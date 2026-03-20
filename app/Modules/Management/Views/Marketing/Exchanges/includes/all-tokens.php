@@ -128,7 +128,7 @@ $viewFileData                       = array(
 
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
-        $('#website-table').DataTable({
+        initDataTableSafe($('#website-table'),{
             "order": [[ 2, "desc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         });

@@ -97,7 +97,7 @@ $getNBATeams = $this->sports_model->get_nba_teams();
 <script <?= $nonce['script'] ?? '' ?>>
 $(document).ready(function() {
     $("#team-dropdown").select2({allowClear: true, dropdownAutoWidth: true});
-    var table = $("#nba_sports_team_statistics").DataTable({
+    var table = initDataTableSafe($("#nba_sports_team_statistics"),{
         processing: true,
         serverSide: false,
         ajax: function(data, callback, settings) {

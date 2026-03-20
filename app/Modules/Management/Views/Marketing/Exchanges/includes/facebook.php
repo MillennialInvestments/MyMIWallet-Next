@@ -125,7 +125,7 @@ $viewFileData                       = array(
 
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
-        $('#faceboook-table').DataTable({
+        initDataTableSafe($('#faceboook-table'),{
             "order": [[ 2, "desc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         });

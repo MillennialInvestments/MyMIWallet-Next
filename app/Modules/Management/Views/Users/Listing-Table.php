@@ -63,7 +63,7 @@
 </div>
 <script <?= $nonce['script'] ?? '' ?>>
 $(document).ready(function() {
-    $('#user-listing-table').DataTable( {
+    initDataTableSafe($('#user-listing-table'), {
         "order": [[ 0, "desc" ]],     
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
     }	

@@ -218,7 +218,7 @@ if ($userAgent->isMobile()) {
 </table>
 <script <?= $nonce['script'] ?? '' ?>>
 $(document).ready(function() {
-    var table = $('#userBudgetingHistoryDatatable').DataTable({
+    var table = initDataTableSafe($('#userBudgetingHistoryDatatable'),{
         "order": [[ 0, "desc" ]],     
         "lengthMenu": [[25, 50, 100, 500, -1], [25, 50, 100, 500, "All"]],
         "columnDefs": [

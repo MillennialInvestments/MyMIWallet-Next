@@ -125,7 +125,7 @@ $(document).ready(function () {
     ];
 
     // Initialize DataTable
-    let table = $('#trade-tracker-table').DataTable({
+    let table = initDataTableSafe($('#trade-tracker-table'),{
         ajax: {
             url: "<?= site_url('Trade-Tracker/getTradeData') ?>",
             dataSrc: function (json) {
@@ -269,7 +269,7 @@ $(document).ready(function () {
 
         table.destroy();
         $('#trade-tracker-table thead tr:last-child').children().last().before(`<th>${columnName}</th>`);
-        table = $('#trade-tracker-table').DataTable({
+        table = initDataTableSafe($('#trade-tracker-table'),{
             ajax: {
                 url: "<?= site_url('Trade-Tracker/getTradeData') ?>",
                 dataSrc: function (json) {
@@ -363,7 +363,7 @@ $(document).ready(function () {
 
         table.destroy();
         $('#trade-tracker-table thead tr:last-child').children().last().before(`<th>${columnName}</th>`);
-        table = $('#trade-tracker-table').DataTable({
+        table = initDataTableSafe($('#trade-tracker-table'),{
             ajax: {
                 url: "<?= site_url('Trade-Tracker/getTradeData') ?>",
                 dataSrc: function (json) {

@@ -489,7 +489,11 @@ window.jQuery = window.jQuery || window.$; // just in case
                     }
                 }, attr = opt ? extend(def, opt) : def;
                 attr = (auto_responsive === false) ? extend(attr, { responsive:false }) : attr;
-                $(this).DataTable(attr);
+                if (typeof window.initDataTableSafe === 'function') {
+                    window.initDataTableSafe($(this), attr);
+                } else {
+                    $(this).DataTable(attr);
+                }
                 $('.dt-export-title').text(export_title);
             });
         }
@@ -710,6 +714,9 @@ window.jQuery = window.jQuery || window.$; // just in case
         $('.modal').on('shown.bs.modal', function () {
             NioApp.Select2.init();
             NioApp.Validate.init();
+            if (typeof window.reinitializeDataTablesIn === 'function') {
+                window.reinitializeDataTablesIn(this);
+            }
         });
     };
 

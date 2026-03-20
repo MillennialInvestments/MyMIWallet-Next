@@ -179,6 +179,6 @@ $subViewData = [
 </div>
 <!-- <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
-        $(".financialAnalysisTable").DataTable({});
+        initDataTableSafe($(".financialAnalysisTable"),{});
     });
 </script> -->

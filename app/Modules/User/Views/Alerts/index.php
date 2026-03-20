@@ -360,7 +360,7 @@ $scannerSignals = $scannerSignals ?? [];
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     if (typeof $ !== 'undefined' && $.fn.DataTable) {
-        $('#openAlertsTable').DataTable({
+        initDataTableSafe($('#openAlertsTable'),{
             pageLength: 10,
             order: [[0, 'asc']],
         });

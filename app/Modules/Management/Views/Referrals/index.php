@@ -68,7 +68,7 @@ $referralCode = $referralCode ?? '';
 <script>
     (function() {
         if (window.jQuery && $.fn && $.fn.DataTable) {
-            $('#referral-conversion-table').DataTable({
+            initDataTableSafe($('#referral-conversion-table'),{
                 order: [[1, 'desc']],
                 pageLength: 25,
             });

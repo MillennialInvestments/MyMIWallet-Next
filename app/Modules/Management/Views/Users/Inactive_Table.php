@@ -58,14 +58,14 @@
 </div>
 <script <?= $nonce['script'] ?? '' ?>>
 $(document).ready(function() {
-    $('#management-inactive-users').DataTable( {
+    initDataTableSafe($('#management-inactive-users'), {
         "order": [[ 1, "desc" ]],     
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
     }	
     );
 } );
 // $(document).ready(function () {
-//     $('#management-inactive-users').DataTable({
+//     initDataTableSafe($('#management-inactive-users'),{
 //         processing: true,
 //         serverSide: true, // Optional if you want pagination handled server-side
 //         ajax: {

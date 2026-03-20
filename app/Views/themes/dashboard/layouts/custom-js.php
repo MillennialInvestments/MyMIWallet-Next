@@ -413,7 +413,7 @@ $(document).ready(function () {
 
     // ✅ Check if Table Exists Before Initializing DataTable
     if ($('#confirmedTradeAlertTable').length) {
-        let confirmedTable = $('#confirmedTradeAlertTable').DataTable({
+        let confirmedTable = initDataTableSafe($('#confirmedTradeAlertTable'),{
             processing: true,
             serverSide: true,
             ajax: {
@@ -434,7 +434,7 @@ $(document).ready(function () {
 
     <?php if ($cuRole <= 3): ?>
     if ($('#pendingTradeAlertTable').length) {
-        let pendingTable = $('#pendingTradeAlertTable').DataTable({
+        let pendingTable = initDataTableSafe($('#pendingTradeAlertTable'),{
             processing: true,
             serverSide: true,
             ajax: {

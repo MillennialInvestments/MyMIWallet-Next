@@ -358,7 +358,7 @@
 </script>
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
-        $('#activeTradeDataTable').DataTable({
+        initDataTableSafe($('#activeTradeDataTable'),{
             "order": [[ 0, "desc" ]],
             "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
         });

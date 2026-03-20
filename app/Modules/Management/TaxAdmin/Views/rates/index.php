@@ -31,7 +31,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         if (window.$ && $.fn.DataTable) {
-            $('#ratesTable').DataTable();
+            initDataTableSafe($('#ratesTable'));
         }
     });
 </script>

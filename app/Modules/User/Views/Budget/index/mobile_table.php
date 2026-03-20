@@ -244,7 +244,7 @@ $epochOf = static function (?string $mdy): int {
       '</div>';
     }
 
-    var table = $table.DataTable({
+    var table = initDataTableSafe($table,{
       autoWidth: false,
       orderFixed: { pre: [[1,'asc']] },       // keep buckets fixed (0 bank, 1 credit, 2 entries)
       order: [[2,'asc']],                     // then by date (numeric epoch in data-order)

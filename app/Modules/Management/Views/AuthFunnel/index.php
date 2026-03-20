@@ -153,7 +153,7 @@ $chartData = [
         }
 
         if (window.jQuery && $.fn && $.fn.DataTable) {
-            $('#auth-funnel-events-table').DataTable({
+            initDataTableSafe($('#auth-funnel-events-table'),{
                 order: [[0, 'desc']],
                 pageLength: 25,
             });

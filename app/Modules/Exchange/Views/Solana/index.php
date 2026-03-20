@@ -547,7 +547,7 @@ $(document).ready(function () {
     }
 
     if ($.fn.DataTable) {
-      $table.DataTable({
+      initDataTableSafe($table,{
         order: [[0, 'asc']],
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'All']],
         destroy: true

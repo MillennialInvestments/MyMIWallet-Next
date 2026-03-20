@@ -247,7 +247,7 @@ $subtotalColumnIndex = $isMobile ? 6 : 8;
       return;
     }
 
-    var table = $table.DataTable({
+    var table = initDataTableSafe($table,{
       orderFixed: { pre: [[0, 'asc']] },
       order: [[3, 'asc']],
       columnDefs: [

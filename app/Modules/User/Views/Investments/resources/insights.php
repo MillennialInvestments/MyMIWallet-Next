@@ -46,6 +46,6 @@ $subViewData = [];
 </div>
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
-        $("#insightTable").DataTable({});
+        initDataTableSafe($("#insightTable"),{});
     });
 </script>

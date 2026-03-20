@@ -9,28 +9,28 @@ $pageURID       = $totalSegments >= 4 ? $uri->getSegment(4) : null;
 <script <?= $nonce['script'] ?? '' ?>>
 $(document).ready(function() {
     if (!$.fn.DataTable.isDataTable('.defaultDTTable')) {
-        $('.defaultDTTable').DataTable({
+        initDataTableSafe($('.defaultDTTable'),{
             "order": [[ 0, "asc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         });
     }
 
     if ($('#supportRequestOverview').length && !$.fn.DataTable.isDataTable('#supportRequestOverview')) {
-        $('#supportRequestOverview').DataTable({
+        initDataTableSafe($('#supportRequestOverview'),{
             "order": [[ 0, "asc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         });
     }
 
     if ($('#userActivityLoggerDatatable').length && !$.fn.DataTable.isDataTable('#userActivityLoggerDatatable')) {
-        $('#userActivityLoggerDatatable').DataTable({
+        initDataTableSafe($('#userActivityLoggerDatatable'),{
             "order": [[ 0, "desc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         });
     }
 
     if ($('#contentCreator').length && !$.fn.DataTable.isDataTable('.contentCreator')) {
-        $('.contentCreator').DataTable({
+        initDataTableSafe($('.contentCreator'),{
             "order": [[ 0, "desc" ]],     
             "lengthMenu": [[10, 25, 50, 100, 250, 500, 1000, -1], ["All", 10, 25, 50, 100, 250, 500, 1000]]
         });
@@ -39,7 +39,7 @@ $(document).ready(function() {
     // Continue in similar fashion for other tables...
 
     if ($('#dashboardTasksDatatable').length && !$.fn.DataTable.isDataTable('#dashboardTasksDatatable')) {
-        $('#dashboardTasksDatatable').DataTable({
+        initDataTableSafe($('#dashboardTasksDatatable'),{
             "order": [[ 0, "desc" ]]
         });
     }
@@ -48,132 +48,132 @@ $(document).ready(function() {
 <script <?= $nonce['script'] ?? '' ?>>
 $(document).ready(function() {
     if (!$.fn.DataTable.isDataTable('.defaultDTTable')) {
-        $('.defaultDTTable').DataTable({
+        initDataTableSafe($('.defaultDTTable'),{
             "order": [[ 0, "asc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         });
     }
 
     if ($('#supportRequestOverview').length && !$.fn.DataTable.isDataTable('#supportRequestOverview')) {
-        $('#supportRequestOverview').DataTable({
+        initDataTableSafe($('#supportRequestOverview'),{
             "order": [[ 0, "asc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         });
     }
 
     if ($('#userActivityLoggerDatatable').length && !$.fn.DataTable.isDataTable('#userActivityLoggerDatatable')) {
-        $('#userActivityLoggerDatatable').DataTable({
+        initDataTableSafe($('#userActivityLoggerDatatable'),{
             "order": [[ 0, "desc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         });
     }
 
     if ($('#contentCreator').length && !$.fn.DataTable.isDataTable('.contentCreator')) {
-        $('.contentCreator').DataTable({
+        initDataTableSafe($('.contentCreator'),{
             "order": [[ 0, "desc" ]],     
             "lengthMenu": [[10, 25, 50, 100, 250, 500, 1000, -1], ["All", 10, 25, 50, 100, 250, 500, 1000]]
         });
     }
 
     if ($('#bankAccountTransactionHistory').length && !$.fn.DataTable.isDataTable('#bankAccountTransactionHistory')) {
-        $('#bankAccountTransactionHistory').DataTable({
+        initDataTableSafe($('#bankAccountTransactionHistory'),{
             "order": [[ 0, "asc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         });
     }
 
     if ($('#userBudgetingDetailsDatatable').length && !$.fn.DataTable.isDataTable('#userBudgetingDetailsDatatable')) {
-        $('#userBudgetingDetailsDatatable').DataTable({
+        initDataTableSafe($('#userBudgetingDetailsDatatable'),{
             "order": [[ 0, "asc" ]],
             "lengthMenu": [[25, 50, 100, 500, -1], [25, 50, 100, 500, "All"]]
         });
     }
 
     if ($('#userBudgetingHistoricalDatatable').length && !$.fn.DataTable.isDataTable('#userBudgetingHistoricalDatatable')) {
-        $('#userBudgetingHistoricalDatatable').DataTable({
+        initDataTableSafe($('#userBudgetingHistoricalDatatable'),{
             "order": [[ 0, "asc" ]],
             "lengthMenu": [[25, 50, 100, 500, -1], [25, 50, 100, 500, "All"]]
         });
     }
 
     if ($('#alertOverviewDatatable').length && !$.fn.DataTable.isDataTable('#alertOverviewDatatable')) {
-        $('#alertOverviewDatatable').DataTable({
+        initDataTableSafe($('#alertOverviewDatatable'),{
             "order": [[ 5, "desc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         });
     }
 
     if ($('#tradeTrackerDatatable').length && !$.fn.DataTable.isDataTable('#tradeTrackerDatatable')) {
-        $('#tradeTrackerDatatable').DataTable({
+        initDataTableSafe($('#tradeTrackerDatatable'),{
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         });
     }
 
     if ($('#walletTradeOverviewDatatable').length && !$.fn.DataTable.isDataTable('#walletTradeOverviewDatatable')) {
-        $('#walletTradeOverviewDatatable').DataTable({
+        initDataTableSafe($('#walletTradeOverviewDatatable'),{
             "order": [[ 0, "desc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         });
     }
 
     if ($('.accountingDatatable').length && !$.fn.DataTable.isDataTable('.accountingDatatable')) {
-        $('.accountingDatatable').DataTable({
+        initDataTableSafe($('.accountingDatatable'),{
             "order": [[ 3, "desc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         });
     }
 
     if ($('#activeTradeDataTable').length && !$.fn.DataTable.isDataTable('#activeTradeDataTable')) {
-        $('#activeTradeDataTable').DataTable({
+        initDataTableSafe($('#activeTradeDataTable'),{
             "order": [[ 0, "desc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         });
     }
 
     // if ($('#watchListDataTable').length && !$.fn.DataTable.isDataTable('#watchListDataTable')) {
-    //     $('#watchListDataTable').DataTable({
+    //     initDataTableSafe($('#watchListDataTable'),{
     //         "order": [[ 0, "desc" ]],     
     //         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
     //     });
     // }
 
     if ($('#walletTransactionDatabase').length && !$.fn.DataTable.isDataTable('#walletTransactionDatabase')) {
-        $('#walletTransactionDatabase').DataTable({
+        initDataTableSafe($('#walletTransactionDatabase'),{
             "order": [[ 0, "desc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],    
         });
     }
 
     if ($('#userInvestmentTable').length && !$.fn.DataTable.isDataTable('#userInvestmentTable')) {
-        $('#userInvestmentTable').DataTable({
+        initDataTableSafe($('#userInvestmentTable'),{
             "order": [[ 0, "desc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],    
         });
     }
 
     if ($('#exchangeOverviewDataTable').length && !$.fn.DataTable.isDataTable('#exchangeOverviewDataTable')) {
-        $('#exchangeOverviewDataTable').DataTable({
+        initDataTableSafe($('#exchangeOverviewDataTable'),{
             "order": [[ 2, "desc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],    
         });
     }
 
     if ($('#userActivityDatatable').length && !$.fn.DataTable.isDataTable('#userActivityDatatable')) {
-        $('#userActivityDatatable').DataTable({
+        initDataTableSafe($('#userActivityDatatable'),{
             "order": [[ 0, "desc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],    
         });
     }
 
     if ($('#myReferralsDatatable').length && !$.fn.DataTable.isDataTable('#myReferralsDatatable')) {
-        $('#myReferralsDatatable').DataTable({
+        initDataTableSafe($('#myReferralsDatatable'),{
             "order": [[ 0, "desc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],    
         });
     }
 
     if ($('#exchangeBuyOrders').length && !$.fn.DataTable.isDataTable('#exchangeBuyOrders')) {
-        $('#exchangeBuyOrders').DataTable({
+        initDataTableSafe($('#exchangeBuyOrders'),{
             "searching": false,
             "paging": false,
             "info": false,
@@ -182,7 +182,7 @@ $(document).ready(function() {
     }
 
     if ($('#exchangeSellOrders').length && !$.fn.DataTable.isDataTable('#exchangeSellOrders')) {
-        $('#exchangeSellOrders').DataTable({
+        initDataTableSafe($('#exchangeSellOrders'),{
             "searching": false,
             "paging": false,
             "info": false,
@@ -191,7 +191,7 @@ $(document).ready(function() {
     }
 
     if ($('#exchangeTradeHistory').length && !$.fn.DataTable.isDataTable('#exchangeTradeHistory')) {
-        $('#exchangeTradeHistory').DataTable({
+        initDataTableSafe($('#exchangeTradeHistory'),{
             "searching": false,
             "paging": false,
             "info": false,
@@ -200,7 +200,7 @@ $(document).ready(function() {
     }
 
     if ($('#dashboardTasksDatatable').length && !$.fn.DataTable.isDataTable('#dashboardTasksDatatable')) {
-        $('#dashboardTasksDatatable').DataTable({
+        initDataTableSafe($('#dashboardTasksDatatable'),{
             "order": [[ 0, "desc" ]]
         });
     }

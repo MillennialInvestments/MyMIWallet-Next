@@ -276,7 +276,7 @@ if (!empty($searchQuery)) {
         });
 
         // $(document).ready(function () {
-        //     $('#userBudgetingDatatable').DataTable({
+        //     initDataTableSafe($('#userBudgetingDatatable'),{
         //         paging: true,
         //         searching: true,
         //         ordering: [[0,'asc']],

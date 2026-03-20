@@ -88,7 +88,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         if (window.$ && $.fn.DataTable) {
-            $('#jurisdictionTable').DataTable();
+            initDataTableSafe($('#jurisdictionTable'));
         }
 
         document.querySelectorAll('.edit-jurisdiction').forEach(btn => {

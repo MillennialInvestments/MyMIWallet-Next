@@ -186,7 +186,7 @@ $(document).ready(function () {
         },
     ];
 
-    let table = $('#trade-tracker-table').DataTable({
+    let table = initDataTableSafe($('#trade-tracker-table'),{
         ajax: {
             url: "<?= site_url('Trade-Tracker/getTradeData') ?>",
             dataSrc: "trades",
@@ -387,7 +387,7 @@ $(document).ready(function () {
     const csrfToken = $('meta[name="csrf-token"]').attr('content');
     const csrfHash = $('input[name="' + csrfName + '"]').val();
 
-    let table = $('#trade-tracker-table').DataTable({
+    let table = initDataTableSafe($('#trade-tracker-table'),{
         ajax: {
             url: '/index.php/Trade-Tracker/getTradeData',
             dataSrc: 'trades'

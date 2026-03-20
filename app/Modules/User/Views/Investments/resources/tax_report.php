@@ -48,6 +48,6 @@ $subViewData = [];
 </div>
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
-        $("#taxReportTable").DataTable({});
+        initDataTableSafe($("#taxReportTable"),{});
     });
 </script>

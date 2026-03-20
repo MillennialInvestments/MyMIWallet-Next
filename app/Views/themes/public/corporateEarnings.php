@@ -156,7 +156,7 @@ $subViewData = [
 </div>
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
-        $('#earnings-calendar-table').DataTable({
+        initDataTableSafe($('#earnings-calendar-table'),{
             paging: true,
             searching: true,
             ordering: true,

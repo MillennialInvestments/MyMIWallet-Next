@@ -56,14 +56,14 @@
 </div>
 <script <?= $nonce['script'] ?? '' ?>>
 $(document).ready(function() {
-    $('#management-active-users').DataTable( {
+    initDataTableSafe($('#management-active-users'), {
         "order": [[ 1, "desc" ]],     
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
     }	
     );
 } );
 // $(document).ready(function () {
-//     $('#management-active-users').DataTable({
+//     initDataTableSafe($('#management-active-users'),{
 //         processing: true,
 //         serverSide: true, // Optional: remove if you want client-side only
 //         ajax: {

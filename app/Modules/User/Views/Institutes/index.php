@@ -48,7 +48,7 @@
 </div>
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
-        $(".institutionRecommendationTable").DataTable({
+        initDataTableSafe($(".institutionRecommendationTable"),{
             "order": [[ 0, "asc" ]],
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             "columnDefs": [

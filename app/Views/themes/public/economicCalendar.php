@@ -149,7 +149,7 @@ $subViewData = [
 </div>
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
-        $('#economic-calendar-table').DataTable({
+        initDataTableSafe($('#economic-calendar-table'),{
             paging: true,
             searching: true,
             ordering: true,

@@ -94,7 +94,7 @@ $taskCategory = $taskCategory ?? 'Daily'; // Default task category
 <script <?= $nonce['script'] ?? '' ?>>
 $(document).ready(function() {
     // Initialize DataTables
-    $('#userGoalsTable').DataTable({
+    initDataTableSafe($('#userGoalsTable'),{
         "lengthMenu": [[10, 25, 50, 100, 500, -1], [10, 25, 50, 100, 500, "All"]],
         "responsive": true,
         "autoWidth": false, // Prevent miscalculations

@@ -47,7 +47,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         if (window.$ && $.fn.DataTable) {
-            $('#returnsTable').DataTable();
+            initDataTableSafe($('#returnsTable'));
         }
     });
 </script>

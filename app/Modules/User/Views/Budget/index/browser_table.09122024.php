@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (window.jQuery && jQuery.fn && jQuery.fn.DataTable) {
     // jQuery DataTables path
     if (!jQuery.fn.dataTable.isDataTable(el)) {
-      jQuery(el).DataTable(options);
+      initDataTableSafe(jQuery(el),options);
     }
   } else if (typeof window.DataTable === 'function') {
     // No-jQuery DataTables 2.x path

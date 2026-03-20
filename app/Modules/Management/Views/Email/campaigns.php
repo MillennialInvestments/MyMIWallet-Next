@@ -113,7 +113,7 @@ $subViewData = [
 
 <script <?= $nonce['script'] ?? '' ?>>
 document.addEventListener('DOMContentLoaded', function() {
-    $('#campaignsTable').DataTable({
+    initDataTableSafe($('#campaignsTable'),{
         pageLength: 10,
         responsive: true,
         dom: 'Bfrtip',

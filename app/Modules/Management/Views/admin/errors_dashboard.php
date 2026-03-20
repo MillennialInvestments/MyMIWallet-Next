@@ -158,7 +158,7 @@
     const rows = j.data || [];
 
     if (!dt){
-      dt = $('#patternsTable').DataTable({
+      dt = initDataTableSafe($('#patternsTable'),{
         data: rows,
         columns: [
           { data: 'severity' },

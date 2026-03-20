@@ -24,6 +24,7 @@ $scriptNonceAttr  = '';
 <!-- DataTables 1.11.5 (current production set) -->
 <script src="https://cdn.jsdelivr.net/npm/datatables.net@1.11.5/js/jquery.dataTables.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.11.5/js/dataTables.bootstrap5.min.js" defer></script>
+<script src="<?= base_url('assets/js/datatables-helper.js'); ?>" defer></script>
 
 <!-- Chart.js (v2.1.2 per your asset list) -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.1.2/dist/Chart.min.js" defer></script>

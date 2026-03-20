@@ -1131,8 +1131,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ✅ Initialize DataTables (only if present)
     if (window.jQuery && $.fn && $.fn.DataTable) {
-        $("#sec-filing-table").DataTable({ paging: true, searching: true, order: [[0, "desc"]] });
-        $("#trade-alert-table").DataTable({ paging: true, searching: true, order: [[0, "desc"]] });
+        initDataTableSafe($("#sec-filing-table"),{ paging: true, searching: true, order: [[0, "desc"]] });
+        initDataTableSafe($("#trade-alert-table"),{ paging: true, searching: true, order: [[0, "desc"]] });
     }
 
     // ✅ Comment Form Submission

@@ -107,7 +107,7 @@ $subViewData = [];
 
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
-        $("#profitLossTable").DataTable({});
-        $("#performanceTable").DataTable({});
+        initDataTableSafe($("#profitLossTable"),{});
+        initDataTableSafe($("#performanceTable"),{});
     });
 </script>

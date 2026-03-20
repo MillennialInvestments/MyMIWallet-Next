@@ -64,7 +64,7 @@
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
         // Initialize DataTable
-        const table = $('#scrapedDataTable').DataTable();
+        const table = initDataTableSafe($('#scrapedDataTable'));
 
         function truncateText(text, maxLength) {
             if (text.length > maxLength) {

@@ -74,7 +74,7 @@ $(document).ready(function () {
     let customColumnIndex = tableHeaders.length; // Start tracking custom columns
 
     // Initialize DataTable with AJAX for backend connection
-    let table = $('#trade-tracker-table').DataTable({
+    let table = initDataTableSafe($('#trade-tracker-table'),{
         ajax: {
             url: "<?= site_url('Trade-Tracker/getTradeData') ?>",
             dataSrc: ''
@@ -118,7 +118,7 @@ $(document).ready(function () {
         // Destroy the current table instance and reinitialize
         table.destroy();
         $('#trade-tracker-table thead tr').append(`<th>${columnName}</th>`); // Add header
-        table = $('#trade-tracker-table').DataTable({
+        table = initDataTableSafe($('#trade-tracker-table'),{
             data: currentData,
             columns: tableHeaders,
         });
