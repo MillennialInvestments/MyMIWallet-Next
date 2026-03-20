@@ -732,7 +732,7 @@ $showSetupBanner   = ! empty($setupStatus)
                     <div class="card-title-group align-start mb-3">
                         <div class="card-title">
                             <h6 class="subtitle">Market News &amp; Highlights</h6>
-                            <span class="text-soft">Curated from alerts@mymiwallet.com and MarketAux feeds.</span>
+                            <span class="text-soft">Curated from tradealerts@mymiwallet.com and MarketAux feeds.</span>
                         </div>
                         <div class="card-tools">
                             <a class="btn btn-sm btn-outline-secondary" href="/news">News Center</a>

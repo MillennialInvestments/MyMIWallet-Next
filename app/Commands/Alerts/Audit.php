@@ -350,7 +350,12 @@ class Audit extends SafeBaseCommand
         $builder = $db->table('bf_investment_scraper')->select(implode(', ', $select), false);
 
         if ($sourceColumn) {
-            $builder->where($sourceColumn, 'alerts@mymiwallet.com');
+            $config = config('MyMI');
+            $builder->groupStart();
+            foreach ($config->allowedAlertEmails as $allowedAlertEmail) {
+                $builder->orWhere($sourceColumn, $allowedAlertEmail);
+            }
+            $builder->groupEnd();
         }
 
         if ($createdColumn) {

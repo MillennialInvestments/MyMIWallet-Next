@@ -57,9 +57,12 @@ class Ingest extends SafeBaseCommand
                 throw new \RuntimeException('IMAP extension not available.');
             }
 
+            $config = config('MyMI');
+            CLI::write('Using alert email: ' . $config->alertEmail, 'yellow');
+            log_message('info', 'Using alert email: ' . $config->alertEmail);
             $imapHost = env('alerts.imap.host', 'imap.dreamhost.com:993/imap/ssl');
             $imapMailbox = sprintf('{%s}%s', $imapHost, 'INBOX');
-            $imapUser = env('alerts.imap.user', 'alerts@mymiwallet.com');
+            $imapUser = env('alerts.imap.user', $config->alertEmail);
             $imapPass = env('alerts.imap.pass', env('ALERTS_IMAP_PASSWORD', 'MyMI2024!'));
 
             $imap = @imap_open($imapMailbox, $imapUser, $imapPass);

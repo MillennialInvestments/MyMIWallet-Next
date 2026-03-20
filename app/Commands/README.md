@@ -69,7 +69,7 @@ This document inventories every discovered Spark CLI command implemented under `
 | `aiops:copilot:validate` | Validate copilot instructions and Spark command safety rules. | `php spark aiops:copilot:validate [--json] [--notify] [--db]` |
 | `aiops:db:slow_scan` | Scan logs for slow query markers (best-effort) | `php spark aiops:db:slow_scan` |
 | `aiops:diff:format` | Generate a real unified diff from current working tree | `php spark aiops:diff:format` |
-| `aiops:email-scan` | Scan alerts mailbox for new emails and record AIOps counts. | `php spark aiops:email-scan [--mailbox=INBOX] [--from=alerts@mymiwallet.com] [--since=YYYY-MM-DD] [--lookback-days=2] [--limit=250] [--dry-run]` |
+| `aiops:email-scan` | Scan alerts mailbox for new emails and record AIOps counts. | `php spark aiops:email-scan [--mailbox=INBOX] [--from=tradealerts@mymiwallet.com] [--since=YYYY-MM-DD] [--lookback-days=2] [--limit=250] [--dry-run]` |
 | `aiops:gate:cost` | Enforce daily AI cost cap; auto-disable AiOps LLM when threshold exceeded | `php spark aiops:gate:cost` |
 | `aiops:governance:analyze` | Analyze token usage + model anomalies | `php spark aiops:governance:analyze` |
 | `aiops:health:full` | Run full system health checks and generate a consolidated report | `php spark aiops:health:full` |
@@ -414,11 +414,11 @@ This document inventories every discovered Spark CLI command implemented under `
 - **Class:** `App\Commands\AiOps\EmailScan`
 - **Source:** `app/Commands/AiOps/EmailScan.php`
 - **Purpose:** Scan alerts mailbox for new emails and record AIOps counts.
-- **Usage:** `php spark aiops:email-scan [--mailbox=INBOX] [--from=alerts@mymiwallet.com] [--since=YYYY-MM-DD] [--lookback-days=2] [--limit=250] [--dry-run]`
+- **Usage:** `php spark aiops:email-scan [--mailbox=INBOX] [--from=tradealerts@mymiwallet.com] [--since=YYYY-MM-DD] [--lookback-days=2] [--limit=250] [--dry-run]`
 - **Arguments:** none declared.
 - **Options:**
   - `--mailbox` — IMAP mailbox folder (default: INBOX).
-  - `--from` — Filter by sender email address (default: alerts@mymiwallet.com).
+  - `--from` — Filter by sender email address (default: tradealerts@mymiwallet.com).
   - `--since` — IMAP SINCE date in YYYY-MM-DD format (overrides lookback-days).
   - `--lookback-days` — Number of days to look back when --since is not provided (default: 2).
   - `--limit` — Maximum number of emails to scan per run.

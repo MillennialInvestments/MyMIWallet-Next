@@ -15,10 +15,10 @@ class EmailScan extends SafeBaseCommand
     protected $group = 'AIOps - Marketing';
     protected $name = 'aiops:email-scan';
     protected $description = 'Scan alerts mailbox for new emails and record AIOps counts.';
-    protected $usage = 'aiops:email-scan [--mailbox=INBOX] [--from=alerts@mymiwallet.com] [--since=YYYY-MM-DD] [--lookback-days=2] [--limit=250] [--dry-run]';
+    protected $usage = 'aiops:email-scan [--mailbox=INBOX] [--from=tradealerts@mymiwallet.com] [--since=YYYY-MM-DD] [--lookback-days=2] [--limit=250] [--dry-run]';
     protected $options = [
         '--mailbox' => 'IMAP mailbox folder (default: INBOX).',
-        '--from' => 'Filter by sender email address (default: alerts@mymiwallet.com).',
+        '--from' => 'Filter by sender email address (default: tradealerts@mymiwallet.com).',
         '--since' => 'IMAP SINCE date in YYYY-MM-DD format (overrides lookback-days).',
         '--lookback-days' => 'Number of days to look back when --since is not provided (default: 2).',
         '--limit' => 'Maximum number of emails to scan per run.',
@@ -37,11 +37,12 @@ class EmailScan extends SafeBaseCommand
             return EXIT_ERROR;
         }
 
+        $config = config('MyMI');
         $host = trim((string) env('MYMI_ALERTS_IMAP_HOST'));
-        $user = trim((string) env('MYMI_ALERTS_IMAP_USER'));
+        $user = trim((string) env('MYMI_ALERTS_IMAP_USER', $config->alertEmail));
         $pass = trim((string) env('MYMI_ALERTS_IMAP_PASS'));
         $mailbox = trim((string) $this->resolveStringOption($params, 'mailbox', env('MYMI_ALERTS_IMAP_MAILBOX') ?: 'INBOX'));
-        $from = trim((string) $this->resolveStringOption($params, 'from', env('MYMI_ALERTS_IMAP_FROM') ?: 'alerts@mymiwallet.com'));
+        $from = trim((string) $this->resolveStringOption($params, 'from', env('MYMI_ALERTS_IMAP_FROM') ?: $config->alertEmail));
         $since = trim((string) $this->resolveStringOption($params, 'since', ''));
         $lookbackDays = $this->resolveIntOption($params, 'lookback-days', (int) (env('MYMI_ALERTS_IMAP_LOOKBACK_DAYS') ?: 2));
         $limit = $this->resolveIntOption($params, 'limit', (int) (env('MYMI_ALERTS_IMAP_LIMIT') ?: 0));
