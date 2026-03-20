@@ -514,6 +514,24 @@ class Services extends CoreServices
      *     return new \CodeIgniter\Example();
      * }
      */
+    public static function git(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('git');
+        }
+
+        return new \App\Services\GitService();
+    }
+
+    public static function github(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('github');
+        }
+
+        return new \App\Services\GitHubService();
+    }
+
     public static function externalApiGuard(bool $getShared = true)
     {
         if ($getShared) {

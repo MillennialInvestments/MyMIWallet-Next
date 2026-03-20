@@ -25,12 +25,14 @@ app/FiltersO/
 .env
 .env.*
 !env/.env.ci.example
+!env/.env.github-control.example
 chat/.env*
 !chat/.env.staging.example
 !chat/.env.production.example
 # *.log
 /.idea/
-/.vscode/
+/.vscode/*
+!/.vscode/settings.json
 phpunit.xml
 phpunit.xml.dist
 *.map

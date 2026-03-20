@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Commands\Docs;
 
-use App\Commands\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
 class DocsTest extends SafeBaseCommand
@@ -19,9 +21,9 @@ class DocsTest extends SafeBaseCommand
 
         $doc = $docs->getDoc('overview');
 
-        if (!$doc) {
+        if (! $doc) {
             CLI::error('Failed to load overview document.');
-            return;
+            return EXIT_ERROR;
         }
 
         CLI::write('Overview doc loaded successfully', 'green');
@@ -35,5 +37,7 @@ class DocsTest extends SafeBaseCommand
         }
 
         CLI::write('DocsService test complete.', 'green');
+
+        return EXIT_SUCCESS;
     }
 }
