@@ -33,7 +33,7 @@
 
 <script <?= $nonce['script'] ?? '' ?>>
 $(document).ready(function () {
-    const table = $('#scrapedDataTable').DataTable();
+    const table = initDataTableSafe($('#scrapedDataTable'));
 
     function truncateText(text, maxLength = 60) {
         if (!text) return '—';

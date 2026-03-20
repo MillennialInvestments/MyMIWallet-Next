@@ -34,5 +34,5 @@ $positions = $positions ?? [];
   var el=document.getElementById('predPortfolioTable');
   if(!el) return;
   var cfg={paging:true,searching:true,ordering:true,order:[[0,'desc']],lengthMenu:[[25,50,100,-1],[25,50,100,'All']],info:true};
-  if(window.jQuery && (jQuery.fn.DataTable||jQuery.fn.dataTable)){ jQuery.fn.dataTable.isDataTable(el)||jQuery(el).DataTable(cfg); }
+  if(window.jQuery && (jQuery.fn.DataTable||jQuery.fn.dataTable)){ jQuery.fn.dataTable.isDataTable(el)||initDataTableSafe(jQuery(el),cfg); }
 });</script>

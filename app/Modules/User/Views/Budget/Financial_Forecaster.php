@@ -203,7 +203,7 @@ $subViewData = [
 </div>
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
-        $(".financialForecastTable").DataTable({
+        initDataTableSafe($(".financialForecastTable"),{
             "order": [[ 0, "asc" ]],     
             "lengthMenu": [[12, 60, 120, 180, 240, 300, 360, -1], [1 + " Year", 5 + " Years", 10 + " Years", 15 + " Years", 20 + " Years", 25 + " Years", 30 + " Years", "All"]],
             "columnDefs": [

@@ -669,7 +669,7 @@ $subViewData                        = [
     }
 
     // ✅ Check if Table Exists Before Initializing DataTable
-    let confirmedTable = $('#confirmedTradeAlertTable').DataTable({
+    let confirmedTable = initDataTableSafe($('#confirmedTradeAlertTable'),{
         processing: true,
         serverSide: true,
         destroy: true,
@@ -695,7 +695,7 @@ $subViewData                        = [
     });
 
     <?php if ($cuRole <= 3): ?>
-    let pendingTable = $('#pendingTradeAlertTable').DataTable({
+    let pendingTable = initDataTableSafe($('#pendingTradeAlertTable'),{
         processing: true,
         serverSide: true,
         destroy: true,
@@ -722,7 +722,7 @@ $subViewData                        = [
     <?php endif; ?>
 
 
-    let scannerTable = $('#scannerSignalsTable').DataTable({
+    let scannerTable = initDataTableSafe($('#scannerSignalsTable'),{
         processing: true,
         ajax: {
             url: '<?= site_url("API/Alerts/scanner"); ?>',

@@ -6,7 +6,7 @@
     var flagChart = null;
 
     function initTable() {
-        scorecardTable = $('#squeeze-scorecard-table').DataTable({
+        scorecardTable = initDataTableSafe($('#squeeze-scorecard-table'),{
             paging: true,
             searching: true,
             order: [[1, 'desc']],

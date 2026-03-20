@@ -254,11 +254,11 @@ if ($debug === 1) {
 
                                     <script <?= $nonce['script'] ?? '' ?>>
                                         $(document).ready(function() {
-                                            $('#cuSolanaAssetsDatatable').DataTable({
+                                            initDataTableSafe($('#cuSolanaAssetsDatatable'),{
                                                 "order": [[ 2, "desc" ]],     
                                                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
                                             });
-                                            $('#solanaTopPerformersTable').DataTable({
+                                            initDataTableSafe($('#solanaTopPerformersTable'),{
                                                 "order": [[ 2, "desc" ]],     
                                                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
                                             });

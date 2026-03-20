@@ -98,7 +98,7 @@ $referralReport = $referralReport ?? [];
 
 <script <?= $nonce['script'] ?? '' ?>>
 $(document).ready(function() {
-    $('#referral-report-table').DataTable({
+    initDataTableSafe($('#referral-report-table'),{
         order: [[2, 'desc']],
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'All']]
     });

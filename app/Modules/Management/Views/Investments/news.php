@@ -71,7 +71,7 @@
             return $.get(`${baseUrl}/${id}`);
         }
 
-        const table = $('#investments-news-table').DataTable({
+        const table = initDataTableSafe($('#investments-news-table'),{
             ajax: {
                 url: baseUrl,
                 dataSrc: 'data'

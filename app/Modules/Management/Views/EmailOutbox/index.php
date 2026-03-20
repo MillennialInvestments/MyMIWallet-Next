@@ -168,7 +168,7 @@ $outboxRows = $outboxRows ?? [];
 
     document.addEventListener('DOMContentLoaded', () => {
         if (window.jQuery && $.fn && $.fn.DataTable) {
-            $('#emailOutboxTable').DataTable({
+            initDataTableSafe($('#emailOutboxTable'),{
                 order: [[0, 'desc']],
                 pageLength: 25,
             });

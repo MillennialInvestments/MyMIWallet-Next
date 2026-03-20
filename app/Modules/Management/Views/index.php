@@ -537,7 +537,7 @@ $autoloadStatusLabel = $autoloadViolations === 0
     // $(document).ready(function () {
     //     // Function to load data via AJAX into a DataTable
     //     function loadTableData(apiEndpoint, tableID, columns) {
-    //         $(`#${tableID}`).DataTable({
+    //         initDataTableSafe($(`#${tableID}`),{
     //             ajax: {
     //                 url: apiEndpoint,
     //                 dataSrc: ''

@@ -380,7 +380,7 @@ $subViewData                        = [
         };
         if (window.jQuery?.fn?.DataTable) {
             if (!jQuery.fn.dataTable.isDataTable(state.tableElement)) {
-                state.tableInstance = jQuery(state.tableElement).DataTable(options);
+                state.tableInstance = initDataTableSafe(jQuery(state.tableElement),options);
             } else {
                 state.tableInstance = jQuery(state.tableElement).DataTable();
             }

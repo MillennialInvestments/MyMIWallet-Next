@@ -76,7 +76,7 @@ $(function () {
 
     loadProjects();
 
-    const table = $('#ops-tasks-table').DataTable({
+    const table = initDataTableSafe($('#ops-tasks-table'),{
         ajax: '<?= site_url('Ops/tasks') ?>',
         columns: [
             {data: 'code'}, {data: 'project_code'}, {data: 'subproject_code'}, {data: 'title'},

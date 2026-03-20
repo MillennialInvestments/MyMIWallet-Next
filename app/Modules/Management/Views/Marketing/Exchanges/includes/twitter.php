@@ -121,7 +121,7 @@ $viewFileData                       = array(
 
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
-        $('#twitter-table').DataTable({
+        initDataTableSafe($('#twitter-table'),{
             "order": [[ 2, "desc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         });

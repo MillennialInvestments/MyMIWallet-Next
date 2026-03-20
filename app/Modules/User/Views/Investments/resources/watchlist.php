@@ -63,6 +63,6 @@ $subViewData = [];
 </div>
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
-        $("#userWatchlistTable").DataTable({});
+        initDataTableSafe($("#userWatchlistTable"),{});
     });
 </script>

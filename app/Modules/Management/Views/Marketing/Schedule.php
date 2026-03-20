@@ -109,7 +109,7 @@ $platformIcons = [
 
 <script <?= $nonce['script'] ?? '' ?>>
 $(document).ready(function() {
-    $("#scheduleTable").DataTable({
+    initDataTableSafe($("#scheduleTable"),{
         order: [[0, "asc"]],
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]]
     });

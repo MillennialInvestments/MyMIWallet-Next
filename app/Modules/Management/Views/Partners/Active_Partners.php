@@ -90,7 +90,7 @@
 </div>
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
-        $('#activePartnersDatatable').DataTable( {
+        initDataTableSafe($('#activePartnersDatatable'), {
             "order": [[ 0, "desc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         }	

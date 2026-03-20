@@ -49,7 +49,7 @@
 </div><!-- .nk-block -->
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
-        $('#userLoginActivityTable').DataTable({
+        initDataTableSafe($('#userLoginActivityTable'),{
             "order": [[ 2, "desc" ]],     
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         });

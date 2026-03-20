@@ -64,6 +64,6 @@ $subViewData = [];
 
 <script <?= $nonce['script'] ?? '' ?>>
     document.addEventListener('DOMContentLoaded', function() {
-        $('#symbolListingTable').DataTable();
+        initDataTableSafe($('#symbolListingTable'));
     });
 </script>

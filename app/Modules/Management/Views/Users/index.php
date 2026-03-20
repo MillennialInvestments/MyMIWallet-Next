@@ -259,7 +259,7 @@ $(document).on('click', '.ban-user-btn', function (e) {
 </script>
 <script <?= $nonce['script'] ?? '' ?>>
 $(document).ready(function () {
-    // const table = $('#management-inactive-users').DataTable({
+    // const table = initDataTableSafe($('#management-inactive-users'),{
     //     order: [[1, 'desc']],
     //     lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]]
     // });

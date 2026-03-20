@@ -45,7 +45,7 @@ $economicCalendar = $investDashboard['economicCalendar'] ?? []; // Retrieve the 
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
         // Initialize DataTables
-        $('#economic-calendar-table').DataTable({
+        initDataTableSafe($('#economic-calendar-table'),{
             "paging": true,
             "searching": true,
             "ordering": true,

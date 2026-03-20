@@ -319,7 +319,7 @@ if (!function_exists('miw_is_outflow')) {
 
       if (window.jQuery && jQuery.fn && jQuery.fn.DataTable) {
         if (!jQuery.fn.dataTable.isDataTable(el)) {
-          jQuery(el).DataTable(options);
+          initDataTableSafe(jQuery(el),options);
         }
       } else if (typeof window.DataTable === 'function') {
         if (!el.classList.contains('dt-initialized')) {

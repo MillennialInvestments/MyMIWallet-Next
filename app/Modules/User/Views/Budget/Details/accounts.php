@@ -253,7 +253,7 @@
 	</div>
     <script <?= $nonce['script'] ?? '' ?>>
         $(document).ready(function() {
-            $("#userBudgetDetailsDatatable").DataTable({
+            initDataTableSafe($("#userBudgetDetailsDatatable"),{
                 "order": [[ 0, "des" ]],     
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             });

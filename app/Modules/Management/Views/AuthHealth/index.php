@@ -90,7 +90,7 @@ $runs = $authHealthRuns ?? [];
 <script>
     (function() {
         if (window.jQuery && $.fn && $.fn.DataTable) {
-            $('#auth-health-table').DataTable({
+            initDataTableSafe($('#auth-health-table'),{
                 order: [[0, 'desc']],
             });
         }

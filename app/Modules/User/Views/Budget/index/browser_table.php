@@ -200,7 +200,7 @@ $epochOf = static function (?string $mdy): int {
 
   readyDT(function ($) {
     var $table = $('#userBudgetingDatatable');
-    var table  = $table.DataTable({
+    var table  = initDataTableSafe($table,{
       orderFixed: { pre: [[0, 'asc']] },   // keep buckets (bank/credit/entries) fixed
       order: [[1, 'asc']],                 // then date ascending (by numeric epoch)
       columnDefs: [

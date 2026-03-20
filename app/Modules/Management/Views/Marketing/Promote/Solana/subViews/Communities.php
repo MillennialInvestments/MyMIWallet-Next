@@ -243,11 +243,11 @@ $getTopListedTokens = $pageContent['getTopListedTokens'];
 <script <?= $nonce['script'] ?? '' ?>>
 $(document).ready(function() {
     // Initialize DataTables for each table
-    $('#top-assets-table').DataTable({ order: [[2, 'desc']] });
-    $('#discord-table').DataTable({ order: [[1, 'desc']] });
-    $('#facebook-table').DataTable({ order: [[1, 'desc']] });
-    $('#twitter-table').DataTable({ order: [[1, 'desc']] });
-    $('#website-table').DataTable({ order: [[1, 'desc']] });
+    initDataTableSafe($('#top-assets-table'),{ order: [[2, 'desc']] });
+    initDataTableSafe($('#discord-table'),{ order: [[1, 'desc']] });
+    initDataTableSafe($('#facebook-table'),{ order: [[1, 'desc']] });
+    initDataTableSafe($('#twitter-table'),{ order: [[1, 'desc']] });
+    initDataTableSafe($('#website-table'),{ order: [[1, 'desc']] });
 });
 
 </script>

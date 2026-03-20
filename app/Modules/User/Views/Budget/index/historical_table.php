@@ -83,7 +83,7 @@ if ($userAgent->isMobile()) {
 
 <script <?= $nonce['script'] ?? '' ?>>
 $(document).ready(function() {
-    var table = $('#userBudgetingHistoryDatatable').DataTable({
+    var table = initDataTableSafe($('#userBudgetingHistoryDatatable'),{
         "order": [[1, "desc"]], // Sort by "Due Date" column
         "lengthMenu": [[25, 50, 100, 500, -1], [25, 50, 100, 500, "All"]],
         "columnDefs": [

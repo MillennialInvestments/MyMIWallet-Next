@@ -104,7 +104,7 @@ $solanaListing = [];
                             </table>
                             <script <?= $nonce['script'] ?? '' ?>>
                             $(document).ready(function() {
-                                var table = $('#solanaTokenListing').DataTable({
+                                var table = initDataTableSafe($('#solanaTokenListing'),{
                                     "order": [[ 0, "asc" ]],     
                                     "lengthMenu": [[25, 50, 100, 500, -1], [25, 50, 100, 500, "All"]],
                                     "columnDefs": [

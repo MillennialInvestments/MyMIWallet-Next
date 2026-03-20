@@ -108,7 +108,7 @@ $subViewData = [
 <!-- DataTable Initialization Script -->
 <script <?= $nonce['script'] ?? '' ?>>
 $(document).ready(function() {
-    $('#MyMIProjectsListingTable').DataTable({
+    initDataTableSafe($('#MyMIProjectsListingTable'),{
         "order": [[ 0, "asc" ]],     
         "lengthMenu": [[50, 100, 250, -1], [50, 100, 250, "All"]]
     });

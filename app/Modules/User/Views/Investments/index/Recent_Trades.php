@@ -168,7 +168,7 @@ function ordinal($number) {
 </div><!-- .card -->
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {
-        $('#investmentTable').DataTable({
+        initDataTableSafe($('#investmentTable'),{
             "order": [[ 1, "desc" ]]  // Sort by first column in ascending order
         });
     });
