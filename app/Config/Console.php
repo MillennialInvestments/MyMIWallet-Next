@@ -471,6 +471,20 @@ class Console extends BaseConfig
         
         /*
         |----------------------------------------------------------------------
+        | Git
+        |----------------------------------------------------------------------
+        */
+        \App\Commands\Git\Status::class,
+        \App\Commands\Git\Commit::class,
+        \App\Commands\Git\Push::class,
+        \App\Commands\Git\Pull::class,
+        \App\Commands\Git\Branch::class,
+        \App\Commands\Git\CreatePR::class,
+        \App\Commands\Git\Sync::class,
+        \App\Commands\Git\Health::class,
+
+        /*
+        |----------------------------------------------------------------------
         | Repo
         |----------------------------------------------------------------------
         */
