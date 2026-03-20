@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-03-18T07:00:01Z
+> Run: 2026-03-19T07:00:01Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -582,7 +582,19 @@
   - ❌ No obvious code match found (heuristic)
 - docs/audit/news_audit_last_run.md
   - ❌ No obvious code match found (heuristic)
+- docs/audits/ajax-response-audit.md
+  - ❌ No obvious code match found (heuristic)
+- docs/audits/database-premium-audit.md
+  - ❌ No obvious code match found (heuristic)
+- docs/audits/frontend-ux-audit.md
+  - ❌ No obvious code match found (heuristic)
+- docs/audits/full-premium-system-audit.md
+  - ❌ No obvious code match found (heuristic)
 - docs/audits/model_limit_patch_report_20260218.md
+  - ❌ No obvious code match found (heuristic)
+- docs/audits/route-security-audit.md
+  - ❌ No obvious code match found (heuristic)
+- docs/audits/user-flow-validation.md
   - ❌ No obvious code match found (heuristic)
 - docs/auth-flow.md
   - ❌ No obvious code match found (heuristic)
@@ -794,16 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/discord/discord_integration_overview.md
   - ❌ No obvious code match found (heuristic)
-- docs/discord/discord_schema_v3.sql.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord/discord_seed_v3.sql.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord/discord_to_ci4_commands.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord/earnings_calendar_automation.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord/environments.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord/events_matrix.md
-  - ❌ No obvious code match found (heuristic)
-- … and 888 more
+- … and 894 more
