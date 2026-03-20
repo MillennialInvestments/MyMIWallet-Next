@@ -29,7 +29,8 @@ class MyMIAlerts
     protected $session;
     protected $emailConfig;
     protected $emailHost;
-    protected $emailUsername = 'alerts@mymiwallet.com';
+    protected $emailUsername = '';
+
     protected $emailPassword;
     protected $siteSettings;
     protected $alertsModel;
@@ -93,6 +94,7 @@ class MyMIAlerts
         'tradingview',
         'thinkorswim',
         'alerts@mymiwallet.com',
+        'tradealerts@mymiwallet.com',
         'tradingview.com',
         'thinkorswim.com',
     ];
@@ -102,6 +104,7 @@ class MyMIAlerts
      */
     private array $newsSenders = [
         'alerts@mymiwallet.com',
+        'tradealerts@mymiwallet.com',
         'alerts@thinkorswim.com',
     ];
 
@@ -187,11 +190,13 @@ class MyMIAlerts
         $this->debug = $this->siteSettings->debug;
         $this->session = Services::session();
         $this->emailConfig = config('Email');
-
+        $myMIConfig = config('MyMI');
 
         $this->emailHost = $this->emailConfig->SMTPHost;
-        $this->emailUsername = 'alerts@mymiwallet.com';
-        $this->emailPassword = 'MyMI2024!';
+        $this->emailUsername = $myMIConfig->alertEmail;
+        $this->emailPassword = env('alerts.imap.pass', env('ALERTS_IMAP_PASSWORD', env('email.password', 'MyMI2024!')));
+        $this->senderFilters = array_values(array_unique(array_merge($this->senderFilters, $myMIConfig->allowedAlertEmails)));
+        $this->newsSenders = array_values(array_unique(array_merge($this->newsSenders, $myMIConfig->allowedAlertEmails)));
 
         $this->alertsModel = $alertsModel ?? new AlertsModel();
         $this->trackerModel = new TrackerModel();
@@ -1151,11 +1156,15 @@ class MyMIAlerts
     
     public function fetchAndStoreAlertsEmails()
     {
+        $config = config('MyMI');
         log_message('info', '✅ Connecting to IMAP server...');
+        log_message('info', 'Using alert email: ' . $config->alertEmail);
 
         $hostname = '{imap.dreamhost.com:993/imap/ssl}INBOX';
-        $username = 'alerts@mymiwallet.com';
+        $username = $config->alertEmail;
         $password = $this->emailPassword;
+
+        log_message('debug', 'IMAP connected using: ' . $config->alertEmail);
 
         $inbox = @imap_open($hostname, $username, $password);
         if (!$inbox) {
@@ -1169,10 +1178,12 @@ class MyMIAlerts
         try {
             $emails = imap_search($inbox, $query);
             if (empty($emails)) {
+                log_message('debug', 'Processing scraper records count: 0');
                 log_message('info', '⚠️ No new unseen alert emails found.');
                 return false;
             }
 
+            log_message('debug', 'Processing scraper records count: ' . count($emails));
             log_message('info', '📥 Total new alert emails found: ' . count($emails));
 
             foreach ($emails as $emailNumber) {
@@ -1221,7 +1232,7 @@ class MyMIAlerts
     //     log_message('info', '✅ Connecting to IMAP server...');
     
     //     $hostname = '{imap.dreamhost.com:993/imap/ssl}INBOX';
-    //     $username = 'alerts@mymiwallet.com';
+    //     $username = 'tradealerts@mymiwallet.com';
     //     $password = $this->emailPassword;
     
     //     $inbox = imap_open($hostname, $username, $password);
@@ -1356,7 +1367,7 @@ class MyMIAlerts
     // public function fetchAndStoreAlertsEmails()
     // {
     //     $hostname = '{imap.dreamhost.com:993/imap/ssl}INBOX';
-    //     $username = 'alerts@mymiwallet.com';
+    //     $username = 'tradealerts@mymiwallet.com';
     //     $password = $this->emailPassword;
     
     //     log_message('info', '✅ Connecting to IMAP server...');
@@ -1486,11 +1497,15 @@ class MyMIAlerts
     
     public function fetchAndStoreEmails()
     {
+        $config = config('MyMI');
         log_message('info', '✅ Connecting to IMAP server...');
+        log_message('info', 'Using alert email: ' . $config->alertEmail);
     
         $hostname = '{imap.dreamhost.com:993/imap/ssl}INBOX';
-        $username = 'alerts@mymiwallet.com';
+        $username = $config->alertEmail;
         $password = $this->emailPassword;
+
+        log_message('debug', 'IMAP connected using: ' . $config->alertEmail);
     
         $inbox = imap_open($hostname, $username, $password);
         if (!$inbox) {

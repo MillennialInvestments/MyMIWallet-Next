@@ -22,8 +22,9 @@ class EmailChannel implements AlertChannelInterface
         }
 
         try {
+            $config = config('MyMI');
             $result = $this->mailer->send(
-                $alert['recipient'] ?? 'alerts@mymiwallet.com',
+                $alert['recipient'] ?? $config->alertEmail,
                 'MyMI Trade Alert: ' . ($alert['symbol'] ?? 'Update'),
                 $alert['summary'] ?? '',
                 ['module' => 'alerts', 'queue' => true]

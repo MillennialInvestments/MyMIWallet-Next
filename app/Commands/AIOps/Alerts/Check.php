@@ -17,8 +17,10 @@ class Check extends SafeBaseCommand
     {
         CLI::write("Fetching emails...");
 
+        $config = config('MyMI');
+
         $scraper = new EmailScraperService();
-        $emails = $scraper->fetchUnread('alerts@mymiwallet.com');
+        $emails = $scraper->fetchUnread($config->alertEmail);
 
         $queue = new EmailQueueService();
 
