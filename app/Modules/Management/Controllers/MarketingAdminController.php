@@ -9,6 +9,7 @@ use Config\{APIs, Auth, SiteSettings, SocialMedia};
 use App\Libraries\{HtmlFormatter, MyMIAnalytics, MyMIAlerts, MyMIBudget, MyMIDashboard, MyMIExchange, MyMIMarketing, MyMIUser};
 use App\Models\{AlertsModel, AnnouncementModel, InvestmentModel, ManagementModel, MarketingModel, MyMIGoldModel, SocialCommunityModel, SocialDistributionQueueModel, SocialGeneratedPostModel, SocialPlatformModel, SocialPostTemplateModel, SolanaModel, UserModel};
 use App\Services\{DashboardService, GoalTrackingService, MarketingService, SocialPostFormatter, SolanaService, UserService};
+use App\Services\Marketing\MarketingVideoService;
 use App\Commands\RevenueStreamsScan;
 use CodeIgniter\API\ResponseTrait;
 use GuzzleHttp\Client;
@@ -2839,5 +2840,19 @@ class MarketingAdminController extends BaseAdminController
         return array_map(static fn ($k) => preg_replace('/\\s+/', '', strtolower((string) $k)), array_slice($keywords, 0, 6));
     }
     
+
+    public function contentStudio()
+    {
+        $service = new MarketingVideoService();
+        $this->data['pageTitle'] = 'Marketing Content Studio | Management | MyMI Wallet';
+        $this->data['implementationMap'] = $service->implementationMap();
+        $this->data['templates'] = $service->ensureDefaultTemplates();
+        $this->data['queue'] = $service->getQueue([], 25);
+        $this->commonData();
+        log_message('info', 'Marketing content studio dashboard load', ['user_id' => $this->cuID]);
+        return $this->renderTheme('ManagementModule\Views\Marketing\contentStudio', $this->data);
+    }
+
+
 }
 ?>

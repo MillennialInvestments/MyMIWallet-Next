@@ -12,6 +12,7 @@ use App\Libraries\{MyMIDiscord, MyMIMarketing};
 use App\Services\MarketingService;
 use App\Models\MarketingModel;
 use App\Support\Http;
+use App\Services\Marketing\MarketingVideoService;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 #[\AllowDynamicProperties]
@@ -22,13 +23,21 @@ class MarketingAPIController extends BaseAPIController
     protected MyMIMarketing $MyMIMarketing;
     protected MarketingService $marketingService;
     protected MarketingModel $marketingModel;
+    protected MarketingVideoService $marketingVideoService;
 
     // Explicit property to avoid PHP 8.2 legacy property notices
     protected bool $stringAsHtml = false;
 
     public function _remap($method, ...$params)
     {
-        if (! aiKimiEnabled()) {
+        $studioAllowed = [
+            'generateVideoContent', 'generateTikTokContent', 'saveVideoDraft', 'updateVideoContent',
+            'approveVideoContent', 'archiveVideoContent', 'duplicateVideoContent', 'getVideoContent',
+            'getVideoQueue', 'generateFromTicker', 'generateFromTopic', 'generateFromScrapedSource',
+            'exportVideoPackage', 'getTemplates', 'saveTemplate', 'deleteTemplate',
+        ];
+
+        if (! aiKimiEnabled() && ! in_array($method, $studioAllowed, true)) {
             return $this->response->setJSON([
                 'status'  => 'disabled',
                 'message' => 'Kimi AI Services are currently disabled by SiteSettings.',
@@ -52,6 +61,7 @@ class MarketingAPIController extends BaseAPIController
         $this->MyMIMarketing    = service('MyMIMarketing');
         $this->marketingModel   = model(MarketingModel::class);
         $this->marketingService = new MarketingService();
+        $this->marketingVideoService = new MarketingVideoService();
     }
 
     public function generateKimiSummaries()
@@ -2622,6 +2632,180 @@ class MarketingAPIController extends BaseAPIController
             'message' => "📅 Post #{$id} scheduled for {$datetime}."
         ]);
     }
+
+
+    public function generateVideoContent()
+    {
+        try {
+            $input = $this->request->getJSON(true) ?: $this->request->getPost();
+            $input['generated_by'] = (int) (session('user_id') ?? 0) ?: null;
+            $generated = $this->marketingVideoService->generateVideoContent((array) $input);
+            $content = $this->marketingVideoService->saveGeneratedVideoContent($generated);
+            return Http::jsonSuccess(['status' => 'success', 'content' => $content, 'map' => $this->marketingVideoService->implementationMap()]);
+        } catch (\Throwable $e) {
+            log_message('error', 'generateVideoContent failed: ' . $e->getMessage());
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function generateTikTokContent()
+    {
+        try {
+            $input = $this->request->getJSON(true) ?: $this->request->getPost();
+            $input['target_platform'] = 'tiktok';
+            $generated = $this->marketingVideoService->generateTikTokVideo((array) $input);
+            $content = $this->marketingVideoService->saveGeneratedVideoContent($generated);
+            return Http::jsonSuccess(['status' => 'success', 'content' => $content]);
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function saveVideoDraft()
+    {
+        try {
+            $input = $this->request->getJSON(true) ?: $this->request->getPost();
+            $input['status'] = $input['status'] ?? 'Draft';
+            $input['generated_by'] = (int) (session('user_id') ?? 0) ?: null;
+            $content = $this->marketingVideoService->saveGeneratedVideoContent((array) $input);
+            return Http::jsonSuccess(['status' => 'success', 'content' => $content]);
+        } catch (\Throwable $e) {
+            log_message('error', 'saveVideoDraft failed: ' . $e->getMessage());
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function updateVideoContent($id)
+    {
+        try {
+            $input = $this->request->getJSON(true) ?: $this->request->getPost();
+            $input['generated_by'] = (int) (session('user_id') ?? 0) ?: null;
+            $content = $this->marketingVideoService->updateVideoContent((int) $id, (array) $input);
+            return Http::jsonSuccess(['status' => 'success', 'content' => $content]);
+        } catch (\Throwable $e) {
+            log_message('error', 'updateVideoContent failed: ' . $e->getMessage());
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function approveVideoContent($id)
+    {
+        try {
+            $content = $this->marketingVideoService->approveVideoContent((int) $id, (int) (session('user_id') ?? 0));
+            return Http::jsonSuccess(['status' => 'success', 'content' => $content]);
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function archiveVideoContent($id)
+    {
+        try {
+            $content = $this->marketingVideoService->archiveVideoContent((int) $id);
+            return Http::jsonSuccess(['status' => 'success', 'content' => $content]);
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function duplicateVideoContent($id)
+    {
+        try {
+            $content = $this->marketingVideoService->cloneVideoContent((int) $id);
+            return Http::jsonSuccess(['status' => 'success', 'content' => $content]);
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function getVideoContent($id)
+    {
+        $content = $this->marketingVideoService->getVideoContentWithRelations((int) $id);
+        if (! $content) {
+            return $this->failNotFound('Video content not found.');
+        }
+        return Http::jsonSuccess(['status' => 'success', 'content' => $content]);
+    }
+
+    public function getVideoQueue()
+    {
+        $filters = $this->request->getGet();
+        $queue = $this->marketingVideoService->getQueue((array) $filters, 100);
+        return Http::jsonSuccess(['status' => 'success', 'queue' => $queue]);
+    }
+
+    public function generateFromTicker()
+    {
+        try {
+            $input = $this->request->getJSON(true) ?: $this->request->getPost();
+            $generated = $this->marketingVideoService->buildFromTicker((string) ($input['symbol'] ?? $input['ticker'] ?? ''), (array) $input);
+            $content = $this->marketingVideoService->saveGeneratedVideoContent($generated);
+            return Http::jsonSuccess(['status' => 'success', 'content' => $content]);
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function generateFromTopic()
+    {
+        try {
+            $input = $this->request->getJSON(true) ?: $this->request->getPost();
+            $generated = $this->marketingVideoService->buildFromTopic((string) ($input['topic'] ?? ''), (array) $input);
+            $content = $this->marketingVideoService->saveGeneratedVideoContent($generated);
+            return Http::jsonSuccess(['status' => 'success', 'content' => $content]);
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function generateFromScrapedSource($id)
+    {
+        try {
+            $input = $this->request->getJSON(true) ?: $this->request->getPost();
+            $generated = $this->marketingVideoService->buildFromScrapedSource((int) $id, (array) $input);
+            $content = $this->marketingVideoService->saveGeneratedVideoContent($generated);
+            return Http::jsonSuccess(['status' => 'success', 'content' => $content]);
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function exportVideoPackage($id)
+    {
+        try {
+            $export = $this->marketingVideoService->exportVideoPackage((int) $id);
+            return Http::jsonSuccess(['status' => 'success', 'export' => $export]);
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(404)->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function getTemplates()
+    {
+        return Http::jsonSuccess(['status' => 'success', 'templates' => $this->marketingVideoService->getTemplates($this->request->getGet('platform'))]);
+    }
+
+    public function saveTemplate()
+    {
+        try {
+            $input = $this->request->getJSON(true) ?: $this->request->getPost();
+            $template = $this->marketingVideoService->saveTemplate((array) $input);
+            return Http::jsonSuccess(['status' => 'success', 'template' => $template]);
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function deleteTemplate($id)
+    {
+        try {
+            $deleted = $this->marketingVideoService->deleteTemplate((int) $id);
+            return Http::jsonSuccess(['status' => $deleted ? 'success' : 'error', 'deleted' => $deleted]);
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
 
     public function viewTimelineGrouped()
     {
