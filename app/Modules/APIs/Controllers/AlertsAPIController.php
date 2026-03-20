@@ -2443,6 +2443,113 @@ class AlertsAPIController extends BaseAPIController
     //     return $this->respond(["status" => "success", "message" => "Trade alert emails sent successfully."]);
     // }
 
+    public function sparkStockReport()
+    {
+        $symbol = strtoupper($this->request->getPost('symbol'));
+        $alertId = (int) $this->request->getPost('alert_id');
+
+        if (!$symbol || !$alertId) {
+            return $this->fail("symbol and alert_id are required.");
+        }
+
+        try {
+            $cacheKey = "spark_report_{$symbol}";
+            $cache = \Config\Services::cache();
+
+            // ✅ CACHE HIT
+            if ($cached = $cache->get($cacheKey)) {
+                return $this->respond([
+                    'status' => 'cached',
+                    'data' => $cached
+                ]);
+            }
+
+            // =========================
+            // 📊 TECHNICAL DATA
+            // =========================
+            $alpha = $this->getMyMIAlphaVantage();
+
+            $quote      = $alpha->getQuote($symbol);
+            $emas       = $alpha->fetchEMAs($symbol);
+            $smas       = $alpha->fetchSMAs($symbol);
+            $indicators = $alpha->getAllTechnicalIndicators($symbol);
+            $metrics    = $alpha->getTechnicalMetrics($symbol)['data'] ?? [];
+
+            // =========================
+            // 💰 FUNDAMENTALS
+            // =========================
+            $fundamentals = $alpha->getCompanyOverview($symbol); // AlphaVantage OVERVIEW
+
+            // =========================
+            // 📰 NEWS + SENTIMENT
+            // =========================
+            $news = $this->MyMIMarketing->fetchRecentFinancialNews($symbol);
+
+            // =========================
+            // 🏛️ SEC FILINGS
+            // =========================
+            $sec = $this->fetchSecFilings($symbol);
+
+            // =========================
+            // 🧠 AI SUMMARY
+            // =========================
+            $reportPayload = [
+                'symbol' => $symbol,
+                'price' => $quote['price'] ?? null,
+                'technicals' => array_merge($emas, $smas, $indicators),
+                'fundamentals' => $fundamentals,
+                'news' => $news,
+                'sec_filings' => $sec,
+            ];
+
+            $summary = $this->MyMIMarketing->generateSummaryFromAlert($reportPayload);
+
+            // =========================
+            // 🗄️ STORE IN DB
+            // =========================
+            $updateData = [
+                'analysis_summary' => $summary,
+                'financial_news'   => $news['summary'] ?? '',
+                'market_sentiment' => $news['sentiment'] ?? 'Neutral',
+                'price'            => $quote['price'] ?? null,
+                'open'             => $quote['open'] ?? null,
+                'high'             => $quote['high'] ?? null,
+                'low'              => $quote['low'] ?? null,
+                'volume'           => $quote['volume'] ?? null,
+                'ema_9'            => $emas['ema_9'] ?? null,
+                'ema_21'           => $emas['ema_21'] ?? null,
+                'ema_200'          => $emas['ema_200'] ?? null,
+                'updated_at'       => date('Y-m-d H:i:s'),
+            ];
+
+            $this->alertsModel->update($alertId, $updateData);
+
+            // =========================
+            // 🧠 FINAL RESPONSE
+            // =========================
+            $final = [
+                'symbol' => $symbol,
+                'quote' => $quote,
+                'technicals' => $indicators,
+                'fundamentals' => $fundamentals,
+                'news' => $news,
+                'summary' => $summary,
+            ];
+
+            // CACHE RESULT
+            $cache->save($cacheKey, $final, 900);
+
+            return $this->respond([
+                'status' => 'success',
+                'data' => $final
+            ]);
+
+        } catch (\Throwable $e) {
+            log_message('error', 'sparkStockReport error: '.$e->getMessage());
+            return $this->failServerError('Failed to generate stock report.');
+        }
+    }
+
     /**
      * API endpoint to store marketing content for a trade alert.
      * This method expects a trade alert ID via POST (and optionally the content fields).

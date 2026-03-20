@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Commands\Git;
+namespace App\Commands\GitHub;
 
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;

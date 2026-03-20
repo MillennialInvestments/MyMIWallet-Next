@@ -15,7 +15,7 @@ class Ingest extends SafeBaseCommand
     protected $group = 'Alerts';
     protected $name = 'alerts:ingest';
     protected $description = 'Ingest ThinkorSwim alert emails and upsert trade alerts.';
-    protected $usage = 'ops:alerts:ingest [--since=15m|1h|today] [--limit=200] [--dry-run] [--verbose]';
+    protected $usage = 'alerts:ingest [--since=15m|1h|today] [--limit=200] [--dry-run] [--verbose]';
     protected $options = [
         '--since' => 'How far back to scan (default: 15m). Supports 15m|1h|today.',
         '--limit' => 'Max emails to scan (default: 200).',
@@ -103,11 +103,10 @@ class Ingest extends SafeBaseCommand
                     }
 
                     $payload = [
-                        'subject' => $subject,
-                        'date' => $date,
-                        'sender' => $sender,
-                        'body' => $body,
-                        'identifier' => $identifier,
+                        'email_subject'     => $subject,
+                        'email_date'        => $date,
+                        'email_body'        => $body,
+                        'email_identifier'  => $identifier,
                     ];
 
                     $result = $alerts->ingestEmailPayload($payload);
@@ -211,6 +210,7 @@ class Ingest extends SafeBaseCommand
     private function resolveOption(array $params, string $key, string $default): string
     {
         $value = $default;
+
         foreach ($params as $index => $param) {
             if (! is_string($param)) {
                 continue;
