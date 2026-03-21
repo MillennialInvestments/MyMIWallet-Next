@@ -219,7 +219,6 @@ class Console extends BaseConfig
         \App\Commands\Codex\Instructions\Audit::class,
         \App\Commands\Codex\Instructions\DevOpsReview::class,
         \App\Commands\Codex\Instructions\Summarize::class,
-        \App\Commands\Codex\Auth::class,
         \App\Commands\Codex\Audit::class,
         \App\Commands\Codex\ContinueAudit::class,
         \App\Commands\Codex\Gate::class,
@@ -259,6 +258,7 @@ class Console extends BaseConfig
         |----------------------------------------------------------------------
         */
         \App\Commands\Docs\ArchitectureGraph::class,
+        \App\Commands\Docs\DocsTest::class,
         \App\Commands\Docs\DatabaseMap::class,
         \App\Commands\Docs\DependenciesMap::class,
         \App\Commands\Docs\FullDocsAudit::class,
@@ -297,7 +297,7 @@ class Console extends BaseConfig
         | .env
         |----------------------------------------------------------------------
         */
-        \App\Commands\ENV\EnvDoctor::class,
+        \App\Commands\Env\EnvDoctor::class,
 
         /*
         |----------------------------------------------------------------------
@@ -354,8 +354,8 @@ class Console extends BaseConfig
         | Mail
         |----------------------------------------------------------------------
         */
-        \App\Commands\Mail\SendSend::class,
-        \App\Commands\Mail\SendTestEmail::class,
+        \App\Commands\Mail\Send::class,
+        \App\Commands\Mail\SendTest::class,
         \App\Commands\Mail\Test::class,
         \App\Commands\Mail\Verify::class,
 
@@ -382,7 +382,6 @@ class Console extends BaseConfig
         */
         \App\Commands\Ops\AnalyzeCommands::class,
         \App\Commands\Ops\AppUpdate::class,
-        \App\Commands\Ops\BaseOpsCommand::class,
         \App\Commands\Ops\BuildConsoleRegistry::class,
         \App\Commands\Ops\CiPrepare::class,
         \App\Commands\Ops\ConfigLint::class,
@@ -394,7 +393,6 @@ class Console extends BaseConfig
         \App\Commands\Ops\FetchCommands::class,
         \App\Commands\Ops\FilesystemFix::class,
         \App\Commands\Ops\FilesystemLint::class,
-        \App\Commands\Ops\ImageCapabilities::class,
         \App\Commands\Ops\LoggerTest::class,
         \App\Commands\Ops\ModelLimitAudit::class,
         \App\Commands\Ops\NetworkMatrix::class,
@@ -411,11 +409,10 @@ class Console extends BaseConfig
         \App\Commands\Ops\Work::class,
         \App\Commands\Ops\Commands\Audit::class,
         \App\Commands\Ops\Commands\Autofix::class,
-        \App\Commands\Ops\Commands\ConstructorScanner::class,
         \App\Commands\Ops\Commands\Inventory::class,
         \App\Commands\Ops\Commands\Lint::class,
         \App\Commands\Ops\Commands\MissingFromConsole::class,
-        \App\Commands\Ops\Daignostics\FilesystemScan::class,
+        \App\Commands\Ops\Diagnostics\FilesystemScan::class,
         \App\Commands\Ops\Subs\Audit::class,
         \App\Commands\Ops\Subs\Doctor::class,
         \App\Commands\Ops\Subs\Repair::class,
@@ -517,7 +514,6 @@ class Console extends BaseConfig
         | Routes
         |----------------------------------------------------------------------
         */
-        \App\Commands\Routes\Audit::class,
         \App\Commands\Routes\Benchmark::class,
         \App\Commands\Routes\Debug::class,
         \App\Commands\Routes\Docs::class,
@@ -537,7 +533,7 @@ class Console extends BaseConfig
         \App\Commands\Runtime\SparkOptimize::class,
         \App\Commands\Runtime\Triage::class,
 
-        \App\Commands\Diagnose503::class,
+        \App\Commands\Errors\Diagnose503::class,
         \App\Commands\Fix503::class,
         \App\Commands\PurgeFastCGI::class,
         \App\Commands\RestartSafe::class,
@@ -565,10 +561,12 @@ class Console extends BaseConfig
         | Spark
         |----------------------------------------------------------------------
         */
+        \App\Commands\Spark\CommandGraph::class,
         \App\Commands\Spark\Doctor::class,
-        \App\Commands\Spark\DoctorRuntime::class,
         \App\Commands\Spark\Fix::class,
-        \App\Commands\Spark\Optimize::class,
+        \App\Commands\Spark\InfraServerAudit::class,
+        \App\Commands\Spark\RegistryAudit::class,
+        \App\Commands\Spark\Reset::class,
 
         /*
         |----------------------------------------------------------------------
