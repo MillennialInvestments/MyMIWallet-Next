@@ -2,10 +2,10 @@
 
 namespace App\Commands\Ops\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class MissingFromConsole extends BaseCommand
+class MissingFromConsole extends SafeBaseCommand
 {
     protected $group = 'ops';
     protected $name = 'ops:commands:missing';
@@ -13,6 +13,8 @@ class MissingFromConsole extends BaseCommand
 
     public function run(array $params)
     {
+        $this->parseParams($params);
+
         $console = config('Console');
 
         $registered = $console->commands ?? [];

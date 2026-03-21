@@ -134,10 +134,15 @@ class RegistryAudit extends SafeBaseCommand
             }
 
             $fqcn = $namespace . '\\' . $class;
+            $name = $this->extractProperty($contents, 'name') ?? '';
+            if ($name === '') {
+                continue;
+            }
+
             $records[$fqcn] = [
                 'class' => $fqcn,
                 'path' => $path,
-                'name' => $this->extractProperty($contents, 'name') ?? '',
+                'name' => $name,
                 'group' => $this->extractProperty($contents, 'group') ?? '',
             ];
         }
@@ -149,7 +154,7 @@ class RegistryAudit extends SafeBaseCommand
 
     private function extractNamespace(string $contents): ?string
     {
-        if (! preg_match('/^namespace\s+([^;]+);/m', $contents, $matches)) {
+        if (! preg_match('/namespace\s+([^;]+);/', $contents, $matches)) {
             return null;
         }
 
@@ -158,7 +163,7 @@ class RegistryAudit extends SafeBaseCommand
 
     private function extractClass(string $contents): ?string
     {
-        if (! preg_match('/^class\s+([A-Za-z0-9_]+)/m', $contents, $matches)) {
+        if (! preg_match('/^(?:(?:abstract|final)\s+)?class\s+([A-Za-z0-9_]+)/m', $contents, $matches)) {
             return null;
         }
 
@@ -216,15 +221,21 @@ class RegistryAudit extends SafeBaseCommand
     {
         $output = [];
         $code = 0;
+        $sparkBinary = rtrim(ROOTPATH, '/\\') . DIRECTORY_SEPARATOR . 'spark';
 
-        exec(PHP_BINARY . ' spark list', $output, $code);
+        if (! is_file($sparkBinary)) {
+            return [];
+        }
+
+        $command = escapeshellarg(PHP_BINARY) . ' ' . escapeshellarg($sparkBinary) . ' list';
+        exec($command, $output, $code);
         if ($code !== 0) {
             return [];
         }
 
         $commands = [];
         foreach ($output as $line) {
-            if (! preg_match('/\b([a-z0-9]+:[a-z0-9:_-]+)\b/', $line, $matches)) {
+            if (! preg_match('/^\s{2}([a-z0-9]+:[a-z0-9:_-]+)\s{2,}/', $line, $matches)) {
                 continue;
             }
 
