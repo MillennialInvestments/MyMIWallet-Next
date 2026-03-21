@@ -16,7 +16,7 @@ class FetchCommands extends SafeBaseCommand
         '--approve' => 'Acknowledge and store inbox items',
     ];
 
-    private ?OpsCommandInboxModel $model = null;
+    private $model = null;
 
     protected function svc(): \App\Services\OpsCommandService
     {

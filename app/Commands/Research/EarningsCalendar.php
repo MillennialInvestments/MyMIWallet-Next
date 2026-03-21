@@ -9,5 +9,5 @@ class EarningsCalendar extends BaseResearchTaskCommand
     protected $group = 'research';
     protected $name = 'research:earnings:calendar';
     protected $description = 'Collect earnings calendar research items';
-    protected string $taskKey = 'earnings_calendar';
+    protected $taskKey = 'earnings_calendar';
 }

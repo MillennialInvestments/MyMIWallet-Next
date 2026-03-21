@@ -21,7 +21,7 @@ class WalletsWarmSummaryCache extends SafeBaseCommand
         '--approve' => 'Acknowledge and warm summary cache',
     ];
 
-    private ?WalletSummaryService $summaryService = null;
+    private $summaryService = null;
 
     public function run(array $params)
     {

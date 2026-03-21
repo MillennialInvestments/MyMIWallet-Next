@@ -13,14 +13,8 @@ class DedupeReport extends SafeBaseCommand
     protected $name        = 'aiops:dedupe:report';
     protected $description = 'Generate duplicate and near-duplicate instruction report.';
 
-    protected AIOpsInstructionModel $model;
-    protected InstructionService $service;
-
-    public function __construct()
-    {
-        $this->model   = new AIOpsInstructionModel();
-        $this->service = new InstructionService();
-    }
+    protected $model;
+    protected $service;
 
     public function run(array $params)
     {
@@ -33,11 +27,29 @@ class DedupeReport extends SafeBaseCommand
         CLI::write("\nReport complete.", 'green');
     }
 
+    protected function model(): AIOpsInstructionModel
+    {
+        if (! $this->model instanceof AIOpsInstructionModel) {
+            $this->model = new AIOpsInstructionModel();
+        }
+
+        return $this->model;
+    }
+
+    protected function instructionService(): InstructionService
+    {
+        if (! $this->service instanceof InstructionService) {
+            $this->service = new InstructionService();
+        }
+
+        return $this->service;
+    }
+
     protected function reportExactDuplicates(): void
     {
         CLI::write("\n[Exact Duplicates]", 'cyan');
 
-        $duplicates = $this->model
+        $duplicates = $this->model()
             ->select('instruction_hash, COUNT(*) as total')
             ->groupBy('instruction_hash')
             ->having('total > 1')
@@ -51,7 +63,7 @@ class DedupeReport extends SafeBaseCommand
         foreach ($duplicates as $dup) {
             CLI::write("Hash: {$dup['instruction_hash']} (Count: {$dup['total']})", 'red');
 
-            $rows = $this->model
+            $rows = $this->model()
                 ->where('instruction_hash', $dup['instruction_hash'])
                 ->findAll();
 
@@ -65,7 +77,7 @@ class DedupeReport extends SafeBaseCommand
     {
         CLI::write("\n[Near Duplicates ≥ 0.80 Similarity]", 'cyan');
 
-        $rows = $this->model
+        $rows = $this->model()
             ->orderBy('created_at', 'DESC')
             ->findAll(200);
 
@@ -98,7 +110,7 @@ class DedupeReport extends SafeBaseCommand
     {
         CLI::write("\n[Open PR Branch Conflicts]", 'cyan');
 
-        $open = $this->model
+        $open = $this->model()
             ->where('status', 'processing')
             ->orWhere('status', 'completed')
             ->where('pr_branch IS NOT NULL', null, false)

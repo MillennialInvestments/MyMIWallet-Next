@@ -20,7 +20,7 @@ class FilesystemLint extends SafeBaseCommand
         '--json' => 'JSON output',
     ];
 
-    private FilesystemGovernance $governance;
+    private $governance;
 
     public function run(array $params)
     {

@@ -93,7 +93,26 @@ abstract class SafeBaseCommand extends BaseCommand implements
         $args  = [];
         $flags = [];
 
-        foreach ($params as $param) {
+        foreach ($params as $index => $param) {
+            if (is_string($index)) {
+                $key = ltrim($index, '-');
+
+                if ($param === null || $param === true || $param === '') {
+                    $flags[$key] = true;
+                    continue;
+                }
+
+                if ($param === false) {
+                    continue;
+                }
+
+                if (is_scalar($param)) {
+                    $flags[$key] = (string) $param;
+                }
+
+                continue;
+            }
+
             // Spark delegation can introduce nulls
             if ($param === null) {
                 continue;
@@ -132,8 +151,6 @@ abstract class SafeBaseCommand extends BaseCommand implements
             }
         }
 
-        $this->parsedFlags = $flags;
-
         // Implicit dry-run enforcement
         if (
             $this->defaultDryRun
@@ -142,6 +159,8 @@ abstract class SafeBaseCommand extends BaseCommand implements
         ) {
             $flags['dry-run'] = true;
         }
+
+        $this->parsedFlags = $flags;
 
         $dryRun = $this->resolveDryRun($flags);
 
@@ -209,6 +228,7 @@ abstract class SafeBaseCommand extends BaseCommand implements
         }
 
         CLI::error('This action is destructive. Re-run with --approve.');
+        exit(EXIT_ERROR);
     }
 
     /**
@@ -245,11 +265,10 @@ abstract class SafeBaseCommand extends BaseCommand implements
      */
     protected function option(string $key, $default = false)
     {
-        if ($this->request !== null) {
-            $options = $this->request->getOptions();
-            if (array_key_exists($key, $options)) {
-                return $options[$key];
-            }
+        $options = CLI::getOptions();
+
+        if (array_key_exists($key, $options)) {
+            return $options[$key];
         }
 
         if (array_key_exists($key, $this->parsedFlags)) {
@@ -321,4 +340,3 @@ abstract class SafeBaseCommand extends BaseCommand implements
         return $this->sparkRun($command);
     }
 }
-
