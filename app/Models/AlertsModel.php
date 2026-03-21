@@ -1875,8 +1875,22 @@ class AlertsModel extends Model
 
     public function isEmailProcessed($emailIdentifier)
     {
-        $exists = $this->where('email_identifier', $emailIdentifier)->countAllResults() > 0;
-        log_message('info', 'Email identifier (' . $emailIdentifier . ') exists: ' . ($exists ? 'Yes' : 'No'));
+        if ($emailIdentifier === null || $emailIdentifier === '') {
+            return false;
+        }
+
+        if (! $this->hasColumn('bf_investment_scraper', 'email_identifier')) {
+            log_message('warning', 'Email identifier column missing from bf_investment_scraper; duplicate fallback will rely on message_hash.');
+            return false;
+        }
+
+        $exists = $this->db->table('bf_investment_scraper')
+            ->select('id')
+            ->where('email_identifier', $emailIdentifier)
+            ->limit(1)
+            ->countAllResults() > 0;
+
+        log_message('info', 'Scraper email identifier (' . $emailIdentifier . ') exists: ' . ($exists ? 'Yes' : 'No'));
         return $exists;
     }
 

@@ -25,6 +25,7 @@ class Ingest extends SafeBaseCommand
 
     public function run(array $params)
     {
+        $params = $this->normalizeCliParams($params);
         [$args, $flags] = $this->parseParams($params);
         $dryRun = $this->resolveDryRun($flags);
         $verbose = isset($flags['verbose']);
@@ -211,6 +212,10 @@ class Ingest extends SafeBaseCommand
     {
         $value = $default;
         foreach ($params as $index => $param) {
+            if (! is_string($param)) {
+                continue;
+            }
+
             if ($param === '--' . $key && isset($params[$index + 1])) {
                 $value = (string) $params[$index + 1];
                 continue;
@@ -222,6 +227,32 @@ class Ingest extends SafeBaseCommand
         }
 
         return $value;
+    }
+
+    private function normalizeCliParams(array $params): array
+    {
+        $normalized = [];
+
+        foreach ($params as $key => $value) {
+            if (is_string($key)) {
+                $flag = '--' . ltrim($key, '-');
+                if ($value === null || $value === true || $value === '') {
+                    $normalized[] = $flag;
+                    continue;
+                }
+
+                if ($value === false) {
+                    continue;
+                }
+
+                $normalized[] = $flag . '=' . (string) $value;
+                continue;
+            }
+
+            $normalized[] = $value;
+        }
+
+        return $normalized;
     }
 
     /**
