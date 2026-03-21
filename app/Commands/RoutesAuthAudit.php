@@ -22,7 +22,7 @@ class RoutesAuthAudit extends SafeBaseCommand
     /**
      * @var array<int, array<string, mixed>>
      */
-    private array $publicRoutes = [
+    private $publicRoutes = [
         [
             'method' => 'GET',
             'path' => '/',

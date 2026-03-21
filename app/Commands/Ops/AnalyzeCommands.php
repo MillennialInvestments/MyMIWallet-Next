@@ -16,8 +16,6 @@ class AnalyzeCommands extends SafeBaseCommand
         '--approve' => 'Acknowledge and update inbox items',
     ];
 
-    protected OpsCommandService $service;
-
     protected function svc(): OpsCommandService
     {
         // Lazy init so command discovery doesn't instantiate heavy services

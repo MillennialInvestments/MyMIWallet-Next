@@ -9,5 +9,5 @@ class ShortInterestScan extends BaseResearchTaskCommand
     protected $group = 'research';
     protected $name = 'research:short-interest:scan';
     protected $description = 'Scan short-interest candidates';
-    protected string $taskKey = 'short_interest_scan';
+    protected $taskKey = 'short_interest_scan';
 }

@@ -14,7 +14,7 @@ class ControllerAudit extends SafeBaseCommand
     protected $description = 'Audit controllers for unsafe initController patterns, score severity, suggest patches, optional safe auto-fix, and regression diff.';
 
     /** @var array<int,array<string,mixed>> */
-    protected array $findings = [];
+    protected $findings = [];
 
     public function run(array $params)
     {

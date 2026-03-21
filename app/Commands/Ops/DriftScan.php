@@ -13,7 +13,7 @@ class DriftScan extends SafeBaseCommand
     protected $name = 'ops:drift:scan';
     protected $description = 'Scan critical services for production drift.';
 
-    private array $criticalFiles = [
+    private $criticalFiles = [
         'app/Services/WalletService.php',
         'app/Services/MyMIMarketing.php',
         'app/Modules/APIs/Controllers/ManagementController.php',

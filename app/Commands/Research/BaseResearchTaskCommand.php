@@ -10,7 +10,7 @@ use CodeIgniter\CLI\CLI;
 abstract class BaseResearchTaskCommand extends SafeBaseCommand
 {
 
-    protected string $taskKey = '';
+    protected $taskKey = '';
 
     public function run(array $params)
     {

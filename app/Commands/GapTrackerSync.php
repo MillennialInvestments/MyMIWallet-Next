@@ -21,7 +21,7 @@ class GapTrackerSync extends SafeBaseCommand
         '--report-only'=> 'Generate report without updating CSV',
     ];
 
-    protected ?AiOpsManager $manager = null;
+    protected $manager = null;
 
     public function run(array $params)
     {

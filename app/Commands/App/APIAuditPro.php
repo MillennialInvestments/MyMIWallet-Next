@@ -13,9 +13,9 @@ class APIAuditPro extends SafeBaseCommand
     protected $name        = 'app:api:audit';
     protected $description = 'Advanced API audit: groups, filters, duplicates, OpenAPI, Postman, probe mode.';
 
-    protected array $routes = [];
-    protected array $controllers = [];
-    protected array $report = [];
+    protected $routes = [];
+    protected $controllers = [];
+    protected $report = [];
 
     public function run(array $params)
     {

@@ -17,7 +17,7 @@ class Audit extends SafeBaseCommand
         '--dry-run' => 'Preview actions without writing audit artifacts',
     ];
 
-    private ?ReflectionMethod $symbolExtractor = null;
+    private $symbolExtractor = null;
 
     public function run(array $params)
     {

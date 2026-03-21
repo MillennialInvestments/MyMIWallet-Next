@@ -15,7 +15,7 @@ class RevenueStreamsScan extends SafeBaseCommand
         '--dry-run' => 'Preview actions without writing documentation',
     ];
 
-    protected array $keywords = [
+    protected $keywords = [
         'membership',
         'premium',
         'pro',

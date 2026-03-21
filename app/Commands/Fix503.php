@@ -12,9 +12,9 @@ use Config\Ops;
 
 class Fix503 extends SafeBaseCommand
 {
-    private Ops $ops;
-    private float $confidence = 0.0;
-    private string $artifactDir;
+    private $ops;
+    private $confidence = 0.0;
+    private $artifactDir;
 
     protected $group = 'ops';
     protected $name = 'fix:503';
@@ -25,9 +25,9 @@ class Fix503 extends SafeBaseCommand
         '--approve' => 'Acknowledge and apply corrective actions',
     ];
 
-    private string $logPath;
-    private string $summaryPath;
-    private string $reportTimestamp;
+    private $logPath;
+    private $summaryPath;
+    private $reportTimestamp;
 
     public function run(array $params)
     {
