@@ -742,6 +742,20 @@ class MyMIAlerts
         return trim($normalized ?? '');
     }
 
+    private function normalizeEmailIdentifier(string $identifier, string $subject, string $date, string $sender): string
+    {
+        $identifier = trim($identifier);
+        if ($identifier === '') {
+            return md5($subject . $date . $sender);
+        }
+
+        if (mb_strlen($identifier) <= 100) {
+            return $identifier;
+        }
+
+        return hash('sha256', $identifier);
+    }
+
     private function detectBrokerSource(string $subject, string $sender, string $body): ?string
     {
         $haystack = strtolower($subject . ' ' . $sender . ' ' . $body);
@@ -785,7 +799,12 @@ class MyMIAlerts
         $rawSender  = strtolower(trim((string) ($payload['sender'] ?? '')));
         $sender     = $this->formatSender($payload['sender'] ?? '[Unknown Sender]');
 
-        $identifier = $payload['identifier'] ?? md5($subject . $date . $sender);
+        $identifier = $this->normalizeEmailIdentifier(
+            (string) ($payload['identifier'] ?? ''),
+            $subject,
+            (string) $date,
+            $sender
+        );
 
         $source = $this->detectBrokerSource($subject, $rawSender ?: $sender, $body) ?? 'unknown';
         $accountType = $source === 'thinkorswim'
