@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\CLI\BaseCommand;
 use App\Commands\Contracts\AiOpsRunnable;
 use App\Commands\Traits\NextStepTrait;
 use App\Commands\Traits\SparkRunnerTrait;
@@ -20,6 +20,7 @@ use App\Commands\Contracts\RequiresApproval;
  * - NO typed properties
  * - NO service access during class load
  */
+
 abstract class SafeBaseCommand extends BaseCommand implements
     RequiresApproval,
     DryRunCapable,

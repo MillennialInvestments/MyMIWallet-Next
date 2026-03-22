@@ -11378,3 +11378,127 @@ Nightly Summary Preview:
 - Spark results: `docs/_aiops/spark-results.md`
 - CI summary: `docs/_aiops/ci-summary.md`
 
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-03-21 07:00:01 UTC+00:00
+
+[Error]
+Class "App\Commands\SafeBaseCommand" not found
+at APPPATH/Commands/SafeBaseCommand.php:23
+
+Backtrace:
+  1    VENDORPATH/composer/ClassLoader.php:576
+       include()
+
+  2    VENDORPATH/composer/ClassLoader.php:427
+       Composer\Autoload\{closure}('/home/mymiteam/mymiwallet/site/current/vendor/composer/../../app/Commands/SafeBaseCommand.php')
+
+  3    APPPATH/Commands/AIOps/API/SchemaValidate.php:8
+       Composer\Autoload\ClassLoader()->loadClass('App\\Commands\\SafeBaseCommand')
+
+  4    VENDORPATH/composer/ClassLoader.php:576
+       include('/home/mymiteam/mymiwallet/site/current/app/Commands/AIOps/API/SchemaValidate.php')
+
+  5    VENDORPATH/composer/ClassLoader.php:427
+       Composer\Autoload\{closure}('/home/mymiteam/mymiwallet/site/current/vendor/composer/../../app/Commands/AIOps/API/SchemaValidate.php')
+
+  6    [internal function]
+       Composer\Autoload\ClassLoader()->loadClass('App\\Commands\\AIOps\\API\\SchemaValidate')
+
+  7    SYSTEMPATH/CLI/Commands.php:119
+       class_exists('App\\Commands\\AIOps\\API\\SchemaValidate')
+
+  8    SYSTEMPATH/CLI/Commands.php:51
+       CodeIgniter\CLI\Commands()->discoverCommands()
+
+  9    SYSTEMPATH/Config/Services.php:178
+       CodeIgniter\CLI\Commands()->__construct()
+
+ 10    SYSTEMPATH/Config/BaseService.php:264
+       CodeIgniter\Config\Services::commands(false)
+
+ 11    SYSTEMPATH/Config/Services.php:175
+       CodeIgniter\Config\BaseService::getSharedInstance('commands')
+
+ 12    SYSTEMPATH/Config/BaseService.php:334
+       CodeIgniter\Config\Services::commands()
+
+ 13    SYSTEMPATH/Config/BaseService.php:203
+       CodeIgniter\Config\BaseService::__callStatic('commands', [])
+
+ 14    SYSTEMPATH/Common.php:1078
+       CodeIgniter\Config\BaseService::get('commands')
+
+ 15    SYSTEMPATH/CLI/Console.php:47
+       service('commands')
+
+ 16    SYSTEMPATH/Boot.php:442
+       CodeIgniter\CLI\Console()->run()
+
+ 17    SYSTEMPATH/Boot.php:166
+       CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+
+ 18    ROOTPATH/spark:107
+       CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-03-22 07:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-03-22T07:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "audit": {
+        "ok": false,
+        "issues": [
+            "Ollama endpoint unreachable"
+        ],
+        "endpoint": "http://127.0.0.1:11434/api/generate",
+        "model": "qwen2.5-coder:3b",
+        "timeout": 120,
+        "token_limit": 2048,
+        "memory_limit_mb": 512,
+        "reachable": false
+    },
+    "status": "failed_ollama_config",
+    "job_id": "README",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-03-22T07:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-03-22T07:00:02Z
+
+## Docs
+- Changed docs: 0
+- Total docs scanned: 1300
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1164
+- Docs with no code match candidates: 1094
+
+## Stale Docs
+- Docs older than 60 days: 372
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+
