@@ -251,6 +251,11 @@ abstract class BaseController extends Controller
         return view($view, $data);
     }
 
+    protected function respondWithRendered(string $view, array $data = []): ResponseInterface
+    {
+        return $this->response->setBody(view($view, $data));
+    }
+
     protected function commonData(): array|ResponseInterface
     {
         $this->logTelemetryMemory('commonData:start');
@@ -343,7 +348,7 @@ abstract class BaseController extends Controller
         $setValue = function (string $key, $value): void {
             if ($value === null) return;
             if (is_string($value)) {
-                $v = trim($value);
+                $v = trim((string) $value);
                 if ($v === '') return;
                 $this->data[$key] = $v;
                 return;
@@ -1244,7 +1249,7 @@ abstract class BaseController extends Controller
 
     private function formatNonceAttribute(string $nonce): string
     {
-        $nonce = trim($nonce);
+        $nonce = trim((string) $nonce);
         if ($nonce === '') {
             return '';
         }

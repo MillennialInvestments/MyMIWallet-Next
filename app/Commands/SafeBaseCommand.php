@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Commands;
 
-use App\Commands\SafeBaseCommand;
+use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use App\Commands\Contracts\AiOpsRunnable;
 use App\Commands\Traits\NextStepTrait;
@@ -20,7 +20,7 @@ use App\Commands\Contracts\RequiresApproval;
  * - NO typed properties
  * - NO service access during class load
  */
-abstract class SafeBaseCommand extends SafeBaseCommand implements
+abstract class SafeBaseCommand extends BaseCommand implements
     RequiresApproval,
     DryRunCapable,
     AiOpsRunnable
