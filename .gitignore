@@ -30,6 +30,8 @@ chat/.env*
 !chat/.env.staging.example
 !chat/.env.production.example
 # *.log
+*.sql
+*.zip
 /.idea/
 /.vscode/*
 !/.vscode/settings.json

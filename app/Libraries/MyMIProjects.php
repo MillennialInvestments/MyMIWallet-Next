@@ -1,5 +1,6 @@
 <?php namespace App\Libraries;
 
+use Config\MyMI as MyMIConfig;
 use Config\Projects as ProjectsConfig;
 use App\Models\{ProjectCommitmentsModel, ProjectDistributionsModel, ProjectInboxModel, ProjectPayoutsModel, ProjectTokenAllocationsModel, ProjectWithdrawalsModel, ProjectsModel};
 use CodeIgniter\I18n\Time;
@@ -18,7 +19,8 @@ class MyMIProjects
         private ProjectPayoutsModel $payouts = new ProjectPayoutsModel(),
         private ProjectWithdrawalsModel $withdrawals = new ProjectWithdrawalsModel(),
         private MyMIExchangeAdapter $exchange = new MyMIExchangeAdapter(),
-        private ProjectsConfig $config = new ProjectsConfig()
+        private ProjectsConfig $config = new ProjectsConfig(),
+        private MyMIConfig $myMIConfig = new MyMIConfig()
     ) {
     }
 
@@ -452,7 +454,7 @@ class MyMIProjects
         return $count;
     }    public function projectsData(?int $userId = null): array
     {
-        $projects = $this->projects->findAll(20);
+        $projects = $this->projects->getAllProjects();
         $list = array_map(function (array $project) {
             $committed = $this->totalCommitted($project['id']);
             $target = (float) ($project['target_raise'] ?? 0);
@@ -670,5 +672,604 @@ class MyMIProjects
         log_message('info', 'MyMIProjects::distributeRevenue called (compatibility shim)', ['project_id' => $projectId]);
         return true;
     }
+
+    public function getPrimaryFundProject(): ?array
+    {
+        return $this->projects->getPrimarySystemProject();
+    }
+
+    public function getFundDashboardData($projectId, $cuID): array
+    {
+        $project = $projectId ? $this->projects->find((int) $projectId) : $this->getPrimaryFundProject();
+        if (! $project) {
+            return [];
+        }
+
+        $pid = (int) $project['id'];
+        return [
+            'project' => $project,
+            'fundSummary' => $this->projects->getProjectFundSummary($pid),
+            'myPosition' => $this->getUserFundPosition($pid, (int) $cuID),
+            'compliance' => $this->projects->getFundInvestorProfile($pid, (int) $cuID),
+            'navHistory' => $this->projects->getProjectNAVHistory($pid, 30),
+            'recentTransactions' => $this->projects->getProjectFundTransactions($pid, 25),
+            'distributions' => $this->projects->getProjectDistributionsDetailed($pid),
+            'capitalFlows' => $this->projects->getFundCapitalFlows($pid, 20),
+            'auditTrail' => $this->projects->getFundAuditTrail($pid, 20),
+            'exchangeStatus' => [
+                'exchange_asset_id' => (int) ($project['exchange_asset_id'] ?? 0),
+                'linked_token_id' => (int) ($project['linked_token_id'] ?? 0),
+                'exchange_enabled' => (int) ($project['exchange_enabled'] ?? 0),
+                'secondary_trading_enabled' => (int) ($project['secondary_trading_enabled'] ?? 0),
+                'market_price' => null,
+                'premium_to_nav' => null,
+            ],
+            'holders' => $this->projects->getProjectFundHolders($pid),
+        ];
+    }
+
+    public function issueUnitsAtNav($projectId, $userId, $investmentAmount, ?string $idempotencyKey = null): array
+    {
+        $this->assertFundModuleEnabled();
+        $db = $this->projects->db;
+        $projectId = (int) $projectId;
+        $userId = (int) $userId;
+
+        $amount = round((float) $investmentAmount, 2);
+        if ($amount <= 0) {
+            throw new RuntimeException('Investment amount must be greater than zero.');
+        }
+        if ($amount < (float) $this->myMIConfig->fund_minimum_investment) {
+            throw new RuntimeException('Investment amount is below minimum allowed.');
+        }
+
+        if ($idempotencyKey) {
+            $existingTx = $this->projects->findFundTransactionByIdempotencyKey($idempotencyKey);
+            if ($existingTx) {
+                return [
+                    'units_issued' => (float) ($existingTx['units'] ?? 0),
+                    'nav' => (float) ($existingTx['nav_price'] ?? 0),
+                    'transaction_id' => (int) $existingTx['id'],
+                    'idempotent_replay' => true,
+                ];
+            }
+        }
+
+        if (! $this->projects->isEligibleFundInvestor((int) $projectId, (int) $userId)) {
+            throw new RuntimeException('Investor profile is not yet eligible for fund unit purchases.');
+        }
+
+        $db->transStart();
+        $lockedProject = $db->query('SELECT * FROM bf_projects WHERE id = ? FOR UPDATE', [$projectId])->getRowArray();
+        if (! $lockedProject) {
+            $db->transComplete();
+            throw new RuntimeException('Fund project not found.');
+        }
+        if ((int) ($lockedProject['nav_update_in_progress'] ?? 0) === 1) {
+            $db->transComplete();
+            throw new RuntimeException('Issuance paused while NAV update is in progress.');
+        }
+        if ((int) ($lockedProject['primary_issuance_enabled'] ?? 1) !== 1) {
+            $db->transComplete();
+            throw new RuntimeException('Primary issuance is currently paused.');
+        }
+
+        $nav = (float) ($lockedProject['nav_per_unit'] ?? 0);
+        if ($nav <= 0) {
+            $db->transComplete();
+            throw new RuntimeException('Invalid NAV for issuance.');
+        }
+
+        $units = $this->calculateIssuedUnits($amount, $nav);
+        if ($units <= 0) {
+            $db->transComplete();
+            throw new RuntimeException('Calculated units must be greater than zero.');
+        }
+
+        $holder = $this->projects->getFundHolderByUser($projectId, $userId);
+        if ($holder) {
+            $newUnits = (float) $holder['units_owned'] + $units;
+            $newCapital = (float) $holder['capital_contributed'] + $amount;
+            $avg = $newUnits > 0 ? round($newCapital / $newUnits, 8) : $nav;
+            $this->projects->updateFundHolder((int) $holder['id'], [
+                'units_owned' => $newUnits,
+                'capital_contributed' => $newCapital,
+                'average_nav' => $avg,
+            ]);
+        } else {
+            $this->projects->createFundHolder([
+                'project_id' => $projectId,
+                'user_id' => $userId,
+                'units_owned' => $units,
+                'capital_contributed' => $amount,
+                'average_nav' => $nav,
+                'holder_status' => 'active',
+            ]);
+        }
+
+        $this->projects->update($projectId, [
+            'total_units_issued' => round((float) ($lockedProject['total_units_issued'] ?? 0) + $units, 8),
+            'current_amount' => round((float) ($lockedProject['current_amount'] ?? 0) + $amount, 2),
+            'updated_at' => Time::now()->toDateTimeString(),
+        ]);
+
+        $txId = $this->projects->logFundTransaction([
+            'project_id' => $projectId,
+            'user_id' => $userId,
+            'transaction_type' => 'primary_issuance',
+            'reference_type' => 'fund_unit_purchase',
+            'units' => $units,
+            'nav_price' => $nav,
+            'gross_amount' => $amount,
+            'fee_amount' => 0,
+            'net_amount' => $amount,
+            'idempotency_key' => $idempotencyKey,
+            'notes' => 'Primary issuance at current NAV',
+        ]);
+
+        $this->projects->recordCapitalFlow([
+            'project_id' => $projectId,
+            'flow_type' => 'investor_subscription',
+            'amount' => $amount,
+            'units_delta' => $units,
+            'reference' => 'tx:' . $txId,
+            'created_by' => $userId,
+            'notes' => 'Primary NAV issuance capital inflow',
+        ]);
+
+        if ($this->myMIConfig->enable_project_exchange_bridge) {
+            $this->mirrorIssuanceToBridgeLedgers($projectId, $userId, $units, $amount, $txId);
+        }
+
+        $db->transComplete();
+        if ($db->transStatus() === false) {
+            throw new RuntimeException('Transaction failed during unit issuance.');
+        }
+
+        $this->projects->logFundAuditEvent($projectId, $userId, 'fund_unit_purchase', [
+            'event' => 'fund_unit_purchase',
+            'project_id' => $projectId,
+            'user_id' => $userId,
+            'amount' => $amount,
+            'units' => $units,
+            'transaction_id' => $txId,
+        ]);
+
+        log_message('info', json_encode([
+            'event' => 'fund_unit_purchase',
+            'project_id' => $projectId,
+            'user_id' => $userId,
+            'nav' => $nav,
+            'units' => $units,
+            'amount' => $amount,
+            'transaction_id' => $txId,
+        ]));
+
+        return ['units_issued' => $units, 'nav' => $nav, 'transaction_id' => $txId];
+    }
+
+    public function recalculateProjectNAV($projectId, $totalFundValue = null): float
+    {
+        $this->assertFundModuleEnabled();
+        $db = $this->projects->db;
+        $projectId = (int) $projectId;
+
+        $db->transStart();
+        $project = $db->query('SELECT * FROM bf_projects WHERE id = ? FOR UPDATE', [$projectId])->getRowArray();
+        if (! $project) {
+            $db->transComplete();
+            throw new RuntimeException('Fund project not found.');
+        }
+
+        if ((int) ($project['nav_update_in_progress'] ?? 0) === 1) {
+            $db->transComplete();
+            throw new RuntimeException('NAV update already in progress.');
+        }
+
+        $db->table('bf_projects')->where('id', $projectId)->update(['nav_update_in_progress' => 1]);
+
+        $value = $totalFundValue !== null ? (float) $totalFundValue : (float) ($project['total_fund_value'] ?? 0);
+        if ($value < 0) {
+            $db->table('bf_projects')->where('id', $projectId)->update(['nav_update_in_progress' => 0]);
+            $db->transComplete();
+            throw new RuntimeException('Fund value cannot be negative.');
+        }
+
+        $units = (float) ($project['total_units_issued'] ?? 0);
+        if ($units <= 0 && $value > 0) {
+            $db->table('bf_projects')->where('id', $projectId)->update(['nav_update_in_progress' => 0]);
+            $db->transComplete();
+            throw new RuntimeException('Fund integrity guard: cannot set positive value with zero units issued.');
+        }
+        $nav = $this->calculateNavValue($value, $units);
+        if ($nav <= 0) {
+            $db->table('bf_projects')->where('id', $projectId)->update(['nav_update_in_progress' => 0]);
+            $db->transComplete();
+            throw new RuntimeException('NAV must be greater than zero.');
+        }
+
+        $this->projects->update((int) $projectId, [
+            'total_fund_value' => round($value, 2),
+            'nav_per_unit' => round($nav, 8),
+            'nav_update_in_progress' => 0,
+            'updated_at' => Time::now()->toDateTimeString(),
+        ]);
+
+        $this->projects->recordNAVSnapshot([
+            'project_id' => (int) $projectId,
+            'nav_per_unit' => round($nav, 8),
+            'total_fund_value' => round($value, 2),
+            'total_units_issued' => round($units, 8),
+            'source_note' => 'Manual NAV recalculation',
+        ]);
+
+        $this->projects->recordCapitalFlow([
+            'project_id' => (int) $projectId,
+            'flow_type' => 'manual_nav_update',
+            'amount' => round($value, 2),
+            'units_delta' => 0,
+            'reference' => 'nav_snapshot',
+            'notes' => 'Manual fund value update used for NAV refresh',
+        ]);
+
+        if ($this->myMIConfig->enable_live_nav_sync && $this->projects->db->tableExists('bf_mdit_nav_snapshots')) {
+            $payload = $this->filterTableColumns('bf_mdit_nav_snapshots', [
+                'project_id' => (int) $projectId,
+                'nav_per_unit' => round($nav, 8),
+                'total_fund_value' => round($value, 2),
+                'total_units_issued' => round($units, 8),
+                'created_at' => Time::now()->toDateTimeString(),
+            ]);
+            if (! empty($payload)) {
+                $this->projects->db->table('bf_mdit_nav_snapshots')->insert($payload);
+            }
+        }
+
+        $db->transComplete();
+        if ($db->transStatus() === false) {
+            throw new RuntimeException('Transaction failed during NAV update.');
+        }
+
+        $this->projects->logFundAuditEvent((int) $projectId, null, 'nav_recalculation', [
+            'nav' => round($nav, 8),
+            'total_fund_value' => round($value, 2),
+            'total_units_issued' => round($units, 8),
+        ]);
+
+        log_message('info', 'MyMIProjects::recalculateProjectNAV', ['project_id' => (int) $projectId, 'nav' => $nav, 'total_fund_value' => $value]);
+
+        return round($nav, 8);
+    }
+
+    public function recordFundDistribution($projectId, $totalAmount, $note = null): int
+    {
+        $this->assertFundModuleEnabled();
+        $db = $this->projects->db;
+        $project = $this->projects->find((int) $projectId);
+        if (! $project) {
+            throw new RuntimeException('Fund project not found.');
+        }
+
+        $units = (float) ($project['total_units_issued'] ?? 0);
+        $amount = round((float) $totalAmount, 2);
+        if ($amount <= 0) {
+            throw new RuntimeException('Distribution amount must be greater than zero.');
+        }
+        if ($amount > (float) ($project['total_fund_value'] ?? 0)) {
+            throw new RuntimeException('Distribution cannot exceed current fund value.');
+        }
+        $amountPerUnit = $this->calculateDistributionPerUnit($amount, $units);
+
+        $db->transStart();
+        $id = $this->projects->createDistribution([
+            'project_id' => (int) $projectId,
+            'distribution_type' => 'profit_distribution',
+            'total_amount' => $amount,
+            'amount_per_unit' => $amountPerUnit,
+            'status' => 'pending',
+            'notes' => $note,
+        ]);
+        $db->transComplete();
+        if ($db->transStatus() === false) {
+            throw new RuntimeException('Transaction failed during distribution recording.');
+        }
+
+        $this->projects->logFundAuditEvent((int) $projectId, null, 'distribution_recorded', [
+            'distribution_id' => $id,
+            'amount' => $amount,
+            'amount_per_unit' => $amountPerUnit,
+        ]);
+
+        log_message('info', 'MyMIProjects::recordFundDistribution', ['project_id' => (int) $projectId, 'distribution_id' => $id, 'amount' => $amount, 'amount_per_unit' => $amountPerUnit]);
+        return $id;
+    }
+
+    public function getUserFundPosition($projectId, $userId): array
+    {
+        $project = $this->projects->find((int) $projectId) ?? [];
+        $holder = $this->projects->getFundHolderByUser((int) $projectId, (int) $userId) ?? [];
+
+        $units = (float) ($holder['units_owned'] ?? 0);
+        $nav = (float) ($project['nav_per_unit'] ?? 1);
+        return [
+            'units_owned' => $units,
+            'average_nav' => (float) ($holder['average_nav'] ?? 0),
+            'capital_contributed' => (float) ($holder['capital_contributed'] ?? 0),
+            'implied_position_value' => round($units * $nav, 2),
+            'holder_status' => $holder['holder_status'] ?? 'inactive',
+        ];
+    }
+
+
+    public function updateInvestorCompliance(int $projectId, int $userId, array $profileData, ?int $reviewedBy = null): bool
+    {
+        $payload = [
+            'kyc_status' => $profileData['kyc_status'] ?? 'pending',
+            'investor_eligibility' => $profileData['investor_eligibility'] ?? 'pending',
+            'agreement_signed' => (int) ($profileData['agreement_signed'] ?? 0),
+            'agreement_signed_at' => ! empty($profileData['agreement_signed']) ? Time::now()->toDateTimeString() : null,
+            'reviewed_by' => $reviewedBy,
+            'notes' => $profileData['notes'] ?? null,
+        ];
+
+        $ok = $this->projects->upsertFundInvestorProfile($projectId, $userId, $payload);
+
+        $this->projects->logFundAuditEvent($projectId, $reviewedBy, 'investor_compliance_updated', [
+            'user_id' => $userId,
+            'payload' => $payload,
+        ]);
+
+        return $ok;
+    }
+
+    public function recordManualCapitalFlow(int $projectId, string $flowType, float $amount, float $unitsDelta = 0, ?string $reference = null, ?string $notes = null, ?int $createdBy = null): int
+    {
+        $this->assertFundModuleEnabled();
+        $id = $this->projects->recordCapitalFlow([
+            'project_id' => $projectId,
+            'flow_type' => $flowType,
+            'amount' => round($amount, 2),
+            'units_delta' => round($unitsDelta, 8),
+            'reference' => $reference,
+            'notes' => $notes,
+            'created_by' => $createdBy,
+        ]);
+
+        $this->projects->logFundAuditEvent($projectId, $createdBy, 'capital_flow_recorded', [
+            'capital_flow_id' => $id,
+            'flow_type' => $flowType,
+            'amount' => round($amount, 2),
+            'units_delta' => round($unitsDelta, 8),
+            'reference' => $reference,
+        ]);
+
+        return $id;
+    }
+
+    public function attachTokenToProject(int $projectId, int $tokenId): bool
+    {
+        return (bool) $this->projects->update($projectId, [
+            'linked_token_id' => $tokenId,
+            'exchange_asset_id' => $tokenId,
+            'updated_at' => Time::now()->toDateTimeString(),
+        ]);
+    }
+
+    public function registerProjectAsExchangeAsset(int $projectId): array
+    {
+        $this->assertFundModuleEnabled();
+        $db = $this->projects->db;
+        $db->transStart();
+        $project = $this->projects->find($projectId);
+        if (! $project) {
+            $db->transComplete();
+            throw new RuntimeException('Project not found for exchange registration.');
+        }
+        if (($project['project_type'] ?? '') !== 'private_fund') {
+            $db->transComplete();
+            throw new RuntimeException('Only private_fund projects may be exchange registered.');
+        }
+
+        $symbol = 'MYMIUSO';
+        $assetPayload = $this->filterTableColumns('bf_exchanges_assets', [
+            'symbol' => $symbol,
+            'coin_name' => $project['name'] ?? $project['title'] ?? 'MyMI US Oil Fund',
+            'asset_type' => 'project_fund_unit',
+            'status' => 'draft',
+            'is_tradable' => 0,
+            'tradeable' => 0,
+            'market' => 'MYMI',
+            'market_pair' => $symbol . '/USD',
+            'coin_value' => (float) ($project['nav_per_unit'] ?? 1),
+            'created_on' => date('Y-m-d H:i:s'),
+        ]);
+
+        if (empty($assetPayload)) {
+            $db->transComplete();
+            throw new RuntimeException('Exchange asset schema unavailable for registration.');
+        }
+
+        $assetId = $this->projects->upsertExchangeAsset($assetPayload);
+        $this->attachTokenToProject($projectId, $assetId);
+        $db->transComplete();
+        if ($db->transStatus() === false) {
+            throw new RuntimeException('Transaction failed during exchange asset registration.');
+        }
+
+        $this->projects->logFundAuditEvent($projectId, null, 'exchange_asset_linked', [
+            'asset_id' => $assetId,
+            'symbol' => $symbol,
+            'project_id' => $projectId,
+        ]);
+
+        return ['asset_id' => $assetId, 'symbol' => $symbol];
+    }
+
+    public function reconcileProjectFundWithExchange(int $projectId): array
+    {
+        $project = $this->projects->find($projectId) ?? [];
+        $assetId = (int) ($project['exchange_asset_id'] ?? 0);
+        $holders = $this->projects->getProjectFundHolders($projectId);
+        $holderUnits = array_reduce($holders, static fn($carry, $row) => $carry + (float) ($row['units_owned'] ?? 0), 0.0);
+        $projectUnits = (float) ($project['total_units_issued'] ?? 0);
+
+        $exchangeUnits = null;
+        if ($assetId > 0 && $this->projects->db->tableExists('bf_exchanges_assets_ledger')) {
+            $row = $this->projects->db->table('bf_exchanges_assets_ledger')
+                ->select('COALESCE(SUM(amount),0) as units_total')
+                ->where('asset_id', $assetId)
+                ->get()->getRowArray();
+            $exchangeUnits = (float) ($row['units_total'] ?? 0);
+        }
+
+        $ledger = $this->assertLedgerConsistency($projectId);
+
+        return [
+            'project_id' => $projectId,
+            'asset_linked' => $assetId > 0,
+            'asset_id' => $assetId,
+            'project_units' => round($projectUnits, 8),
+            'holder_units' => round($holderUnits, 8),
+            'exchange_units' => $exchangeUnits !== null ? round($exchangeUnits, 8) : null,
+            'holder_vs_project_match' => abs($holderUnits - $projectUnits) < 0.00000001,
+            'exchange_vs_project_match' => $exchangeUnits === null ? null : abs($exchangeUnits - $projectUnits) < 0.00000001,
+            'no_negative_balances' => $holderUnits >= 0 && $projectUnits >= 0 && ($exchangeUnits === null || $exchangeUnits >= 0),
+            'ledger_consistency' => $ledger,
+        ];
+    }
+
+    public function assertLedgerConsistency(int $projectId): array
+    {
+        $project = $this->projects->find($projectId) ?? [];
+        $assetId = (int) ($project['exchange_asset_id'] ?? 0);
+        $projectUnits = (float) ($project['total_units_issued'] ?? 0);
+
+        $holders = $this->projects->getProjectFundHolders($projectId);
+        $holderUnits = array_reduce($holders, static fn($carry, $row) => $carry + (float) ($row['units_owned'] ?? 0), 0.0);
+
+        $tokenLedgerUnits = null;
+        if ($this->projects->db->tableExists('bf_mdit_token_ledger')) {
+            $row = $this->projects->db->table('bf_mdit_token_ledger')
+                ->select('COALESCE(SUM(units),0) as units_total')
+                ->where('project_id', $projectId)
+                ->get()->getRowArray();
+            $tokenLedgerUnits = (float) ($row['units_total'] ?? 0);
+        }
+
+        $exchangeLedgerUnits = null;
+        if ($assetId > 0 && $this->projects->db->tableExists('bf_exchanges_assets_ledger')) {
+            $row = $this->projects->db->table('bf_exchanges_assets_ledger')
+                ->select('COALESCE(SUM(amount),0) as units_total')
+                ->where('asset_id', $assetId)
+                ->get()->getRowArray();
+            $exchangeLedgerUnits = (float) ($row['units_total'] ?? 0);
+        }
+
+        return [
+            'project_units' => round($projectUnits, 8),
+            'holder_units' => round($holderUnits, 8),
+            'token_ledger_units' => $tokenLedgerUnits !== null ? round($tokenLedgerUnits, 8) : null,
+            'exchange_ledger_units' => $exchangeLedgerUnits !== null ? round($exchangeLedgerUnits, 8) : null,
+            'holders_match_project' => abs($holderUnits - $projectUnits) < 0.00000001,
+            'token_ledger_match_project' => $tokenLedgerUnits === null ? null : abs($tokenLedgerUnits - $projectUnits) < 0.00000001,
+            'exchange_ledger_match_project' => $exchangeLedgerUnits === null ? null : abs($exchangeLedgerUnits - $projectUnits) < 0.00000001,
+        ];
+    }
+
+    public function calculateNavValue(float $totalFundValue, float $totalUnits): float
+    {
+        return $totalUnits > 0 ? round($totalFundValue / $totalUnits, 8) : 1.0;
+    }
+
+    public function calculateIssuedUnits(float $investmentAmount, float $navPerUnit): float
+    {
+        if ($navPerUnit <= 0) {
+            throw new RuntimeException('NAV must be greater than zero.');
+        }
+
+        return round($investmentAmount / $navPerUnit, 8);
+    }
+
+    public function calculateDistributionPerUnit(float $distributionAmount, float $totalUnits): float
+    {
+        return $totalUnits > 0 ? round($distributionAmount / $totalUnits, 8) : 0.0;
+    }
+
+    public function validateFundIntegrity(int $projectId): array
+    {
+        $project = $this->projects->find($projectId) ?? [];
+        $holders = $this->projects->getProjectFundHolders($projectId);
+        $sumHolderUnits = array_reduce($holders, static fn($carry, $row) => $carry + (float) ($row['units_owned'] ?? 0), 0.0);
+        $totalUnits = (float) ($project['total_units_issued'] ?? 0);
+        $fundValue = (float) ($project['total_fund_value'] ?? 0);
+        $nav = (float) ($project['nav_per_unit'] ?? 0);
+        $expectedNav = $totalUnits > 0 ? ($fundValue / $totalUnits) : 1.0;
+
+        return [
+            'project_id' => $projectId,
+            'sum_holder_units' => round($sumHolderUnits, 8),
+            'total_units_issued' => round($totalUnits, 8),
+            'units_match' => abs($sumHolderUnits - $totalUnits) < 0.00000001,
+            'fund_value' => round($fundValue, 2),
+            'nav_per_unit' => round($nav, 8),
+            'expected_nav' => round($expectedNav, 8),
+            'nav_match' => abs($nav - $expectedNav) < 0.00000001,
+            'has_negative_balance' => $fundValue < 0 || $totalUnits < 0 || $sumHolderUnits < 0,
+        ];
+    }
+
+    private function assertFundModuleEnabled(): void
+    {
+        if (! $this->myMIConfig->enable_fund_module || ! $this->myMIConfig->enable_project_fund_module) {
+            throw new RuntimeException('Fund module is currently disabled.');
+        }
+    }
+
+    private function mirrorIssuanceToBridgeLedgers(int $projectId, int $userId, float $units, float $amount, int $txId): void
+    {
+        $project = $this->projects->find($projectId) ?? [];
+        $assetId = (int) ($project['exchange_asset_id'] ?? 0);
+
+        if ($this->projects->db->tableExists('bf_mdit_token_ledger')) {
+            $mditPayload = $this->filterTableColumns('bf_mdit_token_ledger', [
+                'project_id' => $projectId,
+                'user_id' => $userId,
+                'token_id' => $assetId ?: null,
+                'event_type' => 'primary_issuance',
+                'units' => $units,
+                'amount' => $amount,
+                'reference_id' => $txId,
+                'created_at' => Time::now()->toDateTimeString(),
+            ]);
+            if (! empty($mditPayload)) {
+                $this->projects->db->table('bf_mdit_token_ledger')->insert($mditPayload);
+            }
+        }
+
+        if ($assetId > 0 && $this->projects->db->tableExists('bf_exchanges_assets_ledger')) {
+            $exchangePayload = $this->filterTableColumns('bf_exchanges_assets_ledger', [
+                'asset_id' => $assetId,
+                'user_id' => $userId,
+                'transaction_type' => 'primary_issuance',
+                'amount' => $units,
+                'reference_id' => $txId,
+                'status' => 1,
+                'created_on' => date('Y-m-d H:i:s'),
+            ]);
+            if (! empty($exchangePayload)) {
+                $this->projects->db->table('bf_exchanges_assets_ledger')->insert($exchangePayload);
+            }
+        }
+    }
+
+    private function filterTableColumns(string $table, array $payload): array
+    {
+        if (! $this->projects->db->tableExists($table)) {
+            return [];
+        }
+        $columns = $this->projects->db->getFieldNames($table);
+        return array_intersect_key($payload, array_flip($columns));
+    }
+
 
 }

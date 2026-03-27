@@ -34,11 +34,20 @@ class ProjectsController extends BaseUserController
             // Visitor not authenticated; continue with public data.
         }
         $payload = $this->projectsService->projectsData($userId);
+        $primaryProject = $this->projectsService->getPrimaryFundProject();
+        if ($primaryProject) {
+            usort($payload['list'], static function ($a, $b) use ($primaryProject) {
+                return ((int) (($b['project']['id'] ?? 0) === (int) $primaryProject['id'])) <=> ((int) (($a['project']['id'] ?? 0) === (int) $primaryProject['id']));
+            });
+        }
+
         $data = [
             'projects' => $payload['list'] ?? [],
             'summary'  => $payload,
+            'primaryProject' => $primaryProject,
+            'primaryFundSummary' => $primaryProject ? $this->projectsModel->getProjectFundSummary((int) $primaryProject['id']) : null,
         ];
-        return $this->renderTheme('App\\Modules\\User\\Views\\Projects\\index', $data);
+        return $this->renderTheme('App\\Modules\\User\\Views\\Projects\\view', $data);
     }
 
     public function view(string $slug)
@@ -59,7 +68,7 @@ class ProjectsController extends BaseUserController
             'progress'  => $progress,
         ];
         helper('form');
-        return $this->renderTheme('App\\Modules\\User\\Views\\Projects\\index', $data);
+        return $this->renderTheme('App\\Modules\\User\\Views\\Projects\\view', $data);
     }
 
     public function commit(int $projectId)
@@ -134,6 +143,68 @@ class ProjectsController extends BaseUserController
         $this->ensurePost();
         // Placeholder for confirmation workflow.
         return $this->respond(['status' => 'ok', 'message' => 'Allocation accepted.']);
+    }
+
+
+
+    public function fund($projectId = null)
+    {
+        $userId = $this->currentUserId();
+        $projectId = $projectId !== null ? (int) $projectId : null;
+
+        if ($projectId === null) {
+            $primary = $this->projectsService->getPrimaryFundProject();
+            if (! $primary) {
+                throw PageNotFoundException::forPageNotFound('Primary fund project not found.');
+            }
+            $projectId = (int) $primary['id'];
+        }
+
+        $dashboard = $this->projectsService->getFundDashboardData($projectId, $userId);
+        if (empty($dashboard)) {
+            throw PageNotFoundException::forPageNotFound('Fund project not found.');
+        }
+
+        return $this->renderTheme('App\Modules\User\Views\Projects\fund_dashboard', $dashboard);
+    }
+
+    public function purchaseFundUnits()
+    {
+        $this->ensurePost();
+        helper('form');
+
+        $rules = [
+            'project_id' => 'required|integer',
+            'investment_amount' => 'required|decimal|greater_than[0]',
+        ];
+
+        if (! $this->validate($rules)) {
+            $errors = $this->validator->getErrors();
+            if ($this->request->isAJAX()) {
+                return $this->failValidationErrors($errors);
+            }
+            return redirect()->back()->withInput()->with('error', implode(' ', $errors));
+        }
+
+        $projectId = (int) $this->request->getPost('project_id');
+        $amount = (float) $this->request->getPost('investment_amount');
+        $userId = $this->currentUserId();
+        $idempotencyKey = (string) ($this->request->getHeaderLine('X-Idempotency-Key') ?: $this->request->getPost('idempotency_key'));
+
+        try {
+            $result = $this->projectsService->issueUnitsAtNav($projectId, $userId, $amount, $idempotencyKey ?: null);
+        } catch (\Throwable $e) {
+            if ($this->request->isAJAX()) {
+                return $this->fail($e->getMessage(), 400);
+            }
+            return redirect()->back()->withInput()->with('error', $e->getMessage());
+        }
+
+        if ($this->request->isAJAX()) {
+            return $this->respond(['status' => 'ok', 'data' => $result]);
+        }
+
+        return redirect()->back()->with('success', 'Fund units purchased successfully.');
     }
 
     protected function ensurePost(): void

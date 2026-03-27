@@ -72,6 +72,9 @@ $fieldData = array(
         <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
 
         <div id="form-errors" class="alert alert-danger d-none"></div>
+        <input type="hidden" name="project_type" value="general">
+        <input type="hidden" name="is_system" value="0">
+        <div class="alert alert-info">Private fund projects are reserved for admin management workflows.</div>
 
         <!-- Project Information Section -->
         <div class="nk-block">
@@ -155,6 +158,9 @@ $fieldData = array(
                                 <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
 
                                 <div id="form-errors" class="alert alert-danger d-none"></div>
+                                <input type="hidden" name="project_type" value="general">
+                                <input type="hidden" name="is_system" value="0">
+                                <div class="alert alert-info">Private fund projects are reserved for admin management workflows.</div>
                                 <fieldset>
                                     <?php echo view('UserModule\Views\Projects\Add\user_fields', $subViewData); ?>
                                 </fieldset>

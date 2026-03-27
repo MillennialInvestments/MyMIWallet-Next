@@ -1330,6 +1330,18 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
         $routes->post('Reject/(:segment)', 'ProjectsController::rejectProject/$1'); 
         $routes->get('Quick-Intake', 'ProjectsController::realEstateQuickIntake');
         $routes->post('Quick-Intake', 'ProjectsController::realEstateQuickSubmit');
+        $routes->get('Fund', 'ProjectsAdminController::fundOverview');
+        $routes->get('Fund/(:num)', 'ProjectsAdminController::fundOverview/$1');
+        $routes->post('UpdateFundNAV', 'ProjectsAdminController::updateFundNAV');
+        $routes->post('RecordFundDistribution', 'ProjectsAdminController::recordFundDistribution');
+        $routes->post('SeedPrimaryFundProject', 'ProjectsAdminController::seedPrimaryFundProject');
+        $routes->post('HideTestProjects', 'ProjectsAdminController::hideTestProjects');
+        $routes->post('UpdateInvestorCompliance', 'ProjectsAdminController::updateInvestorCompliance');
+        $routes->post('RecordFundCapitalFlow', 'ProjectsAdminController::recordFundCapitalFlow');
+        $routes->get('ValidateFundIntegrity', 'ProjectsAdminController::validateFundIntegrity');
+        $routes->get('ValidateFundIntegrity/(:num)', 'ProjectsAdminController::validateFundIntegrity/$1');
+        $routes->get('ReconcileFundExchange/(:num)', 'ProjectsAdminController::reconcileFundExchange/$1');
+        $routes->post('RegisterFundExchangeAsset/(:num)', 'ProjectsAdminController::registerFundExchangeAsset/$1');
     });
     $routes->group('Referrals', function($routes) {
         $routes->get('/', 'ReferralsController::index');
@@ -1594,6 +1606,9 @@ $routes->group('Projects', ['namespace' => 'App\Modules\User\Controllers'], stat
     $routes->get('My/Commitments', 'ProjectsController::myCommitments');
     $routes->post('Request-Monthly-Withdrawal/(:num)', 'ProjectsController::requestMonthlyWithdrawal/$1');
     $routes->post('Accept-Private-Allocation/(:num)', 'ProjectsController::acceptPrivateAllocation/$1');
+    $routes->get('Fund', 'ProjectsController::fund');
+    $routes->get('Fund/(:num)', 'ProjectsController::fund/$1');
+    $routes->post('PurchaseFundUnits', 'ProjectsController::purchaseFundUnits');
 }); 
 
 // Blog:
