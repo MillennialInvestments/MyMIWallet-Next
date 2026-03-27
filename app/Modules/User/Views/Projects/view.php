@@ -4,6 +4,31 @@
 /** @var float $target */
 /** @var float $progress */
 ?>
+<?php if (($project['project_type'] ?? '') === 'private_fund'): ?>
+<div class="nk-block">
+    <div class="card card-bordered mb-4"><div class="card-inner">
+        <h3 class="card-title mb-2"><?= esc($project['name'] ?? $project['title']) ?></h3>
+        <p class="text-muted">Private fund dashboard with NAV-based ownership units and distribution ledger tracking.</p>
+        <ul class="list-unstyled small">
+            <li><strong>NAV:</strong> $<?= number_format((float)($project['nav_per_unit'] ?? 1), 8) ?></li>
+            <li><strong>Total Fund Value:</strong> $<?= number_format((float)($project['total_fund_value'] ?? 0), 2) ?></li>
+            <li><strong>Total Units Issued:</strong> <?= number_format((float)($project['total_units_issued'] ?? 0), 8) ?></li>
+        </ul>
+        <div class="border rounded p-2 mb-3 small">
+            <strong>Exchange Status</strong>
+            <ul class="mb-0">
+                <li>Linked Asset ID: <?= (int) ($project['exchange_asset_id'] ?? 0) ?></li>
+                <li>Exchange Enabled: <?= (int) ($project['exchange_enabled'] ?? 0) === 1 ? 'Enabled' : 'Disabled' ?></li>
+                <li>Secondary Trading: <?= (int) ($project['secondary_trading_enabled'] ?? 0) === 1 ? 'Enabled' : 'Disabled' ?></li>
+                <li>Current NAV: $<?= number_format((float)($project['nav_per_unit'] ?? 1), 8) ?></li>
+                <li>Market Price: Coming soon</li>
+                <li>Premium / Discount to NAV: Coming soon</li>
+            </ul>
+        </div>
+        <img src="https://cdn.mymi.com/projects/mymi-us-oil-fund-flow.png" class="img-fluid rounded border" alt="MyMI US Oil Fund workflow">
+    </div></div>
+</div>
+<?php else: ?>
 <div class="nk-block">
     <div class="card card-bordered mb-4">
         <div class="card-inner">
@@ -59,3 +84,5 @@
         Commitment holders will be invited to a private auction once the funding threshold is reached. Monthly withdrawals are available post-activation, subject to policy fees.
     </div>
 </div>
+
+<?php endif; ?>

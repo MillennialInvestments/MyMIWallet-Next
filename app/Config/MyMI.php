@@ -25,6 +25,25 @@ class MyMI extends BaseConfig
         'maxAlertsPerPage'       => 50,    // Hard cap on open alerts fetched for dashboard tables
     ];
 
+    /**
+     * Private fund module toggles.
+     *
+     * Keep fund features off by default in new environments until migration + policy checks are complete.
+     */
+    public bool $enable_fund_module = true;
+    public bool $enable_secondary_market = false;
+    public bool $enable_live_nav = false;
+    public bool $enable_project_fund_module = true;
+    public bool $enable_project_exchange_bridge = true;
+    public bool $enable_secondary_fund_trading = false;
+    public bool $enable_mdit_compliance_checks = true;
+    public bool $enable_live_nav_sync = false;
+
+    /**
+     * Financial guardrails.
+     */
+    public float $fund_minimum_investment = 10.00;
+
     public function __construct()
     {
         parent::__construct();

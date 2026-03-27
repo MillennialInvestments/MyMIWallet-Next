@@ -472,4 +472,177 @@ class ProjectsAdminController extends BaseAdminController
         }
     }
     
+
+    public function fundOverview($projectId = null)
+    {
+        $this->commonData();
+        $projectId = $projectId ? (int) $projectId : null;
+        if ($projectId === null) {
+            $primary = $this->getMyMIProjects()->getPrimaryFundProject();
+            $projectId = (int) ($primary['id'] ?? 0);
+        }
+
+        if ($projectId <= 0) {
+            return redirect()->back()->with('error', 'No fund project found.');
+        }
+
+        $dashboard = $this->getMyMIProjects()->getFundDashboardData($projectId, (int) $this->cuID);
+        $dashboard['pageTitle'] = 'Fund Overview';
+        return $this->renderTheme('App\Modules\Management\Views\Projects\fund_overview', $dashboard);
+    }
+
+    public function updateFundNAV()
+    {
+        $projectId = (int) $this->request->getPost('project_id');
+        $totalFundValue = $this->request->getPost('total_fund_value');
+
+        try {
+            $nav = $this->getMyMIProjects()->recalculateProjectNAV($projectId, $totalFundValue !== null ? (float) $totalFundValue : null);
+            log_message('info', 'ProjectsAdminController::updateFundNAV', ['project_id' => $projectId, 'nav' => $nav]);
+            return $this->respond(['status' => 'success', 'nav' => $nav]);
+        } catch (\Throwable $e) {
+            return $this->respond(['status' => 'error', 'message' => $e->getMessage()], 400);
+        }
+    }
+
+    public function recordFundDistribution()
+    {
+        $projectId = (int) $this->request->getPost('project_id');
+        $totalAmount = (float) $this->request->getPost('total_amount');
+        $note = $this->request->getPost('note');
+
+        try {
+            $distributionId = $this->getMyMIProjects()->recordFundDistribution($projectId, $totalAmount, $note);
+            log_message('info', 'ProjectsAdminController::recordFundDistribution', ['project_id' => $projectId, 'distribution_id' => $distributionId]);
+            return $this->respond(['status' => 'success', 'distribution_id' => $distributionId]);
+        } catch (\Throwable $e) {
+            return $this->respond(['status' => 'error', 'message' => $e->getMessage()], 400);
+        }
+    }
+
+    public function seedPrimaryFundProject()
+    {
+        $existing = $this->projectsModel->getPrimarySystemProject();
+        if ($existing) {
+            return $this->respond(['status' => 'success', 'message' => 'Primary fund project already exists.', 'project_id' => (int) $existing['id']]);
+        }
+
+        $id = $this->projectsModel->insert([
+            'name' => 'MyMI US Oil Fund',
+            'description' => 'Private fund project focused on disciplined accumulation and management of U.S. oil exposure using a NAV-driven unit model inside MyMI Projects.',
+            'target_amount' => 1000000.00,
+            'current_amount' => 0.00,
+            'status' => 'active',
+            'is_active' => 1,
+            'is_system' => 1,
+            'project_type' => 'private_fund',
+            'nav_per_unit' => 1.00000000,
+            'total_units_issued' => 1000000.00000000,
+            'total_fund_value' => 1000000.00,
+            'linked_visual' => 'https://cdn.mymi.com/projects/mymi-us-oil-fund-flow.png',
+            'created_by' => (int) $this->cuID,
+            'created_at' => date('Y-m-d H:i:s'),
+        ], true);
+
+        log_message('info', 'ProjectsAdminController::seedPrimaryFundProject seeded project', ['project_id' => $id]);
+        try {
+            $asset = $this->getMyMIProjects()->registerProjectAsExchangeAsset((int) $id);
+        } catch (\Throwable $e) {
+            $asset = ['error' => $e->getMessage()];
+        }
+
+        return $this->respond(['status' => 'success', 'project_id' => (int) $id, 'exchange_asset' => $asset]);
+    }
+
+    public function hideTestProjects()
+    {
+        $updated = $this->projectsModel
+            ->where('is_system', 0)
+            ->set(['is_active' => 0, 'updated_at' => date('Y-m-d H:i:s')])
+            ->update();
+
+        log_message('info', 'ProjectsAdminController::hideTestProjects hid non-system projects', ['updated' => $updated]);
+        return $this->respond(['status' => 'success', 'updated' => $updated]);
+    }
+
+    public function updateInvestorCompliance()
+    {
+        $projectId = (int) $this->request->getPost('project_id');
+        $userId = (int) $this->request->getPost('user_id');
+
+        $payload = [
+            'kyc_status' => (string) $this->request->getPost('kyc_status'),
+            'investor_eligibility' => (string) $this->request->getPost('investor_eligibility'),
+            'agreement_signed' => (int) $this->request->getPost('agreement_signed'),
+            'notes' => $this->request->getPost('notes'),
+        ];
+
+        $ok = $this->getMyMIProjects()->updateInvestorCompliance($projectId, $userId, $payload, (int) $this->cuID);
+        return $this->respond(['status' => $ok ? 'success' : 'error']);
+    }
+
+    public function recordFundCapitalFlow()
+    {
+        $projectId = (int) $this->request->getPost('project_id');
+        $flowType = (string) $this->request->getPost('flow_type');
+        $amount = (float) $this->request->getPost('amount');
+        $unitsDelta = (float) $this->request->getPost('units_delta');
+        $reference = $this->request->getPost('reference');
+        $notes = $this->request->getPost('notes');
+
+        $id = $this->getMyMIProjects()->recordManualCapitalFlow(
+            $projectId,
+            $flowType,
+            $amount,
+            $unitsDelta,
+            $reference,
+            $notes,
+            (int) $this->cuID
+        );
+
+        return $this->respond(['status' => 'success', 'capital_flow_id' => $id]);
+    }
+
+    public function validateFundIntegrity($projectId = null)
+    {
+        $projectId = $projectId ? (int) $projectId : 0;
+        if ($projectId <= 0) {
+            $primary = $this->projectsModel->getPrimarySystemProject();
+            $projectId = (int) ($primary['id'] ?? 0);
+        }
+
+        if ($projectId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'No fund project found.'], 404);
+        }
+
+        $report = $this->getMyMIProjects()->validateFundIntegrity($projectId);
+        return $this->respond(['status' => 'success', 'data' => $report]);
+    }
+
+    public function reconcileFundExchange($projectId)
+    {
+        $projectId = (int) $projectId;
+        if ($projectId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'Invalid project id.'], 400);
+        }
+
+        $report = $this->getMyMIProjects()->reconcileProjectFundWithExchange($projectId);
+        return $this->respond(['status' => 'success', 'data' => $report]);
+    }
+
+    public function registerFundExchangeAsset($projectId)
+    {
+        $projectId = (int) $projectId;
+        if ($projectId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'Invalid project id.'], 400);
+        }
+
+        try {
+            $asset = $this->getMyMIProjects()->registerProjectAsExchangeAsset($projectId);
+            return $this->respond(['status' => 'success', 'data' => $asset]);
+        } catch (\Throwable $e) {
+            return $this->respond(['status' => 'error', 'message' => $e->getMessage()], 400);
+        }
+    }
+
 }
