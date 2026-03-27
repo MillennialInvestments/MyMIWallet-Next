@@ -18,6 +18,11 @@ use CodeIgniter\Config\BaseConfig;
 class Console extends BaseConfig
 {
     /**
+     * Disable automatic Spark command discovery.
+     */
+    public bool $discoverCommands = false;
+
+    /**
      * Explicitly registered Spark commands
      *
      * @var array<class-string>
@@ -177,6 +182,9 @@ class Console extends BaseConfig
         \App\Commands\RevenueStreamsScan::class,
         \App\Commands\Scanning\RunScanner::class,
         \App\Commands\Ux\JourneyAudit::class,
+        \App\Commands\GigHop\Health::class,
+        \App\Commands\GigHop\DispatchOptimize::class,
+        \App\Commands\GigHop\ZonesValidate::class,
 
         /*
         |----------------------------------------------------------------------

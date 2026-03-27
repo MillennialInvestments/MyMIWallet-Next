@@ -3,11 +3,11 @@
 namespace App\Commands\Logs;
 
 use App\Services\Spark\LogSummarizeService;
-use App\Commands\SafeBaseCommand;
+use App\Commands\Base\BaseAiopsCommand;
 use App\Commands\AIOps\WorkerLogs;
 use CodeIgniter\CLI\CLI;
 
-class Summarize extends SafeBaseCommand
+class Summarize extends BaseAiopsCommand
 {
     protected $group       = 'logs';
     protected $name        = 'logs:summarize';

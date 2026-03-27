@@ -45,6 +45,39 @@ use function is_ci;
  */
 class Services extends CoreServices
 {
+    public static function aiopsService(bool $getShared = true): \App\Services\AiopsService
+    {
+        if ($getShared) {
+            /** @var \App\Services\AiopsService $service */
+            $service = static::getSharedInstance('aiopsService');
+            return $service;
+        }
+
+        return new \App\Services\AiopsService();
+    }
+
+    public static function logAnalyzerService(bool $getShared = true): \App\Services\LogAnalyzerService
+    {
+        if ($getShared) {
+            /** @var \App\Services\LogAnalyzerService $service */
+            $service = static::getSharedInstance('logAnalyzerService');
+            return $service;
+        }
+
+        return new \App\Services\LogAnalyzerService();
+    }
+
+    public static function patchGeneratorService(bool $getShared = true): \App\Services\PatchGeneratorService
+    {
+        if ($getShared) {
+            /** @var \App\Services\PatchGeneratorService $service */
+            $service = static::getSharedInstance('patchGeneratorService');
+            return $service;
+        }
+
+        return new \App\Services\PatchGeneratorService();
+    }
+
     public static function cache(?Cache $config = null, bool $getShared = true)
     {
         if (! function_exists('is_ci')) {
