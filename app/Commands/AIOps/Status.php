@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Commands\AIOps;
 
-use App\Commands\SafeBaseCommand;
+use App\Commands\Base\BaseAiopsCommand;
 use App\Commands\Support\SubsCommandTrait;
 use App\Services\AIOps\AiOpsServiceManager;
 
-class Status extends SafeBaseCommand
+class Status extends BaseAiopsCommand
 {
     use SubsCommandTrait;
 
