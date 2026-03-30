@@ -61,8 +61,15 @@ Events::on('post_system', static function (): void {
         $request = service('request');
         $path = (string) $request->getUri()->getPath();
         $errorType = $status === 404 ? 'missing_route' : 'http_' . $status;
+        $message = $status === 404 ? '404 route not found' : ('HTTP ' . $status . ' response');
 
         (new \App\Services\AIOps\RouteErrorHeatmapService())->record($path, $errorType, $status);
+
+        (new \App\Services\AIOps\ErrorIngestService())->capture([
+            'level' => $status >= 500 ? 'critical' : 'error',
+            'message' => $message,
+            'route' => current_url(),
+        ]);
     } catch (\Throwable $e) {
         log_message('debug', 'Route heatmap post_system hook skipped: ' . $e->getMessage());
     }

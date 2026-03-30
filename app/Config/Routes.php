@@ -32,13 +32,37 @@ $routes->setDefaultController('Home');   // change if you have a different landi
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override(function () {
+    $request = service('request');
+    $path = '/' . ltrim((string) $request->getUri()->getPath(), '/');
+
     log_message('error', '[404_ROUTE]', [
         'uri' => current_url(),
+        'path' => $path,
         'referrer' => $_SERVER['HTTP_REFERER'] ?? null,
         'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
     ]);
 
-    return redirect()->to(site_url('/'))->setStatusCode(302);
+    if (preg_match('/\.(js|mjs)$/i', $path) === 1) {
+        return service('response')
+            ->setStatusCode(404)
+            ->setContentType('application/javascript')
+            ->setBody("/* 404 Not Found: {$path} */");
+    }
+
+    if (str_starts_with(strtolower(trim($path, '/')), 'api/')) {
+        return service('response')
+            ->setStatusCode(404)
+            ->setJSON([
+                'error' => 'not_found',
+                'message' => 'Route not found.',
+                'path' => $path,
+            ]);
+    }
+
+    return view('errors/auto_route_fallback', [
+        'url' => current_url(),
+        'path' => $path,
+    ]);
 });
 
 $routes->get('/', 'Home::index');

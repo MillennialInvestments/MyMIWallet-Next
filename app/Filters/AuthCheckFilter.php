@@ -43,9 +43,13 @@ class AuthCheckFilter implements FilterInterface
     {
         $accepts = strtolower($request->getHeaderLine('Accept'));
         $content = strtolower($request->getHeaderLine('Content-Type'));
+        $path = trim(strtolower((string) $request->getUri()->getPath()), '/');
 
         return str_contains($accepts, 'application/json')
             || str_contains($content, 'application/json')
+            || str_starts_with($path, 'api/')
+            || str_ends_with($path, '.js')
+            || str_ends_with($path, '.mjs')
             || method_exists($request, 'isAJAX') && $request->isAJAX();
     }
 }

@@ -74,10 +74,7 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 fbq('init', '1066980131308331');
 fbq('track', 'PageView');
 </script> -->
-<noscript><img height="1" width="1" class="d-none"
-src="https://www.facebook.com/tr?id=1066980131308331&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
+<!-- Meta pixel is loaded once in the public header. -->
  <!-- Clarity tracking code for https://mymiwallet.com/ -->
 <script nonce="<?= esc($cspNonce) ?>">
     (function(c,l,a,r,i,t,y){
