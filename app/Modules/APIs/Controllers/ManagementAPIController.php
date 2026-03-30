@@ -271,8 +271,27 @@ class ManagementAPIController extends BaseAPIController
 
     public function Run_CRON_Tasks()
     {
+        $allowedIps = array_values(array_filter([
+            '127.0.0.1',
+            '::1',
+            $_SERVER['SERVER_ADDR'] ?? '',
+        ]));
+        $requestIp = $this->request->getIPAddress();
+
+        if (! in_array($requestIp, $allowedIps, true)) {
+            log_message('error', '[CRON BLOCKED] Unauthorized access attempt', [
+                'ip'  => $requestIp,
+                'uri' => (string) $this->request->getUri(),
+            ]);
+
+            return $this->response->setStatusCode(403)->setJSON([
+                'status'  => 'error',
+                'message' => 'Unauthorized',
+            ]);
+        }
+
         $token = $this->request->getHeaderLine('X-CRON-Key') ?: $this->request->getGet('cronKey');
-        $expected = env('CRON_SHARED_KEY');
+        $expected = env('CRON_TOKEN') ?: env('CRON_SHARED_KEY');
 
         if (!$expected || ! hash_equals((string) $expected, (string) $token)) {
             log_message('warning', '🚫 ManagementController::Run_CRON_Tasks() blocked - invalid or missing token.');

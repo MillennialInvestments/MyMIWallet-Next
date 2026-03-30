@@ -90,6 +90,11 @@ abstract class BaseController extends Controller
         LoggerInterface $logger
     ) {
         parent::initController($request, $response, $logger);
+
+        if (strtolower($request->getMethod()) === 'head') {
+            return;
+        }
+
         $this->startTime = microtime(true);
         $this->requestId = bin2hex(random_bytes(6));
         $this->trace('[INIT] ' . static::class . '::' . $this->request->getMethod());
