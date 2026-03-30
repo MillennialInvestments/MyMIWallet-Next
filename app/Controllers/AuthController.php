@@ -827,7 +827,8 @@ class AuthController extends BaseController
 
     public function registerSuccess()
     {
-        log_message('critical', '[REGISTER_SUCCESS_TRACE] step=1 entered');
+        log_message('debug', '[REGISTER_SUCCESS] entered');
+
         try {
             $this->session->remove('redirect_url');
 
@@ -836,29 +837,25 @@ class AuthController extends BaseController
                 'config'       => $this->config,
                 'siteSettings' => config('SiteSettings'),
                 'socialMedia'  => config('SocialMedia'),
+                'userRole'     => $this->resolveUserRole(),
+                'activationRequired' => $this->config->requireActivation !== null,
             ];
 
-            log_message('critical', '[REGISTER_SUCCESS_TRACE] step=2 data prepared');
+            log_message('debug', '[REGISTER_SUCCESS] data prepared', $data);
 
-            $output = view('Auth/register_success', $data);
+            return $this->_render('Auth/register_success', $data);
 
-            log_message('critical', '[REGISTER_SUCCESS_TRACE] step=3 raw view rendered length=' . strlen($output));
-
-            return service('response')
-                ->setStatusCode(200)
-                ->setBody($output);
         } catch (\Throwable $e) {
-            log_message('critical', '[REGISTER_SUCCESS_TRACE] EXCEPTION', [
+            log_message('critical', '[REGISTER_SUCCESS_ERROR]', [
                 'message' => $e->getMessage(),
                 'file'    => $e->getFile(),
                 'line'    => $e->getLine(),
-                'trace'   => $e->getTraceAsString(),
             ]);
 
-            throw $e;
+            throw $e; // allow debug visibility
         }
     }
-
+    
     public function registerSuccessProbe()
     {
         log_message('critical', '[REGISTER_SUCCESS_PROBE] start');
@@ -1021,6 +1018,31 @@ class AuthController extends BaseController
             'email' => $email,
         ]);
         return redirect()->route('reset-password');
+    }
+
+    /**
+     * Resolve User's Role if empty.
+     */private function resolveUserRole(): string
+    {
+        try {
+            $user = $this->auth->user();
+
+            if (!$user) {
+                return session('role') ?? 'guest';
+            }
+
+            // Myth\Auth groups or custom role field
+            if (method_exists($user, 'getRoles')) {
+                $roles = $user->getRoles();
+                return $roles[0] ?? 'user';
+            }
+
+            return $user->role ?? 'user';
+
+        } catch (\Throwable $e) {
+            log_message('debug', '[ROLE_RESOLVE_FAIL] ' . $e->getMessage());
+            return 'guest';
+        }
     }
 
     /**

@@ -62,7 +62,7 @@ window.addEventListener('load', function() {
   gtag('config', 'UA-168714029-1');
 </script>
 <!-- Meta Pixel Code -->
-<script nonce="<?= esc($cspNonce) ?>">
+<!-- <script nonce="<?= esc($cspNonce) ?>">
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -73,7 +73,7 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '1066980131308331');
 fbq('track', 'PageView');
-</script>
+</script> -->
 <noscript><img height="1" width="1" class="d-none"
 src="https://www.facebook.com/tr?id=1066980131308331&ev=PageView&noscript=1"
 /></noscript>

@@ -274,6 +274,8 @@ class Filters extends BaseConfig
                 'except' => [
                     'register/success',
                     'index.php/register/success',
+                    'index.php?debugbar',
+                    'debugbar*',
                 ],
             ],
             // 'csp' => ['except' => ['API/*', 'assets/*']],
