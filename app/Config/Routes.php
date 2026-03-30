@@ -291,6 +291,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->post('Alerts/backfillEmailAlerts', 'AlertsAPIController::backfillEmailAlerts');
     $routes->get('cronFetchAndGenerateNews', 'ManagementAPIController::cronFetchAndGenerateNews');
     $routes->post('Management/backfillMarketingEmails', 'ManagementAPIController::backfillMarketingEmails');
+    $routes->get('Management/debugLogs', 'ManagementAPIController::debugLogs', ['filter' => 'permission:admin.access']);
     $routes->group('Scanner', static function($routes) {
         $routes->get('status', 'ScannerController::status');
         $routes->post('run', 'ScannerController::run');

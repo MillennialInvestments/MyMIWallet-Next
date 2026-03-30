@@ -3,10 +3,7 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
-use CodeIgniter\Debug\Toolbar\Collectors\Config as ToolbarConfigCollector;
 use CodeIgniter\Debug\Toolbar\Collectors\Database;
-use CodeIgniter\Debug\Toolbar\Collectors\Events;
-use CodeIgniter\Debug\Toolbar\Collectors\Files;
 use CodeIgniter\Debug\Toolbar\Collectors\Logs;
 use CodeIgniter\Debug\Toolbar\Collectors\Routes;
 use CodeIgniter\Debug\Toolbar\Collectors\Timers;
@@ -27,7 +24,7 @@ class Toolbar extends BaseConfig
     /**
      * Enable toolbar by default; constructor applies environment safety gates.
      */
-    public bool $enabled = ENVIRONMENT === 'development';
+    public bool $enabled = true;
     // public bool $enabled = true;
     // public bool $enabled = false;
 
@@ -35,25 +32,7 @@ class Toolbar extends BaseConfig
     {
         parent::__construct();
 
-        $debugFlag = filter_var((string) env('CI_DEBUG', CI_DEBUG ? '1' : '0'), FILTER_VALIDATE_BOOL);
-
-        if (ENVIRONMENT === 'production' || ! $debugFlag) {
-            $this->enabled = false;
-            return;
-        }
-
-        $debugbarPath = WRITEPATH . 'debugbar';
-
-        if (! is_dir($debugbarPath)) {
-            if (! @mkdir($debugbarPath, 0775, true)) {
-                $this->enabled = false;
-                return;
-            }
-        }
-
-        if (! is_writable($debugbarPath)) {
-            $this->enabled = false;
-        }
+        $this->enabled = true;
     }
     /**
      * --------------------------------------------------------------------------
@@ -66,14 +45,11 @@ class Toolbar extends BaseConfig
      * @var list<class-string>
      */
     public array $collectors = [
-        ToolbarConfigCollector::class,
         Database::class,
-        Events::class,
-        Files::class,
         Logs::class,
-        Routes::class,
         Timers::class,
         Views::class,
+        Routes::class,
     ];
 
     /**

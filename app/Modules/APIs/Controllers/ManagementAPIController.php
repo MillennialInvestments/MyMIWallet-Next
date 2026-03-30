@@ -218,6 +218,61 @@ class ManagementAPIController extends BaseAPIController
         ]);
     }
 
+    public function debugLogs(): ResponseInterface
+    {
+        $authGuard = $this->guardAdmin();
+        if ($authGuard) {
+            return $authGuard;
+        }
+
+        return $this->response->setJSON([
+            'errors' => $this->getRecentErrors(),
+            'routes' => $this->getRouteIssues(),
+            'views' => $this->getMissingViews(),
+        ]);
+    }
+
+    private function getRecentErrors(): array
+    {
+        $file = WRITEPATH . 'logs/log-' . date('Y-m-d') . '.php';
+        if (! is_file($file)) {
+            return [];
+        }
+
+        $lines = @file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [];
+
+        return array_slice(array_values(array_filter(
+            $lines,
+            static fn ($line) => stripos((string) $line, 'ERROR') !== false || stripos((string) $line, 'CRITICAL') !== false
+        )), -100);
+    }
+
+    private function getRouteIssues(): array
+    {
+        $file = WRITEPATH . 'logs/route_scan.json';
+        if (! is_file($file)) {
+            return [];
+        }
+
+        $decoded = json_decode((string) file_get_contents($file), true);
+        return is_array($decoded) ? $decoded : [];
+    }
+
+    private function getMissingViews(): array
+    {
+        $file = WRITEPATH . 'logs/log-' . date('Y-m-d') . '.php';
+        if (! is_file($file)) {
+            return [];
+        }
+
+        $lines = @file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [];
+
+        return array_slice(array_values(array_filter(
+            $lines,
+            static fn ($line) => str_contains((string) $line, '[MISSING VIEW]')
+        )), -100);
+    }
+
     public function saveSuggestion()
     {
         $authGuard = $this->guardAdmin();

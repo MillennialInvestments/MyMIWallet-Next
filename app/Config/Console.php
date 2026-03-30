@@ -274,6 +274,7 @@ class Console extends BaseConfig
         \App\Commands\Docs\Scan\ViewFiles::class,
         \App\Commands\Docs\GenerateKnowledgeGraph::class,
         \App\Commands\Docs\BuildHowItWorksNavigation::class,
+        \App\Commands\Docs\ScanRoutes::class,
         \App\Commands\Docs\ScanOrphanRoutes::class,
         \App\Commands\Docs\ScanOrphanViews::class,
         \App\Commands\Docs\ScanUndocumentedControllers::class,

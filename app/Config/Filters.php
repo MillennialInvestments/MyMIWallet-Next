@@ -14,18 +14,9 @@ class Filters extends BaseConfig
     {
         parent::__construct();
 
-        if (ENVIRONMENT === 'development') {
-            if (! in_array('toolbar', $this->globals['after'], true)) {
-                $this->globals['after'][] = 'toolbar';
-            }
-
-            return;
+        if (! in_array('toolbar', $this->globals['after'], true)) {
+            $this->globals['after'][] = 'toolbar';
         }
-
-        $this->globals['after'] = array_values(array_filter(
-            $this->globals['after'],
-            static fn (string $filter): bool => $filter !== 'toolbar'
-        ));
     }
 
     /**
@@ -279,6 +270,7 @@ class Filters extends BaseConfig
 
         ],
         'after' => [
+            'toolbar',
             // 'csp' => ['except' => ['API/*', 'assets/*']],
             'cspoff',
             'sessionTracker',
