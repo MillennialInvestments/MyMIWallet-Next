@@ -270,7 +270,12 @@ class Filters extends BaseConfig
 
         ],
         'after' => [
-            'toolbar',
+            'toolbar' => [
+                'except' => [
+                    'register/success',
+                    'index.php/register/success',
+                ],
+            ],
             // 'csp' => ['except' => ['API/*', 'assets/*']],
             'cspoff',
             'sessionTracker',

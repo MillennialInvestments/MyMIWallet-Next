@@ -134,6 +134,9 @@ $routes->get('Debug/auth-audit-cache', 'Debug::authAuditCacheSelfTest');
 $routes->group('debug', ['namespace' => 'App\Controllers\Debug'], static function ($routes) {
     $routes->get('common-data/smoke', 'CommonDataController::smoke');
 });
+$routes->get('debug/register-success-probe', 'AuthController::registerSuccessProbe');
+$routes->get('API/Management/error-heatmap', 'SystemDebugController::errorHeatmap', ['filter' => 'permission:admin.access']);
+$routes->get('Management/System-Debug', 'SystemDebugController::index', ['filter' => 'permission:admin.access']);
 
 // App Health and Ops endpoints
 $routes->group('', ['namespace' => 'App\Controllers'], static function($routes) {
