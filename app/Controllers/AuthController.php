@@ -835,7 +835,17 @@ class AuthController extends BaseController
 
         log_message('info', 'AuthController::registerSuccess view rendered.');
 
-        return $this->_render('Auth/register_success', $this->data);
+        try {
+            return $this->_render('Auth/register_success', $this->data);
+        } catch (\Throwable $e) {
+            log_message('critical', '[VIEW ERROR]', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
+
+            throw $e;
+        }
     }
 
     public function resendRegistrationActivation()

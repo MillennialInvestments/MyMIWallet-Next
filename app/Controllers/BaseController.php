@@ -99,6 +99,7 @@ abstract class BaseController extends Controller
         $this->requestId = bin2hex(random_bytes(6));
         $this->trace('[INIT] ' . static::class . '::' . $this->request->getMethod());
         $this->memoryCheckpoint('controller-start');
+        $this->logRequestTrace();
 
         if (is_cli()) {
             return;
@@ -182,6 +183,17 @@ abstract class BaseController extends Controller
         log_message($level, '[REQ_ID=' . ($this->requestId ?? 'N/A') . '] ' . $message);
     }
 
+    protected function logRequestTrace(): void
+    {
+        log_message('debug', '[TRACE]', [
+            'url' => current_url(),
+            'method' => $this->request->getMethod(),
+            'controller' => static::class,
+            'memory' => memory_get_usage(true),
+            'user_id' => function_exists('user_id') ? user_id() : null,
+        ]);
+    }
+
     protected function memoryCheckpoint($label): void
     {
         $this->trace('[MEMORY][' . $label . '] ' . memory_get_usage(true), 'info');
@@ -251,6 +263,10 @@ abstract class BaseController extends Controller
     {
         if (!is_string($view) || empty($view)) {
             throw new \InvalidArgumentException('View must be string');
+        }
+
+        if (! is_file(APPPATH . 'Views/' . str_replace('\\', '/', $view) . '.php')) {
+            log_message('error', '[MISSING VIEW] ' . $view);
         }
 
         return view($view, $data);

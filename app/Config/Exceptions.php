@@ -44,6 +44,7 @@ class Exceptions extends BaseConfig
      * Should detailed errors be shown to the client in development.
      */
     public bool $displayErrors = true;
+    public bool $display = true;
     // public bool $displayErrors = ENVIRONMENT !== 'production';
 
     /**
@@ -66,7 +67,7 @@ class Exceptions extends BaseConfig
      *
      * Default: APPPATH.'Views/errors'
      */
-    public string $errorViewPath = APPPATH . 'Views/errors';
+    public string $errorViewPath = SYSTEMPATH . 'Views/errors/';
 
     /**
      * --------------------------------------------------------------------------
