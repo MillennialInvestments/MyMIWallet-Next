@@ -532,7 +532,7 @@ class KnowledgebaseController extends BaseUserController
         return preg_replace('/[^a-z0-9\-]/', '-', $slug);
     }
 
-    private function respondWithRendered(string $view, array $data = []): ResponseInterface
+    protected function respondWithRendered(string $view, array $data = []): ResponseInterface
     {
         $rendered = $this->renderTheme($view, $data);
         if ($rendered instanceof ResponseInterface) {

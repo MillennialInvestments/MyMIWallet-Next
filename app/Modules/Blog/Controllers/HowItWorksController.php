@@ -21,7 +21,7 @@ class HowItWorksController extends UserController
     protected string $ci4DocsPath = ROOTPATH . 'docs/user-guides/ci4/';
 
     protected $auth;
-    protected $helpers = ['directory', 'form', 'file', 'url'];
+    protected $helpers = ['directory', 'form', 'file', 'url', 'url_safe'];
     protected $request;
     protected $session;
     protected $uri;
@@ -153,7 +153,22 @@ class HowItWorksController extends UserController
     public function show(string $slug = 'overview'): ResponseInterface
     {
         try {
-            $normalizedSlug = $this->normalizeSlug($slug);
+            $slug = normalize_slug($this->request->uri->getSegment(2) ?? 'overview');
+            log_message('debug', '[HOW_IT_WORKS] slug=' . $slug);
+
+            $validPages = [
+                'overview',
+                'automated-financial-insights',
+                'investor-profile',
+            ];
+
+            if (!in_array($slug, $validPages, true)) {
+                log_message('error', 'HowItWorksController failure: ' . $slug);
+
+                return redirect()->to(site_url('How-It-Works'));
+            }
+
+            $normalizedSlug = $slug;
 
             $viewMap = [
                 'registering-an-account'          => 'App\Modules\Blog\Views\HowItWorks\Registering_An_Account',
@@ -399,13 +414,4 @@ class HowItWorksController extends UserController
         return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\Setting_Financial_Goals', $data);
     }
 
-    /**
-     * Normalize slug
-     */
-    private function normalizeSlug(string $slug): string
-    {
-        $slug = trim(strtolower($slug));
-        $slug = str_replace([' ', '_'], '-', $slug);
-        return preg_replace('/[^a-z0-9\-]+/', '-', $slug);
-    }
 }
