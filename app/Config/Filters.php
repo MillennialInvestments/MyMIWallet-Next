@@ -14,7 +14,8 @@ class Filters extends BaseConfig
     {
         parent::__construct();
 
-        if (! in_array('toolbar', $this->globals['after'], true)) {
+        // Keep DebugToolbar out of production responses.
+        if (ENVIRONMENT !== 'production' && ! in_array('toolbar', $this->globals['after'], true)) {
             $this->globals['after'][] = 'toolbar';
         }
     }
