@@ -37,3 +37,9 @@ if (! function_exists('href_or')) {
         return (is_string($maybe) && $maybe !== '') ? $maybe : $fallback;
     }
 }
+if (! function_exists('normalize_slug')) {
+    function normalize_slug($slug): string
+    {
+        return strtolower(trim(str_replace(['_', ' '], '-', (string) $slug)));
+    }
+}

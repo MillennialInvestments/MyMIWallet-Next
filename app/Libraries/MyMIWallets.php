@@ -37,6 +37,11 @@ class MyMIWallets {
             $this->cuID = null;
             log_message('warning', 'MyMIWallets initialized without numeric user context.');
         }
+
+        if (!is_numeric($this->cuID ?? null)) {
+            log_message('debug', 'MyMIWallets skipped (no user context)');
+            return;
+        }
         $this->mymiCoin = new MyMICoin();
         $this->mymiGold = new MyMIGold();
         $this->analyticsModel = new AnalyticalModel();

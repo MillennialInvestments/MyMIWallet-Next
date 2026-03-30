@@ -11,6 +11,8 @@ use Config\Services; // ← add this line
  */
 $routes = Services::routes();
 helper('ai');
+$routes->get('index.php', 'Home::index');
+$routes->get('index.php/', 'Home::index');
 // app/Config/Routes.php
 // $routes->get('assets/(.*)', 'Assets::file/$1');
 // $routes->get('favicon.ico', 'Assets::favicon');
@@ -29,7 +31,15 @@ $routes->setDefaultNamespace('App\Controllers');
 $routes->setDefaultController('Home');   // change if you have a different landing controller
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
-$routes->set404Override();
+$routes->set404Override(function () {
+    log_message('error', '[404_ROUTE]', [
+        'uri' => current_url(),
+        'referrer' => $_SERVER['HTTP_REFERER'] ?? null,
+        'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
+    ]);
+
+    return redirect()->to(site_url('/'))->setStatusCode(302);
+});
 
 $routes->get('/', 'Home::index');
 // Explicit home route. If you don't have Home::index, temporarily redirect to /login.
@@ -105,11 +115,11 @@ $routes->get('/Privacy-Policy', 'Home::privacyPolicy');
 $routes->get('/Legal/Privacy-Policy', 'Home::privacyPolicy');
 $routes->get('/Legal/Terms-And-Conditions', 'Home::terms');
 $routes->get('/Customer-Support', 'App\Modules\Support\Controllers\SupportController::index');
-$routes->get('/Investments/News', static fn() => redirect()->to('/News', 301));
+$routes->get('/Investments/News', static fn() => redirect()->to(site_url('News'), 301));
 $routes->get('/Profile', 'App\Modules\User\Controllers\DashboardController::profile', ['filter' => 'login']);
-$routes->get('/Purchase/MyMIGold', static fn() => redirect()->to('/Wallets/Purchase/MyMI-Gold', 301));
+$routes->get('/Purchase/MyMIGold', static fn() => redirect()->to(site_url('Wallets/Purchase/MyMI-Gold'), 301));
 $routes->post('auth/resend-activation', 'AuthController::resendActivationCode', ['as' => 'auth/resend-activation-legacy']);
-$routes->get('/How-It-Works/Purchase/MyMIGold', static fn() => redirect()->to('/How-It-Works/Purchase-MyMI-Gold', 301));
+$routes->get('/How-It-Works/Purchase/MyMIGold', static fn() => redirect()->to(site_url('How-It-Works/Purchase-MyMI-Gold'), 301));
 
 $routes->get('Sector/(:segment)', 'Home::sector/$1');
 $routes->get('/Terms-Of-Service', 'Home::termsOfService');

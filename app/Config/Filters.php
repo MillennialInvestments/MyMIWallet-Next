@@ -76,6 +76,7 @@ class Filters extends BaseConfig
         'except'        => \App\Filters\ExceptFilter::class,
         'requestLifecycle' => \App\Filters\RequestLifecycleLogger::class,
         'botBlocker'    => \App\Filters\BotBlocker::class,
+        'domainfilter' => \App\Filters\DomainFilter::class,
     ];
 
     /**
@@ -85,6 +86,7 @@ class Filters extends BaseConfig
      * @var array<string, array<string, array<string, string>>>|array<string, list<string>>
      */
     public array $globals = [
+        'pre_system' => ['domainfilter'],
         'before' => [
             'maintenance' => [
                 'except' => [
