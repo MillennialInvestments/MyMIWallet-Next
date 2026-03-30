@@ -6,7 +6,7 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Myth\Auth\Exceptions\PermissionException;
+use Myth\Auth\Authorization\GroupModel;
 
 class RoleFilter extends BaseFilter implements FilterInterface
 {
@@ -17,36 +17,37 @@ class RoleFilter extends BaseFilter implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        // If no user is logged in then send them to the login form.
-        if (! isset($this->authenticate) || ! $this->authenticate->check()) {
+        if (! function_exists('user_id') || ! user_id()) {
             session()->set('redirect_url', current_url());
-            return redirect($this->reservedRoutes['login']);
+            return redirect()->to('/login');
         }
 
-        if (empty($arguments)) {
+        $groupModel = new GroupModel();
+        $userId     = (int) user_id();
+        $userGroups = $groupModel->getGroupsForUser($userId);
+
+        log_message('debug', '[ROLE_FILTER] USER GROUPS: ' . json_encode($userGroups));
+
+        $allowed = array_column($userGroups, 'name');
+
+        if (in_array('admin', $allowed, true)) {
             return;
         }
 
-        // 🔥 Harden: ensure authorization service exists
-        if (! isset($this->authorize)) {
-            throw new \RuntimeException('Authorization service not initialized.');
+        if (! empty($arguments) && ! array_intersect($arguments, $allowed)) {
+            log_message('error', '[ROLE_FILTER] ACCESS DENIED', [
+                'required'    => $arguments,
+                'user_groups' => $allowed,
+            ]);
+
+            log_message('error', '[AUTH FAILURE]', [
+                'url'     => current_url(),
+                'user_id' => $userId,
+                'ip'      => $request->getIPAddress(),
+            ]);
+
+            return redirect()->to('/dashboard')->with('error', 'Access denied.');
         }
-
-        foreach ($arguments as $group) {
-            if ($this->authorize->inGroup($group, $this->authenticate->id())) {
-                return;
-            }
-        }
-
-        if ($this->authenticate->silent()) {
-            $redirectURL = session('redirect_url') ?? route_to($this->landingRoute);
-            unset($_SESSION['redirect_url']);
-
-            return redirect()->to($redirectURL)
-                ->with('error', lang('Auth.notEnoughPrivilege'));
-        }
-
-        throw new PermissionException(lang('Auth.notEnoughPrivilege'));
     }
 
 

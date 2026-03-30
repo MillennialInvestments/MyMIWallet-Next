@@ -42,7 +42,7 @@ class Filters extends BaseConfig
         'sessionRevoked'  => \App\Filters\SessionRevokedFilter::class,
         // PATCH: register RBAC permission filter
         'permission'     => \App\Filters\PermissionFilter::class,
-        'role' => \App\Filters\PermissionFilter::class,
+        'role' => \App\Filters\RoleFilter::class,
         // PATCH: API token authentication filter
         'apiToken'       => \App\Filters\ApiTokenAuthFilter::class,
         'internalToken' => \App\Filters\InternalTokenFilter::class,
@@ -50,6 +50,7 @@ class Filters extends BaseConfig
         'feature'        => \App\Filters\FeatureFlagFilter::class,
         // PATCH: anti-abuse filters
         'ratelimit'     => \App\Filters\RateLimitFilter::class,
+        'throttle'      => \App\Filters\ThrottleFilter::class,
         'captcha'       => \App\Filters\CaptchaFilter::class,
         'emailVerified' => \App\Filters\EmailVerifiedFilter::class,
         'idempotency'  => \App\Filters\IdempotencyFilter::class,
@@ -102,6 +103,7 @@ class Filters extends BaseConfig
             'requestLifecycle',
             'observability',
             'ratelimit',
+            'throttle',
             'sessionRevoked',
             'csrf' => [
                 'except' => [

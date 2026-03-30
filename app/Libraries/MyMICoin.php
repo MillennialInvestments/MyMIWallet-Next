@@ -10,6 +10,9 @@ use Config\Services;
 #[\AllowDynamicProperties]
 class MyMICoin
 {
+    private static bool $initialized = false;
+    private static ?MyMICoinModel $sharedCoinModel = null;
+    private static ?UserModel $sharedUserModel = null;
 
     protected $auth;
     protected $cuID;
@@ -21,11 +24,27 @@ class MyMICoin
 
     public function __construct()
     {
+        if (self::$initialized) {
+            $this->MyMICoinModel = self::$sharedCoinModel ?? new MyMICoinModel();
+            $this->userModel     = self::$sharedUserModel ?? new UserModel();
+            $this->auth          = service('authentication');
+            $this->session       = Services::session();
+            $this->request       = Services::request();
+            $this->cuID          = service('authentication')->id();
+
+            return;
+        }
+
+        self::$initialized = true;
+        log_message('debug', 'MyMICoin initialized ONCE');
+
         $this->auth = service('authentication');
         $this->session = Services::session();
         $this->request                      = Services::request();
         $this->MyMICoinModel                = new MyMICoinModel();
-        $this->userModel                    = new userModel();
+        $this->userModel                    = new UserModel();
+        self::$sharedCoinModel              = $this->MyMICoinModel;
+        self::$sharedUserModel              = $this->userModel;
         // Assuming you have services like 'auth' properly configured in CI4
         
         $this->cuID = service('authentication')->id();
