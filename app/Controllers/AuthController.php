@@ -829,6 +829,8 @@ class AuthController extends BaseController
     {
         log_message('critical', '[REGISTER_SUCCESS_TRACE] step=1 entered');
         try {
+            $this->session->remove('redirect_url');
+
             $data = [
                 'pageTitle'    => 'Registration Successful',
                 'config'       => $this->config,
@@ -1368,12 +1370,24 @@ class AuthController extends BaseController
     {
         $redirectURL = (string) ($this->session->get('redirect_url') ?? '');
 
+        log_message('debug', '[REDIRECT_FINAL] ' . ($redirectURL !== '' ? $redirectURL : '[empty]'));
+
+        if ($redirectURL === '') {
+            $this->session->remove('redirect_url');
+            return $this->dashboardUrl();
+        }
+
         if (! $this->isValidRedirectTarget($redirectURL)) {
             $redirectURL = $this->dashboardUrl();
         }
 
         // Absolute final guard against loop targets
-        if ($this->isRootDestination($redirectURL) || $this->isLoginDestination($redirectURL) || $this->isLogoutDestination($redirectURL)) {
+        if (
+            $this->isRootDestination($redirectURL)
+            || $this->isLoginDestination($redirectURL)
+            || $this->isLogoutDestination($redirectURL)
+            || $this->isRegisterSuccessDestination($redirectURL)
+        ) {
             $redirectURL = $this->dashboardUrl();
         }
 
@@ -1403,6 +1417,10 @@ class AuthController extends BaseController
     private function isValidRedirectTarget(?string $url): bool
     {
         if ($url === null || $url === '') {
+            return false;
+        }
+
+        if ($this->isRegisterSuccessDestination($url)) {
             return false;
         }
 
@@ -1472,7 +1490,11 @@ class AuthController extends BaseController
         $path      = $this->normalisePath($url);
         $loginPath = $this->normalisePath(site_url('login'));
 
-        return $path === $loginPath;
+        if ($path === $loginPath || str_ends_with(strtolower($path), '/login') || strtolower($path) === 'login') {
+            return true;
+        }
+
+        return stripos($url, '/login') !== false;
     }
 
     private function isLogoutDestination(?string $url): bool
@@ -1482,6 +1504,15 @@ class AuthController extends BaseController
         }
 
         return stripos($url, '/logout') !== false;
+    }
+
+    private function isRegisterSuccessDestination(?string $url): bool
+    {
+        if ($url === null) {
+            return false;
+        }
+
+        return stripos($url, '/register/success') !== false;
     }
 
     private function isExternalDestination(string $url): bool
