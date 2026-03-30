@@ -1,0 +1,1847 @@
+{
+    "generated_at": "2026-03-30 12:37:24",
+    "controllers": [
+        {
+            "path": "app/Controllers/Home.php",
+            "services": [
+                "authentication",
+                "session"
+            ],
+            "views": [],
+            "models": [
+                "AlertsModel",
+                "PageSEOModel",
+                "ReferralModel",
+                "SubscribeModel",
+                "UserModel"
+            ]
+        },
+        {
+            "path": "app/Controllers/Debug.php",
+            "services": [
+                "authentication",
+                "authAuditService"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Controllers/System/HealthController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Controllers/Health.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Controllers/Api/AdminChatUsageController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Controllers/Api/AiOpsManualRunController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Controllers/Api/InternalApiController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Controllers/Api/OpsFilesystemStatusController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Controllers/Api/SwaggerDocsController.php",
+            "services": [],
+            "views": [
+                "api/swagger_docs"
+            ],
+            "models": []
+        },
+        {
+            "path": "app/Controllers/StockController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Controllers/Blog.php",
+            "services": [],
+            "views": [
+                "blog/index",
+                "blog/single_post",
+                "blog/category"
+            ],
+            "models": [
+                "BlogModel"
+            ]
+        },
+        {
+            "path": "app/Controllers/Traits/HasUserContext.php",
+            "services": [
+                "logger"
+            ],
+            "views": [],
+            "models": [
+                "WalletModel"
+            ]
+        },
+        {
+            "path": "app/Controllers/MaintenanceController.php",
+            "services": [],
+            "views": [
+                "maintenance/index"
+            ],
+            "models": []
+        },
+        {
+            "path": "app/Controllers/Test.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Controllers/UserController.php",
+            "services": [
+                "router"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Controllers/OpsHealthController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Controllers/BaseUserController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Controllers/BaseController.php",
+            "services": [
+                "alerts",
+                "authentication",
+                "crudCacheInvalidator",
+                "locator",
+                "router",
+                "response",
+                "myMIAnalytics",
+                "myMIInvestments",
+                "dashboardService",
+                "session"
+            ],
+            "views": [],
+            "models": [
+                "WalletModel"
+            ]
+        },
+        {
+            "path": "app/Controllers/BaseAPIController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Controllers/BaseAdminController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Controllers/AuthController.php",
+            "services": [
+                "session",
+                "authentication",
+                "eventTracker",
+                "request",
+                "onboardingProgressService",
+                "safeCache",
+                "registrationAttributionService",
+                "activator",
+                "authAuditService",
+                "throttler",
+                "resetter",
+                "response"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/MditIssuanceAPIController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "MditTokenLedgerModel",
+                "MditDepositModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/MditWebhookAPIController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "MditWebhookEventModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/InvestmentsAPIController.php",
+            "services": [
+                "authentication",
+                "request",
+                "session",
+                "forecastAggregationService",
+                "forecastAccuracyEvaluator",
+                "mymiInvestments",
+                "authorization",
+                "mymiForecaster"
+            ],
+            "views": [],
+            "models": [
+                "InvestmentModel",
+                "ReferralModel",
+                "PageSEOModel",
+                "SubscribeModel",
+                "InvestmentsNewsModel",
+                "AlertsModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/Webhooks/EmailBounceAPIController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/Webhooks/TradingViewAPIController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "InboundWebhookModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/Webhooks/ZapierAPIController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "InboundWebhookModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/SqueezeAPIController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "SqueezeModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/ChatAPIController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "ChatToolRunModel",
+                "OpsQueueModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/AiOpsAPIController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/PredictionsAPIController.php",
+            "services": [
+                "mymipredictions",
+                "auth"
+            ],
+            "views": [],
+            "models": [
+                "TradesModel",
+                "MarketsModel",
+                "OrdersModel",
+                "PositionsModel",
+                "PayoutsModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/ProjectsAPIController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "ProjectsModel",
+                "ProjectInboxModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/ReferralAPIController.php",
+            "services": [
+                "authentication",
+                "session"
+            ],
+            "views": [],
+            "models": [
+                "ReferralModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/UserAPIController.php",
+            "services": [
+                "MyMIExchange",
+                "MyMIMarketing",
+                "internalToken"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/MarketingAPIController.php",
+            "services": [
+                "MyMIMarketing",
+                "mailService",
+                "request",
+                "activator"
+            ],
+            "views": [],
+            "models": [
+                "MarketingModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/AIAPIController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "DiscordLinkModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/AuctionsAPIController.php",
+            "services": [
+                "fmv"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/BitcoinAPIController.php",
+            "services": [
+                "BitcoinService"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/BrokerSmokeAPIController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/BudgetAPIController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/ContentEngineAPIController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": [
+                "GroupModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/DiscordAPIController.php",
+            "services": [
+                "logger"
+            ],
+            "views": [],
+            "models": [
+                "DiscordLinkModel",
+                "AlertsModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/DocsAPIController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/DoorDashAPIController.php",
+            "services": [
+                "authentication",
+                "request",
+                "curlrequest"
+            ],
+            "views": [],
+            "models": [
+                "UserModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/DripCampaignAPIController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/EmailAPIController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "CampaignModel",
+                "EmailModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/EsportsAPIController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/HealthAPIController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/KeysAPIController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "ApiTokenModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/ManagementAPIController.php",
+            "services": [
+                "authorization",
+                "MyMIMarketing",
+                "request",
+                "activator",
+                "mailService"
+            ],
+            "views": [],
+            "models": [
+                "MarketingModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/MditBaseAPIController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/OpsAPIController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": [
+                "OpsJobsModel",
+                "OpsQueueModel",
+                "OpsRunsModel",
+                "AiOpsIngestRunModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/OpsPublicPagesAPIController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/ScannerController.php",
+            "services": [
+                "scannerService"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/WalletsAPIController.php",
+            "services": [
+                "authentication",
+                "crudCacheInvalidator",
+                "renderer",
+                "logger",
+                "walletService"
+            ],
+            "views": [],
+            "models": [
+                "WalletModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/AlertsAPIController.php",
+            "services": [
+                "authorization",
+                "alertService",
+                "MyMIMarketing",
+                "authentication",
+                "mailService",
+                "email"
+            ],
+            "views": [
+                "ManagementModule\\\\Views\\\\Alerts\\\\modals\\\\createTradeAlert",
+                "ManagementModule\\\\Views\\\\Alerts\\\\modals\\\\viewTradeChart",
+                "ManagementModule\\\\Views\\\\Alerts\\\\modals\\\\manageTradeAlert",
+                "ManagementModule\\\\Views\\\\Alerts\\\\modals\\\\updateExchange",
+                "App\\\\Modules\\\\Management\\\\Views\\\\Signals\\\\modals\\\\preview_file"
+            ],
+            "models": [
+                "SignalsModel",
+                "SignalFilesModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/MditAdminAPIController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "MditRedemptionModel",
+                "MditDepositModel",
+                "MditWebhookEventModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/MditDepositAPIController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "MditDepositModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/MditInvestorAPIController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "MditInvestorProfileModel",
+                "MditTokenLedgerModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/MditRedemptionAPIController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/SupportAPIController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "SupportModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/SolanaAPIController.php",
+            "services": [
+                "authentication",
+                "request"
+            ],
+            "views": [],
+            "models": [
+                "ExchangeModel",
+                "SolanaModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/AIOpsAPIController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/SearchAPIController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/ZapierAPIController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/AlertsPublicAPIController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Admin/Controllers/BackupsController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Admin/Controllers/FlagsController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "FeatureFlagModel",
+                "FeatureFlagOverrideModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Admin/Controllers/PrivacyController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Advertise/Controllers/FeaturesController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "MyMIGoldModel",
+                "PageSEOModel",
+                "SubscribeModel",
+                "UserModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/SubscribeController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "UserModel",
+                "PageSEOModel",
+                "SubscribeModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/EarningsController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": [
+                "MyMIGoldModel",
+                "PageSEOModel",
+                "SubscribeModel",
+                "UserModel",
+                "InvestmentsCalendarModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/HowItWorks.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "MyMIGoldModel",
+                "PageSEOModel",
+                "SubscribeModel",
+                "UserModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/IRSController.php",
+            "services": [
+                "authentication",
+                "session"
+            ],
+            "views": [],
+            "models": [
+                "UserModel",
+                "PageSEOModel",
+                "SubscribeModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/NewsAndUpdates.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "UserModel",
+                "PageSEOModel",
+                "SubscribeModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/PersonalBudgetingController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": [
+                "UserModel",
+                "PageSEOModel",
+                "SubscribeModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/UpdatesController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": [
+                "UserModel",
+                "PageSEOModel",
+                "SubscribeModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/BlogController.php",
+            "services": [
+                "authentication",
+                "auth"
+            ],
+            "views": [],
+            "models": [
+                "UserModel",
+                "PageSEOModel",
+                "SubscribeModel",
+                "BlogModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/InvestingController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": [
+                "UserModel",
+                "PageSEOModel",
+                "SubscribeModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/HowItWorksController.php",
+            "services": [
+                "authentication",
+                "request",
+                "myMIGold"
+            ],
+            "views": [],
+            "models": [
+                "PageSEOModel",
+                "SubscribeModel",
+                "UserModel",
+                "MyMIGoldModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Docs/Controllers/OpenApiController.php",
+            "services": [],
+            "views": [
+                "App\\Modules\\Docs\\Views\\openapi"
+            ],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Docs/Controllers/DocsController.php",
+            "services": [],
+            "views": [
+                "App\\Modules\\Docs\\Views\\index",
+                "App\\Modules\\Docs\\Views\\doc"
+            ],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Exchange/Controllers/BlockchainController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Exchange/Controllers/UserController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Exchange/Controllers/MetaMaskController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Exchange/Controllers/GeminiController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Exchange/Controllers/ExchangeController.php",
+            "services": [
+                "authentication",
+                "curlrequest",
+                "logger",
+                "solanaService",
+                "queue"
+            ],
+            "views": [],
+            "models": [
+                "ExchangeModel",
+                "WalletModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Exchange/Controllers/DigiByteController.php",
+            "services": [
+                "request"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Exchange/Controllers/SolanaController.php",
+            "services": [
+                "authentication",
+                "request",
+                "solanaService"
+            ],
+            "views": [],
+            "models": [
+                "AccountsModel",
+                "ExchangeModel",
+                "SolanaModel",
+                "TokenModel",
+                "UserModel",
+                "WalletModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Finance/Controllers/FinanceController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "RiskBudgetModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/AssetsAdminController.php",
+            "services": [
+                "authentication",
+                "request"
+            ],
+            "views": [],
+            "models": [
+                "AccountsModel",
+                "BudgetModel",
+                "UserModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/HRAdminController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/TradovateAdminController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/UsersAdminController.php",
+            "services": [
+                "authentication",
+                "request"
+            ],
+            "views": [],
+            "models": [
+                "MarketingModel",
+                "AccountsModel",
+                "BudgetModel",
+                "InvestmentModel",
+                "MyMIGoldModel",
+                "UserModel",
+                "WalletModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/WebDesignAdminController.php",
+            "services": [
+                "authentication",
+                "request"
+            ],
+            "views": [],
+            "models": [
+                "MarketingModel",
+                "AccountsModel",
+                "AnalyticalModel",
+                "AnnouncementsModel",
+                "DesignModel",
+                "BudgetModel",
+                "InvestmentModel",
+                "MyMIGoldModel",
+                "UserModel",
+                "WalletModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/MarketingAdminController.php",
+            "services": [
+                "authentication",
+                "logger",
+                "request",
+                "MyMIMarketing",
+                "MyMIUser",
+                "solanaService",
+                "mailService",
+                "marketingService"
+            ],
+            "views": [
+                "App\\\\Modules\\\\Management\\\\Views\\\\Marketing\\\\communities"
+            ],
+            "models": [
+                "AlertsModel",
+                "InvestmentModel",
+                "MarketingModel",
+                "SocialPlatformModel",
+                "SocialCommunityModel",
+                "SocialPostTemplateModel",
+                "SocialGeneratedPostModel",
+                "SocialDistributionQueueModel",
+                "UserModel",
+                "CampaignModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/APIAdminController.php",
+            "services": [
+                "authentication",
+                "request"
+            ],
+            "views": [],
+            "models": [
+                "AccountsModel",
+                "BudgetModel",
+                "UserModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/WalletsAdminController.php",
+            "services": [
+                "authentication",
+                "request"
+            ],
+            "views": [],
+            "models": [
+                "MarketingModel",
+                "AccountsModel",
+                "BudgetModel",
+                "InvestmentModel",
+                "MyMIGoldModel",
+                "UserModel",
+                "WalletModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/AlertsAdminController.php",
+            "services": [
+                "authentication",
+                "request",
+                "alertService",
+                "mailService"
+            ],
+            "views": [],
+            "models": [
+                "AccountsModel",
+                "BudgetModel",
+                "UserModel",
+                "SignalsModel",
+                "AlertsModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/Marketing/BloggerAdminController.php",
+            "services": [
+                "bloggerService"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/Marketing/CampaignAdminController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "EmailQueueModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/Marketing/EmailQueueAdminController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "EmailTemplateModel",
+                "EmailQueueModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/Marketing/EmailTemplateAdminController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "EmailTemplateModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/ManagementController.php",
+            "services": [
+                "authentication",
+                "logger",
+                "MyMISolana"
+            ],
+            "views": [],
+            "models": [
+                "WeeklyStreamWatchlistModel",
+                "MarketingNewsletterModel",
+                "BudgetModel",
+                "WalletModel",
+                "AuthHealthRunModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/BudgetsAdminController.php",
+            "services": [
+                "authentication",
+                "request"
+            ],
+            "views": [],
+            "models": [
+                "AccountsModel",
+                "BudgetModel",
+                "UserModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/ErrorOpsController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "ErrorPatternModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/SignalsAdminController.php",
+            "services": [],
+            "views": [
+                "App\\Modules\\Management\\Views\\Signals\\index"
+            ],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/AdminController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/SmtpTestAdminController.php",
+            "services": [
+                "email"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/SupportAdminController.php",
+            "services": [
+                "authentication",
+                "request",
+                "mailService"
+            ],
+            "views": [],
+            "models": [
+                "MarketingModel",
+                "AccountsModel",
+                "BudgetModel",
+                "InvestmentModel",
+                "AnnouncementsModel",
+                "DesignModel",
+                "MyMIGoldModel",
+                "UserModel",
+                "WalletModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/TestAdminController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/ProjectsAdminController.php",
+            "services": [
+                "authentication",
+                "request",
+                "solanaService",
+                "RealEstateIngestService"
+            ],
+            "views": [],
+            "models": [
+                "DashboardModel",
+                "ProjectsModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/AccountRescueAdminController.php",
+            "services": [
+                "activator",
+                "resetter",
+                "authentication"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/AiOpsManagementAdminController.php",
+            "services": [],
+            "views": [
+                "App\\Modules\\Management\\Views\\AiOps\\index"
+            ],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/AuthFunnelAdminController.php",
+            "services": [
+                "request",
+                "authentication"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/AuthHealthAdminController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [
+                "App\\Modules\\Management\\Views\\AuthHealth\\modals\\details"
+            ],
+            "models": [
+                "AuthHealthRunModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/BudgetingAdminController.php",
+            "services": [
+                "authentication",
+                "request"
+            ],
+            "views": [],
+            "models": [
+                "AccountsModel",
+                "BudgetModel",
+                "UserModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/ChatAdminController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": [
+                "AIOpsChatAdminModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/ChatUsageAdminController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/ContentEngineAdminController.php",
+            "services": [],
+            "views": [
+                "App\\Modules\\Management\\Views\\ContentEngine\\modals\\post_preview"
+            ],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/DevelopmentAdminController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/DiscordAdminController.php",
+            "services": [
+                "authentication",
+                "logger"
+            ],
+            "views": [],
+            "models": [
+                "BudgetModel",
+                "WalletModel",
+                "DiscordModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/DocsAdminController.php",
+            "services": [],
+            "views": [
+                "App\\Modules\\Management\\Views\\docs\\view",
+                "App\\Modules\\Management\\Views\\docs\\index"
+            ],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/DripCampaignAdminController.php",
+            "services": [
+                "session",
+                "request",
+                "authentication"
+            ],
+            "views": [],
+            "models": [
+                "DripCampaignModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/EmailAdminController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "EmailModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/EmailOutboxAdminController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": [
+                "EmailOutboxModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/ExchangeAdminController.php",
+            "services": [
+                "authentication",
+                "request"
+            ],
+            "views": [],
+            "models": [
+                "MarketingModel",
+                "AccountsModel",
+                "AnalyticalModel",
+                "AnnouncementsModel",
+                "DesignModel",
+                "BudgetModel",
+                "ExchangeModel",
+                "InvestmentModel",
+                "MyMIGoldModel",
+                "SolanaModel",
+                "UserModel",
+                "WalletModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/FinanceAdminController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/HowTosAdminController.php",
+            "services": [
+                "authentication",
+                "logger",
+                "solanaService"
+            ],
+            "views": [],
+            "models": [
+                "BudgetModel",
+                "WalletModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/InvestmentsAdminController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/ManagementAdminController.php",
+            "services": [
+                "authentication",
+                "request",
+                "solanaService",
+                "RealEstateIngestService"
+            ],
+            "views": [],
+            "models": [
+                "DashboardModel",
+                "ProjectsModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/NotificationAdminController.php",
+            "services": [
+                "authentication",
+                "request",
+                "MyMIMarketing"
+            ],
+            "views": [],
+            "models": [
+                "AlertsModel",
+                "MarketingModel",
+                "UserModel",
+                "YourModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/OpsAdminController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": [
+                "OpsJobsModel",
+                "OpsQueueModel",
+                "OpsRunsModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/PartnersAdminController.php",
+            "services": [
+                "authentication",
+                "request",
+                "MyMIMarketing"
+            ],
+            "views": [],
+            "models": [
+                "AlertsModel",
+                "MarketingModel",
+                "UserModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/PublicPagesAdminController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/SecurityAdminController.php",
+            "services": [
+                "authentication",
+                "request",
+                "security",
+                "phishing_detector",
+                "mobile_security_checker",
+                "vulnerability_scanner",
+                "compliance_checker",
+                "encryption"
+            ],
+            "views": [],
+            "models": [
+                "AccountsModel",
+                "BudgetModel",
+                "UserModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/OperationsAdminController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/OpsInboxAdminController.php",
+            "services": [],
+            "views": [
+                "Management/OpsInbox/index",
+                "Management/OpsInbox/show"
+            ],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/ServicesAdminController.php",
+            "services": [
+                "authentication",
+                "request"
+            ],
+            "views": [],
+            "models": [
+                "AccountsModel",
+                "BudgetModel",
+                "UserModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/SitemapAdminController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "SitemapModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/TaxAdmin/Controllers/TaxConfig.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [
+                "App\\\\Modules\\\\Management\\\\TaxAdmin\\\\Views\\\\dashboard",
+                "App\\\\Modules\\\\Management\\\\TaxAdmin\\\\Views\\\\templates\\\\index",
+                "App\\\\Modules\\\\Management\\\\TaxAdmin\\\\Views\\\\templates\\\\edit",
+                "App\\\\Modules\\\\Management\\\\TaxAdmin\\\\Views\\\\jurisdictions\\\\index",
+                "App\\\\Modules\\\\Management\\\\TaxAdmin\\\\Views\\\\rates\\\\index",
+                "App\\\\Modules\\\\Management\\\\TaxAdmin\\\\Views\\\\rates\\\\edit"
+            ],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Marketing_New/Controllers/ScraperController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "MarketingModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Notifications/Controllers/PushController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "PushSubscriptionModel"
+            ]
+        },
+        {
+            "path": "app/Modules/ScriptStudio/Controllers/ScriptStudioController.php",
+            "services": [],
+            "views": [
+                "App\\\\Modules\\\\ScriptStudio\\\\Views\\\\index",
+                "App\\\\Modules\\\\ScriptStudio\\\\Views\\\\marketplace",
+                "App\\\\Modules\\\\ScriptStudio\\\\Views\\\\create_edit",
+                "App\\\\Modules\\\\ScriptStudio\\\\Views\\\\preview_emulator"
+            ],
+            "models": [
+                "ScriptModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Search/Controllers/SearchController.php",
+            "services": [],
+            "views": [
+                "App\\Modules\\Search\\Views\\index"
+            ],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Status/Controllers/HealthController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Status/Controllers/MetricsController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Support/Controllers/AccountSupportController.php",
+            "services": [
+                "activator",
+                "resetter",
+                "throttler"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Support/Controllers/SupportController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Support/Controllers/SupportTicketController.php",
+            "services": [],
+            "views": [
+                "App\\\\Modules\\\\Support\\\\Views\\\\index",
+                "App\\\\Modules\\\\Support\\\\Views\\\\Support\\\\ticket_detail"
+            ],
+            "models": []
+        },
+        {
+            "path": "app/Modules/User/Controllers/OnboardingWalkthroughController.php",
+            "services": [
+                "onboardingProgressService",
+                "authentication",
+                "eventTracker"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/User/Controllers/PredictionsController.php",
+            "services": [
+                "mymipredictions",
+                "request"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/User/Controllers/PrivacyController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "PrivacyRequestModel"
+            ]
+        },
+        {
+            "path": "app/Modules/User/Controllers/ReferralController.php",
+            "services": [
+                "authentication",
+                "solanaService",
+                "logger"
+            ],
+            "views": [],
+            "models": [
+                "BudgetModel",
+                "UserModel"
+            ]
+        },
+        {
+            "path": "app/Modules/User/Controllers/SearchController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/User/Controllers/SubscribeController.php",
+            "services": [
+                "auth",
+                "request"
+            ],
+            "views": [],
+            "models": [
+                "MarketingModel",
+                "BudgetModel",
+                "MyMIGoldModel",
+                "SubscribeModel"
+            ]
+        },
+        {
+            "path": "app/Modules/User/Controllers/BudgetController.php",
+            "services": [
+                "authentication",
+                "request",
+                "safeCache",
+                "logger",
+                "solanaService",
+                "setupStatusService"
+            ],
+            "views": [],
+            "models": [
+                "AccountsModel",
+                "BudgetModel"
+            ]
+        },
+        {
+            "path": "app/Modules/User/Controllers/WalletsController.php",
+            "services": [
+                "authentication",
+                "request",
+                "logger",
+                "solanaService",
+                "safeCache",
+                "setupStatusService",
+                "email"
+            ],
+            "views": [],
+            "models": [
+                "WalletModel",
+                "MyMIGoldModel"
+            ]
+        },
+        {
+            "path": "app/Modules/User/Controllers/Users.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/User/Controllers/AuctionsController.php",
+            "services": [
+                "curlrequest"
+            ],
+            "views": [],
+            "models": [
+                "AuctionItemModel",
+                "AuctionLotModel",
+                "AuctionBidModel"
+            ]
+        },
+        {
+            "path": "app/Modules/User/Controllers/DashboardController.php",
+            "services": [
+                "authentication",
+                "request",
+                "logger",
+                "onboardingProgressService",
+                "eventTracker",
+                "solanaService",
+                "MyMIMarketing",
+                "setupStatusService",
+                "mymiForecaster",
+                "myMISolana"
+            ],
+            "views": [
+                "UserModule\\Views\\Setup\\continue_setup_modal"
+            ],
+            "models": [
+                "AlertsModel",
+                "DashboardModel",
+                "UserModel",
+                "AccountsModel",
+                "MarketingModel",
+                "SolanaModel",
+                "DiscordLinkModel"
+            ]
+        },
+        {
+            "path": "app/Modules/User/Controllers/TradeTracker.php",
+            "services": [
+                "request",
+                "validation"
+            ],
+            "views": [],
+            "models": [
+                "TrackerModel"
+            ]
+        },
+        {
+            "path": "app/Modules/User/Controllers/AlertsController.php",
+            "services": [
+                "authentication",
+                "request",
+                "myMIUser",
+                "mymialerts"
+            ],
+            "views": [],
+            "models": [
+                "AlertsModel",
+                "BudgetModel"
+            ]
+        },
+        {
+            "path": "app/Modules/User/Controllers/InvestmentsController.php",
+            "services": [
+                "authentication",
+                "request",
+                "logger",
+                "curlrequest",
+                "solanaService",
+                "MyMIUser",
+                "forecastAggregation",
+                "forecastAccuracyEvaluator",
+                "mymiForecaster"
+            ],
+            "views": [
+                "Investments/forecast_detail_modal"
+            ],
+            "models": [
+                "WalletModel",
+                "AccountsModel",
+                "BudgetModel",
+                "InvestmentModel",
+                "MarketingModel",
+                "MyMIGoldModel",
+                "UserModel",
+                "InvestmentPriceForecastModel",
+                "InvestmentForecastHistoryModel",
+                "InvestmentForecastAccuracyModel",
+                "AlertsModel"
+            ]
+        },
+        {
+            "path": "app/Modules/User/Controllers/ProjectsController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": [
+                "ProjectsModel",
+                "ProjectCommitmentsModel"
+            ]
+        },
+        {
+            "path": "app/Modules/User/Controllers/EconomyController.php",
+            "services": [],
+            "views": [
+                "Investments/economy_widget"
+            ],
+            "models": []
+        },
+        {
+            "path": "app/Modules/User/Controllers/EmailController.php",
+            "services": [
+                "mailService"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/User/Controllers/InstitutesController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": [
+                "InstitutesModel",
+                "BudgetModel",
+                "UserModel"
+            ]
+        },
+        {
+            "path": "app/Modules/User/Controllers/KnowledgebaseController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": [
+                "PageSEOModel",
+                "PublicModel",
+                "SubscribeModel"
+            ]
+        },
+        {
+            "path": "app/Modules/User/Controllers/OnboardingController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/User/Controllers/AccountController.php",
+            "services": [
+                "authentication",
+                "request"
+            ],
+            "views": [
+                "themes/dashboard/layouts/index"
+            ],
+            "models": [
+                "BudgetModel"
+            ]
+        },
+        {
+            "path": "app/Modules/User/Tax/Controllers/Tax.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [
+                "App\\\\Modules\\\\User\\\\Tax\\\\Views\\\\index",
+                "App\\\\Modules\\\\User\\\\Tax\\\\Views\\\\edit",
+                "App\\\\Modules\\\\User\\\\Tax\\\\Views\\\\view",
+                "App\\\\Modules\\\\User\\\\Tax\\\\Views\\\\preview"
+            ],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Advisor/Controllers/AdvisorController.php",
+            "services": [
+                "kimiClient"
+            ],
+            "views": [
+                "App\\\\Modules\\\\Advisor\\\\Views\\\\advisor_dashboard"
+            ],
+            "models": []
+        },
+        {
+            "path": "app/Modules/AIOps/Controllers/AIOpsController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Predictions/Controllers/API/PredictionsApiController.php",
+            "services": [
+                "mymipredictions",
+                "auth"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Chat/Controllers/ChatController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/ContentEngine/Controllers/ContentEngineController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Logs/Controllers/LogsController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Ops/Controllers/OpsController.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Ops/Controllers/OpsDashboardController.php",
+            "services": [
+                "request"
+            ],
+            "views": [],
+            "models": [
+                "OpsProjectModel",
+                "OpsTaskModel",
+                "OpsSubprojectModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Public/Controllers/PublicPagesController.php",
+            "services": [],
+            "views": [
+                "App\\\\Modules\\\\Public\\\\Views\\\\pages\\\\container"
+            ],
+            "models": []
+        }
+    ]
+}

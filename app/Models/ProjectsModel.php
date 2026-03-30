@@ -241,20 +241,12 @@ class ProjectsModel extends Model
         ];
     }
 
-
-    public function getFundInvestorProfile(int $projectId, int $userId): ?array
+    public function getFundInvestorProfile($projectId, $userId)
     {
-        if ($this->db->tableExists('bf_mdit_investor_profiles')) {
-            return $this->db->table('bf_mdit_investor_profiles')
-                ->where('project_id', $projectId)
-                ->where('user_id', $userId)
-                ->get()->getRowArray();
-        }
-
-        return $this->db->table('bf_projects_fund_investor_profiles')
-            ->where('project_id', $projectId)
+        return $this->db->table('bf_mdit_investor_profiles')
             ->where('user_id', $userId)
-            ->get()->getRowArray();
+            ->get()
+            ->getRow();
     }
 
     public function upsertFundInvestorProfile(int $projectId, int $userId, array $data): bool

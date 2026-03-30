@@ -1,0 +1,1897 @@
+{
+    "generated_at": "2026-03-30 12:37:24",
+    "total_md_files": 1542,
+    "readme_files": 122,
+    "directories": [
+        {
+            "directory": "docs/ops",
+            "md_files": 44,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/ops/auth",
+            "md_files": 17,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/ops/runbooks",
+            "md_files": 8,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/ops/reviews",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/ops/logs",
+            "md_files": 3,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/ops/log-fixes",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/adr",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/auctions",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/budget",
+            "md_files": 4,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/budgeting",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/discord",
+            "md_files": 23,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/logs",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/marketing",
+            "md_files": 21,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/marketing/_assets",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/marketing/_templates",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/marketing/_templates/Coffee-and-Stocks",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/nginx",
+            "md_files": 7,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/operations",
+            "md_files": 13,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/predictions",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/resolutions",
+            "md_files": 6,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/search",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/security",
+            "md_files": 11,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/tasks",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/wallets",
+            "md_files": 4,
+            "has_readme": true
+        },
+        {
+            "directory": "docs",
+            "md_files": 23,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/_gap-tracker",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/functional_inventory",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/page_seo",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/syndication_inventory",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/content_hub_inventory",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/alerts",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/notes",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/categorized",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/user-guides/ci4",
+            "md_files": 6,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/user-guides/discord",
+            "md_files": 7,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/user-guides",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/_audit",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/Kimi",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/Kimi/suggestions",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/content_engine",
+            "md_files": 10,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/routes",
+            "md_files": 8,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/chatgpt/codex_executive_director",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/chatgpt/mymi_alert_system",
+            "md_files": 3,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/chatgpt",
+            "md_files": 9,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/chatgpt/diffs",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/chatgpt/processed",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/chatgpt/workflows",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/chatgpt/extraction",
+            "md_files": 9,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/chatgpt/archive/MyMI_Codex_Executive",
+            "md_files": 3,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/chatgpt/aiops/MyMI_Codex_Executive",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/chatgpt/aiops",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/codex/reviews",
+            "md_files": 9,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/codex",
+            "md_files": 7,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/cron",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/cron/jobs",
+            "md_files": 8,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/sql",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/automation/communities",
+            "md_files": 3,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/automation",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/communities",
+            "md_files": 11,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/funnels",
+            "md_files": 4,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/gap-audit",
+            "md_files": 5,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/go-live",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/indicators",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/legal/crypto_customer_agreement",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/legal/crypto_customer_agreement/sections",
+            "md_files": 17,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/legal",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/platform_formats",
+            "md_files": 9,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/revenue_streams",
+            "md_files": 5,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/troubleshooting",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/troubleshooting/checklists",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/troubleshooting/ci4-routing",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/troubleshooting/nginx",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/troubleshooting/runbooks",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/troubleshooting/scripts",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/troubleshooting/ssl",
+            "md_files": 3,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/troubleshooting/templates",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/ui",
+            "md_files": 6,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/integrations",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/tax",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/ai-ops",
+            "md_files": 6,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/aiops/runbooks",
+            "md_files": 3,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/workflows",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops",
+            "md_files": 14,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260201-143924",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260201-164836",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260201-165206",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260201-180030",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260201-185612",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260201-234406",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260202-022437",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260207-135815",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260207-140038",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260207-140215",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260207-151413",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260207-152502",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260207-153004",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260207-212657",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260207-231039",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260208-033458",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260208-131051",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260208-132515",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260208-134346",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260208-135706",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260208-141537",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260208-141808",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260208-142038",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260208-142127",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260208-142148",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260208-143848",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260208-154553",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260208-165510",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260209-005441",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260208-201007",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260209-110400",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260209-160123",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260209-191653",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260209-191902",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260209-195604",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260209-211333",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260209-211618",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260209-221128",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260209-222751",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260210-002222",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260210-015456",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260210-015513",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260210-112114",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260210-112241",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ops-spark-reset/20260210-130237",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/config-drift/20260201-180724",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/config-drift/20260201-183558",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/config-drift/20260201-184056",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/db-drift/20260201-181038",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/db-drift/20260201-184402",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/db-drift/20260205-024725",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/growth-retention-watch/20260201-180732",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/growth-retention-watch/20260201-183610",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/growth-retention-watch/20260201-184102",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/growth-retention-watch/20260205-024348",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/growth-retention-watch/20260205-024413",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/marketing-automation-audit/20260201-185227",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/marketing-automation-audit/20260205-024948",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/revenue-cost-forecast/20260201-180746",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/revenue-cost-forecast/20260201-183620",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/revenue-cost-forecast/20260201-184109",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/revenue-cost-forecast/20260205-024422",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/runtime-cache-boot/20260201-185706",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/runtime-cache-boot/20260208-195646",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/runtime-triage/20260201-185742",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/runtime-triage/20260208-195714",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/security-secrets-audit/20260201-185757",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/security-secrets-audit/20260208-195737",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ux-journey-audit/20260201-180810",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ux-journey-audit/20260201-183649",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ux-journey-audit/20260201-184200",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/ux-journey-audit/20260205-024451",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/revenue-scan/20260205-025010",
+            "md_files": 6,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/aiops/artifacts/scraper-audit-emails/20260205-024438",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/fix-503/20260208-195751",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/artifacts/api-audit/20260209-112136",
+            "md_files": 3,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/scraper",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/scrapers",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/automation",
+            "md_files": 6,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/aiops/triage",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/gap_tracker",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/gap_tracker/reports",
+            "md_files": 5,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/gap_tracker/items",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/diffs/manual-run",
+            "md_files": 3,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/diffs/2026-03-01--ops_diff",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/next-steps",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/_aiops/reports",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops",
+            "md_files": 22,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/_aiops/summaries",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/manual",
+            "md_files": 8,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/_aiops/manual/backlog",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/manual/done",
+            "md_files": 4,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/manual/priorities",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/design",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/standards",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/audit",
+            "md_files": 4,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/form-tests",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/_aiops/patch_jobs_failed",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/repairs",
+            "md_files": 6,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/progress",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/logs",
+            "md_files": 13,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/commands",
+            "md_files": 17,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/_aiops/scans/cell_discovery/run-20260209-111651",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/scans/cell_discovery",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/scans/cell_discovery/run-20260209-212001",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/scans/cell_discovery/run-20260211-023610",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/public-pages",
+            "md_files": 3,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/frontend",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/pr_ready/4",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/pr_ready/chat-admin-module",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/pr_ready/5",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/pr_ready/6",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/pr_ready/7",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/pr_ready/8",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/pr_ready/9",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/pr_ready/10",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/pr_ready/11",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/pr_ready/12",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/pr_ready/13",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/pr_ready/14",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/registry",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/patch_jobs",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/_aiops/patch_jobs/20260222-210833-ingest-4",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/patch_jobs/chat-admin-module",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/patch_jobs/20260222-230023-ingest-5",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/patch_jobs/20260223-234213-ingest-6",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/patch_jobs/20260225-030351-ingest-7",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/patch_jobs/20260225-135546-ingest-8",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/patch_jobs/20260225-140141-ingest-9",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/patch_jobs/20260225-140141-ingest-10",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/patch_jobs/20260226-025302-ingest-11",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/patch_jobs/20260227-013824-ingest-12",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/patch_jobs/20260227-125231-ingest-13",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/patch_jobs/20260228-133635-ingest-14",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/runs",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/ollama",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/_aiops/ollama/logs",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/nightly",
+            "md_files": 4,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/audits",
+            "md_files": 5,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/architecture",
+            "md_files": 9,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/doctor",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/inventory",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/mobile/replit",
+            "md_files": 9,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/mobile/replit/patches",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/mobile",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/reports",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/n8n",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/chat",
+            "md_files": 8,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/auth",
+            "md_files": 5,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/health",
+            "md_files": 11,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/health/modules",
+            "md_files": 7,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/onboarding",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/testing",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/standards",
+            "md_files": 8,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/audit",
+            "md_files": 4,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/deploy",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/email",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/architecture",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/ci4",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/errors",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/trading/datapoint-groups",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/trading/glossary",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/trading/rules",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/trading/thinkorswim/scanners",
+            "md_files": 3,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/trading/thinkorswim/studies",
+            "md_files": 3,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/trading/tradingview/indicators",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/trading/workflows",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/trading/codeigniter4",
+            "md_files": 9,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/trading",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/mysql/adjustments",
+            "md_files": 4,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/mysql/tables",
+            "md_files": 429,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/mysql",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/forecasting",
+            "md_files": 15,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/optimize",
+            "md_files": 7,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/ci",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/dashboard",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/hygiene",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/spark/categories/aiops",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/spark/categories/alerts",
+            "md_files": 12,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/spark/categories/auth",
+            "md_files": 3,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/spark/categories/cache",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/spark/categories/database",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/spark/categories/diagnostics",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/spark/categories/forecasting",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/spark/categories/logs",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/spark/categories/maintenance",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/spark/categories/marketing",
+            "md_files": 4,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/spark/categories/security",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/spark/categories/system",
+            "md_files": 3,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/spark/categories/users",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/spark",
+            "md_files": 24,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/dashboards",
+            "md_files": 8,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/triage",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/server",
+            "md_files": 4,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/psr4",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/next",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/next/bf_aiops_task_runs",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/management",
+            "md_files": 9,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/product",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/mdit",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/ai/contracts",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/ai/codex_prompts",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/ai",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/api",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/scrapers",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/controllers/APIs",
+            "md_files": 3,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/controllers/Predictions",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/controllers",
+            "md_files": 13,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/models/AIOps",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/models",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/modules/AIOps",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/modules/APIs",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/modules/Notifications",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/modules/Predictions",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/modules",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/services",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/dev",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/audits",
+            "md_files": 8,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260210-130402",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260210-133819",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260212-005323",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260212-010136",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260212-010223",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260212-010317",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260212-010628",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260212-023503",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260213-050023",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260213-050826",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260217-000858",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260217-001035",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260217-014932",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260217-032014",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260217-041857",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260217-042717",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260217-042932",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260217-043056",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260217-043328",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/ops-spark-reset/20260217-133855",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/api-audit/20260211-023725",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/api-audit/20260217-175526",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/api-audit/20260217-200919",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/fix-503/20260215-005841",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/runtime-cache-boot/20260215-010126",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/runtime-triage/20260215-010146",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/_support/aiops-init/20260220-234314",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/config-clear/20260221-034317",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/config-clear/20260221-123013",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/config-clear/20260221-123209",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/config-clear/20260221-175340",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/config-clear/20260221-141447",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/config-clear/20260222-004516",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/config-clear/20260222-033759",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/config-clear/20260222-224306",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/config-clear/20260222-230252",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/config-clear/20260222-230405",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/config-clear/20260222-230452",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/config-clear/20260223-002620",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/config-clear/20260223-005145",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/config-clear/20260225-005807",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/config-clear/20260225-011911",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/spark-reset/20260221-034349",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/spark-reset/20260221-123005",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/spark-reset/20260221-123211",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/spark-reset/20260221-175347",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/spark-reset/20260221-141452",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/spark-reset/20260222-033804",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/spark-reset/20260223-002623",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/spark-reset/20260225-005815",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/spark-reset/20260226-024907",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/spark-reset/20260306-133918",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/spark-reset/20260307-110433",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_ops",
+            "md_files": 4,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/reviews",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/APIs",
+            "md_files": 8,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/APIs/audit/20260226-032119_bdb17080249dcd27",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/APIs/audit",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/APIs/list",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/Github/temporary/gtm_gap-001",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/Github/temporary/gtm_gap-002",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/Github/temporary/gtm_gap-003",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/Github/temporary/ollama-patch-pipeline-fallback",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/Github/temporary/gtm_gap-004",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/Github",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/launch",
+            "md_files": 22,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/_repo",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/_repo/diff_batches",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/refactor",
+            "md_files": 17,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/_infrastructure/Lists",
+            "md_files": 10,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_infrastructure",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/docs-system",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/log_fixes",
+            "md_files": 3,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/frontend/batches",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/frontend",
+            "md_files": 4,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/how-it-works",
+            "md_files": 8,
+            "has_readme": true
+        }
+    ]
+}

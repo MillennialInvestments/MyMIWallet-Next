@@ -1,0 +1,569 @@
+{
+    "generated_at": "2026-03-30 12:37:24",
+    "services": [
+        {
+            "name": "AIOpsService",
+            "path": "app/Services/AIOpsService.php",
+            "registered": false
+        },
+        {
+            "name": "AccountService",
+            "path": "app/Services/AccountService.php",
+            "registered": false
+        },
+        {
+            "name": "AlertService",
+            "path": "app/Services/AlertService.php",
+            "registered": true
+        },
+        {
+            "name": "AlphaVantagePipelineService",
+            "path": "app/Services/AlphaVantagePipelineService.php",
+            "registered": false
+        },
+        {
+            "name": "AlphaVantageService",
+            "path": "app/Services/AlphaVantageService.php",
+            "registered": false
+        },
+        {
+            "name": "ApiGovernanceService",
+            "path": "app/Services/ApiGovernanceService.php",
+            "registered": false
+        },
+        {
+            "name": "ApiOpsService",
+            "path": "app/Services/ApiOpsService.php",
+            "registered": false
+        },
+        {
+            "name": "ApplePayService",
+            "path": "app/Services/ApplePayService.php",
+            "registered": false
+        },
+        {
+            "name": "AuctionService",
+            "path": "app/Services/AuctionService.php",
+            "registered": false
+        },
+        {
+            "name": "AuthAuditService",
+            "path": "app/Services/AuthAuditService.php",
+            "registered": true
+        },
+        {
+            "name": "AuthSmokeService",
+            "path": "app/Services/AuthSmokeService.php",
+            "registered": false
+        },
+        {
+            "name": "AutoloadAuditService",
+            "path": "app/Services/AutoloadAuditService.php",
+            "registered": false
+        },
+        {
+            "name": "AutoloadHealthService",
+            "path": "app/Services/AutoloadHealthService.php",
+            "registered": true
+        },
+        {
+            "name": "BirdeyeService",
+            "path": "app/Services/BirdeyeService.php",
+            "registered": false
+        },
+        {
+            "name": "BitcoinService",
+            "path": "app/Services/BitcoinService.php",
+            "registered": false
+        },
+        {
+            "name": "BlockchainService",
+            "path": "app/Services/BlockchainService.php",
+            "registered": false
+        },
+        {
+            "name": "BloggerService",
+            "path": "app/Services/BloggerService.php",
+            "registered": false
+        },
+        {
+            "name": "BudgetService",
+            "path": "app/Services/BudgetService.php",
+            "registered": false
+        },
+        {
+            "name": "BufferSchedulerService",
+            "path": "app/Services/BufferSchedulerService.php",
+            "registered": false
+        },
+        {
+            "name": "CashAppService",
+            "path": "app/Services/CashAppService.php",
+            "registered": false
+        },
+        {
+            "name": "ChatGovernanceIndexer",
+            "path": "app/Services/ChatGovernanceIndexer.php",
+            "registered": false
+        },
+        {
+            "name": "CoinGeckoService",
+            "path": "app/Services/CoinGeckoService.php",
+            "registered": false
+        },
+        {
+            "name": "CommandBuilderService",
+            "path": "app/Services/CommandBuilderService.php",
+            "registered": false
+        },
+        {
+            "name": "CommonDataService",
+            "path": "app/Services/CommonDataService.php",
+            "registered": false
+        },
+        {
+            "name": "ConfigLintService",
+            "path": "app/Services/ConfigLintService.php",
+            "registered": false
+        },
+        {
+            "name": "CryptoPanicService",
+            "path": "app/Services/CryptoPanicService.php",
+            "registered": false
+        },
+        {
+            "name": "CurrencyService",
+            "path": "app/Services/CurrencyService.php",
+            "registered": false
+        },
+        {
+            "name": "DashboardAggregatorService",
+            "path": "app/Services/DashboardAggregatorService.php",
+            "registered": false
+        },
+        {
+            "name": "DashboardService",
+            "path": "app/Services/DashboardService.php",
+            "registered": true
+        },
+        {
+            "name": "DebtManagementService",
+            "path": "app/Services/DebtManagementService.php",
+            "registered": false
+        },
+        {
+            "name": "DigiByteService",
+            "path": "app/Services/DigiByteService.php",
+            "registered": false
+        },
+        {
+            "name": "DocsService",
+            "path": "app/Services/DocsService.php",
+            "registered": false
+        },
+        {
+            "name": "DripCampaignService",
+            "path": "app/Services/DripCampaignService.php",
+            "registered": false
+        },
+        {
+            "name": "EmailQueueService",
+            "path": "app/Services/EmailQueueService.php",
+            "registered": false
+        },
+        {
+            "name": "EmailScraperService",
+            "path": "app/Services/EmailScraperService.php",
+            "registered": false
+        },
+        {
+            "name": "EmailService",
+            "path": "app/Services/EmailService.php",
+            "registered": false
+        },
+        {
+            "name": "EthereumServices",
+            "path": "app/Services/EthereumServices.php",
+            "registered": false
+        },
+        {
+            "name": "EtherscanService",
+            "path": "app/Services/EtherscanService.php",
+            "registered": false
+        },
+        {
+            "name": "EventTracker",
+            "path": "app/Services/EventTracker.php",
+            "registered": true
+        },
+        {
+            "name": "ExchangeService",
+            "path": "app/Services/ExchangeService.php",
+            "registered": false
+        },
+        {
+            "name": "ExternalApiGuard",
+            "path": "app/Services/ExternalApiGuard.php",
+            "registered": true
+        },
+        {
+            "name": "FinnhubService",
+            "path": "app/Services/FinnhubService.php",
+            "registered": false
+        },
+        {
+            "name": "ForecastAccuracyEvaluator",
+            "path": "app/Services/ForecastAccuracyEvaluator.php",
+            "registered": true
+        },
+        {
+            "name": "ForecastAggregationService",
+            "path": "app/Services/ForecastAggregationService.php",
+            "registered": true
+        },
+        {
+            "name": "ForecastingService",
+            "path": "app/Services/ForecastingService.php",
+            "registered": false
+        },
+        {
+            "name": "GitHubService",
+            "path": "app/Services/GitHubService.php",
+            "registered": false
+        },
+        {
+            "name": "GitService",
+            "path": "app/Services/GitService.php",
+            "registered": false
+        },
+        {
+            "name": "GoalTrackingService",
+            "path": "app/Services/GoalTrackingService.php",
+            "registered": false
+        },
+        {
+            "name": "GooglePayService",
+            "path": "app/Services/GooglePayService.php",
+            "registered": false
+        },
+        {
+            "name": "InfuraService",
+            "path": "app/Services/InfuraService.php",
+            "registered": false
+        },
+        {
+            "name": "IntakeRouter",
+            "path": "app/Services/IntakeRouter.php",
+            "registered": false
+        },
+        {
+            "name": "InternalEndpointGuardService",
+            "path": "app/Services/InternalEndpointGuardService.php",
+            "registered": false
+        },
+        {
+            "name": "InvestmentService",
+            "path": "app/Services/InvestmentService.php",
+            "registered": false
+        },
+        {
+            "name": "JupiterService",
+            "path": "app/Services/JupiterService.php",
+            "registered": false
+        },
+        {
+            "name": "MailChimpService",
+            "path": "app/Services/MailChimpService.php",
+            "registered": false
+        },
+        {
+            "name": "MailService",
+            "path": "app/Services/MailService.php",
+            "registered": true
+        },
+        {
+            "name": "MarketingScraper",
+            "path": "app/Services/MarketingScraper.php",
+            "registered": false
+        },
+        {
+            "name": "MarketingService",
+            "path": "app/Services/MarketingService.php",
+            "registered": false
+        },
+        {
+            "name": "MetaService",
+            "path": "app/Services/MetaService.php",
+            "registered": false
+        },
+        {
+            "name": "NotificationService",
+            "path": "app/Services/NotificationService.php",
+            "registered": false
+        },
+        {
+            "name": "OnboardingProgressService",
+            "path": "app/Services/OnboardingProgressService.php",
+            "registered": true
+        },
+        {
+            "name": "OnboardingService",
+            "path": "app/Services/OnboardingService.php",
+            "registered": false
+        },
+        {
+            "name": "OpsCommandService",
+            "path": "app/Services/OpsCommandService.php",
+            "registered": false
+        },
+        {
+            "name": "OpsExportService",
+            "path": "app/Services/OpsExportService.php",
+            "registered": false
+        },
+        {
+            "name": "OpsImportService",
+            "path": "app/Services/OpsImportService.php",
+            "registered": false
+        },
+        {
+            "name": "PayPalService",
+            "path": "app/Services/PayPalService.php",
+            "registered": false
+        },
+        {
+            "name": "PlaidService",
+            "path": "app/Services/PlaidService.php",
+            "registered": false
+        },
+        {
+            "name": "PremiumEntitlementService",
+            "path": "app/Services/PremiumEntitlementService.php",
+            "registered": true
+        },
+        {
+            "name": "ProjectsService",
+            "path": "app/Services/ProjectsService.php",
+            "registered": false
+        },
+        {
+            "name": "Psr4AuditService",
+            "path": "app/Services/Psr4AuditService.php",
+            "registered": true
+        },
+        {
+            "name": "PythonService",
+            "path": "app/Services/PythonService.php",
+            "registered": false
+        },
+        {
+            "name": "RealEstateIngestService",
+            "path": "app/Services/RealEstateIngestService.php",
+            "registered": false
+        },
+        {
+            "name": "RecurringService",
+            "path": "app/Services/RecurringService.php",
+            "registered": false
+        },
+        {
+            "name": "ReferralService",
+            "path": "app/Services/ReferralService.php",
+            "registered": false
+        },
+        {
+            "name": "RegistrationAttributionService",
+            "path": "app/Services/RegistrationAttributionService.php",
+            "registered": true
+        },
+        {
+            "name": "RevenueService",
+            "path": "app/Services/RevenueService.php",
+            "registered": false
+        },
+        {
+            "name": "ScannerTaxonomyService",
+            "path": "app/Services/ScannerTaxonomyService.php",
+            "registered": false
+        },
+        {
+            "name": "ScraperOpsService",
+            "path": "app/Services/ScraperOpsService.php",
+            "registered": false
+        },
+        {
+            "name": "SearchRotationService",
+            "path": "app/Services/SearchRotationService.php",
+            "registered": false
+        },
+        {
+            "name": "SearchService",
+            "path": "app/Services/SearchService.php",
+            "registered": false
+        },
+        {
+            "name": "SetupStatusService",
+            "path": "app/Services/SetupStatusService.php",
+            "registered": true
+        },
+        {
+            "name": "SlackWebhookService",
+            "path": "app/Services/SlackWebhookService.php",
+            "registered": false
+        },
+        {
+            "name": "SocialPostFormatter",
+            "path": "app/Services/SocialPostFormatter.php",
+            "registered": false
+        },
+        {
+            "name": "SolanaService",
+            "path": "app/Services/SolanaService.php",
+            "registered": false
+        },
+        {
+            "name": "SubSystemManager",
+            "path": "app/Services/SubSystemManager.php",
+            "registered": false
+        },
+        {
+            "name": "SupportService",
+            "path": "app/Services/SupportService.php",
+            "registered": false
+        },
+        {
+            "name": "TechnicalSnapshotService",
+            "path": "app/Services/TechnicalSnapshotService.php",
+            "registered": false
+        },
+        {
+            "name": "TokenService",
+            "path": "app/Services/TokenService.php",
+            "registered": false
+        },
+        {
+            "name": "TradeAlertsIngest",
+            "path": "app/Services/TradeAlertsIngest.php",
+            "registered": false
+        },
+        {
+            "name": "TransactionService",
+            "path": "app/Services/TransactionService.php",
+            "registered": false
+        },
+        {
+            "name": "UserService",
+            "path": "app/Services/UserService.php",
+            "registered": false
+        },
+        {
+            "name": "WalletService",
+            "path": "app/Services/WalletService.php",
+            "registered": false
+        },
+        {
+            "name": "WalletSummaryCalculator",
+            "path": "app/Services/WalletSummaryCalculator.php",
+            "registered": false
+        },
+        {
+            "name": "WalletSummaryService",
+            "path": "app/Services/WalletSummaryService.php",
+            "registered": false
+        },
+        {
+            "name": "WeeklyStreamService",
+            "path": "app/Services/WeeklyStreamService.php",
+            "registered": false
+        },
+        {
+            "name": "ZapierService",
+            "path": "app/Services/ZapierService.php",
+            "registered": false
+        }
+    ],
+    "issues": [
+        "AIOpsService may not be registered in Services.php",
+        "AccountService may not be registered in Services.php",
+        "AlphaVantagePipelineService may not be registered in Services.php",
+        "AlphaVantageService may not be registered in Services.php",
+        "ApiGovernanceService may not be registered in Services.php",
+        "ApiOpsService may not be registered in Services.php",
+        "ApplePayService may not be registered in Services.php",
+        "AuctionService may not be registered in Services.php",
+        "AuthSmokeService may not be registered in Services.php",
+        "AutoloadAuditService may not be registered in Services.php",
+        "BirdeyeService may not be registered in Services.php",
+        "BitcoinService may not be registered in Services.php",
+        "BlockchainService may not be registered in Services.php",
+        "BloggerService may not be registered in Services.php",
+        "BudgetService may not be registered in Services.php",
+        "BufferSchedulerService may not be registered in Services.php",
+        "CashAppService may not be registered in Services.php",
+        "ChatGovernanceIndexer may not be registered in Services.php",
+        "CoinGeckoService may not be registered in Services.php",
+        "CommandBuilderService may not be registered in Services.php",
+        "CommonDataService may not be registered in Services.php",
+        "ConfigLintService may not be registered in Services.php",
+        "CryptoPanicService may not be registered in Services.php",
+        "CurrencyService may not be registered in Services.php",
+        "DashboardAggregatorService may not be registered in Services.php",
+        "DebtManagementService may not be registered in Services.php",
+        "DigiByteService may not be registered in Services.php",
+        "DocsService may not be registered in Services.php",
+        "DripCampaignService may not be registered in Services.php",
+        "EmailQueueService may not be registered in Services.php",
+        "EmailScraperService may not be registered in Services.php",
+        "EmailService may not be registered in Services.php",
+        "EthereumServices may not be registered in Services.php",
+        "EtherscanService may not be registered in Services.php",
+        "ExchangeService may not be registered in Services.php",
+        "FinnhubService may not be registered in Services.php",
+        "ForecastingService may not be registered in Services.php",
+        "GitHubService may not be registered in Services.php",
+        "GitService may not be registered in Services.php",
+        "GoalTrackingService may not be registered in Services.php",
+        "GooglePayService may not be registered in Services.php",
+        "InfuraService may not be registered in Services.php",
+        "IntakeRouter may not be registered in Services.php",
+        "InternalEndpointGuardService may not be registered in Services.php",
+        "InvestmentService may not be registered in Services.php",
+        "JupiterService may not be registered in Services.php",
+        "MailChimpService may not be registered in Services.php",
+        "MarketingScraper may not be registered in Services.php",
+        "MarketingService may not be registered in Services.php",
+        "MetaService may not be registered in Services.php",
+        "NotificationService may not be registered in Services.php",
+        "OnboardingService may not be registered in Services.php",
+        "OpsCommandService may not be registered in Services.php",
+        "OpsExportService may not be registered in Services.php",
+        "OpsImportService may not be registered in Services.php",
+        "PayPalService may not be registered in Services.php",
+        "PlaidService may not be registered in Services.php",
+        "ProjectsService may not be registered in Services.php",
+        "PythonService may not be registered in Services.php",
+        "RealEstateIngestService may not be registered in Services.php",
+        "RecurringService may not be registered in Services.php",
+        "ReferralService may not be registered in Services.php",
+        "RevenueService may not be registered in Services.php",
+        "ScannerTaxonomyService may not be registered in Services.php",
+        "ScraperOpsService may not be registered in Services.php",
+        "SearchRotationService may not be registered in Services.php",
+        "SearchService may not be registered in Services.php",
+        "SlackWebhookService may not be registered in Services.php",
+        "SocialPostFormatter may not be registered in Services.php",
+        "SolanaService may not be registered in Services.php",
+        "SubSystemManager may not be registered in Services.php",
+        "SupportService may not be registered in Services.php",
+        "TechnicalSnapshotService may not be registered in Services.php",
+        "TokenService may not be registered in Services.php",
+        "TradeAlertsIngest may not be registered in Services.php",
+        "TransactionService may not be registered in Services.php",
+        "UserService may not be registered in Services.php",
+        "WalletService may not be registered in Services.php",
+        "WalletSummaryCalculator may not be registered in Services.php",
+        "WalletSummaryService may not be registered in Services.php",
+        "WeeklyStreamService may not be registered in Services.php",
+        "ZapierService may not be registered in Services.php"
+    ]
+}

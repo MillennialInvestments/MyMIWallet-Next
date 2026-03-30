@@ -690,7 +690,7 @@ class MyMIProjects
             'project' => $project,
             'fundSummary' => $this->projects->getProjectFundSummary($pid),
             'myPosition' => $this->getUserFundPosition($pid, (int) $cuID),
-            'compliance' => $this->projects->getFundInvestorProfile($pid, (int) $cuID),
+            'compliance' => $this->projectsModel->getFundInvestorProfile($cuID),
             'navHistory' => $this->projects->getProjectNAVHistory($pid, 30),
             'recentTransactions' => $this->projects->getProjectFundTransactions($pid, 25),
             'distributions' => $this->projects->getProjectDistributionsDetailed($pid),

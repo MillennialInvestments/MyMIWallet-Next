@@ -1,0 +1,26 @@
+{
+    "generated_at": "2026-03-30 12:37:24",
+    "files": [
+        {
+            "path": "app/Config/Routes.php",
+            "route_count": 1674,
+            "has_closure": true
+        },
+        {
+            "path": "app/Modules/Blog/Config/Routes.php",
+            "route_count": 2,
+            "has_closure": true
+        },
+        {
+            "path": "app/Modules/Management/Config/Routes.php",
+            "route_count": 3,
+            "has_closure": true
+        },
+        {
+            "path": "app/Modules/ScriptStudio/Config/Routes.php",
+            "route_count": 9,
+            "has_closure": true
+        }
+    ],
+    "issues": []
+}

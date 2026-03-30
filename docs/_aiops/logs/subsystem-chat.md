@@ -1,10 +1,10 @@
 # Subsystem Log Summary: chat
 
-- Files: 0
-- Lines scanned: 0
+- Files: 1
+- Lines scanned: 1
 - Errors: 0
 - Warnings: 0
-- Latest timestamp: none
+- Latest timestamp: 2026-03-27T10:44:26
 
 ## Files
-- _No files found_
+- `writable/logs/chat/chat.log`

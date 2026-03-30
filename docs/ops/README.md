@@ -1,0 +1,47 @@
+# ops Documentation
+
+Last Generated: 2026-03-30 12:37:23
+
+- 01-foundation.report.md
+- 01-psr4-autoload-audit.md
+- 500-audit.md
+- 502-playbook.md
+- _index.md
+- _inventory.docs.toc.md
+- _inventory.docs.tree.md
+- ai_usage_snapshot.md
+- aiops-guardrails-architecture.md
+- aiops-n8n-workflows.md
+- aiops-schema-endpoints-spec.md
+- app-update.md
+- auth_redirect_fix.md
+- backfill_emails.md
+- chat-health.md
+- ci4_logging_fixes_2025-12-22.md
+- control_plane_assumptions.md
+- cron_auth.md
+- cron_kick.md
+- daily_runbook.md
+- docs_alignment_report_2025-12-09.md
+- docs_browser.md
+- docs_index.md
+- env-vars.md
+- envdoctor.md
+- filters_audit_2025-12-31.md
+- filters_smoke_test.md
+- fix503.md
+- legacy_psr4_exceptions.md
+- logging_healthcheck.md
+- marketing_ignite.md
+- migration-dry-run.md
+- n8n-capabilities-for-mymiwallet.md
+- n8n_responsibilities.md
+- npm-stack-recommendations.md
+- post-deploy-checklist.md
+- scripts.md
+- scripts_index.md
+- sidebar_toggle_audit.md
+- sidebar_toggle_changelog.md
+- spark_known_issues.md
+- subsystems.md
+- unexpected-token-lt-audit.md

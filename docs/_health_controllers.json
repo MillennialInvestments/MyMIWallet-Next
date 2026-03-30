@@ -1,0 +1,1460 @@
+{
+    "generated_at": "2026-03-30 12:37:24",
+    "controllers": [
+        {
+            "path": "app/Controllers/Api/AdminChatUsageController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Controllers/Api/AiOpsManualRunController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Controllers/Api/InternalApiController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 0,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Controllers/Api/OpsFilesystemStatusController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Controllers/Api/SwaggerDocsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Controllers/AuthController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 17,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Controllers/BaseAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Controllers/BaseAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Controllers/BaseController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Controllers/BaseUserController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Controllers/Blog.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 4,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Controllers/Debug.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Controllers/Health.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Controllers/Home.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 16,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Controllers/MaintenanceController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Controllers/OpsHealthController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Controllers/StockController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Controllers/System/HealthController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Controllers/Test.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Controllers/Traits/HasUserContext.php",
+            "has_namespace": true,
+            "has_class": false,
+            "public_methods": 0,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Controllers/UserController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/AIOps/Controllers/AIOpsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/AIAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 5,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/AIOpsAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 8,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/AiOpsAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 5,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/AlertsAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 76,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/AlertsPublicAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/AuctionsAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 5,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/BitcoinAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/BrokerSmokeAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/BudgetAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 4,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/ChatAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/ContentEngineAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 8,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/DiscordAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 16,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/DocsAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/DoorDashAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 15,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/DripCampaignAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/EmailAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 21,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/EsportsAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 10,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/HealthAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/InvestmentsAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 23,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/KeysAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/ManagementAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 77,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/MarketingAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 115,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/MditAdminAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 5,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/MditBaseAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/MditDepositAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/MditInvestorAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 5,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/MditIssuanceAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/MditRedemptionAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/MditWebhookAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/OpsAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 6,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/OpsPublicPagesAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/PredictionsAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 40,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/ProjectsAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 13,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/ReferralAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/ScannerController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 5,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/SearchAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/SolanaAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 17,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/SqueezeAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 5,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/SupportAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/UserAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 10,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/WalletsAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 21,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/Webhooks/EmailBounceAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/Webhooks/TradingViewAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/Webhooks/ZapierAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/ZapierAPIController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Admin/Controllers/BackupsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Admin/Controllers/FlagsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Admin/Controllers/PrivacyController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Advertise/Controllers/FeaturesController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 5,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Advisor/Controllers/AdvisorController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 6,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/BlogController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 10,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/EarningsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 17,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/HowItWorks.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 7,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/HowItWorksController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 12,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/IRSController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 5,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/InvestingController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/NewsAndUpdates.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 5,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/PersonalBudgetingController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 6,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/SubscribeController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 6,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Blog/Controllers/UpdatesController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 6,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Chat/Controllers/ChatController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/ContentEngine/Controllers/ContentEngineController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Docs/Controllers/DocsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Docs/Controllers/OpenApiController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Exchange/Controllers/BlockchainController.php",
+            "has_namespace": false,
+            "has_class": false,
+            "public_methods": 0,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Exchange/Controllers/DigiByteController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Exchange/Controllers/ExchangeController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 37,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Exchange/Controllers/GeminiController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 10,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Exchange/Controllers/MetaMaskController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 17,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Exchange/Controllers/SolanaController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 43,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Exchange/Controllers/UserController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Finance/Controllers/FinanceController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Logs/Controllers/LogsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/APIAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 20,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/AccountRescueAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 6,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/AdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 9,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/AiOpsManagementAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/AlertsAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 36,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/AssetsAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 8,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/AuthFunnelAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/AuthHealthAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/BudgetingAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 4,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/BudgetsAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 8,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/ChatAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 4,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/ChatUsageAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 4,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/ContentEngineAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/DevelopmentAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/DiscordAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 12,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/DocsAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 4,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/DripCampaignAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 10,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/EmailAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 13,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/EmailOutboxAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/ErrorOpsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 5,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/ExchangeAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 9,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/FinanceAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/HRAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/HowTosAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 27,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/InvestmentsAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/ManagementAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 15,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/ManagementController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 29,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/Marketing/BloggerAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 6,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/Marketing/CampaignAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/Marketing/EmailQueueAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 4,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/Marketing/EmailTemplateAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/MarketingAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 100,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/NotificationAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 5,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/OperationsAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/OpsAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 4,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/OpsInboxAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 7,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/PartnersAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/ProjectsAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 25,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/PublicPagesAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 6,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/SecurityAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 40,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/ServicesAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 8,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/SignalsAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/SitemapAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 4,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/SmtpTestAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/SupportAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 21,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/TestAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/TradovateAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 6,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Management/Controllers/UsersAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 15,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/WalletsAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 17,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/Controllers/WebDesignAdminController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 18,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Management/TaxAdmin/Controllers/TaxConfig.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 8,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Marketing_New/Controllers/ScraperController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Notifications/Controllers/PushController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 4,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Ops/Controllers/OpsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Ops/Controllers/OpsDashboardController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 11,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Predictions/Controllers/API/PredictionsApiController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 9,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Public/Controllers/PublicPagesController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/ScriptStudio/Controllers/ScriptStudioController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 9,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Search/Controllers/SearchController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Status/Controllers/HealthController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 4,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Status/Controllers/MetricsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/Support/Controllers/AccountSupportController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 3,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Support/Controllers/SupportController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 5,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/Support/Controllers/SupportTicketController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/User/Controllers/AccountController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 21,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/User/Controllers/AlertsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 8,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/User/Controllers/AuctionsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 6,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/User/Controllers/BudgetController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 52,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/User/Controllers/DashboardController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 25,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/User/Controllers/EconomyController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 4,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/User/Controllers/EmailController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/User/Controllers/InstitutesController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 8,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/User/Controllers/InvestmentsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 37,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/User/Controllers/KnowledgebaseController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 16,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/User/Controllers/OnboardingController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/User/Controllers/OnboardingWalkthroughController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 6,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/User/Controllers/PredictionsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 7,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/User/Controllers/PrivacyController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 4,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/User/Controllers/ProjectsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 10,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/User/Controllers/ReferralController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 16,
+            "uses_responsetrait": true,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/User/Controllers/SearchController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/User/Controllers/SubscribeController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 4,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/User/Controllers/TradeTracker.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 16,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/User/Controllers/Users.php",
+            "has_namespace": false,
+            "has_class": false,
+            "public_methods": 0,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/User/Controllers/WalletsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 57,
+            "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/User/Tax/Controllers/Tax.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 11,
+            "uses_responsetrait": true,
+            "uses_logging": false
+        }
+    ],
+    "issues": [
+        "app/Controllers/Traits/HasUserContext.php missing class",
+        "app/Modules/Exchange/Controllers/BlockchainController.php missing namespace",
+        "app/Modules/Exchange/Controllers/BlockchainController.php missing class",
+        "app/Modules/User/Controllers/Users.php missing namespace",
+        "app/Modules/User/Controllers/Users.php missing class"
+    ]
+}

@@ -1,6 +1,6 @@
 # MyMI Wallet Documentation Inventory
 
-Generated: 2026-03-07 14:04:37
+Generated: 2026-03-30 12:37:23
 
 - docs/APIs/_inventory_controllers.md
 - docs/APIs/_inventory_filters.md
@@ -95,6 +95,8 @@ Generated: 2026-03-07 14:04:37
 - docs/_aiops/logs/summary-2026-02-14.md
 - docs/_aiops/logs/summary-2026-02-15.md
 - docs/_aiops/logs/summary-2026-02-24.md
+- docs/_aiops/logs/summary-2026-03-22.md
+- docs/_aiops/logs/summary-2026-03-30.md
 - docs/_aiops/manual/02112026-MarketingCampaigns.md
 - docs/_aiops/manual/README.md
 - docs/_aiops/manual/aiops-full-ci4-command-expansion.md
@@ -188,6 +190,18 @@ Generated: 2026-03-07 14:04:37
 - docs/_aiops/touch-log-2026-02-09.md
 - docs/_audit/ci4-logger-audit-2026-02-18.md
 - docs/_audit/ci4-logger-hardening-2026-02-18.md
+- docs/_audit_report.md
+- docs/_infrastructure/Lists/Commands.md
+- docs/_infrastructure/Lists/Config.md
+- docs/_infrastructure/Lists/Controllers.md
+- docs/_infrastructure/Lists/Helpers.md
+- docs/_infrastructure/Lists/Libraries.md
+- docs/_infrastructure/Lists/Models.md
+- docs/_infrastructure/Lists/ModuleControllers.md
+- docs/_infrastructure/Lists/ModulesViews.md
+- docs/_infrastructure/Lists/Services.md
+- docs/_infrastructure/Lists/Views.md
+- docs/_inventory.md
 - docs/_ops/filesystem-lint-summary.md
 - docs/_ops/filesystem-lint.md
 - docs/_ops/filesystem-trend.md
@@ -381,7 +395,13 @@ Generated: 2026-03-07 14:04:37
 - docs/audit/alerts_audit_last_run.md
 - docs/audit/auth_audit_last_run.md
 - docs/audit/news_audit_last_run.md
+- docs/audits/ajax-response-audit.md
+- docs/audits/database-premium-audit.md
+- docs/audits/frontend-ux-audit.md
+- docs/audits/full-premium-system-audit.md
 - docs/audits/model_limit_patch_report_20260218.md
+- docs/audits/route-security-audit.md
+- docs/audits/user-flow-validation.md
 - docs/auth-flow.md
 - docs/auth/auth_smoke.md
 - docs/auth/onboarding_first_login_modal.md
@@ -478,7 +498,19 @@ Generated: 2026-03-07 14:04:37
 - docs/controllers/APIs/HealthController.md
 - docs/controllers/APIs/OpsController.md
 - docs/controllers/APIs/TradingViewController.md
+- docs/controllers/AuthController.md
+- docs/controllers/BaseController.md
+- docs/controllers/Blog.md
+- docs/controllers/Debug.md
+- docs/controllers/Health.md
+- docs/controllers/Home.md
+- docs/controllers/HowItWorksController.md
+- docs/controllers/MaintenanceController.md
+- docs/controllers/OpsHealthController.md
 - docs/controllers/Predictions/PredictionsApiController.md
+- docs/controllers/StockController.md
+- docs/controllers/Test.md
+- docs/controllers/UserController.md
 - docs/cron/README.md
 - docs/cron/jobs/auth_funnel_check.md
 - docs/cron/jobs/codex_review.md
@@ -527,6 +559,7 @@ Generated: 2026-03-07 14:04:37
 - docs/discord/where_to_share_what.md
 - docs/discord_schema.sql.md
 - docs/discord_seed.sql.md
+- docs/docs-system/README.md
 - docs/email/deliverability.md
 - docs/emergency-playbook.md
 - docs/errors/marketingcontroller_mymimarketing_undefined.md
@@ -547,6 +580,10 @@ Generated: 2026-03-07 14:04:37
 - docs/forecasting/confidence_heatmaps.md
 - docs/forecasting/forecast_accuracy_tracking.md
 - docs/forecasting/forecast_detail_ui.md
+- docs/frontend/batches/batch-01-findings.md
+- docs/frontend/view_inventory_manifest.md
+- docs/frontend/view_js_audit_log.md
+- docs/frontend/view_js_enhancement_backlog.md
 - docs/functional_inventory/docs_to_code_map.md
 - docs/functional_inventory/feature_inventory.md
 - docs/funnels/community_funnel.md
@@ -587,6 +624,13 @@ Generated: 2026-03-07 14:04:37
 - docs/health/modules/marketing.md
 - docs/health/modules/system_ops.md
 - docs/health/service_inventory.md
+- docs/how-it-works/financial-forecasting.md
+- docs/how-it-works/financial-goals.md
+- docs/how-it-works/investment-portfolio-management.md
+- docs/how-it-works/mymi-gold.md
+- docs/how-it-works/options-trading.md
+- docs/how-it-works/personal-budgeting.md
+- docs/how-it-works/portfolio-diversification.md
 - docs/hygiene/weekly_repo_hygiene.md
 - docs/indicators/README.md
 - docs/indicators/_template.md
@@ -635,6 +679,8 @@ Generated: 2026-03-07 14:04:37
 - docs/legal/crypto_customer_agreement/sections/14_dispute_resolution_arbitration.md
 - docs/legal/crypto_customer_agreement/sections/15_communications_esign.md
 - docs/legal/crypto_customer_agreement/sections/16_misc_governing_law_changes.md
+- docs/log_fixes/log_repair_2026_03_08.md
+- docs/log_fixes/log_review_2026_03_08.md
 - docs/logs/_index.md
 - docs/logs/log-2025-10-06.md
 - docs/management/Automation_Levels.md
@@ -1242,6 +1288,22 @@ Generated: 2026-03-07 14:04:37
 - docs/predictions/_index.md
 - docs/predictions/mysql-migrations.md
 - docs/product/Next_Codex_Tasks.md
+- docs/refactor/controller_class_conflicts.md
+- docs/refactor/controller_cleanup_validation.md
+- docs/refactor/controller_consolidation_phase3.md
+- docs/refactor/controller_consolidation_phase4.md
+- docs/refactor/controller_consolidation_phase5.md
+- docs/refactor/controller_consolidation_phase6.md
+- docs/refactor/controller_consolidation_phase7.md
+- docs/refactor/controller_duplication_report.md
+- docs/refactor/controller_inventory.md
+- docs/refactor/controller_migration_map.md
+- docs/refactor/controller_migration_validation.md
+- docs/refactor/controller_progress.md
+- docs/refactor/controller_refactor_plan.md
+- docs/refactor/routes_post_migration.md
+- docs/refactor/routes_validation.md
+- docs/refactor/routes_validation_after_consolidation.md
 - docs/repo-review.md
 - docs/reports/code_health.md
 - docs/reports/security_findings.md
@@ -1281,6 +1343,9 @@ Generated: 2026-03-07 14:04:37
 - docs/services/AIOpsGuardrailService.md
 - docs/spark/COMMAND_AUDIT.md
 - docs/spark/README.md
+- docs/spark/aiops.md
+- docs/spark/automation.md
+- docs/spark/bootstrap.md
 - docs/spark/cadence.md
 - docs/spark/categories/aiops/aiops-seed.md
 - docs/spark/categories/alerts/alerts-audit.md
@@ -1316,11 +1381,23 @@ Generated: 2026-03-07 14:04:37
 - docs/spark/categories/system/ops-work.md
 - docs/spark/categories/users/wallets-warm-summary-cache.md
 - docs/spark/cli-standards.md
+- docs/spark/codex.md
+- docs/spark/database.md
+- docs/spark/diagnostics.md
+- docs/spark/documentation.md
+- docs/spark/infrastructure.md
 - docs/spark/inventory.md
+- docs/spark/logging.md
 - docs/spark/merge-report.md
+- docs/spark/ollama.md
+- docs/spark/recovery.md
+- docs/spark/research.md
 - docs/spark/roadmap.md
 - docs/spark/safety-matrix.md
+- docs/spark/security.md
+- docs/spark/spark_command_graph.md
 - docs/spark/standards.md
+- docs/spark/troubleshooting.md
 - docs/sql/mysql.md
 - docs/standards/aiops.md
 - docs/standards/autoloading.md
@@ -1369,6 +1446,7 @@ Generated: 2026-03-07 14:04:37
 - docs/troubleshooting/ssl/02_testing_with_expired_cert.md
 - docs/troubleshooting/ssl/03_acmesh_value_too_large_terminal_crash.md
 - docs/troubleshooting/templates/incident_template.md
+- docs/ui/how_it_works_expansion_workflow.md
 - docs/ui/how_it_works_pages.md
 - docs/ui/mobile-qa-checklist.md
 - docs/ui/mobile-responsiveness-audit.md
@@ -1391,4 +1469,4 @@ Generated: 2026-03-07 14:04:37
 - docs/wallets/wallets_workflow.md
 
 ---
-Total Files: 1387
+Total Files: 1465

@@ -1,0 +1,1056 @@
+{
+    "generated_at": "2026-03-30 12:37:24",
+    "models": [
+        {
+            "path": "app/Models/AIOps/FormTestModel.php",
+            "table": "bf_aiops_form_tests",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AIOpsBranchLockModel.php",
+            "table": "bf_aiops_branch_locks",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AIOpsChatAdminModel.php",
+            "table": "bf_aiops_chat_admin",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AIOpsDependencyModel.php",
+            "table": "bf_aiops_dependencies",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AIOpsInstructionModel.php",
+            "table": "bf_aiops_instructions",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/APIModel.php",
+            "table": "bf_applications",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AccountsModel.php",
+            "table": "bf_applications",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AdvisorModel.php",
+            "table": "bf_users_certified_advisors",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AiOps/FormTestModel.php",
+            "table": "bf_aiops_form_tests",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AiOpsEmailProcessedModel.php",
+            "table": "bf_aiops_email_processed",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AiOpsIngestRunModel.php",
+            "table": "bf_aiops_ingest_runs",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AiOpsManualTodoModel.php",
+            "table": "bf_aiops_manual_todos",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AiOpsReviewLedgerModel.php",
+            "table": "aiops_review_ledger",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AiOpsRunModel.php",
+            "table": "bf_aiops_runs",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AiOpsScanStateModel.php",
+            "table": "aiops_scan_state",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AiOpsSettingsModel.php",
+            "table": "bf_aiops_settings",
+            "primary_key": "setting_key"
+        },
+        {
+            "path": "app/Models/AiOpsTaskModel.php",
+            "table": "bf_aiops_tasks",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AiOpsTaskRunModel.php",
+            "table": "bf_aiops_task_runs",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AiOpsWorkQueueModel.php",
+            "table": "aiops_work_queue",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AiUsageModel.php",
+            "table": "bf_ai_usage",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AlertJobModel.php",
+            "table": "bf_investment_alert_jobs",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AlertsModel.php",
+            "table": "bf_investment_trade_alerts",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AnalyticalModel.php",
+            "table": "bf_applications",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AnnouncementsModel.php",
+            "table": "bf_applications",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ApiTokenModel.php",
+            "table": "bf_api_tokens",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AssetsModel.php",
+            "table": "bf_exchanges_assets",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AuctionBalanceModel.php",
+            "table": "bf_auction_balances",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AuctionBidModel.php",
+            "table": "bf_auction_bids",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AuctionItemModel.php",
+            "table": "bf_auction_items",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AuctionLotModel.php",
+            "table": "bf_auction_lots",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AuctionModel.php",
+            "table": "bf_exchange_auctions",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AuctionPaymentModel.php",
+            "table": "bf_auction_payments",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AuctionSettlementModel.php",
+            "table": "bf_auction_settlements",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AuditLogModel.php",
+            "table": "bf_audit_logs",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AuthHealthRunModel.php",
+            "table": "bf_auth_health_runs",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/AuthRegistrationAttemptModel.php",
+            "table": "bf_auth_registration_attempts",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/BaseModel.php",
+            "table": null,
+            "primary_key": null
+        },
+        {
+            "path": "app/Models/BiddingModel.php",
+            "table": "bids",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/BlogModel.php",
+            "table": "blog_posts",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/BudgetModel.php",
+            "table": "bf_users_budgeting",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/CampaignModel.php",
+            "table": "bf_marketing_campaigns",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ChatArchiveModel.php",
+            "table": "bf_chat_archives",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ChatStepModel.php",
+            "table": "bf_chat_steps",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ChatToolRunModel.php",
+            "table": "bf_chat_tool_runs",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ChatUsageModel.php",
+            "table": "chat_usage",
+            "primary_key": "user_id"
+        },
+        {
+            "path": "app/Models/CircuitBreakerModel.php",
+            "table": "bf_circuit_breakers",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ContentIdeaModel.php",
+            "table": "bf_content_ideas",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ContentPostModel.php",
+            "table": "bf_content_posts",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ContentScannerIngestModel.php",
+            "table": "bf_content_scanner_ingest",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ContentScannerRowModel.php",
+            "table": "bf_content_scanner_rows",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/DashboardModel.php",
+            "table": "users",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/DesignModel.php",
+            "table": "bf_applications",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/DiligenceModel.php",
+            "table": "bf_users_stock_research",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/DiscordAiMessageModel.php",
+            "table": "bf_discord_ai_messages",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/DiscordAiNoteModel.php",
+            "table": "bf_discord_ai_notes",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/DiscordAiSessionModel.php",
+            "table": "bf_discord_ai_sessions",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/DiscordLinkModel.php",
+            "table": "bf_discord_links",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/DiscordModel.php",
+            "table": null,
+            "primary_key": null
+        },
+        {
+            "path": "app/Models/DripCampaignModel.php",
+            "table": "bf_email_drip_campaigns",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/EconomicDataPointModel.php",
+            "table": "bf_economic_data_points",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/EconomicIndicatorModel.php",
+            "table": "bf_economic_indicators",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/EmailModel.php",
+            "table": "bf_email_distribution_lists",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/EmailOutboxModel.php",
+            "table": "bf_email_outbox",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ErrorAlertEventModel.php",
+            "table": "bf_error_alert_events",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ErrorAlertRuleModel.php",
+            "table": "bf_error_alert_rules",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ErrorLearningRunModel.php",
+            "table": "bf_error_learning_runs",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ErrorPatternModel.php",
+            "table": "bf_error_patterns",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/EsportsModel.php",
+            "table": "bf_esports_events",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ExchangeModel.php",
+            "table": "bf_exchanges",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/FailedJobModel.php",
+            "table": "bf_failed_jobs",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/FeatureFlagModel.php",
+            "table": "bf_feature_flags",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/FeatureFlagOverrideModel.php",
+            "table": "bf_feature_flag_overrides",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Fin/PositionDailyModel.php",
+            "table": "bf_fin_positions_daily",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Fin/PriceEodModel.php",
+            "table": "bf_fin_prices_eod",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Fin/RiskBreachModel.php",
+            "table": "bf_fin_risk_breaches",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Fin/RiskBudgetModel.php",
+            "table": "bf_fin_risk_budgets",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Fin/TradeModel.php",
+            "table": "bf_fin_trades",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/GoalsModel.php",
+            "table": "bf_users_goal_checklist",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/IdempotencyModel.php",
+            "table": "bf_idempotency",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/InboundWebhookModel.php",
+            "table": "bf_inbound_webhooks",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/InstitutesModel.php",
+            "table": "bf_users_financial_institutions",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/InvestmentForecastAccuracyModel.php",
+            "table": "bf_investment_forecast_accuracy",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/InvestmentForecastHistoryModel.php",
+            "table": "bf_investment_forecast_history",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/InvestmentModel.php",
+            "table": "bf_users_trades",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/InvestmentPriceForecastModel.php",
+            "table": "bf_investment_price_forecasts",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/InvestmentScannerLineageModel.php",
+            "table": "bf_investment_scanner_lineage",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/InvestmentTickerDailyCountModel.php",
+            "table": "bf_investment_ticker_daily_counts",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/InvestorModel.php",
+            "table": "users",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/JobModel.php",
+            "table": "bf_jobs",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/LoginModel.php",
+            "table": "auth_logins",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/MDIT/MditDepositModel.php",
+            "table": "bf_mdit_deposits",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/MDIT/MditDisclosureAcceptanceModel.php",
+            "table": "bf_mdit_disclosures_acceptance",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/MDIT/MditInvestorProfileModel.php",
+            "table": "bf_mdit_investor_profiles",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/MDIT/MditNavSnapshotModel.php",
+            "table": "bf_mdit_nav_snapshots",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/MDIT/MditRedemptionModel.php",
+            "table": "bf_mdit_redemptions",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/MDIT/MditTokenLedgerModel.php",
+            "table": "bf_mdit_token_ledger",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/MDIT/MditWalletModel.php",
+            "table": "bf_mdit_wallets",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/MDIT/MditWebhookEventModel.php",
+            "table": "bf_mdit_webhook_events",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/MailQueueModel.php",
+            "table": "bf_mail_queue",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Marketing/AudienceModel.php",
+            "table": "bf_audience",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Marketing/EmailMarketingModel.php",
+            "table": "bf_marketing_campaigns",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Marketing/EmailOpenTrackingModel.php",
+            "table": "bf_email_open_tracking",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Marketing/EmailQueueModel.php",
+            "table": "bf_marketing_email_queue",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Marketing/EmailTemplateModel.php",
+            "table": "bf_marketing_email_templates",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Marketing/MarketingPublishQueueModel.php",
+            "table": "bf_marketing_publish_queue",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Marketing/MarketingVideoAssetModel.php",
+            "table": "bf_marketing_video_assets",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Marketing/MarketingVideoContentModel.php",
+            "table": "bf_marketing_video_content",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Marketing/MarketingVideoTemplateModel.php",
+            "table": "bf_marketing_video_templates",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Marketing/MarketingVideoVersionModel.php",
+            "table": "bf_marketing_video_versions",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/MarketingModel.php",
+            "table": "bf_marketing_scraper",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/MarketingNewsletterModel.php",
+            "table": "bf_marketing_newsletters",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/MgmtBudgetModel.php",
+            "table": "bf_users_budgeting",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/MyMICoinModel.php",
+            "table": "bf_mymicoin_overview",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/MyMIGoldModel.php",
+            "table": "bf_mymigold_overview",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/NotificationOutboxModel.php",
+            "table": "notification_outbox",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ObservedModel.php",
+            "table": null,
+            "primary_key": null
+        },
+        {
+            "path": "app/Models/OllamaQueueModel.php",
+            "table": "bf_ollama_queue",
+            "primary_key": "job_id"
+        },
+        {
+            "path": "app/Models/OllamaRunModel.php",
+            "table": "bf_ollama_runs",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/OllamaSessionModel.php",
+            "table": "bf_ollama_sessions",
+            "primary_key": "session_id"
+        },
+        {
+            "path": "app/Models/Ops/SparkHealthModel.php",
+            "table": "bf_ops_spark_health",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/OpsCommandInboxModel.php",
+            "table": "bf_ops_command_inbox",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/OpsJobsModel.php",
+            "table": "bf_ops_jobs",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/OpsProjectModel.php",
+            "table": "ops_projects",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/OpsQueueModel.php",
+            "table": "bf_ops_queue",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/OpsRunsModel.php",
+            "table": "bf_ops_job_runs",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/OpsSubprojectModel.php",
+            "table": "ops_subprojects",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/OpsTaskEventModel.php",
+            "table": "ops_task_events",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/OpsTaskModel.php",
+            "table": "ops_tasks",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/PageSEOModel.php",
+            "table": "bf_marketing_page_seo",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/PermissionModel.php",
+            "table": "bf_permissions",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/PermissionRoleModel.php",
+            "table": "bf_permission_role",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/PlaidModel.php",
+            "table": "bf_applications",
+            "primary_key": null
+        },
+        {
+            "path": "app/Models/Predictions/LiquidityModel.php",
+            "table": "bf_predictions_liquidity",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Predictions/MarketsModel.php",
+            "table": "bf_predictions_markets",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Predictions/OptionsModel.php",
+            "table": "bf_predictions_options",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Predictions/OrdersModel.php",
+            "table": "bf_predictions_orders",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Predictions/PayoutsModel.php",
+            "table": "bf_predictions_payouts",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Predictions/PositionsModel.php",
+            "table": "bf_predictions_positions",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/Predictions/TradesModel.php",
+            "table": "bf_predictions_trades",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/PrivacyRequestModel.php",
+            "table": "bf_privacy_requests",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ProfileModel.php",
+            "table": "bf_user_profiles",
+            "primary_key": null
+        },
+        {
+            "path": "app/Models/ProjectCommitmentsModel.php",
+            "table": "bf_project_commitments",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ProjectDistributionsModel.php",
+            "table": "bf_project_distributions",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ProjectInboxModel.php",
+            "table": "bf_projects_inbox",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ProjectPayoutsModel.php",
+            "table": "bf_project_payouts",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ProjectTaskRegistryModel.php",
+            "table": "project_task_registry",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ProjectTokenAllocationsModel.php",
+            "table": "bf_project_token_allocations",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ProjectWithdrawalsModel.php",
+            "table": "bf_project_withdrawals",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ProjectsModel.php",
+            "table": "bf_projects",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/PublicModel.php",
+            "table": "bf_applications",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/PushSubscriptionModel.php",
+            "table": "bf_push_subscriptions",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ReferralModel.php",
+            "table": "bf_users_referral_program",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/RoleModel.php",
+            "table": "bf_roles",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/RoleUserModel.php",
+            "table": "bf_role_user",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/RuntimeConfigModel.php",
+            "table": "bf_runtime_config",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ScannerTaxonomyModel.php",
+            "table": "bf_scanner_taxonomy",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/SecurityModel.php",
+            "table": "bf_security",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/SignalFilesModel.php",
+            "table": "bf_investment_signal_files",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/SignalsModel.php",
+            "table": "bf_investment_signals",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/SocialCommunityModel.php",
+            "table": "bf_social_communities",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/SocialDistributionQueueModel.php",
+            "table": "bf_social_distribution_queue",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/SocialGeneratedPostModel.php",
+            "table": "bf_social_generated_posts",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/SocialPlatformModel.php",
+            "table": "bf_social_platforms",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/SocialPostTemplateModel.php",
+            "table": "bf_social_post_templates",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/SolanaModel.php",
+            "table": "bf_exchanges",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/SqueezeModel.php",
+            "table": null,
+            "primary_key": null
+        },
+        {
+            "path": "app/Models/SqueezeScorecardModel.php",
+            "table": "bf_squeeze_scorecards",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/StockFundamentalsModel.php",
+            "table": "bf_stock_fundamentals",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/SubscribeModel.php",
+            "table": "bf_applications",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/SupportModel.php",
+            "table": "bf_support_requests",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/TokenModel.php",
+            "table": "bf_tokens",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/TrackerModel.php",
+            "table": "bf_applications",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/TradeAlertScannerMetaModel.php",
+            "table": "bf_trade_alert_scanner_meta",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/TransactionModel.php",
+            "table": "bf_users_wallet_transactions",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/UserIpHistoryModel.php",
+            "table": "bf_user_ip_history",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/UserModel.php",
+            "table": "users",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/UserPermissionOverrideModel.php",
+            "table": "bf_user_permission_overrides",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/UserSessionModel.php",
+            "table": "bf_user_sessions",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/UserTwoFactorModel.php",
+            "table": "bf_user_2fa",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/WalletModel.php",
+            "table": "bf_users_wallet",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/WebhookOutboxModel.php",
+            "table": "bf_webhook_outbox",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/WeeklyStreamWatchlistModel.php",
+            "table": "bf_weekly_stream_watchlist",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/AIOps/Models/AIOpsBudgetModel.php",
+            "table": "bf_aiops_budget",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/AIOps/Models/AIOpsCacheModel.php",
+            "table": "bf_aiops_cache",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/AIOps/Models/AIOpsDedupeModel.php",
+            "table": "bf_aiops_dedupe",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/AIOps/Models/AIOpsUsageModel.php",
+            "table": "bf_aiops_usage",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/AIOps/Models/AIOpsWorkflowUsageModel.php",
+            "table": "bf_aiops_workflow_usage",
+            "primary_key": "workflow_id"
+        },
+        {
+            "path": "app/Modules/AIOps/Models/AIOpsWorkflowsModel.php",
+            "table": "bf_aiops_workflows",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/APIs/Models/InvestmentsNewsModel.php",
+            "table": "bf_investments_news",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/APIs/Models/InvestmentsTickersModel.php",
+            "table": "bf_investment_tickers",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/APIs/Models/MarketingNewsContentModel.php",
+            "table": "bf_marketing_news_content",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/APIs/Models/ScannerModel.php",
+            "table": "bf_scanner_jobs",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/Exchange/Models/ExchangeOrderModel.php",
+            "table": "exchange_orders",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/Management/Models/AlertPendingModel.php",
+            "table": "alert_pending",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/Management/TaxAdmin/Models/TaxAuditLogModel.php",
+            "table": "bf_tax_audit_log",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/Management/TaxAdmin/Models/TaxJurisdictionsModel.php",
+            "table": "bf_tax_jurisdictions",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/Management/TaxAdmin/Models/TaxLinesModel.php",
+            "table": "bf_tax_return_lines",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/Management/TaxAdmin/Models/TaxRatesModel.php",
+            "table": "bf_tax_rates",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/Management/TaxAdmin/Models/TaxTemplatesModel.php",
+            "table": "bf_tax_return_templates",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/Marketing_New/Models/MarketingModel.php",
+            "table": "bf_marketing_scraper",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/ScriptStudio/Models/ScriptModel.php",
+            "table": "bf_script_studio",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/Support/Models/SupportTicketEventModel.php",
+            "table": "bf_support_ticket_events",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/Support/Models/SupportTicketModel.php",
+            "table": "bf_support_tickets",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/Template/Models/TemplateModel.php",
+            "table": "template",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/User/Models/BudgetModuleModel.php",
+            "table": "bf_users_budgeting",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/User/Models/UserModuleModel.php",
+            "table": "users",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/User/Tax/Models/TaxJurisdictionModel.php",
+            "table": "bf_tax_jurisdictions",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/User/Tax/Models/TaxReturnModel.php",
+            "table": "bf_user_tax_returns",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/User/Tax/Models/TaxTemplateModel.php",
+            "table": "bf_tax_return_templates",
+            "primary_key": "id"
+        }
+    ],
+    "issues": [
+        "app/Models/BaseModel.php missing $table",
+        "app/Models/DiscordModel.php missing $table",
+        "app/Models/ObservedModel.php missing $table",
+        "app/Models/SqueezeModel.php missing $table"
+    ]
+}
