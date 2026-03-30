@@ -45,6 +45,27 @@ Events::on('post_system', static function (): void {
         log_message('info', '[SPARK_COMPLETE] CLI bootstrap');
         log_message('info', '[SPARK_MEMORY] ' . memory_get_usage(true));
     }
+
+    try {
+        if (! service('request') instanceof \CodeIgniter\HTTP\IncomingRequest) {
+            return;
+        }
+
+        $response = service('response');
+        $status = method_exists($response, 'getStatusCode') ? (int) $response->getStatusCode() : 200;
+
+        if ($status < 400) {
+            return;
+        }
+
+        $request = service('request');
+        $path = (string) $request->getUri()->getPath();
+        $errorType = $status === 404 ? 'missing_route' : 'http_' . $status;
+
+        (new \App\Services\AIOps\RouteErrorHeatmapService())->record($path, $errorType, $status);
+    } catch (\Throwable $e) {
+        log_message('debug', 'Route heatmap post_system hook skipped: ' . $e->getMessage());
+    }
 });
 
 if (ENVIRONMENT === 'development') {

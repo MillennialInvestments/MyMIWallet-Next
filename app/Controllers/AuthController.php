@@ -827,25 +827,41 @@ class AuthController extends BaseController
 
     public function registerSuccess()
     {
-        $this->data = [
-            'config'       => $this->config,
-            'siteSettings' => config('SiteSettings'),
-            'socialMedia'  => config('SocialMedia'),
-        ];
-
-        log_message('info', 'AuthController::registerSuccess view rendered.');
-
+        log_message('critical', '[REGISTER_SUCCESS_TRACE] step=1 entered');
         try {
-            return $this->_render('Auth/register_success', $this->data);
+            $data = [
+                'pageTitle'    => 'Registration Successful',
+                'config'       => $this->config,
+                'siteSettings' => config('SiteSettings'),
+                'socialMedia'  => config('SocialMedia'),
+            ];
+
+            log_message('critical', '[REGISTER_SUCCESS_TRACE] step=2 data prepared');
+
+            $output = view('Auth/register_success', $data);
+
+            log_message('critical', '[REGISTER_SUCCESS_TRACE] step=3 raw view rendered length=' . strlen($output));
+
+            return service('response')
+                ->setStatusCode(200)
+                ->setBody($output);
         } catch (\Throwable $e) {
-            log_message('critical', '[VIEW ERROR]', [
+            log_message('critical', '[REGISTER_SUCCESS_TRACE] EXCEPTION', [
                 'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
+                'file'    => $e->getFile(),
+                'line'    => $e->getLine(),
+                'trace'   => $e->getTraceAsString(),
             ]);
 
             throw $e;
         }
+    }
+
+    public function registerSuccessProbe()
+    {
+        log_message('critical', '[REGISTER_SUCCESS_PROBE] start');
+
+        return view('Auth/register_success_plain');
     }
 
     public function resendRegistrationActivation()
