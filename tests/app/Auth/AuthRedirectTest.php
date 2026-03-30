@@ -52,6 +52,9 @@ final class AuthRedirectTest extends CIUnitTestCase
         $session->set('redirect_url', '/');
         $this->assertSame(site_url('Dashboard'), $method->invoke($controller));
 
+        $session->set('redirect_url', '/register/success');
+        $this->assertSame(site_url('Dashboard'), $method->invoke($controller));
+
         $session->set('redirect_url', '/Budget');
         $this->assertSame('/Budget', $method->invoke($controller));
     }
