@@ -41,6 +41,7 @@ class Console extends BaseConfig
         |----------------------------------------------------------------------
         */
         \App\Commands\AIOps\All::class,
+        \App\Commands\AIOps\LogsErrors::class,
         \App\Commands\AIOps\Audit::class,
         \App\Commands\AIOps\AutoRun::class,
         \App\Commands\AIOps\Backlog::class,

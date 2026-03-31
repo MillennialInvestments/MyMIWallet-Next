@@ -28,3 +28,8 @@ Use HTTP CRON hits or `php spark` commands (no sudo required). All jobs respect 
 - Master switch OFF: run endpoints return error JSON and no API/Redis activity.
 - Subsystem toggle OFF: specific jobs are denied with reason `subsystem_disabled`.
 - Override flag is ignored when the master switch is OFF.
+
+## AIOps engine loop schedule
+
+- `*/5 * * * * php spark logs:errors`
+- `*/10 * * * * php spark aiops:all`

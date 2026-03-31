@@ -3,6 +3,8 @@
 namespace App\Commands\AiOps;
 
 use App\Commands\SafeBaseCommand;
+use App\Services\AiopsActionService;
+use App\Services\AiopsPatchService;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
 use Config\Services;
@@ -62,11 +64,25 @@ class All extends SafeBaseCommand
                 'architecture' => $flags['logs-only'] ? [] : $this->getArchitecture(),
                 'database'     => $flags['logs-only'] ? [] : $this->getDatabaseInfo(),
                 'commands'     => $flags['logs-only'] ? [] : $this->getCommandHealth(),
-                'actions'      => $this->extractActionsFromDocs(),
+                'actions'      => [],
+                'patches'      => [],
                 'performance'  => $this->getPerformanceInsights($startTime),
                 'security'     => $this->getSecurityInsights(),
                 'summary'      => [],
             ];
+
+
+            $actionService = new AiopsActionService();
+            $report['actions'] = $actionService->generateActionsFromErrors($report['errors']);
+
+            $patchService = new AiopsPatchService();
+            $patches = [];
+
+            foreach ($report['actions'] as $action) {
+                $patches[] = $patchService->generatePatch($action);
+            }
+
+            $report['patches'] = $patches;
 
             $this->generateCodeFromActions($report['actions']);
             $report['summary'] = $this->buildSummary($report);
@@ -522,6 +538,11 @@ class All extends SafeBaseCommand
         file_put_contents(
             $reportDir . '_aiops_all.md',
             $this->buildMarkdownReport($report)
+        );
+
+        file_put_contents(
+            $reportDir . 'patches.json',
+            json_encode($report['patches'] ?? [], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
         );
     }
 
