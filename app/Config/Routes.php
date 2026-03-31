@@ -1220,6 +1220,7 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
         $routes->get('Test-Email', 'AlertsAdminController::sendTestEmail');
         $routes->get('Trades', 'AlertsAdminController::trades');
         $routes->get('Top-Performance/Weekly', 'AlertsAdminController::topPerformanceWeekly');
+        $routes->get('weeklyTopPerformance', 'AlertsAdminController::topPerformanceWeekly');
     });
     $routes->group('Assets', function($routes) {
         $routes->get('/', 'AssetsAdminController::index');

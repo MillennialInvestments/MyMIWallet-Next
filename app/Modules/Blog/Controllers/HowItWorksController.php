@@ -188,7 +188,12 @@ class HowItWorksController extends UserController
             ];
 
             if (isset($viewMap[$normalizedSlug])) {
-                return $this->respondWithRendered($viewMap[$normalizedSlug], $this->commonData());
+                $data = $this->commonData();
+                if (method_exists($this, 'respondWithRendered')) {
+                    return $this->respondWithRendered($viewMap[$normalizedSlug], $data);
+                }
+
+                return $this->renderPublic($viewMap[$normalizedSlug], is_array($data) ? $data : []);
             }
 
             // 3) Dynamic docs/how-it-works/*.md fallback
@@ -203,7 +208,11 @@ class HowItWorksController extends UserController
                         'navItems'    => $this->getNavItems(),
                     ];
 
-                    return $this->respondWithRendered('App\Modules\Blog\Views\HowItWorks\index', $data);
+                    if (method_exists($this, 'respondWithRendered')) {
+                        return $this->respondWithRendered('App\Modules\Blog\Views\HowItWorks\index', $data);
+                    }
+
+                    return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\index', $data);
                 }
             }
 

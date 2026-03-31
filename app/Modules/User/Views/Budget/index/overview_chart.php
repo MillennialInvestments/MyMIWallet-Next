@@ -233,10 +233,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const fetchAllBudgetData = async () => {
       await Promise.all([
-        fetchAndStore('/index.php/API/Budget/getUserBudgetRecords', 'budgetData'),
-        fetchAndStore('/index.php/API/Budget/getUserCreditBalances', 'creditData'),
-        fetchAndStore('/index.php/API/Budget/getUserAvailableBalances', 'availableData'),
-        fetchAndStore('/index.php/API/Budget/getUserRepaymentSummary', 'repaymentSummary')
+        fetchAndStore('<?= site_url('API/Budget/getUserBudgetRecords') ?>', 'budgetData'),
+        fetchAndStore('<?= site_url('API/Budget/getUserCreditBalances') ?>', 'creditData'),
+        fetchAndStore('<?= site_url('API/Budget/getUserAvailableBalances') ?>', 'availableData'),
+        fetchAndStore('<?= site_url('API/Budget/getUserRepaymentSummary') ?>', 'repaymentSummary')
       ]);
       updateChartData();
     };

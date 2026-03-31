@@ -11,7 +11,7 @@ class ReferralModel extends Model
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
     protected $returnType = 'array';
-    protected $useSoftDeletes = true;
+    protected $useSoftDeletes = false;
     protected $allowedFields = ['user_id', 'referrer_code', 'active', 'signup_date', 'user_type', 'first_name', 'last_name', 'email', 'phone', 'address', 'city', 'state', 'country', 'zipcode', 'paypal', 'other_payment', 'user_ip_address', 'total_spend', 'days_active'];
     protected $beforeInsert = [];
     protected $beforeUpdate = [];
@@ -26,7 +26,8 @@ class ReferralModel extends Model
 
     protected $createdField = 'created_on';
     protected $updatedField = 'modified_on';
-    protected $deletedField = 'deleted_at';
+    protected $deletedField = '';
+    protected ?bool $hasDeletedAtColumn = null;
 
     public function apply($data)
     {
@@ -76,12 +77,14 @@ class ReferralModel extends Model
         
     public function getAllReferrals()
     {
-        return $this->db->table('bf_users_referrals')
-                    ->select('id, signup_date, referral_email, referrer_code, type, first_name, last_name, active, total_spend')
-                    ->where('deleted_at', null)
-                    ->orderBy('signup_date', 'DESC')  // You can also order by signup date if needed
-                    ->get()
-                    ->getResultArray();
+        $builder = $this->db->table('bf_users_referrals')
+            ->select('id, signup_date, referral_email, referrer_code, type, first_name, last_name, active, total_spend');
+
+        $this->applyDeletedAtFilter($builder, 'bf_users_referrals');
+
+        return $builder->orderBy('signup_date', 'DESC')
+            ->get()
+            ->getResultArray();
     }
 
     public function getTotalReferrals($cuID, $cuReferrerCode)
@@ -91,13 +94,15 @@ class ReferralModel extends Model
         }
 
         // Select the fields you want to retrieve (e.g., signup_date, referrer_email, etc.)
-        return $this->db->table('bf_users_referrals')
-                    ->select('id, signup_date, referral_email, referrer_code, referrer_code as referral_code, type, first_name, last_name, active, total_spend')
-                    ->where('referrer_code', $cuReferrerCode)
-                    ->where('deleted_at', null)
-                    ->orderBy('signup_date', 'DESC')  // You can also order by signup date if needed
-                    ->get()
-                    ->getResultArray();
+        $builder = $this->db->table('bf_users_referrals')
+            ->select('id, signup_date, referral_email, referrer_code, referrer_code as referral_code, type, first_name, last_name, active, total_spend')
+            ->where('referrer_code', $cuReferrerCode);
+
+        $this->applyDeletedAtFilter($builder, 'bf_users_referrals');
+
+        return $builder->orderBy('signup_date', 'DESC')
+            ->get()
+            ->getResultArray();
     }
     
 
@@ -108,13 +113,15 @@ class ReferralModel extends Model
             return [];
         }
 
-        return $this->db->table('bf_users_referrals')
-                    ->select('COUNT(*) as count, signup_date')
-                    ->where(['referrer_code' => $cuReferrerCode, 'active' => 1])
-                    ->where('deleted_at', null)
-                    ->groupBy('DATE(signup_date)')
-                    ->get()
-                    ->getResultArray();
+        $builder = $this->db->table('bf_users_referrals')
+            ->select('COUNT(*) as count, signup_date')
+            ->where(['referrer_code' => $cuReferrerCode, 'active' => 1]);
+
+        $this->applyDeletedAtFilter($builder, 'bf_users_referrals');
+
+        return $builder->groupBy('DATE(signup_date)')
+            ->get()
+            ->getResultArray();
     }
 
     public function getMonthlyReferralStats($cuReferrerCode)
@@ -123,21 +130,46 @@ class ReferralModel extends Model
             return [];
         }
 
-        return $this->db->table('bf_users_referrals')
-                    ->select(
-                        'YEAR(signup_date) as year,' .
-                        'MONTH(signup_date) as month,' .
-                        'COUNT(*) as total,' .
-                        'SUM(CASE WHEN active = 1 THEN 1 ELSE 0 END) as active,' .
-                        'SUM(CASE WHEN COALESCE(total_spend, 0) > 0 THEN 1 ELSE 0 END) as paying'
-                    )
-                    ->where('referrer_code', $cuReferrerCode)
-                    ->where('deleted_at', null)
-                    ->groupBy('YEAR(signup_date), MONTH(signup_date)')
-                    ->orderBy('YEAR(signup_date)', 'ASC')
-                    ->orderBy('MONTH(signup_date)', 'ASC')
-                    ->get()
-                    ->getResultArray();
+        $builder = $this->db->table('bf_users_referrals')
+            ->select(
+                'YEAR(signup_date) as year,' .
+                'MONTH(signup_date) as month,' .
+                'COUNT(*) as total,' .
+                'SUM(CASE WHEN active = 1 THEN 1 ELSE 0 END) as active,' .
+                'SUM(CASE WHEN COALESCE(total_spend, 0) > 0 THEN 1 ELSE 0 END) as paying'
+            )
+            ->where('referrer_code', $cuReferrerCode);
+
+        $this->applyDeletedAtFilter($builder, 'bf_users_referrals');
+
+        return $builder->groupBy('YEAR(signup_date), MONTH(signup_date)')
+            ->orderBy('YEAR(signup_date)', 'ASC')
+            ->orderBy('MONTH(signup_date)', 'ASC')
+            ->get()
+            ->getResultArray();
+    }
+
+    private function applyDeletedAtFilter(\CodeIgniter\Database\BaseBuilder $builder, string $table): void
+    {
+        if ($this->hasDeletedAtColumn($table)) {
+            $builder->where('deleted_at', null);
+        }
+    }
+
+    private function hasDeletedAtColumn(string $table): bool
+    {
+        if ($this->hasDeletedAtColumn !== null) {
+            return $this->hasDeletedAtColumn;
+        }
+
+        try {
+            $this->hasDeletedAtColumn = $this->db->fieldExists('deleted_at', $table);
+        } catch (\Throwable $e) {
+            $this->hasDeletedAtColumn = false;
+            log_message('debug', 'ReferralModel::hasDeletedAtColumn fallback: {msg}', ['msg' => $e->getMessage()]);
+        }
+
+        return $this->hasDeletedAtColumn;
     }
 
     public function bulkUpdateStatus(array $ids, int $userId, bool $makeActive = true)
