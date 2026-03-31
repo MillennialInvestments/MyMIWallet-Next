@@ -130,6 +130,7 @@ class DashboardController extends BaseUserController
         $progressPayload = $onboardingProgress->computeProgress($cuID);
         $this->data['onboardingProgress'] = $progressPayload;
         $this->data['onboardingIncomplete'] = ! ($progressPayload['isComplete'] ?? false);
+        $this->data['sourceAwareWelcome'] = $onboardingProgress->getSourceAwareWelcomeState($cuID);
 
         try {
             $this->data['opsHealth'] = (new EnvDoctorService())->latestSummary();
