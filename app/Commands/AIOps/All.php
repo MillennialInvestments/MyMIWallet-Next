@@ -12,7 +12,7 @@ use Throwable;
 
 class All extends SafeBaseCommand
 {
-    protected $group       = 'AIOps';
+    protected $group       = 'AIOps - All Control';
     protected $name        = 'aiops:all';
     protected $description = 'Run a full AIOps scan and generate unified Markdown and JSON reports in docs/_aiops.';
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Commands\AiOps;
+namespace App\Commands\AIOps;
 
 use App\Commands\SafeBaseCommand;
 use App\Services\Spark\AiopsDocsExecutionService;
@@ -10,7 +10,7 @@ use CodeIgniter\CLI\CLI;
 
 class ExecuteDocs extends SafeBaseCommand
 {
-    protected $group = 'aiops';
+    protected $group = 'AIOps - All Control';
     protected $name = 'aiops:execute-docs';
     protected $description = 'Process docs/_aiops markdown files and execute actionable patches in a stateful loop.';
     protected $usage = 'aiops:execute-docs [--resume] [--file=filename.md] [--dry-run] [--force]';
