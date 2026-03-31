@@ -21,7 +21,7 @@ class UserModel extends Model
     protected $allowedFields  = [
         'email', 'username', 'password_hash', '2fa_secret', 'reset_hash', 'reset_at', 'reset_expires', 'activate_hash',
         'status', 'status_message', 'active', 'force_pass_reset', 'permissions', 'deleted_at', 'anonymous_id', 'ip_address', 'created_at', 'user_id', 'comment', 'ticker',
-        'referral_code', 'referred_by_user_id',
+        'referral_code', 'referred_by_user_id', 'source_channel', 'campaign_code', 'source_slug', 'utm_source', 'utm_medium', 'utm_campaign', 'landing_path',
     ];
     protected $useTimestamps   = true;
     protected $validationRules = [

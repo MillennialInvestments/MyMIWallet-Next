@@ -6,6 +6,7 @@ use App\Services\AuthAuditService;
 use App\Services\Auth\AuthLogger;
 use App\Services\OnboardingProgressService;
 use App\Services\RegistrationAttributionService;
+use App\Services\RegistrationSourceContentService;
 use App\Models\UserIpHistoryModel;
 use App\Modules\Support\Services\SupportTicketService;
 use App\Controllers\BaseController;
@@ -323,10 +324,19 @@ class AuthController extends BaseController
                 ->withCookies();
         }
 
-        $this->setAuthMessage(
-            'success',
-            lang('Auth.loginSuccess')
-        );
+        $postRegistration = $this->session->get('post_registration_source');
+        if (is_array($postRegistration) && ($postRegistration['source_channel'] ?? '') === 'discord') {
+            $this->session->setFlashdata('auth_message', [
+                'type' => 'success',
+                'text' => 'Welcome from Discord! Start with Budgeting, then explore Investments and Alerts from your dashboard.',
+            ]);
+            $this->session->remove('post_registration_source');
+        } else {
+            $this->setAuthMessage(
+                'success',
+                lang('Auth.loginSuccess')
+            );
+        }
 
         $this->session->regenerate(true);
 
@@ -421,6 +431,10 @@ class AuthController extends BaseController
 
         $this->session->set('registration_attribution', $attribution);
 
+        /** @var RegistrationSourceContentService $registrationSourceContentService */
+        $registrationSourceContentService = service('registrationSourceContentService');
+        $registrationSourceContent = $registrationSourceContentService->resolve($attribution);
+
         log_message('info', '[REGISTRATION] Form loaded', [
             'referral_code' => $referralCode !== '' ? $referralCode : null,
             'source_channel' => $attribution['source_channel'] ?? 'direct',
@@ -442,6 +456,7 @@ class AuthController extends BaseController
             'socialMedia' => config('SocialMedia'),
             'uri' => $uri,
             'registrationAttribution' => $attribution,
+            'registrationSourceContent' => $registrationSourceContent,
         ]);
     }
 
@@ -534,7 +549,10 @@ class AuthController extends BaseController
             ]);
         }
 
+        $requestId = (string) ($request->getHeaderLine('X-Request-Id') ?: bin2hex(random_bytes(6)));
+
         log_message('info', '[REGISTRATION] Submission received', [
+            'request_id' => $requestId,
             'email' => $email,
             'referral_code' => $referralCode ?: null,
             'source_channel' => $attribution['source_channel'] ?? 'direct',
@@ -589,9 +607,13 @@ class AuthController extends BaseController
                     'summary' => $this->validationSummary($this->validator->getErrors()),
                 ]);
 
+                $basicErrors = $this->validator->getErrors();
+                $isDuplicateEmail = array_key_exists('email', $basicErrors) && str_contains(strtolower((string) $basicErrors['email']), 'taken');
                 log_message('warning', '[REGISTRATION] Validation failed (basic fields)', [
+                    'request_id' => $requestId,
                     'email'  => $email,
-                    'errors' => $this->validator->getErrors(),
+                    'errors' => $basicErrors,
+                    'duplicate_email' => $isDuplicateEmail,
                 ]);
 
                 $errors = $this->validator->getErrors();
@@ -620,7 +642,8 @@ class AuthController extends BaseController
 
                 log_message('warning', '[REGISTRATION] Validation failed (password fields)', [
                     'email'  => $email,
-                    'errors' => $this->validator->getErrors(),
+                    'errors' => $basicErrors,
+                    'duplicate_email' => $isDuplicateEmail,
                 ]);
 
                 $errors = $this->validator->getErrors();
@@ -744,6 +767,10 @@ class AuthController extends BaseController
 
                 log_message('info', 'Registration redirecting to success guide for user_id={id}', ['id' => $newUserId]);
 
+                $this->session->set('post_registration_source', [
+                    'source_channel' => $attribution['source_channel'] ?? 'direct',
+                    'source_slug' => $attribution['source_slug'] ?? null,
+                ]);
                 $this->session->remove('referral_code');
                 $this->session->remove('registration_attribution');
 
@@ -762,6 +789,10 @@ class AuthController extends BaseController
 
             log_message('info', 'Registration redirecting to success guide for user_id={id}', ['id' => $newUserId]);
 
+            $this->session->set('post_registration_source', [
+                'source_channel' => $attribution['source_channel'] ?? 'direct',
+                'source_slug' => $attribution['source_slug'] ?? null,
+            ]);
             $this->session->remove('referral_code');
             $this->session->remove('registration_attribution');
 
@@ -816,6 +847,21 @@ class AuthController extends BaseController
         if (in_array('campaign_code', $fields, true)) {
             $campaignCode = trim((string) ($attribution['campaign_code'] ?? ''));
             $payload['campaign_code'] = $campaignCode !== '' ? $campaignCode : null;
+        }
+        if (in_array('source_slug', $fields, true)) {
+            $payload['source_slug'] = (string) ($attribution['source_slug'] ?? '') ?: null;
+        }
+        if (in_array('landing_path', $fields, true)) {
+            $payload['landing_path'] = (string) ($attribution['landing_path'] ?? ($attribution['route'] ?? '')) ?: null;
+        }
+        if (in_array('utm_source', $fields, true)) {
+            $payload['utm_source'] = (string) ($attribution['utm']['utm_source'] ?? '') ?: null;
+        }
+        if (in_array('utm_medium', $fields, true)) {
+            $payload['utm_medium'] = (string) ($attribution['utm']['utm_medium'] ?? '') ?: null;
+        }
+        if (in_array('utm_campaign', $fields, true)) {
+            $payload['utm_campaign'] = (string) ($attribution['utm']['utm_campaign'] ?? '') ?: null;
         }
 
         if ($payload === []) {

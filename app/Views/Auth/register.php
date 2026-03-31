@@ -1,4 +1,4 @@
-<?php 
+<?php
 $req = service('request');
 $uri = $uri ?? ($req ? $req->getUri() : null);
 $this->config = config('Auth');
@@ -6,9 +6,9 @@ $config = $this->config;
 $currentURL = current_url();
 $referralLink = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $currentURL;
 $registrationAttribution = is_array($registrationAttribution ?? null) ? $registrationAttribution : [];
+$registrationSourceContent = is_array($registrationSourceContent ?? null) ? $registrationSourceContent : [];
 $referralPlatform = (string) ($registrationAttribution['view_slug'] ?? 'Free');
-$hasCustomRegistrationView = (bool) ($registrationAttribution['view_exists'] ?? false);
-$registerFormat = $hasCustomRegistrationView && ! in_array($referralPlatform, ['Free', 'MyMI'], true) ? 'Split-Form' : 'Single-Form';
+$registerFormat = (($registrationSourceContent['layout'] ?? 'single') === 'split') ? 'Split-Form' : 'Single-Form';
 $subViewData = [
     'uri' => $uri,
     'siteSettings' => $siteSettings,
@@ -17,6 +17,7 @@ $subViewData = [
     'referralLink' => $referralLink,
     'referralCode' => $referralCode,
     'registrationAttribution' => $registrationAttribution,
+    'registrationSourceContent' => $registrationSourceContent,
 ];
 ?>
 <?= $this->extend($config->viewLayout) ?>
@@ -31,9 +32,9 @@ $subViewData = [
 
 <div class="mt-5">
     <div class="row bg-white rounded shadow-sm p-3 mt-5">
-        <?php if ($registerFormat === 'Split-Form') : ?>
+        <?php if ($registerFormat === 'Split-Form' && ! empty($registrationSourceContent['intro_view'])) : ?>
             <div class="col-sm-6 border-right pr-3">
-                <?php echo view('Auth/register/' . $referralPlatform, $subViewData); ?>
+                <?php echo view($registrationSourceContent['intro_view'], $subViewData); ?>
             </div>
             <div class="col-sm-6">
                 <?php echo view('Auth/register_form', $subViewData); ?>
@@ -41,20 +42,23 @@ $subViewData = [
             </div>
         <?php else: ?>
         <div class="col-sm-6 offset-sm-3">
-
             <?php echo view('Auth/register_form', $subViewData); ?>
-
         </div>
         <?php endif; ?>
     </div>
-    <?php 
-    if (($registrationAttribution['view_slug'] ?? null) === 'Apex') {
-        echo view('Auth/register/resources/apexHowItWorks');
-    } else {
-        echo '<hr>';
-    }
+
+    <?php if (($registrationAttribution['view_slug'] ?? null) === 'Apex') : ?>
+        <?= view('Auth/register/resources/apexHowItWorks') ?>
+    <?php else : ?>
+        <hr>
+    <?php endif; ?>
+
+    <?php
+    // Placement comment: reusable source-driven promotional sections beneath registration.
+    echo view('Auth/partials/registration_promo_sections', $subViewData);
     ?>
-    <?php echo view('themes/public/resources/stayConnected', $subViewData); ?>    
+
+    <?php echo view('themes/public/resources/stayConnected', $subViewData); ?>
 </div>
 
 <?= $this->endSection() ?>
