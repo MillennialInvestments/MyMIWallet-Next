@@ -108,6 +108,41 @@ class ExchangeModel extends Model
         return $largeTransactions; 
     }
 
+    public function getAssetByTicker(string $ticker): ?object
+    {
+        return $this->db->table('bf_exchanges_assets')
+            ->where('symbol', $ticker)
+            ->orWhere('ticker', $ticker)
+            ->get()
+            ->getRow();
+    }
+
+    public function getOrderBook(int $assetId): array
+    {
+        $buy = $this->db->table('bf_exchanges_orders')
+            ->where('asset_id', $assetId)
+            ->where('status', 'Open')
+            ->where('trade_type', 'Buy')
+            ->orderBy('price', 'DESC')
+            ->limit(50)
+            ->get()
+            ->getResultArray();
+
+        $sell = $this->db->table('bf_exchanges_orders')
+            ->where('asset_id', $assetId)
+            ->where('status', 'Open')
+            ->where('trade_type', 'Sell')
+            ->orderBy('price', 'ASC')
+            ->limit(50)
+            ->get()
+            ->getResultArray();
+
+        return [
+            'buy' => $buy,
+            'sell' => $sell,
+        ];
+    }
+
     public function getMTDLargeTransactions() { 
         $startDate = date('Y-01-01'); // January 1st of the current year
         $endDate = date('Y-m-d'); // Today's date

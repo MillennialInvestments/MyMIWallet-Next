@@ -1499,6 +1499,7 @@ $routes->group('Budget', ['namespace' => 'App\Modules\User\Controllers', 'filter
 // MyMI Exchanges 
 $routes->group('Exchange', ['namespace' => 'App\Modules\Exchange\Controllers', 'filter' => 'login'], function($routes) {
     $routes->get('', 'ExchangeController::index', ['as' => 'mymi-exchange']);
+    $routes->get('Projects/(:any)', 'ExchangeController::project/$1');
     $routes->group('DigiByte', function($routes) { 
         $routes->post('fetchFrontendData', 'DigiByteController::fetchFrontendData', ['filter' => 'csrf']);
         $routes->post('provisionDefaultWallet', 'DigiByteController::provisionDefaultWallet', ['filter' => 'csrf']);
@@ -1638,7 +1639,7 @@ $routes->group('Predictions', ['namespace' => 'App\Modules\User\Controllers'], s
 // ===== Projects (User) =====
 $routes->group('Projects', ['namespace' => 'App\Modules\User\Controllers'], static function($routes) {
     $routes->get('/', 'ProjectsController::index');
-    $routes->get('View/(:segment)', 'ProjectsController::view/$1');
+    $routes->get('View/(:num)', 'ProjectsController::view/$1');
     $routes->post('Commit/(:num)', 'ProjectsController::commit/$1');
     $routes->post('Withdraw-Commit/(:num)', 'ProjectsController::withdrawCommit/$1');
     $routes->get('My/Commitments', 'ProjectsController::myCommitments');

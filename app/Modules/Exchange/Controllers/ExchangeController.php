@@ -140,6 +140,21 @@ class ExchangeController extends UserController
         return $this->renderTheme('App\Modules\Exchange\Views\index', $this->data);
     }
 
+    public function project(string $ticker)
+    {
+        $asset = $this->exchangeModel->getAssetByTicker($ticker);
+        if (! $asset) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Project exchange asset not found.');
+        }
+
+        $orderBook = $this->exchangeModel->getOrderBook((int) $asset->id);
+
+        return view('Exchange/project', [
+            'asset' => $asset,
+            'orderBook' => $orderBook,
+        ]);
+    }
+
     public function dashboard()
     {
         $data = [
