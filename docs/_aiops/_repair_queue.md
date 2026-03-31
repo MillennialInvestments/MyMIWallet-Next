@@ -1,0 +1,52 @@
+# Repair Queue
+
+## ID: RQ-001
+- Priority: medium
+- Classification: generic_boot_failure
+- Target file: app/Controllers/BaseController.php
+- Summary: Investigate and repair runtime error.
+- Evidence: [Error]
+- Recommended fix: Add guard clauses, normalize inputs, and update CI4 APIs where needed.
+- Safe to autopatch: no
+- Status: queued
+
+## ID: RQ-002
+- Priority: medium
+- Classification: route_resolution_failure
+- Target file: app/Controllers/BaseController.php
+- Summary: Investigate and repair runtime error.
+- Evidence: 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+- Recommended fix: Add guard clauses, normalize inputs, and update CI4 APIs where needed.
+- Safe to autopatch: no
+- Status: queued
+
+## ID: RQ-003
+- Priority: high
+- Classification: request_csrf_rejected
+- Target file: app/Filters/CsrfDebugFilter.php
+- Summary: Review token propagation, method handling, AJAX headers, and justified exclusions.
+- Evidence: {"timestamp":"2026-03-31T12:41:31+00:00","message":"BOOT FAILURE: The action you requested is not allowed.","context":{"trace":"#0 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Security/Security.php(263): CodeIgniter\\Security\\Exceptions\\SecurityException::forDisallowedAction()\n#1 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Filters/CSRF.php(52): CodeIgniter\\Security\\Security->verify(Object(CodeIgniter\\HTTP\\IncomingRequest))\n#2 /home/mymiteam/mymiwallet/site/current/app/Filters/CsrfDebugFilter.php(23): CodeIgniter\\Filters\\CSRF->before(Object(CodeIgniter\\HTTP\\IncomingRequest), NULL)\n#3 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Filters/Filters.php(241): App\\Filters\\CsrfDebugFilter->before(Object(CodeIgniter\\HTTP\\IncomingRequest), NULL)\n#4 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Filters/Filters.php(221): CodeIgniter\\Filters\\Filters->runBefore(Array)\n#5 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php(465): CodeIgniter\\Filters\\Filters->run('Budget/Account-...', 'before')\n#6 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php(340): CodeIgniter\\CodeIgniter->handleRequest(NULL, Object(Config\\Cache), false)\n#7 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Boot.php(417): CodeIgniter\\CodeIgniter->run()\n#8 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Boot.php(68): CodeIgniter\\Boot::runCodeIgniter(Object(CodeIgniter\\CodeIgniter))\n#9 /home/mymiteam/mymiwallet/site/current/public/index.php(121): CodeIgniter\\Boot::bootWeb(Object(Config\\Paths))\n#10 {main}"}}
+- Recommended fix: Bridge known CSRF header variants and log route-level diagnostics for Budget account flows.
+- Safe to autopatch: no
+- Status: queued
+
+## ID: RQ-004
+- Priority: medium
+- Classification: undefined_method
+- Target file: app/Controllers/BaseController.php
+- Summary: Investigate and repair runtime error.
+- Evidence: ERROR --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
+- Recommended fix: Add guard clauses, normalize inputs, and update CI4 APIs where needed.
+- Safe to autopatch: no
+- Status: queued
+
+## ID: RQ-005
+- Priority: medium
+- Classification: auth_failure
+- Target file: app/Controllers/BaseController.php
+- Summary: Investigate and repair runtime error.
+- Evidence: DEBUG --> Auth attempt failed for identifier esp.inoz.a.s4.1.5@gmail.com. Error: Unable to log you in. Please check your password.
+- Recommended fix: Add guard clauses, normalize inputs, and update CI4 APIs where needed.
+- Safe to autopatch: no
+- Status: queued
+

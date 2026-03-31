@@ -9,7 +9,7 @@ $this->session = Services::session();
 $this->request = Services::request();
 
 $socialMediaConfig = new SocialMedia(); 
-$uri = $this->request->uri;
+$uri = $this->request->getUri();
 $pageURIA = ($uri->getTotalSegments() >= 1) ? $uri->getSegment(1) : null;
 $pageURIB = ($uri->getTotalSegments() >= 2) ? $uri->getSegment(2) : null;
 $pageRef                    = $uri->getTotalSegments(); 

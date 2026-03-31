@@ -153,7 +153,7 @@ class HowItWorksController extends UserController
     public function show(string $slug = 'overview'): ResponseInterface
     {
         try {
-            $slug = normalize_slug($this->request->uri->getSegment(2) ?? 'overview');
+            $slug = normalize_slug($this->request->getUri()->getSegment(2) ?? 'overview');
             log_message('debug', '[HOW_IT_WORKS] slug=' . $slug);
 
             $validPages = [

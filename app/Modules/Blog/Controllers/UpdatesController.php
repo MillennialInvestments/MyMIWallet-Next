@@ -120,7 +120,7 @@ class UpdatesController extends UserController
     {
         $cuID                                           = $this->session->get('user_id') ?? 0;
         $reportingData                                  = $this->getMyMIAnalytics()->reporting($cuID);
-        $uri                                            = $this->request->uri;
+        $uri                                            = $this->request->getUri();
         $siteSettings                                   = $this->getSiteSettings();
 
         $pageTitle                                      = $this->getPageTitle($pageName);

@@ -34,21 +34,21 @@ class NewsAndUpdates extends UserController
 
     public function index()
     {
-        $uri = $this->request->uri;
+        $uri = $this->request->getUri();
         $content = view('Modules\Blog\Views\NewsAndUpdates\index', $this->getViewFileData($uri));
         return $this->renderPage('Home', 'Automated', $content);
     }
 
     public function IntegratingWithPlaid()
     {
-        $uri = $this->request->uri;
+        $uri = $this->request->getUri();
         $content = view('Modules\Blog\Views\NewsAndUpdates\Integrating_With_Plaid', $this->getViewFileData($uri));
         return $this->renderPage('Home', 'Automated', $content);
     }
 
     public function TheRoadmapToTheFutureOfFinance()
     {
-        $uri = $this->request->uri;
+        $uri = $this->request->getUri();
         $content = view('Modules\Blog\Views\NewsAndUpdates\The_Roadmap_To_The_Future_Of_Finance', $this->getViewFileData($uri));
         return $this->renderPage('Home', 'Automated', $content);
     }
@@ -59,7 +59,7 @@ class NewsAndUpdates extends UserController
     {
         $cuID = $this->session->get('user_id') ?? 0;
         $reportingData = $this->getMyMIAnalytics()->reporting($cuID);
-        $uri = $this->request->uri;
+        $uri = $this->request->getUri();
         $siteSettings = $this->getSiteSettings();
 
         $pageTitle = $this->getPageTitle($pageName);

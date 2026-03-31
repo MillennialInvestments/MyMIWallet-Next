@@ -37,14 +37,14 @@ class HowItWorks extends UserController
 
     public function index()
     {
-        $uri = $this->request->uri;
+        $uri = $this->request->getUri();
         $content = view('Modules\Blog\Views\HowItWorks\index', $this->getViewFileData($uri));
         return $this->renderPage('Home', 'Automated', $content);
     }
 
     public function DetermineYourFinancialGoals()
     {
-        $uri = $this->request->uri;
+        $uri = $this->request->getUri();
         $content = view('Modules\Blog\Views\HowItWorks\Determining_Your_Financial_Goals', $this->getViewFileData($uri));
         return $this->renderPage('Home', 'Automated', $content);
     }
@@ -53,7 +53,7 @@ class HowItWorks extends UserController
         $getCoinValue = $this->MyMIGoldModel->getCoinValue(); 
         $getInitialCoinValue = $this->MyMIGoldModel->getInitialCoinValue(); 
         
-        $uri = $this->request->uri;
+        $uri = $this->request->getUri();
     
         $viewFileData = [
             'getCoinValue' => $getCoinValue,
@@ -71,7 +71,7 @@ class HowItWorks extends UserController
         $getCoinValue = $this->MyMIGoldModel->getCoinValue(); 
         $getInitialCoinValue = $this->MyMIGoldModel->getInitialCoinValue(); 
         
-        $uri = $this->request->uri;
+        $uri = $this->request->getUri();
     
         $viewFileData = [
             'getCoinValue' => $getCoinValue,
@@ -87,7 +87,7 @@ class HowItWorks extends UserController
 
     public function PersonalBudgeting()
     {
-        $uri = $this->request->uri;
+        $uri = $this->request->getUri();
         $content = view('Modules\Blog\Views\HowItWorks\Personal_Budgeting', $this->getViewFileData($uri));
         return $this->renderPage('Home', 'Automated', $content);
     }
@@ -98,7 +98,7 @@ class HowItWorks extends UserController
     {
         $cuID = $this->session->get('user_id') ?? 0;
         $reportingData = $this->getMyMIAnalytics()->reporting($cuID);
-        $uri = $this->request->uri;
+        $uri = $this->request->getUri();
         $siteSettings = $this->getSiteSettings();
 
         $pageTitle = $this->getPageTitle($pageName);

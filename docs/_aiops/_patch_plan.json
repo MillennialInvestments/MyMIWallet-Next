@@ -1,0 +1,95 @@
+{
+    "generated_at": "2026-03-31T23:41:32+00:00",
+    "plans": [
+        {
+            "id": "PLAN-001",
+            "target_file": "app/Controllers/BaseController.php",
+            "why_file_chosen": "Investigate and repair runtime error.",
+            "methods_to_inspect": [
+                "safeView",
+                "normalizeAppOverridesFolder"
+            ],
+            "patch_strategy": "Add guard clauses, normalize inputs, and update CI4 APIs where needed.",
+            "regression_risks": "Potential behavior changes in request validation/rendering paths.",
+            "tests_to_run": [
+                "php spark logs:errors",
+                "php spark aiops:all --logs-only",
+                "php spark aiops:repairs",
+                "php spark routes",
+                "php spark cache:clear"
+            ]
+        },
+        {
+            "id": "PLAN-002",
+            "target_file": "app/Controllers/BaseController.php",
+            "why_file_chosen": "Investigate and repair runtime error.",
+            "methods_to_inspect": [
+                "safeView",
+                "normalizeAppOverridesFolder"
+            ],
+            "patch_strategy": "Add guard clauses, normalize inputs, and update CI4 APIs where needed.",
+            "regression_risks": "Potential behavior changes in request validation/rendering paths.",
+            "tests_to_run": [
+                "php spark logs:errors",
+                "php spark aiops:all --logs-only",
+                "php spark aiops:repairs",
+                "php spark routes",
+                "php spark cache:clear"
+            ]
+        },
+        {
+            "id": "PLAN-003",
+            "target_file": "app/Filters/CsrfDebugFilter.php",
+            "why_file_chosen": "Review token propagation, method handling, AJAX headers, and justified exclusions.",
+            "methods_to_inspect": [
+                "before",
+                "logLoginCsrfDebug"
+            ],
+            "patch_strategy": "Bridge known CSRF header variants and log route-level diagnostics for Budget account flows.",
+            "regression_risks": "Potential behavior changes in request validation/rendering paths.",
+            "tests_to_run": [
+                "php spark logs:errors",
+                "php spark aiops:all --logs-only",
+                "php spark aiops:repairs",
+                "php spark routes",
+                "php spark cache:clear"
+            ]
+        },
+        {
+            "id": "PLAN-004",
+            "target_file": "app/Controllers/BaseController.php",
+            "why_file_chosen": "Investigate and repair runtime error.",
+            "methods_to_inspect": [
+                "safeView",
+                "normalizeAppOverridesFolder"
+            ],
+            "patch_strategy": "Add guard clauses, normalize inputs, and update CI4 APIs where needed.",
+            "regression_risks": "Potential behavior changes in request validation/rendering paths.",
+            "tests_to_run": [
+                "php spark logs:errors",
+                "php spark aiops:all --logs-only",
+                "php spark aiops:repairs",
+                "php spark routes",
+                "php spark cache:clear"
+            ]
+        },
+        {
+            "id": "PLAN-005",
+            "target_file": "app/Controllers/BaseController.php",
+            "why_file_chosen": "Investigate and repair runtime error.",
+            "methods_to_inspect": [
+                "safeView",
+                "normalizeAppOverridesFolder"
+            ],
+            "patch_strategy": "Add guard clauses, normalize inputs, and update CI4 APIs where needed.",
+            "regression_risks": "Potential behavior changes in request validation/rendering paths.",
+            "tests_to_run": [
+                "php spark logs:errors",
+                "php spark aiops:all --logs-only",
+                "php spark aiops:repairs",
+                "php spark routes",
+                "php spark cache:clear"
+            ]
+        }
+    ]
+}
