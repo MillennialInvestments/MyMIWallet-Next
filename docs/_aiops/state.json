@@ -65,8 +65,8 @@
             "mtime": "2026-02-28"
         },
         "docs/Kimi/README.md": {
-            "hash": "1ea4573d71c02435a078ad00364de045c540afa984851d0018c2061ffaa03bc2",
-            "mtime": "2025-12-11"
+            "hash": "6ad17252e1f129d10e38c231ffba3407ace1b0cba9daf4670003cecb751eb1c3",
+            "mtime": "2026-03-30"
         },
         "docs/Kimi/audit-2025-12-11.md": {
             "hash": "6319dd8756d71465cdd1cf842c8181fe1bc58827b32902bbebcc1b33968278ed",
@@ -333,8 +333,8 @@
             "mtime": "2026-01-04"
         },
         "docs/ai-ops/README.md": {
-            "hash": "537d5b74a19a5b9067ca64f3ed67521436365081c7a7babaae5242d385b33ab6",
-            "mtime": "2026-01-01"
+            "hash": "ed540a2e5a7c40964fd17d9b92dca2e64a54c81841d6c2873bfbc26d53661f6d",
+            "mtime": "2026-03-30"
         },
         "docs/ai-ops/api-automations.md": {
             "hash": "12c9f26581245b1c5e45d91e7a3178c512b835e2077304528cab46f6a202d05c",
@@ -373,8 +373,8 @@
             "mtime": "2026-02-02"
         },
         "docs/aiops/README.md": {
-            "hash": "d06c1b59ad07313eb79c10c9d50e45b16e12a48ee2507617194e160fd7e02379",
-            "mtime": "2026-02-01"
+            "hash": "b8caaa4ad121fcaf9399ca3b700ad29ed98a5539993220e6643fee9482f60ebf",
+            "mtime": "2026-03-30"
         },
         "docs/aiops/api-audit.md": {
             "hash": "ff3dc66dad2e7e0c6a8f2a985f33857d9bd0d2c9c242b4884ae62ccf93fc0e16",
@@ -917,8 +917,8 @@
             "mtime": "2025-11-08"
         },
         "docs/categorized/README.md": {
-            "hash": "ace6bbb28a77d714dd48746ba2e8011ea8ae4cc2d9606fe437fc029da66a6f59",
-            "mtime": "2025-11-30"
+            "hash": "c006fd36052c688fb75db413ffcaf15539f53bb47cb17a78391e555389c0acc3",
+            "mtime": "2026-03-30"
         },
         "docs/chat-auth-flow.md": {
             "hash": "d8de2d4f248a95fa08ebdb807b9637def747b8b4bf79c141c26e7f017dc18d0a",
@@ -949,16 +949,16 @@
             "mtime": "2026-01-05"
         },
         "docs/chat/README.md": {
-            "hash": "1d4c58dca819eee9300a16e83fec70d99f03146bc61ea4c4017a62d3e4317709",
-            "mtime": "2026-01-05"
+            "hash": "1942ee051eab0751de54dab02ca947446dd0705fbf3339ab83259159d0e392a0",
+            "mtime": "2026-03-30"
         },
         "docs/chat/TROUBLESHOOTING.md": {
             "hash": "fe8c3590b6010363796394c28c8e1a3fe0aa054658237f3f6eb82f22950bd04a",
             "mtime": "2026-01-05"
         },
         "docs/chatgpt/README.md": {
-            "hash": "abf309f4d951818611876efe18c4ff191b3aa470783f58d26b85a3cf1c59a36c",
-            "mtime": "2026-01-04"
+            "hash": "7e967e9b5ef218196258ac1937c88e826dac109ff9dbc3c212a18f87a117c359",
+            "mtime": "2026-03-30"
         },
         "docs/chatgpt/aiops/MyMI_Codex_Executive/AIOPS_Worker_and_Spark_Integration.md": {
             "hash": "eef9bd9e83c9a0db9ffa806fdb02bef7ffe94ff9ac61e274d760bc638a16511b",
@@ -1245,8 +1245,8 @@
             "mtime": "2026-02-09"
         },
         "docs/cron/README.md": {
-            "hash": "809e30863190cc87dadca93cfc2a6dd50129c0577d4c4b039c47505285570cfe",
-            "mtime": "2025-12-21"
+            "hash": "634f7d54f37877e1d395cb7fa4a55e77db3470fec04b6a00621b0b96d4626696",
+            "mtime": "2026-03-30"
         },
         "docs/cron/jobs/auth_funnel_check.md": {
             "hash": "193367a7db025000274aa72a10f98ffac5a95a407a5a667453e94494ace7f455",
@@ -1309,8 +1309,8 @@
             "mtime": "2026-01-25"
         },
         "docs/dashboards/README.md": {
-            "hash": "ed2e53de6bd170ba20c44ddbd79d77dc084c9667d0e072430534b14ce1a39667",
-            "mtime": "2026-01-25"
+            "hash": "300c4a5332168dc52386b43995141789dff6921cb07c5fb1ec307757b2dc91d6",
+            "mtime": "2026-03-30"
         },
         "docs/dashboards/WalletsController.md": {
             "hash": "4c2c07204befdb6626a758c52b7d7d0ad9e9d86f76d47bcba91c53cfa922c054",
@@ -1337,8 +1337,8 @@
             "mtime": "2026-02-10"
         },
         "docs/discord/README.md": {
-            "hash": "7d7063eb0472e106d050f91ec78dfe398bdb3fb61f292e927507dd3812948a74",
-            "mtime": "2025-12-07"
+            "hash": "f2642a9c628125bdb58585fed3ae54630228f887e19d4fecc108a54ac54da6c1",
+            "mtime": "2026-03-30"
         },
         "docs/discord/_index.md": {
             "hash": "e7a8d49b0b44756b323993007e66c88e7de7edc886ed24be83a5c9eca296e188",
@@ -1497,8 +1497,8 @@
             "mtime": "2026-01-25"
         },
         "docs/forecasting/README.md": {
-            "hash": "ed4f69bd887bb34e70df3de9432f1bd7f979a36fe1ecf8b0fa8bda3dc3a69cbf",
-            "mtime": "2026-01-24"
+            "hash": "db0632cfd25d359d2dcc5b129980e83dac12da963f9335b194c40fa3820545a9",
+            "mtime": "2026-03-30"
         },
         "docs/forecasting/advanced_forecasting_overview.md": {
             "hash": "2659554fc749b0e96ab19a4c9d778dda42cf633f73a3c8d1f4a4d09dd4d31812",
@@ -1537,8 +1537,8 @@
             "mtime": "2025-12-27"
         },
         "docs/gap-audit/README.md": {
-            "hash": "7e498112af6b507074c0c0811870a1c5c96d5fbe21936219193d18207df2c75f",
-            "mtime": "2026-01-01"
+            "hash": "13df746baed6d9345d65ad31c17b03c3bf112498bfed61b72a75dbbe018d2711",
+            "mtime": "2026-03-30"
         },
         "docs/gap-audit/codex_queue.md": {
             "hash": "8c0628e6a07601811bf90fef8f356b378c563f7d7649812cc4563432d133cca3",
@@ -1557,8 +1557,8 @@
             "mtime": "2025-12-27"
         },
         "docs/gap_tracker/README.md": {
-            "hash": "493523c81e6df5ab0b3d129a5e6a0898d62eca369236f21921a10ae651ba9fc4",
-            "mtime": "2026-01-01"
+            "hash": "1bbc7381ca0c486234fa2297ef3cca51c602d867928cf704bf19b209950f33b3",
+            "mtime": "2026-03-30"
         },
         "docs/gap_tracker/items/GAP-AI-001.md": {
             "hash": "3f537bca82c4b7f2641abbdf48f69ce6142ee5df6e65ac95e94a86b88b700a1e",
@@ -1589,8 +1589,8 @@
             "mtime": "2026-02-08"
         },
         "docs/go-live/README.md": {
-            "hash": "17ad5f1a7b08e98f7458b66fcc1367eef0e9542fc18c3f1403b123f1d8683017",
-            "mtime": "2025-12-27"
+            "hash": "f3ab54507ea2473cd75f318a04fc0652e7549811b31034ac815d7484d76c36e9",
+            "mtime": "2026-03-30"
         },
         "docs/go-live/go_live_checklist.md": {
             "hash": "7cbc074a21742c9b4d2787ebd4c4ae8c660fbb4d4918c81469616bd1dad8cd05",
@@ -1605,8 +1605,8 @@
             "mtime": "2026-01-01"
         },
         "docs/health/README.md": {
-            "hash": "12f248b7c154fd30a471cc3e29e3e13e45e04fa7d48753c59e9f9aaab72fe609",
-            "mtime": "2026-01-17"
+            "hash": "ac948f018f98e268b8189bf627e109ba0ce2ebee74f03ddaaeee1566a16917a9",
+            "mtime": "2026-03-30"
         },
         "docs/health/api_inventory.md": {
             "hash": "61ae24179b8261f42d1865e0c477b260091b35355adc7e28d888047c3fb6bf53",
@@ -1681,8 +1681,8 @@
             "mtime": "2026-01-24"
         },
         "docs/indicators/README.md": {
-            "hash": "1dd4fe05fd4e44602168355dc66f28d9f07597b4baaffcb744704557a551f412",
-            "mtime": "2025-12-27"
+            "hash": "a836988c6456162377b86bc61f2f5521773618df2fd706ebfa1cb8ccfa6e0119",
+            "mtime": "2026-03-30"
         },
         "docs/indicators/_template.md": {
             "hash": "6e5c957e6d4a87b4f5969067f20dd4d6317f657d2d824527552fddefccc7502e",
@@ -1977,8 +1977,8 @@
             "mtime": "2025-11-08"
         },
         "docs/marketing/README.md": {
-            "hash": "39b23e7b83332eb1437dd8b702b2f8bad6937f72da51f58f09695e78362faa58",
-            "mtime": "2025-11-08"
+            "hash": "ee98a2a46299597766b51c7727fbe6585417d1c7f9693ddafb4e3ee44cfd2edf",
+            "mtime": "2026-03-30"
         },
         "docs/marketing/_assets/README.md": {
             "hash": "73cca90209a6b1c644f2d550802a52202fa5f6351c4c825f8bb516c5340ae519",
@@ -2081,8 +2081,8 @@
             "mtime": "2026-02-15"
         },
         "docs/mysql/README.md": {
-            "hash": "eeec1d64da2d0a506734fe3018a9e506df884ae66192c209f9363c7908e54337",
-            "mtime": "2026-02-05"
+            "hash": "114cb428767cc1f1cee733a1662c3fb44650a692ccfb33eddb09b1f83d921a8c",
+            "mtime": "2026-03-30"
         },
         "docs/mysql/adjustments/adjustment_log_2026-01-21.md": {
             "hash": "d9a31d0be11486f45fc2ac1cbca8383e827b67f7b6c13078aee134b93fa9b8c3",
@@ -3821,8 +3821,8 @@
             "mtime": "2026-02-06"
         },
         "docs/n8n/README.md": {
-            "hash": "c92a16b22cfd4ebe5d97d31f71449a8240e12a9f7a48559286caf88f6f3b8059",
-            "mtime": "2026-02-09"
+            "hash": "5b2aefea3a083d56020d80d708cbfe0593a3a535baae8c35b0fb5649a446f508",
+            "mtime": "2026-03-30"
         },
         "docs/next/Next-Steps.md": {
             "hash": "d584ada0c892aa9fb6c3ffb74067bc3be948769e363d0ab204f040c8afd12dc8",
@@ -3837,8 +3837,8 @@
             "mtime": "2025-12-27"
         },
         "docs/nginx/README.md": {
-            "hash": "cedef8cddfbfb93e8d3f4b57b0c13a9d11162965cfcb3c8fce45d00c11f704b4",
-            "mtime": "2026-01-26"
+            "hash": "900a34a7054b64c9374bb0b9bf48587eb4d341252fbcaeb02187cc2730a766b2",
+            "mtime": "2026-03-30"
         },
         "docs/nginx/_index.md": {
             "hash": "07613d7fb3e5d7e4db9a129a57902254ae79f2158fcec4001ffccdf225aa293e",
@@ -4281,8 +4281,8 @@
             "mtime": "2025-12-27"
         },
         "docs/predictions/README.md": {
-            "hash": "0d0b96d44ccf751d49d9be540d03d60160015ece2b12bf9878474a9b45e60316",
-            "mtime": "2026-01-01"
+            "hash": "2e4a1ae2f509d037c250339bdf8c8913fcd6ad1f82b05e306e0881e67f4bbf71",
+            "mtime": "2026-03-30"
         },
         "docs/predictions/_index.md": {
             "hash": "a453ac7667ae06bc59a44ed2faa5fc2e9a228b27f923d135c605c3d0dd5f8896",
@@ -4329,8 +4329,8 @@
             "mtime": "2026-02-07"
         },
         "docs/revenue_streams/README.md": {
-            "hash": "0cc25ff2c5432d8f55e234159c08a4d2d0d288dca0ebdf32d2e8a6fd01de5ee3",
-            "mtime": "2025-12-27"
+            "hash": "836e59227eaaad4370f24ba7bb7fcf043e57600c59e717d20dced99f491c6244",
+            "mtime": "2026-03-30"
         },
         "docs/revenue_streams/revenue_streams_by_module.md": {
             "hash": "c69ed7618353a710750c67cbae446bc93d354b021e7d1d5950e72fa341c9d415",
@@ -4373,8 +4373,8 @@
             "mtime": "2025-12-16"
         },
         "docs/search/README.md": {
-            "hash": "475f48957b5f07d6bb18cd072dbac01cb8aa6d1a21e1474573af3457836e6bf5",
-            "mtime": "2026-01-01"
+            "hash": "f9c5cad19963a323ac134c91c951fb18398316bacde45070a821412209b63c3a",
+            "mtime": "2026-03-30"
         },
         "docs/search/_index.md": {
             "hash": "f291cba506f15ef010cde4c32b05b5f61cea21037a3fc58a607eef1eebc326bb",
@@ -4441,8 +4441,8 @@
             "mtime": "2026-03-08"
         },
         "docs/spark/README.md": {
-            "hash": "f3f266be441eda47f92e0a0020bece26a5e6d74e24118039667b6355724e682b",
-            "mtime": "2026-03-08"
+            "hash": "b6c9705db268ea5b68901bacfbb4334bcbc2192b6b53ff11a2136b2f0133fa9b",
+            "mtime": "2026-03-30"
         },
         "docs/spark/cadence.md": {
             "hash": "a6d67dc4237617b9af3021076556bb14eb0e24bd7e9ee04c806360615e83b4a6",
@@ -4645,8 +4645,8 @@
             "mtime": "2025-11-08"
         },
         "docs/tax/README.md": {
-            "hash": "5a3bb4e2da11600b6495bf2f0dfbd93db581204bf9d83682389e7fa52ae81838",
-            "mtime": "2025-12-31"
+            "hash": "f46168d869e864cc075ead5acdad8f8ca677490fa137957f2a25abc5a3cc39a9",
+            "mtime": "2026-03-30"
         },
         "docs/testing/auth-tests.md": {
             "hash": "954236e4f752a4a60e1ba254a875e3cb88dee83c52a831a619dfdea60d1b0e30",
@@ -4745,8 +4745,8 @@
             "mtime": "2026-01-25"
         },
         "docs/troubleshooting/README.md": {
-            "hash": "f7bcdea12f79e2c5c676d44a6ee25415c983c81511cd7f6ff6c7204b03c99321",
-            "mtime": "2025-12-27"
+            "hash": "08d14ba04ebef95e9f9d37c35991d7a036cb282a84e498be6c34eb8919c4b8c2",
+            "mtime": "2026-03-30"
         },
         "docs/troubleshooting/checklists/00_master_checklist.md": {
             "hash": "0a925b562bc587811bf111749b5f1f903647d90ef707b718ab64dfb71f5cdc3f",
@@ -4885,8 +4885,8 @@
             "mtime": "2026-03-08"
         },
         "docs/_audit_report.md": {
-            "hash": "1414a2a3828ba9060ae4b34b00cc7fbdbd261bb36adc55dd3f0a3262d429082c",
-            "mtime": "2026-03-08"
+            "hash": "c9fe8ac8c471f2657673ac6802818ebd2529c6b0031e8066350e02493da6a75e",
+            "mtime": "2026-03-30"
         },
         "docs/_infrastructure/Lists/Commands.md": {
             "hash": "775327a3f6f1a71987c4cc03f79155f0e04f31855a4d3513ea253466e416d895",
@@ -4929,8 +4929,8 @@
             "mtime": "2026-03-08"
         },
         "docs/_inventory.md": {
-            "hash": "7172c6e35fe1181b89a6cb40fb6ab32046d7b4c06a3764338177299051c9011f",
-            "mtime": "2026-03-08"
+            "hash": "fc998fe43d2bae15258f9af87d578a2411f1dee16753f1a3edc29de8bba55d27",
+            "mtime": "2026-03-30"
         },
         "docs/_repo/class_trace_fix.md": {
             "hash": "7e61a35608e9739e26f2f12a466dc2134b7f75487f4d5023dddd597ed443a972",
@@ -4985,8 +4985,8 @@
             "mtime": "2026-03-08"
         },
         "docs/docs-system/README.md": {
-            "hash": "e881689da3dd223b39c3e0937e97bbba4506f1a9c8d2fe5d23e48d6d041cdf56",
-            "mtime": "2026-03-08"
+            "hash": "743886131eeeac7ccb7404570c19fe47cc87e22a41ce098e12a8b0be9a2246b2",
+            "mtime": "2026-03-30"
         },
         "docs/routes/routes_reconcile.md": {
             "hash": "b0dba2e72bb8fb66bf9b1f2c902b70c6eddfd0bb76e9930759c660617a145b5c",
@@ -5199,7 +5199,315 @@
         "docs/audits/user-flow-validation.md": {
             "hash": "ab3547b1e0602a7d73ac349b729f06a1a3e71f17db17194393685dcc92764c60",
             "mtime": "2026-03-18"
+        },
+        "docs/APIs/README.md": {
+            "hash": "612da35a34e4e702e42b6ed20ff4402439e662c233e1cad568ad60b89344664b",
+            "mtime": "2026-03-30"
+        },
+        "docs/Github/README.md": {
+            "hash": "a7cfb9e4b14cbddb262bfb248960e3ce5cc54ada70c772abe7349c8a317eec9e",
+            "mtime": "2026-03-30"
+        },
+        "docs/_audit/README.md": {
+            "hash": "bc9e83026367465f6e771af438daeca5c7d42f88dfdd21d67e2d0aec17b4b579",
+            "mtime": "2026-03-30"
+        },
+        "docs/_gap-tracker/README.md": {
+            "hash": "30031f7c2df900162418cd25cd8a8e14b48608cba562335580f531aa469429c3",
+            "mtime": "2026-03-30"
+        },
+        "docs/_infrastructure/README.md": {
+            "hash": "8fbd60a15633be5b1856c0cf690d71b201cca60c603be5590a7a9c9d8df127b3",
+            "mtime": "2026-03-30"
+        },
+        "docs/_ops/README.md": {
+            "hash": "eefcba0dce6ec68491bce36e0ee5c6597471f1bb8fce40862b3881740dd3f06c",
+            "mtime": "2026-03-30"
+        },
+        "docs/_repo/README.md": {
+            "hash": "9b2bc12b5f9eb8032d9feee4846e328d1f071e641480a7718b8a9b58a6c6b15d",
+            "mtime": "2026-03-30"
+        },
+        "docs/_support/README.md": {
+            "hash": "06d037176da51ffd32098930e15d6c11312e16de4db685a2bf85476ba26c72f1",
+            "mtime": "2026-03-30"
+        },
+        "docs/adr/README.md": {
+            "hash": "32feb9ed5aaea3cc03ba2234c241b1a885a0c57a6f08cae0fa95aab68def1589",
+            "mtime": "2026-03-30"
+        },
+        "docs/ai/README.md": {
+            "hash": "022337ee9e6181538698886579350c0469fff9fe00bfaf1504822a69aa469560",
+            "mtime": "2026-03-30"
+        },
+        "docs/alerts/README.md": {
+            "hash": "44dd034f275feaf6ebd7b2ae415bb5b03d3629a64e867b331c06cb6acc6edc06",
+            "mtime": "2026-03-30"
+        },
+        "docs/api/README.md": {
+            "hash": "ee12acfdab435606f6b9533e6aff18e2ad473b0feb90eb5918aca23fcce6af8c",
+            "mtime": "2026-03-30"
+        },
+        "docs/architecture/README.md": {
+            "hash": "4a51bc17ba7911a2c7f686d002521a53d809dc6246d80e29778fbdba083d4376",
+            "mtime": "2026-03-30"
+        },
+        "docs/auctions/README.md": {
+            "hash": "fac8a244192b7deffa404e21af04ac03afea702021774e118054c87575260c5f",
+            "mtime": "2026-03-30"
+        },
+        "docs/audit/README.md": {
+            "hash": "6be9ed95e3e461b3c5c4a0f544a50b3cdcab9a8eb502a0c1a269c96495d64474",
+            "mtime": "2026-03-30"
+        },
+        "docs/audits/README.md": {
+            "hash": "dd44e5e2cb2b1440a9cc91c6f88c69d819f76e45369209632c5190ef7962ade3",
+            "mtime": "2026-03-30"
+        },
+        "docs/auth/README.md": {
+            "hash": "c1453cba9739394b2f81692e4757e579a413cda97f79ceadeedf60ec921fd583",
+            "mtime": "2026-03-30"
+        },
+        "docs/automation/README.md": {
+            "hash": "1e48c81b40f55fe896a351171183aba804e9329c89738b96c97a2a1442250cd0",
+            "mtime": "2026-03-30"
+        },
+        "docs/budget/README.md": {
+            "hash": "7459ef707c021794acb2eca7ad664c0921d7eec816e987dc49d3cfd92e424d8e",
+            "mtime": "2026-03-30"
+        },
+        "docs/budgeting/README.md": {
+            "hash": "42b4fce55b31a3a48f203c9f2840545f6aab89051f05464a216da9dfba5e87ce",
+            "mtime": "2026-03-30"
+        },
+        "docs/ci/README.md": {
+            "hash": "a68b86114a59cd2c29c47e5d86583849896ddf496dfd6d7656eecd1db83efe1c",
+            "mtime": "2026-03-30"
+        },
+        "docs/ci4/README.md": {
+            "hash": "fae304ec35e1215fb37361d0ac3bbacdd0dd10be2f0173670c41e17c82cd594d",
+            "mtime": "2026-03-30"
+        },
+        "docs/codex/README.md": {
+            "hash": "0528d2046e2a5b537f111d1fd1f04fda87848401c4e60c6a719fe8b126566d70",
+            "mtime": "2026-03-30"
+        },
+        "docs/communities/README.md": {
+            "hash": "5939bb5e90ccab9c8f5e9d11c3aeec23406008414ae81b1c53fc255f08bcb30e",
+            "mtime": "2026-03-30"
+        },
+        "docs/content_engine/README.md": {
+            "hash": "440689d868289cac5e0d1481c0b9932231da928d78b72db2d57ff11cd4d748b0",
+            "mtime": "2026-03-30"
+        },
+        "docs/content_hub_inventory/README.md": {
+            "hash": "d11a4dc780bc48650974bc3a9ff3a7bc801513455732ae538946d926326ac848",
+            "mtime": "2026-03-30"
+        },
+        "docs/controllers/README.md": {
+            "hash": "4e76dfe6050ae397d6dff612fe006eb826ab26d23053f433a59b351f18a14c69",
+            "mtime": "2026-03-30"
+        },
+        "docs/dashboard/README.md": {
+            "hash": "03139c510a651d7f620ac77998bc2c73bb40e4a929e31ef3fe3ddda11f518ea5",
+            "mtime": "2026-03-30"
+        },
+        "docs/deploy/README.md": {
+            "hash": "7d85233b3124e8f95d41512a35c67c7eb99e1401bc6aafe8cd0e6f10c1f7abc1",
+            "mtime": "2026-03-30"
+        },
+        "docs/dev/README.md": {
+            "hash": "643f63ce24b6d18dbfceca7910f5a2055ecb88a1b8019e85b86df542f1b02b13",
+            "mtime": "2026-03-30"
+        },
+        "docs/email/README.md": {
+            "hash": "b971239fd4ed791fe4126929386436a5a6b6ca8c3b1abb94c0f13f019a64ca65",
+            "mtime": "2026-03-30"
+        },
+        "docs/errors/README.md": {
+            "hash": "8a1ed36dd908ab6abde488b28e1a6f12b90bf9315118de6eeffff5bd3277c039",
+            "mtime": "2026-03-30"
+        },
+        "docs/frontend/README.md": {
+            "hash": "5ce9b0ea2a20a30d24a9da657b6aaaa852bb5deca6c95dbaa98338d5d47a6dc3",
+            "mtime": "2026-03-30"
+        },
+        "docs/functional_inventory/README.md": {
+            "hash": "6f35a899cc746ac1c0c5a9ac8a5f2160678a3ab2f602fc3a42964729b2ef10f9",
+            "mtime": "2026-03-30"
+        },
+        "docs/funnels/README.md": {
+            "hash": "ff0958216bf5acb435230374301f166e41560ea1ad9b42537fe5f6de408c3bc6",
+            "mtime": "2026-03-30"
+        },
+        "docs/how-it-works/README.md": {
+            "hash": "f32a8a5b2ee187acbbc0a00354436b5ba677e4af74c159d721d2b534d5827e5c",
+            "mtime": "2026-03-30"
+        },
+        "docs/hygiene/README.md": {
+            "hash": "bf99e9e8edfd27e183ee2551c70f6546c55b2b7b7f77e238946155932619a711",
+            "mtime": "2026-03-30"
+        },
+        "docs/integrations/README.md": {
+            "hash": "be6be492dea8b510fc5921578b67e456873f15d76f7110308ee95e9d958bb2aa",
+            "mtime": "2026-03-30"
+        },
+        "docs/inventory/README.md": {
+            "hash": "168b46e44204b329e9c16b388f1c9c8ec4aaaefac159f3331e1506464b040bf1",
+            "mtime": "2026-03-30"
+        },
+        "docs/launch/README.md": {
+            "hash": "c6e09d448559ed38931a2327b541afeb8d6ba44ee85d22febc07f03c75a62c3f",
+            "mtime": "2026-03-30"
+        },
+        "docs/legal/README.md": {
+            "hash": "6da1b6926504fedf82c0a3d70f2bf99d4e3890c2573cbabf7a8cefe6faf098b8",
+            "mtime": "2026-03-30"
+        },
+        "docs/log_fixes/README.md": {
+            "hash": "49af25d737ba54fc18d99fcbcc6d02941b05bb89c4c3f7be890d120860a09208",
+            "mtime": "2026-03-30"
+        },
+        "docs/logs/README.md": {
+            "hash": "47d641cd13dbea70178ef43d22ebccabb8ff140b59a4a284b6a5d639c2cd7663",
+            "mtime": "2026-03-30"
+        },
+        "docs/management/README.md": {
+            "hash": "0d43f18a068e5b29bcf02bad23d2978673d80ddec12411c5de565ef9957e62fc",
+            "mtime": "2026-03-30"
+        },
+        "docs/mdit/README.md": {
+            "hash": "52a7ef2d7aeafa6a91117101e1473e0a41fcb689fea6eca2e5123a5db49566c6",
+            "mtime": "2026-03-30"
+        },
+        "docs/mobile/README.md": {
+            "hash": "b93e492313e29cd35f96791c765f68a86e70ae665671453d9443f80adc52bec1",
+            "mtime": "2026-03-30"
+        },
+        "docs/models/README.md": {
+            "hash": "b785d2dd6133b2b9a7c2289ccff8fd4cb40456580577847c260320baed435f6d",
+            "mtime": "2026-03-30"
+        },
+        "docs/modules/README.md": {
+            "hash": "370b92950dfbbfecbd3ee56e1182f91c05870b14204519a8f476e2a6fc13e1f6",
+            "mtime": "2026-03-30"
+        },
+        "docs/next/README.md": {
+            "hash": "d64805491ccd3ce79cd39a3e5667cec6a7b1c38e6f02d19deb8593e98c746f85",
+            "mtime": "2026-03-30"
+        },
+        "docs/notes/README.md": {
+            "hash": "73abca0fde54577d4a8d6840121856c6da7f0cc5acf2e5ff9dbbb199004c1c00",
+            "mtime": "2026-03-30"
+        },
+        "docs/onboarding/README.md": {
+            "hash": "ba8904c02ac5865af254872b0b1c49a641335e0190bc1f6e2b743130fc14385c",
+            "mtime": "2026-03-30"
+        },
+        "docs/operations/README.md": {
+            "hash": "562691520ba5a8cf13382fd315f5d1382fb4cb1943b05599f16d052627389874",
+            "mtime": "2026-03-30"
+        },
+        "docs/ops/README.md": {
+            "hash": "8c84bc21a8266ad6e67dde3c193284e1b8b8c29d2401ecde715a42e8983b8b71",
+            "mtime": "2026-03-30"
+        },
+        "docs/optimize/README.md": {
+            "hash": "ce80e23fa88b8993493cdc4a37a5094a6c6895ce43a20d126bea49421a3d2b78",
+            "mtime": "2026-03-30"
+        },
+        "docs/page_seo/README.md": {
+            "hash": "4f62b54ae672ef21fb07b8f18818c50a473f99a60824a52ac924e8f24a148846",
+            "mtime": "2026-03-30"
+        },
+        "docs/platform_formats/README.md": {
+            "hash": "3ebb930ebc69b057fd42471d858c31116394fe07944935d5f0271545579e5e85",
+            "mtime": "2026-03-30"
+        },
+        "docs/product/README.md": {
+            "hash": "4c362a19704c1ada5feca4f9b867f98dcb4104cf1e8f18d2693875fdf52e5ec0",
+            "mtime": "2026-03-30"
+        },
+        "docs/psr4/README.md": {
+            "hash": "ce15d9b4990a6b17e1eb1e24e88b46fa6b803a98f681e5591a68e68dec582d4b",
+            "mtime": "2026-03-30"
+        },
+        "docs/refactor/README.md": {
+            "hash": "5bf6f18490632f925c6ec213f860880484b89c1f75eae920636b641792c7de6b",
+            "mtime": "2026-03-30"
+        },
+        "docs/reports/README.md": {
+            "hash": "4a3cb8561bb0a5889e1e4aea65eeae86822d88a02ac2d98d71e3e5c8aeb1c582",
+            "mtime": "2026-03-30"
+        },
+        "docs/resolutions/README.md": {
+            "hash": "23ee3093cf1d1c97e66486dd70ac81284cc937540e37fb6806a1c726042bfc38",
+            "mtime": "2026-03-30"
+        },
+        "docs/reviews/README.md": {
+            "hash": "fef81421e934c0e9739809eae06511df0b606ec5374bce5cc60807d2f767a343",
+            "mtime": "2026-03-30"
+        },
+        "docs/routes/README.md": {
+            "hash": "8f93e54b38a5726e64ff676985bbe9b73341cb43da3e08ca8fc3a8aca0a7d0ff",
+            "mtime": "2026-03-30"
+        },
+        "docs/scrapers/README.md": {
+            "hash": "0d994cbc8b4750ba47e2d82718028cdde32378bb23f28c0e37ca816eb16358be",
+            "mtime": "2026-03-30"
+        },
+        "docs/security/README.md": {
+            "hash": "f02602735ceb76ca7d972c538c246ba0747f87e1be03f921dac3864e075770cb",
+            "mtime": "2026-03-30"
+        },
+        "docs/server/README.md": {
+            "hash": "8d13db7f06afd7717d0b279a434c60c1b2a2b10f4038265e07c3dee4e0766407",
+            "mtime": "2026-03-30"
+        },
+        "docs/services/README.md": {
+            "hash": "80f81846c5d0a180dd3166b49901bd6efab1bf59594f4f445e43fa92ef7dd505",
+            "mtime": "2026-03-30"
+        },
+        "docs/sql/README.md": {
+            "hash": "42a28b8ad8f96b75e399c148e626f317955a89f92e58547b02df13aca9601ac9",
+            "mtime": "2026-03-30"
+        },
+        "docs/standards/README.md": {
+            "hash": "485fa6772083fdc5adb93fddb4b0b05a83e38b616baa301fca5f240d1cc6d699",
+            "mtime": "2026-03-30"
+        },
+        "docs/syndication_inventory/README.md": {
+            "hash": "65e7384fed5b985b74e00da00eabe4d030443ef1753b4d4743cd34be045b3b0a",
+            "mtime": "2026-03-30"
+        },
+        "docs/tasks/README.md": {
+            "hash": "e3214e6d3ac6a324ce6987efa821401a2aea59486492f021c33de23b0a90c196",
+            "mtime": "2026-03-30"
+        },
+        "docs/testing/README.md": {
+            "hash": "86b15483036d482d3c24f20e4a178dbc246f02b364cd1f6af04d4250ea365b1e",
+            "mtime": "2026-03-30"
+        },
+        "docs/trading/README.md": {
+            "hash": "04d381be858557237c94e49dddbcf92ff1fcf83c34f1e09c3e8db628d78d93ce",
+            "mtime": "2026-03-30"
+        },
+        "docs/triage/README.md": {
+            "hash": "545f71c49a97c2632a752c89de32647297ebfcc8d7b77258752d5579e1dec7b1",
+            "mtime": "2026-03-30"
+        },
+        "docs/ui/README.md": {
+            "hash": "43e08c0fe0a8ad65f2720c41c8c96451e7ef84ec9d002d068fcb32ba4220e42a",
+            "mtime": "2026-03-30"
+        },
+        "docs/user-guides/README.md": {
+            "hash": "2132d1f2dd00f96436dcca0c59700972f147ec32d60751152ac715a9cac643fe",
+            "mtime": "2026-03-30"
+        },
+        "docs/wallets/README.md": {
+            "hash": "9c1945b9e67eecb9444a4f976614578e7fcfb29f6239d82a563705691982a63a",
+            "mtime": "2026-03-30"
         }
     },
-    "last_run": "2026-03-30T07:00:02Z"
+    "last_run": "2026-03-31T07:00:02Z"
 }

@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-03-30T07:00:02Z
+> Run: 2026-03-31T07:00:02Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -403,9 +403,11 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/Alerts/add/user_fields.php
   - ⚠️ No obvious doc match found (heuristic)
-- … and 966 more
+- … and 967 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
+- docs/APIs/README.md
+  - ❌ No obvious code match found (heuristic)
 - docs/APIs/_inventory_controllers.md
   - ❌ No obvious code match found (heuristic)
 - docs/APIs/_inventory_filters.md
@@ -426,6 +428,8 @@
   - ❌ No obvious code match found (heuristic)
 - docs/CRON.md
   - ❌ No obvious code match found (heuristic)
+- docs/Github/README.md
+  - ❌ No obvious code match found (heuristic)
 - docs/Github/temporary/gtm_gap-001/validation.md
   - ❌ No obvious code match found (heuristic)
 - docs/Github/temporary/gtm_gap-002/validation.md
@@ -444,11 +448,15 @@
   - ❌ No obvious code match found (heuristic)
 - docs/README.md
   - ❌ No obvious code match found (heuristic)
+- docs/_audit/README.md
+  - ❌ No obvious code match found (heuristic)
 - docs/_audit/ci4-logger-audit-2026-02-18.md
   - ❌ No obvious code match found (heuristic)
 - docs/_audit/ci4-logger-hardening-2026-02-18.md
   - ❌ No obvious code match found (heuristic)
 - docs/_audit_report.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_gap-tracker/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/_infrastructure/Lists/Helpers.md
   - ❌ No obvious code match found (heuristic)
@@ -456,7 +464,11 @@
   - ❌ No obvious code match found (heuristic)
 - docs/_infrastructure/Lists/ModulesViews.md
   - ❌ No obvious code match found (heuristic)
+- docs/_infrastructure/README.md
+  - ❌ No obvious code match found (heuristic)
 - docs/_inventory.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_ops/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/_ops/filesystem-lint-summary.md
   - ❌ No obvious code match found (heuristic)
@@ -464,15 +476,21 @@
   - ❌ No obvious code match found (heuristic)
 - docs/_ops/filesystem-trend.md
   - ❌ No obvious code match found (heuristic)
+- docs/_repo/README.md
+  - ❌ No obvious code match found (heuristic)
 - docs/_repo/class_integrity_report.md
   - ❌ No obvious code match found (heuristic)
 - docs/_repo/class_trace_fix.md
   - ❌ No obvious code match found (heuristic)
 - docs/_repo/diff_batches/batch_01.md
   - ❌ No obvious code match found (heuristic)
+- docs/_support/README.md
+  - ❌ No obvious code match found (heuristic)
 - docs/_support/aiops-init.md
   - ❌ No obvious code match found (heuristic)
 - docs/adr/0001-standards-and-response-contract.md
+  - ❌ No obvious code match found (heuristic)
+- docs/adr/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/adr/_index.md
   - ❌ No obvious code match found (heuristic)
@@ -487,6 +505,8 @@
 - docs/ai-ops/cron-jobs.md
   - ❌ No obvious code match found (heuristic)
 - docs/ai-ops/observability-policy.md
+  - ❌ No obvious code match found (heuristic)
+- docs/ai/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/ai/codex_prompts/spark_rules.md
   - ❌ No obvious code match found (heuristic)
@@ -562,25 +582,37 @@
   - ❌ No obvious code match found (heuristic)
 - docs/aiops/workflows/n8n-workflows.md
   - ❌ No obvious code match found (heuristic)
+- docs/alerts/README.md
+  - ❌ No obvious code match found (heuristic)
 - docs/alerts/alerts_marketing_pipline.md
   - ❌ No obvious code match found (heuristic)
 - docs/alerts/thinkorswim_broker_ingestion.md
   - ❌ No obvious code match found (heuristic)
+- docs/api/README.md
+  - ❌ No obvious code match found (heuristic)
 - docs/api/internal-orchestration.md
+  - ❌ No obvious code match found (heuristic)
+- docs/architecture/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/architecture/marketing_module_lifecycle.md
   - ❌ No obvious code match found (heuristic)
 - docs/architecture/psr4-remediation.md
   - ❌ No obvious code match found (heuristic)
+- docs/auctions/README.md
+  - ❌ No obvious code match found (heuristic)
 - docs/auctions/_index.md
   - ❌ No obvious code match found (heuristic)
 - docs/auctions/auction-schema.md
+  - ❌ No obvious code match found (heuristic)
+- docs/audit/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/audit/alerts_audit_last_run.md
   - ❌ No obvious code match found (heuristic)
 - docs/audit/auth_audit_last_run.md
   - ❌ No obvious code match found (heuristic)
 - docs/audit/news_audit_last_run.md
+  - ❌ No obvious code match found (heuristic)
+- docs/audits/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/audits/ajax-response-audit.md
   - ❌ No obvious code match found (heuristic)
@@ -598,6 +630,8 @@
   - ❌ No obvious code match found (heuristic)
 - docs/auth-flow.md
   - ❌ No obvious code match found (heuristic)
+- docs/auth/README.md
+  - ❌ No obvious code match found (heuristic)
 - docs/auth/auth_smoke.md
   - ❌ No obvious code match found (heuristic)
 - docs/auth/onboarding_first_login_modal.md
@@ -605,6 +639,8 @@
 - docs/auth/register_success_page.md
   - ❌ No obvious code match found (heuristic)
 - docs/auth/registration_flow_audit.md
+  - ❌ No obvious code match found (heuristic)
+- docs/automation/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/automation/ai_code_review.md
   - ❌ No obvious code match found (heuristic)
@@ -616,11 +652,15 @@
   - ❌ No obvious code match found (heuristic)
 - docs/bitcoin-standardization.md
   - ❌ No obvious code match found (heuristic)
+- docs/budget/README.md
+  - ❌ No obvious code match found (heuristic)
 - docs/budget/UI-Suggestions.md
   - ❌ No obvious code match found (heuristic)
 - docs/budget/_index.md
   - ❌ No obvious code match found (heuristic)
 - docs/budget/budget-controller.md
+  - ❌ No obvious code match found (heuristic)
+- docs/budgeting/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/budgeting/_index.md
   - ❌ No obvious code match found (heuristic)
@@ -698,7 +738,11 @@
   - ❌ No obvious code match found (heuristic)
 - docs/chatgpt/workflows/export_to_csv.md
   - ❌ No obvious code match found (heuristic)
+- docs/ci/README.md
+  - ❌ No obvious code match found (heuristic)
 - docs/ci/psr4_ci_gate.md
+  - ❌ No obvious code match found (heuristic)
+- docs/ci4/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/ci4/constructor-audit.md
   - ❌ No obvious code match found (heuristic)
@@ -715,6 +759,8 @@
 - docs/codex/04_pr4_chat_management_ui.md
   - ❌ No obvious code match found (heuristic)
 - docs/codex/05_pr5_n8n_docs_automation.md
+  - ❌ No obvious code match found (heuristic)
+- docs/codex/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/codex/reviews/Spark-Analysis-2026-02-01.md
   - ❌ No obvious code match found (heuristic)
@@ -734,6 +780,8 @@
   - ❌ No obvious code match found (heuristic)
 - docs/codex/reviews/review-prompt-2026-02-08.md
   - ❌ No obvious code match found (heuristic)
+- docs/communities/README.md
+  - ❌ No obvious code match found (heuristic)
 - docs/communities/linkedin.md
   - ❌ No obvious code match found (heuristic)
 - docs/communities/templates_library.md
@@ -743,6 +791,8 @@
 - docs/communities/twitch.md
   - ❌ No obvious code match found (heuristic)
 - docs/communities/x_twitter.md
+  - ❌ No obvious code match found (heuristic)
+- docs/content_engine/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/content_engine/api_endpoints.md
   - ❌ No obvious code match found (heuristic)
@@ -756,54 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/content_engine/troubleshooting.md
   - ❌ No obvious code match found (heuristic)
-- docs/content_engine/ui_workflow.md
-  - ❌ No obvious code match found (heuristic)
-- docs/content_hub_inventory/content_hub_inventory.md
-  - ❌ No obvious code match found (heuristic)
-- docs/controllers/APIs/TradingViewController.md
-  - ❌ No obvious code match found (heuristic)
-- docs/cron/README.md
-  - ❌ No obvious code match found (heuristic)
-- docs/cron/jobs/auth_funnel_check.md
-  - ❌ No obvious code match found (heuristic)
-- docs/cron/jobs/codex_review.md
-  - ❌ No obvious code match found (heuristic)
-- docs/cron/jobs/deploy_pull_restart.md
-  - ❌ No obvious code match found (heuristic)
-- docs/cron/jobs/health_check.md
-  - ❌ No obvious code match found (heuristic)
-- docs/cron/jobs/log_summarize_and_diff.md
-  - ❌ No obvious code match found (heuristic)
-- docs/cron/jobs/marketing_daily_run.md
-  - ❌ No obvious code match found (heuristic)
-- docs/cron/jobs/ops_analyze_commands.md
-  - ❌ No obvious code match found (heuristic)
-- docs/cron/jobs/ops_fetch_commands.md
-  - ❌ No obvious code match found (heuristic)
-- docs/csp-and-commondata.md
-  - ❌ No obvious code match found (heuristic)
-- docs/dashboard/autoload_health_widget.md
-  - ❌ No obvious code match found (heuristic)
-- docs/dashboards/Investments_index.md
-  - ❌ No obvious code match found (heuristic)
-- docs/dashboards/README.md
-  - ❌ No obvious code match found (heuristic)
-- docs/debug-validation-checklist.md
-  - ❌ No obvious code match found (heuristic)
-- docs/deploy/quality_gates.md
-  - ❌ No obvious code match found (heuristic)
-- docs/dev/logging.md
-  - ❌ No obvious code match found (heuristic)
-- docs/dev/maintenance-mode.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord/README.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord/_index.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord/_inventory.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord/alerts_automation.md
-  - ❌ No obvious code match found (heuristic)
-- docs/discord/discord_integration_overview.md
-  - ❌ No obvious code match found (heuristic)
-- … and 894 more
+- … and 971 more
