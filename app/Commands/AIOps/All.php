@@ -62,11 +62,13 @@ class All extends SafeBaseCommand
                 'architecture' => $flags['logs-only'] ? [] : $this->getArchitecture(),
                 'database'     => $flags['logs-only'] ? [] : $this->getDatabaseInfo(),
                 'commands'     => $flags['logs-only'] ? [] : $this->getCommandHealth(),
+                'actions'      => $this->extractActionsFromDocs(),
                 'performance'  => $this->getPerformanceInsights($startTime),
                 'security'     => $this->getSecurityInsights(),
                 'summary'      => [],
             ];
 
+            $this->generateCodeFromActions($report['actions']);
             $report['summary'] = $this->buildSummary($report);
 
             $this->writeReports($report, $reportDir);
@@ -502,6 +504,7 @@ class All extends SafeBaseCommand
             'database_table_count'=> count($databaseTables),
             'command_count'       => count($commandFiles),
             'command_issue_count' => count($commandIssues),
+            'action_count'        => count($report['actions'] ?? []),
             'controller_count'    => count($report['architecture']['controllers'] ?? []),
             'model_count'         => count($report['architecture']['models'] ?? []),
             'service_count'       => count($report['architecture']['services'] ?? []),
@@ -550,6 +553,7 @@ class All extends SafeBaseCommand
         $databaseTables = $report['database']['tables'] ?? [];
         $commandIssues = $report['commands']['issues'] ?? [];
         $architecture = $report['architecture'] ?? [];
+        $actions = $report['actions'] ?? [];
 
         $md  = "# AIOps Full Report\n\n";
         $md .= "**Generated:** " . ($report['generated_at'] ?? date(DATE_ATOM)) . "\n\n";
@@ -559,6 +563,7 @@ class All extends SafeBaseCommand
         $md .= "- Database tables: " . ($summary['database_table_count'] ?? 0) . "\n";
         $md .= "- Command files: " . ($summary['command_count'] ?? 0) . "\n";
         $md .= "- Command issues: " . ($summary['command_issue_count'] ?? 0) . "\n";
+        $md .= "- Actions detected: " . ($summary['action_count'] ?? 0) . "\n";
         $md .= "- Root controllers: " . ($summary['controller_count'] ?? 0) . "\n";
         $md .= "- Root models: " . ($summary['model_count'] ?? 0) . "\n";
         $md .= "- Root services: " . ($summary['service_count'] ?? 0) . "\n";
@@ -669,6 +674,10 @@ class All extends SafeBaseCommand
             $md .= "\n";
         }
 
+        $md .= "## Actions Detected\n```json\n";
+        $md .= json_encode($actions, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        $md .= "\n```\n\n";
+
         $md .= "## Recommended Next Actions\n";
         $md .= "- Review the **Detected Errors** section first.\n";
         $md .= "- Prioritize files referenced repeatedly across logs.\n";
@@ -698,6 +707,90 @@ class All extends SafeBaseCommand
     {
         if (! is_dir($directory)) {
             mkdir($directory, 0775, true);
+        }
+    }
+
+    protected function extractActionsFromDocs(): array
+    {
+        $actions = [];
+        $docsRoot = ROOTPATH . 'docs';
+
+        if (! is_dir($docsRoot)) {
+            return $actions;
+        }
+
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($docsRoot, RecursiveDirectoryIterator::SKIP_DOTS)
+        );
+
+        foreach ($iterator as $file) {
+            if (! $file->isFile() || strtolower($file->getExtension()) !== 'md') {
+                continue;
+            }
+
+            $content = @file_get_contents($file->getPathname());
+            if ($content === false || $content === '') {
+                continue;
+            }
+
+            if (preg_match_all('/## ACTION:(.*?)\n(.*?)(?=\n##|\z)/s', $content, $matches, PREG_SET_ORDER)) {
+                foreach ($matches as $match) {
+                    $block = trim($match[0] ?? '');
+                    $title = trim($match[1] ?? '');
+                    $body = trim($match[2] ?? '');
+
+                    $actions[] = [
+                        'file'   => ltrim(str_replace(ROOTPATH, '', $file->getPathname()), '/'),
+                        'title'  => $title,
+                        'block'  => $block,
+                        'fields' => $this->parseActionFields($body),
+                    ];
+                }
+            }
+        }
+
+        return $actions;
+    }
+
+    protected function parseActionFields(string $body): array
+    {
+        $fields = [];
+        $lines = preg_split('/\R/', $body) ?: [];
+
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if ($line === '' || strpos($line, '- ') !== 0) {
+                continue;
+            }
+
+            $line = substr($line, 2);
+            if (strpos($line, ':') === false) {
+                continue;
+            }
+
+            [$key, $value] = array_map('trim', explode(':', $line, 2));
+            if ($key === '') {
+                continue;
+            }
+
+            $fields[strtolower($key)] = $value;
+        }
+
+        return $fields;
+    }
+
+    protected function generateCodeFromActions(array $actions): void
+    {
+        if ($actions === []) {
+            CLI::write('[AIOPS ACTION] No ACTION blocks detected in docs.', 'yellow');
+            return;
+        }
+
+        foreach ($actions as $action) {
+            $block = (string) ($action['block'] ?? '');
+            CLI::write("Processing Action:\n" . $block, 'cyan');
+            CLI::write('- Placeholder: connect Ollama/GPT patch generator here.', 'yellow');
+            CLI::write('- Placeholder: validate patch, write files, and queue commit/PR.', 'yellow');
         }
     }
 }
