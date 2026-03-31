@@ -37,7 +37,10 @@ if (! function_exists('premium_guard')) {
 
         $request = service('request');
         $response = service('response');
-        $expectsJson = $request->isAJAX() || str_contains(strtolower((string) $request->getHeaderLine('Accept')), 'application/json');
+        $path = trim(strtolower((string) $request->getUri()->getPath()), '/');
+        $expectsJson = $request->isAJAX()
+            || str_contains(strtolower((string) $request->getHeaderLine('Accept')), 'application/json')
+            || str_starts_with($path, 'api/');
         $message = $options['message'] ?? ($entitlements['featureReason'] ?? 'Premium access required.');
 
         log_message('warning', 'Premium access denied: feature={feature} route={route} user_id={userId} tier={tier} status={status}', [

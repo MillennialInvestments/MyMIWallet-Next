@@ -38,6 +38,8 @@ class MyMIInvestments
     protected $MyMIMarketing;
     protected $MyMIWallet;
     protected $queue;
+    protected ?array $squeezeColumns = null;
+    protected array $invalidMarketSymbolsLogged = [];
 
     public function __construct()
     {
@@ -701,8 +703,9 @@ class MyMIInvestments
 
         try {
             $db = db_connect();
+            $asOfColumn = $this->resolveSqueezeAsOfColumn($db);
             $rows = $db->table('bf_squeeze_scorecards')
-                ->orderBy('as_of_datetime', 'DESC')
+                ->orderBy($asOfColumn, 'DESC')
                 ->limit($limit)
                 ->get()
                 ->getResultArray();
@@ -746,9 +749,11 @@ class MyMIInvestments
         try {
             $db = db_connect();
             $since = date('Y-m-d H:i:s', strtotime("-{$hours} hours"));
+            $scoreColumn = $this->resolveSqueezeScoreColumn($db);
+            $asOfColumn = $this->resolveSqueezeAsOfColumn($db);
             $count = (int) $db->table('bf_squeeze_scorecards')
-                ->where('score_total >=', $threshold)
-                ->where('as_of_datetime >=', $since)
+                ->where($scoreColumn . ' >=', $threshold)
+                ->where($asOfColumn . ' >=', $since)
                 ->countAllResults();
         } catch (\Throwable $e) {
             log_message('debug', 'MyMIInvestments::getSqueezeHighRiskCount failed: {msg}', ['msg' => $e->getMessage()]);
@@ -781,16 +786,17 @@ class MyMIInvestments
             $db = db_connect();
             $since = date('Y-m-d H:i:s', strtotime("-{$hours} hours"));
             $placeholders = implode(',', array_fill(0, count($symbols), '?'));
+            $asOfColumn = $this->resolveSqueezeAsOfColumn($db);
             $sql = "
                 SELECT s1.*
                 FROM bf_squeeze_scorecards s1
                 INNER JOIN (
-                    SELECT symbol, MAX(as_of_datetime) AS max_dt
+                    SELECT symbol, MAX({$asOfColumn}) AS max_dt
                     FROM bf_squeeze_scorecards
                     WHERE symbol IN ({$placeholders})
-                    AND as_of_datetime >= ?
+                    AND {$asOfColumn} >= ?
                     GROUP BY symbol
-                ) s2 ON s1.symbol = s2.symbol AND s1.as_of_datetime = s2.max_dt
+                ) s2 ON s1.symbol = s2.symbol AND s1.{$asOfColumn} = s2.max_dt
             ";
             $query = $db->query($sql, array_merge($symbols, [$since]));
             $rows = $query->getResultArray();
@@ -853,6 +859,46 @@ class MyMIInvestments
         }
 
         return $map;
+    }
+
+    private function resolveSqueezeAsOfColumn(\CodeIgniter\Database\BaseConnection $db): string
+    {
+        $columns = $this->getSqueezeColumns($db);
+        if (in_array('as_of_datetime', $columns, true)) {
+            return 'as_of_datetime';
+        }
+
+        return in_array('created_at', $columns, true) ? 'created_at' : 'id';
+    }
+
+    private function resolveSqueezeScoreColumn(\CodeIgniter\Database\BaseConnection $db): string
+    {
+        $columns = $this->getSqueezeColumns($db);
+        if (in_array('score_total', $columns, true)) {
+            return 'score_total';
+        }
+
+        return in_array('score', $columns, true) ? 'score' : 'confidence_score';
+    }
+
+    private function getSqueezeColumns(\CodeIgniter\Database\BaseConnection $db): array
+    {
+        if ($this->squeezeColumns !== null) {
+            return $this->squeezeColumns;
+        }
+
+        try {
+            $fields = $db->getFieldData('bf_squeeze_scorecards');
+            $this->squeezeColumns = array_map(
+                static fn ($field) => strtolower((string) ($field->name ?? '')),
+                $fields
+            );
+        } catch (\Throwable $e) {
+            log_message('debug', 'MyMIInvestments::getSqueezeColumns failed: {msg}', ['msg' => $e->getMessage()]);
+            $this->squeezeColumns = ['id'];
+        }
+
+        return $this->squeezeColumns;
     }
     
     public function getInvestmentInsights($topic = null, $complexityLevel = null)
@@ -1524,6 +1570,14 @@ class MyMIInvestments
             log_message('error', "❌ MyMIInvestments L1114 - Failed to retrieve market data for {$symbol}: " . $errorMessage);
             return false;
         }
+
+        if (! $this->isValidMarketPayload($marketData)) {
+            if (! isset($this->invalidMarketSymbolsLogged[$symbol])) {
+                log_message('warning', 'Skipping invalid market payload for {symbol}', ['symbol' => $symbol]);
+                $this->invalidMarketSymbolsLogged[$symbol] = true;
+            }
+            return false;
+        }
     
         try {
             $this->investmentModel->saveTickerData($symbol, $marketData);
@@ -1550,6 +1604,17 @@ class MyMIInvestments
             log_message('error', "❌ Exception while updating stock data for {$symbol}: " . $e->getMessage());
             return false;
         }
+    }
+
+    private function isValidMarketPayload(array $marketData): bool
+    {
+        foreach (['price', 'high', 'low', 'open', 'volume'] as $key) {
+            if (! array_key_exists($key, $marketData) || ! is_numeric($marketData[$key])) {
+                return false;
+            }
+        }
+
+        return true;
     }
     
     public function getStrategyById($id)
