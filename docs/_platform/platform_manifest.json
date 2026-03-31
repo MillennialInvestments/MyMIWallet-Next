@@ -1,0 +1,15 @@
+{
+  "platform_key": "mymiwallet",
+  "platform_name": "MyMI Wallet",
+  "platform_role": "control-plane",
+  "repo_path": "/workspace/MyMIWallet-Next",
+  "artifact_export_path": "/workspace/MyMIWallet-Next/docs/_platform",
+  "public_health_endpoint": "",
+  "shared_tags": ["finance", "alerts", "marketing"],
+  "enabled_subsystems": ["alerts", "marketing", "api", "auth", "wallets", "research"],
+  "preferred_profiles": {
+    "light": "platform:run --profile=light",
+    "nightly": "platform:run --profile=nightly",
+    "repair": "platform:run --repair=1 --profile=light"
+  }
+}
