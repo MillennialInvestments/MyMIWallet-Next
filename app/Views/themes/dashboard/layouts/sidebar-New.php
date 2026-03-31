@@ -13,7 +13,7 @@ $initials = !empty($cuDisplayName) ? mb_strtoupper(mb_substr($cuDisplayName, 0, 
 $coinBalance = $userGoldData->coinSum ?? '0';
 
 $request = service('request');
-// $uri = $request->uri;
+// $uri = $request->getUri();
 $currentUrl = current_url();
 
 $groups = [

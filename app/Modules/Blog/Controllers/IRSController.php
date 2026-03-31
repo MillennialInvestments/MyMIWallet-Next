@@ -114,7 +114,7 @@ class IRSController extends UserController
     {
         $cuID = service('authentication')->id() ?? service('session')->get('user_id');;
         $reportingData                                  = $this->getMyMIAnalytics()->reporting($cuID);
-        $uri                                            = $this->request->uri;
+        $uri                                            = $this->request->getUri();
         $siteSettings                                   = $this->getSiteSettings();
 
         $pageTitle                                      = $this->getPageTitle($pageName);

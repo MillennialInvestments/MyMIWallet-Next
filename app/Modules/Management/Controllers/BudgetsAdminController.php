@@ -149,7 +149,7 @@ class BudgetsAdminController extends BaseAdminController
     {
         $this->data['pageTitle'] = 'Approval | Management | MyMI Wallet';
         $this->commonData();
-        $pageURID = $this->request->uri->getSegment(4);
+        $pageURID = $this->request->getUri()->getSegment(4);
         if ($pageURID === 'Approve') {
             $assetStatus = 'Approved';
         } elseif ($pageURID === 'Deny') {

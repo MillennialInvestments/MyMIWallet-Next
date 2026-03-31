@@ -95,11 +95,11 @@ class SubscribeController extends BaseUserController
     private function preparePageData($pageType, $pageName)
     {
         $request = service('request');
-        $pageURIA = $request->uri->getSegment(1);
-        $pageURIB = $request->uri->getSegment(2);
-        $pageURIC = $request->uri->getSegment(3);
-        $pageURID = $request->uri->getSegment(4);
-        $pageURIE = $request->uri->getSegment(5);
+        $pageURIA = $request->getUri()->getSegment(1);
+        $pageURIB = $request->getUri()->getSegment(2);
+        $pageURIC = $request->getUri()->getSegment(3);
+        $pageURID = $request->getUri()->getSegment(4);
+        $pageURIE = $request->getUri()->getSegment(5);
         // Add other URI segments and data as needed
     
         return [

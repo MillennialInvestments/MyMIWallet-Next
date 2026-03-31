@@ -37,14 +37,14 @@ class FeaturesController extends UserController
 
     public function index()
     {
-        $uri = $this->request->uri;
+        $uri = $this->request->getUri();
         $content = view('Modules\Advertise\Views\Features\index', $this->getViewFileData($uri));
         return $this->renderPage('Features', 'Automated', $content);
     }
 
     public function BrokerageIntegrations()
     {
-        $uri = $this->request->uri;
+        $uri = $this->request->getUri();
         $content = view('Modules\Advertise\Views\Features\Brokerage_Integrations', $this->getViewFileData($uri));
         return $this->renderPage('Features', 'Automated', $content);
     }
@@ -53,7 +53,7 @@ class FeaturesController extends UserController
         $getCoinValue = $this->MyMIGoldModel->getCoinValue(); 
         $getInitialCoinValue = $this->MyMIGoldModel->getInitialCoinValue(); 
         
-        $uri = $this->request->uri;
+        $uri = $this->request->getUri();
     
         $viewFileData = [
             'getCoinValue' => $getCoinValue,
@@ -73,7 +73,7 @@ class FeaturesController extends UserController
     {
         $cuID = $this->session->get('user_id') ?? 0;
         $reportingData = $this->getMyMIAnalytics()->reporting($cuID);
-        $uri = $this->request->uri;
+        $uri = $this->request->getUri();
         $siteSettings = $this->getSiteSettings();
 
         $pageTitle = $this->getPageTitle($pageName);

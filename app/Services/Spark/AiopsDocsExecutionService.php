@@ -81,7 +81,7 @@ class AiopsDocsExecutionService
                     'dry_run' => $dryRun,
                 ];
 
-                $this->appendExecutionLog($filePath, $classification, $applyResult['modified_files'], '✅ Complete', $dryRun);
+                $this->appendExecutionLog($filePath, $classification, $applyResult['modified_files'], '✅ Complete', $dryRun, $parsed);
 
                 if (! in_array($filePath, $state['processed_files'], true)) {
                     $state['processed_files'][] = $filePath;
@@ -95,7 +95,7 @@ class AiopsDocsExecutionService
                 $errors[] = $error;
                 $state['errors'][] = $error;
 
-                $this->appendExecutionLog($filePath, [], [], '❌ Error: ' . $e->getMessage(), $dryRun);
+                $this->appendExecutionLog($filePath, [], [], '❌ Error: ' . $e->getMessage(), $dryRun, []);
             }
 
             $state['last_updated'] = $this->now();
@@ -226,23 +226,16 @@ class AiopsDocsExecutionService
     private function classifyInstructions(array $requiredChanges): array
     {
         $joined = strtolower(implode("\n", $requiredChanges));
-        $map = [
-            'controller' => 'Patch or create',
-            'model' => 'Update queries / structure',
-            'service' => 'Add logic',
-            'config' => 'Update files',
-            'route' => 'Add/adjust',
-            'db' => 'Generate migration',
-            'migration' => 'Generate migration',
-            'spark' => 'Create/update command',
-            'command' => 'Create/update command',
-            'view' => 'Create/update view',
-        ];
-
         $result = [];
-        foreach ($map as $keyword => $action) {
-            if (str_contains($joined, $keyword)) {
-                $result[] = ['type' => ucfirst($keyword), 'action' => $action];
+        if (preg_match_all('/##\s*action\s*(?:\n|\r\n)(.*?)(?=\n##|\z)/is', implode("\n", $requiredChanges), $matches)) {
+            foreach (($matches[1] ?? []) as $block) {
+                $result[] = ['type' => 'Explicit', 'action' => trim((string) $block)];
+            }
+        }
+
+        foreach (['fix', 'patch', 'add route', 'create command', 'implement', 'normalize', 'repair', 'guard against', 'ensure', 'replace'] as $verb) {
+            if (str_contains($joined, $verb)) {
+                $result[] = ['type' => 'Inferred', 'action' => 'Candidate action inferred from docs keyword: ' . $verb];
             }
         }
 
@@ -352,33 +345,30 @@ class AiopsDocsExecutionService
      * @param array<int,array{type:string,action:string}> $classification
      * @param array<int,string> $files
      */
-    private function appendExecutionLog(string $docPath, array $classification, array $files, string $status, bool $dryRun): void
+    private function appendExecutionLog(string $docPath, array $classification, array $files, string $status, bool $dryRun, array $parsed): void
     {
-        $content = "\n## Processed: " . basename($docPath) . "\n\n";
-        $content .= "### Changes Applied:\n";
+        $explicit = array_values(array_filter($classification, static fn(array $line): bool => ($line['type'] ?? '') === 'Explicit'));
+        $inferred = array_values(array_filter($classification, static fn(array $line): bool => ($line['type'] ?? '') === 'Inferred'));
 
-        if ($classification === []) {
-            $content .= "- No explicit actionable instructions detected.\n";
-        } else {
-            foreach ($classification as $line) {
-                $content .= '- ' . $line['type'] . ': ' . $line['action'] . "\n";
-            }
-        }
+        $content = "\n## Processed: " . basename($docPath) . "\n\n";
+        $content .= '- explicit actions found: ' . count($explicit) . "\n";
+        $content .= '- inferred actions found: ' . count($inferred) . "\n";
+        $content .= '- actions skipped: ' . (($classification === []) ? 1 : 0) . "\n";
+        $content .= '- files modified: ' . count($files) . "\n";
 
         if ($dryRun) {
             $content .= "- Dry-run mode active (no filesystem writes applied).\n";
         }
 
-        $content .= "\n### Files Modified:\n";
-        if ($files === []) {
-            $content .= "- None\n";
-        } else {
-            foreach ($files as $file) {
-                $content .= '- ' . $file . "\n";
-            }
+        if ($classification === []) {
+            $content .= "- reasons no changes were made: no explicit or inferred action extracted from required changes section.\n";
         }
 
-        $content .= "\n### Status:\n" . $status . "\n";
+        if (($parsed['required_changes'] ?? []) === []) {
+            $content .= "- reasons no changes were made: required changes section not present in document.\n";
+        }
+
+        $content .= "\n### Status\n" . $status . "\n";
 
         file_put_contents($this->logFile, $content, FILE_APPEND);
     }
@@ -386,6 +376,22 @@ class AiopsDocsExecutionService
     /** @param array<int,array<string,mixed>> $results @param array<int,array<string,mixed>> $errors @param array<int,string> $files */
     private function writeFinalReport(array $files, array $results, array $errors, bool $dryRun): void
     {
+        $explicit = 0;
+        $inferred = 0;
+        $modified = 0;
+
+        foreach ($results as $result) {
+            foreach (($result['classification'] ?? []) as $action) {
+                if (($action['type'] ?? '') === 'Explicit') {
+                    $explicit++;
+                }
+                if (($action['type'] ?? '') === 'Inferred') {
+                    $inferred++;
+                }
+            }
+            $modified += count($result['modified_files'] ?? []);
+        }
+
         $lines = [];
         $lines[] = '# AIOps Docs Execution Final Report';
         $lines[] = '';
@@ -393,6 +399,9 @@ class AiopsDocsExecutionService
         $lines[] = '- Dry-run: ' . ($dryRun ? 'yes' : 'no');
         $lines[] = '- Total inventory files: ' . count($files);
         $lines[] = '- Files processed: ' . count($results);
+        $lines[] = '- Explicit actions found: ' . $explicit;
+        $lines[] = '- Inferred actions found: ' . $inferred;
+        $lines[] = '- Files modified: ' . $modified;
         $lines[] = '- Errors: ' . count($errors);
         $lines[] = '';
         $lines[] = '## Processed Files';

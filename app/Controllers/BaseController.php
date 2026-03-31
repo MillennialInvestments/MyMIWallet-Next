@@ -107,7 +107,7 @@ abstract class BaseController extends Controller
 
         // Pick theme by first URI segment when not running in CLI
         if (! ($this->request instanceof CLIRequest)) {
-            $uri   = $this->request->getUri();          // <-- accessor, not $this->request->uri
+            $uri   = $this->request->getUri();          // <-- accessor, not $this->request->getUri()
             $first = $uri->getSegment(1);
             if ($first === 'dashboard') {
                 $this->theme = 'dashboard';
@@ -259,17 +259,27 @@ abstract class BaseController extends Controller
     }
 
 
-    protected function safeView(string $view, array $data = [])
+    protected function safeView($view, array $data = [])
     {
-        if (!is_string($view) || empty($view)) {
-            throw new \InvalidArgumentException('View must be string');
+        if (! is_string($view) || trim($view) === '') {
+            log_message('critical', '[VIEW_RESOLUTION] Invalid view passed to safeView()', [
+                'type' => gettype($view),
+                'value' => $view,
+            ]);
+            throw new \InvalidArgumentException('View must be a non-empty string.');
         }
 
-        if (! is_file(APPPATH . 'Views/' . str_replace('\\', '/', $view) . '.php')) {
+        $normalizedView = trim($view, "/\\ \t\n\r\0\x0B");
+
+        if ($normalizedView === '') {
+            throw new \InvalidArgumentException('View cannot normalize to an empty path.');
+        }
+
+        if (! is_file(APPPATH . 'Views/' . str_replace('\\', '/', $normalizedView) . '.php')) {
             log_message('error', '[MISSING VIEW] ' . $view);
         }
 
-        return view($view, $data);
+        return view($normalizedView, $data);
     }
 
     protected function respondWithRendered(string $view, array $data = []): ResponseInterface
@@ -582,7 +592,7 @@ abstract class BaseController extends Controller
             return;
         }
 
-        $config->appOverridesFolder = trim($config->appOverridesFolder, "/\\");
+        $config->appOverridesFolder = trim((string) ($config->appOverridesFolder ?? ''), "/\\");
     }
 
     protected function renderTheme(string $view, ResponseInterface|array $data = []): ResponseInterface|string

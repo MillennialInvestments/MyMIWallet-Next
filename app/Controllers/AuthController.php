@@ -1627,14 +1627,18 @@ class AuthController extends BaseController
         return site_url('Dashboard');
     }
 
-    protected function _render(string $view, array $data = [])
+    protected function _render($view, array $data = [])
     {
-        if (!is_string($view) || empty($view)) {
-            log_message('critical', 'Invalid view path passed to render()', ['view' => $view]);
+        if (! is_string($view) || trim($view) === '') {
+            log_message('critical', '[AUTH_RENDER] Invalid view path passed to _render()', [
+                'type' => gettype($view),
+                'view' => $view,
+                'route' => (string) $this->request->getUri(),
+            ]);
             throw new \RuntimeException('Invalid view path');
         }
 
-        return $this->safeView($view, $data);
+        return $this->safeView(trim($view), $data);
     }
 
     private function setAuthMessage(string $type, string $text, ?string $title = null): void
