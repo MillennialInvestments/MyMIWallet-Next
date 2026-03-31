@@ -54,6 +54,7 @@ class Console extends BaseConfig
         \App\Commands\AIOps\DepsAdd::class,
         \App\Commands\AIOps\DiffFormat::class,
         \App\Commands\AIOps\Doctor::class,
+        \App\Commands\AiOps\ExecuteDocs::class,
         \App\Commands\AIOps\GateCost::class,
         \App\Commands\AIOps\EmailScan::class,
         \App\Commands\AIOps\GovernanceAnalyze::class,
