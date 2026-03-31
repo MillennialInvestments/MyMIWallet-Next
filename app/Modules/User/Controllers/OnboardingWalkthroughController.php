@@ -354,6 +354,22 @@ class OnboardingWalkthroughController extends BaseUserController
         return $this->respondSuccess('Watchlist saved.', $progress->computeProgress($userId));
     }
 
+    public function completeSourceWelcome()
+    {
+        $userId = (int) ($this->cuID ?? session('user_id') ?? 0);
+        if ($userId <= 0) {
+            return $this->respondError('Unauthorized', 401);
+        }
+
+        $action = trim((string) $this->request->getPost('action')) ?: 'completed';
+
+        /** @var OnboardingProgressService $progress */
+        $progress = service('onboardingProgressService');
+        $state = $progress->markSourceAwareWelcomeComplete($userId, $action);
+
+        return $this->respondSuccess('Source welcome updated.', $state);
+    }
+
     private function respondSuccess(string $message, array $data = [], int $status = 200)
     {
         return $this->response

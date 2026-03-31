@@ -125,6 +125,9 @@ $showSetupBanner   = ! empty($setupStatus)
     && ! ($setupStatus['overall_complete'] ?? false)
     && ! ($setupPrefs['dismiss_all'] ?? false)
     && ! ($setupPrefs['dismiss_dashboard'] ?? false);
+$sourceAwareWelcome = is_array($sourceAwareWelcome ?? null) ? $sourceAwareWelcome : [];
+$showSourceAwareWelcome = (bool) ($sourceAwareWelcome['show'] ?? false);
+$sourceWelcomeActions = is_array($sourceAwareWelcome['nextActions'] ?? null) ? $sourceAwareWelcome['nextActions'] : [];
 ?>
 <div class="nk-block-head nk-block-head-sm">
     <div class="nk-block-between">
@@ -172,6 +175,58 @@ $showSetupBanner   = ! empty($setupStatus)
         </a>
     </li>
 </ul>
+<?php endif; ?>
+
+<?php if ($showSourceAwareWelcome): ?>
+<div class="alert alert-primary mb-4 border border-primary-subtle" id="sourceAwareWelcomeCard">
+    <div class="d-flex flex-column flex-lg-row justify-content-between gap-3">
+        <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <em class="icon ni ni-discord"></em>
+                <strong>Welcome to MyMI Wallet from Discord</strong>
+            </div>
+            <div class="small mb-2">Use these next actions to personalize your first dashboard session.</div>
+            <div class="d-flex flex-wrap gap-2">
+                <?php foreach (array_slice($sourceWelcomeActions, 0, 5) as $action): ?>
+                    <?php $actionLabel = (string) ($action['label'] ?? 'Next step'); ?>
+                    <?php $actionUrl = (string) ($action['url'] ?? '/Dashboard'); ?>
+                    <a class="btn btn-sm btn-outline-primary" href="<?= esc($actionUrl); ?>"><?= esc($actionLabel); ?></a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="d-flex align-items-start gap-2">
+            <button type="button" class="btn btn-sm btn-primary" id="sourceWelcomeDoneBtn">Done</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" id="sourceWelcomeDismissBtn">Dismiss</button>
+        </div>
+    </div>
+</div>
+<script <?= $nonce['script'] ?? '' ?>>
+document.addEventListener('DOMContentLoaded', () => {
+    const card = document.getElementById('sourceAwareWelcomeCard');
+    if (!card) {
+        return;
+    }
+
+    const endpoint = <?= json_encode(site_url('Dashboard/onboarding/source-welcome/complete')) ?>;
+    const csrfName = <?= json_encode(csrf_token()) ?>;
+    const csrfHash = <?= json_encode(csrf_hash()) ?>;
+    const submit = async (action) => {
+        const body = new URLSearchParams();
+        body.append('action', action);
+        body.append(csrfName, csrfHash);
+        await fetch(endpoint, {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+            body: body.toString(),
+        });
+        card.remove();
+    };
+
+    document.getElementById('sourceWelcomeDoneBtn')?.addEventListener('click', () => submit('completed'));
+    document.getElementById('sourceWelcomeDismissBtn')?.addEventListener('click', () => submit('dismissed'));
+});
+</script>
 <?php endif; ?>
 
 <?php if ($showSetupBanner): ?>

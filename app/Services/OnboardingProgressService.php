@@ -66,6 +66,48 @@ class OnboardingProgressService
         return true;
     }
 
+    public function getSourceAwareWelcomeState(int $userId): array
+    {
+        $record = $this->ensureRecord($userId);
+        $steps = $this->getStepsFromRecord($record);
+        $meta = $steps['meta'] ?? [];
+        $sourceChannel = $this->getUserSourceChannel($userId);
+
+        $completedAt = (string) ($meta['source_welcome_completed_at'] ?? '');
+        $isDiscord = $sourceChannel === 'discord';
+        $hasFirstLogin = ! empty($record['first_verified_login_at']);
+
+        return [
+            'sourceChannel' => $sourceChannel,
+            'isDiscord' => $isDiscord,
+            'show' => $isDiscord && $hasFirstLogin && $completedAt === '',
+            'completedAt' => $completedAt,
+            'nextActions' => $this->defaultSourceNextActions($isDiscord),
+        ];
+    }
+
+    public function markSourceAwareWelcomeComplete(int $userId, string $action = 'completed'): array
+    {
+        $record = $this->ensureRecord($userId);
+        $steps = $this->getStepsFromRecord($record);
+        $steps['meta'] = is_array($steps['meta'] ?? null) ? $steps['meta'] : [];
+
+        if (! empty($steps['meta']['source_welcome_completed_at'])) {
+            return $this->getSourceAwareWelcomeState($userId);
+        }
+
+        $steps['meta']['source_welcome_completed_at'] = (new DateTimeImmutable('now'))->format('Y-m-d H:i:s');
+        $steps['meta']['source_welcome_completion_action'] = trim($action) !== '' ? $action : 'completed';
+
+        $this->updateSteps($userId, $steps, $record);
+        service('eventTracker')->track('setup.source_welcome_completed', [
+            'source' => $this->getUserSourceChannel($userId),
+            'action' => $steps['meta']['source_welcome_completion_action'],
+        ], $userId, 'onboarding');
+
+        return $this->getSourceAwareWelcomeState($userId);
+    }
+
     public function shouldTriggerWalkthrough(int $userId): bool
     {
         $record = $this->ensureRecord($userId);
@@ -198,7 +240,42 @@ class OnboardingProgressService
                 'completed'          => false,
             ],
             'completed' => false,
+            'meta' => [
+                'source_welcome_completed_at' => null,
+                'source_welcome_completion_action' => null,
+            ],
         ];
+    }
+
+    private function getUserSourceChannel(int $userId): string
+    {
+        if (! $this->db->tableExists('bf_users') || ! $this->tableHasColumn('bf_users', 'source_channel')) {
+            return 'direct';
+        }
+
+        $row = $this->db->table('bf_users')
+            ->select('source_channel')
+            ->where('id', $userId)
+            ->get()
+            ->getRowArray();
+
+        return strtolower(trim((string) ($row['source_channel'] ?? 'direct')));
+    }
+
+    private function defaultSourceNextActions(bool $isDiscord): array
+    {
+        $actions = [
+            ['label' => 'Start your budget', 'url' => '/Budget'],
+            ['label' => 'Explore investments', 'url' => '/Investments'],
+            ['label' => 'Set up your watchlist', 'url' => '/Investments/Watchlist'],
+            ['label' => 'Learn about wallets/exchange', 'url' => '/Exchange'],
+        ];
+
+        if ($isDiscord) {
+            $actions[] = ['label' => 'Upgrade for premium tools', 'url' => '/Billing'];
+        }
+
+        return $actions;
     }
 
     private function missingSteps(array $steps): array
