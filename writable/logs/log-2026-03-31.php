@@ -10221,3 +10221,8 @@ DEBUG - 2026-03-31 14:06:22 --> Session: Class initialized using 'CodeIgniter\Se
 ERROR - 2026-03-31 14:06:22 --> [404_ROUTE]
 DEBUG - 2026-03-31 14:06:22 --> [REQ_ID=e1595cd0823f] [REQUEST][END]
 INFO - 2026-03-31 14:06:22 --> [REQ_ID=e1595cd0823f] [PERF] Execution time=0.230323
+DEBUG - 2026-03-31 14:11:22 --> [REQ_ID=5b947fed91c3] [REQUEST][START] HEAD /
+DEBUG - 2026-03-31 14:11:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-31 14:11:22 --> [404_ROUTE]
+DEBUG - 2026-03-31 14:11:22 --> [REQ_ID=5b947fed91c3] [REQUEST][END]
+INFO - 2026-03-31 14:11:22 --> [REQ_ID=5b947fed91c3] [PERF] Execution time=0.158662
