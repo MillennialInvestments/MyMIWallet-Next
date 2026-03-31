@@ -27,48 +27,25 @@ class ProjectsController extends BaseUserController
 
     public function index()
     {
-        $userId = null;
-        try {
-            $userId = $this->currentUserId();
-        } catch (\Throwable $e) {
-            // Visitor not authenticated; continue with public data.
-        }
-        $payload = $this->projectsService->projectsData($userId);
-        $primaryProject = $this->projectsService->getPrimaryFundProject();
-        if ($primaryProject) {
-            usort($payload['list'], static function ($a, $b) use ($primaryProject) {
-                return ((int) (($b['project']['id'] ?? 0) === (int) $primaryProject['id'])) <=> ((int) (($a['project']['id'] ?? 0) === (int) $primaryProject['id']));
-            });
+        $projects = cache('projects_list');
+        if (! is_array($projects)) {
+            $projects = $this->projectsModel->getActiveProjectsWithStats();
+            cache()->save('projects_list', $projects, 300);
         }
 
-        $data = [
-            'projects' => $payload['list'] ?? [],
-            'summary'  => $payload,
-            'primaryProject' => $primaryProject,
-            'primaryFundSummary' => $primaryProject ? $this->projectsModel->getProjectFundSummary((int) $primaryProject['id']) : null,
-        ];
-        return $this->renderTheme('App\\Modules\\User\\Views\\Projects\\view', $data);
+        return $this->renderTheme('App\\Modules\\User\\Views\\Projects\\index', [
+            'projects' => $projects,
+        ]);
     }
 
-    public function view(string $slug)
+    public function view(int $projectId)
     {
-        $project = $this->projectsModel->findBySlug($slug);
-        if (! $project) {
+        $details = $this->projectsModel->getProjectFullDetails($projectId);
+        if ($details === []) {
             throw PageNotFoundException::forPageNotFound('Project not found.');
         }
 
-        $committed = $this->projectsService->totalCommitted($project['id']);
-        $target = (float) ($project['target_raise'] ?? 0);
-        $progress = $target > 0 ? min($committed / $target, 1.0) : 0;
-
-        $data = [
-            'project'   => $project,
-            'committed' => $committed,
-            'target'    => $target,
-            'progress'  => $progress,
-        ];
-        helper('form');
-        return $this->renderTheme('App\\Modules\\User\\Views\\Projects\\view', $data);
+        return $this->renderTheme('App\\Modules\\User\\Views\\Projects\\profile', $details);
     }
 
     public function commit(int $projectId)

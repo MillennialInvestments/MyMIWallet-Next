@@ -20,6 +20,7 @@ class ProjectsModel extends Model
         'commit_deadline',
         'status',
         'exchange_symbol',
+        'ticker',
         'exchange_asset_id',
         'auction_id',
         'auction_snapshot',
@@ -369,6 +370,69 @@ class ProjectsModel extends Model
 
         $this->db->table('bf_exchanges_assets')->insert($assetData);
         return (int) $this->db->insertID();
+    }
+
+    public function getActiveProjectsWithStats(): array
+    {
+        return $this->db->table('bf_projects p')
+            ->select(
+                'p.id,
+                p.title,
+                p.description,
+                p.project_type,
+                p.nav_per_unit,
+                p.total_units_issued,
+                p.total_fund_value,
+                p.exchange_enabled,
+                p.linked_token_id,
+                p.ticker,
+                COUNT(DISTINCT h.user_id) as total_holders'
+            )
+            ->join('bf_projects_fund_holders h', 'h.project_id = p.id', 'left')
+            ->where('p.status', 'active')
+            ->groupBy('p.id')
+            ->orderBy('p.created_at', 'DESC')
+            ->get()
+            ->getResultArray();
+    }
+
+    public function getProjectFullDetails(int $projectId): array
+    {
+        $project = $this->db->table('bf_projects')
+            ->where('id', $projectId)
+            ->where('status', 'active')
+            ->get()
+            ->getRow();
+
+        if (! $project) {
+            return [];
+        }
+
+        $holders = $this->db->table('bf_projects_fund_holders')
+            ->where('project_id', $projectId)
+            ->countAllResults();
+
+        $navHistory = $this->db->table('bf_projects_fund_nav_history')
+            ->where('project_id', $projectId)
+            ->orderBy('created_at', 'DESC')
+            ->limit(60)
+            ->get()
+            ->getResult();
+
+        return [
+            'project' => $project,
+            'holders' => $holders,
+            'navHistory' => $navHistory,
+        ];
+    }
+
+    public function getProjectByTicker(string $ticker): ?object
+    {
+        return $this->db->table('bf_projects')
+            ->where('ticker', $ticker)
+            ->where('status', 'active')
+            ->get()
+            ->getRow();
     }
 
 }

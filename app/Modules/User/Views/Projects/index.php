@@ -1,43 +1,93 @@
 <?php
 /** @var array $projects */
+$projects = is_array($projects ?? null) ? $projects : [];
 ?>
+
 <div class="nk-block">
-    <div class="row g-4">
-        <?php if (empty($projects)): ?>
-            <div class="col-12">
-                <div class="alert alert-info">No projects are currently available.</div>
-            </div>
-        <?php endif; ?>
-        <?php foreach ($projects as $entry):
-            $project = $entry['project'];
-            $progress = (float) ($entry['progress_ratio'] ?? 0);
-            $percent = number_format($progress * 100, 1);
-            $target = number_format((float) ($entry['target'] ?? 0), 2);
-            $committed = number_format((float) ($entry['committed'] ?? 0), 2);
-        ?>
-        <div class="col-12 col-md-6 col-xl-4">
-            <div class="card card-bordered h-100">
-                <div class="card-inner">
-                    <h5 class="card-title mb-2">
-                        <a href="<?= site_url('Projects/View/' . esc($project['slug'])) ?>">
-                            <?= esc($project['title']) ?>
-                        </a>
-                    </h5>
-                    <p class="text-muted small mb-3">Status: <span class="badge bg-light text-dark"><?= esc($project['status']) ?></span></p>
-                    <div class="progress mb-2">
-                        <div class="progress-bar" role="progressbar" style="width: <?= $percent ?>%" aria-valuenow="<?= $percent ?>" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <ul class="list-unstyled small mb-3">
-                        <li><strong>Committed:</strong> $<?= $committed ?></li>
-                        <li><strong>Target:</strong> $<?= $target ?></li>
-                        <?php if (! empty($project['commit_deadline'])): ?>
-                            <li><strong>Commit Deadline:</strong> <?= esc($project['commit_deadline']) ?></li>
-                        <?php endif; ?>
-                    </ul>
-                    <a class="btn btn-primary btn-sm" href="<?= site_url('Projects/View/' . esc($project['slug'])) ?>">View Details</a>
+    <div class="card card-bordered">
+        <div class="card-inner">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                <h4 class="card-title mb-0">Projects</h4>
+                <div>
+                    <label for="projectTypeFilter" class="form-label mb-0 me-2">Type</label>
+                    <select id="projectTypeFilter" class="form-select form-select-sm d-inline-block" style="width: 200px;">
+                        <option value="">All</option>
+                        <option value="private_fund">Private Fund</option>
+                    </select>
                 </div>
             </div>
+
+            <div class="table-responsive">
+                <table id="projectsTable" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Type</th>
+                            <th>NAV</th>
+                            <th>Fund Value</th>
+                            <th>Units</th>
+                            <th>Holders</th>
+                            <th>Exchange</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
-        <?php endforeach; ?>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const table = $('#projectsTable').DataTable({
+        data: <?= json_encode($projects, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>,
+        columns: [
+            {
+                data: 'title',
+                render: function (data, type, row) {
+                    return `<a href="/Projects/View/${row.id}">${data || 'Untitled Project'}</a>`;
+                }
+            },
+            { data: 'project_type' },
+            {
+                data: 'nav_per_unit',
+                render: function (val) {
+                    return '$' + parseFloat(val || 0).toFixed(2);
+                }
+            },
+            {
+                data: 'total_fund_value',
+                render: function (val) {
+                    return '$' + parseFloat(val || 0).toLocaleString();
+                }
+            },
+            {
+                data: 'total_units_issued',
+                render: function (val) {
+                    return parseFloat(val || 0).toLocaleString();
+                }
+            },
+            { data: 'total_holders' },
+            {
+                data: null,
+                render: function (_, __, row) {
+                    if (parseInt(row.exchange_enabled || 0, 10) === 1 && row.ticker) {
+                        return `<a class="badge bg-success text-white" href="/Exchange/Projects/${row.ticker}">Active</a>`;
+                    }
+                    return '<span class="badge bg-secondary text-white">Not Listed</span>';
+                }
+            }
+        ],
+        pageLength: 25,
+        order: [[0, 'asc']]
+    });
+
+    const filter = document.getElementById('projectTypeFilter');
+    filter.addEventListener('change', function () {
+        if (this.value === 'private_fund') {
+            table.column(1).search('private_fund').draw();
+            return;
+        }
+        table.column(1).search(this.value).draw();
+    });
+});
+</script>
