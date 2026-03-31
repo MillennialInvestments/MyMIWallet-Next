@@ -1,16 +1,17 @@
 # AIOps Full Report
 
-**Generated:** 2026-03-31T13:28:24+00:00
+**Generated:** 2026-03-31T14:27:17+00:00
 
 ## Executive Summary
 - Errors detected: 250
 - Routes discovered: 17
 - Database tables: 354
-- Command files: 403
-- Command issues: 370
+- Command files: 404
+- Command issues: 371
+- Actions detected: 2
 - Root controllers: 22
 - Root models: 183
-- Root services: 206
+- Root services: 208
 - Modules discovered: 24
 
 ## System
@@ -90,9 +91,9 @@
 ```json
 {
     "memory_usage_bytes": 25165824,
-    "memory_peak_usage_bytes": 25165824,
-    "execution_seconds": 5.4157,
-    "included_files_count": 582
+    "memory_peak_usage_bytes": 27262976,
+    "execution_seconds": 6.1639,
+    "included_files_count": 583
 }
 ```
 
@@ -107,10 +108,17 @@
 ```
 
 ## Detected Errors
-- **summary-2026-03-31.log** [pattern: 404] INFO --> [REQ_ID=f73ed139b770] [PERF] Execution time=0.040443
-- **summary-2026-03-31.log** [pattern: warning] LEVEL: WARNING
+- **summary-2026-03-31.log** [pattern: 504] DEBUG --> [CSRF] token name=csrf_test_name hash=fd12e4a1504c011a1cd8af6f7f5a424b
+- **summary-2026-03-31.log** [pattern: 500] DEBUG --> [REQ_ID=9c500f9832d4] [INIT] App\Controllers\AuthController::GET
+- **summary-2026-03-31.log** [pattern: 404] INFO --> [REQ_ID=241173862ee3] [PERF] Execution time=0.040468
+- **summary-2026-03-31.log** [pattern: 404] INFO --> [REQ_ID=1b897b16861a] [PERF] Execution time=0.040424
+- **summary-2026-03-31.log** [pattern: 504] INFO --> [REQ_ID=6ef5c304de57] [PERF] Execution time=0.050417
+- **summary-2026-03-31.log** [pattern: 500] INFO --> [REQ_ID=9c500f9832d4] [MEMORY][controller-start] 4194304
+- **summary-2026-03-31.log** [pattern: 500] INFO --> [REQ_ID=9c500f9832d4] [PERF] Execution time=0.117900
+- **summary-2026-03-31.log** [pattern: warning] LEVEL: WARNING (NEW)
 - **summary-2026-03-31.log** [pattern: warning] WARNING --> MyMIWallets initialized without numeric user context.
 - **summary-2026-03-31.log** [pattern: 404] ERROR --> [404_ROUTE]
+- **summary-2026-03-31.log** [pattern: exception] CRITICAL --> [CSRF][EXCEPTION] The action you requested is not allowed.
 - **summary-2026-03-30.log** [pattern: 404] DEBUG --> [REQ_ID=3526c5404443] [REQUEST][START] GET /index.php/
 - **summary-2026-03-30.log** [pattern: 404] DEBUG --> [REQ_ID=3526c5404443] [FILTER_BEFORE] /index.php/
 - **summary-2026-03-30.log** [pattern: 404] DEBUG --> [REQ_ID=3526c5404443] [ROUTE] Controller=\App\Controllers\Home Method=index
@@ -350,16 +358,9 @@
 - **summary-2026-03-20.log** [pattern: warning] WARNING --> MyMIWallets initialized without numeric user context.
 - **summary-2026-03-20.log** [pattern: warning] WARNING --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works
 - **summary-2026-03-20.log** [pattern: warning] WARNING --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works | referrer: none
-- **summary-2026-03-20.log** [pattern: warning] WARNING --> [404] URI=https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Wallets
-- **summary-2026-03-20.log** [pattern: warning] WARNING --> 404 route miss: https://www.mymiwallet.com/index.php/How-It-Works/MyMI-Wallets | referrer: none
-- **summary-2026-03-20.log** [pattern: undefined] ERROR --> DashboardController::index failed to load executive summary: Call to undefined method CodeIgniter\Cache\Handlers\FileHandler::set()
-- **summary-2026-03-20.log** [pattern: 404] ERROR --> [ERROR_PAGE] event=error_404 status=404 message=Page not found.
-- **summary-2026-03-20.log** [pattern: undefined] ERROR --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered()
-- **summary-2026-03-20.log** [pattern: exception] CRITICAL --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found
-- **summary-2026-03-20.log** [pattern: exception] CRITICAL --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001
 
 ## Log Files Scanned
-- **summary-2026-03-31.log** | size: 81286 bytes | preview lines: 1858
+- **summary-2026-03-31.log** | size: 265527 bytes | preview lines: 2000
 - **summary-2026-03-30.log** | size: 223824 bytes | preview lines: 2000
 - **summary-2026-03-29.log** | size: 56282 bytes | preview lines: 1259
 - **summary-2026-03-28.log** | size: 63856 bytes | preview lines: 1383
@@ -776,6 +777,7 @@
 - app/Services/RecurringService.php
 - app/Services/ReferralService.php
 - app/Services/RegistrationAttributionService.php
+- app/Services/RegistrationSourceContentService.php
 - app/Services/Research/FinancialResearchService.php
 - app/Services/Research/InstitutionalResearchService.php
 - app/Services/RevenueService.php
@@ -800,6 +802,7 @@
 - app/Services/SlackWebhookService.php
 - app/Services/SocialPostFormatter.php
 - app/Services/SolanaService.php
+- app/Services/Spark/AiopsDocsExecutionService.php
 - app/Services/Spark/AuthAuditRunner.php
 - app/Services/Spark/AuthFunnelCheckService.php
 - app/Services/Spark/CommandInventoryService.php
@@ -7145,6 +7148,7 @@
 - app/Commands/AIOps/Docs/AutoSync.php
 - app/Commands/AIOps/Doctor.php
 - app/Commands/AIOps/EmailScan.php
+- app/Commands/AIOps/ExecuteDocs.php
 - app/Commands/AIOps/FormTestScan.php
 - app/Commands/AIOps/Forms/TestScan.php
 - app/Commands/AIOps/GateCost.php
@@ -7550,6 +7554,7 @@
 - **app/Commands/AIOps/Docs/AutoSync.php**: Check for typed/invalid BaseCommand property overrides
 - **app/Commands/AIOps/Doctor.php**: Check for typed/invalid BaseCommand property overrides
 - **app/Commands/AIOps/EmailScan.php**: Check for typed/invalid BaseCommand property overrides
+- **app/Commands/AIOps/ExecuteDocs.php**: Check for typed/invalid BaseCommand property overrides
 - **app/Commands/AIOps/FormTestScan.php**: Check for typed/invalid BaseCommand property overrides
 - **app/Commands/AIOps/GateCost.php**: Check for typed/invalid BaseCommand property overrides
 - **app/Commands/AIOps/GovernanceAnalyze.php**: Check for typed/invalid BaseCommand property overrides
@@ -7897,6 +7902,34 @@
 - **app/Commands/TrafficSpikeGuard.php**: Check for typed/invalid BaseCommand property overrides
 - **app/Commands/Ux/JourneyAudit.php**: Check for typed/invalid BaseCommand property overrides
 - **app/Commands/WalletsWarmSummaryCache.php**: Check for typed/invalid BaseCommand property overrides
+
+## Actions Detected
+```json
+[
+    {
+        "file": "docs/_aiops/aiops_mission.md",
+        "title": "Implement Docs ACTION extraction in aiops:all",
+        "block": "## ACTION: Implement Docs ACTION extraction in aiops:all\n\n- type: patch\n- target: app/Commands/AIOps/All.php\n- action: extract structured ACTION blocks from docs/**/*.md and include in JSON + Markdown report output\n- priority: high",
+        "fields": {
+            "type": "patch",
+            "target": "app/Commands/AIOps/All.php",
+            "action": "extract structured ACTION blocks from docs/**/*.md and include in JSON + Markdown report output",
+            "priority": "high"
+        }
+    },
+    {
+        "file": "docs/_aiops/aiops_mission.md",
+        "title": "Add code generation placeholder phase",
+        "block": "## ACTION: Add code generation placeholder phase\n\n- type: patch\n- target: app/Commands/AIOps/All.php\n- action: iterate detected actions and log placeholder execution steps for AI patch generation\n- priority: high\napp/Services/Scraper/\napp/Libraries/\n\n\nThese should be added to:\n\nAIOps scan config\n\nAIOps instructions doc\n\nCodex context (read-only)\n\n\ud83d\udcc4 PART 6 \u2014 WHERE CODEX-ONLY SCRAPER INSTRUCTIONS LIVE\n\nYou were 100% right to separate this.\n\nCreate:\ndocs/aiops/codex/\n\u251c\u2500\u2500 _index.md\n\u251c\u2500\u2500 scraper_marketing.md\n\u251c\u2500\u2500 scraper_investments.md\n\u251c\u2500\u2500 automation_rules.md\n\n\nThese docs:\n\nAre written by Codex\n\nAre read by AIOps\n\nAre never executed directly\n\nThis gives you:\n\nClear separation of concerns\n\nA living playbook\n\nNo runtime risk\n\n\ud83e\udde0 PART 7 \u2014 CREDIT OPTIMIZATION STRATEGY (IMPORTANT)\nTask\tUses Codex?\naiops:run\t\u274c\nops:work\t\u274c\nops:propose-pr\t\u274c\nCodex review\t\u2705\nIssue commentary\t\u2705\nDoc generation\t\u26a0\ufe0f optional\n\n\u27a1\ufe0f 80\u201390% of work runs without Codex\n\nThat\u2019s how you scale without burning budget.\n\n\u2705 WHAT I RECOMMEND NEXT (IN ORDER)\n\nIf you want to continue cleanly:\n\nDefine ops:work modes\n\n--doc-only\n\n--proposal-only\n\nAdd GitHub Issue emitter\n\nWrite Codex reviewer prompt\n\nDraft AIOps watchlist config\n\nScaffold docs/aiops/codex/\n\nI can do any one of these next, or produce a single master plan doc that AIOps itself can consume.\n\nJust tell me how you want to proceed \u2014 you\u2019ve built something genuinely powerful here.",
+        "fields": {
+            "type": "patch",
+            "target": "app/Commands/AIOps/All.php",
+            "action": "iterate detected actions and log placeholder execution steps for AI patch generation",
+            "priority": "high"
+        }
+    }
+]
+```
 
 ## Recommended Next Actions
 - Review the **Detected Errors** section first.
