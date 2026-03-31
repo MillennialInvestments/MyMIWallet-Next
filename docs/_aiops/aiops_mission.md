@@ -218,6 +218,20 @@ writable/logs/
 Scraper-Specific (Future Expansion)
 app/Modules/Marketing/
 app/Modules/Investments/
+
+## ACTION: Implement Docs ACTION extraction in aiops:all
+
+- type: patch
+- target: app/Commands/AIOps/All.php
+- action: extract structured ACTION blocks from docs/**/*.md and include in JSON + Markdown report output
+- priority: high
+
+## ACTION: Add code generation placeholder phase
+
+- type: patch
+- target: app/Commands/AIOps/All.php
+- action: iterate detected actions and log placeholder execution steps for AI patch generation
+- priority: high
 app/Services/Scraper/
 app/Libraries/
 
