@@ -13,6 +13,7 @@ use App\Services\Psr4AuditService;
 use App\Services\SetupStatusService;
 use App\Services\PremiumEntitlementService;
 use App\Services\RegistrationAttributionService;
+use App\Services\RegistrationSourceContentService;
 use App\Services\ForecastAccuracyEvaluator;
 use App\Services\ForecastAggregationService;
 use App\Services\Forecasting\MyMIForecaster;
@@ -292,6 +293,17 @@ class Services extends CoreServices
         return new PremiumEntitlementService();
     }
 
+
+    public static function registrationSourceContentService(bool $getShared = true): RegistrationSourceContentService
+    {
+        if ($getShared) {
+            /** @var RegistrationSourceContentService $service */
+            $service = static::getSharedInstance('registrationSourceContentService');
+            return $service;
+        }
+
+        return new RegistrationSourceContentService();
+    }
     public static function registrationAttributionService(bool $getShared = true): RegistrationAttributionService
     {
         if ($getShared) {

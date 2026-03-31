@@ -5,7 +5,8 @@ $subViewData = [
     'uri'       => $uri,
 ]; 
 ?>
-<?php $cspNonce = $cspNonce ?? (service('renderer')->getData('cspNonce') ?? ''); ?>
+<?php $resolvedNonce = $cspNonce ?? (service('renderer')->getData('cspNonce') ?? '');
+$cspNonce = is_scalar($resolvedNonce) ? (string) $resolvedNonce : ''; ?>
 <style nonce="<?= esc($cspNonce) ?>">
     #gettingStartedBanner {
         background-image: url('<?php echo base_url('assets/images/MyMI-Walllet-Background.jpeg'); ?>');

@@ -206,11 +206,17 @@ $routes->group('', ['namespace' => 'App\Controllers', 'filter' => 'no-cache'], s
     $routes->post('Auth/link-snaptrade', 'AuthController::linkSnapTrade');
 
     // Registration (including dynamic/referral patterns)
+    // Placement comment: explicit Discord route declared before dynamic catch-all for intentional campaign resolution.
     $routes->get('register/(:segment)', 'AuthController::register/$1', ['as' => 'register-segment']);
-    $routes->get('(:any)/register', 'AuthController::register', ['as' => 'dynamic-register']);
-    $routes->get('(:any)/register/(:segment)', 'AuthController::register/$2', ['as' => 'dynamic-register-referral']);
-    $routes->post('(:any)/register', 'AuthController::attemptRegister');
-    $routes->post('(:any)/register/(:segment)', 'AuthController::attemptRegister');
+    $routes->get('Discord/register', 'AuthController::register', ['as' => 'discord-register']);
+    $routes->get('Discord/register/(:segment)', 'AuthController::register/$1', ['as' => 'discord-register-referral']);
+    $routes->post('Discord/register', 'AuthController::attemptRegister', ['as' => 'discord-register-attempt']);
+    $routes->post('Discord/register/(:segment)', 'AuthController::attemptRegister');
+
+    $routes->get('(:segment)/register', 'AuthController::register', ['as' => 'dynamic-register']);
+    $routes->get('(:segment)/register/(:segment)', 'AuthController::register/$2', ['as' => 'dynamic-register-referral']);
+    $routes->post('(:segment)/register', 'AuthController::attemptRegister');
+    $routes->post('(:segment)/register/(:segment)', 'AuthController::attemptRegister');
 
     // Activation
     $routes->get('activate', 'AuthController::activateAccount', ['as' => 'activate']);
