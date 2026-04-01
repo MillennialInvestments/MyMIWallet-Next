@@ -1896,6 +1896,14 @@ class AlertsModel extends Model
 
     public function findScraperByIdentifier(string $identifier): ?array
     {
+        if ($identifier === '') {
+            return null;
+        }
+
+        if (! $this->hasColumn('bf_investment_scraper', 'email_identifier')) {
+            return null;
+        }
+
         return $this->db->table('bf_investment_scraper')
             ->where('email_identifier', $identifier)
             ->get()
@@ -1918,6 +1926,44 @@ class AlertsModel extends Model
     public function insertScraperEmail(array $data): bool
     {
         return (bool) $this->db->table('bf_investment_scraper')->insert($data);
+    }
+
+    /**
+     * Insert a raw IMAP email payload while protecting against unknown columns.
+     */
+    public function insertRawScraperEmail(array $data): bool
+    {
+        $safeData = $this->filterScraperColumns($data);
+        if ($safeData === []) {
+            return false;
+        }
+
+        return (bool) $this->db->table('bf_investment_scraper')->insert($safeData);
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>
+     */
+    public function filterScraperColumns(array $data): array
+    {
+        $table = 'bf_investment_scraper';
+        $columns = [];
+        foreach ($this->db->getFieldData($table) as $field) {
+            $columns[strtolower((string) $field->name)] = (string) $field->name;
+        }
+
+        $safe = [];
+        foreach ($data as $key => $value) {
+            $normalized = strtolower((string) $key);
+            if (! isset($columns[$normalized])) {
+                continue;
+            }
+
+            $safe[$columns[$normalized]] = $value;
+        }
+
+        return $safe;
     }
 
     public function getOldestScraperEmailDate(): ?string
