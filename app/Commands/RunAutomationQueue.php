@@ -71,7 +71,10 @@ class RunAutomationQueue extends BaseCommand
             return;
         }
 
-        $marketing = new MyMIMarketing();
+        $marketing = service('MyMIMarketing');
+        if (! $marketing instanceof MyMIMarketing) {
+            $marketing = new MyMIMarketing();
+        }
 
         switch ($route) {
             case 'cronFetchAndGenerateNews':
