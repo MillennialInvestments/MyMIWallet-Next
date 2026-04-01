@@ -5,6 +5,7 @@ namespace App\Libraries;
 
 use App\Libraries\{BaseLoader, MyMICoin, MyMIGold};
 use App\Models\{AnalyticalModel, InvestorModel, TrackerModel, WalletModel};
+use CodeIgniter\Database\BaseResult;
 use Config\Services;
 
 #[\AllowDynamicProperties]
@@ -35,7 +36,7 @@ class MyMIWallets {
             $this->cuID = (int) $sessionUserId;
         } else {
             $this->cuID = null;
-            log_message('warning', 'MyMIWallets initialized without numeric user context.');
+            log_message('debug', 'MyMIWallets initialized without numeric user context.');
         }
 
         if (!is_numeric($this->cuID ?? null)) {
@@ -61,7 +62,7 @@ class MyMIWallets {
         $resolvedUserId = $userId ?? $this->cuID;
 
         if (!is_numeric($resolvedUserId)) {
-            log_message('warning', 'MyMIWallets::getUserWallets called with non-numeric userId: {value}', [
+            log_message('debug', 'MyMIWallets::getUserWallets called with non-numeric userId: {value}', [
                 'value' => $resolvedUserId,
             ]);
             return [];
@@ -98,6 +99,9 @@ class MyMIWallets {
     }
 
     public function getUserBankAccounts($cuID) {
+        if (! $this->walletModel instanceof WalletModel) {
+            return [];
+        }
         $getBankAccounts = $this->walletModel->getUserBankAccounts($this->cuID); 
         return $getBankAccounts; 
     }

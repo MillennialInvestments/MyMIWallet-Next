@@ -42,15 +42,15 @@
             <div class="mb-3">
                 <div class="d-flex justify-content-between small mb-1">
                     <span>Funding Progress</span>
-                    <span><?= number_format($progress * 100, 1) ?>%</span>
+                    <span><?= number_format((float) (($progress ?? 0) * 100), 1) ?>%</span>
                 </div>
                 <div class="progress">
                     <div class="progress-bar" role="progressbar" style="width: <?= min($progress * 100, 100) ?>%" aria-valuenow="<?= $progress * 100 ?>" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
             <ul class="list-unstyled small mb-0">
-                <li><strong>Committed:</strong> $<?= number_format($committed, 2) ?></li>
-                <li><strong>Target Raise:</strong> $<?= number_format($target, 2) ?></li>
+                <li><strong>Committed:</strong> $<?= number_format((float) ($committed ?? 0), 2) ?></li>
+                <li><strong>Target Raise:</strong> $<?= number_format((float) ($target ?? 0), 2) ?></li>
                 <?php if (! empty($project['commit_deadline'])): ?>
                     <li><strong>Commitment Deadline:</strong> <?= esc($project['commit_deadline']) ?></li>
                 <?php endif; ?>
