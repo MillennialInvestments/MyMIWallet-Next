@@ -11,6 +11,7 @@ Provide operators and developers with command intent, dependencies, workflows, a
 ## Command Inventory
 
 - `alerts:audit` (Diagnostic)
+- `alerts:fetch-raw-emails` (Operational)
 - `alerts:forecast` (Operational)
 - `alerts:ingest` (Operational)
 - `alerts:parse-test` (Operational)
