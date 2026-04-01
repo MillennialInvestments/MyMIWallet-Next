@@ -6,6 +6,7 @@ namespace App\Commands\Alerts;
 
 use App\Commands\SafeBaseCommand;
 use App\Libraries\MyMIAlerts;
+use App\Libraries\TradeAlertMailboxFetcher;
 use App\Models\AiOpsIngestRunModel;
 use App\Models\AlertsModel;
 use CodeIgniter\CLI\CLI;
@@ -15,10 +16,11 @@ class Ingest extends SafeBaseCommand
     protected $group = 'Alerts';
     protected $name = 'alerts:ingest';
     protected $description = 'Ingest ThinkorSwim alert emails and upsert trade alerts.';
-    protected $usage = 'alerts:ingest [--since=15m|1h|today] [--limit=200] [--dry-run] [--verbose]';
+    protected $usage = 'alerts:ingest [--since=15m|1h|today] [--limit=200] [--fetch-first] [--dry-run] [--verbose]';
     protected $options = [
         '--since' => 'How far back to scan (default: 15m). Supports 15m|1h|today.',
         '--limit' => 'Max emails to scan (default: 200).',
+        '--fetch-first' => 'Use alerts:fetch-raw-emails path before processing scraped symbols (opt-in until stable).',
         '--dry-run' => 'Preview ingestion without DB writes.',
         '--verbose' => 'Verbose logging to CLI.',
     ];
@@ -29,6 +31,7 @@ class Ingest extends SafeBaseCommand
         [$args, $flags] = $this->parseParams($params);
         $dryRun = $this->resolveDryRun($flags);
         $verbose = isset($flags['verbose']);
+        $fetchFirst = isset($flags['fetch-first']);
 
         $since = $this->resolveOption($params, 'since', '15m');
         $limit = (int) $this->resolveOption($params, 'limit', '200');
@@ -44,83 +47,16 @@ class Ingest extends SafeBaseCommand
             'duplicates' => 0,
             'alerts_created' => 0,
             'alerts_updated' => 0,
+            'fetch_errors' => 0,
         ];
         $status = 'success';
         $errorMessage = null;
 
         try {
-            if (! function_exists('imap_open')) {
-                if ($dryRun) {
-                    CLI::write('IMAP extension not available. Dry-run will skip mailbox scan.', 'yellow');
-                    $errorMessage = 'IMAP extension not available.';
-                    throw new \RuntimeException('Dry-run skip');
-                }
-                throw new \RuntimeException('IMAP extension not available.');
-            }
-
-            $config = config('MyMI');
-            CLI::write('Using alert email: ' . $config->alertEmail, 'yellow');
-            log_message('info', 'Using alert email: ' . $config->alertEmail);
-            $imapHost = env('alerts.imap.host', 'imap.dreamhost.com:993/imap/ssl');
-            $imapMailbox = sprintf('{%s}%s', $imapHost, 'INBOX');
-            $imapUser = env('alerts.imap.user', $config->alertEmail);
-            $imapPass = env('alerts.imap.pass', env('ALERTS_IMAP_PASSWORD', 'MyMI2024!'));
-
-            $imap = @imap_open($imapMailbox, $imapUser, $imapPass);
-            if (! $imap) {
-                throw new \RuntimeException('Unable to connect to IMAP mailbox.');
-            }
-
-            try {
-                $criteria = $this->buildImapCriteria($since);
-                $emails = imap_search($imap, $criteria) ?: [];
-                $emails = array_slice($emails, 0, $limit);
-                $summary['emails_scanned'] = count($emails);
-
-                if ($verbose) {
-                    CLI::write('IMAP criteria: ' . $criteria, 'blue');
-                    CLI::write('Emails scanned: ' . $summary['emails_scanned'], 'blue');
-                }
-
-                $alerts = $dryRun ? null : new MyMIAlerts();
-
-                foreach ($emails as $emailNumber) {
-                    $header = imap_headerinfo($imap, (int) $emailNumber);
-                    $subject = isset($header->subject) ? imap_utf8($header->subject) : 'No Subject';
-                    $date = isset($header->date) ? date('Y-m-d H:i:s', strtotime($header->date)) : date('Y-m-d H:i:s');
-                    $sender = $header->from ?? [];
-                    $messageId = isset($header->message_id) ? trim((string) $header->message_id) : '';
-                    $body = $this->fetchEmailBody($imap, (int) $emailNumber);
-
-                    $identifier = $messageId !== '' ? $messageId : md5($subject . $date . json_encode($sender));
-
-                    if ($dryRun) {
-                        $summary['new_emails']++;
-                        if ($verbose) {
-                            CLI::write(sprintf('Dry-run: would ingest "%s"', $subject));
-                        }
-                        continue;
-                    }
-
-                    $payload = [
-                        'email_subject'     => $subject,
-                        'email_date'        => $date,
-                        'email_body'        => $body,
-                        'email_identifier'  => $identifier,
-                    ];
-
-                    $result = $alerts->ingestEmailPayload($payload);
-                    if ($result === null) {
-                        $summary['duplicates']++;
-                        continue;
-                    }
-
-                    if (! empty($result['id'])) {
-                        $summary['new_emails']++;
-                    }
-                }
-            } finally {
-                imap_close($imap);
+            if ($fetchFirst) {
+                $this->runFetchFirstIngestStep($since, $limit, $dryRun, $verbose, $summary);
+            } else {
+                $this->runLegacyIngestStep($since, $limit, $dryRun, $verbose, $summary);
             }
 
             if (! $dryRun) {
@@ -164,9 +100,111 @@ class Ingest extends SafeBaseCommand
         CLI::write(sprintf('duplicates skipped: %d', $summary['duplicates']));
         CLI::write(sprintf('alerts created: %d', $summary['alerts_created']));
         CLI::write(sprintf('alerts updated: %d', $summary['alerts_updated']));
+        CLI::write(sprintf('fetch errors: %d', $summary['fetch_errors']));
         CLI::write(sprintf('total runtime ms: %d', $durationMs));
 
         return $status === 'success' ? EXIT_SUCCESS : EXIT_ERROR;
+    }
+
+    private function runFetchFirstIngestStep(string $since, int $limit, bool $dryRun, bool $verbose, array &$summary): void
+    {
+        $fetcher = new TradeAlertMailboxFetcher();
+        $fetchSummary = $fetcher->fetch([
+            'since' => $since,
+            'limit' => $limit,
+            'dry_run' => $dryRun,
+            'verbose' => $verbose,
+        ]);
+
+        $summary['emails_scanned'] = (int) ($fetchSummary['emails_scanned'] ?? 0);
+        $summary['new_emails'] = (int) ($fetchSummary['new_stored'] ?? 0);
+        $summary['duplicates'] = (int) ($fetchSummary['duplicates_skipped'] ?? 0);
+
+        $errors = $fetchSummary['errors'] ?? [];
+        if (is_array($errors) && $errors !== []) {
+            $summary['fetch_errors'] = count($errors);
+            foreach ($errors as $error) {
+                CLI::write('fetch warning: ' . (string) $error, 'yellow');
+            }
+            CLI::write('Continuing with processScrapedSymbols() despite fetch warnings.', 'yellow');
+        }
+    }
+
+    private function runLegacyIngestStep(string $since, int $limit, bool $dryRun, bool $verbose, array &$summary): void
+    {
+        if (! function_exists('imap_open')) {
+            if ($dryRun) {
+                CLI::write('IMAP extension not available. Dry-run will skip mailbox scan.', 'yellow');
+                return;
+            }
+
+            throw new \RuntimeException('IMAP extension not available.');
+        }
+
+        $config = config('MyMI');
+        CLI::write('Using alert email: ' . $config->alertEmail, 'yellow');
+        log_message('info', 'Using alert email: ' . $config->alertEmail);
+        $imapHost = env('alerts.imap.host', 'imap.dreamhost.com:993/imap/ssl');
+        $imapMailbox = sprintf('{%s}%s', $imapHost, 'INBOX');
+        $imapUser = env('alerts.imap.user', $config->alertEmail);
+        $imapPass = env('alerts.imap.pass', env('ALERTS_IMAP_PASSWORD', 'MyMI2024!'));
+
+        $imap = @imap_open($imapMailbox, $imapUser, $imapPass);
+        if (! $imap) {
+            throw new \RuntimeException('Unable to connect to IMAP mailbox.');
+        }
+
+        try {
+            $criteria = $this->buildImapCriteria($since);
+            $emails = imap_search($imap, $criteria) ?: [];
+            $emails = array_slice($emails, 0, $limit);
+            $summary['emails_scanned'] = count($emails);
+
+            if ($verbose) {
+                CLI::write('IMAP criteria: ' . $criteria, 'blue');
+                CLI::write('Emails scanned: ' . $summary['emails_scanned'], 'blue');
+            }
+
+            $alerts = $dryRun ? null : new MyMIAlerts();
+
+            foreach ($emails as $emailNumber) {
+                $header = imap_headerinfo($imap, (int) $emailNumber);
+                $subject = isset($header->subject) ? imap_utf8($header->subject) : 'No Subject';
+                $date = isset($header->date) ? date('Y-m-d H:i:s', strtotime($header->date)) : date('Y-m-d H:i:s');
+                $sender = $header->from ?? [];
+                $messageId = isset($header->message_id) ? trim((string) $header->message_id) : '';
+                $body = $this->fetchEmailBody($imap, (int) $emailNumber);
+
+                $identifier = $messageId !== '' ? $messageId : md5($subject . $date . json_encode($sender));
+
+                if ($dryRun) {
+                    $summary['new_emails']++;
+                    if ($verbose) {
+                        CLI::write(sprintf('Dry-run: would ingest "%s"', $subject));
+                    }
+                    continue;
+                }
+
+                $payload = [
+                    'email_subject'     => $subject,
+                    'email_date'        => $date,
+                    'email_body'        => $body,
+                    'email_identifier'  => $identifier,
+                ];
+
+                $result = $alerts->ingestEmailPayload($payload);
+                if ($result === null) {
+                    $summary['duplicates']++;
+                    continue;
+                }
+
+                if (! empty($result['id'])) {
+                    $summary['new_emails']++;
+                }
+            }
+        } finally {
+            imap_close($imap);
+        }
     }
 
     private function buildImapCriteria(string $since): string
