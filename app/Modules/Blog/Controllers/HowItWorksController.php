@@ -153,20 +153,8 @@ class HowItWorksController extends UserController
     public function show(string $slug = 'overview'): ResponseInterface
     {
         try {
-            $slug = normalize_slug($this->request->getUri()->getSegment(2) ?? 'overview');
+            $slug = normalize_slug($slug ?: ($this->request->getUri()->getSegment(2) ?? 'overview'));
             log_message('debug', '[HOW_IT_WORKS] slug=' . $slug);
-
-            $validPages = [
-                'overview',
-                'automated-financial-insights',
-                'investor-profile',
-            ];
-
-            if (!in_array($slug, $validPages, true)) {
-                log_message('error', 'HowItWorksController failure: ' . $slug);
-
-                return redirect()->to(site_url('How-It-Works'));
-            }
 
             $normalizedSlug = $slug;
 
@@ -216,8 +204,8 @@ class HowItWorksController extends UserController
                 }
             }
 
-            // Graceful 404 (no exception)
-            throw PageNotFoundException::forPageNotFound($normalizedSlug);
+            log_message('notice', '[HOW_IT_WORKS] Unknown slug fallback: {slug}', ['slug' => $normalizedSlug]);
+            return redirect()->to(site_url('How-It-Works'));
 
         } catch (\Throwable $e) {
 

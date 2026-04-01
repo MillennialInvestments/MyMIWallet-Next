@@ -144,6 +144,8 @@ $routes->get('/Profile', 'App\Modules\User\Controllers\DashboardController::prof
 $routes->get('/Purchase/MyMIGold', static fn() => redirect()->to(site_url('Wallets/Purchase/MyMI-Gold'), 301));
 $routes->post('auth/resend-activation', 'AuthController::resendActivationCode', ['as' => 'auth/resend-activation-legacy']);
 $routes->get('/How-It-Works/Purchase/MyMIGold', static fn() => redirect()->to(site_url('How-It-Works/Purchase-MyMI-Gold'), 301));
+$routes->get('/How-It-Works', '\\App\\Modules\\Blog\\Controllers\\HowItWorksController::index');
+$routes->get('/How-It-Works/(:segment)', '\\App\\Modules\\Blog\\Controllers\\HowItWorksController::show/$1');
 
 $routes->get('Sector/(:segment)', 'Home::sector/$1');
 $routes->get('/Terms-Of-Service', 'Home::termsOfService');
@@ -373,7 +375,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->get('Chat/me', 'ChatController::me');
     $routes->post('Chat/tool', 'ChatController::tool');
 
-    $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers', 'filter' => 'cronKey'], function($routes) {
+    $routes->group('Management', ['namespace' => 'App\Modules\APIs\Controllers', 'filter' => 'cronKey'], function($routes) {
         $routes->match(['GET', 'POST'], 'Run-CRON-Tasks', 'ManagementAPIController::Run_CRON_Tasks');
         $routes->cli('Run-CRON-Tasks', 'ManagementAPIController::runCRONTasks');
         $routes->match(['GET', 'POST'], 'ajaxGetActiveUsers', 'ManagementAPIController::ajaxGetActiveUsers');
@@ -1691,7 +1693,7 @@ $routes->group('ScriptStudio', ['namespace' => 'App\\Modules\\ScriptStudio\\Cont
 
 // Public: How It Works (new public views)
 $routes->group('How-It-Works', ['namespace' => 'App\\Modules\\Blog\\Controllers'], static function ($routes) {
-    $routes->get('/', 'HowItWorksController::index');
+    $routes->get('', 'HowItWorksController::index');
 
     $routes->get('Daily-Financial-News', 'HowItWorksController::DailyFinancialNews');
     $routes->get('Investing', 'HowItWorksController::InvestmentPortfolioManagement');
@@ -1709,6 +1711,16 @@ $routes->group('How-It-Works', ['namespace' => 'App\\Modules\\Blog\\Controllers'
 
     // Catch-all MUST be last
     $routes->get('(:segment)', 'HowItWorksController::show/$1');
+});
+
+// Legacy API aliases for external callers that still hit exact historical paths.
+$routes->group('API', ['namespace' => 'App\\Modules\\APIs\\Controllers'], static function ($routes) {
+    $routes->get('Budget/getUserBudgetRecords', 'BudgetAPIController::getUserBudgetRecords');
+    $routes->get('Budget/getUserCreditBalances', 'BudgetAPIController::getUserCreditBalances');
+    $routes->get('Budget/getUserRepaymentSummary', 'BudgetAPIController::getUserRepaymentSummary');
+    $routes->get('Budget/getUserAvailableBalances', 'BudgetAPIController::getUserAvailableBalances');
+    $routes->match(['GET', 'POST'], 'Alerts/fetchEmailAlerts', 'AlertsAPIController::fetchEmailAlerts');
+    $routes->match(['GET', 'POST'], 'Management/Run-CRON-Tasks', 'ManagementAPIController::Run_CRON_Tasks', ['filter' => 'cronKey']);
 });
 
 // Customer Support:

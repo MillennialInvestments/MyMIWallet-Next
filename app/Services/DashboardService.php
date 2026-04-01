@@ -45,7 +45,15 @@ class DashboardService
         }
 
         $summary = $this->myMIDashboard->getExecutiveDashboardSummary($userId);
-        $this->cache->set($cacheKey, $summary, self::EXECUTIVE_SUMMARY_TTL_SECONDS);
+
+        try {
+            $this->cache->save($cacheKey, $summary, self::EXECUTIVE_SUMMARY_TTL_SECONDS);
+        } catch (\Throwable $e) {
+            log_message('warning', 'DashboardService cache save failed for executive summary: {msg}', [
+                'msg' => $e->getMessage(),
+                'userId' => $userId,
+            ]);
+        }
 
         return $summary;
     }
