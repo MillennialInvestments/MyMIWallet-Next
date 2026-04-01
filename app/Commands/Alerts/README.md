@@ -91,7 +91,7 @@ Ingest ThinkorSwim alert emails and upsert trade alerts.
 `php spark alerts:ingest`
 
 **Options**  
-`--since`, `How far back to scan (default: 15m). Supports 15m|1h|today.`, `--limit`, `Max emails to scan (default: 200).`, `--dry-run`, `Preview ingestion without DB writes.`, `--verbose`, `Verbose logging to CLI.`
+`--since`, `How far back to scan (default: 15m). Supports 15m|1h|today.`, `--limit`, `Max emails to scan (default: 200).`, `--fetch-first`, `Use alerts:fetch-raw-emails path before processing scraped symbols (opt-in until stable).`, `--dry-run`, `Preview ingestion without DB writes.`, `--verbose`, `Verbose logging to CLI.`
 
 **Services Used**  
 None detected.
