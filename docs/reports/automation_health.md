@@ -22,6 +22,11 @@ dedupe_key=2026-04-01_midday_digest
    - `MyMIMarketing::generateDailyContentDigest()`
    - `/API/Management/distributeTodaysNewsContent`
 
+## Integration Notes
+- Uses the existing email scrape stack, including `emailReader->getUnread()` with a fallback through `MyMIMarketing::fetchAndStoreEmails('marketing')`.
+- Preserves compatibility with `bf_marketing_temp_scraper` and `bf_marketing_scraper` via the existing MyMIMarketing workflows.
+- Distribution route (`/API/Management/distributeTodaysNewsContent`) remains compatible with existing Zapier hooks and Discord alert pipelines already wired behind that endpoint.
+
 ## Logging Signals
 - `Calendar Trigger Received: ...`
 - `Job Queued: ...`
