@@ -553,5 +553,14 @@ class Services extends CoreServices
         return new \App\Services\ExternalApiGuard(config(\Config\ExternalApiPolicy::class));
     }
 
+    public static function calendarEmailTriggerService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('calendarEmailTriggerService');
+        }
+
+        return new \App\Services\CalendarEmailTriggerService();
+    }
+
 
 }
