@@ -1217,6 +1217,10 @@ class AlertsAPIController extends BaseAPIController
      */
     public function getFilteredAlerts()
     {
+        if (ob_get_level() > 0) {
+            ob_clean();
+        }
+
         log_message('debug', '⚡ getFilteredAlerts - Request received.');
 
         $postData = $this->request->getPost();

@@ -1044,63 +1044,87 @@ class AlertsAdminController extends BaseAdminController
 
     public function getFilteredAlerts()
     {
+        if (ob_get_level() > 0) {
+            ob_clean();
+        }
+
         $request = $this->request;
+        $postData = (array) $request->getPost();
+        $draw   = (int) ($postData['draw'] ?? 1);
+        $start  = max(0, (int) ($postData['start'] ?? 0));
+        $length = max(1, min(100, (int) ($postData['length'] ?? 25)));
 
-        $draw   = (int) $request->getPost('draw');
-        $start  = (int) $request->getPost('start');
-        $length = (int) $request->getPost('length');
-
-        $timeRange = $request->getPost('timeRange');
-        $category  = $request->getPost('category');
-        $search    = $request->getPost('search')['value'] ?? null;
-
-        if (!$timeRange) {
-            return $this->response->setJSON([
-                'draw' => $draw,
+        $emptyResponse = static function (int $drawValue, ?string $error = null): array {
+            $payload = [
+                'draw' => $drawValue,
                 'recordsTotal' => 0,
                 'recordsFiltered' => 0,
-                'data' => []
+                'data' => [],
+            ];
+            if ($error !== null && $error !== '') {
+                $payload['error'] = $error;
+            }
+            return $payload;
+        };
+
+        try {
+            $search = $request->getPost('search');
+            $searchValue = is_array($search) ? ($search['value'] ?? '') : '';
+            $timeRange = trim((string) ($request->getPost('timeRange') ?? 'today'));
+            $dateRange = $this->getDateRange($timeRange);
+            if (!$dateRange) {
+                return $this->response->setJSON($emptyResponse($draw, 'Invalid time range filter.'));
+            }
+
+            $orderInput  = $postData['order'][0] ?? ['column' => 0, 'dir' => 'desc'];
+            $orderColIdx = (int) ($orderInput['column'] ?? 0);
+            $orderDir    = strtolower((string) ($orderInput['dir'] ?? 'desc'));
+            $orderDir    = in_array($orderDir, ['asc', 'desc'], true) ? $orderDir : 'desc';
+
+            $columns = [
+                0  => 'a.id',
+                1  => 'a.created_on',
+                2  => 'a.ticker',
+                3  => 'a.exchange',
+                4  => 'a.category',
+                5  => 'a.price',
+                6  => 'a.current_price',
+                7  => 'a.id',
+                8  => 'a.potential_price',
+                9  => 'a.locked_profit_stop',
+                10 => 'a.trailing_stop_percent',
+                11 => 'a.ema_3_8',
+                12 => 'a.ema_8_13',
+                13 => 'a.ema_13_34',
+                14 => 'a.ema_34_48',
+                15 => 'a.ema_consensus',
+                16 => 'a.id',
+                17 => 'a.id',
+            ];
+
+            $opts = [
+                'q'             => trim((string) ($postData['q'] ?? $searchValue)),
+                'category'      => trim((string) ($postData['category'] ?? '')),
+                'alert_created' => isset($postData['alert_created']) ? (int) $postData['alert_created'] : null,
+                'source'        => trim((string) ($postData['source'] ?? '')),
+                'orderBy'       => $columns[$orderColIdx] ?? 'a.created_on',
+                'orderDir'      => $orderDir,
+                'limit'         => $length,
+                'offset'        => $start,
+            ];
+
+            $result = $this->alertsModel->getFilteredTradeAlertsServerSide($dateRange, $opts);
+
+            return $this->response->setJSON([
+                'draw' => $draw,
+                'recordsTotal' => (int) ($result['recordsTotal'] ?? 0),
+                'recordsFiltered' => (int) ($result['recordsFiltered'] ?? 0),
+                'data' => array_values($result['data'] ?? []),
             ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'AlertsAdminController::getFilteredAlerts failed: ' . $e->getMessage());
+            return $this->response->setJSON($emptyResponse($draw, 'Unable to load alerts.'));
         }
-
-        $dateRange = $this->getDateRange(
-            $this->request->getPost('timeRange')
-        );
-
-        $result = $this->alertsModel
-                ->getFilteredTradeAlerts($dateRange, $opts);
-        // $builder = $this->alertsModel
-        //     ->select('id, created_on, ticker, exchange, category, price, entry_price, target_price, locked_profit_stop, trailing_stop_percent, ema_3_8, ema_8_13, ema_13_34, ema_34_48, ema_consensus')
-        //     ->where('created_on >=', $dateRange['start'])
-        //     ->where('created_on <=', $dateRange['end']);
-
-        if (!empty($category)) {
-            $builder->where('category', $category);
-        }
-
-        if (!empty($search)) {
-            $builder->groupStart()
-                ->like('ticker', $search)
-                ->orLike('exchange', $search)
-                ->orLike('category', $search)
-            ->groupEnd();
-        }
-
-        $totalRecords = $builder->countAllResults(false); // keep builder state
-
-        $data = $builder
-            ->orderBy('id', 'DESC')
-            ->limit($length, $start)
-            ->limit(20)
-            ->get()
-            ->getResultArray();
-
-        return $this->response->setJSON([
-            'draw' => $draw,
-            'recordsTotal' => $totalRecords,
-            'recordsFiltered' => $totalRecords,
-            'data' => $data
-        ]);
     }
 
        

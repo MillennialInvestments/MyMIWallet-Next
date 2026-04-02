@@ -240,45 +240,66 @@ class SolanaAPIController extends BaseAPIController {
     }
 
     public function getAssetsData() {
+        if (ob_get_level() > 0) {
+            ob_clean();
+        }
+
         $request = \Config\Services::request();
-        $draw = intval($request->getPost('draw'));
-        $start = intval($request->getPost('start'));
-        $length = intval($request->getPost('length'));
-        $searchValue = $request->getPost('search')['value'];
+        $draw = (int) ($request->getPost('draw') ?? 1);
+        $start = max(0, (int) ($request->getPost('start') ?? 0));
+        $length = max(1, min(100, (int) ($request->getPost('length') ?? 10)));
+        $search = $request->getPost('search');
+        $searchValue = is_array($search) ? trim((string) ($search['value'] ?? '')) : '';
 
-        $assetsModel = new \App\Models\AssetsModel();
-        $totalRecords = $assetsModel->countAll();
+        $emptyResponse = static fn (int $drawValue, ?string $error = null): array => array_filter([
+            'draw' => $drawValue,
+            'recordsTotal' => 0,
+            'recordsFiltered' => 0,
+            'data' => [],
+            'error' => $error,
+        ], static fn ($value) => $value !== null);
 
-        if (!empty($searchValue)) {
-            $assets = $assetsModel->like('wallet_type', $searchValue)
-                                ->orLike('public_key', $searchValue)
-                                ->findAll($length, $start);
-            $totalFilteredRecords = $assetsModel->like('wallet_type', $searchValue)
-                                                ->orLike('public_key', $searchValue)
-                                                ->countAllResults();
-        } else {
-            $assets = $assetsModel->findAll($length, $start);
-            $totalFilteredRecords = $totalRecords;
+        try {
+            $assetsModel = new \App\Models\AssetsModel();
+            $totalRecords = (int) $assetsModel->countAll();
+
+            if ($searchValue !== '') {
+                $assets = $assetsModel->groupStart()
+                    ->like('wallet_type', $searchValue)
+                    ->orLike('public_key', $searchValue)
+                    ->groupEnd()
+                    ->findAll($length, $start);
+
+                $totalFilteredRecords = (int) $assetsModel->groupStart()
+                    ->like('wallet_type', $searchValue)
+                    ->orLike('public_key', $searchValue)
+                    ->groupEnd()
+                    ->countAllResults();
+            } else {
+                $assets = $assetsModel->findAll($length, $start);
+                $totalFilteredRecords = $totalRecords;
+            }
+
+            $data = [];
+            foreach ($assets as $asset) {
+                $data[] = [
+                    'wallet_type' => $asset['wallet_type'] ?? '',
+                    'public_key' => $asset['public_key'] ?? '',
+                    'actions' => '',
+                    'id' => $asset['id'] ?? null,
+                ];
+            }
+
+            return $this->response->setJSON([
+                'draw' => $draw,
+                'recordsTotal' => $totalRecords,
+                'recordsFiltered' => $totalFilteredRecords,
+                'data' => $data,
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'getAssetsData failed: ' . $e->getMessage());
+            return $this->response->setJSON($emptyResponse($draw, 'Unable to load assets data.'));
         }
-
-        $data = [];
-        foreach ($assets as $asset) {
-            $data[] = [
-                'wallet_type' => $asset['wallet_type'],
-                'public_key' => $asset['public_key'],
-                'actions' => '',
-                'id' => $asset['id']
-            ];
-        }
-
-        $output = [
-            'draw' => $draw,
-            'recordsTotal' => $totalRecords,
-            'recordsFiltered' => $totalFilteredRecords,
-            'data' => $data
-        ];
-
-        return $this->response->setJSON($output);
     }
     
     public function getCoinAmount($tokenAddress) {
