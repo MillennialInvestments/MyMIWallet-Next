@@ -65,16 +65,17 @@ $(document).ready(function () {
                     // ✅ Close modal
                     $('#dynamicModalLoader').modal('hide');
 
-                    // ✅ Refresh only the updated row in DataTable
-                    let tradeAlertTable = $('#tradeAlertTable').DataTable();
-                    let rowIndex = tradeAlertTable.rows().eq(0).filter(function (rowIdx) {
-                        return tradeAlertTable.cell(rowIdx, 3).data() === "<?= $ticker ?>"; 
-                    });
-
-                    if (rowIndex.length > 0) {
-                        tradeAlertTable.cell(rowIndex[0], 2).data(exchange).draw(false); 
+                    // ✅ Safely refresh the Alerts DataTables instances
+                    if (typeof window.reloadDataTableSafe === 'function') {
+                        window.reloadDataTableSafe('#confirmedTradeAlertTable', false);
+                        window.reloadDataTableSafe('#pendingTradeAlertTable', false);
                     } else {
-                        tradeAlertTable.ajax.reload(null, false); 
+                        if ($.fn.DataTable.isDataTable('#confirmedTradeAlertTable')) {
+                            $('#confirmedTradeAlertTable').DataTable().ajax.reload(null, false);
+                        }
+                        if ($.fn.DataTable.isDataTable('#pendingTradeAlertTable')) {
+                            $('#pendingTradeAlertTable').DataTable().ajax.reload(null, false);
+                        }
                     }
                 } else {
                     alert("Error: " + response.message);

@@ -114,6 +114,11 @@ $customizableFeaturesEnabled = 0;
 
 <script <?= $nonce['script'] ?? '' ?>>
 $(document).ready(function () {
+    if (window.__mymiTradeTrackerPrimaryInit) {
+        return;
+    }
+    window.__mymiTradeTrackerPrimaryInit = true;
+
     console.log("Document is ready");
 
     let isFeatureEnabled = 0;
@@ -313,7 +318,7 @@ $(document).ready(function () {
             data: JSON.stringify(payload),
             success: function (response) {
                 alert("Trade saved successfully.");
-                table.ajax.reload();
+                table.ajax.reload(null, false);
             },
             error: function (xhr) {
                 console.error("Error saving trade:", xhr.responseText);
@@ -339,50 +344,12 @@ $(document).ready(function () {
 
 </script>
 <script <?= $nonce['script'] ?? '' ?>>
-document.addEventListener('DOMContentLoaded', function () {
-    const refreshBtn = document.getElementById('refreshPricesBtn');
-    const statusBox = document.getElementById('statusBox');
-    $('#summaryModal .modal-body').text(summary);
-    $('#summaryModal').modal('show');
-    async function fetchLatestPrices() {
-        if (!statusBox) return;
-        statusBox.innerText = '🔄 Fetching prices...';
-
-        try {
-            const res = await fetch('index.php/API/Alerts/getLatestPrices');
-            const data = await res.json();
-
-            if (data.status === 'success') {
-                const updated = data.updated || {};
-                Object.entries(updated).forEach(([symbol, price]) => {
-                    const row = document.querySelector(`tr[data-symbol="${symbol}"]`);
-                    if (row) {
-                        const priceCell = row.querySelector('.price');
-                        if (priceCell) {
-                            priceCell.innerText = price;
-                        }
-                    }
-                });
-                statusBox.innerText = `✅ Updated ${Object.keys(updated).length} tickers.`;
-            } else {
-                statusBox.innerText = '❌ Could not fetch prices.';
-            }
-        } catch (e) {
-            console.error(e);
-            statusBox.innerText = '❌ Error occurred while fetching prices.';
-        }
-    }
-
-    if (refreshBtn) {
-        refreshBtn.addEventListener('click', fetchLatestPrices);
-    }
-
-    fetchLatestPrices(); // initial fetch
-    setInterval(fetchLatestPrices, 30000); // auto-update every 30s
-});
-</script>
-<script <?= $nonce['script'] ?? '' ?>>
 $(document).ready(function () {
+    if (window.__mymiTradeTrackerEnhancedInit) {
+        return;
+    }
+    window.__mymiTradeTrackerEnhancedInit = true;
+
     const csrfName = $('meta[name="csrf-token-name"]').attr('content');
     const csrfToken = $('meta[name="csrf-token"]').attr('content');
     const csrfHash = $('input[name="' + csrfName + '"]').val();
@@ -489,7 +456,7 @@ $(document).ready(function () {
             headers: { [csrfName]: csrfToken },
             success: function (res) {
                 alert('✅ Trade saved');
-                table.ajax.reload();
+                table.ajax.reload(null, false);
             },
             error: function (err) {
                 alert('❌ Error saving');

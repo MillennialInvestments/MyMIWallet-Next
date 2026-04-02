@@ -511,11 +511,6 @@ $(document).ready(function () {
       return;
     }
 
-    // Destroy safely if already initialized
-    if ($.fn.DataTable && $.fn.DataTable.isDataTable($table)) {
-      $table.DataTable().clear().destroy();
-    }
-
     const $tbody = $table.find('tbody');
     $tbody.empty();
 
@@ -550,7 +545,7 @@ $(document).ready(function () {
       initDataTableSafe($table,{
         order: [[0, 'asc']],
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'All']],
-        destroy: true
+        forceRebuild: true
       });
     }
   }

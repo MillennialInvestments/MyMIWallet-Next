@@ -907,11 +907,16 @@ $subViewData                        = [
       btnBackfill.textContent = 'Backfill Categories';
       // Refresh tables if present
       if (window.jQuery && $.fn && $.fn.DataTable) {
-        if ($.fn.DataTable.isDataTable('#confirmedTradeAlertTable')) {
-          $('#confirmedTradeAlertTable').DataTable().ajax.reload(null, false);
-        }
-        if ($.fn.DataTable.isDataTable('#pendingTradeAlertTable')) {
-          $('#pendingTradeAlertTable').DataTable().ajax.reload(null, false);
+        if (typeof window.reloadDataTableSafe === 'function') {
+          window.reloadDataTableSafe('#confirmedTradeAlertTable', false);
+          window.reloadDataTableSafe('#pendingTradeAlertTable', false);
+        } else {
+          if ($.fn.DataTable.isDataTable('#confirmedTradeAlertTable')) {
+            $('#confirmedTradeAlertTable').DataTable().ajax.reload(null, false);
+          }
+          if ($.fn.DataTable.isDataTable('#pendingTradeAlertTable')) {
+            $('#pendingTradeAlertTable').DataTable().ajax.reload(null, false);
+          }
         }
       }
     }
@@ -941,4 +946,3 @@ $subViewData                        = [
   });
 })();
 </script>
-

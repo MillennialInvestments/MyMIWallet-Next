@@ -147,7 +147,7 @@ $(document).ready(function() {
     });
 
     $("#team-dropdown").change(function() {
-        table.ajax.reload();
+        table.ajax.reload(null, false);
     });
 });
 
