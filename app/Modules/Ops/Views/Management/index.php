@@ -119,7 +119,7 @@ $(function () {
             data: fd,
             processData: false,
             contentType: false
-        }).done(function() { table.ajax.reload(); location.reload(); });
+        }).done(function() { table.ajax.reload(null, false); location.reload(); });
     });
 });
 </script>

@@ -769,100 +769,116 @@ class ManagementAPIController extends BaseAPIController
     
     public function ajaxGetActiveUsers()
     {
-        log_message('debug', '📥 ajaxGetActiveUsers() called.');
-        $request = service('request');
-        $post = (array) $request->getPost();
-        log_message('debug', '📦 Incoming POST keys: ' . implode(',', array_keys($post)));
-        log_message('debug', '📦 Incoming POST value sizes: ' . json_encode(array_map(static fn ($value): int => strlen((string) (is_scalar($value) ? $value : json_encode($value))), $post)));
+        if (ob_get_level() > 0) {
+            ob_clean();
+        }
 
+        $post = (array) $this->request->getPost();
+        $draw = (int) ($post['draw'] ?? 1);
         $start = max(0, (int) ($post['start'] ?? 0));
         $length = max(1, min(100, (int) ($post['length'] ?? 10)));
-        $search = $post['search']['value'] ?? '';
+        $search = trim((string) ($post['search']['value'] ?? ''));
+
+        $emptyResponse = static fn (int $drawValue, ?string $error = null): array => array_filter([
+            'draw' => $drawValue,
+            'recordsTotal' => 0,
+            'recordsFiltered' => 0,
+            'data' => [],
+            'error' => $error,
+        ], static fn ($value) => $value !== null);
 
         try {
             $records = $this->userModel->getUsersByStatus(1, $search);
             $totalRecords = count($records);
             $records = array_slice($records, $start, $length);
-        } catch (\Throwable $e) {
-            log_message('error', '❌ ajaxGetActiveUsers query failed: ' . $e->getMessage());
-            return Http::jsonError('Unable to load active users.', 500);
-        }
-    
-        $data = [];
-        foreach ($records as $user) {
-            try {
-                $actionView = view('ManagementModule\Views\Users\partials\action_buttons', ['user' => $user]);
-            } catch (\Throwable $e) {
-                log_message('error', '❌ Error rendering action_buttons view for user ID ' . $user['id'] . ': ' . $e->getMessage());
+
+            $data = [];
+            foreach ($records as $user) {
                 $actionView = '<span class="text-danger">View Error</span>';
+                try {
+                    $actionView = view('ManagementModule\Views\Users\partials\action_buttons', ['user' => $user]);
+                } catch (\Throwable $e) {
+                    log_message('error', 'ajaxGetActiveUsers: action_buttons render failed for user ' . ($user['id'] ?? 'unknown') . ': ' . $e->getMessage());
+                }
+
+                $data[] = [
+                    'id'            => '<a href="' . site_url('Management/Users/Profile/' . ($user['username'] ?? '')) . '">' . ($user['id'] ?? '') . '</a>',
+                    'type'          => $user['type'] ?? '',
+                    'name'          => trim(($user['first_name'] ?? '') . ' ' . ($user['last_name'] ?? '') . ' ' . ($user['name_suffix'] ?? '')),
+                    'email'         => '<a href="mailto:' . ($user['email'] ?? '') . '">' . ($user['email'] ?? '') . '</a>',
+                    'location'      => trim(($user['city'] ?? '') . ', ' . ($user['state'] ?? ''), ', '),
+                    'referral_code' => $user['referral_code'] ?? '',
+                    'actions'       => $actionView,
+                ];
             }
-    
-            $data[] = [
-                'id'            => '<a href="' . site_url('Management/Users/Profile/' . $user['username']) . '">' . $user['id'] . '</a>',
-                'type'          => $user['type'],
-                'name'          => $user['first_name'] . ' ' . $user['last_name'] . ' ' . $user['name_suffix'],
-                'email'         => '<a href="mailto:' . $user['email'] . '">' . $user['email'] . '</a>',
-                'location'      => $user['city'] . ', ' . $user['state'],
-                'referral_code' => $user['referral_code'],
-                'actions'       => $actionView,
-            ];
+
+            return $this->response->setJSON([
+                'draw'            => $draw,
+                'recordsTotal'    => $totalRecords,
+                'recordsFiltered' => $totalRecords,
+                'data'            => $data,
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'ajaxGetActiveUsers failed: ' . $e->getMessage());
+            return $this->response->setJSON($emptyResponse($draw, 'Unable to load active users.'));
         }
-    
-        return Http::jsonSuccess([
-            'draw'            => intval($post['draw'] ?? 1),
-            'recordsTotal'    => $totalRecords,
-            'recordsFiltered' => $totalRecords,
-            'data'            => $data,
-        ]);
     }
     
     public function ajaxGetInactiveUsers()
     {
-        log_message('debug', '📥 ajaxGetInactiveUsers() called.');
-        $request = service('request');
-        $post = (array) $request->getPost();
-        log_message('debug', '📦 Incoming POST keys: ' . implode(',', array_keys($post)));
-        log_message('debug', '📦 Incoming POST value sizes: ' . json_encode(array_map(static fn ($value): int => strlen((string) (is_scalar($value) ? $value : json_encode($value))), $post)));
+        if (ob_get_level() > 0) {
+            ob_clean();
+        }
 
+        $post = (array) $this->request->getPost();
+        $draw = (int) ($post['draw'] ?? 1);
         $start = max(0, (int) ($post['start'] ?? 0));
         $length = max(1, min(100, (int) ($post['length'] ?? 10)));
-        $search = $post['search']['value'] ?? '';
+        $search = trim((string) ($post['search']['value'] ?? ''));
+
+        $emptyResponse = static fn (int $drawValue, ?string $error = null): array => array_filter([
+            'draw' => $drawValue,
+            'recordsTotal' => 0,
+            'recordsFiltered' => 0,
+            'data' => [],
+            'error' => $error,
+        ], static fn ($value) => $value !== null);
 
         try {
             $records = $this->userModel->getUsersByStatus(0, $search);
             $totalRecords = count($records);
             $records = array_slice($records, $start, $length);
-        } catch (\Throwable $e) {
-            log_message('error', '❌ ajaxGetInactiveUsers query failed: ' . $e->getMessage());
-            return Http::jsonError('Unable to load inactive users.', 500);
-        }
-    
-        $data = [];
-        foreach ($records as $user) {
-            try {
-                $actionView = view('ManagementModule\Views\Users\partials\action_buttons', ['user' => $user]);
-            } catch (\Throwable $e) {
-                log_message('error', '❌ Error rendering action_buttons view for user ID ' . $user['id'] . ': ' . $e->getMessage());
+
+            $data = [];
+            foreach ($records as $user) {
                 $actionView = '<span class="text-danger">View Error</span>';
+                try {
+                    $actionView = view('ManagementModule\Views\Users\partials\action_buttons', ['user' => $user]);
+                } catch (\Throwable $e) {
+                    log_message('error', 'ajaxGetInactiveUsers: action_buttons render failed for user ' . ($user['id'] ?? 'unknown') . ': ' . $e->getMessage());
+                }
+
+                $data[] = [
+                    'id'            => '<a href="' . site_url('Management/Users/Profile/' . ($user['username'] ?? '')) . '">' . ($user['id'] ?? '') . '</a>',
+                    'type'          => $user['type'] ?? '',
+                    'name'          => trim(($user['first_name'] ?? '') . ' ' . ($user['last_name'] ?? '') . ' ' . ($user['name_suffix'] ?? '')),
+                    'email'         => '<a href="mailto:' . ($user['email'] ?? '') . '">' . ($user['email'] ?? '') . '</a>',
+                    'location'      => trim(($user['city'] ?? '') . ', ' . ($user['state'] ?? ''), ', '),
+                    'referral_code' => $user['referral_code'] ?? '',
+                    'actions'       => $actionView,
+                ];
             }
-    
-            $data[] = [
-                'id'            => '<a href="' . site_url('Management/Users/Profile/' . $user['username']) . '">' . $user['id'] . '</a>',
-                'type'          => $user['type'],
-                'name'          => $user['first_name'] . ' ' . $user['last_name'] . ' ' . $user['name_suffix'],
-                'email'         => '<a href="mailto:' . $user['email'] . '">' . $user['email'] . '</a>',
-                'location'      => $user['city'] . ', ' . $user['state'],
-                'referral_code' => $user['referral_code'],
-                'actions'       => $actionView,
-            ];
+
+            return $this->response->setJSON([
+                'draw'            => $draw,
+                'recordsTotal'    => $totalRecords,
+                'recordsFiltered' => $totalRecords,
+                'data'            => $data,
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'ajaxGetInactiveUsers failed: ' . $e->getMessage());
+            return $this->response->setJSON($emptyResponse($draw, 'Unable to load inactive users.'));
         }
-    
-        return Http::jsonSuccess([
-            'draw'            => intval($post['draw'] ?? 1),
-            'recordsTotal'    => $totalRecords,
-            'recordsFiltered' => $totalRecords,
-            'data'            => $data,
-        ]);
     }    
 
     protected function arrayToXml(array $data, \SimpleXMLElement $xml)

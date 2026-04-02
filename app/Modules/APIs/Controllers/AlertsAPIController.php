@@ -1217,73 +1217,91 @@ class AlertsAPIController extends BaseAPIController
      */
     public function getFilteredAlerts()
     {
+        if (ob_get_level() > 0) {
+            ob_clean();
+        }
+
         log_message('debug', '⚡ getFilteredAlerts - Request received.');
 
+        $postData = $this->request->getPost();
+        $draw = (int) ($postData['draw'] ?? 1);
+
+        $emptyResponse = static function (int $drawValue, ?string $error = null): array {
+            $payload = [
+                'draw'            => $drawValue,
+                'recordsTotal'    => 0,
+                'recordsFiltered' => 0,
+                'data'            => [],
+            ];
+            if ($error !== null && $error !== '') {
+                $payload['error'] = $error;
+            }
+            return $payload;
+        };
+
         if (!$this->alertsModel) {
-            log_message('error', '❌ getFilteredAlerts - $this->alertsModel is not initialized.');
-            return $this->respond(['error' => 'Internal Server Error: AlertsModel not initialized'], 500);
+            log_message('error', '❌ getFilteredAlerts - AlertsModel not initialized.');
+            return $this->response->setJSON($emptyResponse($draw, 'Internal Server Error: AlertsModel not initialized'));
         }
 
-        $postData    = $this->request->getPost();
-        $draw        = (int)($postData['draw'] ?? 1);
         $search      = $this->request->getPost('search');
         $searchValue = is_array($search) ? ($search['value'] ?? '') : '';
-        $timeRange   = $this->request->getPost('timeRange') ?? 'today';
+        $timeRange   = trim((string) ($this->request->getPost('timeRange') ?? 'today'));
 
-        // DataTables paging
-        $start       = isset($postData['start'])  ? (int)$postData['start']  : 0;
-        $length      = isset($postData['length']) ? (int)$postData['length'] : 50;
-        if ($length < 1)  { $length = 10; }
-        if ($length > 100){ $length = 100; }
-
-        // DataTables ordering
-        $orderInput  = $postData['order'][0] ?? ['column' => 0, 'dir' => 'desc'];
-        $orderColIdx = (int)($orderInput['column'] ?? 0);
-        $orderDir    = strtolower($orderInput['dir'] ?? 'desc');
-        $orderDir    = in_array($orderDir, ['asc','desc'], true) ? $orderDir : 'desc';
-
-        // Filters
-        // $timeRange   = $postData['timeRange'] ?? 'today';
-        $dateRange   = $this->getDateRange($timeRange);
-        if (!$dateRange) {
-            log_message('error', "❌ getFilteredAlerts - Invalid date range for timeRange: {$timeRange}");
-            return $this->respond(['error' => 'Invalid time range'], 400);
+        $start  = max(0, (int) ($postData['start'] ?? 0));
+        $length = (int) ($postData['length'] ?? 50);
+        if ($length < 1) {
+            $length = 10;
+        }
+        if ($length > 100) {
+            $length = 100;
         }
 
-        // $searchValue = $postData['search']['value'] ?? '';          // DataTables global search
-        $q           = trim($postData['q'] ?? $searchValue);         // your extra ?q= from the form
-        $category    = trim($postData['category'] ?? '');
-        $alertCreated = isset($postData['alert_created']) ? (int)$postData['alert_created'] : null; // 1 confirmed, 0 pending
-        $source       = trim((string) ($postData['source'] ?? ''));
+        $orderInput  = $postData['order'][0] ?? ['column' => 0, 'dir' => 'desc'];
+        $orderColIdx = (int) ($orderInput['column'] ?? 0);
+        $orderDir    = strtolower((string) ($orderInput['dir'] ?? 'desc'));
+        $orderDir    = in_array($orderDir, ['asc', 'desc'], true) ? $orderDir : 'desc';
 
-        // Map columns index -> DB field (adjust if your schema differs)
+        $dateRange = $this->getDateRange($timeRange);
+        if (!$dateRange) {
+            log_message('warning', "getFilteredAlerts - Invalid timeRange '{$timeRange}', returning empty DataTables response.");
+            return $this->response->setJSON($emptyResponse($draw, 'Invalid time range filter.'));
+        }
+
+        $q            = trim((string) ($postData['q'] ?? $searchValue));
+        $category     = trim((string) ($postData['category'] ?? ''));
+        $alertCreated = isset($postData['alert_created']) ? (int) $postData['alert_created'] : null;
+        if (!in_array($alertCreated, [0, 1], true)) {
+            $alertCreated = null;
+        }
+        $source = trim((string) ($postData['source'] ?? ''));
+
         $columns = [
-            0  => 'id',
-            1  => 'created_on',
-            2  => 'ticker',
-            3  => 'exchange',
-            4  => 'category',
-            5  => 'price',
-            6  => 'current_price',          // entry_price alias
-            7  => 'id',                     // Δ/% is client derived; keep stable sort
-            8  => 'potential_price',        // target
-            9  => 'locked_profit_stop',
-            10 => 'trailing_stop_percent',
-            11 => 'ema_3_8',
-            12 => 'ema_8_13',
-            13 => 'ema_13_34',
-            14 => 'ema_34_48',
-            15 => 'ema_consensus',
-            16 => 'chart_link',
-            17 => 'id'
+            0  => 'a.id',
+            1  => 'a.created_on',
+            2  => 'a.ticker',
+            3  => 'a.exchange',
+            4  => 'a.category',
+            5  => 'a.price',
+            6  => 'a.current_price',
+            7  => 'a.id',
+            8  => 'a.potential_price',
+            9  => 'a.locked_profit_stop',
+            10 => 'a.trailing_stop_percent',
+            11 => 'a.ema_3_8',
+            12 => 'a.ema_8_13',
+            13 => 'a.ema_13_34',
+            14 => 'a.ema_34_48',
+            15 => 'a.ema_consensus',
+            16 => 'a.id',
+            17 => 'a.id',
         ];
-        $orderBy = $columns[$orderColIdx] ?? 'created_on';
+        $orderBy = $columns[$orderColIdx] ?? 'a.created_on';
 
-        // Options for the model
         $opts = [
             'q'             => $q,
             'category'      => $category,
-            'alert_created' => $alertCreated,       // can be 0 or 1 or null
+            'alert_created' => $alertCreated,
             'source'        => $source,
             'orderBy'       => $orderBy,
             'orderDir'      => $orderDir,
@@ -1292,18 +1310,16 @@ class AlertsAPIController extends BaseAPIController
         ];
 
         try {
-            // The model returns: data, recordsTotal, recordsFiltered
             $result = $this->alertsModel->getFilteredTradeAlertsServerSide($dateRange, $opts);
-
-            return Http::jsonSuccess([
+            return $this->response->setJSON([
                 'draw'            => $draw,
-                'recordsTotal'    => (int)$result['recordsTotal'],
-                'recordsFiltered' => (int)$result['recordsFiltered'],
-                'data'            => $result['data'],
+                'recordsTotal'    => (int) ($result['recordsTotal'] ?? 0),
+                'recordsFiltered' => (int) ($result['recordsFiltered'] ?? 0),
+                'data'            => array_values($result['data'] ?? []),
             ]);
         } catch (\Throwable $e) {
-            log_message('error', '❌ getFilteredAlerts - Model error: ' . $e->getMessage());
-            return $this->respond(['error' => 'Database error: ' . $e->getMessage()], 500);
+            log_message('error', '❌ getFilteredAlerts exception: ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine());
+            return $this->response->setJSON($emptyResponse($draw, 'Failed to load alert data.'));
         }
     }
     

@@ -125,7 +125,31 @@
         }
     }
 
-    window.initDataTableSafe = function (selector, options) {
+    window.MyMIDataTables = window.MyMIDataTables || {};
+
+    window.getOrCreateDataTable = function (selector, options) {
+        var $ = getJQuery();
+        var settings = options || {};
+
+        if (!$ || !$.fn || typeof $.fn.DataTable !== 'function') {
+            return null;
+        }
+
+        var $table = resolveCollection(selector);
+        if (!$table || !$table.length) {
+            return null;
+        }
+
+        $table = $table.first();
+
+        if ($.fn.DataTable.isDataTable($table)) {
+            return $table.DataTable();
+        }
+
+        return $table.DataTable(settings);
+    };
+
+    window.rebuildDataTableSafe = function (selector, options) {
         var $ = getJQuery();
         var settings = options || {};
 
@@ -150,6 +174,34 @@
         return $table.DataTable(settings);
     };
 
+    window.initDataTableSafe = function (selector, options) {
+        var settings = options || {};
+        if (settings.forceRebuild === true) {
+            var rebuildOptions = Object.assign({}, settings);
+            delete rebuildOptions.forceRebuild;
+            return window.rebuildDataTableSafe(selector, rebuildOptions);
+        }
+        return window.getOrCreateDataTable(selector, settings);
+    };
+
+    window.reloadDataTableSafe = function (selector, resetPaging) {
+        var $ = getJQuery();
+        if (!$ || !$.fn || typeof $.fn.DataTable !== 'function') {
+            return;
+        }
+
+        var $table = resolveCollection(selector);
+        if (!$table || !$table.length) {
+            return;
+        }
+
+        $table = $table.first();
+
+        if ($.fn.DataTable.isDataTable($table)) {
+            $table.DataTable().ajax.reload(null, resetPaging === true);
+        }
+    };
+
     window.reinitializeDataTablesIn = function (context) {
         var $ = getJQuery();
         if (!$ || !$.fn || typeof $.fn.DataTable !== 'function') {
@@ -166,9 +218,79 @@
         $context.find(selector).addBack(selector).each(function () {
             var $table = $(this);
             var options = parseOptions($table.attr('data-datatable-options'));
-            window.initDataTableSafe($table, options);
+            window.getOrCreateDataTable($table, options);
         });
     };
+
+    window.createDataTableAjaxConfig = function (config) {
+        var options = config || {};
+        var endpoint = options.url || '';
+        var requestData = typeof options.data === 'function' ? options.data : function () {};
+        var statusTarget = options.statusTarget || null;
+        var dataSrc = typeof options.dataSrc === 'function'
+            ? options.dataSrc
+            : function (json) {
+                return json && Array.isArray(json.data) ? json.data : [];
+            };
+
+        function writeStatus(message, level) {
+            if (!statusTarget) {
+                return;
+            }
+
+            var $ = getJQuery();
+            if (!$) {
+                return;
+            }
+
+            var $target = resolveCollection(statusTarget);
+            if (!$target || !$target.length) {
+                return;
+            }
+
+            var type = level || 'warning';
+            var cssClass = type === 'danger'
+                ? 'alert-danger'
+                : (type === 'success' ? 'alert-success' : 'alert-warning');
+            $target.html('<div class="alert ' + cssClass + ' py-2 px-3 mb-0">' + message + '</div>');
+        }
+
+        return {
+            url: endpoint,
+            type: options.type || 'POST',
+            data: function (d) {
+                requestData(d);
+            },
+            dataSrc: function (json) {
+                if (!json || !Array.isArray(json.data)) {
+                    console.error('Invalid DataTables JSON response.', {
+                        endpoint: endpoint,
+                        payload: json
+                    });
+                    writeStatus('Received an invalid table payload from the server.', 'danger');
+                }
+                return dataSrc(json);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.error('DataTables AJAX request failed.', {
+                    endpoint: endpoint,
+                    status: xhr && xhr.status,
+                    statusText: xhr && xhr.statusText,
+                    textStatus: textStatus,
+                    errorThrown: errorThrown,
+                    responseText: xhr && xhr.responseText
+                });
+                writeStatus('Unable to load table data. Please refresh and try again.', 'danger');
+            }
+        };
+    };
+
+    window.MyMIDataTables.getOrCreate = window.getOrCreateDataTable;
+    window.MyMIDataTables.rebuild = window.rebuildDataTableSafe;
+    window.MyMIDataTables.init = window.initDataTableSafe;
+    window.MyMIDataTables.reload = window.reloadDataTableSafe;
+    window.MyMIDataTables.reinitializeIn = window.reinitializeDataTablesIn;
+    window.MyMIDataTables.ajaxConfig = window.createDataTableAjaxConfig;
 
     function boot() {
         var $ = getJQuery();
