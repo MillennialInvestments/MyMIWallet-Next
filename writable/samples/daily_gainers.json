@@ -1,0 +1,12 @@
+{
+  "scan_name": "daily_gainers",
+  "quote_ts": "2026-04-02T13:30:00Z",
+  "rows": [
+    {
+      "symbol": "AAPL",
+      "price": 150.0,
+      "changePercent": 1.2,
+      "volume": 54233123
+    }
+  ]
+}
