@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOTPATH="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DOCS_PATH="${ROOTPATH}/docs/mysql"
-OUTPUT_DIR="${ROOTPATH}/writable/db_inventory"
+OUTPUT_DIR="${ROOTPATH}/writable/aiops/artifacts/db-apply-docs"
 OUTPUT_FILE="${OUTPUT_DIR}/compiled_adjustments.sql"
 
 mkdir -p "${OUTPUT_DIR}"

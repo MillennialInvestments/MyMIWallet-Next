@@ -48,3 +48,8 @@ Audits the custom library layer that powers wallets, budgeting, investments, mar
 - `app/Libraries/MyMIExchange.php`, `MyMISolana.php`, `MyMIAlphaVantage.php`, `MyMIAnalytics.php`
 - `app/Libraries/MyMIMarketing.php`, `MyMIAlerts.php`, `MyMIAdvisor.php`, `MyMIAssets.php`
 - `app/Libraries/MyMICoin.php`, `MyMIGold.php`, `MyMIUser.php`
+
+
+### Follow-up: FRED cache key sanitization
+
+- `EconomicDataService` now uses a sanitized cache-key pattern (`econ_fred_...`) to stay compatible with CI4 cache adapters that reject reserved characters.

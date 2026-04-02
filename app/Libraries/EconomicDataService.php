@@ -58,7 +58,7 @@ class EconomicDataService
     public function fetchFredSeries(string $seriesId): array
     {
         $cache = cache();
-        $cacheKey = 'econ:fred:' . $seriesId;
+        $cacheKey = $this->fredCacheKey($seriesId);
         $ttl = $this->cacheTtlBySeries[$seriesId] ?? 3600;
 
         $cached = $cache->get($cacheKey);
@@ -93,6 +93,14 @@ class EconomicDataService
             log_message('error', 'EconomicDataService FRED error: {message}', ['message' => $e->getMessage()]);
             return [];
         }
+    }
+
+
+    private function fredCacheKey(string $seriesId): string
+    {
+        $raw = 'econ_fred_' . $seriesId;
+
+        return (string) preg_replace('/[^A-Za-z0-9_.-]/', '_', $raw);
     }
 
     public function updateAllIndicators(): array

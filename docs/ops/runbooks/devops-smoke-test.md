@@ -28,3 +28,10 @@ Manual checklist to verify deployment health on DreamHost after pushing changes.
 - If git state diverges, run `git reset --hard origin/main` (or tracked branch) and redeploy.
 - Restore nginx config from backup and reload service if smoke fails.
 - Notify stakeholders with captured log output for follow-up.
+
+
+## Content ingestion sample prerequisite
+
+- Ensure `writable/samples/daily_gainers.json` exists before running CLI smoke commands.
+- Use `php spark content:ingest-sample` as the ingestion smoke command.
+- `php spark contentengine:smoke` and `php spark content:ingest-sample` both read this file.

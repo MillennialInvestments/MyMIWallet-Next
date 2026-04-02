@@ -1,5 +1,4 @@
 /writable/*
-!/writable/logs
 !/writable/.htaccess
 !/writable/index.html
 /public/writable/
@@ -66,3 +65,12 @@ application/modules/investments/controllers/API_Squeeze.php
 /chat/runtime/*.log
 /chat/runtime/*.status.json
 .archive/*
+
+# Runtime logs and process files
+/writable/logs/
+/aiops/logs/
+/aiops/n8n.pid
+
+# Checked-in sample payloads for content ingestion smoke tests
+!/writable/samples/
+!/writable/samples/daily_gainers.json
