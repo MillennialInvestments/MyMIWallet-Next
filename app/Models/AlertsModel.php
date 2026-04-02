@@ -977,12 +977,13 @@ class AlertsModel extends Model
      */
     public function getFilteredTradeAlertsServerSide(array $dateRange, array $opts): array
     {
-        $tableName = 'bf_investment_trade_alerts';
+        try {
+            $tableName = 'bf_investment_trade_alerts';
 
-        $hasTv           = $this->hasColumn($tableName, 'tv_symbol');
-        $hasAlertCreated = $this->hasColumn($tableName, 'alert_created');
+            $hasTv           = $this->hasColumn($tableName, 'tv_symbol');
+            $hasAlertCreated = $this->hasColumn($tableName, 'alert_created');
 
-        $base = $this->db->table($tableName . ' a');
+            $base = $this->db->table($tableName . ' a');
 
         // Build SELECT list safely
         $selectParts = [
@@ -1032,106 +1033,137 @@ class AlertsModel extends Model
             $selectParts[] = 'a.alert_created';
         }
 
-        $base->select(implode(",\n", $selectParts));
+            $base->select(implode(",\n", $selectParts));
 
         // Date range filter
-        if (!empty($dateRange['start']) && !empty($dateRange['end'])) {
-            $base->where('a.created_on >=', $dateRange['start']);
-            $base->where('a.created_on <=', $dateRange['end']);
-        }
+            if (!empty($dateRange['start']) && !empty($dateRange['end'])) {
+                $base->where('a.created_on >=', $dateRange['start']);
+                $base->where('a.created_on <=', $dateRange['end']);
+            }
 
         // Safely read option keys (prevents "Undefined array key")
-        $alertCreated = $opts['alert_created'] ?? null;
-        $category     = $opts['category']      ?? null;
-        $q            = trim($opts['q']        ?? '');
-        $orderBy      = $opts['orderBy']       ?? 'a.created_on';
-        $source       = trim((string) ($opts['source'] ?? ''));
-        $orderDir     = strtoupper($opts['orderDir'] ?? 'DESC');
-        $limit        = (int) ($opts['limit']  ?? 50);
-        $offset       = (int) ($opts['offset'] ?? 0);
+            $alertCreated = $opts['alert_created'] ?? null;
+            $category     = $opts['category']      ?? null;
+            $q            = trim($opts['q']        ?? '');
+            $orderBy      = $opts['orderBy']       ?? 'a.created_on';
+            $source       = trim((string) ($opts['source'] ?? ''));
+            $orderDir     = strtoupper($opts['orderDir'] ?? 'DESC');
+            $limit        = (int) ($opts['limit']  ?? 50);
+            $offset       = (int) ($opts['offset'] ?? 0);
 
-        if ($hasAlertCreated && $alertCreated !== null) {
-            $base->where('a.alert_created', (int) $alertCreated);
-        }
-
-        if (!empty($category)) {
-            $base->where('a.category', $category);
-        }
-
-        if ($source !== '' && $this->hasColumn($tableName, 'source')) {
-            $base->where('a.source', $source);
-        }
-
-        if ($this->hasColumn($tableName, 'active')) {
-            $base->where('a.active', 1);
-        }
-        if ($this->hasColumn($tableName, 'status')) {
-            $base->where('a.status !=', 'Hidden');
-        }
-
-        if ($q !== '') {
-            $base->groupStart()
-                ->like('a.ticker', $q)
-                ->orLike('a.category', $q)
-                ->orLike('a.exchange', $q);
-            if ($this->hasColumn($tableName, 'company')) {
-                $base->orLike('a.company', $q);
+            if ($hasAlertCreated && $alertCreated !== null) {
+                $base->where('a.alert_created', (int) $alertCreated);
             }
-            if ($this->hasColumn($tableName, 'tv_title')) {
-                $base->orLike('a.tv_title', $q);
-            }
-            if ($this->hasColumn($tableName, 'tv_description')) {
-                $base->orLike('a.tv_description', $q);
-            }
-            $base->groupEnd();
-        }
 
-        // Count filtered
-        $filteredBuilder = clone $base;
-        $recordsFiltered = (int) ($filteredBuilder->select('COUNT(a.id) AS c')->get()->getRow('c') ?? 0);
+            if (!empty($category)) {
+                $base->where('a.category', $category);
+            }
+
+            if ($source !== '' && $this->hasColumn($tableName, 'source')) {
+                $base->where('a.source', $source);
+            }
+
+            if ($this->hasColumn($tableName, 'active')) {
+                $base->where('a.active', 1);
+            }
+            if ($this->hasColumn($tableName, 'status')) {
+                $base->where('a.status !=', 'Hidden');
+            }
+
+            if ($q !== '') {
+                $base->groupStart()
+                    ->like('a.ticker', $q)
+                    ->orLike('a.category', $q)
+                    ->orLike('a.exchange', $q);
+                if ($this->hasColumn($tableName, 'company')) {
+                    $base->orLike('a.company', $q);
+                }
+                if ($this->hasColumn($tableName, 'tv_title')) {
+                    $base->orLike('a.tv_title', $q);
+                }
+                if ($this->hasColumn($tableName, 'tv_description')) {
+                    $base->orLike('a.tv_description', $q);
+                }
+                $base->groupEnd();
+            }
+
+            // Count filtered
+            $filteredBuilder = clone $base;
+            $recordsFiltered = (int) ($filteredBuilder->select('COUNT(a.id) AS c')->get()->getRow('c') ?? 0);
 
         // Order by (fallback if alert_created requested but column not present)
-        if (!$hasAlertCreated && stripos($orderBy, 'alert_created') !== false) {
-            $orderBy = 'a.created_on';
-        }
-        if (!in_array($orderDir, ['ASC', 'DESC'], true)) {
-            $orderDir = 'DESC';
-        }
-        $base->orderBy($orderBy, $orderDir);
+            $allowedOrderColumns = [
+                'a.id',
+                'a.created_on',
+                'a.ticker',
+                'a.exchange',
+                'a.category',
+                'a.price',
+                'a.current_price',
+                'a.potential_price',
+                'a.locked_profit_stop',
+                'a.trailing_stop_percent',
+                'a.ema_3_8',
+                'a.ema_8_13',
+                'a.ema_13_34',
+                'a.ema_34_48',
+                'a.ema_consensus',
+            ];
+            if (!$hasAlertCreated && stripos($orderBy, 'alert_created') !== false) {
+                $orderBy = 'a.created_on';
+            }
+            if (!in_array($orderBy, $allowedOrderColumns, true)) {
+                $orderBy = 'a.created_on';
+            }
+            if (!in_array($orderDir, ['ASC', 'DESC'], true)) {
+                $orderDir = 'DESC';
+            }
+            $base->orderBy($orderBy, $orderDir);
 
-        if ($limit > 0) {
-            $base->limit($limit, $offset);
-        }
+            if ($limit > 0) {
+                $base->limit($limit, max(0, $offset));
+            }
 
-        $rows = $base->get()->getResultArray();
+            $rows = $base->get()->getResultArray();
 
         // Total (without search filter but with same structural guards)
-        $totalBase = $this->db->table($tableName . ' a');
+            $totalBase = $this->db->table($tableName . ' a');
 
-        if (!empty($dateRange['start']) && !empty($dateRange['end'])) {
-            $totalBase->where('a.created_on >=', $dateRange['start']);
-            $totalBase->where('a.created_on <=', $dateRange['end']);
-        }
-        if ($hasAlertCreated && $alertCreated !== null) {
-            $totalBase->where('a.alert_created', (int) $alertCreated);
-        }
-        if (!empty($category)) {
-            $totalBase->where('a.category', $category);
-        }
-        if ($this->hasColumn($tableName, 'active')) {
-            $totalBase->where('a.active', 1);
-        }
-        if ($this->hasColumn($tableName, 'status')) {
-            $totalBase->where('a.status !=', 'Hidden');
-        }
+            if (!empty($dateRange['start']) && !empty($dateRange['end'])) {
+                $totalBase->where('a.created_on >=', $dateRange['start']);
+                $totalBase->where('a.created_on <=', $dateRange['end']);
+            }
+            if ($hasAlertCreated && $alertCreated !== null) {
+                $totalBase->where('a.alert_created', (int) $alertCreated);
+            }
+            if (!empty($category)) {
+                $totalBase->where('a.category', $category);
+            }
+            if ($source !== '' && $this->hasColumn($tableName, 'source')) {
+                $totalBase->where('a.source', $source);
+            }
+            if ($this->hasColumn($tableName, 'active')) {
+                $totalBase->where('a.active', 1);
+            }
+            if ($this->hasColumn($tableName, 'status')) {
+                $totalBase->where('a.status !=', 'Hidden');
+            }
 
-        $recordsTotal = (int) ($totalBase->select('COUNT(a.id) AS c')->get()->getRow('c') ?? 0);
+            $recordsTotal = (int) ($totalBase->select('COUNT(a.id) AS c')->get()->getRow('c') ?? 0);
 
-        return [
-            'recordsTotal'    => $recordsTotal,
-            'recordsFiltered' => $recordsFiltered,
-            'data'            => $rows,
-        ];
+            return [
+                'recordsTotal'    => $recordsTotal,
+                'recordsFiltered' => $recordsFiltered,
+                'data'            => $rows,
+            ];
+        } catch (\Throwable $e) {
+            log_message('error', 'getFilteredTradeAlertsServerSide exception: ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine());
+            return [
+                'recordsTotal'    => 0,
+                'recordsFiltered' => 0,
+                'data'            => [],
+            ];
+        }
     }
 
     public function getFilteredTradeAlertsBySymbol($symbol)
