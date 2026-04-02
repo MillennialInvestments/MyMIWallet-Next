@@ -48,6 +48,7 @@ class TradeAlertMailboxFetcher
         $config = $this->resolveImapConfig($folder);
         $imap = null;
         $criteria = $this->buildSinceCriteria($since);
+        $canMoveToTarget = ! $dryRun;
 
         try {
             $imap = @imap_open($config['mailbox'], $config['user'], $config['pass']);
@@ -56,7 +57,7 @@ class TradeAlertMailboxFetcher
             }
 
             if (! $dryRun) {
-                $this->ensureTargetFolder($imap, $config['root'], $targetFolder, $summary, $verbose);
+                $canMoveToTarget = $this->ensureTargetFolder($imap, $config['root'], $targetFolder, $summary, $verbose);
             }
 
             $emailNumbers = imap_search($imap, $criteria, SE_UID) ?: [];
@@ -93,6 +94,13 @@ class TradeAlertMailboxFetcher
                 }
 
                 $summary['new_stored']++;
+
+                if (! $canMoveToTarget) {
+                    if ($verbose) {
+                        log_message('warning', 'alerts:fetch-raw-emails skipping mailbox move for uid {uid}; target folder unavailable.', ['uid' => (int) $uid]);
+                    }
+                    continue;
+                }
 
                 $moved = @imap_mail_move($imap, (string) $uid, $targetFolder, CP_UID);
                 if (! $moved) {
@@ -145,23 +153,32 @@ class TradeAlertMailboxFetcher
         ];
     }
 
-    private function ensureTargetFolder($imap, string $root, string $targetFolder, array &$summary, bool $verbose): void
+    private function ensureTargetFolder($imap, string $root, string $targetFolder, array &$summary, bool $verbose): bool
     {
         $mailboxes = @imap_getmailboxes($imap, $root, '*') ?: [];
         foreach ($mailboxes as $mailbox) {
             $name = str_replace($root, '', (string) ($mailbox->name ?? ''));
             if (strcasecmp($name, $targetFolder) === 0) {
-                return;
+                return true;
             }
         }
 
         $created = @imap_createmailbox($imap, imap_utf7_encode($root . $targetFolder));
-        if (! $created) {
-            $summary['errors'][] = 'Could not create target folder "' . $targetFolder . '": ' . $this->lastImapError();
+        if ($created) {
             if ($verbose) {
-                log_message('warning', 'alerts:fetch-raw-emails target folder creation failed.');
+                log_message('info', 'alerts:fetch-raw-emails created missing target folder "{folder}".', ['folder' => $targetFolder]);
+            }
+            return true;
+        }
+
+        if (! $created) {
+            $summary['errors'][] = 'Could not create target folder "' . $targetFolder . '". Inserts completed, but move/expunge was disabled for this run. IMAP error: ' . $this->lastImapError();
+            if ($verbose) {
+                log_message('warning', 'alerts:fetch-raw-emails target folder creation failed; move/expunge disabled.');
             }
         }
+
+        return false;
     }
 
     /**
@@ -179,16 +196,20 @@ class TradeAlertMailboxFetcher
         $subject = $this->decodeMimeHeader((string) ($overview->subject ?? ''));
         $sender = $this->extractSender($headerText, $overview);
         $emailDate = $this->normalizeDate((string) ($overview->date ?? ''));
-        $body = $this->extractBody($imap, $uid);
+        $rawBody = imap_body($imap, (string) $uid, FT_UID) ?: '';
+        $rawMessage = $headerText . "\r\n" . $rawBody;
+        $body = $this->toUtf8((string) $rawMessage);
         $messageId = trim((string) ($overview->message_id ?? ''));
         $identifier = $messageId !== ''
             ? $messageId
             : hash('sha256', $subject . '|' . $emailDate . '|' . $sender . '|' . $body);
+        $messageHash = hash('sha256', $body);
 
         $metadata = [
             'imap_uid' => $uid,
             'folder' => 'INBOX',
             'message_id' => $messageId,
+            'raw_payload' => 'email_body stores full RFC822 payload (header + body) from IMAP',
             'fallback_identifier' => $messageId === '' ? 'sha256(subject|date|from|body)' : null,
             'overview' => [
                 'size' => $overview->size ?? null,
@@ -205,6 +226,7 @@ class TradeAlertMailboxFetcher
             'source_email' => $sourceEmail,
             'source' => 'imap',
             'account_type' => 'tradealerts',
+            'message_hash' => $messageHash,
             'status' => 'In Review',
             'email_type' => 'broker_alert',
             'metadata' => json_encode($metadata, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),

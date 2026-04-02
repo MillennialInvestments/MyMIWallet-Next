@@ -82,6 +82,45 @@ Command executes with status output and logs/errors based on runtime state.
 **Example Execution**  
 `php spark alerts:forecast`
 
+### alerts:fetch-raw-emails
+
+**Purpose**  
+Fetch raw RFC822 trade-alert emails over IMAP, insert each message into `bf_investment_scraper`, then move successfully inserted messages from `INBOX` to `Processed`.
+
+**Why IMAP-first (and not DreamHost API)**
+- IMAP is the mailbox protocol designed for message retrieval, folder access, flagging, moving, and expunging.
+- The workflow needs mailbox-level operations (`INBOX` read + `Processed` move + expunge), which IMAP supports directly and reliably.
+- DreamHost API is better suited to mailbox/account administration and is intentionally not used in this ingestion path unless an administrative blocker is found.
+
+**Usage**  
+`php spark alerts:fetch-raw-emails [--limit=200] [--folder=INBOX] [--target-folder=Processed] [--since="1 day ago"] [--approve] [--dry-run] [--verbose]`
+
+**Options**  
+`--limit`, `Max messages to scan (default: 200)`  
+`--folder`, `IMAP source folder (default: INBOX)`  
+`--target-folder`, `Destination folder for successfully inserted messages (default: Processed)`  
+`--since`, `Date expression for IMAP SINCE criteria (default: 1 day ago)`  
+`--approve`, `Required for destructive mailbox moves when dry-run is disabled`  
+`--dry-run`, `Scan only; do not insert, move, or expunge`  
+`--verbose`, `Verbose logging`
+
+**Required Environment / Config Keys**
+- `alerts.imap.host` (default: `imap.dreamhost.com`)
+- `alerts.imap.port` (default: `993`)
+- `alerts.imap.flags` (default: `/imap/ssl`)
+- `alerts.imap.mailbox` (optional full mailbox path; if omitted uses `{host:portflags}INBOX`)
+- `alerts.imap.user` (set to `tradealerts@mymiwallet.com`)
+- `alerts.imap.pass` (mailbox password)
+- `alerts.imap.processed_folder` (default: `Processed`)
+
+**Example Executions**
+- `php spark alerts:fetch-raw-emails --approve --limit=200 --folder=INBOX --target-folder=Processed --since="1 day ago"`
+- `php spark alerts:fetch-raw-emails --dry-run --limit=50 --since="2026-03-30" --verbose`
+
+**Failure/Recovery Behavior**
+- If `Processed` does not exist, command attempts IMAP folder creation.
+- If folder creation fails, inserts still continue, but move/expunge is skipped for the run and a clear warning is emitted.
+
 ### alerts:ingest
 
 **Purpose**  
