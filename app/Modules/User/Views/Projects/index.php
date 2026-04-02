@@ -38,7 +38,12 @@ $projects = is_array($projects ?? null) ? $projects : [];
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const table = $('#projectsTable').DataTable({
+    if (window.__mymiProjectsTableInitialized) {
+        return;
+    }
+    window.__mymiProjectsTableInitialized = true;
+
+    const table = initDataTableSafe($('#projectsTable'),{
         data: <?= json_encode($projects, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>,
         columns: [
             {

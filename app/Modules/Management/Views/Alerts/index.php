@@ -438,598 +438,423 @@ $subViewData                        = [
     }
 
     $(function () {
-    console.log('✅ Document is ready.');
+        if (window.__mymiAlertsPageInitialized) {
+            console.debug('Alerts page scripts already initialized; skipping duplicate init.');
+            return;
+        }
+        window.__mymiAlertsPageInitialized = true;
 
-    let csrfName = $('meta[name="csrf-name"]').attr('content');
-    let csrfHash = $('meta[name="csrf-hash"]').attr('content');
+        let csrfName = $('meta[name="csrf-name"]').attr('content');
+        let csrfHash = $('meta[name="csrf-hash"]').attr('content');
+        const $fetchStatus = $('#fetch-status');
 
-    function updateCsrfToken(newCsrfName, newCsrfHash) {
-        csrfName = newCsrfName;
-        csrfHash = newCsrfHash;
-        $('meta[name="csrf-name"]').attr('content', csrfName);
-        $('meta[name="csrf-hash"]').attr('content', csrfHash);
-    }
+        function updateFetchStatus(message, level = 'warning') {
+            if (!$fetchStatus.length) return;
+            const cls = level === 'danger' ? 'alert-danger' : level === 'success' ? 'alert-success' : 'alert-warning';
+            $fetchStatus.html(`<div class="alert ${cls} py-2 px-3 mb-0">${message}</div>`);
+        }
 
-    function getColumnConfig() {
-        return [
-            { data: 'id', title: 'ID', orderable: true },
-            { data: 'created_on', title: 'Date', orderable: true },
-            {
-                data: 'ticker',
-                title: 'Ticker',
-                orderable: true,
-                render: function (data, type, row) {
-                    const exchange = (row.exchange && row.exchange !== "N/A" && row.exchange !== "Unknown") ? row.exchange : null;
-                    const previewUrl = '<?= site_url('Preview/Alert'); ?>/' + encodeURIComponent(exchange ? `${exchange}-${data}` : data);
-                    const tvUrl = exchange ? `https://www.tradingview.com/symbols/${exchange}-${data}/` : null;
-
-                    let html = `<a href="${previewUrl}" class="text-primary fw-bold">${data}</a>`;
-
-                    if (tvUrl) {
-                        html += ` <a href="${tvUrl}" target="_blank" rel="noopener" class="ms-1 text-soft">
-                                    <em class="icon ni ni-external"></em>
-                                 </a>`;
-                    }
-
-                    if (!exchange) {
-                        html += ' <span class="text-muted">(No Exchange)</span>';
-                    }
-
-                    return html;
-                }
-            },
-            {
-                data: 'exchange',
-                title: 'Exchange',
-                orderable: true,
-                render: function (data, type, row) {
-                    let exchangeDisplay = data ? data : '<span class="text-muted">N/A</span>';
-                    if (!data || data === "N/A" || data === "Unknown") {
-                        exchangeDisplay += ` 
-                            <a class="dynamicModalLoader btn btn-xs btn-warning" 
-                            data-formtype="Alerts" 
-                            data-endpoint="updateExchange" 
-                            data-accountid="${row.id}" 
-                            data-ticker="${row.ticker}">
-                            <em class="icon ni ni-plus"></em>
-                            </a>`;
-                    }
-                    return exchangeDisplay;
-                }
-            },
-            { data: 'category', title: 'Category', orderable: true },
-            { 
-                data: 'price', 
-                name: 'price', 
-                title: 'Market Price', 
-                render: function (data, type, row) {
-                    return data ? `$${parseFloat(data).toFixed(2)}` : '<span class="text-muted">N/A</span>';
-                }
-            },
-            {
-                data: 'entry_price',
-                name: 'entry_price',
-                title: 'Entry Price',
-                render: (data) => data ? `$${parseFloat(data).toFixed(2)}` : 'N/A'
-            },
-            {
-                data: 'delta_gain',
-                name: 'delta_gain',
-                title: 'Δ / % Gain',
-                visible: true, // Hidden by default
-                orderable: true,
-                render: function (data, type, row) {
-                    const market = parseFloat(row.price);
-                    const entry = parseFloat(row.entry_price);
-                    if (!isNaN(market) && !isNaN(entry) && entry !== 0) {
-                        const delta = (market - entry).toFixed(2);
-                        const percent = ((delta / entry) * 100).toFixed(2);
-                        const sign = delta >= 0 ? '+' : '';
-                        const colorClass = delta >= 0 ? 'text-success' : 'text-danger';
-                        return `<span class="text-muted">${sign}$${delta}</span> <span class="${colorClass}">(${sign}${percent}%)</span>`;
-                    }
-                    return '<span class="text-muted">N/A</span>';
-                }
-            },
-            {
-                data: 'target_price',
-                name: 'target_price',
-                title: 'Target (3%)',
-                visible: false,
-                render: (data) => data ? `$${parseFloat(data).toFixed(2)}` : 'N/A'
-            },
-            {
-                data: 'locked_profit_stop',
-                name: 'locked_profit_stop',
-                title: 'Profit Lock Stop',
-                visible: false,
-                render: (data) => data ? `$${parseFloat(data).toFixed(2)}` : 'N/A'
-            },
-            {
-                data: 'trailing_stop_percent',
-                name: 'trailing_stop_percent',
-                title: 'Trailing %',
-                visible: false,
-                render: (data) => data ? `${data}%` : 'N/A'
-            },      
-            {
-                data: 'ema_3_8',
-                name: 'ema_3_8',
-                title: '3/8 EMA',
-                visible: false,
-                render: function (data) {
-                    if (data === 'up') {
-                        return '<span class="badge bg-success">↑</span>';
-                    } else if (data === 'down') {
-                        return '<span class="badge bg-danger">↓</span>';
-                    }
-                    return '<span class="text-muted">N/A</span>';
-                }
-            },
-            {
-                data: 'ema_8_13',
-                name: 'ema_8_13',
-                title: '8/13 EMA',
-                visible: false,
-                render: function (data) {
-                    return data === 'up' ? '<span class="badge bg-success">↑</span>' :
-                        data === 'down' ? '<span class="badge bg-danger">↓</span>' :
-                        '<span class="text-muted">N/A</span>';
-                }
-            },
-            {
-                data: 'ema_13_34',
-                name: 'ema_13_34',
-                title: '13/34 EMA',
-                visible: false,
-                render: function (data) {
-                    return data === 'up' ? '<span class="badge bg-success">↑</span>' :
-                        data === 'down' ? '<span class="badge bg-danger">↓</span>' :
-                        '<span class="text-muted">N/A</span>';
-                }
-            },
-            {
-                data: 'ema_34_48',
-                name: 'ema_34_48',
-                title: '34/48 EMA',
-                visible: false,
-                render: function (data) {
-                    return data === 'up' ? '<span class="badge bg-success">↑</span>' :
-                        data === 'down' ? '<span class="badge bg-danger">↓</span>' :
-                        '<span class="text-muted">N/A</span>';
-                }
-            },
-            {
-                data: 'ema_consensus',
-                name: 'ema_consensus',
-                title: 'EMA Analysis',
-                visible: false,
-                orderable: true,
-                render: function (data) {
-                    const isUp = parseInt(data) > 2;
-                    return `<span class="badge ${isUp ? 'bg-success' : 'bg-danger'}">${data}/4 ${isUp ? '↑' : '↓'}</span>`;
-                }
-            },
-            {
-                data: 'tv_chart',
-                name: 'tv_chart',
-                title: 'TV Chart',
-                orderable: false,
-                render: function (data, type, row) {
-                    if (data && data !== 'N/A') {
-                        return `<a href="${data}" target="_blank" class="btn btn-sm btn-info">
-                                    <em class="icon ni ni-eye"></em> View
-                                </a>`;
-                    } else {
-                        const tvLink = `https://www.tradingview.com/symbols/${row.exchange}-${row.ticker}/`;
-                        return `<a href="${tvLink}" target="_blank" class="btn btn-sm btn-secondary">
-                                    <em class="icon ni ni-eye"></em> View
-                                </a>
-                                <a class="dynamicModalLoader btn btn-sm btn-warning" 
-                                    data-formtype="Alerts" 
-                                    data-endpoint="addChart" 
-                                    data-accountid="${row.id}">
-                                    <em class="icon ni ni-plus"></em>
-                                </a>`;
-                    }
-                }
-            },
-            {
-                data: 'id',
-                title: 'Manage',
-                orderable: false,
-                render: function (data, type, row, meta) {
-                    const tableId = meta.settings.sTableId;
-
-                    const editBtn = `
-                        <button class="btn btn-sm btn-primary edit-alert dynamicModalLoader" data-formtype="Alerts" data-endpoint="createTradeAlert" data-accountid="${data}">
-                            <i class="icon ni ni-edit"></i> Edit
-                        </button>`;
-
-                    const manageBtn = `
-                        <button class="btn btn-sm btn-success manage-alert dynamicModalLoader" data-formtype="Alerts" data-endpoint="manageTradeAlert" data-accountid="${data}">
-                            <i class="icon ni ni-chat"></i> Manage
-                        </button>`;
-
-                    const deleteBtn = `
-                        <button class="btn btn-sm btn-danger delete-alert" data-id="${data}">
-                            <i class="icon ni ni-trash"></i> Hide
-                        </button>`;
-
-                    // Inject Manage button ONLY for #pendingTradeAlertTable
-                    if (tableId === 'confirmedTradeAlertTable') {
-                        return editBtn + manageBtn + deleteBtn;
-                    } else {
-                        return editBtn + deleteBtn;
-                    }
-                }
+        function getOrCreateDataTable($table, config) {
+            if (!$table || !$table.length) return null;
+            if ($.fn.DataTable.isDataTable($table)) {
+                return $table.DataTable();
             }
+            return $table.DataTable(config);
+        }
 
-        ];
-    }
-
-    // ✅ Check if Table Exists Before Initializing DataTable
-    let confirmedTable = initDataTableSafe($('#confirmedTradeAlertTable'),{
-        processing: true,
-        serverSide: true,
-        destroy: true,
-        deferRender: true,
-        searchDelay: 300,
-        pageLength: 50,
-        lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
-        ajax: {
-            url: '<?= site_url("API/Alerts/getFilteredAlerts"); ?>',
-            type: 'POST',
-            data: function (d) {
-                d.q = $('input[name="q"]').val();
-                d.timeRange = $('#timeFilter').val();
-                d.category = $('#categoryFilter').val();
-                d.alert_created = 1;
-                d.source = $('#sourceFilter').val();
-                d[csrfName] = csrfHash;
-            },
-            dataSrc: 'data'
-        },
-        order: [[0, 'desc']],
-        columns: getColumnConfig()
-    });
-
-    <?php if ($cuRole <= 3): ?>
-    let pendingTable = initDataTableSafe($('#pendingTradeAlertTable'),{
-        processing: true,
-        serverSide: true,
-        destroy: true,
-        deferRender: true,
-        searchDelay: 300,
-        pageLength: 50,
-        lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
-        ajax: {
-            url: '<?= site_url("API/Alerts/getFilteredAlerts"); ?>',
-            type: 'POST',
-            data: function (d) {
-                d.q = $('input[name="q"]').val();
-                d.timeRange = $('#timeFilter').val();
-                d.category = $('#categoryFilter').val();
-                d.alert_created = 0;
-                d.source = $('#sourceFilter').val();
-                d[csrfName] = csrfHash;
-            },
-            dataSrc: 'data'
-        },
-        order: [[0, 'desc']],
-        columns: getColumnConfig()
-    });
-    <?php endif; ?>
-
-
-    let scannerTable = initDataTableSafe($('#scannerSignalsTable'),{
-        processing: true,
-        ajax: {
-            url: '<?= site_url("API/Alerts/scanner"); ?>',
-            dataSrc: 'data'
-        },
-        order: [[0, 'desc']],
-        columns: [
-            { data: 'id' },
-            { data: 'created_on' },
-            { data: 'ticker' },
-            { data: 'category' },
-            { data: 'price' },
-            { data: 'status' },
-            { data: 'source' }
-        ]
-    });
-
-    // 🔄 Toggle Columns Logic
-    let columnsVisible = false;
-    
-    $('#toggleColumnsBtn').on('click', function () {
-        const columnNames = [
-            'locked_profit_stop',
-            'trailing_stop_percent',
-            'delta_gain',
-            'locked_profit_stop',
-            'trailing_stop_percent',
-            'ema_3_8',
-            'ema_8_13',
-            'ema_13_34',
-            'ema_34_48'
-        ];
-
-        const tables = ['#confirmedTradeAlertTable', '#pendingTradeAlertTable'];
-
-        // Get current visibility status from the first table
-        const mainTable = $(tables[0]).DataTable();
-        const isCurrentlyHidden = !mainTable.column(`${columnNames[0]}:name`).visible();
-
-        // Toggle button label
-        $(this).html(isCurrentlyHidden 
-            ? '<i class="icon ni ni-refresh"></i> Hide Extra Columns'
-            : '<i class="icon ni ni-refresh"></i> Show More Columns');
-
-        tables.forEach(selector => {
+        function safeReload(selector) {
             if ($.fn.DataTable.isDataTable(selector)) {
-                const dt = $(selector).DataTable();
-
-                // Toggle responsive class for scroll
-                if (isCurrentlyHidden) {
-                    $(selector).closest('.dataTables_wrapper').addClass('table-responsive');
-                } else {
-                    $(selector).closest('.dataTables_wrapper').removeClass('table-responsive');
-                }
-
-                // Toggle visibility of specified columns
-                columnNames.forEach(name => {
-                    const col = dt.column(`${name}:name`);
-                    if (col && col.header()) {
-                        col.visible(isCurrentlyHidden);
-                    }
-                });
-
-                // Adjust Manage buttons for space
-                dt.rows().every(function () {
-                    const $cell = $(this.node()).find('td:last');
-                    const $editBtn = $cell.find('.edit-alert');
-                    const $manageBtn = $cell.find('.manage-alert');
-                    const $deleteBtn = $cell.find('.delete-alert');
-
-                    if (isCurrentlyHidden) {
-                        $editBtn.html('<i class="icon ni ni-edit"></i>');
-                        $manageBtn.html('<i class="icon ni ni-chat"></i>');
-                        $deleteBtn.html('<i class="icon ni ni-trash"></i>');
-                    } else {
-                        const id = $editBtn.data('id');
-                        $editBtn.html(`<i class="icon ni ni-edit"></i> Edit`).attr('data-id', id);
-
-                        const manId = $manageBtn.data('id');
-                        $manageBtn.html(`<i class="icon ni ni-chat"></i> Manage`).attr('data-id', manId);
-
-                        const delId = $deleteBtn.data('id');
-                        $deleteBtn.html(`<i class="icon ni ni-trash"></i> Hide`).attr('data-id', delId);
-                    }
-                });
+                $(selector).DataTable().ajax.reload(null, false);
             }
+        }
+
+        function buildDataTableAjaxConfig(extraData) {
+            return {
+                url: '<?= site_url("API/Alerts/getFilteredAlerts"); ?>',
+                type: 'POST',
+                data: function (d) {
+                    d.q = $('input[name="q"]').val();
+                    d.timeRange = $('#timeFilter').val();
+                    d.category = $('#categoryFilter').val();
+                    d.source = $('#sourceFilter').val();
+                    d[csrfName] = csrfHash;
+                    if (typeof extraData === 'function') {
+                        extraData(d);
+                    }
+                },
+                dataSrc: function (json) {
+                    if (!json || !Array.isArray(json.data)) {
+                        console.error('Invalid DataTables JSON received from getFilteredAlerts.', json);
+                        updateFetchStatus('Alert data response was invalid. Check logs for details.', 'danger');
+                        return [];
+                    }
+                    return json.data;
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error('DataTables AJAX error.', {
+                        endpoint: '<?= site_url("API/Alerts/getFilteredAlerts"); ?>',
+                        status: xhr?.status,
+                        statusText: xhr?.statusText,
+                        textStatus,
+                        errorThrown,
+                        responseText: xhr?.responseText,
+                    });
+                    updateFetchStatus('Unable to load alerts table data. Please retry or check server logs.', 'danger');
+                }
+            };
+        }
+
+        function getColumnConfig() {
+            return [
+                { data: 'id', title: 'ID', name: 'id', orderable: true },
+                { data: 'created_on', title: 'Date', name: 'created_on', orderable: true },
+                {
+                    data: 'ticker',
+                    title: 'Ticker',
+                    name: 'ticker',
+                    orderable: true,
+                    render: function (data, type, row) {
+                        const exchange = (row.exchange && row.exchange !== "N/A" && row.exchange !== "Unknown") ? row.exchange : null;
+                        const previewUrl = '<?= site_url('Preview/Alert'); ?>/' + encodeURIComponent(exchange ? `${exchange}-${data}` : data);
+                        const tvUrl = exchange ? `https://www.tradingview.com/symbols/${exchange}-${data}/` : null;
+
+                        let html = `<a href="${previewUrl}" class="text-primary fw-bold">${data}</a>`;
+
+                        if (tvUrl) {
+                            html += ` <a href="${tvUrl}" target="_blank" rel="noopener" class="ms-1 text-soft"><em class="icon ni ni-external"></em></a>`;
+                        }
+
+                        if (!exchange) {
+                            html += ' <span class="text-muted">(No Exchange)</span>';
+                        }
+
+                        return html;
+                    }
+                },
+                {
+                    data: 'exchange',
+                    title: 'Exchange',
+                    name: 'exchange',
+                    orderable: true,
+                    render: function (data, type, row) {
+                        let exchangeDisplay = data ? data : '<span class="text-muted">N/A</span>';
+                        if (!data || data === "N/A" || data === "Unknown") {
+                            exchangeDisplay += ` <a class="dynamicModalLoader btn btn-xs btn-warning" data-formtype="Alerts" data-endpoint="updateExchange" data-accountid="${row.id}" data-ticker="${row.ticker}"><em class="icon ni ni-plus"></em></a>`;
+                        }
+                        return exchangeDisplay;
+                    }
+                },
+                { data: 'category', title: 'Category', name: 'category', orderable: true },
+                {
+                    data: 'price',
+                    name: 'price',
+                    title: 'Market Price',
+                    render: (data) => data ? `$${parseFloat(data).toFixed(2)}` : '<span class="text-muted">N/A</span>'
+                },
+                {
+                    data: 'entry_price',
+                    name: 'entry_price',
+                    title: 'Entry Price',
+                    render: (data) => data ? `$${parseFloat(data).toFixed(2)}` : 'N/A'
+                },
+                {
+                    data: 'delta_gain',
+                    name: 'delta_gain',
+                    title: 'Δ / % Gain',
+                    visible: true,
+                    orderable: true,
+                    render: function (data, type, row) {
+                        const market = parseFloat(row.price);
+                        const entry = parseFloat(row.entry_price);
+                        if (!isNaN(market) && !isNaN(entry) && entry !== 0) {
+                            const delta = (market - entry).toFixed(2);
+                            const percent = ((delta / entry) * 100).toFixed(2);
+                            const sign = delta >= 0 ? '+' : '';
+                            const colorClass = delta >= 0 ? 'text-success' : 'text-danger';
+                            return `<span class="text-muted">${sign}$${delta}</span> <span class="${colorClass}">(${sign}${percent}%)</span>`;
+                        }
+                        return '<span class="text-muted">N/A</span>';
+                    }
+                },
+                { data: 'target_price', name: 'target_price', title: 'Target (3%)', visible: false, render: (data) => data ? `$${parseFloat(data).toFixed(2)}` : 'N/A' },
+                { data: 'locked_profit_stop', name: 'locked_profit_stop', title: 'Profit Lock Stop', visible: false, render: (data) => data ? `$${parseFloat(data).toFixed(2)}` : 'N/A' },
+                { data: 'trailing_stop_percent', name: 'trailing_stop_percent', title: 'Trailing %', visible: false, render: (data) => data ? `${data}%` : 'N/A' },
+                { data: 'ema_3_8', name: 'ema_3_8', title: '3/8 EMA', visible: false, render: (data) => data === 'up' ? '<span class="badge bg-success">↑</span>' : data === 'down' ? '<span class="badge bg-danger">↓</span>' : '<span class="text-muted">N/A</span>' },
+                { data: 'ema_8_13', name: 'ema_8_13', title: '8/13 EMA', visible: false, render: (data) => data === 'up' ? '<span class="badge bg-success">↑</span>' : data === 'down' ? '<span class="badge bg-danger">↓</span>' : '<span class="text-muted">N/A</span>' },
+                { data: 'ema_13_34', name: 'ema_13_34', title: '13/34 EMA', visible: false, render: (data) => data === 'up' ? '<span class="badge bg-success">↑</span>' : data === 'down' ? '<span class="badge bg-danger">↓</span>' : '<span class="text-muted">N/A</span>' },
+                { data: 'ema_34_48', name: 'ema_34_48', title: '34/48 EMA', visible: false, render: (data) => data === 'up' ? '<span class="badge bg-success">↑</span>' : data === 'down' ? '<span class="badge bg-danger">↓</span>' : '<span class="text-muted">N/A</span>' },
+                {
+                    data: 'ema_consensus',
+                    name: 'ema_consensus',
+                    title: 'EMA Analysis',
+                    visible: false,
+                    orderable: true,
+                    render: function (data) {
+                        const isUp = parseInt(data) > 2;
+                        return `<span class="badge ${isUp ? 'bg-success' : 'bg-danger'}">${data}/4 ${isUp ? '↑' : '↓'}</span>`;
+                    }
+                },
+                {
+                    data: 'tv_chart',
+                    name: 'tv_chart',
+                    title: 'TV Chart',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        if (data && data !== 'N/A') {
+                            return `<a href="${data}" target="_blank" class="btn btn-sm btn-info"><em class="icon ni ni-eye"></em> View</a>`;
+                        }
+                        const tvLink = `https://www.tradingview.com/symbols/${row.exchange}-${row.ticker}/`;
+                        return `<a href="${tvLink}" target="_blank" class="btn btn-sm btn-secondary"><em class="icon ni ni-eye"></em> View</a>
+                                <a class="dynamicModalLoader btn btn-sm btn-warning" data-formtype="Alerts" data-endpoint="addChart" data-accountid="${row.id}"><em class="icon ni ni-plus"></em></a>`;
+                    }
+                },
+                {
+                    data: 'id',
+                    title: 'Manage',
+                    name: 'manage',
+                    orderable: false,
+                    render: function (data, type, row, meta) {
+                        const tableId = meta.settings.sTableId;
+                        const editBtn = `<button class="btn btn-sm btn-primary edit-alert dynamicModalLoader" data-formtype="Alerts" data-endpoint="createTradeAlert" data-accountid="${data}"><i class="icon ni ni-edit"></i> Edit</button>`;
+                        const manageBtn = `<button class="btn btn-sm btn-success manage-alert dynamicModalLoader" data-formtype="Alerts" data-endpoint="manageTradeAlert" data-accountid="${data}"><i class="icon ni ni-chat"></i> Manage</button>`;
+                        const deleteBtn = `<button class="btn btn-sm btn-danger delete-alert" data-id="${data}"><i class="icon ni ni-trash"></i> Hide</button>`;
+                        return tableId === 'confirmedTradeAlertTable' ? editBtn + manageBtn + deleteBtn : editBtn + deleteBtn;
+                    }
+                }
+            ];
+        }
+
+        const commonConfig = {
+            processing: true,
+            serverSide: true,
+            deferRender: true,
+            searchDelay: 300,
+            pageLength: 50,
+            lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
+            order: [[0, 'desc']],
+            columns: getColumnConfig()
+        };
+
+        const confirmedTable = getOrCreateDataTable($('#confirmedTradeAlertTable'), {
+            ...commonConfig,
+            ajax: buildDataTableAjaxConfig((d) => {
+                d.alert_created = 1;
+            })
         });
-    });
 
-    let userLastActive = Date.now();
-    const inactivityLimit = 5 * 60 * 1000; // 5 minutes
-    const overlay = document.getElementById('inactivityOverlay');
-    let processing = true;
-    let currentOffset = 0;
-    const batchSize = 25;
+        <?php if ($cuRole <= 3): ?>
+        const pendingTable = getOrCreateDataTable($('#pendingTradeAlertTable'), {
+            ...commonConfig,
+            ajax: buildDataTableAjaxConfig((d) => {
+                d.alert_created = 0;
+            })
+        });
+        <?php endif; ?>
 
-    // ⏱️ Reset on activity
-    function resetActivityTimer() {
-        userLastActive = Date.now();
-        overlay.style.display = 'none';
-    }
-    ['mousemove', 'keydown', 'scroll', 'click'].forEach(evt =>
-        document.addEventListener(evt, resetActivityTimer)
-    );
-
-    // ⏰ Periodic check
-    setInterval(() => {
-        if (Date.now() - userLastActive > inactivityLimit) {
-            processing = false;
-            overlay.style.display = 'block';
-        }
-    }, 30000); // every 30s
-
-    // ✅ Resume when user clicks overlay button
-    document.getElementById('resumeProcessing').addEventListener('click', () => {
-        userLastActive = Date.now();
-        overlay.style.display = 'none';
-        if (!processing) {
-            processing = true;
-            processNextBatch(); // resume
-        }
-    });
-
-    // 🔁 Batch rotation logic
-    function processNextBatch() {
-        if (!processing) return;
-
-        $.ajax({
-            url: '<?= site_url("API/Alerts/processTradeBatch"); ?>',
-            type: 'POST',
-            data: {
-                offset: currentOffset,
-                batchSize: batchSize,
-                [csrfName]: csrfHash
-            },
-            success: function (res) {
-                console.log(`Processed trade alert batch offset: ${currentOffset}`);
-
-                // Reload tables to show updated data
-                $('#confirmedTradeAlertTable').DataTable().ajax.reload(null, false);
-                <?php if ($cuRole <= 3): ?> 
-                $('#pendingTradeAlertTable').DataTable().ajax.reload(null, false);
-                <?php endif; ?>
-
-                // Rotate or reset
-                currentOffset = res.reachedEnd ? 0 : currentOffset + batchSize;
-
-                // Schedule next batch if user still active
-                if (Date.now() - userLastActive < inactivityLimit) {
-                    setTimeout(processNextBatch, 300000); // 5 minutes
-                } else {
-                    processing = false;
-                    overlay.style.display = 'block';
+        const scannerTable = getOrCreateDataTable($('#scannerSignalsTable'), {
+            processing: true,
+            order: [[0, 'desc']],
+            ajax: {
+                url: '<?= site_url("API/Alerts/scanner"); ?>',
+                dataSrc: function (json) {
+                    return (json && Array.isArray(json.data)) ? json.data : [];
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error('Scanner DataTable AJAX error.', {
+                        endpoint: '<?= site_url("API/Alerts/scanner"); ?>',
+                        status: xhr?.status,
+                        statusText: xhr?.statusText,
+                        textStatus,
+                        errorThrown,
+                        responseText: xhr?.responseText,
+                    });
                 }
             },
-            error: function (xhr) {
-                console.error('Batch processing failed:', xhr.responseText);
-            }
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'created_on', name: 'created_on' },
+                { data: 'ticker', name: 'ticker' },
+                { data: 'category', name: 'category' },
+                { data: 'price', name: 'price' },
+                { data: 'status', name: 'status' },
+                { data: 'source', name: 'source' }
+            ]
         });
-    }
 
-    // 🚀 Start initial polling on load
-    processNextBatch();
-    
-    function refreshPricesEveryMinute() {
+        let userLastActive = Date.now();
+        const inactivityLimit = 5 * 60 * 1000;
+        const overlay = document.getElementById('inactivityOverlay');
+        let processing = true;
+        let currentOffset = 0;
+        const batchSize = 25;
+
+        function resetActivityTimer() {
+            userLastActive = Date.now();
+            if (overlay) overlay.style.display = 'none';
+        }
+        ['mousemove', 'keydown', 'scroll', 'click'].forEach(evt => document.addEventListener(evt, resetActivityTimer));
+
         setInterval(() => {
-            $.ajax({
-                url: '<?= site_url("API/Alerts/getLatestPrices"); ?>',
-                type: 'GET',
-                success: function (response) {
-                    if (response.status === 'success') {
-                        response.data.forEach(function (alert) {
-                            const table = $('#confirmedTradeAlertTable').DataTable();
-                            const rowIdx = table.rows().eq(0).filter(function (rowIdx) {
-                                return table.cell(rowIdx, 0).data() == alert.id; // match ID
-                            });
+            if (Date.now() - userLastActive > inactivityLimit) {
+                processing = false;
+                if (overlay) overlay.style.display = 'block';
+            }
+        }, 30000);
 
-                            if (rowIdx.length > 0) {
-                                const currentRowData = table.row(rowIdx[0]).data();
-                                currentRowData.price = alert.price;
-                                table.row(rowIdx[0]).data(currentRowData).invalidate().draw(false);
-                            }
-                        });
+        document.getElementById('resumeProcessing')?.addEventListener('click', () => {
+            userLastActive = Date.now();
+            if (overlay) overlay.style.display = 'none';
+            if (!processing) {
+                processing = true;
+                processNextBatch();
+            }
+        });
+
+        function processNextBatch() {
+            if (!processing) return;
+
+            $.ajax({
+                url: '<?= site_url("API/Alerts/processTradeBatch"); ?>',
+                type: 'POST',
+                data: {
+                    offset: currentOffset,
+                    batchSize: batchSize,
+                    [csrfName]: csrfHash
+                },
+                success: function (res) {
+                    safeReload('#confirmedTradeAlertTable');
+                    <?php if ($cuRole <= 3): ?>
+                    safeReload('#pendingTradeAlertTable');
+                    <?php endif; ?>
+                    safeReload('#scannerSignalsTable');
+
+                    currentOffset = res?.reachedEnd ? 0 : currentOffset + batchSize;
+
+                    if (Date.now() - userLastActive < inactivityLimit) {
+                        setTimeout(processNextBatch, 300000);
+                    } else {
+                        processing = false;
+                        if (overlay) overlay.style.display = 'block';
                     }
                 },
                 error: function (xhr) {
-                    console.error('❌ Error refreshing market prices:', xhr.responseText);
+                    console.error('Batch processing failed:', xhr?.responseText);
                 }
             });
-        // }, 60000); // ⏱️ every 60 seconds
-        // }, 300000); // ⏱️ every 5 mins
-        }, 600000); // ⏱️ every 10 mins
-    }
-
-    // 🟢 Start polling after DOM ready
-    refreshPricesEveryMinute();
-
-    // ✅ Refresh Data on Filter Change
-    $('#timeFilter, #categoryFilter, #sourceFilter').on('change', function () {
-        if ($('#confirmedTradeAlertTable').length) {
-            $('#confirmedTradeAlertTable').DataTable().ajax.reload();
         }
-        <?php if ($cuRole <= 3): ?> 
-        if ($('#pendingTradeAlertTable').length) {
-            $('#pendingTradeAlertTable').DataTable().ajax.reload(); 
-        }
-        <?php endif; ?>
-        if ($('#scannerSignalsTable').length) { $('#scannerSignalsTable').DataTable().ajax.reload(); }
-    });
+        processNextBatch();
 
-    // ✅ Handle Creating New Trade Alert
-    $('#create-new-trade-alert').on('click', function () {
-        $.ajax({
-            url: '<?= site_url("API/Alerts/createTradeAlert"); ?>',
-            type: 'POST',
-            data: {
-                ticker: 'AAPL',
-                price: 175.25,
-                [csrfName]: csrfHash
-            },
-            success: function (response) {
-                alert(response.message);
-                $('#confirmedTradeAlertTable').DataTable().ajax.reload();
-                <?php if ($cuRole <= 3): ?> $('#pendingTradeAlertTable').DataTable().ajax.reload(); <?php endif; ?>
-            },
-            error: function (xhr) {
-                alert("Error creating trade alert.");
-                console.error(xhr.responseText);
-            }
+        // Removed legacy direct row-manipulation polling in favor of DataTables reloads only.
+
+        let columnsVisible = false;
+        $('#toggleColumnsBtn').on('click', function () {
+            const columnNames = [
+                'delta_gain',
+                'target_price',
+                'locked_profit_stop',
+                'trailing_stop_percent',
+                'ema_3_8',
+                'ema_8_13',
+                'ema_13_34',
+                'ema_34_48',
+                'ema_consensus'
+            ];
+
+            const tables = ['#confirmedTradeAlertTable', '#pendingTradeAlertTable'];
+            const availableMainTable = $.fn.DataTable.isDataTable(tables[0]) ? $(tables[0]).DataTable() : null;
+            if (!availableMainTable) return;
+
+            columnsVisible = !columnsVisible;
+            $(this).html(columnsVisible
+                ? '<i class="icon ni ni-refresh"></i> Hide Extra Columns'
+                : '<i class="icon ni ni-refresh"></i> Show More Columns');
+
+            tables.forEach(selector => {
+                if (!$.fn.DataTable.isDataTable(selector)) return;
+                const dt = $(selector).DataTable();
+                columnNames.forEach(name => {
+                    const col = dt.column(`${name}:name`);
+                    if (col && col.header()) {
+                        col.visible(columnsVisible, false);
+                    }
+                });
+                dt.columns.adjust().draw(false);
+            });
         });
-    });
 
-    // // ✅ Handle Editing an Alert
-    // $(document).on('click', '.edit-alert', function () {
-    //     let alertId = $(this).data('id');
-    //     $.ajax({
-    //         url: '<?= site_url("API/Alerts/createTradeAlert"); ?>',
-    //         type: 'POST',
-    //         data: { alert_id: alertId, [csrfName]: csrfHash },
-    //         success: function (response) {
-    //             alert("Trade alert updated successfully!");
-    //             $('#confirmedTradeAlertTable').DataTable().ajax.reload();
-    //             <?php if ($cuRole <= 3): ?> $('#pendingTradeAlertTable').DataTable().ajax.reload(); <?php endif; ?>
-    //         },
-    //         error: function (xhr) {
-    //             alert("Error updating trade alert.");
-    //             console.error(xhr.responseText);
-    //         }
-    //     });
-    // });
+        $('#timeFilter, #categoryFilter, #sourceFilter').on('change', function () {
+            safeReload('#confirmedTradeAlertTable');
+            <?php if ($cuRole <= 3): ?>
+            safeReload('#pendingTradeAlertTable');
+            <?php endif; ?>
+            safeReload('#scannerSignalsTable');
+        });
 
-    $('#generateAdvisorMediaBtn').on('click', function () {
-        const userId = $(this).data('userid');
-        const statusDiv = $('#advisorMediaStatus');
-
-        statusDiv.text('Generating advisor media package...');
-
-        $.ajax({
-            url: '/index.php/API/Advisor/generateNow',
-            type: 'POST',
-            data: { user_id: userId },
-            success: function (res) {
-                if (res.status === 'success') {
-                    const media = res.media;
-                    statusDiv.html(`
-                        ✅ Generated: ${media.timestamp}<br>
-                        <b>Ticker:</b> ${media.ticker}<br>
-                        <b>Score:</b> ${media.score}<br>
-                        <b>Risk:</b> ${media.risk_rating}<br>
-                        <b>Sentiment:</b> ${media.sentiment}<br>
-                        <a href="${media.voiceover_url}" target="_blank" class="btn btn-sm btn-info mt-2">🎧 Listen</a>
-                        <a href="${media.chart_url}" target="_blank" class="btn btn-sm btn-primary mt-2">📈 Chart</a>
-                        <a href="${media.zip_url}" target="_blank" class="btn btn-sm btn-success mt-2">📦 Download Zip</a>
-                    `);
-                } else {
-                    statusDiv.text('⚠️ Failed to generate advisor media.');
+        $('#create-new-trade-alert').on('click', function () {
+            $.ajax({
+                url: '<?= site_url("API/Alerts/createTradeAlert"); ?>',
+                type: 'POST',
+                data: {
+                    ticker: 'AAPL',
+                    price: 175.25,
+                    [csrfName]: csrfHash
+                },
+                success: function (response) {
+                    alert(response.message);
+                    safeReload('#confirmedTradeAlertTable');
+                    <?php if ($cuRole <= 3): ?> safeReload('#pendingTradeAlertTable'); <?php endif; ?>
+                },
+                error: function (xhr) {
+                    alert('Error creating trade alert.');
+                    console.error(xhr?.responseText);
                 }
-            },
-            error: function () {
-                statusDiv.text('❌ AJAX error while generating advisor package.');
-            }
+            });
         });
-    });
 
-    // ✅ Handle Hiding an Alert
-    $(document).on('click', '.delete-alert', function () {
-        let alertId = $(this).data('id');
-        if (confirm('Are you sure you want to hide this alert?')) {
+        $('#generateAdvisorMediaBtn').on('click', function () {
+            const userId = $(this).data('userid');
+            const statusDiv = $('#advisorMediaStatus');
+            statusDiv.text('Generating advisor media package...');
+
+            $.ajax({
+                url: '/index.php/API/Advisor/generateNow',
+                type: 'POST',
+                data: { user_id: userId },
+                success: function (res) {
+                    if (res.status === 'success') {
+                        const media = res.media;
+                        statusDiv.html(`✅ Generated: ${media.timestamp}<br><b>Ticker:</b> ${media.ticker}<br><b>Score:</b> ${media.score}<br><b>Risk:</b> ${media.risk_rating}<br><b>Sentiment:</b> ${media.sentiment}<br><a href="${media.voiceover_url}" target="_blank" class="btn btn-sm btn-info mt-2">🎧 Listen</a><a href="${media.chart_url}" target="_blank" class="btn btn-sm btn-primary mt-2">📈 Chart</a><a href="${media.zip_url}" target="_blank" class="btn btn-sm btn-success mt-2">📦 Download Zip</a>`);
+                    } else {
+                        statusDiv.text('⚠️ Failed to generate advisor media.');
+                    }
+                },
+                error: function () {
+                    statusDiv.text('❌ AJAX error while generating advisor package.');
+                }
+            });
+        });
+
+        $(document).on('click', '.delete-alert', function () {
+            const alertId = $(this).data('id');
+            if (!confirm('Are you sure you want to hide this alert?')) return;
+
             $.ajax({
                 url: '<?= site_url("API/Alerts/hideTradeAlert"); ?>',
                 type: 'POST',
                 data: { alert_id: alertId, [csrfName]: csrfHash },
                 success: function (response) {
                     alert(response.message);
-                    $('#confirmedTradeAlertTable').DataTable().ajax.reload();
-                    <?php if ($cuRole <= 3): ?> $('#pendingTradeAlertTable').DataTable().ajax.reload(); <?php endif; ?>
+                    safeReload('#confirmedTradeAlertTable');
+                    <?php if ($cuRole <= 3): ?> safeReload('#pendingTradeAlertTable'); <?php endif; ?>
                 },
                 error: function (xhr) {
-                    alert("Error hiding alert.");
-                    console.error(xhr.responseText);
+                    alert('Error hiding alert.');
+                    console.error(xhr?.responseText);
                 }
             });
-        }
-    });
+        });
     });
 })();
-
 </script>
 <script <?= $nonce['script'] ?? '' ?>>
 (function(){
@@ -1082,11 +907,16 @@ $subViewData                        = [
       btnBackfill.textContent = 'Backfill Categories';
       // Refresh tables if present
       if (window.jQuery && $.fn && $.fn.DataTable) {
-        if ($.fn.DataTable.isDataTable('#confirmedTradeAlertTable')) {
-          $('#confirmedTradeAlertTable').DataTable().ajax.reload(null, false);
-        }
-        if ($.fn.DataTable.isDataTable('#pendingTradeAlertTable')) {
-          $('#pendingTradeAlertTable').DataTable().ajax.reload(null, false);
+        if (typeof window.reloadDataTableSafe === 'function') {
+          window.reloadDataTableSafe('#confirmedTradeAlertTable', false);
+          window.reloadDataTableSafe('#pendingTradeAlertTable', false);
+        } else {
+          if ($.fn.DataTable.isDataTable('#confirmedTradeAlertTable')) {
+            $('#confirmedTradeAlertTable').DataTable().ajax.reload(null, false);
+          }
+          if ($.fn.DataTable.isDataTable('#pendingTradeAlertTable')) {
+            $('#pendingTradeAlertTable').DataTable().ajax.reload(null, false);
+          }
         }
       }
     }
@@ -1114,39 +944,5 @@ $subViewData                        = [
       btnBackfillEmails.textContent = originalText;
     }
   });
-})();
-</script>
-<script <?= $nonce['script'] ?? '' ?>>
-(function initAlertsPricePolling(attempt = 0) {
-    if (typeof window.jQuery === 'undefined') {
-        if (attempt > 200) {
-            console.error('jQuery not available for Alerts price polling.');
-            return;
-        }
-        return setTimeout(() => initAlertsPricePolling(attempt + 1), 50);
-    }
-
-    const $ = window.jQuery;
-
-    setInterval(() => {
-        fetch('index.php/API/Alerts/getLatestPrices')
-            .then(res => res.json())
-            .then(response => {
-                if (response.status === 'success') {
-                    const prices = response.prices;
-                    // Loop through rows and update the price column
-                    $('#alertsTable tbody tr').each(function () {
-                        const row = $(this);
-                        const ticker = row.find('td:eq(1)').text().trim(); // Adjust column index
-                        if (prices[ticker]) {
-                            row.find('td.price-cell').text(`$${prices[ticker].toFixed(2)}`);
-                        }
-                    });
-                }
-            })
-            .catch((error) => console.error('Failed to refresh latest prices', error));
-    // }, 60000); // every 60s
-    }, 300000); // every 5m
-    // }, 600000); // every 10m
 })();
 </script>

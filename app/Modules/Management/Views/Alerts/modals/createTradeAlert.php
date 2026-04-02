@@ -421,10 +421,20 @@ $(document).ready(function () {
                         $("#createTradeAlertForm").closest(".modal").modal("hide");
                     }, 300);
 
-                    if ($.fn.DataTable.isDataTable("#tradeAlertsTable")) {
-                        $("#tradeAlertsTable").DataTable().ajax.reload(null, false);
+                    if (typeof window.reloadDataTableSafe === 'function') {
+                        window.reloadDataTableSafe('#confirmedTradeAlertTable', false);
+                        window.reloadDataTableSafe('#pendingTradeAlertTable', false);
+                        window.reloadDataTableSafe('#scannerSignalsTable', false);
                     } else {
-                        $("#tradeAlertsTable").load("<?= site_url('Management/Alerts #tradeAlertsTable') ?>");
+                        if ($.fn.DataTable.isDataTable('#confirmedTradeAlertTable')) {
+                            $('#confirmedTradeAlertTable').DataTable().ajax.reload(null, false);
+                        }
+                        if ($.fn.DataTable.isDataTable('#pendingTradeAlertTable')) {
+                            $('#pendingTradeAlertTable').DataTable().ajax.reload(null, false);
+                        }
+                        if ($.fn.DataTable.isDataTable('#scannerSignalsTable')) {
+                            $('#scannerSignalsTable').DataTable().ajax.reload(null, false);
+                        }
                     }
                 } else {
                     alert("❌ Error: " + (response.message || "Unknown error occurred."));
