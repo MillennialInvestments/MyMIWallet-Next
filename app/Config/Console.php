@@ -60,6 +60,7 @@ class Console extends BaseConfig
         \App\Commands\AIOps\Observe\Snapshot::class,
         \App\Commands\AIOps\Observe\Suggest::class,
         \App\Commands\AIOps\PRAuto::class,
+        \App\Commands\AIOps\PyOps::class,
         \App\Commands\AIOps\PRCreate::class,
         \App\Commands\AIOps\Patch\Apply::class,
         \App\Commands\AIOps\Patch\DryRun::class,
