@@ -9,6 +9,27 @@ This document describes the ThinkorSwim “Order Filled” broker-email ingestio
 3. Each fill is inserted via `execution_id` (idempotent) and logged into `bf_investment_alert_history`.
 4. Discord notification is queued once per execution fill (`notified_discord = 1`).
 
+## IMAP-First Decision (alerts:fetch-raw-emails)
+- **Primary path**: IMAP is used for mailbox access, `INBOX` reads, raw message retrieval, message move to `Processed`, and expunge.
+- **Why IMAP**: This workflow is mailbox-native (fetch, move, expunge), and IMAP is the protocol designed for those operations.
+- **Why not DreamHost API**: DreamHost API is reserved for account/mailbox administration and is not used for day-to-day message ingestion/move operations.
+- **Failure safety**: If `Processed` is missing, the command attempts IMAP create; if create fails, DB inserts continue and only move/expunge is skipped.
+
+### Command usage
+```bash
+php spark alerts:fetch-raw-emails --approve --limit=200 --folder=INBOX --target-folder=Processed --since="1 day ago"
+php spark alerts:fetch-raw-emails --dry-run --limit=50 --since="2026-03-30" --verbose
+```
+
+### Required env/config keys
+- `alerts.imap.host` (default: `imap.dreamhost.com`)
+- `alerts.imap.port` (default: `993`)
+- `alerts.imap.flags` (default: `/imap/ssl`)
+- `alerts.imap.mailbox` (optional full IMAP mailbox path)
+- `alerts.imap.user` (set to `tradealerts@mymiwallet.com`)
+- `alerts.imap.pass`
+- `alerts.imap.processed_folder` (default: `Processed`)
+
 ## Endpoints
 - `GET /API/Alerts/processBrokerEmails?cronKey=...`
   - Processes only `source=thinkorswim` records.
