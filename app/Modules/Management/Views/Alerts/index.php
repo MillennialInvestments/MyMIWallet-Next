@@ -455,9 +455,6 @@ $subViewData                        = [
         }
 
         function getOrCreateDataTable($table, config) {
-            if (window.MyMIDataTables && typeof window.MyMIDataTables.getOrCreate === 'function') {
-                return window.MyMIDataTables.getOrCreate($table, config);
-            }
             if (!$table || !$table.length) return null;
             if ($.fn.DataTable.isDataTable($table)) {
                 return $table.DataTable();
@@ -466,34 +463,12 @@ $subViewData                        = [
         }
 
         function safeReload(selector) {
-            if (window.MyMIDataTables && typeof window.MyMIDataTables.reload === 'function') {
-                window.MyMIDataTables.reload(selector, false);
-                return;
-            }
             if ($.fn.DataTable.isDataTable(selector)) {
                 $(selector).DataTable().ajax.reload(null, false);
             }
         }
 
         function buildDataTableAjaxConfig(extraData) {
-            if (window.MyMIDataTables && typeof window.MyMIDataTables.ajaxConfig === 'function') {
-                return window.MyMIDataTables.ajaxConfig({
-                    url: '<?= site_url("API/Alerts/getFilteredAlerts"); ?>',
-                    type: 'POST',
-                    statusTarget: '#fetch-status',
-                    data: function (d) {
-                        d.q = $('input[name="q"]').val();
-                        d.timeRange = $('#timeFilter').val();
-                        d.category = $('#categoryFilter').val();
-                        d.source = $('#sourceFilter').val();
-                        d[csrfName] = csrfHash;
-                        if (typeof extraData === 'function') {
-                            extraData(d);
-                        }
-                    }
-                });
-            }
-
             return {
                 url: '<?= site_url("API/Alerts/getFilteredAlerts"); ?>',
                 type: 'POST',
@@ -506,6 +481,25 @@ $subViewData                        = [
                     if (typeof extraData === 'function') {
                         extraData(d);
                     }
+                },
+                dataSrc: function (json) {
+                    if (!json || !Array.isArray(json.data)) {
+                        console.error('Invalid DataTables JSON received from getFilteredAlerts.', json);
+                        updateFetchStatus('Alert data response was invalid. Check logs for details.', 'danger');
+                        return [];
+                    }
+                    return json.data;
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error('DataTables AJAX error.', {
+                        endpoint: '<?= site_url("API/Alerts/getFilteredAlerts"); ?>',
+                        status: xhr?.status,
+                        statusText: xhr?.statusText,
+                        textStatus,
+                        errorThrown,
+                        responseText: xhr?.responseText,
+                    });
+                    updateFetchStatus('Unable to load alerts table data. Please retry or check server logs.', 'danger');
                 }
             };
         }

@@ -125,8 +125,6 @@
         }
     }
 
-    window.MyMIDataTables = window.MyMIDataTables || {};
-
     window.getOrCreateDataTable = function (selector, options) {
         var $ = getJQuery();
         var settings = options || {};
