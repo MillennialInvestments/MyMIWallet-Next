@@ -294,6 +294,7 @@ class Console extends BaseConfig
         \App\Commands\Ollama\Queue\Stats::class,
         \App\Commands\Ollama\Queue\Work::class,
         \App\Commands\Ollama\RagQuery::class,
+        \App\Commands\Ollama\OllamaRun::class,
         \App\Commands\Ollama\Sessions\ListSessions::class,
         \App\Commands\Ollama\Sessions\RmSession::class,
         \App\Commands\Ollama\Sessions\ShowSession::class,

@@ -14,6 +14,10 @@ class Ollama extends BaseConfig
     public string $defaultChatModel = 'llama3.2:latest';
     public string $defaultEmbedModel = 'mxbai-embed-large:latest';
     public string $governanceProfile = 'aiops';
+    public float $defaultTemperature = 0.2;
+    public bool $allowShellFallback = false;
+    public bool $writeSidecarJson = true;
+
 
     /**
      * @var array<string, array<string, mixed>>
@@ -55,5 +59,11 @@ class Ollama extends BaseConfig
         $this->defaultChatModel = (string) env('OLLAMA_DEFAULT_CHAT_MODEL', $this->defaultChatModel);
         $this->defaultEmbedModel = (string) env('OLLAMA_DEFAULT_EMBED_MODEL', $this->defaultEmbedModel);
         $this->governanceProfile = (string) env('OLLAMA_GOV_PROFILE', $this->governanceProfile);
+        $this->defaultTemperature = (float) env('OLLAMA_DEFAULT_TEMPERATURE', (string) $this->defaultTemperature);
+        $allowShellFallback = filter_var(env('OLLAMA_ALLOW_SHELL_FALLBACK', $this->allowShellFallback), FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE);
+        $writeSidecarJson = filter_var(env('OLLAMA_WRITE_SIDECAR_JSON', $this->writeSidecarJson), FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE);
+
+        $this->allowShellFallback = $allowShellFallback ?? $this->allowShellFallback;
+        $this->writeSidecarJson = $writeSidecarJson ?? $this->writeSidecarJson;
     }
 }
