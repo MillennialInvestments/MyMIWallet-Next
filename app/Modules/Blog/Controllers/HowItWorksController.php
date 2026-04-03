@@ -37,6 +37,7 @@ class HowItWorksController extends UserController
     protected ?array $userAccount = null;
     protected ?MyMIGold $myMIGold = null;
     protected $docsRenderer;
+    protected static array $missingSlugLogCache = [];
 
     public function initController(
         \CodeIgniter\HTTP\RequestInterface $request,
@@ -204,19 +205,30 @@ class HowItWorksController extends UserController
                 }
             }
 
-            log_message('notice', '[HOW_IT_WORKS] Unknown slug fallback: {slug}', ['slug' => $normalizedSlug]);
-            return redirect()->to(site_url('How-It-Works'));
+            $cacheKey = 'slug:' . $normalizedSlug;
+            if (!isset(self::$missingSlugLogCache[$cacheKey])) {
+                log_message('notice', '[HOW_IT_WORKS] Unknown slug fallback: {slug}', ['slug' => $normalizedSlug]);
+                self::$missingSlugLogCache[$cacheKey] = true;
+            }
+            return $this->renderHowItWorksFallback($normalizedSlug);
 
         } catch (\Throwable $e) {
-
-            log_message('error', 'HowItWorksController failure: {msg}', [
+            log_message('error', 'HowItWorksController failure: {msg} | file={file} line={line}', [
                 'msg' => $e->getMessage(),
                 'file' => $e->getFile(),
                 'line' => $e->getLine()
             ]);
-
-            throw $e;
+            return $this->renderHowItWorksFallback($slug);
         }
+    }
+
+    protected function renderHowItWorksFallback(string $slug): ResponseInterface
+    {
+        $normalized = normalize_slug($slug ?: 'overview');
+        return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\fallback', [
+            'slug'  => $normalized,
+            'title' => ucwords(str_replace('-', ' ', $normalized)),
+        ]);
     }
 
     /**

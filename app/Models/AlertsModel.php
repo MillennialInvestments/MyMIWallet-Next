@@ -2947,25 +2947,80 @@ class AlertsModel extends Model
     public function trackFailedTicker(string $symbol, string $reason = 'Missing or invalid price', string $source = 'AlphaVantage')
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('bf_investment_tickers_nw');
+        $table = 'bf_investment_tickers_nw';
+        $builder = $db->table($table);
+        $hasRetryCount = $this->hasColumn($table, 'retry_count');
+        $hasQuarantine = $this->hasColumn($table, 'is_quarantined');
+        $hasQuarantineReason = $this->hasColumn($table, 'quarantine_reason');
+        $hasLastError = $this->hasColumn($table, 'last_error_message');
+        $hasLastErrorAt = $this->hasColumn($table, 'last_error_at');
 
         $exists = $builder->where(['symbol' => $symbol, 'source' => $source])->get()->getRow();
+        $now = date('Y-m-d H:i:s');
+        $retryCount = (int) (($exists->retry_count ?? $exists->failure_count ?? 0) + 1);
+        $isQuarantined = $retryCount >= 3 ? 1 : (int) ($exists->is_quarantined ?? 0);
 
         if ($exists) {
-            $builder->where('id', $exists->id)->update([
-                'failure_count' => $exists->failure_count + 1,
-                'last_detected' => date('Y-m-d H:i:s'),
+            $updateData = [
+                'failure_count' => ((int) $exists->failure_count) + 1,
+                'last_detected' => $now,
                 'reason' => $reason,
-            ]);
+            ];
+            if ($hasRetryCount) {
+                $updateData['retry_count'] = $retryCount;
+            }
+            if ($hasQuarantine) {
+                $updateData['is_quarantined'] = $isQuarantined;
+            }
+            if ($hasQuarantineReason && $isQuarantined === 1) {
+                $updateData['quarantine_reason'] = 'invalid_market_data';
+            }
+            if ($hasLastError) {
+                $updateData['last_error_message'] = $reason;
+            }
+            if ($hasLastErrorAt) {
+                $updateData['last_error_at'] = $now;
+            }
+            $builder->where('id', $exists->id)->update($updateData);
         } else {
-            $builder->insert([
+            $insertData = [
                 'symbol' => $symbol,
                 'source' => $source,
                 'reason' => $reason,
                 'failure_count' => 1,
-                'first_detected' => date('Y-m-d H:i:s'),
-            ]);
+                'first_detected' => $now,
+            ];
+            if ($hasRetryCount) {
+                $insertData['retry_count'] = 1;
+            }
+            if ($hasQuarantine) {
+                $insertData['is_quarantined'] = 0;
+            }
+            if ($hasLastError) {
+                $insertData['last_error_message'] = $reason;
+            }
+            if ($hasLastErrorAt) {
+                $insertData['last_error_at'] = $now;
+            }
+            $builder->insert($insertData);
         }
+    }
+
+    public function getQuarantinedTickers(string $source = 'AlphaVantage'): array
+    {
+        $table = 'bf_investment_tickers_nw';
+        if (! $this->hasColumn($table, 'is_quarantined')) {
+            return [];
+        }
+
+        $rows = $this->db->table($table)
+            ->select('symbol')
+            ->where('source', $source)
+            ->where('is_quarantined', 1)
+            ->get()
+            ->getResultArray();
+
+        return array_values(array_unique(array_map(static fn(array $row) => strtoupper((string) ($row['symbol'] ?? '')), $rows)));
     }
 
     public function updateAlertHistory($id, $data)

@@ -443,10 +443,18 @@ $subViewData                        = [
             return;
         }
         window.__mymiAlertsPageInitialized = true;
+        window.appUrls = Object.assign({
+            getLatestPrices: '<?= site_url('API/Alerts/getLatestPrices'); ?>',
+            getFilteredAlerts: '<?= site_url('API/Alerts/getFilteredAlerts'); ?>',
+            processTradeBatch: '<?= site_url('API/Alerts/processTradeBatch'); ?>',
+            fetchEmailAlerts: '<?= site_url('API/Alerts/fetchEmailAlerts'); ?>'
+        }, window.appUrls || {});
 
         let csrfName = $('meta[name="csrf-name"]').attr('content');
         let csrfHash = $('meta[name="csrf-hash"]').attr('content');
         const $fetchStatus = $('#fetch-status');
+        let latestPricesPoller = null;
+        let latestPricesRequestInFlight = false;
 
         function updateFetchStatus(message, level = 'warning') {
             if (!$fetchStatus.length) return;
@@ -468,9 +476,39 @@ $subViewData                        = [
             }
         }
 
+        function fetchLatestPrices() {
+            if (latestPricesRequestInFlight) return;
+            latestPricesRequestInFlight = true;
+
+            $.ajax({
+                url: window.appUrls.getLatestPrices,
+                method: 'GET',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            }).always(function () {
+                latestPricesRequestInFlight = false;
+            });
+        }
+
+        function startLatestPricesPolling() {
+            if (latestPricesPoller) {
+                return;
+            }
+
+            latestPricesPoller = setInterval(function () {
+                fetchLatestPrices();
+            }, 60000);
+        }
+
+        function stopLatestPricesPolling() {
+            if (latestPricesPoller) {
+                clearInterval(latestPricesPoller);
+                latestPricesPoller = null;
+            }
+        }
+
         function buildDataTableAjaxConfig(extraData) {
             return {
-                url: '<?= site_url("API/Alerts/getFilteredAlerts"); ?>',
+                url: window.appUrls.getFilteredAlerts,
                 type: 'POST',
                 data: function (d) {
                     d.q = $('input[name="q"]').val();
@@ -492,7 +530,7 @@ $subViewData                        = [
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     console.error('DataTables AJAX error.', {
-                        endpoint: '<?= site_url("API/Alerts/getFilteredAlerts"); ?>',
+                        endpoint: window.appUrls.getFilteredAlerts,
                         status: xhr?.status,
                         statusText: xhr?.statusText,
                         textStatus,
@@ -714,7 +752,7 @@ $subViewData                        = [
             if (!processing) return;
 
             $.ajax({
-                url: '<?= site_url("API/Alerts/processTradeBatch"); ?>',
+                url: window.appUrls.processTradeBatch,
                 type: 'POST',
                 data: {
                     offset: currentOffset,
@@ -747,7 +785,7 @@ $subViewData                        = [
         // Removed legacy direct row-manipulation polling in favor of DataTables reloads only.
 
         let columnsVisible = false;
-        $('#toggleColumnsBtn').on('click', function () {
+        $('#toggleColumnsBtn').off('click').on('click', function () {
             const columnNames = [
                 'delta_gain',
                 'target_price',
@@ -782,7 +820,7 @@ $subViewData                        = [
             });
         });
 
-        $('#timeFilter, #categoryFilter, #sourceFilter').on('change', function () {
+        $('#timeFilter, #categoryFilter, #sourceFilter').off('change').on('change', function () {
             safeReload('#confirmedTradeAlertTable');
             <?php if ($cuRole <= 3): ?>
             safeReload('#pendingTradeAlertTable');
@@ -790,7 +828,7 @@ $subViewData                        = [
             safeReload('#scannerSignalsTable');
         });
 
-        $('#create-new-trade-alert').on('click', function () {
+        $('#create-new-trade-alert').off('click').on('click', function () {
             $.ajax({
                 url: '<?= site_url("API/Alerts/createTradeAlert"); ?>',
                 type: 'POST',
@@ -811,7 +849,7 @@ $subViewData                        = [
             });
         });
 
-        $('#generateAdvisorMediaBtn').on('click', function () {
+        $('#generateAdvisorMediaBtn').off('click').on('click', function () {
             const userId = $(this).data('userid');
             const statusDiv = $('#advisorMediaStatus');
             statusDiv.text('Generating advisor media package...');
@@ -834,7 +872,7 @@ $subViewData                        = [
             });
         });
 
-        $(document).on('click', '.delete-alert', function () {
+        $(document).off('click', '.delete-alert').on('click', '.delete-alert', function () {
             const alertId = $(this).data('id');
             if (!confirm('Are you sure you want to hide this alert?')) return;
 
@@ -852,6 +890,18 @@ $subViewData                        = [
                     console.error(xhr?.responseText);
                 }
             });
+        });
+
+        startLatestPricesPolling();
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                stopLatestPricesPolling();
+                return;
+            }
+            startLatestPricesPolling();
+        });
+        $(window).off('beforeunload.mymiAlertsPolling').on('beforeunload.mymiAlertsPolling', function () {
+            stopLatestPricesPolling();
         });
     });
 })();

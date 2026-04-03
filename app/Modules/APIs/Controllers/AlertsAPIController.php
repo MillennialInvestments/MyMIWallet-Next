@@ -92,6 +92,25 @@ class AlertsAPIController extends BaseAPIController
 //         $this->MyMISEC = new MyMISEC(); // replaced by BaseController getter
     }
 
+    private function buildRequestId(): string
+    {
+        return substr(hash('sha256', microtime(true) . '|' . random_int(1000, 9999)), 0, 12);
+    }
+
+    private function logEndpointSummary(string $endpoint, string $requestId, float $startedAt, array $context = []): void
+    {
+        $durationMs = (int) round((microtime(true) - $startedAt) * 1000);
+        $userId = $this->auth?->id() ?? 'guest';
+
+        log_message('info', '[AlertsAPIController::{endpoint}] request_id={request_id} user={user} duration_ms={duration} context={context}', [
+            'endpoint'   => $endpoint,
+            'request_id' => $requestId,
+            'user'       => $userId,
+            'duration'   => $durationMs,
+            'context'    => json_encode($context, JSON_UNESCAPED_SLASHES),
+        ]);
+    }
+
     public function generateAlertCommentary($id = null)
     {
         if (! aiKimiEnabled()) {
@@ -419,17 +438,27 @@ class AlertsAPIController extends BaseAPIController
      */
     public function fetchEmailAlerts()
     {
+        $requestId = $this->buildRequestId();
+        $startedAt = microtime(true);
         if ($response = $this->enforceCronKey()) {
             return $response;
         }
-        log_message('info', '⚡ fetchEmailAlerts - Started.');
+        log_message('info', '[AlertsAPIController::fetchEmailAlerts] request_id={request_id} started', [
+            'request_id' => $requestId,
+        ]);
         try {
             $this->alertManager->fetchAndStoreAlertsEmails();
-            log_message('info', '✅ fetchEmailAlerts - Completed.');
-            return $this->respond(["status" => "success", "message" => "Emails fetched successfully."]);
+            $this->logEndpointSummary('fetchEmailAlerts', $requestId, $startedAt, ['status' => 'success']);
+            return $this->response->setJSON(["status" => "success", "message" => "Emails fetched successfully."]);
         } catch (\Exception $e) {
-            log_message('error', '❌ fetchEmailAlerts - Error: ' . $e->getMessage());
-            return $this->respond(["status" => "error", "message" => $e->getMessage()], 500);
+            log_message('error', '[AlertsAPIController::fetchEmailAlerts] {message} | file={file} line={line} request_id={request_id}', [
+                'message'    => $e->getMessage(),
+                'file'       => $e->getFile(),
+                'line'       => $e->getLine(),
+                'request_id' => $requestId,
+            ]);
+            $this->logEndpointSummary('fetchEmailAlerts', $requestId, $startedAt, ['status' => 'error', 'exception' => get_class($e)]);
+            return $this->response->setStatusCode(500)->setJSON(["status" => "error", "message" => $e->getMessage()]);
         }
     }   
 
@@ -1217,14 +1246,14 @@ class AlertsAPIController extends BaseAPIController
      */
     public function getFilteredAlerts()
     {
+        $requestId = $this->buildRequestId();
+        $startedAt = microtime(true);
         if (ob_get_level() > 0) {
             ob_clean();
         }
 
-        log_message('debug', '⚡ getFilteredAlerts - Request received.');
-
         $postData = $this->request->getPost();
-        $draw = (int) ($postData['draw'] ?? 1);
+        $draw = max(0, (int) ($postData['draw'] ?? 1));
 
         $emptyResponse = static function (int $drawValue, ?string $error = null): array {
             $payload = [
@@ -1240,7 +1269,9 @@ class AlertsAPIController extends BaseAPIController
         };
 
         if (!$this->alertsModel) {
-            log_message('error', '❌ getFilteredAlerts - AlertsModel not initialized.');
+            log_message('error', '[AlertsAPIController::getFilteredAlerts] AlertsModel not initialized | request_id={request_id}', [
+                'request_id' => $requestId,
+            ]);
             return $this->response->setJSON($emptyResponse($draw, 'Internal Server Error: AlertsModel not initialized'));
         }
 
@@ -1257,7 +1288,9 @@ class AlertsAPIController extends BaseAPIController
             $length = 100;
         }
 
-        $orderInput  = $postData['order'][0] ?? ['column' => 0, 'dir' => 'desc'];
+        $orderInput = (isset($postData['order']) && is_array($postData['order']) && isset($postData['order'][0]) && is_array($postData['order'][0]))
+            ? $postData['order'][0]
+            : ['column' => 0, 'dir' => 'desc'];
         $orderColIdx = (int) ($orderInput['column'] ?? 0);
         $orderDir    = strtolower((string) ($orderInput['dir'] ?? 'desc'));
         $orderDir    = in_array($orderDir, ['asc', 'desc'], true) ? $orderDir : 'desc';
@@ -1296,7 +1329,14 @@ class AlertsAPIController extends BaseAPIController
             16 => 'a.id',
             17 => 'a.id',
         ];
-        $orderBy = $columns[$orderColIdx] ?? 'a.created_on';
+        if (!array_key_exists($orderColIdx, $columns)) {
+            log_message('warning', '[AlertsAPIController::getFilteredAlerts] invalid order column index={index} request_id={request_id}', [
+                'index'      => $orderColIdx,
+                'request_id' => $requestId,
+            ]);
+            $orderColIdx = 1;
+        }
+        $orderBy = $columns[$orderColIdx];
 
         $opts = [
             'q'             => $q,
@@ -1311,14 +1351,25 @@ class AlertsAPIController extends BaseAPIController
 
         try {
             $result = $this->alertsModel->getFilteredTradeAlertsServerSide($dateRange, $opts);
-            return $this->response->setJSON([
+            $responsePayload = [
                 'draw'            => $draw,
                 'recordsTotal'    => (int) ($result['recordsTotal'] ?? 0),
                 'recordsFiltered' => (int) ($result['recordsFiltered'] ?? 0),
                 'data'            => array_values($result['data'] ?? []),
+            ];
+            $this->logEndpointSummary('getFilteredAlerts', $requestId, $startedAt, [
+                'rows'            => count($responsePayload['data']),
+                'recordsTotal'    => $responsePayload['recordsTotal'],
+                'recordsFiltered' => $responsePayload['recordsFiltered'],
             ]);
+            return $this->response->setJSON($responsePayload);
         } catch (\Throwable $e) {
-            log_message('error', '❌ getFilteredAlerts exception: ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine());
+            log_message('error', '[AlertsAPIController::getFilteredAlerts] {message} | file={file} line={line}', [
+                'message' => $e->getMessage(),
+                'file'    => $e->getFile(),
+                'line'    => $e->getLine(),
+            ]);
+            $this->logEndpointSummary('getFilteredAlerts', $requestId, $startedAt, ['status' => 'error', 'exception' => get_class($e)]);
             return $this->response->setJSON($emptyResponse($draw, 'Failed to load alert data.'));
         }
     }
@@ -1432,7 +1483,9 @@ class AlertsAPIController extends BaseAPIController
     // API/AlertsController.php
     public function getLatestPrices()
     {
-        log_message('debug', 'getLatestPrices - Starting price refresh');
+        $requestId = $this->buildRequestId();
+        $startedAt = microtime(true);
+        log_message('debug', '[AlertsAPIController::getLatestPrices] request_id={request_id} started', ['request_id' => $requestId]);
 
         helper('array');
         $alpha = $this->getMyMIAlphaVantage(); // Use AlphaVantage for market data (not MarketAux)
@@ -1446,13 +1499,20 @@ class AlertsAPIController extends BaseAPIController
         );
         if (empty($activeAlerts)) {
             log_message('warning', 'getLatestPrices - No active trade alerts found.');
-            return $this->fail('No active trade alerts to process.');
+            $this->logEndpointSummary('getLatestPrices', $requestId, $startedAt, ['status' => 'empty']);
+            return $this->response->setJSON(['status' => 'success', 'updated' => 0, 'data' => []]);
         }
 
         $symbols = array_unique(array_map('trim', array_column($activeAlerts, 'ticker')));
         $excludedSymbols = ['US', 'USD', 'BTC', 'ETH', ''];
         $symbols = array_values(array_filter($symbols, fn($s) => !in_array(strtoupper($s), $excludedSymbols)));
         $symbols = array_map('strtoupper', $symbols);
+        $quarantinedSymbols = method_exists($this->alertsModel, 'getQuarantinedTickers')
+            ? $this->alertsModel->getQuarantinedTickers('AlphaVantage')
+            : [];
+        if (!empty($quarantinedSymbols)) {
+            $symbols = array_values(array_diff($symbols, $quarantinedSymbols));
+        }
 
         $validUpdates = [];
         $skipped = [];
@@ -1521,6 +1581,7 @@ class AlertsAPIController extends BaseAPIController
                     'filtered' => $totalSymbols,
                     'invalid'  => $invalidPriceCount,
                     'missing'  => $missingAlertCount,
+                    'quarantined' => is_array($quarantinedSymbols) ? count($quarantinedSymbols) : 0,
                 ]
             );
             return $this->respond([
@@ -1548,6 +1609,13 @@ class AlertsAPIController extends BaseAPIController
                 'missing'  => $missingAlertCount,
             ]
         );
+        $this->logEndpointSummary('getLatestPrices', $requestId, $startedAt, [
+            'updated'       => $updateCount,
+            'loaded'        => is_array($activeAlerts) ? count($activeAlerts) : 0,
+            'filtered'      => is_array($symbols) ? count($symbols) : 0,
+            'invalid_price' => $invalidPriceCount,
+            'missing_alert' => $missingAlertCount,
+        ]);
 
         return $this->respond([
             'status'  => 'success',
@@ -2196,16 +2264,20 @@ class AlertsAPIController extends BaseAPIController
     
     public function processTradeBatch()
     {
+        $requestId = $this->buildRequestId();
+        $startedAt = microtime(true);
         $offset = (int) $this->request->getPost('offset');
         $limit = (int) $this->request->getPost('batchSize');
 
         $batch = $this->alertsModel->getBatchTradeAlerts($offset, $limit);
 
         if (empty($batch)) {
+            $this->logEndpointSummary('processTradeBatch', $requestId, $startedAt, ['batch' => 0, 'offset' => $offset, 'limit' => $limit]);
             return Http::jsonSuccess(['status' => 'done', 'reachedEnd' => true]);
         }
 
         $this->alertsModel->fetchBatchMarketData($batch);
+        $this->logEndpointSummary('processTradeBatch', $requestId, $startedAt, ['batch' => count($batch), 'offset' => $offset, 'limit' => $limit]);
         return Http::jsonSuccess(['status' => 'processed', 'reachedEnd' => false]);
     }
     

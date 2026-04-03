@@ -34,10 +34,25 @@ $routes->setTranslateURIDashes(false);
 $routes->set404Override(function () {
     $request = service('request');
     $path = '/' . ltrim((string) $request->getUri()->getPath(), '/');
+    $query = (string) ($request->getUri()->getQuery() ?? '');
+    $lowerPath = strtolower($path);
+    $lowerQuery = strtolower($query);
+
+    $isWpProbe = str_contains($lowerPath, 'wp-json')
+        || str_contains($lowerPath, '/wp/')
+        || str_contains($lowerQuery, 'rest_route=/wp/v2/');
+
+    if ($isWpProbe) {
+        return service('response')
+            ->setStatusCode(410)
+            ->setContentType('text/plain')
+            ->setBody('Gone');
+    }
 
     log_message('error', '[404_ROUTE]', [
         'uri' => current_url(),
         'path' => $path,
+        'query' => $query,
         'referrer' => $_SERVER['HTTP_REFERER'] ?? null,
         'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
     ]);
