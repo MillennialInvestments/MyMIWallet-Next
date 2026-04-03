@@ -1,0 +1,1072 @@
+{
+    "command": "db:drift",
+    "timestamp": "20260402-095240",
+    "dry_run": false,
+    "emit": "docs",
+    "error": null,
+    "table_count": 354,
+    "tables": [
+        {
+            "Tables_in_mymiwallet": "aiops_email_queue"
+        },
+        {
+            "Tables_in_mymiwallet": "aiops_generated_commands"
+        },
+        {
+            "Tables_in_mymiwallet": "aiops_review_ledger"
+        },
+        {
+            "Tables_in_mymiwallet": "aiops_scan_state"
+        },
+        {
+            "Tables_in_mymiwallet": "aiops_work_queue"
+        },
+        {
+            "Tables_in_mymiwallet": "auth_activation_attempts"
+        },
+        {
+            "Tables_in_mymiwallet": "auth_errors"
+        },
+        {
+            "Tables_in_mymiwallet": "auth_groups"
+        },
+        {
+            "Tables_in_mymiwallet": "auth_groups_permissions"
+        },
+        {
+            "Tables_in_mymiwallet": "auth_groups_users"
+        },
+        {
+            "Tables_in_mymiwallet": "auth_identities"
+        },
+        {
+            "Tables_in_mymiwallet": "auth_logins"
+        },
+        {
+            "Tables_in_mymiwallet": "auth_permissions"
+        },
+        {
+            "Tables_in_mymiwallet": "auth_permissions_users"
+        },
+        {
+            "Tables_in_mymiwallet": "auth_remember_tokens"
+        },
+        {
+            "Tables_in_mymiwallet": "auth_reset_attempts"
+        },
+        {
+            "Tables_in_mymiwallet": "auth_token_logins"
+        },
+        {
+            "Tables_in_mymiwallet": "auth_tokens"
+        },
+        {
+            "Tables_in_mymiwallet": "auth_users_permissions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_act_logger"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_ai_ops_caps"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_ai_ops_events"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_ai_ops_runs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_ai_ops_usage"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_ai_usage"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_aiops_branch_locks"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_aiops_chat_admin"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_aiops_dependencies"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_aiops_email_processed"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_aiops_form_tests"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_aiops_ingest_runs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_aiops_instructions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_aiops_manual_todos"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_aiops_query_audit"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_aiops_registry"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_aiops_runs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_aiops_schema_cache"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_aiops_services"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_aiops_settings"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_aiops_task_runs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_aiops_tasks"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_aiops_workflow_usage"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_api_audit_findings"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_api_audit_runs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_api_endpoint_rules"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_api_endpoints"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_auth_groups_users"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_auth_health_runs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_auth_identities"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_auth_logins"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_auth_permissions_users"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_auth_registration_attempts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_auth_remember_tokens"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_auth_token_logins"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_chat_archives"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_chat_steps"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_chat_tool_runs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_coin_redistribution_items"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_company_logos"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_compliance_audits"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_content_ideas"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_content_posts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_content_scanner_ingest"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_content_scanner_rows"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_discord_ai_messages"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_discord_ai_notes"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_discord_ai_sessions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_discord_channels"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_discord_events_log"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_discord_links"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_discord_logs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_discord_message_history"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_discord_policies"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_discord_queue"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_discord_subscriptions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_discord_templates"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_economic_data_points"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_economic_indicators"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_email_bounces"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_email_campaigns"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_email_distribution_lists"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_email_drip_campaign_steps"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_email_drip_campaigns"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_email_drip_email_tracking"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_email_list_members"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_email_outbox"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_email_user_drip_progress"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_emails_campaigns"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_error_alert_events"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_error_alert_rules"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_error_consolidated_logs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_error_learning_runs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_error_logs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_error_patterns"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_error_processing_checkpoint"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_exchanges"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_exchanges_assets"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_exchanges_assets_ledger"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_exchanges_coin_addresses"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_exchanges_listing_request"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_exchanges_orders"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_exchanges_transactions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_financial_goals"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_frontend_incidents"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_ftp_file_data"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_health_registry"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_health_run_results"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_health_runs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_import_files"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_advisor_log"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_alert_enrichment"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_alert_history"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_calendar"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_economic_data"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_filings"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_forecast_accuracy"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_forecast_history"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_forecast_jobs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_fundamentals"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_price_forecasts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_scanner_lineage"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_scraper"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_signal_files"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_signals"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_stock_listing"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_strategies"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_technical_snapshots"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_ticker_daily_counts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_tickers"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_tickers_nw"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_trade_alert_changes"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_trade_alert_enrichment"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investment_trade_alerts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_investments_news"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_jobs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_mail_queue"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_management_positions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_management_tasks"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_ab_tests"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_ab_variants"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_analysis"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_audience_selection"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_best_times"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_blog_posts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_buffer"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_buffer_posts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_calendar"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_campaigns"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_compliance_rules"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_content_enrichment_cache"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_content_fingerprints"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_content_versions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_email_open_tracking"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_email_queue"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_email_templates"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_engagements"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_events"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_generated_content"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_ideas"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_job_runs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_media_assets"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_news_content"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_newsletters"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_page_seo"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_pages_missing"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_platform_rules"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_platforms"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_post_queue"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_promotions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_publish_queue"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_schedule"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_schedule_content"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_scraper"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_search_api_log"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_search_engine_usage"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_search_enrichment_log"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_social_templates"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_suggestions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_taxonomy"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_temp_scraper"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_video_assets"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_video_content"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_video_templates"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_video_versions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_marketing_visuals"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_mdit_deposits"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_mdit_disclosures_acceptance"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_mdit_investor_profiles"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_mdit_nav_snapshots"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_mdit_redemptions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_mdit_token_ledger"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_mdit_wallets"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_mdit_webhook_events"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_migrations"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_mymicoin_overview"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_mymigold_overview"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_notification_outbox"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_ollama_embeddings"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_ollama_queue"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_ollama_runs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_ollama_sessions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_ops_command_inbox"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_ops_job_runs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_ops_jobs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_ops_queue"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_ops_schema_audit"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_ops_spark_health"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_predictions_liquidity"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_predictions_markets"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_predictions_options"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_predictions_orders"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_predictions_payouts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_predictions_positions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_predictions_settlements"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_predictions_trades"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_project_comments"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_project_commitments"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_project_payouts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_project_task_registry"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_project_tokens"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_auctions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_coin_redistributions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_commitments"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_distributions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_fund_audit_logs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_fund_capital_flows"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_fund_distributions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_fund_holders"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_fund_investor_profiles"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_fund_nav_history"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_fund_transactions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_insurance_reserve"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_investments"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_providers"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_real_estate"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_revenue"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_revenue_distributions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_revenue_distributions_items"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_revenue_events"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_projects_token_allocations"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_public_pages_catalog"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_public_pages_drafts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_public_pages_published"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_public_pages_query_presets"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_public_pages_runs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_public_pages_sources"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_redirect_links"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_research_insights"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_research_items"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_research_metrics"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_research_runs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_retirement_goals"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_route_error_heatmap"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_runtime_config"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_scanner_jobs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_scanner_results"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_scanner_symbol_universe"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_scanner_taxonomy"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_sec_filings"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_settings"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_site_settings_overrides"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_social_communities"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_social_distribution_queue"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_social_generated_posts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_social_platforms"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_social_post_templates"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_squeeze_scorecards"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_stock_fundamentals"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_strategy_progress"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_support_kb_articles"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_support_requests"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_support_ticket_events"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_support_tickets"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_tax_audit_log"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_tax_jurisdictions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_tax_rates"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_tax_return_lines"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_tax_return_templates"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_trade_alert_scanner_meta"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_trade_plans"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_user_discord_rewards"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_user_employment"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_user_events"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_user_ip_history"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_user_onboarding"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_user_profiles"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_user_tax_return_jurisdictions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_user_tax_return_values"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_user_tax_returns"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_user_tokens"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_user_trading_accounts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_user_trading_profile"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_2fa"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_account_ledger"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_alerts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_anonymous"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_audit_log"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_bank_accounts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_budgeting"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_budgeting_forecast"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_budgeting_goals"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_certified_advisors"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_coin_purchases"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_comments"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_credit_accounts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_crypto_accounts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_debt_accounts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_financial_institutions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_goal_checklist"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_goal_completions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_invest_accounts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_link_clicks"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_loan_accounts"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_memberships"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_notification_subscriptions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_onboarding"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_post_likes"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_promotional_messages"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_promotions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_rate_limits"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_referral_program"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_referrals"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_retirement"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_retirement_goals"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_retirement_plans"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_retirement_progress_logs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_services"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_services_purchases"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_sessions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_subscribers"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_subscriptions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_trades"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_trades_configs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_trades_logs"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_wallet"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_wallet_transactions"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_users_watchlist"
+        },
+        {
+            "Tables_in_mymiwallet": "bf_weekly_stream_watchlist"
+        },
+        {
+            "Tables_in_mymiwallet": "chat_usage"
+        },
+        {
+            "Tables_in_mymiwallet": "error_heatmap"
+        },
+        {
+            "Tables_in_mymiwallet": "estimate_request_photos"
+        },
+        {
+            "Tables_in_mymiwallet": "migrations"
+        },
+        {
+            "Tables_in_mymiwallet": "mymiwallet.bf_project_commitments"
+        },
+        {
+            "Tables_in_mymiwallet": "ops_projects"
+        },
+        {
+            "Tables_in_mymiwallet": "ops_subprojects"
+        },
+        {
+            "Tables_in_mymiwallet": "ops_task_events"
+        },
+        {
+            "Tables_in_mymiwallet": "ops_tasks"
+        },
+        {
+            "Tables_in_mymiwallet": "quick_links"
+        },
+        {
+            "Tables_in_mymiwallet": "settings"
+        },
+        {
+            "Tables_in_mymiwallet": "system_errors"
+        },
+        {
+            "Tables_in_mymiwallet": "users"
+        },
+        {
+            "Tables_in_mymiwallet": "vw_project_tasks_next"
+        }
+    ]
+}

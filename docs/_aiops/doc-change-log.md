@@ -1,10 +1,10 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-03-31T07:00:02Z
+> Run: 2026-04-02T07:00:01Z
 
 - docs/APIs/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/APIs/_inventory_controllers.md
   - Last updated: 2026-02-28
   - Change type: unchanged
@@ -40,7 +40,7 @@
   - Change type: unchanged
 - docs/Github/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/Github/temporary/gtm_gap-001/validation.md
   - Last updated: 2026-02-28
   - Change type: unchanged
@@ -58,7 +58,7 @@
   - Change type: unchanged
 - docs/Kimi/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/Kimi/audit-2025-12-11.md
   - Last updated: 2025-12-11
   - Change type: unchanged
@@ -73,7 +73,7 @@
   - Change type: unchanged
 - docs/_audit/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/_audit/ci4-logger-audit-2026-02-18.md
   - Last updated: 2026-02-18
   - Change type: unchanged
@@ -82,10 +82,10 @@
   - Change type: unchanged
 - docs/_audit_report.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/_gap-tracker/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/_infrastructure/Lists/Commands.md
   - Last updated: 2026-03-08
   - Change type: unchanged
@@ -118,13 +118,13 @@
   - Change type: unchanged
 - docs/_infrastructure/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/_inventory.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/_ops/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/_ops/filesystem-lint-summary.md
   - Last updated: 2026-02-10
   - Change type: unchanged
@@ -136,7 +136,7 @@
   - Change type: unchanged
 - docs/_repo/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/_repo/class_integrity_report.md
   - Last updated: 2026-03-07
   - Change type: unchanged
@@ -148,7 +148,7 @@
   - Change type: unchanged
 - docs/_support/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/_support/aiops-init.md
   - Last updated: 2026-02-20
   - Change type: unchanged
@@ -316,7 +316,7 @@
   - Change type: unchanged
 - docs/adr/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/adr/_index.md
   - Last updated: 2025-11-08
   - Change type: unchanged
@@ -325,7 +325,7 @@
   - Change type: unchanged
 - docs/ai-ops/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/ai-ops/api-automations.md
   - Last updated: 2026-01-01
   - Change type: unchanged
@@ -333,7 +333,7 @@
   - Last updated: 2026-01-01
   - Change type: unchanged
 - docs/ai-ops/cron-jobs.md
-  - Last updated: 2026-01-01
+  - Last updated: 2026-03-31
   - Change type: unchanged
 - docs/ai-ops/dashboard.md
   - Last updated: 2026-01-02
@@ -343,7 +343,7 @@
   - Change type: unchanged
 - docs/ai/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/ai/codex_prompts/spark_rules.md
   - Last updated: 2026-01-30
   - Change type: unchanged
@@ -358,7 +358,7 @@
   - Change type: unchanged
 - docs/aiops/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/aiops/api-audit.md
   - Last updated: 2026-02-01
   - Change type: unchanged
@@ -688,22 +688,22 @@
   - Change type: unchanged
 - docs/alerts/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/alerts/alerts_marketing_pipline.md
   - Last updated: 2025-11-22
   - Change type: unchanged
 - docs/alerts/thinkorswim_broker_ingestion.md
-  - Last updated: 2026-01-17
-  - Change type: unchanged
+  - Last updated: 2026-04-02
+  - Change type: modified
 - docs/api/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/api/internal-orchestration.md
   - Last updated: 2026-02-09
   - Change type: unchanged
 - docs/architecture/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/architecture/marketing_module_lifecycle.md
   - Last updated: 2026-01-21
   - Change type: unchanged
@@ -712,7 +712,7 @@
   - Change type: unchanged
 - docs/auctions/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/auctions/_index.md
   - Last updated: 2025-11-08
   - Change type: unchanged
@@ -721,7 +721,7 @@
   - Change type: unchanged
 - docs/audit/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/audit/alerts_audit_last_run.md
   - Last updated: 2026-02-28
   - Change type: unchanged
@@ -733,7 +733,7 @@
   - Change type: unchanged
 - docs/audits/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/audits/ajax-response-audit.md
   - Last updated: 2026-03-18
   - Change type: unchanged
@@ -749,6 +749,9 @@
 - docs/audits/model_limit_patch_report_20260218.md
   - Last updated: 2026-02-18
   - Change type: unchanged
+- docs/audits/registration-launch-readiness-audit.md
+  - Last updated: 2026-03-31
+  - Change type: unchanged
 - docs/audits/route-security-audit.md
   - Last updated: 2026-03-18
   - Change type: unchanged
@@ -760,9 +763,15 @@
   - Change type: unchanged
 - docs/auth/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/auth/auth_smoke.md
   - Last updated: 2026-01-21
+  - Change type: unchanged
+- docs/auth/discord-registration-flow.md
+  - Last updated: 2026-03-31
+  - Change type: unchanged
+- docs/auth/dynamic-registration-layout.md
+  - Last updated: 2026-03-31
   - Change type: unchanged
 - docs/auth/onboarding_first_login_modal.md
   - Last updated: 2026-01-17
@@ -775,7 +784,7 @@
   - Change type: unchanged
 - docs/automation/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/automation/ai_code_review.md
   - Last updated: 2026-01-25
   - Change type: unchanged
@@ -793,7 +802,7 @@
   - Change type: unchanged
 - docs/budget/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/budget/UI-Suggestions.md
   - Last updated: 2025-11-08
   - Change type: unchanged
@@ -805,7 +814,7 @@
   - Change type: unchanged
 - docs/budgeting/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/budgeting/_index.md
   - Last updated: 2025-11-08
   - Change type: unchanged
@@ -814,7 +823,7 @@
   - Change type: unchanged
 - docs/categorized/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/chat-auth-flow.md
   - Last updated: 2026-01-04
   - Change type: unchanged
@@ -838,13 +847,13 @@
   - Change type: unchanged
 - docs/chat/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/chat/TROUBLESHOOTING.md
   - Last updated: 2026-01-05
   - Change type: unchanged
 - docs/chatgpt/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/chatgpt/aiops/MyMI_Codex_Executive/AIOPS_Worker_and_Spark_Integration.md
   - Last updated: 2026-02-01
   - Change type: unchanged
@@ -934,13 +943,13 @@
   - Change type: unchanged
 - docs/ci/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/ci/psr4_ci_gate.md
   - Last updated: 2026-01-24
   - Change type: unchanged
 - docs/ci4/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/ci4/constructor-audit.md
   - Last updated: 2026-01-23
   - Change type: unchanged
@@ -967,7 +976,7 @@
   - Change type: unchanged
 - docs/codex/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/codex/reviews/Spark-Analysis-2026-02-01.md
   - Last updated: 2026-02-15
   - Change type: unchanged
@@ -997,7 +1006,7 @@
   - Change type: unchanged
 - docs/communities/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/communities/discord.md
   - Last updated: 2025-12-27
   - Change type: unchanged
@@ -1030,7 +1039,7 @@
   - Change type: unchanged
 - docs/content_engine/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/content_engine/api_endpoints.md
   - Last updated: 2025-12-16
   - Change type: unchanged
@@ -1060,7 +1069,7 @@
   - Change type: unchanged
 - docs/content_hub_inventory/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/content_hub_inventory/content_hub_inventory.md
   - Last updated: 2025-11-17
   - Change type: unchanged
@@ -1105,7 +1114,7 @@
   - Change type: unchanged
 - docs/controllers/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/controllers/StockController.md
   - Last updated: 2026-03-08
   - Change type: unchanged
@@ -1117,7 +1126,7 @@
   - Change type: unchanged
 - docs/cron/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/cron/jobs/auth_funnel_check.md
   - Last updated: 2026-01-21
   - Change type: unchanged
@@ -1147,7 +1156,7 @@
   - Change type: unchanged
 - docs/dashboard/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/dashboard/autoload_health_widget.md
   - Last updated: 2026-01-24
   - Change type: unchanged
@@ -1168,7 +1177,7 @@
   - Change type: unchanged
 - docs/dashboards/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/dashboards/WalletsController.md
   - Last updated: 2026-01-25
   - Change type: unchanged
@@ -1180,13 +1189,13 @@
   - Change type: unchanged
 - docs/deploy/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/deploy/quality_gates.md
   - Last updated: 2026-01-21
   - Change type: unchanged
 - docs/dev/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/dev/logging.md
   - Last updated: 2026-02-10
   - Change type: unchanged
@@ -1195,7 +1204,7 @@
   - Change type: unchanged
 - docs/discord/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/discord/_index.md
   - Last updated: 2025-12-05
   - Change type: unchanged
@@ -1270,10 +1279,10 @@
   - Change type: unchanged
 - docs/docs-system/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/email/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/email/deliverability.md
   - Last updated: 2026-01-21
   - Change type: unchanged
@@ -1282,7 +1291,7 @@
   - Change type: unchanged
 - docs/errors/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/errors/marketingcontroller_mymimarketing_undefined.md
   - Last updated: 2026-01-21
   - Change type: unchanged
@@ -1324,7 +1333,7 @@
   - Change type: unchanged
 - docs/forecasting/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/forecasting/advanced_forecasting_overview.md
   - Last updated: 2026-01-25
   - Change type: unchanged
@@ -1339,7 +1348,7 @@
   - Change type: unchanged
 - docs/frontend/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/frontend/batches/batch-01-findings.md
   - Last updated: 2026-03-08
   - Change type: unchanged
@@ -1354,7 +1363,7 @@
   - Change type: unchanged
 - docs/functional_inventory/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/functional_inventory/docs_to_code_map.md
   - Last updated: 2026-02-15
   - Change type: unchanged
@@ -1363,7 +1372,7 @@
   - Change type: unchanged
 - docs/funnels/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/funnels/community_funnel.md
   - Last updated: 2025-12-27
   - Change type: unchanged
@@ -1375,7 +1384,7 @@
   - Change type: unchanged
 - docs/gap-audit/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/gap-audit/codex_queue.md
   - Last updated: 2026-01-04
   - Change type: unchanged
@@ -1390,7 +1399,7 @@
   - Change type: unchanged
 - docs/gap_tracker/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/gap_tracker/items/GAP-AI-001.md
   - Last updated: 2026-01-02
   - Change type: unchanged
@@ -1414,7 +1423,7 @@
   - Change type: unchanged
 - docs/go-live/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/go-live/go_live_checklist.md
   - Last updated: 2025-12-27
   - Change type: unchanged
@@ -1426,7 +1435,7 @@
   - Change type: unchanged
 - docs/health/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/health/api_inventory.md
   - Last updated: 2026-01-17
   - Change type: unchanged
@@ -1480,7 +1489,7 @@
   - Change type: unchanged
 - docs/how-it-works/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/how-it-works/financial-forecasting.md
   - Last updated: 2026-03-08
   - Change type: unchanged
@@ -1504,13 +1513,13 @@
   - Change type: unchanged
 - docs/hygiene/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/hygiene/weekly_repo_hygiene.md
   - Last updated: 2026-01-24
   - Change type: unchanged
 - docs/indicators/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/indicators/_template.md
   - Last updated: 2025-12-27
   - Change type: unchanged
@@ -1519,13 +1528,13 @@
   - Change type: unchanged
 - docs/integrations/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/integrations/technology_investor_integrations.md
   - Last updated: 2025-12-31
   - Change type: unchanged
 - docs/inventory/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/inventory/docs_gaps.md
   - Last updated: 2026-01-04
   - Change type: unchanged
@@ -1534,7 +1543,7 @@
   - Change type: unchanged
 - docs/launch/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/launch/aiops_ollama_dependency_audit.md
   - Last updated: 2026-02-28
   - Change type: unchanged
@@ -1600,7 +1609,7 @@
   - Change type: unchanged
 - docs/legal/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/legal/crypto_customer_agreement/README.md
   - Last updated: 2025-12-27
   - Change type: unchanged
@@ -1663,7 +1672,7 @@
   - Change type: unchanged
 - docs/log_fixes/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/log_fixes/log_repair_2026_03_08.md
   - Last updated: 2026-03-09
   - Change type: unchanged
@@ -1672,7 +1681,7 @@
   - Change type: unchanged
 - docs/logs/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/logs/_index.md
   - Last updated: 2025-11-08
   - Change type: unchanged
@@ -1699,7 +1708,7 @@
   - Change type: unchanged
 - docs/management/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/management/Recommended_New_Commands.md
   - Last updated: 2026-01-30
   - Change type: unchanged
@@ -1759,7 +1768,7 @@
   - Change type: unchanged
 - docs/marketing/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/marketing/_assets/README.md
   - Last updated: 2025-11-08
   - Change type: unchanged
@@ -1783,13 +1792,13 @@
   - Change type: unchanged
 - docs/mdit/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/mdit/phase1_implementation_notes.md
   - Last updated: 2026-01-30
   - Change type: unchanged
 - docs/mobile/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/mobile/replit/00_overview.md
   - Last updated: 2026-01-04
   - Change type: unchanged
@@ -1828,7 +1837,7 @@
   - Change type: unchanged
 - docs/models/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/modules/AIOps/README.md
   - Last updated: 2026-02-09
   - Change type: unchanged
@@ -1843,13 +1852,13 @@
   - Change type: unchanged
 - docs/modules/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/mysql.md
   - Last updated: 2026-02-15
   - Change type: unchanged
 - docs/mysql/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/mysql/adjustments/adjustment_log_2026-01-21.md
   - Last updated: 2026-01-23
   - Change type: unchanged
@@ -3154,13 +3163,13 @@
   - Change type: unchanged
 - docs/n8n/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/next/Next-Steps.md
   - Last updated: 2026-01-29
   - Change type: unchanged
 - docs/next/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/next/bf_aiops_task_runs/README.md
   - Last updated: 2026-01-31
   - Change type: unchanged
@@ -3169,7 +3178,7 @@
   - Change type: unchanged
 - docs/nginx/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/nginx/_index.md
   - Last updated: 2025-11-08
   - Change type: unchanged
@@ -3193,12 +3202,15 @@
   - Change type: unchanged
 - docs/notes/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/onboarding/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/onboarding/budget_investments_quick_setup.md
   - Last updated: 2026-01-17
+  - Change type: unchanged
+- docs/onboarding_source_aware_welcome.md
+  - Last updated: 2026-03-31
   - Change type: unchanged
 - docs/operations/01-foundation.md
   - Last updated: 2025-11-08
@@ -3235,7 +3247,7 @@
   - Change type: unchanged
 - docs/operations/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/operations/_index.md
   - Last updated: 2025-11-08
   - Change type: unchanged
@@ -3256,7 +3268,7 @@
   - Change type: unchanged
 - docs/ops/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/ops/_index.md
   - Last updated: 2025-11-08
   - Change type: unchanged
@@ -3466,7 +3478,7 @@
   - Change type: unchanged
 - docs/optimize/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/optimize/psr4_audit_2026-01-24.md
   - Last updated: 2026-01-24
   - Change type: unchanged
@@ -3487,16 +3499,28 @@
   - Change type: unchanged
 - docs/page_seo/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/page_seo/page_seo_inventory.md
   - Last updated: 2025-11-28
   - Change type: unchanged
 - docs/php-errors-playbook.md
   - Last updated: 2026-02-15
   - Change type: unchanged
+- docs/platform/control-plane.md
+  - Last updated: 2026-03-31
+  - Change type: unchanged
+- docs/platform/platform-cron.md
+  - Last updated: 2026-03-31
+  - Change type: unchanged
+- docs/platform/platform-profiles.md
+  - Last updated: 2026-03-31
+  - Change type: unchanged
+- docs/platform/platform-run.md
+  - Last updated: 2026-03-31
+  - Change type: unchanged
 - docs/platform_formats/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/platform_formats/discord.md
   - Last updated: 2025-12-27
   - Change type: unchanged
@@ -3523,7 +3547,7 @@
   - Change type: unchanged
 - docs/predictions/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/predictions/_index.md
   - Last updated: 2025-11-08
   - Change type: unchanged
@@ -3535,13 +3559,13 @@
   - Change type: unchanged
 - docs/product/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/psr4/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/refactor/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/refactor/controller_class_conflicts.md
   - Last updated: 2026-03-08
   - Change type: unchanged
@@ -3595,6 +3619,12 @@
   - Change type: unchanged
 - docs/reports/README.md
   - Last updated: 2026-03-30
+  - Change type: unchanged
+- docs/reports/autofix_report.md
+  - Last updated: 2026-03-31
+  - Change type: unchanged
+- docs/reports/automation_health.md
+  - Last updated: 2026-04-01
   - Change type: new
 - docs/reports/code_health.md
   - Last updated: 2026-01-04
@@ -3616,13 +3646,13 @@
   - Change type: unchanged
 - docs/resolutions/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/resolutions/_index.md
   - Last updated: 2026-02-07
   - Change type: unchanged
 - docs/revenue_streams/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/revenue_streams/revenue_streams_by_module.md
   - Last updated: 2025-12-27
   - Change type: unchanged
@@ -3637,13 +3667,13 @@
   - Change type: unchanged
 - docs/reviews/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/reviews/ci4-config-service-audit.md
   - Last updated: 2026-02-15
   - Change type: unchanged
 - docs/routes/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/routes/controller_method_inventory.md
   - Last updated: 2025-12-16
   - Change type: unchanged
@@ -3667,10 +3697,10 @@
   - Change type: unchanged
 - docs/scrapers/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/search/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/search/_index.md
   - Last updated: 2025-11-08
   - Change type: unchanged
@@ -3685,7 +3715,7 @@
   - Change type: unchanged
 - docs/security/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/security/_index.md
   - Last updated: 2025-11-08
   - Change type: unchanged
@@ -3709,7 +3739,7 @@
   - Change type: unchanged
 - docs/server/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/server/bootstrap-checklist.md
   - Last updated: 2026-01-25
   - Change type: unchanged
@@ -3724,13 +3754,13 @@
   - Change type: unchanged
 - docs/services/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/spark/COMMAND_AUDIT.md
   - Last updated: 2026-03-08
   - Change type: unchanged
 - docs/spark/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/spark/aiops.md
   - Last updated: 2026-03-08
   - Change type: unchanged
@@ -3898,13 +3928,13 @@
   - Change type: unchanged
 - docs/sql/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/sql/mysql.md
   - Last updated: 2025-12-21
   - Change type: unchanged
 - docs/standards/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/standards/aiops.md
   - Last updated: 2026-01-31
   - Change type: unchanged
@@ -3928,22 +3958,22 @@
   - Change type: unchanged
 - docs/syndication_inventory/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/syndication_inventory/syndication_inventory.md
   - Last updated: 2025-11-17
   - Change type: unchanged
 - docs/tasks/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/tasks/_index.md
   - Last updated: 2025-11-08
   - Change type: unchanged
 - docs/tax/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/testing/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/testing/auth-tests.md
   - Last updated: 2026-02-10
   - Change type: unchanged
@@ -3952,7 +3982,7 @@
   - Change type: unchanged
 - docs/trading/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/trading/codeigniter4/README.md
   - Last updated: 2026-02-22
   - Change type: unchanged
@@ -4018,13 +4048,13 @@
   - Change type: unchanged
 - docs/triage/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/triage/rules.md
   - Last updated: 2026-01-25
   - Change type: unchanged
 - docs/troubleshooting/README.md
   - Last updated: 2026-03-30
-  - Change type: modified
+  - Change type: unchanged
 - docs/troubleshooting/checklists/00_master_checklist.md
   - Last updated: 2025-12-27
   - Change type: unchanged
@@ -4063,7 +4093,7 @@
   - Change type: unchanged
 - docs/ui/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/ui/how_it_works_expansion_workflow.md
   - Last updated: 2026-03-08
   - Change type: unchanged
@@ -4081,7 +4111,7 @@
   - Change type: unchanged
 - docs/user-guides/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/user-guides/ci4/01_Overview.md
   - Last updated: 2025-12-07
   - Change type: unchanged
@@ -4123,7 +4153,7 @@
   - Change type: unchanged
 - docs/wallets/README.md
   - Last updated: 2026-03-30
-  - Change type: new
+  - Change type: unchanged
 - docs/wallets/_index.md
   - Last updated: 2025-11-08
   - Change type: unchanged

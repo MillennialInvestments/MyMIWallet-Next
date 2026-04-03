@@ -1,11 +1,137 @@
-# Error Report
+# Error Summary
 
-Generated: 2026-03-31 23:30:32
+## Executive Summary
+- Date: 2026-04-01
+- Total errors found today: 114
+- Total new errors today: 114
 
-## New Errors
+## New Errors Today
+- [aiops-docs] - Errors: 0 (n/a:n/a)
+- [aiops-docs] - Errors: 9561 (n/a:n/a)
+- [aiops-docs] | Subsystem | Files | Lines | Errors | Warnings | Latest Timestamp | (n/a:n/a)
+- [ollama] - error: `#6 /workspace/MyMIWallet-Next/app/Commands/Ollama/Logs/Export.php(33): CodeIgniter\BaseModel->findAll()` (app/Commands/Ollama/Logs/Export.php:33)
+- [ollama] - error: `#7 /workspace/MyMIWallet-Next/vendor/codeigniter4/framework/system/CLI/Commands.php(74): App\Commands\Ollama\Logs\Export->run()` (n/a:n/a)
+- [ollama] - error: `#5 /workspace/MyMIWallet-Next/app/Commands/Ollama/Logs/Export.php(33): CodeIgniter\BaseModel->findAll()` (app/Commands/Ollama/Logs/Export.php:33)
+- [ollama] - error: `#6 /workspace/MyMIWallet-Next/vendor/codeigniter4/framework/system/CLI/Commands.php(74): App\Commands\Ollama\Logs\Export->run()` (n/a:n/a)
+- [ollama] - error: `#6 /workspace/MyMIWallet-Next/app/Commands/Ollama/Logs/Export.php(34): CodeIgniter\BaseModel->findAll()` (app/Commands/Ollama/Logs/Export.php:34)
+- [ollama] - error: `#5 /workspace/MyMIWallet-Next/app/Commands/Ollama/Logs/Export.php(34): CodeIgniter\BaseModel->findAll()` (app/Commands/Ollama/Logs/Export.php:34)
+- [ci4] [Error] (n/a:n/a)
+- [ci4] 1 SYSTEMPATH/CodeIgniter.php(1001): CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(null) (n/a:n/a)
+- [ci4] 2 SYSTEMPATH/CodeIgniter.php(346): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException)) (n/a:n/a)
+- [ci4] 5 FCPATH/index.php(114): CodeIgniter\Boot::bootWeb(Object(Config\Paths)) error=Database connection unavailable (n/a:n/a)
+- [ci4] 7 ROOTPATH/spark(99): CodeIgniter\Boot::bootSpark(Object(Config\Paths)) error=Database connection unavailable (n/a:n/a)
+- [ci4] 14 ROOTPATH/spark(99): CodeIgniter\Boot::bootSpark(Object(Config\Paths)) error=Database connection unavailable (n/a:n/a)
+- [ci4] 1 SYSTEMPATH/Filters/Filters.php(590): CodeIgniter\Filters\Exceptions\FilterException::forNoAlias('none') (n/a:n/a)
+- [ci4] 10 ROOTPATH/spark(99): CodeIgniter\Boot::bootSpark(Object(Config\Paths)) error=Database connection unavailable (n/a:n/a)
+- [ci4] LEVEL: ERROR (NEW) (n/a:n/a)
+- [ci4] ERROR --> [ERROR_PAGE] event=error_404 status=404 message=Page not found. (n/a:n/a)
+- [ci4] LEVEL: ERROR (n/a:n/a)
+- [ci4] ERROR --> Registration failed: {"username":"The username field is not in the correct format.","email":"The email field must contain a unique value."} (n/a:n/a)
+- [ci4] LEVEL: CRITICAL (n/a:n/a)
+- [ci4] CRITICAL --> CodeIgniter\Exceptions\PageNotFoundException: Page Not Found (n/a:n/a)
+- [ci4] CRITICAL --> [EXCEPTION] Page Not Found File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php Line=1001 (n/a:n/a)
+- [ci4] CRITICAL --> Error: Class "App\Modules\APIs\Controllers\MditBaseController" not found (n/a:n/a)
+- [ci4] CRITICAL --> [EXCEPTION] Class "App\Modules\APIs\Controllers\MditBaseController" not found File=/home/mymiteam/mymiwallet/site/current/app/Modules/APIs/Controllers/MditInvestorAPIController.php Line=12 (n/a:n/a)
+- [ci4] CRITICAL --> [EXCEPTION] Class "App\Modules\APIs\Controllers\MditBaseController" not found File=/home/mymiteam/mymiwallet/site/current/app/Modules/APIs/Controllers/MditInvestorAPIController.php Line=13 (n/a:n/a)
+- [ci4] CRITICAL --> [EXCEPTION] Class "App\Modules\APIs\Controllers\MditBaseController" not found File=/home/mymiteam/mymiwallet/site/current/app/Modules/APIs/Controllers/MditAdminAPIController.php Line=13 (n/a:n/a)
+- [ci4] CRITICAL --> CodeIgniter\Router\Exceptions\RouterException: The namespace delimiter is a backslash (\), not a slash (/). Route handler: "\App\Modules\APIs\Controllers\EmailAPIController:cloneCampaign/$1" (n/a:n/a)
+- [ci4] CRITICAL --> [EXCEPTION] The namespace delimiter is a backslash (\), not a slash (/). Route handler: "\App\Modules\APIs\Controllers\EmailAPIController:cloneCampaign/$1" File=/home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Router/Router.php Line=523 (n/a:n/a)
+- [ci4] CRITICAL --> ErrorException: Type of App\Modules\Management\Controllers\DevelopmentAdminController::$helpers must not be defined (as in class App\Controllers\BaseController) (n/a:n/a)
+- [ci4] CRITICAL --> [EXCEPTION] Type of App\Modules\Management\Controllers\DevelopmentAdminController::$helpers must not be defined (as in class App\Controllers\BaseController) File=/home/mymiteam/mymiwallet/site/current/app/Modules/Management/Controllers/DevelopmentAdminController.php Line=8 (n/a:n/a)
+- [ci4] CRITICAL --> ErrorException: Type of App\Modules\Management\Controllers\DiscordAdminController::$walletService must be ?App\Services\WalletService (as in class App\Controllers\UserController) (n/a:n/a)
+- [ci4] CRITICAL --> [EXCEPTION] Type of App\Modules\Management\Controllers\DiscordAdminController::$walletService must be ?App\Services\WalletService (as in class App\Controllers\UserController) File=/home/mymiteam/mymiwallet/site/current/app/Modules/Management/Controllers/DiscordAdminController.php Line=2 (n/a:n/a)
+- [ci4] CRITICAL --> ErrorException: Type of App\Modules\Management\Controllers\FinanceAdminController::$helpers must not be defined (as in class App\Controllers\BaseController) (n/a:n/a)
+- [ci4] CRITICAL --> [EXCEPTION] Type of App\Modules\Management\Controllers\FinanceAdminController::$helpers must not be defined (as in class App\Controllers\BaseController) File=/home/mymiteam/mymiwallet/site/current/app/Modules/Management/Controllers/FinanceAdminController.php Line=8 (n/a:n/a)
+- [ci4] CRITICAL --> ErrorException: Type of App\Modules\Management\Controllers\HRAdminController::$helpers must not be defined (as in class App\Controllers\BaseController) (n/a:n/a)
+- [ci4] CRITICAL --> [EXCEPTION] Type of App\Modules\Management\Controllers\HRAdminController::$helpers must not be defined (as in class App\Controllers\BaseController) File=/home/mymiteam/mymiwallet/site/current/app/Modules/Management/Controllers/HRAdminController.php Line=8 (n/a:n/a)
+- [ci4] CRITICAL --> ErrorException: Type of App\Modules\Management\Controllers\InvestmentsAdminController::$helpers must not be defined (as in class App\Controllers\BaseController) (n/a:n/a)
+- [ci4] CRITICAL --> [EXCEPTION] Type of App\Modules\Management\Controllers\InvestmentsAdminController::$helpers must not be defined (as in class App\Controllers\BaseController) File=/home/mymiteam/mymiwallet/site/current/app/Modules/Management/Controllers/InvestmentsAdminController.php Line=8 (n/a:n/a)
+- [ci4] LEVEL: CRITICAL (NEW) (n/a:n/a)
+- [ci4] ERROR --> Registration failed: {"username":"The username field is not in the correct format."} (n/a:n/a)
+- [ci4] CRITICAL --> ErrorException: Cannot declare class App\Modules\Ops\Controllers\OpsManagementController, because the name is already in use (n/a:n/a)
+- [ci4] CRITICAL --> [EXCEPTION] Cannot declare class App\Modules\Ops\Controllers\OpsManagementController, because the name is already in use File=/home/mymiteam/mymiwallet/site/current/app/Modules/Ops/Controllers/OpsManagementController.php Line=14 (n/a:n/a)
+- [ci4] ERROR --> DocsAutoSync failure: Call to a member function scan() on null (n/a:n/a)
+- [ci4] ERROR --> [ACTIVATION] Activation failed: user not found (n/a:n/a)
+- [ci4] CRITICAL --> [EXCEPTION] Cannot declare class App\Modules\Ops\Controllers\OpsManagementController, because the name is already in use File=/home/mymiteam/mymiwallet/site/current/app/Modules/Ops/Controllers/OpsManagementController.php Line=15 (n/a:n/a)
+- [ci4] CRITICAL --> ErrorException: Cannot declare class App\Controllers\OpsHealth, because the name is already in use (n/a:n/a)
+- [ci4] CRITICAL --> [EXCEPTION] Cannot declare class App\Controllers\OpsHealth, because the name is already in use File=/home/mymiteam/mymiwallet/site/current/app/Controllers/OpsHealth.php Line=11 (n/a:n/a)
+- [ci4] CRITICAL --> ErrorException: Cannot declare class App\Controllers\OpsHealthController, because the name is already in use (n/a:n/a)
+- [ci4] CRITICAL --> [EXCEPTION] Cannot declare class App\Controllers\OpsHealthController, because the name is already in use File=/home/mymiteam/mymiwallet/site/current/app/Controllers/OpsHealthController.php Line=12 (n/a:n/a)
+- [ci4] ERROR --> HowItWorksController failure: Call to undefined method App\Modules\Blog\Controllers\HowItWorksController::respondWithRendered() (n/a:n/a)
+- [ci4] ERROR --> HowItWorksController failure: automated-financial-insights (n/a:n/a)
+- [ci4] ERROR --> HowItWorksController failure: overview (n/a:n/a)
+- [ci4] ERROR --> HowItWorksController failure: alerts (n/a:n/a)
+- [ci4] ERROR --> Registration failed: {"username":"The username field must contain a unique value.","email":"The email field must contain a unique value."} (n/a:n/a)
+- [ci4] ERROR --> HowItWorksController failure: investor-profile (n/a:n/a)
+- [ci4] ERROR --> DashboardController::index failed to load executive summary: Call to undefined method CodeIgniter\Cache\Handlers\FileHandler::set() (n/a:n/a)
+- [ci4] ERROR --> Unknown column 'score_total' in 'where clause' (n/a:n/a)
+- [ci4] ERROR --> BudgetController::index failed to build executive summary: Call to undefined method CodeIgniter\Cache\Handlers\FileHandler::set() (n/a:n/a)
+- [ci4] ERROR --> HowItWorksController failure: investments (n/a:n/a)
+- [ci4] CRITICAL --> [CSRF][EXCEPTION] The action you requested is not allowed. (n/a:n/a)
+- [ci4] DEBUG --> Auth attempt failed for identifier esp.inoz.a.s4.1.5@gmail.com. Error: Unable to log you in. Please check your password. (n/a:n/a)
+- [ci4] ERROR --> Email: Unable to send email using SMTP. Your server might not be configured to send mail using this method. (n/a:n/a)
+- [ci4] ERROR --> 220 pdx1-sub0-mail-a221.dreamhost.com ESMTP (n/a:n/a)
+- [ci4] ERROR --> Registration failed: Failed to send activation message to: m.ar.tins.h.ir.l.e.y.84@gmail.com (n/a:n/a)
+- [ci4] ERROR --> [REGISTRATION] Activation email failed to send (n/a:n/a)
+- [ci4] ERROR --> HowItWorksController failure: mymi-wallets (n/a:n/a)
+- [ci4] ERROR --> ❌ getFilteredAlerts - Model error: Class "App\Support\Http" not found (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: ADAMM (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: SCCC (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: GLBS (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: WPFHD (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: TFSA (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: CLBEY (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: BRCB (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: RHEPZ (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: LSANF (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: GDQMF (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: AGNCZ (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: AUROW (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: PMMAF (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: CLTFF (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: ESOCF (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: HRGN (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: SBNYL (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: FGIWW (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: LGN (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: ARKR (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: SCIA (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: BMXC (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: MGMLD (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: DIIBF (n/a:n/a)
+- [ci4] ERROR --> Invalid market data for ticker: CDBMF (n/a:n/a)
+- [ci4] ERROR --> Unknown column 'as_of_datetime' in 'order clause' (n/a:n/a)
+- [ci4] ERROR --> Unknown column 'deleted_at' in 'where clause' (n/a:n/a)
+- [ci4] ERROR --> ReferralController::commonData getUserReferralData failed: Unknown column 'deleted_at' in 'where clause' (n/a:n/a)
+- [ci4] ERROR --> ReferralController::commonData getReferralSuccess failed: Unknown column 'deleted_at' in 'where clause' (n/a:n/a)
+- [ci4] ERROR --> Duplicate entry 'michael.stogsdill.bricker@gmail.com-108.94.16.157' for key 'bf_user_ip_history.bf_user_ip_unique_email' (n/a:n/a)
+- [ci4] ERROR --> UserIpHistoryModel::record failed: Duplicate entry 'michael.stogsdill.bricker@gmail.com-108.94.16.157' for key 'bf_user_ip_history.bf_user_ip_unique_email' (n/a:n/a)
+- [ci4] CRITICAL --> Error: Class "App\Commands\SafeBaseCommand" not found (n/a:n/a)
+- [ci4] CRITICAL --> [EXCEPTION] Class "App\Commands\SafeBaseCommand" not found File=/home/mymiteam/mymiwallet/site/current/app/Commands/SafeBaseCommand.php Line=23 (n/a:n/a)
+- [ci4] CRITICAL --> [EXCEPTION] Class "App\Commands\SafeBaseCommand" not found File=/home/mymiteam/mymiwallet/site/current/app/Commands/SafeBaseCommand.php Line=22 (n/a:n/a)
+- [ci4] ERROR --> [ERROR_PAGE] event=error_500 status=500 message=Internal server error. (n/a:n/a)
+- [ci4] CRITICAL --> ErrorException: Access level to App\Modules\User\Controllers\KnowledgebaseController::respondWithRendered() must be protected (as in class App\Controllers\BaseController) or weaker (n/a:n/a)
+- [ci4] CRITICAL --> [EXCEPTION] Access level to App\Modules\User\Controllers\KnowledgebaseController::respondWithRendered() must be protected (as in class App\Controllers\BaseController) or weaker File=/home/mymiteam/mymiwallet/site/current/app/Modules/User/Controllers/KnowledgebaseController.php Line=535 (n/a:n/a)
+- [ci4] ERROR --> HowItWorksController failure: marketing (n/a:n/a)
+- [ci4] ERROR --> HowItWorksController failure: earnings (n/a:n/a)
+- [ci4] ERROR --> HowItWorksController failure: account-settings (n/a:n/a)
+- [ci4] ERROR --> Registration failed: {"password":"Validation.strong_password"} (n/a:n/a)
+- [ci4] ERROR --> [404_ROUTE] (n/a:n/a)
+- [ci4] ERROR --> Table 'mymiwallet.bf_route_error_heatmap' doesn't exist (n/a:n/a)
+- [ci4] ERROR --> Duplicate entry 'tburks2392@gmail.com-76.234.126.68' for key 'bf_user_ip_history.bf_user_ip_unique_email' (n/a:n/a)
+- [ci4] ERROR --> UserIpHistoryModel::record failed: Duplicate entry 'tburks2392@gmail.com-76.234.126.68' for key 'bf_user_ip_history.bf_user_ip_unique_email' (n/a:n/a)
 
+## Recurring Errors Today
 
-## All Errors Today
+## Errors By System
+- ci4: 105
+- ollama: 6
+- aiops-docs: 3
 
-- [ci4] {"timestamp":"2026-03-31T12:41:31+00:00","message":"BOOT FAILURE: The action you requested is not allowed.","context":{"trace":"#0 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Security/Security.php(263): CodeIgniter\\Security\\Exceptions\\SecurityException::forDisallowedAction()\n#1 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Filters/CSRF.php(52): CodeIgniter\\Security\\Security->verify(Object(CodeIgniter\\HTTP\\IncomingRequest))\n#2 /home/mymiteam/mymiwallet/site/current/app/Filters/CsrfDebugFilter.php(23): CodeIgniter\\Filters\\CSRF->before(Object(CodeIgniter\\HTTP\\IncomingRequest), NULL)\n#3 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Filters/Filters.php(241): App\\Filters\\CsrfDebugFilter->before(Object(CodeIgniter\\HTTP\\IncomingRequest), NULL)\n#4 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Filters/Filters.php(221): CodeIgniter\\Filters\\Filters->runBefore(Array)\n#5 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php(465): CodeIgniter\\Filters\\Filters->run('Budget/Account-...', 'before')\n#6 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php(340): CodeIgniter\\CodeIgniter->handleRequest(NULL, Object(Config\\Cache), false)\n#7 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Boot.php(417): CodeIgniter\\CodeIgniter->run()\n#8 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Boot.php(68): CodeIgniter\\Boot::runCodeIgniter(Object(CodeIgniter\\CodeIgniter))\n#9 /home/mymiteam/mymiwallet/site/current/public/index.php(121): CodeIgniter\\Boot::bootWeb(Object(Config\\Paths))\n#10 {main}"}}
-- [ci4] {"timestamp":"2026-03-31T12:42:17+00:00","message":"BOOT FAILURE: The action you requested is not allowed.","context":{"trace":"#0 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Security/Security.php(263): CodeIgniter\\Security\\Exceptions\\SecurityException::forDisallowedAction()\n#1 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Filters/CSRF.php(52): CodeIgniter\\Security\\Security->verify(Object(CodeIgniter\\HTTP\\IncomingRequest))\n#2 /home/mymiteam/mymiwallet/site/current/app/Filters/CsrfDebugFilter.php(23): CodeIgniter\\Filters\\CSRF->before(Object(CodeIgniter\\HTTP\\IncomingRequest), NULL)\n#3 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Filters/Filters.php(241): App\\Filters\\CsrfDebugFilter->before(Object(CodeIgniter\\HTTP\\IncomingRequest), NULL)\n#4 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Filters/Filters.php(221): CodeIgniter\\Filters\\Filters->runBefore(Array)\n#5 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php(465): CodeIgniter\\Filters\\Filters->run('Budget/Account-...', 'before')\n#6 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/CodeIgniter.php(340): CodeIgniter\\CodeIgniter->handleRequest(NULL, Object(Config\\Cache), false)\n#7 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Boot.php(417): CodeIgniter\\CodeIgniter->run()\n#8 /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Boot.php(68): CodeIgniter\\Boot::runCodeIgniter(Object(CodeIgniter\\CodeIgniter))\n#9 /home/mymiteam/mymiwallet/site/current/public/index.php(121): CodeIgniter\\Boot::bootWeb(Object(Config\\Paths))\n#10 {main}"}}
+## Errors By App File
+- unknown: 110
+- app/Commands/Ollama/Logs/Export.php: 4
+
+## Recommended Repair Targets
+- unknown
+- app/Commands/Ollama/Logs/Export.php

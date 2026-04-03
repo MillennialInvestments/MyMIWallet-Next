@@ -1,23 +1,23 @@
 # Routes Export
 
-- Generated (UTC): `2026-03-07T11:22:07Z`
+- Generated (UTC): `2026-04-02T09:57:00Z`
 - Environment: `development`
 - Mode: `all`
 - Limit: `0`
 
 ## Summary
-- Total routes: `1491`
-- Methods: `{"GET":982,"POST":489,"PUT":3,"DELETE":11,"PATCH":0,"OPTIONS":0,"CLI":1,"OTHER":5}`
-- Surface groups: `{"Public/User":745,"API":722,"Admin":13,"Ops":11}`
+- Total routes: `1562`
+- Methods: `{"GET":1018,"POST":511,"PUT":3,"DELETE":12,"PATCH":0,"OPTIONS":0,"CLI":1,"OTHER":17}`
+- Surface groups: `{"Public/User":794,"API":744,"Admin":13,"Ops":11}`
 
 ## Routes
 
 | Method | Route | Handler | Surface | Issues |
 |---|---|---|---|---|
-| GET | (.*)/register | unknown_handler | Public/User |  |
-| POST | (.*)/register | unknown_handler | Public/User |  |
-| GET | (.*)/register/([^/]+) | unknown_handler | Public/User |  |
-| POST | (.*)/register/([^/]+) | unknown_handler | Public/User |  |
+| GET | ([^/]+)/register | unknown_handler | Public/User |  |
+| POST | ([^/]+)/register | unknown_handler | Public/User |  |
+| GET | ([^/]+)/register/([^/]+) | unknown_handler | Public/User |  |
+| POST | ([^/]+)/register/([^/]+) | unknown_handler | Public/User |  |
 | GET | / | unknown_handler | Public/User |  |
 | GET | API | unknown_handler | Public/User |  |
 | POST | API | unknown_handler | Public/User |  |
@@ -379,7 +379,9 @@
 | POST | API/Management/checkForSpamUsers | unknown_handler | API |  |
 | GET | API/Management/cronGenerateDailyCommunityPosts | unknown_handler | API |  |
 | GET | API/Management/cronQueueDistribution | unknown_handler | API |  |
+| GET | API/Management/debugLogs | unknown_handler | API |  |
 | GET | API/Management/distributeTodaysNewsContent | unknown_handler | API |  |
+| GET | API/Management/error-heatmap | unknown_handler | API |  |
 | GET | API/Management/exportGeneratedPostJson/([0-9]+) | unknown_handler | API |  |
 | GET | API/Management/exportPostJson/([0-9]+) | unknown_handler | API |  |
 | GET | API/Management/exportWeeklyWatchlistCSV | unknown_handler | API |  |
@@ -491,6 +493,8 @@
 | GET | API/Marketing/View-Grouped-Summaries | unknown_handler | API |  |
 | POST | API/Marketing/approveBufferItem/([0-9]+) | unknown_handler | API |  |
 | POST | API/Marketing/approvePost/([0-9]+) | unknown_handler | API |  |
+| POST | API/Marketing/approveVideoContent/([0-9]+) | unknown_handler | API |  |
+| POST | API/Marketing/archiveVideoContent/([0-9]+) | unknown_handler | API |  |
 | POST | API/Marketing/autoScheduleNextApproved | unknown_handler | API |  |
 | POST | API/Marketing/composePost | unknown_handler | API |  |
 | GET | API/Marketing/cronAnalyzeContent | unknown_handler | API |  |
@@ -504,9 +508,12 @@
 | DELETE | API/Marketing/deleteScrape/([0-9]+) | unknown_handler | API |  |
 | DELETE | API/Marketing/deleteSuggestion/([0-9]+) | unknown_handler | API |  |
 | DELETE | API/Marketing/deleteTaxonomy/([0-9]+) | unknown_handler | API |  |
+| DELETE | API/Marketing/deleteTemplate/([0-9]+) | unknown_handler | API |  |
 | GET | API/Marketing/distributeHighScoreContent | unknown_handler | API |  |
 | GET | API/Marketing/downloadVoiceover/(.*) | unknown_handler | API |  |
+| POST | API/Marketing/duplicateVideoContent/([0-9]+) | unknown_handler | API |  |
 | GET | API/Marketing/emailPostForApproval/([0-9]+) | unknown_handler | API |  |
+| GET | API/Marketing/exportVideoPackage/([0-9]+) | unknown_handler | API |  |
 | GET | API/Marketing/fetchBufferPaginated | unknown_handler | API |  |
 | GET | API/Marketing/fetchEmails | unknown_handler | API |  |
 | GET | API/Marketing/fetchFinalizedSummariesBlock | unknown_handler | API |  |
@@ -526,7 +533,13 @@
 | GET | API/Marketing/generateDailyContentDigest | unknown_handler | API |  |
 | GET | API/Marketing/generateDailyMarketCampaign | unknown_handler | API |  |
 | POST | API/Marketing/generateDailyMarketCampaign | unknown_handler | API |  |
+| GET | API/Marketing/generateFromScrapedSource/([0-9]+) | unknown_handler | API |  |
+| POST | API/Marketing/generateFromScrapedSource/([0-9]+) | unknown_handler | API |  |
 | GET | API/Marketing/generateFromSimilar | unknown_handler | API |  |
+| GET | API/Marketing/generateFromTicker | unknown_handler | API |  |
+| POST | API/Marketing/generateFromTicker | unknown_handler | API |  |
+| GET | API/Marketing/generateFromTopic | unknown_handler | API |  |
+| POST | API/Marketing/generateFromTopic | unknown_handler | API |  |
 | GET | API/Marketing/generateKimiPosts | unknown_handler | API |  |
 | GET | API/Marketing/generateKimiSummaries | unknown_handler | API |  |
 | GET | API/Marketing/generateLivePreview | unknown_handler | API |  |
@@ -537,6 +550,8 @@
 | GET | API/Marketing/generatePostsFromSummary/([0-9]+) | unknown_handler | API |  |
 | GET | API/Marketing/generateScheduledPosts | unknown_handler | API |  |
 | GET | API/Marketing/generateThreadFromSummary/([0-9]+) | unknown_handler | API |  |
+| POST | API/Marketing/generateTikTokContent | unknown_handler | API |  |
+| POST | API/Marketing/generateVideoContent | unknown_handler | API |  |
 | GET | API/Marketing/getCleanedScrapedContent | unknown_handler | API |  |
 | GET | API/Marketing/getContentPerformanceAnalytics | unknown_handler | API |  |
 | GET | API/Marketing/getGeneratedPostsPaginated | unknown_handler | API |  |
@@ -546,8 +561,11 @@
 | GET | API/Marketing/getRecentScrapes | unknown_handler | API |  |
 | GET | API/Marketing/getScrapeDetails/([0-9]+) | unknown_handler | API |  |
 | GET | API/Marketing/getStoryboardPackage/([0-9]+) | unknown_handler | API |  |
+| GET | API/Marketing/getTemplates | unknown_handler | API |  |
 | GET | API/Marketing/getTopGeneratedPosts | unknown_handler | API |  |
 | GET | API/Marketing/getTopKeywordChart/([0-9]+) | unknown_handler | API |  |
+| GET | API/Marketing/getVideoContent/([0-9]+) | unknown_handler | API |  |
+| GET | API/Marketing/getVideoQueue | unknown_handler | API |  |
 | GET | API/Marketing/groupSimilarSummariesByCosine | unknown_handler | API |  |
 | GET | API/Marketing/listSuggestions/([^/]+)/([^/]+) | unknown_handler | API |  |
 | GET | API/Marketing/massResendActivationEmails | unknown_handler | API |  |
@@ -568,6 +586,9 @@
 | POST | API/Marketing/savePlatform | unknown_handler | API |  |
 | POST | API/Marketing/saveSuggestion | unknown_handler | API |  |
 | POST | API/Marketing/saveTaxonomy | unknown_handler | API |  |
+| GET | API/Marketing/saveTemplate | unknown_handler | API |  |
+| POST | API/Marketing/saveTemplate | unknown_handler | API |  |
+| POST | API/Marketing/saveVideoDraft | unknown_handler | API |  |
 | GET | API/Marketing/scheduleApprovedPost/([0-9]+) | unknown_handler | API |  |
 | GET | API/Marketing/scheduleNewsletters | unknown_handler | API |  |
 | GET | API/Marketing/schedulePost/(.*)/(.*)/(.*) | unknown_handler | API |  |
@@ -590,6 +611,7 @@
 | POST | API/Marketing/updateInsight | unknown_handler | API |  |
 | POST | API/Marketing/updatePlatformToggle/([0-9]+) | unknown_handler | API |  |
 | POST | API/Marketing/updatePostSchedule/([0-9]+) | unknown_handler | API |  |
+| POST | API/Marketing/updateVideoContent/([0-9]+) | unknown_handler | API |  |
 | POST | API/Marketing/upsertPlatformRule | unknown_handler | API |  |
 | POST | API/Marketing/validateSymbol | unknown_handler | API |  |
 | POST | API/Mdit/accreditation/attest | unknown_handler | API |  |
@@ -832,10 +854,12 @@
 | POST | Budget/Edit/([^/]+)/([^/]+) | unknown_handler | Public/User |  |
 | GET | Budget/Expenses | unknown_handler | Public/User |  |
 | POST | Budget/Expenses | unknown_handler | Public/User |  |
+| * | Budget/Financial-Advisors | unknown_handler | Public/User |  |
 | GET | Budget/Financial-Analysis | unknown_handler | Public/User |  |
 | POST | Budget/Financial-Analysis | unknown_handler | Public/User |  |
 | GET | Budget/Financial-Forecaster | unknown_handler | Public/User |  |
 | POST | Budget/Financial-Forecaster | unknown_handler | Public/User |  |
+| * | Budget/Financial-Institute | unknown_handler | Public/User |  |
 | GET | Budget/Forecast | unknown_handler | Public/User |  |
 | GET | Budget/Forecast/([^/]+) | unknown_handler | Public/User |  |
 | GET | Budget/History | unknown_handler | Public/User |  |
@@ -884,11 +908,16 @@
 | POST | Dashboard/onboarding/profile | unknown_handler | Public/User |  |
 | GET | Dashboard/onboarding/progress | unknown_handler | Public/User |  |
 | POST | Dashboard/onboarding/recurring-expense | unknown_handler | Public/User |  |
+| POST | Dashboard/onboarding/source-welcome/complete | unknown_handler | Public/User |  |
 | POST | Dashboard/onboarding/watchlist | unknown_handler | Public/User |  |
 | POST | Dashboard/setup/dismiss | unknown_handler | Public/User |  |
 | GET | Debug/auth-audit-cache | unknown_handler | Public/User |  |
 | GET | Debug/whoami | unknown_handler | Public/User |  |
 | GET | Dev/BitcoinTest | unknown_handler | Public/User |  |
+| GET | Discord/register | unknown_handler | Public/User |  |
+| POST | Discord/register | unknown_handler | Public/User |  |
+| GET | Discord/register/([^/]+) | unknown_handler | Public/User |  |
+| POST | Discord/register/([^/]+) | unknown_handler | Public/User |  |
 | GET | Economic-Calendar | unknown_handler | Public/User |  |
 | GET | Economic-Calendar/([^/]+) | unknown_handler | Public/User |  |
 | GET | Exchange | unknown_handler | Public/User |  |
@@ -916,6 +945,7 @@
 | POST | Exchange/MetaMask/signTransaction | unknown_handler | Public/User |  |
 | POST | Exchange/MetaMask/validateAddress | unknown_handler | Public/User |  |
 | POST | Exchange/MetaMask/verifySignature | unknown_handler | Public/User |  |
+| GET | Exchange/Projects/(.*) | unknown_handler | Public/User |  |
 | GET | Exchange/Solana | unknown_handler | Public/User |  |
 | GET | Exchange/Solana/Assets | unknown_handler | Public/User |  |
 | GET | Exchange/Solana/Create | unknown_handler | Public/User |  |
@@ -953,6 +983,8 @@
 | POST | Exchange/Wallet/Refresh/Solflare | unknown_handler | Public/User |  |
 | POST | Exchange/Wallet/Refresh/TrustWallet | unknown_handler | Public/User |  |
 | GET | Features | unknown_handler | Public/User |  |
+| * | Features/Advanced-Investment-Portfoio-Manager | unknown_handler | Public/User |  |
+| GET | Features/Brokerage-Integration | unknown_handler | Public/User |  |
 | GET | Features/Brokerage-Integrations | unknown_handler | Public/User |  |
 | GET | Features/MyMI-Gold | unknown_handler | Public/User |  |
 | GET | Getting-Started | unknown_handler | Public/User |  |
@@ -960,15 +992,22 @@
 | GET | Getting-Started/([^/]+)/([^/]+) | unknown_handler | Public/User |  |
 | * | Home | unknown_handler | Public/User |  |
 | GET | How-It-Works | unknown_handler | Public/User |  |
-| GET | How-It-Works/(.*) | unknown_handler | Public/User |  |
+| GET | How-It-Works/([^/]+) | unknown_handler | Public/User |  |
+| GET | How-It-Works/Daily-Financial-News | unknown_handler | Public/User |  |
+| GET | How-It-Works/Investing | unknown_handler | Public/User |  |
+| GET | How-It-Works/Investment-Portfolio-Management | unknown_handler | Public/User |  |
+| GET | How-It-Works/MyMI-Gold | unknown_handler | Public/User |  |
+| GET | How-It-Works/Personal-Budgeting | unknown_handler | Public/User |  |
+| GET | How-It-Works/Purchase-MyMI-Gold | unknown_handler | Public/User |  |
 | GET | How-It-Works/Purchase/MyMIGold | unknown_handler | Public/User |  |
+| GET | How-It-Works/Setting-Financial-Goals | unknown_handler | Public/User |  |
+| GET | How-It-Works/What-Is-MyMI-Gold | unknown_handler | Public/User |  |
 | GET | How-It-Works/alerts | unknown_handler | Public/User |  |
-| GET | How-It-Works/budgeting | unknown_handler | Public/User |  |
 | GET | How-It-Works/crypto | unknown_handler | Public/User |  |
-| GET | How-It-Works/investing | unknown_handler | Public/User |  |
 | GET | How-It-Works/pricing | unknown_handler | Public/User |  |
 | GET | How-It-Works/projects | unknown_handler | Public/User |  |
 | GET | How-It-Works/security | unknown_handler | Public/User |  |
+| * | How-To-Guides | unknown_handler | Public/User |  |
 | GET | Institutes | unknown_handler | Public/User |  |
 | POST | Institutes | unknown_handler | Public/User |  |
 | GET | Investments | unknown_handler | Public/User |  |
@@ -993,6 +1032,7 @@
 | GET | Investments/News | unknown_handler | Public/User |  |
 | GET | Investments/Overview | unknown_handler | Public/User |  |
 | POST | Investments/Overview | unknown_handler | Public/User |  |
+| * | Investments/Reports | unknown_handler | Public/User |  |
 | GET | Investments/Retirement | unknown_handler | Public/User |  |
 | POST | Investments/Retirement | unknown_handler | Public/User |  |
 | GET | Investments/Save | unknown_handler | Public/User |  |
@@ -1031,6 +1071,8 @@
 | GET | Login | unknown_handler | Public/User |  |
 | GET | Maintenance | unknown_handler | Public/User |  |
 | GET | Management | unknown_handler | Public/User |  |
+| GET | Management/API | unknown_handler | Public/User |  |
+| GET | Management/API/([^/]+) | unknown_handler | Public/User |  |
 | GET | Management/AccountRescue | unknown_handler | Public/User |  |
 | POST | Management/AccountRescue/force-password-reset | unknown_handler | Public/User |  |
 | POST | Management/AccountRescue/lookup | unknown_handler | Public/User |  |
@@ -1061,6 +1103,7 @@
 | GET | Management/Alerts/Trades | unknown_handler | Public/User |  |
 | GET | Management/Alerts/addTradeAlert | unknown_handler | Public/User |  |
 | GET | Management/Alerts/fetchData | unknown_handler | Public/User |  |
+| GET | Management/Alerts/weeklyTopPerformance | unknown_handler | Public/User |  |
 | GET | Management/Assets | unknown_handler | Public/User |  |
 | GET | Management/Budgeting | unknown_handler | Public/User |  |
 | GET | Management/Budgets | unknown_handler | Public/User |  |
@@ -1075,6 +1118,8 @@
 | POST | Management/Discord/Discord/Subscriptions/Save | unknown_handler | Public/User |  |
 | POST | Management/Discord/Discord/Templates/Delete | unknown_handler | Public/User |  |
 | POST | Management/Discord/Discord/Templates/Save | unknown_handler | Public/User |  |
+| GET | Management/Docs | unknown_handler | Public/User |  |
+| GET | Management/Docs/(.*) | unknown_handler | Public/User |  |
 | GET | Management/Drip-Campaigns | unknown_handler | Public/User |  |
 | GET | Management/Drip-Campaigns/([0-9]+)/Steps | unknown_handler | Public/User |  |
 | GET | Management/Drip-Campaigns/([0-9]+)/Steps/Add | unknown_handler | Public/User |  |
@@ -1125,6 +1170,7 @@
 | POST | Management/Marketing/Blogs/Backfill-Excerpts | unknown_handler | Public/User |  |
 | GET | Management/Marketing/Campaigns | unknown_handler | Public/User |  |
 | GET | Management/Marketing/Content-Review | unknown_handler | Public/User |  |
+| GET | Management/Marketing/Content-Studio | unknown_handler | Public/User |  |
 | GET | Management/Marketing/Content/Generator | unknown_handler | Public/User |  |
 | GET | Management/Marketing/Content/Listing | unknown_handler | Public/User |  |
 | GET | Management/Marketing/Daily-Log | unknown_handler | Public/User |  |
@@ -1189,13 +1235,26 @@
 | GET | Management/Projects | unknown_handler | Public/User |  |
 | POST | Management/Projects/Approve/([^/]+) | unknown_handler | Public/User |  |
 | POST | Management/Projects/Edit/([^/]+) | unknown_handler | Public/User |  |
+| GET | Management/Projects/Fund | unknown_handler | Public/User |  |
+| GET | Management/Projects/Fund/([0-9]+) | unknown_handler | Public/User |  |
+| POST | Management/Projects/HideTestProjects | unknown_handler | Public/User |  |
 | GET | Management/Projects/Quick-Intake | unknown_handler | Public/User |  |
 | POST | Management/Projects/Quick-Intake | unknown_handler | Public/User |  |
+| GET | Management/Projects/ReconcileFundExchange/([0-9]+) | unknown_handler | Public/User |  |
+| POST | Management/Projects/RecordFundCapitalFlow | unknown_handler | Public/User |  |
+| POST | Management/Projects/RecordFundDistribution | unknown_handler | Public/User |  |
+| POST | Management/Projects/RegisterFundExchangeAsset/([0-9]+) | unknown_handler | Public/User |  |
 | POST | Management/Projects/Reject/([^/]+) | unknown_handler | Public/User |  |
+| POST | Management/Projects/SeedPrimaryFundProject | unknown_handler | Public/User |  |
+| POST | Management/Projects/UpdateFundNAV | unknown_handler | Public/User |  |
+| POST | Management/Projects/UpdateInvestorCompliance | unknown_handler | Public/User |  |
+| GET | Management/Projects/ValidateFundIntegrity | unknown_handler | Public/User |  |
+| GET | Management/Projects/ValidateFundIntegrity/([0-9]+) | unknown_handler | Public/User |  |
 | GET | Management/Referrals | unknown_handler | Public/User |  |
 | GET | Management/Security | unknown_handler | Public/User |  |
 | GET | Management/Services | unknown_handler | Public/User |  |
 | GET | Management/Signals | unknown_handler | Public/User |  |
+| GET | Management/System-Debug | unknown_handler | Public/User |  |
 | GET | Management/Users | unknown_handler | Public/User |  |
 | GET | Management/Users/Profile/([^/]+) | unknown_handler | Public/User |  |
 | GET | Management/Users/ajaxBlockUser/([^/]+) | unknown_handler | Public/User |  |
@@ -1242,6 +1301,11 @@
 | POST | Predictions/PlaceOrder | unknown_handler | Public/User |  |
 | GET | Predictions/Portfolio | unknown_handler | Public/User |  |
 | GET | Predictions/Settlements | unknown_handler | Public/User |  |
+| * | Premium-Features/Advanced-Charting | unknown_handler | Public/User |  |
+| * | Premium-Features/Advanced-Trade-Tracker | unknown_handler | Public/User |  |
+| * | Premium-Features/Due-Diligence-Database | unknown_handler | Public/User |  |
+| * | Premium-Features/Wallets | unknown_handler | Public/User |  |
+| * | Premium_Features/Brokerage-Integrations | unknown_handler | Public/User |  |
 | GET | Preview/Alert/([^/]+) | unknown_handler | Public/User |  |
 | GET | Privacy-Policy | unknown_handler | Public/User |  |
 | GET | Profile | unknown_handler | Public/User |  |
@@ -1249,9 +1313,12 @@
 | GET | Projects | unknown_handler | Public/User |  |
 | POST | Projects/Accept-Private-Allocation/([0-9]+) | unknown_handler | Public/User |  |
 | POST | Projects/Commit/([0-9]+) | unknown_handler | Public/User |  |
+| GET | Projects/Fund | unknown_handler | Public/User |  |
+| GET | Projects/Fund/([0-9]+) | unknown_handler | Public/User |  |
 | GET | Projects/My/Commitments | unknown_handler | Public/User |  |
+| POST | Projects/PurchaseFundUnits | unknown_handler | Public/User |  |
 | POST | Projects/Request-Monthly-Withdrawal/([0-9]+) | unknown_handler | Public/User |  |
-| GET | Projects/View/([^/]+) | unknown_handler | Public/User |  |
+| GET | Projects/View/([0-9]+) | unknown_handler | Public/User |  |
 | POST | Projects/Withdraw-Commit/([0-9]+) | unknown_handler | Public/User |  |
 | GET | Purchase/MyMIGold | unknown_handler | Public/User |  |
 | GET | Referrals | unknown_handler | Public/User |  |
@@ -1468,6 +1535,7 @@
 | POST | debug | unknown_handler | Public/User |  |
 | GET | debug/common-data/smoke | unknown_handler | Public/User |  |
 | GET | debug/manual-exception | unknown_handler | Public/User |  |
+| GET | debug/register-success-probe | unknown_handler | Public/User |  |
 | GET | forgot | unknown_handler | Public/User |  |
 | POST | forgot | unknown_handler | Public/User |  |
 | GET | forgot-password | unknown_handler | Public/User |  |
@@ -1475,7 +1543,10 @@
 | GET | health | unknown_handler | Public/User |  |
 | GET | healthz | unknown_handler | Public/User |  |
 | GET | help/account | unknown_handler | Public/User |  |
+| * | index.php | unknown_handler | Public/User |  |
+| GET | index.php | unknown_handler | Public/User |  |
 | * | index.php/(.*) | unknown_handler | Public/User |  |
+| * | index.php/images/(.*) | unknown_handler | Public/User |  |
 | GET | investments/economy/update_all | unknown_handler | Public/User |  |
 | POST | investments/economy/update_all | unknown_handler | Public/User |  |
 | GET | investments/fundamentals/([^/]+) | unknown_handler | Public/User |  |

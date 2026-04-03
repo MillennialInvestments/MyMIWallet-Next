@@ -211,44 +211,59 @@ class AlertsModel extends Model
 
     public function ensureTickerExists($symbol)
     {
-        $db      = \Config\Database::connect();
+        $symbol = strtoupper(trim((string) $symbol));
+        if ($symbol === '') {
+            return false;
+        }
+
+        $db = \Config\Database::connect();
         $builder = $db->table('bf_investment_tickers');
 
         $exists = $builder->select('symbol')->where('symbol', $symbol)->get()->getRow();
         if ($exists) {
-            log_message('info', "✅ ensureTickerExists: {$symbol} already exists in bf_investment_tickers.");
+            log_message('info', "ensureTickerExists: {$symbol} already exists in bf_investment_tickers.");
             return true;
         }
 
-        $api     = new \App\Libraries\MyMIAlphaVantage();
+        $api = new \App\Libraries\MyMIAlphaVantage();
         $matches = $api->searchSymbol($symbol);
 
         if (empty($matches)) {
-            log_message('error', "❌ Unable to ensure ticker exists for symbol: {$symbol}. No data from AlphaVantage.");
+            log_message('warning', "ensureTickerExists: no Alpha Vantage symbol matches found for {$symbol}.");
             return false;
         }
 
-        $bestMatch     = $matches[0];
-        $fetchedSymbol = $bestMatch['1. symbol'] ?? null;
+        $bestMatch = null;
 
-        if (!$fetchedSymbol || $fetchedSymbol !== strtoupper($symbol)) {
-            log_message('warning', "⚠️ ensureTickerExists: AlphaVantage returned {$fetchedSymbol} for requested {$symbol}. Skipping to avoid duplicate insert.");
+        foreach ($matches as $match) {
+            $candidate = strtoupper(trim((string) ($match['1. symbol'] ?? '')));
+            if ($candidate === $symbol) {
+                $bestMatch = $match;
+                break;
+            }
+        }
+
+        if ($bestMatch === null) {
+            $first = $matches[0] ?? [];
+            $candidate = strtoupper(trim((string) ($first['1. symbol'] ?? '')));
+            log_message('warning', "ensureTickerExists: no exact match found for {$symbol}; first candidate was {$candidate}. Skipping insert.");
             return false;
         }
 
         try {
             $insertData = [
-                'symbol'     => $fetchedSymbol,
+                'symbol'     => $symbol,
                 'name'       => $bestMatch['2. name'] ?? '',
                 'exchange'   => $bestMatch['4. region'] ?? 'US',
                 'currency'   => $bestMatch['8. currency'] ?? 'USD',
-                'created_on' => date('Y-m-d H:i:s')
+                'created_on' => date('Y-m-d H:i:s'),
             ];
+
             $builder->insert($insertData);
-            log_message('info', "✅ ensureTickerExists: Inserted {$fetchedSymbol} successfully.");
+            log_message('info', "ensureTickerExists: inserted {$symbol} successfully.");
             return true;
         } catch (\Throwable $e) {
-            log_message('warning', "ensureTickerExists: Duplicate insert attempt for {$fetchedSymbol}. Error: " . $e->getMessage());
+            log_message('warning', "ensureTickerExists: failed insert for {$symbol}: " . $e->getMessage());
             return false;
         }
     }

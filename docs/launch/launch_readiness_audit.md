@@ -1,17 +1,18 @@
 # Launch Readiness Audit (Phase A)
 
 ## run_meta
-- timestamp_utc: `2026-03-07T02:30:56+00:00`
-- git_commit: `119139eea`
+- timestamp_utc: `2026-04-02T09:57:00+00:00`
+- git_commit: `633d3262c`
 - env: `development`
 - command: `php spark gtm:launch:audit`
 
 ## route scan summary
-- total routes discovered: 1046
-- Phase A routes included: 29
-- Excluded routes: 1017
+- total routes discovered: 1103
+- Phase A routes included: 38
+- Excluded routes: 1065
 
 ### Included user-facing routes (Phase A)
+- `GET /debug/register-success-probe` => `AuthController::registerSuccessProbe`
 - `GET /login` => `AuthController::login`
 - `POST /login` => `AuthController::attemptLogin`
 - `GET /logout` => `AuthController::logout`
@@ -21,10 +22,14 @@
 - `GET /register/success` => `AuthController::registerSuccess`
 - `POST /register/resend-activation` => `AuthController::resendRegistrationActivation`
 - `GET /register/(:segment)` => `AuthController::register/$1`
-- `GET /(:any)/register` => `AuthController::register`
-- `GET /(:any)/register/(:segment)` => `AuthController::register/$2`
-- `POST /(:any)/register` => `AuthController::attemptRegister`
-- `POST /(:any)/register/(:segment)` => `AuthController::attemptRegister`
+- `GET /Discord/register` => `AuthController::register`
+- `GET /Discord/register/(:segment)` => `AuthController::register/$1`
+- `POST /Discord/register` => `AuthController::attemptRegister`
+- `POST /Discord/register/(:segment)` => `AuthController::attemptRegister`
+- `GET /(:segment)/register` => `AuthController::register`
+- `GET /(:segment)/register/(:segment)` => `AuthController::register/$2`
+- `POST /(:segment)/register` => `AuthController::attemptRegister`
+- `POST /(:segment)/register/(:segment)` => `AuthController::attemptRegister`
 - `GET /forgot-password` => `AuthController::forgotPassword`
 - `GET /reset-password` => `AuthController::resetPassword`
 - `POST /forgot` => `AuthController::attemptForgot`
@@ -40,28 +45,25 @@
 - `POST /Investments/Update/(:num)` => `WalletsAPIController::updateInvestment/$1`
 - `POST /onboarding/budget-income` => `OnboardingWalkthroughController::saveBudgetIncome`
 - `POST /onboarding/watchlist` => `OnboardingWalkthroughController::saveWatchlist`
-- `GET /budgeting` => `HowItWorksController::budgeting`
+- `POST /RegisterFundExchangeAsset/(:num)` => `ProjectsAdminController::registerFundExchangeAsset/$1`
+- `GET /Budget/getUserBudgetRecords` => `BudgetAPIController::getUserBudgetRecords`
+- `GET /Budget/getUserCreditBalances` => `BudgetAPIController::getUserCreditBalances`
+- `GET /Budget/getUserRepaymentSummary` => `BudgetAPIController::getUserRepaymentSummary`
+- `GET /Budget/getUserAvailableBalances` => `BudgetAPIController::getUserAvailableBalances`
 
 ### Excluded route samples
+- `GET /index.php` => `Home::index`
+- `GET /index.php/` => `Home::index`
 - `GET /` => `Home::index`
 - `GET /healthz` => `System\HealthController::healthz`
 - `GET /test/crash` => `Test::crash`
-- `GET /ops/health` => `\\App\\Controllers\\OpsHealth::index`
+- `GET /ops/health` => `\\App\\Controllers\\OpsHealthController::index`
 - `GET /Maintenance` => `MaintenanceController::index`
-- `GET /projects` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::projects`
-- `POST /projects/save` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::saveProject`
-- `GET /subprojects` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::subprojects`
-- `POST /subprojects/save` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::saveSubproject`
-- `GET /tasks` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::tasks`
-- `POST /tasks/save` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::saveTask`
-- `POST /import/xlsx` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::importXlsx`
-- `GET /export/tasks.csv` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::exportTasksCsv`
-- `GET /export/workbook.xlsx` => `App\\Modules\\Ops\\Controllers\\OpsManagementController::exportWorkbookXlsx`
-- `GET /API/Ops/health-score` => `\\App\\Controllers\\OpsHealth::score`
+- `GET /API/Ops/health-score` => `\\App\\Controllers\\OpsHealthController::score`
 - `GET /API/Ops/filesystem-status` => `\\App\\Controllers\\Api\\OpsFilesystemStatusController::index`
 - `GET /API/docs` => `\\App\\Controllers\\Api\\SwaggerDocsController::index`
-- `GET /health` => `\\App\\Controllers\\OpsHealth::index`
-- `POST /health/run` => `\\App\\Controllers\\OpsHealth::run`
+- `GET /health` => `\\App\\Controllers\\OpsHealthController::index`
+- `POST /health/run` => `\\App\\Controllers\\OpsHealthController::run`
 - `GET /index` => `DocsController::index`
 - `GET /view` => `DocsController::view`
 - `GET /Stock/(:segment)/(:segment)` => `StockController::show/$1/$2`
@@ -83,32 +85,32 @@
 - `GET /Learn/(:segment)` => `App\Modules\Public\Controllers\PublicPagesController::show/$1`
 - `GET /Alerts/Preview/(:segment)` => `AlertsController::preview/$1`
 - `GET /Preview/Alert/(:segment)` => `AlertsController::preview/$1`
+- `GET /Privacy-Policy` => `Home::privacyPolicy`
+- `GET /Legal/Privacy-Policy` => `Home::privacyPolicy`
+- `GET /Legal/Terms-And-Conditions` => `Home::terms`
+- `GET /Customer-Support` => `App\Modules\Support\Controllers\SupportController::index`
+- `GET /Profile` => `App\Modules\User\Controllers\DashboardController::profile`
+- `POST /auth/resend-activation` => `AuthController::resendActivationCode`
+- `GET /How-It-Works` => `\\App\\Modules\\Blog\\Controllers\\HowItWorksController::index`
 
 ## route->controller integrity scan
-- scanned: 1045
-- missing targets: 469
+- scanned: 1102
+- missing targets: 492
 - ❌ `GET /healthz => System\HealthController::healthz`
-- ❌ `GET /ops/health => \\App\\Controllers\\OpsHealth::index`
-- ❌ `GET /projects => App\\Modules\\Ops\\Controllers\\OpsManagementController::projects`
-- ❌ `POST /projects/save => App\\Modules\\Ops\\Controllers\\OpsManagementController::saveProject`
-- ❌ `GET /subprojects => App\\Modules\\Ops\\Controllers\\OpsManagementController::subprojects`
-- ❌ `POST /subprojects/save => App\\Modules\\Ops\\Controllers\\OpsManagementController::saveSubproject`
-- ❌ `GET /tasks => App\\Modules\\Ops\\Controllers\\OpsManagementController::tasks`
-- ❌ `POST /tasks/save => App\\Modules\\Ops\\Controllers\\OpsManagementController::saveTask`
-- ❌ `POST /import/xlsx => App\\Modules\\Ops\\Controllers\\OpsManagementController::importXlsx`
-- ❌ `GET /export/tasks.csv => App\\Modules\\Ops\\Controllers\\OpsManagementController::exportTasksCsv`
-- ❌ `GET /export/workbook.xlsx => App\\Modules\\Ops\\Controllers\\OpsManagementController::exportWorkbookXlsx`
-- ❌ `GET /API/Ops/health-score => \\App\\Controllers\\OpsHealth::score`
+- ❌ `GET /ops/health => \\App\\Controllers\\OpsHealthController::index`
+- ❌ `GET /API/Ops/health-score => \\App\\Controllers\\OpsHealthController::score`
 - ❌ `GET /API/Ops/filesystem-status => \\App\\Controllers\\Api\\OpsFilesystemStatusController::index`
 - ❌ `GET /API/docs => \\App\\Controllers\\Api\\SwaggerDocsController::index`
-- ❌ `GET /health => \\App\\Controllers\\OpsHealth::index`
-- ❌ `POST /health/run => \\App\\Controllers\\OpsHealth::run`
+- ❌ `GET /health => \\App\\Controllers\\OpsHealthController::index`
+- ❌ `POST /health/run => \\App\\Controllers\\OpsHealthController::run`
 - ❌ `GET /index => DocsController::index`
 - ❌ `GET /view => DocsController::view`
 - ❌ `GET /sw.js => ServiceWorker::index`
 - ❌ `GET /Learn/(:segment) => App\Modules\Public\Controllers\PublicPagesController::show/$1`
 - ❌ `GET /Customer-Support => App\Modules\Support\Controllers\SupportController::index`
 - ❌ `GET /Profile => App\Modules\User\Controllers\DashboardController::profile`
+- ❌ `GET /How-It-Works => \\App\\Modules\\Blog\\Controllers\\HowItWorksController::index`
+- ❌ `GET /How-It-Works/(:segment) => \\App\\Modules\\Blog\\Controllers\\HowItWorksController::show/$1`
 - ❌ `GET /Dev/BitcoinTest => App\Controllers\Dev\BitcoinTest::index`
 - ❌ `GET /common-data/smoke => CommonDataController::smoke`
 - ❌ `GET /api/health => Api\\HealthController::index`
@@ -392,6 +394,7 @@
 - ❌ `GET /Stock/(:segment)/(:segment) => Management\AlertsAdminController::stockOverview/$1/$2`
 - ❌ `GET /Tasks/fetchAlerts => Management\AlertsAdminController::fetchData`
 - ❌ `GET /Top-Performance/Weekly => AlertsAdminController::topPerformanceWeekly`
+- ❌ `GET /weeklyTopPerformance => AlertsAdminController::topPerformanceWeekly`
 - ❌ `GET /autoScheduleDrafts => EmailAdminController::autoScheduleDrafts`
 - ❌ `POST /updateCampaign/(:num) => EmailAdminController::updateCampaign/$1`
 - ❌ `GET /Blog-Creator => MarketingAdminController::blogCreator`
@@ -425,6 +428,16 @@
 - ❌ `GET /Reconcile => WalletsController::reconcile`
 - ❌ `POST /EmailUserAboutIssue/(:num)/(:num) => WalletsController::emailUserAboutIssue/$1/$2`
 - ❌ `GET / => WebDesignController::index`
+- ❌ `GET /projects => OpsDashboardController::projects`
+- ❌ `POST /projects/save => OpsDashboardController::saveProject`
+- ❌ `GET /subprojects => OpsDashboardController::subprojects`
+- ❌ `POST /subprojects/save => OpsDashboardController::saveSubproject`
+- ❌ `GET /tasks => OpsDashboardController::tasks`
+- ❌ `POST /tasks/save => OpsDashboardController::saveTask`
+- ❌ `POST /import/xlsx => OpsDashboardController::importXlsx`
+- ❌ `GET /export/tasks.csv => OpsDashboardController::exportTasksCsv`
+- ❌ `GET /export/workbook.xlsx => OpsDashboardController::exportWorkbookXlsx`
+- ❌ `GET /Projects/(:any) => ExchangeController::project/$1`
 - ❌ `POST /fetchFrontendData => DigiByteController::fetchFrontendData`
 - ❌ `POST /provisionDefaultWallet => DigiByteController::provisionDefaultWallet`
 - ❌ `POST /disconnectWallet => DigiByteController::disconnectWallet`
@@ -510,8 +523,26 @@
 - ❌ `POST /Update/(:num) => ScriptStudioController::update/$1`
 - ❌ `GET /Preview/(:num) => ScriptStudioController::preview/$1`
 - ❌ `GET /Export/(:num)/(:segment) => ScriptStudioController::export/$1/$2`
-- ❌ `GET /(:any) => HowItWorksController::show/$1`
+- ❌ `GET /Daily-Financial-News => HowItWorksController::DailyFinancialNews`
+- ❌ `GET /Investing => HowItWorksController::InvestmentPortfolioManagement`
+- ❌ `GET /Investment-Portfolio-Management => HowItWorksController::InvestmentPortfolioManagement`
+- ❌ `GET /MyMI-Gold => HowItWorksController::MyMIGold`
+- ❌ `GET /What-Is-MyMI-Gold => HowItWorksController::MyMIGold`
+- ❌ `GET /Personal-Budgeting => HowItWorksController::PersonalBudgeting`
+- ❌ `GET /Purchase-MyMI-Gold => HowItWorksController::PurchaseMyMIGold`
+- ❌ `GET /Setting-Financial-Goals => HowItWorksController::SettingFinancialGoals`
+- ❌ `GET /crypto => HowItWorksController::show/crypto`
+- ❌ `GET /alerts => HowItWorksController::show/alerts`
+- ❌ `GET /projects => HowItWorksController::show/projects`
+- ❌ `GET /security => HowItWorksController::show/security`
+- ❌ `GET /pricing => HowItWorksController::show/pricing`
+- ❌ `GET /(:segment) => HowItWorksController::show/$1`
+- ❌ `GET /Budget/getUserBudgetRecords => BudgetAPIController::getUserBudgetRecords`
+- ❌ `GET /Budget/getUserCreditBalances => BudgetAPIController::getUserCreditBalances`
+- ❌ `GET /Budget/getUserRepaymentSummary => BudgetAPIController::getUserRepaymentSummary`
+- ❌ `GET /Budget/getUserAvailableBalances => BudgetAPIController::getUserAvailableBalances`
 - ❌ `GET /ticket/(:num) => SupportTicketController::show/$1`
+- ❌ `GET / => SupportController::index`
 - ❌ `GET /Account => AccountSupportController::index`
 - ❌ `POST /resendActivation => AccountSupportController::resendActivation`
 - ❌ `POST /sendPasswordReset => AccountSupportController::sendPasswordReset`
@@ -523,8 +554,9 @@
 - ❌ `GET /Test-Email => SupportController::view/Test-Email`
 - ❌ `GET /(:any) => SupportController::view/$1`
 - ❌ `GET /help/account => App\\Modules\\Support\\Controllers\\AccountSupportController::index`
-- ❌ `GET / => Features::index`
-- ❌ `GET /Brokerage-Integrations => Features::BrokerageIntegrations`
+- ❌ `GET / => FeaturesController::index`
+- ❌ `GET /Brokerage-Integrations => FeaturesController::BrokerageIntegrations`
+- ❌ `GET /Brokerage-Integration => FeaturesController::BrokerageIntegrations`
 - ❌ `GET /MyMI-Gold => HowItWorks::MyMIGold`
 - ❌ `POST /buildUnsignedPsbt => App\Modules\APIs\Controllers\BitcoinController::buildUnsignedPsbt`
 - ❌ `POST /broadcastSignedTx => App\Modules\APIs\Controllers\BitcoinController::broadcastSignedTx`
@@ -589,7 +621,7 @@
 - gtm:launch:smoke: `present`
 
 ## blockers list
-- Missing route targets detected: 469
+- Missing route targets detected: 492
 
 ## decision
 - **HOLD**

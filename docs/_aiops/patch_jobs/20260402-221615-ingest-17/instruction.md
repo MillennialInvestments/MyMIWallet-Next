@@ -1,0 +1,1 @@
+REview my trade alerts from today and summarize content for each

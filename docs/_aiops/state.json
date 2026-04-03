@@ -345,8 +345,8 @@
             "mtime": "2026-01-01"
         },
         "docs/ai-ops/cron-jobs.md": {
-            "hash": "7596cb40dda8177b3463062ae8d5ce7468e4edfb8d919d5653f1dcecac83e546",
-            "mtime": "2026-01-01"
+            "hash": "41ec980c936ddedcb0d7f4255ab2b60b9210965fd4c55f95feb3b12bdf47dec9",
+            "mtime": "2026-03-31"
         },
         "docs/ai-ops/dashboard.md": {
             "hash": "7bc601330390bbb436c124e3503a1347fccb1946c050b28cec8ff51017f15c09",
@@ -817,8 +817,8 @@
             "mtime": "2025-11-22"
         },
         "docs/alerts/thinkorswim_broker_ingestion.md": {
-            "hash": "7c52176c427f0ad85379dbe9bf37ba6ca87b1983887d2ba4dfbe71570f45f806",
-            "mtime": "2026-01-17"
+            "hash": "00951495d8496d226ed9fb9087357585abd010e5c74063c79639fe2748aa428c",
+            "mtime": "2026-04-02"
         },
         "docs/api/internal-orchestration.md": {
             "hash": "0840947e0d1f2e6afec77e2aaaf576c31cbd67a2c54f5fddd5022273bc4933df",
@@ -5507,7 +5507,47 @@
         "docs/wallets/README.md": {
             "hash": "9c1945b9e67eecb9444a4f976614578e7fcfb29f6239d82a563705691982a63a",
             "mtime": "2026-03-30"
+        },
+        "docs/audits/registration-launch-readiness-audit.md": {
+            "hash": "af00574a3f5d8b98e02130d2431c8922d8562d572f8ffe40216afdb21f88b60c",
+            "mtime": "2026-03-31"
+        },
+        "docs/auth/discord-registration-flow.md": {
+            "hash": "3fc7a9751dd49d39b85b36678eda9fc33ecad182c0b34eafcc652fe52a133397",
+            "mtime": "2026-03-31"
+        },
+        "docs/auth/dynamic-registration-layout.md": {
+            "hash": "bb767347922b0656adb3a2c9c617f31ab96ce318d1702658e3cabb93fb990100",
+            "mtime": "2026-03-31"
+        },
+        "docs/onboarding_source_aware_welcome.md": {
+            "hash": "56d52b1d8f7b2d596f09b78b49cb5fc5cfea0ce04e80a04660d3c6329ae9aea6",
+            "mtime": "2026-03-31"
+        },
+        "docs/platform/control-plane.md": {
+            "hash": "e864ac8487e7fd86f619b1d6127b63538106cdb0a6f0b842674b7c6231aa8c06",
+            "mtime": "2026-03-31"
+        },
+        "docs/platform/platform-cron.md": {
+            "hash": "0b36605ba40c955f8b2b8306edf05e562b63e7e65e56e78ea93780f5c9b62f6a",
+            "mtime": "2026-03-31"
+        },
+        "docs/platform/platform-profiles.md": {
+            "hash": "cb90fb7b50c840c8adeb576fedcac2582ea61d5bbbc31c9a20552171585366ee",
+            "mtime": "2026-03-31"
+        },
+        "docs/platform/platform-run.md": {
+            "hash": "d8961e14cb16fbbc0e6ca40d156f335588d04b9ba52b2a89a7da47cfe3229a1e",
+            "mtime": "2026-03-31"
+        },
+        "docs/reports/autofix_report.md": {
+            "hash": "2ee5549525d2cd6f7e4e20b10f13d229febe6a364e9ce7a758fd2fd40c9c8df1",
+            "mtime": "2026-03-31"
+        },
+        "docs/reports/automation_health.md": {
+            "hash": "cecf2c5ad09a97b7212fd348a52690b723583a5da6df2943ca1918441bc3f33f",
+            "mtime": "2026-04-01"
         }
     },
-    "last_run": "2026-03-31T07:00:02Z"
+    "last_run": "2026-04-02T07:00:01Z"
 }

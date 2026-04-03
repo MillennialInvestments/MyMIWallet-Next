@@ -128,6 +128,50 @@ class MyMIAlphaVantage
         $this->apiKey = $this->alphaKeys[$this->alphaKeyIndex] ?? $this->apiKey;
     }
 
+    public function searchSymbol(string $keywords): array
+    {
+        $keywords = strtoupper(trim($keywords));
+        if ($keywords === '') {
+            return [];
+        }
+
+        try {
+            $data = $this->getAlphaVantageResponse([
+                'function' => 'SYMBOL_SEARCH',
+                'keywords' => $keywords,
+            ]);
+
+            if (!is_array($data) || empty($data['bestMatches']) || !is_array($data['bestMatches'])) {
+                log_message('debug', 'AlphaVantage::searchSymbol returned no matches for ' . $keywords);
+                return [];
+            }
+
+            $results = [];
+            foreach ($data['bestMatches'] as $match) {
+                if (!is_array($match)) {
+                    continue;
+                }
+
+                $results[] = [
+                    '1. symbol'      => (string) ($match['1. symbol'] ?? ''),
+                    '2. name'        => (string) ($match['2. name'] ?? ''),
+                    '3. type'        => (string) ($match['3. type'] ?? ''),
+                    '4. region'      => (string) ($match['4. region'] ?? ''),
+                    '5. marketOpen'  => (string) ($match['5. marketOpen'] ?? ''),
+                    '6. marketClose' => (string) ($match['6. marketClose'] ?? ''),
+                    '7. timezone'    => (string) ($match['7. timezone'] ?? ''),
+                    '8. currency'    => (string) ($match['8. currency'] ?? ''),
+                    '9. matchScore'  => (string) ($match['9. matchScore'] ?? ''),
+                ];
+            }
+
+            return $results;
+        } catch (\Throwable $e) {
+            log_message('error', 'AlphaVantage::searchSymbol failed for ' . $keywords . ': ' . $e->getMessage());
+            return [];
+        }
+    }
+
     private function getAlphaVantageResponse(array $query): ?array
     {
         if (empty($this->alphaKeys)) {

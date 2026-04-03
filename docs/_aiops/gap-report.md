@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-03-31T07:00:02Z
+> Run: 2026-04-02T07:00:01Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -403,7 +403,7 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/Alerts/add/user_fields.php
   - ⚠️ No obvious doc match found (heuristic)
-- … and 967 more
+- … and 972 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
 - docs/APIs/README.md
@@ -624,6 +624,8 @@
   - ❌ No obvious code match found (heuristic)
 - docs/audits/model_limit_patch_report_20260218.md
   - ❌ No obvious code match found (heuristic)
+- docs/audits/registration-launch-readiness-audit.md
+  - ❌ No obvious code match found (heuristic)
 - docs/audits/route-security-audit.md
   - ❌ No obvious code match found (heuristic)
 - docs/audits/user-flow-validation.md
@@ -633,6 +635,10 @@
 - docs/auth/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/auth/auth_smoke.md
+  - ❌ No obvious code match found (heuristic)
+- docs/auth/discord-registration-flow.md
+  - ❌ No obvious code match found (heuristic)
+- docs/auth/dynamic-registration-layout.md
   - ❌ No obvious code match found (heuristic)
 - docs/auth/onboarding_first_login_modal.md
   - ❌ No obvious code match found (heuristic)
@@ -800,10 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/content_engine/json_contract.md
   - ❌ No obvious code match found (heuristic)
-- docs/content_engine/scoring_rules.md
-  - ❌ No obvious code match found (heuristic)
-- docs/content_engine/sql_patch_notes.md
-  - ❌ No obvious code match found (heuristic)
-- docs/content_engine/troubleshooting.md
-  - ❌ No obvious code match found (heuristic)
-- … and 971 more
+- … and 981 more
