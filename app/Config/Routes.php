@@ -925,6 +925,9 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->post('updatePostSchedule/(:num)', 'MarketingAPIController::updatePostSchedule/$1');
         $routes->post('updatePlatformToggle/(:num)', 'MarketingAPIController::updatePlatformToggle/$1');
         $routes->post('validateSymbol', 'MarketingAPIController::validateSymbol');
+        $routes->post('uploadNotification', 'MarketingAPIController::uploadNotification');
+        $routes->post('getStoryUpdates', 'MarketingAPIController::getStoryUpdates');
+        $routes->post('generateMarketingPackage', 'MarketingAPIController::generateMarketingPackage');
 
         // UI/ops endpoints (deduped from former parallel group)
         $routes->get('/', 'MarketingAPIController::index');
