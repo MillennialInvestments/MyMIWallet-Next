@@ -961,38 +961,91 @@ class MarketingAPIController extends BaseAPIController
 
     public function generateMarketingPackage()
     {
-        $headlines = $this->request->getPost('headlines');
-        if (!$headlines) {
-            $headline = $this->request->getPost('headline');
-            $headlines = $headline ? [$headline] : [];
-        }
+        $input = $this->request->getJSON(true) ?: $this->request->getPost();
 
+        $db = Database::connect();
         $packages = [];
 
+        /**
+         * =========================================
+         * 1. NOTIFICATION-BASED WORKFLOW (NEW)
+         * =========================================
+         */
+        $notificationId = (int) ($input['notification_id'] ?? 0);
+
+        if ($notificationId > 0) {
+            $notification = $db->table('bf_marketing_notifications')
+                ->where('id', $notificationId)
+                ->get()
+                ->getRowArray();
+
+            if (! $notification) {
+                return $this->failNotFound('Notification not found');
+            }
+
+            $workflow = new MarketingNotificationService($this->MyMIMarketing);
+
+            $storyId = $workflow->attachToStory($notification);
+            $package = $workflow->generateMarketingPackage($notification, $storyId);
+
+            $db->table('bf_marketing_generated_content')->insert([
+                'notification_id' => $notificationId,
+                'story_id'        => $storyId,
+                'content_json'    => json_encode($package),
+                'created_at'      => date('Y-m-d H:i:s'),
+                'updated_at'      => date('Y-m-d H:i:s'),
+            ]);
+
+            return Http::jsonSuccess([
+                'status' => 'success',
+                'generated_content_id' => (int) $db->insertID(),
+                'data' => $package,
+            ]);
+        }
+
+        /**
+         * =========================================
+         * 2. MANUAL HEADLINE WORKFLOW (ORIGINAL)
+         * =========================================
+         */
+        $headlines = $input['headlines'] ?? [];
+
+        if (empty($headlines) && !empty($input['headline'])) {
+            $headlines = [$input['headline']];
+        }
+
+        if (empty($headlines)) {
+            return $this->response->setStatusCode(422)->setJSON([
+                'status' => 'error',
+                'message' => 'headline(s) or notification_id required'
+            ]);
+        }
+
         foreach ($headlines as $headline) {
-            // 1. Summarize headline
+
+            // 1. Summarize
             $summary = $this->MyMIMarketing->summarizeText($headline);
 
-            // 2. Extract keywords (use your existing keyword extractor)
+            // 2. Keywords (TF-IDF based per your system)
             $keywords = $this->MyMIMarketing->extractKeywordsFromSummary($summary);
 
-            // 3. Generate social posts (returns array keyed by platform)
+            // 3. Social Posts (multi-platform)
             $socialPosts = $this->MyMIMarketing->generateUnifiedSocialPosts($summary, $keywords);
-            // ↑ This function already produces platform‑specific posts:contentReference[oaicite:0]{index=0}.
 
-            // 4. Build voiceover script and audio
+            // 4. Voice + Audio
             $voiceScript = $this->MyMIMarketing->generateVoiceoverScriptFromSummary($summary);
-            // ↑ Generates a narrative script from the summary:contentReference[oaicite:1]{index=1}.
-            $audioFile = $this->MyMIMarketing->generateVoiceoverAudio($voiceScript, 'marketing-' . time() . '.mp3');
-            // ↑ Uses Google Cloud TTS to produce an MP3:contentReference[oaicite:2]{index=2}.
+            $audioFile = $this->MyMIMarketing->generateVoiceoverAudio(
+                $voiceScript,
+                'marketing-' . time() . '.mp3'
+            );
 
-            // 5. Generate video scripts
+            // 5. Video Scripts
             $videoScripts = [
                 'tiktok'  => $this->MyMIMarketing->generateTikTokScript($summary),
                 'youtube' => $this->MyMIMarketing->generateYouTubeScript($summary)
             ];
 
-            // 6. Generate a branded image (function to implement)
+            // 6. Image
             $imageUrl = $this->MyMIMarketing->generateMarketingImage($headline, $keywords);
 
             $packages[] = [
@@ -2947,39 +3000,6 @@ class MarketingAPIController extends BaseAPIController
         unset($story);
 
         return Http::jsonSuccess(['status' => 'success', 'stories' => $stories]);
-    }
-
-    public function generateMarketingPackage()
-    {
-        $input = $this->request->getJSON(true) ?: $this->request->getPost();
-        $notificationId = (int) ($input['notification_id'] ?? 0);
-        if ($notificationId < 1) {
-            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => 'notification_id is required']);
-        }
-
-        $db = Database::connect();
-        $notification = $db->table('bf_marketing_notifications')->where('id', $notificationId)->get()->getRowArray();
-        if (! $notification) {
-            return $this->failNotFound('Notification not found');
-        }
-
-        $workflow = new MarketingNotificationService($this->MyMIMarketing);
-        $storyId = $workflow->attachToStory($notification);
-        $package = $workflow->generateMarketingPackage($notification, $storyId);
-
-        $db->table('bf_marketing_generated_content')->insert([
-            'notification_id' => $notificationId,
-            'story_id' => $storyId,
-            'content_json' => json_encode($package),
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
-        ]);
-
-        return Http::jsonSuccess([
-            'status' => 'success',
-            'generated_content_id' => (int) $db->insertID(),
-            'data' => $package,
-        ]);
     }
     
 }
