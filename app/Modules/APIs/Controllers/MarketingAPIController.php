@@ -13,7 +13,11 @@ use App\Services\MarketingService;
 use App\Models\MarketingModel;
 use App\Support\Http;
 use App\Services\Marketing\MarketingVideoService;
+use App\Services\Marketing\MarketingNotificationService;
+use App\Services\Marketing\OcrService;
+use App\Services\Marketing\TranslationService;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use Config\Database;
 
 #[\AllowDynamicProperties]
 class MarketingAPIController extends BaseAPIController
@@ -2812,6 +2816,116 @@ class MarketingAPIController extends BaseAPIController
         $records = $this->getMyMIMarketing()->getTimelineGroupedByTopic();
         $this->data['timeline'] = $records;
         return $this->renderTheme('ManagementModule\Views\Marketing\resources\timelineGroupedView', $this->data);
+    }
+
+    public function uploadNotification()
+    {
+        $file = $this->request->getFile('notification');
+        if (! $file || ! $file->isValid()) {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => 'notification file is required']);
+        }
+
+        $ext = strtolower((string) $file->getExtension());
+        if (! in_array($ext, ['png', 'jpg', 'jpeg'], true)) {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => 'Only PNG/JPG uploads are supported']);
+        }
+
+        $uploadDir = FCPATH . 'uploads/notifications';
+        if (! is_dir($uploadDir)) {
+            @mkdir($uploadDir, 0775, true);
+        }
+
+        $name = $file->getRandomName();
+        $file->move($uploadDir, $name, true);
+        $absolutePath = $uploadDir . DIRECTORY_SEPARATOR . $name;
+        $publicPath = 'uploads/notifications/' . $name;
+
+        $ocr = new OcrService();
+        $translation = new TranslationService();
+        $rawText = $ocr->extractText($absolutePath);
+        $translated = $translation->translate($rawText, 'en');
+        $summary = (string) $this->MyMIMarketing->summarizeText($translated);
+        $keywords = $this->MyMIMarketing->extractKeywordsFromSummary($summary);
+
+        $db = Database::connect();
+        $auth = service('authentication');
+        $db->table('bf_marketing_notifications')->insert([
+            'user_id' => (int) (($auth && method_exists($auth, 'id')) ? ($auth->id() ?? 0) : 0),
+            'source_name' => (string) $this->request->getPost('source_name'),
+            'file_path' => $publicPath,
+            'raw_text' => $rawText,
+            'translated_text' => $translated,
+            'summary' => $summary,
+            'keywords' => json_encode($keywords),
+            'created_at' => date('Y-m-d H:i:s'),
+            'processed_at' => date('Y-m-d H:i:s'),
+            'status' => 'processed',
+        ]);
+
+        $notificationId = (int) $db->insertID();
+
+        return Http::jsonSuccess([
+            'status' => 'success',
+            'upload_id' => $notificationId,
+            'raw_text' => $rawText,
+            'translated_text' => $translated,
+            'summary' => $summary,
+            'keywords' => $keywords,
+        ]);
+    }
+
+    public function getStoryUpdates()
+    {
+        $db = Database::connect();
+        $stories = $db->table('bf_marketing_stories')
+            ->orderBy('updated_at', 'DESC')
+            ->limit(50)
+            ->get()
+            ->getResultArray();
+
+        foreach ($stories as &$story) {
+            $story['updates'] = $db->table('bf_marketing_story_updates')
+                ->where('story_id', (int) $story['id'])
+                ->orderBy('id', 'DESC')
+                ->get()
+                ->getResultArray();
+        }
+        unset($story);
+
+        return Http::jsonSuccess(['status' => 'success', 'stories' => $stories]);
+    }
+
+    public function generateMarketingPackage()
+    {
+        $input = $this->request->getJSON(true) ?: $this->request->getPost();
+        $notificationId = (int) ($input['notification_id'] ?? 0);
+        if ($notificationId < 1) {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => 'notification_id is required']);
+        }
+
+        $db = Database::connect();
+        $notification = $db->table('bf_marketing_notifications')->where('id', $notificationId)->get()->getRowArray();
+        if (! $notification) {
+            return $this->failNotFound('Notification not found');
+        }
+
+        $workflow = new MarketingNotificationService($this->MyMIMarketing);
+        $storyId = $workflow->attachToStory($notification);
+        $package = $workflow->generateMarketingPackage($notification, $storyId);
+
+        $db->table('bf_marketing_generated_content')->insert([
+            'notification_id' => $notificationId,
+            'story_id' => $storyId,
+            'content_json' => json_encode($package),
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        return Http::jsonSuccess([
+            'status' => 'success',
+            'generated_content_id' => (int) $db->insertID(),
+            'data' => $package,
+        ]);
     }
     
 }

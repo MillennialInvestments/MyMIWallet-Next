@@ -920,6 +920,27 @@ class MyMIMarketing
         }
         return $summary;
     }
+
+    public function extractKeywordsFromSummary(string $summary): array
+    {
+        $summary = trim($summary);
+        if ($summary === '') {
+            return [];
+        }
+
+        try {
+            $extractor = new KeywordExtractor();
+            $keywords = $extractor->getKeywords($summary);
+            if (!empty($keywords)) {
+                return $keywords;
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'extractKeywordsFromSummary(): KeywordExtractor failed: ' . $e->getMessage());
+        }
+
+        // Fallback to existing extractor flow.
+        return $this->extractKeywords($summary, $this->fallbackKeywordExtraction($summary));
+    }
     
     public function extractKeywords(array $sentences, array $fallback = [], array $alertContext = []): array
     {
