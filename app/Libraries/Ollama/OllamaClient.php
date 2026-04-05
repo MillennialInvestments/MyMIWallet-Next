@@ -27,6 +27,7 @@ class OllamaClient
         $payload = $this->buildGeneratePayload($prompt, $options);
         $preferInternal = (bool) ($options['prefer_internal'] ?? false);
         $baseUrl = rtrim((string) ($options['base_url'] ?? $this->config->getResolvedBaseUrl($preferInternal)), '/');
+        $url = $baseUrl . '/api/generate';
         $timeout = (int) ($options['timeout'] ?? $this->config->timeout);
         $maxTokens = (int) ($payload['options']['num_predict'] ?? $this->config->maxTokens);
         $model = (string) ($payload['model'] ?? $this->config->defaultChatModel);
@@ -52,7 +53,7 @@ class OllamaClient
                 'timeout' => $timeout,
                 'max_tokens' => $maxTokens,
             ]);
-            $response = $client->post($baseUrl . '/api/generate', ['json' => $payload]);
+            $response = $client->post($url, ['json' => $payload]);
         } catch (Throwable $e) {
             throw new RuntimeException('Unable to reach Ollama API: ' . $e->getMessage(), 0, $e);
         }

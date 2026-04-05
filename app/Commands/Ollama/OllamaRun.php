@@ -23,7 +23,7 @@ class OllamaRun extends BaseOllamaCommand
         '--profile' => 'Governance profile override.',
         '--format' => 'Output format. Supported: markdown.',
         '--timeout' => 'HTTP timeout (seconds). Defaults to Config\\Ollama::timeout.',
-        '--prefer-internal' => 'Set to 1 to target OLLAMA_INTERNAL_BASE_URL for same-server execution.',
+        '--prefer-internal' => 'Set to 1 to target OLLAMA_INTERNAL_BASE_URL for same-server execution (default: true).',
         '--overwrite' => 'Set to 1 to overwrite existing output file.',
         '--job-dir' => 'Patch-job directory containing ollama_prompt.md.',
         '--system' => 'Optional system prompt for Ollama /api/generate.',
@@ -73,7 +73,9 @@ class OllamaRun extends BaseOllamaCommand
             $format = strtolower(trim((string) ($flags['format'] ?? 'markdown')));
             $system = trim((string) ($flags['system'] ?? ''));
             $timeout = (int) ($flags['timeout'] ?? $config->timeout);
-            $preferInternal = $this->toBool($flags['prefer-internal'] ?? false);
+            $preferInternal = array_key_exists('prefer-internal', $flags)
+                ? $this->toBool($flags['prefer-internal'])
+                : true;
             $resolvedBaseUrl = $config->getResolvedBaseUrl($preferInternal);
             $overwrite = $this->toBool($flags['overwrite'] ?? false);
             $maxTokensOverride = isset($flags['max-tokens']) ? (int) $flags['max-tokens'] : null;
@@ -128,6 +130,7 @@ class OllamaRun extends BaseOllamaCommand
             $metadata['prompt_sha1'] = sha1($prompt);
             $metadata['prompt_length'] = strlen($prompt);
             $metadata['timeout'] = $timeout;
+            $metadata['prefer_internal'] = $preferInternal;
 
             $profileData = $client->resolveProfile(is_string($profileOverride) ? $profileOverride : null);
             $profile = (string) $profileData['name'];
@@ -155,6 +158,8 @@ class OllamaRun extends BaseOllamaCommand
             log_message('debug', '[ollama:run] model=' . $model);
             log_message('debug', '[ollama:run] profile=' . $profile);
             log_message('debug', '[ollama:run] timeout=' . $timeout);
+            log_message('debug', '[ollama:run] resolvedBaseUrl=' . $resolvedBaseUrl);
+            log_message('debug', '[ollama:run] preferInternal=' . ($preferInternal ? 'true' : 'false'));
             log_message('debug', '[ollama:run] effectiveMaxTokens=' . $effectiveMaxTokens);
             log_message('debug', '[ollama:run] promptLength=' . strlen($prompt));
 
