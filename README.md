@@ -79,3 +79,34 @@ Additionally, make sure that the following extensions are enabled in your PHP:
 - Runtime overrides are applied after boot using `App\Libraries\SiteSettingsRuntime`.
 - Executive dashboard aggregation is centralized in `App\Services\DashboardService` with user-scoped cache keys and a 120-second TTL.
 - Budget mutations invalidate dashboard summary cache through `DashboardService::invalidateExecutiveDashboardSummary()` to prevent stale data.
+
+## Centralized AIOPS + Ollama Endpoint Model (CI4)
+
+MyMI Wallet now resolves orchestration and LLM endpoints with an environment-driven model that is compatible with CI4, DreamHost, and PHP 8.2:
+
+- **Primary AIOPS endpoint**: `https://aiops.timothyburks.com`
+- **Primary public Ollama endpoint**: `https://ollama.timothyburks.com`
+- **Optional same-server fallback**: `http://127.0.0.1:11434` (use only for explicitly internal CLI/server-side tasks)
+
+Recommended `.env` values:
+
+```dotenv
+AIOPS_MODE=remote
+AIOPS_BASE_URL=https://aiops.timothyburks.com
+AIOPS_APP_KEY=mymiwallet
+AIOPS_SHARED_SECRET=replace-with-shared-secret
+AIOPS_REQUEST_TIMEOUT=30
+
+OLLAMA_MODE=remote
+OLLAMA_BASE_URL=https://ollama.timothyburks.com
+OLLAMA_INTERNAL_BASE_URL=http://127.0.0.1:11434
+OLLAMA_DEFAULT_CHAT_MODEL=qwen2.5-coder:0.5b
+OLLAMA_DEFAULT_EMBED_MODEL=mxbai-embed-large:latest
+OLLAMA_TIMEOUT=180
+OLLAMA_MAX_TOKENS=100
+```
+
+Notes:
+- Do not commit real shared secrets.
+- App identity headers (`X-App-Key`, `X-App-Timestamp`, `X-App-Signature`) are wired for centralized AIOPS requests.
+- Ollama commands support `--prefer-internal=1` when same-server jobs must use local Ollama.

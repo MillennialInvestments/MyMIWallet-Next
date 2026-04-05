@@ -22,6 +22,7 @@ class OllamaRun extends BaseOllamaCommand
         '--profile' => 'Governance profile override.',
         '--format' => 'Output format. Supported: markdown.',
         '--timeout' => 'HTTP timeout (seconds). Defaults to Config\\Ollama::timeout.',
+        '--prefer-internal' => 'Set to 1 to target OLLAMA_INTERNAL_BASE_URL for same-server execution.',
         '--overwrite' => 'Set to 1 to overwrite existing output file.',
         '--job-dir' => 'Patch-job directory containing ollama_prompt.md.',
         '--system' => 'Optional system prompt for Ollama /api/generate.',
@@ -39,7 +40,7 @@ class OllamaRun extends BaseOllamaCommand
             'success' => false,
             'profile' => null,
             'model' => null,
-            'base_url' => $config->baseUrl,
+            'base_url' => $config->getResolvedBaseUrl(false),
             'prompt_file' => null,
             'output_file' => null,
             'started_at' => $startedAt,
@@ -68,6 +69,8 @@ class OllamaRun extends BaseOllamaCommand
             $format = strtolower(trim((string) ($flags['format'] ?? 'markdown')));
             $system = trim((string) ($flags['system'] ?? ''));
             $timeout = (int) ($flags['timeout'] ?? $config->timeout);
+            $preferInternal = $this->toBool($flags['prefer-internal'] ?? false);
+            $resolvedBaseUrl = $config->getResolvedBaseUrl($preferInternal);
             $overwrite = $this->toBool($flags['overwrite'] ?? false);
 
             if ($file === '' && $jobDir === '') {
@@ -116,7 +119,7 @@ class OllamaRun extends BaseOllamaCommand
             $metadata['prompt_file'] = $file;
             $metadata['output_file'] = $output;
             $metadata['model'] = $model;
-            $metadata['base_url'] = $config->baseUrl;
+            $metadata['base_url'] = $resolvedBaseUrl;
             $metadata['prompt_sha1'] = sha1($prompt);
 
             $profileData = $client->resolveProfile(is_string($profileOverride) ? $profileOverride : null);
@@ -141,7 +144,7 @@ class OllamaRun extends BaseOllamaCommand
                 'max_tokens' => $effectiveMaxTokens,
                 'timeout' => $timeout,
                 'system' => $system,
-                'base_url' => $config->baseUrl,
+                'base_url' => $resolvedBaseUrl,
             ]);
 
             $markdown = $this->buildMarkdownOutput(

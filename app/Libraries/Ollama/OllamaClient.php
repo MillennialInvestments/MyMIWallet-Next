@@ -25,8 +25,11 @@ class OllamaClient
     public function generate(string $prompt, array $options = []): array
     {
         $payload = $this->buildGeneratePayload($prompt, $options);
-        $baseUrl = rtrim((string) ($options['base_url'] ?? $this->config->baseUrl), '/');
+        $preferInternal = (bool) ($options['prefer_internal'] ?? false);
+        $baseUrl = rtrim((string) ($options['base_url'] ?? $this->config->getResolvedBaseUrl($preferInternal)), '/');
         $timeout = (int) ($options['timeout'] ?? $this->config->timeout);
+        $maxTokens = (int) ($payload['options']['num_predict'] ?? $this->config->maxTokens);
+        $model = (string) ($payload['model'] ?? $this->config->defaultChatModel);
 
         $client = Services::curlrequest([
             'timeout' => $timeout,
@@ -38,6 +41,13 @@ class OllamaClient
         ]);
 
         try {
+            log_message('debug', 'Ollama generate resolved config', [
+                'base_url' => $baseUrl,
+                'mode' => $this->config->mode,
+                'model' => $model,
+                'timeout' => $timeout,
+                'max_tokens' => $maxTokens,
+            ]);
             $response = $client->post($baseUrl . '/api/generate', ['json' => $payload]);
         } catch (Throwable $e) {
             throw new RuntimeException('Unable to reach Ollama API: ' . $e->getMessage(), 0, $e);

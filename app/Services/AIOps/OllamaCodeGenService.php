@@ -10,7 +10,10 @@ class OllamaCodeGenService
 {
     public function __construct(
         private string $ollamaUrl,
-        private string $model
+        private string $model,
+        private int $timeout = 60,
+        private int $maxTokens = 1200,
+        private string $mode = 'remote'
     ) {}
 
     /**
@@ -44,10 +47,17 @@ class OllamaCodeGenService
     {
         /** @var CURLRequest $http */
         $http = Services::curlrequest([
-            'timeout' => 60,
+            'timeout' => $this->timeout,
         ]);
 
         try {
+            log_message('debug', 'AIOps codegen Ollama resolved config', [
+                'base_url' => $this->ollamaUrl,
+                'mode' => $this->mode,
+                'model' => $this->model,
+                'timeout' => $this->timeout,
+                'max_tokens' => $this->maxTokens,
+            ]);
             $res = $http->post($this->ollamaUrl . '/api/generate', [
                 'json' => [
                     'model' => $this->model,
@@ -55,7 +65,7 @@ class OllamaCodeGenService
                     'stream' => false,
                     'options' => [
                         'temperature' => 0.2,
-                        'num_predict' => 1200,
+                        'num_predict' => $this->maxTokens,
                     ],
                 ],
             ]);

@@ -3,14 +3,18 @@
 namespace App\Libraries\AiOps;
 
 use Config\Services;
+use Config\Ollama as OllamaConfig;
 
 class OllamaClient
 {
     protected string $baseUrl;
+    protected OllamaConfig $config;
 
-    public function __construct(?string $baseUrl = null)
+    public function __construct(?string $baseUrl = null, ?OllamaConfig $config = null, bool $preferInternal = false)
     {
-        $this->baseUrl = rtrim($baseUrl ?? env('OLLAMA_BASE_URL') ?: 'http://localhost:11434', '/');
+        $this->config = $config ?? config(OllamaConfig::class);
+        $resolved = $baseUrl ?? $this->config->getResolvedBaseUrl($preferInternal);
+        $this->baseUrl = rtrim($resolved, '/');
     }
 
     public function generate(string $model, string $prompt, array $options = []): array
@@ -21,10 +25,21 @@ class OllamaClient
             'prompt' => $prompt,
             'stream' => false,
         ], $options);
+        $timeout = (int) ($options['timeout'] ?? $this->config->timeout);
+        $maxTokens = (int) ($payload['options']['num_predict'] ?? $this->config->maxTokens);
+
+        log_message('debug', 'AIOps Ollama client resolved config', [
+            'base_url' => $this->baseUrl,
+            'mode' => $this->config->mode,
+            'model' => $model,
+            'timeout' => $timeout,
+            'max_tokens' => $maxTokens,
+        ]);
 
         $response = $client->post($this->baseUrl . '/api/generate', [
             'headers' => ['Content-Type' => 'application/json'],
             'json'    => $payload,
+            'timeout' => $timeout,
         ]);
 
         return [

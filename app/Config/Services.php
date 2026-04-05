@@ -82,9 +82,14 @@ class Services extends CoreServices
     public static function aiopsOllamaCodeGen(bool $getShared = true)
     {
         if ($getShared) return static::getSharedInstance('aiopsOllamaCodeGen');
+        $ollamaConfig = config(\Config\Ollama::class);
+
         return new \App\Services\AIOps\OllamaCodeGenService(
-            rtrim((string) env('OLLAMA_URL', 'http://127.0.0.1:11434'), '/'),
-            (string) env('OLLAMA_MODEL', 'qwen2.5-coder:7b')
+            $ollamaConfig->getResolvedBaseUrl(false),
+            (string) env('OLLAMA_MODEL', $ollamaConfig->defaultChatModel),
+            $ollamaConfig->timeout,
+            $ollamaConfig->maxTokens,
+            $ollamaConfig->mode
         );
     }
 
