@@ -68,20 +68,6 @@ class MarketingAPIController extends BaseAPIController
         $this->marketingVideoService = new MarketingVideoService();
     }
 
-    public function generateKimiSummaries()
-    {
-        $records = $this->marketingModel->getRecentTempScraperRecords(10);
-        $result  = $this->MyMIMarketing->generateSummaryWithKimi($records);
-        return $this->response->setJSON(['status' => 'success', 'data' => $result]);
-    }
-
-    public function generateKimiPosts()
-    {
-        $summaries = $this->marketingModel->getRecentSummaries(5);
-        $result = $this->MyMIMarketing->generateSocialPostsWithKimi($summaries);
-        return $this->response->setJSON(['status' => 'success', 'data' => $result]);
-    }
-
     public function approveBufferItem($id)
     {
         $record = $this->marketingModel->findFinalizedById($id);
@@ -957,6 +943,74 @@ class MarketingAPIController extends BaseAPIController
         }
     
         return Http::jsonSuccess(['status' => 'success', 'inserted' => $processed], 200);
+    }
+
+    public function generateKimiSummaries()
+    {
+        $records = $this->marketingModel->getRecentTempScraperRecords(10);
+        $result  = $this->MyMIMarketing->generateSummaryWithKimi($records);
+        return $this->response->setJSON(['status' => 'success', 'data' => $result]);
+    }
+
+    public function generateKimiPosts()
+    {
+        $summaries = $this->marketingModel->getRecentSummaries(5);
+        $result = $this->MyMIMarketing->generateSocialPostsWithKimi($summaries);
+        return $this->response->setJSON(['status' => 'success', 'data' => $result]);
+    }
+
+    public function generateMarketingPackage()
+    {
+        $headlines = $this->request->getPost('headlines');
+        if (!$headlines) {
+            $headline = $this->request->getPost('headline');
+            $headlines = $headline ? [$headline] : [];
+        }
+
+        $packages = [];
+
+        foreach ($headlines as $headline) {
+            // 1. Summarize headline
+            $summary = $this->MyMIMarketing->summarizeText($headline);
+
+            // 2. Extract keywords (use your existing keyword extractor)
+            $keywords = $this->MyMIMarketing->extractKeywordsFromSummary($summary);
+
+            // 3. Generate social posts (returns array keyed by platform)
+            $socialPosts = $this->MyMIMarketing->generateUnifiedSocialPosts($summary, $keywords);
+            // ↑ This function already produces platform‑specific posts:contentReference[oaicite:0]{index=0}.
+
+            // 4. Build voiceover script and audio
+            $voiceScript = $this->MyMIMarketing->generateVoiceoverScriptFromSummary($summary);
+            // ↑ Generates a narrative script from the summary:contentReference[oaicite:1]{index=1}.
+            $audioFile = $this->MyMIMarketing->generateVoiceoverAudio($voiceScript, 'marketing-' . time() . '.mp3');
+            // ↑ Uses Google Cloud TTS to produce an MP3:contentReference[oaicite:2]{index=2}.
+
+            // 5. Generate video scripts
+            $videoScripts = [
+                'tiktok'  => $this->MyMIMarketing->generateTikTokScript($summary),
+                'youtube' => $this->MyMIMarketing->generateYouTubeScript($summary)
+            ];
+
+            // 6. Generate a branded image (function to implement)
+            $imageUrl = $this->MyMIMarketing->generateMarketingImage($headline, $keywords);
+
+            $packages[] = [
+                'headline'      => $headline,
+                'summary'       => $summary,
+                'keywords'      => $keywords,
+                'social_posts'  => $socialPosts,
+                'voice_script'  => $voiceScript,
+                'audio_url'     => $audioFile,
+                'video_scripts' => $videoScripts,
+                'image_url'     => $imageUrl
+            ];
+        }
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data'   => $packages
+        ]);
     }
     
     public function generateFromSimilar($tempId)

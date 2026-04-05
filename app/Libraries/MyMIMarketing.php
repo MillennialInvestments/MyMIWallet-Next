@@ -6066,6 +6066,29 @@ class MyMIMarketing
         return site_url('API/Marketing/downloadVoiceover/' . basename($filePath));
     }
 
+    public function generateMarketingImage(string $headline, array $keywords): string
+    {
+        // 1. Create a prompt for image generation.
+        $prompt = "Abstract illustration of " . $headline . 
+                ", finance themed, modern, dark teal and gold";
+
+        // 2. Call the imagegen tool via ChatGPT to create a background image.
+        // This call happens outside of your PHP code; here you can call the tool
+        // using an internal job or separate script. For example:
+        // $background = $this->callImageGenAPI($prompt);
+
+        // 3. Load the MyMI logo (stored in /public/assets/images/mymi_logo.png)
+        // and overlay it on the bottom right of the generated background using PHP GD.
+        // Example:
+        // $bg = imagecreatefrompng($background);
+        // $logo = imagecreatefrompng(ROOTPATH.'public/assets/images/mymi_logo.png');
+        // imagecopyresampled($bg, $logo, ... positioning ...);
+        // imagepng($bg, $outputPath);
+
+        // 4. Store the final image in /uploads/marketing/ and return its URL.
+        // return base_url('uploads/marketing/'.$filename);
+    }
+
     public function generateStockInformation($cuID)
     {
         $MyMIInvestments = new MyMIInvestments();

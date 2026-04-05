@@ -948,6 +948,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('Financial-News', 'MarketingAPIController::financialNews');
         $routes->post('generateAutomatedContent', 'MarketingAPIController::generateAutomatedContent');
         $routes->get('generateContent', 'MarketingAPIController::generateContent');
+        $routes->post('generateMarketingPackage', 'MarketingAPIController::generateMarketingPackage');
         $routes->get('generateNewsletter', 'MarketingAPIController::generateNewsletterContent');
         $routes->get('getRecentScrapes', 'MarketingAPIController::getRecentScrapes');
         $routes->get('Grouped-Content-Drafts', 'MarketingAPIController::generateGroupedContentDrafts');
