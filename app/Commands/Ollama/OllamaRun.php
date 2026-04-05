@@ -17,6 +17,7 @@ class OllamaRun extends BaseOllamaCommand
     protected $usage = 'ollama:run --file="./docs/_aiops/patch_jobs/{job-id}/ollama_prompt.md"';
     protected $options = [
         '--file' => 'Prompt file path. If omitted, --job-dir/ollama_prompt.md is used.',
+        '--max-tokens' => 'Max output tokens. Defaults to Config\\Ollama/profile limits.',
         '--model' => 'Model override. Defaults to Config\\Ollama::defaultChatModel.',
         '--output' => 'Output file path. Defaults to prompt dir/ollama_response.md.',
         '--profile' => 'Governance profile override.',
@@ -49,6 +50,9 @@ class OllamaRun extends BaseOllamaCommand
             'prompt_sha1' => null,
             'response_sha1' => null,
             'response_length' => 0,
+            'prompt_length' => 0,
+            'timeout' => 0,
+            'effective_max_tokens' => 0,
             'total_duration' => 0,
             'load_duration' => 0,
             'prompt_eval_count' => 0,
@@ -72,6 +76,7 @@ class OllamaRun extends BaseOllamaCommand
             $preferInternal = $this->toBool($flags['prefer-internal'] ?? false);
             $resolvedBaseUrl = $config->getResolvedBaseUrl($preferInternal);
             $overwrite = $this->toBool($flags['overwrite'] ?? false);
+            $maxTokensOverride = isset($flags['max-tokens']) ? (int) $flags['max-tokens'] : null;
 
             if ($file === '' && $jobDir === '') {
                 throw new RuntimeException('Missing required input. Provide --file or --job-dir.');
@@ -121,6 +126,8 @@ class OllamaRun extends BaseOllamaCommand
             $metadata['model'] = $model;
             $metadata['base_url'] = $resolvedBaseUrl;
             $metadata['prompt_sha1'] = sha1($prompt);
+            $metadata['prompt_length'] = strlen($prompt);
+            $metadata['timeout'] = $timeout;
 
             $profileData = $client->resolveProfile(is_string($profileOverride) ? $profileOverride : null);
             $profile = (string) $profileData['name'];
@@ -129,7 +136,13 @@ class OllamaRun extends BaseOllamaCommand
             $client->assertModelAllowed($model, $profile);
 
             $profileMaxTokens = (int) ($settings['max_tokens'] ?? $config->maxTokens);
-            $effectiveMaxTokens = max(1, min($config->maxTokens, $profileMaxTokens));
+
+            $baseMaxTokens = ($maxTokensOverride !== null && $maxTokensOverride > 0)
+                ? $maxTokensOverride
+                : $config->maxTokens;
+
+            $effectiveMaxTokens = max(1, min($baseMaxTokens, $profileMaxTokens));
+            $metadata['effective_max_tokens'] = $effectiveMaxTokens;
 
             if (($settings['pii_redaction'] ?? false) === true) {
                 $prompt = $this->applyPiiRedactionStub($prompt);
@@ -138,6 +151,12 @@ class OllamaRun extends BaseOllamaCommand
             if ($format !== 'markdown') {
                 throw new RuntimeException('Unsupported format: ' . $format . '. Only markdown is supported.');
             }
+
+            log_message('debug', '[ollama:run] model=' . $model);
+            log_message('debug', '[ollama:run] profile=' . $profile);
+            log_message('debug', '[ollama:run] timeout=' . $timeout);
+            log_message('debug', '[ollama:run] effectiveMaxTokens=' . $effectiveMaxTokens);
+            log_message('debug', '[ollama:run] promptLength=' . strlen($prompt));
 
             $result = $client->generate($prompt, [
                 'model' => $model,
@@ -231,9 +250,6 @@ class OllamaRun extends BaseOllamaCommand
             . $response . "\n";
     }
 
-    /**
-     * Placeholder for future repository-level PII redaction integration.
-     */
     private function applyPiiRedactionStub(string $prompt): string
     {
         return $prompt;

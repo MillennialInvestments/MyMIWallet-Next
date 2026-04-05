@@ -40,6 +40,10 @@ class OllamaClient
             ],
         ]);
 
+        log_message('debug', '[ollama.generate] url=' . $url);
+        log_message('debug', '[ollama.generate] model=' . (string) ($payload['model'] ?? ''));
+        log_message('debug', '[ollama.generate] prompt_length=' . strlen($prompt));
+
         try {
             log_message('debug', 'Ollama generate resolved config', [
                 'base_url' => $baseUrl,
@@ -57,7 +61,10 @@ class OllamaClient
         $body = (string) $response->getBody();
 
         if ($status !== 200) {
-            throw new RuntimeException('Ollama API returned HTTP ' . $status . '.');
+            log_message('error', '[ollama.generate] http_status=' . $status . ' body=' . substr($body, 0, 500));
+            throw new RuntimeException(
+                'Ollama API returned HTTP ' . $status . ' for ' . $url . '. Body: ' . substr($body, 0, 300)
+            );
         }
 
         $decoded = json_decode($body, true);

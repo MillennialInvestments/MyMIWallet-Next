@@ -20,32 +20,51 @@ class Ollama extends BaseConfig
     public bool $allowShellFallback = false;
     public bool $writeSidecarJson = true;
 
-
     /**
      * @var array<string, array<string, mixed>>
      */
     public array $profiles = [
         'default' => [
-            'allowed_models' => ['llama3.2:latest', 'mxbai-embed-large:latest'],
-            'max_tokens' => 1200,
+            'allowed_models' => [
+                'llama3.2:latest',
+                'qwen2.5-coder:0.5b',
+                'qwen2.5-coder:3b',
+                'mxbai-embed-large:latest',
+            ],
+            'max_tokens' => 100,
             'require_logging' => true,
             'pii_redaction' => false,
         ],
         'aiops' => [
-            'allowed_models' => ['llama3.2:latest', 'mxbai-embed-large:latest'],
-            'max_tokens' => 1200,
+            'allowed_models' => [
+                'llama3.2:latest',
+                'qwen2.5-coder:0.5b',
+                'qwen2.5-coder:3b',
+                'mxbai-embed-large:latest',
+            ],
+            'max_tokens' => 100,
             'require_logging' => true,
             'pii_redaction' => true,
         ],
         'marketing' => [
-            'allowed_models' => ['llama3.2:latest'],
-            'max_tokens' => 800,
+            'allowed_models' => [
+                'llama3.2:latest',
+                'qwen2.5-coder:0.5b',
+                'qwen2.5-coder:3b',
+                'mxbai-embed-large:latest',
+            ],
+            'max_tokens' => 100,
             'require_logging' => true,
             'pii_redaction' => true,
         ],
         'alerts' => [
-            'allowed_models' => ['llama3.2:latest'],
-            'max_tokens' => 600,
+            'allowed_models' => [
+                'llama3.2:latest',
+                'qwen2.5-coder:0.5b',
+                'qwen2.5-coder:3b',
+                'mxbai-embed-large:latest',
+            ],
+            'max_tokens' => 100,
             'require_logging' => true,
             'pii_redaction' => true,
         ],
@@ -64,8 +83,18 @@ class Ollama extends BaseConfig
         $this->defaultEmbedModel = (string) env('OLLAMA_DEFAULT_EMBED_MODEL', $this->defaultEmbedModel);
         $this->governanceProfile = (string) env('OLLAMA_GOV_PROFILE', $this->governanceProfile);
         $this->defaultTemperature = (float) env('OLLAMA_DEFAULT_TEMPERATURE', (string) $this->defaultTemperature);
-        $allowShellFallback = filter_var(env('OLLAMA_ALLOW_SHELL_FALLBACK', $this->allowShellFallback), FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE);
-        $writeSidecarJson = filter_var(env('OLLAMA_WRITE_SIDECAR_JSON', $this->writeSidecarJson), FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE);
+
+        $allowShellFallback = filter_var(
+            env('OLLAMA_ALLOW_SHELL_FALLBACK', $this->allowShellFallback),
+            FILTER_VALIDATE_BOOL,
+            FILTER_NULL_ON_FAILURE
+        );
+
+        $writeSidecarJson = filter_var(
+            env('OLLAMA_WRITE_SIDECAR_JSON', $this->writeSidecarJson),
+            FILTER_VALIDATE_BOOL,
+            FILTER_NULL_ON_FAILURE
+        );
 
         $this->allowShellFallback = $allowShellFallback ?? $this->allowShellFallback;
         $this->writeSidecarJson = $writeSidecarJson ?? $this->writeSidecarJson;
