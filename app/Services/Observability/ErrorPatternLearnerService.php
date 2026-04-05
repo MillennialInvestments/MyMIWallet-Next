@@ -161,8 +161,17 @@ class ErrorPatternLearnerService
 
     private function ollamaGenerate(string $prompt): array
     {
-        $url = rtrim((string) env('OBS_OLLAMA_URL', 'http://127.0.0.1:11434'), '/');
-        $model = (string) env('OBS_OLLAMA_MODEL', 'llama3.1');
+        $url = rtrim((string) env('OBS_OLLAMA_URL', (string) env('OLLAMA_BASE_URL', 'https://ollama.timothyburks.com')), '/');
+        $model = (string) env('OBS_OLLAMA_MODEL', (string) env('OLLAMA_DEFAULT_CHAT_MODEL', 'qwen2.5-coder:0.5b'));
+        $timeout = (int) env('OBS_OLLAMA_TIMEOUT', '20');
+
+        log_message('debug', 'Observability Ollama resolved config', [
+            'base_url' => $url,
+            'mode' => (string) env('OLLAMA_MODE', 'remote'),
+            'model' => $model,
+            'timeout' => $timeout,
+            'max_tokens' => (int) env('OLLAMA_MAX_TOKENS', '100'),
+        ]);
 
         $payload = json_encode([
             'model' => $model,
@@ -176,7 +185,7 @@ class ErrorPatternLearnerService
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
             CURLOPT_POSTFIELDS => $payload,
-            CURLOPT_TIMEOUT => 20,
+            CURLOPT_TIMEOUT => $timeout,
         ]);
 
         $resp = curl_exec($ch);

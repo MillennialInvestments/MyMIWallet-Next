@@ -149,8 +149,9 @@ abstract class BaseOllamaCommand extends SafeBaseCommand
     protected function resolveBaseUrl(array $flags): string
     {
         $cfg = config(Ollama::class);
+        $preferInternal = $this->optBool($flags, 'prefer-internal', false);
 
-        return $this->optString($flags, 'base-url', $cfg->baseUrl);
+        return $this->optString($flags, 'base-url', $cfg->getResolvedBaseUrl($preferInternal));
     }
 
     protected function resolveTimeout(array $flags): int

@@ -8,10 +8,12 @@ use CodeIgniter\Config\BaseConfig;
 
 class Ollama extends BaseConfig
 {
-    public string $baseUrl = 'http://127.0.0.1:11434';
-    public int $timeout = 30;
-    public int $maxTokens = 1200;
-    public string $defaultChatModel = 'llama3.2:latest';
+    public string $mode = 'remote';
+    public string $baseUrl = 'https://ollama.timothyburks.com';
+    public string $internalBaseUrl = 'http://127.0.0.1:11434';
+    public int $timeout = 180;
+    public int $maxTokens = 100;
+    public string $defaultChatModel = 'qwen2.5-coder:0.5b';
     public string $defaultEmbedModel = 'mxbai-embed-large:latest';
     public string $governanceProfile = 'aiops';
     public float $defaultTemperature = 0.2;
@@ -53,7 +55,9 @@ class Ollama extends BaseConfig
     {
         parent::__construct();
 
+        $this->mode = (string) env('OLLAMA_MODE', $this->mode);
         $this->baseUrl = (string) env('OLLAMA_BASE_URL', $this->baseUrl);
+        $this->internalBaseUrl = (string) env('OLLAMA_INTERNAL_BASE_URL', $this->internalBaseUrl);
         $this->timeout = (int) env('OLLAMA_TIMEOUT', (string) $this->timeout);
         $this->maxTokens = (int) env('OLLAMA_MAX_TOKENS', (string) $this->maxTokens);
         $this->defaultChatModel = (string) env('OLLAMA_DEFAULT_CHAT_MODEL', $this->defaultChatModel);
@@ -65,5 +69,20 @@ class Ollama extends BaseConfig
 
         $this->allowShellFallback = $allowShellFallback ?? $this->allowShellFallback;
         $this->writeSidecarJson = $writeSidecarJson ?? $this->writeSidecarJson;
+    }
+
+    public function getResolvedBaseUrl(bool $preferInternal = false): string
+    {
+        $mode = strtolower(trim($this->mode));
+
+        if ($preferInternal && $this->internalBaseUrl !== '') {
+            return rtrim($this->internalBaseUrl, '/');
+        }
+
+        if ($mode === 'local' && $this->internalBaseUrl !== '') {
+            return rtrim($this->internalBaseUrl, '/');
+        }
+
+        return rtrim($this->baseUrl, '/');
     }
 }

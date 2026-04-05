@@ -80,11 +80,16 @@ class OllamaClient
         return $this->request('POST', '/api/embed', $request, $baseUrl, $timeout);
     }
 
-    /** @param array<string,mixed> $payload * @return array<string,mixed> */
+    /**
+     * @param array<string,mixed> $payload
+     * @return array<string,mixed>
+     */
     protected function request(string $method, string $path, array $payload = [], string $baseUrl = '', int $timeout = 0): array
     {
-        $baseUrl = rtrim($baseUrl !== '' ? $baseUrl : $this->config->baseUrl, '/');
+        $baseUrl = rtrim($baseUrl !== '' ? $baseUrl : $this->config->getResolvedBaseUrl(false), '/');
         $timeout = $timeout > 0 ? $timeout : $this->config->timeout;
+        $maxTokens = (int) ($payload['options']['num_predict'] ?? $this->config->maxTokens);
+        $model = (string) ($payload['model'] ?? $this->config->defaultChatModel);
         $runUuid = bin2hex(random_bytes(8));
 
         try {
@@ -108,6 +113,15 @@ class OllamaClient
                 throw new RuntimeException('Ollama HTTP ' . $status . ': ' . $body);
             }
 
+            log_message('debug', 'Ollama call resolved config', [
+                'run_uuid' => $runUuid,
+                'path' => $path,
+                'base_url' => $baseUrl,
+                'mode' => $this->config->mode,
+                'model' => $model,
+                'timeout' => $timeout,
+                'max_tokens' => $maxTokens,
+            ]);
             log_message('info', 'Ollama call success', ['run_uuid' => $runUuid, 'path' => $path, 'status' => $status]);
 
             if (! is_array($data)) {
@@ -116,7 +130,16 @@ class OllamaClient
 
             return $data;
         } catch (\Throwable $e) {
-            log_message('error', 'Ollama call failure: {msg}', ['msg' => $e->getMessage(), 'run_uuid' => $runUuid, 'path' => $path]);
+            log_message('error', 'Ollama call failure: {msg}', [
+                'msg' => $e->getMessage(),
+                'run_uuid' => $runUuid,
+                'path' => $path,
+                'base_url' => $baseUrl,
+                'mode' => $this->config->mode,
+                'model' => $model,
+                'timeout' => $timeout,
+                'max_tokens' => $maxTokens,
+            ]);
             throw $e;
         }
     }
