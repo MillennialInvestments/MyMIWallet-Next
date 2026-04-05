@@ -16,8 +16,99 @@ class AiOpsServiceManager
         ],
     ];
 
+    private string $mode;
+    private string $baseUrl;
+    private string $appKey;
+    private string $sharedSecret;
+    private int $requestTimeout;
+    private bool $allowLocalRestart;
+
+    public function __construct()
+    {
+        $this->mode = strtolower((string) env('AIOPS_MODE', 'remote'));
+        $this->baseUrl = rtrim((string) env('AIOPS_BASE_URL', 'https://aiops.timothyburks.com'), '/');
+        $this->appKey = (string) env('AIOPS_APP_KEY', 'mymiwallet');
+        $this->sharedSecret = (string) env('AIOPS_SHARED_SECRET', '');
+        $this->requestTimeout = max(1, (int) env('AIOPS_REQUEST_TIMEOUT', '30'));
+        $this->allowLocalRestart = filter_var((string) env('AIOPS_ALLOW_LOCAL_RESTART', 'false'), FILTER_VALIDATE_BOOLEAN);
+    }
+
     /** @return array<string, mixed> */
     public function ensureServiceRunning(string $serviceName): array
+    {
+        if ($this->mode === 'remote') {
+            return $this->checkRemoteStatus($serviceName);
+        }
+
+        return $this->checkLocalStatus($serviceName);
+    }
+
+    /** @return array<string, mixed> */
+    private function checkRemoteStatus(string $serviceName): array
+    {
+        $endpoint = $this->baseUrl . '/health';
+        log_message('debug', '[aiops:status] resolved remote config', [
+            'mode' => $this->mode,
+            'base_url' => $this->baseUrl,
+            'health_endpoint' => $endpoint,
+            'app_key' => $this->appKey,
+            'timeout' => $this->requestTimeout,
+        ]);
+
+        if ($this->baseUrl === '') {
+            return [
+                'service_name' => $serviceName,
+                'status' => 'degraded',
+                'mode' => 'remote',
+                'health_status' => 'missing_base_url',
+                'notes' => 'AIOPS_BASE_URL is empty',
+                'remote_endpoint' => null,
+                'port_listening' => null,
+                'restarted' => false,
+            ];
+        }
+
+        $request = $this->requestRemoteHealth($endpoint);
+        if (($request['http_code'] ?? 0) === 404) {
+            $endpoint = $this->baseUrl . '/status';
+            $request = $this->requestRemoteHealth($endpoint);
+        }
+
+        log_message('debug', '[aiops:status] remote health response', [
+            'endpoint' => $endpoint,
+            'http_code' => $request['http_code'] ?? 0,
+            'body' => $request['body'] ?? null,
+            'decoded' => $request['decoded'] ?? null,
+            'curl_error' => $request['error'] ?? null,
+        ]);
+
+        $decoded = is_array($request['decoded'] ?? null) ? $request['decoded'] : [];
+        $healthy = ($request['http_code'] ?? 0) >= 200 && ($request['http_code'] ?? 0) < 300;
+
+        return [
+            'service_name' => $serviceName,
+            'status' => $healthy ? 'running' : 'degraded',
+            'mode' => 'remote',
+            'pid' => null,
+            'port' => null,
+            'last_checked_at' => date('Y-m-d H:i:s'),
+            'health_status' => $healthy ? 'healthy' : 'unhealthy',
+            'notes' => json_encode([
+                'http_code' => $request['http_code'] ?? 0,
+                'remote_status' => $decoded['status'] ?? null,
+                'remote_ok' => $decoded['ok'] ?? null,
+                'curl_error' => $request['error'] ?? null,
+            ], JSON_UNESCAPED_SLASHES),
+            'port_listening' => null,
+            'restarted' => false,
+            'health_url' => $endpoint,
+            'remote_endpoint' => $endpoint,
+            'remote_response' => $decoded,
+        ];
+    }
+
+    /** @return array<string, mixed> */
+    private function checkLocalStatus(string $serviceName): array
     {
         $service = $this->serviceMap[$serviceName] ?? null;
         if ($service === null) {
@@ -39,7 +130,7 @@ class AiOpsServiceManager
         $portListening = $lsofOutput !== '' && ! str_contains(strtolower($lsofOutput), 'not found');
         $wasRestarted = false;
 
-        if (! $portListening) {
+        if (! $portListening && $this->allowLocalRestart) {
             shell_exec((string) $service['start_command']);
             $wasRestarted = true;
             sleep(3);
@@ -57,6 +148,7 @@ class AiOpsServiceManager
         $record = [
             'service_name' => $serviceName,
             'status' => $status,
+            'mode' => 'local',
             'pid' => $pid,
             'port' => $port,
             'last_checked_at' => date('Y-m-d H:i:s'),
@@ -76,6 +168,52 @@ class AiOpsServiceManager
             'port_listening' => $portListening,
             'restarted' => $wasRestarted,
             'health_url' => $service['health_url'] ?? null,
+            'remote_endpoint' => null,
+            'remote_response' => null,
+        ];
+    }
+
+    /** @return array{http_code:int, body:string|null, decoded:array<string,mixed>|null, error:string|null} */
+    private function requestRemoteHealth(string $url): array
+    {
+        $timestamp = (string) time();
+        $signature = '';
+        if ($this->sharedSecret !== '') {
+            $signature = hash_hmac('sha256', $this->appKey . '.' . $timestamp, $this->sharedSecret);
+        }
+
+        $headers = [
+            'Accept: application/json',
+            'X-App-Key: ' . $this->appKey,
+            'X-App-Timestamp: ' . $timestamp,
+            'X-App-Signature: ' . $signature,
+        ];
+
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_TIMEOUT => $this->requestTimeout,
+        ]);
+
+        $body = curl_exec($ch);
+        $error = $body === false ? curl_error($ch) : null;
+        $httpCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        $decoded = null;
+        if (is_string($body) && $body !== '') {
+            $parsed = json_decode($body, true);
+            if (is_array($parsed)) {
+                $decoded = $parsed;
+            }
+        }
+
+        return [
+            'http_code' => $httpCode,
+            'body' => is_string($body) ? $body : null,
+            'decoded' => $decoded,
+            'error' => $error,
         ];
     }
 

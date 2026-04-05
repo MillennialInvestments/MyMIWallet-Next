@@ -7,10 +7,22 @@ namespace App\Services;
 class SubSystemManager
 {
     private array $map;
+    private string $aiopsMode;
+    private string $aiopsBaseUrl;
+    private string $aiopsAppKey;
+    private string $aiopsSharedSecret;
+    private int $aiopsTimeout;
+    private bool $allowRemoteServiceActions;
 
     public function __construct()
     {
         $chatPort = $this->resolveChatPort();
+        $this->aiopsMode = strtolower((string) env('AIOPS_MODE', 'remote'));
+        $this->aiopsBaseUrl = rtrim((string) env('AIOPS_BASE_URL', 'https://aiops.timothyburks.com'), '/');
+        $this->aiopsAppKey = (string) env('AIOPS_APP_KEY', 'mymiwallet');
+        $this->aiopsSharedSecret = (string) env('AIOPS_SHARED_SECRET', '');
+        $this->aiopsTimeout = max(1, (int) env('AIOPS_REQUEST_TIMEOUT', '30'));
+        $this->allowRemoteServiceActions = filter_var((string) env('AIOPS_ALLOW_REMOTE_SERVICE_ACTIONS', 'false'), FILTER_VALIDATE_BOOLEAN);
 
         $this->map = [
             'aiops.n8n' => [
@@ -47,6 +59,10 @@ class SubSystemManager
 
     public function status(string $service): array
     {
+        if ($service === 'aiops.n8n' && $this->aiopsMode === 'remote') {
+            return $this->remoteAiopsStatus($service);
+        }
+
         $cfg = $this->cfg($service);
         $pidFile = $this->pidFile($cfg);
         $pid = is_file($pidFile) ? (int) trim((string) file_get_contents($pidFile)) : null;
@@ -70,6 +86,7 @@ class SubSystemManager
 
         $status = [
             'service' => $service,
+            'mode' => 'local',
             'pid' => $pid,
             'pid_file' => $pidFile,
             'running' => $running,
@@ -150,6 +167,114 @@ class SubSystemManager
         ];
     }
 
+    /** @return array<string, mixed> */
+    private function remoteAiopsStatus(string $service): array
+    {
+        $endpoint = $this->aiopsBaseUrl . '/health';
+        log_message('debug', '[subsystems] remote aiops status config', [
+            'mode' => $this->aiopsMode,
+            'base_url' => $this->aiopsBaseUrl,
+            'health_endpoint' => $endpoint,
+            'app_key' => $this->aiopsAppKey,
+            'timeout' => $this->aiopsTimeout,
+        ]);
+
+        if ($this->aiopsBaseUrl === '') {
+            return [
+                'service' => $service,
+                'mode' => 'remote',
+                'status' => 'degraded',
+                'healthy' => false,
+                'issues' => ['missing_base_url'],
+                'remote_endpoint' => null,
+                'checked_at' => date('c'),
+            ];
+        }
+
+        $response = $this->remoteHealthRequest($endpoint);
+        if (($response['http_code'] ?? 0) === 404) {
+            $endpoint = $this->aiopsBaseUrl . '/status';
+            $response = $this->remoteHealthRequest($endpoint);
+        }
+
+        $decoded = is_array($response['decoded'] ?? null) ? $response['decoded'] : [];
+        $healthy = ($response['http_code'] ?? 0) >= 200 && ($response['http_code'] ?? 0) < 300;
+
+        log_message('debug', '[subsystems] remote aiops health response', [
+            'endpoint' => $endpoint,
+            'http_code' => $response['http_code'] ?? 0,
+            'body' => $response['body'] ?? null,
+            'decoded' => $decoded,
+            'curl_error' => $response['error'] ?? null,
+        ]);
+
+        return [
+            'service' => $service,
+            'mode' => 'remote',
+            'pid' => null,
+            'pid_file' => null,
+            'running' => $healthy,
+            'port' => null,
+            'port_listening' => null,
+            'healthy' => $healthy,
+            'issues' => $healthy ? [] : ['remote_healthcheck_failed'],
+            'bridge_port' => null,
+            'bridge_port_owner' => null,
+            'runtime_dir' => null,
+            'log_file' => null,
+            'error_log_file' => null,
+            'status' => $healthy ? 'running' : 'degraded',
+            'checked_at' => date('c'),
+            'remote_endpoint' => $endpoint,
+            'remote_http_code' => $response['http_code'] ?? 0,
+            'remote_response' => $decoded,
+        ];
+    }
+
+    /** @return array{http_code:int, body:string|null, decoded:array<string,mixed>|null, error:string|null} */
+    private function remoteHealthRequest(string $url): array
+    {
+        $timestamp = (string) time();
+        $signature = '';
+        if ($this->aiopsSharedSecret !== '') {
+            $signature = hash_hmac('sha256', $this->aiopsAppKey . '.' . $timestamp, $this->aiopsSharedSecret);
+        }
+
+        $headers = [
+            'Accept: application/json',
+            'X-App-Key: ' . $this->aiopsAppKey,
+            'X-App-Timestamp: ' . $timestamp,
+            'X-App-Signature: ' . $signature,
+        ];
+
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_TIMEOUT => $this->aiopsTimeout,
+        ]);
+
+        $body = curl_exec($ch);
+        $error = $body === false ? curl_error($ch) : null;
+        $httpCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        $decoded = null;
+        if (is_string($body) && $body !== '') {
+            $parsed = json_decode($body, true);
+            if (is_array($parsed)) {
+                $decoded = $parsed;
+            }
+        }
+
+        return [
+            'http_code' => $httpCode,
+            'body' => is_string($body) ? $body : null,
+            'decoded' => $decoded,
+            'error' => $error,
+        ];
+    }
+
     private function filterBySince(array $lines, string $since): array
     {
         $seconds = $this->parseSinceToSeconds($since);
@@ -196,6 +321,15 @@ class SubSystemManager
     private function executeAction(string $service, string $action, bool $dryRun): array
     {
         $cfg = $this->cfg($service);
+
+        if ($service === 'aiops.n8n' && $this->aiopsMode === 'remote' && ! $this->allowRemoteServiceActions) {
+            return [
+                'ok' => false,
+                'action' => $action,
+                'service' => $service,
+                'message' => 'AIOPS_MODE=remote: local lifecycle actions are disabled unless AIOPS_ALLOW_REMOTE_SERVICE_ACTIONS=true',
+            ];
+        }
         $lock = $this->lockFile($cfg);
         if ($this->isFreshLock($lock, 120)) {
             return ['ok' => false, 'message' => 'Action already in progress', 'lock_file' => $lock, 'action' => $action];

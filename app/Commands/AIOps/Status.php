@@ -22,19 +22,24 @@ class Status extends SafeBaseCommand
         $this->parseParams($params);
         $json = $this->optBool('json');
 
-        $mgr = $this->mgr();
+        $mode = strtolower((string) env('AIOPS_MODE', 'remote'));
         $serviceManager = new AiOpsServiceManager();
         $n8n = $serviceManager->ensureServiceRunning('n8n');
+
+        $services = ['n8n' => $n8n];
+
+        if ($mode === 'local') {
+            $mgr = $this->mgr();
+            $services['bridge_8500'] = [
+                'port_listening' => $mgr->isPortOccupied(8500),
+            ];
+        }
 
         $payload = [
             'status' => $n8n['status'] === 'running' ? 'ok' : 'degraded',
             'timestamp' => date('c'),
-            'services' => [
-                'n8n' => $n8n,
-                'bridge_8500' => [
-                    'port_listening' => $mgr->isPortOccupied(8500),
-                ],
-            ],
+            'mode' => $mode,
+            'services' => $services,
         ];
 
         $this->emit($payload, $json);
