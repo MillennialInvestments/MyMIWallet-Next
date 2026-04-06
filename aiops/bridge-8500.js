@@ -1,38 +1,91 @@
 #!/usr/bin/env node
-const http = require('http');
+const express = require('express');
 
-const PORT = Number(process.env.BRIDGE_PORT || 8500);
-const HOST = process.env.BRIDGE_HOST || '127.0.0.1';
-const STARTED_AT = new Date().toISOString();
+const PORT = Number(process.env.BRIDGE_PORT || process.env.AIOPS_PORT || 8500);
+const HOST = process.env.BRIDGE_HOST || process.env.AIOPS_HOST || '127.0.0.1';
+const STARTED_AT_ISO = new Date().toISOString();
+const startedAtMs = Date.now();
+const app = express();
 
 const log = (level, message, extra = {}) => {
   const entry = {
     ts: new Date().toISOString(),
-    component: 'aiops-bridge',
+    component: 'aiops-api',
     level,
     message,
     ...extra,
   };
+
   process.stdout.write(`${JSON.stringify(entry)}\n`);
 };
 
-const server = http.createServer((req, res) => {
-  if (req.url === '/health' || req.url === '/status') {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ ok: true, component: 'aiops-bridge', startedAt: STARTED_AT }));
-    return;
-  }
+app.use(express.json({ limit: '1mb' }));
 
-  res.writeHead(404, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify({ ok: false, error: 'Not found' }));
+app.use((req, res, next) => {
+  const requestStarted = Date.now();
+  res.on('finish', () => {
+    log('info', 'request complete', {
+      method: req.method,
+      path: req.originalUrl,
+      statusCode: res.statusCode,
+      durationMs: Date.now() - requestStarted,
+      remoteAddress: req.ip,
+    });
+  });
+  next();
 });
 
-server.listen(PORT, HOST, () => {
-  log('info', 'bridge started', { host: HOST, port: PORT });
+const runtimeMeta = () => ({
+  component: 'aiops-api',
+  controlPlane: 'aiops-primary',
+  ollamaMode: 'internal-first',
+  startedAt: STARTED_AT_ISO,
+  uptimeSeconds: Math.floor((Date.now() - startedAtMs) / 1000),
+  timestamp: new Date().toISOString(),
+});
+
+app.get('/api/health', (req, res) => {
+  res.status(200).json({
+    ok: true,
+    status: 'healthy',
+    ...runtimeMeta(),
+  });
+});
+
+app.get('/api/status', (req, res) => {
+  res.status(200).json({
+    ok: true,
+    status: 'ready',
+    stage: 'lean-core',
+    proxyRequired: false,
+    notes: [
+      'AIOPS is the primary control plane for CI4 integrations.',
+      'Ollama stays internal-first in this stage.',
+      'DreamHost public Proxy Server for Ollama can be added later if needed.',
+    ],
+    ...runtimeMeta(),
+  });
+});
+
+// Backward-compatible endpoints currently used by existing checks.
+app.get('/health', (req, res) => res.redirect(302, '/api/health'));
+app.get('/status', (req, res) => res.redirect(302, '/api/status'));
+
+app.use((req, res) => {
+  res.status(404).json({
+    ok: false,
+    status: 'not_found',
+    ...runtimeMeta(),
+    error: `Route ${req.method} ${req.originalUrl} not found`,
+  });
+});
+
+const server = app.listen(PORT, HOST, () => {
+  log('info', 'aiops api started', { host: HOST, port: PORT, pid: process.pid });
 });
 
 const shutdown = (signal) => {
-  log('info', 'bridge shutting down', { signal });
+  log('info', 'aiops api shutting down', { signal });
   server.close(() => process.exit(0));
   setTimeout(() => process.exit(0), 2000).unref();
 };

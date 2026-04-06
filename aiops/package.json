@@ -1,15 +1,25 @@
 {
   "name": "aiops",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Lightweight AIOPS control-plane API for CI4 apps",
+  "main": "bridge-8500.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node bridge-8500.js",
+    "start:api": "node bridge-8500.js",
+    "start:aiops": "./start-aiops.sh",
+    "stop:aiops": "./stop-aiops.sh",
+    "test:health": "node -e \"fetch('http://127.0.0.1:8500/api/health').then(r=>r.json()).then(j=>{console.log(JSON.stringify(j,null,2));if(!j.ok)process.exit(1);}).catch(e=>{console.error(e);process.exit(1);});\""
   },
-  "keywords": [],
+  "keywords": [
+    "aiops",
+    "ci4",
+    "express",
+    "healthcheck"
+  ],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
+    "express": "^4.21.2",
     "n8n": "^2.1.4",
     "sqlite3": "^5.1.7"
   }
