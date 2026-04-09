@@ -2,10 +2,10 @@
 
 namespace App\Commands\Marketing;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class PipelineCommand extends BaseCommand
+class Pipeline extends SafeBaseCommand
 {
     protected $group = 'Marketing';
     protected $name = 'marketing:pipeline';

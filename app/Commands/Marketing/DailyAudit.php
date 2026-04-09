@@ -2,11 +2,11 @@
 
 namespace App\Commands\Marketing;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
 
-class DailyAuditCommand extends BaseCommand
+class DailyAudit extends SafeBaseCommand
 {
     protected $group = 'Marketing';
     protected $name = 'marketing:daily-audit';

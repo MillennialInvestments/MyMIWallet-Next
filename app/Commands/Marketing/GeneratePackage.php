@@ -2,10 +2,10 @@
 
 namespace App\Commands\Marketing;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class GeneratePackageCommand extends BaseCommand
+class GeneratePackage extends SafeBaseCommand
 {
     protected $group = 'Marketing';
     protected $name = 'marketing:generate-package';
