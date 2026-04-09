@@ -13,7 +13,6 @@ use App\Services\MarketingService;
 use App\Models\MarketingModel;
 use App\Support\Http;
 use App\Services\Marketing\MarketingVideoService;
-use App\Services\Marketing\MarketingNotificationService;
 use App\Services\Marketing\OcrService;
 use App\Services\Marketing\TranslationService;
 use CodeIgniter\Exceptions\PageNotFoundException;
@@ -542,9 +541,12 @@ class MarketingAPIController extends BaseAPIController
     public function forceGenerateFromTemp($tempId)
     {
         $record = $this->marketingModel->getTempRecordById($tempId);
-        $summary = $this->MyMIMarketing->processInboundMessage($record['content']);
-        $this->marketingModel->insertFinalScraper($record, $summary, true); // true = force
-        return Http::jsonSuccess(['message' => 'Force-generated and inserted.']);
+        if (!$record) {
+            return $this->failNotFound('Record not found.');
+        }
+
+        $result = service('marketingPipelineService')->processTempScraperRecord($record + ['force' => 1]);
+        return Http::jsonSuccess(['status' => 'success', 'result' => $result]);
     }
     
     public function generateAdvisorMediaOnDemand($userId = null)
@@ -817,45 +819,14 @@ class MarketingAPIController extends BaseAPIController
     
     public function generateContentFromScraper()
     {
-        $records = $this->marketingModel->getValidUnprocessedEmails(5);
-        foreach ($records as $record) {
-            try {
-                $summary = $this->MyMIMarketing->generateContentFromRaw($record);
-                if ($summary) {
-                    $this->marketingModel->insertFinalScraper($record, $summary);
-                }
-            } catch (\Throwable $e) {
-                log_message('error', 'generateContentFromScraper(): Error processing record ID ' . ($record['id'] ?? 'unknown') . ' — ' . $e->getMessage());
-            }
-        }
+        $result = service('marketingPipelineService')->processPendingTempRecords(5);
+        return Http::jsonSuccess(['status' => 'success', 'result' => $result]);
     }
         
     public function generateContentDigestFromStored()
     {
-        $records = $this->marketingModel->getRecentUnprocessedTempEmails(5);
-        $processedTitles = [];
-    
-        foreach ($records as $record) {
-            $recordId = $record['id'] ?? 0;
-            try {
-                if (empty($record['title'])) {
-                    $record['title'] = $this->MyMIMarketing->generateHeadline($record['content']);
-                }
-    
-                $insertResult = $this->getMyMIMarketing()->generateContentAndInsert($record);
-                if ($insertResult) {
-                    $this->marketingModel->markTempScraperProcessed($recordId);
-                    $processedTitles[] = $insertResult['title'];
-                    log_message('info', "✅ Inserted content for ID {$recordId}");
-                } else {
-                    log_message('warning', "⚠️ Skipped record ID {$recordId} — summary not stored");
-                }
-            } catch (\Throwable $e) {
-                log_message('error', "❌ Exception on record ID {$recordId}: {$e->getMessage()}");
-            }
-        }
-    
-        return Http::jsonSuccess(['status' => 'complete', 'processed_titles' => $processedTitles]);
+        $result = service('marketingPipelineService')->processPendingTempRecords(5);
+        return Http::jsonSuccess(['status' => 'success', 'result' => $result]);
     }
     
     public function generateDailyContentDigest()
@@ -962,107 +933,55 @@ class MarketingAPIController extends BaseAPIController
     public function generateMarketingPackage()
     {
         $input = $this->request->getJSON(true) ?: $this->request->getPost();
+        /** @var \App\Services\MarketingPackageService $service */
+        $service = service('marketingPackageService');
+        $result = $service->generateFromInput($input);
 
-        $db = Database::connect();
-        $packages = [];
-
-        /**
-         * =========================================
-         * 1. NOTIFICATION-BASED WORKFLOW (NEW)
-         * =========================================
-         */
-        $notificationId = (int) ($input['notification_id'] ?? 0);
-
-        if ($notificationId > 0) {
-            $notification = $db->table('bf_marketing_notifications')
-                ->where('id', $notificationId)
-                ->get()
-                ->getRowArray();
-
-            if (! $notification) {
-                return $this->failNotFound('Notification not found');
-            }
-
-            $workflow = new MarketingNotificationService($this->MyMIMarketing);
-
-            $storyId = $workflow->attachToStory($notification);
-            $package = $workflow->generateMarketingPackage($notification, $storyId);
-
-            $db->table('bf_marketing_generated_content')->insert([
-                'notification_id' => $notificationId,
-                'story_id'        => $storyId,
-                'content_json'    => json_encode($package),
-                'created_at'      => date('Y-m-d H:i:s'),
-                'updated_at'      => date('Y-m-d H:i:s'),
-            ]);
-
-            return Http::jsonSuccess([
-                'status' => 'success',
-                'generated_content_id' => (int) $db->insertID(),
-                'data' => $package,
-            ]);
+        if (($result['status'] ?? 'error') !== 'success') {
+            return $this->response->setStatusCode($result['code'] ?? 422)->setJSON($result);
         }
 
-        /**
-         * =========================================
-         * 2. MANUAL HEADLINE WORKFLOW (ORIGINAL)
-         * =========================================
-         */
-        $headlines = $input['headlines'] ?? [];
+        return $this->response->setJSON($result);
+    }
 
-        if (empty($headlines) && !empty($input['headline'])) {
-            $headlines = [$input['headline']];
-        }
+    public function processPendingNotifications()
+    {
+        $result = service('marketingPipelineService')->processPendingNotifications(10);
+        return Http::jsonSuccess(['status' => 'success', 'results' => $result]);
+    }
 
-        if (empty($headlines)) {
-            return $this->response->setStatusCode(422)->setJSON([
-                'status' => 'error',
-                'message' => 'headline(s) or notification_id required'
-            ]);
-        }
+    public function processPendingTempScraper()
+    {
+        $result = service('marketingPipelineService')->processPendingTempRecords(10);
+        return Http::jsonSuccess(['status' => 'success', 'results' => $result]);
+    }
 
-        foreach ($headlines as $headline) {
+    public function processPendingCampaigns()
+    {
+        $result = service('marketingPipelineService')->processPendingCampaigns(5);
+        return Http::jsonSuccess(['status' => 'success', 'results' => $result]);
+    }
 
-            // 1. Summarize
-            $summary = $this->MyMIMarketing->summarizeText($headline);
+    public function processPendingGeneratedContent()
+    {
+        $result = service('marketingPipelineService')->processPendingGeneratedContent(10);
+        return Http::jsonSuccess(['status' => 'success', 'results' => $result]);
+    }
 
-            // 2. Keywords (TF-IDF based per your system)
-            $keywords = $this->MyMIMarketing->extractKeywordsFromSummary($summary);
+    public function runMarketingPipeline()
+    {
+        $pipeline = service('marketingPipelineService');
 
-            // 3. Social Posts (multi-platform)
-            $socialPosts = $this->MyMIMarketing->generateUnifiedSocialPosts($summary, $keywords);
+        $results = [
+            'notifications' => $pipeline->processPendingNotifications(10),
+            'temp_scraper'  => $pipeline->processPendingTempRecords(10),
+            'campaigns'     => $pipeline->processPendingCampaigns(5),
+            'distribution'  => $pipeline->processPendingGeneratedContent(10),
+        ];
 
-            // 4. Voice + Audio
-            $voiceScript = $this->MyMIMarketing->generateVoiceoverScriptFromSummary($summary);
-            $audioFile = $this->MyMIMarketing->generateVoiceoverAudio(
-                $voiceScript,
-                'marketing-' . time() . '.mp3'
-            );
-
-            // 5. Video Scripts
-            $videoScripts = [
-                'tiktok'  => $this->MyMIMarketing->generateTikTokScript($summary),
-                'youtube' => $this->MyMIMarketing->generateYouTubeScript($summary)
-            ];
-
-            // 6. Image
-            $imageUrl = $this->MyMIMarketing->generateMarketingImage($headline, $keywords);
-
-            $packages[] = [
-                'headline'      => $headline,
-                'summary'       => $summary,
-                'keywords'      => $keywords,
-                'social_posts'  => $socialPosts,
-                'voice_script'  => $voiceScript,
-                'audio_url'     => $audioFile,
-                'video_scripts' => $videoScripts,
-                'image_url'     => $imageUrl
-            ];
-        }
-
-        return $this->response->setJSON([
+        return Http::jsonSuccess([
             'status' => 'success',
-            'data'   => $packages
+            'results' => $results,
         ]);
     }
     

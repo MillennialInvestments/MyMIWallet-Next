@@ -928,6 +928,11 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->post('uploadNotification', 'MarketingAPIController::uploadNotification');
         $routes->post('getStoryUpdates', 'MarketingAPIController::getStoryUpdates');
         $routes->post('generateMarketingPackage', 'MarketingAPIController::generateMarketingPackage');
+        $routes->match(['GET', 'POST'], 'processPendingNotifications', 'MarketingAPIController::processPendingNotifications');
+        $routes->match(['GET', 'POST'], 'processPendingTempScraper', 'MarketingAPIController::processPendingTempScraper');
+        $routes->match(['GET', 'POST'], 'processPendingCampaigns', 'MarketingAPIController::processPendingCampaigns');
+        $routes->match(['GET', 'POST'], 'processPendingGeneratedContent', 'MarketingAPIController::processPendingGeneratedContent');
+        $routes->match(['GET', 'POST'], 'runMarketingPipeline', 'MarketingAPIController::runMarketingPipeline');
 
         // UI/ops endpoints (deduped from former parallel group)
         $routes->get('/', 'MarketingAPIController::index');

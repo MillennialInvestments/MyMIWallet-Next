@@ -1134,123 +1134,15 @@ class ManagementAPIController extends BaseAPIController
 
     public function generateContentDigestFromStored()
     {
-        log_message('info', 'Marketing: Starting summary generation from stored marketing emails.');
-    
-        $model = new MarketingModel();
-        $records = $model->getRecentUnprocessedTempEmails(5);
-    
-        $results = [];
-        foreach ($records as $record) {
-            if (empty($record['title']) || empty($record['content']) || strlen($record['content']) < 100) {
-                log_message('warning', "⚠️ Skipping malformed or empty record ID {$record['id']} (title/content missing).");
-                continue;
-            }            
-    
-            try {
-                $summary = $this->getMarketingService()->generateContentFromRaw($record['title'], $record['content']);
-    
-                $model->storeFinalMarketingContent([
-                    'source_id' => $record['id'],
-                    'title' => $record['title'],
-                    'summary' => $summary,
-                    'created_at' => date('Y-m-d H:i:s')
-                ]);
-    
-                $model->markTempRecordAsProcessed($record['id']);
-                $results[] = $record['title'];
-    
-            } catch (\Throwable $e) {
-                log_message('error', 'Failed to process record ID ' . $record['id'] . ': ' . $e->getMessage());
-            }
-        }
-    
-        return $this->respond(['status' => 'complete', 'processed_titles' => $results]);
+        $result = service('marketingPipelineService')->processPendingTempRecords(5);
+        return $this->respond(['status' => 'success', 'result' => $result]);
     }
     
     public function generateContentFromScraper()
     {
-        log_message('debug', '🔁 API::MarketingController::generateContentFromScraper called');
-    
-        try {
-            $limit = $this->request->getGet('limit') ?? 5;
-            $records = [];
-            $allRecords = $this->marketingModel->getValidUnprocessedEmails($limit); // fetch from model
-    
-            if (!is_array($allRecords)) {
-                log_message('error', '❌ $allRecords is not an array or null. Cannot proceed.');
-                return $this->respond(['status' => 'error', 'message' => 'Failed to fetch records.']);
-            }
-    
-            foreach ($allRecords as $record) {
-                $titleOk = !empty($record['title']);
-                $contentOk = strlen(strip_tags($record['content'] ?? '')) > 1000;
-    
-                if ($titleOk && $contentOk) {
-                    $records[] = $record;
-                    if (count($records) >= $limit) break;
-                } else {
-                    log_message('debug', "⚠️ Skipping invalid record ID {$record['id']} during prefilter (Title or content missing/too short).");
-                    $this->marketingModel->markEmailsAsProcessed([$record['id']]);
-                }
-            }
-    
-            if (empty($records)) {
-                return $this->respond(['status' => 'no_data', 'message' => 'No unprocessed records found.']);
-            }
-    
-            $processedSummaries = [];
-    
-            foreach ($records as $record) {
-                $content = $record['content'] ?? '';
-                $title = $record['title'] ?? '';
-                $recordId = $record['id'] ?? 0;
-    
-                if (empty(trim($content)) || strlen($content) < 1000) {
-                    log_message('debug', "⏭️ Skipping record ID {$recordId} - content too short or empty.");
-                    continue;
-                }
-    
-                if (empty(trim($title))) {
-                    log_message('debug', "⏭️ Skipping record ID {$recordId} - missing title.");
-                    continue;
-                }
-    
-                if (stripos($content, '<html') !== false && substr_count($content, '<') > 50) {
-                    log_message('debug', "⏭️ Skipping record ID {$recordId} - content likely raw HTML.");
-                    continue;
-                }
-    
-                try {
-                    $processed = $this->getMarketingService()->generateContentFromRaw($record);
-    
-                    if (!is_array($processed)) {
-                        log_message('debug', "⚠️ Skipped record ID {$recordId} - generateContentFromRaw() returned invalid structure.");
-                        continue;
-                    }
-    
-                    $this->marketingModel->saveFinalizedMarketingContent($processed);
-                    $this->marketingModel->markEmailsAsProcessed([$recordId]);
-    
-                    $processedSummaries[] = [
-                        'id'       => $recordId,
-                        'title'    => $processed['headline'] ?? $title,
-                        'summary'  => $processed['summary'] ?? '',
-                        'keywords' => $processed['keywords'] ?? [],
-                    ];
-                } catch (\Throwable $e) {
-                    log_message('error', "❌ Failed to process record ID {$recordId}: {$e->getMessage()}");
-                }
-            }
-    
-            return $this->respond([
-                'status'  => 'success',
-                'message' => count($processedSummaries) . ' records processed successfully.',
-                'data'    => $processedSummaries
-            ]);
-        } catch (\Throwable $e) {
-            log_message('error', '❌ API::generateContentFromScraper error - ' . $e->getMessage());
-            return $this->failServerError($e->getMessage());
-        }
+        $limit = (int) ($this->request->getGet('limit') ?? 5);
+        $result = service('marketingPipelineService')->processPendingTempRecords($limit);
+        return $this->respond(['status' => 'success', 'result' => $result]);
     }
     
     public function generateDailyContentDigest()
