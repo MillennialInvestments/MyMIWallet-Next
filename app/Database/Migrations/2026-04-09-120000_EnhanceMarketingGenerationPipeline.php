@@ -8,6 +8,10 @@ class EnhanceMarketingGenerationPipeline extends Migration
 {
     public function up()
     {
+        if (! $this->db->tableExists('bf_marketing_generated_content')) {
+            return;
+        }
+
         $fields = [
             'source_type' => ['type' => 'VARCHAR', 'constraint' => 50, 'null' => true, 'after' => 'notification_id'],
             'source_id' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'null' => true, 'after' => 'source_type'],
@@ -59,11 +63,15 @@ class EnhanceMarketingGenerationPipeline extends Migration
 
     public function down()
     {
-        $this->forge->dropTable('bf_marketing_generated_content_versions', true);
-        $this->forge->dropTable('bf_marketing_distribution_log', true);
+        if ($this->db->tableExists('bf_marketing_generated_content_versions')) {
+            $this->forge->dropTable('bf_marketing_generated_content_versions', true);
+        }
+        if ($this->db->tableExists('bf_marketing_distribution_log')) {
+            $this->forge->dropTable('bf_marketing_distribution_log', true);
+        }
 
         foreach (['source_type', 'source_id', 'status', 'approval_status', 'distribution_status', 'version', 'content_hash', 'title', 'summary', 'keywords'] as $field) {
-            if ($this->db->fieldExists($field, 'bf_marketing_generated_content')) {
+            if ($this->db->tableExists('bf_marketing_generated_content') && $this->db->fieldExists($field, 'bf_marketing_generated_content')) {
                 $this->forge->dropColumn('bf_marketing_generated_content', $field);
             }
         }

@@ -236,6 +236,7 @@ class MarketingAdminController extends BaseAdminController
         $this->data['finalizedContent'] = $this->marketingModel->getFinalizedPosts();
         $this->data['marketingBuffer'] = $this->marketingModel->getMarketingBuffer();
         $this->data['dripCampaigns'] = $this->getDripCampaigns();
+        $this->data['pipelineDashboard'] = $this->buildNewsPipelineDashboardData();
     
         // 👇 Optional: baseline post creation from today’s story (if you want to enforce it)
         if (empty($this->data['todaysStory'])) {
@@ -252,6 +253,64 @@ class MarketingAdminController extends BaseAdminController
     
         $this->commonData();
         return $this->renderTheme('ManagementModule\Views\Marketing\index', $this->data);
+    }
+
+    private function buildNewsPipelineDashboardData(): array
+    {
+        $data = [
+            'pending_scraped_alerts' => 0,
+            'pending_story_generation' => 0,
+            'latest_generated_stories' => [],
+            'timeline_preview' => [],
+            'pending_review_queue' => [],
+            'distribution_history' => [],
+        ];
+
+        if ($this->db->tableExists('bf_marketing_temp_scraper')) {
+            $data['pending_scraped_alerts'] = $this->db->table('bf_marketing_temp_scraper')
+                ->where('status', 'pending')
+                ->countAllResults();
+        }
+
+        if ($this->db->tableExists('bf_marketing_scraper')) {
+            $data['pending_story_generation'] = $this->db->table('bf_marketing_scraper')
+                ->whereIn('story_status', ['pending_generation', 'pending_review'])
+                ->countAllResults();
+            $data['latest_generated_stories'] = $this->db->table('bf_marketing_scraper')
+                ->select('id, story_title, ticker, story_status, latest_source_at')
+                ->orderBy('created_on', 'DESC')
+                ->limit(8)
+                ->get()
+                ->getResultArray();
+            $data['timeline_preview'] = $this->db->table('bf_marketing_scraper')
+                ->select('id, story_title, timeline_json')
+                ->where('timeline_json IS NOT NULL', null, false)
+                ->orderBy('created_on', 'DESC')
+                ->limit(5)
+                ->get()
+                ->getResultArray();
+        }
+
+        if ($this->db->tableExists('bf_marketing_generated_content')) {
+            $data['pending_review_queue'] = $this->db->table('bf_marketing_generated_content')
+                ->select('id, title, status, approval_status, created_at')
+                ->whereIn('approval_status', ['pending_review'])
+                ->orderBy('created_at', 'DESC')
+                ->limit(10)
+                ->get()
+                ->getResultArray();
+        }
+
+        if ($this->db->tableExists('bf_marketing_distribution_log')) {
+            $data['distribution_history'] = $this->db->table('bf_marketing_distribution_log')
+                ->select('id, generated_content_id, platform, status, attempted_at')
+                ->orderBy('attempted_at', 'DESC')
+                ->limit(15)
+                ->get()
+                ->getResultArray();
+        }
+
+        return $data;
     }
     
     // public function index()

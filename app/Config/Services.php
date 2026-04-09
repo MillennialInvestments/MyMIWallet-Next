@@ -623,5 +623,30 @@ class Services extends CoreServices
         );
     }
 
+    public static function marketingNewsScrapeService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('marketingNewsScrapeService');
+        }
+
+        return new \App\Services\MarketingNewsScrapeService(
+            new \App\Models\MarketingModel(),
+            new \App\Libraries\MyMIMarketing(),
+            new \App\Services\Marketing\OcrService(),
+        );
+    }
+
+    public static function marketingNewsGenerateService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('marketingNewsGenerateService');
+        }
+
+        return new \App\Services\MarketingNewsGenerateService(
+            new \App\Models\MarketingModel(),
+            new \App\Libraries\MyMIMarketing(),
+        );
+    }
+
 
 }

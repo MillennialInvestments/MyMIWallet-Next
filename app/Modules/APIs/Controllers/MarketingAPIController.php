@@ -15,6 +15,8 @@ use App\Support\Http;
 use App\Services\Marketing\MarketingVideoService;
 use App\Services\Marketing\OcrService;
 use App\Services\Marketing\TranslationService;
+use App\Services\MarketingNewsGenerateService;
+use App\Services\MarketingNewsScrapeService;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Config\Database;
 
@@ -235,6 +237,67 @@ class MarketingAPIController extends BaseAPIController
             log_message('error', '❌ cronFetchMarketingEmails() failed: ' . $e->getMessage());
             return $this->failServerError('Inbox fetch failed: ' . $e->getMessage());
         }
+    }
+
+    public function runNewsScrape()
+    {
+        /** @var MarketingNewsScrapeService $service */
+        $service = service('marketingNewsScrapeService');
+        $mailbox = $this->request->getGet('mailbox') ?? 'alerts@mymiwallet.com';
+        $limit = (int) ($this->request->getGet('limit') ?? 25);
+        $force = (bool) ($this->request->getGet('force') ?? false);
+
+        $result = $service->fetchEmails([
+            'mailbox' => $mailbox,
+            'limit' => $limit,
+            'force' => $force,
+        ]);
+
+        return Http::jsonSuccess([
+            'status' => 'success',
+            'message' => 'News scrape completed.',
+            'result' => $result,
+        ]);
+    }
+
+    public function runNewsGenerate()
+    {
+        /** @var MarketingNewsGenerateService $service */
+        $service = service('marketingNewsGenerateService');
+        $limit = (int) ($this->request->getGet('limit') ?? 25);
+        $result = $service->processPending(max(1, $limit));
+
+        return Http::jsonSuccess([
+            'status' => 'success',
+            'message' => 'News generation completed.',
+            'result' => $result,
+        ]);
+    }
+
+    public function runNewsPipeline()
+    {
+        /** @var MarketingNewsScrapeService $scrape */
+        $scrape = service('marketingNewsScrapeService');
+        /** @var MarketingNewsGenerateService $generate */
+        $generate = service('marketingNewsGenerateService');
+
+        $mailbox = $this->request->getGet('mailbox') ?? 'alerts@mymiwallet.com';
+        $limit = (int) ($this->request->getGet('limit') ?? 25);
+        $force = (bool) ($this->request->getGet('force') ?? false);
+
+        $scrapeResult = $scrape->fetchEmails([
+            'mailbox' => $mailbox,
+            'limit' => $limit,
+            'force' => $force,
+        ]);
+        $generateResult = $generate->processPending(max(1, $limit));
+
+        return Http::jsonSuccess([
+            'status' => 'success',
+            'message' => 'News pipeline completed.',
+            'scrape' => $scrapeResult,
+            'generate' => $generateResult,
+        ]);
     }
 
     public function cronProcessSMSMarketingIdeas()
