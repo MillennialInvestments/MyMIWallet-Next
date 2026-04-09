@@ -5873,8 +5873,11 @@ class MyMIMarketing
     // ✅ Redirect legacy method to unified generator
     public function generatePlatformContent($summary, $keywords, $platforms = [])
     {
-        $this->generateUnifiedSocialPosts(is_array($summary) ? implode(' ', $summary) : $summary, $keywords, $platforms); // Fails if $summary is array
-        // return $this->generateUnifiedSocialPosts($summary, $keywords, $platforms);
+        return $this->generateUnifiedSocialPosts(
+            is_array($summary) ? implode(' ', $summary) : (string) $summary,
+            is_array($keywords) ? $keywords : array_filter(array_map('trim', explode(',', (string) $keywords))),
+            is_array($platforms) ? $platforms : []
+        );
     }  
 
     // ✅ Redirect legacy method to unified generator
@@ -5883,8 +5886,11 @@ class MyMIMarketing
         $text = $summary['summary'] ?? '';
         $keywords = is_array($summary['keywords']) ? $summary['keywords'] : explode(',', $summary['keywords'] ?? '');
 
-        // return $this->generateUnifiedSocialPosts($text, $keywords);
-        $this->generateUnifiedSocialPosts(is_array($text) ? implode(' ', $text) : $text, $keywords, $platforms); // Fails if $summary is array
+        return $this->generateUnifiedSocialPosts(
+            is_array($text) ? implode(' ', $text) : (string) $text,
+            array_values(array_filter(array_map('trim', $keywords))),
+            []
+        );
     }
 
     private function generateSocialMediaContent($scrapedData)
@@ -6030,6 +6036,76 @@ class MyMIMarketing
         return "YouTube Video Script:\n1. Hook: \"{$hook}\"\n2. Detailed Summary: {$summary}\n3. Media: {$mediaInclusion}\n4. CTA: {$cta}";
     }
 
+    public function generateFullMarketingPackage(string $title, string $content, array $keywords = [], array $context = []): array
+    {
+        $title = trim(strip_tags($title));
+        $content = trim(strip_tags($content));
+
+        if ($title === '' && $content !== '') {
+            $title = $this->generateHeadline($content);
+        }
+
+        $summary = trim((string) $this->summarizeText($content !== '' ? $content : $title));
+        if ($summary === '') {
+            $summary = $content !== '' ? mb_substr($content, 0, 400) : $title;
+        }
+
+        if ($keywords === []) {
+            $keywords = $this->extractKeywordsFromSummary($summary);
+        }
+        $keywords = array_values(array_filter(array_map('strval', $keywords)));
+        $hashtags = implode(' ', array_map(static fn(string $k): string => '#' . preg_replace('/[^A-Za-z0-9_]/', '', $k), array_slice($keywords, 0, 8)));
+
+        $socialPosts = $this->generateUnifiedSocialPosts($summary, $keywords);
+        $voiceScript = $this->generateVoiceoverScriptFromSummary($summary);
+        $audioUrl = null;
+        try {
+            $audioUrl = $this->generateVoiceoverAudio($voiceScript, 'marketing-' . date('YmdHis'));
+        } catch (\Throwable $e) {
+            log_message('warning', 'MyMIMarketing::generateFullMarketingPackage audio generation failed: ' . $e->getMessage());
+        }
+
+        $imageUrl = null;
+        try {
+            $imageUrl = $this->generateMarketingImage($title !== '' ? $title : $summary, $keywords);
+        } catch (\Throwable $e) {
+            log_message('warning', 'MyMIMarketing::generateFullMarketingPackage image generation failed: ' . $e->getMessage());
+        }
+
+        $sourceLinks = [];
+        if (!empty($context['source_url'])) {
+            $sourceLinks[] = (string) $context['source_url'];
+        }
+        if (!empty($context['source_links']) && is_array($context['source_links'])) {
+            $sourceLinks = array_values(array_unique(array_merge($sourceLinks, array_map('strval', $context['source_links']))));
+        }
+
+        return [
+            'title' => $title,
+            'summary' => $summary,
+            'keywords' => $keywords,
+            'hashtags' => trim($hashtags),
+            'social_posts' => [
+                'facebook' => (string) ($socialPosts['facebook'] ?? ''),
+                'linkedin' => (string) ($socialPosts['linkedin'] ?? ''),
+                'discord' => (string) ($socialPosts['discord'] ?? ''),
+                'email' => (string) ($socialPosts['email'] ?? ''),
+                'stocktwits' => (string) ($socialPosts['stocktwits'] ?? ''),
+                'tiktok' => (string) ($socialPosts['tiktok'] ?? ''),
+                'youtube' => (string) ($socialPosts['youtube'] ?? ''),
+            ],
+            'voice_script' => $voiceScript,
+            'audio_url' => $audioUrl,
+            'video_scripts' => [
+                'tiktok' => $this->generateTikTokScript($summary, $keywords),
+                'youtube' => $this->generateYouTubeScript($summary, $keywords),
+                'instagram_reel' => $this->generateTikTokScript($summary, $keywords),
+            ],
+            'image_url' => $imageUrl,
+            'source_links' => $sourceLinks,
+        ];
+    }
+
     public function generateVoiceoverAudio($text, $filename) {
         putenv('GOOGLE_CLOUD_DISABLE_GRPC=true');
         putenv('GOOGLE_APPLICATION_CREDENTIALS=' . '/home/mymiteam/mymiwallet/credentials/mymi-gcloud-key.json');
@@ -6087,6 +6163,7 @@ class MyMIMarketing
 
         // 4. Store the final image in /uploads/marketing/ and return its URL.
         // return base_url('uploads/marketing/'.$filename);
+        return '';
     }
 
     public function generateStockInformation($cuID)

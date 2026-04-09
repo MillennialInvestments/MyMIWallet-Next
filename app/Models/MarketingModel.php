@@ -347,6 +347,76 @@ class MarketingModel extends Model
         ];
     }
 
+    public function insertGeneratedPackage(array $data): int
+    {
+        $this->db->table('bf_marketing_generated_content')->insert($data);
+        return (int) $this->db->insertID();
+    }
+
+    public function updateGeneratedPackage(int $id, array $data): bool
+    {
+        return (bool) $this->db->table('bf_marketing_generated_content')
+            ->where('id', $id)
+            ->update($data);
+    }
+
+    public function insertStoryUpdate(array $data): int
+    {
+        $this->db->table('bf_marketing_story_updates')->insert($data);
+        return (int) $this->db->insertID();
+    }
+
+    public function getPendingGenerationRecords(int $limit = 10): array
+    {
+        return $this->db->table('bf_marketing_scraper')
+            ->where('processed', 0)
+            ->orderBy('id', 'ASC')
+            ->limit($limit)
+            ->get()
+            ->getResultArray();
+    }
+
+    public function getPendingDistributionRecords(int $limit = 10): array
+    {
+        return $this->db->table('bf_marketing_generated_content')
+            ->whereIn('approval_status', ['approved', 'auto_approved'])
+            ->whereIn('distribution_status', ['pending', 'scheduled'])
+            ->orderBy('id', 'ASC')
+            ->limit($limit)
+            ->get()
+            ->getResultArray();
+    }
+
+    public function markGenerated(int $id, string $sourceTable): bool
+    {
+        if ($id < 1 || trim($sourceTable) === '') {
+            return false;
+        }
+
+        return (bool) $this->db->table($sourceTable)
+            ->where('id', $id)
+            ->update([
+                'processed' => 1,
+                'status' => 'generated',
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+    }
+
+    public function markDistributed(int $generatedContentId, string $platform): bool
+    {
+        if ($generatedContentId < 1) {
+            return false;
+        }
+
+        return (bool) $this->db->table('bf_marketing_generated_content')
+            ->where('id', $generatedContentId)
+            ->update([
+                'distribution_status' => 'distributed',
+                'status' => 'distributed',
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+    }
+
     public function fetchBufferPostsForReview($limit = 25)
     {
         return $this->db->table('bf_marketing_buffer')

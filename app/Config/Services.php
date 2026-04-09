@@ -567,5 +567,61 @@ class Services extends CoreServices
         return new \App\Services\CalendarEmailTriggerService();
     }
 
+    public static function marketingNotificationService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('marketingNotificationService');
+        }
+
+        return new \App\Services\MarketingNotificationService();
+    }
+
+    public static function marketingStoryService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('marketingStoryService');
+        }
+
+        return new \App\Services\MarketingStoryService(new \App\Models\MarketingModel());
+    }
+
+    public static function marketingPackageService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('marketingPackageService');
+        }
+
+        return new \App\Services\MarketingPackageService(
+            new \App\Libraries\MyMIMarketing(),
+            new \App\Models\MarketingModel(),
+            static::marketingNotificationService(false),
+            static::marketingStoryService(false),
+        );
+    }
+
+    public static function marketingDistributionService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('marketingDistributionService');
+        }
+
+        return new \App\Services\MarketingDistributionService(new \App\Models\MarketingModel());
+    }
+
+    public static function marketingPipelineService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('marketingPipelineService');
+        }
+
+        return new \App\Services\MarketingPipelineService(
+            new \App\Models\MarketingModel(),
+            static::marketingPackageService(false),
+            static::marketingNotificationService(false),
+            static::marketingStoryService(false),
+            static::marketingDistributionService(false),
+        );
+    }
+
 
 }
