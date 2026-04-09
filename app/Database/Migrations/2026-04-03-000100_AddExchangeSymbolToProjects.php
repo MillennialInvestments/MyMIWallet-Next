@@ -14,7 +14,7 @@ class AddExchangeSymbolToProjects extends Migration
 
         $fields = $this->db->getFieldNames('bf_projects');
         if (! in_array('exchange_symbol', $fields, true)) {
-            $after = in_array('coin_ticker', $fields, true) ? 'coin_ticker' : null;
+            $after = in_array('ticker', $fields, true) ? 'ticker' : null;
             $column = [
                 'exchange_symbol' => [
                     'type'       => 'VARCHAR',
@@ -36,11 +36,15 @@ class AddExchangeSymbolToProjects extends Migration
             $this->db->query('CREATE INDEX idx_bf_projects_exchange_symbol ON bf_projects (exchange_symbol)');
         }
 
-        $this->db->query("UPDATE bf_projects
-            SET exchange_symbol = coin_ticker
-            WHERE (exchange_symbol IS NULL OR exchange_symbol = '')
-              AND coin_ticker IS NOT NULL
-              AND coin_ticker <> ''");
+        if (in_array('exchange_symbol', $fields, true) && in_array('ticker', $fields, true)) {
+            $this->db->query("
+                UPDATE bf_projects
+                SET exchange_symbol = ticker
+                WHERE (exchange_symbol IS NULL OR exchange_symbol = '')
+                AND ticker IS NOT NULL
+                AND ticker <> ''
+            ");
+        }
     }
 
     public function down()

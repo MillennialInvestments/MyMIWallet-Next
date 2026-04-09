@@ -15,6 +15,12 @@ class DailyAudit extends SafeBaseCommand
     public function run(array $params)
     {
         $db = Database::connect();
+        $tables = $db->listTables();
+
+        if (! in_array('bf_marketing_distribution_log', $tables, true)) {
+            CLI::write('WARN: bf_marketing_distribution_log does not exist yet.', 'yellow');
+            return;
+        }
         $today = date('Y-m-d');
 
         $generated = 0;

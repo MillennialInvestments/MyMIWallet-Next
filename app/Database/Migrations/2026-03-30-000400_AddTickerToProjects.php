@@ -17,7 +17,7 @@ class AddTickerToProjects extends Migration
         if (! in_array('ticker', $fields, true)) {
             $afterColumn = in_array('exchange_symbol', $fields, true)
                 ? 'exchange_symbol'
-                : (in_array('coin_ticker', $fields, true) ? 'coin_ticker' : null);
+                : (in_array('ticker', $fields, true) ? 'ticker' : null);
             $this->forge->addColumn('bf_projects', [
                 'ticker' => [
                     'type' => 'VARCHAR',
