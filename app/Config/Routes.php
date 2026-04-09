@@ -896,6 +896,9 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('processMarketingTempEmails/(:num)/(:segment)', 'MarketingAPIController::processMarketingTempEmails/$1/$2');
         $routes->get('publishGroupedContentDraft', 'MarketingAPIController::publishGroupedContentDraft');
         $routes->get('rankBufferPostsDaily', 'MarketingAPIController::rankBufferPostsDaily');
+        $routes->match(['GET', 'POST'], 'runNewsScrape', 'MarketingAPIController::runNewsScrape');
+        $routes->match(['GET', 'POST'], 'runNewsGenerate', 'MarketingAPIController::runNewsGenerate');
+        $routes->match(['GET', 'POST'], 'runNewsPipeline', 'MarketingAPIController::runNewsPipeline');
         $routes->get('reprocessIncompleteEmails', 'MarketingAPIController::reprocessIncompleteEmails');
         $routes->post('rejectBufferItem/(:num)', 'MarketingAPIController::rejectBufferItem/$1');
         $routes->get('runContentGenerationBatch', 'MarketingAPIController::runContentGenerationBatch');

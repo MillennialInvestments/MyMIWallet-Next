@@ -26,6 +26,7 @@ $viewFileData = [
 ];
 $newsletterWeekStart = date('Y-m-d', strtotime('saturday this week'));
 $cronKey = env('CRON_SHARED_KEY');
+$pipelineDashboard = $pipelineDashboard ?? [];
 ?>
 
 <div class="nk-block">
@@ -89,6 +90,58 @@ $cronKey = env('CRON_SHARED_KEY');
             </div>
         </div>
         <?php endif; ?>
+
+        <div class="col-12">
+            <div class="card card-bordered mb-3">
+                <div class="card-inner">
+                    <h5 class="title mb-3">🧭 Marketing News Pipeline Dashboard</h5>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-3">
+                            <div class="alert alert-primary mb-0">Pending Scraped Alerts: <strong><?= esc((string) ($pipelineDashboard['pending_scraped_alerts'] ?? 0)); ?></strong></div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="alert alert-info mb-0">Pending Story Generation: <strong><?= esc((string) ($pipelineDashboard['pending_story_generation'] ?? 0)); ?></strong></div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="alert alert-warning mb-0">Pending Review Queue: <strong><?= esc((string) count($pipelineDashboard['pending_review_queue'] ?? [])); ?></strong></div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="alert alert-success mb-0">Distribution Attempts: <strong><?= esc((string) count($pipelineDashboard['distribution_history'] ?? [])); ?></strong></div>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-lg-6">
+                            <h6>Latest Generated Stories</h6>
+                            <ul class="list-group">
+                                <?php foreach (($pipelineDashboard['latest_generated_stories'] ?? []) as $story): ?>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span><?= esc($story['story_title'] ?? '(Untitled Story)'); ?><?= !empty($story['ticker']) ? ' (' . esc($story['ticker']) . ')' : ''; ?></span>
+                                        <span class="badge bg-secondary"><?= esc($story['story_status'] ?? 'n/a'); ?></span>
+                                    </li>
+                                <?php endforeach; ?>
+                                <?php if (empty($pipelineDashboard['latest_generated_stories'])): ?>
+                                    <li class="list-group-item text-muted">No generated stories yet.</li>
+                                <?php endif; ?>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6">
+                            <h6>Distribution History</h6>
+                            <ul class="list-group">
+                                <?php foreach (($pipelineDashboard['distribution_history'] ?? []) as $row): ?>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>#<?= esc((string) ($row['generated_content_id'] ?? 0)); ?> → <?= esc($row['platform'] ?? 'unknown'); ?></span>
+                                        <span class="badge bg-dark"><?= esc($row['status'] ?? 'queued'); ?></span>
+                                    </li>
+                                <?php endforeach; ?>
+                                <?php if (empty($pipelineDashboard['distribution_history'])): ?>
+                                    <li class="list-group-item text-muted">No distribution history yet.</li>
+                                <?php endif; ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- 🧩 Primary Marketing Interface -->
         <div class="col-12 col-xxl-4">
