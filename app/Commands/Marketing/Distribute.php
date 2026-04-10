@@ -15,6 +15,9 @@ class Distribute extends SafeBaseCommand
     {
         $pipeline = service('marketingPipelineService');
         $result = $pipeline->processPendingGeneratedContent((int) ($params[0] ?? 10));
+        if (((int) ($result['count'] ?? 0)) === 0) {
+            $result['reason'] = 'No source records were available because inbox scraping failed';
+        }
 
         CLI::write(json_encode(['status' => 'success', 'result' => $result], JSON_PRETTY_PRINT));
     }

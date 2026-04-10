@@ -93,22 +93,24 @@ class Marketing extends BaseConfig
     public function __construct()
     {
         parent::__construct();
+        $newsEmail = config('NewsEmailServer');
+        $resolved = method_exists($newsEmail, 'resolve') ? $newsEmail->resolve() : [];
 
         $folders = (string) env('MARKETING_IMAP_FOLDERS', 'INBOX');
 
-        $this->imap['host'] = (string) env('MARKETING_IMAP_HOST', env('MYMI_ALERTS_IMAP_HOST', 'imap.dreamhost.com'));
-        $this->imap['port'] = (int) env('MARKETING_IMAP_PORT', 993);
-        $this->imap['encryption'] = (string) env('MARKETING_IMAP_ENCRYPTION', 'ssl');
+        $this->imap['host'] = (string) env('MARKETING_IMAP_HOST', (string) ($resolved['host'] ?? 'imap.dreamhost.com'));
+        $this->imap['port'] = (int) env('MARKETING_IMAP_PORT', (int) ($resolved['port'] ?? 993));
+        $this->imap['encryption'] = (string) env('MARKETING_IMAP_ENCRYPTION', (string) ($resolved['encryption'] ?? 'ssl'));
         $this->imap['validate_cert'] = (bool) env('MARKETING_IMAP_VALIDATE_CERT', false);
-        $this->imap['username'] = (string) env('MARKETING_IMAP_USERNAME', 'tradealerts@mymiwallet.com');
-        $this->imap['password'] = (string) env('MARKETING_IMAP_PASSWORD', '');
-        $this->imap['mailbox'] = (string) env('MARKETING_IMAP_MAILBOX', $this->imap['username']);
-        $this->imap['default_folder'] = (string) env('MARKETING_IMAP_DEFAULT_FOLDER', 'INBOX');
+        $this->imap['username'] = (string) env('MARKETING_IMAP_USERNAME', (string) ($resolved['username'] ?? 'news@mymiwallet.com'));
+        $this->imap['password'] = (string) env('MARKETING_IMAP_PASSWORD', (string) ($resolved['password'] ?? ''));
+        $this->imap['mailbox'] = (string) env('MARKETING_IMAP_MAILBOX', (string) ($resolved['mailbox'] ?? $this->imap['username']));
+        $this->imap['default_folder'] = (string) env('MARKETING_IMAP_DEFAULT_FOLDER', (string) ($resolved['default_folder'] ?? 'INBOX'));
         $this->imap['folders'] = array_values(array_filter(array_map('trim', explode(',', $folders))));
         if ($this->imap['folders'] === []) {
             $this->imap['folders'] = [(string) $this->imap['default_folder']];
         }
-        $this->imap['search_criteria'] = (string) env('MARKETING_IMAP_SEARCH', 'ALL');
+        $this->imap['search_criteria'] = (string) env('MARKETING_IMAP_SEARCH', (string) ($resolved['search_criteria'] ?? 'ALL'));
         $this->imap['timeout'] = (int) env('MARKETING_IMAP_TIMEOUT', 30);
 
         $patterns = (string) env('MARKETING_ACCEPT_SUBJECT_PATTERNS', '');

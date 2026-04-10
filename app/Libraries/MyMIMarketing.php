@@ -1122,12 +1122,17 @@ class MyMIMarketing
     public function fetchAndStoreEmails($emailType)
     {
         log_message('info', "MyMIMarketing fetchAndStoreEmails L865: Starting to fetch and store emails of type: {$emailType}");
-    
-        
+        $emailConfig = config('NewsEmailServer');
+        $mailbox = strtolower(trim((string) ($emailType . '@mymiwallet.com')));
+        $resolved = method_exists($emailConfig, 'resolve') ? $emailConfig->resolve($mailbox) : [];
+        $connectionString = method_exists($emailConfig, 'buildConnectionString')
+            ? $emailConfig->buildConnectionString($resolved, (string) ($resolved['default_folder'] ?? 'INBOX'))
+            : sprintf('{%s:%d/imap/%s}%s', (string) ($resolved['host'] ?? 'imap.dreamhost.com'), (int) ($resolved['port'] ?? 993), (string) ($resolved['encryption'] ?? 'ssl'), (string) ($resolved['default_folder'] ?? 'INBOX'));
+
         $emailCredentials = [
-            'hostname' => '{imap.dreamhost.com:993/imap/ssl}INBOX',
-            'username' => $emailType . '@mymiwallet.com',
-            'password' => $this->APIs->emailPassword,
+            'hostname' => $connectionString,
+            'username' => (string) ($resolved['username'] ?? $mailbox),
+            'password' => (string) ($resolved['password'] ?? $this->APIs->emailPassword),
         ];
     
         $inbox = $this->retry(function () use ($emailCredentials) {

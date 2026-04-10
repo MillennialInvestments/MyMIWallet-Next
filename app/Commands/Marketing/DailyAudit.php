@@ -50,6 +50,7 @@ class DailyAudit extends SafeBaseCommand
             'generated' => $generated,
             'failed' => $failed,
             'distributed' => $distributed,
+            'reason' => ($generated === 0 && $distributed === 0) ? 'No source records were available because inbox scraping failed' : null,
             'warnings' => $warnings,
         ], JSON_PRETTY_PRINT));
     }

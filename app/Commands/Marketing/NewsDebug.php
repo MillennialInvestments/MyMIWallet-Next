@@ -9,9 +9,9 @@ use CodeIgniter\CLI\CLI;
 class NewsDebug extends BaseCommand
 {
     protected $group = 'Marketing';
-    protected $name = 'marketing:news-debug';
+    protected $name = 'marketing:news:debug';
     protected $description = 'Diagnose marketing IMAP connectivity, folder counts, subject samples, and filter matches.';
-    protected $usage = 'marketing:news-debug [--folders=INBOX,Alerts] [--subject-limit=10] [--search=ALL]';
+    protected $usage = 'marketing:news:debug [--mailbox=news@mymiwallet.com] [--folders=INBOX,Alerts] [--subject-limit=10] [--search=ALL]';
 
     public function run(array $params)
     {
@@ -21,6 +21,7 @@ class NewsDebug extends BaseCommand
         }
 
         $foldersOpt = CLI::getOption('folders');
+        $mailbox = CLI::getOption('mailbox');
         $subjectLimit = max(1, (int) (CLI::getOption('subject-limit') ?: 10));
         $search = CLI::getOption('search') ?: null;
         $folders = null;
@@ -30,13 +31,14 @@ class NewsDebug extends BaseCommand
 
         $diag = $service->mailboxDiagnostics([
             'folders' => $folders,
+            'mailbox' => $mailbox,
             'subject_limit' => $subjectLimit,
             'search_criteria' => $search,
         ]);
 
         CLI::write((string) json_encode([
             'status' => 'success',
-            'command' => 'marketing:news-debug',
+            'command' => 'marketing:news:debug',
             'diagnostics' => $diag,
         ], JSON_PRETTY_PRINT));
     }

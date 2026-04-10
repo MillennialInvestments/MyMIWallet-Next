@@ -6,17 +6,22 @@ use App\Models\MarketingModel;
 use App\Services\Marketing\OcrService;
 use Config\Database;
 use Config\Marketing;
+use Config\NewsEmailServer;
 
 class MarketingNewsScrapeService
 {
+    /** @var array<string,mixed> */
+    private array $activeImapConfig = [];
     public function __construct(
         private ?MarketingModel $marketingModel = null,
         private ?OcrService $ocrService = null,
         private ?Marketing $marketingConfig = null,
+        private ?NewsEmailServer $newsEmailConfig = null,
     ) {
         $this->marketingModel ??= new MarketingModel();
         $this->ocrService ??= new OcrService();
         $this->marketingConfig ??= config('Marketing');
+        $this->newsEmailConfig ??= config('NewsEmailServer');
     }
 
     public function fetchEmails(array $options = []): array
@@ -25,8 +30,9 @@ class MarketingNewsScrapeService
             return ['status' => 'error', 'connection_ok' => false, 'error' => 'imap_open not available'];
         }
 
-        $imap = $this->marketingConfig->imap;
-        $mailbox = trim((string) ($options['mailbox'] ?? $imap['mailbox'] ?? $imap['username'] ?? ''));
+        $imap = $this->resolveImapConfig($options);
+        $this->activeImapConfig = $imap;
+        $mailbox = trim((string) ($imap['mailbox'] ?? $imap['username'] ?? ''));
         $folders = $this->resolveFolders($options);
         $limit = max(1, (int) ($options['limit'] ?? 25));
         $force = ! empty($options['force']);
@@ -48,6 +54,8 @@ class MarketingNewsScrapeService
             'folders' => $folders,
             'search_criteria' => $searchCriteria,
             'connection_ok' => false,
+            'config_resolved' => ! empty($imap['host']) && ! empty($imap['username']),
+            'password_present' => ! empty($imap['password']),
             'folder_exists' => false,
             'matched_subject_count' => 0,
             'parsed_count' => 0,
@@ -63,11 +71,21 @@ class MarketingNewsScrapeService
                 'candidate_subjects' => [],
             ],
         ];
+        log_message('info', sprintf(
+            '[marketing:news:scrape] IMAP resolved host=%s port=%d encryption=%s username=%s folder=%s password_present=%s',
+            (string) $report['imap_host'],
+            (int) $report['imap_port'],
+            (string) $report['encryption'],
+            (string) $report['username'],
+            (string) $report['default_folder'],
+            $report['password_present'] ? 'true' : 'false'
+        ));
 
         $conn = $this->connectToFolder((string) $folders[0]);
         if (! $conn['ok']) {
             $report['status'] = 'error';
             $report['error'] = $conn['error'];
+            $report['imap_last_error'] = $conn['imap_last_error'] ?? null;
             return $report;
         }
 
@@ -99,12 +117,19 @@ class MarketingNewsScrapeService
             ];
         }
 
+        $report['insert_verification'] = [
+            'inserted_count' => (int) $report['stored'],
+            'duplicate_skipped_count' => (int) $report['duplicate_skipped'],
+            'rejected_count' => (int) $report['rejected_count'],
+        ];
+
         return $report;
     }
 
     public function mailboxDiagnostics(array $options = []): array
     {
-        $imap = $this->marketingConfig->imap;
+        $imap = $this->resolveImapConfig($options);
+        $this->activeImapConfig = $imap;
         $folders = $this->resolveFolders($options);
         $searchCriteria = trim((string) ($options['search_criteria'] ?? $imap['search_criteria'] ?? 'ALL'));
         $subjectLimit = max(1, (int) ($options['subject_limit'] ?? 10));
@@ -118,16 +143,28 @@ class MarketingNewsScrapeService
                 'mailbox' => $imap['mailbox'] ?? '',
                 'default_folder' => $imap['default_folder'] ?? 'INBOX',
                 'search_criteria' => $searchCriteria,
+                'password_present' => ! empty($imap['password']),
             ],
             'folders_configured' => $folders,
             'connection_ok' => false,
+            'config_resolved' => ! empty($imap['host']) && ! empty($imap['username']),
             'folders_found' => [],
             'per_folder' => [],
         ];
+        log_message('info', sprintf(
+            '[marketing:news:debug] IMAP resolved host=%s port=%d encryption=%s username=%s folder=%s password_present=%s',
+            (string) $diag['connection']['host'],
+            (int) $diag['connection']['port'],
+            (string) $diag['connection']['encryption'],
+            (string) $diag['connection']['username'],
+            (string) $diag['connection']['default_folder'],
+            $diag['connection']['password_present'] ? 'true' : 'false'
+        ));
 
         $conn = $this->connectToFolder((string) ($imap['default_folder'] ?? 'INBOX'));
         if (! $conn['ok']) {
             $diag['error'] = $conn['error'];
+            $diag['imap_last_error'] = $conn['imap_last_error'] ?? null;
             return $diag;
         }
 
@@ -498,22 +535,12 @@ class MarketingNewsScrapeService
 
     private function connectToFolder(string $folder): array
     {
-        $imap = $this->marketingConfig->imap;
-        $flag = '/imap';
-        $encryption = strtolower((string) ($imap['encryption'] ?? 'ssl'));
-        if ($encryption === 'ssl') {
-            $flag .= '/ssl';
-        } elseif ($encryption === 'tls') {
-            $flag .= '/tls';
-        }
-        if (! (bool) ($imap['validate_cert'] ?? false)) {
-            $flag .= '/novalidate-cert';
-        }
-
-        $path = sprintf('{%s:%d%s}%s', $imap['host'], (int) $imap['port'], $flag, $folder);
+        $imap = $this->resolveImapConfig([]);
+        $folder = trim($folder) !== '' ? trim($folder) : (string) ($imap['default_folder'] ?? 'INBOX');
+        $path = $this->newsEmailConfig->buildConnectionString($imap, $folder);
         $conn = @imap_open($path, (string) $imap['username'], (string) $imap['password']);
         if ($conn === false) {
-            return ['ok' => false, 'error' => imap_last_error() ?: 'imap_open failed'];
+            return ['ok' => false, 'error' => imap_last_error() ?: 'imap_open failed', 'imap_last_error' => imap_last_error()];
         }
 
         return ['ok' => true, 'imap' => $conn, 'path' => $path];
@@ -521,7 +548,7 @@ class MarketingNewsScrapeService
 
     private function listFolders($imap): array
     {
-        $cfg = $this->marketingConfig->imap;
+        $cfg = $this->resolveImapConfig([]);
         $base = sprintf('{%s:%d/imap}', $cfg['host'], (int) $cfg['port']);
         $boxes = imap_getmailboxes($imap, $base, '*') ?: [];
         $folders = [];
@@ -602,6 +629,27 @@ class MarketingNewsScrapeService
         }
 
         return null;
+    }
+
+    private function resolveImapConfig(array $options): array
+    {
+        if ($options === [] && $this->activeImapConfig !== []) {
+            return $this->activeImapConfig;
+        }
+
+        $mailboxOverride = isset($options['mailbox']) ? trim((string) $options['mailbox']) : null;
+        $resolved = $this->newsEmailConfig->resolve($mailboxOverride ?: null);
+
+        if ($mailboxOverride !== null && $mailboxOverride !== '') {
+            $resolved['mailbox'] = strtolower($mailboxOverride);
+            $resolved['username'] = strtolower($mailboxOverride);
+        }
+
+        if (empty($resolved['password']) && ! empty($this->marketingConfig->imap['password'])) {
+            $resolved['password'] = (string) $this->marketingConfig->imap['password'];
+        }
+
+        return $resolved;
     }
 
     private function detectAlertType(string $text): string
