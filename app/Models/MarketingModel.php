@@ -1920,9 +1920,18 @@ class MarketingModel extends Model
     public function idleFetchEmails()
     {
         $config = config('NewsEmailServer');
-        $connectionString = "{$config->host}:{$config->port}/imap/{$config->encryption}";
+        $resolved = method_exists($config, 'resolve') ? $config->resolve() : [
+            'host' => $config->host,
+            'port' => $config->port,
+            'encryption' => $config->encryption,
+            'username' => $config->username,
+            'password' => $config->password,
+            'default_folder' => 'INBOX',
+        ];
+        $folder = $resolved['default_folder'] ?? 'INBOX';
+        $connectionString = sprintf('{%s:%d/imap/%s}%s', $resolved['host'], (int) $resolved['port'], $resolved['encryption'], $folder);
 
-        $inbox = @imap_open($connectionString, $config->username, $config->password);
+        $inbox = @imap_open($connectionString, $resolved['username'], $resolved['password']);
         if (!$inbox) {
             log_message('error', 'Cannot connect to email server: ' . imap_last_error());
             return;

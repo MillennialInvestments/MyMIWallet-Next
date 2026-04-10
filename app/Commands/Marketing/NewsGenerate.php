@@ -22,6 +22,9 @@ class NewsGenerate extends SafeBaseCommand
 
         $limit = max(1, (int) (CLI::getOption('limit') ?: 25));
         $result = $service->processPending($limit);
+        if (((int) ($result['processed'] ?? 0)) === 0) {
+            $result['reason'] = 'No source records were available because inbox scraping failed';
+        }
 
         CLI::write(json_encode([
             'status' => 'success',

@@ -3,6 +3,8 @@
 namespace App\Commands\Marketing;
 
 use App\Commands\SafeBaseCommand;
+use App\Services\MarketingNewsGenerateService;
+use App\Services\MarketingNewsScrapeService;
 use CodeIgniter\CLI\CLI;
 
 class Pipeline extends SafeBaseCommand
@@ -15,8 +17,34 @@ class Pipeline extends SafeBaseCommand
     {
         $mode = strtolower((string) ($params[0] ?? 'all'));
         $pipeline = service('marketingPipelineService');
+        $mailbox = CLI::getOption('mailbox');
 
         $result = [];
+        if ($mode === 'news' || $mode === 'all') {
+            $scrapeService = service('marketingNewsScrapeService');
+            if (! $scrapeService instanceof MarketingNewsScrapeService) {
+                $scrapeService = new MarketingNewsScrapeService();
+            }
+            $generateService = service('marketingNewsGenerateService');
+            if (! $generateService instanceof MarketingNewsGenerateService) {
+                $generateService = new MarketingNewsGenerateService();
+            }
+
+            $scrape = $scrapeService->fetchEmails([
+                'mailbox' => $mailbox,
+                'limit' => max(1, (int) (CLI::getOption('limit') ?: 25)),
+            ]);
+            $generate = $generateService->processPending(max(1, (int) (CLI::getOption('generate-limit') ?: 25)));
+            $distribute = $pipeline->processPendingGeneratedContent(max(1, (int) (CLI::getOption('distribute-limit') ?: 10)));
+            if (((int) ($generate['processed'] ?? 0)) === 0 && ((int) ($distribute['count'] ?? 0)) === 0) {
+                $result['reason'] = 'No source records were available because inbox scraping failed';
+            }
+            $result['news'] = [
+                'scrape' => $scrape,
+                'generate' => $generate,
+                'distribute' => $distribute,
+            ];
+        }
         if ($mode === 'notifications' || $mode === 'all') {
             $result['notifications'] = $pipeline->processPendingNotifications(10);
         }
@@ -27,6 +55,6 @@ class Pipeline extends SafeBaseCommand
             $result['campaigns'] = $pipeline->processPendingCampaigns(5);
         }
 
-        CLI::write(json_encode(['status' => 'success', 'mode' => $mode, 'result' => $result], JSON_PRETTY_PRINT));
+        CLI::write(json_encode(['status' => 'success', 'mode' => $mode, 'mailbox' => $mailbox, 'result' => $result], JSON_PRETTY_PRINT));
     }
 }
