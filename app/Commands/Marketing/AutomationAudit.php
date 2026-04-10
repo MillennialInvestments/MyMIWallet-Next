@@ -9,7 +9,7 @@ use CodeIgniter\CLI\CLI;
 class AutomationAudit extends SafeBaseCommand
 {
     protected $group       = 'marketing';
-    protected $name        = 'marketing:automation-audit';
+    protected $name        = 'marketing:automation:audit';
     protected $description = 'Verify marketing automations, cron hooks, and API usage expectations.';
     protected $usage       = 'marketing:automation-audit [--emit=docs] [--out=path] [--dry-run] [--approve]';
     protected $options     = [

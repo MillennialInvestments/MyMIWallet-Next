@@ -8,7 +8,7 @@ use CodeIgniter\CLI\CLI;
 class GeneratePackage extends SafeBaseCommand
 {
     protected $group = 'Marketing';
-    protected $name = 'marketing:generate-package';
+    protected $name = 'marketing:generate:package';
     protected $description = 'Generate a marketing package from notification_id or headline.';
 
     public function run(array $params)

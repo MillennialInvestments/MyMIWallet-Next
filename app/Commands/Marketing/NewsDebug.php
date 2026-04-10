@@ -3,10 +3,10 @@
 namespace App\Commands\Marketing;
 
 use App\Services\MarketingNewsScrapeService;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class NewsDebug extends BaseCommand
+class NewsDebug extends SafeBaseCommand
 {
     protected $group = 'Marketing';
     protected $name = 'marketing:news:debug';
