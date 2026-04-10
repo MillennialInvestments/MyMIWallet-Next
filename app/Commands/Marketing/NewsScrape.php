@@ -9,7 +9,7 @@ use CodeIgniter\CLI\CLI;
 class NewsScrape extends SafeBaseCommand
 {
     protected $group = 'Marketing';
-    protected $name = 'marketing:news-scrape';
+    protected $name = 'marketing:news:scrape';
     protected $description = 'Ingests alert/news emails (or OCR/raw text) into bf_marketing_temp_scraper with folder-level diagnostics.';
     protected $usage = 'marketing:news-scrape [--limit=50] [--folder=INBOX] [--folders=INBOX,Alerts] [--search=ALL] [--debug-subjects] [--force]';
 

@@ -3,13 +3,13 @@
 namespace App\Commands\Marketing;
 
 use App\Services\MarketingNewsScrapeService;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class NewsDebug extends BaseCommand
+class NewsDebug extends SafeBaseCommand
 {
     protected $group = 'Marketing';
-    protected $name = 'marketing:news-debug';
+    protected $name = 'marketing:news:debug';
     protected $description = 'Diagnose marketing IMAP connectivity, folder counts, subject samples, and filter matches.';
     protected $usage = 'marketing:news-debug [--folders=INBOX,Alerts] [--subject-limit=10] [--search=ALL]';
 
