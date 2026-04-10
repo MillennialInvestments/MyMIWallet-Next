@@ -3,10 +3,10 @@
 namespace App\Commands\Marketing;
 
 use App\Services\MarketingNewsGenerateService;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class NewsGenerate extends BaseCommand
+class NewsGenerate extends SafeBaseCommand
 {
     protected $group = 'Marketing';
     protected $name = 'marketing:news:generate';
