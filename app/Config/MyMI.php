@@ -7,7 +7,7 @@ use CodeIgniter\Config\BaseConfig;
 class MyMI extends BaseConfig
 {
     public string $alertEmail = 'tradealerts@mymiwallet.com';
-    public string $legacyAlertEmail = 'alerts@mymiwallet.com';
+    public string $legacyAlertEmail = 'tradealerts@mymiwallet.com';
 
     /**
      * @var string[]
@@ -49,7 +49,7 @@ class MyMI extends BaseConfig
         parent::__construct();
 
         $this->alertEmail = (string) env('MYMI_ALERT_EMAIL', 'tradealerts@mymiwallet.com');
-        $this->legacyAlertEmail = (string) env('MYMI_LEGACY_ALERT_EMAIL', 'alerts@mymiwallet.com');
+        $this->legacyAlertEmail = (string) env('MYMI_LEGACY_ALERT_EMAIL', 'tradealerts@mymiwallet.com');
 
         $allowed = array_filter(array_map('trim', [
             $this->legacyAlertEmail,

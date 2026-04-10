@@ -243,7 +243,7 @@ class MarketingAPIController extends BaseAPIController
     {
         /** @var MarketingNewsScrapeService $service */
         $service = service('marketingNewsScrapeService');
-        $mailbox = $this->request->getGet('mailbox') ?? 'alerts@mymiwallet.com';
+        $mailbox = $this->request->getGet('mailbox') ?? 'tradealerts@mymiwallet.com';
         $limit = (int) ($this->request->getGet('limit') ?? 25);
         $force = (bool) ($this->request->getGet('force') ?? false);
 
@@ -281,7 +281,7 @@ class MarketingAPIController extends BaseAPIController
         /** @var MarketingNewsGenerateService $generate */
         $generate = service('marketingNewsGenerateService');
 
-        $mailbox = $this->request->getGet('mailbox') ?? 'alerts@mymiwallet.com';
+        $mailbox = $this->request->getGet('mailbox') ?? 'tradealerts@mymiwallet.com';
         $limit = (int) ($this->request->getGet('limit') ?? 25);
         $force = (bool) ($this->request->getGet('force') ?? false);
 

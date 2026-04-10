@@ -108,7 +108,7 @@ Using Guzzle for HTTP requests and php-ai/php-ml for TF-IDF
 
 Using dynamicModalLoader() for modal rendering in dashboard
 
-Email content comes from alerts@MyMIWallet.com or news@MyMIWallet.com
+Email content comes from tradealerts@mymiwallet.com or news@MyMIWallet.com
 
 Base trait BaseLoader provides getMyMIMarketing(), getMarketingService(), etc.
 

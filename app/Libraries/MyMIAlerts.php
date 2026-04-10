@@ -191,7 +191,7 @@ class MyMIAlerts
         $myMIConfig = config('MyMI');
 
         $this->emailHost = $this->emailConfig->SMTPHost;
-        $this->emailUsername = 'alerts@mymiwallet.com';
+        $this->emailUsername = 'tradealerts@mymiwallet.com';
         $this->emailPassword = 'MyMI2024!';
 
         $this->alertsModel = $alertsModel ?? new AlertsModel();

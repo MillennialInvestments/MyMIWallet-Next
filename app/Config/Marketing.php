@@ -14,7 +14,7 @@ class Marketing extends BaseConfig
         'validate_cert' => false,
         'username' => '',
         'password' => '',
-        'mailbox' => 'alerts@mymiwallet.com',
+        'mailbox' => 'tradealerts@mymiwallet.com',
         'default_folder' => 'INBOX',
         'folders' => ['INBOX'],
         'search_criteria' => 'ALL',
@@ -100,7 +100,7 @@ class Marketing extends BaseConfig
         $this->imap['port'] = (int) env('MARKETING_IMAP_PORT', 993);
         $this->imap['encryption'] = (string) env('MARKETING_IMAP_ENCRYPTION', 'ssl');
         $this->imap['validate_cert'] = (bool) env('MARKETING_IMAP_VALIDATE_CERT', false);
-        $this->imap['username'] = (string) env('MARKETING_IMAP_USERNAME', 'alerts@mymiwallet.com');
+        $this->imap['username'] = (string) env('MARKETING_IMAP_USERNAME', 'tradealerts@mymiwallet.com');
         $this->imap['password'] = (string) env('MARKETING_IMAP_PASSWORD', '');
         $this->imap['mailbox'] = (string) env('MARKETING_IMAP_MAILBOX', $this->imap['username']);
         $this->imap['default_folder'] = (string) env('MARKETING_IMAP_DEFAULT_FOLDER', 'INBOX');
