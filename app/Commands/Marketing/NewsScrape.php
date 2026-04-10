@@ -10,21 +10,32 @@ class NewsScrape extends BaseCommand
 {
     protected $group = 'Marketing';
     protected $name = 'marketing:news-scrape';
-    protected $description = 'Ingests alert/news emails (or OCR/raw text) into bf_marketing_temp_scraper.';
-    protected $usage = 'marketing:news-scrape [--mailbox=alerts@mymiwallet.com] [--limit=50] [--ocr=/path/image.png] [--file=/path/text.txt] [--force]';
+    protected $description = 'Ingests alert/news emails (or OCR/raw text) into bf_marketing_temp_scraper with folder-level diagnostics.';
+    protected $usage = 'marketing:news-scrape [--limit=50] [--folder=INBOX] [--folders=INBOX,Alerts] [--search=ALL] [--debug-subjects] [--force]';
 
     public function run(array $params)
     {
         $service = service('marketingNewsScrapeService');
-        if (!$service instanceof MarketingNewsScrapeService) {
+        if (! $service instanceof MarketingNewsScrapeService) {
             $service = new MarketingNewsScrapeService();
         }
 
-        $mailbox = CLI::getOption('mailbox') ?: 'alerts@mymiwallet.com';
+        $mailbox = CLI::getOption('mailbox');
         $limit = max(1, (int) (CLI::getOption('limit') ?: 25));
         $ocrPath = CLI::getOption('ocr');
         $filePath = CLI::getOption('file');
         $force = CLI::getOption('force') !== null;
+        $debugSubjects = CLI::getOption('debug-subjects') !== null;
+        $search = CLI::getOption('search') ?: null;
+        $foldersOpt = CLI::getOption('folders');
+        $folderOpt = CLI::getOption('folder');
+
+        $folders = null;
+        if (is_string($foldersOpt) && trim($foldersOpt) !== '') {
+            $folders = array_values(array_filter(array_map('trim', explode(',', $foldersOpt))));
+        } elseif (is_string($folderOpt) && trim($folderOpt) !== '') {
+            $folders = [trim($folderOpt)];
+        }
 
         $results = [];
 
@@ -49,19 +60,26 @@ class NewsScrape extends BaseCommand
         }
 
         if ($ocrPath === null && $filePath === null) {
-            $results[] = $service->fetchEmails([
+            $result = $service->fetchEmails([
                 'mailbox' => $mailbox,
+                'folders' => $folders,
                 'limit' => $limit,
                 'force' => $force,
+                'debug' => $debugSubjects,
+                'search_criteria' => $search,
             ]);
+            $results[] = $result;
         }
 
-        CLI::write(json_encode([
+        CLI::write((string) json_encode([
             'status' => 'success',
             'command' => 'marketing:news-scrape',
             'mailbox' => $mailbox,
+            'folders' => $folders,
+            'search_criteria' => $search,
             'limit' => $limit,
             'force' => $force,
+            'debug_subjects' => $debugSubjects,
             'results' => $results,
         ], JSON_PRETTY_PRINT));
     }
