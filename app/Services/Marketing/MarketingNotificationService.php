@@ -4,16 +4,19 @@ namespace App\Services\Marketing;
 
 use App\Libraries\MyMIMarketing;
 use Config\Database;
+use Config\Marketing;
 
 class MarketingNotificationService
 {
     private MyMIMarketing $marketing;
     private SourceFinderService $sourceFinder;
+    private Marketing $marketingConfig;
 
-    public function __construct(MyMIMarketing $marketing, ?SourceFinderService $sourceFinder = null)
+    public function __construct(MyMIMarketing $marketing, ?SourceFinderService $sourceFinder = null, ?Marketing $marketingConfig = null)
     {
         $this->marketing = $marketing;
         $this->sourceFinder = $sourceFinder ?? new SourceFinderService();
+        $this->marketingConfig = $marketingConfig ?? config('Marketing');
     }
 
     public function attachToStory(array $notification): int
@@ -23,7 +26,7 @@ class MarketingNotificationService
 
         $stories = $db->table('bf_marketing_stories')
             ->orderBy('updated_at', 'DESC')
-            ->limit(50)
+            ->limit((int) ($this->marketingConfig->storyline['lookback_limit'] ?? 50))
             ->get()
             ->getResultArray();
 
@@ -41,7 +44,7 @@ class MarketingNotificationService
 
         $source = $this->sourceFinder->findSource((string) ($notification['translated_text'] ?? $notification['raw_text'] ?? ''));
 
-        if ($bestStory && $bestScore >= 0.3) {
+        if ($bestStory && $bestScore >= (float) ($this->marketingConfig->storyline['keyword_only_threshold'] ?? 0.30)) {
             $storyId = (int) $bestStory['id'];
             $db->table('bf_marketing_story_updates')->insert([
                 'story_id' => $storyId,

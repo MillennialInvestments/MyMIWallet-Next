@@ -4,12 +4,14 @@ namespace App\Services;
 
 use App\Models\MarketingModel;
 use Config\Database;
+use Config\Marketing;
 
 class MarketingStoryService
 {
-    public function __construct(private ?MarketingModel $marketingModel = null)
+    public function __construct(private ?MarketingModel $marketingModel = null, private ?Marketing $marketingConfig = null)
     {
         $this->marketingModel ??= new MarketingModel();
+        $this->marketingConfig ??= config('Marketing');
     }
 
     public function attachToStory(array $notification): int
@@ -34,7 +36,7 @@ class MarketingStoryService
     public function findMatchingStory(array $notification): ?array
     {
         $db = Database::connect();
-        $stories = $db->table('bf_marketing_stories')->orderBy('updated_at', 'DESC')->limit(50)->get()->getResultArray();
+        $stories = $db->table('bf_marketing_stories')->orderBy('updated_at', 'DESC')->limit((int) ($this->marketingConfig->storyline['lookback_limit'] ?? 50))->get()->getResultArray();
         if ($stories === []) {
             return null;
         }
@@ -60,16 +62,20 @@ class MarketingStoryService
 
             $storyUpdated = strtotime((string) ($story['updated_at'] ?? 'now')) ?: $createdAt;
             $hoursDiff = abs($createdAt - $storyUpdated) / 3600;
-            $timeScore = max(0.0, 1.0 - min($hoursDiff / 72, 1.0));
+            $timeDecayHours = (float) ($this->marketingConfig->storyline['time_decay_hours'] ?? 72);
+            $timeScore = max(0.0, 1.0 - min($hoursDiff / max($timeDecayHours, 1.0), 1.0));
 
-            $score = ($overlap * 0.45) + ($titleScore * 0.30) + ($domainScore * 0.10) + ($timeScore * 0.15);
+            $score = ($overlap * (float) ($this->marketingConfig->storyline['keyword_weight'] ?? 0.45))
+                + ($titleScore * (float) ($this->marketingConfig->storyline['title_weight'] ?? 0.30))
+                + ($domainScore * (float) ($this->marketingConfig->storyline['domain_weight'] ?? 0.10))
+                + ($timeScore * (float) ($this->marketingConfig->storyline['time_weight'] ?? 0.15));
             if ($score > $bestScore) {
                 $bestScore = $score;
                 $best = $story;
             }
         }
 
-        return $bestScore >= 0.35 ? $best : null;
+        return $bestScore >= (float) ($this->marketingConfig->storyline['match_threshold'] ?? 0.35) ? $best : null;
     }
 
     public function createStoryFromNotification(array $notification): int

@@ -631,8 +631,8 @@ class Services extends CoreServices
 
         return new \App\Services\MarketingNewsScrapeService(
             new \App\Models\MarketingModel(),
-            new \App\Libraries\MyMIMarketing(),
             new \App\Services\Marketing\OcrService(),
+            config('Marketing'),
         );
     }
 
