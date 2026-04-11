@@ -14,6 +14,8 @@ class MarketingNewsScrapeService
 {
     /** @var array<string,mixed> */
     private array $activeImapConfig = [];
+    /** @var array<string,array<string,string>> */
+    private array $tableColumnsCache = [];
     public function __construct(
         private ?MarketingModel $marketingModel = null,
         private ?OcrService $ocrService = null,
@@ -45,6 +47,7 @@ class MarketingNewsScrapeService
         $mailbox = trim((string) ($imap['username'] ?? ''));
         $folders = $this->resolveFolders($options);
         $limit = max(1, (int) ($options['limit'] ?? 25));
+        $scanDepth = max($limit, (int) ($options['scan_depth'] ?? 500));
         $force = ! empty($options['force']);
         $searchCriteria = trim((string) ($options['search_criteria'] ?? 'ALL'));
         $cliSubjectFilter = trim((string) ($options['subject'] ?? ''));
@@ -79,6 +82,12 @@ class MarketingNewsScrapeService
             'parsed_count' => 0,
             'stored' => 0,
             'duplicate_skipped' => 0,
+            'messages_scanned' => 0,
+            'route_matched' => 0,
+            'new_records_stored' => 0,
+            'invalid_skipped' => 0,
+            'moved_to_processed' => 0,
+            'remaining_candidates' => 0,
             'parse_failed' => 0,
             'rejected_count' => 0,
             'rejections' => [],
@@ -132,13 +141,19 @@ class MarketingNewsScrapeService
         imap_close($rootImap);
 
         foreach ($folders as $folder) {
-            $folderResult = $this->scanFolder($folder, $limit, $force, $searchCriteria, $subjectFilter, $debugMode, $debugSubjectLimit, $availableFolders);
+            $folderResult = $this->scanFolder($folder, $limit, $scanDepth, $force, $searchCriteria, $subjectFilter, $debugMode, $debugSubjectLimit, $availableFolders);
             $report['folder_stats'][] = $folderResult;
             $report['folder_exists'] = $report['folder_exists'] || ($folderResult['folder_exists'] ?? false);
             $report['matched_subject_count'] += (int) ($folderResult['matched_subject_count'] ?? 0);
             $report['parsed_count'] += (int) ($folderResult['parsed_count'] ?? 0);
             $report['stored'] += (int) ($folderResult['stored'] ?? 0);
             $report['duplicate_skipped'] += (int) ($folderResult['duplicate_skipped'] ?? 0);
+            $report['messages_scanned'] += (int) ($folderResult['messages_scanned'] ?? 0);
+            $report['route_matched'] += (int) ($folderResult['route_matched'] ?? 0);
+            $report['new_records_stored'] += (int) ($folderResult['new_records_stored'] ?? 0);
+            $report['invalid_skipped'] += (int) ($folderResult['invalid_skipped'] ?? 0);
+            $report['moved_to_processed'] += (int) ($folderResult['moved_to_processed'] ?? 0);
+            $report['remaining_candidates'] += (int) ($folderResult['remaining_candidates'] ?? 0);
             $report['parse_failed'] += (int) ($folderResult['parse_failed'] ?? 0);
             $report['rejected_count'] += (int) ($folderResult['rejected_count'] ?? 0);
             $report['routing_summary']['marketing_news_stored'] += (int) ($folderResult['marketing_news_stored'] ?? 0);
@@ -442,7 +457,18 @@ class MarketingNewsScrapeService
                 'matched_keyword' => $payload['matched_keyword'] ?? null,
                 'source_mailbox' => $payload['source_mailbox'] ?? ($this->activeImapConfig['username'] ?? null),
                 'source_folder' => $payload['source_folder'] ?? null,
+                'imap_uid' => isset($payload['imap_uid']) ? (int) $payload['imap_uid'] : null,
+                'message_id' => $payload['message_id'] ?? null,
+                'email_identifier' => $payload['email_identifier'] ?? null,
+                'ingested_at' => $payload['ingested_at'] ?? date('Y-m-d H:i:s'),
             ], JSON_UNESCAPED_SLASHES),
+            'source_mailbox' => $payload['source_mailbox'] ?? null,
+            'source_folder' => $payload['source_folder'] ?? null,
+            'imap_uid' => $payload['imap_uid'] ?? null,
+            'message_id' => $payload['message_id'] ?? null,
+            'route_category' => $payload['route_category'] ?? 'marketing_news',
+            'ingested_at' => $payload['ingested_at'] ?? date('Y-m-d H:i:s'),
+            'moved_to_processed_at' => null,
             'ticker' => $payload['ticker'] ?? null,
             'company_name' => $payload['company_name'] ?? null,
             'content_hash' => $contentHash,
@@ -460,7 +486,7 @@ class MarketingNewsScrapeService
         return (int) $db->insertID();
     }
 
-    private function scanFolder(string $folder, int $limit, bool $force, string $searchCriteria, string $subjectFilter, bool $debugMode, int $debugSubjectLimit, array $availableFolders): array
+    private function scanFolder(string $folder, int $limit, int $scanDepth, bool $force, string $searchCriteria, string $subjectFilter, bool $debugMode, int $debugSubjectLimit, array $availableFolders): array
     {
         $result = [
             'folder' => $folder,
@@ -470,6 +496,12 @@ class MarketingNewsScrapeService
             'parsed_count' => 0,
             'stored' => 0,
             'duplicate_skipped' => 0,
+            'messages_scanned' => 0,
+            'route_matched' => 0,
+            'new_records_stored' => 0,
+            'invalid_skipped' => 0,
+            'moved_to_processed' => 0,
+            'remaining_candidates' => 0,
             'parse_failed' => 0,
             'rejected_count' => 0,
             'candidate_subjects' => [],
@@ -496,8 +528,14 @@ class MarketingNewsScrapeService
 
         $emailNumbers = imap_search($imap, $searchCriteria) ?: [];
         rsort($emailNumbers);
+        $candidates = array_slice($emailNumbers, 0, max(1, $scanDepth));
+        $mailbox = trim((string) ($this->activeImapConfig['username'] ?? ''));
 
-        foreach (array_slice($emailNumbers, 0, $limit) as $emailNumber) {
+        foreach ($candidates as $emailNumber) {
+            if ((int) $result['new_records_stored'] >= $limit) {
+                break;
+            }
+            $result['messages_scanned']++;
             $overviewList = imap_fetch_overview($imap, (string) $emailNumber, 0) ?: [];
             if ($overviewList === []) {
                 continue;
@@ -526,11 +564,13 @@ class MarketingNewsScrapeService
             }
             $reason = $this->determineRejectionReason($emailAddress, $subject, $route['category'], $subjectFilter);
             if ($reason !== null) {
+                $result['invalid_skipped']++;
                 $result['rejected_count']++;
                 $result['rejections'][] = ['folder' => $folder, 'subject' => $subject, 'from' => $emailAddress, 'reason' => $reason, 'route' => $route];
                 continue;
             }
 
+            $result['route_matched']++;
             $result['matched_subject_count']++;
             $lastIdx = count($result['candidate_subjects']) - 1;
             if ($lastIdx >= 0) {
@@ -541,19 +581,28 @@ class MarketingNewsScrapeService
                 continue;
             }
 
+            $imapUid = (int) imap_uid($imap, (int) $emailNumber);
+            $messageId = trim((string) ($overview->message_id ?? ''));
+            $identity = $this->resolveEmailIdentity($mailbox, $folder, $imapUid, $messageId);
+            if (! $force && $this->isDuplicateForRoute((string) ($route['category'] ?? ''), $identity)) {
+                $result['duplicate_skipped']++;
+                continue;
+            }
+
             $body = $this->fetchEmailBody($imap, (int) $emailNumber);
             $parsed = $this->parseAlertEmail([
                 'subject' => $subject,
                 'body' => $body,
                 'from' => $emailAddress,
-                'message_id' => (string) ($overview->message_id ?? md5($subject . $emailAddress)),
+                'message_id' => $messageId !== '' ? $messageId : md5($subject . $emailAddress),
                 'date' => (string) ($overview->date ?? ''),
-                'uid' => (int) imap_uid($imap, (int) $emailNumber),
+                'uid' => $imapUid,
                 'folder' => $folder,
             ]);
 
             if ($parsed === null) {
                 $result['parse_failed']++;
+                $result['invalid_skipped']++;
                 $result['rejected_count']++;
                 $result['rejections'][] = ['folder' => $folder, 'subject' => $subject, 'from' => $emailAddress, 'reason' => 'parse_failed'];
                 continue;
@@ -562,8 +611,12 @@ class MarketingNewsScrapeService
             $result['parsed_count']++;
             $parsed['route_category'] = $route['category'];
             $parsed['matched_keyword'] = $route['keyword'];
-            $parsed['source_mailbox'] = (string) ($this->activeImapConfig['username'] ?? '');
+            $parsed['source_mailbox'] = $mailbox;
             $parsed['source_folder'] = $folder;
+            $parsed['imap_uid'] = $imapUid;
+            $parsed['message_id'] = $messageId !== '' ? $messageId : null;
+            $parsed['email_identifier'] = $identity['email_identifier'];
+            $parsed['ingested_at'] = date('Y-m-d H:i:s');
             $id = 0;
             if (($route['category'] ?? null) === 'investment_alerts') {
                 $id = $this->storeInvestmentRecord($parsed + ['force' => $force]);
@@ -572,6 +625,7 @@ class MarketingNewsScrapeService
             }
             if ($id > 0) {
                 $result['stored']++;
+                $result['new_records_stored']++;
                 if (($route['category'] ?? null) === 'investment_alerts') {
                     $result['investment_alerts_stored']++;
                 } elseif (($route['category'] ?? null) === 'marketing_news') {
@@ -580,11 +634,10 @@ class MarketingNewsScrapeService
                 $result['items'][] = ['id' => $id, 'title' => $parsed['title'] ?? '', 'folder' => $folder, 'route' => $route];
             } else {
                 $result['duplicate_skipped']++;
-                $result['rejected_count']++;
-                $result['rejections'][] = ['folder' => $folder, 'subject' => $subject, 'from' => $emailAddress, 'reason' => 'duplicate_skipped', 'route' => $route];
             }
         }
 
+        $result['remaining_candidates'] = max(0, count($candidates) - (int) $result['messages_scanned']);
         imap_close($imap);
         return $result;
     }
@@ -767,6 +820,8 @@ class MarketingNewsScrapeService
         $identifier = trim((string) ($payload['email_identifier'] ?? ''));
         $sourceMailbox = trim((string) ($payload['source_mailbox'] ?? $this->activeImapConfig['username'] ?? 'tradealerts@mymiwallet.com'));
         $sourceFolder = trim((string) ($payload['source_folder'] ?? 'INBOX'));
+        $imapUid = (int) ($payload['imap_uid'] ?? 0);
+        $messageId = trim((string) ($payload['message_id'] ?? $payload['source_message_id'] ?? ''));
         $messageHash = hash('sha256', mb_strtolower(trim((string) ($payload['email_subject'] ?? $payload['title'] ?? ''))) . '|' . mb_strtolower(trim((string) ($payload['content'] ?? ''))));
 
         if ($identifier !== '' && $this->alertsModel->isEmailProcessed($identifier)) {
@@ -785,6 +840,10 @@ class MarketingNewsScrapeService
             'matched_keyword' => $payload['matched_keyword'] ?? null,
             'source_mailbox' => $sourceMailbox,
             'source_folder' => $sourceFolder,
+            'imap_uid' => $imapUid > 0 ? $imapUid : null,
+            'message_id' => $messageId !== '' ? $messageId : null,
+            'email_identifier' => $identifier !== '' ? $identifier : null,
+            'ingested_at' => $payload['ingested_at'] ?? date('Y-m-d H:i:s'),
         ];
 
         $data = [
@@ -801,6 +860,13 @@ class MarketingNewsScrapeService
             'email_type' => 'investment_alert',
             'message_hash' => $messageHash,
             'metadata' => json_encode($metadata, JSON_UNESCAPED_SLASHES),
+            'source_mailbox' => $sourceMailbox,
+            'source_folder' => $sourceFolder,
+            'imap_uid' => $imapUid > 0 ? $imapUid : null,
+            'message_id' => $messageId !== '' ? $messageId : null,
+            'route_category' => $payload['route_category'] ?? 'investment_alerts',
+            'ingested_at' => $payload['ingested_at'] ?? date('Y-m-d H:i:s'),
+            'moved_to_processed_at' => null,
             'status' => 'New',
             'created_on' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
@@ -1025,6 +1091,107 @@ class MarketingNewsScrapeService
         }
 
         return $resolved;
+    }
+
+    /**
+     * @return array{email_identifier:string,mailbox:string,folder:string,imap_uid:int,message_id:string}
+     */
+    private function resolveEmailIdentity(string $mailbox, string $folder, int $imapUid, string $messageId): array
+    {
+        $mailbox = trim($mailbox);
+        $folder = trim($folder) !== '' ? trim($folder) : 'INBOX';
+        $messageId = trim($messageId);
+        $identifier = $imapUid > 0
+            ? trim($mailbox . ':' . $folder . ':' . $imapUid)
+            : ($messageId !== '' ? trim($mailbox . ':' . $folder . ':' . $messageId) : trim($mailbox . ':' . $folder . ':fallback'));
+
+        return [
+            'email_identifier' => $identifier,
+            'mailbox' => $mailbox,
+            'folder' => $folder,
+            'imap_uid' => $imapUid,
+            'message_id' => $messageId,
+        ];
+    }
+
+    /**
+     * @param array{email_identifier:string,mailbox:string,folder:string,imap_uid:int,message_id:string} $identity
+     */
+    private function isDuplicateForRoute(string $routeCategory, array $identity): bool
+    {
+        $table = $routeCategory === 'investment_alerts' ? 'bf_investment_scraper' : 'bf_marketing_temp_scraper';
+        $db = Database::connect();
+        if (! $db->tableExists($table)) {
+            return false;
+        }
+
+        return $this->matchByEmailIdentifier($table, $identity['email_identifier'])
+            || $this->matchByMailboxUid($table, $identity['mailbox'], $identity['imap_uid'])
+            || $this->matchByMailboxMessageId($table, $identity['mailbox'], $identity['message_id']);
+    }
+
+    private function matchByEmailIdentifier(string $table, string $emailIdentifier): bool
+    {
+        if ($emailIdentifier === '') {
+            return false;
+        }
+
+        $column = $this->tableColumn($table, 'email_identifier');
+        if ($column === null) {
+            return false;
+        }
+
+        return Database::connect()->table($table)->where($column, $emailIdentifier)->countAllResults() > 0;
+    }
+
+    private function matchByMailboxUid(string $table, string $mailbox, int $imapUid): bool
+    {
+        if ($mailbox === '' || $imapUid <= 0) {
+            return false;
+        }
+
+        $mailboxColumn = $this->tableColumn($table, 'source_mailbox');
+        $uidColumn = $this->tableColumn($table, 'imap_uid');
+        if ($mailboxColumn !== null && $uidColumn !== null) {
+            return Database::connect()->table($table)
+                ->where($mailboxColumn, $mailbox)
+                ->where($uidColumn, $imapUid)
+                ->countAllResults() > 0;
+        }
+
+        return false;
+    }
+
+    private function matchByMailboxMessageId(string $table, string $mailbox, string $messageId): bool
+    {
+        if ($mailbox === '' || $messageId === '') {
+            return false;
+        }
+
+        $mailboxColumn = $this->tableColumn($table, 'source_mailbox');
+        $messageColumn = $this->tableColumn($table, 'message_id') ?? $this->tableColumn($table, 'source_message_id');
+        if ($mailboxColumn !== null && $messageColumn !== null) {
+            return Database::connect()->table($table)
+                ->where($mailboxColumn, $mailbox)
+                ->where($messageColumn, $messageId)
+                ->countAllResults() > 0;
+        }
+
+        return false;
+    }
+
+    private function tableColumn(string $table, string $column): ?string
+    {
+        $key = strtolower($table);
+        if (! isset($this->tableColumnsCache[$key])) {
+            $fields = [];
+            foreach (Database::connect()->getFieldData($table) as $field) {
+                $fields[strtolower((string) $field->name)] = (string) $field->name;
+            }
+            $this->tableColumnsCache[$key] = $fields;
+        }
+
+        return $this->tableColumnsCache[$key][strtolower($column)] ?? null;
     }
 
     private function detectAlertType(string $text): string

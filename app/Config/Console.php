@@ -248,6 +248,7 @@ class Console extends BaseConfig
         \App\Commands\Marketing\Distribute::class,
         \App\Commands\Marketing\GeneratePackage::class,
         \App\Commands\Marketing\Pipeline::class,
+        \App\Commands\MarketingEmailClean::class,
         \App\Commands\Marketing\NewsDebug::class,
         \App\Commands\Marketing\NewsScrape::class,
         \App\Commands\Marketing\NewsGenerate::class,
