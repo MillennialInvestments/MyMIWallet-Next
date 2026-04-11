@@ -23,7 +23,7 @@ class NewsGenerate extends SafeBaseCommand
         $limit = max(1, (int) (CLI::getOption('limit') ?: 25));
         $result = $service->processPending($limit);
         if (((int) ($result['processed'] ?? 0)) === 0) {
-            $result['reason'] = 'No source records were available because inbox scraping failed';
+            $result['reason'] = 'No eligible marketing_news records were available for generation.';
         }
 
         CLI::write(json_encode([

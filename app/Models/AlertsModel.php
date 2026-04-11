@@ -1989,6 +1989,31 @@ class AlertsModel extends Model
     }
 
     /**
+     * Insert investment alert email records with duplicate protection.
+     *
+     * @param array<string,mixed> $data
+     */
+    public function insertInvestmentAlertEmail(array $data): int
+    {
+        $identifier = trim((string) ($data['email_identifier'] ?? ''));
+        if ($identifier !== '' && $this->isEmailProcessed($identifier)) {
+            return 0;
+        }
+
+        $source = trim((string) ($data['source'] ?? 'email'));
+        $messageHash = trim((string) ($data['message_hash'] ?? ''));
+        if ($messageHash !== '' && $this->findScraperByMessageHash($source, $messageHash) !== null) {
+            return 0;
+        }
+
+        if (! $this->insertRawScraperEmail($data)) {
+            return 0;
+        }
+
+        return (int) $this->db->insertID();
+    }
+
+    /**
      * @param array<string, mixed> $data
      * @return array<string, mixed>
      */

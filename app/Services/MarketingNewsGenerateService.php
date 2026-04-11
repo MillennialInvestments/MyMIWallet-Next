@@ -24,7 +24,10 @@ class MarketingNewsGenerateService
                 ->where('status', 'pending')
                 ->orWhere('processed', 0)
             ->groupEnd()
-            ->like('email_subject', 'Press Release')
+            ->groupStart()
+                ->where('source_type', 'email_alert')
+                ->orLike('metadata', '"route_category":"marketing_news"')
+            ->groupEnd()
             ->orderBy('date_scraped', 'DESC')
             ->limit($limit)
             ->get()
@@ -49,8 +52,14 @@ class MarketingNewsGenerateService
 
     public function processRecord(array $record): array
     {
-        $content = trim(strip_tags((string) ($record['content'] ?? '')));
+        if (! $this->isMarketingNewsRecord($record)) {
+            $this->markTempSkipped((int) ($record['id'] ?? 0), 'skipped_non_marketing_route');
+            return ['status' => 'skipped', 'reason' => 'non_marketing_route', 'id' => $record['id'] ?? null];
+        }
+
+        $content = $this->sanitizeForGeneration((string) ($record['content'] ?? ''));
         if ($content === '') {
+            $this->markTempSkipped((int) ($record['id'] ?? 0), 'empty_content');
             return ['status' => 'skipped', 'reason' => 'empty_content', 'id' => $record['id'] ?? null];
         }
 
@@ -60,7 +69,13 @@ class MarketingNewsGenerateService
         }
         $summary = trim((string) $summary);
 
-        $keywords = $this->marketingLibrary->extractKeywords($content);
+        $sentences = $this->marketingLibrary->splitIntoSentences($content);
+        $keywords = $this->marketingLibrary->extractKeywords($sentences, [], [
+            'ticker' => $record['ticker'] ?? '',
+            'company' => $record['company_name'] ?? '',
+            'summary' => $summary,
+            'category' => 'marketing_news',
+        ]);
         if (!is_array($keywords)) {
             $keywords = array_filter(array_map('trim', explode(',', (string) $keywords)));
         }
@@ -75,6 +90,7 @@ class MarketingNewsGenerateService
 
         $id = $this->persistStoryboard($record, $payload);
         if ($id <= 0) {
+            $this->markTempSkipped((int) ($record['id'] ?? 0), 'persist_failed');
             return ['status' => 'skipped', 'reason' => 'persist_failed', 'id' => $record['id'] ?? null];
         }
 
@@ -243,6 +259,24 @@ class MarketingNewsGenerateService
             ]);
     }
 
+    public function markTempSkipped(int $id, string $reason): bool
+    {
+        if ($id <= 0) {
+            return false;
+        }
+
+        $db = Database::connect();
+
+        return (bool) $db->table('bf_marketing_temp_scraper')
+            ->where('id', $id)
+            ->update([
+                'status' => $reason,
+                'processed' => 0,
+                'processed_at' => date('Y-m-d H:i:s'),
+                'modified_on' => date('Y-m-d H:i:s'),
+            ]);
+    }
+
     private function buildWhyItMatters(array $record, array $keywords): string
     {
         $ticker = strtoupper((string) ($record['ticker'] ?? ''));
@@ -259,6 +293,28 @@ class MarketingNewsGenerateService
             '15s' => mb_substr($summary, 0, 120),
             '30s' => mb_substr($summary, 0, 240),
         ];
+    }
+
+    private function isMarketingNewsRecord(array $record): bool
+    {
+        $category = strtolower(trim((string) ($record['category'] ?? '')));
+        if ($category === 'marketing_news') {
+            return true;
+        }
+
+        $metadata = (string) ($record['metadata'] ?? '');
+        return str_contains(strtolower($metadata), '"route_category":"marketing_news"')
+            || str_contains(strtolower($metadata), '"category":"marketing_news"');
+    }
+
+    private function sanitizeForGeneration(string $content): string
+    {
+        $decoded = quoted_printable_decode($content);
+        $decoded = html_entity_decode($decoded, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $cleaned = $this->marketingLibrary->sanitizeRawEmailContent($decoded);
+        $cleaned = preg_replace('/\b(this email.+?unsubscribe.*)$/is', '', $cleaned) ?? $cleaned;
+        $cleaned = preg_replace('/\s+/', ' ', strip_tags($cleaned)) ?? $cleaned;
+        return trim($cleaned);
     }
 
     private function extractKeywordsFromRow(array $row): array

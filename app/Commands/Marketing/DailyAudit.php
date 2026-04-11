@@ -26,6 +26,7 @@ class DailyAudit extends SafeBaseCommand
         $generated = 0;
         $failed = 0;
         $distributed = 0;
+        $scrapedToday = 0;
         $warnings = [];
 
         if ($db->tableExists('bf_marketing_generated_content')) {
@@ -44,13 +45,22 @@ class DailyAudit extends SafeBaseCommand
             CLI::write('⚠️ bf_marketing_distribution_log table is missing; distribution metrics skipped.', 'yellow');
         }
 
+        if ($db->tableExists('bf_marketing_temp_scraper')) {
+            $scrapedToday = $db->table('bf_marketing_temp_scraper')
+                ->where('DATE(date_scraped)', $today)
+                ->countAllResults();
+        }
+
         CLI::write(json_encode([
             'status' => 'success',
             'date' => $today,
+            'scraped_today' => $scrapedToday,
             'generated' => $generated,
             'failed' => $failed,
             'distributed' => $distributed,
-            'reason' => ($generated === 0 && $distributed === 0) ? 'No source records were available because inbox scraping failed' : null,
+            'reason' => ($generated === 0 && $distributed === 0 && $scrapedToday === 0)
+                ? 'No source records were available because inbox scraping failed'
+                : null,
             'warnings' => $warnings,
         ], JSON_PRETTY_PRINT));
     }
