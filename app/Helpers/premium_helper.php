@@ -43,17 +43,23 @@ if (! function_exists('premium_guard')) {
             || str_starts_with($path, 'api/');
         $message = $options['message'] ?? ($entitlements['featureReason'] ?? 'Premium access required.');
 
-        log_message('warning', 'Premium access denied: feature={feature} route={route} user_id={userId} tier={tier} status={status}', [
+        $userId = $entitlements['userId'] ?? null;
+        $membershipTier = $entitlements['membershipTier'] ?? 'free';
+        $membershipStatus = $entitlements['membershipStatus'] ?? 'free';
+        $hasMalformedEntitlements = $userId !== null && ($membershipTier === '' || $membershipStatus === '');
+
+        log_message($hasMalformedEntitlements ? 'warning' : 'notice', 'Premium access denied: feature={feature} route={route} user_id={userId} tier={tier} status={status}', [
             'feature' => $featureKey,
             'route' => '/' . ltrim((string) $request->getUri()->getPath(), '/'),
-            'userId' => $entitlements['userId'] ?? null,
-            'tier' => $entitlements['membershipTier'] ?? 'free',
-            'status' => $entitlements['membershipStatus'] ?? 'free',
+            'userId' => $userId,
+            'tier' => $membershipTier,
+            'status' => $membershipStatus,
         ]);
 
         if ($expectsJson) {
             return $response->setStatusCode(403)->setJSON([
-                'status' => 'error',
+                'status' => 'denied',
+                'code' => 'PREMIUM_REQUIRED',
                 'message' => $message,
                 'data' => [
                     'feature' => $featureKey,

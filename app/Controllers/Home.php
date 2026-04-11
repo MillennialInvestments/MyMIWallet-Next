@@ -61,6 +61,7 @@ class Home extends BaseController
      */
     protected function buildCommonData(array $overrides = []): array|ResponseInterface
     {
+        $buildStart = microtime(true);
         $data = parent::commonData();
         if ($data instanceof ResponseInterface) {
             return $data;
@@ -74,7 +75,7 @@ class Home extends BaseController
         // Current user quick info
         $userAccount = [];
         try {
-            if (method_exists($this, 'getMyMIUser')) {
+            if ($this->cuID && method_exists($this, 'getMyMIUser')) {
                 $userAccount = $this->getMyMIUser()->getUserInformation($this->cuID) ?? [];
             }
         } catch (\Throwable $e) {
@@ -122,6 +123,11 @@ class Home extends BaseController
             $data = array_replace($data, $overrides);
         }
 
+        log_message('info', '[PERF][HOME] buildCommonData complete in {ms}ms', [
+            'ms' => round((microtime(true) - $buildStart) * 1000, 2),
+            'user_id' => $this->cuID,
+        ]);
+
         return $data;
     }
 
@@ -144,6 +150,7 @@ class Home extends BaseController
     // If you want the old “home” as well (mapped to /home-old for now)
     public function index()
     {
+        $requestStart = microtime(true);
         $data = $this->buildCommonData([
             'layout'    => 'public',
             'pageName'  => 'Home',
@@ -155,7 +162,19 @@ class Home extends BaseController
         if ($data instanceof ResponseInterface) {
             return $data;
         }
-        return $this->renderTheme('themes/public/home', $data);
+        log_message('info', '[PERF][HOME] index commonData done in {ms}ms', [
+            'ms' => round((microtime(true) - $requestStart) * 1000, 2),
+            'user_id' => $this->cuID,
+        ]);
+        $renderStart = microtime(true);
+        $response = $this->renderTheme('themes/public/home', $data);
+        log_message('info', '[PERF][HOME] index renderTheme done in {ms}ms', [
+            'ms' => round((microtime(true) - $renderStart) * 1000, 2),
+            'total_ms' => round((microtime(true) - $requestStart) * 1000, 2),
+            'user_id' => $this->cuID,
+        ]);
+
+        return $response;
     }
 
     public function apexReferral(?string $referralCode = null)

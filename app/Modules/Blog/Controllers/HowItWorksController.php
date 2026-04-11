@@ -38,6 +38,18 @@ class HowItWorksController extends UserController
     protected ?MyMIGold $myMIGold = null;
     protected $docsRenderer;
     protected static array $missingSlugLogCache = [];
+    protected const CANONICAL_SLUG_ALIASES = [
+        'overview' => 'overview',
+        'overview-page' => 'overview',
+        'investor-profile' => 'setting-financial-goals',
+        'earnings' => 'daily-financial-news',
+        'alerts' => 'alerts',
+        'account-settings' => 'setting-financial-goals',
+        'marketing' => 'financial-forecasting',
+        'investments' => 'investment-portfolio-management',
+        'mymi-wallets' => 'manage-finances',
+        'automated-financial-insights' => 'financial-forecasting',
+    ];
 
     public function initController(
         \CodeIgniter\HTTP\RequestInterface $request,
@@ -154,12 +166,18 @@ class HowItWorksController extends UserController
     public function show(string $slug = 'overview'): ResponseInterface
     {
         try {
-            $slug = normalize_slug($slug ?: ($this->request->getUri()->getSegment(2) ?? 'overview'));
+            $slug = $this->normalizeRequestedSlug($slug ?: ($this->request->getUri()->getSegment(2) ?? 'overview'));
             log_message('debug', '[HOW_IT_WORKS] slug=' . $slug);
 
-            $normalizedSlug = $slug;
+            $canonicalSlug = $this->resolveCanonicalSlug($slug);
+            if ($canonicalSlug !== $slug) {
+                return redirect()->to(site_url('How-It-Works/' . $canonicalSlug), 301);
+            }
+
+            $normalizedSlug = $canonicalSlug;
 
             $viewMap = [
+                'overview'                        => 'App\Modules\Blog\Views\HowItWorks\fallback',
                 'registering-an-account'          => 'App\Modules\Blog\Views\HowItWorks\Registering_An_Account',
                 'personal-budgeting'              => 'App\Modules\Blog\Views\HowItWorks\Personal_Budgeting',
                 'investment-dashboard'            => 'App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management',
@@ -174,6 +192,7 @@ class HowItWorksController extends UserController
                 'discord'                         => 'App\Modules\Blog\Views\HowItWorks\Discord',
                 'streaming'                       => 'App\Modules\Blog\Views\HowItWorks\Streaming',
                 'purchase-mymi-gold'              => 'App\Modules\Blog\Views\HowItWorks\Purchase_MyMI_Gold',
+                'alerts'                          => 'App\Modules\Blog\Views\HowItWorks\fallback',
             ];
 
             if (isset($viewMap[$normalizedSlug])) {
@@ -207,7 +226,11 @@ class HowItWorksController extends UserController
 
             $cacheKey = 'slug:' . $normalizedSlug;
             if (!isset(self::$missingSlugLogCache[$cacheKey])) {
-                log_message('notice', '[HOW_IT_WORKS] Unknown slug fallback: {slug}', ['slug' => $normalizedSlug]);
+                log_message('notice', '[HOW_IT_WORKS] Unknown slug fallback', [
+                    'requested_slug' => $slug,
+                    'normalized_slug' => $normalizedSlug,
+                    'referrer' => (string) $this->request->getHeaderLine('Referer'),
+                ]);
                 self::$missingSlugLogCache[$cacheKey] = true;
             }
             return $this->renderHowItWorksFallback($normalizedSlug);
@@ -224,11 +247,27 @@ class HowItWorksController extends UserController
 
     protected function renderHowItWorksFallback(string $slug): ResponseInterface
     {
-        $normalized = normalize_slug($slug ?: 'overview');
+        $normalized = $this->normalizeRequestedSlug($slug ?: 'overview');
         return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\fallback', [
             'slug'  => $normalized,
             'title' => ucwords(str_replace('-', ' ', $normalized)),
         ]);
+    }
+
+    protected function normalizeRequestedSlug(string $slug): string
+    {
+        $slug = strtolower(trim(str_replace('_', '-', $slug)));
+        $slug = preg_replace('/\s+/', '-', $slug) ?? $slug;
+        $slug = preg_replace('/-+/', '-', $slug) ?? $slug;
+
+        return trim($slug, '-') ?: 'overview';
+    }
+
+    protected function resolveCanonicalSlug(string $slug): string
+    {
+        $normalized = $this->normalizeRequestedSlug($slug);
+
+        return self::CANONICAL_SLUG_ALIASES[$normalized] ?? $normalized;
     }
 
     /**

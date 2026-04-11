@@ -56,7 +56,7 @@ class SupportController extends UserController
         $article = $this->supportModel?->findBySlug($slug);
         if (! empty($article)) {
             $data['article'] = $article;
-            return $this->renderTheme('SupportModule/Support/article', $data);
+            return $this->renderTheme('SupportModule/article', $data);
         }
 
         $viewCandidate = 'SupportModule/Support/' . str_replace('-', '_', strtolower($slug));
@@ -72,8 +72,33 @@ class SupportController extends UserController
     public function article(string $slug = 'welcome')
     {
         $data = $this->commonData();
-        $data['article'] = $this->supportModel->findBySlug($slug);
-        return $this->renderTheme('SupportModule/Support/article', $data);
+        $normalizedSlug = trim(strtolower($slug)) !== '' ? trim(strtolower($slug)) : 'welcome';
+        $article = $this->supportModel->findBySlug($normalizedSlug);
+        $attemptedView = 'SupportModule/article';
+
+        if (! is_array($article) || empty($article['title']) || empty($article['content'])) {
+            $article = [
+                'slug' => $normalizedSlug,
+                'title' => ucfirst(str_replace('-', ' ', $normalizedSlug)),
+                'content' => view('App\\Modules\\Support\\Views\\articles\\welcome'),
+            ];
+
+            log_message('notice', 'SupportController::article fallback article rendered', [
+                'slug' => $normalizedSlug,
+                'attempted_view' => $attemptedView,
+            ]);
+        }
+
+        $data['article'] = $article;
+
+        if (! $this->viewExists($attemptedView)) {
+            log_message('error', 'SupportController::article missing primary template', [
+                'slug' => $normalizedSlug,
+                'attempted_view' => $attemptedView,
+            ]);
+        }
+
+        return $this->renderTheme($attemptedView, $data);
     }
 
     public function discordOnboarding()
