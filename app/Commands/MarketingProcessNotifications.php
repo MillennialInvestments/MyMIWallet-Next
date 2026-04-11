@@ -5,6 +5,7 @@ namespace App\Commands;
 use App\Libraries\MyMIMarketing;
 use App\Services\Marketing\MarketingNotificationService;
 use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\CLI;
 use Config\Database;
 
 class MarketingProcessNotifications extends BaseCommand
@@ -25,7 +26,7 @@ class MarketingProcessNotifications extends BaseCommand
             ->getResultArray();
 
         if (empty($records)) {
-            $this->show('No notifications to process.');
+            CLI::write('No notifications to process.');
             return;
         }
 
@@ -49,10 +50,10 @@ class MarketingProcessNotifications extends BaseCommand
                     'updated_at' => date('Y-m-d H:i:s'),
                 ]);
 
-                $this->show('Processed notification #' . $record['id']);
+                CLI::write('Processed notification #' . $record['id']);
             } catch (\Throwable $e) {
                 log_message('error', 'marketing:process-notifications failed for ID ' . $record['id'] . ': ' . $e->getMessage());
-                $this->show('Failed notification #' . $record['id'] . ': ' . $e->getMessage());
+                CLI::error('Failed notification #' . $record['id'] . ': ' . $e->getMessage());
             }
         }
     }
