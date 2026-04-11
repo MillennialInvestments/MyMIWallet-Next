@@ -83,6 +83,11 @@ class NewsAudit extends SafeBaseCommand
             $title = trim((string) ($record['title'] ?? ''));
             $content = trim((string) ($record['content'] ?? ''));
             $source = strtolower(trim((string) ($record['source'] ?? '')));
+            $metadata = $this->decodeJson((string) ($record['metadata'] ?? ''));
+            $routeCategory = strtolower((string) ($metadata['route_category'] ?? ''));
+            $matchedKeyword = (string) ($metadata['matched_keyword'] ?? '');
+            $sourceMailbox = (string) ($metadata['source_mailbox'] ?? ($record['source_mailbox'] ?? ''));
+            $status = strtolower(trim((string) ($record['status'] ?? '')));
 
             $eligible = true;
 
@@ -119,13 +124,22 @@ class NewsAudit extends SafeBaseCommand
                 ]);
             }
 
-            if ($source === '' || ! in_array($source, self::SOURCE_WHITELIST, true)) {
+            if ($routeCategory === 'investment_alerts' || $status === 'routed_to_investment') {
                 $eligible = false;
                 $this->addIssue($issues, $issueRecordIndex, [
                     'record_id' => $record['id'],
-                    'source' => $source ?: '—',
+                    'source' => ($sourceMailbox !== '' ? $sourceMailbox : ($source ?: '—')),
                     'title' => $this->trimTitle($title),
-                    'category' => 'SCRAPER_SKIPPED_UNLOGGED',
+                    'category' => 'ROUTED_TO_INVESTMENT_QUEUE',
+                    'stage' => 'ingest',
+                ]);
+            } elseif ($source === '' || ! in_array($source, self::SOURCE_WHITELIST, true)) {
+                $eligible = false;
+                $this->addIssue($issues, $issueRecordIndex, [
+                    'record_id' => $record['id'],
+                    'source' => ($sourceMailbox !== '' ? $sourceMailbox : ($source ?: '—')),
+                    'title' => $this->trimTitle($title . ($matchedKeyword !== '' ? ' [' . $matchedKeyword . ']' : '')),
+                    'category' => 'SCRAPER_SOURCE_UNSUPPORTED',
                     'stage' => 'ingest',
                 ]);
             }
@@ -144,9 +158,9 @@ class NewsAudit extends SafeBaseCommand
                 $skippedCount++;
                 $this->addIssue($issues, $issueRecordIndex, [
                     'record_id' => $record['id'],
-                    'source' => $source ?: '—',
-                    'title' => $this->trimTitle($title),
-                    'category' => 'SCRAPER_SKIPPED_UNLOGGED',
+                    'source' => ($sourceMailbox !== '' ? $sourceMailbox : ($source ?: '—')),
+                    'title' => $this->trimTitle($title . ($matchedKeyword !== '' ? ' [' . $matchedKeyword . ']' : '')),
+                    'category' => 'SCRAPER_SKIPPED_LOGGED',
                     'stage' => 'summarize',
                 ]);
             }
@@ -409,6 +423,9 @@ class NewsAudit extends SafeBaseCommand
         $contentColumn = $this->pickColumn($columns, ['content', 'body']);
         $urlColumn = $this->pickColumn($columns, ['url', 'link']);
         $createdColumn = $this->pickColumn($columns, ['created_at', 'created_on']);
+        $metadataColumn = $this->pickColumn($columns, ['metadata']);
+        $statusColumn = $this->pickColumn($columns, ['status']);
+        $mailboxColumn = $this->pickColumn($columns, ['source_mailbox']);
 
         $select = ['id'];
         if ($sourceColumn) {
@@ -428,6 +445,15 @@ class NewsAudit extends SafeBaseCommand
         }
         if ($createdColumn) {
             $select[] = $createdColumn . ' AS created_at';
+        }
+        if ($metadataColumn) {
+            $select[] = $metadataColumn . ' AS metadata';
+        }
+        if ($statusColumn) {
+            $select[] = $statusColumn . ' AS status';
+        }
+        if ($mailboxColumn) {
+            $select[] = $mailboxColumn . ' AS source_mailbox';
         }
 
         $builder = $db->table('bf_marketing_temp_scraper')->select(implode(', ', $select), false);
@@ -570,6 +596,19 @@ class NewsAudit extends SafeBaseCommand
         }
 
         return [$value];
+    }
+
+    /**
+     * @return array<string,mixed>
+     */
+    private function decodeJson(string $json): array
+    {
+        if (trim($json) === '') {
+            return [];
+        }
+
+        $decoded = json_decode($json, true);
+        return is_array($decoded) ? $decoded : [];
     }
 
     private function isHtmlHeavy(string $content): bool

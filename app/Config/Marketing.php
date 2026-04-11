@@ -57,6 +57,44 @@ class Marketing extends BaseConfig
         'log_subject_rejections' => true,
     ];
 
+    /** @var array<string,array<int,string>> */
+    public array $emailSubjectRouting = [
+        'investment_alerts' => [
+            'New Alert',
+            'Alert:',
+            'Alert',
+            'Trade Alert',
+            'New symbols:',
+        ],
+        'marketing_news' => [
+            'Press Release',
+            'Press release',
+            'News Release',
+            'News release',
+            'News alert',
+            'News',
+        ],
+    ];
+
+    /** @var array<int,string> */
+    public array $marketing_news_subject_keywords = [
+        'Press Release',
+        'Press release',
+        'News Release',
+        'News release',
+        'News alert',
+        'News',
+    ];
+
+    /** @var array<int,string> */
+    public array $investment_alert_subject_keywords = [
+        'New Alert',
+        'Alert:',
+        'Alert',
+        'Trade Alert',
+        'New symbols:',
+    ];
+
     /** @var array<string,mixed> */
     public array $ocr = [
         'engine_mode' => 3,
@@ -124,5 +162,38 @@ class Marketing extends BaseConfig
         }
 
         $this->logging['debug_mode'] = (bool) env('MARKETING_DEBUG_MODE', false);
+    }
+
+    /**
+     * @return array<string,array<int,string>>
+     */
+    public function getEmailSubjectRouting(): array
+    {
+        return [
+            'investment_alerts' => array_values(array_filter(array_map('trim', $this->investment_alert_subject_keywords))),
+            'marketing_news' => array_values(array_filter(array_map('trim', $this->marketing_news_subject_keywords))),
+        ];
+    }
+
+    /**
+     * @return array{category:?string,keyword:?string}
+     */
+    public function matchSubjectRoute(string $subject): array
+    {
+        $subject = trim($subject);
+        if ($subject === '') {
+            return ['category' => null, 'keyword' => null];
+        }
+
+        $routes = $this->getEmailSubjectRouting();
+        foreach (['investment_alerts', 'marketing_news'] as $category) {
+            foreach (($routes[$category] ?? []) as $keyword) {
+                if ($keyword !== '' && stripos($subject, $keyword) !== false) {
+                    return ['category' => $category, 'keyword' => $keyword];
+                }
+            }
+        }
+
+        return ['category' => null, 'keyword' => null];
     }
 }

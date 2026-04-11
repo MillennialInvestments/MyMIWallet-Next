@@ -78,6 +78,18 @@ class NewsScrape extends SafeBaseCommand
             $results[] = $result;
         }
 
+        $routingSummary = [
+            'marketing_news_stored' => 0,
+            'investment_alerts_stored' => 0,
+            'rejected_count' => 0,
+        ];
+        foreach ($results as $entry) {
+            $summary = (array) ($entry['routing_summary'] ?? []);
+            $routingSummary['marketing_news_stored'] += (int) ($summary['marketing_news_stored'] ?? 0);
+            $routingSummary['investment_alerts_stored'] += (int) ($summary['investment_alerts_stored'] ?? 0);
+            $routingSummary['rejected_count'] += (int) ($summary['rejected_count'] ?? 0);
+        }
+
         CLI::write((string) json_encode([
             'status' => 'success',
             'command' => 'marketing:news:scrape',
@@ -88,6 +100,7 @@ class NewsScrape extends SafeBaseCommand
             'limit' => $limit,
             'force' => $force,
             'debug_subjects' => $debugSubjects,
+            'routing_summary' => $routingSummary,
             'results' => $results,
         ], JSON_PRETTY_PRINT));
     }

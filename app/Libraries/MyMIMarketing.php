@@ -912,7 +912,7 @@ class MyMIMarketing
 
     private function extractTopSentences($sentences, $scores, $topN = 5)
     {
-        https://www.xnxx.com/porn-maker/familystrokesasort($scores, SORT_NUMERIC);
+        asort($scores, SORT_NUMERIC);
         $topSentenceIndexes = array_keys(array_slice($scores, -$topN, $topN, true));
         $summary = [];
         foreach ($topSentenceIndexes as $index) {
@@ -942,16 +942,15 @@ class MyMIMarketing
         return $this->extractKeywords($summary, $this->fallbackKeywordExtraction($summary));
     }
     
-    public function extractKeywords(array $sentences, array $fallback = [], array $alertContext = []): array
+    public function extractKeywords($sentences, array $fallback = [], array $alertContext = []): array
     {
-        // 🔄 If a string was passed (by accident or fallback), auto-convert
         if (is_string($sentences)) {
-            $sentences = $this->splitIntoSentences($sentences);
+            $sentences = $this->splitIntoSentences($this->sanitizeRawEmailContent($sentences));
         }
 
-        if (!is_array($sentences)) {
+        if (! is_array($sentences) || $sentences === []) {
             log_message('error', '⚠️ extractKeywords() received invalid sentence format.');
-            return $fallback;
+            return array_values(array_unique(array_filter($fallback)));
         }
 
         if (empty($sentences) && !empty($alertContext['summary'])) {
