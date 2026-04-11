@@ -2376,3 +2376,7 @@ $routes->group('investments/economy', ['namespace' => 'App\Modules\User\Controll
 $routes->group('investments', ['namespace' => 'App\Modules\APIs\Controllers'], static function($routes) {
     $routes->get('fundamentals/(:segment)', 'InvestmentsAPIController::fundamentals/$1');
 });
+
+if (is_file(APPPATH . 'Modules/PropFirms/Config/Routes.php')) {
+    require APPPATH . 'Modules/PropFirms/Config/Routes.php';
+}
