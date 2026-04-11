@@ -30,13 +30,18 @@ class MarketingNewsScrapeService
             return ['status' => 'error', 'connection_ok' => false, 'error' => 'imap_open not available'];
         }
 
-        $imap = $this->resolveImapConfig($options);
+        try {
+            $imap = $this->resolveImapConfig($options);
+        } catch (\RuntimeException $e) {
+            return ['status' => 'error', 'connection_ok' => false, 'error' => $e->getMessage()];
+        }
         $this->activeImapConfig = $imap;
-        $mailbox = trim((string) ($imap['mailbox'] ?? $imap['username'] ?? ''));
+        $mailbox = trim((string) ($imap['username'] ?? ''));
         $folders = $this->resolveFolders($options);
         $limit = max(1, (int) ($options['limit'] ?? 25));
         $force = ! empty($options['force']);
-        $searchCriteria = trim((string) ($options['search_criteria'] ?? $imap['search_criteria'] ?? 'ALL'));
+        $searchCriteria = trim((string) ($options['search_criteria'] ?? 'ALL'));
+        $subjectFilter = trim((string) ($options['subject'] ?? $imap['subject_filter'] ?? 'Press Release'));
         $debugMode = array_key_exists('debug', $options)
             ? (bool) $options['debug']
             : (bool) ($this->marketingConfig->logging['debug_mode'] ?? false);
@@ -50,9 +55,11 @@ class MarketingNewsScrapeService
             'imap_port' => (int) ($imap['port'] ?? 993),
             'encryption' => (string) ($imap['encryption'] ?? 'ssl'),
             'username' => (string) ($imap['username'] ?? ''),
-            'default_folder' => (string) ($imap['default_folder'] ?? 'INBOX'),
+            'folder' => (string) ($imap['folder'] ?? 'INBOX'),
+            'source_map' => (array) ($imap['source_map'] ?? []),
             'folders' => $folders,
             'search_criteria' => $searchCriteria,
+            'subject_filter' => $subjectFilter,
             'connection_ok' => false,
             'config_resolved' => ! empty($imap['host']) && ! empty($imap['username']),
             'password_present' => ! empty($imap['password']),
@@ -77,9 +84,18 @@ class MarketingNewsScrapeService
             (int) $report['imap_port'],
             (string) $report['encryption'],
             (string) $report['username'],
-            (string) $report['default_folder'],
+            (string) $report['folder'],
             $report['password_present'] ? 'true' : 'false'
         ));
+
+        if (! $report['password_present']) {
+            return [
+                'status' => 'error',
+                'message' => 'Missing IMAP password for tradealerts@mymiwallet.com',
+                'config_resolved' => true,
+                'password_present' => false,
+            ] + $report;
+        }
 
         $conn = $this->connectToFolder((string) $folders[0]);
         if (! $conn['ok']) {
@@ -96,7 +112,7 @@ class MarketingNewsScrapeService
         imap_close($rootImap);
 
         foreach ($folders as $folder) {
-            $folderResult = $this->scanFolder($folder, $limit, $force, $searchCriteria, $debugMode, $debugSubjectLimit, $availableFolders);
+            $folderResult = $this->scanFolder($folder, $limit, $force, $searchCriteria, $subjectFilter, $debugMode, $debugSubjectLimit, $availableFolders);
             $report['folder_stats'][] = $folderResult;
             $report['folder_exists'] = $report['folder_exists'] || ($folderResult['folder_exists'] ?? false);
             $report['matched_subject_count'] += (int) ($folderResult['matched_subject_count'] ?? 0);
@@ -128,10 +144,15 @@ class MarketingNewsScrapeService
 
     public function mailboxDiagnostics(array $options = []): array
     {
-        $imap = $this->resolveImapConfig($options);
+        try {
+            $imap = $this->resolveImapConfig($options);
+        } catch (\RuntimeException $e) {
+            return ['status' => 'error', 'connection_ok' => false, 'error' => $e->getMessage()];
+        }
         $this->activeImapConfig = $imap;
         $folders = $this->resolveFolders($options);
-        $searchCriteria = trim((string) ($options['search_criteria'] ?? $imap['search_criteria'] ?? 'ALL'));
+        $searchCriteria = trim((string) ($options['search_criteria'] ?? 'ALL'));
+        $subjectFilter = trim((string) ($options['subject'] ?? $imap['subject_filter'] ?? 'Press Release'));
         $subjectLimit = max(1, (int) ($options['subject_limit'] ?? 10));
 
         $diag = [
@@ -140,10 +161,11 @@ class MarketingNewsScrapeService
                 'port' => (int) ($imap['port'] ?? 993),
                 'encryption' => $imap['encryption'] ?? 'ssl',
                 'username' => $imap['username'] ?? '',
-                'mailbox' => $imap['mailbox'] ?? '',
-                'default_folder' => $imap['default_folder'] ?? 'INBOX',
+                'folder' => $imap['folder'] ?? 'INBOX',
                 'search_criteria' => $searchCriteria,
+                'subject_filter' => $subjectFilter,
                 'password_present' => ! empty($imap['password']),
+                'source_map' => (array) ($imap['source_map'] ?? []),
             ],
             'folders_configured' => $folders,
             'connection_ok' => false,
@@ -157,11 +179,17 @@ class MarketingNewsScrapeService
             (int) $diag['connection']['port'],
             (string) $diag['connection']['encryption'],
             (string) $diag['connection']['username'],
-            (string) $diag['connection']['default_folder'],
+            (string) $diag['connection']['folder'],
             $diag['connection']['password_present'] ? 'true' : 'false'
         ));
 
-        $conn = $this->connectToFolder((string) ($imap['default_folder'] ?? 'INBOX'));
+        if (! $diag['connection']['password_present']) {
+            $diag['status'] = 'error';
+            $diag['message'] = 'Missing IMAP password for tradealerts@mymiwallet.com';
+            return $diag;
+        }
+
+        $conn = $this->connectToFolder((string) ($imap['folder'] ?? 'INBOX'));
         if (! $conn['ok']) {
             $diag['error'] = $conn['error'];
             $diag['imap_last_error'] = $conn['imap_last_error'] ?? null;
@@ -175,7 +203,7 @@ class MarketingNewsScrapeService
         imap_close($rootImap);
 
         foreach ($folders as $folder) {
-            $diag['per_folder'][$folder] = $this->scanFolderForDiagnostics($folder, $searchCriteria, $subjectLimit, $found);
+            $diag['per_folder'][$folder] = $this->scanFolderForDiagnostics($folder, $searchCriteria, $subjectFilter, $subjectLimit, $found);
         }
 
         return $diag;
@@ -205,6 +233,11 @@ class MarketingNewsScrapeService
             'source_message_id' => $messageId,
             'title' => $headline['title'] ?: $headlineSource,
             'content' => trim($cleanBody),
+            'email_subject' => $subject,
+            'email_sender' => $sender,
+            'email_date' => (string) ($email['date'] ?? ''),
+            'email_identifier' => trim((string) (($email['folder'] ?? 'INBOX') . ':' . ($email['uid'] ?? $messageId))),
+            'metadata' => json_encode(['source' => 'email', 'category' => 'press_release']),
             'ticker' => $headline['ticker'] ?? null,
             'company_name' => $headline['company_name'] ?? null,
             'status' => 'pending',
@@ -333,6 +366,15 @@ class MarketingNewsScrapeService
         $contentHash = hash('sha256', $normalizedTitle . '|' . $normalizedBody);
         $force = ! empty($payload['force']);
         $dedupe = (bool) ($this->marketingConfig->tempScraper['dedupe_on_content_hash'] ?? true);
+        $emailIdentifier = trim((string) ($payload['email_identifier'] ?? ''));
+        $sourceMessageId = trim((string) ($payload['source_message_id'] ?? ''));
+
+        if (! $force && $emailIdentifier !== '' && $db->table($table)->where('email_identifier', $emailIdentifier)->countAllResults() > 0) {
+            return 0;
+        }
+        if (! $force && $sourceMessageId !== '' && $db->table($table)->where('source_message_id', $sourceMessageId)->countAllResults() > 0) {
+            return 0;
+        }
 
         if (! $force && $dedupe && $db->table($table)->where('content_hash', $contentHash)->countAllResults() > 0) {
             return 0;
@@ -348,6 +390,11 @@ class MarketingNewsScrapeService
             'alert_type' => $payload['alert_type'] ?? null,
             'sender_email' => $payload['sender_email'] ?? null,
             'source_message_id' => $payload['source_message_id'] ?? null,
+            'email_subject' => $payload['email_subject'] ?? ($payload['title'] ?? null),
+            'email_sender' => $payload['email_sender'] ?? ($payload['sender_email'] ?? null),
+            'email_date' => $payload['email_date'] ?? null,
+            'email_identifier' => $payload['email_identifier'] ?? ($payload['source_message_id'] ?? null),
+            'metadata' => $payload['metadata'] ?? null,
             'ticker' => $payload['ticker'] ?? null,
             'company_name' => $payload['company_name'] ?? null,
             'content_hash' => $contentHash,
@@ -364,7 +411,7 @@ class MarketingNewsScrapeService
         return (int) $db->insertID();
     }
 
-    private function scanFolder(string $folder, int $limit, bool $force, string $searchCriteria, bool $debugMode, int $debugSubjectLimit, array $availableFolders): array
+    private function scanFolder(string $folder, int $limit, bool $force, string $searchCriteria, string $subjectFilter, bool $debugMode, int $debugSubjectLimit, array $availableFolders): array
     {
         $result = [
             'folder' => $folder,
@@ -411,7 +458,7 @@ class MarketingNewsScrapeService
                 array_shift($result['candidate_subjects']);
             }
 
-            $reason = $this->determineRejectionReason($emailAddress, $subject);
+            $reason = $this->determineRejectionReason($emailAddress, $subject, $subjectFilter);
             if ($reason !== null) {
                 $result['rejected_count']++;
                 $result['rejections'][] = ['folder' => $folder, 'subject' => $subject, 'from' => $emailAddress, 'reason' => $reason];
@@ -435,6 +482,8 @@ class MarketingNewsScrapeService
                 'from' => $emailAddress,
                 'message_id' => (string) ($overview->message_id ?? md5($subject . $emailAddress)),
                 'date' => (string) ($overview->date ?? ''),
+                'uid' => (int) imap_uid($imap, (int) $emailNumber),
+                'folder' => $folder,
             ]);
 
             if ($parsed === null) {
@@ -460,7 +509,7 @@ class MarketingNewsScrapeService
         return $result;
     }
 
-    private function scanFolderForDiagnostics(string $folder, string $searchCriteria, int $subjectLimit, array $availableFolders): array
+    private function scanFolderForDiagnostics(string $folder, string $searchCriteria, string $subjectFilter, int $subjectLimit, array $availableFolders): array
     {
         $stats = [
             'folder_exists' => in_array($folder, $availableFolders, true),
@@ -498,7 +547,7 @@ class MarketingNewsScrapeService
             $email = $this->extractEmail($from);
 
             $senderMatch = $this->senderAllowed($email);
-            $subjectMatch = $this->subjectAccepted($subject);
+            $subjectMatch = $this->subjectAccepted($subject, $subjectFilter);
             $stats['sender_matches'] += $senderMatch ? 1 : 0;
             $stats['subject_matches'] += $subjectMatch ? 1 : 0;
             $stats['full_matches'] += ($senderMatch && $subjectMatch) ? 1 : 0;
@@ -530,13 +579,14 @@ class MarketingNewsScrapeService
             return [trim((string) $options['mailbox_folder'])];
         }
 
-        return (array) ($this->marketingConfig->imap['folders'] ?? ['INBOX']);
+        $resolvedFolder = trim((string) ($this->activeImapConfig['folder'] ?? 'INBOX'));
+        return [$resolvedFolder !== '' ? $resolvedFolder : 'INBOX'];
     }
 
     private function connectToFolder(string $folder): array
     {
         $imap = $this->resolveImapConfig([]);
-        $folder = trim($folder) !== '' ? trim($folder) : (string) ($imap['default_folder'] ?? 'INBOX');
+        $folder = trim($folder) !== '' ? trim($folder) : (string) ($imap['folder'] ?? 'INBOX');
         $path = $this->newsEmailConfig->buildConnectionString($imap, $folder);
         $conn = @imap_open($path, (string) $imap['username'], (string) $imap['password']);
         if ($conn === false) {
@@ -602,8 +652,12 @@ class MarketingNewsScrapeService
         return in_array(mb_strtolower($email), $allowed, true);
     }
 
-    private function subjectAccepted(string $subject): bool
+    private function subjectAccepted(string $subject, string $subjectFilter = ''): bool
     {
+        if (trim($subjectFilter) !== '') {
+            return stripos($subject, $subjectFilter) !== false;
+        }
+
         $patterns = (array) ($this->marketingConfig->newsScrape['accepted_subject_patterns'] ?? []);
         if ($patterns === []) {
             return true;
@@ -618,13 +672,13 @@ class MarketingNewsScrapeService
         return false;
     }
 
-    private function determineRejectionReason(string $email, string $subject): ?string
+    private function determineRejectionReason(string $email, string $subject, string $subjectFilter = ''): ?string
     {
         if (! $this->senderAllowed($email)) {
             return 'sender_not_allowed';
         }
 
-        if (! $this->subjectAccepted($subject)) {
+        if (! $this->subjectAccepted($subject, $subjectFilter)) {
             return 'subject_not_matched';
         }
 
@@ -637,12 +691,15 @@ class MarketingNewsScrapeService
             return $this->activeImapConfig;
         }
 
-        $mailboxOverride = isset($options['mailbox']) ? trim((string) $options['mailbox']) : null;
-        $resolved = $this->newsEmailConfig->resolve($mailboxOverride ?: null);
+        $username = isset($options['username']) ? trim((string) $options['username']) : '';
+        $mailboxLegacy = isset($options['mailbox']) ? trim((string) $options['mailbox']) : '';
+        if ($username === '' && str_contains($mailboxLegacy, '@')) {
+            $username = $mailboxLegacy;
+        }
+        $resolved = $this->newsEmailConfig->resolve($username !== '' ? $username : null);
 
-        if ($mailboxOverride !== null && $mailboxOverride !== '') {
-            $resolved['mailbox'] = strtolower($mailboxOverride);
-            $resolved['username'] = strtolower($mailboxOverride);
+        if (! empty($options['folder'])) {
+            $resolved['folder'] = trim((string) $options['folder']);
         }
 
         if (empty($resolved['password']) && ! empty($this->marketingConfig->imap['password'])) {

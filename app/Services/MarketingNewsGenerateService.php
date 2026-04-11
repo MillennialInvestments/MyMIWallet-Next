@@ -20,7 +20,11 @@ class MarketingNewsGenerateService
     {
         $db = Database::connect();
         $records = $db->table('bf_marketing_temp_scraper')
-            ->where('status', 'pending')
+            ->groupStart()
+                ->where('status', 'pending')
+                ->orWhere('processed', 0)
+            ->groupEnd()
+            ->like('email_subject', 'Press Release')
             ->orderBy('date_scraped', 'DESC')
             ->limit($limit)
             ->get()

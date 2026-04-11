@@ -9,53 +9,42 @@ class NewsEmailServer extends BaseConfig
     public string $host = 'imap.dreamhost.com';
     public int $port = 993;
     public string $encryption = 'ssl';
-    public string $username = 'news@mymiwallet.com';
+    public string $username = 'tradealerts@mymiwallet.com';
     public string $password = '';
-    public string $mailbox = 'news@mymiwallet.com';
-    public string $default_folder = 'INBOX';
-    public string $search_criteria = 'ALL';
-
-    /** @var array<string,array{username:string,password_env:string}> */
-    public array $mailboxes = [
-        'news@mymiwallet.com' => [
-            'username' => 'news@mymiwallet.com',
-            'password_env' => 'MYMI_NEWS_IMAP_PASSWORD',
-        ],
-        'alerts@mymiwallet.com' => [
-            'username' => 'alerts@mymiwallet.com',
-            'password_env' => 'MYMI_ALERTS_IMAP_PASSWORD',
-        ],
-        'tradealerts@mymiwallet.com' => [
-            'username' => 'tradealerts@mymiwallet.com',
-            'password_env' => 'MYMI_TRADEALERTS_IMAP_PASSWORD',
-        ],
-    ];
+    public string $folder = 'INBOX';
+    public string $subject_filter = 'Press Release';
 
     public function resolve(?string $mailboxOverride = null): array
     {
-        $mailbox = strtolower(trim((string) ($mailboxOverride ?: env('MARKETING_NEWS_IMAP_MAILBOX', env('MARKETING_IMAP_MAILBOX', $this->mailbox)))));
-        if ($mailbox === '') {
-            $mailbox = $this->mailbox;
+        $usernameOverride = trim((string) ($mailboxOverride ?? ''));
+        $sources = [];
+
+        $host = $this->resolveByPrefixes(['HOST'], (string) $this->host, $sources, 'host');
+        $port = (int) $this->resolveByPrefixes(['PORT'], (string) $this->port, $sources, 'port');
+        $encryption = strtolower($this->resolveByPrefixes(['ENCRYPTION'], (string) $this->encryption, $sources, 'encryption'));
+        $username = $usernameOverride !== ''
+            ? $usernameOverride
+            : $this->resolveByPrefixes(['USER', 'USERNAME'], (string) $this->username, $sources, 'username');
+        if ($usernameOverride !== '') {
+            $sources['username'] = 'runtime_override';
+        }
+        $password = $this->resolveByPrefixes(['PASS', 'PASSWORD'], (string) $this->password, $sources, 'password');
+        $folder = $this->resolveByPrefixes(['MAILBOX', 'FOLDER'], (string) $this->folder, $sources, 'folder');
+        $subjectFilter = $this->resolveByPrefixes(['SUBJECT_FILTER'], (string) $this->subject_filter, $sources, 'subject_filter');
+
+        if (strtolower(trim($username)) === 'inbox') {
+            throw new \RuntimeException('Invalid IMAP username resolution: username resolved to INBOX');
         }
 
-        $mailboxConfig = $this->mailboxes[$mailbox] ?? [
-            'username' => $mailbox,
-            'password_env' => '',
-        ];
-
-        $username = (string) env('MARKETING_NEWS_IMAP_USERNAME', env('MARKETING_IMAP_USERNAME', $mailboxConfig['username'] ?: $this->username));
-        $passwordFromMailboxEnv = $mailboxConfig['password_env'] !== '' ? (string) env($mailboxConfig['password_env'], '') : '';
-        $password = (string) env('MARKETING_NEWS_IMAP_PASSWORD', env('MARKETING_IMAP_PASSWORD', $passwordFromMailboxEnv !== '' ? $passwordFromMailboxEnv : $this->password));
-
         return [
-            'host' => (string) env('MARKETING_NEWS_IMAP_HOST', env('MARKETING_IMAP_HOST', env('MYMI_ALERTS_IMAP_HOST', $this->host))),
-            'port' => (int) env('MARKETING_NEWS_IMAP_PORT', env('MARKETING_IMAP_PORT', $this->port)),
-            'encryption' => strtolower((string) env('MARKETING_NEWS_IMAP_ENCRYPTION', env('MARKETING_IMAP_ENCRYPTION', $this->encryption))),
-            'username' => $username,
+            'host' => trim($host),
+            'port' => $port,
+            'encryption' => $encryption !== '' ? $encryption : 'ssl',
+            'username' => trim($username),
             'password' => $password,
-            'mailbox' => $mailbox,
-            'default_folder' => (string) env('MARKETING_NEWS_IMAP_DEFAULT_FOLDER', env('MARKETING_IMAP_DEFAULT_FOLDER', $this->default_folder)),
-            'search_criteria' => (string) env('MARKETING_NEWS_IMAP_SEARCH', env('MARKETING_IMAP_SEARCH', $this->search_criteria)),
+            'folder' => trim($folder) !== '' ? trim($folder) : 'INBOX',
+            'subject_filter' => trim($subjectFilter) !== '' ? trim($subjectFilter) : 'Press Release',
+            'source_map' => $sources,
         ];
     }
 
@@ -64,11 +53,45 @@ class NewsEmailServer extends BaseConfig
         $host = (string) ($config['host'] ?? $this->host);
         $port = (int) ($config['port'] ?? $this->port);
         $encryption = strtolower((string) ($config['encryption'] ?? $this->encryption));
-        $folder = trim((string) ($folder ?: ($config['default_folder'] ?? $this->default_folder)));
-        if ($folder === '') {
-            $folder = 'INBOX';
+        $folder = trim((string) ($folder ?: ($config['folder'] ?? $this->folder)));
+
+        return sprintf(
+            '{%s:%d/imap/%s/novalidate-cert}%s',
+            $host,
+            (int) $port,
+            $encryption !== '' ? $encryption : 'ssl',
+            $folder !== '' ? $folder : 'INBOX'
+        );
+    }
+
+    public function toArray(?string $usernameOverride = null): array
+    {
+        return $this->resolve($usernameOverride);
+    }
+
+    private function resolveByPrefixes(array $suffixes, string $default, array &$sources, string $field): string
+    {
+        $prefixes = ['MARKETING_NEWS_IMAP_', 'MYMI_ALERTS_IMAP_', 'IMAP_'];
+        foreach ($prefixes as $prefix) {
+            foreach ($suffixes as $suffix) {
+                $key = $prefix . $suffix;
+                $value = env($key);
+                if ($value !== null && trim((string) $value) !== '') {
+                    $sources[$field] = $key;
+                    return (string) $value;
+                }
+            }
         }
 
-        return sprintf('{%s:%d/imap/%s}%s', $host, $port, $encryption, $folder);
+        if ($field === 'subject_filter') {
+            $legacy = env('MARKETING_NEWS_SUBJECT_FILTER');
+            if ($legacy !== null && trim((string) $legacy) !== '') {
+                $sources[$field] = 'MARKETING_NEWS_SUBJECT_FILTER';
+                return (string) $legacy;
+            }
+        }
+
+        $sources[$field] = 'default';
+        return $default;
     }
 }

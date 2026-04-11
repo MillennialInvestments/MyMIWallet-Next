@@ -18,6 +18,10 @@ class Pipeline extends SafeBaseCommand
         $mode = strtolower((string) ($params[0] ?? 'all'));
         $pipeline = service('marketingPipelineService');
         $mailbox = CLI::getOption('mailbox');
+        $username = CLI::getOption('username');
+        if ((! is_string($username) || trim($username) === '') && is_string($mailbox) && str_contains($mailbox, '@')) {
+            $username = $mailbox;
+        }
 
         $result = [];
         if ($mode === 'news' || $mode === 'all') {
@@ -32,6 +36,9 @@ class Pipeline extends SafeBaseCommand
 
             $scrape = $scrapeService->fetchEmails([
                 'mailbox' => $mailbox,
+                'username' => $username,
+                'folder' => CLI::getOption('folder'),
+                'subject' => CLI::getOption('subject') ?: null,
                 'limit' => max(1, (int) (CLI::getOption('limit') ?: 25)),
             ]);
             $generate = $generateService->processPending(max(1, (int) (CLI::getOption('generate-limit') ?: 25)));
