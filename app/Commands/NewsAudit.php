@@ -143,7 +143,10 @@ class NewsAudit extends SafeBaseCommand
                     'category' => 'ROUTED_TO_INVESTMENT_QUEUE',
                     'stage' => 'ingest',
                 ]);
-            } elseif ($normalizedSource === '' || ! in_array($normalizedSource, self::SOURCE_WHITELIST, true)) {
+            } elseif (
+                ($effectiveRouteCategory !== 'marketing_news' && $effectiveRouteCategory !== 'investment_alerts')
+                && ($normalizedSource === '' || ! in_array($normalizedSource, self::SOURCE_WHITELIST, true))
+            ) {
                 $eligible = false;
                 $this->addIssue($issues, $issueRecordIndex, [
                     'record_id' => $record['id'],

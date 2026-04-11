@@ -11,7 +11,7 @@ class NewsScrape extends SafeBaseCommand
     protected $group = 'Marketing';
     protected $name = 'marketing:news:scrape';
     protected $description = 'Ingests alert/news emails (or OCR/raw text) into bf_marketing_temp_scraper with folder-level diagnostics.';
-    protected $usage = 'marketing:news:scrape [--username=tradealerts@mymiwallet.com] [--folder=INBOX] [--subject="Press Release"] [--limit=50] [--folders=INBOX,Alerts] [--search=ALL] [--debug-subjects] [--force]';
+    protected $usage = 'marketing:news:scrape [--username=tradealerts@mymiwallet.com] [--folder=INBOX] [--subject="Press Release"] [--limit=25] [--scan-depth=500] [--folders=INBOX,Alerts] [--search=ALL] [--debug-subjects] [--force]';
 
     public function run(array $params)
     {
@@ -31,6 +31,7 @@ class NewsScrape extends SafeBaseCommand
         $force = CLI::getOption('force') !== null;
         $debugSubjects = CLI::getOption('debug-subjects') !== null;
         $search = CLI::getOption('search') ?: null;
+        $scanDepth = max(1, (int) (CLI::getOption('scan-depth') ?: 500));
         $foldersOpt = CLI::getOption('folders');
         $folderOpt = CLI::getOption('folder');
 
@@ -74,6 +75,7 @@ class NewsScrape extends SafeBaseCommand
                 'debug' => $debugSubjects,
                 'subject' => CLI::getOption('subject') ?: null,
                 'search_criteria' => $search,
+                'scan_depth' => $scanDepth,
             ]);
             $results[] = $result;
         }
@@ -110,6 +112,7 @@ class NewsScrape extends SafeBaseCommand
             'folders' => $folders,
             'search_criteria' => $search,
             'limit' => $limit,
+            'scan_depth' => $scanDepth,
             'force' => $force,
             'debug_subjects' => $debugSubjects,
             'routing_summary' => $routingSummary,
