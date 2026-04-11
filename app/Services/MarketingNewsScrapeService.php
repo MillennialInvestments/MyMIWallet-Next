@@ -813,40 +813,41 @@ class MarketingNewsScrapeService
     {
         $db = Database::connect();
         if (! $db->tableExists('bf_marketing_temp_scraper') || ! $db->tableExists('bf_investment_scraper')) {
-            return ['marketing_to_investment_migrated' => 0, 'investment_to_marketing_migrated' => 0, 'skipped' => 0];
+            return ['marketing_to_investment_migrated' => 0, 'investment_to_marketing_migrated' => 0, 'already_correct' => 0, 'skipped' => 0];
         }
 
-        $tempRows = $db->table('bf_marketing_temp_scraper')
-            ->select('id, title, content, email_subject, email_sender, email_date, email_identifier, source_message_id, metadata')
-            ->groupStart()
+        $tempRows = $this->fetchRepairRows('bf_marketing_temp_scraper', 500, static function ($builder): void {
+            $builder->groupStart()
                 ->where('status', 'pending')
                 ->orWhere('status', 'rejected')
                 ->orWhere('status', 'new')
-            ->groupEnd()
-            ->orderBy('id', 'DESC')
-            ->limit(500)
-            ->get()
-            ->getResultArray();
+                ->groupEnd();
+        });
 
         $marketingToInvestmentMigrated = 0;
         $investmentToMarketingMigrated = 0;
+        $alreadyCorrect = 0;
         $skipped = 0;
         foreach ($tempRows as $row) {
-            $subject = (string) ($row['email_subject'] ?? $row['title'] ?? '');
+            $normalized = $this->normalizeRepairRow($row, 'bf_marketing_temp_scraper');
+            $subject = $normalized['subject'];
             $route = $this->resolveSubjectRoute($subject);
             if (($route['category'] ?? null) !== 'investment_alerts') {
+                if (($route['category'] ?? null) === 'marketing_news') {
+                    $alreadyCorrect++;
+                }
                 continue;
             }
 
             $id = $this->storeInvestmentRecord([
-                'title' => $row['title'] ?? $subject,
+                'title' => $normalized['title'] !== '' ? $normalized['title'] : $subject,
                 'email_subject' => $subject,
-                'email_sender' => $row['email_sender'] ?? null,
-                'email_date' => $row['email_date'] ?? null,
-                'email_identifier' => $row['email_identifier'] ?? null,
-                'source_message_id' => $row['source_message_id'] ?? null,
-                'content' => $row['content'] ?? '',
-                'raw_body' => $row['content'] ?? '',
+                'email_sender' => $normalized['sender'],
+                'email_date' => $normalized['email_date'],
+                'email_identifier' => $normalized['email_identifier'],
+                'source_message_id' => $normalized['source_message_id'],
+                'content' => $normalized['content'],
+                'raw_body' => $normalized['content'],
                 'route_category' => $route['category'],
                 'matched_keyword' => $route['keyword'],
                 'force' => $force,
@@ -874,28 +875,27 @@ class MarketingNewsScrapeService
             }
         }
 
-        $investmentRows = $db->table('bf_investment_scraper')
-            ->select('id, title, subject, email_subject, content, email_body, raw_email_body, email_sender, email_date, email_identifier, metadata, source')
-            ->orderBy('id', 'DESC')
-            ->limit(500)
-            ->get()
-            ->getResultArray();
+        $investmentRows = $this->fetchRepairRows('bf_investment_scraper', 500);
 
         foreach ($investmentRows as $row) {
-            $subject = (string) ($row['email_subject'] ?? $row['subject'] ?? $row['title'] ?? '');
+            $normalized = $this->normalizeRepairRow($row, 'bf_investment_scraper');
+            $subject = $normalized['subject'];
             $route = $this->resolveSubjectRoute($subject);
             if (($route['category'] ?? null) !== 'marketing_news') {
+                if (($route['category'] ?? null) === 'investment_alerts') {
+                    $alreadyCorrect++;
+                }
                 continue;
             }
 
             $payload = [
-                'title' => $row['title'] ?? $subject,
-                'content' => (string) ($row['content'] ?? $row['email_body'] ?? $row['raw_email_body'] ?? ''),
+                'title' => $normalized['title'] !== '' ? $normalized['title'] : $subject,
+                'content' => $normalized['content'],
                 'email_subject' => $subject,
-                'email_sender' => $row['email_sender'] ?? null,
-                'email_date' => $row['email_date'] ?? null,
-                'email_identifier' => $row['email_identifier'] ?? null,
-                'source_message_id' => $row['email_identifier'] ?? null,
+                'email_sender' => $normalized['sender'],
+                'email_date' => $normalized['email_date'],
+                'email_identifier' => $normalized['email_identifier'],
+                'source_message_id' => $normalized['source_message_id'],
                 'source' => 'email',
                 'category' => 'marketing_news',
                 'route_category' => 'marketing_news',
@@ -907,11 +907,11 @@ class MarketingNewsScrapeService
             $storedId = $this->storeTempRecord($payload);
             if ($storedId > 0) {
                 $db->table('bf_investment_scraper')
-                    ->where('id', (int) $row['id'])
-                    ->update([
+                    ->where('id', (int) ($row['id'] ?? 0))
+                    ->update($this->filterTableColumns('bf_investment_scraper', [
                         'status' => 'Reclassified-Marketing',
                         'updated_at' => date('Y-m-d H:i:s'),
-                    ]);
+                    ]));
                 $investmentToMarketingMigrated++;
             } else {
                 $skipped++;
@@ -921,8 +921,86 @@ class MarketingNewsScrapeService
         return [
             'marketing_to_investment_migrated' => $marketingToInvestmentMigrated,
             'investment_to_marketing_migrated' => $investmentToMarketingMigrated,
+            'already_correct' => $alreadyCorrect,
             'skipped' => $skipped,
         ];
+    }
+
+    /**
+     * @param callable|null $queryMutator
+     * @return array<int,array<string,mixed>>
+     */
+    private function fetchRepairRows(string $table, int $limit, ?callable $queryMutator = null): array
+    {
+        $db = Database::connect();
+        if (! $db->tableExists($table)) {
+            return [];
+        }
+
+        $preferredColumns = ['id', 'title', 'subject', 'email_subject', 'content', 'email_body', 'raw_email_body', 'email_sender', 'sender_email', 'email_date', 'email_identifier', 'source_message_id', 'metadata', 'source', 'status'];
+        $select = $this->buildExistingColumnSelect($table, $preferredColumns);
+        if ($select === []) {
+            return [];
+        }
+
+        $builder = $db->table($table)->select(implode(', ', $select), false);
+        if ($queryMutator !== null) {
+            $queryMutator($builder);
+        }
+        $builder->orderBy('id', 'DESC')->limit($limit);
+
+        return $builder->get()->getResultArray();
+    }
+
+    /**
+     * @param array<string,mixed> $row
+     * @return array{title:string,subject:string,content:string,sender:?string,email_date:?string,email_identifier:?string,source_message_id:?string,source:string}
+     */
+    private function normalizeRepairRow(array $row, string $table): array
+    {
+        $subject = trim((string) ($row['email_subject'] ?? $row['subject'] ?? $row['title'] ?? ''));
+        $identifier = trim((string) ($row['email_identifier'] ?? ''));
+
+        return [
+            'title' => trim((string) ($row['title'] ?? $subject)),
+            'subject' => $subject,
+            'content' => trim((string) ($row['content'] ?? $row['email_body'] ?? $row['raw_email_body'] ?? '')),
+            'sender' => $row['email_sender'] ?? $row['sender_email'] ?? null,
+            'email_date' => $row['email_date'] ?? null,
+            'email_identifier' => $identifier !== '' ? $identifier : null,
+            'source_message_id' => trim((string) ($row['source_message_id'] ?? '')) !== ''
+                ? (string) $row['source_message_id']
+                : ($identifier !== '' ? $identifier : ($table . ':' . ((string) ($row['id'] ?? '')))),
+            'source' => (string) ($row['source'] ?? 'email'),
+        ];
+    }
+
+    /**
+     * @param array<int,string> $preferredColumns
+     * @return array<int,string>
+     */
+    private function buildExistingColumnSelect(string $table, array $preferredColumns): array
+    {
+        $db = Database::connect();
+        if (! $db->tableExists($table)) {
+            return [];
+        }
+
+        $fields = [];
+        foreach ($db->getFieldData($table) as $field) {
+            $name = (string) $field->name;
+            $fields[strtolower($name)] = $name;
+        }
+
+        $select = [];
+        foreach ($preferredColumns as $column) {
+            $lookup = strtolower($column);
+            if (isset($fields[$lookup])) {
+                $select[] = $fields[$lookup];
+            }
+        }
+
+        return $select;
     }
 
     private function resolveImapConfig(array $options): array

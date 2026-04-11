@@ -87,6 +87,7 @@ class NewsAudit extends SafeBaseCommand
             $content = trim((string) ($record['content'] ?? ''));
             $source = strtolower(trim((string) ($record['source'] ?? '')));
             $metadata = $this->decodeJson((string) ($record['metadata'] ?? ''));
+            $normalizedSource = $this->normalizeSourceForAudit($source, $metadata);
             $routeCategory = strtolower((string) ($metadata['route_category'] ?? ''));
             $matchedKeyword = (string) ($metadata['matched_keyword'] ?? '');
             $sourceMailbox = (string) ($metadata['source_mailbox'] ?? ($record['source_mailbox'] ?? ''));
@@ -142,7 +143,7 @@ class NewsAudit extends SafeBaseCommand
                     'category' => 'ROUTED_TO_INVESTMENT_QUEUE',
                     'stage' => 'ingest',
                 ]);
-            } elseif ($source === '' || ! in_array($source, self::SOURCE_WHITELIST, true)) {
+            } elseif ($normalizedSource === '' || ! in_array($normalizedSource, self::SOURCE_WHITELIST, true)) {
                 $eligible = false;
                 $this->addIssue($issues, $issueRecordIndex, [
                     'record_id' => $record['id'],
@@ -474,6 +475,27 @@ class NewsAudit extends SafeBaseCommand
         }
 
         return $builder->limit(self::TEMP_LIMIT)->get()->getResultArray();
+    }
+
+    /**
+     * @param array<string,mixed> $metadata
+     */
+    private function normalizeSourceForAudit(string $source, array $metadata): string
+    {
+        if ($source !== '' && in_array($source, self::SOURCE_WHITELIST, true)) {
+            return $source;
+        }
+
+        $metadataSource = strtolower(trim((string) ($metadata['source'] ?? '')));
+        if ($metadataSource !== '' && in_array($metadataSource, self::SOURCE_WHITELIST, true)) {
+            return $metadataSource;
+        }
+
+        if (str_contains($source, '@') || str_contains($source, ':')) {
+            return 'email';
+        }
+
+        return $source;
     }
 
     private function fetchFinalRecords($db): array

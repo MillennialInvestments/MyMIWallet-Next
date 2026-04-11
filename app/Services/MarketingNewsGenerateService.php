@@ -19,19 +19,36 @@ class MarketingNewsGenerateService
     public function processPending(int $limit = 25): array
     {
         $db = Database::connect();
-        $records = $db->table('bf_marketing_temp_scraper')
-            ->groupStart()
-                ->where('status', 'pending')
-                ->orWhere('processed', 0)
-            ->groupEnd()
-            ->groupStart()
-                ->where('source_type', 'email_alert')
-                ->orLike('metadata', '"route_category":"marketing_news"')
-            ->groupEnd()
-            ->orderBy('date_scraped', 'DESC')
-            ->limit($limit)
-            ->get()
-            ->getResultArray();
+        $columns = array_flip($db->getFieldNames('bf_marketing_temp_scraper'));
+        $builder = $db->table('bf_marketing_temp_scraper');
+
+        $builder->groupStart();
+        if (isset($columns['status'])) {
+            $builder->where('status', 'pending');
+        }
+        if (isset($columns['processed'])) {
+            isset($columns['status']) ? $builder->orWhere('processed', 0) : $builder->where('processed', 0);
+        }
+        $builder->groupEnd();
+
+        $builder->groupStart();
+        $hasRouteGuard = false;
+        if (isset($columns['source_type'])) {
+            $builder->where('source_type', 'email_alert');
+            $hasRouteGuard = true;
+        }
+        if (isset($columns['category'])) {
+            $hasRouteGuard ? $builder->orWhere('category', 'marketing_news') : $builder->where('category', 'marketing_news');
+            $hasRouteGuard = true;
+        }
+        if (isset($columns['metadata'])) {
+            $hasRouteGuard ? $builder->orLike('metadata', '"route_category":"marketing_news"') : $builder->like('metadata', '"route_category":"marketing_news"');
+            $builder->orLike('metadata', '"category":"marketing_news"');
+        }
+        $builder->groupEnd();
+
+        $orderColumn = isset($columns['date_scraped']) ? 'date_scraped' : 'id';
+        $records = $builder->orderBy($orderColumn, 'DESC')->limit($limit)->get()->getResultArray();
 
         $result = ['processed' => 0, 'stored' => 0, 'skipped' => 0, 'items' => []];
 
