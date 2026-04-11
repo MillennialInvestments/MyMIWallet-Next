@@ -160,7 +160,12 @@ $routes->get('/Purchase/MyMIGold', static fn() => redirect()->to(site_url('Walle
 $routes->post('auth/resend-activation', 'AuthController::resendActivationCode', ['as' => 'auth/resend-activation-legacy']);
 $routes->get('/How-It-Works/Purchase/MyMIGold', static fn() => redirect()->to(site_url('How-It-Works/Purchase-MyMI-Gold'), 301));
 $routes->get('/How-It-Works', '\\App\\Modules\\Blog\\Controllers\\HowItWorksController::index');
+$routes->get('/How-It-Works/', static fn() => redirect()->to(site_url('How-It-Works'), 301));
 $routes->get('/How-It-Works/(:segment)', '\\App\\Modules\\Blog\\Controllers\\HowItWorksController::show/$1');
+$routes->get('/Support/Article', static fn() => redirect()->to(site_url('Support/Article/welcome'), 301));
+$routes->get('/Wallets/Purchase/Memberships/Pro', static fn() => redirect()->to(site_url('Memberships/Pro'), 301));
+$routes->get('/index.php/How-It-Works', static fn() => redirect()->to(site_url('How-It-Works'), 301));
+$routes->get('/index.php/How-It-Works/(:segment)', static fn($slug) => redirect()->to(site_url('How-It-Works/' . $slug), 301));
 
 $routes->get('Sector/(:segment)', 'Home::sector/$1');
 $routes->get('/Terms-Of-Service', 'Home::termsOfService');
@@ -1175,6 +1180,9 @@ $routes->group('Blog', ['namespace' => 'App\Modules\Blog\Controllers'],  functio
     $routes->get('(:segment)/(:segment)', 'BlogController::view/$1/$2');
     $routes->get('(:segment)', 'BlogController::view/$1');
 });
+$routes->get('index.php/Blog', static fn() => redirect()->to(site_url('Blog'), 301));
+$routes->get('index.php/Blog/(:segment)', static fn($slug) => redirect()->to(site_url('Blog/' . $slug), 301));
+$routes->get('index.php/Blog/(:segment)/(:segment)', static fn($a, $b) => redirect()->to(site_url('Blog/' . $a . '/' . $b), 301));
 
 // Dashboard
 $routes->group('Dashboard', ['namespace' => 'App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
@@ -1748,6 +1756,7 @@ $routes->group('API', ['namespace' => 'App\\Modules\\APIs\\Controllers'], static
     $routes->get('Budget/getUserAvailableBalances', 'BudgetAPIController::getUserAvailableBalances');
     $routes->match(['GET', 'POST'], 'Alerts/fetchEmailAlerts', 'AlertsAPIController::fetchEmailAlerts');
     $routes->match(['GET', 'POST'], 'Management/Run-CRON-Tasks', 'ManagementAPIController::Run_CRON_Tasks', ['filter' => 'cronKey']);
+    $routes->match(['GET', 'POST'], 'management/run-cron-tasks', 'ManagementAPIController::Run_CRON_Tasks', ['filter' => 'cronKey']);
 });
 
 // Customer Support:
@@ -1758,6 +1767,7 @@ $routes->group('Support', ['namespace' => 'App\Modules\Support\Controllers'], fu
     $routes->post('resendActivation', 'AccountSupportController::resendActivation');
     $routes->post('sendPasswordReset', 'AccountSupportController::sendPasswordReset');
     $routes->get('Article/(:segment)', 'SupportController::article/$1');
+    $routes->get('Article', 'SupportController::article');
     $routes->get('Discord', 'SupportController::discordOnboarding');
     $routes->get('FAQ', 'SupportController::view/FAQ');
     $routes->get('Feedback', 'SupportController::view/Feedback');

@@ -98,7 +98,6 @@ class AuthController extends BaseController
     public function attemptLogin()
     {
         helper('auth');
-        log_message('info', 'AuthController L93: Auth:attemptLogin started.');
 
         service('eventTracker')->track('auth.login_attempt', [
             'login_type' => $this->config->validFields === ['email'] ? 'email' : 'username',
@@ -109,7 +108,6 @@ class AuthController extends BaseController
             'password' => 'required',
         ];
 
-        log_message('info', 'AuthController L104: Auth:attemptLogin rules: ' . json_encode($rules));
 
         if ($this->config->validFields === ['email']) {
             $rules['login'] .= '|valid_email';
@@ -122,7 +120,7 @@ class AuthController extends BaseController
                 'summary' => $this->validationSummary($errors),
             ]);
             $this->setAuthMessage('danger', $this->formatValidationErrors($errors));
-            log_message('warning', '[AUTH] Login validation failed', [
+            log_message('notice', '[AUTH] Login validation failed', [
                 'errors' => $errors,
                 'ip'     => $this->request->getIPAddress(),
             ]);
@@ -136,8 +134,6 @@ class AuthController extends BaseController
         $remember = (bool) $this->request->getPost('remember');
         $ip = $this->request->getIPAddress();
         $ua = (string) $this->request->getUserAgent();
-
-        log_message('info', 'AuthController L132: Auth:attemptLogin Login Variables: login: ' . $rules['login'] . ', remember: ' . ($remember ? 'true' : 'false') . ', ip: ' . $ip . ', ua: ' . $ua);
 
         $this->authLogger->logLoginAttempt((string) $login, $ip, $ua);
         $this->ipHistoryModel->record(null, filter_var($login, FILTER_VALIDATE_EMAIL) ? (string) $login : null, $ip, $ua);
@@ -201,7 +197,10 @@ class AuthController extends BaseController
 
         // 🔴 AUTH ATTEMPT
         if (! $attempt) {
-            log_message('warning', '[AUTH_FAILURE] ' . (string) $identifier);
+            log_message('notice', '[AUTH_FAILURE] login attempt denied', [
+                'login' => (string) $login,
+                'ip' => $ip,
+            ]);
             // LocalAuthenticator exposes `error()` (single last error message)
             $errorMsg = $this->auth->error() ?? lang('Auth.badAttempt');
             $inactiveMessage = lang('Auth.notActivated');
@@ -221,7 +220,7 @@ class AuthController extends BaseController
                 ]);
                 $this->setAuthMessage('warning', 'Your account is not activated yet. Please activate it using the email link, or resend the activation email below.');
                 $this->session->setFlashdata('auth_show_resend', true);
-                log_message('info', '[AUTH] Login inactive', [
+                log_message('notice', '[AUTH] Login inactive', [
                     'login' => $login,
                     'ip'    => $this->request->getIPAddress(),
                 ]);
@@ -231,7 +230,7 @@ class AuthController extends BaseController
                 ]);
                 $this->setAuthMessage('danger', 'Login failed. Please check your email and password.');
                 $this->authLogger->logLoginFailure('invalid_credentials', ['login' => (string) $login, 'ip' => $ip, 'user_agent' => $ua]);
-                log_message('warning', '[AUTH] Login failed', [
+                log_message('notice', '[AUTH] Login failed', [
                     'login' => $login,
                     'error' => $errorMsg,
                     'ip'    => $this->request->getIPAddress(),
@@ -1230,7 +1229,7 @@ class AuthController extends BaseController
             service('eventTracker')->track('auth.activate_fail', [
                 'reason' => 'invalid',
             ]);
-            log_message('warning', '[ACTIVATION] Activation failed: missing token', [
+            log_message('notice', '[ACTIVATION] Activation failed: missing token', [
                 'ip' => $this->request->getIPAddress(),
             ]);
             return redirect()->to(site_url('Support/Account'));
@@ -1239,7 +1238,7 @@ class AuthController extends BaseController
         $user = $users->where('activate_hash', $token)->first();
 
         if (null === $user) {
-            log_message('error', '[ACTIVATION] Activation failed: user not found', [
+            log_message('notice', '[ACTIVATION] Activation failed: user not found', [
                 'token_hash' => $tokenHash,
                 'ip'    => $this->request->getIPAddress(),
             ]);
