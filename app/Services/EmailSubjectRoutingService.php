@@ -44,21 +44,15 @@ class EmailSubjectRoutingService
             }
         }
 
-        $hasMarketingPhrase = $this->containsKeyword($normalized, 'press release')
-            || $this->containsKeyword($normalized, 'news release')
-            || $this->containsKeyword($normalized, 'news alert');
-
-        if (! $hasMarketingPhrase) {
-            $investmentKeywords = $this->marketingConfig->getInvestmentAlertKeywords();
-            foreach ($investmentKeywords as $keyword) {
-                if ($this->containsKeyword($normalized, $keyword)) {
-                    return [
-                        'category' => 'investment_alerts',
-                        'keyword' => $keyword,
-                        'normalized_subject' => $normalized,
-                        'reason' => 'matched_investment_alert_keyword',
-                    ];
-                }
+        $investmentKeywords = $this->marketingConfig->getInvestmentAlertKeywords();
+        foreach ($investmentKeywords as $keyword) {
+            if ($this->containsKeyword($normalized, $keyword)) {
+                return [
+                    'category' => 'investment_alerts',
+                    'keyword' => $keyword,
+                    'normalized_subject' => $normalized,
+                    'reason' => 'matched_investment_alert_keyword',
+                ];
             }
         }
 
@@ -75,6 +69,12 @@ class EmailSubjectRoutingService
         $needle = mb_strtolower(trim($keyword));
         if ($needle === '') {
             return false;
+        }
+
+        if ($needle === 'alert') {
+            if (str_contains($normalizedSubject, 'press release alert') || str_contains($normalizedSubject, 'news alert')) {
+                return false;
+            }
         }
 
         return str_contains($normalizedSubject, $needle);
