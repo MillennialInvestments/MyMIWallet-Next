@@ -18,6 +18,7 @@ $marketplaceOperations  = $siteSettings->marketplaceOperations ?? 0;
 $newsOperations         = $siteSettings->newsOperations ?? 0;
 $partnerOperations      = $siteSettings->partnerOperations ?? 0;
 $projectOperations      = $siteSettings->projectOperations ?? 0;
+$propfirmOperations     = $siteSettings->propfirmOperations ?? 0;
 $referralOperations     = $siteSettings->referralOperations ?? 0;
 $retirementOperations   = $siteSettings->retirementOperations ?? 0;
 
@@ -480,6 +481,25 @@ $agent                  = service('request')->getUserAgent();
 								<span class="nk-menu-icon"><i class="icon ni ni-network"></i></span><span class="nk-menu-text">My Projects</span>
 							</a>
 						</li>
+                        <?php 
+                        }
+                        ?>
+                        <?php
+                        if ($propfirmOperations === 1) {
+                        ?>
+                        <li class="nk-menu-item has-sub">
+                            <a href="#" class="nk-menu-link nk-menu-toggle">
+                                <span class="nk-menu-icon"><em class="icon ni ni-coin"></em></span>
+                                <span class="nk-menu-text text-yellow">My Prop Firms</span>
+                            </a>
+                            <ul class="nk-menu-sub">
+                                <li class="nk-menu-item">
+                                    <a class="nk-menu-link" href="<?php echo site_url('/PropFirm'); ?>">
+                                        <span class="nk-menu-text">Home</span>
+                                    </a>
+                                </li>
+                            </ul><!-- .nk-menu-sub -->
+                        </li>
                         <?php 
                         }
                         ?>

@@ -39,6 +39,7 @@ class SiteSettings extends BaseConfig
         public $newsOperations                  = 0;
         public $partnerOperations               = 0;
         public $projectOperations               = 1;
+        public $propfirmOperations              = 1;
         public $referralOperations              = 1;
         public $retirementOperations            = 0;
         public $siteOperations                  = 0; 
@@ -287,6 +288,20 @@ class SiteSettings extends BaseConfig
                     $this->alertOperations = 1; 
                     break;
                 case 6: // !! NEEDS TO BE ADJUSTED BELOW HERE
+                    // Alert Integrations
+                    $this->siteOperations = 1;
+                    $this->budgetOperations = 1;
+                    $this->debtOperations = 1;
+                    $this->investmentOperations = 1;
+                    $this->assetOperations = 0;
+                    $this->referralOperations = 1;
+                    $this->exchangeOperations = 1;
+                    $this->marketplaceOperations = 1;
+                    $this->integrationOperations = 1;
+                    $this->alertOperations = 1; 
+                    $this->propfirmOperations = 1; 
+                    break;
+                case 7: // !! NEEDS TO BE ADJUSTED BELOW HERE
                     // Financia News Program
                     $this->siteOperations = 1;
                     $this->budgetOperations = 1;
@@ -297,7 +312,7 @@ class SiteSettings extends BaseConfig
                     $this->referralOperations = 1;
                     $this->exchangeOperations = 1;
                     break;
-                case 6: 
+                case 8: 
                     // Referral Program
                     $this->siteOperations = 1;
                     $this->budgetOperations = 1;
@@ -308,7 +323,7 @@ class SiteSettings extends BaseConfig
                     $this->referralOperations = 1;
                     $this->exchangeOperations = 1;
                     break;
-                case 7: 
+                case 9: 
                     // Credit / Debt Recovery
                     $this->siteOperations = 1;
                     $this->budgetOperations = 1;
@@ -318,7 +333,7 @@ class SiteSettings extends BaseConfig
                     $this->newsOperations = 1;
                     $this->referralOperations = 1;
                     break;
-                case 8: 
+                case 10: 
                     // Retirement Planning
                     $this->siteOperations = 1;
                     $this->educateOperations = 1;
@@ -330,7 +345,7 @@ class SiteSettings extends BaseConfig
                     $this->referralOperations = 1;
                     $this->retirementOperations = 1;
                     break;
-                case 9: 
+                case 11: 
                     // Asset Creator | Exchange Program
                     $this->siteOperations = 1;
                     $this->educateOperations = 1;
@@ -344,7 +359,7 @@ class SiteSettings extends BaseConfig
                     $this->assetOperations = 1;
                     $this->exchangeOperations = 1;
                     break;
-                case 10: 
+                case 12: 
                     // Marketplace Program
                     $this->siteOperations = 1;
                     $this->educateOperations = 1;
@@ -359,7 +374,7 @@ class SiteSettings extends BaseConfig
                     $this->exchangeOperations = 1;
                     $this->marketplaceOperations = 1;
                     break;
-                case 11: 
+                case 13: 
                     // Partnership Program
                     $this->siteOperations = 1;
                     $this->educateOperations = 1;
@@ -375,7 +390,7 @@ class SiteSettings extends BaseConfig
                     $this->marketplaceOperations = 1;
                     $this->partnerOperations = 1;
                     break;
-                case 12: 
+                case 14: 
                     // Betting Analysis Program
                     $this->siteOperations = 1;
                     $this->educateOperations = 1;
