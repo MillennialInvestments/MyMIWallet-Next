@@ -14,6 +14,7 @@ use App\Services\SetupStatusService;
 use App\Services\PremiumEntitlementService;
 use App\Services\RegistrationAttributionService;
 use App\Services\RegistrationSourceContentService;
+use App\Modules\PropFirms\Libraries\PropFirmsService;
 use App\Services\ForecastAccuracyEvaluator;
 use App\Services\ForecastAggregationService;
 use App\Services\Forecasting\MyMIForecaster;
@@ -330,6 +331,17 @@ class Services extends CoreServices
         }
 
         return new DashboardService();
+    }
+
+    public static function propFirmsService(bool $getShared = true): PropFirmsService
+    {
+        if ($getShared) {
+            /** @var PropFirmsService $service */
+            $service = static::getSharedInstance('propFirmsService');
+            return $service;
+        }
+
+        return new PropFirmsService();
     }
 
     public static function setupStatusService(bool $getShared = true): SetupStatusService
