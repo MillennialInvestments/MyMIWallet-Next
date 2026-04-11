@@ -3,6 +3,7 @@
 namespace App\Commands;
 
 use App\Commands\SafeBaseCommand;
+use App\Services\EmailSubjectRoutingService;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
 
@@ -25,10 +26,12 @@ class NewsAudit extends SafeBaseCommand
     private const MIN_POST_LENGTH = 40;
 
     private const SOURCE_WHITELIST = ['email', 'marketaux', 'manual'];
+    private EmailSubjectRoutingService $subjectRouting;
 
     public function run(array $params)
     {
         log_message('info', '[spark:news:audit] Started', ['params' => $params]);
+        $this->subjectRouting = new EmailSubjectRoutingService(config('Marketing'));
         [$args, $flags] = $this->parseParams($params);
         $dryRun = $this->resolveDryRun($flags);
 
@@ -88,6 +91,12 @@ class NewsAudit extends SafeBaseCommand
             $matchedKeyword = (string) ($metadata['matched_keyword'] ?? '');
             $sourceMailbox = (string) ($metadata['source_mailbox'] ?? ($record['source_mailbox'] ?? ''));
             $status = strtolower(trim((string) ($record['status'] ?? '')));
+            $subject = trim((string) ($record['email_subject'] ?? $title));
+            $resolvedRoute = $this->subjectRouting->resolveEmailRoute($subject);
+            $effectiveRouteCategory = $routeCategory !== '' ? $routeCategory : strtolower((string) ($resolvedRoute['category'] ?? ''));
+            if (($resolvedRoute['category'] ?? null) === 'marketing_news') {
+                $effectiveRouteCategory = 'marketing_news';
+            }
 
             $eligible = true;
 
@@ -124,7 +133,7 @@ class NewsAudit extends SafeBaseCommand
                 ]);
             }
 
-            if ($routeCategory === 'investment_alerts' || $status === 'routed_to_investment') {
+            if ($effectiveRouteCategory === 'investment_alerts' || $status === 'routed_to_investment') {
                 $eligible = false;
                 $this->addIssue($issues, $issueRecordIndex, [
                     'record_id' => $record['id'],
