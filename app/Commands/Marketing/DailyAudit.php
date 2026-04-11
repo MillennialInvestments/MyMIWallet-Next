@@ -27,6 +27,7 @@ class DailyAudit extends SafeBaseCommand
         $failed = 0;
         $distributed = 0;
         $scrapedToday = 0;
+        $approvedReady = 0;
         $warnings = [];
 
         if ($db->tableExists('bf_marketing_generated_content')) {
@@ -50,6 +51,21 @@ class DailyAudit extends SafeBaseCommand
                 ->where('DATE(date_scraped)', $today)
                 ->countAllResults();
         }
+        if ($db->tableExists('bf_marketing_generated_content')) {
+            $approvedReady = $db->table('bf_marketing_generated_content')
+                ->whereIn('approval_status', ['approved', 'auto_approved'])
+                ->whereIn('distribution_status', ['pending', 'scheduled'])
+                ->countAllResults();
+        }
+
+        $reason = null;
+        if ($generated === 0 && $scrapedToday > 0) {
+            $reason = 'Distribution skipped because generation has not yet produced distributable records';
+        } elseif ($generated === 0 && $scrapedToday === 0) {
+            $reason = 'No generated marketing content is currently available for distribution';
+        } elseif ($approvedReady === 0 && $distributed === 0) {
+            $reason = 'No approved/generated items matched the distribution criteria';
+        }
 
         CLI::write(json_encode([
             'status' => 'success',
@@ -58,9 +74,8 @@ class DailyAudit extends SafeBaseCommand
             'generated' => $generated,
             'failed' => $failed,
             'distributed' => $distributed,
-            'reason' => ($generated === 0 && $distributed === 0 && $scrapedToday === 0)
-                ? 'No source records were available because inbox scraping failed'
-                : null,
+            'approved_ready' => $approvedReady,
+            'reason' => $reason,
             'warnings' => $warnings,
         ], JSON_PRETTY_PRINT));
     }

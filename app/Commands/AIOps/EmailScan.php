@@ -9,6 +9,7 @@ use App\Models\AiOpsRunModel;
 use App\Services\AIOps\EmailScannerService;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
+use RuntimeException;
 
 class EmailScan extends SafeBaseCommand
 {
@@ -95,18 +96,38 @@ class EmailScan extends SafeBaseCommand
                 'dry_run' => $dryRun,
             ]);
 
-            $this->renderSummary($summary, $mailbox, $from, $sinceDate, $dryRun);
-
             log_message('info', '[spark:aiops:email-scan] Completed', [
                 'summary' => $summary,
                 'dry_run' => $dryRun,
             ]);
-        } catch (\Throwable $error) {
+            CLI::write(json_encode([
+                'status' => $status,
+                'mailbox' => $mailbox,
+                'from' => $from,
+                'since' => $sinceDate,
+                'result' => $summary,
+            ], JSON_PRETTY_PRINT));
+        } catch (RuntimeException $error) {
             $duration = (int) round(microtime(true) - $startedAt);
 
             if (isset($runId)) {
                 $runModel->finishRun($runId, 'failed', [
                 'duration_seconds' => $duration,
+                ], [
+                    'error' => $error->getMessage(),
+                    'dry_run' => $dryRun,
+                ]);
+            }
+
+            log_message('error', '[spark:aiops:email-scan] Failed', ['reason' => $error->getMessage()]);
+            CLI::error($error->getMessage());
+            return EXIT_ERROR;
+        } catch (\Throwable $error) {
+            $duration = (int) round(microtime(true) - $startedAt);
+
+            if (isset($runId)) {
+                $runModel->finishRun($runId, 'failed', [
+                    'duration_seconds' => $duration,
                 ], [
                     'error' => $error->getMessage(),
                     'dry_run' => $dryRun,
@@ -167,22 +188,4 @@ class EmailScan extends SafeBaseCommand
         return $value;
     }
 
-    /**
-     * @param array<string, mixed> $summary
-     */
-    private function renderSummary(array $summary, string $mailbox, string $from, string $since, bool $dryRun): void
-    {
-        CLI::write('AIOps Email Scan Summary', 'yellow');
-        CLI::write('Mailbox: ' . $mailbox);
-        CLI::write('From: ' . $from);
-        CLI::write('Since: ' . $since);
-        CLI::write('Scanned: ' . ($summary['scanned_count'] ?? 0));
-        CLI::write('Processed: ' . ($summary['processed_count'] ?? 0));
-        CLI::write('Duplicates skipped: ' . ($summary['duplicate_count'] ?? 0));
-        CLI::write('Tickers recorded: ' . ($summary['ticker_count'] ?? 0));
-        CLI::write('Duration (seconds): ' . ($summary['duration_seconds'] ?? 0));
-        if ($dryRun) {
-            CLI::write('Mode: dry-run (no database writes)', 'yellow');
-        }
-    }
 }

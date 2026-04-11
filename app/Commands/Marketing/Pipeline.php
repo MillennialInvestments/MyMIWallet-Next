@@ -43,10 +43,15 @@ class Pipeline extends SafeBaseCommand
             ]);
             $generate = $generateService->processPending(max(1, (int) (CLI::getOption('generate-limit') ?: 25)));
             $distribute = $pipeline->processPendingGeneratedContent(max(1, (int) (CLI::getOption('distribute-limit') ?: 10)));
-            if (((int) ($generate['processed'] ?? 0)) === 0 && ((int) ($distribute['count'] ?? 0)) === 0) {
-                $result['reason'] = ((int) ($scrape['stored'] ?? 0)) > 0
-                    ? 'No eligible marketing_news records were available for generation.'
-                    : 'No source records were available because inbox scraping failed';
+            $pipelineReason = null;
+            if (((int) ($generate['processed'] ?? 0)) === 0) {
+                $pipelineReason = 'Distribution skipped because generation has not yet produced distributable records';
+            }
+            if (((int) ($distribute['count'] ?? 0)) === 0 && ! empty($distribute['reason'])) {
+                $pipelineReason = (string) $distribute['reason'];
+            }
+            if ($pipelineReason !== null) {
+                $result['reason'] = $pipelineReason;
             }
             $result['news'] = [
                 'scrape' => $scrape,

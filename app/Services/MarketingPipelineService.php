@@ -124,6 +124,47 @@ class MarketingPipelineService
             $results[] = $this->distributionService->distributeGeneratedContent($record);
         }
 
-        return ['count' => count($results), 'items' => $results];
+        $summary = $this->getDistributionReadinessSummary();
+        $count = count($results);
+
+        return [
+            'count' => $count,
+            'items' => $results,
+            'reason' => $count === 0 ? $summary['reason'] : null,
+            'distribution_context' => $summary,
+        ];
+    }
+
+    /**
+     * @return array<string,mixed>
+     */
+    public function getDistributionReadinessSummary(): array
+    {
+        $db = Database::connect();
+
+        $generatedCount = $db->table('bf_marketing_generated_content')->countAllResults();
+        $approvedCount = $db->table('bf_marketing_generated_content')
+            ->whereIn('approval_status', ['approved', 'auto_approved'])
+            ->countAllResults();
+        $distributableCount = $db->table('bf_marketing_generated_content')
+            ->whereIn('approval_status', ['approved', 'auto_approved'])
+            ->whereIn('distribution_status', ['pending', 'scheduled'])
+            ->countAllResults();
+
+        $reason = null;
+        if ($generatedCount === 0) {
+            $reason = 'Distribution skipped because generation has not yet produced distributable records';
+        } elseif ($approvedCount === 0) {
+            $reason = 'No generated marketing content is currently available for distribution';
+        } elseif ($distributableCount === 0) {
+            $reason = 'No approved/generated items matched the distribution criteria';
+        }
+
+        return [
+            'generated_count' => $generatedCount,
+            'approved_count' => $approvedCount,
+            'distributable_count' => $distributableCount,
+            'reason' => $reason,
+        ];
     }
 }

@@ -170,9 +170,27 @@ class Marketing extends BaseConfig
     public function getEmailSubjectRouting(): array
     {
         return [
-            'investment_alerts' => array_values(array_filter(array_map('trim', $this->investment_alert_subject_keywords))),
-            'marketing_news' => array_values(array_filter(array_map('trim', $this->marketing_news_subject_keywords))),
+            'investment_alerts' => $this->getInvestmentAlertKeywords(),
+            'marketing_news' => $this->getMarketingNewsKeywords(),
         ];
+    }
+
+    /**
+     * @return array<int,string>
+     */
+    public function getInvestmentAlertKeywords(): array
+    {
+        $keywords = $this->emailSubjectRouting['investment_alerts'] ?? $this->investment_alert_subject_keywords ?? [];
+        return array_values(array_filter(array_map('trim', (array) $keywords)));
+    }
+
+    /**
+     * @return array<int,string>
+     */
+    public function getMarketingNewsKeywords(): array
+    {
+        $keywords = $this->emailSubjectRouting['marketing_news'] ?? $this->marketing_news_subject_keywords ?? [];
+        return array_values(array_filter(array_map('trim', (array) $keywords)));
     }
 
     /**

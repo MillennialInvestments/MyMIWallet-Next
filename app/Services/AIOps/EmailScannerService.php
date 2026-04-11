@@ -59,21 +59,19 @@ class EmailScannerService
         $criteria = $criteriaParts === [] ? 'ALL' : implode(' ', $criteriaParts);
 
         $port = (int) (env('MYMI_ALERTS_IMAP_PORT') ?: 993);
-        $flags = $config['flags'] ?? '/imap/ssl';
-        log_message('debug', [
+        $mailboxConnection = $this->buildMailboxString([
+            'host' => $host,
+            'port' => $port,
+            'mailbox' => $mailbox,
+        ]);
+
+        log_message('debug', 'EmailScannerService IMAP config: ' . json_encode([
             'library' => 'EmailScannerService',
             'host' => $host,
             'port' => $port,
             'mailbox' => $mailbox,
             'connection_string' => $mailboxConnection,
-        ]);
-
-        $mailboxConnection = sprintf(
-            '{%s:%d/imap/ssl/novalidate-cert}%s',
-            $host,
-            $port,
-            $mailbox
-        );
+        ], JSON_UNESCAPED_SLASHES));
 
         log_message('debug', 'IMAP Mailbox String: ' . $mailboxConnection);
 
@@ -94,18 +92,17 @@ class EmailScannerService
                 $uids = array_slice($uids, 0, $limit);
             }
 
-            $summary = $service->scan([
-                'host' => $host,
-                'port' => $port,
-                'flags' => '/imap/ssl/novalidate-cert',
-                'user' => $user,
-                'pass' => $pass,
+            $summary = [
+                'status' => 'success',
+                'scanned_count' => count($uids),
+                'processed_count' => 0,
+                'duplicate_count' => 0,
+                'ticker_count' => 0,
+                'tickers' => [],
                 'mailbox' => $mailbox,
-                'from' => $from,
-                'since' => $sinceDate,
-                'limit' => $limit,
+                'criteria' => $criteria,
                 'dry_run' => $dryRun,
-            ]);
+            ];
 
             foreach ($uids as $uid) {
                 $imapUid = (int) $uid;
@@ -180,6 +177,8 @@ class EmailScannerService
             }
 
             return $summary;
+        } catch (\Throwable $e) {
+            throw new RuntimeException('Email scanner failed: ' . $e->getMessage(), 0, $e);
         } finally {
             imap_close($imap);
         }
@@ -312,9 +311,15 @@ class EmailScannerService
 
     private function buildMailboxString(array $config): string
     {
-        $host = $config['host'];
+        $host = trim((string) ($config['host'] ?? ''));
+        if ($host === '') {
+            throw new RuntimeException('IMAP host is required.');
+        }
         $port = (int) ($config['port'] ?? 993);
-        $mailbox = $config['mailbox'] ?? 'INBOX';
+        $mailbox = trim((string) ($config['mailbox'] ?? 'INBOX'));
+        if ($mailbox === '') {
+            $mailbox = 'INBOX';
+        }
 
         return sprintf(
             '{%s:%d/imap/ssl/novalidate-cert}%s',
