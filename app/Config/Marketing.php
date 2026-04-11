@@ -59,20 +59,20 @@ class Marketing extends BaseConfig
 
     /** @var array<string,array<int,string>> */
     public array $emailSubjectRouting = [
-        'investment_alerts' => [
-            'New Alert',
-            'Alert:',
-            'Alert',
-            'Trade Alert',
-            'New symbols:',
-        ],
         'marketing_news' => [
             'Press Release',
             'Press release',
+            'Press release alert',
             'News Release',
             'News release',
             'News alert',
             'News',
+        ],
+        'investment_alerts' => [
+            'New Alert',
+            'Alert:',
+            'Trade Alert',
+            'New symbols:',
         ],
     ];
 
@@ -80,6 +80,7 @@ class Marketing extends BaseConfig
     public array $marketing_news_subject_keywords = [
         'Press Release',
         'Press release',
+        'Press release alert',
         'News Release',
         'News release',
         'News alert',
@@ -90,9 +91,16 @@ class Marketing extends BaseConfig
     public array $investment_alert_subject_keywords = [
         'New Alert',
         'Alert:',
-        'Alert',
         'Trade Alert',
         'New symbols:',
+    ];
+
+    /** @var array<int,string> */
+    public array $marketingNewsDefaultFilters = [
+        'Press Release',
+        'News Release',
+        'News alert',
+        'News',
     ];
 
     /** @var array<string,mixed> */
@@ -203,11 +211,23 @@ class Marketing extends BaseConfig
             return ['category' => null, 'keyword' => null];
         }
 
+        $normalizedSubject = mb_strtolower($subject);
         $routes = $this->getEmailSubjectRouting();
-        foreach (['investment_alerts', 'marketing_news'] as $category) {
-            foreach (($routes[$category] ?? []) as $keyword) {
-                if ($keyword !== '' && stripos($subject, $keyword) !== false) {
-                    return ['category' => $category, 'keyword' => $keyword];
+
+        foreach (($routes['marketing_news'] ?? []) as $keyword) {
+            if ($keyword !== '' && str_contains($normalizedSubject, mb_strtolower($keyword))) {
+                return ['category' => 'marketing_news', 'keyword' => $keyword];
+            }
+        }
+
+        $hasMarketingPhrase = str_contains($normalizedSubject, 'press release')
+            || str_contains($normalizedSubject, 'news release')
+            || str_contains($normalizedSubject, 'news alert');
+
+        if (! $hasMarketingPhrase) {
+            foreach (($routes['investment_alerts'] ?? []) as $keyword) {
+                if ($keyword !== '' && str_contains($normalizedSubject, mb_strtolower($keyword))) {
+                    return ['category' => 'investment_alerts', 'keyword' => $keyword];
                 }
             }
         }

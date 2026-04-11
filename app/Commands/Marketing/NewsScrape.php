@@ -79,15 +79,27 @@ class NewsScrape extends SafeBaseCommand
         }
 
         $routingSummary = [
+            'marketing_news_matched' => 0,
+            'investment_alerts_matched' => 0,
             'marketing_news_stored' => 0,
             'investment_alerts_stored' => 0,
             'rejected_count' => 0,
+            'route_counts' => [],
+            'keyword_counts' => [],
         ];
         foreach ($results as $entry) {
             $summary = (array) ($entry['routing_summary'] ?? []);
+            $routingSummary['marketing_news_matched'] += (int) ($summary['marketing_news_matched'] ?? 0);
+            $routingSummary['investment_alerts_matched'] += (int) ($summary['investment_alerts_matched'] ?? 0);
             $routingSummary['marketing_news_stored'] += (int) ($summary['marketing_news_stored'] ?? 0);
             $routingSummary['investment_alerts_stored'] += (int) ($summary['investment_alerts_stored'] ?? 0);
             $routingSummary['rejected_count'] += (int) ($summary['rejected_count'] ?? 0);
+            foreach ((array) ($summary['route_counts'] ?? []) as $route => $count) {
+                $routingSummary['route_counts'][$route] = (int) (($routingSummary['route_counts'][$route] ?? 0) + (int) $count);
+            }
+            foreach ((array) ($summary['keyword_counts'] ?? []) as $keyword => $count) {
+                $routingSummary['keyword_counts'][$keyword] = (int) (($routingSummary['keyword_counts'][$keyword] ?? 0) + (int) $count);
+            }
         }
 
         CLI::write((string) json_encode([
