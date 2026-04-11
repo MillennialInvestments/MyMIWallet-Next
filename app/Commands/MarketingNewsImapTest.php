@@ -17,10 +17,48 @@ class MarketingNewsImapTest extends SafeBaseCommand
             return;
         }
 
+        $username = CLI::getOption('username');
         $mailbox = CLI::getOption('mailbox');
+        if ((! is_string($username) || trim($username) === '') && is_string($mailbox) && str_contains($mailbox, '@')) {
+            $username = $mailbox;
+        }
         $folder = (string) (CLI::getOption('folder') ?: 'INBOX');
         $config = config('NewsEmailServer');
-        $resolved = $config->resolve(is_string($mailbox) ? $mailbox : null);
+        try {
+            $resolved = $config->resolve(is_string($username) ? $username : null);
+        } catch (\RuntimeException $e) {
+            CLI::write((string) json_encode([
+                'status' => 'error',
+                'message' => $e->getMessage(),
+            ], JSON_PRETTY_PRINT));
+            return;
+        }
+        if (strtolower(trim((string) ($resolved['username'] ?? ''))) === 'inbox') {
+            CLI::write((string) json_encode([
+                'status' => 'error',
+                'message' => 'Invalid IMAP username resolution: username resolved to INBOX',
+                'resolved' => $resolved,
+            ], JSON_PRETTY_PRINT));
+            return;
+        }
+
+        if (trim((string) ($resolved['password'] ?? '')) === '') {
+            CLI::write((string) json_encode([
+                'status' => 'error',
+                'message' => 'Missing IMAP password for tradealerts@mymiwallet.com',
+                'config_resolved' => true,
+                'password_present' => false,
+                'resolved' => [
+                    'host' => $resolved['host'] ?? null,
+                    'port' => $resolved['port'] ?? null,
+                    'encryption' => $resolved['encryption'] ?? null,
+                    'username' => $resolved['username'] ?? null,
+                    'folder' => $folder,
+                ],
+                'source_map' => $resolved['source_map'] ?? [],
+            ], JSON_PRETTY_PRINT));
+            return;
+        }
         $connection = $config->buildConnectionString($resolved, $folder);
 
         $imap = @imap_open($connection, (string) $resolved['username'], (string) $resolved['password']);
@@ -37,6 +75,7 @@ class MarketingNewsImapTest extends SafeBaseCommand
                     'username' => $resolved['username'] ?? null,
                     'folder' => $folder,
                 ],
+                'source_map' => $resolved['source_map'] ?? [],
                 'imap_last_error' => imap_last_error(),
             ], JSON_PRETTY_PRINT));
             return;
@@ -62,6 +101,8 @@ class MarketingNewsImapTest extends SafeBaseCommand
                 'username' => $resolved['username'] ?? null,
                 'folder' => $folder,
             ],
+            'source_map' => $resolved['source_map'] ?? [],
+            'connection_ok' => true,
             'folders' => $folders,
         ], JSON_PRETTY_PRINT));
     }

@@ -11,7 +11,7 @@ class NewsScrape extends SafeBaseCommand
     protected $group = 'Marketing';
     protected $name = 'marketing:news:scrape';
     protected $description = 'Ingests alert/news emails (or OCR/raw text) into bf_marketing_temp_scraper with folder-level diagnostics.';
-    protected $usage = 'marketing:news:scrape [--mailbox=news@mymiwallet.com] [--limit=50] [--folder=INBOX] [--folders=INBOX,Alerts] [--search=ALL] [--debug-subjects] [--force]';
+    protected $usage = 'marketing:news:scrape [--username=tradealerts@mymiwallet.com] [--folder=INBOX] [--subject="Press Release"] [--limit=50] [--folders=INBOX,Alerts] [--search=ALL] [--debug-subjects] [--force]';
 
     public function run(array $params)
     {
@@ -20,7 +20,11 @@ class NewsScrape extends SafeBaseCommand
             $service = new MarketingNewsScrapeService();
         }
 
+        $username = CLI::getOption('username');
         $mailbox = CLI::getOption('mailbox');
+        if ((! is_string($username) || trim($username) === '') && is_string($mailbox) && str_contains($mailbox, '@')) {
+            $username = $mailbox;
+        }
         $limit = max(1, (int) (CLI::getOption('limit') ?: 25));
         $ocrPath = CLI::getOption('ocr');
         $filePath = CLI::getOption('file');
@@ -62,10 +66,13 @@ class NewsScrape extends SafeBaseCommand
         if ($ocrPath === null && $filePath === null) {
             $result = $service->fetchEmails([
                 'mailbox' => $mailbox,
+                'username' => $username,
+                'folder' => $folderOpt,
                 'folders' => $folders,
                 'limit' => $limit,
                 'force' => $force,
                 'debug' => $debugSubjects,
+                'subject' => CLI::getOption('subject') ?: null,
                 'search_criteria' => $search,
             ]);
             $results[] = $result;
@@ -75,6 +82,7 @@ class NewsScrape extends SafeBaseCommand
             'status' => 'success',
             'command' => 'marketing:news:scrape',
             'mailbox' => $mailbox,
+            'username' => $username,
             'folders' => $folders,
             'search_criteria' => $search,
             'limit' => $limit,
