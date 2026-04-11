@@ -1929,8 +1929,7 @@ class MarketingModel extends Model
             'default_folder' => 'INBOX',
         ];
         $folder = $resolved['default_folder'] ?? 'INBOX';
-        $connectionString = sprintf('{%s:%d/imap/%s}%s', $resolved['host'], (int) $resolved['port'], $resolved['encryption'], $folder);
-
+        $connectionString = sprintf('{%s:%d/imap/%s/novalidate-cert}%s', $host, (int) $port, $encryption, $folder ?: 'INBOX');
         $inbox = @imap_open($connectionString, $resolved['username'], $resolved['password']);
         if (!$inbox) {
             log_message('error', 'Cannot connect to email server: ' . imap_last_error());

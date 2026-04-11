@@ -1125,9 +1125,7 @@ class MyMIMarketing
         $emailConfig = config('NewsEmailServer');
         $mailbox = strtolower(trim((string) ($emailType . '@mymiwallet.com')));
         $resolved = method_exists($emailConfig, 'resolve') ? $emailConfig->resolve($mailbox) : [];
-        $connectionString = method_exists($emailConfig, 'buildConnectionString')
-            ? $emailConfig->buildConnectionString($resolved, (string) ($resolved['default_folder'] ?? 'INBOX'))
-            : sprintf('{%s:%d/imap/%s}%s', (string) ($resolved['host'] ?? 'imap.dreamhost.com'), (int) ($resolved['port'] ?? 993), (string) ($resolved['encryption'] ?? 'ssl'), (string) ($resolved['default_folder'] ?? 'INBOX'));
+        $connectionString = sprintf('{%s:%d/imap/%s/novalidate-cert}%s', $host, (int) $port, $encryption, $folder ?: 'INBOX');
 
         $emailCredentials = [
             'hostname' => $connectionString,

@@ -925,7 +925,7 @@ class AuthAuditRunner
         }
 
         $passwordRules = [
-            'password' => 'required|strong_password',
+            'password' => 'required|min_length[10]|max_length[72]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).+$/]',
             'pass_confirm' => 'required|matches[password]',
         ];
 
@@ -997,7 +997,7 @@ class AuthAuditRunner
         $rules = [
             'token' => 'required',
             'email' => 'required|valid_email',
-            'password' => 'required|strong_password',
+            'password' => 'required|min_length[10]|max_length[72]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).+$/]',
             'pass_confirm' => 'required|matches[password]',
         ];
 
