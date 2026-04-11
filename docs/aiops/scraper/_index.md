@@ -1,7 +1,7 @@
 # AIOps Scraper Control Index
 
 ## Investment Alerts
-- Inbox: alerts@mymiwallet.com
+- Inbox: tradealerts@mymiwallet.com
 - Entry Command: alerts:parse-test / maintenance:alerts:audit
 - Data Flow:
   Email → Scraper → Normalizer → Trade Alerts → Discord / UI

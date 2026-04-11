@@ -777,16 +777,16 @@
             "mtime": "2026-02-08"
         },
         "docs/aiops/scraper/_index.md": {
-            "hash": "261a54f5ebe57b781283277c0754ab57079fdb5d0c7eff3d826716a918b326bb",
-            "mtime": "2026-02-03"
+            "hash": "b0c124ddc65ab149ee29f84fd2a0c4d79ec3a1e989ffadbeb539447a94f2778d",
+            "mtime": "2026-04-10"
         },
         "docs/aiops/scrapers/_index.md": {
             "hash": "6b03df66b86b47015004655b1a76eecb8bf35bc6d475148fea89fd157e2cb61c",
             "mtime": "2026-02-03"
         },
         "docs/aiops/scrapers/alerts-email-scan.md": {
-            "hash": "7ce3032349279c28b5a967b97e65dc5b82310b078a5bfdda4a467599678eb60a",
-            "mtime": "2026-02-03"
+            "hash": "43bf5e1dec09288444eabec7362eb121db7d05a586a29083fe8130df65b71431",
+            "mtime": "2026-04-10"
         },
         "docs/aiops/selfhosted-stack.md": {
             "hash": "f44f6da086670ab65971218e272d6261bb1af5e33d1ec9e058053fec70bfdcca",
@@ -841,8 +841,8 @@
             "mtime": "2025-11-08"
         },
         "docs/audit/alerts_audit_last_run.md": {
-            "hash": "30691ca579a37b3fe1e500e76289520f049fcc8fd02a5fd51d785dab20b22293",
-            "mtime": "2026-02-28"
+            "hash": "6bcd78d1af51562a0d01c80efe7c07aaa410e367b7c721e31c39ec66313fe7b0",
+            "mtime": "2026-04-03"
         },
         "docs/audit/auth_audit_last_run.md": {
             "hash": "1298982982678bc623fc33e25137ae8fd44b03d9138fa029daab66ad6f065174",
@@ -1381,8 +1381,8 @@
             "mtime": "2025-12-05"
         },
         "docs/discord/marketing_news_automation.md": {
-            "hash": "fde3f94cda7529f1cfb5cae897af89134f304de8c94e7923fbe2ecf0e778e0ee",
-            "mtime": "2025-12-10"
+            "hash": "dcd58069aff14989463e4fce25ed880566c2fb603acac8aaf0998537194b15d1",
+            "mtime": "2026-04-10"
         },
         "docs/discord/mee6_and_mymi_automation.md": {
             "hash": "4943cff5f15f4e187aca353de1654516bf9ca53192abf0f8a61cea2c4c08393e",
@@ -1765,8 +1765,8 @@
             "mtime": "2026-03-01"
         },
         "docs/launch/launch_readiness_audit.md": {
-            "hash": "6fedecdbeeed6c7501e9860e991d2b1c3d53c2854b50f40e08c35869918effe9",
-            "mtime": "2026-03-07"
+            "hash": "beb70a0f74a29504657bf69c4f9cab6f473c02c40744ede04e84b7cac1c85b57",
+            "mtime": "2026-04-03"
         },
         "docs/launch/launch_smoke_results.md": {
             "hash": "043390d690b323d428df1b5dc561a1303b3501923ce56e99faab2cb043554aab",
@@ -3881,8 +3881,8 @@
             "mtime": "2025-11-08"
         },
         "docs/operations/02-libraries.md": {
-            "hash": "a326de35cc470a327534e243fa027107d99623d7d17de2097d0f1e8c8191d1d6",
-            "mtime": "2025-11-08"
+            "hash": "436fb69b7a8546b87ba0fc127b17491d89dccf5ef9583bfecc1ca681dde55235",
+            "mtime": "2026-04-02"
         },
         "docs/operations/03-controllers.md": {
             "hash": "5a09bdfaf2543a015dce8c080644627faa1b0eeaeebdf1fa2401ab957f799db8",
@@ -4165,8 +4165,8 @@
             "mtime": "2025-11-08"
         },
         "docs/ops/runbooks/devops-smoke-test.md": {
-            "hash": "86a03e2fcd8b41da50a3b4616dd0d192f7dee17315819f3fb31572917a4ba9b2",
-            "mtime": "2025-12-27"
+            "hash": "d0568952cbbcfd22bca1bb7753b67c6233ff0669316f5dc24fa8d5412094c3d9",
+            "mtime": "2026-04-02"
         },
         "docs/ops/runbooks/env-baseline-keys.md": {
             "hash": "661a2813d774684f5298922348b60b1fffee70f65ade3cad9afb6392eaf4e382",
@@ -4209,8 +4209,8 @@
             "mtime": "2026-02-01"
         },
         "docs/ops/subsystems.md": {
-            "hash": "579f69ec1953a0524a8112dd8d4bd99247c52d70daf9ef488e0b6933e32cbca0",
-            "mtime": "2026-02-08"
+            "hash": "8a7ce97235622ce92aa25b125a86b58f7d5848ea96ff3adfc528b31c1863b83a",
+            "mtime": "2026-04-05"
         },
         "docs/ops/unexpected-token-lt-audit.md": {
             "hash": "2f29e830fe7a935a4aedd47e41ba2fb83d2a7e32ebb62635a96a9a2e8593f0e3",
@@ -4357,8 +4357,8 @@
             "mtime": "2025-12-16"
         },
         "docs/routes/routes.md": {
-            "hash": "0198ea445ba63fb77cc3a7e6102b194aa27a46bd703f6ae12b8d19a41cb64171",
-            "mtime": "2026-03-07"
+            "hash": "754fc919e9e538dbafef5a549400fc152204d61950ecaa93e326e17ae1c2f980",
+            "mtime": "2026-04-03"
         },
         "docs/routes/routes_audit.md": {
             "hash": "4de9fe39a7f53b56994c09b48859c846075870d92c59e6827596017980468cfc",
@@ -5065,8 +5065,8 @@
             "mtime": "2026-03-08"
         },
         "docs/spark/aiops.md": {
-            "hash": "a084ff531e0faf71b40dcf519415e57293a83bb4fbb63473c9e65c4c7f4e3ceb",
-            "mtime": "2026-03-08"
+            "hash": "5186998ce0301939854f7aaf0bfc09d28052bcdb2651fcf42572756094e30b5b",
+            "mtime": "2026-04-10"
         },
         "docs/spark/automation.md": {
             "hash": "21dd6f549a84ceb711cf80e86679daf68ee2d49684516f3e8f28af5d0c80f54f",
@@ -5547,7 +5547,91 @@
         "docs/reports/automation_health.md": {
             "hash": "cecf2c5ad09a97b7212fd348a52690b723583a5da6df2943ca1918441bc3f33f",
             "mtime": "2026-04-01"
+        },
+        "docs/_support/db-drift/20260402-095240/summary.md": {
+            "hash": "b764bbe9f57c972687d085e91ad532314c0055f58c5a2d2114ef08fa688ba95c",
+            "mtime": "2026-04-03"
+        },
+        "docs/_support/scraper-audit-emails/20260402-095602/summary.md": {
+            "hash": "6c65f05068153b8c319fc11d35ca8cb8057497e9b068c6c2cad853deb6739145",
+            "mtime": "2026-04-03"
+        },
+        "docs/integrations/aiops-centralized.md": {
+            "hash": "73145f127df3a8936adb49c3912e11b37ee000e1d74319d6feb9de7dc5eb25ec",
+            "mtime": "2026-04-05"
+        },
+        "docs/integrations/ollama-centralized.md": {
+            "hash": "2c5314d846eb739151fb505625259bc6af8f06f8bcbddd2f70cb0e98b1380779",
+            "mtime": "2026-04-05"
+        },
+        "docs/operations/remote-vs-local-mode.md": {
+            "hash": "fa86919a4ccbd7c97e4996912de01f47f0fd93b30d5c654bcc2da79c43d8f9d2",
+            "mtime": "2026-04-05"
+        },
+        "docs/ops/aiops-remote-health-contract.md": {
+            "hash": "8590d9e90cc7168c857d096aeab048413a153b5961ae3a5c39325ac2505c60f1",
+            "mtime": "2026-04-05"
+        },
+        "docs/_support/marketing-automation-audit/20260410-005014/summary.md": {
+            "hash": "65c3f9b926b58f7033c11b58d4f1586da21666963e69a60990080a32008f30f7",
+            "mtime": "2026-04-10"
+        },
+        "docs/_support/marketing-automation-audit/20260410-005604/summary.md": {
+            "hash": "7896d1931f5244bce035b3081b0f7c497b9470b1aab051f6a3a6932624b7b2d7",
+            "mtime": "2026-04-10"
+        },
+        "docs/tasks/completed/2026-04-09-fk-fix-bf_marketing_distribution_log.md": {
+            "hash": "7f014da62395186027e71a42dec2035b40404f2b8877e87eebf7dc4b39be684c",
+            "mtime": "2026-04-09"
+        },
+        "docs/tasks/completed/2026-04-09-marketing-config-centralization-and-inbox-debug.md": {
+            "hash": "9ee50c76483530eb7fbd80ac974b4dd2bfddb99cccb7782f90666ce24b3f1bc6",
+            "mtime": "2026-04-10"
+        },
+        "docs/tasks/completed/2026-04-09-marketing-dashboard-news-pipeline.md": {
+            "hash": "1a9aa407d65b95424e7687deb1bae0d9d4ed2ff7b848ab5f5410b95e95dabe66",
+            "mtime": "2026-04-09"
+        },
+        "docs/tasks/completed/2026-04-09-marketing-news-generate-command.md": {
+            "hash": "f29d1fdef484a1cbb2c65def45eaf8c9635ece1d67ad0bfd9398743bfe85aa01",
+            "mtime": "2026-04-09"
+        },
+        "docs/tasks/completed/2026-04-09-marketing-news-scrape-command.md": {
+            "hash": "c90580cf16b2c008723128a4f42fe9118be24f704ff6f9b3ba4c2aac542250ad",
+            "mtime": "2026-04-10"
+        },
+        "docs/tasks/completed/2026-04-09-marketing-news-services.md": {
+            "hash": "7e5f7d29f48c8ff6c91f3104aee06b5031720f523e007f7a45a0bcf3d32efee2",
+            "mtime": "2026-04-10"
+        },
+        "docs/tasks/completed/2026-04-09-schema-hardening-marketing-tables.md": {
+            "hash": "86c67f665acf067714f2bc75acb68f6b1f326621233413e02a8b705e319ea181",
+            "mtime": "2026-04-09"
+        },
+        "docs/tasks/pending/2026-04-09-ab-testing-generated-news-content.md": {
+            "hash": "1013efa77d888a8f4c0392c47efbac9b981e7e9616ec60a8ac79274e8dcd91e2",
+            "mtime": "2026-04-09"
+        },
+        "docs/tasks/pending/2026-04-09-distribution-platform-adapters.md": {
+            "hash": "16e5fe38ea9baf0403acf536fb899f7204718f63a8a9db18b626210ca597f3ee",
+            "mtime": "2026-04-09"
+        },
+        "docs/tasks/pending/2026-04-09-marketing-imap-diagnostics-followups.md": {
+            "hash": "4027640099b56dad88f81eefecf24f279948c711d28653a642b3ec9d25da9b0b",
+            "mtime": "2026-04-10"
+        },
+        "docs/tasks/pending/2026-04-09-monitoring-alerting-marketing-pipeline.md": {
+            "hash": "2abfcbd87839c0353cf866fb5b34e9f0ac72bab921e1f8df4442d800a9076f36",
+            "mtime": "2026-04-09"
+        },
+        "docs/tasks/pending/2026-04-09-news-ocr-enhancements.md": {
+            "hash": "a56670760f5bf086898bdfebb12405f18ed17aaa7dc47e74273000ef8251401a",
+            "mtime": "2026-04-09"
+        },
+        "docs/tasks/pending/2026-04-09-storyboard-ui-polish.md": {
+            "hash": "321dfe9830328bfc6fd4882274dffcfd8777d0050b19dae7b8179a25c1d93dec",
+            "mtime": "2026-04-09"
         }
     },
-    "last_run": "2026-04-02T07:00:01Z"
+    "last_run": "2026-04-10T07:00:01Z"
 }

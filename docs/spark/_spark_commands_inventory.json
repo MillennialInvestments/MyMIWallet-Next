@@ -244,7 +244,7 @@
       "--mailbox",
       "IMAP mailbox folder (default: INBOX).",
       "--from",
-      "Filter by sender email address (default: alerts@mymiwallet.com).",
+      "Filter by sender email address (default: tradealerts@mymiwallet.com).",
       "--since",
       "IMAP SINCE date in YYYY-MM-DD format (overrides lookback-days).",
       "--lookback-days",
@@ -254,7 +254,7 @@
       "--dry-run",
       "Preview counts without writing to the database."
     ],
-    "usage": "aiops:email-scan [--mailbox=INBOX] [--from=alerts@mymiwallet.com] [--since=YYYY-MM-DD] [--lookback-days=2] [--limit=250] [--dry-run]",
+    "usage": "aiops:email-scan [--mailbox=INBOX] [--from=tradealerts@mymiwallet.com] [--since=YYYY-MM-DD] [--lookback-days=2] [--limit=250] [--dry-run]",
     "file_path": "app/Commands/AIOps/EmailScan.php",
     "namespace": "App\\Commands\\AIOps"
   },

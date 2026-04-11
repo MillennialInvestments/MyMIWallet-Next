@@ -1,0 +1,1 @@
+After analysis, prepare a Codex-ready remediation plan to restore stock CI4 exception/debug rendering in development and staging, while keeping production on generic error pages with full logging to bf_error_logs and alerting. Include exact file names, code placement notes, risk notes, and validation steps.

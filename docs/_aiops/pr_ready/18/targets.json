@@ -1,0 +1,9 @@
+{
+    "file_candidates": [
+        "public/index.php",
+        "app/Config/Exceptions.php",
+        "app/Config/Filters.php",
+        "app/Views/"
+    ],
+    "notes": "Heuristic inference only; AIOps/Ollama should confirm exact file placements."
+}

@@ -4,7 +4,7 @@ This guide captures how marketing content and news flow into the platform and ho
 
 ## Content Sources
 - **MarketAux API:** Fetched via `MyMIMarketing` news utilities; used for symbol-specific and general market headlines.
-- **Email Scrapes:** Broker/newsletter emails delivered to `alerts@mymiwallet.com`, staged in `bf_marketing_temp_scraper`, and promoted to `bf_marketing_scraper` after parsing.
+- **Email Scrapes:** Broker/newsletter emails delivered to `tradealerts@mymiwallet.com`, staged in `bf_marketing_temp_scraper`, and promoted to `bf_marketing_scraper` after parsing.
 - **Alert-Derived Marketing:** Trade alerts enriched into marketing copy through `MyMIMarketing::generateTradeAlertMessage` and campaign builders.
 
 ## Processing & Scoring

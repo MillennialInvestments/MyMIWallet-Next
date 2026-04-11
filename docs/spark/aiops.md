@@ -722,7 +722,7 @@ Scan alerts mailbox for new emails and record AIOps counts.
 `php spark aiops:email-scan`
 
 **Options**  
-`--mailbox`, `IMAP mailbox folder (default: INBOX).`, `--from`, `Filter by sender email address (default: alerts@mymiwallet.com).`, `--since`, `IMAP SINCE date in YYYY-MM-DD format (overrides lookback-days).`, `--lookback-days`, `Number of days to look back when --since is not provided (default: 2).`, `--limit`, `Maximum number of emails to scan per run.`, `--dry-run`, `Preview counts without writing to the database.`
+`--mailbox`, `IMAP mailbox folder (default: INBOX).`, `--from`, `Filter by sender email address (default: tradealerts@mymiwallet.com).`, `--since`, `IMAP SINCE date in YYYY-MM-DD format (overrides lookback-days).`, `--lookback-days`, `Number of days to look back when --since is not provided (default: 2).`, `--limit`, `Maximum number of emails to scan per run.`, `--dry-run`, `Preview counts without writing to the database.`
 
 **Services Used**  
 `App\Services\AIOps\EmailScannerService`

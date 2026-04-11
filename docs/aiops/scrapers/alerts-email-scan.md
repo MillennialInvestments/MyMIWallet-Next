@@ -48,7 +48,7 @@ Captures scanner-to-event lineage when a scanner name can be extracted.
 ```bash
 php spark aiops:email-scan \
   --mailbox=INBOX \
-  --from=alerts@mymiwallet.com \
+  --from=tradealerts@mymiwallet.com \
   --lookback-days=2 \
   --limit=250
 ```
@@ -66,7 +66,7 @@ The command acquires a MySQL advisory lock (`GET_LOCK`) to ensure only one run i
 **Command template:**
 
 ```bash
-*/15 * * * * /usr/local/bin/php /home/mymiteam/mymiwallet/site/current/spark aiops:email-scan --mailbox=INBOX --from=alerts@mymiwallet.com
+*/15 * * * * /usr/local/bin/php /home/mymiteam/mymiwallet/site/current/spark aiops:email-scan --mailbox=INBOX --from=tradealerts@mymiwallet.com
 ```
 
 Update the IMAP environment variables on the server as needed:

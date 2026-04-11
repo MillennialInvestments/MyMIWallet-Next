@@ -18,7 +18,7 @@ Implemented CLI ingestion command and service for mailbox alerts, OCR screenshot
 - `API/Marketing/runNewsScrape` (controller wrapper)
 
 ## manual test steps
-1. Run `php spark marketing:news-scrape --mailbox=alerts@mymiwallet.com --limit=10`.
+1. Run `php spark marketing:news-scrape --mailbox=tradealerts@mymiwallet.com --limit=10`.
 2. Run `php spark marketing:news-scrape --ocr=/mnt/data/image.png`.
 3. Run `php spark marketing:news-scrape --file=/mnt/data/Pasted\ text.txt`.
 4. Verify rows inserted as `status=pending`.

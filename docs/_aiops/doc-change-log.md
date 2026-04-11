@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-04-02T07:00:01Z
+> Run: 2026-04-10T07:00:01Z
 
 - docs/APIs/README.md
   - Last updated: 2026-03-30
@@ -209,9 +209,18 @@
 - docs/_support/config-clear/20260225-011911/summary.md
   - Last updated: 2026-02-25
   - Change type: unchanged
+- docs/_support/db-drift/20260402-095240/summary.md
+  - Last updated: 2026-04-03
+  - Change type: unchanged
 - docs/_support/fix-503/20260215-005841/summary.md
   - Last updated: 2026-02-15
   - Change type: unchanged
+- docs/_support/marketing-automation-audit/20260410-005014/summary.md
+  - Last updated: 2026-04-10
+  - Change type: new
+- docs/_support/marketing-automation-audit/20260410-005604/summary.md
+  - Last updated: 2026-04-10
+  - Change type: new
 - docs/_support/ops-spark-reset/20260210-130402/summary.md
   - Last updated: 2026-02-10
   - Change type: unchanged
@@ -277,6 +286,9 @@
   - Change type: unchanged
 - docs/_support/runtime-triage/20260215-010146/summary.md
   - Last updated: 2026-02-15
+  - Change type: unchanged
+- docs/_support/scraper-audit-emails/20260402-095602/summary.md
+  - Last updated: 2026-04-03
   - Change type: unchanged
 - docs/_support/spark-reset/20260221-034349/summary.md
   - Last updated: 2026-02-21
@@ -660,14 +672,14 @@
   - Last updated: 2026-02-08
   - Change type: unchanged
 - docs/aiops/scraper/_index.md
-  - Last updated: 2026-02-03
-  - Change type: unchanged
+  - Last updated: 2026-04-10
+  - Change type: modified
 - docs/aiops/scrapers/_index.md
   - Last updated: 2026-02-03
   - Change type: unchanged
 - docs/aiops/scrapers/alerts-email-scan.md
-  - Last updated: 2026-02-03
-  - Change type: unchanged
+  - Last updated: 2026-04-10
+  - Change type: modified
 - docs/aiops/selfhosted-stack.md
   - Last updated: 2026-01-02
   - Change type: unchanged
@@ -694,7 +706,7 @@
   - Change type: unchanged
 - docs/alerts/thinkorswim_broker_ingestion.md
   - Last updated: 2026-04-02
-  - Change type: modified
+  - Change type: unchanged
 - docs/api/README.md
   - Last updated: 2026-03-30
   - Change type: unchanged
@@ -723,7 +735,7 @@
   - Last updated: 2026-03-30
   - Change type: unchanged
 - docs/audit/alerts_audit_last_run.md
-  - Last updated: 2026-02-28
+  - Last updated: 2026-04-03
   - Change type: unchanged
 - docs/audit/auth_audit_last_run.md
   - Last updated: 2026-02-15
@@ -1236,8 +1248,8 @@
   - Last updated: 2025-12-05
   - Change type: unchanged
 - docs/discord/marketing_news_automation.md
-  - Last updated: 2025-12-10
-  - Change type: unchanged
+  - Last updated: 2026-04-10
+  - Change type: modified
 - docs/discord/mee6_and_mymi_automation.md
   - Last updated: 2025-12-05
   - Change type: unchanged
@@ -1529,6 +1541,12 @@
 - docs/integrations/README.md
   - Last updated: 2026-03-30
   - Change type: unchanged
+- docs/integrations/aiops-centralized.md
+  - Last updated: 2026-04-05
+  - Change type: unchanged
+- docs/integrations/ollama-centralized.md
+  - Last updated: 2026-04-05
+  - Change type: unchanged
 - docs/integrations/technology_investor_integrations.md
   - Last updated: 2025-12-31
   - Change type: unchanged
@@ -1590,7 +1608,7 @@
   - Last updated: 2026-03-01
   - Change type: unchanged
 - docs/launch/launch_readiness_audit.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-04-03
   - Change type: unchanged
 - docs/launch/launch_smoke_results.md
   - Last updated: 2026-03-01
@@ -3219,7 +3237,7 @@
   - Last updated: 2025-11-08
   - Change type: unchanged
 - docs/operations/02-libraries.md
-  - Last updated: 2025-11-08
+  - Last updated: 2026-04-02
   - Change type: unchanged
 - docs/operations/03-controllers.md
   - Last updated: 2025-11-08
@@ -3250,6 +3268,9 @@
   - Change type: unchanged
 - docs/operations/_index.md
   - Last updated: 2025-11-08
+  - Change type: unchanged
+- docs/operations/remote-vs-local-mode.md
+  - Last updated: 2026-04-05
   - Change type: unchanged
 - docs/ops-runbook.md
   - Last updated: 2026-01-04
@@ -3286,6 +3307,9 @@
   - Change type: unchanged
 - docs/ops/aiops-n8n-workflows.md
   - Last updated: 2026-01-03
+  - Change type: unchanged
+- docs/ops/aiops-remote-health-contract.md
+  - Last updated: 2026-04-05
   - Change type: unchanged
 - docs/ops/aiops-schema-endpoints-spec.md
   - Last updated: 2026-01-03
@@ -3438,7 +3462,7 @@
   - Last updated: 2025-11-08
   - Change type: unchanged
 - docs/ops/runbooks/devops-smoke-test.md
-  - Last updated: 2025-12-27
+  - Last updated: 2026-04-02
   - Change type: unchanged
 - docs/ops/runbooks/env-baseline-keys.md
   - Last updated: 2025-11-08
@@ -3471,7 +3495,7 @@
   - Last updated: 2026-02-01
   - Change type: unchanged
 - docs/ops/subsystems.md
-  - Last updated: 2026-02-08
+  - Last updated: 2026-04-05
   - Change type: unchanged
 - docs/ops/unexpected-token-lt-audit.md
   - Last updated: 2025-11-08
@@ -3625,7 +3649,7 @@
   - Change type: unchanged
 - docs/reports/automation_health.md
   - Last updated: 2026-04-01
-  - Change type: new
+  - Change type: unchanged
 - docs/reports/code_health.md
   - Last updated: 2026-01-04
   - Change type: unchanged
@@ -3678,7 +3702,7 @@
   - Last updated: 2025-12-16
   - Change type: unchanged
 - docs/routes/routes.md
-  - Last updated: 2026-03-07
+  - Last updated: 2026-04-03
   - Change type: unchanged
 - docs/routes/routes_audit.md
   - Last updated: 2025-12-16
@@ -3762,8 +3786,8 @@
   - Last updated: 2026-03-30
   - Change type: unchanged
 - docs/spark/aiops.md
-  - Last updated: 2026-03-08
-  - Change type: unchanged
+  - Last updated: 2026-04-10
+  - Change type: modified
 - docs/spark/automation.md
   - Last updated: 2026-03-08
   - Change type: unchanged
@@ -3968,6 +3992,45 @@
 - docs/tasks/_index.md
   - Last updated: 2025-11-08
   - Change type: unchanged
+- docs/tasks/completed/2026-04-09-fk-fix-bf_marketing_distribution_log.md
+  - Last updated: 2026-04-09
+  - Change type: new
+- docs/tasks/completed/2026-04-09-marketing-config-centralization-and-inbox-debug.md
+  - Last updated: 2026-04-10
+  - Change type: new
+- docs/tasks/completed/2026-04-09-marketing-dashboard-news-pipeline.md
+  - Last updated: 2026-04-09
+  - Change type: new
+- docs/tasks/completed/2026-04-09-marketing-news-generate-command.md
+  - Last updated: 2026-04-09
+  - Change type: new
+- docs/tasks/completed/2026-04-09-marketing-news-scrape-command.md
+  - Last updated: 2026-04-10
+  - Change type: new
+- docs/tasks/completed/2026-04-09-marketing-news-services.md
+  - Last updated: 2026-04-10
+  - Change type: new
+- docs/tasks/completed/2026-04-09-schema-hardening-marketing-tables.md
+  - Last updated: 2026-04-09
+  - Change type: new
+- docs/tasks/pending/2026-04-09-ab-testing-generated-news-content.md
+  - Last updated: 2026-04-09
+  - Change type: new
+- docs/tasks/pending/2026-04-09-distribution-platform-adapters.md
+  - Last updated: 2026-04-09
+  - Change type: new
+- docs/tasks/pending/2026-04-09-marketing-imap-diagnostics-followups.md
+  - Last updated: 2026-04-10
+  - Change type: new
+- docs/tasks/pending/2026-04-09-monitoring-alerting-marketing-pipeline.md
+  - Last updated: 2026-04-09
+  - Change type: new
+- docs/tasks/pending/2026-04-09-news-ocr-enhancements.md
+  - Last updated: 2026-04-09
+  - Change type: new
+- docs/tasks/pending/2026-04-09-storyboard-ui-polish.md
+  - Last updated: 2026-04-09
+  - Change type: new
 - docs/tax/README.md
   - Last updated: 2026-03-30
   - Change type: unchanged

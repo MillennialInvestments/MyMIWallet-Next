@@ -1,20 +1,23 @@
 # News Audit - Last Run
 
-Run timestamp: 2026-02-05 02:49:07
-Duration (ms): 263
-Memory peak: 18.00 MB
+Run timestamp: 2026-04-11 18:43:45
+Duration (ms): 179
+Memory peak: 22.00 MB
 
 ## Executive Summary
 Audit status: FAIL (0% valid pipeline).
-Temp scanned: 233 | Final scanned: 250 | Posts scanned: 0.
+Temp scanned: 250 | Final scanned: 250 | Posts scanned: 0.
 Skipped: 0% | Broken: 100%.
 
 ## Breakdown by Issue Category
-- SCRAPER_SKIPPED_UNLOGGED: 483
-- SUMMARY_TOO_SHORT: 178
-- KEYWORDS_MISSING: 250
-- TFIDF_VECTOR_EMPTY: 250
-- SUMMARY_MISSING: 13
+- SCRAPER_SOURCE_UNSUPPORTED: 248
+- ROUTED_TO_INVESTMENT_QUEUE: 2
+- SCRAPER_SKIPPED_UNLOGGED: 250
+- SUMMARY_TOO_SHORT: 159
+- KEYWORDS_MISSING: 222
+- TFIDF_VECTOR_EMPTY: 222
+- SUMMARY_MISSING: 9
+- DUPLICATE_SOURCE_ID: 4
 
 ## Probable Root Causes
 - Ingestion payloads missing normalized title/content fields or source identifiers.

@@ -28,7 +28,7 @@ Added dedicated services for ingestion and generation while reusing existing MyM
 3. Verify no regressions for existing cron methods.
 
 ## cron examples
-- `*/10 * * * * php /home/mymiteam/mymiwallet/site/current/spark marketing:news-scrape --mailbox=alerts@mymiwallet.com >> /home/mymiteam/mymiwallet/site/current/writable/logs/marketing-news-scrape.log 2>&1`
+- `*/10 * * * * php /home/mymiteam/mymiwallet/site/current/spark marketing:news-scrape --mailbox=tradealerts@mymiwallet.com >> /home/mymiteam/mymiwallet/site/current/writable/logs/marketing-news-scrape.log 2>&1`
 - `*/15 * * * * php /home/mymiteam/mymiwallet/site/current/spark marketing:news:generate --limit=25 >> /home/mymiteam/mymiwallet/site/current/writable/logs/marketing-news-generate.log 2>&1`
 - `0 */4 * * * php /home/mymiteam/mymiwallet/site/current/spark marketing:daily-audit >> /home/mymiteam/mymiwallet/site/current/writable/logs/marketing-daily-audit.log 2>&1`
 
