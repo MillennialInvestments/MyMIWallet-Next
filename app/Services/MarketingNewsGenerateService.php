@@ -16,49 +16,150 @@ class MarketingNewsGenerateService
         $this->marketingLibrary ??= service('MyMIMarketing');
     }
 
-    public function processPending(int $limit = 25): array
+    public function processPending(int $limit = 25, array $filters = []): array
     {
         $db = Database::connect();
         $columns = array_flip($db->getFieldNames('bf_marketing_temp_scraper'));
         $builder = $db->table('bf_marketing_temp_scraper');
 
-        $builder->groupStart();
-        if (isset($columns['status'])) {
-            $builder->where('status', 'pending');
-        }
-        if (isset($columns['processed'])) {
-            isset($columns['status']) ? $builder->orWhere('processed', 0) : $builder->where('processed', 0);
-        }
-        $builder->groupEnd();
+        $limit = max(1, $limit);
 
+        $type = isset($filters['type']) && is_string($filters['type']) && trim($filters['type']) !== ''
+            ? trim($filters['type'])
+            : 'marketing_news';
+
+        $ticker = isset($filters['ticker']) && is_string($filters['ticker']) && trim($filters['ticker']) !== ''
+            ? strtoupper(trim($filters['ticker']))
+            : null;
+
+        $force = !empty($filters['force']);
+
+        // Title must exist
+        if (isset($columns['title'])) {
+            $builder->where('title IS NOT NULL', null, false);
+            $builder->where('title !=', '');
+        }
+
+        // Content should exist if available
+        if (isset($columns['content'])) {
+            $builder->where('content IS NOT NULL', null, false);
+            $builder->where('content !=', '');
+        }
+
+        // Only process pending/unprocessed rows unless forced
+        if (! $force) {
+            $builder->groupStart();
+
+            $hasPendingGuard = false;
+
+            if (isset($columns['status'])) {
+                $builder->where('status', 'pending');
+                $builder->orWhere('status IS NULL', null, false);
+                $builder->orWhere('status', '');
+                $hasPendingGuard = true;
+            }
+
+            if (isset($columns['processed'])) {
+                if ($hasPendingGuard) {
+                    $builder->orWhere('processed', 0);
+                    $builder->orWhere('processed IS NULL', null, false);
+                } else {
+                    $builder->where('processed', 0);
+                    $builder->orWhere('processed IS NULL', null, false);
+                }
+            }
+
+            $builder->groupEnd();
+        }
+
+        // Route/type guard for marketing-news rows only
         $builder->groupStart();
         $hasRouteGuard = false;
+
+        if (isset($columns['type'])) {
+            $builder->where('type', $type);
+            $hasRouteGuard = true;
+        }
+
         if (isset($columns['source_type'])) {
-            $builder->where('source_type', 'email_alert');
-            $hasRouteGuard = true;
+            if ($hasRouteGuard) {
+                $builder->orWhere('source_type', 'email_alert');
+            } else {
+                $builder->where('source_type', 'email_alert');
+                $hasRouteGuard = true;
+            }
         }
-        if (isset($columns['category'])) {
-            $hasRouteGuard ? $builder->orWhere('category', 'marketing_news') : $builder->where('category', 'marketing_news');
-            $hasRouteGuard = true;
-        }
+
         if (isset($columns['metadata'])) {
-            $hasRouteGuard ? $builder->orLike('metadata', '"route_category":"marketing_news"') : $builder->like('metadata', '"route_category":"marketing_news"');
-            $builder->orLike('metadata', '"category":"marketing_news"');
+            if ($hasRouteGuard) {
+                $builder->orLike('metadata', '"route_category":"marketing_news"');
+                $builder->orLike('metadata', '"type":"marketing_news"');
+                $builder->orLike('metadata', '"category":"marketing_news"');
+            } else {
+                $builder->like('metadata', '"route_category":"marketing_news"');
+                $builder->orLike('metadata', '"type":"marketing_news"');
+                $builder->orLike('metadata', '"category":"marketing_news"');
+                $hasRouteGuard = true;
+            }
         }
+
         $builder->groupEnd();
 
-        $orderColumn = isset($columns['date_scraped']) ? 'date_scraped' : 'id';
-        $records = $builder->orderBy($orderColumn, 'DESC')->limit($limit)->get()->getResultArray();
+        // Optional ticker filter
+        if ($ticker !== null) {
+            $builder->groupStart();
 
-        $result = ['processed' => 0, 'stored' => 0, 'skipped' => 0, 'items' => []];
+            $hasTickerGuard = false;
+
+            if (isset($columns['ticker'])) {
+                $builder->where('UPPER(ticker)', $ticker);
+                $hasTickerGuard = true;
+            }
+
+            if (isset($columns['title'])) {
+                if ($hasTickerGuard) {
+                    $builder->orLike('title', $ticker);
+                } else {
+                    $builder->like('title', $ticker);
+                    $hasTickerGuard = true;
+                }
+            }
+
+            if (isset($columns['content'])) {
+                if ($hasTickerGuard) {
+                    $builder->orLike('content', $ticker);
+                } else {
+                    $builder->like('content', $ticker);
+                    $hasTickerGuard = true;
+                }
+            }
+
+            $builder->groupEnd();
+        }
+
+        $orderColumn = isset($columns['date_scraped']) ? 'date_scraped' : 'id';
+
+        $records = $builder
+            ->orderBy($orderColumn, 'DESC')
+            ->limit($limit)
+            ->get()
+            ->getResultArray();
+
+        $result = [
+            'processed' => 0,
+            'stored'    => 0,
+            'skipped'   => 0,
+            'items'     => [],
+        ];
 
         foreach ($records as $record) {
             $processed = $this->processRecord($record);
             $result['items'][] = $processed;
             $result['processed']++;
+
             if (($processed['status'] ?? '') === 'stored') {
                 $result['stored']++;
-                $this->markTempProcessed((int) $record['id']);
+                $this->markTempProcessed((int) ($record['id'] ?? 0));
             } else {
                 $result['skipped']++;
             }
@@ -314,14 +415,21 @@ class MarketingNewsGenerateService
 
     private function isMarketingNewsRecord(array $record): bool
     {
-        $category = strtolower(trim((string) ($record['category'] ?? '')));
-        if ($category === 'marketing_news') {
+        $type = strtolower(trim((string) ($record['type'] ?? '')));
+        if ($type === 'marketing_news') {
             return true;
         }
 
-        $metadata = (string) ($record['metadata'] ?? '');
-        return str_contains(strtolower($metadata), '"route_category":"marketing_news"')
-            || str_contains(strtolower($metadata), '"category":"marketing_news"');
+        $sourceType = strtolower(trim((string) ($record['source_type'] ?? '')));
+        if ($sourceType === 'email_alert') {
+            return true;
+        }
+
+        $metadata = strtolower((string) ($record['metadata'] ?? ''));
+
+        return str_contains($metadata, '"route_category":"marketing_news"')
+            || str_contains($metadata, '"type":"marketing_news"')
+            || str_contains($metadata, '"category":"marketing_news"');
     }
 
     private function sanitizeForGeneration(string $content): string

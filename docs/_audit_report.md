@@ -1,6 +1,6 @@
 # Documentation Audit
 
-Generated: 2026-03-30 12:37:23
+Generated: 2026-04-12 16:08:57
 
 ## Undocumented Controllers
 
@@ -16,5 +16,6 @@ Generated: 2026-03-30 12:37:23
 - MaintenanceController.php
 - OpsHealthController.php
 - StockController.php
+- SystemDebugController.php
 - Test.php
 - UserController.php

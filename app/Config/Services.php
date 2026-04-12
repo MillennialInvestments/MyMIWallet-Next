@@ -178,6 +178,17 @@ class Services extends CoreServices
         return new \App\Services\Docs\DocsScanner();
     }
 
+    public static function docsSyncEngine(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('docsSyncEngine');
+        }
+
+        return new \App\Services\Docs\DocsSyncEngine(
+            static::docsScanner(false)
+        );
+    }
+    
     public static function institutionalResearch($getShared = true)
     {
         if ($getShared) {

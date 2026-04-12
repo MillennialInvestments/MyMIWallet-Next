@@ -1,0 +1,42 @@
+{
+    "run_id": 2,
+    "provider_slug": "developer",
+    "provider_name": "Developer",
+    "run_timestamp": "2026-04-12T12:12:00+00:00",
+    "start_url": "https://developer.tradovate.com",
+    "docs_domain": "developer.tradovate.com",
+    "source_urls": [
+        "https://developer.tradovate.com"
+    ],
+    "pages_scraped": 1,
+    "specs_found": 0,
+    "endpoints_found": 0,
+    "auth": {
+        "primary_auth_type": "unknown",
+        "confidence": 0.1,
+        "token_url": null,
+        "required_headers": [],
+        "signals": [],
+        "notes": []
+    },
+    "servers": [],
+    "rate_limits": [],
+    "pagination": [],
+    "webhooks": [],
+    "sdk_support": [],
+    "examples": {
+        "curl": [],
+        "json": [],
+        "javascript": [],
+        "php": [],
+        "python": []
+    },
+    "endpoints": [],
+    "generated_tasks": [
+        "Create App\\Libraries\\Integrations\\DeveloperService",
+        "Add .env keys for developer.baseUrl, developer.timeout, and credentials",
+        "Add retry and rate-limit handling wrapper for developer requests",
+        "Log request failures to application logger / bf_error_logs"
+    ],
+    "integration_score": 0
+}

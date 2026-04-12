@@ -300,5 +300,32 @@
         "SecurityCspAudit.php",
         "TrafficSpikeGuard.php",
         "WalletsWarmSummaryCache.php"
+    ],
+    "modules": [
+        "AIOps",
+        "APIs",
+        "Admin",
+        "Advertise",
+        "Advisor",
+        "Blog",
+        "Chat",
+        "ContentEngine",
+        "Docs",
+        "Exchange",
+        "Finance",
+        "Logs",
+        "Management",
+        "Marketing_New",
+        "Notifications",
+        "Ops",
+        "Predictions",
+        "PropFirms",
+        "Public",
+        "ScriptStudio",
+        "Search",
+        "Status",
+        "Support",
+        "Template",
+        "User"
     ]
 }
