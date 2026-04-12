@@ -5,6 +5,10 @@ namespace App\Services;
 use App\Libraries\MyMIDiscord;
 use App\Models\MarketingDistributionTargetModel;
 use App\Models\MarketingModel;
+use App\Services\Marketing\Distribution\BlueskyDistributionService;
+use App\Services\Marketing\Distribution\LinkedInDistributionService;
+use App\Services\Marketing\Distribution\MastodonDistributionService;
+use App\Services\Marketing\Distribution\WebhookDistributionService;
 use Config\Database;
 use Config\MarketingDistribution;
 
@@ -16,10 +20,18 @@ class MarketingDistributionService
         private ?MarketingModel $marketingModel = null,
         private ?MarketingDistributionTargetModel $targetModel = null,
         private ?MarketingDistribution $distributionConfig = null,
+        private ?BlueskyDistributionService $blueskyService = null,
+        private ?MastodonDistributionService $mastodonService = null,
+        private ?LinkedInDistributionService $linkedinService = null,
+        private ?WebhookDistributionService $webhookService = null,
     ) {
         $this->marketingModel ??= new MarketingModel();
         $this->targetModel ??= new MarketingDistributionTargetModel();
         $this->distributionConfig ??= config('MarketingDistribution');
+        $this->blueskyService ??= new BlueskyDistributionService($this->distributionConfig);
+        $this->mastodonService ??= new MastodonDistributionService($this->distributionConfig);
+        $this->linkedinService ??= new LinkedInDistributionService($this->distributionConfig);
+        $this->webhookService ??= new WebhookDistributionService($this->distributionConfig);
     }
 
     public function queueDistribution(int $generatedContentId, array $destinations = []): array
@@ -113,44 +125,6 @@ class MarketingDistributionService
         return ['count' => count($results), 'items' => $results];
     }
 
-    public function getDistributionSummary(int $limit = 100): array
-    {
-        $db = Database::connect();
-
-        $statusRows = $db->table('bf_marketing_distribution_targets')
-            ->select('status, COUNT(*) AS total')
-            ->groupBy('status')
-            ->get()
-            ->getResultArray();
-
-        $destinationRows = $db->table('bf_marketing_distribution_targets')
-            ->select('destination, status, COUNT(*) AS total')
-            ->groupBy('destination, status')
-            ->orderBy('destination', 'ASC')
-            ->get()
-            ->getResultArray();
-
-        $recent = $db->table('bf_marketing_distribution_targets')
-            ->orderBy('id', 'DESC')
-            ->limit($limit)
-            ->get()
-            ->getResultArray();
-
-        return [
-            'statuses' => $statusRows,
-            'by_destination' => $destinationRows,
-            'recent' => $recent,
-        ];
-    }
-
-    public function getContentDestinationHistory(int $generatedContentId): array
-    {
-        return $this->targetModel
-            ->where('generated_content_id', $generatedContentId)
-            ->orderBy('id', 'ASC')
-            ->findAll();
-    }
-
     private function ensureTargetsForRecord(array $record, array $destinations = []): array
     {
         $generatedContentId = (int) ($record['id'] ?? 0);
@@ -207,9 +181,6 @@ class MarketingDistributionService
         }
 
         $retryCount = (int) ($target['retry_count'] ?? 0);
-        if ($retryCount >= $this->distributionConfig->maxRetries && ($target['status'] ?? '') === 'failed') {
-            return ['id' => $targetId, 'status' => 'skipped', 'destination' => $destination, 'reason' => 'max_retries_reached'];
-        }
 
         $this->targetModel->update($targetId, [
             'status' => 'queued',
@@ -223,11 +194,10 @@ class MarketingDistributionService
                 'in_app' => $this->handleInAppDestination($target, $payload),
                 'email' => $this->handleEmailDestination($target, $payload),
                 'discord' => $this->handleDiscordDestination($target, $payload),
-                'bluesky', 'mastodon', 'linkedin', 'webhook' => [
-                    'status' => 'skipped',
-                    'response' => ['message' => 'Adapter slot prepared; native handler not enabled yet.'],
-                    'error' => null,
-                ],
+                'bluesky' => $this->blueskyService->publish($payload),
+                'mastodon' => $this->mastodonService->publish($payload),
+                'linkedin' => $this->linkedinService->publish($payload),
+                'webhook' => $this->webhookService->publish($this->buildWebhookPayload($target, $payload)),
                 default => [
                     'status' => 'failed',
                     'response' => null,
@@ -235,35 +205,30 @@ class MarketingDistributionService
                 ],
             };
         } catch (\Throwable $e) {
-            $result = [
-                'status' => 'failed',
-                'response' => null,
-                'error' => $e->getMessage(),
-            ];
+            $result = ['status' => 'failed', 'response' => null, 'error' => $e->getMessage()];
         }
 
-        $nextRetry = in_array($result['status'], ['failed'], true)
-            ? $retryCount + 1
-            : $retryCount;
+        $nextRetry = $result['status'] === 'failed' ? $retryCount + 1 : $retryCount;
 
         $update = [
             'status' => $result['status'],
             'response_json' => isset($result['response']) ? json_encode($result['response']) : null,
+            'external_id' => $result['external_id'] ?? null,
+            'external_uri' => $result['external_uri'] ?? null,
             'error_message' => $result['error'] ?? null,
             'retry_count' => $nextRetry,
             'modified_on' => date('Y-m-d H:i:s'),
         ];
 
-        if ($result['status'] === 'sent' || $result['status'] === 'skipped') {
+        if (in_array($result['status'], ['sent', 'skipped'], true)) {
             $update['sent_at'] = date('Y-m-d H:i:s');
         }
 
         if ($result['status'] === 'failed') {
             $update['failed_at'] = date('Y-m-d H:i:s');
-        }
-
-        if ($result['status'] === 'failed' && $nextRetry < $this->distributionConfig->maxRetries) {
-            $update['status'] = 'retrying';
+            if ($nextRetry < $this->distributionConfig->maxRetries) {
+                $update['status'] = 'retrying';
+            }
         }
 
         $this->targetModel->update($targetId, $update);
@@ -437,12 +402,30 @@ class MarketingDistributionService
 
         return [
             'generated_content_id' => (int) ($record['id'] ?? 0),
+            'story_id' => (int) ($record['story_id'] ?? 0),
+            'approved_at' => (string) ($record['updated_at'] ?? date('Y-m-d H:i:s')),
             'destination' => $destination,
             'title' => (string) ($record['title'] ?? $content['title'] ?? 'Marketing Update'),
             'summary' => (string) ($record['summary'] ?? $content['summary'] ?? ''),
+            'content_json' => $content,
             'content' => (string) ($content['blog_post'] ?? $content['summary'] ?? $record['summary'] ?? ''),
             'keywords' => $content['keywords'] ?? $record['keywords'] ?? [],
             'target_group' => 'internal_team',
+        ];
+    }
+
+    /** @return array<string,mixed> */
+    private function buildWebhookPayload(array $target, array $payload): array
+    {
+        return [
+            'generated_content_id' => (int) ($target['generated_content_id'] ?? ($payload['generated_content_id'] ?? 0)),
+            'story_id' => (int) ($target['story_id'] ?? ($payload['story_id'] ?? 0)),
+            'title' => (string) ($payload['title'] ?? ''),
+            'summary' => (string) ($payload['summary'] ?? ''),
+            'keywords' => $payload['keywords'] ?? [],
+            'content_json' => $payload['content_json'] ?? [],
+            'destination' => (string) ($target['destination'] ?? 'webhook'),
+            'approved_at' => (string) ($payload['approved_at'] ?? date('Y-m-d H:i:s')),
         ];
     }
 

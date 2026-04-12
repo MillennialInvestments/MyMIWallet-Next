@@ -12,12 +12,6 @@ class ApproveGenerated extends SafeBaseCommand
     protected $name = 'marketing:approve-generated';
     protected $description = 'Approve generated marketing content and optionally pre-create destination targets.';
 
-    protected $options = [
-        '--id' => 'Approve a specific generated_content id.',
-        '--limit' => 'Maximum records to approve when --id is omitted (default 20).',
-        '--skip-targets' => 'Do not create distribution target rows while approving.',
-    ];
-
     public function run(array $params)
     {
         $id = (int) (CLI::getOption('id') ?? 0);

@@ -24,6 +24,8 @@ class MarketingDistributionTargetModel extends Model
         'sent_at',
         'failed_at',
         'response_json',
+        'external_id',
+        'external_uri',
         'error_message',
         'retry_count',
         'created_on',

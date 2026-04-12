@@ -621,7 +621,47 @@ class Services extends CoreServices
             new \App\Models\MarketingModel(),
             new \App\Models\MarketingDistributionTargetModel(),
             config('MarketingDistribution'),
+            static::blueskyDistributionService(false),
+            static::mastodonDistributionService(false),
+            static::linkedinDistributionService(false),
+            static::webhookDistributionService(false),
         );
+    }
+
+    public static function blueskyDistributionService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('blueskyDistributionService');
+        }
+
+        return new \App\Services\Marketing\Distribution\BlueskyDistributionService(config('MarketingDistribution'));
+    }
+
+    public static function mastodonDistributionService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('mastodonDistributionService');
+        }
+
+        return new \App\Services\Marketing\Distribution\MastodonDistributionService(config('MarketingDistribution'));
+    }
+
+    public static function linkedinDistributionService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('linkedinDistributionService');
+        }
+
+        return new \App\Services\Marketing\Distribution\LinkedInDistributionService(config('MarketingDistribution'));
+    }
+
+    public static function webhookDistributionService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('webhookDistributionService');
+        }
+
+        return new \App\Services\Marketing\Distribution\WebhookDistributionService(config('MarketingDistribution'));
     }
 
     public static function marketingPipelineService(bool $getShared = true)
