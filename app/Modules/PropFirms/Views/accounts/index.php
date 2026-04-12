@@ -22,6 +22,7 @@
                                 <button class="btn btn-sm btn-outline-secondary js-edit">Edit</button>
                                 <button class="btn btn-sm btn-outline-info js-refresh">Refresh State</button>
                                 <button class="btn btn-sm btn-outline-success js-connect">Connect Broker</button>
+                                <a class="btn btn-sm btn-outline-primary" href="<?= site_url('PropFirms/Replay/' . (int) $account['id'] . '/ES') ?>">Replay</a>
                                 <button class="btn btn-sm btn-outline-danger js-delete">Delete</button>
                             </td>
                         </tr>

@@ -11,5 +11,11 @@ class PropReplayDiagnosticModel extends ObservedModel
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $useTimestamps = true;
-    protected $allowedFields = [];
+    protected $allowedFields = [
+        'prop_replay_event_id',
+        'severity',
+        'message',
+        'diagnostic_json',
+        'logged_at',
+    ];
 }

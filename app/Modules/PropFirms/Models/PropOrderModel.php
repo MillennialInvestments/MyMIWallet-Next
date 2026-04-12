@@ -11,5 +11,16 @@ class PropOrderModel extends ObservedModel
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $useTimestamps = true;
-    protected $allowedFields = [];
+    protected $allowedFields = [
+        'user_prop_account_id',
+        'prop_broker_connection_id',
+        'symbol',
+        'side',
+        'order_type',
+        'qty',
+        'limit_price',
+        'status',
+        'external_order_id',
+        'submitted_at',
+    ];
 }

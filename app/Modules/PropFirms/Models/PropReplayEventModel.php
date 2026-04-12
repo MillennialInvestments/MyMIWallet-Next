@@ -11,5 +11,11 @@ class PropReplayEventModel extends ObservedModel
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $useTimestamps = true;
-    protected $allowedFields = [];
+    protected $allowedFields = [
+        'user_prop_account_id',
+        'event_type',
+        'event_payload_json',
+        'event_at',
+        'sequence_no',
+    ];
 }

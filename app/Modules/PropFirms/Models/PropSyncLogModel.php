@@ -11,5 +11,12 @@ class PropSyncLogModel extends ObservedModel
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $useTimestamps = true;
-    protected $allowedFields = [];
+    protected $allowedFields = [
+        'user_prop_account_id',
+        'sync_type',
+        'status',
+        'started_at',
+        'finished_at',
+        'summary_json',
+    ];
 }

@@ -19,6 +19,9 @@ class UserPropAccountModel extends ObservedModel
         'account_status',
         'starting_balance',
         'current_balance',
+        'peak_balance',
+        'remaining_drawdown',
+        'remaining_dll',
         'metadata_json',
     ];
 }
