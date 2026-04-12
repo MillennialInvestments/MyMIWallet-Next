@@ -617,7 +617,11 @@ class Services extends CoreServices
             return static::getSharedInstance('marketingDistributionService');
         }
 
-        return new \App\Services\MarketingDistributionService(new \App\Models\MarketingModel());
+        return new \App\Services\MarketingDistributionService(
+            new \App\Models\MarketingModel(),
+            new \App\Models\MarketingDistributionTargetModel(),
+            config('MarketingDistribution'),
+        );
     }
 
     public static function marketingPipelineService(bool $getShared = true)
