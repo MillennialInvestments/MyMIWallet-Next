@@ -1,119 +1,84 @@
-<?php 
+<?php
+
 namespace App\Services\Docs;
 
-use App\Services\AiOps\DiffEngineService;
-use App\Services\AiOps\RepoScannerService;
-use App\Services\AiOps\PatchValidatorService;
+use CodeIgniter\Config\Factories;
+use Config\Services;
+use Throwable;
 
 class DocsSyncEngine
 {
-    protected $repoScanner;
-    protected $diffEngine;
-    protected $validator;
-    protected $docsParser;
+    protected $scanner;
+    protected $db;
+    protected $logger;
 
-    public function __construct()
+    public function __construct($scanner = null, $db = null, $logger = null)
     {
-        $this->repoScanner = service('repoScanner');
-        $this->diffEngine  = service('diffEngine');
-        $this->validator   = service('patchValidator');
-        $this->docsParser  = service('docsParser');
+        $this->scanner = $scanner ?? $this->resolveScanner();
+        $this->db = $db ?? \Config\Database::connect();
+        $this->logger = $logger;
     }
 
-    public function execute(array $options)
+    /**
+     * Execute docs-to-code sync pipeline.
+     *
+     * @param array<string, mixed> $options
+     * @return array<string, mixed>
+     */
+    public function execute(array $options = []): array
     {
-        $docs = $this->docsParser->parseDocsDirectory(ROOTPATH . 'docs');
-
-        $repoSnapshot = $this->repoScanner->scan();
-
-        $instructions = $this->buildInstructions($docs);
-
-        $patch = $this->diffEngine->generatePatch([
-            'source' => 'docs',
-            'instructions' => $instructions
-        ], $repoSnapshot);
-
-        $validation = $this->validator->validate($patch);
-
-        if (!$validation['valid']) {
-            return [
-                'status' => 'failed',
-                'reason' => $validation
-            ];
+        if ($this->scanner === null) {
+            throw new \RuntimeException('DocsSyncEngine scanner dependency could not be resolved.');
         }
 
-        if ($options['createPR']) {
-
-            $branch = 'docs-sync-' . date('Ymd-His');
-
-            service('githubPRFactory')->createFromPatch([
-                'branch' => $branch,
-                'title' => 'Docs Sync Auto Alignment',
-                'description' => 'Generated from docs:sync-code command.',
-                'patch' => $patch
-            ]);
+        if (! method_exists($this->scanner, 'scan')) {
+            throw new \RuntimeException('DocsSyncEngine scanner does not implement scan().');
         }
+
+        $scanResults = $this->scanner->scan($options);
 
         return [
             'status' => 'success',
-            'patch_generated' => true,
-            'files_modified' => count($patch['files'])
+            'scanned' => is_array($scanResults) ? count($scanResults) : 0,
+            'results' => $scanResults,
         ];
     }
 
-    private function buildInstructions($docs)
+    /**
+     * Resolve the docs scanner from Services or direct class fallback.
+     *
+     * @return object|null
+     */
+    protected function resolveScanner()
     {
-
-        $intent = $docs['required_changes'];
-
-        $instructions = [];
-
-        foreach ($intent['routes'] as $route) {
-
-            $instructions[] = [
-                'type' => 'route',
-                'action' => 'verify_or_create',
-                'value' => trim($route)
-            ];
+        try {
+            if (method_exists(Services::class, 'docsScanner')) {
+                return Services::docsScanner();
+            }
+        } catch (Throwable $e) {
+            log_message('error', 'DocsSyncEngine docsScanner service resolution failed: {message}', [
+                'message' => $e->getMessage(),
+            ]);
         }
 
-        foreach ($intent['controllers'] as $controller) {
-
-            $instructions[] = [
-                'type' => 'controller',
-                'action' => 'verify_or_create',
-                'value' => trim($controller)
-            ];
-        }
-
-        foreach ($intent['tables'] as $table) {
-
-            $instructions[] = [
-                'type' => 'table',
-                'action' => 'verify_or_create',
-                'value' => trim($table)
-            ];
-        }
-
-        return $instructions;
-    }
-
-    private function filterUnsafeChanges($patch)
-    {
-
-        $protected = [
-            'app/Config/App.php',
-            'app/Config/Database.php',
-            '.env'
+        $fallbackClasses = [
+            \App\Services\Docs\DocsScanner::class,
+            \App\Services\DocsScanner::class,
         ];
 
-        foreach ($patch['files'] as $file) {
-
-            if (in_array($file['path'], $protected)) {
-                unset($file);
+        foreach ($fallbackClasses as $class) {
+            if (class_exists($class)) {
+                try {
+                    return new $class();
+                } catch (Throwable $e) {
+                    log_message('error', 'DocsSyncEngine fallback scanner init failed for {class}: {message}', [
+                        'class' => $class,
+                        'message' => $e->getMessage(),
+                    ]);
+                }
             }
         }
 
-        return $patch;
+        return null;
     }
 }

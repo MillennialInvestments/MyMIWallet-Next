@@ -169,13 +169,13 @@ class Services extends CoreServices
         return new \App\Services\Docs\DocsParserService();
     }
 
-    public static function docsSyncEngine($getShared = true)
+    public static function docsScanner(bool $getShared = true)
     {
         if ($getShared) {
-            return static::getSharedInstance('docsSyncEngine');
+            return static::getSharedInstance('docsScanner');
         }
 
-        return new \App\Services\Docs\DocsSyncEngine();
+        return new \App\Services\Docs\DocsScanner();
     }
 
     public static function institutionalResearch($getShared = true)
