@@ -309,9 +309,39 @@ class MarketingNewsGenerateService
     {
         $db = Database::connect();
 
-        $sourceIds = json_encode([(int) ($record['id'] ?? 0)]);
+        $storyHash = trim((string) ($payload['story_hash'] ?? ''));
+        if ($storyHash === '') {
+            return 0;
+        }
+
+        $sourceId = (int) ($record['id'] ?? 0);
+        $now = date('Y-m-d H:i:s');
+
+        $existing = $db->table('bf_marketing_scraper')
+            ->select('id, source_ids, source_count, timeline_json, generated_payload, story_hash')
+            ->where('story_hash', $storyHash)
+            ->orderBy('id', 'DESC')
+            ->get(1)
+            ->getRowArray();
+
+        $incomingSourceIds = [$sourceId];
+        $existingSourceIds = [];
+
+        if (! empty($existing['source_ids'])) {
+            $decoded = json_decode((string) $existing['source_ids'], true);
+            if (is_array($decoded)) {
+                $existingSourceIds = array_map('intval', $decoded);
+            }
+        }
+
+        $mergedSourceIds = array_values(array_unique(array_filter(array_merge($existingSourceIds, $incomingSourceIds))));
+        $mergedTimeline = $this->mergeTimeline(
+            $existing['timeline_json'] ?? null,
+            (string) ($payload['timeline_json'] ?? '[]')
+        );
+
         $finalRow = [
-            'source_id' => $record['id'] ?? null,
+            'source_id' => $sourceId > 0 ? $sourceId : null,
             'source' => $payload['source'] ?? null,
             'type' => $payload['story_type'] ?? null,
             'title' => $payload['title'] ?? null,
@@ -319,31 +349,55 @@ class MarketingNewsGenerateService
             'content' => $payload['long_summary'] ?? null,
             'keywords' => $payload['keywords'] ?? null,
             'status' => $payload['story_status'] ?? 'generated',
-            'story_hash' => $payload['story_hash'] ?? null,
+            'story_hash' => $storyHash,
             'story_title' => $payload['story_title'] ?? null,
             'story_type' => $payload['story_type'] ?? null,
             'ticker' => $payload['ticker'] ?? null,
             'company_name' => $payload['company_name'] ?? null,
-            'source_ids' => $sourceIds,
-            'source_count' => 1,
-            'latest_source_at' => date('Y-m-d H:i:s'),
-            'timeline_json' => $payload['timeline_json'] ?? null,
+            'source_ids' => json_encode($mergedSourceIds),
+            'source_count' => count($mergedSourceIds),
+            'latest_source_at' => $now,
+            'timeline_json' => $mergedTimeline,
             'story_status' => $payload['story_status'] ?? 'generated',
             'generated_payload' => $payload['generated_payload'] ?? null,
-            'date_scraped' => date('Y-m-d H:i:s'),
-            'created_on' => date('Y-m-d H:i:s'),
-            'modified_on' => date('Y-m-d H:i:s'),
+            'date_scraped' => $now,
+            'modified_on' => $now,
         ];
 
-        $db->table('bf_marketing_scraper')->insert($finalRow);
-        $storyId = (int) $db->insertID();
+        $storyId = 0;
+
+        if (! empty($existing['id'])) {
+            $db->table('bf_marketing_scraper')
+                ->where('id', (int) $existing['id'])
+                ->update($finalRow);
+
+            $storyId = (int) $existing['id'];
+        } else {
+            $finalRow['created_on'] = $now;
+
+            $db->table('bf_marketing_scraper')->insert($finalRow);
+            $storyId = (int) $db->insertID();
+        }
+
         if ($storyId <= 0) {
             return 0;
         }
 
+        $contentHash = hash(
+            'sha256',
+            $storyHash . '|' . (string) ($payload['short_summary'] ?? '')
+        );
+
+        $existingGenerated = $db->table('bf_marketing_generated_content')
+            ->select('id, source_id')
+            ->where('story_id', $storyId)
+            ->where('content_hash', $contentHash)
+            ->get(1)
+            ->getRowArray();
+
         $generatedRow = [
             'source_type' => 'temp_scraper',
-            'source_id' => $record['id'] ?? null,
+            'source_id' => $sourceId > 0 ? $sourceId : null,
             'story_id' => $storyId,
             'title' => $payload['title'] ?? null,
             'summary' => $payload['short_summary'] ?? null,
@@ -353,12 +407,18 @@ class MarketingNewsGenerateService
             'approval_status' => 'pending_review',
             'distribution_status' => 'pending_generation',
             'version' => 1,
-            'content_hash' => hash('sha256', ($payload['story_hash'] ?? '') . '|' . ($payload['short_summary'] ?? '')),
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
+            'content_hash' => $contentHash,
+            'updated_at' => $now,
         ];
 
-        $this->marketingModel->insertGeneratedContent($generatedRow);
+        if (! empty($existingGenerated['id'])) {
+            $db->table('bf_marketing_generated_content')
+                ->where('id', (int) $existingGenerated['id'])
+                ->update($generatedRow);
+        } else {
+            $generatedRow['created_at'] = $now;
+            $this->marketingModel->insertGeneratedContent($generatedRow);
+        }
 
         return $storyId;
     }

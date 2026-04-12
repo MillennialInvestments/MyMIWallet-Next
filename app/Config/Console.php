@@ -245,6 +245,7 @@ class Console extends BaseConfig
         \App\Commands\Mail\Send::class,
         \App\Commands\Mail\Test::class,
         \App\Commands\Mail\Verify::class,
+        \App\Commands\Marketing\ApproveGeneratedContent::class,
         \App\Commands\Marketing\AutomationAudit::class,
         \App\Commands\Marketing\BlueskyHealthcheck::class,
         \App\Commands\Marketing\ApproveGenerated::class,
