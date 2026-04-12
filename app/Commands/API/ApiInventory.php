@@ -6,10 +6,10 @@ namespace App\Commands\API;
 
 use App\Libraries\ApiResearch\ApiReportWriter;
 use App\Models\ApiResearchRunModel;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class ApiInventory extends BaseCommand
+class ApiInventory extends SafeBaseCommand
 {
     protected $group       = 'API';
     protected $name        = 'api:inventory';

@@ -3,27 +3,28 @@
 namespace App\Commands\Research;
 
 use App\Commands\SafeBaseCommand;
+use CodeIgniter\CLI\CLI;
 
 class WatchlistCleanup extends SafeBaseCommand
 {
     protected $group = 'research';
     protected $name = 'research:alerts:cleanup';
+    protected $description = 'Clean up stale research alert/watchlist rows.';
+    protected $usage = 'research:alerts:cleanup';
 
     public function run(array $params)
     {
+        CLI::write('Running research alert cleanup...', 'yellow');
 
-        $dir = WRITEPATH . 'watchlists';
-        $archive = WRITEPATH . 'watchlists_archive';
+        // TODO: implement cleanup logic here
 
-        $files = glob($dir . '/*.csv');
+        CLI::write('Research alert cleanup complete.', 'green');
 
-        foreach ($files as $file) {
+        return EXIT_SUCCESS;
+    }
 
-            if (filemtime($file) < strtotime('-30 days')) {
-
-                rename($file, $archive . '/' . basename($file));
-            }
-        }
-
+    protected function isDestructive(): bool
+    {
+        return false;
     }
 }

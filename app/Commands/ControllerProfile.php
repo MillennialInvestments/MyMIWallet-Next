@@ -2,7 +2,7 @@
 
 namespace App\Commands;
 
-use App\Commands\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
 class ControllerProfile extends SafeBaseCommand

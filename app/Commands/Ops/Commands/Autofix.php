@@ -160,7 +160,7 @@ class Autofix extends SafeBaseCommand
     {
         $code = preg_replace(
             '/extends\s+\\\\?CodeIgniter\\\\CLI\\\\BaseCommand/',
-            'extends SafeBaseCommand',
+            '/extends\s+\\\\?App\\\\Commands\\\\SafeBaseCommand/',
             $code
         );
 

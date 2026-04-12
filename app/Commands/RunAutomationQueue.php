@@ -3,10 +3,10 @@
 namespace App\Commands;
 
 use App\Libraries\MyMIMarketing;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use Config\Database;
 
-class RunAutomationQueue extends BaseCommand
+class RunAutomationQueue extends SafeBaseCommand
 {
     protected $group = 'Automation';
     protected $name = 'automation:run';
