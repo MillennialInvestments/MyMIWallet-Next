@@ -11,5 +11,12 @@ class PropBrokerConnectionModel extends ObservedModel
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $useTimestamps = true;
-    protected $allowedFields = [];
+    protected $allowedFields = [
+        'user_prop_account_id',
+        'broker_name',
+        'external_account_id',
+        'connection_status',
+        'last_heartbeat_at',
+        'credentials_json',
+    ];
 }

@@ -1122,6 +1122,151 @@ class MyMIAlphaVantage
         }
     }
 
+
+    public function normalizeFuturesSymbol(string $symbol): string
+    {
+        $raw = strtoupper(trim($symbol));
+        if ($raw === '') {
+            return '';
+        }
+
+        $map = [
+            'ES' => 'ES',
+            'NQ' => 'NQ',
+            'YM' => 'YM',
+            'RTY' => 'RTY',
+            'CL' => 'CL',
+            'GC' => 'GC',
+            'SI' => 'SI',
+            'MES' => 'MES',
+            'MNQ' => 'MNQ',
+        ];
+
+        if (isset($map[$raw])) {
+            return $map[$raw];
+        }
+
+        if (preg_match('/^([A-Z]{1,4})[FGHJKMNQUVXZ]\d{1,2}$/', $raw, $matches)) {
+            return $matches[1];
+        }
+
+        return preg_replace('/[^A-Z0-9]/', '', $raw) ?? $raw;
+    }
+
+    public function getPropCandles(string $symbol, string $interval = '5min', int $limit = 200): array
+    {
+        $normalized = $this->normalizeFuturesSymbol($symbol);
+        if ($normalized === '') {
+            return [];
+        }
+
+        $cache = Services::cache();
+        $cacheKey = sanitizeCacheKey(sprintf('av_prop_candles_%s_%s_%d', $normalized, $interval, $limit));
+        $cached = $cache->get($cacheKey);
+        if (is_array($cached) && $cached !== []) {
+            return $cached;
+        }
+
+        $function = $interval === 'daily' ? 'TIME_SERIES_DAILY' : 'TIME_SERIES_INTRADAY';
+        $query = ['function' => $function, 'symbol' => $normalized, 'outputsize' => 'full'];
+        if ($function === 'TIME_SERIES_INTRADAY') {
+            $query['interval'] = $interval;
+        }
+
+        $payload = $this->getAlphaVantageResponse($query);
+        if (! is_array($payload)) {
+            return [];
+        }
+
+        $seriesKey = $function === 'TIME_SERIES_DAILY'
+            ? 'Time Series (Daily)'
+            : sprintf('Time Series (%s)', $interval);
+
+        $series = $payload[$seriesKey] ?? [];
+        if (! is_array($series) || $series === []) {
+            return [];
+        }
+
+        $rows = [];
+        foreach ($series as $time => $point) {
+            $rows[] = [
+                'time' => (string) $time,
+                'open' => (float) ($point['1. open'] ?? 0),
+                'high' => (float) ($point['2. high'] ?? 0),
+                'low' => (float) ($point['3. low'] ?? 0),
+                'close' => (float) ($point['4. close'] ?? 0),
+                'volume' => (float) ($point['5. volume'] ?? 0),
+            ];
+        }
+
+        usort($rows, static fn (array $a, array $b): int => strcmp($b['time'], $a['time']));
+        $rows = array_slice($rows, 0, max(1, $limit));
+
+        $cache->save($cacheKey, $rows, 45);
+
+        return $rows;
+    }
+
+    public function getStochasticSeries(string $symbol, string $interval = '5min', int $limit = 30): array
+    {
+        $normalized = $this->normalizeFuturesSymbol($symbol);
+        if ($normalized === '') {
+            return [];
+        }
+
+        $cache = Services::cache();
+        $cacheKey = sanitizeCacheKey(sprintf('av_prop_stoch_%s_%s_%d', $normalized, $interval, $limit));
+        $cached = $cache->get($cacheKey);
+        if (is_array($cached) && $cached !== []) {
+            return $cached;
+        }
+
+        $payload = $this->getAlphaVantageResponse([
+            'function' => 'STOCH',
+            'symbol' => $normalized,
+            'interval' => $interval,
+        ]);
+
+        $series = $payload['Technical Analysis: STOCH'] ?? [];
+        if (! is_array($series) || $series === []) {
+            return [];
+        }
+
+        $rows = [];
+        foreach ($series as $time => $point) {
+            $rows[] = [
+                'time' => (string) $time,
+                'k' => (float) ($point['SlowK'] ?? 0),
+                'd' => (float) ($point['SlowD'] ?? 0),
+            ];
+        }
+
+        usort($rows, static fn (array $a, array $b): int => strcmp($b['time'], $a['time']));
+        $rows = array_slice($rows, 0, max(1, $limit));
+        $cache->save($cacheKey, $rows, 45);
+
+        return $rows;
+    }
+
+    public function getReplayData(string $symbol, string $interval = '5min', int $limit = 300): array
+    {
+        $candles = $this->getPropCandles($symbol, $interval, $limit);
+        $stochastic = $this->getStochasticSeries($symbol, $interval, min($limit, 100));
+
+        return [
+            'symbol' => $this->normalizeFuturesSymbol($symbol),
+            'interval' => $interval,
+            'candles' => $candles,
+            'stochastic' => $stochastic,
+            'generated_at' => date('c'),
+        ];
+    }
+
+    public function getCandlesForSignalEngine(string $symbol, string $interval = '5min', int $limit = 120): array
+    {
+        return $this->getPropCandles($symbol, $interval, $limit);
+    }
+
     public function isProUser(): bool
     {
         return env('ALPHA_VANTAGE_API_KEY');
