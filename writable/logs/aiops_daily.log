@@ -12625,3 +12625,65 @@ Stack trace:
 #5 /home/mymiteam/mymiwallet/site/current/spark(107): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
 #6 {main}
   thrown in /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Config/DotEnv.php on line 179
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-04-12 07:00:01 UTC+00:00
+
+AI-Ops Spark Runner
+--------------------
+Worker: /home/mymiteam/mymiwallet/site/current/aiops/aiops_worker.php
+Mode: manual
+Dry run: NO
+
+Executing worker...
+
+AI-Ops worker complete. Wrote docs/_aiops outputs. Run=2026-04-12T07:00:02Z
+
+
+[AIOPS OLLAMA] Patch runner result:
+{
+    "job_file": "docs/_aiops/patch_jobs/README.md",
+    "audit": {
+        "ok": false,
+        "issues": [
+            "Ollama endpoint unreachable"
+        ],
+        "endpoint": "http://127.0.0.1:11434/api/generate",
+        "model": "qwen2.5-coder:3b",
+        "timeout": 120,
+        "token_limit": 2048,
+        "memory_limit_mb": 512,
+        "reachable": false
+    },
+    "status": "failed_ollama_config",
+    "job_id": "README",
+    "diff_path": null,
+    "diff_valid": false,
+    "timestamp": "2026-04-12T07:00:04+00:00"
+}
+AI-Ops worker completed successfully.
+Outputs written to: docs/_aiops/
+
+Nightly Summary Preview:
+------------------------
+# AI-Ops: Nightly Summary
+> Auto-generated. Do not edit manually.
+> Run: 2026-04-12T07:00:02Z
+
+## Docs
+- Changed docs: 3
+- Total docs scanned: 1409
+
+## Gaps (heuristic)
+- Undocumented code candidates: 1205
+- Docs with no code match candidates: 1197
+
+## Stale Docs
+- Docs older than 60 days: 1053
+
+## Suggestions
+- See: `docs/_aiops/next-steps.md`
+
+## Ops
+- Spark results: `docs/_aiops/spark-results.md`
+- CI summary: `docs/_aiops/ci-summary.md`
+

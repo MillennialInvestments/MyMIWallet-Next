@@ -778,7 +778,7 @@
         },
         "docs/aiops/scraper/_index.md": {
             "hash": "b0c124ddc65ab149ee29f84fd2a0c4d79ec3a1e989ffadbeb539447a94f2778d",
-            "mtime": "2026-04-10"
+            "mtime": "2026-04-11"
         },
         "docs/aiops/scrapers/_index.md": {
             "hash": "6b03df66b86b47015004655b1a76eecb8bf35bc6d475148fea89fd157e2cb61c",
@@ -786,7 +786,7 @@
         },
         "docs/aiops/scrapers/alerts-email-scan.md": {
             "hash": "43bf5e1dec09288444eabec7362eb121db7d05a586a29083fe8130df65b71431",
-            "mtime": "2026-04-10"
+            "mtime": "2026-04-11"
         },
         "docs/aiops/selfhosted-stack.md": {
             "hash": "f44f6da086670ab65971218e272d6261bb1af5e33d1ec9e058053fec70bfdcca",
@@ -841,16 +841,16 @@
             "mtime": "2025-11-08"
         },
         "docs/audit/alerts_audit_last_run.md": {
-            "hash": "6bcd78d1af51562a0d01c80efe7c07aaa410e367b7c721e31c39ec66313fe7b0",
-            "mtime": "2026-04-03"
+            "hash": "c8c31da460e0af66a228bb9e639f106c30b6c411e62171f4c674ff6667ed2750",
+            "mtime": "2026-04-12"
         },
         "docs/audit/auth_audit_last_run.md": {
             "hash": "1298982982678bc623fc33e25137ae8fd44b03d9138fa029daab66ad6f065174",
             "mtime": "2026-02-15"
         },
         "docs/audit/news_audit_last_run.md": {
-            "hash": "90319b579c4c4126c31016403612ae7b85839f9a06fb189f382ebb6dc840bbed",
-            "mtime": "2026-02-06"
+            "hash": "2b7c9d468bb9e0e7d9eb439a95fed627ff46bf8d07c5b8abbb55e5df9fd36db8",
+            "mtime": "2026-04-11"
         },
         "docs/audits/model_limit_patch_report_20260218.md": {
             "hash": "75acf2c162e64dc8bc6ffbc201c1c37db31d0cfea556d9ed7ee2be7c2f61ff15",
@@ -1382,7 +1382,7 @@
         },
         "docs/discord/marketing_news_automation.md": {
             "hash": "dcd58069aff14989463e4fce25ed880566c2fb603acac8aaf0998537194b15d1",
-            "mtime": "2026-04-10"
+            "mtime": "2026-04-11"
         },
         "docs/discord/mee6_and_mymi_automation.md": {
             "hash": "4943cff5f15f4e187aca353de1654516bf9ca53192abf0f8a61cea2c4c08393e",
@@ -5066,7 +5066,7 @@
         },
         "docs/spark/aiops.md": {
             "hash": "5186998ce0301939854f7aaf0bfc09d28052bcdb2651fcf42572756094e30b5b",
-            "mtime": "2026-04-10"
+            "mtime": "2026-04-11"
         },
         "docs/spark/automation.md": {
             "hash": "21dd6f549a84ceb711cf80e86679daf68ee2d49684516f3e8f28af5d0c80f54f",
@@ -5574,11 +5574,11 @@
         },
         "docs/_support/marketing-automation-audit/20260410-005014/summary.md": {
             "hash": "65c3f9b926b58f7033c11b58d4f1586da21666963e69a60990080a32008f30f7",
-            "mtime": "2026-04-10"
+            "mtime": "2026-04-11"
         },
         "docs/_support/marketing-automation-audit/20260410-005604/summary.md": {
             "hash": "7896d1931f5244bce035b3081b0f7c497b9470b1aab051f6a3a6932624b7b2d7",
-            "mtime": "2026-04-10"
+            "mtime": "2026-04-11"
         },
         "docs/tasks/completed/2026-04-09-fk-fix-bf_marketing_distribution_log.md": {
             "hash": "7f014da62395186027e71a42dec2035b40404f2b8877e87eebf7dc4b39be684c",
@@ -5598,11 +5598,11 @@
         },
         "docs/tasks/completed/2026-04-09-marketing-news-scrape-command.md": {
             "hash": "c90580cf16b2c008723128a4f42fe9118be24f704ff6f9b3ba4c2aac542250ad",
-            "mtime": "2026-04-10"
+            "mtime": "2026-04-11"
         },
         "docs/tasks/completed/2026-04-09-marketing-news-services.md": {
             "hash": "7e5f7d29f48c8ff6c91f3104aee06b5031720f523e007f7a45a0bcf3d32efee2",
-            "mtime": "2026-04-10"
+            "mtime": "2026-04-11"
         },
         "docs/tasks/completed/2026-04-09-schema-hardening-marketing-tables.md": {
             "hash": "86c67f665acf067714f2bc75acb68f6b1f326621233413e02a8b705e319ea181",
@@ -5631,7 +5631,11 @@
         "docs/tasks/pending/2026-04-09-storyboard-ui-polish.md": {
             "hash": "321dfe9830328bfc6fd4882274dffcfd8777d0050b19dae7b8179a25c1d93dec",
             "mtime": "2026-04-09"
+        },
+        "docs/_support/marketing-automation-audit/20260411-143442/summary.md": {
+            "hash": "dc2483ebfb3c2626c20defd178c550a2b3f90ad0bda9390a9a6ef44b3f098c68",
+            "mtime": "2026-04-11"
         }
     },
-    "last_run": "2026-04-10T07:00:01Z"
+    "last_run": "2026-04-12T07:00:02Z"
 }

@@ -11373,3 +11373,8 @@ Stack trace:
 #5 /home/mymiteam/mymiwallet/site/current/spark(107): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
 #6 {main}
   thrown in /home/mymiteam/mymiwallet/site/current/vendor/codeigniter4/framework/system/Config/DotEnv.php on line 179
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-04-12 07:00:01 UTC+00:00
+
+ops:work starting (safe_mode=ON)
+ops:work completed. Processed 0 task(s).

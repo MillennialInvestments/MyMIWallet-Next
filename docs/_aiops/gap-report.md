@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-04-10T07:00:01Z
+> Run: 2026-04-12T07:00:02Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -403,7 +403,7 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/Alerts/add/user_fields.php
   - ⚠️ No obvious doc match found (heuristic)
-- … and 974 more
+- … and 1005 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
 - docs/APIs/README.md
@@ -806,4 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/content_engine/json_contract.md
   - ❌ No obvious code match found (heuristic)
-- … and 998 more
+- … and 997 more

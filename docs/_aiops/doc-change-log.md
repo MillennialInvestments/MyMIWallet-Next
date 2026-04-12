@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-04-10T07:00:01Z
+> Run: 2026-04-12T07:00:02Z
 
 - docs/APIs/README.md
   - Last updated: 2026-03-30
@@ -216,10 +216,13 @@
   - Last updated: 2026-02-15
   - Change type: unchanged
 - docs/_support/marketing-automation-audit/20260410-005014/summary.md
-  - Last updated: 2026-04-10
-  - Change type: new
+  - Last updated: 2026-04-11
+  - Change type: unchanged
 - docs/_support/marketing-automation-audit/20260410-005604/summary.md
-  - Last updated: 2026-04-10
+  - Last updated: 2026-04-11
+  - Change type: unchanged
+- docs/_support/marketing-automation-audit/20260411-143442/summary.md
+  - Last updated: 2026-04-11
   - Change type: new
 - docs/_support/ops-spark-reset/20260210-130402/summary.md
   - Last updated: 2026-02-10
@@ -672,14 +675,14 @@
   - Last updated: 2026-02-08
   - Change type: unchanged
 - docs/aiops/scraper/_index.md
-  - Last updated: 2026-04-10
-  - Change type: modified
+  - Last updated: 2026-04-11
+  - Change type: unchanged
 - docs/aiops/scrapers/_index.md
   - Last updated: 2026-02-03
   - Change type: unchanged
 - docs/aiops/scrapers/alerts-email-scan.md
-  - Last updated: 2026-04-10
-  - Change type: modified
+  - Last updated: 2026-04-11
+  - Change type: unchanged
 - docs/aiops/selfhosted-stack.md
   - Last updated: 2026-01-02
   - Change type: unchanged
@@ -735,14 +738,14 @@
   - Last updated: 2026-03-30
   - Change type: unchanged
 - docs/audit/alerts_audit_last_run.md
-  - Last updated: 2026-04-03
-  - Change type: unchanged
+  - Last updated: 2026-04-12
+  - Change type: modified
 - docs/audit/auth_audit_last_run.md
   - Last updated: 2026-02-15
   - Change type: unchanged
 - docs/audit/news_audit_last_run.md
-  - Last updated: 2026-02-06
-  - Change type: unchanged
+  - Last updated: 2026-04-11
+  - Change type: modified
 - docs/audits/README.md
   - Last updated: 2026-03-30
   - Change type: unchanged
@@ -1248,8 +1251,8 @@
   - Last updated: 2025-12-05
   - Change type: unchanged
 - docs/discord/marketing_news_automation.md
-  - Last updated: 2026-04-10
-  - Change type: modified
+  - Last updated: 2026-04-11
+  - Change type: unchanged
 - docs/discord/mee6_and_mymi_automation.md
   - Last updated: 2025-12-05
   - Change type: unchanged
@@ -3786,8 +3789,8 @@
   - Last updated: 2026-03-30
   - Change type: unchanged
 - docs/spark/aiops.md
-  - Last updated: 2026-04-10
-  - Change type: modified
+  - Last updated: 2026-04-11
+  - Change type: unchanged
 - docs/spark/automation.md
   - Last updated: 2026-03-08
   - Change type: unchanged
@@ -3994,43 +3997,43 @@
   - Change type: unchanged
 - docs/tasks/completed/2026-04-09-fk-fix-bf_marketing_distribution_log.md
   - Last updated: 2026-04-09
-  - Change type: new
+  - Change type: unchanged
 - docs/tasks/completed/2026-04-09-marketing-config-centralization-and-inbox-debug.md
   - Last updated: 2026-04-10
-  - Change type: new
+  - Change type: unchanged
 - docs/tasks/completed/2026-04-09-marketing-dashboard-news-pipeline.md
   - Last updated: 2026-04-09
-  - Change type: new
+  - Change type: unchanged
 - docs/tasks/completed/2026-04-09-marketing-news-generate-command.md
   - Last updated: 2026-04-09
-  - Change type: new
+  - Change type: unchanged
 - docs/tasks/completed/2026-04-09-marketing-news-scrape-command.md
-  - Last updated: 2026-04-10
-  - Change type: new
+  - Last updated: 2026-04-11
+  - Change type: unchanged
 - docs/tasks/completed/2026-04-09-marketing-news-services.md
-  - Last updated: 2026-04-10
-  - Change type: new
+  - Last updated: 2026-04-11
+  - Change type: unchanged
 - docs/tasks/completed/2026-04-09-schema-hardening-marketing-tables.md
   - Last updated: 2026-04-09
-  - Change type: new
+  - Change type: unchanged
 - docs/tasks/pending/2026-04-09-ab-testing-generated-news-content.md
   - Last updated: 2026-04-09
-  - Change type: new
+  - Change type: unchanged
 - docs/tasks/pending/2026-04-09-distribution-platform-adapters.md
   - Last updated: 2026-04-09
-  - Change type: new
+  - Change type: unchanged
 - docs/tasks/pending/2026-04-09-marketing-imap-diagnostics-followups.md
   - Last updated: 2026-04-10
-  - Change type: new
+  - Change type: unchanged
 - docs/tasks/pending/2026-04-09-monitoring-alerting-marketing-pipeline.md
   - Last updated: 2026-04-09
-  - Change type: new
+  - Change type: unchanged
 - docs/tasks/pending/2026-04-09-news-ocr-enhancements.md
   - Last updated: 2026-04-09
-  - Change type: new
+  - Change type: unchanged
 - docs/tasks/pending/2026-04-09-storyboard-ui-polish.md
   - Last updated: 2026-04-09
-  - Change type: new
+  - Change type: unchanged
 - docs/tax/README.md
   - Last updated: 2026-03-30
   - Change type: unchanged
