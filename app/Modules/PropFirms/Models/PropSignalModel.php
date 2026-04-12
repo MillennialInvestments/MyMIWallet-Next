@@ -11,5 +11,12 @@ class PropSignalModel extends ObservedModel
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $useTimestamps = true;
-    protected $allowedFields = [];
+    protected $allowedFields = [
+        'user_prop_account_id',
+        'symbol',
+        'signal_type',
+        'signal_strength',
+        'payload_json',
+        'triggered_at',
+    ];
 }

@@ -11,5 +11,17 @@ class PropNotificationModel extends ObservedModel
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $useTimestamps = true;
-    protected $allowedFields = [];
+    protected $allowedFields = [
+        'user_prop_account_id',
+        'channel',
+        'type',
+        'symbol',
+        'subject',
+        'body',
+        'status',
+        'event_key',
+        'payload_json',
+        'sent_at',
+        'read_at',
+    ];
 }

@@ -11,5 +11,23 @@ class PropRuleSetModel extends ObservedModel
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $useTimestamps = true;
-    protected $allowedFields = [];
+    protected $allowedFields = [
+        'prop_firm_id',
+        'name',
+        'rule_version',
+        'account_type',
+        'platform',
+        'starting_balance',
+        'daily_loss_limit',
+        'drawdown_limit',
+        'max_drawdown',
+        'trailing_mode',
+        'trailing_stop_behavior',
+        'stop_loss_required',
+        'qualifying_days',
+        'consistency_percent',
+        'max_position_size',
+        'config_json',
+        'rules_json',
+    ];
 }

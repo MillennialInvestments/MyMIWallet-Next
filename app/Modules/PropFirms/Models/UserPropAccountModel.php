@@ -11,5 +11,14 @@ class UserPropAccountModel extends ObservedModel
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $useTimestamps = true;
-    protected $allowedFields = [];
+    protected $allowedFields = [
+        'user_id',
+        'prop_firm_id',
+        'prop_rule_set_id',
+        'account_ref',
+        'account_status',
+        'starting_balance',
+        'current_balance',
+        'metadata_json',
+    ];
 }

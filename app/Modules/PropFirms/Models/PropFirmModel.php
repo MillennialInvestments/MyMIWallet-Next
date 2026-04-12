@@ -11,5 +11,10 @@ class PropFirmModel extends ObservedModel
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $useTimestamps = true;
-    protected $allowedFields = [];
+    protected $allowedFields = [
+        'name',
+        'slug',
+        'status',
+        'meta_json',
+    ];
 }
