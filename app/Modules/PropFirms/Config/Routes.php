@@ -4,8 +4,8 @@ use CodeIgniter\Router\RouteCollection;
 
 /** @var RouteCollection $routes */
 $routes->group('Dashboard', ['namespace' => 'App\Modules\PropFirms\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) {
-    $routes->get('PropFirms', 'DashboardController::index');
-    $routes->get('propfirms', 'DashboardController::index');
+    $routes->get('PropFirms', 'PropFirmsController::index');
+    $routes->get('propfirms', 'PropFirmsController::index');
 });
 
 $routes->group('PropFirms', ['namespace' => 'App\Modules\PropFirms\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) {

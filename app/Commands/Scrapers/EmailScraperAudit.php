@@ -11,10 +11,10 @@ use RuntimeException;
 
 class EmailScraperAudit extends SafeBaseCommand
 {
-    protected $group       = 'audit';
-    protected $name        = 'scraper:audit-emails';
+    protected $group       = 'Marketing';
+    protected $name        = 'marketing:scraper:audit-emails';
     protected $description = 'Audit recent trade and news emails against the expected scraper schema.';
-    protected $usage       = 'scraper:audit-emails [limit] [--limit=25]';
+    protected $usage       = 'marketing:scraper:audit-emails [limit] [--limit=25]';
     protected $options     = [
         '--limit' => 'Number of emails to scan (default: 25).',
     ];
