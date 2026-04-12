@@ -12,4 +12,5 @@ $routes->group('PropFirms', ['namespace' => 'App\Modules\PropFirms\Controllers',
     $routes->get('/', 'PropFirmsController::index');
     $routes->get('RuleSets', 'PropFirmsController::ruleSets');
     $routes->get('Accounts', 'PropFirmsController::accounts');
+    $routes->post('Rules/SeedDefaults', 'PropFirmsController::seedDefaults');
 });
