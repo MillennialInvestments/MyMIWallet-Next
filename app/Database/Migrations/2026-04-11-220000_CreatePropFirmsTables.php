@@ -79,13 +79,25 @@ class CreatePropFirmsTables extends Migration
         $this->forge->addField($this->addStandardFields() + [
             'prop_firm_id' => ['type' => 'BIGINT', 'unsigned' => true],
             'name' => ['type' => 'VARCHAR', 'constraint' => 120],
+            'rule_version' => ['type' => 'VARCHAR', 'constraint' => 30, 'default' => 'v1'],
+            'account_type' => ['type' => 'VARCHAR', 'constraint' => 40, 'default' => 'eval'],
+            'platform' => ['type' => 'VARCHAR', 'constraint' => 40, 'default' => 'tradovate'],
+            'starting_balance' => ['type' => 'DECIMAL', 'constraint' => '15,2', 'default' => 0],
             'daily_loss_limit' => ['type' => 'DECIMAL', 'constraint' => '15,2', 'default' => 0],
+            'drawdown_limit' => ['type' => 'DECIMAL', 'constraint' => '15,2', 'default' => 0],
             'max_drawdown' => ['type' => 'DECIMAL', 'constraint' => '15,2', 'default' => 0],
+            'trailing_mode' => ['type' => 'VARCHAR', 'constraint' => 30, 'default' => 'none'],
+            'trailing_stop_behavior' => ['type' => 'VARCHAR', 'constraint' => 60, 'default' => 'none'],
+            'stop_loss_required' => ['type' => 'TINYINT', 'constraint' => 1, 'default' => 0],
+            'qualifying_days' => ['type' => 'INT', 'unsigned' => true, 'default' => 0],
+            'consistency_percent' => ['type' => 'DECIMAL', 'constraint' => '5,2', 'default' => 0],
             'max_position_size' => ['type' => 'DECIMAL', 'constraint' => '15,4', 'default' => 0],
+            'config_json' => ['type' => 'LONGTEXT', 'null' => true],
             'rules_json' => ['type' => 'LONGTEXT', 'null' => true],
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addKey('prop_firm_id');
+        $this->forge->addUniqueKey(['prop_firm_id', 'rule_version', 'account_type', 'platform'], 'uq_prop_rule_sets_version_combo');
         $this->forge->addForeignKey('prop_firm_id', 'bf_prop_firms', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('bf_prop_rule_sets', true);
     }
