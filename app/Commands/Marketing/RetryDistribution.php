@@ -11,11 +11,6 @@ class RetryDistribution extends SafeBaseCommand
     protected $name = 'marketing:retry-distribution';
     protected $description = 'Retry failed marketing distribution targets.';
 
-    protected $options = [
-        '--generated-content-id' => 'Only retry targets for a specific generated content record.',
-        '--limit' => 'Maximum failed targets to retry (default 25).',
-    ];
-
     public function run(array $params)
     {
         $generatedContentId = CLI::getOption('generated-content-id');
