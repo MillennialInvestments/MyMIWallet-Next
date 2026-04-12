@@ -298,6 +298,10 @@ $routes->group('', ['namespace' => 'App\Modules\User\Controllers', 'filter' => [
 });
 
 
+$routes->group('', ['namespace' => 'App\Modules\PropFirms\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
+    $routes->get('/', 'PropFirmsController::index', ['as' => 'dashboard']);
+    $routes->get('/(:segment)', 'PropFirmsController::index/$1');
+});
 $routes->group('Advisor', static function($routes) {
     $routes->get('/', 'AdvisorController::index');
     $routes->post('generateInsight', 'AdvisorController::generateAdvisorInsight');
