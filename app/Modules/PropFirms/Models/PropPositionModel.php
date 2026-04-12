@@ -11,5 +11,14 @@ class PropPositionModel extends ObservedModel
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $useTimestamps = true;
-    protected $allowedFields = [];
+    protected $allowedFields = [
+        'user_prop_account_id',
+        'symbol',
+        'side',
+        'qty',
+        'avg_price',
+        'unrealized_pnl',
+        'opened_at',
+        'closed_at',
+    ];
 }

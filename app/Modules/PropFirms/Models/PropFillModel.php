@@ -11,5 +11,12 @@ class PropFillModel extends ObservedModel
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $useTimestamps = true;
-    protected $allowedFields = [];
+    protected $allowedFields = [
+        'prop_order_id',
+        'fill_qty',
+        'fill_price',
+        'fee_amount',
+        'filled_at',
+        'external_fill_id',
+    ];
 }
