@@ -944,6 +944,10 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->match(['GET', 'POST'], 'processPendingTempScraper', 'MarketingAPIController::processPendingTempScraper');
         $routes->match(['GET', 'POST'], 'processPendingCampaigns', 'MarketingAPIController::processPendingCampaigns');
         $routes->match(['GET', 'POST'], 'processPendingGeneratedContent', 'MarketingAPIController::processPendingGeneratedContent');
+        $routes->get('distributionSummary', 'MarketingAPIController::distributionSummary');
+        $routes->get('distributionHistory/(:num)', 'MarketingAPIController::distributionHistory/$1');
+        $routes->match(['GET', 'POST'], 'retryDistributionTargets', 'MarketingAPIController::retryDistributionTargets');
+        $routes->match(['GET', 'POST'], 'retryDistributionTargets/(:num)', 'MarketingAPIController::retryDistributionTargets/$1');
         $routes->match(['GET', 'POST'], 'runMarketingPipeline', 'MarketingAPIController::runMarketingPipeline');
 
         // UI/ops endpoints (deduped from former parallel group)

@@ -2984,5 +2984,40 @@ class MarketingAPIController extends BaseAPIController
         return Http::jsonSuccess(['status' => 'success', 'stories' => $stories]);
     }
     
+    public function distributionSummary()
+    {
+        $limit = max(1, (int) ($this->request->getGet('limit') ?? 100));
+        $summary = service('marketingDistributionService')->getDistributionSummary($limit);
+
+        return Http::jsonSuccess([
+            'status' => 'success',
+            'summary' => $summary,
+        ]);
+    }
+
+    public function distributionHistory($generatedContentId)
+    {
+        $history = service('marketingDistributionService')->getContentDestinationHistory((int) $generatedContentId);
+
+        return Http::jsonSuccess([
+            'status' => 'success',
+            'generated_content_id' => (int) $generatedContentId,
+            'history' => $history,
+        ]);
+    }
+
+    public function retryDistributionTargets($generatedContentId = null)
+    {
+        $limit = max(1, (int) ($this->request->getPost('limit') ?? $this->request->getGet('limit') ?? 25));
+        $contentId = $generatedContentId !== null ? (int) $generatedContentId : null;
+
+        $result = service('marketingDistributionService')->retryFailedTargets($contentId, $limit);
+
+        return Http::jsonSuccess([
+            'status' => 'success',
+            'result' => $result,
+        ]);
+    }
+
 }
 ?>
