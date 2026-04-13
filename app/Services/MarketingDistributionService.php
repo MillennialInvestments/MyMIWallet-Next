@@ -125,6 +125,141 @@ class MarketingDistributionService
         return ['count' => count($results), 'items' => $results];
     }
 
+    /** @return array<string,mixed> */
+    public function getDistributionSummary(int $limit = 100): array
+    {
+        $db = Database::connect();
+
+        $recentTargets = $this->targetModel
+            ->orderBy('id', 'DESC')
+            ->limit(max(1, $limit))
+            ->findAll();
+
+        return [
+            'totals' => $this->getChannelStatusTotals(),
+            'failed_retryable' => $this->getFailedRetryableSummary(),
+            'recent_targets' => $recentTargets,
+            'sql_assertions' => $this->getSqlAssertions(),
+            'generated_backlog' => [
+                'pending_review' => $db->table('bf_marketing_generated_content')
+                    ->groupStart()
+                        ->whereIn('approval_status', ['pending_review', 'pending', ''])
+                        ->orWhere('approval_status IS NULL', null, false)
+                    ->groupEnd()
+                    ->countAllResults(),
+                'approved_not_distributed' => $db->table('bf_marketing_generated_content')
+                    ->whereIn('approval_status', ['approved', 'auto_approved'])
+                    ->groupStart()
+                        ->whereIn('distribution_status', ['pending', 'scheduled', 'partial_failed', ''])
+                        ->orWhere('distribution_status IS NULL', null, false)
+                    ->groupEnd()
+                    ->countAllResults(),
+            ],
+        ];
+    }
+
+    /** @return array<int,array<string,mixed>> */
+    public function getContentDestinationHistory(int $generatedContentId): array
+    {
+        return $this->targetModel
+            ->where('generated_content_id', $generatedContentId)
+            ->orderBy('id', 'ASC')
+            ->findAll();
+    }
+
+    /** @return array<string,mixed> */
+    public function getFailedRetryableSummary(): array
+    {
+        $rows = $this->targetModel
+            ->whereIn('status', ['failed', 'retrying'])
+            ->findAll();
+
+        $maxRetries = max(0, (int) $this->distributionConfig->maxRetries);
+        $retryable = array_filter($rows, static fn(array $row): bool => (int) ($row['retry_count'] ?? 0) < $maxRetries);
+
+        return [
+            'max_retries' => $maxRetries,
+            'failed_or_retrying' => count($rows),
+            'retryable' => count($retryable),
+            'by_destination' => $this->buildCountByDestination($rows),
+        ];
+    }
+
+    /** @return array<string,array<string,int>> */
+    public function getChannelStatusTotals(): array
+    {
+        $rows = $this->targetModel->select('destination, status, COUNT(*) AS total')
+            ->groupBy('destination, status')
+            ->findAll();
+
+        $totals = [];
+        foreach ($rows as $row) {
+            $destination = (string) ($row['destination'] ?? 'unknown');
+            $status = (string) ($row['status'] ?? 'unknown');
+            $totals[$destination] ??= [];
+            $totals[$destination][$status] = (int) ($row['total'] ?? 0);
+        }
+
+        return $totals;
+    }
+
+    /** @return array<string,mixed> */
+    public function getSqlAssertions(): array
+    {
+        $db = Database::connect();
+        $assertions = [
+            'duplicate_story_hash_groups' => 0,
+            'pending_review_backlog' => 0,
+            'approved_never_distributed' => 0,
+            'failed_target_accumulation' => 0,
+            'duplicate_distribution_targets' => 0,
+        ];
+
+        if ($db->tableExists('bf_marketing_scraper') && $db->fieldExists('story_hash', 'bf_marketing_scraper')) {
+            $assertions['duplicate_story_hash_groups'] = (int) $db->query(
+                "SELECT COUNT(*) AS total FROM (
+                    SELECT story_hash FROM bf_marketing_scraper
+                    WHERE story_hash IS NOT NULL AND story_hash <> ''
+                    GROUP BY story_hash HAVING COUNT(*) > 1
+                ) duplicate_hashes"
+            )->getRow('total');
+        }
+
+        if ($db->tableExists('bf_marketing_generated_content')) {
+            $assertions['pending_review_backlog'] = $db->table('bf_marketing_generated_content')
+                ->groupStart()
+                    ->whereIn('approval_status', ['pending_review', 'pending', ''])
+                    ->orWhere('approval_status IS NULL', null, false)
+                ->groupEnd()
+                ->countAllResults();
+
+            $assertions['approved_never_distributed'] = $db->table('bf_marketing_generated_content')
+                ->whereIn('approval_status', ['approved', 'auto_approved'])
+                ->groupStart()
+                    ->whereIn('distribution_status', ['pending', 'scheduled', 'partial_failed', ''])
+                    ->orWhere('distribution_status IS NULL', null, false)
+                ->groupEnd()
+                ->countAllResults();
+        }
+
+        if ($db->tableExists('bf_marketing_distribution_targets')) {
+            $assertions['failed_target_accumulation'] = $db->table('bf_marketing_distribution_targets')
+                ->whereIn('status', ['failed', 'retrying'])
+                ->countAllResults();
+
+            $assertions['duplicate_distribution_targets'] = (int) $db->query(
+                "SELECT COUNT(*) AS total FROM (
+                    SELECT generated_content_id, channel, destination
+                    FROM bf_marketing_distribution_targets
+                    GROUP BY generated_content_id, channel, destination
+                    HAVING COUNT(*) > 1
+                ) duplicate_targets"
+            )->getRow('total');
+        }
+
+        return $assertions;
+    }
+
     private function ensureTargetsForRecord(array $record, array $destinations = []): array
     {
         $generatedContentId = (int) ($record['id'] ?? 0);
@@ -147,6 +282,15 @@ class MarketingDistributionService
                 ->first();
 
             if ($existingRow) {
+                if (in_array((string) ($existingRow['status'] ?? ''), ['failed', 'retrying'], true)) {
+                    $this->targetModel->update((int) $existingRow['id'], [
+                        'payload_json' => json_encode($this->buildPayload($record, $destination)),
+                        'status' => 'pending',
+                        'error_message' => null,
+                        'failed_at' => null,
+                        'modified_on' => date('Y-m-d H:i:s'),
+                    ]);
+                }
                 $existing++;
                 continue;
             }
@@ -189,6 +333,10 @@ class MarketingDistributionService
         ]);
 
         try {
+            if ($this->shouldInjectFailureForDestination($destination)) {
+                throw new \RuntimeException('Failure injection enabled for destination: ' . $destination);
+            }
+
             $result = match ($destination) {
                 'blog' => $this->handleBlogDestination($target, $payload),
                 'in_app' => $this->handleInAppDestination($target, $payload),
@@ -226,9 +374,6 @@ class MarketingDistributionService
 
         if ($result['status'] === 'failed') {
             $update['failed_at'] = date('Y-m-d H:i:s');
-            if ($nextRetry < $this->distributionConfig->maxRetries) {
-                $update['status'] = 'retrying';
-            }
         }
 
         $this->targetModel->update($targetId, $update);
@@ -437,5 +582,24 @@ class MarketingDistributionService
             ->getRowArray();
 
         return is_array($record) ? $record : null;
+    }
+
+    private function shouldInjectFailureForDestination(string $destination): bool
+    {
+        $inject = array_map('strtolower', $this->distributionConfig->failureInjectionDestinations);
+
+        return in_array(strtolower($destination), $inject, true);
+    }
+
+    /** @param list<array<string,mixed>> $rows */
+    private function buildCountByDestination(array $rows): array
+    {
+        $result = [];
+        foreach ($rows as $row) {
+            $destination = (string) ($row['destination'] ?? 'unknown');
+            $result[$destination] = (int) (($result[$destination] ?? 0) + 1);
+        }
+
+        return $result;
     }
 }

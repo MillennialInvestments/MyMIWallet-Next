@@ -68,6 +68,8 @@ class MarketingDistribution extends BaseConfig
 
     public int $maxRetries = 3;
     public bool $autoCreateTargetsOnApprove = true;
+    /** @var list<string> */
+    public array $failureInjectionDestinations = [];
 
     public function __construct()
     {
@@ -112,5 +114,13 @@ class MarketingDistribution extends BaseConfig
 
         $this->maxRetries = max(0, (int) env('MARKETING_DISTRIBUTION_MAX_RETRIES', $this->maxRetries));
         $this->autoCreateTargetsOnApprove = (bool) env('MARKETING_DISTRIBUTION_AUTO_CREATE_TARGETS_ON_APPROVE', $this->autoCreateTargetsOnApprove);
+
+        $failureInjection = trim((string) env('MARKETING_DISTRIBUTION_FAILURE_INJECTION_DESTINATIONS', ''));
+        if ($failureInjection !== '') {
+            $this->failureInjectionDestinations = array_values(array_unique(array_filter(array_map(
+                static fn(string $value): string => strtolower(trim($value)),
+                explode(',', $failureInjection)
+            ))));
+        }
     }
 }
