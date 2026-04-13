@@ -141,6 +141,40 @@ class StubMyMIDiscord extends MyMIDiscord
     }
 }
 
+class SendRoutingMyMIDiscord extends MyMIDiscord
+{
+    public array $calls = [];
+
+    public function __construct(FakeDiscordModel $model, DiscordConfig $cfg)
+    {
+        $this->model = $model;
+        $this->cfg   = $cfg;
+        $this->tz    = new \DateTimeZone($cfg->timezone ?? 'UTC');
+    }
+
+    protected function postJSONWithResult(string $url, array $body): array
+    {
+        $this->calls[] = ['method' => 'webhook', 'url' => $url, 'body' => $body];
+        return [
+            'success' => true,
+            'external_message_id' => 'w-1',
+            'response_json' => ['id' => 'w-1'],
+            'error_message' => null,
+        ];
+    }
+
+    protected function postBotMessageWithResult(string $channelId, array $body): array
+    {
+        $this->calls[] = ['method' => 'bot', 'channel_id' => $channelId, 'body' => $body];
+        return [
+            'success' => true,
+            'external_message_id' => 'b-1',
+            'response_json' => ['id' => 'b-1'],
+            'error_message' => null,
+        ];
+    }
+}
+
 class MyMIDiscordTest extends CIUnitTestCase
 {
     public function testRenderTemplateReplacesVariablesAndEmbeds()
@@ -219,5 +253,73 @@ class MyMIDiscordTest extends CIUnitTestCase
         $this->assertSame(1, $stats['sent']);
         $this->assertCount(1, $discord->sentPayloads);
         $this->assertSame('alerts.free', $discord->sentPayloads[0]['channel']['channel_key']);
+    }
+
+    public function testForcedChannelIdIgnoresDefaultWebhookAndUsesBotApiFallback(): void
+    {
+        $model = new FakeDiscordModel();
+        $model->channels['announcements'] = [
+            'channel_key' => 'announcements',
+            'webhook_url' => '',
+            'channel_id' => '',
+        ];
+
+        $cfg = new DiscordConfig();
+        $cfg->defaultWebhook = 'https://discord.test/default';
+        $cfg->botToken = 'token';
+        $discord = new SendRoutingMyMIDiscord($model, $cfg);
+
+        $result = $discord->sendToChannel('announcements', ['content' => 'Activation test'], '999999');
+
+        $this->assertTrue($result['success']);
+        $this->assertSame('bot_api', $result['transport']);
+        $this->assertCount(1, $discord->calls);
+        $this->assertSame('bot', $discord->calls[0]['method']);
+        $this->assertSame('999999', $discord->calls[0]['channel_id']);
+    }
+
+    public function testForcedChannelIdUsesChannelSpecificWebhookBeforeBotApi(): void
+    {
+        $model = new FakeDiscordModel();
+        $model->channels['announcements'] = [
+            'channel_key' => 'announcements',
+            'webhook_url' => 'https://discord.test/channel',
+            'channel_id' => '',
+        ];
+
+        $cfg = new DiscordConfig();
+        $cfg->defaultWebhook = 'https://discord.test/default';
+        $cfg->botToken = 'token';
+        $discord = new SendRoutingMyMIDiscord($model, $cfg);
+
+        $result = $discord->sendToChannel('announcements', ['content' => 'Activation test'], '999999');
+
+        $this->assertTrue($result['success']);
+        $this->assertSame('channel_webhook', $result['transport']);
+        $this->assertCount(1, $discord->calls);
+        $this->assertSame('webhook', $discord->calls[0]['method']);
+        $this->assertStringContainsString('/channel', $discord->calls[0]['url']);
+    }
+
+    public function testForcedChannelIdFailsClearlyWhenNoChannelWebhookOrBotApi(): void
+    {
+        $model = new FakeDiscordModel();
+        $model->channels['announcements'] = [
+            'channel_key' => 'announcements',
+            'webhook_url' => '',
+            'channel_id' => '',
+        ];
+
+        $cfg = new DiscordConfig();
+        $cfg->defaultWebhook = 'https://discord.test/default';
+        $cfg->botToken = '';
+        $discord = new SendRoutingMyMIDiscord($model, $cfg);
+
+        $result = $discord->sendToChannel('announcements', ['content' => 'Activation test'], '999999');
+
+        $this->assertFalse($result['success']);
+        $this->assertSame('failed', $result['transport']);
+        $this->assertStringContainsString('Forced channel send unavailable', (string) $result['error_message']);
+        $this->assertCount(0, $discord->calls);
     }
 }

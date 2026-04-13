@@ -81,13 +81,16 @@ class MyMIDiscord
      */
     public function sendToChannel(string $channelKey, array $payload, ?string $forcedChannelId = null): array
     {
-        $payload['content'] = $this->sanitize((string) ($payload['content'] ?? ''));
+        $allowMassMentions = (bool) ($payload['allow_mass_mentions'] ?? false);
+        unset($payload['allow_mass_mentions']);
+        $payload['content'] = $this->sanitize((string) ($payload['content'] ?? ''), $allowMassMentions);
         if ($payload['content'] === '') {
             return [
                 'success' => false,
                 'external_message_id' => null,
                 'response_json' => null,
                 'error_message' => 'Empty content after sanitize/policy filters.',
+                'transport' => 'failed',
             ];
         }
 
@@ -97,28 +100,62 @@ class MyMIDiscord
                 'external_message_id' => null,
                 'response_json' => ['dry_run' => true, 'channel_key' => $channelKey, 'payload' => $payload],
                 'error_message' => null,
+                'transport' => 'failed',
             ];
         }
 
         $channel = $this->model->getChannel($channelKey) ?: ['channel_key' => $channelKey];
-        $webhook = $this->resolveChannelWebhook($channel);
+        $channelWebhook = $this->resolveChannelWebhook($channel, false);
+        $explicitWebhook = trim((string) ($payload['webhook_url'] ?? ''));
+        unset($payload['webhook_url']);
 
-        if ($webhook !== '') {
-            $url = strpos($webhook, 'wait=true') === false ? $webhook . (str_contains($webhook, '?') ? '&' : '?') . 'wait=true' : $webhook;
-            return $this->postJSONWithResult($url, $payload);
+        if ($forcedChannelId !== null && $forcedChannelId !== '') {
+            if ($channelWebhook !== '') {
+                $url = strpos($channelWebhook, 'wait=true') === false ? $channelWebhook . (str_contains($channelWebhook, '?') ? '&' : '?') . 'wait=true' : $channelWebhook;
+                return $this->withTransport($this->postJSONWithResult($url, $payload), 'channel_webhook');
+            }
+
+            if (!empty($this->cfg->botToken)) {
+                return $this->withTransport($this->postBotMessageWithResult($forcedChannelId, $payload), 'bot_api');
+            }
+
+            return [
+                'success' => false,
+                'external_message_id' => null,
+                'response_json' => null,
+                'error_message' => 'Forced channel send unavailable: no channel webhook and bot API is not configured.',
+                'transport' => 'failed',
+            ];
         }
 
-        $channelId = $forcedChannelId ?: ($channel['channel_id'] ?? '') ?: $this->resolveChannelId($channel);
+        if ($explicitWebhook !== '') {
+            $url = strpos($explicitWebhook, 'wait=true') === false ? $explicitWebhook . (str_contains($explicitWebhook, '?') ? '&' : '?') . 'wait=true' : $explicitWebhook;
+            return $this->withTransport($this->postJSONWithResult($url, $payload), 'channel_webhook');
+        }
+
+        if ($channelWebhook !== '') {
+            $url = strpos($channelWebhook, 'wait=true') === false ? $channelWebhook . (str_contains($channelWebhook, '?') ? '&' : '?') . 'wait=true' : $channelWebhook;
+            return $this->withTransport($this->postJSONWithResult($url, $payload), 'channel_webhook');
+        }
+
+        $defaultWebhook = $this->cfg->defaultWebhook ?: (string) env('DISCORD_DEFAULT_WEBHOOK') ?: '';
+        if ($defaultWebhook !== '') {
+            $url = strpos($defaultWebhook, 'wait=true') === false ? $defaultWebhook . (str_contains($defaultWebhook, '?') ? '&' : '?') . 'wait=true' : $defaultWebhook;
+            return $this->withTransport($this->postJSONWithResult($url, $payload), 'default_webhook');
+        }
+
+        $channelId = ($channel['channel_id'] ?? '') ?: $this->resolveChannelId($channel);
         if ($channelId === '' || empty($this->cfg->botToken)) {
             return [
                 'success' => false,
                 'external_message_id' => null,
                 'response_json' => null,
                 'error_message' => 'No webhook or bot channel configured for channel key: ' . $channelKey,
+                'transport' => 'failed',
             ];
         }
 
-        return $this->postBotMessageWithResult((string) $channelId, $payload);
+        return $this->withTransport($this->postBotMessageWithResult((string) $channelId, $payload), 'bot_api');
     }
 
     /**
@@ -224,10 +261,12 @@ class MyMIDiscord
         return trim($text);
     }
 
-    protected function sanitize(string $s): string
+    protected function sanitize(string $s, bool $allowMassMentions = false): string
     {
         // prevent @everyone etc. and excess whitespace
-        $s = str_replace(['@everyone','@here'], ['everyone','here'], $s);
+        if (!$allowMassMentions) {
+            $s = str_replace(['@everyone','@here'], ['everyone','here'], $s);
+        }
         $s = preg_replace('/\s{3,}/', '  ', $s);
 
         try {
@@ -624,7 +663,7 @@ class MyMIDiscord
         }
     }
 
-    protected function resolveChannelWebhook(array $chan): string
+    protected function resolveChannelWebhook(array $chan, bool $includeDefaultWebhook = true): string
     {
         $key = $chan['channel_key'] ?? '';
         if (!empty($chan['webhook_url'])) {
@@ -635,7 +674,19 @@ class MyMIDiscord
             return $this->cfg->channelWebhooks[$key];
         }
 
-        return $this->cfg->defaultWebhook ?: (string) env('DISCORD_DEFAULT_WEBHOOK') ?: '';
+        if ($includeDefaultWebhook) {
+            return $this->cfg->defaultWebhook ?: (string) env('DISCORD_DEFAULT_WEBHOOK') ?: '';
+        }
+
+        return '';
+    }
+
+    /** @param array{success:bool,external_message_id:?string,response_json:array<string,mixed>|null,error_message:?string} $result */
+    protected function withTransport(array $result, string $transport): array
+    {
+        $result['transport'] = $result['success'] ? $transport : 'failed';
+
+        return $result;
     }
 
     protected function resolveChannelId(array $chan): string

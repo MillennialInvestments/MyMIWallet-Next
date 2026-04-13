@@ -142,8 +142,29 @@ final class MarketingDiscordDistributionTest extends CIUnitTestCase
         $result = $this->service->sendActivationAnnouncement(true);
 
         $this->assertTrue($result['result']['success']);
+        $this->assertStringStartsWith("@everyone\n\n", (string) $this->discord->lastPayload['content']);
         $this->assertSame(['everyone'], $this->discord->lastPayload['allowed_mentions']['parse']);
         $this->assertStringContainsString('#community-news', $this->discord->lastPayload['content']);
+    }
+
+    public function testActivationAnnouncementWithoutEveryoneDoesNotMentionEveryone(): void
+    {
+        $result = $this->service->sendActivationAnnouncement(false);
+
+        $this->assertTrue($result['result']['success']);
+        $this->assertStringNotContainsString('@everyone', (string) $this->discord->lastPayload['content']);
+        $this->assertSame([], $this->discord->lastPayload['allowed_mentions']['parse']);
+    }
+
+    public function testNormalCategoryMessagesNeverIncludeEveryoneByDefault(): void
+    {
+        $id = $this->seedApprovedContent('community_news', []);
+        $record = Database::connect()->table('bf_marketing_generated_content')->where('id', $id)->get()->getRowArray();
+        $record['summary'] = 'Routine stream post for @everyone';
+
+        $this->service->distributeGeneratedContent($record ?: []);
+
+        $this->assertStringNotContainsString('@everyone', (string) $this->discord->lastPayload['content']);
     }
 
     private function seedApprovedContent(string $primaryCategory, array $secondaryTags): int
