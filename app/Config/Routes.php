@@ -732,6 +732,9 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->post('broadcast',       'DiscordAPIController::broadcast');
         $routes->post('interactions',    'DiscordAPIController::handleInteraction');
         $routes->post('messageHook',     'DiscordAPIController::messageHook');
+        $routes->get('lookup/ticker',    'DiscordAPIController::tickerLookup');
+        $routes->get('lookup/crypto',    'DiscordAPIController::cryptoLookup');
+        $routes->get('lookup/quote',     'DiscordAPIController::quoteLookup');
         $routes->post('webhook',         'DiscordAPIController::webhookProxy');
         $routes->post('createLinkToken', 'DiscordAPIController::createLinkToken');
         $routes->get('process-queue',    'DiscordAPIController::processQueue');

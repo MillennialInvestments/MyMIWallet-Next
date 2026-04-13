@@ -71,6 +71,11 @@ class Discord extends BaseConfig
         'ops'              => '',
         'support'          => '',
         'staging'          => '',
+        'customer_support' => '',
+        'ticker_lookup'    => '',
+        'aiops_chat'       => '',
+        'ollama_chat'      => '',
+        'admin_spark'      => '',
     ];
 
     /**
@@ -93,6 +98,11 @@ class Discord extends BaseConfig
         'ops'              => '',
         'support'          => '',
         'staging'          => '',
+        'customer_support' => '',
+        'ticker_lookup'    => '',
+        'aiops_chat'       => '',
+        'ollama_chat'      => '',
+        'admin_spark'      => '',
     ];
 
     /**
@@ -192,6 +202,11 @@ class Discord extends BaseConfig
         $this->channelWebhooks['ops']              = (string) env('DISCORD_OPS_WEBHOOK', $this->channelWebhooks['ops']);
         $this->channelWebhooks['support']          = (string) env('DISCORD_SUPPORT_WEBHOOK', $this->channelWebhooks['support']);
         $this->channelWebhooks['staging']          = (string) env('DISCORD_STAGING_WEBHOOK', $this->channelWebhooks['staging']);
+        $this->channelWebhooks['customer_support'] = (string) env('DISCORD_CUSTOMER_SUPPORT_WEBHOOK', $this->channelWebhooks['customer_support']);
+        $this->channelWebhooks['ticker_lookup']    = (string) env('DISCORD_TICKER_LOOKUP_WEBHOOK', $this->channelWebhooks['ticker_lookup']);
+        $this->channelWebhooks['aiops_chat']       = (string) env('DISCORD_AIOPS_CHAT_WEBHOOK', $this->channelWebhooks['aiops_chat']);
+        $this->channelWebhooks['ollama_chat']      = (string) env('DISCORD_OLLAMA_CHAT_WEBHOOK', $this->channelWebhooks['ollama_chat']);
+        $this->channelWebhooks['admin_spark']      = (string) env('DISCORD_ADMIN_SPARK_WEBHOOK', $this->channelWebhooks['admin_spark']);
 
         /**
          * Channel IDs used for Bot API fallback (optional).
@@ -213,6 +228,11 @@ class Discord extends BaseConfig
         $this->channelIds['ops']              = (string) env('DISCORD_OPS_CHANNEL_ID', $this->channelIds['ops']);
         $this->channelIds['support']          = (string) env('DISCORD_SUPPORT_CHANNEL_ID', $this->channelIds['support']);
         $this->channelIds['staging']          = (string) env('DISCORD_STAGING_CHANNEL_ID', $this->channelIds['staging']);
+        $this->channelIds['customer_support'] = (string) env('DISCORD_CUSTOMER_SUPPORT_CHANNEL_ID', $this->channelIds['customer_support']);
+        $this->channelIds['ticker_lookup']    = (string) env('DISCORD_TICKER_LOOKUP_CHANNEL_ID', $this->channelIds['ticker_lookup']);
+        $this->channelIds['aiops_chat']       = (string) env('DISCORD_AIOPS_CHAT_CHANNEL_ID', $this->channelIds['aiops_chat']);
+        $this->channelIds['ollama_chat']      = (string) env('DISCORD_OLLAMA_CHAT_CHANNEL_ID', $this->channelIds['ollama_chat']);
+        $this->channelIds['admin_spark']      = (string) env('DISCORD_ADMIN_SPARK_CHANNEL_ID', $this->channelIds['admin_spark']);
 
     }
 }

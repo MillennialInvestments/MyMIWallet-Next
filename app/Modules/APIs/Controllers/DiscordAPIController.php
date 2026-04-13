@@ -6,6 +6,8 @@ use App\Libraries\MyMIDiscord;
 use App\Libraries\MyMIAssistant;
 use App\Models\AlertsModel;
 use App\Models\DiscordLinkModel;
+use App\Models\DiscordRelayAuditModel;
+use App\Services\Discord\DiscordOpsRelayService;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Discord as DiscordConfig;
@@ -18,6 +20,8 @@ class DiscordAPIController extends BaseAPIController
     protected DiscordConfig $cfg;
     protected DiscordLinkModel $linkModel;
     protected MyMIAssistant $assistant;
+    protected DiscordRelayAuditModel $relayAudit;
+    protected DiscordOpsRelayService $relayService;
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
@@ -26,6 +30,8 @@ class DiscordAPIController extends BaseAPIController
         $this->cfg     = config('Discord');
         $this->linkModel = new DiscordLinkModel();
         $this->assistant = new MyMIAssistant();
+        $this->relayAudit = new DiscordRelayAuditModel();
+        $this->relayService = new DiscordOpsRelayService();
     }
 
     public function enqueue()
@@ -179,6 +185,16 @@ class DiscordAPIController extends BaseAPIController
                 return $this->handleMymiCommand($sub, $options['options'] ?? [], $payload);
             case 'ticker':
                 return $this->respond($this->formatTickerResponse($payload));
+            case 'quote':
+                return $this->respond($this->formatQuoteResponse($payload));
+            case 'crypto':
+                return $this->respond($this->formatCryptoResponse($payload));
+            case 'aiops':
+                return $this->respond($this->handleAiopsRelayCommand($payload));
+            case 'ollama':
+                return $this->respond($this->handleOllamaRelayCommand($payload));
+            case 'spark':
+                return $this->respond($this->handleSparkCommand($payload));
             default:
                 return $this->respond($this->interactionMessage('Unknown command. Please run /mymi help for options.'));
         }
@@ -550,6 +566,153 @@ class DiscordAPIController extends BaseAPIController
                 'content' => 'Latest alert for '.$symbol,
                 'embeds'  => [$this->alertEmbed($alert)],
             ],
+        ];
+    }
+
+    public function tickerLookup(): ResponseInterface
+    {
+        $symbol = strtoupper((string) $this->request->getGet('symbol'));
+        return $this->response->setJSON($this->buildQuotePayload($symbol, 'ticker'));
+    }
+
+    public function cryptoLookup(): ResponseInterface
+    {
+        $symbol = strtoupper((string) $this->request->getGet('symbol'));
+        return $this->response->setJSON($this->buildQuotePayload($symbol, 'crypto'));
+    }
+
+    public function quoteLookup(): ResponseInterface
+    {
+        $symbol = strtoupper((string) $this->request->getGet('symbol'));
+        return $this->response->setJSON($this->buildQuotePayload($symbol, 'quote'));
+    }
+
+    protected function formatQuoteResponse(array $payload): array
+    {
+        $symbol = strtoupper((string) (($payload['data']['options'][0]['value'] ?? '')));
+        $data = $this->buildQuotePayload($symbol, 'quote');
+        return $this->interactionMessage($data['message'] ?? 'No data found.');
+    }
+
+    protected function formatCryptoResponse(array $payload): array
+    {
+        $symbol = strtoupper((string) (($payload['data']['options'][0]['value'] ?? '')));
+        $data = $this->buildQuotePayload($symbol, 'crypto');
+        return $this->interactionMessage($data['message'] ?? 'No data found.');
+    }
+
+    protected function handleAiopsRelayCommand(array $payload): array
+    {
+        $prompt = trim((string) ($payload['data']['options'][0]['value'] ?? ''));
+        if ($prompt === '') {
+            return $this->interactionMessage('Usage: /aiops <prompt>');
+        }
+
+        $result = $this->relayService->relayAiopsPrompt($prompt, ['discord_payload' => $payload]);
+        $this->auditRelay('aiops', 'aiops', $payload, $result);
+        return $this->interactionMessage($result['content'], true);
+    }
+
+    protected function handleOllamaRelayCommand(array $payload): array
+    {
+        $prompt = trim((string) ($payload['data']['options'][0]['value'] ?? ''));
+        if ($prompt === '') {
+            return $this->interactionMessage('Usage: /ollama <prompt>');
+        }
+
+        $result = $this->relayService->relayOllamaPrompt($prompt, ['discord_payload' => $payload]);
+        $this->auditRelay('ollama', 'ollama', $payload, $result);
+        return $this->interactionMessage($result['content'], true);
+    }
+
+    protected function handleSparkCommand(array $payload): array
+    {
+        $options = $payload['data']['options'] ?? [];
+        $command = trim((string) ($options[0]['value'] ?? ''));
+        $discordOps = config('DiscordOps');
+        $allowed = array_values(array_map('trim', (array) $discordOps->sparkAllowlist));
+
+        if (! in_array($command, $allowed, true)) {
+            $this->auditRelay('spark', 'spark', $payload, ['success' => false, 'content' => 'Denied command']);
+            return $this->interactionMessage('Denied. Command is not allowlisted.');
+        }
+
+        if (! $this->isDiscordAdminAuthorized($payload)) {
+            $this->auditRelay('spark', 'spark', $payload, ['success' => false, 'content' => 'Unauthorized']);
+            return $this->interactionMessage('Unauthorized for /spark command.');
+        }
+
+        $output = shell_exec('php ' . escapeshellarg(ROOTPATH . 'spark') . ' ' . escapeshellcmd($command) . ' 2>&1');
+        $content = "```
+" . $this->relayService->truncateReply((string) $output) . "
+```";
+        $this->auditRelay('spark', $command, $payload, ['success' => true, 'content' => $content]);
+        return $this->interactionMessage($content, true);
+    }
+
+    protected function isDiscordAdminAuthorized(array $payload): bool
+    {
+        $cfg = config('DiscordOps');
+        $user = $payload['member']['user'] ?? $payload['user'] ?? [];
+        $userId = (string) ($user['id'] ?? '');
+        if ($userId !== '' && in_array($userId, (array) $cfg->adminUserIds, true)) {
+            return true;
+        }
+
+        $roles = array_map('strval', (array) ($payload['member']['roles'] ?? []));
+        foreach ((array) $cfg->adminRoleIds as $roleId) {
+            if (in_array((string) $roleId, $roles, true)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected function auditRelay(string $type, string $commandName, array $payload, array $result): void
+    {
+        try {
+            $user = $payload['member']['user'] ?? $payload['user'] ?? [];
+            $this->relayAudit->insert([
+                'relay_type' => $type,
+                'discord_user_id' => (string) ($user['id'] ?? ''),
+                'discord_channel_id' => (string) ($payload['channel_id'] ?? ''),
+                'command_name' => $commandName,
+                'request_payload' => json_encode($payload, JSON_UNESCAPED_SLASHES),
+                'response_payload' => json_encode($result, JSON_UNESCAPED_SLASHES),
+                'status' => ($result['success'] ?? false) ? 'ok' : 'failed',
+                'created_on' => date('Y-m-d H:i:s'),
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'Discord relay audit failed: {msg}', ['msg' => $e->getMessage()]);
+        }
+    }
+
+    protected function buildQuotePayload(string $symbol, string $type): array
+    {
+        if ($symbol === '') {
+            return ['status' => 'error', 'message' => 'Missing symbol'];
+        }
+
+        $alert = $this->latestAlertForSymbol($symbol);
+        if (! $alert) {
+            return ['status' => 'error', 'message' => "No recent market data found for {$symbol}."];
+        }
+
+        $price = (float) ($alert['price'] ?? 0);
+        $target = (float) ($alert['target_price'] ?? 0);
+        $change = $target > 0 && $price > 0 ? (($target - $price) / $price) * 100 : 0.0;
+
+        $emoji = $change >= 0 ? '📈' : '📉';
+        $message = sprintf('%s **%s** %s: $%0.2f | Δ %0.2f%% | status: %s', $emoji, $symbol, strtoupper($type), $price, $change, (string) ($alert['status'] ?? 'n/a'));
+
+        return [
+            'status' => 'success',
+            'symbol' => $symbol,
+            'price' => $price,
+            'change_percent' => round($change, 2),
+            'message' => $message,
+            'context' => ['created_on' => $alert['created_on'] ?? null],
         ];
     }
 

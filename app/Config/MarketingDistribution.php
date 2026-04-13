@@ -86,6 +86,11 @@ class MarketingDistribution extends BaseConfig
             'crypto_news' => '',
             'financial_news' => '',
             'stock_news' => '',
+            'customer_support' => '',
+            'ticker_lookup' => '',
+            'aiops_chat' => '',
+            'ollama_chat' => '',
+            'admin_spark' => '',
         ],
         'category_channel_map' => [
             'community_news' => ['community_news'],
@@ -94,6 +99,11 @@ class MarketingDistribution extends BaseConfig
             'crypto_news' => ['crypto_news'],
             'financial_news' => ['financial_news'],
             'stock_news' => ['stock_news'],
+            'customer_support' => ['customer_support'],
+            'ticker_lookup' => ['ticker_lookup'],
+            'aiops_chat' => ['aiops_chat'],
+            'ollama_chat' => ['ollama_chat'],
+            'admin_spark' => ['admin_spark'],
         ],
     ];
 
