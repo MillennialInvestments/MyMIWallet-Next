@@ -721,6 +721,10 @@ class MarketingDistributionService
         ];
 
         $payload = $this->discordMessageBuilder->build($record, 'announcements');
+        if ($withEveryone) {
+            $payload['content'] = "@everyone\n\n" . ltrim((string) ($payload['content'] ?? ''));
+            $payload['allow_mass_mentions'] = true;
+        }
         $payload['allowed_mentions'] = $this->discordMessageBuilder->buildAllowedMentions($record);
 
         $channelKey = 'announcements';

@@ -46,6 +46,11 @@ class DiscordMessageBuilder
         }
 
         $content = $this->truncate(implode("\n", $sections));
+        $allowEveryone = (bool) ($record['allow_everyone'] ?? false);
+        $isAnnouncement = $primaryCategory === 'announcements';
+        if (!($isAnnouncement && $allowEveryone)) {
+            $content = str_replace(['@everyone', '@here'], ['everyone', 'here'], $content);
+        }
 
         return [
             'content' => $content,
