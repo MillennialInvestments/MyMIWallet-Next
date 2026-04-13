@@ -70,6 +70,14 @@ class ApproveGeneratedContent extends SafeBaseCommand
                 'ids' => $ids,
             ], JSON_PRETTY_PRINT), 'green');
 
+            $distributionConfig = config('MarketingDistribution');
+            if ($distributionConfig->autoCreateTargetsOnApprove) {
+                $distributionService = service('marketingDistributionService');
+                foreach ($ids as $id) {
+                    $distributionService->ensureTargetsForContentId((int) $id);
+                }
+            }
+
             return EXIT_SUCCESS;
         } catch (Throwable $e) {
             CLI::error('marketing:approve-generated failed: ' . $e->getMessage());

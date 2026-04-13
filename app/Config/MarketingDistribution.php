@@ -66,6 +66,37 @@ class MarketingDistribution extends BaseConfig
         'headers' => [],
     ];
 
+    /** @var array<string,mixed> */
+    public array $discord = [
+        'enabled' => true,
+        'stream_enabled' => true,
+        'fallback_channel' => 'community_news',
+        'allow_everyone_for_announcement_only' => true,
+        'default_mentions_disabled' => true,
+        'max_length' => 1800,
+        'truncate_suffix' => '…',
+        'mention_policy' => [
+            'routine_parse' => [],
+            'announcement_parse' => ['everyone'],
+        ],
+        'channels' => [
+            'community_news' => '',
+            'announcements' => '',
+            'mymi_news' => '',
+            'crypto_news' => '',
+            'financial_news' => '',
+            'stock_news' => '',
+        ],
+        'category_channel_map' => [
+            'community_news' => ['community_news'],
+            'announcements' => ['announcements'],
+            'mymi_news' => ['mymi_news'],
+            'crypto_news' => ['crypto_news'],
+            'financial_news' => ['financial_news'],
+            'stock_news' => ['stock_news'],
+        ],
+    ];
+
     public int $maxRetries = 3;
     public bool $autoCreateTargetsOnApprove = true;
     /** @var list<string> */
@@ -98,6 +129,25 @@ class MarketingDistribution extends BaseConfig
         $this->webhook['endpoint_url'] = (string) env('MARKETING_WEBHOOK_ENDPOINT_URL', $this->webhook['endpoint_url']);
         $this->webhook['timeout_seconds'] = max(1, (int) env('MARKETING_WEBHOOK_TIMEOUT_SECONDS', (int) $this->webhook['timeout_seconds']));
         $this->webhook['retry_limit'] = max(0, (int) env('MARKETING_WEBHOOK_RETRY_LIMIT', (int) $this->webhook['retry_limit']));
+
+        $this->discord['enabled'] = (bool) env('MARKETING_DISCORD_ENABLED', $this->discord['enabled']);
+        $this->discord['stream_enabled'] = (bool) env('MARKETING_DISCORD_STREAM_ENABLED', $this->discord['stream_enabled']);
+        $this->discord['fallback_channel'] = (string) env('MARKETING_DISCORD_FALLBACK_CHANNEL', $this->discord['fallback_channel']);
+        $this->discord['allow_everyone_for_announcement_only'] = (bool) env(
+            'MARKETING_DISCORD_ALLOW_EVERYONE_FOR_ANNOUNCEMENT_ONLY',
+            $this->discord['allow_everyone_for_announcement_only']
+        );
+        $this->discord['default_mentions_disabled'] = (bool) env(
+            'MARKETING_DISCORD_DEFAULT_MENTIONS_DISABLED',
+            $this->discord['default_mentions_disabled']
+        );
+        $this->discord['max_length'] = max(280, (int) env('MARKETING_DISCORD_MAX_LENGTH', (int) $this->discord['max_length']));
+        $this->discord['truncate_suffix'] = (string) env('MARKETING_DISCORD_TRUNCATE_SUFFIX', $this->discord['truncate_suffix']);
+
+        foreach (array_keys($this->discord['channels']) as $channelKey) {
+            $envKey = 'MARKETING_DISCORD_CHANNEL_ID_' . strtoupper($channelKey);
+            $this->discord['channels'][$channelKey] = (string) env($envKey, (string) $this->discord['channels'][$channelKey]);
+        }
 
         $headers = trim((string) env('MARKETING_WEBHOOK_HEADERS_JSON', ''));
         if ($headers !== '') {

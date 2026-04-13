@@ -6,6 +6,7 @@ use App\Libraries\MyMIDiscord;
 use App\Models\MarketingDistributionTargetModel;
 use App\Models\MarketingModel;
 use App\Services\Marketing\Distribution\BlueskyDistributionService;
+use App\Services\Marketing\Distribution\DiscordMessageBuilder;
 use App\Services\Marketing\Distribution\LinkedInDistributionService;
 use App\Services\Marketing\Distribution\MastodonDistributionService;
 use App\Services\Marketing\Distribution\WebhookDistributionService;
@@ -15,6 +16,14 @@ use Config\MarketingDistribution;
 class MarketingDistributionService
 {
     private const PROCESSABLE_STATUSES = ['pending', 'queued', 'retrying'];
+    private const VALID_CATEGORIES = [
+        'community_news',
+        'announcements',
+        'mymi_news',
+        'crypto_news',
+        'financial_news',
+        'stock_news',
+    ];
 
     public function __construct(
         private ?MarketingModel $marketingModel = null,
@@ -24,6 +33,8 @@ class MarketingDistributionService
         private ?MastodonDistributionService $mastodonService = null,
         private ?LinkedInDistributionService $linkedinService = null,
         private ?WebhookDistributionService $webhookService = null,
+        private ?MyMIDiscord $discordService = null,
+        private ?DiscordMessageBuilder $discordMessageBuilder = null,
     ) {
         $this->marketingModel ??= new MarketingModel();
         $this->targetModel ??= new MarketingDistributionTargetModel();
@@ -32,6 +43,8 @@ class MarketingDistributionService
         $this->mastodonService ??= new MastodonDistributionService($this->distributionConfig);
         $this->linkedinService ??= new LinkedInDistributionService($this->distributionConfig);
         $this->webhookService ??= new WebhookDistributionService($this->distributionConfig);
+        $this->discordService ??= new MyMIDiscord();
+        $this->discordMessageBuilder ??= new DiscordMessageBuilder($this->distributionConfig);
     }
 
     public function queueDistribution(int $generatedContentId, array $destinations = []): array
@@ -142,17 +155,11 @@ class MarketingDistributionService
             'sql_assertions' => $this->getSqlAssertions(),
             'generated_backlog' => [
                 'pending_review' => $db->table('bf_marketing_generated_content')
-                    ->groupStart()
-                        ->whereIn('approval_status', ['pending_review', 'pending', ''])
-                        ->orWhere('approval_status IS NULL', null, false)
-                    ->groupEnd()
+                    ->groupStart()->whereIn('approval_status', ['pending_review', 'pending', ''])->orWhere('approval_status IS NULL', null, false)->groupEnd()
                     ->countAllResults(),
                 'approved_not_distributed' => $db->table('bf_marketing_generated_content')
                     ->whereIn('approval_status', ['approved', 'auto_approved'])
-                    ->groupStart()
-                        ->whereIn('distribution_status', ['pending', 'scheduled', 'partial_failed', ''])
-                        ->orWhere('distribution_status IS NULL', null, false)
-                    ->groupEnd()
+                    ->groupStart()->whereIn('distribution_status', ['pending', 'scheduled', 'partial_failed', ''])->orWhere('distribution_status IS NULL', null, false)->groupEnd()
                     ->countAllResults(),
             ],
         ];
@@ -170,10 +177,7 @@ class MarketingDistributionService
     /** @return array<string,mixed> */
     public function getFailedRetryableSummary(): array
     {
-        $rows = $this->targetModel
-            ->whereIn('status', ['failed', 'retrying'])
-            ->findAll();
-
+        $rows = $this->targetModel->whereIn('status', ['failed', 'retrying'])->findAll();
         $maxRetries = max(0, (int) $this->distributionConfig->maxRetries);
         $retryable = array_filter($rows, static fn(array $row): bool => (int) ($row['retry_count'] ?? 0) < $maxRetries);
 
@@ -188,10 +192,7 @@ class MarketingDistributionService
     /** @return array<string,array<string,int>> */
     public function getChannelStatusTotals(): array
     {
-        $rows = $this->targetModel->select('destination, status, COUNT(*) AS total')
-            ->groupBy('destination, status')
-            ->findAll();
-
+        $rows = $this->targetModel->select('destination, status, COUNT(*) AS total')->groupBy('destination, status')->findAll();
         $totals = [];
         foreach ($rows as $row) {
             $destination = (string) ($row['destination'] ?? 'unknown');
@@ -215,30 +216,14 @@ class MarketingDistributionService
             'duplicate_distribution_targets' => 0,
         ];
 
-        if ($db->tableExists('bf_marketing_scraper') && $db->fieldExists('story_hash', 'bf_marketing_scraper')) {
-            $assertions['duplicate_story_hash_groups'] = (int) $db->query(
-                "SELECT COUNT(*) AS total FROM (
-                    SELECT story_hash FROM bf_marketing_scraper
-                    WHERE story_hash IS NOT NULL AND story_hash <> ''
-                    GROUP BY story_hash HAVING COUNT(*) > 1
-                ) duplicate_hashes"
-            )->getRow('total');
-        }
-
         if ($db->tableExists('bf_marketing_generated_content')) {
             $assertions['pending_review_backlog'] = $db->table('bf_marketing_generated_content')
-                ->groupStart()
-                    ->whereIn('approval_status', ['pending_review', 'pending', ''])
-                    ->orWhere('approval_status IS NULL', null, false)
-                ->groupEnd()
+                ->groupStart()->whereIn('approval_status', ['pending_review', 'pending', ''])->orWhere('approval_status IS NULL', null, false)->groupEnd()
                 ->countAllResults();
 
             $assertions['approved_never_distributed'] = $db->table('bf_marketing_generated_content')
                 ->whereIn('approval_status', ['approved', 'auto_approved'])
-                ->groupStart()
-                    ->whereIn('distribution_status', ['pending', 'scheduled', 'partial_failed', ''])
-                    ->orWhere('distribution_status IS NULL', null, false)
-                ->groupEnd()
+                ->groupStart()->whereIn('distribution_status', ['pending', 'scheduled', 'partial_failed', ''])->orWhere('distribution_status IS NULL', null, false)->groupEnd()
                 ->countAllResults();
         }
 
@@ -263,28 +248,45 @@ class MarketingDistributionService
     private function ensureTargetsForRecord(array $record, array $destinations = []): array
     {
         $generatedContentId = (int) ($record['id'] ?? 0);
-        $resolved = $this->resolveDestinations($record, $destinations);
+        $record = $this->normalizeCategoryMeta($record);
+
+        $targets = [];
+        foreach ($this->resolveDestinations($record, $destinations) as $destination) {
+            $targets[] = ['channel' => 'marketing', 'destination' => $destination];
+        }
+
+        foreach ($this->resolveDiscordTargets($record) as $channelKey) {
+            $targets[] = ['channel' => 'discord', 'destination' => $channelKey];
+        }
 
         $created = 0;
         $existing = 0;
         $skipped = 0;
 
-        foreach ($resolved as $destination) {
-            if (! $this->isDestinationEnabled($destination)) {
+        foreach ($targets as $targetDef) {
+            $destination = $targetDef['destination'];
+            $channel = $targetDef['channel'];
+
+            if ($channel === 'marketing' && ! $this->isDestinationEnabled($destination)) {
+                $skipped++;
+                continue;
+            }
+
+            if ($channel === 'discord' && ! $this->isDiscordStreamEnabled()) {
                 $skipped++;
                 continue;
             }
 
             $existingRow = $this->targetModel
                 ->where('generated_content_id', $generatedContentId)
-                ->where('channel', 'marketing')
+                ->where('channel', $channel)
                 ->where('destination', $destination)
                 ->first();
 
             if ($existingRow) {
                 if (in_array((string) ($existingRow['status'] ?? ''), ['failed', 'retrying'], true)) {
                     $this->targetModel->update((int) $existingRow['id'], [
-                        'payload_json' => json_encode($this->buildPayload($record, $destination)),
+                        'payload_json' => json_encode($this->buildPayload($record, $destination, $channel)),
                         'status' => 'pending',
                         'error_message' => null,
                         'failed_at' => null,
@@ -298,9 +300,9 @@ class MarketingDistributionService
             $inserted = $this->targetModel->insert([
                 'generated_content_id' => $generatedContentId,
                 'story_id' => $record['story_id'] ?? null,
-                'channel' => 'marketing',
+                'channel' => $channel,
                 'destination' => $destination,
-                'payload_json' => json_encode($this->buildPayload($record, $destination)),
+                'payload_json' => json_encode($this->buildPayload($record, $destination, $channel)),
                 'status' => 'pending',
                 'retry_count' => 0,
                 'created_on' => date('Y-m-d H:i:s'),
@@ -319,6 +321,7 @@ class MarketingDistributionService
     {
         $targetId = (int) ($target['id'] ?? 0);
         $destination = (string) ($target['destination'] ?? '');
+        $channel = (string) ($target['channel'] ?? 'marketing');
         $payload = json_decode((string) ($target['payload_json'] ?? '{}'), true);
         if (! is_array($payload)) {
             $payload = [];
@@ -337,21 +340,24 @@ class MarketingDistributionService
                 throw new \RuntimeException('Failure injection enabled for destination: ' . $destination);
             }
 
-            $result = match ($destination) {
-                'blog' => $this->handleBlogDestination($target, $payload),
-                'in_app' => $this->handleInAppDestination($target, $payload),
-                'email' => $this->handleEmailDestination($target, $payload),
-                'discord' => $this->handleDiscordDestination($target, $payload),
-                'bluesky' => $this->blueskyService->publish($payload),
-                'mastodon' => $this->mastodonService->publish($payload),
-                'linkedin' => $this->linkedinService->publish($payload),
-                'webhook' => $this->webhookService->publish($this->buildWebhookPayload($target, $payload)),
-                default => [
-                    'status' => 'failed',
-                    'response' => null,
-                    'error' => 'Unknown destination: ' . $destination,
-                ],
-            };
+            if ($channel === 'discord') {
+                $result = $this->handleDiscordDestination($target, $payload);
+            } else {
+                $result = match ($destination) {
+                    'blog' => $this->handleBlogDestination($target, $payload),
+                    'in_app' => $this->handleInAppDestination($target, $payload),
+                    'email' => $this->handleEmailDestination($target, $payload),
+                    'bluesky' => $this->blueskyService->publish($payload),
+                    'mastodon' => $this->mastodonService->publish($payload),
+                    'linkedin' => $this->linkedinService->publish($payload),
+                    'webhook' => $this->webhookService->publish($this->buildWebhookPayload($target, $payload)),
+                    default => [
+                        'status' => 'failed',
+                        'response' => null,
+                        'error' => 'Unknown destination: ' . $destination,
+                    ],
+                };
+            }
         } catch (\Throwable $e) {
             $result = ['status' => 'failed', 'response' => null, 'error' => $e->getMessage()];
         }
@@ -382,6 +388,7 @@ class MarketingDistributionService
             'id' => $targetId,
             'generated_content_id' => (int) ($target['generated_content_id'] ?? 0),
             'destination' => $destination,
+            'channel' => $channel,
             'status' => $update['status'],
             'retry_count' => $nextRetry,
             'error' => $update['error_message'] ?? null,
@@ -468,19 +475,37 @@ class MarketingDistributionService
 
     private function handleDiscordDestination(array $target, array $payload): array
     {
-        $discord = new MyMIDiscord();
-        $message = "**" . ($payload['title'] ?? 'Marketing Update') . "**\n" . ($payload['summary'] ?? '');
-
-        $queued = $discord->enqueuePlain('marketing', $message, [
-            'priority' => 5,
-            'dedupe_key' => 'marketing-distribution-target-' . (int) ($target['id'] ?? 0),
-        ]);
-
-        if (! $queued) {
-            return ['status' => 'failed', 'response' => null, 'error' => 'Discord queue rejected message'];
+        if (! $this->isDiscordStreamEnabled()) {
+            return ['status' => 'skipped', 'response' => ['reason' => 'discord_stream_disabled'], 'error' => null];
         }
 
-        return ['status' => 'sent', 'response' => ['queued' => true], 'error' => null];
+        $channelKey = (string) ($target['destination'] ?? $payload['discord_channel_key'] ?? '');
+        if ($channelKey === '') {
+            $channelKey = (string) ($this->distributionConfig->discord['fallback_channel'] ?? 'community_news');
+        }
+
+        $messagePayload = [
+            'content' => (string) ($payload['message'] ?? $payload['summary'] ?? ''),
+            'allowed_mentions' => $payload['allowed_mentions'] ?? ['parse' => []],
+        ];
+
+        $channelId = (string) ($this->distributionConfig->discord['channels'][$channelKey] ?? '');
+        $result = $this->discordService->sendToChannel($channelKey, $messagePayload, $channelId !== '' ? $channelId : null);
+
+        if (! $result['success']) {
+            return [
+                'status' => 'failed',
+                'response' => $result['response_json'],
+                'error' => $result['error_message'] ?? 'Discord send failed',
+            ];
+        }
+
+        return [
+            'status' => 'sent',
+            'response' => $result['response_json'],
+            'external_id' => $result['external_message_id'],
+            'error' => null,
+        ];
     }
 
     private function updateGeneratedContentStatus(int $generatedContentId): array
@@ -527,9 +552,31 @@ class MarketingDistributionService
         $sourceType = (string) ($record['source_type'] ?? 'default');
         $routing = $this->distributionConfig->routingRulesBySourceType[$sourceType]
             ?? $this->distributionConfig->routingRulesBySourceType['default']
-            ?? ['blog', 'in_app', 'email', 'discord'];
+            ?? ['blog', 'in_app', 'email'];
 
-        return array_values(array_unique($routing));
+        return array_values(array_filter(array_unique($routing), static fn(string $destination): bool => $destination !== 'discord'));
+    }
+
+    /** @return list<string> */
+    private function resolveDiscordTargets(array $record): array
+    {
+        if (! $this->isDiscordStreamEnabled()) {
+            return [];
+        }
+
+        $map = $this->distributionConfig->discord['category_channel_map'] ?? [];
+        $primary = (string) ($record['primary_category'] ?? 'community_news');
+        $channels = (array) ($map[$primary] ?? []);
+
+        foreach ($this->normalizeSecondaryTags($record['secondary_tags'] ?? []) as $tag) {
+            $channels = array_merge($channels, (array) ($map[$tag] ?? []));
+        }
+
+        if ($channels === []) {
+            $channels = [(string) ($this->distributionConfig->discord['fallback_channel'] ?? 'community_news')];
+        }
+
+        return array_values(array_unique(array_map(static fn($item): string => (string) $item, $channels)));
     }
 
     private function isDestinationEnabled(string $destination): bool
@@ -538,14 +585,16 @@ class MarketingDistributionService
     }
 
     /** @return array<string,mixed> */
-    private function buildPayload(array $record, string $destination): array
+    private function buildPayload(array $record, string $destination, string $channel = 'marketing'): array
     {
         $content = json_decode((string) ($record['content_json'] ?? '{}'), true);
         if (! is_array($content)) {
             $content = [];
         }
 
-        return [
+        $record = $this->normalizeCategoryMeta(array_merge($record, ['content_json' => $content]));
+
+        $base = [
             'generated_content_id' => (int) ($record['id'] ?? 0),
             'story_id' => (int) ($record['story_id'] ?? 0),
             'approved_at' => (string) ($record['updated_at'] ?? date('Y-m-d H:i:s')),
@@ -556,7 +605,20 @@ class MarketingDistributionService
             'content' => (string) ($content['blog_post'] ?? $content['summary'] ?? $record['summary'] ?? ''),
             'keywords' => $content['keywords'] ?? $record['keywords'] ?? [],
             'target_group' => 'internal_team',
+            'primary_category' => (string) $record['primary_category'],
+            'secondary_tags' => $record['secondary_tags'],
+            'source_type' => (string) ($record['source_type'] ?? 'marketing'),
+            'content_type' => (string) ($record['content_type'] ?? 'generated_summary'),
         ];
+
+        if ($channel === 'discord') {
+            $message = $this->discordMessageBuilder->build($record, $destination);
+            $base['discord_channel_key'] = $destination;
+            $base['message'] = $message['content'];
+            $base['allowed_mentions'] = $this->discordMessageBuilder->buildAllowedMentions($record);
+        }
+
+        return $base;
     }
 
     /** @return array<string,mixed> */
@@ -576,10 +638,7 @@ class MarketingDistributionService
 
     private function fetchGeneratedContent(int $generatedContentId): ?array
     {
-        $record = Database::connect()->table('bf_marketing_generated_content')
-            ->where('id', $generatedContentId)
-            ->get()
-            ->getRowArray();
+        $record = Database::connect()->table('bf_marketing_generated_content')->where('id', $generatedContentId)->get()->getRowArray();
 
         return is_array($record) ? $record : null;
     }
@@ -601,5 +660,73 @@ class MarketingDistributionService
         }
 
         return $result;
+    }
+
+    /** @return array<string,mixed> */
+    private function normalizeCategoryMeta(array $record): array
+    {
+        $primary = strtolower(trim((string) ($record['primary_category'] ?? $record['category'] ?? 'community_news')));
+        if (! in_array($primary, self::VALID_CATEGORIES, true)) {
+            $primary = 'community_news';
+        }
+
+        $record['primary_category'] = $primary;
+        $record['secondary_tags'] = $this->normalizeSecondaryTags($record['secondary_tags'] ?? $record['keywords'] ?? []);
+        $record['source_type'] = (string) ($record['source_type'] ?? 'marketing_scraper');
+        $record['content_type'] = (string) ($record['content_type'] ?? 'generated_summary');
+
+        return $record;
+    }
+
+    /** @return list<string> */
+    private function normalizeSecondaryTags(mixed $raw): array
+    {
+        if (is_string($raw)) {
+            $decoded = json_decode($raw, true);
+            $raw = is_array($decoded) ? $decoded : explode(',', $raw);
+        }
+
+        if (! is_array($raw)) {
+            return [];
+        }
+
+        $normalized = [];
+        foreach ($raw as $item) {
+            $value = strtolower(trim((string) $item));
+            if ($value !== '') {
+                $normalized[] = str_replace(' ', '_', $value);
+            }
+        }
+
+        return array_values(array_unique($normalized));
+    }
+
+    private function isDiscordStreamEnabled(): bool
+    {
+        return (bool) ($this->distributionConfig->discord['enabled'] ?? false)
+            && (bool) ($this->distributionConfig->discord['stream_enabled'] ?? false)
+            && (bool) ($this->distributionConfig->enabledDestinations['discord'] ?? true);
+    }
+
+    /** @return array<string,mixed> */
+    public function sendActivationAnnouncement(bool $withEveryone = false): array
+    {
+        $record = [
+            'primary_category' => 'announcements',
+            'allow_everyone' => $withEveryone,
+            'title' => 'Discord Streaming Activation',
+            'summary' => 'Good morning all, I will be turning on Discord Streaming Messages for #community-news, #announcements, #mymi-news, #crypto-news, #financial-news, and #stock-news.',
+            'source_type' => 'admin',
+            'content_type' => 'activation_announcement',
+        ];
+
+        $payload = $this->discordMessageBuilder->build($record, 'announcements');
+        $payload['allowed_mentions'] = $this->discordMessageBuilder->buildAllowedMentions($record);
+
+        $channelKey = 'announcements';
+        $channelId = (string) ($this->distributionConfig->discord['channels'][$channelKey] ?? '');
+        $result = $this->discordService->sendToChannel($channelKey, $payload, $channelId !== '' ? $channelId : null);
+
+        return ['channel' => $channelKey, 'result' => $result];
     }
 }
