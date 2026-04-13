@@ -3019,5 +3019,25 @@ class MarketingAPIController extends BaseAPIController
         ]);
     }
 
+    public function distributionFailedSummary()
+    {
+        $summary = service('marketingDistributionService')->getFailedRetryableSummary();
+
+        return Http::jsonSuccess([
+            'status' => 'success',
+            'summary' => $summary,
+        ]);
+    }
+
+    public function distributionChannelTotals()
+    {
+        $totals = service('marketingDistributionService')->getChannelStatusTotals();
+
+        return Http::jsonSuccess([
+            'status' => 'success',
+            'totals' => $totals,
+        ]);
+    }
+
 }
 ?>

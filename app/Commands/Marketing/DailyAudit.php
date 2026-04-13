@@ -77,6 +77,7 @@ class DailyAudit extends SafeBaseCommand
             'approved_ready' => $approvedReady,
             'reason' => $reason,
             'warnings' => $warnings,
+            'sql_assertions' => service('marketingDistributionService')->getSqlAssertions(),
         ], JSON_PRETTY_PRINT));
     }
 }
