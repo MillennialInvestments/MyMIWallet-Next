@@ -75,6 +75,53 @@ class MyMIDiscord
     }
 
     /**
+     * Send immediately to a specific channel key or channel id with a structured result.
+     *
+     * @return array{success:bool,external_message_id:?string,response_json:array<string,mixed>|null,error_message:?string}
+     */
+    public function sendToChannel(string $channelKey, array $payload, ?string $forcedChannelId = null): array
+    {
+        $payload['content'] = $this->sanitize((string) ($payload['content'] ?? ''));
+        if ($payload['content'] === '') {
+            return [
+                'success' => false,
+                'external_message_id' => null,
+                'response_json' => null,
+                'error_message' => 'Empty content after sanitize/policy filters.',
+            ];
+        }
+
+        if ($this->cfg->alertsDryRun) {
+            return [
+                'success' => true,
+                'external_message_id' => null,
+                'response_json' => ['dry_run' => true, 'channel_key' => $channelKey, 'payload' => $payload],
+                'error_message' => null,
+            ];
+        }
+
+        $channel = $this->model->getChannel($channelKey) ?: ['channel_key' => $channelKey];
+        $webhook = $this->resolveChannelWebhook($channel);
+
+        if ($webhook !== '') {
+            $url = strpos($webhook, 'wait=true') === false ? $webhook . (str_contains($webhook, '?') ? '&' : '?') . 'wait=true' : $webhook;
+            return $this->postJSONWithResult($url, $payload);
+        }
+
+        $channelId = $forcedChannelId ?: ($channel['channel_id'] ?? '') ?: $this->resolveChannelId($channel);
+        if ($channelId === '' || empty($this->cfg->botToken)) {
+            return [
+                'success' => false,
+                'external_message_id' => null,
+                'response_json' => null,
+                'error_message' => 'No webhook or bot channel configured for channel key: ' . $channelKey,
+            ];
+        }
+
+        return $this->postBotMessageWithResult((string) $channelId, $payload);
+    }
+
+    /**
      * Dispatch a liquidity scanner alert through the Discord pipeline.
      */
     public function notifyLiquidityScan(array $payload): bool
@@ -451,6 +498,35 @@ class MyMIDiscord
         }
     }
 
+    /** @return array{success:bool,external_message_id:?string,response_json:array<string,mixed>|null,error_message:?string} */
+    protected function postJSONWithResult(string $url, array $body): array
+    {
+        try {
+            $client = \Config\Services::curlrequest(['timeout' => 10]);
+            $resp = $client->post($url, [
+                'headers' => ['Content-Type' => 'application/json'],
+                'json'    => $body,
+            ]);
+            $code = $resp->getStatusCode();
+            $decoded = json_decode((string) $resp->getBody(), true);
+            $ok = $code >= 200 && $code < 300;
+
+            return [
+                'success' => $ok,
+                'external_message_id' => $ok ? (string) ($decoded['id'] ?? '') ?: null : null,
+                'response_json' => is_array($decoded) ? $decoded : ['status_code' => $code],
+                'error_message' => $ok ? null : 'Discord webhook HTTP ' . $code,
+            ];
+        } catch (\Throwable $e) {
+            return [
+                'success' => false,
+                'external_message_id' => null,
+                'response_json' => null,
+                'error_message' => $e->getMessage(),
+            ];
+        }
+    }
+
     protected function postBotMessage(string $channelId, array $body): bool
     {
         try {
@@ -470,6 +546,42 @@ class MyMIDiscord
         } catch (\Throwable $e) {
             log_message('error', 'Discord Bot API failed: {err}', ['err' => $e->getMessage()]);
             return false;
+        }
+    }
+
+    /** @return array{success:bool,external_message_id:?string,response_json:array<string,mixed>|null,error_message:?string} */
+    protected function postBotMessageWithResult(string $channelId, array $body): array
+    {
+        try {
+            $client = \Config\Services::curlrequest(['timeout' => 10]);
+            $resp = $client->post('https://discord.com/api/v10/channels/' . $channelId . '/messages', [
+                'headers' => [
+                    'Authorization' => 'Bot ' . $this->cfg->botToken,
+                    'Content-Type'  => 'application/json',
+                ],
+                'json' => [
+                    'content'          => $body['content'] ?? '',
+                    'embeds'           => $body['embeds'] ?? null,
+                    'allowed_mentions' => $body['allowed_mentions'] ?? ['parse' => []],
+                ],
+            ]);
+            $code = $resp->getStatusCode();
+            $decoded = json_decode((string) $resp->getBody(), true);
+            $ok = $code >= 200 && $code < 300;
+
+            return [
+                'success' => $ok,
+                'external_message_id' => $ok ? (string) ($decoded['id'] ?? '') ?: null : null,
+                'response_json' => is_array($decoded) ? $decoded : ['status_code' => $code],
+                'error_message' => $ok ? null : 'Discord bot HTTP ' . $code,
+            ];
+        } catch (\Throwable $e) {
+            return [
+                'success' => false,
+                'external_message_id' => null,
+                'response_json' => null,
+                'error_message' => $e->getMessage(),
+            ];
         }
     }
 
