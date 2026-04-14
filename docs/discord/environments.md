@@ -3,7 +3,8 @@
 Use this file as the canonical list of environment variables required by the MyMIDiscord pipeline. Populate them in `.env` or your host configuration; the CI4 `Config\\Discord` class and `MyMIDiscord::hydrateConfigFromEnv()` already read these keys.
 
 ## Required core variables
-- `DISCORD_BOT_TOKEN` — Bot token for optional Bot API fallback and future role sync.
+- `DISCORD_MYMI_AI_BOT_TOKEN` — Primary bot token for MyMI AI Bot operations.
+- `DISCORD_BOT_TOKEN` — Backward-compatible fallback read only when `DISCORD_MYMI_AI_BOT_TOKEN` is unset (legacy deployments).
 - `DISCORD_GUILD_ID` — Guild/server ID used for member/role operations.
 - `DISCORD_TIMEZONE` — Timezone for quiet hours and pacing checks (default `America/Chicago`).
 - `DISCORD_MIN_SECONDS_BETWEEN_POSTS` — Global pacing value when a channel row does not override `min_interval_sec`.

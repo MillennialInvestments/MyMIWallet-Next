@@ -3,7 +3,8 @@
   "cron_key": "<optional-management-cron-key>",
   "discord_webhook_digest": "https://discord.com/api/webhooks/.../digest",
   "discord_webhook_engagement": "https://discord.com/api/webhooks/.../engagement",
-  "discord_bot_token": "<bot-token-if-used>",
+  "discord_mymi_ai_bot_token": "<primary-bot-token-if-used>",
+  "discord_bot_token": "<legacy-fallback-bot-token-optional>",
   "guild_id": "<guild-id>",
   "lookback_minutes": 15
 }

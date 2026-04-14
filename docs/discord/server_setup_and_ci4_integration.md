@@ -33,12 +33,13 @@ Step-by-step checklist to provision the Discord server, webhooks, and CI4 wiring
    DISCORD_OPS_WEBHOOK="https://discord.com/api/webhooks/xxx/ops"
    DISCORD_SUPPORT_WEBHOOK="https://discord.com/api/webhooks/xxx/support"     # optional: support inbox
    DISCORD_ALERTS_TIER1_WEBHOOK="https://discord.com/api/webhooks/xxx/tier1"  # optional: tiered alert routing
-   DISCORD_BOT_TOKEN="<bot-token-if-using-bot-api>"
+   DISCORD_MYMI_AI_BOT_TOKEN="<bot-token-for-mymi-ai-bot>"
+   DISCORD_BOT_TOKEN="<legacy-fallback-only-optional>"
    DISCORD_GUILD_ID="<guild-id>"
    DISCORD_ALERTS_DRY_RUN=false        # set true on staging
    DISCORD_USE_BOT_API_FALLBACK=true   # allow bot API when channel_id is present
    ```
-2. Ensure `app/Config/Discord.php` reads these env keys (already wired for `DISCORD_DEFAULT_WEBHOOK`, `DISCORD_BOT_TOKEN`, `DISCORD_GUILD_ID`, `DISCORD_USE_BOT_API_FALLBACK`, `DISCORD_ALERTS_DRY_RUN`).
+2. Ensure `app/Config/Discord.php` reads these env keys (already wired for `DISCORD_DEFAULT_WEBHOOK`, `DISCORD_MYMI_AI_BOT_TOKEN` with `DISCORD_BOT_TOKEN` fallback, `DISCORD_GUILD_ID`, `DISCORD_USE_BOT_API_FALLBACK`, `DISCORD_ALERTS_DRY_RUN`).
 3. If you prefer database-driven channels/templates, seed `bf_discord_channels`, `bf_discord_templates`, and `bf_discord_subscriptions` through the **Management → Discord** UI; store webhook URLs in `bf_discord_channels.target_webhook`.
 
 ## 4) Wire alerts to Discord

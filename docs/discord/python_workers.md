@@ -15,7 +15,8 @@ Each script is CLI-driven (`python realtime_digest_worker.py`) and expects a `.e
 - `cron_key` — Optional Management cron key when calling secured CI4 routes.
 - `discord_webhook_digest` — Webhook URL for digest posts.
 - `discord_webhook_engagement` — Webhook or channel for engagement metrics.
-- `discord_bot_token` — Bot token for optional Discord REST calls (rate-limit safely).
+- `discord_mymi_ai_bot_token` — Primary bot token for optional Discord REST calls (rate-limit safely).
+- `discord_bot_token` — Optional backward-compatible fallback key for older worker configs.
 - `guild_id` — Guild ID for role/member lookups.
 - `lookback_minutes` — Default lookback for digests or analytics.
 
@@ -34,7 +35,7 @@ Behavior:
 Purpose: gather basic engagement metrics to fuel Discord upsells.
 
 Behavior:
-- Pulls message/reaction counts either from Discord REST (when `discord_bot_token` is provided) or from a local `bf_discord_events`/`bf_discord_events_log` view if available.
+- Pulls message/reaction counts either from Discord REST (when `discord_mymi_ai_bot_token` is provided, or legacy `discord_bot_token` fallback exists) or from a local `bf_discord_events`/`bf_discord_events_log` view if available.
 - Calculates totals by channel and tier (e.g., free vs. paid alert channels).
 - POSTs metrics back to a CI4 endpoint (stubbed in the script) or writes a local JSON report.
 - Can emit an upsell-friendly summary to a Discord webhook.

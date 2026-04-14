@@ -16,6 +16,7 @@ CONFIG_KEYS = {
     "api_base",
     "cron_key",
     "discord_webhook_engagement",
+    "discord_mymi_ai_bot_token",
     "discord_bot_token",
     "guild_id",
 }

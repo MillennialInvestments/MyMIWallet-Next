@@ -26,7 +26,8 @@ MyMI Data (Emails / Scanners / APIs)
 ## 2) Environment Variables (.env) Setup
 `Config\Discord` pulls every value from `.env` (CI4 uses `env()`/`getenv()`), so key names must match exactly. A typical block:
 ```
-DISCORD_BOT_TOKEN="xxxxxxxxxxxxxxxxxxxxxxxx"
+DISCORD_MYMI_AI_BOT_TOKEN="xxxxxxxxxxxxxxxxxxxxxxxx"
+DISCORD_BOT_TOKEN="" # optional legacy fallback only
 DISCORD_GUILD_ID="726783076188815452"
 DISCORD_TIMEZONE="America/Chicago"
 

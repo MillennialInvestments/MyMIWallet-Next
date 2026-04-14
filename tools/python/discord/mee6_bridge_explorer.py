@@ -10,7 +10,7 @@ import sys
 from typing import Any, Dict, List
 from urllib import request, error
 
-CONFIG_KEYS = {"discord_bot_token", "guild_id", "api_base", "cron_key"}
+CONFIG_KEYS = {"discord_mymi_ai_bot_token", "discord_bot_token", "guild_id", "api_base", "cron_key"}
 
 
 def load_config(path: str) -> Dict[str, Any]:
@@ -49,12 +49,12 @@ def main() -> int:
     args = parser.parse_args()
 
     cfg = load_config(args.config)
-    bot_token = cfg.get("discord_bot_token")
+    bot_token = cfg.get("discord_mymi_ai_bot_token") or cfg.get("discord_bot_token")
     guild_id = cfg.get("guild_id")
     plan_map = json.loads(args.plan_map)
 
     if not bot_token or not guild_id:
-        print("[warn] bot_token and guild_id are required to query Discord; exiting.")
+        print("[warn] discord_mymi_ai_bot_token (or legacy discord_bot_token) and guild_id are required to query Discord; exiting.")
         return 0
 
     try:
