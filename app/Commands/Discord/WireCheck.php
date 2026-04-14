@@ -48,7 +48,7 @@ class WireCheck extends SafeBaseCommand
     protected function printEnvStatus(DiscordConfig $cfg): array
     {
         $required = [
-            'DISCORD_BOT_TOKEN'                  => $cfg->botToken,
+            'DISCORD_MYMI_AI_BOT_TOKEN'          => $cfg->botToken,
             'DISCORD_GUILD_ID'                   => $cfg->guildId,
             'DISCORD_TIMEZONE'                   => $cfg->timezone,
             'DISCORD_MIN_SECONDS_BETWEEN_POSTS'  => $cfg->minSecondsBetweenPosts,

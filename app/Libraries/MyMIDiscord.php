@@ -705,10 +705,10 @@ class MyMIDiscord
 
     public function apiGet(string $endpoint)
     {
-        $token = env('DISCORD_BOT_TOKEN');
+        $token = (string) env('DISCORD_MYMI_AI_BOT_TOKEN', (string) env('DISCORD_BOT_TOKEN', ''));
 
         if (empty($token)) {
-            log_message('error', 'MyMIDiscord::apiGet missing DISCORD_BOT_TOKEN env var.');
+            log_message('error', 'MyMIDiscord::apiGet missing DISCORD_MYMI_AI_BOT_TOKEN env var (or fallback DISCORD_BOT_TOKEN).');
             return null;
         }
 

@@ -18,11 +18,20 @@ class DiscordOps extends BaseConfig
     public string $ollamaSecondaryBaseUrl = '';
     public string $ollamaInternalToken = '';
 
+    /** @var array<string,bool> */
+    public array $providersEnabled = [
+        'aiops' => true,
+        'ollama' => true,
+        'openai' => false,
+        'anthropic' => false,
+        'gemini' => false,
+        'grok' => false,
+    ];
+
     /** @var array<string,string> */
     public array $channelRouting = [
         'custom_messages' => 'custom_messages',
-        'customer_support' => 'custom_messages',
-        'ticker_lookup' => 'ops',
+        'ticker_lookup' => 'ticker_lookup',
         'aiops_chat' => 'aiops_chat',
         'ollama_chat' => 'ollama_chat',
         'admin_spark' => 'admin_spark',
@@ -42,12 +51,15 @@ class DiscordOps extends BaseConfig
         'marketing:discord:test-all-categories',
         'discord:wire-check',
         'ollama:health',
-        'aiops:alerts-health',
         'logs:summarize',
     ];
 
     public int $relayTimeoutSeconds = 20;
     public int $maxDiscordReplyLength = 1400;
+    public int $interactionsMaxSkewSeconds = 300;
+    public int $rateLimitWindowSeconds = 60;
+    public int $rateLimitMaxRequestsPerUser = 20;
+    public int $maxPromptLength = 1200;
 
     public function __construct()
     {
@@ -63,17 +75,22 @@ class DiscordOps extends BaseConfig
         $this->ollamaSecondaryBaseUrl = rtrim((string) env('OLLAMA_SECONDARY_BASE_URL', $this->ollamaSecondaryBaseUrl), '/');
         $this->ollamaInternalToken = (string) env('OLLAMA_INTERNAL_TOKEN', $this->ollamaInternalToken);
 
-        $adminUsers = trim((string) env('DISCORD_ADMIN_USER_IDS', ''));
+        foreach (array_keys($this->providersEnabled) as $provider) {
+            $envKey = 'DISCORD_AI_PROVIDER_' . strtoupper($provider) . '_ENABLED';
+            $this->providersEnabled[$provider] = filter_var(env($envKey, $this->providersEnabled[$provider]), FILTER_VALIDATE_BOOLEAN);
+        }
+
+        $adminUsers = trim((string) env('DISCORD_ADMIN_ALLOWED_USER_IDS', (string) env('DISCORD_ADMIN_USER_IDS', '')));
         if ($adminUsers !== '') {
             $this->adminUserIds = array_values(array_filter(array_map('trim', explode(',', $adminUsers))));
         }
 
-        $adminRoles = trim((string) env('DISCORD_ADMIN_ROLE_IDS', ''));
+        $adminRoles = trim((string) env('DISCORD_ADMIN_ALLOWED_ROLE_IDS', (string) env('DISCORD_ADMIN_ROLE_IDS', '')));
         if ($adminRoles !== '') {
             $this->adminRoleIds = array_values(array_filter(array_map('trim', explode(',', $adminRoles))));
         }
 
-        $allowlist = trim((string) env('DISCORD_SPARK_ALLOWLIST', ''));
+        $allowlist = trim((string) env('DISCORD_SPARK_ALLOWED_COMMANDS', (string) env('DISCORD_SPARK_ALLOWLIST', '')));
         if ($allowlist !== '') {
             $this->sparkAllowlist = array_values(array_filter(array_map('trim', explode(',', $allowlist))));
         }
@@ -85,5 +102,9 @@ class DiscordOps extends BaseConfig
 
         $this->relayTimeoutSeconds = max(3, (int) env('DISCORD_RELAY_TIMEOUT_SECONDS', (string) $this->relayTimeoutSeconds));
         $this->maxDiscordReplyLength = max(300, (int) env('DISCORD_MAX_REPLY_LENGTH', (string) $this->maxDiscordReplyLength));
+        $this->interactionsMaxSkewSeconds = max(30, (int) env('DISCORD_INTERACTIONS_MAX_SKEW_SECONDS', (string) $this->interactionsMaxSkewSeconds));
+        $this->rateLimitWindowSeconds = max(10, (int) env('DISCORD_RATE_LIMIT_WINDOW_SECONDS', (string) $this->rateLimitWindowSeconds));
+        $this->rateLimitMaxRequestsPerUser = max(1, (int) env('DISCORD_RATE_LIMIT_MAX_REQUESTS_PER_USER', (string) $this->rateLimitMaxRequestsPerUser));
+        $this->maxPromptLength = max(100, (int) env('DISCORD_MAX_PROMPT_LENGTH', (string) $this->maxPromptLength));
     }
 }

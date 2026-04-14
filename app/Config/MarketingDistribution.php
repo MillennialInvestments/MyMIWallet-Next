@@ -100,7 +100,6 @@ class MarketingDistribution extends BaseConfig
             'financial_news' => ['financial_news'],
             'stock_news' => ['stock_news'],
             'custom_messages' => ['custom_messages'],
-            'customer_support' => ['custom_messages'],
             'ticker_lookup' => ['ticker_lookup'],
             'aiops_chat' => ['aiops_chat'],
             'ollama_chat' => ['ollama_chat'],

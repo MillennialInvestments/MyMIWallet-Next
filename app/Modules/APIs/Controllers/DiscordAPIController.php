@@ -13,6 +13,7 @@ use App\Models\AlertsModel;
 use App\Models\DiscordLinkModel;
 use App\Models\DiscordRelayAuditModel;
 use App\Services\Discord\DiscordOpsRelayService;
+use App\Services\Market\IndicatorHealthService;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Discord as DiscordConfig;
@@ -167,6 +168,61 @@ class DiscordAPIController extends BaseAPIController
         return $this->response->setJSON($data);
     }
 
+
+    public function interactions(): ResponseInterface
+    {
+        return $this->handleInteraction();
+    }
+
+    public function registerGuildCommands(): ResponseInterface
+    {
+        $cfg = $this->cfg;
+        $appId = trim((string) ($cfg->applicationId ?? ''));
+        $guildId = trim((string) ($cfg->guildId ?? ''));
+        $botToken = trim((string) ($cfg->botToken ?? ''));
+
+        if ($appId === '' || $guildId === '' || $botToken === '') {
+            return $this->response->setStatusCode(422)->setJSON([
+                'status' => 'error',
+                'message' => 'Missing DISCORD_APPLICATION_ID, DISCORD_GUILD_ID, or DISCORD_MYMI_AI_BOT_TOKEN.',
+            ]);
+        }
+
+        $commands = [
+            ['name' => 'ai', 'description' => 'Relay prompt to configured AI provider', 'options' => [
+                ['type' => 3, 'name' => 'provider', 'description' => 'aiops|ollama', 'required' => true],
+                ['type' => 3, 'name' => 'prompt', 'description' => 'Prompt text', 'required' => true],
+            ]],
+            ['name' => 'ticker', 'description' => 'Lookup stock ticker', 'options' => [['type' => 3, 'name' => 'symbol', 'description' => 'Ticker symbol', 'required' => true]]],
+            ['name' => 'crypto', 'description' => 'Lookup crypto symbol', 'options' => [['type' => 3, 'name' => 'symbol', 'description' => 'Crypto symbol', 'required' => true]]],
+            ['name' => 'quote', 'description' => 'Lookup quote summary', 'options' => [['type' => 3, 'name' => 'symbol', 'description' => 'Ticker symbol', 'required' => true]]],
+            ['name' => 'news', 'description' => 'Lookup recent news', 'options' => [['type' => 3, 'name' => 'symbol', 'description' => 'Ticker symbol', 'required' => true]]],
+            ['name' => 'custom-send', 'description' => 'Queue custom message to routed channel', 'options' => [
+                ['type' => 3, 'name' => 'channel_key', 'description' => 'custom_messages, announcements, etc', 'required' => true],
+                ['type' => 3, 'name' => 'message', 'description' => 'Message text', 'required' => true],
+            ]],
+            ['name' => 'spark', 'description' => 'Run allowlisted spark command', 'options' => [['type' => 3, 'name' => 'command', 'description' => 'Allowlisted spark command', 'required' => true]]],
+        ];
+
+        $url = sprintf('https://discord.com/api/v10/applications/%s/guilds/%s/commands', rawurlencode($appId), rawurlencode($guildId));
+        try {
+            $res = service('curlrequest')->put($url, [
+                'headers' => ['Authorization' => 'Bot ' . $botToken, 'Content-Type' => 'application/json'],
+                'json' => $commands,
+                'timeout' => 20,
+            ]);
+            $status = $res->getStatusCode();
+            $body = json_decode((string) $res->getBody(), true);
+            return $this->response->setStatusCode($status)->setJSON([
+                'status' => $status >= 200 && $status < 300 ? 'ok' : 'error',
+                'discord_status' => $status,
+                'response' => $body,
+            ]);
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(502)->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
     public function handleInteraction(): ResponseInterface
     {
         $raw = $this->request->getBody();
@@ -175,6 +231,14 @@ class DiscordAPIController extends BaseAPIController
         }
 
         $payload = json_decode($raw, true) ?? [];
+        if (! $this->isWithinTimestampSkew()) {
+            return $this->response->setStatusCode(401)->setJSON(['error' => 'timestamp_skew']);
+        }
+
+        if (! $this->enforceRateLimit($payload)) {
+            return $this->response->setStatusCode(429)->setJSON(['error' => 'rate_limited']);
+        }
+
         $type    = $payload['type'] ?? null;
 
         if ($type === 1) {
@@ -186,7 +250,7 @@ class DiscordAPIController extends BaseAPIController
 
         switch ($command) {
             case 'ai':
-                return $this->respond($this->handleAiChatFromInteraction($payload['data']['options'] ?? [], $payload));
+                return $this->respond($this->handleAiProviderCommand($payload));
             case 'mymi':
                 $sub = strtolower($options['name'] ?? '');
                 return $this->handleMymiCommand($sub, $options['options'] ?? [], $payload);
@@ -722,14 +786,41 @@ class DiscordAPIController extends BaseAPIController
             $source = 'alerts_cache';
         }
 
+        $indicator = (new IndicatorHealthService())->evaluate($symbol, [
+            'price' => $price,
+            'change_percent' => $change,
+            'high' => $quote['high'] ?? $price,
+            'low' => $quote['low'] ?? $price,
+            'open' => $quote['open'] ?? $price,
+            'volume' => $quote['volume'] ?? 0,
+        ]);
+
+        $headlines = [];
+        try {
+            $news = (new MyMIAlerts())->fetchAlphaVantageNews($symbol);
+            foreach (array_slice((array) $news, 0, 3) as $item) {
+                $headlines[] = (string) ($item['title'] ?? $item['headline'] ?? 'headline');
+            }
+        } catch (\Throwable $e) {
+            $headlines = [];
+        }
+
         $emoji = $change >= 0 ? '📈' : '📉';
-        $message = sprintf('%s **%s** %s: $%0.2f | Δ %0.2f%% | source: %s', $emoji, $symbol, strtoupper($type), $price, $change, $source);
+        $message = sprintf('%s **%s** %s: $%0.2f | Δ %0.2f%% | trend: %s | health: %s | source: %s', $emoji, $symbol, strtoupper($type), $price, $change, strtoupper((string) $indicator['summary']), $alpha->didHitRateLimit() ? 'rate_limited' : 'ok', $source);
+        if ($headlines !== []) {
+            $message .= "
+• " . implode("
+• ", $headlines);
+        }
 
         return [
             'status' => 'success',
             'symbol' => $symbol,
             'price' => $price,
             'change_percent' => round($change, 2),
+            'trend' => $indicator['summary'] ?? 'neutral',
+            'indicator' => $indicator,
+            'headlines' => $headlines,
             'message' => $message,
             'context' => ['source' => $source, 'indicator_healthcheck' => $alpha->didHitRateLimit() ? 'rate_limited' : 'ok'],
         ];
@@ -784,19 +875,20 @@ class DiscordAPIController extends BaseAPIController
 
     protected function handleCustomSendCommand(array $payload): array
     {
+        $channelKey = trim((string) $this->extractOptionValue((array) ($payload['data']['options'] ?? []), 'channel_key'));
         $message = trim((string) $this->extractOptionValue((array) ($payload['data']['options'] ?? []), 'message'));
-        if ($message === '') {
-            return $this->interactionMessage('Usage: /custom-send message:<text> [subject] [recipient_email]');
+        if ($channelKey === '' || $message === '') {
+            return $this->interactionMessage('Usage: /custom-send channel_key:<key> message:<text>');
         }
 
         $subject = trim((string) $this->extractOptionValue((array) ($payload['data']['options'] ?? []), 'subject')) ?: 'Custom Message';
         $recipientEmail = trim((string) $this->extractOptionValue((array) ($payload['data']['options'] ?? []), 'recipient_email'));
         $content = "📩 **{$subject}**\n{$message}";
 
-        $queued = $this->discord->enqueuePlain('custom_messages', $content, ['priority' => 5, 'recipient_email' => $recipientEmail]);
+        $queued = $this->discord->enqueuePlain($channelKey, $content, ['priority' => 5, 'recipient_email' => $recipientEmail]);
         $this->auditRelay('custom_send', 'custom-send', $payload, ['success' => $queued, 'content' => $content]);
 
-        return $this->interactionMessage($queued ? 'Queued to custom_messages.' : 'Unable to queue custom message.');
+        return $this->interactionMessage($queued ? 'Queued to ' . $channelKey . '.' : 'Unable to queue custom message.');
     }
 
     protected function interactionMessage(string $content, bool $ephemeral = true): array
@@ -821,12 +913,90 @@ class DiscordAPIController extends BaseAPIController
         }
 
         try {
+            $sigBin = @hex2bin($sig);
+            $keyBin = @hex2bin($publicKey);
+            if ($sigBin === false || $keyBin === false) {
+                return false;
+            }
             $message = $timestamp.$rawBody;
-            return sodium_crypto_sign_verify_detached(hex2bin($sig), $message, hex2bin($publicKey));
+            return sodium_crypto_sign_verify_detached($sigBin, $message, $keyBin);
         } catch (\Throwable $e) {
             log_message('warning', 'Discord signature verification failed: '.$e->getMessage());
             return false;
         }
+    }
+
+
+
+    protected function handleAiProviderCommand(array $payload): array
+    {
+        $options = (array) ($payload['data']['options'] ?? []);
+        $provider = strtolower(trim((string) $this->extractOptionValue($options, 'provider')));
+        $prompt = trim((string) $this->extractOptionValue($options, 'prompt'));
+
+        if ($provider === '' || $prompt === '') {
+            return $this->interactionMessage('Usage: /ai provider:<aiops|ollama> prompt:<text>');
+        }
+
+        $ops = config('DiscordOps');
+        if (mb_strlen($prompt) > $ops->maxPromptLength) {
+            return $this->interactionMessage('Prompt too long for relay policy.');
+        }
+
+        if (! ($ops->providersEnabled[$provider] ?? false)) {
+            return $this->interactionMessage('Provider is disabled by policy.');
+        }
+
+        $result = match ($provider) {
+            'aiops' => $this->relayService->relayAiopsPrompt($prompt, ['discord_payload' => $payload]),
+            'ollama' => $this->relayService->relayOllamaPrompt($prompt, ['discord_payload' => $payload]),
+            default => ['success' => false, 'content' => 'Unsupported provider.', 'meta' => []],
+        };
+
+        $this->auditRelay('ai', $provider, $payload, $result);
+        return $this->interactionMessage((string) ($result['content'] ?? 'No response.'), true);
+    }
+
+    protected function isWithinTimestampSkew(): bool
+    {
+        $ts = trim($this->request->getHeaderLine('X-Signature-Timestamp'));
+        if ($ts === '' || ! ctype_digit($ts)) {
+            return false;
+        }
+
+        $ops = config('DiscordOps');
+        return abs(time() - (int) $ts) <= max(30, (int) $ops->interactionsMaxSkewSeconds);
+    }
+
+    protected function enforceRateLimit(array $payload): bool
+    {
+        $ops = config('DiscordOps');
+        $userId = $this->getInteractionUserId($payload);
+        if ($userId === '') {
+            return true;
+        }
+
+        $cache = cache();
+        $window = max(10, (int) $ops->rateLimitWindowSeconds);
+        $max = max(1, (int) $ops->rateLimitMaxRequestsPerUser);
+        $key = 'discord:int:rate:' . sha1($userId);
+        $bucket = $cache->get($key);
+        $now = time();
+
+        if (! is_array($bucket) || ($bucket['expires_at'] ?? 0) < $now) {
+            $bucket = ['count' => 0, 'expires_at' => $now + $window];
+        }
+
+        $bucket['count'] = (int) ($bucket['count'] ?? 0) + 1;
+        $cache->save($key, $bucket, max(1, $bucket['expires_at'] - $now));
+
+        return $bucket['count'] <= $max;
+    }
+
+    protected function getInteractionUserId(array $payload): string
+    {
+        $user = $payload['member']['user'] ?? $payload['user'] ?? [];
+        return trim((string) ($user['id'] ?? ''));
     }
 
     protected function extractOptionValue(array $options, string $name): ?string

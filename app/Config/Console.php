@@ -160,6 +160,7 @@ class Console extends BaseConfig
         \App\Commands\Database\Inventory::class,
         \App\Commands\Database\MigrateDryRun::class,
         \App\Commands\Discord\CustomSend::class,
+        \App\Commands\DiscordCustomSend::class,
         \App\Commands\Discord\GetList::class,
         \App\Commands\Discord\ProcessQueue::class,
         \App\Commands\Discord\Test::class,

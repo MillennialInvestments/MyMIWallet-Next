@@ -376,11 +376,11 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('Notes', 'AIAPIController::listNotes');
         $routes->post('LinkSettings', 'AIAPIController::updateLinkSettings');
     });
-    $routes->group('Discord', ['filter' => 'authcheck'], static function($routes) {
+    $routes->group('Discord', static function($routes) {
         $routes->post('completeOnboardingStep', 'DiscordAPIController::completeOnboardingStep');
-        $routes->get('health', 'App\Modules\APIs\Controllers\DiscordAPIController::health');
-        $routes->post('interactions', 'App\Modules\APIs\Controllers\DiscordAPIController::interactions');
-        $routes->post('register-guild-commands', 'App\Modules\APIs\Controllers\DiscordAPIController::registerGuildCommands');
+        $routes->get('health', 'DiscordAPIController::health');
+        $routes->post('interactions', 'DiscordAPIController::interactions');
+        $routes->post('register-guild-commands', 'DiscordAPIController::registerGuildCommands');
     });
     $routes->group('Mdit', ['filter' => 'authcheck'], static function($routes) {
         $routes->post('kyc/start', 'MditInvestorAPIController::startKyc');

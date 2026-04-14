@@ -18,7 +18,7 @@ class DiscordTestCategory extends SafeBaseCommand
     public function run(array $params)
     {
         [, $flags] = $this->parseParams($params);
-        $category = strtolower(trim((string) ($flags['category'] ?? '')));
+        $category = strtolower(trim((string) (($flags['category'] ?? null) ?? CLI::getOption('category') ?? '')));
         if (! in_array($category, self::SUPPORTED, true)) {
             CLI::error('Unsupported or missing --category. Allowed: ' . implode(', ', self::SUPPORTED));
             return EXIT_ERROR;
