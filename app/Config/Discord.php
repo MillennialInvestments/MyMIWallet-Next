@@ -38,6 +38,7 @@ class Discord extends BaseConfig
      * Discord interaction verification public key (used if/when you add slash commands).
      */
     public string $publicKey = '';
+    public string $applicationId = '';
 
     /**
      * Channel webhooks are the primary delivery path. Keys must match bf_discord_channels.channel_key.
@@ -72,8 +73,7 @@ class Discord extends BaseConfig
         'support'          => '',
         'staging'          => '',
         'custom_messages' => '',
-        'customer_support' => '',
-        'ticker_lookup'    => '',
+                'ticker_lookup'    => '',
         'aiops_chat'       => '',
         'ollama_chat'      => '',
         'admin_spark'      => '',
@@ -100,8 +100,7 @@ class Discord extends BaseConfig
         'support'          => '',
         'staging'          => '',
         'custom_messages' => '',
-        'customer_support' => '',
-        'ticker_lookup'    => '',
+                'ticker_lookup'    => '',
         'aiops_chat'       => '',
         'ollama_chat'      => '',
         'admin_spark'      => '',
@@ -154,8 +153,9 @@ class Discord extends BaseConfig
         $this->defaultWebhook     = (string) env('DISCORD_DEFAULT_WEBHOOK', $this->defaultWebhook);
         $this->newsWebhook       = (string) env('DISCORD_WEBHOOK_NEWS', $this->newsWebhook);
         $this->alertsWebhook     = (string) env('DISCORD_WEBHOOK_ALERTS', $this->alertsWebhook);
-        $this->publicKey          = (string) env('DISCORD_PUBLIC_KEY', '');
-        $this->botToken           = (string) env('DISCORD_BOT_TOKEN', '');
+        $this->publicKey          = (string) env('DISCORD_INTERACTIONS_PUBLIC_KEY', (string) env('DISCORD_PUBLIC_KEY', ''));
+        $this->applicationId      = (string) env('DISCORD_APPLICATION_ID', '');
+        $this->botToken           = (string) env('DISCORD_MYMI_AI_BOT_TOKEN', (string) env('DISCORD_BOT_TOKEN', ''));
         $this->guildId            = (string) env('DISCORD_GUILD_ID', '');
         $this->useBotApiFallback  = filter_var(env('DISCORD_USE_BOT_API_FALLBACK', $this->useBotApiFallback), FILTER_VALIDATE_BOOLEAN);
         $this->storeWebhookMsgId  = filter_var(env('DISCORD_STORE_WEBHOOK_MSG_ID', $this->storeWebhookMsgId), FILTER_VALIDATE_BOOLEAN);
@@ -205,8 +205,7 @@ class Discord extends BaseConfig
         $this->channelWebhooks['support']          = (string) env('DISCORD_SUPPORT_WEBHOOK', $this->channelWebhooks['support']);
         $this->channelWebhooks['staging']          = (string) env('DISCORD_STAGING_WEBHOOK', $this->channelWebhooks['staging']);
         $this->channelWebhooks['custom_messages'] = (string) env('DISCORD_CUSTOM_MESSAGES_WEBHOOK', $this->channelWebhooks['custom_messages']);
-        $this->channelWebhooks['customer_support'] = (string) env('DISCORD_CUSTOMER_SUPPORT_WEBHOOK', $this->channelWebhooks['customer_support'] ?: $this->channelWebhooks['custom_messages']);
-        $this->channelWebhooks['ticker_lookup']    = (string) env('DISCORD_TICKER_LOOKUP_WEBHOOK', $this->channelWebhooks['ticker_lookup']);
+                $this->channelWebhooks['ticker_lookup']    = (string) env('DISCORD_TICKER_LOOKUP_WEBHOOK', $this->channelWebhooks['ticker_lookup']);
         $this->channelWebhooks['aiops_chat']       = (string) env('DISCORD_AIOPS_CHAT_WEBHOOK', $this->channelWebhooks['aiops_chat']);
         $this->channelWebhooks['ollama_chat']      = (string) env('DISCORD_OLLAMA_CHAT_WEBHOOK', $this->channelWebhooks['ollama_chat']);
         $this->channelWebhooks['admin_spark']      = (string) env('DISCORD_ADMIN_SPARK_WEBHOOK', $this->channelWebhooks['admin_spark']);
@@ -231,12 +230,11 @@ class Discord extends BaseConfig
         $this->channelIds['ops']              = (string) env('DISCORD_OPS_CHANNEL_ID', $this->channelIds['ops']);
         $this->channelIds['support']          = (string) env('DISCORD_SUPPORT_CHANNEL_ID', $this->channelIds['support']);
         $this->channelIds['staging']          = (string) env('DISCORD_STAGING_CHANNEL_ID', $this->channelIds['staging']);
-        $this->channelIds['custom_messages'] = (string) env('DISCORD_CUSTOM_MESSAGES_CHANNEL_ID', $this->channelIds['custom_messages']);
-        $this->channelIds['customer_support'] = (string) env('DISCORD_CUSTOMER_SUPPORT_CHANNEL_ID', $this->channelIds['customer_support'] ?: $this->channelIds['custom_messages']);
-        $this->channelIds['ticker_lookup']    = (string) env('DISCORD_TICKER_LOOKUP_CHANNEL_ID', $this->channelIds['ticker_lookup']);
-        $this->channelIds['aiops_chat']       = (string) env('DISCORD_AIOPS_CHAT_CHANNEL_ID', $this->channelIds['aiops_chat']);
-        $this->channelIds['ollama_chat']      = (string) env('DISCORD_OLLAMA_CHAT_CHANNEL_ID', $this->channelIds['ollama_chat']);
-        $this->channelIds['admin_spark']      = (string) env('DISCORD_ADMIN_SPARK_CHANNEL_ID', $this->channelIds['admin_spark']);
+        $this->channelIds['custom_messages'] = (string) env('DISCORD_CHANNEL_ID_CUSTOM_MESSAGES', (string) env('DISCORD_CUSTOM_MESSAGES_CHANNEL_ID', $this->channelIds['custom_messages']));
+                $this->channelIds['ticker_lookup']    = (string) env('DISCORD_CHANNEL_ID_TICKER_LOOKUP', (string) env('DISCORD_TICKER_LOOKUP_CHANNEL_ID', $this->channelIds['ticker_lookup']));
+        $this->channelIds['aiops_chat']       = (string) env('DISCORD_CHANNEL_ID_AIOPS_CHAT', (string) env('DISCORD_AIOPS_CHAT_CHANNEL_ID', $this->channelIds['aiops_chat']));
+        $this->channelIds['ollama_chat']      = (string) env('DISCORD_CHANNEL_ID_OLLAMA_CHAT', (string) env('DISCORD_OLLAMA_CHAT_CHANNEL_ID', $this->channelIds['ollama_chat']));
+        $this->channelIds['admin_spark']      = (string) env('DISCORD_CHANNEL_ID_ADMIN_SPARK', (string) env('DISCORD_ADMIN_SPARK_CHANNEL_ID', $this->channelIds['admin_spark']));
 
     }
 }
