@@ -1,5 +1,6 @@
 # Disable directory browsing
 Options -Indexes
+AcceptPathInfo On
 
 # ----------------------------------------------------------------------
 # Rewrite engine

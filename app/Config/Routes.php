@@ -376,6 +376,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('Notes', 'AIAPIController::listNotes');
         $routes->post('LinkSettings', 'AIAPIController::updateLinkSettings');
     });
+    // Canonical Discord interactions + command registration endpoints.
     $routes->group('Discord', static function($routes) {
         $routes->post('completeOnboardingStep', 'DiscordAPIController::completeOnboardingStep');
         $routes->get('health', 'DiscordAPIController::health');
@@ -735,7 +736,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('sharingGuide',     'DiscordAPIController::sharingGuide');
         $routes->post('enqueue',         'DiscordAPIController::enqueue');
         $routes->post('broadcast',       'DiscordAPIController::broadcast');
-        $routes->post('interactions',    'DiscordAPIController::handleInteraction');
+        // Keep interactions canonical mapping in the earlier Discord route group.
         $routes->post('messageHook',     'DiscordAPIController::messageHook');
         $routes->get('lookup/ticker',    'DiscordAPIController::tickerLookup');
         $routes->get('lookup/crypto',    'DiscordAPIController::cryptoLookup');
@@ -745,7 +746,6 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('process-queue',    'DiscordAPIController::processQueue');
         $routes->get('coalesce-now',     'DiscordAPIController::coalesceNow');
         $routes->delete('purge-dead',    'DiscordAPIController::purgeDead');
-        $routes->get('health',           'DiscordAPIController::health');
         $routes->post('test',            'DiscordAPIController::test');
     });
 
