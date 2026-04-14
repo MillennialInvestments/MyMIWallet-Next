@@ -114,7 +114,13 @@ class DiscordAPIController extends BaseAPIController
     {
         $db = db_connect();
         $queued = $db->table('bf_discord_queue')->where('status','queued')->countAllResults();
-        return $this->respond(['queued'=>$queued,'tz'=>config('Discord')->timezone]);
+        return $this->respond([
+            'status' => 'ok',
+            'service' => 'discord_interactions',
+            'queued' => $queued,
+            'tz' => config('Discord')->timezone,
+            'time' => date(DATE_ATOM),
+        ]);
     }
 
     public function commandsCatalog(): ResponseInterface
@@ -184,7 +190,13 @@ class DiscordAPIController extends BaseAPIController
         if ($appId === '' || $guildId === '' || $botToken === '') {
             return $this->response->setStatusCode(422)->setJSON([
                 'status' => 'error',
-                'message' => 'Missing DISCORD_APPLICATION_ID, DISCORD_GUILD_ID, or DISCORD_MYMI_AI_BOT_TOKEN.',
+                'message' => 'Missing Discord command registration configuration.',
+                'required' => [
+                    'DISCORD_APPLICATION_ID' => $appId !== '',
+                    'DISCORD_GUILD_ID' => $guildId !== '',
+                    'DISCORD_INTERACTIONS_PUBLIC_KEY' => trim((string) ($cfg->publicKey ?? '')) !== '',
+                    'DISCORD_MYMI_AI_BOT_TOKEN' => $botToken !== '',
+                ],
             ]);
         }
 
