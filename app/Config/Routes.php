@@ -363,7 +363,6 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->post('Management/subsystems/action', 'ManagementAPIController::subsystemsAction', ['filter' => 'permission:admin.access']);
 
     // Public Discord help/onboarding endpoints
-    $routes->post('Discord/completeOnboardingStep', 'DiscordAPIController::completeOnboardingStep');
     $routes->match(['GET', 'POST'], 'Status/(:segment)', 'APIController::status');
     $routes->match(['GET', 'POST'], 'Investments/getSymbolsByTradeType/(:segment)', 'APIController::getSymbolsByTradeType/$1');
     $routes->get('Investments/getForecastDetails/(:segment)', 'InvestmentsAPIController::getForecastDetails/$1');
@@ -376,6 +375,12 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->post('Chat', 'AIAPIController::postChat');
         $routes->get('Notes', 'AIAPIController::listNotes');
         $routes->post('LinkSettings', 'AIAPIController::updateLinkSettings');
+    });
+    $routes->group('Discord', ['filter' => 'authcheck'], static function($routes) {
+        $routes->post('completeOnboardingStep', 'DiscordAPIController::completeOnboardingStep');
+        $routes->get('health', 'App\Modules\APIs\Controllers\DiscordAPIController::health');
+        $routes->post('interactions', 'App\Modules\APIs\Controllers\DiscordAPIController::interactions');
+        $routes->post('register-guild-commands', 'App\Modules\APIs\Controllers\DiscordAPIController::registerGuildCommands');
     });
     $routes->group('Mdit', ['filter' => 'authcheck'], static function($routes) {
         $routes->post('kyc/start', 'MditInvestorAPIController::startKyc');
