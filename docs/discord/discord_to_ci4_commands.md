@@ -134,7 +134,7 @@ Wire these routes inside the existing `/API` group (matching the Alerts/Manageme
 ## Membership and role sync (Discord ↔ CI4)
 
 - **Mapping:** Maintain a map of CI4 plans → Discord roles (e.g., `Pro` → `role_id_123`). Store in `config('Discord')->rolePlanMap` or an env JSON string.
-- **Sync job:** Nightly CRON or webhook-triggered job calls Discord’s `guilds/{guild.id}/members/{user.id}` endpoints to add/remove roles based on `bf_users` subscription status (paid, trial, past-due). Use `DISCORD_BOT_TOKEN` for authorization.
+- **Sync job:** Nightly CRON or webhook-triggered job calls Discord’s `guilds/{guild.id}/members/{user.id}` endpoints to add/remove roles based on `bf_users` subscription status (paid, trial, past-due). Use `DISCORD_MYMI_AI_BOT_TOKEN` for authorization (keep `DISCORD_BOT_TOKEN` only as documented legacy fallback).
 - **Access checks:** Interaction handler loads the linked CI4 user; if `membership_status` is expired/past-due, respond with an upgrade prompt and avoid returning premium data (portfolio, advanced alerts).
 - **Audit:** Log role sync actions in CI4 (table `discord_role_sync_logs` or existing audit tables) to trace permission changes.
 
@@ -158,7 +158,8 @@ Wire these routes inside the existing `/API` group (matching the Alerts/Manageme
 
 2. **Configure CI4 environment**
    - Add to `.env` (or server secrets):
-     - `DISCORD_BOT_TOKEN="..."`
+     - `DISCORD_MYMI_AI_BOT_TOKEN="..."`
+     - `DISCORD_BOT_TOKEN="..."` (optional legacy fallback only)
      - `DISCORD_PUBLIC_KEY="..."`
      - `DISCORD_CLIENT_ID="..."`
      - `DISCORD_CLIENT_SECRET="..."`

@@ -49,6 +49,7 @@ class GetList extends SafeBaseCommand
 
     protected function printEnvSummary(DiscordConfig $cfg): void
     {
+        // Prefer DISCORD_MYMI_AI_BOT_TOKEN; keep DISCORD_BOT_TOKEN for intentional backward compatibility.
         $botToken = $cfg->botToken ?: env('DISCORD_MYMI_AI_BOT_TOKEN') ?: env('DISCORD_BOT_TOKEN');
         $guildId  = $cfg->guildId  ?: env('DISCORD_GUILD_ID');
 

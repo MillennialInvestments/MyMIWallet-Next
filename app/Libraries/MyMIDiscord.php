@@ -705,6 +705,7 @@ class MyMIDiscord
 
     public function apiGet(string $endpoint)
     {
+        // Prefer DISCORD_MYMI_AI_BOT_TOKEN; keep DISCORD_BOT_TOKEN as explicit legacy fallback.
         $token = (string) env('DISCORD_MYMI_AI_BOT_TOKEN', (string) env('DISCORD_BOT_TOKEN', ''));
 
         if (empty($token)) {

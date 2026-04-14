@@ -155,6 +155,7 @@ class Discord extends BaseConfig
         $this->alertsWebhook     = (string) env('DISCORD_WEBHOOK_ALERTS', $this->alertsWebhook);
         $this->publicKey          = (string) env('DISCORD_INTERACTIONS_PUBLIC_KEY', (string) env('DISCORD_PUBLIC_KEY', ''));
         $this->applicationId      = (string) env('DISCORD_APPLICATION_ID', '');
+        // Primary token is DISCORD_MYMI_AI_BOT_TOKEN; DISCORD_BOT_TOKEN is retained as explicit legacy fallback.
         $this->botToken           = (string) env('DISCORD_MYMI_AI_BOT_TOKEN', (string) env('DISCORD_BOT_TOKEN', ''));
         $this->guildId            = (string) env('DISCORD_GUILD_ID', '');
         $this->useBotApiFallback  = filter_var(env('DISCORD_USE_BOT_API_FALLBACK', $this->useBotApiFallback), FILTER_VALIDATE_BOOLEAN);

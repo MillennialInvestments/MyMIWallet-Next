@@ -67,7 +67,8 @@ Set the following values in your `.env` or DreamHost panel:
 ```env
 DISCORD_WEBHOOK_NEWS="https://discord.com/api/webhooks/..."
 DISCORD_WEBHOOK_ALERTS="https://discord.com/api/webhooks/..."  # optional
-DISCORD_BOT_TOKEN="..."                                       # if bot API fallback is used
+DISCORD_MYMI_AI_BOT_TOKEN="..."                              # primary token for MyMI AI Bot
+DISCORD_BOT_TOKEN="..."                                      # optional legacy fallback only
 DISCORD_PUBLIC_KEY="..."                                      # only needed for interactions
 MARKETAUX_API_KEY="..."                                       # required for news fetching
 ```
