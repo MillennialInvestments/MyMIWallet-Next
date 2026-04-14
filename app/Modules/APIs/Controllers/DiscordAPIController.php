@@ -185,7 +185,12 @@ class DiscordAPIController extends BaseAPIController
         $cfg = $this->cfg;
         $appId = trim((string) ($cfg->applicationId ?? ''));
         $guildId = trim((string) ($cfg->guildId ?? ''));
-        $botToken = trim((string) ($cfg->botToken ?? ''));
+        $primaryToken = trim((string) env('DISCORD_MYMI_AI_BOT_TOKEN', ''));
+        $legacyFallbackToken = trim((string) env('DISCORD_BOT_TOKEN', ''));
+        $botToken = $primaryToken !== '' ? $primaryToken : trim((string) ($cfg->botToken ?? ''));
+        $tokenSource = $primaryToken !== ''
+            ? 'DISCORD_MYMI_AI_BOT_TOKEN'
+            : ($legacyFallbackToken !== '' ? 'DISCORD_BOT_TOKEN (fallback)' : 'missing');
 
         if ($appId === '' || $guildId === '' || $botToken === '') {
             return $this->response->setStatusCode(422)->setJSON([
@@ -197,6 +202,7 @@ class DiscordAPIController extends BaseAPIController
                     'DISCORD_INTERACTIONS_PUBLIC_KEY' => trim((string) ($cfg->publicKey ?? '')) !== '',
                     'DISCORD_MYMI_AI_BOT_TOKEN' => $botToken !== '',
                 ],
+                'token_source' => $tokenSource,
             ]);
         }
 
@@ -228,6 +234,7 @@ class DiscordAPIController extends BaseAPIController
             return $this->response->setStatusCode($status)->setJSON([
                 'status' => $status >= 200 && $status < 300 ? 'ok' : 'error',
                 'discord_status' => $status,
+                'token_source' => $tokenSource,
                 'response' => $body,
             ]);
         } catch (\Throwable $e) {
