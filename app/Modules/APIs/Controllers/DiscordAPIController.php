@@ -4,6 +4,11 @@ use App\Controllers\BaseAPIController;
 
 use App\Libraries\MyMIDiscord;
 use App\Libraries\MyMIAssistant;
+use App\Libraries\MyMIAlphaVantage;
+use App\Libraries\MyMIAlerts;
+use App\Libraries\MyMINews;
+use App\Libraries\MyMISEC;
+use App\Libraries\FRED;
 use App\Models\AlertsModel;
 use App\Models\DiscordLinkModel;
 use App\Models\DiscordRelayAuditModel;
@@ -180,6 +185,8 @@ class DiscordAPIController extends BaseAPIController
         $options = $payload['data']['options'][0] ?? [];
 
         switch ($command) {
+            case 'ai':
+                return $this->respond($this->handleAiChatFromInteraction($payload['data']['options'] ?? [], $payload));
             case 'mymi':
                 $sub = strtolower($options['name'] ?? '');
                 return $this->handleMymiCommand($sub, $options['options'] ?? [], $payload);
@@ -189,6 +196,10 @@ class DiscordAPIController extends BaseAPIController
                 return $this->respond($this->formatQuoteResponse($payload));
             case 'crypto':
                 return $this->respond($this->formatCryptoResponse($payload));
+            case 'news':
+                return $this->respond($this->formatNewsResponse($payload));
+            case 'custom-send':
+                return $this->respond($this->handleCustomSendCommand($payload));
             case 'aiops':
                 return $this->respond($this->handleAiopsRelayCommand($payload));
             case 'ollama':
@@ -642,7 +653,7 @@ class DiscordAPIController extends BaseAPIController
             return $this->interactionMessage('Unauthorized for /spark command.');
         }
 
-        $output = shell_exec('php ' . escapeshellarg(ROOTPATH . 'spark') . ' ' . escapeshellcmd($command) . ' 2>&1');
+        $output = command($command);
         $content = "```
 " . $this->relayService->truncateReply((string) $output) . "
 ```";
@@ -694,17 +705,25 @@ class DiscordAPIController extends BaseAPIController
             return ['status' => 'error', 'message' => 'Missing symbol'];
         }
 
-        $alert = $this->latestAlertForSymbol($symbol);
-        if (! $alert) {
-            return ['status' => 'error', 'message' => "No recent market data found for {$symbol}."];
+        $alpha = new MyMIAlphaVantage();
+        $quote = $alpha->getCurrentPrice($symbol);
+        $price = (float) ($quote['price'] ?? 0);
+        $change = (float) ($quote['change_percent'] ?? 0);
+        $source = 'AlphaVantage';
+
+        if ($price <= 0) {
+            $alert = $this->latestAlertForSymbol($symbol);
+            if (! $alert) {
+                return ['status' => 'error', 'message' => "No recent market data found for {$symbol}."];
+            }
+            $price = (float) ($alert['price'] ?? 0);
+            $target = (float) ($alert['target_price'] ?? 0);
+            $change = $target > 0 && $price > 0 ? (($target - $price) / $price) * 100 : 0.0;
+            $source = 'alerts_cache';
         }
 
-        $price = (float) ($alert['price'] ?? 0);
-        $target = (float) ($alert['target_price'] ?? 0);
-        $change = $target > 0 && $price > 0 ? (($target - $price) / $price) * 100 : 0.0;
-
         $emoji = $change >= 0 ? '📈' : '📉';
-        $message = sprintf('%s **%s** %s: $%0.2f | Δ %0.2f%% | status: %s', $emoji, $symbol, strtoupper($type), $price, $change, (string) ($alert['status'] ?? 'n/a'));
+        $message = sprintf('%s **%s** %s: $%0.2f | Δ %0.2f%% | source: %s', $emoji, $symbol, strtoupper($type), $price, $change, $source);
 
         return [
             'status' => 'success',
@@ -712,8 +731,72 @@ class DiscordAPIController extends BaseAPIController
             'price' => $price,
             'change_percent' => round($change, 2),
             'message' => $message,
-            'context' => ['created_on' => $alert['created_on'] ?? null],
+            'context' => ['source' => $source, 'indicator_healthcheck' => $alpha->didHitRateLimit() ? 'rate_limited' : 'ok'],
         ];
+    }
+
+    protected function formatNewsResponse(array $payload): array
+    {
+        $symbol = strtoupper((string) (($payload['data']['options'][0]['value'] ?? 'SPY')));
+        $items = [];
+        try {
+            $items = (new MyMIAlerts())->fetchAlphaVantageNews($symbol);
+        } catch (\Throwable $e) {
+            log_message('warning', 'Discord news alpha fetch failed: {msg}', ['msg' => $e->getMessage()]);
+        }
+
+        if (empty($items)) {
+            try {
+                $items = (new MyMINews())->fetchTopMarketAuxNews(4);
+            } catch (\Throwable $e) {
+                log_message('warning', 'Discord news fallback fetch failed: {msg}', ['msg' => $e->getMessage()]);
+            }
+        }
+
+        $macroCount = 0;
+        try {
+            $macro = (new FRED())->fetchSeriesUpdates(2);
+            $macroCount = is_array($macro['seriess'] ?? null) ? count($macro['seriess']) : 0;
+        } catch (\Throwable $e) {
+            $macroCount = 0;
+        }
+
+        $secCount = 0;
+        try {
+            $secCount = count((new MyMISEC())->filings($symbol, 2));
+        } catch (\Throwable $e) {
+            $secCount = 0;
+        }
+
+        if (empty($items)) {
+            return $this->interactionMessage("No recent news found for {$symbol}. Macro(FRED): {$macroCount}, SEC filings: {$secCount}.");
+        }
+
+        $lines = [];
+        foreach (array_slice($items, 0, 4) as $item) {
+            $title = (string) ($item['title'] ?? $item['headline'] ?? 'News');
+            $url = (string) ($item['url'] ?? $item['link'] ?? '');
+            $lines[] = $url !== '' ? "- {$title} {$url}" : "- {$title}";
+        }
+
+        return $this->interactionMessage("📰 {$symbol} recent news\n" . implode("\n", $lines) . "\nMacro(FRED): {$macroCount} | SEC filings: {$secCount}");
+    }
+
+    protected function handleCustomSendCommand(array $payload): array
+    {
+        $message = trim((string) $this->extractOptionValue((array) ($payload['data']['options'] ?? []), 'message'));
+        if ($message === '') {
+            return $this->interactionMessage('Usage: /custom-send message:<text> [subject] [recipient_email]');
+        }
+
+        $subject = trim((string) $this->extractOptionValue((array) ($payload['data']['options'] ?? []), 'subject')) ?: 'Custom Message';
+        $recipientEmail = trim((string) $this->extractOptionValue((array) ($payload['data']['options'] ?? []), 'recipient_email'));
+        $content = "📩 **{$subject}**\n{$message}";
+
+        $queued = $this->discord->enqueuePlain('custom_messages', $content, ['priority' => 5, 'recipient_email' => $recipientEmail]);
+        $this->auditRelay('custom_send', 'custom-send', $payload, ['success' => $queued, 'content' => $content]);
+
+        return $this->interactionMessage($queued ? 'Queued to custom_messages.' : 'Unable to queue custom message.');
     }
 
     protected function interactionMessage(string $content, bool $ephemeral = true): array

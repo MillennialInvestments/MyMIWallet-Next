@@ -22,6 +22,7 @@ class DiscordOpsRelayService
             [
                 ['base' => $this->config->aiopsPrimaryBaseUrl, 'token' => $this->config->aiopsInternalToken],
                 ['base' => $this->config->aiopsFallbackBaseUrl, 'token' => $this->config->aiopsInternalToken],
+                ['base' => $this->config->aiopsSecondaryBaseUrl, 'token' => $this->config->aiopsInternalToken],
             ],
             '/api/chat',
             $context
@@ -36,6 +37,7 @@ class DiscordOpsRelayService
             [
                 ['base' => $this->config->ollamaPrimaryBaseUrl, 'token' => $this->config->ollamaInternalToken],
                 ['base' => $this->config->ollamaFallbackBaseUrl, 'token' => $this->config->ollamaInternalToken],
+                ['base' => $this->config->ollamaSecondaryBaseUrl, 'token' => $this->config->ollamaInternalToken],
             ],
             '/api/chat',
             $context

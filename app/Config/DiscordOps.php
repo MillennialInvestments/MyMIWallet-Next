@@ -9,16 +9,19 @@ use CodeIgniter\Config\BaseConfig;
 class DiscordOps extends BaseConfig
 {
     public string $aiopsPrimaryBaseUrl = 'https://aiops.timothyburks.com';
-    public string $aiopsFallbackBaseUrl = '';
+    public string $aiopsFallbackBaseUrl = 'https://aiops.mymiwallet.com';
+    public string $aiopsSecondaryBaseUrl = '';
     public string $aiopsInternalToken = '';
 
     public string $ollamaPrimaryBaseUrl = 'https://ollama.timothyburks.com';
     public string $ollamaFallbackBaseUrl = '';
+    public string $ollamaSecondaryBaseUrl = '';
     public string $ollamaInternalToken = '';
 
     /** @var array<string,string> */
     public array $channelRouting = [
-        'customer_support' => 'support',
+        'custom_messages' => 'custom_messages',
+        'customer_support' => 'custom_messages',
         'ticker_lookup' => 'ops',
         'aiops_chat' => 'aiops_chat',
         'ollama_chat' => 'ollama_chat',
@@ -52,10 +55,12 @@ class DiscordOps extends BaseConfig
 
         $this->aiopsPrimaryBaseUrl = rtrim((string) env('AIOPS_PRIMARY_BASE_URL', $this->aiopsPrimaryBaseUrl), '/');
         $this->aiopsFallbackBaseUrl = rtrim((string) env('AIOPS_FALLBACK_BASE_URL', $this->aiopsFallbackBaseUrl), '/');
+        $this->aiopsSecondaryBaseUrl = rtrim((string) env('AIOPS_SECONDARY_BASE_URL', $this->aiopsSecondaryBaseUrl), '/');
         $this->aiopsInternalToken = (string) env('AIOPS_INTERNAL_TOKEN', $this->aiopsInternalToken);
 
         $this->ollamaPrimaryBaseUrl = rtrim((string) env('OLLAMA_PRIMARY_BASE_URL', $this->ollamaPrimaryBaseUrl), '/');
         $this->ollamaFallbackBaseUrl = rtrim((string) env('OLLAMA_FALLBACK_BASE_URL', $this->ollamaFallbackBaseUrl), '/');
+        $this->ollamaSecondaryBaseUrl = rtrim((string) env('OLLAMA_SECONDARY_BASE_URL', $this->ollamaSecondaryBaseUrl), '/');
         $this->ollamaInternalToken = (string) env('OLLAMA_INTERNAL_TOKEN', $this->ollamaInternalToken);
 
         $adminUsers = trim((string) env('DISCORD_ADMIN_USER_IDS', ''));

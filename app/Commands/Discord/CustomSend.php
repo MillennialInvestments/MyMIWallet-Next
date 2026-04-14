@@ -5,16 +5,16 @@ use App\Libraries\MyMIDiscord;
 use App\Models\DiscordManualMessageModel;
 use CodeIgniter\CLI\CLI;
 
-class CustomerSend extends SafeBaseCommand
+class CustomSend extends SafeBaseCommand
 {
     protected $group = 'Discord';
-    protected $name = 'discord:customer:send';
-    protected $description = 'Send or queue a customer-facing message to a chosen Discord channel key and audit it.';
+    protected $name = 'discord:custom:send';
+    protected $description = 'Send or queue a custom message to a chosen Discord channel key and audit it.';
     protected $options = [
         '--channel-key' => 'Target channel key',
         '--message' => 'Message content',
-        '--customer-id' => 'Optional customer ID',
-        '--customer-email' => 'Optional customer email',
+        '--recipient-id' => 'Optional recipient ID',
+        '--recipient-email' => 'Optional recipient email',
         '--subject' => 'Optional subject',
         '--priority' => 'Optional priority (default 5)',
         '--queue' => 'Queue instead of immediate send',
@@ -38,7 +38,7 @@ class CustomerSend extends SafeBaseCommand
         }
 
         $priority = max(1, (int) ($flags['priority'] ?? 5));
-        $subject = trim((string) ($flags['subject'] ?? 'Customer Message'));
+        $subject = trim((string) ($flags['subject'] ?? 'Custom Message'));
         $isQueue = isset($flags['queue']);
         $discord = new MyMIDiscord();
 
@@ -65,8 +65,8 @@ class CustomerSend extends SafeBaseCommand
         $audit->insert([
             'sender_identity' => get_current_user() ?: 'spark-cli',
             'channel_key' => $channelKey,
-            'customer_id' => ($flags['customer-id'] ?? null) !== null ? (int) $flags['customer-id'] : null,
-            'customer_email' => ($flags['customer-email'] ?? null) !== null ? (string) $flags['customer-email'] : null,
+            'recipient_id' => ($flags['recipient-id'] ?? null) !== null ? (int) $flags['recipient-id'] : null,
+            'recipient_email' => ($flags['recipient-email'] ?? null) !== null ? (string) $flags['recipient-email'] : null,
             'subject' => $subject,
             'priority' => $priority,
             'message_payload' => json_encode($payload, JSON_UNESCAPED_SLASHES),

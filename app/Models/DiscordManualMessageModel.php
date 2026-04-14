@@ -14,8 +14,8 @@ class DiscordManualMessageModel extends Model
     protected $allowedFields = [
         'sender_identity',
         'channel_key',
-        'customer_id',
-        'customer_email',
+        'recipient_id',
+        'recipient_email',
         'subject',
         'priority',
         'message_payload',
