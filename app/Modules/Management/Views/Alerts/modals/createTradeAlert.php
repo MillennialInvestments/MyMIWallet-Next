@@ -116,7 +116,7 @@ $fieldData = [
 <div class="modal-body">
     <form class="form-horizontal" id="createTradeAlertForm" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
-        <input type="hidden" name="user_id" value="<?= $cuID ?? auth()->id() ?>">
+        <input type="hidden" name="user_id" value="<?= $cuID ?? auth()->user()->id ?>">
         <input type="hidden" name="trade_id" value="<?= $tradeAlertID ?>">
         <input type="hidden" name="formMode" value="<?= $formMode ?? 'Add' ?>">
         <?php if(!empty($tradeAlertID)) : ?>

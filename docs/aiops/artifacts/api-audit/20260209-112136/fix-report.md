@@ -24,7 +24,7 @@ Based on `report.json` (161 failed endpoints), failures were bucketed by route p
   - Added explicit internal-access gate (`is_cli()` or `internalToken->allowed()`).
   - Added exception safety + structured API error logging.
 - `GET /API/AiOps/status`
-  - Added internal-or-auth gate (`auth()->id()` or internal token).
+  - Added internal-or-auth gate (`auth()->user()->id` or internal token).
   - Added exception safety + structured API error logging.
 
 ### Shared API base hardening

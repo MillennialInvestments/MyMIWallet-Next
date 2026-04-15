@@ -98,7 +98,7 @@ class AiOpsAPIController extends BaseAPIController
             return $this->failValidationErrors('Unsupported toggle');
         }
 
-        $userId    = function_exists('auth') ? auth()->id() : null;
+        $userId    = function_exists('auth') ? auth()->user()->id : null;
         if ($userId === null) {
             return $this->fail('Unauthorized', 401);
         }
@@ -124,7 +124,7 @@ class AiOpsAPIController extends BaseAPIController
         $payload    = $this->request->getJSON(true) ?? $this->request->getPost();
         $jobKey     = $payload['jobKey'] ?? '';
         $subsystem  = $payload['subsystem'] ?? $this->mapSubsystem($jobKey);
-        $userId     = function_exists('auth') ? auth()->id() : null;
+        $userId     = function_exists('auth') ? auth()->user()->id : null;
         $webhookUrl = $this->getWebhookUrl($jobKey);
         $signature  = $this->request->getHeaderLine('X-MyMI-Signature');
 

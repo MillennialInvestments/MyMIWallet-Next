@@ -91,7 +91,7 @@ class WalletsAPIController extends BaseAPIController
             $uid = $this->currentUserId();
             // Optional: fall back to Shield/Myth\Auth helper if present
             if (!$uid && function_exists('auth') && auth()->loggedIn()) {
-                $uid = (int) auth()->id();
+                $uid = (int) auth()->user()->id;
             }
             if (!$uid) {
                 return $this->failUnauthorized('Unauthorized');
@@ -128,7 +128,7 @@ class WalletsAPIController extends BaseAPIController
         try {
             $uid = $this->currentUserId();
             if (!$uid && function_exists('auth') && auth()->loggedIn()) {
-                $uid = (int) auth()->id();
+                $uid = (int) auth()->user()->id;
             }
             if (!$uid) {
                 return $this->failUnauthorized('Unauthorized');
@@ -150,7 +150,7 @@ class WalletsAPIController extends BaseAPIController
     {
         try {
             $uid = $this->currentUserId();
-            if (!$uid && function_exists('auth') && auth()->loggedIn()) { $uid = (int) auth()->id(); }
+            if (!$uid && function_exists('auth') && auth()->loggedIn()) { $uid = (int) auth()->user()->id; }
             if (!$uid) return $this->failUnauthorized('Unauthorized');
 
             $category    = strtolower((string) $this->request->getPost('category'));
@@ -241,7 +241,7 @@ class WalletsAPIController extends BaseAPIController
     {
         try {
             $uid = $this->currentUserId();
-            if (!$uid && function_exists('auth') && auth()->loggedIn()) { $uid = (int) auth()->id(); }
+            if (!$uid && function_exists('auth') && auth()->loggedIn()) { $uid = (int) auth()->user()->id; }
             if (!$uid) return $this->failUnauthorized('Unauthorized');
             $id = (int) $id;
             if ($id <= 0) {
@@ -388,7 +388,7 @@ class WalletsAPIController extends BaseAPIController
     {
         try {
             $uid = $this->currentUserId();
-            if (!$uid && function_exists('auth') && auth()->loggedIn()) { $uid = (int) auth()->id(); }
+            if (!$uid && function_exists('auth') && auth()->loggedIn()) { $uid = (int) auth()->user()->id; }
             if (!$uid) return $this->failUnauthorized('Unauthorized');
             $category = strtolower((string) $this->request->getGet('category'));
             $m = new WalletModel();
@@ -406,7 +406,7 @@ class WalletsAPIController extends BaseAPIController
     {
         try {
             $uid = $this->currentUserId();
-            if (!$uid && function_exists('auth') && auth()->loggedIn()) { $uid = (int) auth()->id(); }
+            if (!$uid && function_exists('auth') && auth()->loggedIn()) { $uid = (int) auth()->user()->id; }
             if (!$uid) return $this->failUnauthorized('Unauthorized');
             $id = (int) $id;
             if ($id <= 0) {
@@ -446,7 +446,7 @@ class WalletsAPIController extends BaseAPIController
     private function updateByType($id, string $type): ResponseInterface {
         try {
             $uid = $this->currentUserId();
-            if (!$uid && function_exists('auth') && auth()->loggedIn()) { $uid = (int) auth()->id(); }
+            if (!$uid && function_exists('auth') && auth()->loggedIn()) { $uid = (int) auth()->user()->id; }
             if (!$uid) return $this->failUnauthorized('Unauthorized');
 
             $id = (int) $id;

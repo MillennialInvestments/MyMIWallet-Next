@@ -42,7 +42,7 @@ if (!$finalPageView || !$finalFieldData) {
     $wm = model(\App\Models\WalletModel::class);
 
     // Current user context (if controller didn’t set them)
-    $cuID       = (int) ($cuID       ?? (function_exists('auth') && auth()->loggedIn() ? (int) auth()->id() : 0));
+    $cuID       = (int) ($cuID       ?? (function_exists('auth') && auth()->loggedIn() ? (int) auth()->user()->id : 0));
     $cuEmail    = (string) ($cuEmail  ?? '');
     $cuUsername = (string) ($cuUsername ?? '');
     $beta       = (string) (($siteSettings->beta ?? 0) . '');

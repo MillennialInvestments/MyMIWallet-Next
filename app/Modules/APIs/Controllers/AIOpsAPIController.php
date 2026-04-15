@@ -262,7 +262,7 @@ class AIOpsAPIController extends BaseAPIController
             'aiops_alert_email',
         ];
 
-        $userId = function_exists('auth') ? auth()->id() : null;
+        $userId = function_exists('auth') ? auth()->user()->id : null;
         if ($userId === null) {
             return $this->fail('Unauthorized', 401);
         }

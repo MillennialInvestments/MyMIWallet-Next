@@ -17,7 +17,7 @@ class InternalEndpointGuardService
         }
 
         if ($allowAuthenticatedUser) {
-            $userId = function_exists('auth') ? auth()->id() : null;
+            $userId = function_exists('auth') ? auth()->user()->id : null;
             if ($userId !== null) {
                 return null;
             }

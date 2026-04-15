@@ -354,7 +354,7 @@ class AlertsAPIController extends BaseAPIController
 
         $data = [
             'alert' => $alert,
-            'cuID'  => auth()->id() ?? session('user_id'),
+            'cuID'  => auth()->user()->id ?? session('user_id'),
             'nonce' => ['style' => '', 'script' => ''],
         ];
 
