@@ -571,8 +571,6 @@ class AuthController extends BaseController
     // }
     public function attemptRegister()
     {
-        $requestId = (string) ($this->request->getHeaderLine('X-Request-Id') ?: bin2hex(random_bytes(6)));
-        $this->requestId = $requestId;
         log_message('debug', '[AUTH_SUBMIT] attemptRegister reached', [
             'request_id' => $requestId,
             'method' => $this->request->getMethod(),
@@ -581,6 +579,8 @@ class AuthController extends BaseController
             'post_keys' => array_keys($this->request->getPost() ?? []),
             'has_csrf' => array_key_exists(csrf_token(), $this->request->getPost() ?? []),
         ]);
+        $requestId = (string) ($this->request->getHeaderLine('X-Request-Id') ?: bin2hex(random_bytes(6)));
+        $this->requestId = $requestId;
         $this->ipHistoryModel->record(null, (string) $this->request->getPost('email'), $this->request->getIPAddress(), (string) $this->request->getUserAgent());
         /** @var AuthAuditService $auditService */
         $auditService = service('authAuditService');

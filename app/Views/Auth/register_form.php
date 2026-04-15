@@ -81,3 +81,15 @@
         <?= form_close(); ?>
     </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form');
+    if (form) {
+        console.log('[REGISTER_FORM_DEBUG]', {
+            action: form.getAttribute('action'),
+            resolvedAction: form.action,
+            method: form.getAttribute('method'),
+        });
+    }
+});
+</script>
