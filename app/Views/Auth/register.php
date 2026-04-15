@@ -40,14 +40,8 @@ $safeRenderView = static function ($candidate, array $candidateData = [], ?strin
 <?= $this->extend($config->viewLayout) ?>
 <?= $this->section('main') ?>
 
-<?php if (session()->has('auth_message')) : ?>
-    <?php $msg = session('auth_message'); ?>
-    <div class="alert alert-<?= esc($msg['type']) ?>">
-        <?= esc($msg['text']) ?>
-    </div>
-<?php endif; ?>
-
 <div class="mt-5">
+    <?= view('App\Views\Auth\_message_block') ?>
     <div class="row bg-white rounded shadow-sm p-3 mt-5">
         <?php if ($registerFormat === 'Split-Form' && ! empty($registrationSourceContent['intro_view'])) : ?>
             <div class="col-sm-6 border-right pr-3">

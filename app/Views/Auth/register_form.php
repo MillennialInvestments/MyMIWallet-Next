@@ -6,15 +6,11 @@
         <p class="text-center text-muted mb-2"><?= esc($registrationSourceContent['headline']) ?></p>
     <?php endif; ?>
     <div class="card-body">
-        <?php if (session()->has('auth_message')) : $msg = session('auth_message'); ?>
-            <div class="alert alert-<?= esc($msg['type'] ?? 'info') ?>"><?= esc($msg['text'] ?? '') ?></div>
-        <?php endif; ?>
         <?php if (session()->has('errors')) : foreach ((array) session('errors') as $error) : ?>
             <div class="alert alert-danger"><?= esc((string) $error) ?></div>
         <?php endforeach; endif; ?>
 
-        <!-- Placement comment: form action uses current path so source-specific routes preserve attribution. -->
-        <form class="form-horizontal" id="user_register_form" action="<?= esc(current_url()) ?>" method="POST" novalidate>
+        <form class="form-horizontal" id="user_register_form" action="<?= site_url('register') ?>" method="post" novalidate>
             <?= csrf_field() ?>
             <?php $registrationAttribution = is_array($registrationAttribution ?? null) ? $registrationAttribution : []; ?>
             <input type="hidden" name="referralCode" value="<?= esc($referralCode ?? set_value('referralCode')) ?>">
@@ -62,7 +58,7 @@
                 <input type="text" class="form-control" id="referral_edit" name="referral" value="<?= esc($referralCode ?? set_value('referral')) ?>">
             </div>
 
-            <button type="submit" id="register_submit_btn" class="btn btn-block btn-primary">Register</button>
+            <button type="submit" class="btn btn-block btn-primary">Register</button>
 
             <div class="control-group form-row pt-3">
                 <div class="controls col-12 pl-0 ms-0">
@@ -85,17 +81,3 @@
         <?= form_close(); ?>
     </div>
 </div>
-
-<script>
-(function () {
-    const form = document.getElementById('user_register_form');
-    const submitBtn = document.getElementById('register_submit_btn');
-    if (!form || !submitBtn) return;
-
-    form.addEventListener('submit', function () {
-        submitBtn.disabled = true;
-        submitBtn.dataset.originalText = submitBtn.innerText;
-        submitBtn.innerText = 'Creating Account...';
-    });
-})();
-</script>
