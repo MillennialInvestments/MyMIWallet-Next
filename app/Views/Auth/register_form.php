@@ -58,7 +58,7 @@
                 <input type="text" class="form-control" id="referral_edit" name="referral" value="<?= esc($referralCode ?? set_value('referral')) ?>">
             </div>
 
-            <button type="submit" class="btn btn-primary w-100">Create Account</button>
+            <button type="submit" class="btn btn-primary">Create Account</button>
 
             <div class="control-group form-row pt-3">
                 <div class="controls col-12 pl-0 ms-0">

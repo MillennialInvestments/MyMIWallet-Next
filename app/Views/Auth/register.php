@@ -3,8 +3,25 @@ $req = service('request');
 $uri = $uri ?? ($req ? $req->getUri() : null);
 $this->config = config('Auth');
 $config = $this->config;
-$currentURL = current_url();
-$referralLink = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $currentURL;
+$referralLink = isset($_SERVER['HTTP_REFERER']) ? (string) $_SERVER['HTTP_REFERER'] : site_url('register');
+$referralParts = parse_url($referralLink);
+if (is_array($referralParts) && ! empty($referralParts['query'])) {
+    $referralQuery = [];
+    parse_str((string) $referralParts['query'], $referralQuery);
+    foreach (array_keys($referralQuery) as $queryKey) {
+        if (
+            in_array($queryKey, ['_gl', '_ga', 'gclid', 'fbclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'], true)
+            || str_starts_with((string) $queryKey, '_ga_')
+        ) {
+            unset($referralQuery[$queryKey]);
+        }
+    }
+
+    $referralLink = (string) ($referralParts['path'] ?? $referralLink);
+    if ($referralQuery !== []) {
+        $referralLink .= '?' . http_build_query($referralQuery);
+    }
+}
 $registrationAttribution = is_array($registrationAttribution ?? null) ? $registrationAttribution : [];
 $registrationSourceContent = is_array($registrationSourceContent ?? null) ? $registrationSourceContent : [];
 $referralPlatform = (string) ($registrationAttribution['view_slug'] ?? 'Free');
@@ -38,7 +55,9 @@ $safeRenderView = static function ($candidate, array $candidateData = [], ?strin
 };
 
 $resolvedIntroView = null;
-if (
+if (isset($introView) && is_string($introView) && trim($introView) !== '') {
+    $resolvedIntroView = trim($introView, "/\\ \t\n\r\0\x0B");
+} elseif (
     isset($registrationSourceContent)
     && is_array($registrationSourceContent)
     && isset($registrationSourceContent['intro_view'])
@@ -47,7 +66,7 @@ if (
 ) {
     $resolvedIntroView = trim($registrationSourceContent['intro_view'], "/\\ \t\n\r\0\x0B");
 }
-log_message('debug', '[AUTH_REGISTER_VIEW] intro partial', ['introView' => $resolvedIntroView]);
+log_message('debug', '[AUTH_REGISTER_VIEW] intro partial', ['resolvedIntroView' => $resolvedIntroView]);
 ?>
 <?= $this->extend($config->viewLayout) ?>
 <?= $this->section('main') ?>

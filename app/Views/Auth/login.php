@@ -51,7 +51,7 @@
 						</div>
 					<?php endif; ?>
 
-					 <form action="<?= site_url('login') ?>" method="post">
+					 <form action="<?= site_url('login') ?>" method="post" accept-charset="utf-8" novalidate>
 						<?= csrf_field() ?>
 						<input type="hidden" name="redirect_url" value="<?= session('redirect_url') ?>">
 
@@ -100,7 +100,7 @@
 					<hr>
 
 <?php if ($config->allowRegistration) : ?>
-					<p><a href="<?= url_to('register') ?>"><?=lang('Auth.needAnAccount')?></a></p>
+					<p><a href="<?= site_url('register') ?>"><?=lang('Auth.needAnAccount')?></a></p>
 <?php endif; ?>
                     <p><a href="<?= site_url('/activate') ?>">Activate Account?</a></p>
 <?php if ($config->activeResetter): ?>

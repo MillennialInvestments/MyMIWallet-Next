@@ -32,9 +32,9 @@
 					<hr>
 
 <?php if ($config->allowRegistration) : ?>
-					<p><a href="<?= url_to('register') ?>"><?=lang('Auth.needAnAccount')?></a></p>
+					<p><a href="<?= site_url('register') ?>"><?=lang('Auth.needAnAccount')?></a></p>
 <?php endif; ?>
-					<p><a href="<?= url_to('login') ?>"><?=lang('Auth.alreadyRegistered')?></a></p>
+					<p><a href="<?= site_url('login') ?>"><?=lang('Auth.alreadyRegistered')?></a></p>
 <?php if ($config->activeResetter): ?>
 					<p><a href="<?= url_to('forgot') ?>"><?=lang('Auth.forgotYourPassword')?></a></p>
 <?php endif; ?>
