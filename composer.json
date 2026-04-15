@@ -10,11 +10,13 @@
         "slack": "https://codeigniterchat.slack.com"
     },
     "require": {
-        "php": "^8.1",
         "codeigniter4/framework": "^4.0",
+        "codeigniter4/settings": "^3.0",
+        "codeigniter4/shield": "^1.0",
+        "deployed/myth-to-shield": "^1.0",
         "erusev/parsedown": "^1.7",
         "guzzlehttp/guzzle": "^7.10",
-        "myth/auth": "^1.2",
+        "php": "^8.1",
         "predis/predis": "^3.4",
         "sebastian/diff": "^5.1",
         "tatter/alerts": "^3.1",

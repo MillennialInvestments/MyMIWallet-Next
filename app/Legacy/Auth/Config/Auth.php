@@ -1,15 +1,10 @@
 <?php
 
-namespace Config;
+namespace App\Legacy\Auth\Config;
 
 
 class Auth extends \Myth\Auth\Config\Auth
 {
-    /**
-     * Toggle runtime auth provider.
-     * false = Myth/Auth, true = Shield.
-     */
-    public bool $useShield = false;
     /**
      * --------------------------------------------------------------------
      * Default User Group
@@ -123,17 +118,6 @@ class Auth extends \Myth\Auth\Config\Auth
     ];
 
     /**
-     * Shield route/controller adapters should keep rendering the same templates
-     * during migration testing so UI remains unchanged.
-     *
-     * @var array<string, string>
-     */
-    public array $shieldViews = [
-        'login'    => 'Auth/login',
-        'register' => 'Auth/register',
-    ];
-
-    /**
      * --------------------------------------------------------------------
      * Layout for the views to extend
      * --------------------------------------------------------------------
@@ -237,7 +221,7 @@ class Auth extends \Myth\Auth\Config\Auth
      *
      * @var string|null Name of the ActivatorInterface class
      */
-    public $requireActivation = 'App\Authentication\Activators\EmailActivator';
+    public $requireActivation = 'App\Legacy\Auth\Authentication\Activators\EmailActivator';
 
     /**
      * --------------------------------------------------------------------
@@ -249,7 +233,7 @@ class Auth extends \Myth\Auth\Config\Auth
      *
      * @var string|null Name of the ResetterInterface class
      */
-    public $activeResetter = 'App\Authentication\Resetters\EmailResetter';
+    public $activeResetter = 'App\Legacy\Auth\Authentication\Resetters\EmailResetter';
 
     /**
      * --------------------------------------------------------------------

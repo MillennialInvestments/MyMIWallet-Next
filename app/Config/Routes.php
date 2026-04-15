@@ -213,6 +213,12 @@ $routes->group('', ['namespace' => 'App\Controllers', 'filter' => 'no-cache'], s
     $routes->post('register/resend-activation', 'AuthController::resendRegistrationActivation', ['as' => 'register-resend-activation']);
 // });
 
+    // Shield migration test routes (parallel to Myth/Auth routes).
+    $routes->get('login-shield', '\\App\\Controllers\\ShieldAuth\\Login::index', ['as' => 'login-shield']);
+    $routes->post('login-shield', '\\App\\Controllers\\ShieldAuth\\Login::attempt', ['as' => 'login-shield-submit']);
+    $routes->get('register-shield', '\\App\\Controllers\\ShieldAuth\\Register::index', ['as' => 'register-shield']);
+    $routes->post('register-shield', '\\App\\Controllers\\ShieldAuth\\Register::attempt', ['as' => 'register-shield-submit']);
+
 // $routes->group('', ['namespace' => 'App\Controllers'], static function ($routes) {
 
     // TEMP: handle accidental /Login and redirect to lowercase
