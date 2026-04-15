@@ -80,4 +80,16 @@ class BlogModel extends Model
 
         return $category ?: null;
     }
+
+    public function getPublishedListing(int $perPage = 12): array
+    {
+        $perPage = max(1, $perPage);
+        $now = date('Y-m-d H:i:s');
+
+        return $this->asArray()
+            ->where('published_at IS NOT NULL')
+            ->where('published_at <=', $now)
+            ->orderBy('published_at', 'DESC')
+            ->paginate($perPage);
+    }
 }

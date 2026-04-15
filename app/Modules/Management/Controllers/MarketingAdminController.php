@@ -92,7 +92,16 @@ class MarketingAdminController extends BaseAdminController
         $this->socialGeneratedPostModel = new SocialGeneratedPostModel();
         $this->socialDistributionQueueModel = new SocialDistributionQueueModel();
         $this->postFormatter = new SocialPostFormatter();
-        $this->MyMIMarketing = service('MyMIMarketing');
+        try {
+            $this->MyMIMarketing = $this->getMyMIMarketing();
+        } catch (\Throwable $e) {
+            $this->logRenderFailureToChannels('critical', 'MarketingAdminController failed to initialize MyMIMarketing service', [
+                'controller' => static::class,
+                'method' => __METHOD__,
+                'error' => $e->getMessage(),
+            ]);
+            throw $e;
+        }
         $this->db = \Config\Database::connect();
         // $this->userModel = new UserModel();
 
@@ -119,7 +128,16 @@ class MarketingAdminController extends BaseAdminController
         // $this->userAccount = $this->getMyMIUser()->getUserInformation($this->cuID);
         $this->userDashboard = $this->getMyMIDashboard()->dashboardInfo($this->cuID);
         $this->departmentTasks = $this->getMyMIAnalytics()->get_department_tasks($this->uri->getSegment(2), ['Page SEO Edit']);
-        $this->getBlogPosts = $this->getMyMIMarketing()->getBlogPosts();
+        try {
+            $this->getBlogPosts = $this->getMyMIMarketing()->getBlogPosts();
+        } catch (\Throwable $e) {
+            $this->logRenderFailureToChannels('error', 'MarketingAdminController failed to initialize MyMIMarketing service', [
+                'controller' => static::class,
+                'method' => __METHOD__,
+                'error' => $e->getMessage(),
+            ]);
+            $this->getBlogPosts = [];
+        }
     }
 
     public function commonData(): array {
@@ -200,7 +218,16 @@ class MarketingAdminController extends BaseAdminController
             $this->uri->getSegment(2),
             ['Page SEO Edit']
         );
-        $this->getBlogPosts = $this->getMyMIMarketing()->getBlogPosts();
+        try {
+            $this->getBlogPosts = $this->getMyMIMarketing()->getBlogPosts();
+        } catch (\Throwable $e) {
+            $this->logRenderFailureToChannels('error', 'MarketingAdminController failed to initialize MyMIMarketing service', [
+                'controller' => static::class,
+                'method' => __METHOD__,
+                'error' => $e->getMessage(),
+            ]);
+            $this->getBlogPosts = [];
+        }
         $this->userAccount = $this->getMyMIUser()->getUserInformation($this->cuID);
         $userBudget = $this->getMyMIBudget()->getUserBudget($this->cuID);
         log_message('info', 'DashboardController L72 - $checkingSummary: ' . ($userBudget['checkingSummary'] ?? ''));

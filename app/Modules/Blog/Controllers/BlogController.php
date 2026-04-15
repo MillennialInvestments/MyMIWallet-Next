@@ -109,7 +109,16 @@ class BlogController extends UserController
         $this->data              = $this->commonData();
 
         $perPage = 12;
+        if (! method_exists($this->blogModel, 'getPublishedListing')) {
+            log_message('critical', 'BlogController expected BlogModel::getPublishedListing but method not found');
+            throw new \RuntimeException('BlogModel::getPublishedListing is required for blog listing.');
+        }
         $posts   = $this->blogModel->getPublishedListing($perPage);
+        if ($posts === []) {
+            log_message('warning', 'BlogController::index no published blog posts were returned.', [
+                'per_page' => $perPage,
+            ]);
+        }
 
         $this->data['posts'] = $posts;
         $this->data['pager'] = $this->blogModel->pager;
@@ -208,7 +217,17 @@ class BlogController extends UserController
         $data['pageTitle'] = sprintf('MyMI Blog | %s', ucwords(str_replace('-', ' ', $category)));
 
         $perPage = 12;
+        if (! method_exists($this->blogModel, 'getPublishedListing')) {
+            log_message('critical', 'BlogController expected BlogModel::getPublishedListing but method not found');
+            throw new \RuntimeException('BlogModel::getPublishedListing is required for blog category listing.');
+        }
         $posts   = $this->blogModel->getPublishedListing($perPage);
+        if ($posts === []) {
+            log_message('warning', 'BlogController::category no published blog posts were returned.', [
+                'category' => $category,
+                'per_page' => $perPage,
+            ]);
+        }
 
         $data['posts'] = $posts;
         $data['pager'] = $this->blogModel->pager;

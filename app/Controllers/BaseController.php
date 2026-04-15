@@ -12,7 +12,7 @@ use Throwable;
 use Psr\Log\LoggerInterface;
 
 
-use App\Libraries\{CrudCacheInvalidator, MyMIAdvisor, MyMIAlerts, MyMIAlphaVantage, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIInvestments, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets, SiteSettingsRuntime};
+use App\Libraries\{CrudCacheInvalidator, MyMIAdvisor, MyMIAlerts, MyMIAlphaVantage, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIInvestments, MyMIMarketing, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets, SiteSettingsRuntime};
 use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService};
 use App\Models\WalletModel; // <-- add this
 
@@ -65,6 +65,7 @@ abstract class BaseController extends Controller
     private ?MyMIDashboard $myMIDashboard = null;
     private ?MyMIExchange $myMIExchange = null;
     private ?MyMIInvestments $myMIInvestments = null;
+    private ?MyMIMarketing $myMIMarketing = null;
     private ?MyMIProjects $myMIProjects = null;
     private ?MyMISolana $myMISolana = null;
     private ?MyMIUser $myMIUser = null;
@@ -261,22 +262,32 @@ abstract class BaseController extends Controller
 
     protected function safeView($view, array $data = [])
     {
-        if (! is_string($view) || trim($view) === '') {
-            log_message('critical', '[VIEW_RESOLUTION] Invalid view passed to safeView()', [
-                'type' => gettype($view),
-                'value' => $view,
-            ]);
-            throw new \InvalidArgumentException('View must be a non-empty string.');
-        }
+        $normalizedView = $this->requireValidViewPath($view, 'view', __METHOD__);
 
-        $normalizedView = trim($view, "/\\ \t\n\r\0\x0B");
+        $resolvedLayout = $this->resolveOptionalViewPath(
+            $data['layout'] ?? null,
+            'layout',
+            'themes/public/layouts/index'
+        );
+        $resolvedHeader = $this->resolveOptionalViewPath(
+            $data['headerView'] ?? null,
+            'headerView'
+        );
+        $resolvedFooter = $this->resolveOptionalViewPath(
+            $data['footerView'] ?? null,
+            'footerView'
+        );
 
-        if ($normalizedView === '') {
-            throw new \InvalidArgumentException('View cannot normalize to an empty path.');
-        }
+        $this->logRenderDiagnostics($normalizedView, $resolvedLayout, [
+            'headerView' => $resolvedHeader,
+            'footerView' => $resolvedFooter,
+            'authLayout' => $this->resolveOptionalViewPath($data['authLayout'] ?? null, 'authLayout'),
+            'contentView' => $this->resolveOptionalViewPath($data['contentView'] ?? null, 'contentView'),
+            'introView' => $this->resolveOptionalViewPath($data['introView'] ?? null, 'introView'),
+        ]);
 
         if (! is_file(APPPATH . 'Views/' . str_replace('\\', '/', $normalizedView) . '.php')) {
-            log_message('error', '[MISSING VIEW] ' . $view);
+            log_message('error', '[MISSING VIEW] {view}', ['view' => $normalizedView]);
         }
 
         return view($normalizedView, $data);
@@ -1007,6 +1018,29 @@ abstract class BaseController extends Controller
 
         return $this->myMIInvestments;
     }
+    protected function getMyMIMarketing(): MyMIMarketing
+    {
+        if (! ($this->myMIMarketing instanceof MyMIMarketing)) {
+            try {
+                $svc = service('myMIMarketing');
+                if ($svc instanceof MyMIMarketing) {
+                    $this->myMIMarketing = $svc;
+                }
+            } catch (\Throwable $e) {
+                $this->logRenderFailureToChannels(
+                    'warning',
+                    'BaseController failed to resolve myMIMarketing service; creating new instance.',
+                    ['error' => $e->getMessage()]
+                );
+            }
+
+            if (! ($this->myMIMarketing instanceof MyMIMarketing)) {
+                $this->myMIMarketing = new MyMIMarketing();
+            }
+        }
+
+        return $this->myMIMarketing;
+    }
     protected function getMyMIDashboard(): MyMIDashboard
     {
         return $this->myMIDashboard ??= new MyMIDashboard();
@@ -1039,6 +1073,107 @@ abstract class BaseController extends Controller
     protected function getMyMIAlerts(): MyMIAlerts
     {
         return $this->myMIAlerts ??= new MyMIAlerts();
+    }
+
+    /**
+     * @throws \InvalidArgumentException
+     */
+    protected function requireValidViewPath(mixed $candidate, string $variableName, string $method): string
+    {
+        if (! is_string($candidate) || trim($candidate) === '') {
+            $context = [
+                'controller' => static::class,
+                'method' => $method,
+                'variable' => $variableName,
+                'type' => gettype($candidate),
+                'is_empty' => empty($candidate),
+            ];
+            $this->logRenderFailureToChannels('critical', 'Auth register render failed: missing required view path', $context);
+            throw new \InvalidArgumentException(sprintf('Invalid view path for "%s".', $variableName));
+        }
+
+        return trim($candidate, "/\\ \t\n\r\0\x0B");
+    }
+
+    protected function resolveOptionalViewPath(mixed $candidate, string $variableName, ?string $default = null): ?string
+    {
+        if (is_string($candidate) && trim($candidate) !== '') {
+            return trim($candidate, "/\\ \t\n\r\0\x0B");
+        }
+
+        if (is_string($default) && trim($default) !== '') {
+            $resolvedDefault = trim($default, "/\\ \t\n\r\0\x0B");
+            $this->logRenderFailureToChannels('warning', 'Optional view path missing; using default path', [
+                'controller' => static::class,
+                'variable' => $variableName,
+                'default' => $resolvedDefault,
+            ]);
+            return $resolvedDefault;
+        }
+
+        if ($candidate !== null && $candidate !== '') {
+            $this->logRenderFailureToChannels('warning', 'Optional view path rejected; skipping partial render', [
+                'controller' => static::class,
+                'variable' => $variableName,
+                'type' => gettype($candidate),
+            ]);
+        }
+
+        return null;
+    }
+
+    protected function logRenderDiagnostics(string $requestedView, ?string $resolvedLayout, array $partials = []): void
+    {
+        $emptyPartials = [];
+        foreach ($partials as $name => $value) {
+            if (! is_string($value) || trim($value) === '') {
+                $emptyPartials[] = $name;
+            }
+        }
+
+        log_message('debug', '[VIEW_RESOLUTION] Render configuration', [
+            'controller' => static::class,
+            'requested_view' => $requestedView,
+            'resolved_layout' => $resolvedLayout,
+            'partials' => $partials,
+            'empty_partial_names' => $emptyPartials,
+        ]);
+    }
+
+    protected function logRenderFailureToChannels(string $level, string $message, array $context = []): void
+    {
+        log_message($level, $message, $context);
+
+        try {
+            $db = \Config\Database::connect();
+            if (method_exists($db, 'tableExists') && ! $db->tableExists('bf_error_logs')) {
+                return;
+            }
+
+            $payload = [
+                'log_message' => $message,
+                'uri'         => isset($this->request) ? (string) $this->request->getUri() : null,
+                'method'      => isset($this->request) ? $this->request->getMethod() : null,
+                'ip_address'  => isset($this->request) ? $this->request->getIPAddress() : null,
+                'severity'    => strtoupper($level),
+                'context'     => json_encode($context, JSON_UNESCAPED_SLASHES | JSON_PARTIAL_OUTPUT_ON_ERROR),
+                'created_at'  => date('Y-m-d H:i:s'),
+            ];
+
+            $columns = array_map('strtolower', $db->getFieldNames('bf_error_logs'));
+            $filtered = [];
+            foreach ($payload as $key => $value) {
+                if (in_array(strtolower((string) $key), $columns, true)) {
+                    $filtered[$key] = $value;
+                }
+            }
+
+            if ($filtered !== []) {
+                $db->table('bf_error_logs')->insert($filtered);
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'Failed to mirror render failure to bf_error_logs: {error}', ['error' => $e->getMessage()]);
+        }
     }
 
     protected function getAccountService(): AccountService

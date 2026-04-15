@@ -448,7 +448,7 @@ class AuthController extends BaseController
             'campaign_code' => $attribution['campaign_code'] ?? null,
         ]);
 
-        return $this->_render($this->config->views['register'], [
+        $renderData = [
             'config' => $this->config,
             'referralCode' => $referralCode !== '' ? $referralCode : null,
             'siteSettings' => config('SiteSettings'),
@@ -456,7 +456,18 @@ class AuthController extends BaseController
             'uri' => $uri,
             'registrationAttribution' => $attribution,
             'registrationSourceContent' => $registrationSourceContent,
+        ];
+
+        log_message('debug', '[AUTH_REGISTER] register() render payload prepared', [
+            'view' => $this->config->views['register'] ?? 'Auth/register',
+            'layout' => $renderData['layout'] ?? null,
+            'headerView' => $renderData['headerView'] ?? null,
+            'footerView' => $renderData['footerView'] ?? null,
+            'intro_view' => $registrationSourceContent['intro_view'] ?? null,
+            'source_layout' => $registrationSourceContent['layout'] ?? null,
         ]);
+
+        return $this->_render($this->config->views['register'], $renderData);
     }
 
     /**
@@ -1628,16 +1639,43 @@ class AuthController extends BaseController
 
     protected function _render($view, array $data = [])
     {
-        if (! is_string($view) || trim($view) === '') {
-            log_message('critical', '[AUTH_RENDER] Invalid view path passed to _render()', [
-                'type' => gettype($view),
-                'view' => $view,
-                'route' => (string) $this->request->getUri(),
-            ]);
-            throw new \RuntimeException('Invalid view path');
-        }
+        $normalizedView = $this->requireValidViewPath($view, 'view', __METHOD__);
+        $data = array_merge([
+            'pageTitle' => 'Register | MyMI Wallet',
+            'metaTitle' => 'Register | MyMI Wallet',
+            'metaDescription' => 'Create your MyMI Wallet account.',
+            'layout' => null,
+            'headerView' => null,
+            'footerView' => null,
+            'authLayout' => null,
+            'contentView' => null,
+            'introView' => $data['registrationSourceContent']['intro_view'] ?? null,
+        ], $data);
 
-        return $this->safeView(trim($view), $data);
+        $resolvedLayout = $this->resolveOptionalViewPath($data['layout'] ?? null, 'layout', 'themes/public/layouts/index');
+        $resolvedHeader = $this->resolveOptionalViewPath($data['headerView'] ?? null, 'headerView');
+        $resolvedFooter = $this->resolveOptionalViewPath($data['footerView'] ?? null, 'footerView');
+
+        $this->logRenderDiagnostics($normalizedView, $resolvedLayout, [
+            'headerView' => $resolvedHeader,
+            'footerView' => $resolvedFooter,
+            'authLayout' => $this->resolveOptionalViewPath($data['authLayout'] ?? null, 'authLayout'),
+            'contentView' => $this->resolveOptionalViewPath($data['contentView'] ?? null, 'contentView'),
+            'introView' => $this->resolveOptionalViewPath($data['introView'] ?? null, 'introView'),
+        ]);
+
+        log_message('debug', '[AUTH_RENDER] Final render config', [
+            'route' => (string) $this->request->getUri(),
+            'view' => $normalizedView,
+            'pageTitle' => $data['pageTitle'],
+            'metaTitle' => $data['metaTitle'],
+            'metaDescription' => $data['metaDescription'],
+            'layout' => $resolvedLayout,
+            'headerView' => $resolvedHeader,
+            'footerView' => $resolvedFooter,
+        ]);
+
+        return $this->safeView($normalizedView, $data);
     }
 
     private function setAuthMessage(string $type, string $text, ?string $title = null): void
