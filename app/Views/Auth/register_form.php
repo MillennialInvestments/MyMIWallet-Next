@@ -10,7 +10,7 @@
             <div class="alert alert-danger"><?= esc((string) $error) ?></div>
         <?php endforeach; endif; ?>
 
-        <form class="form-horizontal" id="user_register_form" action="<?= site_url('register') ?>" method="post" novalidate>
+        <form class="form-horizontal" id="user_register_form" action="<?= site_url('register') ?>" method="post" accept-charset="utf-8" novalidate>
             <?= csrf_field() ?>
             <?php $registrationAttribution = is_array($registrationAttribution ?? null) ? $registrationAttribution : []; ?>
             <input type="hidden" name="referralCode" value="<?= esc($referralCode ?? set_value('referralCode')) ?>">
@@ -58,7 +58,7 @@
                 <input type="text" class="form-control" id="referral_edit" name="referral" value="<?= esc($referralCode ?? set_value('referral')) ?>">
             </div>
 
-            <button type="submit" class="btn btn-block btn-primary">Register</button>
+            <button type="submit" class="btn btn-primary w-100">Create Account</button>
 
             <div class="control-group form-row pt-3">
                 <div class="controls col-12 pl-0 ms-0">

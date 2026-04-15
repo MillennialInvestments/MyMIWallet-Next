@@ -36,16 +36,59 @@ $safeRenderView = static function ($candidate, array $candidateData = [], ?strin
 
     return '';
 };
+
+$resolvedIntroView = null;
+if (
+    isset($registrationSourceContent)
+    && is_array($registrationSourceContent)
+    && isset($registrationSourceContent['intro_view'])
+    && is_string($registrationSourceContent['intro_view'])
+    && trim($registrationSourceContent['intro_view']) !== ''
+) {
+    $resolvedIntroView = trim($registrationSourceContent['intro_view'], "/\\ \t\n\r\0\x0B");
+}
+log_message('debug', '[AUTH_REGISTER_VIEW] intro partial', ['introView' => $resolvedIntroView]);
 ?>
 <?= $this->extend($config->viewLayout) ?>
 <?= $this->section('main') ?>
 
 <div class="mt-5">
     <?= view('App\Views\Auth\_message_block') ?>
+    <?php $forcedAlert = session('forced_alert'); ?>
+    <?php if (is_array($forcedAlert)) : ?>
+        <div class="alert alert-<?= esc($forcedAlert['type'] ?? 'danger') ?> mb-3" role="alert">
+            <h5 class="mb-1"><?= esc($forcedAlert['title'] ?? 'There was a problem') ?></h5>
+            <p class="mb-2"><?= esc($forcedAlert['message'] ?? 'An unexpected issue occurred.') ?></p>
+
+            <?php if (! empty($forcedAlert['error_code'])) : ?>
+                <div class="small mb-2">
+                    <strong>Error Code:</strong> <?= esc($forcedAlert['error_code']) ?>
+                    <?php if (! empty($forcedAlert['request_id'])) : ?>
+                        | <strong>Request ID:</strong> <?= esc($forcedAlert['request_id']) ?>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
+            <a
+                href="<?= esc($forcedAlert['support_url'] ?? site_url('Support')) ?>"
+                target="_blank"
+                rel="noopener"
+                class="btn btn-outline-dark btn-sm"
+            >
+                Open Support Ticket
+            </a>
+
+            <?php if (ENVIRONMENT !== 'production' && ! empty($forcedAlert['debug_message'])) : ?>
+                <div class="mt-2 small text-break">
+                    <strong>PHP:</strong> <?= esc($forcedAlert['debug_message']) ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
     <div class="row bg-white rounded shadow-sm p-3 mt-5">
-        <?php if ($registerFormat === 'Split-Form' && ! empty($registrationSourceContent['intro_view'])) : ?>
+        <?php if ($registerFormat === 'Split-Form' && $resolvedIntroView !== null) : ?>
             <div class="col-sm-6 border-right pr-3">
-                <?php echo $safeRenderView($registrationSourceContent['intro_view'], $subViewData); ?>
+                <?php echo $safeRenderView($resolvedIntroView, $subViewData); ?>
             </div>
             <div class="col-sm-6">
                 <?php echo $safeRenderView('Auth/register_form', $subViewData); ?>

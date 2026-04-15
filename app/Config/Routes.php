@@ -203,14 +203,12 @@ $routes->group('', ['namespace' => 'App\Controllers'], static function($routes) 
 $routes->group('', ['namespace' => 'App\Controllers', 'filter' => 'no-cache'], static function ($routes) {
     $routes->get('login', 'AuthController::login', ['as' => 'login']);
     $routes->post('login', 'AuthController::attemptLogin', ['as' => 'login-submit']);
-    $routes->post('auth/attempt-login', 'AuthController::attemptLogin', ['as' => 'auth/attemptLogin']);
     $routes->post('auth/resend-activation', 'AuthController::resendActivationCode', ['as' => 'auth/resend-activation']);
     $routes->get('logout', 'AuthController::logout');
     $routes->post('logout', 'AuthController::logout', ['as' => 'auth/logout']);
 
     $routes->get('register', 'AuthController::register', ['as' => 'register']);
     $routes->post('register', 'AuthController::attemptRegister', ['as' => 'register-submit']);
-    $routes->post('auth/attempt-register', 'AuthController::attemptRegister', ['as' => 'register-attempt']);
     $routes->get('register/success', 'AuthController::registerSuccess', ['as' => 'register-success']);
     $routes->post('register/resend-activation', 'AuthController::resendRegistrationActivation', ['as' => 'register-resend-activation']);
 // });

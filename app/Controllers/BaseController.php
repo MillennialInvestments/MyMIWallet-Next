@@ -305,51 +305,34 @@ abstract class BaseController extends Controller
         string $errorCode,
         ?Throwable $e = null,
         array $context = []
-    ): array {
+    ): void {
         $requestId = $this->requestId ?? bin2hex(random_bytes(6));
         $this->requestId = $requestId;
 
-        $supportMessage = mb_substr(trim($message), 0, 240);
+        $safeMessage = $message;
         $supportUrl = site_url('Support?code=' . rawurlencode($errorCode)
-            . '&message=' . rawurlencode($supportMessage)
+            . '&message=' . rawurlencode($safeMessage)
             . '&request_id=' . rawurlencode($requestId)
             . '&source=auth');
 
         $payload = [
             'type' => $type,
             'title' => $title,
-            'message' => $message,
-            'text' => $message,
+            'message' => $safeMessage,
             'error_code' => $errorCode,
+            'request_id' => $requestId,
             'support_url' => $supportUrl,
-            'request_id' => $requestId,
         ];
 
-        if ($e !== null && ENVIRONMENT !== 'production') {
-            $payload['debug_message'] = mb_substr($e->getMessage(), 0, 500);
-            $payload['debug_file'] = basename($e->getFile()) . ':' . $e->getLine();
+        if (ENVIRONMENT !== 'production' && $e !== null) {
+            $payload['debug_message'] = $e->getMessage();
+            $payload['debug_file'] = $e->getFile();
+            $payload['debug_line'] = $e->getLine();
         }
 
-        $logContext = $context + [
-            'request_id' => $requestId,
-            'error_code' => $errorCode,
-            'uri' => current_url(),
-            'method' => $this->request->getMethod(),
-            'ip' => $this->request->getIPAddress(),
-        ];
-
-        if ($e !== null) {
-            $logContext['exception'] = [
-                'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-            ];
-        }
-
-        log_message('error', '[AUTH_ALERT] {title}', ['title' => $title] + $logContext);
-        session()->setFlashdata('auth_message', $payload);
-
-        return $payload;
+        log_message('error', '[FORCED_SUPPORT_ALERT]', $payload + $context);
+        session()->setFlashdata('forced_alert', $payload);
+        session()->setFlashdata('auth_message', $payload + ['text' => $safeMessage]);
     }
 
     protected function commonData(): array|ResponseInterface
