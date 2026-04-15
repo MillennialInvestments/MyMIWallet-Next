@@ -47,6 +47,21 @@ use function is_ci;
  */
 class Services extends CoreServices
 {
+    public static function authentication(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('authentication');
+        }
+
+        $config = config('Auth');
+
+        if (($config->useShield ?? false) === true) {
+            return \CodeIgniter\Shield\Config\Services::auth(false);
+        }
+
+        return \Myth\Auth\Config\Services::authentication(false);
+    }
+
     public static function cache(?Cache $config = null, bool $getShared = true)
     {
         if (! function_exists('is_ci')) {
