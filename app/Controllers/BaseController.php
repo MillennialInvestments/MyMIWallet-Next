@@ -91,7 +91,8 @@ abstract class BaseController extends Controller
         LoggerInterface $logger
     ) {
         parent::initController($request, $response, $logger);
-
+        $this->normalizeAppOverridesFolder();
+        
         if (strtolower($request->getMethod()) === 'head') {
             return;
         }
@@ -259,9 +260,10 @@ abstract class BaseController extends Controller
         $this->crudCacheInvalidator()->clear($filtered);
     }
 
-
     protected function safeView($view, array $data = [])
     {
+        $this->normalizeAppOverridesFolder();
+
         $normalizedView = $this->requireValidViewPath($view, 'view', __METHOD__);
 
         $resolvedLayout = $this->resolveOptionalViewPath(
@@ -277,17 +279,64 @@ abstract class BaseController extends Controller
             $data['footerView'] ?? null,
             'footerView'
         );
+        $resolvedAuthLayout = $this->resolveOptionalViewPath(
+            $data['authLayout'] ?? null,
+            'authLayout'
+        );
+        $resolvedContentView = $this->resolveOptionalViewPath(
+            $data['contentView'] ?? null,
+            'contentView'
+        );
+        $resolvedIntroView = $this->resolveOptionalViewPath(
+            $data['introView'] ?? null,
+            'introView'
+        );
 
         $this->logRenderDiagnostics($normalizedView, $resolvedLayout, [
             'headerView' => $resolvedHeader,
             'footerView' => $resolvedFooter,
-            'authLayout' => $this->resolveOptionalViewPath($data['authLayout'] ?? null, 'authLayout'),
-            'contentView' => $this->resolveOptionalViewPath($data['contentView'] ?? null, 'contentView'),
-            'introView' => $this->resolveOptionalViewPath($data['introView'] ?? null, 'introView'),
+            'authLayout' => $resolvedAuthLayout,
+            'contentView' => $resolvedContentView,
+            'introView'   => $resolvedIntroView,
         ]);
 
         if (! is_file(APPPATH . 'Views/' . str_replace('\\', '/', $normalizedView) . '.php')) {
             log_message('error', '[MISSING VIEW] {view}', ['view' => $normalizedView]);
+        }
+
+        // Only pass valid resolved render-path keys into the view layer.
+        // This avoids null path-like values later being treated as view paths.
+        unset(
+            $data['layout'],
+            $data['headerView'],
+            $data['footerView'],
+            $data['authLayout'],
+            $data['contentView'],
+            $data['introView']
+        );
+
+        if ($resolvedLayout !== null) {
+            $data['layout'] = $resolvedLayout;
+        }
+
+        if ($resolvedHeader !== null) {
+            $data['headerView'] = $resolvedHeader;
+        }
+
+        if ($resolvedFooter !== null) {
+            $data['footerView'] = $resolvedFooter;
+        }
+
+        if ($resolvedAuthLayout !== null) {
+            $data['authLayout'] = $resolvedAuthLayout;
+        }
+
+        if ($resolvedContentView !== null) {
+            $data['contentView'] = $resolvedContentView;
+        }
+
+        if ($resolvedIntroView !== null) {
+            $data['introView'] = $resolvedIntroView;
         }
 
         return view($normalizedView, $data);
@@ -295,7 +344,11 @@ abstract class BaseController extends Controller
 
     protected function respondWithRendered(string $view, array $data = []): ResponseInterface
     {
-        return $this->response->setBody(view($view, $data));
+        $this->normalizeAppOverridesFolder();
+
+        $normalizedView = $this->requireValidViewPath($view, 'view', __METHOD__);
+
+        return $this->response->setBody(view($normalizedView, $data));
     }
 
     protected function forceSupportAlert(

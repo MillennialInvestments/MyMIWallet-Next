@@ -323,6 +323,7 @@ $routes->addRedirect('API/Health', 'API/v1/Health', 302);
 $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function($routes) {
     $routes->get('/', 'APIController::index');
     $routes->match(['GET', 'POST'], '/', 'APIController::index');
+    $routes->post('Discord/interactions', 'DiscordAPIController::interactions');
     $routes->match(['GET', 'POST'], 'Status', 'APIController::status');
     $routes->get('Health', 'HealthAPIController::index');              // /API/Health
     $routes->get('Health/spark', 'HealthAPIController::spark');        // /API/Health/spark
@@ -385,7 +386,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->post('broadcast', 'DiscordAPIController::broadcast');
         $routes->post('completeOnboardingStep', 'DiscordAPIController::completeOnboardingStep');
         $routes->get('health', 'DiscordAPIController::health');
-        $routes->post('interactions', 'DiscordAPIController::interactions');
+        // $routes->post('interactions', 'DiscordAPIController::interactions');
         $routes->post('register-guild-commands', 'DiscordAPIController::registerGuildCommands');
         $routes->post('messageHook', 'DiscordAPIController::messageHook');
         $routes->get('lookup/ticker', 'DiscordAPIController::tickerLookup');
@@ -1284,14 +1285,14 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
     });
     $routes->group('Discord', function($routes) {  
         $routes->get('/', 'DiscordAdminController::index');
-        $routes->post('Discord/Channels/Save', 'DiscordAdminController::saveDiscordChannel');
-        $routes->post('Discord/Channels/Delete', 'DiscordAdminController::deleteDiscordChannel');
-        $routes->post('Discord/Templates/Save', 'DiscordAdminController::saveDiscordTemplate');
-        $routes->post('Discord/Templates/Delete', 'DiscordAdminController::deleteDiscordTemplate');
-        $routes->post('Discord/Subscriptions/Save', 'DiscordAdminController::saveDiscordSubscription');
-        $routes->post('Discord/Subscriptions/Delete', 'DiscordAdminController::deleteDiscordSubscription');
-        $routes->post('Discord/Policies/Save', 'DiscordAdminController::saveDiscordPolicy');
-        $routes->post('Discord/Policies/Delete', 'DiscordAdminController::deleteDiscordPolicy');
+        $routes->post('Channels/Save', 'DiscordAdminController::saveDiscordChannel');
+        $routes->post('Channels/Delete', 'DiscordAdminController::deleteDiscordChannel');
+        $routes->post('Templates/Save', 'DiscordAdminController::saveDiscordTemplate');
+        $routes->post('Templates/Delete', 'DiscordAdminController::deleteDiscordTemplate');
+        $routes->post('Subscriptions/Save', 'DiscordAdminController::saveDiscordSubscription');
+        $routes->post('Subscriptions/Delete', 'DiscordAdminController::deleteDiscordSubscription');
+        $routes->post('Policies/Save', 'DiscordAdminController::saveDiscordPolicy');
+        $routes->post('Policies/Delete', 'DiscordAdminController::deleteDiscordPolicy');
     });
     $routes->group('Drip-Campaigns', function($routes) {
         $routes->get('/', 'DripCampaignAdminController::index');

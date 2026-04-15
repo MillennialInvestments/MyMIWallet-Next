@@ -124,10 +124,10 @@ class AuthController extends BaseController
         }
 
         if (! $this->validate($rules)) {
-            $errors = $this->validator->getErrors();
-            service('eventTracker')->track('auth.login_fail', [
-                'reason' => 'validation',
-                'summary' => $this->validationSummary($errors),
+            $passwordErrors = $this->validator->getErrors();
+
+            $auditService->notifyRegistrationResult($email, 'failed', $request, null, $auditContext + [
+                'error' => json_encode($passwordErrors),
             ]);
             $this->forceSupportAlert(
                 'danger',
@@ -1701,40 +1701,64 @@ class AuthController extends BaseController
 
     protected function _render($view, array $data = [])
     {
+        $this->normalizeAppOverridesFolder();
+
         $normalizedView = $this->requireValidViewPath($view, 'view', __METHOD__);
+
+        $registrationSourceContent = $data['registrationSourceContent'] ?? [];
+        $introView = null;
+
+        if (is_array($registrationSourceContent)) {
+            $candidateIntroView = $registrationSourceContent['intro_view'] ?? null;
+            if (is_string($candidateIntroView) && trim($candidateIntroView) !== '') {
+                $introView = trim($candidateIntroView, "/\\ \t\n\r\0\x0B");
+            }
+        }
+
         $data = array_merge([
-            'pageTitle' => 'Register | MyMI Wallet',
-            'metaTitle' => 'Register | MyMI Wallet',
+            'pageTitle'       => 'Register | MyMI Wallet',
+            'metaTitle'       => 'Register | MyMI Wallet',
             'metaDescription' => 'Create your MyMI Wallet account.',
-            'layout' => null,
-            'headerView' => null,
-            'footerView' => null,
-            'authLayout' => null,
-            'contentView' => null,
-            'introView' => $data['registrationSourceContent']['intro_view'] ?? null,
         ], $data);
+
+        // Remove optional render-path keys when they are null/empty
+        foreach (['layout', 'headerView', 'footerView', 'authLayout', 'contentView', 'introView'] as $key) {
+            if (array_key_exists($key, $data) && (! is_string($data[$key]) || trim((string) $data[$key]) === '')) {
+                unset($data[$key]);
+            }
+        }
+
+        if ($introView !== null) {
+            $data['introView'] = $introView;
+        }
 
         $resolvedLayout = $this->resolveOptionalViewPath($data['layout'] ?? null, 'layout', 'themes/public/layouts/index');
         $resolvedHeader = $this->resolveOptionalViewPath($data['headerView'] ?? null, 'headerView');
         $resolvedFooter = $this->resolveOptionalViewPath($data['footerView'] ?? null, 'footerView');
+        $resolvedAuthLayout = $this->resolveOptionalViewPath($data['authLayout'] ?? null, 'authLayout');
+        $resolvedContentView = $this->resolveOptionalViewPath($data['contentView'] ?? null, 'contentView');
+        $resolvedIntroView = $this->resolveOptionalViewPath($data['introView'] ?? null, 'introView');
 
         $this->logRenderDiagnostics($normalizedView, $resolvedLayout, [
             'headerView' => $resolvedHeader,
             'footerView' => $resolvedFooter,
-            'authLayout' => $this->resolveOptionalViewPath($data['authLayout'] ?? null, 'authLayout'),
-            'contentView' => $this->resolveOptionalViewPath($data['contentView'] ?? null, 'contentView'),
-            'introView' => $this->resolveOptionalViewPath($data['introView'] ?? null, 'introView'),
+            'authLayout' => $resolvedAuthLayout,
+            'contentView' => $resolvedContentView,
+            'introView' => $resolvedIntroView,
         ]);
 
         log_message('debug', '[AUTH_RENDER] Final render config', [
             'route' => (string) $this->request->getUri(),
             'view' => $normalizedView,
-            'pageTitle' => $data['pageTitle'],
-            'metaTitle' => $data['metaTitle'],
-            'metaDescription' => $data['metaDescription'],
+            'pageTitle' => $data['pageTitle'] ?? null,
+            'metaTitle' => $data['metaTitle'] ?? null,
+            'metaDescription' => $data['metaDescription'] ?? null,
             'layout' => $resolvedLayout,
             'headerView' => $resolvedHeader,
             'footerView' => $resolvedFooter,
+            'authLayout' => $resolvedAuthLayout,
+            'contentView' => $resolvedContentView,
+            'introView' => $resolvedIntroView,
         ]);
 
         return $this->safeView($normalizedView, $data);

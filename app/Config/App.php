@@ -28,7 +28,7 @@ class App extends BaseConfig
     /**
      * URI Protocol
      */
-    public string $uriProtocol = 'AUTO';
+    public string $uriProtocol = 'REQUEST_URI';
 
     /**
      * Allowed URL Characters
