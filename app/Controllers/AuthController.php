@@ -98,8 +98,16 @@ class AuthController extends BaseController
     public function attemptLogin()
     {
         helper('auth');
-        $requestId = $this->ensureAuthRequestId();
-        $this->logAuthSubmitDiagnostics('attemptLogin', $requestId);
+        $requestId = (string) ($this->request->getHeaderLine('X-Request-Id') ?: bin2hex(random_bytes(6)));
+        $this->requestId = $requestId;
+        log_message('debug', '[AUTH_SUBMIT] attemptLogin reached', [
+            'request_id' => $requestId,
+            'method' => $this->request->getMethod(),
+            'uri' => (string) $this->request->getUri(),
+            'referer' => (string) $this->request->getServer('HTTP_REFERER'),
+            'post_keys' => array_keys($this->request->getPost() ?? []),
+            'has_csrf' => array_key_exists(csrf_token(), $this->request->getPost() ?? []),
+        ]);
 
         service('eventTracker')->track('auth.login_attempt', [
             'login_type' => $this->config->validFields === ['email'] ? 'email' : 'username',
@@ -133,7 +141,7 @@ class AuthController extends BaseController
                 'errors' => $errors,
                 'ip'     => $this->request->getIPAddress(),
             ]);
-            return $this->redirectToAuthFailure('login')
+            return redirect()->to(site_url('login'))
                 ->withInput()
                 ->with('errors', $errors);
         }
@@ -208,7 +216,9 @@ class AuthController extends BaseController
                 ['ticket_id' => $ticketId, 'login' => (string) $login, 'request_id' => $requestId]
             );
 
-            return $this->redirectToAuthFailure('login')->withInput();
+            return redirect()->to(site_url('login'))
+                ->withInput()
+                ->with('errors', ['login' => 'A login system error occurred.']);
         }
 
         // 🔴 AUTH ATTEMPT
@@ -267,8 +277,9 @@ class AuthController extends BaseController
                 ]);
             }
 
-            return $this->redirectToAuthFailure('login')
-                ->withInput();
+            return redirect()->to(site_url('login'))
+                ->withInput()
+                ->with('errors', ['login' => $errorMsg]);
         }
 
         // ✅ SUCCESS: secure the user identity for the rest of the app
@@ -564,8 +575,16 @@ class AuthController extends BaseController
     // }
     public function attemptRegister()
     {
-        $requestId = $this->ensureAuthRequestId();
-        $this->logAuthSubmitDiagnostics('attemptRegister', $requestId);
+        $requestId = (string) ($this->request->getHeaderLine('X-Request-Id') ?: bin2hex(random_bytes(6)));
+        $this->requestId = $requestId;
+        log_message('debug', '[AUTH_SUBMIT] attemptRegister reached', [
+            'request_id' => $requestId,
+            'method' => $this->request->getMethod(),
+            'uri' => (string) $this->request->getUri(),
+            'referer' => (string) $this->request->getServer('HTTP_REFERER'),
+            'post_keys' => array_keys($this->request->getPost() ?? []),
+            'has_csrf' => array_key_exists(csrf_token(), $this->request->getPost() ?? []),
+        ]);
         $this->ipHistoryModel->record(null, (string) $this->request->getPost('email'), $this->request->getIPAddress(), (string) $this->request->getUserAgent());
         /** @var AuthAuditService $auditService */
         $auditService = service('authAuditService');
@@ -626,7 +645,7 @@ class AuthController extends BaseController
             ]);
 
             $this->forceSupportAlert('danger', 'Registration unavailable', lang('Auth.registerDisabled'), 'AUTH-REG-001', null, ['request_id' => $requestId]);
-            return $this->redirectToAuthFailure('register')->withInput();
+            return redirect()->to(site_url('register'))->withInput()->with('errors', ['register' => lang('Auth.registerDisabled')]);
         }
 
         $users = model(UserModel::class);
@@ -657,8 +676,8 @@ class AuthController extends BaseController
                 ]);
 
                 $errors = $this->validator->getErrors();
-                $this->forceSupportAlert('danger', 'Registration validation failed', $this->formatValidationErrors($errors), 'AUTH-REG-VAL-001', null, ['errors' => $errors, 'request_id' => $requestId]);
-                return $this->redirectToAuthFailure('register')->withInput()->with('errors', $errors);
+                $this->forceSupportAlert('danger', 'Registration could not be completed', 'Please correct the highlighted fields and try again.', 'AUTH-REG-VALIDATION-001', null, ['errors' => $errors, 'request_id' => $requestId]);
+                return redirect()->to(site_url('register'))->withInput()->with('errors', $errors);
             }
 
             log_message('info', '[REGISTRATION] Validation passed (basic fields)', [
@@ -686,8 +705,8 @@ class AuthController extends BaseController
                 ]);
 
                 $errors = $this->validator->getErrors();
-                $this->forceSupportAlert('danger', 'Registration validation failed', $this->formatValidationErrors($errors), 'AUTH-REG-VAL-002', null, ['errors' => $errors, 'request_id' => $requestId]);
-                return $this->redirectToAuthFailure('register')->withInput()->with('errors', $errors);
+                $this->forceSupportAlert('danger', 'Registration could not be completed', 'Please correct the highlighted fields and try again.', 'AUTH-REG-VALIDATION-001', null, ['errors' => $errors, 'request_id' => $requestId]);
+                return redirect()->to(site_url('register'))->withInput()->with('errors', $errors);
             }
 
             log_message('info', '[REGISTRATION] Validation passed (password fields)', [
@@ -725,8 +744,8 @@ class AuthController extends BaseController
                 ]);
 
                 $errors = $users->errors();
-                $this->forceSupportAlert('danger', 'Registration save failed', $this->formatValidationErrors($errors), 'AUTH-REG-002', null, ['errors' => $errors, 'request_id' => $requestId]);
-                return $this->redirectToAuthFailure('register')->withInput()->with('errors', $errors);
+                $this->forceSupportAlert('danger', 'Registration failed', 'We could not create your account at this time.', 'AUTH-REG-SAVE-001', null, ['errors' => $errors, 'request_id' => $requestId]);
+                return redirect()->to(site_url('register'))->withInput()->with('errors', $errors);
             }
 
             $newUserId       = (int) ($users->getInsertID() ?? 0);
@@ -794,13 +813,13 @@ class AuthController extends BaseController
 
                     $this->forceSupportAlert(
                         'danger',
-                        'Activation email failed',
-                        $activator->error() ?? lang('Auth.unknownError'),
-                        'AUTH-REG-003',
+                        'Registration failed',
+                        'We could not create your account at this time.',
+                        'AUTH-REG-SAVE-001',
                         null,
                         ['user_id' => $newUserId, 'request_id' => $requestId]
                     );
-                    return $this->redirectToAuthFailure('register')->withInput();
+                    return redirect()->to(site_url('register'))->withInput()->with('errors', ['activation' => $activator->error() ?? lang('Auth.unknownError')]);
                 }
 
                 $auditService->notifyRegistrationResult($email, 'success', $request, null, $auditContext);
@@ -864,13 +883,13 @@ class AuthController extends BaseController
 
             $this->forceSupportAlert(
                 'danger',
-                'Registration error',
-                'We could not complete your registration right now. Please try again.',
-                'AUTH-REG-004',
+                'System error during registration',
+                'A system error occurred while processing your registration.',
+                'AUTH-REG-EXCEPTION-001',
                 $e,
                 ['email' => $email, 'request_id' => $requestId]
             );
-            return $this->redirectToAuthFailure('register')->withInput();
+            return redirect()->to(site_url('register'))->withInput();
         }
     }
 
