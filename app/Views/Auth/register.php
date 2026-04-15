@@ -19,6 +19,23 @@ $subViewData = [
     'registrationAttribution' => $registrationAttribution,
     'registrationSourceContent' => $registrationSourceContent,
 ];
+
+$safeRenderView = static function ($candidate, array $candidateData = [], ?string $fallback = null): string {
+    if (is_string($candidate) && trim($candidate) !== '') {
+        return view(trim($candidate), $candidateData);
+    }
+
+    if (is_string($fallback) && trim($fallback) !== '') {
+        return view(trim($fallback), $candidateData);
+    }
+
+    log_message('warning', 'Auth register render skipped null/empty partial view', [
+        'candidate_type' => gettype($candidate),
+        'fallback' => $fallback,
+    ]);
+
+    return '';
+};
 ?>
 <?= $this->extend($config->viewLayout) ?>
 <?= $this->section('main') ?>
@@ -34,31 +51,31 @@ $subViewData = [
     <div class="row bg-white rounded shadow-sm p-3 mt-5">
         <?php if ($registerFormat === 'Split-Form' && ! empty($registrationSourceContent['intro_view'])) : ?>
             <div class="col-sm-6 border-right pr-3">
-                <?php echo view($registrationSourceContent['intro_view'], $subViewData); ?>
+                <?php echo $safeRenderView($registrationSourceContent['intro_view'], $subViewData); ?>
             </div>
             <div class="col-sm-6">
-                <?php echo view('Auth/register_form', $subViewData); ?>
-                <?php echo view('themes/public/resources/needSupport', $subViewData); ?>
+                <?php echo $safeRenderView('Auth/register_form', $subViewData); ?>
+                <?php echo $safeRenderView('themes/public/resources/needSupport', $subViewData); ?>
             </div>
         <?php else: ?>
         <div class="col-sm-6 offset-sm-3">
-            <?php echo view('Auth/register_form', $subViewData); ?>
+            <?php echo $safeRenderView('Auth/register_form', $subViewData); ?>
         </div>
         <?php endif; ?>
     </div>
 
     <?php if (($registrationAttribution['view_slug'] ?? null) === 'Apex') : ?>
-        <?= view('Auth/register/resources/apexHowItWorks') ?>
+        <?= $safeRenderView('Auth/register/resources/apexHowItWorks') ?>
     <?php else : ?>
         <hr>
     <?php endif; ?>
 
     <?php
     // Placement comment: reusable source-driven promotional sections beneath registration.
-    echo view('Auth/partials/registration_promo_sections', $subViewData);
+    echo $safeRenderView('Auth/partials/registration_promo_sections', $subViewData);
     ?>
 
-    <?php echo view('themes/public/resources/stayConnected', $subViewData); ?>
+    <?php echo $safeRenderView('themes/public/resources/stayConnected', $subViewData); ?>
 </div>
 
 <?= $this->endSection() ?>
