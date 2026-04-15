@@ -1345,8 +1345,8 @@
             "mtime": "2025-12-05"
         },
         "docs/discord/_inventory.md": {
-            "hash": "00376d1cb2c36af4810761a956a9e7cefba941be81768b4c79b5cdc1fba458c1",
-            "mtime": "2025-12-05"
+            "hash": "fbb11b003828cb4a17aac29548fe6e5e9a30ccca18f19727cdc876ccf10f907c",
+            "mtime": "2026-04-14"
         },
         "docs/discord/alerts_automation.md": {
             "hash": "79fa869d46547e7c9d08496bdcd74bc3cf363d396f369803addab13553ed2d6a",
@@ -1365,24 +1365,24 @@
             "mtime": "2025-11-08"
         },
         "docs/discord/discord_to_ci4_commands.md": {
-            "hash": "d9a2e6251ac823f7f0082d9272c46983d2045bd97ea06b19e46e8ef98246550e",
-            "mtime": "2025-11-26"
+            "hash": "93e9d8c99869074a98dcdb3d4cc9ebc53c916c075c0d83110a41084bf6282fc7",
+            "mtime": "2026-04-14"
         },
         "docs/discord/earnings_calendar_automation.md": {
             "hash": "7c68c616fcf49262fee2b1eeef7b99b05542fee30f103dde33ee18b50990a74e",
             "mtime": "2025-11-26"
         },
         "docs/discord/environments.md": {
-            "hash": "61f163728dda40ff791e10215ede77b4e28120952a815e48fcbfbce89770a5e4",
-            "mtime": "2025-12-05"
+            "hash": "bad59e9655bb92f8ad941161447b8f17c8c8e75f747562b17e3d5cfbaec5cc7a",
+            "mtime": "2026-04-14"
         },
         "docs/discord/events_matrix.md": {
             "hash": "2e5a3105debb14fe82e0b6b278b0c4c26dcc08233296733e605c88aaa147ab28",
             "mtime": "2025-12-05"
         },
         "docs/discord/marketing_news_automation.md": {
-            "hash": "dcd58069aff14989463e4fce25ed880566c2fb603acac8aaf0998537194b15d1",
-            "mtime": "2026-04-11"
+            "hash": "66ee6b9d289f91b6cfe5913193cfc0a319c25481da28afd3748e4f73fb855881",
+            "mtime": "2026-04-14"
         },
         "docs/discord/mee6_and_mymi_automation.md": {
             "hash": "4943cff5f15f4e187aca353de1654516bf9ca53192abf0f8a61cea2c4c08393e",
@@ -1405,16 +1405,16 @@
             "mtime": "2025-12-05"
         },
         "docs/discord/python_workers.md": {
-            "hash": "0937bb1877ed80cc8fd07fb745e4d7354190f1ef7497f9077c633ae27837b9fa",
-            "mtime": "2025-12-05"
+            "hash": "acc12550eeb65302ed61a81501c47367ccd3b68a062ba8498a285b07a5666398",
+            "mtime": "2026-04-14"
         },
         "docs/discord/server_setup_and_alert_routing.md": {
-            "hash": "b6048ffb8d5f484ca1ed679b3bca31734075b225399fff63378c0a71d4e17a58",
-            "mtime": "2026-02-20"
+            "hash": "d2a49347678d0b2170f0cebf377150160f01eb38e1e9ad01f9504c6b425acd63",
+            "mtime": "2026-04-14"
         },
         "docs/discord/server_setup_and_ci4_integration.md": {
-            "hash": "89ac8f66a26fca5c420b00edbcbb714ff9eec97f0fc5e62b02ff3cbaf2cb0055",
-            "mtime": "2025-12-07"
+            "hash": "f8fe1ee8e7ef15e62d6d384ef750cea5e5b7e5a0d4d4e67c36741629ec14d271",
+            "mtime": "2026-04-14"
         },
         "docs/discord/server_setup_support_category.md": {
             "hash": "1035b978d04a8f4c211d8f4caa17e4a1da77b18ab303b6d5f2000f49fb3f9d98",
@@ -4885,8 +4885,8 @@
             "mtime": "2026-03-08"
         },
         "docs/_audit_report.md": {
-            "hash": "c9fe8ac8c471f2657673ac6802818ebd2529c6b0031e8066350e02493da6a75e",
-            "mtime": "2026-03-30"
+            "hash": "c151c69bd9672fc3c1ff436855cf13433728a1569f9595756ce930d2d61eec2a",
+            "mtime": "2026-04-12"
         },
         "docs/_infrastructure/Lists/Commands.md": {
             "hash": "775327a3f6f1a71987c4cc03f79155f0e04f31855a4d3513ea253466e416d895",
@@ -4929,8 +4929,8 @@
             "mtime": "2026-03-08"
         },
         "docs/_inventory.md": {
-            "hash": "fc998fe43d2bae15258f9af87d578a2411f1dee16753f1a3edc29de8bba55d27",
-            "mtime": "2026-03-30"
+            "hash": "c4df312cf3e3d351f16fb00be046146c9ff3dd724b20513b7fac78559f0a1c9e",
+            "mtime": "2026-04-12"
         },
         "docs/_repo/class_trace_fix.md": {
             "hash": "7e61a35608e9739e26f2f12a466dc2134b7f75487f4d5023dddd597ed443a972",
@@ -5635,7 +5635,71 @@
         "docs/_support/marketing-automation-audit/20260411-143442/summary.md": {
             "hash": "dc2483ebfb3c2626c20defd178c550a2b3f90ad0bda9390a9a6ef44b3f098c68",
             "mtime": "2026-04-11"
+        },
+        "docs/APIs/_inventory.md": {
+            "hash": "1675653c05e18b6c145452cc479d8107121739b9ab4323a56e18fe6e0da3c958",
+            "mtime": "2026-04-12"
+        },
+        "docs/APIs/diffs/developer-20260412-121200-diff.md": {
+            "hash": "13591817e304e0abab507593b4525c338540321b3bb217b01546d2e2eda7f09c",
+            "mtime": "2026-04-12"
+        },
+        "docs/APIs/diffs/developer-20260412-121404-diff.md": {
+            "hash": "4922ff9ab9614cf3bab67aec93c8f4adc9356bf2ab166c2453d5db5b77ab74d5",
+            "mtime": "2026-04-12"
+        },
+        "docs/APIs/raw/developer-20260412-120844-raw.md": {
+            "hash": "72ac0b4c639d756186a5b77e97a2c86ebc7657ae87e2a583da1b37a275dc6b02",
+            "mtime": "2026-04-12"
+        },
+        "docs/APIs/raw/developer-20260412-121200-raw.md": {
+            "hash": "72ac0b4c639d756186a5b77e97a2c86ebc7657ae87e2a583da1b37a275dc6b02",
+            "mtime": "2026-04-12"
+        },
+        "docs/APIs/raw/developer-20260412-121404-raw.md": {
+            "hash": "72ac0b4c639d756186a5b77e97a2c86ebc7657ae87e2a583da1b37a275dc6b02",
+            "mtime": "2026-04-12"
+        },
+        "docs/APIs/reports/api-tradovate-com-20260412-111828-integration-report.md": {
+            "hash": "bd4c367bdecd4081d7c4fedd0d23ce55997e43476805e4c0bb6872fa70181121",
+            "mtime": "2026-04-12"
+        },
+        "docs/APIs/reports/developer-20260412-120844-report.md": {
+            "hash": "99d7fd5b7baeb502140b29de0617a28e0fa45deba4f5d05a7880d2d2402907b9",
+            "mtime": "2026-04-12"
+        },
+        "docs/APIs/reports/developer-20260412-121200-report.md": {
+            "hash": "2baaa84f41f217fcb7f8c48fd72591b7db534374ac08f7993ea1d0b922db3ad5",
+            "mtime": "2026-04-12"
+        },
+        "docs/APIs/reports/developer-20260412-121404-report.md": {
+            "hash": "871e7cc1c30339c2207621110d523622de88957e2d146caafb4edd21a8849da4",
+            "mtime": "2026-04-12"
+        },
+        "docs/APIs/scraped/api-tradovate-com-20260412-111828-raw.md": {
+            "hash": "82e01b1d56a6cd650540aed89c7bf6a61f345781aa8b6ede9f02abc259cd596c",
+            "mtime": "2026-04-12"
+        },
+        "docs/controllers/BaseAPIController.md": {
+            "hash": "769f9ef7ae82c82a56bdd004df6bc239733f32caad2047c69cfb2bcc2a54c254",
+            "mtime": "2026-04-12"
+        },
+        "docs/controllers/BaseAdminController.md": {
+            "hash": "4e2fd6280d69eac222279c3cfae40f7ddec1b018838f2bff2f827fc9a3d80391",
+            "mtime": "2026-04-12"
+        },
+        "docs/controllers/BaseUserController.md": {
+            "hash": "a1e12ea9b31c8850135fbaf1f475c9b674188a16ab5380e2d7771ee53303ffec",
+            "mtime": "2026-04-12"
+        },
+        "docs/controllers/SystemDebugController.md": {
+            "hash": "3f70bd826f69b904a449587abd30ea46e00fd21412ce9e34388b9675dafa599a",
+            "mtime": "2026-04-12"
+        },
+        "docs/marketing/distribution-hardening-report.md": {
+            "hash": "61d40055de46cb2189b9fc2870af7430fd56364d93223c3fa02e680813329eb7",
+            "mtime": "2026-04-13"
         }
     },
-    "last_run": "2026-04-12T07:00:02Z"
+    "last_run": "2026-04-15T07:00:02Z"
 }

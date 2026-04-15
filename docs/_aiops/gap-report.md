@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-04-12T07:00:02Z
+> Run: 2026-04-15T07:00:02Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -283,8 +283,6 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/AccountRescueAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Controllers/AdminController.php
-  - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/AiOpsManagementAdminController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Controllers/AlertsAdminController.php
@@ -403,10 +401,14 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/Alerts/add/user_fields.php
   - ⚠️ No obvious doc match found (heuristic)
-- … and 1005 more
+- app/Modules/Management/Views/Alerts/batchEmailAudit.php
+  - ⚠️ No obvious doc match found (heuristic)
+- … and 1021 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
 - docs/APIs/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/_inventory.md
   - ❌ No obvious code match found (heuristic)
 - docs/APIs/_inventory_controllers.md
   - ❌ No obvious code match found (heuristic)
@@ -422,9 +424,29 @@
   - ❌ No obvious code match found (heuristic)
 - docs/APIs/deprecations.md
   - ❌ No obvious code match found (heuristic)
+- docs/APIs/diffs/developer-20260412-121200-diff.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/diffs/developer-20260412-121404-diff.md
+  - ❌ No obvious code match found (heuristic)
 - docs/APIs/list/latest.md
   - ❌ No obvious code match found (heuristic)
 - docs/APIs/rate-limit-coverage.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/raw/developer-20260412-120844-raw.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/raw/developer-20260412-121200-raw.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/raw/developer-20260412-121404-raw.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/reports/api-tradovate-com-20260412-111828-integration-report.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/reports/developer-20260412-120844-report.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/reports/developer-20260412-121200-report.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/reports/developer-20260412-121404-report.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/scraped/api-tradovate-com-20260412-111828-raw.md
   - ❌ No obvious code match found (heuristic)
 - docs/CRON.md
   - ❌ No obvious code match found (heuristic)
@@ -784,26 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/codex/reviews/review-prompt-2026-02-05.md
   - ❌ No obvious code match found (heuristic)
-- docs/codex/reviews/review-prompt-2026-02-08.md
-  - ❌ No obvious code match found (heuristic)
-- docs/communities/README.md
-  - ❌ No obvious code match found (heuristic)
-- docs/communities/linkedin.md
-  - ❌ No obvious code match found (heuristic)
-- docs/communities/templates_library.md
-  - ❌ No obvious code match found (heuristic)
-- docs/communities/test_plan.md
-  - ❌ No obvious code match found (heuristic)
-- docs/communities/twitch.md
-  - ❌ No obvious code match found (heuristic)
-- docs/communities/x_twitter.md
-  - ❌ No obvious code match found (heuristic)
-- docs/content_engine/README.md
-  - ❌ No obvious code match found (heuristic)
-- docs/content_engine/api_endpoints.md
-  - ❌ No obvious code match found (heuristic)
-- docs/content_engine/cron_jobs.md
-  - ❌ No obvious code match found (heuristic)
-- docs/content_engine/json_contract.md
-  - ❌ No obvious code match found (heuristic)
-- … and 997 more
+- … and 1009 more

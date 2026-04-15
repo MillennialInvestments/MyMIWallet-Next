@@ -1,6 +1,6 @@
 # MyMI Wallet Documentation Inventory
 
-Generated: 2026-04-12 16:08:57
+Generated: 2026-04-15 12:09:25
 
 - docs/APIs/README.md
 - docs/APIs/_inventory.md
@@ -566,7 +566,10 @@ Generated: 2026-04-12 16:08:57
 - docs/controllers/APIs/OpsController.md
 - docs/controllers/APIs/TradingViewController.md
 - docs/controllers/AuthController.md
+- docs/controllers/BaseAPIController.md
+- docs/controllers/BaseAdminController.md
 - docs/controllers/BaseController.md
+- docs/controllers/BaseUserController.md
 - docs/controllers/Blog.md
 - docs/controllers/Debug.md
 - docs/controllers/Health.md
@@ -577,6 +580,7 @@ Generated: 2026-04-12 16:08:57
 - docs/controllers/Predictions/PredictionsApiController.md
 - docs/controllers/README.md
 - docs/controllers/StockController.md
+- docs/controllers/SystemDebugController.md
 - docs/controllers/Test.md
 - docs/controllers/UserController.md
 - docs/cron/README.md
@@ -801,6 +805,7 @@ Generated: 2026-04-12 16:08:57
 - docs/marketing/_templates/CAMPAIGN_TEMPLATE.md
 - docs/marketing/_templates/Coffee-and-Stocks/Facebook_Event_Template.md
 - docs/marketing/_templates/Coffee-and-Stocks/Prism_Live_Stream_Template.md
+- docs/marketing/distribution-hardening-report.md
 - docs/marketing/index.md
 - docs/marketing/marketing-intake.md
 - docs/mdit/README.md
@@ -1611,4 +1616,4 @@ Generated: 2026-04-12 16:08:57
 - docs/wallets/wallets_workflow.md
 
 ---
-Total Files: 1607
+Total Files: 1612

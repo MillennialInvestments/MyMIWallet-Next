@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-03-30 12:37:24",
+    "generated_at": "2026-04-15 12:09:26",
     "services": [
         {
             "name": "AIOpsService",
@@ -9,6 +9,16 @@
         {
             "name": "AccountService",
             "path": "app/Services/AccountService.php",
+            "registered": false
+        },
+        {
+            "name": "AiopsActionService",
+            "path": "app/Services/AiopsActionService.php",
+            "registered": false
+        },
+        {
+            "name": "AiopsPatchService",
+            "path": "app/Services/AiopsPatchService.php",
             "registered": false
         },
         {
@@ -97,6 +107,11 @@
             "registered": false
         },
         {
+            "name": "CalendarEmailTriggerService",
+            "path": "app/Services/CalendarEmailTriggerService.php",
+            "registered": true
+        },
+        {
             "name": "CashAppService",
             "path": "app/Services/CashAppService.php",
             "registered": false
@@ -179,6 +194,11 @@
         {
             "name": "EmailService",
             "path": "app/Services/EmailService.php",
+            "registered": false
+        },
+        {
+            "name": "EmailSubjectRoutingService",
+            "path": "app/Services/EmailSubjectRoutingService.php",
             "registered": false
         },
         {
@@ -282,6 +302,36 @@
             "registered": true
         },
         {
+            "name": "MarketingDistributionService",
+            "path": "app/Services/MarketingDistributionService.php",
+            "registered": true
+        },
+        {
+            "name": "MarketingNewsGenerateService",
+            "path": "app/Services/MarketingNewsGenerateService.php",
+            "registered": true
+        },
+        {
+            "name": "MarketingNewsScrapeService",
+            "path": "app/Services/MarketingNewsScrapeService.php",
+            "registered": true
+        },
+        {
+            "name": "MarketingNotificationService",
+            "path": "app/Services/MarketingNotificationService.php",
+            "registered": true
+        },
+        {
+            "name": "MarketingPackageService",
+            "path": "app/Services/MarketingPackageService.php",
+            "registered": true
+        },
+        {
+            "name": "MarketingPipelineService",
+            "path": "app/Services/MarketingPipelineService.php",
+            "registered": true
+        },
+        {
             "name": "MarketingScraper",
             "path": "app/Services/MarketingScraper.php",
             "registered": false
@@ -290,6 +340,11 @@
             "name": "MarketingService",
             "path": "app/Services/MarketingService.php",
             "registered": false
+        },
+        {
+            "name": "MarketingStoryService",
+            "path": "app/Services/MarketingStoryService.php",
+            "registered": true
         },
         {
             "name": "MetaService",
@@ -374,6 +429,11 @@
         {
             "name": "RegistrationAttributionService",
             "path": "app/Services/RegistrationAttributionService.php",
+            "registered": true
+        },
+        {
+            "name": "RegistrationSourceContentService",
+            "path": "app/Services/RegistrationSourceContentService.php",
             "registered": true
         },
         {
@@ -485,6 +545,8 @@
     "issues": [
         "AIOpsService may not be registered in Services.php",
         "AccountService may not be registered in Services.php",
+        "AiopsActionService may not be registered in Services.php",
+        "AiopsPatchService may not be registered in Services.php",
         "AlphaVantagePipelineService may not be registered in Services.php",
         "AlphaVantageService may not be registered in Services.php",
         "ApiGovernanceService may not be registered in Services.php",
@@ -515,6 +577,7 @@
         "EmailQueueService may not be registered in Services.php",
         "EmailScraperService may not be registered in Services.php",
         "EmailService may not be registered in Services.php",
+        "EmailSubjectRoutingService may not be registered in Services.php",
         "EthereumServices may not be registered in Services.php",
         "EtherscanService may not be registered in Services.php",
         "ExchangeService may not be registered in Services.php",

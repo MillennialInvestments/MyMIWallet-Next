@@ -1,6 +1,6 @@
 # ops Documentation
 
-Last Generated: 2026-03-30 12:37:23
+Last Generated: 2026-04-15 12:09:25
 
 - 01-foundation.report.md
 - 01-psr4-autoload-audit.md
@@ -12,6 +12,7 @@ Last Generated: 2026-03-30 12:37:23
 - ai_usage_snapshot.md
 - aiops-guardrails-architecture.md
 - aiops-n8n-workflows.md
+- aiops-remote-health-contract.md
 - aiops-schema-endpoints-spec.md
 - app-update.md
 - auth_redirect_fix.md

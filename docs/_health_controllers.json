@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-03-30 12:37:24",
+    "generated_at": "2026-04-15 12:09:26",
     "controllers": [
         {
             "path": "app/Controllers/Api/AdminChatUsageController.php",
@@ -45,7 +45,7 @@
             "path": "app/Controllers/AuthController.php",
             "has_namespace": true,
             "has_class": true,
-            "public_methods": 17,
+            "public_methods": 18,
             "uses_responsetrait": false,
             "uses_logging": true
         },
@@ -144,6 +144,14 @@
             "public_methods": 2,
             "uses_responsetrait": false,
             "uses_logging": true
+        },
+        {
+            "path": "app/Controllers/SystemDebugController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": false
         },
         {
             "path": "app/Controllers/Test.php",
@@ -269,7 +277,7 @@
             "path": "app/Modules/APIs/Controllers/DiscordAPIController.php",
             "has_namespace": true,
             "has_class": true,
-            "public_methods": 16,
+            "public_methods": 21,
             "uses_responsetrait": true,
             "uses_logging": true
         },
@@ -341,7 +349,7 @@
             "path": "app/Modules/APIs/Controllers/ManagementAPIController.php",
             "has_namespace": true,
             "has_class": true,
-            "public_methods": 77,
+            "public_methods": 78,
             "uses_responsetrait": true,
             "uses_logging": true
         },
@@ -349,7 +357,7 @@
             "path": "app/Modules/APIs/Controllers/MarketingAPIController.php",
             "has_namespace": true,
             "has_class": true,
-            "public_methods": 115,
+            "public_methods": 131,
             "uses_responsetrait": true,
             "uses_logging": true
         },
@@ -709,7 +717,7 @@
             "path": "app/Modules/Exchange/Controllers/ExchangeController.php",
             "has_namespace": true,
             "has_class": true,
-            "public_methods": 37,
+            "public_methods": 38,
             "uses_responsetrait": true,
             "uses_logging": true
         },
@@ -1210,6 +1218,62 @@
             "uses_logging": true
         },
         {
+            "path": "app/Modules/PropFirms/Controllers/AccountsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 11,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/PropFirms/Controllers/DashboardController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/PropFirms/Controllers/NotificationsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/PropFirms/Controllers/PropFirmsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 4,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/PropFirms/Controllers/ReplayController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 5,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/PropFirms/Controllers/SignalsController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 1,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/PropFirms/Controllers/TradovateController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 7,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
             "path": "app/Modules/Public/Controllers/PublicPagesController.php",
             "has_namespace": true,
             "has_class": true,
@@ -1365,7 +1429,7 @@
             "path": "app/Modules/User/Controllers/OnboardingWalkthroughController.php",
             "has_namespace": true,
             "has_class": true,
-            "public_methods": 6,
+            "public_methods": 7,
             "uses_responsetrait": true,
             "uses_logging": true
         },

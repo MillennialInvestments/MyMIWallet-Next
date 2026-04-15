@@ -1,6 +1,6 @@
 # Documentation Audit
 
-Generated: 2026-04-12 16:08:57
+Generated: 2026-04-15 12:09:25
 
 ## Undocumented Controllers
 

@@ -1,9 +1,12 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-04-12T07:00:02Z
+> Run: 2026-04-15T07:00:02Z
 
 - docs/APIs/README.md
   - Last updated: 2026-03-30
+  - Change type: unchanged
+- docs/APIs/_inventory.md
+  - Last updated: 2026-04-12
   - Change type: unchanged
 - docs/APIs/_inventory_controllers.md
   - Last updated: 2026-02-28
@@ -29,11 +32,41 @@
 - docs/APIs/deprecations.md
   - Last updated: 2026-02-28
   - Change type: unchanged
+- docs/APIs/diffs/developer-20260412-121200-diff.md
+  - Last updated: 2026-04-12
+  - Change type: unchanged
+- docs/APIs/diffs/developer-20260412-121404-diff.md
+  - Last updated: 2026-04-12
+  - Change type: unchanged
 - docs/APIs/list/latest.md
   - Last updated: 2026-02-28
   - Change type: unchanged
 - docs/APIs/rate-limit-coverage.md
   - Last updated: 2026-02-28
+  - Change type: unchanged
+- docs/APIs/raw/developer-20260412-120844-raw.md
+  - Last updated: 2026-04-12
+  - Change type: unchanged
+- docs/APIs/raw/developer-20260412-121200-raw.md
+  - Last updated: 2026-04-12
+  - Change type: unchanged
+- docs/APIs/raw/developer-20260412-121404-raw.md
+  - Last updated: 2026-04-12
+  - Change type: unchanged
+- docs/APIs/reports/api-tradovate-com-20260412-111828-integration-report.md
+  - Last updated: 2026-04-12
+  - Change type: unchanged
+- docs/APIs/reports/developer-20260412-120844-report.md
+  - Last updated: 2026-04-12
+  - Change type: unchanged
+- docs/APIs/reports/developer-20260412-121200-report.md
+  - Last updated: 2026-04-12
+  - Change type: unchanged
+- docs/APIs/reports/developer-20260412-121404-report.md
+  - Last updated: 2026-04-12
+  - Change type: unchanged
+- docs/APIs/scraped/api-tradovate-com-20260412-111828-raw.md
+  - Last updated: 2026-04-12
   - Change type: unchanged
 - docs/CRON.md
   - Last updated: 2026-01-30
@@ -81,7 +114,7 @@
   - Last updated: 2026-02-18
   - Change type: unchanged
 - docs/_audit_report.md
-  - Last updated: 2026-03-30
+  - Last updated: 2026-04-12
   - Change type: unchanged
 - docs/_gap-tracker/README.md
   - Last updated: 2026-03-30
@@ -120,7 +153,7 @@
   - Last updated: 2026-03-30
   - Change type: unchanged
 - docs/_inventory.md
-  - Last updated: 2026-03-30
+  - Last updated: 2026-04-12
   - Change type: unchanged
 - docs/_ops/README.md
   - Last updated: 2026-03-30
@@ -223,7 +256,7 @@
   - Change type: unchanged
 - docs/_support/marketing-automation-audit/20260411-143442/summary.md
   - Last updated: 2026-04-11
-  - Change type: new
+  - Change type: unchanged
 - docs/_support/ops-spark-reset/20260210-130402/summary.md
   - Last updated: 2026-02-10
   - Change type: unchanged
@@ -739,13 +772,13 @@
   - Change type: unchanged
 - docs/audit/alerts_audit_last_run.md
   - Last updated: 2026-04-12
-  - Change type: modified
+  - Change type: unchanged
 - docs/audit/auth_audit_last_run.md
   - Last updated: 2026-02-15
   - Change type: unchanged
 - docs/audit/news_audit_last_run.md
   - Last updated: 2026-04-11
-  - Change type: modified
+  - Change type: unchanged
 - docs/audits/README.md
   - Last updated: 2026-03-30
   - Change type: unchanged
@@ -1100,8 +1133,17 @@
 - docs/controllers/AuthController.md
   - Last updated: 2026-03-08
   - Change type: unchanged
+- docs/controllers/BaseAPIController.md
+  - Last updated: 2026-04-12
+  - Change type: unchanged
+- docs/controllers/BaseAdminController.md
+  - Last updated: 2026-04-12
+  - Change type: unchanged
 - docs/controllers/BaseController.md
   - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/controllers/BaseUserController.md
+  - Last updated: 2026-04-12
   - Change type: unchanged
 - docs/controllers/Blog.md
   - Last updated: 2026-03-08
@@ -1132,6 +1174,9 @@
   - Change type: unchanged
 - docs/controllers/StockController.md
   - Last updated: 2026-03-08
+  - Change type: unchanged
+- docs/controllers/SystemDebugController.md
+  - Last updated: 2026-04-12
   - Change type: unchanged
 - docs/controllers/Test.md
   - Last updated: 2026-03-08
@@ -1224,8 +1269,8 @@
   - Last updated: 2025-12-05
   - Change type: unchanged
 - docs/discord/_inventory.md
-  - Last updated: 2025-12-05
-  - Change type: unchanged
+  - Last updated: 2026-04-14
+  - Change type: modified
 - docs/discord/alerts_automation.md
   - Last updated: 2025-11-27
   - Change type: unchanged
@@ -1239,20 +1284,20 @@
   - Last updated: 2025-11-08
   - Change type: unchanged
 - docs/discord/discord_to_ci4_commands.md
-  - Last updated: 2025-11-26
-  - Change type: unchanged
+  - Last updated: 2026-04-14
+  - Change type: modified
 - docs/discord/earnings_calendar_automation.md
   - Last updated: 2025-11-26
   - Change type: unchanged
 - docs/discord/environments.md
-  - Last updated: 2025-12-05
-  - Change type: unchanged
+  - Last updated: 2026-04-14
+  - Change type: modified
 - docs/discord/events_matrix.md
   - Last updated: 2025-12-05
   - Change type: unchanged
 - docs/discord/marketing_news_automation.md
-  - Last updated: 2026-04-11
-  - Change type: unchanged
+  - Last updated: 2026-04-14
+  - Change type: modified
 - docs/discord/mee6_and_mymi_automation.md
   - Last updated: 2025-12-05
   - Change type: unchanged
@@ -1269,14 +1314,14 @@
   - Last updated: 2025-12-05
   - Change type: unchanged
 - docs/discord/python_workers.md
-  - Last updated: 2025-12-05
-  - Change type: unchanged
+  - Last updated: 2026-04-14
+  - Change type: modified
 - docs/discord/server_setup_and_alert_routing.md
-  - Last updated: 2026-02-20
-  - Change type: unchanged
+  - Last updated: 2026-04-14
+  - Change type: modified
 - docs/discord/server_setup_and_ci4_integration.md
-  - Last updated: 2025-12-07
-  - Change type: unchanged
+  - Last updated: 2026-04-14
+  - Change type: modified
 - docs/discord/server_setup_support_category.md
   - Last updated: 2025-12-07
   - Change type: unchanged
@@ -1804,6 +1849,9 @@
   - Change type: unchanged
 - docs/marketing/_templates/Coffee-and-Stocks/Prism_Live_Stream_Template.md
   - Last updated: 2025-12-21
+  - Change type: unchanged
+- docs/marketing/distribution-hardening-report.md
+  - Last updated: 2026-04-13
   - Change type: unchanged
 - docs/marketing/index.md
   - Last updated: 2025-11-08

@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-03-30 12:37:24",
+    "generated_at": "2026-04-15 12:09:26",
     "log_files": [
         {
             "file": "writable/logs/log-2026-02-28.php",
@@ -99,48 +99,131 @@
         {
             "file": "writable/logs/log-2026-03-22.php",
             "size": 1429241,
-            "date": "2026-03-22 23:56:22"
+            "date": "2026-03-30 12:38:18"
         },
         {
             "file": "writable/logs/log-2026-03-23.php",
             "size": 536804,
-            "date": "2026-03-23 23:59:23"
+            "date": "2026-03-30 12:38:18"
         },
         {
             "file": "writable/logs/log-2026-03-24.php",
             "size": 531876,
-            "date": "2026-03-24 23:56:22"
+            "date": "2026-03-30 12:38:18"
         },
         {
             "file": "writable/logs/log-2026-03-25.php",
             "size": 614537,
-            "date": "2026-03-25 23:59:04"
+            "date": "2026-03-30 12:38:18"
         },
         {
             "file": "writable/logs/log-2026-03-26.php",
             "size": 500271,
-            "date": "2026-03-26 23:56:22"
+            "date": "2026-03-30 12:38:18"
         },
         {
             "file": "writable/logs/log-2026-03-27.php",
             "size": 655909,
-            "date": "2026-03-27 23:56:22"
+            "date": "2026-03-30 12:38:18"
         },
         {
             "file": "writable/logs/log-2026-03-28.php",
             "size": 699288,
-            "date": "2026-03-28 23:56:22"
+            "date": "2026-03-30 12:38:18"
         },
         {
             "file": "writable/logs/log-2026-03-29.php",
             "size": 752268,
-            "date": "2026-03-29 23:56:22"
+            "date": "2026-03-30 12:38:18"
         },
         {
             "file": "writable/logs/log-2026-03-30.php",
-            "size": 482188,
-            "date": "2026-03-30 12:37:24"
+            "size": 994984,
+            "date": "2026-03-30 23:56:22"
+        },
+        {
+            "file": "writable/logs/log-2026-03-31.php",
+            "size": 858180,
+            "date": "2026-04-01 00:04:51"
+        },
+        {
+            "file": "writable/logs/log-2026-04-01.php",
+            "size": 4387116,
+            "date": "2026-04-03 01:22:29"
+        },
+        {
+            "file": "writable/logs/log-2026-04-02.php",
+            "size": 102308386,
+            "date": "2026-04-03 01:22:29"
+        },
+        {
+            "file": "writable/logs/log-2026-04-03.php",
+            "size": 259736,
+            "date": "2026-04-03 23:55:54"
+        },
+        {
+            "file": "writable/logs/log-2026-04-04.php",
+            "size": 301404,
+            "date": "2026-04-04 23:20:42"
+        },
+        {
+            "file": "writable/logs/log-2026-04-05.php",
+            "size": 259387,
+            "date": "2026-04-05 23:58:30"
+        },
+        {
+            "file": "writable/logs/log-2026-04-06.php",
+            "size": 323282,
+            "date": "2026-04-06 23:56:21"
+        },
+        {
+            "file": "writable/logs/log-2026-04-07.php",
+            "size": 446449,
+            "date": "2026-04-07 23:55:58"
+        },
+        {
+            "file": "writable/logs/log-2026-04-08.php",
+            "size": 398455,
+            "date": "2026-04-08 23:53:11"
+        },
+        {
+            "file": "writable/logs/log-2026-04-09.php",
+            "size": 326814,
+            "date": "2026-04-09 23:54:27"
+        },
+        {
+            "file": "writable/logs/log-2026-04-10.php",
+            "size": 539596,
+            "date": "2026-04-10 23:17:00"
+        },
+        {
+            "file": "writable/logs/log-2026-04-11.php",
+            "size": 755717,
+            "date": "2026-04-11 23:44:26"
+        },
+        {
+            "file": "writable/logs/log-2026-04-12.php",
+            "size": 27314551,
+            "date": "2026-04-12 23:50:46"
+        },
+        {
+            "file": "writable/logs/log-2026-04-13.php",
+            "size": 285688,
+            "date": "2026-04-13 23:56:50"
+        },
+        {
+            "file": "writable/logs/log-2026-04-14.php",
+            "size": 323162,
+            "date": "2026-04-14 23:56:37"
+        },
+        {
+            "file": "writable/logs/log-2026-04-15.php",
+            "size": 414845,
+            "date": "2026-04-15 12:09:26"
         }
     ],
-    "issues": []
+    "issues": [
+        "log-2026-04-02.php exceeds 20MB",
+        "log-2026-04-12.php exceeds 20MB"
+    ]
 }

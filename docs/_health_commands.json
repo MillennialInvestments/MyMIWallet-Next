@@ -1,17 +1,167 @@
 {
-    "generated_at": "2026-03-30 12:37:24",
+    "generated_at": "2026-04-15 12:09:26",
     "commands": [
         {
             "path": "app/Commands/Marketing/AutomationAudit.php",
             "group": "marketing",
-            "name": "marketing:automation-audit",
+            "name": "marketing:automation:audit",
             "description": "Verify marketing automations, cron hooks, and API usage expectations."
         },
         {
-            "path": "app/Commands/RoutesAuthAudit.php",
-            "group": "maintenance",
-            "name": "routes:auth-audit",
-            "description": "Audit public routes for unauthenticated access regressions."
+            "path": "app/Commands/Marketing/GeneratePackage.php",
+            "group": "Marketing",
+            "name": "marketing:generate:package",
+            "description": "Generate a marketing package from notification_id or headline."
+        },
+        {
+            "path": "app/Commands/Marketing/NewsDebug.php",
+            "group": "Marketing",
+            "name": "marketing:news:debug",
+            "description": "Diagnose marketing IMAP connectivity, folder counts, subject samples, and filter matches."
+        },
+        {
+            "path": "app/Commands/Marketing/NewsGenerate.php",
+            "group": "Marketing",
+            "name": "marketing:news:generate",
+            "description": "Generates clustered story records from pending bf_marketing_temp_scraper rows."
+        },
+        {
+            "path": "app/Commands/Marketing/Distribute.php",
+            "group": "Marketing",
+            "name": "marketing:distribute",
+            "description": "Distribute approved generated marketing content."
+        },
+        {
+            "path": "app/Commands/Marketing/Pipeline.php",
+            "group": "Marketing",
+            "name": "marketing:pipeline",
+            "description": "Runs marketing generation pipeline sections."
+        },
+        {
+            "path": "app/Commands/Marketing/NewsScrape.php",
+            "group": "Marketing",
+            "name": "marketing:news:scrape",
+            "description": "Ingests alert/news emails (or OCR/raw text) into bf_marketing_temp_scraper with folder-level diagnostics."
+        },
+        {
+            "path": "app/Commands/Marketing/NewsImapTest.php",
+            "group": "Marketing",
+            "name": "marketing:news:imap-test",
+            "description": "Smoke test for marketing/news IMAP connectivity."
+        },
+        {
+            "path": "app/Commands/Marketing/ProcessNotifications.php",
+            "group": "Marketing",
+            "name": "marketing:process-notifications",
+            "description": "Process pending marketing notifications and generate marketing packages."
+        },
+        {
+            "path": "app/Commands/Marketing/NewsSeedTest.php",
+            "group": "Marketing",
+            "name": "marketing:news:seed-test",
+            "description": "Insert synthetic rows into bf_marketing_temp_scraper for non-IMAP pipeline testing."
+        },
+        {
+            "path": "app/Commands/Marketing/EmailClean.php",
+            "group": "Marketing",
+            "name": "marketing:email:clean",
+            "description": "Moves already-ingested emails from IMAP source folder into a processed folder."
+        },
+        {
+            "path": "app/Commands/Marketing/NotificationTest.php",
+            "group": "Marketing",
+            "name": "marketing:notification:test",
+            "description": "Test marketing notification readiness, pending counts, and recent campaign activity."
+        },
+        {
+            "path": "app/Commands/Marketing/PromotionsAudit.php",
+            "group": "Marketing",
+            "name": "marketing:promotions:audit",
+            "description": "Audit promotion source data and campaign readiness from scraper and campaign tables."
+        },
+        {
+            "path": "app/Commands/Marketing/PromotionsGenerate.php",
+            "group": "Marketing",
+            "name": "marketing:promotions:generate",
+            "description": "Generate promotion campaign rows from finalized marketing summaries."
+        },
+        {
+            "path": "app/Commands/Marketing/PromotionsTest.php",
+            "group": "Marketing",
+            "name": "marketing:promotions:test",
+            "description": "Run a chained smoke test for promotions audit and dry-run generation."
+        },
+        {
+            "path": "app/Commands/Marketing/ApproveGenerated.php",
+            "group": "Marketing",
+            "name": "marketing:approve-generated",
+            "description": "Approve generated marketing content and optionally pre-create destination targets."
+        },
+        {
+            "path": "app/Commands/Marketing/BlueskyHealthcheck.php",
+            "group": "Marketing",
+            "name": "marketing:bluesky:healthcheck",
+            "description": "Run Bluesky connectivity/auth healthcheck for marketing distribution."
+        },
+        {
+            "path": "app/Commands/Marketing/MastodonHealthcheck.php",
+            "group": "Marketing",
+            "name": "marketing:mastodon:healthcheck",
+            "description": "Run Mastodon connectivity/auth healthcheck for marketing distribution."
+        },
+        {
+            "path": "app/Commands/Marketing/RetryDistribution.php",
+            "group": "Marketing",
+            "name": "marketing:retry-distribution",
+            "description": "Retry failed marketing distribution targets."
+        },
+        {
+            "path": "app/Commands/Marketing/ApproveGeneratedContent.php",
+            "group": "Marketing",
+            "name": "marketing:approve-generated",
+            "description": "Promote generated marketing content from pending_review to approved."
+        },
+        {
+            "path": "app/Commands/Marketing/DailyAudit.php",
+            "group": "Marketing",
+            "name": "marketing:daily-audit",
+            "description": "Daily marketing pipeline QA audit report."
+        },
+        {
+            "path": "app/Commands/Marketing/DiscordActivationAnnouncement.php",
+            "group": "Marketing",
+            "name": "marketing:discord-activation",
+            "description": "Send one-time Discord activation announcement for marketing stream channels."
+        },
+        {
+            "path": "app/Commands/Marketing/DistributionFailureInjectTest.php",
+            "group": "Marketing",
+            "name": "marketing:distribution:failure-inject-test",
+            "description": "Dev-safe failure injection checks for blog/in_app/email/discord target retries and idempotency."
+        },
+        {
+            "path": "app/Commands/Marketing/DistributionSqlAssert.php",
+            "group": "Marketing",
+            "name": "marketing:distribution:assert-sql",
+            "description": "Runs SQL-level anomaly assertions for marketing distribution/regression monitoring."
+        },
+        {
+            "path": "app/Commands/Marketing/RegressionSmoke.php",
+            "group": "Marketing",
+            "name": "marketing:regression:smoke",
+            "description": "Runs full marketing pipeline smoke checks and validates count movement across stages."
+        },
+        {
+            "path": "app/Commands/Marketing/DiscordTestAllCategories.php",
+            "group": "Marketing",
+            "name": "marketing:discord:test-all-categories",
+            "description": "Loop all configured marketing Discord categories and test post delivery."
+        },
+        {
+            "path": "app/Commands/Marketing/DiscordTestCategory.php",
+            "group": "Marketing",
+            "name": "marketing:discord:test-category",
+            "description": "Send a category-formatted test message to the mapped Discord channel."
         },
         {
             "path": "app/Commands/SafeBaseCommand.php",
@@ -20,16 +170,16 @@
             "description": null
         },
         {
+            "path": "app/Commands/RunAutomationQueue.php",
+            "group": "Automation",
+            "name": "automation:run",
+            "description": "Run queued automation jobs"
+        },
+        {
             "path": "app/Commands/Env/EnvDoctor.php",
             "group": "env",
             "name": "env:doctor",
             "description": "Environment diagnostics and snapshot."
-        },
-        {
-            "path": "app/Commands/GtmHealthSnapshot.php",
-            "group": "GTM",
-            "name": "gtm:health:snapshot",
-            "description": "Generate deterministic GTM daily health snapshot markdown report."
         },
         {
             "path": "app/Commands/Ops/NetworkMatrix.php",
@@ -428,10 +578,40 @@
             "description": "Run the master docs, graph, and health pipeline."
         },
         {
-            "path": "app/Commands/GtmCronRouteSecurityValidation.php",
+            "path": "app/Commands/Gtm/CronRouteSecurityValidation.php",
             "group": "GTM",
             "name": "gtm:cron:validate-security",
             "description": "Validate INTERNAL_CRON and /API/Management routes reject missing/invalid tokens."
+        },
+        {
+            "path": "app/Commands/Gtm/HealthSnapshot.php",
+            "group": "GTM",
+            "name": "gtm:health:snapshot",
+            "description": "Generate deterministic GTM daily health snapshot markdown report."
+        },
+        {
+            "path": "app/Commands/Gtm/LaunchAudit.php",
+            "group": "GTM",
+            "name": "gtm:launch:audit",
+            "description": "Generate go-live launch readiness audit for Phase A user surfaces."
+        },
+        {
+            "path": "app/Commands/Gtm/LaunchSmoke.php",
+            "group": "GTM",
+            "name": "gtm:launch:smoke",
+            "description": "Run non-destructive HTTP smoke checks for Phase A user navigation surfaces."
+        },
+        {
+            "path": "app/Commands/Content/EngineSmoke.php",
+            "group": "content",
+            "name": "contentengine:smoke",
+            "description": "End-to-end smoke test for the Content Engine ingest \u2192 scoring \u2192 drafts pipeline."
+        },
+        {
+            "path": "app/Commands/Content/IngestSample.php",
+            "group": "content",
+            "name": "content:ingest-sample",
+            "description": "Load sample Daily Top Gainers JSON, ingest, score, and print the top 5 ideas."
         },
         {
             "path": "app/Commands/Growth/RetentionWatch.php",
@@ -468,6 +648,12 @@
             "group": "Audit",
             "name": "audit:all",
             "description": "Full system visibility audit"
+        },
+        {
+            "path": "app/Commands/Audit/Psr4.php",
+            "group": "maintenance",
+            "name": "audit:psr4",
+            "description": "Audit PSR-4 compliance for the app namespace."
         },
         {
             "path": "app/Commands/GitHub/SearchRepo.php",
@@ -552,6 +738,12 @@
             "group": "Test",
             "name": "test:redis",
             "description": "Test Redis connection"
+        },
+        {
+            "path": "app/Commands/Test/Email.php",
+            "group": "maintenance",
+            "name": "email:test",
+            "description": "Send a test email using the current SMTP configuration."
         },
         {
             "path": "app/Commands/PurgeFastCGI.php",
@@ -704,6 +896,24 @@
             "description": "Summarize CI4 logs for a given date, including new entries since the last run."
         },
         {
+            "path": "app/Commands/Logs/Errors.php",
+            "group": null,
+            "name": null,
+            "description": null
+        },
+        {
+            "path": "app/Commands/Logs/FullReport.php",
+            "group": "maintenance",
+            "name": "logs:full-report",
+            "description": "Summarize CI4 + Apache + PHP logs for a given date."
+        },
+        {
+            "path": "app/Commands/Logs/Test.php",
+            "group": "logs",
+            "name": "logs:test",
+            "description": "Canonical logging test command (writes debug/info/error and validates file + DB sinks)."
+        },
+        {
             "path": "app/Commands/AppUpdate.php",
             "group": "app",
             "name": "app:update",
@@ -746,22 +956,16 @@
             "description": "Audit controllers for unsafe initController patterns, score severity, suggest patches, optional safe auto-fix, and regression diff."
         },
         {
-            "path": "app/Commands/LogsTest.php",
-            "group": "logs",
-            "name": "logs:test",
-            "description": "Canonical logging test command (writes debug/info/error and validates file + DB sinks)."
-        },
-        {
             "path": "app/Commands/CompatAudit.php",
             "group": "App",
             "name": "app:compat-audit",
             "description": "Audit MyMI Wallet for CI4 + PHP compatibility issues."
         },
         {
-            "path": "app/Commands/ContentEngineSmoke.php",
-            "group": "content",
-            "name": "contentengine:smoke",
-            "description": "End-to-end smoke test for the Content Engine ingest \u2192 scoring \u2192 drafts pipeline."
+            "path": "app/Commands/DiscordCustomSend.php",
+            "group": "Discord",
+            "name": "discord:custom:send",
+            "description": "Send or queue a custom message to a chosen Discord channel key and audit it."
         },
         {
             "path": "app/Commands/Runtime/SparkFix.php",
@@ -806,16 +1010,28 @@
             "description": "Consolidate runtime diagnostics into a single report."
         },
         {
-            "path": "app/Commands/GtmLaunchAudit.php",
-            "group": "GTM",
-            "name": "gtm:launch:audit",
-            "description": "Generate go-live launch readiness audit for Phase A user surfaces."
+            "path": "app/Commands/Runtime/Check.php",
+            "group": "app",
+            "name": "runtime:check",
+            "description": "Validate runtime invariants (nginx, php, permissions, etc.)."
         },
         {
             "path": "app/Commands/Config/Drift.php",
             "group": "audit",
             "name": "config:drift",
             "description": "Compare deployed config and environment to repo baselines."
+        },
+        {
+            "path": "app/Commands/Config/Clear.php",
+            "group": "Config",
+            "name": "config:clear",
+            "description": "Clear configuration-related caches safely (guarded)."
+        },
+        {
+            "path": "app/Commands/Config/Lint.php",
+            "group": "config",
+            "name": "config:lint",
+            "description": "Lint Config/Services.php overrides against CI4 service signatures."
         },
         {
             "path": "app/Commands/Security/SecretsAudit.php",
@@ -872,9 +1088,39 @@
             "description": "Detect API endpoints missing /API/vN namespace and emit remediation."
         },
         {
+            "path": "app/Commands/API/ApiTestUrl.php",
+            "group": "API",
+            "name": "api:test-url",
+            "description": "Test an API URL or endpoint and write a markdown report."
+        },
+        {
+            "path": "app/Commands/API/DocsScrapeApi.php",
+            "group": "Docs",
+            "name": "api:scrape",
+            "description": "Scrape API docs and generate a MyMI Wallet integration summary report."
+        },
+        {
+            "path": "app/Commands/API/ApiResearch.php",
+            "group": "API",
+            "name": "api:research",
+            "description": "Research API documentation, parse specs, extract endpoints, and write reports."
+        },
+        {
+            "path": "app/Commands/API/ApiInventory.php",
+            "group": "API",
+            "name": "api:inventory",
+            "description": "Build docs/APIs/_inventory.md from latest API research runs."
+        },
+        {
+            "path": "app/Commands/API/ApiDiff.php",
+            "group": "API",
+            "name": "api:diff",
+            "description": "Compare the two most recent research runs for a provider."
+        },
+        {
             "path": "app/Commands/Scrapers/EmailScraperAudit.php",
-            "group": "audit",
-            "name": "scraper:audit-emails",
+            "group": "Marketing",
+            "name": "marketing:scraper:audit-emails",
             "description": "Audit recent trade and news emails against the expected scraper schema."
         },
         {
@@ -912,12 +1158,6 @@
             "group": "cache",
             "name": "cache:audit",
             "description": "Scan the repo for unsafe cache key usage."
-        },
-        {
-            "path": "app/Commands/ContentIngestSample.php",
-            "group": "content",
-            "name": "content:ingest-sample",
-            "description": "Load sample Daily Top Gainers JSON, ingest, score, and print the top 5 ideas."
         },
         {
             "path": "app/Commands/Performance/K6Run.php",
@@ -962,22 +1202,16 @@
             "description": "Reconcile route handlers against actual controllers and methods."
         },
         {
-            "path": "app/Commands/RevenueStreamsScan.php",
-            "group": "marketing",
-            "name": "revenue:scan",
-            "description": "Scan the repository for monetizable features and generate revenue stream docs."
+            "path": "app/Commands/Routes/AuthAudit.php",
+            "group": "maintenance",
+            "name": "routes:auth-audit",
+            "description": "Audit public routes for unauthenticated access regressions."
         },
         {
             "path": "app/Commands/ForecastEvaluate.php",
             "group": "Forecasts",
             "name": "forecasts:evaluate",
             "description": "Evaluate forecasts for accuracy windows."
-        },
-        {
-            "path": "app/Commands/ConfigLint.php",
-            "group": "config",
-            "name": "config:lint",
-            "description": "Lint Config/Services.php overrides against CI4 service signatures."
         },
         {
             "path": "app/Commands/Traits/ParamOptions.php",
@@ -1036,20 +1270,8 @@
         {
             "path": "app/Commands/Spark/RegistryAudit.php",
             "group": "Spark",
-            "name": "spark:registry-audit",
+            "name": "registry:audit",
             "description": "Audit Spark command registry against filesystem declarations and runtime list output."
-        },
-        {
-            "path": "app/Commands/ConfigClear.php",
-            "group": "Config",
-            "name": "config:clear",
-            "description": "Clear configuration-related caches safely (guarded)."
-        },
-        {
-            "path": "app/Commands/LogsFullReport.php",
-            "group": "maintenance",
-            "name": "logs:full-report",
-            "description": "Summarize CI4 + Apache + PHP logs for a given date."
         },
         {
             "path": "app/Commands/WalletsWarmSummaryCache.php",
@@ -1062,6 +1284,12 @@
             "group": "audit",
             "name": "revenue:cost-forecast",
             "description": "Forecast infra and API costs and detect overruns."
+        },
+        {
+            "path": "app/Commands/Revenue/StreamsScan.php",
+            "group": "marketing",
+            "name": "revenue:scan",
+            "description": "Scan the repository for monetizable features and generate revenue stream docs."
         },
         {
             "path": "app/Commands/Codex/ReviewCommit.php",
@@ -1148,16 +1376,58 @@
             "description": "Generate Codex review artifacts (summary + prompt payload)"
         },
         {
-            "path": "app/Commands/AuditPsr4.php",
-            "group": "maintenance",
-            "name": "audit:psr4",
-            "description": "Audit PSR-4 compliance for the app namespace."
+            "path": "app/Commands/Platform/ControlAnalyze.php",
+            "group": "platform",
+            "name": "platform:control:analyze",
+            "description": "Analyze collected control-plane artifacts and output ranked action queue."
         },
         {
-            "path": "app/Commands/GtmLaunchSmoke.php",
-            "group": "GTM",
-            "name": "gtm:launch:smoke",
-            "description": "Run non-destructive HTTP smoke checks for Phase A user navigation surfaces."
+            "path": "app/Commands/Platform/ControlCollect.php",
+            "group": "platform",
+            "name": "platform:control:collect",
+            "description": "Collect edge snapshots from registered platform manifests."
+        },
+        {
+            "path": "app/Commands/Platform/ControlDispatch.php",
+            "group": "platform",
+            "name": "platform:control:dispatch",
+            "description": "Dispatch or dry-run actions generated by control-plane analysis."
+        },
+        {
+            "path": "app/Commands/Platform/ControlRun.php",
+            "group": "platform",
+            "name": "platform:control:run",
+            "description": "Run control-plane collect -> analyze -> dispatch pipeline."
+        },
+        {
+            "path": "app/Commands/Platform/CronDispatch.php",
+            "group": "platform",
+            "name": "platform:cron:dispatch",
+            "description": "Cron-friendly wrapper for control-plane dispatch dry-run workflow."
+        },
+        {
+            "path": "app/Commands/Platform/EdgeSnapshot.php",
+            "group": "platform",
+            "name": "platform:edge-snapshot",
+            "description": "Generate lightweight edge status and metrics artifacts for control-plane collection."
+        },
+        {
+            "path": "app/Commands/Platform/RunPlatform.php",
+            "group": "platform",
+            "name": "platform:run",
+            "description": "Run deterministic platform lifecycle orchestration with safe failure isolation."
+        },
+        {
+            "path": "app/Commands/Platform/RunReport.php",
+            "group": "platform",
+            "name": "platform:run:report",
+            "description": "Print latest platform run report summary."
+        },
+        {
+            "path": "app/Commands/Platform/RunSubsystem.php",
+            "group": "platform",
+            "name": "platform:run:subsystem",
+            "description": "Run platform pipeline scoped to one or more subsystems."
         },
         {
             "path": "app/Commands/Mail/Send.php",
@@ -1241,7 +1511,7 @@
             "path": "app/Commands/Research/WatchlistCleanup.php",
             "group": "research",
             "name": "research:alerts:cleanup",
-            "description": null
+            "description": "Clean up stale research alert/watchlist rows."
         },
         {
             "path": "app/Commands/Research/WeeklyMarketReport.php",
@@ -1377,21 +1647,33 @@
         },
         {
             "path": "app/Commands/AIOps/Forms/TestScan.php",
-            "group": null,
-            "name": null,
-            "description": null
-        },
-        {
-            "path": "app/Commands/AIOps/Status.php",
-            "group": "AIOps - Repair",
-            "name": "aiops:status",
-            "description": "AIOps runtime status"
+            "group": "AIOps - QA",
+            "name": "aiops:form:test",
+            "description": "Scan a form (url/file/text), map route->controller, generate payload, submit, capture logs, and queue a patch job if errors found."
         },
         {
             "path": "app/Commands/AIOps/DedupeReport.php",
             "group": "AIOps - Run",
             "name": "aiops:dedupe:report",
             "description": "Generate duplicate and near-duplicate instruction report."
+        },
+        {
+            "path": "app/Commands/AIOps/MissingViewScan.php",
+            "group": "AIOps",
+            "name": "aiops:views:missing",
+            "description": "Scan controllers for view()/renderTheme() references and report missing views."
+        },
+        {
+            "path": "app/Commands/AIOps/ExecuteDocs.php",
+            "group": "AIOps - All Control",
+            "name": "aiops:execute-docs",
+            "description": "Process docs/_aiops markdown files and execute actionable patches in a stateful loop."
+        },
+        {
+            "path": "app/Commands/AIOps/Status.php",
+            "group": "AIOps - Repair",
+            "name": "aiops:status",
+            "description": "AIOps runtime status"
         },
         {
             "path": "app/Commands/AIOps/Repair.php",
@@ -1460,10 +1742,22 @@
             "description": "Run documentation sync pipeline using DocsSyncEngine"
         },
         {
-            "path": "app/Commands/AIOps/EmailScan.php",
-            "group": "AIOps - Marketing",
-            "name": "aiops:email-scan",
-            "description": "Scan alerts mailbox for new emails and record AIOps counts."
+            "path": "app/Commands/AIOps/AutoFixAnalyze.php",
+            "group": "AIOps",
+            "name": "aiops:autofix:analyze",
+            "description": "Analyze latest log file and produce categorized recurring issue suggestions."
+        },
+        {
+            "path": "app/Commands/AIOps/SuggestRoutes.php",
+            "group": "AIOps",
+            "name": "aiops:routes:suggest",
+            "description": "Scan recent 404 logs and suggest likely intended route matches."
+        },
+        {
+            "path": "app/Commands/AIOps/PyOps.php",
+            "group": "AIOps - Run",
+            "name": "aiops:py",
+            "description": "Run Python automation actions and return structured JSON."
         },
         {
             "path": "app/Commands/AIOps/Audit.php",
@@ -1482,6 +1776,18 @@
             "group": "AIOps - Commands",
             "name": "aiops:build-command",
             "description": "Generate a Spark command from text logic using AIOps"
+        },
+        {
+            "path": "app/Commands/AIOps/All.php",
+            "group": "AIOps - All Control",
+            "name": "aiops:all",
+            "description": "Run a full AIOps scan and generate unified Markdown and JSON reports in docs/_aiops."
+        },
+        {
+            "path": "app/Commands/AIOps/AiopsRepairs.php",
+            "group": "AIOps - All Control",
+            "name": "aiops:repairs",
+            "description": "Run the error->action->repair queue->patch plan pipeline."
         },
         {
             "path": "app/Commands/AIOps/SyncPerfRoutes.php",
@@ -1718,6 +2024,18 @@
             "description": "Start n8n"
         },
         {
+            "path": "app/Commands/AIOps/LogsErrors.php",
+            "group": "AIOps",
+            "name": "logs:errors",
+            "description": "Scan runtime logs, normalize errors, and generate structured AIOps error reports."
+        },
+        {
+            "path": "app/Commands/AIOps/EmailScan.php",
+            "group": "AIOps - Marketing",
+            "name": "aiops:email-scan",
+            "description": "Scan alerts mailbox for new emails and record AIOps counts."
+        },
+        {
             "path": "app/Commands/AIOps/ContinueAudit.php",
             "group": "AIOps - Audit",
             "name": "aiops:continue",
@@ -1820,28 +2138,16 @@
             "description": "Process queued AIOps instructions (governance + targeting + diff + optional PR)."
         },
         {
-            "path": "app/Commands/AIOps/FormTestScan.php",
-            "group": "AIOps - QA",
-            "name": "aiops:form:test",
-            "description": "Scan a form (url/file/text), map route->controller, generate payload, submit, capture logs, and queue a patch job if errors found."
-        },
-        {
             "path": "app/Commands/AIOps/IntegrityScan.php",
             "group": "AIOps",
             "name": "aiops:scan:integrity",
             "description": "Scan CI4 app integrity for command inheritance, support files, view paths, and unsafe trim usage."
         },
         {
-            "path": "app/Commands/RuntimeCheck.php",
-            "group": "app",
-            "name": "runtime:check",
-            "description": "Validate runtime invariants (nginx, php, permissions, etc.)."
-        },
-        {
-            "path": "app/Commands/TestEmail.php",
-            "group": "maintenance",
-            "name": "email:test",
-            "description": "Send a test email using the current SMTP configuration."
+            "path": "app/Commands/AIOps/Errors.php",
+            "group": "AIOps",
+            "name": "aiops:errors",
+            "description": "Run the AIOps error scan wrapper and delegate to logs:errors when available."
         },
         {
             "path": "app/Commands/TrafficSpikeGuard.php",
@@ -1884,12 +2190,6 @@
             "group": "maintenance",
             "name": "spark:diagnose-503",
             "description": "Diagnose common 503 causes (cache, maintenance, upstream)."
-        },
-        {
-            "path": "app/Commands/Ollama/BaseOllamaCommand.php",
-            "group": "Ollama - Control",
-            "name": null,
-            "description": null
         },
         {
             "path": "app/Commands/Ollama/Bench.php",
@@ -1950,12 +2250,6 @@
             "group": null,
             "name": "ollama:embed:file",
             "description": "Embeds file chunks into vector storage."
-        },
-        {
-            "path": "app/Commands/Ollama/Generate.php",
-            "group": null,
-            "name": "ollama:generate",
-            "description": "Runs single prompt generate against Ollama."
         },
         {
             "path": "app/Commands/Ollama/Health.php",
@@ -2138,6 +2432,24 @@
             "description": "Resets Ollama circuit breaker."
         },
         {
+            "path": "app/Commands/Ollama/Generate.php",
+            "group": null,
+            "name": null,
+            "description": null
+        },
+        {
+            "path": "app/Commands/Ollama/BaseOllamaCommand.php",
+            "group": "Ollama - Control",
+            "name": null,
+            "description": null
+        },
+        {
+            "path": "app/Commands/Ollama/OllamaRun.php",
+            "group": null,
+            "name": "ollama:run",
+            "description": "Run an Ollama prompt from a file and write response artifacts."
+        },
+        {
             "path": "app/Commands/Repo/Health.php",
             "group": "DevOps",
             "name": "repo:health",
@@ -2162,12 +2474,6 @@
             "description": "Trace where a class is declared and referenced in the repository."
         },
         {
-            "path": "app/Commands/Discord/GetList.php",
-            "group": "Discord",
-            "name": "discord:list",
-            "description": "List configured Discord channels/webhooks/IDs from config and database."
-        },
-        {
             "path": "app/Commands/Discord/ProcessQueue.php",
             "group": "Discord",
             "name": "discord:process-queue",
@@ -2186,10 +2492,22 @@
             "description": "Send a test Liquidity Scan alert to alerts.liquidity channel"
         },
         {
+            "path": "app/Commands/Discord/CustomSend.php",
+            "group": "Discord",
+            "name": "discord:custom:send",
+            "description": "Send or queue a custom message to a chosen Discord channel key and audit it."
+        },
+        {
             "path": "app/Commands/Discord/WireCheck.php",
             "group": "Discord",
             "name": "discord:wire-check",
             "description": "Validate Discord env vars, tables, and queue health for MyMIDiscord."
+        },
+        {
+            "path": "app/Commands/Discord/GetList.php",
+            "group": "Discord",
+            "name": "discord:list",
+            "description": "List configured Discord channels/webhooks/IDs from config and database."
         },
         {
             "path": "app/Commands/Alerts/Forecast.php",
@@ -2210,6 +2528,12 @@
             "description": "Audit recent scraped alert emails against generated trade alerts."
         },
         {
+            "path": "app/Commands/Alerts/FetchRawEmails.php",
+            "group": "Alerts",
+            "name": "alerts:fetch-raw-emails",
+            "description": "Fetch raw trade alert emails into bf_investment_scraper and move inserted messages to Processed."
+        },
+        {
             "path": "app/Commands/Alerts/Ingest.php",
             "group": "Alerts",
             "name": "alerts:ingest",
@@ -2222,46 +2546,16 @@
             "description": "Profile controller boot performance."
         },
         {
-            "path": "app/Commands/Docs/ArchitectureMap.php",
-            "group": "Docs",
-            "name": "docs:architecture-map",
-            "description": "Generate architecture map of CI4 application"
-        },
-        {
             "path": "app/Commands/Docs/AuditDocs.php",
             "group": "Docs",
             "name": "docs:audit",
             "description": "Audit CI4 codebase vs /docs documentation"
         },
         {
-            "path": "app/Commands/Docs/GenerateMissingDocs.php",
-            "group": "Docs",
-            "name": "docs:generate-missing",
-            "description": "Generate documentation for undocumented controllers"
-        },
-        {
             "path": "app/Commands/Docs/InventoryDocs.php",
             "group": "Docs",
             "name": "docs:inventory",
             "description": "Scan /docs directory and generate docs/_inventory.md"
-        },
-        {
-            "path": "app/Commands/Docs/SyncAllDocs.php",
-            "group": "Docs",
-            "name": "docs:sync-all",
-            "description": "Run full documentation pipeline"
-        },
-        {
-            "path": "app/Commands/Docs/SyncCodeFromDocs.php",
-            "group": "Docs",
-            "name": "docs:sync-code",
-            "description": "Analyze /docs and generate repository patches to align code with documentation."
-        },
-        {
-            "path": "app/Commands/Docs/ArchitectureGraph.php",
-            "group": "Docs",
-            "name": "docs:architecture:graph",
-            "description": "Generate CI4 architecture graph"
         },
         {
             "path": "app/Commands/Docs/DatabaseMap.php",
@@ -2292,6 +2586,24 @@
             "group": "Docs Generate",
             "name": "docs:readme:build",
             "description": null
+        },
+        {
+            "path": "app/Commands/Docs/Generate/ArchitectureMap.php",
+            "group": "Docs",
+            "name": "docs:generate-architecture-map",
+            "description": "Generate docs/_architecture_map.json from read-only repository scans."
+        },
+        {
+            "path": "app/Commands/Docs/Generate/KnowledgeGraph.php",
+            "group": "Docs",
+            "name": "docs:generate-knowledge-graph",
+            "description": "Generate docs/_knowledge_graph.json linking docs, views, routes, controllers, services, and health scans."
+        },
+        {
+            "path": "app/Commands/Docs/Generate/MissingDocs.php",
+            "group": "Docs",
+            "name": "docs:generate-missing",
+            "description": "Generate documentation for undocumented controllers"
         },
         {
             "path": "app/Commands/Docs/ModulesMap.php",
@@ -2330,15 +2642,33 @@
             "description": null
         },
         {
+            "path": "app/Commands/Docs/Scan/OrphanRoutes.php",
+            "group": "Docs",
+            "name": "docs:scan-orphan-routes",
+            "description": "Detect routes that do not map to existing controller methods."
+        },
+        {
+            "path": "app/Commands/Docs/Scan/OrphanViews.php",
+            "group": "Docs",
+            "name": "docs:scan-orphan-views",
+            "description": "Detect views that are not referenced by controllers."
+        },
+        {
+            "path": "app/Commands/Docs/Scan/Routes.php",
+            "group": "Docs",
+            "name": "docs:scan-routes",
+            "description": "Scan all routes and validate controllers"
+        },
+        {
+            "path": "app/Commands/Docs/Scan/UndocumentedControllers.php",
+            "group": "Docs",
+            "name": "docs:scan-undocumented-controllers",
+            "description": "Detect controllers with no docs markdown references."
+        },
+        {
             "path": "app/Commands/Docs/SparkCommandsInventory.php",
             "group": "Docs",
             "name": "docs:spark:inventory",
-            "description": null
-        },
-        {
-            "path": "app/Commands/Docs/SyncDocsSystem.php",
-            "group": "Docs",
-            "name": "docs:sync-system",
             "description": null
         },
         {
@@ -2348,40 +2678,40 @@
             "description": "Build How-It-Works navigation partial from view files and docs/how-it-works markdown files."
         },
         {
-            "path": "app/Commands/Docs/GenerateArchitectureMap.php",
-            "group": "Docs",
-            "name": "docs:generate-architecture-map",
-            "description": "Generate docs/_architecture_map.json from read-only repository scans."
-        },
-        {
-            "path": "app/Commands/Docs/GenerateKnowledgeGraph.php",
-            "group": "Docs",
-            "name": "docs:generate-knowledge-graph",
-            "description": "Generate docs/_knowledge_graph.json linking docs, views, routes, controllers, services, and health scans."
-        },
-        {
-            "path": "app/Commands/Docs/ScanOrphanRoutes.php",
-            "group": "Docs",
-            "name": "docs:scan-orphan-routes",
-            "description": "Detect routes that do not map to existing controller methods."
-        },
-        {
-            "path": "app/Commands/Docs/ScanOrphanViews.php",
-            "group": "Docs",
-            "name": "docs:scan-orphan-views",
-            "description": "Detect views that are not referenced by controllers."
-        },
-        {
-            "path": "app/Commands/Docs/ScanUndocumentedControllers.php",
-            "group": "Docs",
-            "name": "docs:scan-undocumented-controllers",
-            "description": "Detect controllers with no docs markdown references."
-        },
-        {
-            "path": "app/Commands/Docs/DocsTest.php",
+            "path": "app/Commands/Docs/Test.php",
             "group": "Docs",
             "name": "docs:test",
             "description": "Test DocsService loading and navigation"
+        },
+        {
+            "path": "app/Commands/Docs/Sync/CodeFromDocs.php",
+            "group": "Docs",
+            "name": "docs:sync-code",
+            "description": "Analyze /docs and execute DocsSyncEngine safely."
+        },
+        {
+            "path": "app/Commands/Docs/Sync/AllDocs.php",
+            "group": "Docs",
+            "name": "docs:sync-all",
+            "description": "Run full documentation pipeline"
+        },
+        {
+            "path": "app/Commands/Docs/Sync/DocsSystem.php",
+            "group": "Docs",
+            "name": "docs:sync-system",
+            "description": null
+        },
+        {
+            "path": "app/Commands/Docs/Architecture/Graph.php",
+            "group": "Docs",
+            "name": "docs:architecture:graph",
+            "description": "Generate CI4 architecture graph"
+        },
+        {
+            "path": "app/Commands/Docs/Architecture/Map.php",
+            "group": "Docs",
+            "name": "docs:architecture-map",
+            "description": "Generate architecture map of CI4 application"
         },
         {
             "path": "app/Commands/GapTrackerSync.php",

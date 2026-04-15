@@ -1,9 +1,12 @@
 # controllers Documentation
 
-Last Generated: 2026-03-30 12:37:23
+Last Generated: 2026-04-15 12:09:25
 
 - AuthController.md
+- BaseAPIController.md
+- BaseAdminController.md
 - BaseController.md
+- BaseUserController.md
 - Blog.md
 - Debug.md
 - Health.md
@@ -12,5 +15,6 @@ Last Generated: 2026-03-30 12:37:23
 - MaintenanceController.md
 - OpsHealthController.md
 - StockController.md
+- SystemDebugController.md
 - Test.md
 - UserController.md

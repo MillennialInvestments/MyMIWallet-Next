@@ -1,6 +1,6 @@
 # operations Documentation
 
-Last Generated: 2026-03-30 12:37:23
+Last Generated: 2026-04-15 12:09:25
 
 - 01-foundation.md
 - 01-foundation.report.md
@@ -14,3 +14,4 @@ Last Generated: 2026-03-30 12:37:23
 - 09-frontend-ui.md
 - 10-roadmap.md
 - _index.md
+- remote-vs-local-mode.md

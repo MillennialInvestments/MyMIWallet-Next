@@ -1,6 +1,6 @@
 # marketing Documentation
 
-Last Generated: 2026-03-30 12:37:23
+Last Generated: 2026-04-15 12:09:25
 
 - 00-Go-To-Market-Strategy.md
 - 01-mymi-gold-and-coin.md
@@ -20,5 +20,6 @@ Last Generated: 2026-03-30 12:37:23
 - 15-youtube-guide.md
 - 16-tiktok-guide.md
 - _index.md
+- distribution-hardening-report.md
 - index.md
 - marketing-intake.md

@@ -1,11 +1,11 @@
 {
-    "generated_at": "2026-03-30 12:37:24",
-    "total_md_files": 1542,
-    "readme_files": 122,
+    "generated_at": "2026-04-15 12:09:26",
+    "total_md_files": 1614,
+    "readme_files": 124,
     "directories": [
         {
             "directory": "docs/ops",
-            "md_files": 44,
+            "md_files": 45,
             "has_readme": true
         },
         {
@@ -65,7 +65,7 @@
         },
         {
             "directory": "docs/marketing",
-            "md_files": 21,
+            "md_files": 22,
             "has_readme": true
         },
         {
@@ -90,7 +90,7 @@
         },
         {
             "directory": "docs/operations",
-            "md_files": 13,
+            "md_files": 14,
             "has_readme": true
         },
         {
@@ -119,17 +119,32 @@
             "has_readme": true
         },
         {
+            "directory": "docs/tasks/completed",
+            "md_files": 7,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/tasks/pending",
+            "md_files": 6,
+            "has_readme": false
+        },
+        {
             "directory": "docs/wallets",
             "md_files": 4,
             "has_readme": true
         },
         {
             "directory": "docs",
-            "md_files": 23,
+            "md_files": 24,
             "has_readme": true
         },
         {
             "directory": "docs/_gap-tracker",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/_platform",
             "md_files": 1,
             "has_readme": true
         },
@@ -269,14 +284,14 @@
             "has_readme": true
         },
         {
-            "directory": "docs/cron",
-            "md_files": 1,
-            "has_readme": true
-        },
-        {
             "directory": "docs/cron/jobs",
             "md_files": 8,
             "has_readme": false
+        },
+        {
+            "directory": "docs/cron",
+            "md_files": 1,
+            "has_readme": true
         },
         {
             "directory": "docs/sql",
@@ -344,11 +359,6 @@
             "has_readme": true
         },
         {
-            "directory": "docs/troubleshooting",
-            "md_files": 1,
-            "has_readme": true
-        },
-        {
             "directory": "docs/troubleshooting/checklists",
             "md_files": 1,
             "has_readme": false
@@ -384,13 +394,18 @@
             "has_readme": false
         },
         {
+            "directory": "docs/troubleshooting",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
             "directory": "docs/ui",
             "md_files": 6,
             "has_readme": true
         },
         {
             "directory": "docs/integrations",
-            "md_files": 2,
+            "md_files": 4,
             "has_readme": true
         },
         {
@@ -819,11 +834,6 @@
             "has_readme": false
         },
         {
-            "directory": "docs/gap_tracker",
-            "md_files": 1,
-            "has_readme": true
-        },
-        {
             "directory": "docs/gap_tracker/reports",
             "md_files": 5,
             "has_readme": false
@@ -832,6 +842,11 @@
             "directory": "docs/gap_tracker/items",
             "md_files": 2,
             "has_readme": false
+        },
+        {
+            "directory": "docs/gap_tracker",
+            "md_files": 1,
+            "has_readme": true
         },
         {
             "directory": "docs/_aiops/diffs/manual-run",
@@ -852,11 +867,6 @@
             "directory": "docs/_aiops/reports",
             "md_files": 1,
             "has_readme": false
-        },
-        {
-            "directory": "docs/_aiops",
-            "md_files": 22,
-            "has_readme": true
         },
         {
             "directory": "docs/_aiops/summaries",
@@ -882,6 +892,11 @@
             "directory": "docs/_aiops/manual/priorities",
             "md_files": 2,
             "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops",
+            "md_files": 30,
+            "has_readme": true
         },
         {
             "directory": "docs/_aiops/design",
@@ -910,7 +925,7 @@
         },
         {
             "directory": "docs/_aiops/repairs",
-            "md_files": 6,
+            "md_files": 9,
             "has_readme": false
         },
         {
@@ -1019,6 +1034,21 @@
             "has_readme": false
         },
         {
+            "directory": "docs/_aiops/pr_ready/17",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/pr_ready/18",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/pr_ready/19",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
             "directory": "docs/_aiops/registry",
             "md_files": 1,
             "has_readme": false
@@ -1089,6 +1119,21 @@
             "has_readme": false
         },
         {
+            "directory": "docs/_aiops/patch_jobs/20260402-221615-ingest-17",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/patch_jobs/20260403-104539-ingest-18",
+            "md_files": 3,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_aiops/patch_jobs/20260403-104547-ingest-19",
+            "md_files": 2,
+            "has_readme": false
+        },
+        {
             "directory": "docs/_aiops/runs",
             "md_files": 1,
             "has_readme": false
@@ -1110,7 +1155,7 @@
         },
         {
             "directory": "docs/_aiops/audits",
-            "md_files": 5,
+            "md_files": 6,
             "has_readme": false
         },
         {
@@ -1145,7 +1190,7 @@
         },
         {
             "directory": "docs/reports",
-            "md_files": 3,
+            "md_files": 5,
             "has_readme": true
         },
         {
@@ -1160,7 +1205,7 @@
         },
         {
             "directory": "docs/auth",
-            "md_files": 5,
+            "md_files": 7,
             "has_readme": true
         },
         {
@@ -1455,7 +1500,7 @@
         },
         {
             "directory": "docs/controllers",
-            "md_files": 13,
+            "md_files": 17,
             "has_readme": true
         },
         {
@@ -1505,7 +1550,7 @@
         },
         {
             "directory": "docs/audits",
-            "md_files": 8,
+            "md_files": 9,
             "has_readme": true
         },
         {
@@ -1779,6 +1824,31 @@
             "has_readme": false
         },
         {
+            "directory": "docs/_support/db-drift/20260402-095240",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/scraper-audit-emails/20260402-095602",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/marketing-automation-audit/20260410-005014",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/marketing-automation-audit/20260410-005604",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_support/marketing-automation-audit/20260411-143442",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
             "directory": "docs/_ops",
             "md_files": 4,
             "has_readme": true
@@ -1790,7 +1860,7 @@
         },
         {
             "directory": "docs/APIs",
-            "md_files": 8,
+            "md_files": 9,
             "has_readme": true
         },
         {
@@ -1806,6 +1876,26 @@
         {
             "directory": "docs/APIs/list",
             "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/APIs/scraped",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/APIs/reports",
+            "md_files": 4,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/APIs/raw",
+            "md_files": 3,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/APIs/diffs",
+            "md_files": 2,
             "has_readme": false
         },
         {
@@ -1891,6 +1981,11 @@
         {
             "directory": "docs/how-it-works",
             "md_files": 8,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/platform",
+            "md_files": 5,
             "has_readme": true
         }
     ]

@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-03-30 12:37:24",
+    "generated_at": "2026-04-15 12:09:26",
     "models": [
         {
             "path": "app/Models/AIOps/FormTestModel.php",
@@ -119,6 +119,31 @@
         {
             "path": "app/Models/AnnouncementsModel.php",
             "table": "bf_applications",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ApiResearchDiffModel.php",
+            "table": "bf_api_research_diffs",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ApiResearchEndpointModel.php",
+            "table": "bf_api_research_endpoints",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ApiResearchPageModel.php",
+            "table": "bf_api_research_pages",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ApiResearchRunModel.php",
+            "table": "bf_api_research_runs",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/ApiResearchSpecModel.php",
+            "table": "bf_api_research_specs",
             "primary_key": "id"
         },
         {
@@ -287,9 +312,19 @@
             "primary_key": "id"
         },
         {
+            "path": "app/Models/DiscordManualMessageModel.php",
+            "table": "bf_discord_manual_messages",
+            "primary_key": "id"
+        },
+        {
             "path": "app/Models/DiscordModel.php",
             "table": null,
             "primary_key": null
+        },
+        {
+            "path": "app/Models/DiscordRelayAuditModel.php",
+            "table": "bf_discord_relay_audit",
+            "primary_key": "id"
         },
         {
             "path": "app/Models/DripCampaignModel.php",
@@ -547,6 +582,11 @@
             "primary_key": "id"
         },
         {
+            "path": "app/Models/MarketingDistributionTargetModel.php",
+            "table": "bf_marketing_distribution_targets",
+            "primary_key": "id"
+        },
+        {
             "path": "app/Models/MarketingModel.php",
             "table": "bf_marketing_scraper",
             "primary_key": "id"
@@ -769,6 +809,11 @@
         {
             "path": "app/Models/RoleUserModel.php",
             "table": "bf_role_user",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/RouteErrorHeatmapModel.php",
+            "table": "bf_route_error_heatmap",
             "primary_key": "id"
         },
         {
@@ -999,6 +1044,86 @@
         {
             "path": "app/Modules/Marketing_New/Models/MarketingModel.php",
             "table": "bf_marketing_scraper",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/PropFirms/Models/PropAllowedSymbolModel.php",
+            "table": "bf_prop_allowed_symbols",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/PropFirms/Models/PropBrokerConnectionModel.php",
+            "table": "bf_prop_broker_connections",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/PropFirms/Models/PropChartSnapshotModel.php",
+            "table": "bf_prop_chart_snapshots",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/PropFirms/Models/PropEquityHistoryModel.php",
+            "table": "bf_prop_equity_history",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/PropFirms/Models/PropFillModel.php",
+            "table": "bf_prop_fills",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/PropFirms/Models/PropFirmModel.php",
+            "table": "bf_prop_firms",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/PropFirms/Models/PropNotificationModel.php",
+            "table": "bf_prop_notifications",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/PropFirms/Models/PropOrderModel.php",
+            "table": "bf_prop_orders",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/PropFirms/Models/PropPositionModel.php",
+            "table": "bf_prop_positions",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/PropFirms/Models/PropReplayDiagnosticModel.php",
+            "table": "bf_prop_replay_diagnostics",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/PropFirms/Models/PropReplayEventModel.php",
+            "table": "bf_prop_replay_events",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/PropFirms/Models/PropRuleSetModel.php",
+            "table": "bf_prop_rule_sets",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/PropFirms/Models/PropSignalModel.php",
+            "table": "bf_prop_signals",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/PropFirms/Models/PropSyncLogModel.php",
+            "table": "bf_prop_sync_logs",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/PropFirms/Models/PropTradeJournalModel.php",
+            "table": "bf_prop_trade_journal",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Modules/PropFirms/Models/UserPropAccountModel.php",
+            "table": "bf_user_prop_accounts",
             "primary_key": "id"
         },
         {

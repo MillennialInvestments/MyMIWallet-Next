@@ -1,8 +1,15 @@
 # _aiops Documentation
 
-Last Generated: 2026-03-30 12:37:23
+Last Generated: 2026-04-15 12:09:25
 
 - IMPLEMENTATION.md
+- _aiops_all.md
+- _error_new_today.md
+- _error_summary.md
+- _execution_log.md
+- _final_report.md
+- _patch_plan.md
+- _repair_queue.md
 - aiops_mission.md
 - architecture.md
 - backlog-report-2026-02-09.md
@@ -18,6 +25,7 @@ Last Generated: 2026-03-30 12:37:23
 - gap-report.md
 - next-steps.md
 - nightly-summary.md
+- ollama-run-command.md
 - pr-checklist.md
 - repair-report.md
 - spark-results.md

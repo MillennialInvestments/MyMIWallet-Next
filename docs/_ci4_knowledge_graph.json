@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-03-30 12:37:23",
+    "generated_at": "2026-04-15 12:09:25",
     "app_path": "/home/mymiteam/mymiwallet/site/current/app/",
     "root_path": "/home/mymiteam/mymiwallet/site/current/",
     "controllers": [
@@ -77,7 +77,9 @@
             "uses_models": [
                 "ipHistoryModel"
             ],
-            "uses_views": [],
+            "uses_views": [
+                "Auth/register_success_plain"
+            ],
             "uses_services": [
                 "session",
                 "authentication",
@@ -86,11 +88,13 @@
                 "onboardingProgressService",
                 "safeCache",
                 "registrationAttributionService",
+                "registrationSourceContentService",
                 "activator",
                 "authAuditService",
                 "throttler",
                 "resetter",
-                "response"
+                "response",
+                "security"
             ],
             "methods": [
                 "initController",
@@ -100,6 +104,7 @@
                 "register",
                 "attemptRegister",
                 "registerSuccess",
+                "registerSuccessProbe",
                 "resendRegistrationActivation",
                 "forgotPassword",
                 "attemptForgot",
@@ -157,6 +162,7 @@
                 "response",
                 "myMIAnalytics",
                 "myMIInvestments",
+                "myMIMarketing",
                 "dashboardService",
                 "session",
                 "renderer",
@@ -332,6 +338,22 @@
             "methods": [
                 "healthz",
                 "diag"
+            ]
+        },
+        {
+            "name": "SystemDebugController",
+            "path": "app/Controllers/SystemDebugController.php",
+            "namespace": "App\\Controllers",
+            "class": "SystemDebugController",
+            "extends": "BaseController",
+            "uses_models": [],
+            "uses_views": [
+                "management/system_debug"
+            ],
+            "uses_services": [],
+            "methods": [
+                "errorHeatmap",
+                "index"
             ]
         },
         {
@@ -689,12 +711,14 @@
             "extends": "BaseAPIController",
             "uses_models": [
                 "DiscordLinkModel",
+                "DiscordRelayAuditModel",
                 "AlertsModel",
                 "linkModel"
             ],
             "uses_views": [],
             "uses_services": [
-                "logger"
+                "logger",
+                "curlrequest"
             ],
             "methods": [
                 "initController",
@@ -708,11 +732,16 @@
                 "commandsCatalog",
                 "onboardingSteps",
                 "sharingGuide",
+                "interactions",
+                "registerGuildCommands",
                 "handleInteraction",
                 "messageHook",
                 "completeOnboardingStep",
                 "webhookProxy",
-                "createLinkToken"
+                "createLinkToken",
+                "tickerLookup",
+                "cryptoLookup",
+                "quoteLookup"
             ]
         },
         {
@@ -940,7 +969,6 @@
             "class": "ManagementAPIController",
             "extends": "BaseAPIController",
             "uses_models": [
-                "MarketingModel",
                 "alertsModel",
                 "exchangeModel",
                 "marketingModel",
@@ -956,7 +984,7 @@
             "uses_services": [
                 "authorization",
                 "MyMIMarketing",
-                "request",
+                "marketingPipelineService",
                 "activator",
                 "mailService",
                 "autoloadHealthService",
@@ -969,6 +997,7 @@
                 "subsystemsStatus",
                 "subsystemsAction",
                 "runAuthSmoke",
+                "debugLogs",
                 "saveSuggestion",
                 "initController",
                 "Run_CRON_Tasks",
@@ -1055,15 +1084,19 @@
             "uses_views": [],
             "uses_services": [
                 "MyMIMarketing",
+                "marketingNewsScrapeService",
+                "marketingNewsGenerateService",
                 "mailService",
                 "request",
-                "activator"
+                "marketingPipelineService",
+                "marketingPackageService",
+                "activator",
+                "authentication",
+                "marketingDistributionService"
             ],
             "methods": [
                 "_remap",
                 "initController",
-                "generateKimiSummaries",
-                "generateKimiPosts",
                 "approveBufferItem",
                 "autoScheduleNextApproved",
                 "cronAnalyzeContent",
@@ -1072,6 +1105,9 @@
                 "cronFetchAndGenerateNews",
                 "cronFetchInbox",
                 "cronFetchMarketingEmails",
+                "runNewsScrape",
+                "runNewsGenerate",
+                "runNewsPipeline",
                 "cronProcessSMSMarketingIdeas",
                 "cronDistributeApprovedContent",
                 "deleteScrape",
@@ -1094,6 +1130,14 @@
                 "generateContentFromScraper",
                 "generateContentDigestFromStored",
                 "generateDailyContentDigest",
+                "generateKimiSummaries",
+                "generateKimiPosts",
+                "generateMarketingPackage",
+                "processPendingNotifications",
+                "processPendingTempScraper",
+                "processPendingCampaigns",
+                "processPendingGeneratedContent",
+                "runMarketingPipeline",
                 "generateFromSimilar",
                 "generateLivePreview",
                 "generatePostsFromSummary",
@@ -1173,7 +1217,14 @@
                 "getTemplates",
                 "saveTemplate",
                 "deleteTemplate",
-                "viewTimelineGrouped"
+                "viewTimelineGrouped",
+                "uploadNotification",
+                "getStoryUpdates",
+                "distributionSummary",
+                "distributionHistory",
+                "retryDistributionTargets",
+                "distributionFailedSummary",
+                "distributionChannelTotals"
             ]
         },
         {
@@ -2182,6 +2233,7 @@
                 "walletModel"
             ],
             "uses_views": [
+                "Exchange/project",
                 "templates/header",
                 "exchange/dashboard",
                 "templates/footer",
@@ -2209,6 +2261,7 @@
                 "initController",
                 "commonData",
                 "index",
+                "project",
                 "dashboard",
                 "applicationManager",
                 "coinListingRequest",
@@ -3277,8 +3330,8 @@
                 "authentication",
                 "logger",
                 "request",
-                "MyMIMarketing",
                 "MyMIUser",
+                "MyMIMarketing",
                 "solanaService",
                 "mailService",
                 "marketingService",
@@ -4096,6 +4149,135 @@
             ]
         },
         {
+            "name": "AccountsController",
+            "path": "app/Modules/PropFirms/Controllers/AccountsController.php",
+            "namespace": "App\\Modules\\PropFirms\\Controllers",
+            "class": "AccountsController",
+            "extends": "UserController",
+            "uses_models": [
+                "UserPropAccountModel",
+                "PropFirmModel",
+                "PropRuleSetModel",
+                "PropBrokerConnectionModel"
+            ],
+            "uses_views": [],
+            "uses_services": [],
+            "methods": [
+                "__construct",
+                "index",
+                "create",
+                "store",
+                "edit",
+                "detail",
+                "update",
+                "delete",
+                "refreshState",
+                "connectBroker",
+                "accountState"
+            ]
+        },
+        {
+            "name": "DashboardController",
+            "path": "app/Modules/PropFirms/Controllers/DashboardController.php",
+            "namespace": "App\\Modules\\PropFirms\\Controllers",
+            "class": "DashboardController",
+            "extends": "UserController",
+            "uses_models": [],
+            "uses_views": [],
+            "uses_services": [
+                "propFirmsService"
+            ],
+            "methods": [
+                "index"
+            ]
+        },
+        {
+            "name": "NotificationsController",
+            "path": "app/Modules/PropFirms/Controllers/NotificationsController.php",
+            "namespace": "App\\Modules\\PropFirms\\Controllers",
+            "class": "NotificationsController",
+            "extends": "UserController",
+            "uses_models": [],
+            "uses_views": [],
+            "uses_services": [],
+            "methods": [
+                "index",
+                "markRead"
+            ]
+        },
+        {
+            "name": "PropFirmsController",
+            "path": "app/Modules/PropFirms/Controllers/PropFirmsController.php",
+            "namespace": "App\\Modules\\PropFirms\\Controllers",
+            "class": "PropFirmsController",
+            "extends": "UserController",
+            "uses_models": [],
+            "uses_views": [],
+            "uses_services": [],
+            "methods": [
+                "index",
+                "ruleSets",
+                "accounts",
+                "seedDefaults"
+            ]
+        },
+        {
+            "name": "ReplayController",
+            "path": "app/Modules/PropFirms/Controllers/ReplayController.php",
+            "namespace": "App\\Modules\\PropFirms\\Controllers",
+            "class": "ReplayController",
+            "extends": "UserController",
+            "uses_models": [
+                "UserPropAccountModel",
+                "PropReplayDiagnosticModel"
+            ],
+            "uses_views": [],
+            "uses_services": [],
+            "methods": [
+                "__construct",
+                "index",
+                "apiReplay",
+                "saveReview",
+                "diagnosticsSummary"
+            ]
+        },
+        {
+            "name": "SignalsController",
+            "path": "app/Modules/PropFirms/Controllers/SignalsController.php",
+            "namespace": "App\\Modules\\PropFirms\\Controllers",
+            "class": "SignalsController",
+            "extends": "UserController",
+            "uses_models": [
+                "UserPropAccountModel"
+            ],
+            "uses_views": [],
+            "uses_services": [],
+            "methods": [
+                "scan"
+            ]
+        },
+        {
+            "name": "TradovateController",
+            "path": "app/Modules/PropFirms/Controllers/TradovateController.php",
+            "namespace": "App\\Modules\\PropFirms\\Controllers",
+            "class": "TradovateController",
+            "extends": "UserController",
+            "uses_models": [
+                "UserPropAccountModel"
+            ],
+            "uses_views": [],
+            "uses_services": [],
+            "methods": [
+                "__construct",
+                "connect",
+                "disconnect",
+                "sync",
+                "syncOrders",
+                "syncFills",
+                "syncPositions"
+            ]
+        },
+        {
             "name": "PublicPagesController",
             "path": "app/Modules/Public/Controllers/PublicPagesController.php",
             "namespace": "App\\Modules\\Public\\Controllers",
@@ -4699,7 +4881,8 @@
                 "saveBudgetIncome",
                 "saveCreditDebt",
                 "saveRecurringExpense",
-                "saveWatchlist"
+                "saveWatchlist",
+                "completeSourceWelcome"
             ]
         },
         {
@@ -5188,6 +5371,41 @@
             "table": "bf_applications"
         },
         {
+            "name": "ApiResearchDiffModel",
+            "path": "app/Models/ApiResearchDiffModel.php",
+            "namespace": "App\\Models",
+            "class": "ApiResearchDiffModel",
+            "table": "bf_api_research_diffs"
+        },
+        {
+            "name": "ApiResearchEndpointModel",
+            "path": "app/Models/ApiResearchEndpointModel.php",
+            "namespace": "App\\Models",
+            "class": "ApiResearchEndpointModel",
+            "table": "bf_api_research_endpoints"
+        },
+        {
+            "name": "ApiResearchPageModel",
+            "path": "app/Models/ApiResearchPageModel.php",
+            "namespace": "App\\Models",
+            "class": "ApiResearchPageModel",
+            "table": "bf_api_research_pages"
+        },
+        {
+            "name": "ApiResearchRunModel",
+            "path": "app/Models/ApiResearchRunModel.php",
+            "namespace": "App\\Models",
+            "class": "ApiResearchRunModel",
+            "table": "bf_api_research_runs"
+        },
+        {
+            "name": "ApiResearchSpecModel",
+            "path": "app/Models/ApiResearchSpecModel.php",
+            "namespace": "App\\Models",
+            "class": "ApiResearchSpecModel",
+            "table": "bf_api_research_specs"
+        },
+        {
             "name": "ApiTokenModel",
             "path": "app/Models/ApiTokenModel.php",
             "namespace": "App\\Models",
@@ -5419,11 +5637,25 @@
             "table": "bf_discord_links"
         },
         {
+            "name": "DiscordManualMessageModel",
+            "path": "app/Models/DiscordManualMessageModel.php",
+            "namespace": "App\\Models",
+            "class": "DiscordManualMessageModel",
+            "table": "bf_discord_manual_messages"
+        },
+        {
             "name": "DiscordModel",
             "path": "app/Models/DiscordModel.php",
             "namespace": "App\\Models",
             "class": "DiscordModel",
             "table": null
+        },
+        {
+            "name": "DiscordRelayAuditModel",
+            "path": "app/Models/DiscordRelayAuditModel.php",
+            "namespace": "App\\Models",
+            "class": "DiscordRelayAuditModel",
+            "table": "bf_discord_relay_audit"
         },
         {
             "name": "DripCampaignModel",
@@ -5783,6 +6015,13 @@
             "table": "bf_marketing_video_versions"
         },
         {
+            "name": "MarketingDistributionTargetModel",
+            "path": "app/Models/MarketingDistributionTargetModel.php",
+            "namespace": "App\\Models",
+            "class": "MarketingDistributionTargetModel",
+            "table": "bf_marketing_distribution_targets"
+        },
+        {
             "name": "MarketingModel",
             "path": "app/Models/MarketingModel.php",
             "namespace": "App\\Models",
@@ -6096,6 +6335,13 @@
             "namespace": "App\\Models",
             "class": "RoleUserModel",
             "table": "bf_role_user"
+        },
+        {
+            "name": "RouteErrorHeatmapModel",
+            "path": "app/Models/RouteErrorHeatmapModel.php",
+            "namespace": "App\\Models",
+            "class": "RouteErrorHeatmapModel",
+            "table": "bf_route_error_heatmap"
         },
         {
             "name": "RuntimeConfigModel",
@@ -6420,6 +6666,118 @@
             "table": "bf_marketing_scraper"
         },
         {
+            "name": "PropAllowedSymbolModel",
+            "path": "app/Modules/PropFirms/Models/PropAllowedSymbolModel.php",
+            "namespace": "App\\Modules\\PropFirms\\Models",
+            "class": "PropAllowedSymbolModel",
+            "table": "bf_prop_allowed_symbols"
+        },
+        {
+            "name": "PropBrokerConnectionModel",
+            "path": "app/Modules/PropFirms/Models/PropBrokerConnectionModel.php",
+            "namespace": "App\\Modules\\PropFirms\\Models",
+            "class": "PropBrokerConnectionModel",
+            "table": "bf_prop_broker_connections"
+        },
+        {
+            "name": "PropChartSnapshotModel",
+            "path": "app/Modules/PropFirms/Models/PropChartSnapshotModel.php",
+            "namespace": "App\\Modules\\PropFirms\\Models",
+            "class": "PropChartSnapshotModel",
+            "table": "bf_prop_chart_snapshots"
+        },
+        {
+            "name": "PropEquityHistoryModel",
+            "path": "app/Modules/PropFirms/Models/PropEquityHistoryModel.php",
+            "namespace": "App\\Modules\\PropFirms\\Models",
+            "class": "PropEquityHistoryModel",
+            "table": "bf_prop_equity_history"
+        },
+        {
+            "name": "PropFillModel",
+            "path": "app/Modules/PropFirms/Models/PropFillModel.php",
+            "namespace": "App\\Modules\\PropFirms\\Models",
+            "class": "PropFillModel",
+            "table": "bf_prop_fills"
+        },
+        {
+            "name": "PropFirmModel",
+            "path": "app/Modules/PropFirms/Models/PropFirmModel.php",
+            "namespace": "App\\Modules\\PropFirms\\Models",
+            "class": "PropFirmModel",
+            "table": "bf_prop_firms"
+        },
+        {
+            "name": "PropNotificationModel",
+            "path": "app/Modules/PropFirms/Models/PropNotificationModel.php",
+            "namespace": "App\\Modules\\PropFirms\\Models",
+            "class": "PropNotificationModel",
+            "table": "bf_prop_notifications"
+        },
+        {
+            "name": "PropOrderModel",
+            "path": "app/Modules/PropFirms/Models/PropOrderModel.php",
+            "namespace": "App\\Modules\\PropFirms\\Models",
+            "class": "PropOrderModel",
+            "table": "bf_prop_orders"
+        },
+        {
+            "name": "PropPositionModel",
+            "path": "app/Modules/PropFirms/Models/PropPositionModel.php",
+            "namespace": "App\\Modules\\PropFirms\\Models",
+            "class": "PropPositionModel",
+            "table": "bf_prop_positions"
+        },
+        {
+            "name": "PropReplayDiagnosticModel",
+            "path": "app/Modules/PropFirms/Models/PropReplayDiagnosticModel.php",
+            "namespace": "App\\Modules\\PropFirms\\Models",
+            "class": "PropReplayDiagnosticModel",
+            "table": "bf_prop_replay_diagnostics"
+        },
+        {
+            "name": "PropReplayEventModel",
+            "path": "app/Modules/PropFirms/Models/PropReplayEventModel.php",
+            "namespace": "App\\Modules\\PropFirms\\Models",
+            "class": "PropReplayEventModel",
+            "table": "bf_prop_replay_events"
+        },
+        {
+            "name": "PropRuleSetModel",
+            "path": "app/Modules/PropFirms/Models/PropRuleSetModel.php",
+            "namespace": "App\\Modules\\PropFirms\\Models",
+            "class": "PropRuleSetModel",
+            "table": "bf_prop_rule_sets"
+        },
+        {
+            "name": "PropSignalModel",
+            "path": "app/Modules/PropFirms/Models/PropSignalModel.php",
+            "namespace": "App\\Modules\\PropFirms\\Models",
+            "class": "PropSignalModel",
+            "table": "bf_prop_signals"
+        },
+        {
+            "name": "PropSyncLogModel",
+            "path": "app/Modules/PropFirms/Models/PropSyncLogModel.php",
+            "namespace": "App\\Modules\\PropFirms\\Models",
+            "class": "PropSyncLogModel",
+            "table": "bf_prop_sync_logs"
+        },
+        {
+            "name": "PropTradeJournalModel",
+            "path": "app/Modules/PropFirms/Models/PropTradeJournalModel.php",
+            "namespace": "App\\Modules\\PropFirms\\Models",
+            "class": "PropTradeJournalModel",
+            "table": "bf_prop_trade_journal"
+        },
+        {
+            "name": "UserPropAccountModel",
+            "path": "app/Modules/PropFirms/Models/UserPropAccountModel.php",
+            "namespace": "App\\Modules\\PropFirms\\Models",
+            "class": "UserPropAccountModel",
+            "table": "bf_user_prop_accounts"
+        },
+        {
             "name": "ScriptModel",
             "path": "app/Modules/ScriptStudio/Models/ScriptModel.php",
             "namespace": "App\\Modules\\ScriptStudio\\Models",
@@ -6533,6 +6891,30 @@
             "class": "AiOpsServiceManager"
         },
         {
+            "name": "AiopsActionExtractor",
+            "path": "app/Services/AIOps/AiopsActionExtractor.php",
+            "namespace": "App\\Services\\AIOps",
+            "class": "AiopsActionExtractor"
+        },
+        {
+            "name": "AiopsErrorParser",
+            "path": "app/Services/AIOps/AiopsErrorParser.php",
+            "namespace": "App\\Services\\AIOps",
+            "class": "AiopsErrorParser"
+        },
+        {
+            "name": "AiopsPatchPlanner",
+            "path": "app/Services/AIOps/AiopsPatchPlanner.php",
+            "namespace": "App\\Services\\AIOps",
+            "class": "AiopsPatchPlanner"
+        },
+        {
+            "name": "AutoFixService",
+            "path": "app/Services/AIOps/AutoFixService.php",
+            "namespace": "App\\Services\\AIOps",
+            "class": "AutoFixService"
+        },
+        {
             "name": "AutoRunCoordinator",
             "path": "app/Services/AIOps/AutoRunCoordinator.php",
             "namespace": "App\\Services\\AIOps",
@@ -6609,6 +6991,18 @@
             "path": "app/Services/AIOps/EmailScannerService.php",
             "namespace": "App\\Services\\AIOps",
             "class": "EmailScannerService"
+        },
+        {
+            "name": "ErrorClassifier",
+            "path": "app/Services/AIOps/ErrorClassifier.php",
+            "namespace": "App\\Services\\AIOps",
+            "class": "ErrorClassifier"
+        },
+        {
+            "name": "ErrorIngestService",
+            "path": "app/Services/AIOps/ErrorIngestService.php",
+            "namespace": "App\\Services\\AIOps",
+            "class": "ErrorIngestService"
         },
         {
             "name": "FingerprintService",
@@ -6749,6 +7143,12 @@
             "class": "RepoVerifierService"
         },
         {
+            "name": "RouteErrorHeatmapService",
+            "path": "app/Services/AIOps/RouteErrorHeatmapService.php",
+            "namespace": "App\\Services\\AIOps",
+            "class": "RouteErrorHeatmapService"
+        },
+        {
             "name": "SchemaInspectorService",
             "path": "app/Services/AIOps/SchemaInspectorService.php",
             "namespace": "App\\Services\\AIOps",
@@ -6777,6 +7177,18 @@
             "path": "app/Services/AccountService.php",
             "namespace": "App\\Services",
             "class": "AccountService"
+        },
+        {
+            "name": "AiopsActionService",
+            "path": "app/Services/AiopsActionService.php",
+            "namespace": "App\\Services",
+            "class": "AiopsActionService"
+        },
+        {
+            "name": "AiopsPatchService",
+            "path": "app/Services/AiopsPatchService.php",
+            "namespace": "App\\Services",
+            "class": "AiopsPatchService"
         },
         {
             "name": "AlertService",
@@ -6887,6 +7299,12 @@
             "class": "BufferSchedulerService"
         },
         {
+            "name": "CalendarEmailTriggerService",
+            "path": "app/Services/CalendarEmailTriggerService.php",
+            "namespace": "App\\Services",
+            "class": "CalendarEmailTriggerService"
+        },
+        {
             "name": "CashAppService",
             "path": "app/Services/CashAppService.php",
             "namespace": "App\\Services",
@@ -6959,6 +7377,12 @@
             "class": "DigiByteService"
         },
         {
+            "name": "DiscordOpsRelayService",
+            "path": "app/Services/Discord/DiscordOpsRelayService.php",
+            "namespace": "App\\Services\\Discord",
+            "class": "DiscordOpsRelayService"
+        },
+        {
             "name": "DocsParserService",
             "path": "app/Services/Docs/DocsParserService.php",
             "namespace": "App\\Services\\Docs",
@@ -7005,6 +7429,12 @@
             "path": "app/Services/EmailService.php",
             "namespace": "App\\Services",
             "class": "EmailService"
+        },
+        {
+            "name": "EmailSubjectRoutingService",
+            "path": "app/Services/EmailSubjectRoutingService.php",
+            "namespace": "App\\Services",
+            "class": "EmailSubjectRoutingService"
         },
         {
             "name": "EnvInspector",
@@ -7235,16 +7665,112 @@
             "class": "MailService"
         },
         {
+            "name": "IndicatorHealthService",
+            "path": "app/Services/Market/IndicatorHealthService.php",
+            "namespace": "App\\Services\\Market",
+            "class": "IndicatorHealthService"
+        },
+        {
+            "name": "BlueskyDistributionService",
+            "path": "app/Services/Marketing/Distribution/BlueskyDistributionService.php",
+            "namespace": "App\\Services\\Marketing\\Distribution",
+            "class": "BlueskyDistributionService"
+        },
+        {
+            "name": "DiscordMessageBuilder",
+            "path": "app/Services/Marketing/Distribution/DiscordMessageBuilder.php",
+            "namespace": "App\\Services\\Marketing\\Distribution",
+            "class": "DiscordMessageBuilder"
+        },
+        {
+            "name": "LinkedInDistributionService",
+            "path": "app/Services/Marketing/Distribution/LinkedInDistributionService.php",
+            "namespace": "App\\Services\\Marketing\\Distribution",
+            "class": "LinkedInDistributionService"
+        },
+        {
+            "name": "MastodonDistributionService",
+            "path": "app/Services/Marketing/Distribution/MastodonDistributionService.php",
+            "namespace": "App\\Services\\Marketing\\Distribution",
+            "class": "MastodonDistributionService"
+        },
+        {
+            "name": "WebhookDistributionService",
+            "path": "app/Services/Marketing/Distribution/WebhookDistributionService.php",
+            "namespace": "App\\Services\\Marketing\\Distribution",
+            "class": "WebhookDistributionService"
+        },
+        {
             "name": "EmailMarketingService",
             "path": "app/Services/Marketing/EmailMarketingService.php",
             "namespace": "App\\Services\\Marketing",
             "class": "EmailMarketingService"
         },
         {
+            "name": "MarketingNotificationService",
+            "path": "app/Services/Marketing/MarketingNotificationService.php",
+            "namespace": "App\\Services\\Marketing",
+            "class": "MarketingNotificationService"
+        },
+        {
             "name": "MarketingVideoService",
             "path": "app/Services/Marketing/MarketingVideoService.php",
             "namespace": "App\\Services\\Marketing",
             "class": "MarketingVideoService"
+        },
+        {
+            "name": "OcrService",
+            "path": "app/Services/Marketing/OcrService.php",
+            "namespace": "App\\Services\\Marketing",
+            "class": "OcrService"
+        },
+        {
+            "name": "SourceFinderService",
+            "path": "app/Services/Marketing/SourceFinderService.php",
+            "namespace": "App\\Services\\Marketing",
+            "class": "SourceFinderService"
+        },
+        {
+            "name": "TranslationService",
+            "path": "app/Services/Marketing/TranslationService.php",
+            "namespace": "App\\Services\\Marketing",
+            "class": "TranslationService"
+        },
+        {
+            "name": "MarketingDistributionService",
+            "path": "app/Services/MarketingDistributionService.php",
+            "namespace": "App\\Services",
+            "class": "MarketingDistributionService"
+        },
+        {
+            "name": "MarketingNewsGenerateService",
+            "path": "app/Services/MarketingNewsGenerateService.php",
+            "namespace": "App\\Services",
+            "class": "MarketingNewsGenerateService"
+        },
+        {
+            "name": "MarketingNewsScrapeService",
+            "path": "app/Services/MarketingNewsScrapeService.php",
+            "namespace": "App\\Services",
+            "class": "MarketingNewsScrapeService"
+        },
+        {
+            "name": "MarketingNotificationService",
+            "path": "app/Services/MarketingNotificationService.php",
+            "namespace": "App\\Services",
+            "class": "MarketingNotificationService"
+        },
+        {
+            "name": "MarketingPackageService",
+            "path": "app/Services/MarketingPackageService.php",
+            "namespace": "App\\Services",
+            "class": "MarketingPackageService"
+        },
+        {
+            "name": "MarketingPipelineService",
+            "path": "app/Services/MarketingPipelineService.php",
+            "namespace": "App\\Services",
+            "class": "MarketingPipelineService"
         },
         {
             "name": "MarketingScraper",
@@ -7257,6 +7783,12 @@
             "path": "app/Services/MarketingService.php",
             "namespace": "App\\Services",
             "class": "MarketingService"
+        },
+        {
+            "name": "MarketingStoryService",
+            "path": "app/Services/MarketingStoryService.php",
+            "namespace": "App\\Services",
+            "class": "MarketingStoryService"
         },
         {
             "name": "MetaService",
@@ -7439,6 +7971,12 @@
             "class": "SchemaGenerator"
         },
         {
+            "name": "PythonRunner",
+            "path": "app/Services/PyOps/PythonRunner.php",
+            "namespace": "App\\Services\\PyOps",
+            "class": "PythonRunner"
+        },
+        {
             "name": "PythonService",
             "path": "app/Services/PythonService.php",
             "namespace": "App\\Services",
@@ -7467,6 +8005,12 @@
             "path": "app/Services/RegistrationAttributionService.php",
             "namespace": "App\\Services",
             "class": "RegistrationAttributionService"
+        },
+        {
+            "name": "RegistrationSourceContentService",
+            "path": "app/Services/RegistrationSourceContentService.php",
+            "namespace": "App\\Services",
+            "class": "RegistrationSourceContentService"
         },
         {
             "name": "FinancialResearchService",
@@ -7613,6 +8157,12 @@
             "class": "SolanaService"
         },
         {
+            "name": "AiopsDocsExecutionService",
+            "path": "app/Services/Spark/AiopsDocsExecutionService.php",
+            "namespace": "App\\Services\\Spark",
+            "class": "AiopsDocsExecutionService"
+        },
+        {
             "name": "AuthAuditRunner",
             "path": "app/Services/Spark/AuthAuditRunner.php",
             "namespace": "App\\Services\\Spark",
@@ -7750,6 +8300,15 @@
             "description": "Validate API endpoints return JSON (optionally check required keys)"
         },
         {
+            "name": "AiopsRepairs",
+            "path": "app/Commands/AIOps/AiopsRepairs.php",
+            "namespace": "App\\Commands\\AIOps",
+            "class": "AiopsRepairs",
+            "group": "AIOps - All Control",
+            "command": "aiops:repairs",
+            "description": "Run the error->action->repair queue->patch plan pipeline."
+        },
+        {
             "name": "Check",
             "path": "app/Commands/AIOps/Alerts/Check.php",
             "namespace": "App\\Commands\\AIOps\\Alerts",
@@ -7786,6 +8345,15 @@
             "description": "Process queued alert emails"
         },
         {
+            "name": "All",
+            "path": "app/Commands/AIOps/All.php",
+            "namespace": "App\\Commands\\AIOps",
+            "class": "All",
+            "group": "AIOps - All Control",
+            "command": "aiops:all",
+            "description": "Run a full AIOps scan and generate unified Markdown and JSON reports in docs/_aiops."
+        },
+        {
             "name": "Audit",
             "path": "app/Commands/AIOps/Audit.php",
             "namespace": "App\\Commands\\AIOps",
@@ -7793,6 +8361,15 @@
             "group": "AIOps - Audit",
             "command": "aiops:audit",
             "description": "Audit aiops runtime, orchestration routes, and n8n/docs readiness"
+        },
+        {
+            "name": "AutoFixAnalyze",
+            "path": "app/Commands/AIOps/AutoFixAnalyze.php",
+            "namespace": "App\\Commands\\AIOps",
+            "class": "AutoFixAnalyze",
+            "group": "AIOps",
+            "command": "aiops:autofix:analyze",
+            "description": "Analyze latest log file and produce categorized recurring issue suggestions."
         },
         {
             "name": "AutoRun",
@@ -7930,22 +8507,31 @@
             "description": "Scan alerts mailbox for new emails and record AIOps counts."
         },
         {
-            "name": "FormTestScan",
-            "path": "app/Commands/AIOps/FormTestScan.php",
+            "name": "Errors",
+            "path": "app/Commands/AIOps/Errors.php",
             "namespace": "App\\Commands\\AIOps",
-            "class": "FormTestScan",
-            "group": "AIOps - QA",
-            "command": "aiops:form:test",
-            "description": "Scan a form (url/file/text), map route->controller, generate payload, submit, capture logs, and queue a patch job if errors found."
+            "class": "Errors",
+            "group": "AIOps",
+            "command": "aiops:errors",
+            "description": "Run the AIOps error scan wrapper and delegate to logs:errors when available."
+        },
+        {
+            "name": "ExecuteDocs",
+            "path": "app/Commands/AIOps/ExecuteDocs.php",
+            "namespace": "App\\Commands\\AIOps",
+            "class": "ExecuteDocs",
+            "group": "AIOps - All Control",
+            "command": "aiops:execute-docs",
+            "description": "Process docs/_aiops markdown files and execute actionable patches in a stateful loop."
         },
         {
             "name": "TestScan",
             "path": "app/Commands/AIOps/Forms/TestScan.php",
             "namespace": "App\\Commands\\AIOps\\Forms",
             "class": "TestScan",
-            "group": null,
-            "command": null,
-            "description": null
+            "group": "AIOps - QA",
+            "command": "aiops:form:test",
+            "description": "Scan a form (url/file/text), map route->controller, generate payload, submit, capture logs, and queue a patch job if errors found."
         },
         {
             "name": "GateCost",
@@ -8002,6 +8588,15 @@
             "description": "Scan CI4 app integrity for command inheritance, support files, view paths, and unsafe trim usage."
         },
         {
+            "name": "LogsErrors",
+            "path": "app/Commands/AIOps/LogsErrors.php",
+            "namespace": "App\\Commands\\AIOps",
+            "class": "LogsErrors",
+            "group": "AIOps",
+            "command": "logs:errors",
+            "description": "Scan runtime logs, normalize errors, and generate structured AIOps error reports."
+        },
+        {
             "name": "ManualIndex",
             "path": "app/Commands/AIOps/ManualIndex.php",
             "namespace": "App\\Commands\\AIOps",
@@ -8018,6 +8613,15 @@
             "group": "AIOps - Run",
             "command": "aiops:manual:run",
             "description": "Run manual-priority AIOPS correlation, state refresh, and PR creation."
+        },
+        {
+            "name": "MissingViewScan",
+            "path": "app/Commands/AIOps/MissingViewScan.php",
+            "namespace": "App\\Commands\\AIOps",
+            "class": "MissingViewScan",
+            "group": "AIOps",
+            "command": "aiops:views:missing",
+            "description": "Scan controllers for view()/renderTheme() references and report missing views."
         },
         {
             "name": "Logs",
@@ -8245,6 +8849,15 @@
             "description": "Run public pages source collection and draft generation."
         },
         {
+            "name": "PyOps",
+            "path": "app/Commands/AIOps/PyOps.php",
+            "namespace": "App\\Commands\\AIOps",
+            "class": "PyOps",
+            "group": "AIOps - Run",
+            "command": "aiops:py",
+            "description": "Run Python automation actions and return structured JSON."
+        },
+        {
             "name": "Stats",
             "path": "app/Commands/AIOps/Redis/Stats.php",
             "namespace": "App\\Commands\\AIOps\\Redis",
@@ -8398,6 +9011,15 @@
             "description": "AIOps runtime status"
         },
         {
+            "name": "SuggestRoutes",
+            "path": "app/Commands/AIOps/SuggestRoutes.php",
+            "namespace": "App\\Commands\\AIOps",
+            "class": "SuggestRoutes",
+            "group": "AIOps",
+            "command": "aiops:routes:suggest",
+            "description": "Scan recent 404 logs and suggest likely intended route matches."
+        },
+        {
             "name": "SyncPerfRoutes",
             "path": "app/Commands/AIOps/SyncPerfRoutes.php",
             "namespace": "App\\Commands\\AIOps",
@@ -8452,6 +9074,15 @@
             "description": "Institutional API governance audit: routes, permissions, filters, rate limits, and versioning."
         },
         {
+            "name": "ApiDiff",
+            "path": "app/Commands/API/ApiDiff.php",
+            "namespace": "App\\Commands\\API",
+            "class": "ApiDiff",
+            "group": "API",
+            "command": "api:diff",
+            "description": "Compare the two most recent research runs for a provider."
+        },
+        {
             "name": "ApiFiltersCheck",
             "path": "app/Commands/API/ApiFiltersCheck.php",
             "namespace": "App\\Commands\\API",
@@ -8459,6 +9090,15 @@
             "group": "API",
             "command": "api:filters-check",
             "description": "Fail on CRITICAL uncovered endpoints by filter governance."
+        },
+        {
+            "name": "ApiInventory",
+            "path": "app/Commands/API/ApiInventory.php",
+            "namespace": "App\\Commands\\API",
+            "class": "ApiInventory",
+            "group": "API",
+            "command": "api:inventory",
+            "description": "Build docs/APIs/_inventory.md from latest API research runs."
         },
         {
             "name": "ApiList",
@@ -8488,6 +9128,24 @@
             "description": "Fail when external/API-like endpoints have no rate-limit enforcement metadata."
         },
         {
+            "name": "ApiResearch",
+            "path": "app/Commands/API/ApiResearch.php",
+            "namespace": "App\\Commands\\API",
+            "class": "ApiResearch",
+            "group": "API",
+            "command": "api:research",
+            "description": "Research API documentation, parse specs, extract endpoints, and write reports."
+        },
+        {
+            "name": "ApiTestUrl",
+            "path": "app/Commands/API/ApiTestUrl.php",
+            "namespace": "App\\Commands\\API",
+            "class": "ApiTestUrl",
+            "group": "API",
+            "command": "api:test-url",
+            "description": "Test an API URL or endpoint and write a markdown report."
+        },
+        {
             "name": "ApiVersioningCheck",
             "path": "app/Commands/API/ApiVersioningCheck.php",
             "namespace": "App\\Commands\\API",
@@ -8497,6 +9155,15 @@
             "description": "Detect API endpoints missing /API/vN namespace and emit remediation."
         },
         {
+            "name": "DocsScrapeApi",
+            "path": "app/Commands/API/DocsScrapeApi.php",
+            "namespace": "App\\Commands\\API",
+            "class": "DocsScrapeApi",
+            "group": "Docs",
+            "command": "api:scrape",
+            "description": "Scrape API docs and generate a MyMI Wallet integration summary report."
+        },
+        {
             "name": "Audit",
             "path": "app/Commands/Alerts/Audit.php",
             "namespace": "App\\Commands\\Alerts",
@@ -8504,6 +9171,15 @@
             "group": "Alerts",
             "command": "alerts:audit",
             "description": "Audit recent scraped alert emails against generated trade alerts."
+        },
+        {
+            "name": "FetchRawEmails",
+            "path": "app/Commands/Alerts/FetchRawEmails.php",
+            "namespace": "App\\Commands\\Alerts",
+            "class": "FetchRawEmails",
+            "group": "Alerts",
+            "command": "alerts:fetch-raw-emails",
+            "description": "Fetch raw trade alert emails into bf_investment_scraper and move inserted messages to Processed."
         },
         {
             "name": "Forecast",
@@ -8614,10 +9290,10 @@
             "description": "Detect tracked node_modules and native build artifacts (read-only)."
         },
         {
-            "name": "AuditPsr4",
-            "path": "app/Commands/AuditPsr4.php",
-            "namespace": "App\\Commands",
-            "class": "AuditPsr4",
+            "name": "Psr4",
+            "path": "app/Commands/Audit/Psr4.php",
+            "namespace": "App\\Commands\\Audit",
+            "class": "Psr4",
             "group": "maintenance",
             "command": "audit:psr4",
             "description": "Audit PSR-4 compliance for the app namespace."
@@ -8884,6 +9560,15 @@
             "description": "Audit MyMI Wallet for CI4 + PHP compatibility issues."
         },
         {
+            "name": "Clear",
+            "path": "app/Commands/Config/Clear.php",
+            "namespace": "App\\Commands\\Config",
+            "class": "Clear",
+            "group": "Config",
+            "command": "config:clear",
+            "description": "Clear configuration-related caches safely (guarded)."
+        },
+        {
             "name": "Drift",
             "path": "app/Commands/Config/Drift.php",
             "namespace": "App\\Commands\\Config",
@@ -8893,37 +9578,28 @@
             "description": "Compare deployed config and environment to repo baselines."
         },
         {
-            "name": "ConfigClear",
-            "path": "app/Commands/ConfigClear.php",
-            "namespace": "App\\Commands",
-            "class": "ConfigClear",
-            "group": "Config",
-            "command": "config:clear",
-            "description": "Clear configuration-related caches safely (guarded)."
-        },
-        {
-            "name": "ConfigLint",
-            "path": "app/Commands/ConfigLint.php",
-            "namespace": "App\\Commands",
-            "class": "ConfigLint",
+            "name": "Lint",
+            "path": "app/Commands/Config/Lint.php",
+            "namespace": "App\\Commands\\Config",
+            "class": "Lint",
             "group": "config",
             "command": "config:lint",
             "description": "Lint Config/Services.php overrides against CI4 service signatures."
         },
         {
-            "name": "ContentEngineSmoke",
-            "path": "app/Commands/ContentEngineSmoke.php",
-            "namespace": "App\\Commands",
-            "class": "ContentEngineSmoke",
+            "name": "EngineSmoke",
+            "path": "app/Commands/Content/EngineSmoke.php",
+            "namespace": "App\\Commands\\Content",
+            "class": "EngineSmoke",
             "group": "content",
             "command": "contentengine:smoke",
             "description": "End-to-end smoke test for the Content Engine ingest \u2192 scoring \u2192 drafts pipeline."
         },
         {
-            "name": "ContentIngestSample",
-            "path": "app/Commands/ContentIngestSample.php",
-            "namespace": "App\\Commands",
-            "class": "ContentIngestSample",
+            "name": "IngestSample",
+            "path": "app/Commands/Content/IngestSample.php",
+            "namespace": "App\\Commands\\Content",
+            "class": "IngestSample",
             "group": "content",
             "command": "content:ingest-sample",
             "description": "Load sample Daily Top Gainers JSON, ingest, score, and print the top 5 ideas."
@@ -9001,6 +9677,15 @@
             "description": "List pending migrations without executing them."
         },
         {
+            "name": "CustomSend",
+            "path": "app/Commands/Discord/CustomSend.php",
+            "namespace": "App\\Commands\\Discord",
+            "class": "CustomSend",
+            "group": "Discord",
+            "command": "discord:custom:send",
+            "description": "Send or queue a custom message to a chosen Discord channel key and audit it."
+        },
+        {
             "name": "GetList",
             "path": "app/Commands/Discord/GetList.php",
             "namespace": "App\\Commands\\Discord",
@@ -9046,19 +9731,28 @@
             "description": "Validate Discord env vars, tables, and queue health for MyMIDiscord."
         },
         {
-            "name": "ArchitectureGraph",
-            "path": "app/Commands/Docs/ArchitectureGraph.php",
-            "namespace": "App\\Commands\\Docs",
-            "class": "ArchitectureGraph",
+            "name": "DiscordCustomSend",
+            "path": "app/Commands/DiscordCustomSend.php",
+            "namespace": "App\\Commands",
+            "class": "DiscordCustomSend",
+            "group": "Discord",
+            "command": "discord:custom:send",
+            "description": "Send or queue a custom message to a chosen Discord channel key and audit it."
+        },
+        {
+            "name": "Graph",
+            "path": "app/Commands/Docs/Architecture/Graph.php",
+            "namespace": "App\\Commands\\Docs\\Architecture",
+            "class": "Graph",
             "group": "Docs",
             "command": "docs:architecture:graph",
             "description": "Generate CI4 architecture graph"
         },
         {
-            "name": "ArchitectureMap",
-            "path": "app/Commands/Docs/ArchitectureMap.php",
-            "namespace": "App\\Commands\\Docs",
-            "class": "ArchitectureMap",
+            "name": "Map",
+            "path": "app/Commands/Docs/Architecture/Map.php",
+            "namespace": "App\\Commands\\Docs\\Architecture",
+            "class": "Map",
             "group": "Docs",
             "command": "docs:architecture-map",
             "description": "Generate architecture map of CI4 application"
@@ -9100,15 +9794,6 @@
             "description": null
         },
         {
-            "name": "DocsTest",
-            "path": "app/Commands/Docs/DocsTest.php",
-            "namespace": "App\\Commands\\Docs",
-            "class": "Test",
-            "group": "Docs",
-            "command": "docs:test",
-            "description": "Test DocsService loading and navigation"
-        },
-        {
             "name": "ExportViewTxt",
             "path": "app/Commands/Docs/Exports/ExportViewTxt.php",
             "namespace": "App\\Commands\\Docs\\Exports",
@@ -9127,6 +9812,15 @@
             "description": null
         },
         {
+            "name": "ArchitectureMap",
+            "path": "app/Commands/Docs/Generate/ArchitectureMap.php",
+            "namespace": "App\\Commands\\Docs\\Generate",
+            "class": "ArchitectureMap",
+            "group": "Docs",
+            "command": "docs:generate-architecture-map",
+            "description": "Generate docs/_architecture_map.json from read-only repository scans."
+        },
+        {
             "name": "DocsReadmeBuilder",
             "path": "app/Commands/Docs/Generate/DocsReadmeBuilder.php",
             "namespace": "App\\Commands\\Docs\\Generate",
@@ -9136,28 +9830,19 @@
             "description": null
         },
         {
-            "name": "GenerateArchitectureMap",
-            "path": "app/Commands/Docs/GenerateArchitectureMap.php",
-            "namespace": "App\\Commands\\Docs",
-            "class": "GenerateArchitectureMap",
-            "group": "Docs",
-            "command": "docs:generate-architecture-map",
-            "description": "Generate docs/_architecture_map.json from read-only repository scans."
-        },
-        {
-            "name": "GenerateKnowledgeGraph",
-            "path": "app/Commands/Docs/GenerateKnowledgeGraph.php",
-            "namespace": "App\\Commands\\Docs",
-            "class": "GenerateKnowledgeGraph",
+            "name": "KnowledgeGraph",
+            "path": "app/Commands/Docs/Generate/KnowledgeGraph.php",
+            "namespace": "App\\Commands\\Docs\\Generate",
+            "class": "KnowledgeGraph",
             "group": "Docs",
             "command": "docs:generate-knowledge-graph",
             "description": "Generate docs/_knowledge_graph.json linking docs, views, routes, controllers, services, and health scans."
         },
         {
-            "name": "GenerateMissingDocs",
-            "path": "app/Commands/Docs/GenerateMissingDocs.php",
-            "namespace": "App\\Commands\\Docs",
-            "class": "GenerateMissingDocs",
+            "name": "MissingDocs",
+            "path": "app/Commands/Docs/Generate/MissingDocs.php",
+            "namespace": "App\\Commands\\Docs\\Generate",
+            "class": "MissingDocs",
             "group": "Docs",
             "command": "docs:generate-missing",
             "description": "Generate documentation for undocumented controllers"
@@ -9199,6 +9884,33 @@
             "description": "List all module controllers"
         },
         {
+            "name": "OrphanRoutes",
+            "path": "app/Commands/Docs/Scan/OrphanRoutes.php",
+            "namespace": "App\\Commands\\Docs\\Scan",
+            "class": "OrphanRoutes",
+            "group": "Docs",
+            "command": "docs:scan-orphan-routes",
+            "description": "Detect routes that do not map to existing controller methods."
+        },
+        {
+            "name": "OrphanViews",
+            "path": "app/Commands/Docs/Scan/OrphanViews.php",
+            "namespace": "App\\Commands\\Docs\\Scan",
+            "class": "OrphanViews",
+            "group": "Docs",
+            "command": "docs:scan-orphan-views",
+            "description": "Detect views that are not referenced by controllers."
+        },
+        {
+            "name": "Routes",
+            "path": "app/Commands/Docs/Scan/Routes.php",
+            "namespace": "App\\Commands\\Docs\\Scan",
+            "class": "Routes",
+            "group": "Docs",
+            "command": "docs:scan-routes",
+            "description": "Scan all routes and validate controllers"
+        },
+        {
             "name": "ServiceList",
             "path": "app/Commands/Docs/Scan/ServiceList.php",
             "namespace": "App\\Commands\\Docs\\Scan",
@@ -9206,6 +9918,15 @@
             "group": "Docs Scan",
             "command": "docs:services:list",
             "description": "List all Services classes"
+        },
+        {
+            "name": "UndocumentedControllers",
+            "path": "app/Commands/Docs/Scan/UndocumentedControllers.php",
+            "namespace": "App\\Commands\\Docs\\Scan",
+            "class": "UndocumentedControllers",
+            "group": "Docs",
+            "command": "docs:scan-undocumented-controllers",
+            "description": "Detect controllers with no docs markdown references."
         },
         {
             "name": "ViewDirectories",
@@ -9226,33 +9947,6 @@
             "description": null
         },
         {
-            "name": "ScanOrphanRoutes",
-            "path": "app/Commands/Docs/ScanOrphanRoutes.php",
-            "namespace": "App\\Commands\\Docs",
-            "class": "ScanOrphanRoutes",
-            "group": "Docs",
-            "command": "docs:scan-orphan-routes",
-            "description": "Detect routes that do not map to existing controller methods."
-        },
-        {
-            "name": "ScanOrphanViews",
-            "path": "app/Commands/Docs/ScanOrphanViews.php",
-            "namespace": "App\\Commands\\Docs",
-            "class": "ScanOrphanViews",
-            "group": "Docs",
-            "command": "docs:scan-orphan-views",
-            "description": "Detect views that are not referenced by controllers."
-        },
-        {
-            "name": "ScanUndocumentedControllers",
-            "path": "app/Commands/Docs/ScanUndocumentedControllers.php",
-            "namespace": "App\\Commands\\Docs",
-            "class": "ScanUndocumentedControllers",
-            "group": "Docs",
-            "command": "docs:scan-undocumented-controllers",
-            "description": "Detect controllers with no docs markdown references."
-        },
-        {
             "name": "SparkCommandsInventory",
             "path": "app/Commands/Docs/SparkCommandsInventory.php",
             "namespace": "App\\Commands\\Docs",
@@ -9262,31 +9956,40 @@
             "description": null
         },
         {
-            "name": "SyncAllDocs",
-            "path": "app/Commands/Docs/SyncAllDocs.php",
-            "namespace": "App\\Commands\\Docs",
-            "class": "SyncAllDocs",
+            "name": "AllDocs",
+            "path": "app/Commands/Docs/Sync/AllDocs.php",
+            "namespace": "App\\Commands\\Docs\\Sync",
+            "class": "AllDocs",
             "group": "Docs",
             "command": "docs:sync-all",
             "description": "Run full documentation pipeline"
         },
         {
-            "name": "SyncCodeFromDocs",
-            "path": "app/Commands/Docs/SyncCodeFromDocs.php",
-            "namespace": "App\\Commands\\Docs",
-            "class": "SyncCodeFromDocs",
+            "name": "CodeFromDocs",
+            "path": "app/Commands/Docs/Sync/CodeFromDocs.php",
+            "namespace": "App\\Commands\\Docs\\Sync",
+            "class": "CodeFromDocs",
             "group": "Docs",
             "command": "docs:sync-code",
-            "description": "Analyze /docs and generate repository patches to align code with documentation."
+            "description": "Analyze /docs and execute DocsSyncEngine safely."
         },
         {
-            "name": "SyncDocsSystem",
-            "path": "app/Commands/Docs/SyncDocsSystem.php",
-            "namespace": "App\\Commands\\Docs",
-            "class": "SyncDocsSystem",
+            "name": "DocsSystem",
+            "path": "app/Commands/Docs/Sync/DocsSystem.php",
+            "namespace": "App\\Commands\\Docs\\Sync",
+            "class": "DocsSystem",
             "group": "Docs",
             "command": "docs:sync-system",
             "description": null
+        },
+        {
+            "name": "Test",
+            "path": "app/Commands/Docs/Test.php",
+            "namespace": "App\\Commands\\Docs",
+            "class": "Test",
+            "group": "Docs",
+            "command": "docs:test",
+            "description": "Test DocsService loading and navigation"
         },
         {
             "name": "DNSTest",
@@ -9568,37 +10271,37 @@
             "description": "Detect retention anomalies from engagement signals."
         },
         {
-            "name": "GtmCronRouteSecurityValidation",
-            "path": "app/Commands/GtmCronRouteSecurityValidation.php",
-            "namespace": "App\\Commands",
-            "class": "GtmCronRouteSecurityValidation",
+            "name": "CronRouteSecurityValidation",
+            "path": "app/Commands/Gtm/CronRouteSecurityValidation.php",
+            "namespace": "App\\Commands\\Gtm",
+            "class": "CronRouteSecurityValidation",
             "group": "GTM",
             "command": "gtm:cron:validate-security",
             "description": "Validate INTERNAL_CRON and /API/Management routes reject missing/invalid tokens."
         },
         {
-            "name": "GtmHealthSnapshot",
-            "path": "app/Commands/GtmHealthSnapshot.php",
-            "namespace": "App\\Commands",
-            "class": "GtmHealthSnapshot",
+            "name": "HealthSnapshot",
+            "path": "app/Commands/Gtm/HealthSnapshot.php",
+            "namespace": "App\\Commands\\Gtm",
+            "class": "HealthSnapshot",
             "group": "GTM",
             "command": "gtm:health:snapshot",
             "description": "Generate deterministic GTM daily health snapshot markdown report."
         },
         {
-            "name": "GtmLaunchAudit",
-            "path": "app/Commands/GtmLaunchAudit.php",
-            "namespace": "App\\Commands",
-            "class": "GtmLaunchAudit",
+            "name": "LaunchAudit",
+            "path": "app/Commands/Gtm/LaunchAudit.php",
+            "namespace": "App\\Commands\\Gtm",
+            "class": "LaunchAudit",
             "group": "GTM",
             "command": "gtm:launch:audit",
             "description": "Generate go-live launch readiness audit for Phase A user surfaces."
         },
         {
-            "name": "GtmLaunchSmoke",
-            "path": "app/Commands/GtmLaunchSmoke.php",
-            "namespace": "App\\Commands",
-            "class": "GtmLaunchSmoke",
+            "name": "LaunchSmoke",
+            "path": "app/Commands/Gtm/LaunchSmoke.php",
+            "namespace": "App\\Commands\\Gtm",
+            "class": "LaunchSmoke",
             "group": "GTM",
             "command": "gtm:launch:smoke",
             "description": "Run non-destructive HTTP smoke checks for Phase A user navigation surfaces."
@@ -9685,6 +10388,24 @@
             "description": "Force CI4 to log all levels with DB + PHP fallback enabled."
         },
         {
+            "name": "Errors",
+            "path": "app/Commands/Logs/Errors.php",
+            "namespace": "App\\Commands\\Logs",
+            "class": "Errors",
+            "group": null,
+            "command": null,
+            "description": null
+        },
+        {
+            "name": "FullReport",
+            "path": "app/Commands/Logs/FullReport.php",
+            "namespace": "App\\Commands\\Logs",
+            "class": "FullReport",
+            "group": "maintenance",
+            "command": "logs:full-report",
+            "description": "Summarize CI4 + Apache + PHP logs for a given date."
+        },
+        {
             "name": "Healthcheck",
             "path": "app/Commands/Logs/Healthcheck.php",
             "namespace": "App\\Commands\\Logs",
@@ -9712,19 +10433,10 @@
             "description": "Summarize logs for all known subsystems from writable/logs/** and emit docs/_aiops/logs markdown reports."
         },
         {
-            "name": "LogsFullReport",
-            "path": "app/Commands/LogsFullReport.php",
-            "namespace": "App\\Commands",
-            "class": "LogsFullReport",
-            "group": "maintenance",
-            "command": "logs:full-report",
-            "description": "Summarize CI4 + Apache + PHP logs for a given date."
-        },
-        {
-            "name": "LogsTest",
-            "path": "app/Commands/LogsTest.php",
-            "namespace": "App\\Commands",
-            "class": "LogsTest",
+            "name": "Test",
+            "path": "app/Commands/Logs/Test.php",
+            "namespace": "App\\Commands\\Logs",
+            "class": "Test",
             "group": "logs",
             "command": "logs:test",
             "description": "Canonical logging test command (writes debug/info/error and validates file + DB sinks)."
@@ -9766,13 +10478,247 @@
             "description": "Verify SMTP settings by sending a diagnostic email."
         },
         {
+            "name": "ApproveGenerated",
+            "path": "app/Commands/Marketing/ApproveGenerated.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "ApproveGenerated",
+            "group": "Marketing",
+            "command": "marketing:approve-generated",
+            "description": "Approve generated marketing content and optionally pre-create destination targets."
+        },
+        {
+            "name": "ApproveGeneratedContent",
+            "path": "app/Commands/Marketing/ApproveGeneratedContent.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "ApproveGeneratedContent",
+            "group": "Marketing",
+            "command": "marketing:approve-generated",
+            "description": "Promote generated marketing content from pending_review to approved."
+        },
+        {
             "name": "AutomationAudit",
             "path": "app/Commands/Marketing/AutomationAudit.php",
             "namespace": "App\\Commands\\Marketing",
             "class": "AutomationAudit",
             "group": "marketing",
-            "command": "marketing:automation-audit",
+            "command": "marketing:automation:audit",
             "description": "Verify marketing automations, cron hooks, and API usage expectations."
+        },
+        {
+            "name": "BlueskyHealthcheck",
+            "path": "app/Commands/Marketing/BlueskyHealthcheck.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "BlueskyHealthcheck",
+            "group": "Marketing",
+            "command": "marketing:bluesky:healthcheck",
+            "description": "Run Bluesky connectivity/auth healthcheck for marketing distribution."
+        },
+        {
+            "name": "DailyAudit",
+            "path": "app/Commands/Marketing/DailyAudit.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "DailyAudit",
+            "group": "Marketing",
+            "command": "marketing:daily-audit",
+            "description": "Daily marketing pipeline QA audit report."
+        },
+        {
+            "name": "DiscordActivationAnnouncement",
+            "path": "app/Commands/Marketing/DiscordActivationAnnouncement.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "DiscordActivationAnnouncement",
+            "group": "Marketing",
+            "command": "marketing:discord-activation",
+            "description": "Send one-time Discord activation announcement for marketing stream channels."
+        },
+        {
+            "name": "DiscordTestAllCategories",
+            "path": "app/Commands/Marketing/DiscordTestAllCategories.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "DiscordTestAllCategories",
+            "group": "Marketing",
+            "command": "marketing:discord:test-all-categories",
+            "description": "Loop all configured marketing Discord categories and test post delivery."
+        },
+        {
+            "name": "DiscordTestCategory",
+            "path": "app/Commands/Marketing/DiscordTestCategory.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "DiscordTestCategory",
+            "group": "Marketing",
+            "command": "marketing:discord:test-category",
+            "description": "Send a category-formatted test message to the mapped Discord channel."
+        },
+        {
+            "name": "Distribute",
+            "path": "app/Commands/Marketing/Distribute.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "Distribute",
+            "group": "Marketing",
+            "command": "marketing:distribute",
+            "description": "Distribute approved generated marketing content."
+        },
+        {
+            "name": "DistributionFailureInjectTest",
+            "path": "app/Commands/Marketing/DistributionFailureInjectTest.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "DistributionFailureInjectTest",
+            "group": "Marketing",
+            "command": "marketing:distribution:failure-inject-test",
+            "description": "Dev-safe failure injection checks for blog/in_app/email/discord target retries and idempotency."
+        },
+        {
+            "name": "DistributionSqlAssert",
+            "path": "app/Commands/Marketing/DistributionSqlAssert.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "DistributionSqlAssert",
+            "group": "Marketing",
+            "command": "marketing:distribution:assert-sql",
+            "description": "Runs SQL-level anomaly assertions for marketing distribution/regression monitoring."
+        },
+        {
+            "name": "EmailClean",
+            "path": "app/Commands/Marketing/EmailClean.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "EmailClean",
+            "group": "Marketing",
+            "command": "marketing:email:clean",
+            "description": "Moves already-ingested emails from IMAP source folder into a processed folder."
+        },
+        {
+            "name": "GeneratePackage",
+            "path": "app/Commands/Marketing/GeneratePackage.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "GeneratePackage",
+            "group": "Marketing",
+            "command": "marketing:generate:package",
+            "description": "Generate a marketing package from notification_id or headline."
+        },
+        {
+            "name": "MastodonHealthcheck",
+            "path": "app/Commands/Marketing/MastodonHealthcheck.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "MastodonHealthcheck",
+            "group": "Marketing",
+            "command": "marketing:mastodon:healthcheck",
+            "description": "Run Mastodon connectivity/auth healthcheck for marketing distribution."
+        },
+        {
+            "name": "NewsDebug",
+            "path": "app/Commands/Marketing/NewsDebug.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "NewsDebug",
+            "group": "Marketing",
+            "command": "marketing:news:debug",
+            "description": "Diagnose marketing IMAP connectivity, folder counts, subject samples, and filter matches."
+        },
+        {
+            "name": "NewsGenerate",
+            "path": "app/Commands/Marketing/NewsGenerate.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "NewsGenerate",
+            "group": "Marketing",
+            "command": "marketing:news:generate",
+            "description": "Generates clustered story records from pending bf_marketing_temp_scraper rows."
+        },
+        {
+            "name": "NewsImapTest",
+            "path": "app/Commands/Marketing/NewsImapTest.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "NewsImapTest",
+            "group": "Marketing",
+            "command": "marketing:news:imap-test",
+            "description": "Smoke test for marketing/news IMAP connectivity."
+        },
+        {
+            "name": "NewsScrape",
+            "path": "app/Commands/Marketing/NewsScrape.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "NewsScrape",
+            "group": "Marketing",
+            "command": "marketing:news:scrape",
+            "description": "Ingests alert/news emails (or OCR/raw text) into bf_marketing_temp_scraper with folder-level diagnostics."
+        },
+        {
+            "name": "NewsSeedTest",
+            "path": "app/Commands/Marketing/NewsSeedTest.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "NewsSeedTest",
+            "group": "Marketing",
+            "command": "marketing:news:seed-test",
+            "description": "Insert synthetic rows into bf_marketing_temp_scraper for non-IMAP pipeline testing."
+        },
+        {
+            "name": "NotificationTest",
+            "path": "app/Commands/Marketing/NotificationTest.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "NotificationTest",
+            "group": "Marketing",
+            "command": "marketing:notification:test",
+            "description": "Test marketing notification readiness, pending counts, and recent campaign activity."
+        },
+        {
+            "name": "Pipeline",
+            "path": "app/Commands/Marketing/Pipeline.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "Pipeline",
+            "group": "Marketing",
+            "command": "marketing:pipeline",
+            "description": "Runs marketing generation pipeline sections."
+        },
+        {
+            "name": "ProcessNotifications",
+            "path": "app/Commands/Marketing/ProcessNotifications.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "ProcessNotifications",
+            "group": "Marketing",
+            "command": "marketing:process-notifications",
+            "description": "Process pending marketing notifications and generate marketing packages."
+        },
+        {
+            "name": "PromotionsAudit",
+            "path": "app/Commands/Marketing/PromotionsAudit.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "PromotionsAudit",
+            "group": "Marketing",
+            "command": "marketing:promotions:audit",
+            "description": "Audit promotion source data and campaign readiness from scraper and campaign tables."
+        },
+        {
+            "name": "PromotionsGenerate",
+            "path": "app/Commands/Marketing/PromotionsGenerate.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "PromotionsGenerate",
+            "group": "Marketing",
+            "command": "marketing:promotions:generate",
+            "description": "Generate promotion campaign rows from finalized marketing summaries."
+        },
+        {
+            "name": "PromotionsTest",
+            "path": "app/Commands/Marketing/PromotionsTest.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "PromotionsTest",
+            "group": "Marketing",
+            "command": "marketing:promotions:test",
+            "description": "Run a chained smoke test for promotions audit and dry-run generation."
+        },
+        {
+            "name": "RegressionSmoke",
+            "path": "app/Commands/Marketing/RegressionSmoke.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "RegressionSmoke",
+            "group": "Marketing",
+            "command": "marketing:regression:smoke",
+            "description": "Runs full marketing pipeline smoke checks and validates count movement across stages."
+        },
+        {
+            "name": "RetryDistribution",
+            "path": "app/Commands/Marketing/RetryDistribution.php",
+            "namespace": "App\\Commands\\Marketing",
+            "class": "RetryDistribution",
+            "group": "Marketing",
+            "command": "marketing:retry-distribution",
+            "description": "Retry failed marketing distribution targets."
         },
         {
             "name": "Commands",
@@ -10014,8 +10960,8 @@
             "namespace": "App\\Commands\\Ollama",
             "class": "Generate",
             "group": null,
-            "command": "ollama:generate",
-            "description": "Runs single prompt generate against Ollama."
+            "command": null,
+            "description": null
         },
         {
             "name": "Health",
@@ -10151,6 +11097,15 @@
             "group": null,
             "command": "ollama:models:show",
             "description": "Shows metadata for one model."
+        },
+        {
+            "name": "OllamaRun",
+            "path": "app/Commands/Ollama/OllamaRun.php",
+            "namespace": "App\\Commands\\Ollama",
+            "class": "OllamaRun",
+            "group": null,
+            "command": "ollama:run",
+            "description": "Run an Ollama prompt from a file and write response artifacts."
         },
         {
             "name": "Ping",
@@ -10774,6 +11729,87 @@
             "description": "Run k6 load test"
         },
         {
+            "name": "ControlAnalyze",
+            "path": "app/Commands/Platform/ControlAnalyze.php",
+            "namespace": "App\\Commands\\Platform",
+            "class": "ControlAnalyze",
+            "group": "platform",
+            "command": "platform:control:analyze",
+            "description": "Analyze collected control-plane artifacts and output ranked action queue."
+        },
+        {
+            "name": "ControlCollect",
+            "path": "app/Commands/Platform/ControlCollect.php",
+            "namespace": "App\\Commands\\Platform",
+            "class": "ControlCollect",
+            "group": "platform",
+            "command": "platform:control:collect",
+            "description": "Collect edge snapshots from registered platform manifests."
+        },
+        {
+            "name": "ControlDispatch",
+            "path": "app/Commands/Platform/ControlDispatch.php",
+            "namespace": "App\\Commands\\Platform",
+            "class": "ControlDispatch",
+            "group": "platform",
+            "command": "platform:control:dispatch",
+            "description": "Dispatch or dry-run actions generated by control-plane analysis."
+        },
+        {
+            "name": "ControlRun",
+            "path": "app/Commands/Platform/ControlRun.php",
+            "namespace": "App\\Commands\\Platform",
+            "class": "ControlRun",
+            "group": "platform",
+            "command": "platform:control:run",
+            "description": "Run control-plane collect -> analyze -> dispatch pipeline."
+        },
+        {
+            "name": "CronDispatch",
+            "path": "app/Commands/Platform/CronDispatch.php",
+            "namespace": "App\\Commands\\Platform",
+            "class": "CronDispatch",
+            "group": "platform",
+            "command": "platform:cron:dispatch",
+            "description": "Cron-friendly wrapper for control-plane dispatch dry-run workflow."
+        },
+        {
+            "name": "EdgeSnapshot",
+            "path": "app/Commands/Platform/EdgeSnapshot.php",
+            "namespace": "App\\Commands\\Platform",
+            "class": "EdgeSnapshot",
+            "group": "platform",
+            "command": "platform:edge-snapshot",
+            "description": "Generate lightweight edge status and metrics artifacts for control-plane collection."
+        },
+        {
+            "name": "RunPlatform",
+            "path": "app/Commands/Platform/RunPlatform.php",
+            "namespace": "App\\Commands\\Platform",
+            "class": "RunPlatform",
+            "group": "platform",
+            "command": "platform:run",
+            "description": "Run deterministic platform lifecycle orchestration with safe failure isolation."
+        },
+        {
+            "name": "RunReport",
+            "path": "app/Commands/Platform/RunReport.php",
+            "namespace": "App\\Commands\\Platform",
+            "class": "RunReport",
+            "group": "platform",
+            "command": "platform:run:report",
+            "description": "Print latest platform run report summary."
+        },
+        {
+            "name": "RunSubsystem",
+            "path": "app/Commands/Platform/RunSubsystem.php",
+            "namespace": "App\\Commands\\Platform",
+            "class": "RunSubsystem",
+            "group": "platform",
+            "command": "platform:run:subsystem",
+            "description": "Run platform pipeline scoped to one or more subsystems."
+        },
+        {
             "name": "PurgeFastCGI",
             "path": "app/Commands/PurgeFastCGI.php",
             "namespace": "App\\Commands",
@@ -10933,7 +11969,7 @@
             "class": "WatchlistCleanup",
             "group": "research",
             "command": "research:alerts:cleanup",
-            "description": null
+            "description": "Clean up stale research alert/watchlist rows."
         },
         {
             "name": "WeeklyMarketReport",
@@ -10963,13 +11999,22 @@
             "description": "Forecast infra and API costs and detect overruns."
         },
         {
-            "name": "RevenueStreamsScan",
-            "path": "app/Commands/RevenueStreamsScan.php",
-            "namespace": "App\\Commands",
-            "class": "RevenueStreamsScan",
+            "name": "StreamsScan",
+            "path": "app/Commands/Revenue/StreamsScan.php",
+            "namespace": "App\\Commands\\Revenue",
+            "class": "StreamsScan",
             "group": "marketing",
             "command": "revenue:scan",
             "description": "Scan the repository for monetizable features and generate revenue stream docs."
+        },
+        {
+            "name": "AuthAudit",
+            "path": "app/Commands/Routes/AuthAudit.php",
+            "namespace": "App\\Commands\\Routes",
+            "class": "AuthAudit",
+            "group": "maintenance",
+            "command": "routes:auth-audit",
+            "description": "Audit public routes for unauthenticated access regressions."
         },
         {
             "name": "Benchmark",
@@ -11017,13 +12062,13 @@
             "description": "Repair invalid route handlers, resolve namespaces, and remove exact duplicate route definitions."
         },
         {
-            "name": "RoutesAuthAudit",
-            "path": "app/Commands/RoutesAuthAudit.php",
+            "name": "RunAutomationQueue",
+            "path": "app/Commands/RunAutomationQueue.php",
             "namespace": "App\\Commands",
-            "class": "RoutesAuthAudit",
-            "group": "maintenance",
-            "command": "routes:auth-audit",
-            "description": "Audit public routes for unauthenticated access regressions."
+            "class": "RunAutomationQueue",
+            "group": "Automation",
+            "command": "automation:run",
+            "description": "Run queued automation jobs"
         },
         {
             "name": "CacheBoot",
@@ -11033,6 +12078,15 @@
             "group": "runtime",
             "command": "runtime:cache-boot",
             "description": "Validate cache boot health and warm critical cache keys."
+        },
+        {
+            "name": "Check",
+            "path": "app/Commands/Runtime/Check.php",
+            "namespace": "App\\Commands\\Runtime",
+            "class": "Check",
+            "group": "app",
+            "command": "runtime:check",
+            "description": "Validate runtime invariants (nginx, php, permissions, etc.)."
         },
         {
             "name": "Diagnose502",
@@ -11089,15 +12143,6 @@
             "description": "Consolidate runtime diagnostics into a single report."
         },
         {
-            "name": "RuntimeCheck",
-            "path": "app/Commands/RuntimeCheck.php",
-            "namespace": "App\\Commands",
-            "class": "RuntimeCheck",
-            "group": "app",
-            "command": "runtime:check",
-            "description": "Validate runtime invariants (nginx, php, permissions, etc.)."
-        },
-        {
             "name": "SafeBaseCommand",
             "path": "app/Commands/SafeBaseCommand.php",
             "namespace": "App\\Commands",
@@ -11120,8 +12165,8 @@
             "path": "app/Commands/Scrapers/EmailScraperAudit.php",
             "namespace": "App\\Commands\\Scrapers",
             "class": "EmailScraperAudit",
-            "group": "audit",
-            "command": "scraper:audit-emails",
+            "group": "Marketing",
+            "command": "marketing:scraper:audit-emails",
             "description": "Audit recent trade and news emails against the expected scraper schema."
         },
         {
@@ -11202,7 +12247,7 @@
             "namespace": "App\\Commands\\Spark",
             "class": "RegistryAudit",
             "group": "Spark",
-            "command": "spark:registry-audit",
+            "command": "registry:audit",
             "description": "Audit Spark command registry against filesystem declarations and runtime list output."
         },
         {
@@ -11242,6 +12287,15 @@
             "description": null
         },
         {
+            "name": "Email",
+            "path": "app/Commands/Test/Email.php",
+            "namespace": "App\\Commands\\Test",
+            "class": "Email",
+            "group": "maintenance",
+            "command": "email:test",
+            "description": "Send a test email using the current SMTP configuration."
+        },
+        {
             "name": "RedisPing",
             "path": "app/Commands/Test/RedisPing.php",
             "namespace": "App\\Commands\\Test",
@@ -11249,15 +12303,6 @@
             "group": "Test",
             "command": "test:redis",
             "description": "Test Redis connection"
-        },
-        {
-            "name": "TestEmail",
-            "path": "app/Commands/TestEmail.php",
-            "namespace": "App\\Commands",
-            "class": "TestEmail",
-            "group": "maintenance",
-            "command": "email:test",
-            "description": "Send a test email using the current SMTP configuration."
         },
         {
             "name": "TrafficSpikeGuard",
@@ -11324,6 +12369,16 @@
         }
     ],
     "routes": [
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'index.php', 'Home::index'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'index.php/', 'Home::index'"
+        },
         {
             "file": "app/Config/Routes.php",
             "method": "get",
@@ -11537,7 +12592,7 @@
         {
             "file": "app/Config/Routes.php",
             "method": "get",
-            "definition": "'/Investments/News', static fn() => redirect()->to('/News', 301)"
+            "definition": "'/Investments/News', static fn() => redirect()->to(site_url('News'), 301)"
         },
         {
             "file": "app/Config/Routes.php",
@@ -11547,7 +12602,7 @@
         {
             "file": "app/Config/Routes.php",
             "method": "get",
-            "definition": "'/Purchase/MyMIGold', static fn() => redirect()->to('/Wallets/Purchase/MyMI-Gold', 301)"
+            "definition": "'/Purchase/MyMIGold', static fn() => redirect()->to(site_url('Wallets/Purchase/MyMI-Gold'), 301)"
         },
         {
             "file": "app/Config/Routes.php",
@@ -11557,7 +12612,42 @@
         {
             "file": "app/Config/Routes.php",
             "method": "get",
-            "definition": "'/How-It-Works/Purchase/MyMIGold', static fn() => redirect()->to('/How-It-Works/Purchase-MyMI-Gold', 301)"
+            "definition": "'/How-It-Works/Purchase/MyMIGold', static fn() => redirect()->to(site_url('How-It-Works/Purchase-MyMI-Gold'), 301)"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'/How-It-Works', '\\\\App\\\\Modules\\\\Blog\\\\Controllers\\\\HowItWorksController::index'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'/How-It-Works/', static fn() => redirect()->to(site_url('How-It-Works'), 301)"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'/How-It-Works/(:segment)', '\\\\App\\\\Modules\\\\Blog\\\\Controllers\\\\HowItWorksController::show/$1'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'/Support/Article', static fn() => redirect()->to(site_url('Support/Article/welcome'), 301)"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'/Wallets/Purchase/Memberships/Pro', static fn() => redirect()->to(site_url('Memberships/Pro'), 301)"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'/index.php/How-It-Works', static fn() => redirect()->to(site_url('How-It-Works'), 301)"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'/index.php/How-It-Works/(:segment)', static fn($slug) => redirect()->to(site_url('How-It-Works/' . $slug), 301)"
         },
         {
             "file": "app/Config/Routes.php",
@@ -11598,6 +12688,21 @@
             "file": "app/Config/Routes.php",
             "method": "group",
             "definition": "'debug', ['namespace' => 'App\\Controllers\\Debug'], static function ($routes) { $routes->get('common-data/smoke', 'CommonDataController::smoke'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'debug/register-success-probe', 'AuthController::registerSuccessProbe'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'API/Management/error-heatmap', 'SystemDebugController::errorHeatmap', ['filter' => 'permission:admin.access']"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'Management/System-Debug', 'SystemDebugController::index', ['filter' => 'permission:admin.access']"
         },
         {
             "file": "app/Config/Routes.php",
@@ -11642,7 +12747,7 @@
         {
             "file": "app/Config/Routes.php",
             "method": "post",
-            "definition": "'login', 'AuthController::attemptLogin', ['as' => 'auth/attemptLogin']"
+            "definition": "'login', 'AuthController::attemptLogin', ['as' => 'login-submit']"
         },
         {
             "file": "app/Config/Routes.php",
@@ -11667,7 +12772,7 @@
         {
             "file": "app/Config/Routes.php",
             "method": "post",
-            "definition": "'register', 'AuthController::attemptRegister', ['as' => 'register-attempt']"
+            "definition": "'register', 'AuthController::attemptRegister', ['as' => 'register-submit']"
         },
         {
             "file": "app/Config/Routes.php",
@@ -11707,22 +12812,42 @@
         {
             "file": "app/Config/Routes.php",
             "method": "get",
-            "definition": "'(:any)/register', 'AuthController::register', ['as' => 'dynamic-register']"
+            "definition": "'Discord/register', 'AuthController::register', ['as' => 'discord-register']"
         },
         {
             "file": "app/Config/Routes.php",
             "method": "get",
-            "definition": "'(:any)/register/(:segment)', 'AuthController::register/$2', ['as' => 'dynamic-register-referral']"
+            "definition": "'Discord/register/(:segment)', 'AuthController::register/$1', ['as' => 'discord-register-referral']"
         },
         {
             "file": "app/Config/Routes.php",
             "method": "post",
-            "definition": "'(:any)/register', 'AuthController::attemptRegister'"
+            "definition": "'Discord/register', 'AuthController::attemptRegister', ['as' => 'discord-register-attempt']"
         },
         {
             "file": "app/Config/Routes.php",
             "method": "post",
-            "definition": "'(:any)/register/(:segment)', 'AuthController::attemptRegister'"
+            "definition": "'Discord/register/(:segment)', 'AuthController::attemptRegister'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'(:segment)/register', 'AuthController::register', ['as' => 'dynamic-register']"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'(:segment)/register/(:segment)', 'AuthController::register/$2', ['as' => 'dynamic-register-referral']"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'(:segment)/register', 'AuthController::attemptRegister'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'(:segment)/register/(:segment)', 'AuthController::attemptRegister'"
         },
         {
             "file": "app/Config/Routes.php",
@@ -11937,6 +13062,16 @@
         {
             "file": "app/Config/Routes.php",
             "method": "group",
+            "definition": "'', ['namespace' => 'App\\Modules\\PropFirms\\Controllers', 'filter' => ['login', 'noStore']], function($routes) { $routes->get('/', 'PropFirmsController::index', ['as' => 'dashboard']"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'/(:segment)', 'PropFirmsController::index/$1'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "group",
             "definition": "'Advisor', static function($routes) { $routes->get('/', 'AdvisorController::index'"
         },
         {
@@ -11983,6 +13118,11 @@
             "file": "app/Config/Routes.php",
             "method": "match",
             "definition": "['GET', 'POST'], '/', 'APIController::index'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'Discord/interactions', 'DiscordAPIController::interactions'"
         },
         {
             "file": "app/Config/Routes.php",
@@ -12101,6 +13241,11 @@
         },
         {
             "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'Management/debugLogs', 'ManagementAPIController::debugLogs', ['filter' => 'permission:admin.access']"
+        },
+        {
+            "file": "app/Config/Routes.php",
             "method": "group",
             "definition": "'Scanner', static function($routes) { $routes->get('status', 'ScannerController::status'"
         },
@@ -12138,11 +13283,6 @@
             "file": "app/Config/Routes.php",
             "method": "post",
             "definition": "'Management/subsystems/action', 'ManagementAPIController::subsystemsAction', ['filter' => 'permission:admin.access']"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "post",
-            "definition": "'Discord/completeOnboardingStep', 'DiscordAPIController::completeOnboardingStep'"
         },
         {
             "file": "app/Config/Routes.php",
@@ -12193,6 +13333,96 @@
             "file": "app/Config/Routes.php",
             "method": "post",
             "definition": "'LinkSettings', 'AIAPIController::updateLinkSettings'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "group",
+            "definition": "'Discord', static function($routes) { $routes->get('commandsCatalog', 'DiscordAPIController::commandsCatalog'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'onboardingSteps', 'DiscordAPIController::onboardingSteps'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'sharingGuide', 'DiscordAPIController::sharingGuide'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'enqueue', 'DiscordAPIController::enqueue'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'broadcast', 'DiscordAPIController::broadcast'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'completeOnboardingStep', 'DiscordAPIController::completeOnboardingStep'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'health', 'DiscordAPIController::health'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'interactions', 'DiscordAPIController::interactions'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'register-guild-commands', 'DiscordAPIController::registerGuildCommands'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'messageHook', 'DiscordAPIController::messageHook'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'lookup/ticker', 'DiscordAPIController::tickerLookup'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'lookup/crypto', 'DiscordAPIController::cryptoLookup'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'lookup/quote', 'DiscordAPIController::quoteLookup'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'webhook', 'DiscordAPIController::webhookProxy'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'createLinkToken', 'DiscordAPIController::createLinkToken'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'process-queue', 'DiscordAPIController::processQueue'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'coalesce-now', 'DiscordAPIController::coalesceNow'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'test', 'DiscordAPIController::test'"
         },
         {
             "file": "app/Config/Routes.php",
@@ -12272,7 +13502,7 @@
         {
             "file": "app/Config/Routes.php",
             "method": "group",
-            "definition": "'Management', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'cronKey'], function($routes) { $routes->match(['GET', 'POST'], 'Run-CRON-Tasks', 'ManagementAPIController::Run_CRON_Tasks'"
+            "definition": "'Management', ['namespace' => 'App\\Modules\\APIs\\Controllers', 'filter' => 'cronKey'], function($routes) { $routes->match(['GET', 'POST'], 'Run-CRON-Tasks', 'ManagementAPIController::Run_CRON_Tasks'"
         },
         {
             "file": "app/Config/Routes.php",
@@ -13577,71 +14807,6 @@
         {
             "file": "app/Config/Routes.php",
             "method": "group",
-            "definition": "'Discord', ['namespace' => 'App\\Modules\\APIs\\Controllers'], static function($routes) { $routes->get('commandsCatalog', 'DiscordAPIController::commandsCatalog'"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "get",
-            "definition": "'onboardingSteps', 'DiscordAPIController::onboardingSteps'"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "get",
-            "definition": "'sharingGuide', 'DiscordAPIController::sharingGuide'"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "post",
-            "definition": "'enqueue', 'DiscordAPIController::enqueue'"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "post",
-            "definition": "'broadcast', 'DiscordAPIController::broadcast'"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "post",
-            "definition": "'interactions', 'DiscordAPIController::handleInteraction'"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "post",
-            "definition": "'messageHook', 'DiscordAPIController::messageHook'"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "post",
-            "definition": "'webhook', 'DiscordAPIController::webhookProxy'"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "post",
-            "definition": "'createLinkToken', 'DiscordAPIController::createLinkToken'"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "get",
-            "definition": "'process-queue', 'DiscordAPIController::processQueue'"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "get",
-            "definition": "'coalesce-now', 'DiscordAPIController::coalesceNow'"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "get",
-            "definition": "'health', 'DiscordAPIController::health'"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "post",
-            "definition": "'test', 'DiscordAPIController::test'"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "group",
             "definition": "'DripCampaign', function($routes) { $routes->get('click/(:segment)', 'DripCampaignAPIController::click/$1'"
         },
         {
@@ -14306,6 +15471,21 @@
         },
         {
             "file": "app/Config/Routes.php",
+            "method": "match",
+            "definition": "['GET', 'POST'], 'runNewsScrape', 'MarketingAPIController::runNewsScrape'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "match",
+            "definition": "['GET', 'POST'], 'runNewsGenerate', 'MarketingAPIController::runNewsGenerate'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "match",
+            "definition": "['GET', 'POST'], 'runNewsPipeline', 'MarketingAPIController::runNewsPipeline'"
+        },
+        {
+            "file": "app/Config/Routes.php",
             "method": "get",
             "definition": "'reprocessIncompleteEmails', 'MarketingAPIController::reprocessIncompleteEmails'"
         },
@@ -14451,6 +15631,76 @@
         },
         {
             "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'uploadNotification', 'MarketingAPIController::uploadNotification'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'getStoryUpdates', 'MarketingAPIController::getStoryUpdates'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'generateMarketingPackage', 'MarketingAPIController::generateMarketingPackage'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "match",
+            "definition": "['GET', 'POST'], 'processPendingNotifications', 'MarketingAPIController::processPendingNotifications'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "match",
+            "definition": "['GET', 'POST'], 'processPendingTempScraper', 'MarketingAPIController::processPendingTempScraper'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "match",
+            "definition": "['GET', 'POST'], 'processPendingCampaigns', 'MarketingAPIController::processPendingCampaigns'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "match",
+            "definition": "['GET', 'POST'], 'processPendingGeneratedContent', 'MarketingAPIController::processPendingGeneratedContent'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'distributionSummary', 'MarketingAPIController::distributionSummary'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'distributionHistory/(:num)', 'MarketingAPIController::distributionHistory/$1'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'distributionFailedSummary', 'MarketingAPIController::distributionFailedSummary'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'distributionChannelTotals', 'MarketingAPIController::distributionChannelTotals'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "match",
+            "definition": "['GET', 'POST'], 'retryDistributionTargets', 'MarketingAPIController::retryDistributionTargets'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "match",
+            "definition": "['GET', 'POST'], 'retryDistributionTargets/(:num)', 'MarketingAPIController::retryDistributionTargets/$1'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "match",
+            "definition": "['GET', 'POST'], 'runMarketingPipeline', 'MarketingAPIController::runMarketingPipeline'"
+        },
+        {
+            "file": "app/Config/Routes.php",
             "method": "get",
             "definition": "'/', 'MarketingAPIController::index'"
         },
@@ -14538,6 +15788,11 @@
             "file": "app/Config/Routes.php",
             "method": "get",
             "definition": "'generateContent', 'MarketingAPIController::generateContent'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'generateMarketingPackage', 'MarketingAPIController::generateMarketingPackage'"
         },
         {
             "file": "app/Config/Routes.php",
@@ -15281,6 +16536,21 @@
         },
         {
             "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'index.php/Blog', static fn() => redirect()->to(site_url('Blog'), 301)"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'index.php/Blog/(:segment)', static fn($slug) => redirect()->to(site_url('Blog/' . $slug), 301)"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'index.php/Blog/(:segment)/(:segment)', static fn($a, $b) => redirect()->to(site_url('Blog/' . $a . '/' . $b), 301)"
+        },
+        {
+            "file": "app/Config/Routes.php",
             "method": "group",
             "definition": "'Dashboard', ['namespace' => 'App\\Modules\\User\\Controllers', 'filter' => ['login', 'noStore']], function($routes) { $routes->get('/', 'DashboardController::index', ['as' => 'dashboard']"
         },
@@ -15373,6 +16643,11 @@
             "file": "app/Config/Routes.php",
             "method": "post",
             "definition": "'onboarding/watchlist', 'OnboardingWalkthroughController::saveWatchlist', ['as' => 'onboarding-save-watchlist']"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'onboarding/source-welcome/complete', 'OnboardingWalkthroughController::completeSourceWelcome', ['as' => 'onboarding-complete-source-welcome']"
         },
         {
             "file": "app/Config/Routes.php",
@@ -15576,6 +16851,11 @@
         },
         {
             "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'weeklyTopPerformance', 'AlertsAdminController::topPerformanceWeekly'"
+        },
+        {
+            "file": "app/Config/Routes.php",
             "method": "group",
             "definition": "'Assets', function($routes) { $routes->get('/', 'AssetsAdminController::index'"
         },
@@ -15602,42 +16882,42 @@
         {
             "file": "app/Config/Routes.php",
             "method": "post",
-            "definition": "'Discord/Channels/Save', 'DiscordAdminController::saveDiscordChannel'"
+            "definition": "'Channels/Save', 'DiscordAdminController::saveDiscordChannel'"
         },
         {
             "file": "app/Config/Routes.php",
             "method": "post",
-            "definition": "'Discord/Channels/Delete', 'DiscordAdminController::deleteDiscordChannel'"
+            "definition": "'Channels/Delete', 'DiscordAdminController::deleteDiscordChannel'"
         },
         {
             "file": "app/Config/Routes.php",
             "method": "post",
-            "definition": "'Discord/Templates/Save', 'DiscordAdminController::saveDiscordTemplate'"
+            "definition": "'Templates/Save', 'DiscordAdminController::saveDiscordTemplate'"
         },
         {
             "file": "app/Config/Routes.php",
             "method": "post",
-            "definition": "'Discord/Templates/Delete', 'DiscordAdminController::deleteDiscordTemplate'"
+            "definition": "'Templates/Delete', 'DiscordAdminController::deleteDiscordTemplate'"
         },
         {
             "file": "app/Config/Routes.php",
             "method": "post",
-            "definition": "'Discord/Subscriptions/Save', 'DiscordAdminController::saveDiscordSubscription'"
+            "definition": "'Subscriptions/Save', 'DiscordAdminController::saveDiscordSubscription'"
         },
         {
             "file": "app/Config/Routes.php",
             "method": "post",
-            "definition": "'Discord/Subscriptions/Delete', 'DiscordAdminController::deleteDiscordSubscription'"
+            "definition": "'Subscriptions/Delete', 'DiscordAdminController::deleteDiscordSubscription'"
         },
         {
             "file": "app/Config/Routes.php",
             "method": "post",
-            "definition": "'Discord/Policies/Save', 'DiscordAdminController::saveDiscordPolicy'"
+            "definition": "'Policies/Save', 'DiscordAdminController::saveDiscordPolicy'"
         },
         {
             "file": "app/Config/Routes.php",
             "method": "post",
-            "definition": "'Discord/Policies/Delete', 'DiscordAdminController::deleteDiscordPolicy'"
+            "definition": "'Policies/Delete', 'DiscordAdminController::deleteDiscordPolicy'"
         },
         {
             "file": "app/Config/Routes.php",
@@ -16551,6 +17831,11 @@
         },
         {
             "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'Projects/(:any)', 'ExchangeController::project/$1'"
+        },
+        {
+            "file": "app/Config/Routes.php",
             "method": "group",
             "definition": "'DigiByte', function($routes) { $routes->post('fetchFrontendData', 'DigiByteController::fetchFrontendData', ['filter' => 'csrf']"
         },
@@ -17037,7 +18322,7 @@
         {
             "file": "app/Config/Routes.php",
             "method": "get",
-            "definition": "'View/(:segment)', 'ProjectsController::view/$1'"
+            "definition": "'View/(:num)', 'ProjectsController::view/$1'"
         },
         {
             "file": "app/Config/Routes.php",
@@ -17147,7 +18432,7 @@
         {
             "file": "app/Config/Routes.php",
             "method": "group",
-            "definition": "'How-It-Works', ['namespace' => 'App\\\\Modules\\\\Blog\\\\Controllers'], static function ($routes) { $routes->get('/', 'HowItWorksController::index'"
+            "definition": "'How-It-Works', ['namespace' => 'App\\\\Modules\\\\Blog\\\\Controllers'], static function ($routes) { $routes->get('', 'HowItWorksController::index'"
         },
         {
             "file": "app/Config/Routes.php",
@@ -17222,6 +18507,41 @@
         {
             "file": "app/Config/Routes.php",
             "method": "group",
+            "definition": "'API', ['namespace' => 'App\\\\Modules\\\\APIs\\\\Controllers'], static function ($routes) { $routes->get('Budget/getUserBudgetRecords', 'BudgetAPIController::getUserBudgetRecords'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'Budget/getUserCreditBalances', 'BudgetAPIController::getUserCreditBalances'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'Budget/getUserRepaymentSummary', 'BudgetAPIController::getUserRepaymentSummary'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'Budget/getUserAvailableBalances', 'BudgetAPIController::getUserAvailableBalances'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "match",
+            "definition": "['GET', 'POST'], 'Alerts/fetchEmailAlerts', 'AlertsAPIController::fetchEmailAlerts'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "match",
+            "definition": "['GET', 'POST'], 'Management/Run-CRON-Tasks', 'ManagementAPIController::Run_CRON_Tasks', ['filter' => 'cronKey']"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "match",
+            "definition": "['GET', 'POST'], 'management/run-cron-tasks', 'ManagementAPIController::Run_CRON_Tasks', ['filter' => 'cronKey']"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "group",
             "definition": "'Support', ['namespace' => 'App\\Modules\\Support\\Controllers'], function($routes) { $routes->get('ticket/(:num)', 'SupportTicketController::show/$1'"
         },
         {
@@ -17248,6 +18568,11 @@
             "file": "app/Config/Routes.php",
             "method": "get",
             "definition": "'Article/(:segment)', 'SupportController::article/$1'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'Article', 'SupportController::article'"
         },
         {
             "file": "app/Config/Routes.php",
@@ -17722,7 +19047,7 @@
         {
             "file": "app/Config/Routes.php",
             "method": "group",
-            "definition": "'Management', ['namespace' => 'App\\Modules\\Management\\Controllers'], function ($routes) { $routes->get('API', 'APIAdminController::index'"
+            "definition": "'Management', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'role:admin,team'], function ($routes) { $routes->get('API', 'APIAdminController::index'"
         },
         {
             "file": "app/Config/Routes.php",
@@ -18945,6 +20270,136 @@
             "definition": "'Management/OpsInbox', ['filter' => 'role:admin'], static function ($r) { $r->get('/', 'App\\\\Modules\\\\Management\\\\Controllers\\\\OpsInboxController::index'"
         },
         {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "group",
+            "definition": "'Dashboard', ['namespace' => 'App\\Modules\\PropFirms\\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) { $routes->get('PropFirms', 'PropFirmsController::index'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "get",
+            "definition": "'propfirms', 'PropFirmsController::index'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "group",
+            "definition": "'PropFirms', ['namespace' => 'App\\Modules\\PropFirms\\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) { $routes->get('/', 'PropFirmsController::index'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "get",
+            "definition": "'RuleSets', 'PropFirmsController::ruleSets'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "get",
+            "definition": "'Accounts', 'AccountsController::index'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "get",
+            "definition": "'Accounts/create', 'AccountsController::create'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "post",
+            "definition": "'Accounts', 'AccountsController::store'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "get",
+            "definition": "'Accounts/(:num)', 'AccountsController::detail/$1'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "get",
+            "definition": "'Accounts/(:num)/edit', 'AccountsController::edit/$1'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "post",
+            "definition": "'Accounts/(:num)/refresh-state', 'AccountsController::refreshState/$1'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "post",
+            "definition": "'Accounts/(:num)/connect-broker', 'AccountsController::connectBroker/$1'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "post",
+            "definition": "'Accounts/(:num)/tradovate/connect', 'TradovateController::connect/$1'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "post",
+            "definition": "'Accounts/(:num)/tradovate/disconnect', 'TradovateController::disconnect/$1'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "post",
+            "definition": "'Accounts/(:num)/tradovate/sync', 'TradovateController::sync/$1'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "post",
+            "definition": "'Accounts/(:num)/tradovate/sync-orders', 'TradovateController::syncOrders/$1'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "post",
+            "definition": "'Accounts/(:num)/tradovate/sync-fills', 'TradovateController::syncFills/$1'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "post",
+            "definition": "'Accounts/(:num)/tradovate/sync-positions', 'TradovateController::syncPositions/$1'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "get",
+            "definition": "'Replay/(:num)/(:segment)', 'ReplayController::index/$1/$2'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "post",
+            "definition": "'Replay/(:num)/save-review', 'ReplayController::saveReview/$1'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "post",
+            "definition": "'Signals/scan/(:num)', 'SignalsController::scan/$1'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "get",
+            "definition": "'Notifications', 'NotificationsController::index'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "post",
+            "definition": "'Notifications/(:num)/read', 'NotificationsController::markRead/$1'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "post",
+            "definition": "'Rules/SeedDefaults', 'PropFirmsController::seedDefaults'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "group",
+            "definition": "'API', ['namespace' => 'App\\Modules\\PropFirms\\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) { $routes->get('account-state/(:num)', 'AccountsController::accountState/$1'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "get",
+            "definition": "'PropFirms/replay/(:num)/(:segment)', 'ReplayController::apiReplay/$1/$2'"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "get",
+            "definition": "'PropFirms/replay/(:num)/diagnostics', 'ReplayController::diagnosticsSummary/$1'"
+        },
+        {
             "file": "app/Modules/ScriptStudio/Config/Routes.php",
             "method": "group",
             "definition": "'ScriptStudio', ['namespace' => 'App\\\\Modules\\\\ScriptStudio\\\\Controllers'], function ($routes) { $routes->get('/', 'ScriptStudioController::index'"
@@ -19031,7 +20486,7 @@
             "path": "app/Modules/Blog",
             "controllers": 10,
             "models": 0,
-            "views": 37,
+            "views": 38,
             "services": 0
         },
         {
@@ -19123,6 +20578,14 @@
             "services": 0
         },
         {
+            "name": "PropFirms",
+            "path": "app/Modules/PropFirms",
+            "controllers": 7,
+            "models": 16,
+            "views": 3,
+            "services": 0
+        },
+        {
             "name": "Public",
             "path": "app/Modules/Public",
             "controllers": 1,
@@ -19175,7 +20638,7 @@
             "path": "app/Modules/User",
             "controllers": 22,
             "models": 5,
-            "views": 572,
+            "views": 573,
             "services": 0
         }
     ],
@@ -19193,6 +20656,13 @@
             "to_type": "model",
             "to": "ipHistoryModel",
             "relation": "uses_model"
+        },
+        {
+            "from_type": "controller",
+            "from": "AuthController",
+            "to_type": "view",
+            "to": "Auth/register_success_plain",
+            "relation": "renders_view"
         },
         {
             "from_type": "controller",
@@ -19247,6 +20717,13 @@
             "from_type": "controller",
             "from": "AuthController",
             "to_type": "service",
+            "to": "registrationSourceContentService",
+            "relation": "uses_service"
+        },
+        {
+            "from_type": "controller",
+            "from": "AuthController",
+            "to_type": "service",
             "to": "activator",
             "relation": "uses_service"
         },
@@ -19276,6 +20753,13 @@
             "from": "AuthController",
             "to_type": "service",
             "to": "response",
+            "relation": "uses_service"
+        },
+        {
+            "from_type": "controller",
+            "from": "AuthController",
+            "to_type": "service",
+            "to": "security",
             "relation": "uses_service"
         },
         {
@@ -19346,6 +20830,13 @@
             "from": "BaseController",
             "to_type": "service",
             "to": "myMIInvestments",
+            "relation": "uses_service"
+        },
+        {
+            "from_type": "controller",
+            "from": "BaseController",
+            "to_type": "service",
+            "to": "myMIMarketing",
             "relation": "uses_service"
         },
         {
@@ -19514,6 +21005,13 @@
             "from": "MaintenanceController",
             "to_type": "view",
             "to": "maintenance/index",
+            "relation": "renders_view"
+        },
+        {
+            "from_type": "controller",
+            "from": "SystemDebugController",
+            "to_type": "view",
+            "to": "management/system_debug",
             "relation": "renders_view"
         },
         {
@@ -19758,6 +21256,13 @@
             "from_type": "controller",
             "from": "DiscordAPIController",
             "to_type": "model",
+            "to": "DiscordRelayAuditModel",
+            "relation": "uses_model"
+        },
+        {
+            "from_type": "controller",
+            "from": "DiscordAPIController",
+            "to_type": "model",
             "to": "AlertsModel",
             "relation": "uses_model"
         },
@@ -19773,6 +21278,13 @@
             "from": "DiscordAPIController",
             "to_type": "service",
             "to": "logger",
+            "relation": "uses_service"
+        },
+        {
+            "from_type": "controller",
+            "from": "DiscordAPIController",
+            "to_type": "service",
+            "to": "curlrequest",
             "relation": "uses_service"
         },
         {
@@ -20017,13 +21529,6 @@
             "from_type": "controller",
             "from": "ManagementAPIController",
             "to_type": "model",
-            "to": "MarketingModel",
-            "relation": "uses_model"
-        },
-        {
-            "from_type": "controller",
-            "from": "ManagementAPIController",
-            "to_type": "model",
             "to": "alertsModel",
             "relation": "uses_model"
         },
@@ -20108,7 +21613,7 @@
             "from_type": "controller",
             "from": "ManagementAPIController",
             "to_type": "service",
-            "to": "request",
+            "to": "marketingPipelineService",
             "relation": "uses_service"
         },
         {
@@ -20171,6 +21676,20 @@
             "from_type": "controller",
             "from": "MarketingAPIController",
             "to_type": "service",
+            "to": "marketingNewsScrapeService",
+            "relation": "uses_service"
+        },
+        {
+            "from_type": "controller",
+            "from": "MarketingAPIController",
+            "to_type": "service",
+            "to": "marketingNewsGenerateService",
+            "relation": "uses_service"
+        },
+        {
+            "from_type": "controller",
+            "from": "MarketingAPIController",
+            "to_type": "service",
             "to": "mailService",
             "relation": "uses_service"
         },
@@ -20185,7 +21704,35 @@
             "from_type": "controller",
             "from": "MarketingAPIController",
             "to_type": "service",
+            "to": "marketingPipelineService",
+            "relation": "uses_service"
+        },
+        {
+            "from_type": "controller",
+            "from": "MarketingAPIController",
+            "to_type": "service",
+            "to": "marketingPackageService",
+            "relation": "uses_service"
+        },
+        {
+            "from_type": "controller",
+            "from": "MarketingAPIController",
+            "to_type": "service",
             "to": "activator",
+            "relation": "uses_service"
+        },
+        {
+            "from_type": "controller",
+            "from": "MarketingAPIController",
+            "to_type": "service",
+            "to": "authentication",
+            "relation": "uses_service"
+        },
+        {
+            "from_type": "controller",
+            "from": "MarketingAPIController",
+            "to_type": "service",
+            "to": "marketingDistributionService",
             "relation": "uses_service"
         },
         {
@@ -21307,6 +22854,13 @@
             "to_type": "model",
             "to": "walletModel",
             "relation": "uses_model"
+        },
+        {
+            "from_type": "controller",
+            "from": "ExchangeController",
+            "to_type": "view",
+            "to": "Exchange/project",
+            "relation": "renders_view"
         },
         {
             "from_type": "controller",
@@ -22950,14 +24504,14 @@
             "from_type": "controller",
             "from": "MarketingAdminController",
             "to_type": "service",
-            "to": "MyMIMarketing",
+            "to": "MyMIUser",
             "relation": "uses_service"
         },
         {
             "from_type": "controller",
             "from": "MarketingAdminController",
             "to_type": "service",
-            "to": "MyMIUser",
+            "to": "MyMIMarketing",
             "relation": "uses_service"
         },
         {
@@ -24191,6 +25745,69 @@
             "to_type": "service",
             "to": "auth",
             "relation": "uses_service"
+        },
+        {
+            "from_type": "controller",
+            "from": "AccountsController",
+            "to_type": "model",
+            "to": "UserPropAccountModel",
+            "relation": "uses_model"
+        },
+        {
+            "from_type": "controller",
+            "from": "AccountsController",
+            "to_type": "model",
+            "to": "PropFirmModel",
+            "relation": "uses_model"
+        },
+        {
+            "from_type": "controller",
+            "from": "AccountsController",
+            "to_type": "model",
+            "to": "PropRuleSetModel",
+            "relation": "uses_model"
+        },
+        {
+            "from_type": "controller",
+            "from": "AccountsController",
+            "to_type": "model",
+            "to": "PropBrokerConnectionModel",
+            "relation": "uses_model"
+        },
+        {
+            "from_type": "controller",
+            "from": "DashboardController",
+            "to_type": "service",
+            "to": "propFirmsService",
+            "relation": "uses_service"
+        },
+        {
+            "from_type": "controller",
+            "from": "ReplayController",
+            "to_type": "model",
+            "to": "UserPropAccountModel",
+            "relation": "uses_model"
+        },
+        {
+            "from_type": "controller",
+            "from": "ReplayController",
+            "to_type": "model",
+            "to": "PropReplayDiagnosticModel",
+            "relation": "uses_model"
+        },
+        {
+            "from_type": "controller",
+            "from": "SignalsController",
+            "to_type": "model",
+            "to": "UserPropAccountModel",
+            "relation": "uses_model"
+        },
+        {
+            "from_type": "controller",
+            "from": "TradovateController",
+            "to_type": "model",
+            "to": "UserPropAccountModel",
+            "relation": "uses_model"
         },
         {
             "from_type": "controller",
@@ -25685,6 +27302,41 @@
         },
         {
             "from_type": "model",
+            "from": "ApiResearchDiffModel",
+            "to_type": "table",
+            "to": "bf_api_research_diffs",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "ApiResearchEndpointModel",
+            "to_type": "table",
+            "to": "bf_api_research_endpoints",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "ApiResearchPageModel",
+            "to_type": "table",
+            "to": "bf_api_research_pages",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "ApiResearchRunModel",
+            "to_type": "table",
+            "to": "bf_api_research_runs",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "ApiResearchSpecModel",
+            "to_type": "table",
+            "to": "bf_api_research_specs",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
             "from": "ApiTokenModel",
             "to_type": "table",
             "to": "bf_api_tokens",
@@ -25905,6 +27557,20 @@
             "from": "DiscordLinkModel",
             "to_type": "table",
             "to": "bf_discord_links",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "DiscordManualMessageModel",
+            "to_type": "table",
+            "to": "bf_discord_manual_messages",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "DiscordRelayAuditModel",
+            "to_type": "table",
+            "to": "bf_discord_relay_audit",
             "relation": "maps_table"
         },
         {
@@ -26266,6 +27932,13 @@
         },
         {
             "from_type": "model",
+            "from": "MarketingDistributionTargetModel",
+            "to_type": "table",
+            "to": "bf_marketing_distribution_targets",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
             "from": "MarketingModel",
             "to_type": "table",
             "to": "bf_marketing_scraper",
@@ -26570,6 +28243,13 @@
             "from": "RoleUserModel",
             "to_type": "table",
             "to": "bf_role_user",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "RouteErrorHeatmapModel",
+            "to_type": "table",
+            "to": "bf_route_error_heatmap",
             "relation": "maps_table"
         },
         {
@@ -26885,6 +28565,118 @@
             "from": "MarketingModel",
             "to_type": "table",
             "to": "bf_marketing_scraper",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "PropAllowedSymbolModel",
+            "to_type": "table",
+            "to": "bf_prop_allowed_symbols",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "PropBrokerConnectionModel",
+            "to_type": "table",
+            "to": "bf_prop_broker_connections",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "PropChartSnapshotModel",
+            "to_type": "table",
+            "to": "bf_prop_chart_snapshots",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "PropEquityHistoryModel",
+            "to_type": "table",
+            "to": "bf_prop_equity_history",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "PropFillModel",
+            "to_type": "table",
+            "to": "bf_prop_fills",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "PropFirmModel",
+            "to_type": "table",
+            "to": "bf_prop_firms",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "PropNotificationModel",
+            "to_type": "table",
+            "to": "bf_prop_notifications",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "PropOrderModel",
+            "to_type": "table",
+            "to": "bf_prop_orders",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "PropPositionModel",
+            "to_type": "table",
+            "to": "bf_prop_positions",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "PropReplayDiagnosticModel",
+            "to_type": "table",
+            "to": "bf_prop_replay_diagnostics",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "PropReplayEventModel",
+            "to_type": "table",
+            "to": "bf_prop_replay_events",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "PropRuleSetModel",
+            "to_type": "table",
+            "to": "bf_prop_rule_sets",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "PropSignalModel",
+            "to_type": "table",
+            "to": "bf_prop_signals",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "PropSyncLogModel",
+            "to_type": "table",
+            "to": "bf_prop_sync_logs",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "PropTradeJournalModel",
+            "to_type": "table",
+            "to": "bf_prop_trade_journal",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "UserPropAccountModel",
+            "to_type": "table",
+            "to": "bf_user_prop_accounts",
             "relation": "maps_table"
         },
         {
