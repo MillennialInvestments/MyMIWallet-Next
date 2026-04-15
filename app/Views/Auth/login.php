@@ -2,13 +2,6 @@
 <!-- <?php //$this->extend($config->viewLayout) ?> -->
 <?= $this->section('main') ?>
 
-<?php if (session()->has('auth_message')) : ?>
-    <?php $msg = session('auth_message'); ?>
-    <div class="alert alert-<?= esc($msg['type']) ?>">
-        <?= esc($msg['text']) ?>
-    </div>
-<?php endif; ?>
-
 <div class="container">
 	<div class="row pt-4 mt-4">
 		<div class="col-sm-6 offset-sm-3 pt-5 mt-5">
@@ -27,7 +20,7 @@
 						</div>
 					<?php endif; ?>
 
-					 <form action="<?= site_url('login'); ?>" method="post">
+					 <form action="<?= site_url('login') ?>" method="post">
 						<?= csrf_field() ?>
 						<input type="hidden" name="redirect_url" value="<?= session('redirect_url') ?>">
 

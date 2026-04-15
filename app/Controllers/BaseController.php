@@ -298,6 +298,60 @@ abstract class BaseController extends Controller
         return $this->response->setBody(view($view, $data));
     }
 
+    protected function forceSupportAlert(
+        string $type,
+        string $title,
+        string $message,
+        string $errorCode,
+        ?Throwable $e = null,
+        array $context = []
+    ): array {
+        $requestId = $this->requestId ?? bin2hex(random_bytes(6));
+        $this->requestId = $requestId;
+
+        $supportMessage = mb_substr(trim($message), 0, 240);
+        $supportUrl = site_url('Support?code=' . rawurlencode($errorCode)
+            . '&message=' . rawurlencode($supportMessage)
+            . '&request_id=' . rawurlencode($requestId)
+            . '&source=auth');
+
+        $payload = [
+            'type' => $type,
+            'title' => $title,
+            'message' => $message,
+            'text' => $message,
+            'error_code' => $errorCode,
+            'support_url' => $supportUrl,
+            'request_id' => $requestId,
+        ];
+
+        if ($e !== null && ENVIRONMENT !== 'production') {
+            $payload['debug_message'] = mb_substr($e->getMessage(), 0, 500);
+            $payload['debug_file'] = basename($e->getFile()) . ':' . $e->getLine();
+        }
+
+        $logContext = $context + [
+            'request_id' => $requestId,
+            'error_code' => $errorCode,
+            'uri' => current_url(),
+            'method' => $this->request->getMethod(),
+            'ip' => $this->request->getIPAddress(),
+        ];
+
+        if ($e !== null) {
+            $logContext['exception'] = [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ];
+        }
+
+        log_message('error', '[AUTH_ALERT] {title}', ['title' => $title] + $logContext);
+        session()->setFlashdata('auth_message', $payload);
+
+        return $payload;
+    }
+
     protected function commonData(): array|ResponseInterface
     {
         $this->logTelemetryMemory('commonData:start');
