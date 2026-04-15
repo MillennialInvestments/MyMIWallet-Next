@@ -66,16 +66,16 @@ class AuthController extends BaseController
         }
 
         $request = $this->request;
-        $next    = $request->getGet('next');
+        $next    = $this->sanitizeRedirectTarget($request->getGet('next'));
 
         if (! empty($next)) {
             session()->set('redirect_url', $next);
             log_message('debug', 'Auth login() captured next param: ' . $next);
         }
 
-        $this->rememberRedirectUrl($request->getGet('redirect_url'));
+        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($request->getGet('redirect_url')));
 
-        $previous = previous_url();
+        $previous = $this->sanitizeRedirectTarget(previous_url());
 
         if (
             ! $this->session->has('redirect_url')
@@ -124,11 +124,7 @@ class AuthController extends BaseController
         }
 
         if (! $this->validate($rules)) {
-            $passwordErrors = $this->validator->getErrors();
-
-            $auditService->notifyRegistrationResult($email, 'failed', $request, null, $auditContext + [
-                'error' => json_encode($passwordErrors),
-            ]);
+            $errors = $this->validator->getErrors();
             $this->forceSupportAlert(
                 'danger',
                 'Login validation failed',
@@ -165,8 +161,8 @@ class AuthController extends BaseController
         );
 
         // Capture redirect targets if provided
-        $this->rememberRedirectUrl($this->request->getPost('redirect_url'));
-        $this->rememberRedirectUrl($this->request->getPost('next'));
+        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($this->request->getPost('redirect_url')));
+        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($this->request->getPost('next')));
 
         log_message(
             'debug',
@@ -441,12 +437,12 @@ class AuthController extends BaseController
     public function register()
     {
         if ($this->auth->check()) {
-            return redirect()->back();
+            return redirect()->to(site_url('login'));
         }
 
         if (! $this->config->allowRegistration) {
             $this->setAuthMessage('danger', lang('Auth.registerDisabled'));
-            return redirect()->back()
+            return redirect()->to(site_url('register'))
                 ->withInput()
                 ->with('errors', ['register' => lang('Auth.registerDisabled')]);
         }
@@ -1541,6 +1537,7 @@ class AuthController extends BaseController
 
     private function rememberRedirectUrl(?string $url): void
     {
+        $url = $this->sanitizeRedirectTarget($url);
         if ($url === null || $url === '') {
             return;
         }
@@ -1552,6 +1549,46 @@ class AuthController extends BaseController
         if ($this->isValidRedirectTarget($url)) {
             $this->session->set('redirect_url', $url);
         }
+    }
+
+    protected function sanitizeRedirectTarget(?string $url): ?string
+    {
+        $url = is_string($url) ? trim($url) : '';
+
+        if ($url === '') {
+            return null;
+        }
+
+        $parts = parse_url($url);
+        if ($parts === false) {
+            return null;
+        }
+
+        $path = (string) ($parts['path'] ?? '');
+        if ($path === '') {
+            return null;
+        }
+
+        $query = [];
+        if (! empty($parts['query'])) {
+            parse_str((string) $parts['query'], $query);
+        }
+
+        foreach (array_keys($query) as $key) {
+            if (
+                in_array($key, ['_gl', '_ga', 'gclid', 'fbclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'redirect_url', 'next'], true)
+                || str_starts_with($key, '_ga_')
+            ) {
+                unset($query[$key]);
+            }
+        }
+
+        $clean = $path;
+        if (! empty($query)) {
+            $clean .= '?' . http_build_query($query);
+        }
+
+        return $clean !== '' ? $clean : null;
     }
 
     private function isValidRedirectTarget(?string $url): bool
