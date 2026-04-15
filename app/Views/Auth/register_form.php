@@ -10,7 +10,7 @@
             <div class="alert alert-danger"><?= esc((string) $error) ?></div>
         <?php endforeach; endif; ?>
 
-        <form class="form-horizontal" id="user_register_form" action="<?= site_url('register') ?>" method="post" accept-charset="utf-8" novalidate>
+        <form action="<?= site_url('register') ?>" method="post" accept-charset="utf-8" novalidate>
             <?= csrf_field() ?>
             <?php $registrationAttribution = is_array($registrationAttribution ?? null) ? $registrationAttribution : []; ?>
             <input type="hidden" name="referralCode" value="<?= esc($referralCode ?? set_value('referralCode')) ?>">

@@ -235,10 +235,12 @@ $routes->group('', ['namespace' => 'App\Controllers', 'filter' => 'no-cache'], s
     $routes->post('Discord/register', 'AuthController::attemptRegister', ['as' => 'discord-register-attempt']);
     $routes->post('Discord/register/(:segment)', 'AuthController::attemptRegister');
 
-    $routes->get('(:segment)/register', 'AuthController::register', ['as' => 'dynamic-register']);
-    $routes->get('(:segment)/register/(:segment)', 'AuthController::register/$2', ['as' => 'dynamic-register-referral']);
-    $routes->post('(:segment)/register', 'AuthController::attemptRegister');
-    $routes->post('(:segment)/register/(:segment)', 'AuthController::attemptRegister');
+    // Generic dynamic register routes are disabled to keep canonical /register unambiguous.
+    // Keep Discord and explicit register-segment routes for campaign/referral use-cases.
+    // $routes->get('(:segment)/register', 'AuthController::register', ['as' => 'dynamic-register']);
+    // $routes->get('(:segment)/register/(:segment)', 'AuthController::register/$2', ['as' => 'dynamic-register-referral']);
+    // $routes->post('(:segment)/register', 'AuthController::attemptRegister');
+    // $routes->post('(:segment)/register/(:segment)', 'AuthController::attemptRegister');
 
     // Activation
     $routes->get('activate', 'AuthController::activateAccount', ['as' => 'activate']);
