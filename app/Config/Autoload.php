@@ -51,6 +51,7 @@ class Autoload extends AutoloadConfig
         'Maatwebsite\\Excel\\' => APPPATH . 'ThirdParty/maatwebsite/excel',
         'CodeIgniter\\Shield' => ROOTPATH . 'vendor/codeigniter4/shield/src',
         'CodeIgniter\\Settings' => ROOTPATH . 'vendor/codeigniter4/settings/src',
+        'Myth\\Auth' => ROOTPATH . 'vendor/myth/auth/src',
         'MythToShield' => ROOTPATH . 'vendor/deployed/myth-to-shield/src',
     ];
 

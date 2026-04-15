@@ -47,7 +47,7 @@ use function is_ci;
  */
 class Services extends CoreServices
 {
-    public static function authentication(bool $getShared = true)
+    public static function authentication(string $lib = 'local', ?\CodeIgniter\Model $userModel = null, ?\CodeIgniter\Model $loginModel = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('authentication');
@@ -59,7 +59,7 @@ class Services extends CoreServices
             return \CodeIgniter\Shield\Config\Services::auth(false);
         }
 
-        return \Myth\Auth\Config\Services::authentication(false);
+        return \Myth\Auth\Config\Services::authentication($lib, $userModel, $loginModel, false);
     }
 
     public static function cache(?Cache $config = null, bool $getShared = true)

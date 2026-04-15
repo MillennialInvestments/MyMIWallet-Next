@@ -58,7 +58,12 @@ class Modules extends BaseModules
      *
      * @var array{only?: list<string>, exclude?: list<string>}
      */
-    public $composerPackages = [];
+    public $composerPackages = [
+        'exclude' => [
+            // Prevent loading Myth/Auth package registrars during Shield migration toggles.
+            'myth/auth',
+        ],
+    ];
 
     /**
      * --------------------------------------------------------------------------
