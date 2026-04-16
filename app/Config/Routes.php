@@ -1947,7 +1947,7 @@ $routes->addRedirect('Budget/Financial-Institute', 'Budget/Account-Manager', 301
 $routes->addRedirect('Budget/Financial-Advisors', 'Advisor', 301);
 $routes->addRedirect('Investments/Reports', 'Investments/Trade-Tracker', 301);
 
-service('auth')->routes($routes);
+// service('auth')->routes($routes);
 
 $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers', 'filter' => 'role:admin,team'], function ($routes) {
     $routes->get('API', 'APIAdminController::index');
