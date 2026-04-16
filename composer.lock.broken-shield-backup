@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "737fe59d56c4a21cb5871ae9acc26d31",
+    "content-hash": "6a53129eddd90e6f126756a1c3de89a5",
     "packages": [
         {
             "name": "codeigniter4/framework",
-            "version": "v4.7.2",
+            "version": "v4.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeigniter4/framework.git",
-                "reference": "b3359be849be29394660c3aed909aa32b6c45cf6"
+                "reference": "e7753bc03f8b74af428f46b5e2bb74925487c930"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeigniter4/framework/zipball/b3359be849be29394660c3aed909aa32b6c45cf6",
-                "reference": "b3359be849be29394660c3aed909aa32b6c45cf6",
+                "url": "https://api.github.com/repos/codeigniter4/framework/zipball/e7753bc03f8b74af428f46b5e2bb74925487c930",
+                "reference": "e7753bc03f8b74af428f46b5e2bb74925487c930",
                 "shasum": ""
             },
             "require": {
@@ -81,7 +81,7 @@
                 "slack": "https://codeigniterchat.slack.com",
                 "source": "https://github.com/codeigniter4/CodeIgniter4"
             },
-            "time": "2026-03-24T18:26:09+00:00"
+            "time": "2026-02-01T20:39:35+00:00"
         },
         {
             "name": "codeigniter4/settings",
@@ -207,6 +207,83 @@
                 "source": "https://github.com/codeigniter4/shield"
             },
             "time": "2026-03-16T16:02:45+00:00"
+        },
+        {
+            "name": "deployed/myth-to-shield",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/deployed-systems/mythToShield.git",
+                "reference": "d726827ef440be59e2b165ac5658302f86fe24ab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/deployed-systems/mythToShield/zipball/d726827ef440be59e2b165ac5658302f86fe24ab",
+                "reference": "d726827ef440be59e2b165ac5658302f86fe24ab",
+                "shasum": ""
+            },
+            "require": {
+                "codeigniter4/settings": "^2.1",
+                "codeigniter4/shield": ">=1.0.1",
+                "php": "^7.4.3 || ^8.0"
+            },
+            "require-dev": {
+                "codeigniter/coding-standard": "1.7.*",
+                "codeigniter/phpstan-codeigniter": "^1.3",
+                "codeigniter4/framework": ">=4.3.5 <4.5.0 || ^4.5.1",
+                "phpstan/extension-installer": "^1.3",
+                "phpstan/phpstan-strict-rules": "^1.5",
+                "phpunit/phpunit": "^9.6",
+                "rector/rector": "1.2.10"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Deployed\\MythToShield\\": "src"
+                },
+                "exclude-from-classmap": [
+                    "**/Database/Migrations/**"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Deployed Systems Software",
+                    "email": "info@deployed.systems",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Ivan Najdanovic",
+                    "email": "najdanovicivan@gmail.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Marko Dzunic",
+                    "email": "soul6reaver@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Tool to migrate from MythAuth to CodeIgniter Shield",
+            "homepage": "https://github.com/deployed-systems/mythToShield",
+            "keywords": [
+                "Authentication",
+                "authorization",
+                "codeigniter",
+                "codeigniter4",
+                "myth",
+                "myth-auth",
+                "shield"
+            ],
+            "support": {
+                "docs": "https://github.com/deployed-systems/mythToShield",
+                "forum": "https://github.com/deployed-systems/mythToShielddiscussions",
+                "issues": "https://github.com/deployed-systems/mythToShieldissues",
+                "source": "https://github.com/deployed-systems/mythToShield"
+            },
+            "time": "2024-12-03T10:44:48+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -475,16 +552,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.9.0",
+            "version": "2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "7d0ed42f28e42d61352a7a79de682e5e67fec884"
+                "reference": "21dc724a0583619cd1652f673303492272778051"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/7d0ed42f28e42d61352a7a79de682e5e67fec884",
-                "reference": "7d0ed42f28e42d61352a7a79de682e5e67fec884",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/21dc724a0583619cd1652f673303492272778051",
+                "reference": "21dc724a0583619cd1652f673303492272778051",
                 "shasum": ""
             },
             "require": {
@@ -500,7 +577,6 @@
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
                 "http-interop/http-factory-tests": "0.9.0",
-                "jshttp/mime-db": "1.54.0.1",
                 "phpunit/phpunit": "^8.5.44 || ^9.6.25"
             },
             "suggest": {
@@ -572,7 +648,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.9.0"
+                "source": "https://github.com/guzzle/psr7/tree/2.8.0"
             },
             "funding": [
                 {
@@ -588,7 +664,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-10T16:41:02+00:00"
+            "time": "2025-08-23T21:21:41+00:00"
         },
         {
             "name": "laminas/laminas-escaper",
@@ -652,91 +728,17 @@
             "time": "2025-10-14T18:31:13+00:00"
         },
         {
-            "name": "myth/auth",
-            "version": "v1.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/lonnieezell/myth-auth.git",
-                "reference": "7d0347faa47bd754d2dc49593a9852800be73986"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/lonnieezell/myth-auth/zipball/7d0347faa47bd754d2dc49593a9852800be73986",
-                "reference": "7d0347faa47bd754d2dc49593a9852800be73986",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.4 || ^8.0"
-            },
-            "provide": {
-                "codeigniter4/authentication-implementation": "1.0"
-            },
-            "require-dev": {
-                "codeigniter4/codeigniter4-standard": "^1.0",
-                "codeigniter4/devkit": "^1.0",
-                "codeigniter4/framework": "^4.1",
-                "mockery/mockery": "^1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Myth\\Auth\\": "src"
-                },
-                "exclude-from-classmap": [
-                    "**/Database/Migrations/**"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Lonnie Ezell",
-                    "email": "lonnieje@gmail.com",
-                    "homepage": "http://newmythmedia.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Flexible authentication/authorization system for CodeIgniter 4.",
-            "homepage": "https://github.com/lonnieezell/myth-auth",
-            "keywords": [
-                "Authentication",
-                "authorization",
-                "codeigniter"
-            ],
-            "support": {
-                "issues": "https://github.com/lonnieezell/myth-auth/issues",
-                "source": "https://github.com/lonnieezell/myth-auth/tree/v1.2.1"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/lonnieezell",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/mgatner",
-                    "type": "github"
-                },
-                {
-                    "url": "https://www.patreon.com/lonnieezell",
-                    "type": "patreon"
-                }
-            ],
-            "time": "2022-07-13T18:35:46+00:00"
-        },
-        {
             "name": "predis/predis",
-            "version": "v3.4.2",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/predis/predis.git",
-                "reference": "2033429520d8997a7815a2485f56abe6d2d0e075"
+                "reference": "0850f2f36ee179f0ff96c92c750e1366c6cd754c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/predis/predis/zipball/2033429520d8997a7815a2485f56abe6d2d0e075",
-                "reference": "2033429520d8997a7815a2485f56abe6d2d0e075",
+                "url": "https://api.github.com/repos/predis/predis/zipball/0850f2f36ee179f0ff96c92c750e1366c6cd754c",
+                "reference": "0850f2f36ee179f0ff96c92c750e1366c6cd754c",
                 "shasum": ""
             },
             "require": {
@@ -778,7 +780,7 @@
             ],
             "support": {
                 "issues": "https://github.com/predis/predis/issues",
-                "source": "https://github.com/predis/predis/tree/v3.4.2"
+                "source": "https://github.com/predis/predis/tree/v3.4.1"
             },
             "funding": [
                 {
@@ -786,7 +788,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-03-09T20:33:04+00:00"
+            "time": "2026-02-23T19:51:21+00:00"
         },
         {
             "name": "psr/http-client",
@@ -3155,5 +3157,5 @@
         "php": "^8.1"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }

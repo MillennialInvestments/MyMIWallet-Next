@@ -51,8 +51,12 @@ class Services extends CoreServices
     /**
      * @param string|false|null $lib
      */
-    public static function authentication(string $lib = 'local', ?\CodeIgniter\Model $userModel = null, ?\CodeIgniter\Model $loginModel = null, bool $getShared = true)
+    public static function authentication($lib = 'local', ?Model $userModel = null, ?Model $loginModel = null, bool $getShared = true)
     {
+        if ($lib === false || $lib === null || $lib === '') {
+            $lib = 'local';
+        }
+
         if ($getShared) {
             return static::getSharedInstance('authentication', $lib, $userModel, $loginModel);
         }

@@ -86,6 +86,30 @@ $routes->get('/', 'Home::index');
 //     return redirect()->to('/login');  // change to 'Home::index' once that exists
 // });
 
+// Block common exploit / probe targets before any catch-all routes
+$routes->get('xmlrpc.php', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('phpinfo.php', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('php_info.php', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('pinfo.php', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('info.php', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('debug.php', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('admin.php', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('server.js', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('.env', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('.env.local', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('.env.prod', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('.env.production', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('.env.old', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('.env.backup', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('.env.bak', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('.git/config', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('wp-admin', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('wp-admin/(:any)', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('wp-content', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('wp-content/(:any)', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('wp-includes', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+$routes->get('wp-includes/(:any)', static fn() => throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound());
+
 // Simple health check that should return 200 without auth
 $routes->get('healthz', 'System\HealthController::healthz', ['as' => 'healthz']);
 if (ENVIRONMENT !== 'production') {
@@ -305,11 +329,11 @@ $routes->group('', ['namespace' => 'App\Modules\User\Controllers', 'filter' => [
     // Additional secured routes here
 });
 
-
-$routes->group('', ['namespace' => 'App\Modules\PropFirms\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
+$routes->group('Dashboard', ['namespace' => 'App\Modules\PropFirms\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
     $routes->get('/', 'PropFirmsController::index', ['as' => 'dashboard']);
-    $routes->get('/(:segment)', 'PropFirmsController::index/$1');
+    $routes->get('(:segment)', 'PropFirmsController::index/$1');
 });
+
 $routes->group('Advisor', static function($routes) {
     $routes->get('/', 'AdvisorController::index');
     $routes->post('generateInsight', 'AdvisorController::generateAdvisorInsight');
@@ -1922,6 +1946,8 @@ $routes->addRedirect('How-To-Guides', 'Knowledgebase/Tutorials', 301);
 $routes->addRedirect('Budget/Financial-Institute', 'Budget/Account-Manager', 301);
 $routes->addRedirect('Budget/Financial-Advisors', 'Advisor', 301);
 $routes->addRedirect('Investments/Reports', 'Investments/Trade-Tracker', 301);
+
+service('auth')->routes($routes);
 
 $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers', 'filter' => 'role:admin,team'], function ($routes) {
     $routes->get('API', 'APIAdminController::index');

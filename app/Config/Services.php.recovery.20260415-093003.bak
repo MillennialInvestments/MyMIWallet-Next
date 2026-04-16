@@ -3,7 +3,6 @@
 namespace Config;
 
 use App\Libraries\{CrudCacheInvalidator, KimiClient, MyMIAnalytics, MyMIInvestments, SafeCache};
-use CodeIgniter\Model;
 use App\Services\AuthAuditService;
 use App\Services\AlertService;
 use App\Services\DashboardService;
@@ -48,13 +47,16 @@ use function is_ci;
  */
 class Services extends CoreServices
 {
-    /**
-     * @param string|false|null $lib
-     */
     public static function authentication(string $lib = 'local', ?\CodeIgniter\Model $userModel = null, ?\CodeIgniter\Model $loginModel = null, bool $getShared = true)
     {
         if ($getShared) {
-            return static::getSharedInstance('authentication', $lib, $userModel, $loginModel);
+            return static::getSharedInstance('authentication');
+        }
+
+        $config = config('Auth');
+
+        if (($config->useShield ?? false) === true) {
+            return \CodeIgniter\Shield\Config\Services::auth(false);
         }
 
         return \Myth\Auth\Config\Services::authentication($lib, $userModel, $loginModel, false);
