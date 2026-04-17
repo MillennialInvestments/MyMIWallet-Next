@@ -61,7 +61,9 @@ class Modules extends BaseModules
     public $composerPackages = [
         'exclude' => [
             // Prevent loading Myth/Auth package registrars during Shield migration toggles.
-            'myth/auth',
+            'codeigniter4/shield',
+            'codeigniter4/settings',
+            'deployed/myth-to-shield',
         ],
     ];
 
