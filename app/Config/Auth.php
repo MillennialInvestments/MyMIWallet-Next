@@ -11,6 +11,16 @@ class Auth extends \Myth\Auth\Config\Auth
      */
     public bool $useShield = false;
     /**
+     * Enables verbose auth diagnostics for login/register flows.
+     */
+    public bool $debug = false;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->debug = (bool) env('auth.debug', false);
+    }
+    /**
      * --------------------------------------------------------------------
      * Default User Group
      * --------------------------------------------------------------------
