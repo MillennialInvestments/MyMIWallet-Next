@@ -57,7 +57,7 @@ class AuthAuditRunner
         if (! $db) {
             throw new RuntimeException('Database connection not initialized in AuthAudit command');
         }
-        $authConfig = config('Auth');
+        $authConfig = config(\App\Legacy\Auth\Config\Auth::class);
         $sessionConfig = config('Session');
         $appConfig = config('App');
         $securityConfig = config('Security');
@@ -338,7 +338,7 @@ class AuthAuditRunner
 
             $users = model(MythUserModel::class);
             $userEntity = $users->find($testUser['id']);
-            if ($userEntity && config('Auth')->requireActivation !== null && ! $userEntity->active) {
+            if ($userEntity && config(\App\Legacy\Auth\Config\Auth::class)->requireActivation !== null && ! $userEntity->active) {
                 $userEntity->activate();
                 $users->save($userEntity);
             }
@@ -698,7 +698,7 @@ class AuthAuditRunner
     private function runEmailTests(?array $testUser): void
     {
         $this->runTest('Email Delivery: Registration activation', function () use ($testUser) {
-            $authConfig = config('Auth');
+            $authConfig = config(\App\Legacy\Auth\Config\Auth::class);
 
             if ($authConfig->requireActivation === null) {
                 return $this->resultWarning('Activation emails disabled.');

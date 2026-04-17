@@ -24,9 +24,18 @@ class Exceptions extends BaseConfig
 {
     public function logException(\Throwable $exception): void
     {
-        log_message('critical', '[EXCEPTION] ' . $exception->getMessage() .
-            ' File=' . $exception->getFile() .
-            ' Line=' . $exception->getLine());
+        $context = [
+            'exception' => $exception::class,
+            'message'   => $exception->getMessage(),
+            'file'      => $exception->getFile(),
+            'line'      => $exception->getLine(),
+        ];
+
+        if (ENVIRONMENT === 'development') {
+            $context['trace'] = $exception->getTraceAsString();
+        }
+
+        log_message('critical', '[EXCEPTION] {exception}: {message} in {file}:{line}', $context);
     }
 
     /**
@@ -128,7 +137,7 @@ class Exceptions extends BaseConfig
         if ($exception instanceof BadRequestException) {
             log_message('error', 'BadRequestException: {msg} | URI: {uri}', [
                 'msg' => $exception->getMessage(),
-                'uri' => (string) service('request')->getUri(),
+                'uri' => (string) (service('request')->getUri() ?? ''),
             ]);
         }
         if ($exception instanceof PageNotFoundException) {

@@ -44,7 +44,7 @@ class InvestmentsAPIController extends BaseAPIController
         $this->auth                         = service('authentication'); // Use the 'authentication' service
         $this->request                      = service('request');
         $this->session                      = service('session');
-        $this->config                       = config('Auth');
+        $this->config                       = config(\App\Legacy\Auth\Config\Auth::class);
         $this->socialMedia                  = config('SocialMedia');
         $this->siteSettings                 = config('SiteSettings');
         $this->debug                        = $this->siteSettings->debug;

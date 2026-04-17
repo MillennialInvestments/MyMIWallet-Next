@@ -66,7 +66,7 @@ class LoginModel extends Model
             ->where('selector', $selector)
             ->update([
                 'hashedValidator' => hash('sha256', $validator),
-                'expires'         => (new DateTime())->modify('+' . config('Auth')->rememberLength . ' seconds')->format('Y-m-d H:i:s'),
+                'expires'         => (new DateTime())->modify('+' . config(\App\Legacy\Auth\Config\Auth::class)->rememberLength . ' seconds')->format('Y-m-d H:i:s'),
             ]);
     }
 
@@ -87,7 +87,7 @@ class LoginModel extends Model
      */
     public function purgeOldRememberTokens()
     {
-        $config = config('Auth');
+        $config = config(\App\Legacy\Auth\Config\Auth::class);
 
         if (! $config->allowRemembering) {
             return;

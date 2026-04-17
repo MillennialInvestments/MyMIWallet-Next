@@ -104,5 +104,5 @@ class Autoload extends AutoloadConfig
      *
      * @var list<string>
      */
-    public $helpers = ['ai', 'asset', 'assets', 'auth', 'cache', 'cachekey', 'ci_guard', 'date', 'file', 'form', 'news', 'string', 'url', 'vite'];
+    public $helpers = ['ai', 'asset', 'assets', 'auth', 'cache', 'cachekey', 'ci_guard', 'date', 'file', 'form', 'news', 'setting', 'string', 'url', 'vite'];
 }

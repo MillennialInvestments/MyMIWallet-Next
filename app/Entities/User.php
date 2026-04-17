@@ -133,7 +133,7 @@ class User extends \Myth\Auth\Entities\User
     public function generateResetHash()
     {
         $this->attributes['reset_hash']    = bin2hex(random_bytes(16));
-        $this->attributes['reset_expires'] = date('Y-m-d H:i:s', time() + config('Auth')->resetTime);
+        $this->attributes['reset_expires'] = date('Y-m-d H:i:s', time() + config(\App\Legacy\Auth\Config\Auth::class)->resetTime);
 
         return $this;
     }

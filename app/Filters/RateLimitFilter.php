@@ -6,20 +6,22 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
+use Throwable;
 
 class RateLimitFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
         $path = strtolower(trim($request->getUri()->getPath(), '/'));
+        $authState = $this->resolveAuthState($request);
 
-        if ($this->isNoisePath($path) && ! $this->isAuthenticated()) {
+        if ($this->isNoisePath($path) && ! $authState['authenticated']) {
             return Services::response()
                 ->setStatusCode(ResponseInterface::HTTP_NOT_FOUND)
                 ->setBody('Not Found');
         }
 
-        if (! $this->isAuthenticated() && $this->isBot($request)) {
+        if (! $authState['authenticated'] && $this->isBot($request)) {
             $cache = cache();
             $key = sanitizeCacheKey('ratelimit:bot:' . sha1($request->getIPAddress() . '|' . $request->getHeaderLine('User-Agent')));
             $attempts = (int) ($cache->get($key) ?? 0);
@@ -41,21 +43,59 @@ class RateLimitFilter implements FilterInterface
         return null;
     }
 
-    private function isAuthenticated(): bool
+    /**
+     * Never throw from this filter: auth service failures must not white-screen requests.
+     *
+     * @return array{authenticated: bool, source: string}
+     */
+    private function resolveAuthState(RequestInterface $request): array
     {
         $session = function_exists('session') ? session() : null;
-        if ($session && $session->has('user_id')) {
-            return true;
-        }
 
-        if (function_exists('auth')) {
-            $auth = auth();
-            if ($auth && method_exists($auth, 'loggedIn') && $auth->loggedIn()) {
-                return true;
+        try {
+            if ($session && $session->has('user_id')) {
+                if (ENVIRONMENT === 'development') {
+                    log_message('debug', '[AUTH_RESOLUTION] RateLimitFilter authenticated via session', [
+                        'uri' => (string) $request->getUri(),
+                    ]);
+                }
+
+                return ['authenticated' => true, 'source' => 'session'];
             }
-        }
 
-        return false;
+            if (function_exists('auth')) {
+                $auth = auth();
+
+                if ($auth && method_exists($auth, 'loggedIn') && $auth->loggedIn()) {
+                    if (ENVIRONMENT === 'development') {
+                        log_message('debug', '[AUTH_RESOLUTION] RateLimitFilter authenticated via Shield helper', [
+                            'uri' => (string) $request->getUri(),
+                        ]);
+                    }
+
+                    return ['authenticated' => true, 'source' => 'shield'];
+                }
+            }
+
+            return ['authenticated' => false, 'source' => 'guest'];
+        } catch (Throwable $e) {
+            $context = [
+                'exception' => get_class($e),
+                'message'   => $e->getMessage(),
+                'file'      => $e->getFile(),
+                'line'      => $e->getLine(),
+                'uri'       => (string) $request->getUri(),
+                'method'    => $request->getMethod(),
+            ];
+
+            if (ENVIRONMENT === 'development') {
+                $context['trace'] = $e->getTraceAsString();
+            }
+
+            log_message('critical', '[AUTH_RESOLUTION_FAILED] RateLimitFilter fell back to guest', $context);
+
+            return ['authenticated' => false, 'source' => 'fallback_guest'];
+        }
     }
 
     private function isBot(RequestInterface $request): bool
