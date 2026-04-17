@@ -30,6 +30,8 @@ use App\Services\Scanning\Providers\ProviderRouter;
 use App\Services\Scanning\Providers\StooqProvider;
 use Config\Cache;
 use CodeIgniter\Config\Services as CoreServices;
+use CodeIgniter\Shield\Auth as ShieldAuth;
+use CodeIgniter\Shield\Config\Auth as ShieldAuthConfig;
 use function is_ci;
 
 /**
@@ -47,13 +49,40 @@ use function is_ci;
  */
 class Services extends CoreServices
 {
+    /**
+     * Shield auth service override.
+     *
+     * Important: this app keeps a legacy Config\Auth class for Myth/Auth
+     * migration support. Shield's default service resolves config(\App\Legacy\Auth\Config\Auth::class),
+     * which causes a type mismatch. We resolve Shield's own config class
+     * explicitly to prevent boot-time TypeErrors.
+     */
+    public static function auth(bool $getShared = true): ShieldAuth
+    {
+        if ($getShared) {
+            return static::getSharedInstance('auth');
+        }
+
+        /** @var ShieldAuthConfig $config */
+        $config = config(ShieldAuthConfig::class);
+
+        if (ENVIRONMENT === 'development') {
+            log_message('debug', '[AUTH_RESOLUTION] Shield auth service initialized', [
+                'config_class' => get_class($config),
+                'service' => __METHOD__,
+            ]);
+        }
+
+        return new ShieldAuth($config);
+    }
+
     public static function authentication(string $lib = 'local', ?\CodeIgniter\Model $userModel = null, ?\CodeIgniter\Model $loginModel = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('authentication');
         }
 
-        $config = config('Auth');
+        $config = config(\App\Legacy\Auth\Config\Auth::class);
         $debugEnabled = (bool) ($config->debug ?? false);
         if ($debugEnabled) {
             log_message('debug', '[AUTH_VIEW] Resolving authentication service', [

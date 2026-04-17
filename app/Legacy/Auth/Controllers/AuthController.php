@@ -41,7 +41,7 @@ class AuthController extends BaseController
         // the session to be started - so fire it up!
         $this->session = service('session');
 
-        $this->config = config('Auth');
+        $this->config = config(\App\Legacy\Auth\Config\Auth::class);
         $this->auth   = service('authentication');
         $this->authLogger = new AuthLogger();
         $this->ipHistoryModel = model(UserIpHistoryModel::class);
