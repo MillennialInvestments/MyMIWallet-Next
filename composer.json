@@ -11,7 +11,7 @@
     },
     "require": {
         "codeigniter4/framework": "^4.0",
-        "codeigniter4/settings": "^3.0",
+        "codeigniter4/settings": "^2.3",
         "codeigniter4/shield": "^1.0",
         "deployed/myth-to-shield": "^1.0",
         "erusev/parsedown": "^1.7",
