@@ -23,6 +23,7 @@ class AuthController extends BaseController
     protected AuthLogger $authLogger;
     protected UserIpHistoryModel $ipHistoryModel;
     protected SupportTicketService $supportTicketService;
+    protected string $requestId = '';
 
     /**
      * @var AuthConfig
@@ -85,6 +86,10 @@ class AuthController extends BaseController
         ) {
             $this->rememberRedirectUrl($previous);
         }
+        $this->authLog('AUTH_VIEW', 'login_view', 'Rendering login view', [
+            'redirect_url' => $this->session->get('redirect_url'),
+            'is_authenticated' => $this->auth->check(),
+        ], 'info', __LINE__);
 
         service('eventTracker')->track('auth.login_view');
 
@@ -98,16 +103,31 @@ class AuthController extends BaseController
     public function attemptLogin()
     {
         helper('auth');
-        $requestId = (string) ($this->request->getHeaderLine('X-Request-Id') ?: bin2hex(random_bytes(6)));
-        $this->requestId = $requestId;
-        log_message('debug', '[AUTH_SUBMIT] attemptLogin reached', [
-            'request_id' => $requestId,
-            'method' => $this->request->getMethod(),
-            'uri' => (string) $this->request->getUri(),
-            'referer' => (string) $this->request->getServer('HTTP_REFERER'),
-            'post_keys' => array_keys($this->request->getPost() ?? []),
-            'has_csrf' => array_key_exists(csrf_token(), $this->request->getPost() ?? []),
-        ]);
+        $requestId = $this->ensureAuthRequestId();
+        $post = (array) ($this->request->getPost() ?? []);
+        $this->authLog('AUTH_LOGIN', 'entry', 'attemptLogin reached', [
+            'post_keys' => array_keys($post),
+            'has_password_field' => array_key_exists('password', $post),
+        ], 'info', __LINE__);
+
+        if (strtoupper($this->request->getMethod()) !== 'POST') {
+            $this->authLog('AUTH_FAIL', 'invalid_method', 'Non-POST login attempt blocked', [
+                'expected' => 'POST',
+                'actual' => strtoupper($this->request->getMethod()),
+                'redirect_target' => site_url('login'),
+            ], 'warning', __LINE__);
+            return redirect()->to(site_url('login'))
+                ->withInput()
+                ->with('error', 'Your request could not be processed. Please refresh the page and try again.');
+        }
+        if (! $this->isCsrfPresent()) {
+            $this->authLog('AUTH_FAIL', 'csrf_missing', 'Login request missing CSRF token', [
+                'redirect_target' => site_url('login'),
+            ], 'warning', __LINE__);
+            return redirect()->to(site_url('login'))
+                ->withInput()
+                ->with('error', 'Your request could not be processed. Please refresh the page and try again.');
+        }
 
         service('eventTracker')->track('auth.login_attempt', [
             'login_type' => $this->config->validFields === ['email'] ? 'email' : 'username',
@@ -125,6 +145,12 @@ class AuthController extends BaseController
 
         if (! $this->validate($rules)) {
             $errors = $this->validator->getErrors();
+            $this->authLog('AUTH_FAIL', 'validation_failed', 'Login validation failed', [
+                'identifier' => (string) ($this->request->getPost('login') ?? ''),
+                'validation_passed' => false,
+                'errors' => $errors,
+                'redirect_target' => site_url('login'),
+            ], 'notice', __LINE__);
             $this->forceSupportAlert(
                 'danger',
                 'Login validation failed',
@@ -139,7 +165,8 @@ class AuthController extends BaseController
             ]);
             return redirect()->to(site_url('login'))
                 ->withInput()
-                ->with('errors', $errors);
+                ->with('errors', $errors)
+                ->with('error', 'Your request could not be processed. Please refresh the page and try again.');
         }
 
         $login    = $this->request->getPost('login');
@@ -147,6 +174,32 @@ class AuthController extends BaseController
         $remember = (bool) $this->request->getPost('remember');
         $ip = $this->request->getIPAddress();
         $ua = (string) $this->request->getUserAgent();
+        $type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $identifier = (string) $login;
+        $users = model(UserModel::class);
+        $userRecord = $users->where($type, $identifier)->first();
+        $userFound = $userRecord !== null;
+        $isInactive = (int) ($userRecord->active ?? 0) !== 1;
+        $isBanned = (int) ($userRecord->banned ?? 0) === 1 || (int) ($userRecord->is_banned ?? 0) === 1;
+        $hasActivateHash = ! empty($userRecord?->activate_hash);
+        $passwordVerifyFailed = false;
+
+        if ($userFound && isset($userRecord->password_hash)) {
+            $passwordVerifyFailed = ! password_verify((string) $password, (string) $userRecord->password_hash);
+        }
+
+        $this->authLog('AUTH_LOGIN', 'pre_attempt', 'Prepared credentials and user lookup', [
+            'identifier' => $identifier,
+            'identifier_type' => $type,
+            'validation_passed' => true,
+            'user_found' => $userFound,
+            'user_id' => $userRecord->id ?? null,
+            'is_inactive' => $isInactive,
+            'is_banned' => $isBanned,
+            'has_activation_hash' => $hasActivateHash,
+            'password_verify_failed' => $passwordVerifyFailed,
+            'remember' => $remember,
+        ], 'info', __LINE__);
 
         $this->authLogger->logLoginAttempt((string) $login, $ip, $ua);
         $this->ipHistoryModel->record(null, filter_var($login, FILTER_VALIDATE_EMAIL) ? (string) $login : null, $ip, $ua);
@@ -169,7 +222,6 @@ class AuthController extends BaseController
             'Auth attemptLogin() called. redirect_url in session: ' . (session('redirect_url') ?? 'none')
         );
 
-        $type        = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         $credentials = [
             $type      => $login,
             'password' => $password,
@@ -183,6 +235,11 @@ class AuthController extends BaseController
         try {
             $attempt = $this->auth->attempt($credentials, $remember);
         } catch (Throwable $e) {
+            $this->authLog('AUTH_FAIL', 'exception', 'Authentication attempt threw exception', [
+                'identifier' => $identifier,
+                'exception' => $e->getMessage(),
+                'redirect_target' => site_url('login'),
+            ], 'error', __LINE__);
             $context = [
                 'email_entered' => filter_var($login, FILTER_VALIDATE_EMAIL) ? (string) $login : null,
                 'user_id' => null,
@@ -214,18 +271,45 @@ class AuthController extends BaseController
 
             return redirect()->to(site_url('login'))
                 ->withInput()
-                ->with('errors', ['login' => 'A login system error occurred.']);
+                ->with('errors', ['login' => 'A login system error occurred.'])
+                ->with('error', 'Your request could not be processed. Please refresh the page and try again.');
         }
 
         // 🔴 AUTH ATTEMPT
         if (! $attempt) {
+            $errorMsg = $this->auth->error() ?? lang('Auth.badAttempt');
+            $inactiveMessage = lang('Auth.notActivated');
+            $message = 'Login failed. Please verify your email/username and password.';
+            $branch = 'unknown_failure';
+            if (! $userFound) {
+                $branch = 'user_not_found';
+            } elseif ($passwordVerifyFailed) {
+                $branch = 'password_verify_failed';
+                $this->authLog('AUTH_FAIL', 'password_verify_failed', 'Password verify failed', [
+                    'identifier' => $identifier,
+                    'user_id' => $userRecord->id ?? null,
+                ], 'notice', __LINE__);
+            } elseif ($isBanned) {
+                $branch = 'banned';
+                $message = 'Your account is currently restricted. Please contact support.';
+            } elseif ($isInactive || $errorMsg === $inactiveMessage || stripos($errorMsg, 'not activated') !== false) {
+                $branch = 'inactive_or_unactivated';
+                $message = 'Your account is not activated yet. Please activate your account to continue.';
+            }
+            $this->authLog('AUTH_FAIL', $branch, 'Login attempt denied', [
+                'identifier' => $identifier,
+                'identifier_type' => $type,
+                'user_found' => $userFound,
+                'password_verify_failed' => $passwordVerifyFailed,
+                'is_banned' => $isBanned,
+                'is_inactive' => $isInactive,
+                'auth_error' => $errorMsg,
+                'redirect_target' => site_url('login'),
+            ], 'notice', __LINE__);
             log_message('notice', '[AUTH_FAILURE] login attempt denied', [
                 'login' => (string) $login,
                 'ip' => $ip,
             ]);
-            // LocalAuthenticator exposes `error()` (single last error message)
-            $errorMsg = $this->auth->error() ?? lang('Auth.badAttempt');
-            $inactiveMessage = lang('Auth.notActivated');
 
             log_message(
                 'debug',
@@ -236,7 +320,7 @@ class AuthController extends BaseController
                 )
             );
 
-            if ($errorMsg === $inactiveMessage || stripos($errorMsg, 'not activated') !== false) {
+            if ($branch === 'inactive_or_unactivated') {
                 service('eventTracker')->track('auth.login_inactive', [
                     'reason' => 'inactive',
                 ]);
@@ -275,7 +359,8 @@ class AuthController extends BaseController
 
             return redirect()->to(site_url('login'))
                 ->withInput()
-                ->with('errors', ['login' => $errorMsg]);
+                ->with('errors', ['login' => $errorMsg ?: $message])
+                ->with('error', $message);
         }
 
         // ✅ SUCCESS: secure the user identity for the rest of the app
@@ -324,6 +409,11 @@ class AuthController extends BaseController
             $this->ipHistoryModel->record((int) $userId, $authUser?->email ?? null, $ip, $ua);
             $this->clearUserCacheKeys((int) $userId);
             service('eventTracker')->track('auth.login_success', [], (int) $userId);
+            $this->authLog('AUTH_SUCCESS', 'login_success', 'Login successful', [
+                'identifier' => $identifier,
+                'user_id' => (int) $userId,
+                'redirect_target' => $this->session->get('redirect_url') ?? $this->dashboardUrl(),
+            ], 'info', __LINE__);
             log_message('info', '[AUTH] Login success', [
                 'user_id'    => (int) $userId,
                 'session_id' => session_id(),
@@ -375,8 +465,13 @@ class AuthController extends BaseController
         }
 
         $this->session->regenerate(true);
-
-        return $this->redirectAfterLogin()->withCookies();
+        $destination = $this->determineRedirectDestination();
+        $this->authLog('AUTH_SUCCESS', 'redirect', 'Login redirect resolved', [
+            'identifier' => $identifier,
+            'user_id' => $userId,
+            'redirect_target' => $destination,
+        ], 'info', __LINE__);
+        return redirect()->to($destination)->withCookies();
 
     }
 
@@ -494,6 +589,11 @@ class AuthController extends BaseController
             'registrationAttribution' => $attribution,
             'registrationSourceContent' => $registrationSourceContent,
         ];
+        $this->authLog('AUTH_VIEW', 'register_view', 'Rendering register view', [
+            'allow_registration' => $this->config->allowRegistration,
+            'source_channel' => $attribution['source_channel'] ?? 'direct',
+            'view_slug' => $attribution['view_slug'] ?? 'Free',
+        ], 'info', __LINE__);
 
         log_message('debug', '[AUTH_REGISTER] register() render payload prepared', [
             'view' => $this->config->views['register'] ?? 'Auth/register',
@@ -571,17 +671,29 @@ class AuthController extends BaseController
     // }
     public function attemptRegister()
     {
-        $requestId = (string) ($this->request->getHeaderLine('X-Request-Id') ?: bin2hex(random_bytes(6)));
-        $this->requestId = $requestId;
+        $requestId = $this->ensureAuthRequestId();
+        if (strtoupper($this->request->getMethod()) !== 'POST') {
+            $this->authLog('AUTH_FAIL', 'register_invalid_method', 'Non-POST register attempt blocked', [
+                'expected' => 'POST',
+                'actual' => strtoupper($this->request->getMethod()),
+                'redirect_target' => site_url('register'),
+            ], 'warning', __LINE__);
+            return redirect()->to(site_url('register'))
+                ->withInput()
+                ->with('error', 'Your request could not be processed. Please refresh the page and try again.');
+        }
+        if (! $this->isCsrfPresent()) {
+            $this->authLog('AUTH_FAIL', 'register_csrf_missing', 'Register request missing CSRF token', [
+                'redirect_target' => site_url('register'),
+            ], 'warning', __LINE__);
+            return redirect()->to(site_url('register'))
+                ->withInput()
+                ->with('error', 'Your request could not be processed. Please refresh the page and try again.');
+        }
 
-        log_message('debug', '[AUTH_SUBMIT] attemptRegister reached', [
-            'request_id' => $requestId,
-            'method' => $this->request->getMethod(),
-            'uri' => (string) $this->request->getUri(),
-            'referer' => (string) $this->request->getServer('HTTP_REFERER'),
+        $this->authLog('AUTH_REGISTER', 'entry', 'attemptRegister reached', [
             'post_keys' => array_keys($this->request->getPost() ?? []),
-            'has_csrf' => array_key_exists(csrf_token(), $this->request->getPost() ?? []),
-        ]);
+        ], 'info', __LINE__);
 
         $this->ipHistoryModel->record(
             null,
@@ -637,6 +749,10 @@ class AuthController extends BaseController
 
         // Check if registration is allowed
         if (! $this->config->allowRegistration) {
+            $this->authLog('AUTH_FAIL', 'register_disabled', 'Registration blocked because registration is disabled', [
+                'email' => $email,
+                'redirect_target' => site_url('register'),
+            ], 'warning', __LINE__);
             $auditService->notifyRegistrationResult($email, 'failed', $request, null, $auditContext + [
                 'error' => lang('Auth.registerDisabled'),
             ]);
@@ -650,7 +766,7 @@ class AuthController extends BaseController
             ]);
 
             $this->forceSupportAlert('danger', 'Registration unavailable', lang('Auth.registerDisabled'), 'AUTH-REG-001', null, ['request_id' => $requestId]);
-            return redirect()->to(site_url('register'))->withInput()->with('errors', ['register' => lang('Auth.registerDisabled')]);
+            return redirect()->to(site_url('register'))->withInput()->with('errors', ['register' => lang('Auth.registerDisabled')])->with('error', 'Your request could not be processed. Please refresh the page and try again.');
         }
 
         $users = model(UserModel::class);
@@ -663,6 +779,11 @@ class AuthController extends BaseController
             ];
 
             if (! $this->validate($rules)) {
+                $this->authLog('AUTH_FAIL', 'register_validation_basic', 'Registration validation failed for basic fields', [
+                    'email' => $email,
+                    'errors' => $this->validator->getErrors(),
+                    'redirect_target' => site_url('register'),
+                ], 'notice', __LINE__);
                 $auditService->notifyRegistrationResult($email, 'failed', $request, null, $auditContext + [
                     'error' => json_encode($this->validator->getErrors()),
                 ]);
@@ -682,7 +803,7 @@ class AuthController extends BaseController
 
                 $errors = $this->validator->getErrors();
                 $this->forceSupportAlert('danger', 'Registration could not be completed', 'Please correct the highlighted fields and try again.', 'AUTH-REG-VALIDATION-001', null, ['errors' => $errors, 'request_id' => $requestId]);
-                return redirect()->to(site_url('register'))->withInput()->with('errors', $errors);
+                return redirect()->to(site_url('register'))->withInput()->with('errors', $errors)->with('error', 'Your request could not be processed. Please refresh the page and try again.');
             }
 
             log_message('info', '[REGISTRATION] Validation passed (basic fields)', [
@@ -696,6 +817,11 @@ class AuthController extends BaseController
             ];
 
             if (! $this->validate($rules)) {
+                $this->authLog('AUTH_FAIL', 'register_validation_password', 'Registration password validation failed', [
+                    'email' => $email,
+                    'errors' => $this->validator->getErrors(),
+                    'redirect_target' => site_url('register'),
+                ], 'notice', __LINE__);
                 $auditService->notifyRegistrationResult($email, 'failed', $request, null, $auditContext + [
                     'error' => json_encode($this->validator->getErrors()),
                 ]);
@@ -711,7 +837,7 @@ class AuthController extends BaseController
 
                 $errors = $this->validator->getErrors();
                 $this->forceSupportAlert('danger', 'Registration could not be completed', 'Please correct the highlighted fields and try again.', 'AUTH-REG-VALIDATION-001', null, ['errors' => $errors, 'request_id' => $requestId]);
-                return redirect()->to(site_url('register'))->withInput()->with('errors', $errors);
+                return redirect()->to(site_url('register'))->withInput()->with('errors', $errors)->with('error', 'Your request could not be processed. Please refresh the page and try again.');
             }
 
             log_message('info', '[REGISTRATION] Validation passed (password fields)', [
@@ -735,6 +861,11 @@ class AuthController extends BaseController
             }
 
             if (! $users->save($user)) {
+                $this->authLog('AUTH_FAIL', 'register_save_failed', 'User save failed during registration', [
+                    'email' => $email,
+                    'errors' => $users->errors(),
+                    'redirect_target' => site_url('register'),
+                ], 'error', __LINE__);
                 $auditService->notifyRegistrationResult($email, 'failed', $request, null, $auditContext + [
                     'error' => json_encode($users->errors()),
                 ]);
@@ -750,7 +881,7 @@ class AuthController extends BaseController
 
                 $errors = $users->errors();
                 $this->forceSupportAlert('danger', 'Registration failed', 'We could not create your account at this time.', 'AUTH-REG-SAVE-001', null, ['errors' => $errors, 'request_id' => $requestId]);
-                return redirect()->to(site_url('register'))->withInput()->with('errors', $errors);
+                return redirect()->to(site_url('register'))->withInput()->with('errors', $errors)->with('error', 'Your request could not be processed. Please refresh the page and try again.');
             }
 
             $newUserId       = (int) ($users->getInsertID() ?? 0);
@@ -803,6 +934,12 @@ class AuthController extends BaseController
                 $sent      = $activator->send($user);
 
                 if (! $sent) {
+                    $this->authLog('AUTH_FAIL', 'activation_send_failed', 'Activation email send failed', [
+                        'email' => $email,
+                        'user_id' => $newUserId,
+                        'activator_error' => $activator->error() ?? lang('Auth.unknownError'),
+                        'redirect_target' => site_url('register'),
+                    ], 'error', __LINE__);
                     $auditService->notifyRegistrationResult($email, 'failed', $request, null, $auditContext + [
                         'error' => $activator->error() ?? lang('Auth.unknownError'),
                     ]);
@@ -826,6 +963,11 @@ class AuthController extends BaseController
                     );
                     return redirect()->to(site_url('register'))->withInput()->with('errors', ['activation' => $activator->error() ?? lang('Auth.unknownError')]);
                 }
+                $this->authLog('AUTH_SUCCESS', 'register_success_activation_required', 'Registration successful with activation required', [
+                    'email' => $email,
+                    'user_id' => $newUserId,
+                    'redirect_target' => site_url('register/success'),
+                ], 'info', __LINE__);
 
                 $auditService->notifyRegistrationResult($email, 'success', $request, null, $auditContext);
                 service('eventTracker')->track('auth.activation_email_sent', [], $newUserId);
@@ -856,6 +998,11 @@ class AuthController extends BaseController
             }
 
             $auditService->notifyRegistrationResult($email, 'success', $request, null, $auditContext);
+            $this->authLog('AUTH_SUCCESS', 'register_success', 'Registration successful', [
+                'email' => $email,
+                'user_id' => $newUserId,
+                'redirect_target' => site_url('register/success'),
+            ], 'info', __LINE__);
 
             log_message('info', 'Registration redirecting to success guide for user_id={id}', ['id' => $newUserId]);
 
@@ -876,6 +1023,11 @@ class AuthController extends BaseController
                 'text' => $message,
             ]);
         } catch (Throwable $e) {
+            $this->authLog('AUTH_FAIL', 'register_exception', 'Exception during registration', [
+                'email' => $email,
+                'exception' => $e->getMessage(),
+                'redirect_target' => site_url('register'),
+            ], 'error', __LINE__);
             $auditService->notifyRegistrationResult($email, 'failed', $request, $e, $auditContext);
             service('eventTracker')->track('auth.register_fail', [
                 'reason' => 'exception',
@@ -894,7 +1046,7 @@ class AuthController extends BaseController
                 $e,
                 ['email' => $email, 'request_id' => $requestId]
             );
-            return redirect()->to(site_url('register'))->withInput();
+            return redirect()->to(site_url('register'))->withInput()->with('error', 'Your request could not be processed. Please refresh the page and try again.');
         }
     }
 
@@ -1856,6 +2008,78 @@ class AuthController extends BaseController
             'has_email' => array_key_exists('email', $post),
             'has_password' => array_key_exists('password', $post),
         ]);
+    }
+
+    public function authDiagnostics()
+    {
+        $auth = service('authentication');
+        $authClass = is_object($auth) ? $auth::class : gettype($auth);
+        $session = service('session');
+        $sessionClass = is_object($session) ? $session::class : gettype($session);
+        $authShape = [
+            'has_check' => is_object($auth) && method_exists($auth, 'check'),
+            'has_attempt' => is_object($auth) && method_exists($auth, 'attempt'),
+            'has_id' => is_object($auth) && method_exists($auth, 'id'),
+            'has_user' => is_object($auth) && method_exists($auth, 'user'),
+        ];
+        $csrfTokenName = null;
+        try {
+            $security = service('security');
+            if (is_object($security) && method_exists($security, 'getTokenName')) {
+                $csrfTokenName = $security->getTokenName();
+            }
+        } catch (Throwable $e) {
+            $csrfTokenName = null;
+        }
+
+        $payload = [
+            'ok' => true,
+            'request_id' => $this->ensureAuthRequestId(),
+            'auth_service_class' => $authClass,
+            'session_class' => $sessionClass,
+            'csrf_token_name' => $csrfTokenName,
+            'session_id' => session_id(),
+            'auth_shape' => $authShape,
+        ];
+        $this->authLog('AUTH_VIEW', 'diagnostic', 'Auth diagnostic endpoint called', $payload, 'info', __LINE__);
+
+        return $this->response->setJSON($payload);
+    }
+
+    private function authLog(string $prefix, string $branch, string $message, array $context = [], string $level = 'debug', ?int $line = null): void
+    {
+        if ($level === 'debug' && ! (bool) ($this->config->debug ?? false)) {
+            return;
+        }
+        $base = [
+            'prefix' => $prefix,
+            'branch' => $branch,
+            'file' => __FILE__,
+            'line' => $line,
+            'request_id' => $this->ensureAuthRequestId(),
+            'method' => strtoupper($this->request->getMethod()),
+            'uri' => (string) $this->request->getUri(),
+            'identifier' => (string) ($this->request->getPost('login') ?? $this->request->getPost('email') ?? ''),
+            'session_status' => session_status(),
+            'session_id' => session_id(),
+            'csrf_present' => $this->isCsrfPresent(),
+        ];
+        log_message($level, "[{$prefix}] {$message}", $base + $context);
+    }
+
+    private function isCsrfPresent(): bool
+    {
+        $post = (array) ($this->request->getPost() ?? []);
+        try {
+            $security = service('security');
+            $tokenName = (is_object($security) && method_exists($security, 'getTokenName'))
+                ? (string) $security->getTokenName()
+                : csrf_token();
+        } catch (Throwable $e) {
+            $tokenName = csrf_token();
+        }
+
+        return $tokenName !== '' && array_key_exists($tokenName, $post);
     }
 
     private function redirectToAuthFailure(string $context): RedirectResponse

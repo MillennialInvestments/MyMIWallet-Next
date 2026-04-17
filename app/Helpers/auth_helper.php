@@ -12,6 +12,12 @@ if (! function_exists('user_id')) {
         if (function_exists('auth')) {
             try {
                 $auth = auth();
+                if (is_object($auth) && method_exists($auth, 'id')) {
+                    $id = $auth->id();
+                    if ($id !== null) {
+                        return (int) $id;
+                    }
+                }
                 if (is_object($auth) && method_exists($auth, 'user')) {
                     $user = $auth->user();
                     if (is_object($user) && isset($user->id)) {

@@ -59,7 +59,7 @@
 						<div class="form-group">
 							<label for="login"><?=lang('Auth.email')?></label>
 							<input type="email" class="form-control <?php if (session('errors.login')) : ?>is-invalid<?php endif ?>"
-								   name="login" placeholder="<?=lang('Auth.email')?>">
+								   name="login" value="<?= esc(old('login')) ?>" placeholder="<?=lang('Auth.email')?>">
 							<div class="invalid-feedback">
 								<?= session('errors.login') ?>
 							</div>
@@ -68,7 +68,7 @@
 						<div class="form-group">
 							<label for="login"><?=lang('Auth.emailOrUsername')?></label>
 							<input type="text" class="form-control <?php if (session('errors.login')) : ?>is-invalid<?php endif ?>"
-								   name="login" placeholder="<?=lang('Auth.emailOrUsername')?>">
+								   name="login" value="<?= esc(old('login')) ?>" placeholder="<?=lang('Auth.emailOrUsername')?>">
 							<div class="invalid-feedback">
 								<?= session('errors.login') ?>
 							</div>

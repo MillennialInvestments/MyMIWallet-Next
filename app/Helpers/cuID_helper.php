@@ -45,7 +45,7 @@ if (!function_exists('getCuID')) {
                 }
                 if ($authHelper && method_exists($authHelper, 'user')) {
                     $user = $authHelper->user();
-                    $value = $user->id ?? null;
+                    $value = (is_object($user) && isset($user->id)) ? $user->id : null;
                     if (is_numeric($value) && (int) $value > 0) {
                         $cached = (int) $value;
                         return $cached;
@@ -67,7 +67,7 @@ if (!function_exists('getCuID')) {
             }
             if ($authService && method_exists($authService, 'user')) {
                 $user = $authService->user();
-                $value = $user->id ?? null;
+                $value = (is_object($user) && isset($user->id)) ? $user->id : null;
                 if (is_numeric($value) && (int) $value > 0) {
                     $cached = (int) $value;
                     return $cached;

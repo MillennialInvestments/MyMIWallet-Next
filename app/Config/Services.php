@@ -54,6 +54,15 @@ class Services extends CoreServices
         }
 
         $config = config('Auth');
+        $debugEnabled = (bool) ($config->debug ?? false);
+        if ($debugEnabled) {
+            log_message('debug', '[AUTH_VIEW] Resolving authentication service', [
+                'use_shield' => (bool) ($config->useShield ?? false),
+                'library' => $lib,
+                'file' => __FILE__,
+                'line' => __LINE__,
+            ]);
+        }
 
         if (($config->useShield ?? false) === true) {
             return \CodeIgniter\Shield\Config\Services::auth(false);
