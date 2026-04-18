@@ -283,6 +283,7 @@
         };
     };
 
+    window.MyMIDataTables = window.MyMIDataTables || {};
     window.MyMIDataTables.getOrCreate = window.getOrCreateDataTable;
     window.MyMIDataTables.rebuild = window.rebuildDataTableSafe;
     window.MyMIDataTables.init = window.initDataTableSafe;

@@ -2,7 +2,11 @@
 ?>
 <script src="<?= base_url('assets/vendor/datatables/1.11.5/js/jquery.dataTables.min.js'); ?>" <?= $nonce['script'] ?? '' ?>></script>
 <script src="<?= base_url('assets/vendor/datatables/1.11.5/js/dataTables.bootstrap5.min.js'); ?>" <?= $nonce['script'] ?? '' ?>></script>
-<script src="<?= base_url('assets/js/datatables-helper.js'); ?>" <?= $nonce['script'] ?? '' ?>></script>
+<?php
+$dataTablesHelperPath = FCPATH . 'assets/js/datatables-helper.js';
+$dataTablesHelperVersion = is_file($dataTablesHelperPath) ? filemtime($dataTablesHelperPath) : time();
+?>
+<script src="<?= base_url('assets/js/datatables-helper.js') . '?v=' . $dataTablesHelperVersion; ?>" <?= $nonce['script'] ?? '' ?>></script>
 <script <?= $nonce['script'] ?? '' ?>>
 $(document).ready(function() {
     if (!$.fn.DataTable.isDataTable('.defaultDTTable')) {

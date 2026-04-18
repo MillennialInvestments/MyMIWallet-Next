@@ -81,6 +81,7 @@
         <?= form_close(); ?>
     </div>
 </div>
+<?php if (ENVIRONMENT !== 'production'): ?>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('form');
@@ -93,3 +94,4 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 </script>
+<?php endif; ?>
