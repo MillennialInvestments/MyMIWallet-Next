@@ -69,6 +69,10 @@ class AuthController extends BaseController
      */
     public function login()
     {
+        if ($redirect = $this->cleanLoginQueryRedirect()) {
+            return $redirect;
+        }
+
         $isLoggedIn = $this->safeAuthCheck();
 
         if ($isLoggedIn) {
@@ -1815,6 +1819,62 @@ class AuthController extends BaseController
         }
 
         return $clean !== '' ? $clean : null;
+    }
+
+    protected function cleanLoginQueryRedirect(): ?RedirectResponse
+    {
+        $query = $this->request->getGet() ?? [];
+        if (! is_array($query) || $query === []) {
+            return null;
+        }
+
+        $trackingKeys = [
+            '_gl',
+            '_ga',
+            'gclid',
+            'fbclid',
+            'msclkid',
+            'utm_source',
+            'utm_medium',
+            'utm_campaign',
+            'utm_term',
+            'utm_content',
+        ];
+
+        $hasTracking = false;
+        foreach (array_keys($query) as $key) {
+            if (in_array($key, $trackingKeys, true) || str_starts_with((string) $key, '_ga_')) {
+                $hasTracking = true;
+                break;
+            }
+        }
+
+        if (! $hasTracking) {
+            return null;
+        }
+
+        $preserve = [];
+        $next = $this->sanitizeRedirectTarget(is_scalar($query['next'] ?? null) ? (string) $query['next'] : null);
+        $redirectUrl = $this->sanitizeRedirectTarget(is_scalar($query['redirect_url'] ?? null) ? (string) $query['redirect_url'] : null);
+
+        if ($next) {
+            $preserve['next'] = $next;
+        }
+        if ($redirectUrl) {
+            $preserve['redirect_url'] = $redirectUrl;
+        }
+
+        $target = site_url('login');
+        if ($preserve !== []) {
+            $target .= '?' . http_build_query($preserve);
+        }
+
+        log_message('debug', 'AuthController login cleaned tracking query params', [
+            'from' => (string) current_url(true),
+            'to'   => $target,
+        ]);
+
+        return redirect()->to($target);
     }
 
     private function isValidRedirectTarget(?string $url): bool

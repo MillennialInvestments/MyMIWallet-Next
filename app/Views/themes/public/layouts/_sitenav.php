@@ -8,7 +8,7 @@ $homeUrl = site_url('/');
 $featuresUrl = site_url('#features');
 $supportUrl = site_url('Support');
 $dashboardUrl = site_url('/Dashboard');
-$loginUrl = site_url('/login');
+$loginUrl = site_url('login');
 
 $brandImage = base_url('assets/images/MyMI-Wallet-Logo-White.png');
 $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto Asset Marketplace/Exchange';
@@ -65,7 +65,7 @@ $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto As
             <a href="<?= $dashboardUrl ?>" class="btn btn-primary text-white"><span>ACCOUNT</span></a>
             <a href="<?= site_url('/logout') ?>" class="btn btn-primary text-white"><span><em class="icon ni ni-signout"></em></span></a>
           <?php else: ?>
-            <a href="<?= $loginUrl ?>" class="btn btn-primary"><span>LOGIN</span></a>
+            <a href="<?= esc($loginUrl, 'attr') ?>" class="btn btn-primary"><span>LOGIN</span></a>
           <?php endif; ?>
         </li>
       </ul>

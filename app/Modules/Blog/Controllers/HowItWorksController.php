@@ -59,7 +59,15 @@ class HowItWorksController extends UserController
     {
         parent::initController($request, $response, $logger);
 
-        $this->auth         = service('authentication');
+        try {
+            $this->auth = service('authentication');
+        } catch (\Throwable $e) {
+            log_message('error', 'HowItWorksController auth bootstrap failed: {message}', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+            $this->auth = null;
+        }
         $this->request      = service('request');
         $this->session      = Services::session();
         $this->uri          = $this->request->getUri();
@@ -71,7 +79,9 @@ class HowItWorksController extends UserController
         $this->subscribeModel = new SubscribeModel();
         $this->userModel = new UserModel();
 
-        $this->cuID = $this->auth->id() ?? $this->session->get('user_id');
+        $this->cuID = ($this->auth && method_exists($this->auth, 'id'))
+            ? ($this->auth->id() ?? $this->session->get('user_id'))
+            : $this->session->get('user_id');
 
         $this->myMIGold = service('myMIGold') ?: (class_exists(MyMIGold::class) ? new MyMIGold() : null);
 
