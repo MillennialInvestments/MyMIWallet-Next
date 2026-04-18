@@ -22,7 +22,11 @@ $subViewData = $subViewData ?? [];
 
 <?php // 3) Theme base (defines NioApp) BEFORE any code that requires it ?>
 <script src="<?= base_url('assets/js/scripts.js'); ?>" <?= $scriptNonceAttr ?> defer></script>
-<script src="<?= base_url('assets/js/datatables-helper.js'); ?>" <?= $scriptNonceAttr ?> defer></script>
+<?php
+$dataTablesHelperPath = FCPATH . 'assets/js/datatables-helper.js';
+$dataTablesHelperVersion = is_file($dataTablesHelperPath) ? filemtime($dataTablesHelperPath) : time();
+?>
+<script src="<?= base_url('assets/js/datatables-helper.js') . '?v=' . $dataTablesHelperVersion; ?>" <?= $scriptNonceAttr ?> defer></script>
 <script <?= $scriptNonceAttr ?>>
   window.MYMI_DEBUG_SIDEBAR = <?= $debugSidebar ? 'true' : 'false' ?>;
 </script>
