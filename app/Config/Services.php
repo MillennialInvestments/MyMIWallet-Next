@@ -28,10 +28,9 @@ use App\Services\Scanning\Providers\AlphaVantageProvider as ScannerAlphaVantageP
 use App\Services\Scanning\Providers\FinnhubProvider;
 use App\Services\Scanning\Providers\ProviderRouter;
 use App\Services\Scanning\Providers\StooqProvider;
+use App\Auth\CompatAuthAdapter;
 use Config\Cache;
 use CodeIgniter\Config\Services as CoreServices;
-use CodeIgniter\Shield\Auth as ShieldAuth;
-use CodeIgniter\Shield\Config\Auth as ShieldAuthConfig;
 use function is_ci;
 
 /**
@@ -50,30 +49,17 @@ use function is_ci;
 class Services extends CoreServices
 {
     /**
-     * Shield auth service override.
+     * Compatibility auth() service for legacy Shield helper consumers.
      *
-     * Important: this app keeps a legacy Config\Auth class for Myth/Auth
-     * migration support. Shield's default service resolves config(\App\Legacy\Auth\Config\Auth::class),
-     * which causes a type mismatch. We resolve Shield's own config class
-     * explicitly to prevent boot-time TypeErrors.
+     * Runtime auth is Myth/Auth in this application.
      */
-    public static function auth(bool $getShared = true): ShieldAuth
+    public static function auth(bool $getShared = true): CompatAuthAdapter
     {
         if ($getShared) {
             return static::getSharedInstance('auth');
         }
 
-        /** @var ShieldAuthConfig $config */
-        $config = config(ShieldAuthConfig::class);
-
-        if (ENVIRONMENT === 'development') {
-            log_message('debug', '[AUTH_RESOLUTION] Shield auth service initialized', [
-                'config_class' => get_class($config),
-                'service' => __METHOD__,
-            ]);
-        }
-
-        return new ShieldAuth($config);
+        return new CompatAuthAdapter(static::authentication('local', null, null, false));
     }
 
     public static function authentication(
@@ -82,16 +68,16 @@ class Services extends CoreServices
         ?\CodeIgniter\Model $loginModel = null,
         bool $getShared = true
     ) {
-        if ($getShared) {
-            return static::getSharedInstance('authentication', $lib, $userModel, $loginModel);
-        }
-
         if ($lib === '') {
             $lib = 'local';
         }
 
+        if ($getShared) {
+            return static::getSharedInstance('authentication', $lib, $userModel, $loginModel);
+        }
+
         return new \Myth\Auth\Authentication\LocalAuthenticator(
-            config('Auth'),
+            config(\App\Legacy\Auth\Config\Auth::class),
             $userModel ?? model(\Myth\Auth\Models\UserModel::class),
             $loginModel ?? model(\Myth\Auth\Models\LoginModel::class),
             service('request'),

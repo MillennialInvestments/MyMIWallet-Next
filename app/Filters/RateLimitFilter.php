@@ -63,18 +63,15 @@ class RateLimitFilter implements FilterInterface
                 return ['authenticated' => true, 'source' => 'session'];
             }
 
-            if (function_exists('auth')) {
-                $auth = auth();
-
-                if ($auth && method_exists($auth, 'loggedIn') && $auth->loggedIn()) {
-                    if (ENVIRONMENT === 'development') {
-                        log_message('debug', '[AUTH_RESOLUTION] RateLimitFilter authenticated via Shield helper', [
-                            'uri' => (string) $request->getUri(),
-                        ]);
-                    }
-
-                    return ['authenticated' => true, 'source' => 'shield'];
+            $auth = service('authentication');
+            if ($auth && method_exists($auth, 'check') && $auth->check()) {
+                if (ENVIRONMENT === 'development') {
+                    log_message('debug', '[AUTH_RESOLUTION] RateLimitFilter authenticated via service(authentication)', [
+                        'uri' => (string) $request->getUri(),
+                    ]);
                 }
+
+                return ['authenticated' => true, 'source' => 'myth_auth'];
             }
 
             return ['authenticated' => false, 'source' => 'guest'];
