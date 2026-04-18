@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-04-15T07:00:02Z
+> Run: 2026-04-18T07:00:02Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -446,7 +446,11 @@
   - ❌ No obvious code match found (heuristic)
 - docs/APIs/reports/developer-20260412-121404-report.md
   - ❌ No obvious code match found (heuristic)
+- docs/APIs/reports/developer-webull-com-apis-docs-20260415-132825-integration-report.md
+  - ❌ No obvious code match found (heuristic)
 - docs/APIs/scraped/api-tradovate-com-20260412-111828-raw.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/scraped/developer-webull-com-apis-docs-20260415-132825-raw.md
   - ❌ No obvious code match found (heuristic)
 - docs/CRON.md
   - ❌ No obvious code match found (heuristic)
@@ -497,6 +501,8 @@
 - docs/_ops/filesystem-lint.md
   - ❌ No obvious code match found (heuristic)
 - docs/_ops/filesystem-trend.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_platform/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/_repo/README.md
   - ❌ No obvious code match found (heuristic)
@@ -668,6 +674,8 @@
   - ❌ No obvious code match found (heuristic)
 - docs/auth/registration_flow_audit.md
   - ❌ No obvious code match found (heuristic)
+- docs/auth_migration.md
+  - ❌ No obvious code match found (heuristic)
 - docs/automation/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/automation/ai_code_review.md
@@ -798,12 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/codex/reviews/review-2026-02-05.md
   - ❌ No obvious code match found (heuristic)
-- docs/codex/reviews/review-2026-02-08.md
-  - ❌ No obvious code match found (heuristic)
-- docs/codex/reviews/review-prompt-2026-01-31.md
-  - ❌ No obvious code match found (heuristic)
-- docs/codex/reviews/review-prompt-2026-02-01.md
-  - ❌ No obvious code match found (heuristic)
-- docs/codex/reviews/review-prompt-2026-02-05.md
-  - ❌ No obvious code match found (heuristic)
-- … and 1009 more
+- … and 1014 more

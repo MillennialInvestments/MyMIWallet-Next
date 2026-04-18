@@ -35,14 +35,35 @@ class Home extends BaseController
         parent::initController($request, $response, $logger);
 
         // Core services/settings
-        $this->auth        = service('authentication');
+        try {
+            $this->auth = service('authentication');
+        } catch (\Throwable $e) {
+            log_message('error', 'Home controller auth bootstrap failed: {message}', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+
+            $this->auth = null;
+        }
+
         $this->session     = service('session');
         $this->siteSettings = config('SiteSettings');
 
         // Resolve current user id (fallbacks preserved)
-        $this->cuID = $this->auth?->id()
-            ?? $this->session?->get('user_id')
-            ?? null;
+        $this->cuID = 0;
+
+        try {
+            if ($this->auth && method_exists($this->auth, 'id')) {
+                $this->cuID = $this->safeAuthId();
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'Home controller user id resolution failed: {message}', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+
+            $this->cuID = 0;
+        }
 
         // Lazy-initialize library/services if available
         $this->myMIAnalytics = class_exists(MyMIAnalytics::class) ? new MyMIAnalytics() : null;
@@ -61,31 +82,31 @@ class Home extends BaseController
      */
     protected function buildCommonData(array $overrides = []): array|ResponseInterface
     {
-        $buildStart = microtime(true);
-        $data = parent::commonData();
+        $buildStart             = microtime(true);
+        $data                   = parent::commonData();
         if ($data instanceof ResponseInterface) {
             return $data;
         }
 
         // Site + auth
-        $data['auth']        = $this->auth ?? service('authentication');
-        $data['siteSettings']= $this->siteSettings ?? config('SiteSettings');
-        $data['beta']        = (int)($data['siteSettings']->beta ?? 0);
+        $data['auth']           = $this->auth;
+        $data['siteSettings']   = $this->siteSettings ?? config('SiteSettings');
+        $data['beta']           = (int)($data['siteSettings']->beta ?? 0);
 
         // Current user quick info
-        $userAccount = [];
+        $userAccount            = [];
         try {
             if ($this->cuID && method_exists($this, 'getMyMIUser')) {
-                $userAccount = $this->getMyMIUser()->getUserInformation($this->cuID) ?? [];
+                $userAccount    = $this->getMyMIUser()->getUserInformation($this->cuID) ?? [];
             }
         } catch (\Throwable $e) {
             log_message('info', 'Home::buildCommonData - no user info: ' . $e->getMessage());
         }
-        $data['cuRole'] = $userAccount['cuRole'] ?? '';
-        $data['cuKYC']  = $userAccount['cuKYC']  ?? '';
+        $data['cuRole']         = $userAccount['cuRole'] ?? '';
+        $data['cuKYC']          = $userAccount['cuKYC']  ?? '';
 
         // Analytics counters
-        $reporting = [];
+        $reporting              = [];
         try {
             if ($this->myMIAnalytics) {
                 $reporting = $this->myMIAnalytics->reporting() ?? [];

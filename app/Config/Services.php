@@ -76,29 +76,56 @@ class Services extends CoreServices
         return new ShieldAuth($config);
     }
 
-    public static function authentication(string $lib = 'local', ?\CodeIgniter\Model $userModel = null, ?\CodeIgniter\Model $loginModel = null, bool $getShared = true)
-    {
+    public static function authentication(
+        string $lib = 'local',
+        ?\CodeIgniter\Model $userModel = null,
+        ?\CodeIgniter\Model $loginModel = null,
+        bool $getShared = true
+    ) {
         if ($getShared) {
-            return static::getSharedInstance('authentication');
+            return static::getSharedInstance('authentication', $lib, $userModel, $loginModel);
         }
 
-        $config = config(\App\Legacy\Auth\Config\Auth::class);
-        $debugEnabled = (bool) ($config->debug ?? false);
-        if ($debugEnabled) {
-            log_message('debug', '[AUTH_VIEW] Resolving authentication service', [
-                'use_shield' => (bool) ($config->useShield ?? false),
-                'library' => $lib,
-                'file' => __FILE__,
-                'line' => __LINE__,
-            ]);
+        if ($lib === '') {
+            $lib = 'local';
         }
 
-        if (($config->useShield ?? false) === true) {
-            return \CodeIgniter\Shield\Config\Services::auth(false);
-        }
-
-        return \Myth\Auth\Config\Services::authentication($lib, $userModel, $loginModel, false);
+        return new \Myth\Auth\Authentication\LocalAuthenticator(
+            config('Auth'),
+            $userModel ?? model(\Myth\Auth\Models\UserModel::class),
+            $loginModel ?? model(\Myth\Auth\Models\LoginModel::class),
+            service('request'),
+            service('response'),
+            service('session')
+        );
     }
+
+    // public static function authentication($lib = 'session', bool $getShared = true)
+    // {
+    //     if (is_bool($lib)) {
+    //         $getShared = $lib;
+    //         $lib = 'session';
+    //     }
+
+    //     if (! is_string($lib) || $lib === '') {
+    //         $lib = 'session';
+    //     }
+
+    //     if ($getShared) {
+    //         return static::getSharedInstance('authentication', $lib);
+    //     }
+
+    //     // Keep your existing underlying auth library here.
+    //     // If you already return a Myth/Auth authentication service, preserve that.
+    //     // Example:
+    //     return new \Myth\Auth\Authentication\LocalAuthenticator(
+    //         config('Auth'),
+    //         service('request'),
+    //         service('response'),
+    //         service('session'),
+    //         model(\Myth\Auth\Models\UserModel::class)
+    //     );
+    // }
 
     public static function cache(?Cache $config = null, bool $getShared = true)
     {

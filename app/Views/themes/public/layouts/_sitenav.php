@@ -1,7 +1,9 @@
 <?php
-$auth = service('authentication');
+$auth = null;
+$isLoggedIn = false;
+$authUser = null;
+$authUserId = null;
 
-$isLoggedIn = !empty($auth->check());
 $homeUrl = site_url('/');
 $featuresUrl = site_url('#features');
 $supportUrl = site_url('Support');

@@ -11,9 +11,9 @@ class AuthCheckFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        $auth = service('authentication');
+        $isAuthenticated = $this->safeAuthCheck();
 
-        if ($auth && $auth->check()) {
+        if ($isAuthenticated) {
             return null;
         }
 
@@ -39,6 +39,23 @@ class AuthCheckFilter implements FilterInterface
         return null;
     }
 
+    private function safeAuthCheck(): bool
+    {
+        try {
+            $auth = service('authentication');
+            if ($auth && method_exists($auth, 'check')) {
+                return (bool) $auth->check();
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'AuthCheckFilter safeAuthCheck failed: {message}', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+        }
+
+        return false;
+    }
+
     private function expectsJson(RequestInterface $request): bool
     {
         $accepts = strtolower($request->getHeaderLine('Accept'));
@@ -50,6 +67,6 @@ class AuthCheckFilter implements FilterInterface
             || str_starts_with($path, 'api/')
             || str_ends_with($path, '.js')
             || str_ends_with($path, '.mjs')
-            || method_exists($request, 'isAJAX') && $request->isAJAX();
+            || (method_exists($request, 'isAJAX') && $request->isAJAX());
     }
 }

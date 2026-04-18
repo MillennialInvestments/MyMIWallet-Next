@@ -1,8 +1,14 @@
 <?php
 use Config\Services;
-$auth = service('authentication');
+$auth = null;
+ = false;
+ = null;
+ = null;
 $session = service('session');
-// $this->auth   = service('authentication');
+// $this->auth   = null;
+ = false;
+ = null;
+ = null;
 $currentUserID = $session->get('user_id') ?? '';
 $currentUserRoleID = $session->get('user_role_id') ?? '';
 $currentUserEmail = $session->get('user_email') ?? '';
@@ -52,7 +58,7 @@ if (empty($cuID)) {
             <div class="col-auto">
                 <!-- Login Button specifically for mobile view -->
                 <?php 
-                    if (!empty($auth->check())) {
+                    if ($isLoggedIn) {
                         echo '
                             <a href="' . site_url('/Dashboard') . '" class="btn btn-primary d-md-none">
                                 <span>ACCOUNT</span>
@@ -93,7 +99,7 @@ if (empty($cuID)) {
                 </li>
                 <li class="nav-item intro-nav-item py-1 pl-lg-1">
                     <?php 
-                    if (!empty($auth->check())) {
+                    if ($isLoggedIn) {
                         echo '
                             <a href="' . site_url('/Dashboard') . '" class="btn btn-primary">
                                 <span>ACCOUNT</span>

@@ -122,7 +122,16 @@ abstract class BaseController extends Controller
 
         // Core boot
         $this->session      = Services::session();
-        $this->auth         = service('authentication');
+        try {
+            $this->auth = service('authentication');
+        } catch (\Throwable $e) {
+            log_message('critical', 'BaseController auth bootstrap failed: {message}', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+
+            $this->auth = null;
+        }
         $this->siteSettings = config('SiteSettings');
 
         // ✅ Apply runtime overrides AFTER boot (helpers + cache are live)
@@ -192,7 +201,7 @@ abstract class BaseController extends Controller
             'method' => $this->request->getMethod(),
             'controller' => static::class,
             'memory' => memory_get_usage(true),
-            'user_id' => function_exists('user_id') ? user_id() : null,
+            'user_id' => $this->safeAuthId() ?: null,
         ]);
     }
 
@@ -949,56 +958,18 @@ abstract class BaseController extends Controller
 
         // Shield helpers (available when shield is loaded)
         try {
-            if (function_exists('user_id')) {
-                $value = user_id();
-                if (is_numeric($value) && (int) $value > 0) {
-                    $candidates[] = (int) $value;
-                }
+            $value = $this->safeAuthId();
+            if ($value > 0) {
+                $candidates[] = $value;
             }
-        } catch (\Throwable $e) {
-            log_message('debug', 'resolveCurrentUserId user_id() lookup failed: ' . $e->getMessage());
-        }
 
-        try {
-            if (function_exists('auth')) {
-                $authHelper = auth();
-                if ($authHelper && method_exists($authHelper, 'id')) {
-                    $value = $authHelper->id();
-                    if (is_numeric($value) && (int) $value > 0) {
-                        $candidates[] = (int) $value;
-                    }
-                }
-                if ($authHelper && method_exists($authHelper, 'user')) {
-                    $user = $authHelper->user();
-                    $value = $user->id ?? null;
-                    if (is_numeric($value) && (int) $value > 0) {
-                        $candidates[] = (int) $value;
-                    }
-                }
+            $user = $this->safeAuthUser();
+            $value = $user->id ?? null;
+            if (is_numeric($value) && (int) $value > 0) {
+                $candidates[] = (int) $value;
             }
         } catch (\Throwable $e) {
-            log_message('debug', 'resolveCurrentUserId auth() lookup failed: ' . $e->getMessage());
-        }
-
-        try {
-            if (function_exists('service')) {
-                $authService = service('authentication');
-                if ($authService && method_exists($authService, 'id')) {
-                    $value = $authService->id();
-                    if (is_numeric($value) && (int) $value > 0) {
-                        $candidates[] = (int) $value;
-                    }
-                }
-                if ($authService && method_exists($authService, 'user')) {
-                    $user = $authService->user();
-                    $value = $user->id ?? null;
-                    if (is_numeric($value) && (int) $value > 0) {
-                        $candidates[] = (int) $value;
-                    }
-                }
-            }
-        } catch (\Throwable $e) {
-            log_message('debug', 'resolveCurrentUserId service("authentication") lookup failed: ' . $e->getMessage());
+            log_message('debug', 'resolveCurrentUserId safe auth lookup failed: ' . $e->getMessage());
         }
 
         foreach ($candidates as $candidate) {
@@ -1021,18 +992,15 @@ abstract class BaseController extends Controller
 
     protected function resolveUserId(): ?int
     {
-        // Myth/Auth style
         try {
-            $auth = service('authentication');
-            if ($auth && method_exists($auth, 'check') && $auth->check()) {
-                $id = $auth->id();
-                return is_numeric($id) ? (int) $id : null;
+            if ($this->safeAuthCheck()) {
+                $id = $this->safeAuthId();
+                return $id > 0 ? $id : null;
             }
         } catch (\Throwable $e) {
-            // ignore and fall through
+            log_message('debug', 'resolveUserId safe auth lookup failed: ' . $e->getMessage());
         }
 
-        // Session fallback
         $sid = session()->get('user_id') ?? session()->get('id');
         if (is_numeric($sid)) {
             return (int) $sid;
@@ -1625,4 +1593,68 @@ abstract class BaseController extends Controller
         $response->setHeader('Content-Security-Policy', implode('; ', $directives));
     }
 
+    protected function safeAuthService()
+    {
+        try {
+            return service('authentication');
+        } catch (\Throwable $e) {
+            log_message('error', 'BaseController safeAuthService failed: {message}', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+        }
+
+        return null;
+    }
+
+    protected function safeAuthCheck(): bool
+    {
+        try {
+            $auth = $this->auth ?? $this->safeAuthService();
+            if ($auth && method_exists($auth, 'check')) {
+                return (bool) $auth->check();
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'BaseController safeAuthCheck failed: {message}', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+        }
+
+        return false;
+    }
+
+    protected function safeAuthId(): int
+    {
+        try {
+            $auth = $this->auth ?? $this->safeAuthService();
+            if ($auth && method_exists($auth, 'id')) {
+                return (int) ($auth->id() ?? 0);
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'BaseController safeAuthId failed: {message}', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+        }
+
+        return 0;
+    }
+
+    protected function safeAuthUser()
+    {
+        try {
+            $auth = $this->auth ?? $this->safeAuthService();
+            if ($auth && method_exists($auth, 'user')) {
+                return $auth->user();
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'BaseController safeAuthUser failed: {message}', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+        }
+
+        return null;
+    }
 }

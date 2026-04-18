@@ -38,7 +38,8 @@
             "**/Database/Migrations/**",
             "app/_legacy/**",
             "app/.archive/**",
-            "app/Modules/**"
+            "app/Modules/**",
+            "app/Config/Myth/Auth/Registrar.php"
         ]
     },
     "autoload-dev": {

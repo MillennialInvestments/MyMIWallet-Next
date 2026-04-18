@@ -88,12 +88,24 @@ class MaintenanceModeFilter implements FilterInterface
         }
 
         try {
+            $isAuthenticated = false;
+            $user = null;
+
             $auth = service('authentication');
-            if ($auth && method_exists($auth, 'check') && $auth->check()) {
+            if ($auth && method_exists($auth, 'check')) {
+                $isAuthenticated = (bool) $auth->check();
+            }
+
+            if (! $isAuthenticated) {
+                return false;
+            }
+
+            if ($auth && method_exists($auth, 'user')) {
                 $user = $auth->user();
-                if ($user && method_exists($user, 'can') && $user->can('admin.access')) {
-                    return true;
-                }
+            }
+
+            if ($user && method_exists($user, 'can') && $user->can('admin.access')) {
+                return true;
             }
         } catch (\Throwable $e) {
             log_message('debug', 'MaintenanceModeFilter admin check skipped: ' . $e->getMessage());

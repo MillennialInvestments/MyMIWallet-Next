@@ -43,7 +43,16 @@ class AuthController extends BaseController
         $this->session = service('session');
 
         $this->config = config(\App\Legacy\Auth\Config\Auth::class);
-        $this->auth   = service('authentication');
+        try {
+            $this->auth = service('authentication');
+        } catch (\Throwable $e) {
+            log_message('error', 'AuthController initController auth bootstrap failed: {message}', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+
+            $this->auth = null;
+        }
         $this->authLogger = new AuthLogger();
         $this->ipHistoryModel = model(UserIpHistoryModel::class);
         $this->supportTicketService = new SupportTicketService();
@@ -60,9 +69,9 @@ class AuthController extends BaseController
      */
     public function login()
     {
-        // No need to show a login form if the user
-        // is already logged in.
-        if ($this->auth->check()) {
+        $isLoggedIn = $this->safeAuthCheck();
+
+        if ($isLoggedIn) {
             return $this->redirectAfterLogin();
         }
 
@@ -86,9 +95,10 @@ class AuthController extends BaseController
         ) {
             $this->rememberRedirectUrl($previous);
         }
+
         $this->authLog('AUTH_VIEW', 'login_view', 'Rendering login view', [
-            'redirect_url' => $this->session->get('redirect_url'),
-            'is_authenticated' => $this->auth->check(),
+            'redirect_url'      => $this->session->get('redirect_url'),
+            'is_authenticated'  => $isLoggedIn,
         ], 'info', __LINE__);
 
         service('eventTracker')->track('auth.login_view');
@@ -364,14 +374,24 @@ class AuthController extends BaseController
         }
 
         // ✅ SUCCESS: secure the user identity for the rest of the app
-        $loggedIn = function_exists('logged_in') ? logged_in() : $this->auth->check();
-        $userId   = null;
+        $loggedIn = $this->safeAuthCheck();
 
-        if (function_exists('user_id')) {
-            $userId = user_id();
-        } else {
-            $authUser = $this->auth->user();
-            $userId = $authUser?->id ?? null;
+        $userId = null;
+
+        $authUser = $this->safeAuthUser();
+        $userId   = $authUser?->id ?? null;
+
+        if (($userId === null || $userId <= 0) && function_exists('user_id')) {
+            try {
+                $userId = user_id();
+            } catch (\Throwable $e) {
+                log_message('error', 'AuthController user_id helper failed: {message}', [
+                    'message' => $e->getMessage(),
+                    'trace'   => $e->getTraceAsString(),
+                ]);
+
+                $userId = null;
+            }
         }
 
         log_message(
@@ -383,20 +403,20 @@ class AuthController extends BaseController
                 $userId ?? 'null'
             )
         );
+
         log_message(
             'debug',
             'Auth attempt succeeded. logged_in(): ' . ($loggedIn ? 'yes' : 'no')
-            . ', user_id(): ' . (function_exists('user_id') ? (user_id() ?? 'null') : 'helper-missing')
+            . ', resolved_user_id(): ' . ($userId ?? 'null')
         );
 
         // 🔐 Expose the user ID into the session for cuID resolution
         if ($userId !== null && $userId > 0) {
             $this->session->set('user_id', (int) $userId);
 
-            $user = $this->auth->user();
-            if ($user) {
-                $this->session->set('user_email', $user->email ?? null);
-                $this->session->set('username', $user->username ?? null);
+            if ($authUser) {
+                $this->session->set('user_email', $authUser->email ?? null);
+                $this->session->set('username', $authUser->username ?? null);
             }
 
             log_message('debug', 'Auth attemptLogin() - session user_id set to: ' . $userId);
@@ -405,7 +425,7 @@ class AuthController extends BaseController
         }
 
         if ($userId !== null && $userId > 0) {
-            $authUser = $this->auth->user();
+            $authUser = $this->safeAuthUser();
             $this->ipHistoryModel->record((int) $userId, $authUser?->email ?? null, $ip, $ua);
             $this->clearUserCacheKeys((int) $userId);
             service('eventTracker')->track('auth.login_success', [], (int) $userId);
@@ -421,7 +441,7 @@ class AuthController extends BaseController
             ]);
         }
 
-        $user = $this->auth->user();
+        $user = $this->safeAuthUser();
         if ($user && (int) ($user->active ?? 0) === 1 && $userId !== null) {
             /** @var OnboardingProgressService $onboardingProgress */
             $onboardingProgress = service('onboardingProgressService');
@@ -443,7 +463,7 @@ class AuthController extends BaseController
         }
 
         // Force password reset branch
-        $authUser = $this->auth->user();
+        $authUser = $this->safeAuthUser();
         if ($authUser && $authUser->force_pass_reset === true) {
             return redirect()
                 ->to(route_to('reset-password') . '?token=' . $authUser->reset_hash)
@@ -475,20 +495,26 @@ class AuthController extends BaseController
 
     }
 
-
-
     /**
      * Log the user out.
      */
     public function logout()
     {
-        $userId = (int) ($this->session->get('user_id') ?? $this->auth->id() ?? 0);
+        $userId = (int) ($this->session->get('user_id') ?? 0);
+
         if ($userId > 0) {
             $this->clearUserCacheKeys($userId);
         }
 
-        if ($this->auth->check()) {
-            $this->auth->logout();
+        try {
+            if ($this->auth && method_exists($this->auth, 'logout')) {
+                $this->auth->logout();
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'AuthController logout failed: {message}', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
         }
 
         $this->session->destroy();
@@ -531,29 +557,34 @@ class AuthController extends BaseController
      */
     public function register()
     {
-        if ($this->auth->check()) {
+        $isLoggedIn = $this->safeAuthCheck();
+
+        if ($isLoggedIn) {
             return redirect()->to($this->dashboardUrl());
         }
 
         if (! $this->config->allowRegistration) {
             $this->setAuthMessage('danger', lang('Auth.registerDisabled'));
+
             return redirect()->to(site_url('register'))
                 ->withInput()
                 ->with('errors', ['register' => lang('Auth.registerDisabled')]);
         }
 
         $request = $this->request;
-        $uri = $request->getUri();
+        $uri     = $request->getUri();
 
         /** @var RegistrationAttributionService $registrationAttribution */
         $registrationAttribution = service('registrationAttributionService');
-        $attribution = $registrationAttribution->resolve($request);
+        $attribution             = $registrationAttribution->resolve($request);
 
         $referralCode = (string) ($attribution['referral_slug'] ?? '');
+
         if ($referralCode !== '') {
             $this->session->set('referral_code', $referralCode);
+
             service('eventTracker')->track('referral.captured', [
-                'source' => $request->getGet('ref') ? 'query' : (($attribution['source_slug'] ?? null) ? 'dynamic-route' : 'segment'),
+                'source'  => $request->getGet('ref') ? 'query' : (($attribution['source_slug'] ?? null) ? 'dynamic-route' : 'segment'),
                 'channel' => $attribution['source_channel'] ?? 'direct',
             ]);
         } else {
@@ -564,44 +595,45 @@ class AuthController extends BaseController
 
         /** @var RegistrationSourceContentService $registrationSourceContentService */
         $registrationSourceContentService = service('registrationSourceContentService');
-        $registrationSourceContent = $registrationSourceContentService->resolve($attribution);
+        $registrationSourceContent        = $registrationSourceContentService->resolve($attribution);
 
         log_message('info', '[REGISTRATION] Form loaded', [
-            'referral_code' => $referralCode !== '' ? $referralCode : null,
+            'referral_code'  => $referralCode !== '' ? $referralCode : null,
             'source_channel' => $attribution['source_channel'] ?? 'direct',
-            'view_slug' => $attribution['view_slug'] ?? 'Free',
-            'campaign_code' => $attribution['campaign_code'] ?? null,
-            'ip' => $this->request->getIPAddress(),
+            'view_slug'      => $attribution['view_slug'] ?? 'Free',
+            'campaign_code'  => $attribution['campaign_code'] ?? null,
+            'ip'             => $this->request->getIPAddress(),
         ]);
 
         service('eventTracker')->track('auth.register_view', [
             'source_channel' => $attribution['source_channel'] ?? 'direct',
-            'view_slug' => $attribution['view_slug'] ?? 'Free',
-            'campaign_code' => $attribution['campaign_code'] ?? null,
+            'view_slug'      => $attribution['view_slug'] ?? 'Free',
+            'campaign_code'  => $attribution['campaign_code'] ?? null,
         ]);
 
         $renderData = [
-            'config' => $this->config,
-            'referralCode' => $referralCode !== '' ? $referralCode : null,
-            'siteSettings' => config('SiteSettings'),
-            'socialMedia' => config('SocialMedia'),
-            'uri' => $uri,
-            'registrationAttribution' => $attribution,
+            'config'                    => $this->config,
+            'referralCode'              => $referralCode !== '' ? $referralCode : null,
+            'siteSettings'              => config('SiteSettings'),
+            'socialMedia'               => config('SocialMedia'),
+            'uri'                       => $uri,
+            'registrationAttribution'   => $attribution,
             'registrationSourceContent' => $registrationSourceContent,
         ];
+
         $this->authLog('AUTH_VIEW', 'register_view', 'Rendering register view', [
             'allow_registration' => $this->config->allowRegistration,
-            'source_channel' => $attribution['source_channel'] ?? 'direct',
-            'view_slug' => $attribution['view_slug'] ?? 'Free',
+            'source_channel'     => $attribution['source_channel'] ?? 'direct',
+            'view_slug'          => $attribution['view_slug'] ?? 'Free',
         ], 'info', __LINE__);
 
         log_message('debug', '[AUTH_REGISTER] register() render payload prepared', [
-            'view' => $this->config->views['register'] ?? 'Auth/register',
-            'layout' => $renderData['layout'] ?? null,
-            'headerView' => $renderData['headerView'] ?? null,
-            'footerView' => $renderData['footerView'] ?? null,
-            'intro_view' => $registrationSourceContent['intro_view'] ?? null,
-            'source_layout' => $registrationSourceContent['layout'] ?? null,
+            'view'         => $this->config->views['register'] ?? 'Auth/register',
+            'layout'       => $renderData['layout'] ?? null,
+            'headerView'   => $renderData['headerView'] ?? null,
+            'footerView'   => $renderData['footerView'] ?? null,
+            'intro_view'   => $registrationSourceContent['intro_view'] ?? null,
+            'source_layout'=> $registrationSourceContent['layout'] ?? null,
         ]);
 
         return $this->_render($this->config->views['register'], $renderData);
@@ -1297,10 +1329,11 @@ class AuthController extends BaseController
 
     /**
      * Resolve User's Role if empty.
-     */private function resolveUserRole(): string
+     */
+    private function resolveUserRole(): string
     {
         try {
-            $user = $this->auth->user();
+            $user = $this->safeAuthUser();
 
             if (!$user) {
                 return session('role') ?? 'guest';
@@ -1712,6 +1745,38 @@ class AuthController extends BaseController
         }
     }
 
+    protected function safeAuthCheck(): bool
+    {
+        try {
+            if ($this->auth && method_exists($this->auth, 'check')) {
+                return (bool) $this->auth->check();
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'AuthController safeAuthCheck failed: {message}', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+        }
+
+        return false;
+    }
+
+    protected function safeAuthUser()
+    {
+        try {
+            if ($this->auth && method_exists($this->auth, 'user')) {
+                return $this->auth->user();
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'AuthController safeAuthUser failed: {message}', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+        }
+
+        return null;
+    }
+    
     protected function sanitizeRedirectTarget(?string $url): ?string
     {
         $url = is_string($url) ? trim($url) : '';
@@ -2012,8 +2077,21 @@ class AuthController extends BaseController
 
     public function authDiagnostics()
     {
-        $auth = service('authentication');
-        $authClass = is_object($auth) ? $auth::class : gettype($auth);
+        $auth = null;
+        $authClass = 'unavailable';
+
+        try {
+            $auth = service('authentication');
+            $authClass = is_object($auth) ? $auth::class : gettype($auth);
+        } catch (\Throwable $e) {
+            log_message('error', 'AuthController authDiagnostics auth bootstrap failed: {message}', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+
+            $auth = null;
+            $authClass = 'unavailable';
+        }
         $session = service('session');
         $sessionClass = is_object($session) ? $session::class : gettype($session);
         $authShape = [

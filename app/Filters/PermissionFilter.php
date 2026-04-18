@@ -17,8 +17,9 @@ class PermissionFilter extends BaseFilter implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        // Ensure authentication service exists and user is logged in
-        if (! isset($this->authenticate) || ! $this->authenticate->check()) {
+        $isAuthenticated = $this->safeAuthenticateCheck();
+
+        if (! $isAuthenticated) {
             session()->set('redirect_url', current_url());
             return redirect($this->reservedRoutes['login']);
         }
@@ -27,18 +28,28 @@ class PermissionFilter extends BaseFilter implements FilterInterface
             return;
         }
 
-        // 🔒 Harden: ensure authorization service exists
         if (! isset($this->authorize)) {
             throw new \RuntimeException('Authorization service not initialized.');
         }
 
-        $userId = $this->authenticate->id();
+        $userId = $this->safeAuthenticateId();
 
-        // Fail fast instead of cumulative boolean tracking
         foreach ($arguments as $permission) {
             if (! $this->authorize->hasPermission($permission, $userId)) {
+                $isSilent = false;
 
-                if ($this->authenticate->silent()) {
+                try {
+                    $isSilent = $this->authenticate && method_exists($this->authenticate, 'silent')
+                        ? (bool) $this->authenticate->silent()
+                        : false;
+                } catch (\Throwable $e) {
+                    log_message('error', 'PermissionFilter silent check failed: {message}', [
+                        'message' => $e->getMessage(),
+                        'trace'   => $e->getTraceAsString(),
+                    ]);
+                }
+
+                if ($isSilent) {
                     $redirectURL = session('redirect_url') ?? route_to($this->landingRoute);
                     unset($_SESSION['redirect_url']);
 
@@ -52,18 +63,42 @@ class PermissionFilter extends BaseFilter implements FilterInterface
         }
     }
 
-
     /**
-     * Allows After filters to inspect and modify the response
-     * object as needed. This method does not allow any way
-     * to stop execution of other after filters, short of
-     * throwing an Exception or Error.
-     *
      * @param array|null $arguments
-     *
-     * @return void
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
+    }
+
+    private function safeAuthenticateCheck(): bool
+    {
+        try {
+            if (isset($this->authenticate) && $this->authenticate && method_exists($this->authenticate, 'check')) {
+                return (bool) $this->authenticate->check();
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'PermissionFilter safeAuthenticateCheck failed: {message}', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+        }
+
+        return false;
+    }
+
+    private function safeAuthenticateId(): int
+    {
+        try {
+            if (isset($this->authenticate) && $this->authenticate && method_exists($this->authenticate, 'id')) {
+                return (int) ($this->authenticate->id() ?? 0);
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'PermissionFilter safeAuthenticateId failed: {message}', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+        }
+
+        return 0;
     }
 }
