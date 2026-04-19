@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <?php endif; ?>
 
 <?php if ($showSetupBanner): ?>
-<div class="alert alert-info d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4" data-setup-banner="dashboard">
+<div class="alert alert-info d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 p-5 mb-4" data-setup-banner="dashboard">
     <div>
         <strong>Continue setup</strong>
         <div class="small text-muted">Complete your onboarding checklist to unlock personalized budget and investment insights.</div>
