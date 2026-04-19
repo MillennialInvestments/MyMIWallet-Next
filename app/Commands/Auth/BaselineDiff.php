@@ -44,7 +44,14 @@ class BaselineDiff extends SafeBaseCommand
             CLI::write('- ' . $key, 'yellow');
         }
 
-        CLI::write('Route drift: ' . (($diff['route_drift'] ?? false) ? 'YES' : 'NO'));
+        $routeDrift = $diff['route_drift'] ?? ['changed' => false, 'added' => [], 'missing' => []];
+        CLI::write('Route drift: ' . (($routeDrift['changed'] ?? false) ? 'YES' : 'NO'));
+        foreach (($routeDrift['added'] ?? []) as $route) {
+            CLI::write('- added: ' . $route, 'yellow');
+        }
+        foreach (($routeDrift['missing'] ?? []) as $route) {
+            CLI::write('- missing: ' . $route, 'red');
+        }
 
         CLI::write('Package drift: ' . count($diff['package_drift'] ?? []));
         foreach (array_keys($diff['package_drift'] ?? []) as $pkg) {
@@ -55,7 +62,7 @@ class BaselineDiff extends SafeBaseCommand
             || ! empty($diff['missing_files'])
             || ! empty($diff['env_drift'])
             || ! empty($diff['package_drift'])
-            || (($diff['route_drift'] ?? false) === true);
+            || (($routeDrift['changed'] ?? false) === true);
 
         return $hasDrift ? EXIT_ERROR : EXIT_SUCCESS;
     }
