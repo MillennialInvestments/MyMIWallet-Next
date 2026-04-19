@@ -4,6 +4,7 @@ namespace App\Commands\Docs\Generate;
 
 use App\Commands\SafeBaseCommand;
 use App\Services\Docs\DocsRendererService;
+use App\Services\Docs\FormInventoryScanner;
 use CodeIgniter\CLI\CLI;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -14,8 +15,14 @@ class KnowledgeGraph extends SafeBaseCommand
     protected $name = 'docs:generate-knowledge-graph';
     protected $description = 'Generate docs/_knowledge_graph.json linking docs, views, routes, controllers, services, and health scans.';
 
+    protected $options = [
+        '--with-forms' => 'Include form inventory nodes and formRelationships in docs/_knowledge_graph.json.',
+    ];
+
     public function run(array $params)
     {
+        [, $flags] = $this->parseParams($params);
+
         $docs = $this->scanDocs();
         $views = $this->scanViews();
         $routes = $this->scanRoutes();
@@ -31,6 +38,8 @@ class KnowledgeGraph extends SafeBaseCommand
             'controllers' => $controllers,
             'services' => $services,
             'relationships' => $relationships,
+            'forms' => [],
+            'formRelationships' => [],
             'health' => [
                 'orphanRoutesFile' => 'docs/_orphan_routes.json',
                 'orphanViewsFile' => 'docs/_orphan_views.json',
@@ -41,10 +50,20 @@ class KnowledgeGraph extends SafeBaseCommand
             ],
         ];
 
+
+        if (isset($flags['with-forms'])) {
+            $formInventory = (new FormInventoryScanner())->scan([
+                'with_js' => true,
+                'with_controller_analysis' => true,
+            ]);
+            $graph['forms'] = $formInventory['forms'] ?? [];
+            $graph['formRelationships'] = $formInventory['formRelationships'] ?? [];
+        }
+
         file_put_contents(ROOTPATH . 'docs/_knowledge_graph.json', json_encode($graph, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 
         CLI::write('Knowledge graph generated: docs/_knowledge_graph.json', 'green');
-        CLI::write(sprintf('docs=%d views=%d routes=%d controllers=%d services=%d relationships=%d', count($docs), count($views), count($routes), count($controllers), count($services), count($relationships)));
+        CLI::write(sprintf('docs=%d views=%d routes=%d controllers=%d services=%d relationships=%d forms=%d formRelationships=%d', count($docs), count($views), count($routes), count($controllers), count($services), count($relationships), count($graph['forms'] ?? []), count($graph['formRelationships'] ?? [])));
     }
 
     private function scanDocs(): array
