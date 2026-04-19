@@ -845,8 +845,8 @@
             "mtime": "2026-04-12"
         },
         "docs/audit/auth_audit_last_run.md": {
-            "hash": "472cfeb76524b2639658a41f815fcc3b0b08abef95bd57247377debad1790894",
-            "mtime": "2026-04-17"
+            "hash": "1298982982678bc623fc33e25137ae8fd44b03d9138fa029daab66ad6f065174",
+            "mtime": "2026-04-19"
         },
         "docs/audit/news_audit_last_run.md": {
             "hash": "2b7c9d468bb9e0e7d9eb439a95fed627ff46bf8d07c5b8abbb55e5df9fd36db8",
@@ -5723,7 +5723,75 @@
         "docs/inventory.md": {
             "hash": "15ae99dec91a5b6405e990655fcf89aa82ca9371cf55da1318063e8f290c22ea",
             "mtime": "2026-04-17"
+        },
+        "docs/_tmp/auth-debug/auth-audit-resolution-2026-04-19.md": {
+            "hash": "93e467f8c8928633829edd41fba377cab2bb5bd9c936ce0f79ed9598eefc3a9b",
+            "mtime": "2026-04-19"
+        },
+        "docs/_tmp/resolution/auth/redirect-url-auth.resolution.md": {
+            "hash": "712e2b270c3280f338a188f4d10518fa97965e678f29e52190327d48c4a04858",
+            "mtime": "2026-04-19"
+        },
+        "docs/_tmp/resolution/auth/redirect-url-readers.resolution.md": {
+            "hash": "ab87926097ee5f0ef3d97232f54d5a671d3e1d9ca90cb5118102e05797db6827",
+            "mtime": "2026-04-19"
+        },
+        "docs/_tmp/resolution/auth/redirect-url-writers.resolution.md": {
+            "hash": "507791d84cc04805f23c17fcd80efa4406be5c93d3db4374d2da2decb2058af6",
+            "mtime": "2026-04-19"
+        },
+        "docs/_tmp/resolution/frontend/auth-js-hooks.resolution.md": {
+            "hash": "2ad1cca27db34deadffc0e60719d32500a89ad0ee2ed5d4a37143ace1d290ff2",
+            "mtime": "2026-04-19"
+        },
+        "docs/_tmp/resolution/frontend/js-submit-redirect-public.resolution.md": {
+            "hash": "876cfa1993e6e93a6c89f357ec364105fe6a7747d6164dadab820c8676de4a0e",
+            "mtime": "2026-04-19"
+        },
+        "docs/_tmp/resolution/frontend/js-submit-redirect-views.resolution.md": {
+            "hash": "dd36360f0ce3150755e458b5dbcc17b4ab00164d1cb4ddd3dd2b3be8074c749a",
+            "mtime": "2026-04-19"
+        },
+        "docs/_tmp/resolution/frontend/js-submit-redirect.resolution.md": {
+            "hash": "db730788d48755bc6d9b4490529f74ee4a0c539cd5bd915e4550839724a286db",
+            "mtime": "2026-04-19"
+        },
+        "docs/_tmp/resolution/frontend/login-form-hooks.resolution.md": {
+            "hash": "670ee4c1f0ce28ef1fb826d7f25c331720a318d8800af4e3c9b6e01d83f17fad",
+            "mtime": "2026-04-19"
+        },
+        "docs/_tmp/resolution/frontend/register-form-hooks.resolution.md": {
+            "hash": "8052e2b4a6fd261455f1f2479305591d1d77c234504e418206db0c77f48c2cde",
+            "mtime": "2026-04-19"
+        },
+        "docs/_tmp/resolution/routes/auth-routes.resolution.md": {
+            "hash": "bddf9efea09422a8a8de08b11145c6b5da9aca3b231af73813e4f318da746644",
+            "mtime": "2026-04-19"
+        },
+        "docs/_tmp/resolution/routes/login-routes.resolution.md": {
+            "hash": "b5e0ed1d26e6c0f5ce60d186b41db2a12db8fe6f77b633738c9db262c9f11843",
+            "mtime": "2026-04-19"
+        },
+        "docs/_tmp/resolution/routes/register-routes.resolution.md": {
+            "hash": "81bb6a438dee18f98d3aa374d96833816ccfcf02b1acb553c81aa8bcb7ba99b1",
+            "mtime": "2026-04-19"
+        },
+        "docs/_tmp/resolution/routes/star-auth-surface.resolution.md": {
+            "hash": "9e505a046b5498ade670420d5d1436c79c08ef90fcec792c0959e982385351d3",
+            "mtime": "2026-04-19"
+        },
+        "docs/_tmp/resolution/routes/star-literal-auth.resolution.md": {
+            "hash": "e6a119250a48973c32249025c52ce0def9dfea85026608dc977c6575fafb0b5e",
+            "mtime": "2026-04-19"
+        },
+        "docs/_tmp/resolution/routes/star-routes-entry.resolution.md": {
+            "hash": "53f8dd05e518ce0f09bd28828423939ad17f0becccbe5a68eee2370c0587361a",
+            "mtime": "2026-04-19"
+        },
+        "docs/mobile/overlap-app.md": {
+            "hash": "257ec29d4f99570b727ff0b23d12f4547891f8bce9eb15c846d90ca1708180e0",
+            "mtime": "2026-04-19"
         }
     },
-    "last_run": "2026-04-18T07:00:02Z"
+    "last_run": "2026-04-19T07:00:02Z"
 }

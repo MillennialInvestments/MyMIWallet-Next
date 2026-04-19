@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-04-18T07:00:02Z
+> Run: 2026-04-19T07:00:02Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -71,6 +71,10 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/APIs/Controllers/MditWebhookAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/MobileAuthController.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Controllers/MobileController.php
+  - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/APIs/Controllers/OpsAPIController.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/APIs/Controllers/OpsPublicPagesAPIController.php
@@ -108,6 +112,8 @@
 - app/Modules/APIs/Models/MarketingNewsContentModel.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/APIs/Models/ScannerModel.php
+  - ⚠️ No obvious doc match found (heuristic)
+- app/Modules/APIs/Services/MobileAppService.php
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Admin/Controllers/BackupsController.php
   - ⚠️ No obvious doc match found (heuristic)
@@ -397,13 +403,7 @@
   - ⚠️ No obvious doc match found (heuristic)
 - app/Modules/Management/Views/API/Sophtron.php
   - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/API/Sophtron_Widget.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/add/user_fields.php
-  - ⚠️ No obvious doc match found (heuristic)
-- app/Modules/Management/Views/Alerts/batchEmailAudit.php
-  - ⚠️ No obvious doc match found (heuristic)
-- … and 1021 more
+- … and 1024 more
 
 ## Documented Items With No Obvious Code Match (best-effort)
 - docs/APIs/README.md
@@ -515,6 +515,38 @@
 - docs/_support/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/_support/aiops-init.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_tmp/auth-debug/auth-audit-resolution-2026-04-19.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_tmp/resolution/auth/redirect-url-auth.resolution.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_tmp/resolution/auth/redirect-url-readers.resolution.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_tmp/resolution/auth/redirect-url-writers.resolution.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_tmp/resolution/frontend/auth-js-hooks.resolution.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_tmp/resolution/frontend/js-submit-redirect-public.resolution.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_tmp/resolution/frontend/js-submit-redirect-views.resolution.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_tmp/resolution/frontend/js-submit-redirect.resolution.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_tmp/resolution/frontend/login-form-hooks.resolution.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_tmp/resolution/frontend/register-form-hooks.resolution.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_tmp/resolution/routes/auth-routes.resolution.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_tmp/resolution/routes/login-routes.resolution.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_tmp/resolution/routes/register-routes.resolution.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_tmp/resolution/routes/star-auth-surface.resolution.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_tmp/resolution/routes/star-literal-auth.resolution.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_tmp/resolution/routes/star-routes-entry.resolution.md
   - ❌ No obvious code match found (heuristic)
 - docs/adr/0001-standards-and-response-contract.md
   - ❌ No obvious code match found (heuristic)
@@ -774,36 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/chatgpt/workflows/export_to_csv.md
   - ❌ No obvious code match found (heuristic)
-- docs/ci/README.md
-  - ❌ No obvious code match found (heuristic)
-- docs/ci/psr4_ci_gate.md
-  - ❌ No obvious code match found (heuristic)
-- docs/ci4/README.md
-  - ❌ No obvious code match found (heuristic)
-- docs/ci4/constructor-audit.md
-  - ❌ No obvious code match found (heuristic)
-- docs/ci4/controller_library_usage.md
-  - ❌ No obvious code match found (heuristic)
-- docs/codex/00_master_plan.md
-  - ❌ No obvious code match found (heuristic)
-- docs/codex/01_pr1_foundations.md
-  - ❌ No obvious code match found (heuristic)
-- docs/codex/02_pr2_worker_and_registry.md
-  - ❌ No obvious code match found (heuristic)
-- docs/codex/03_pr3_management_ui.md
-  - ❌ No obvious code match found (heuristic)
-- docs/codex/04_pr4_chat_management_ui.md
-  - ❌ No obvious code match found (heuristic)
-- docs/codex/05_pr5_n8n_docs_automation.md
-  - ❌ No obvious code match found (heuristic)
-- docs/codex/README.md
-  - ❌ No obvious code match found (heuristic)
-- docs/codex/reviews/Spark-Analysis-2026-02-01.md
-  - ❌ No obvious code match found (heuristic)
-- docs/codex/reviews/review-2026-01-31.md
-  - ❌ No obvious code match found (heuristic)
-- docs/codex/reviews/review-2026-02-01.md
-  - ❌ No obvious code match found (heuristic)
-- docs/codex/reviews/review-2026-02-05.md
-  - ❌ No obvious code match found (heuristic)
-- … and 1014 more
+- … and 1031 more

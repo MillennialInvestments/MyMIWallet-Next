@@ -2,30 +2,20 @@
 
 ## Executive summary
 - Tests executed: 29
-- Passed: 20
-- Failed: 8
+- Passed: 25
+- Failed: 3
 - Warnings: 1
 - Info: 1
-- Health score: 69% (FAIL)
+- Health score: 86% (WARNING)
 
 ## Failing test cases
 - **Registration: Valid registration** (FAILURE): Stored password hash does not verify.
-- **Login: Valid login** (FAILURE): Exception thrown.
-- **Login: Wrong password** (FAILURE): Exception thrown.
-- **Login: Non-existent user** (FAILURE): Exception thrown.
-- **Login: Remember-me enabled** (FAILURE): Exception thrown.
-- **Logout: Logout after login** (FAILURE): Exception thrown.
 - **Reset Password: Valid token reset** (FAILURE): Valid reset failed: Validation failed
 - **Reset Password: Token reuse attempt** (FAILURE): Initial reset failed: Validation failed
 - **Session & Cookie: Secure cookie alignment** (WARNING): App/Session secure cookie flags are not aligned.
 
 ## Error signatures
 - Registration: Valid registration: Stored password hash does not verify.
-- Login: Valid login: {"message":"Call to a member function where() on null","file":"\/home\/mymiteam\/mymiwallet\/site\/current\/vendor\/myth\/auth\/src\/Authentication\/LocalAuthenticator.php","line":140}
-- Login: Wrong password: {"message":"Call to a member function where() on null","file":"\/home\/mymiteam\/mymiwallet\/site\/current\/vendor\/myth\/auth\/src\/Authentication\/LocalAuthenticator.php","line":140}
-- Login: Non-existent user: {"message":"Call to a member function where() on null","file":"\/home\/mymiteam\/mymiwallet\/site\/current\/vendor\/myth\/auth\/src\/Authentication\/LocalAuthenticator.php","line":140}
-- Login: Remember-me enabled: {"message":"Call to a member function where() on null","file":"\/home\/mymiteam\/mymiwallet\/site\/current\/vendor\/myth\/auth\/src\/Authentication\/LocalAuthenticator.php","line":140}
-- Logout: Logout after login: {"message":"Call to a member function where() on null","file":"\/home\/mymiteam\/mymiwallet\/site\/current\/vendor\/myth\/auth\/src\/Authentication\/LocalAuthenticator.php","line":140}
 - Reset Password: Valid token reset: Valid reset failed: Validation failed
 - Reset Password: Token reuse attempt: Initial reset failed: Validation failed
 - Session & Cookie: Secure cookie alignment: {"app_cookie_secure":true,"session_cookie_secure":false}

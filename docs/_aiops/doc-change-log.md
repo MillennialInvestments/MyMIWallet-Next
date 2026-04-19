@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-04-18T07:00:02Z
+> Run: 2026-04-19T07:00:02Z
 
 - docs/APIs/README.md
   - Last updated: 2026-04-15
@@ -368,6 +368,54 @@
 - docs/_support/spark-reset/20260307-110433/summary.md
   - Last updated: 2026-03-08
   - Change type: unchanged
+- docs/_tmp/auth-debug/auth-audit-resolution-2026-04-19.md
+  - Last updated: 2026-04-19
+  - Change type: new
+- docs/_tmp/resolution/auth/redirect-url-auth.resolution.md
+  - Last updated: 2026-04-19
+  - Change type: new
+- docs/_tmp/resolution/auth/redirect-url-readers.resolution.md
+  - Last updated: 2026-04-19
+  - Change type: new
+- docs/_tmp/resolution/auth/redirect-url-writers.resolution.md
+  - Last updated: 2026-04-19
+  - Change type: new
+- docs/_tmp/resolution/frontend/auth-js-hooks.resolution.md
+  - Last updated: 2026-04-19
+  - Change type: new
+- docs/_tmp/resolution/frontend/js-submit-redirect-public.resolution.md
+  - Last updated: 2026-04-19
+  - Change type: new
+- docs/_tmp/resolution/frontend/js-submit-redirect-views.resolution.md
+  - Last updated: 2026-04-19
+  - Change type: new
+- docs/_tmp/resolution/frontend/js-submit-redirect.resolution.md
+  - Last updated: 2026-04-19
+  - Change type: new
+- docs/_tmp/resolution/frontend/login-form-hooks.resolution.md
+  - Last updated: 2026-04-19
+  - Change type: new
+- docs/_tmp/resolution/frontend/register-form-hooks.resolution.md
+  - Last updated: 2026-04-19
+  - Change type: new
+- docs/_tmp/resolution/routes/auth-routes.resolution.md
+  - Last updated: 2026-04-19
+  - Change type: new
+- docs/_tmp/resolution/routes/login-routes.resolution.md
+  - Last updated: 2026-04-19
+  - Change type: new
+- docs/_tmp/resolution/routes/register-routes.resolution.md
+  - Last updated: 2026-04-19
+  - Change type: new
+- docs/_tmp/resolution/routes/star-auth-surface.resolution.md
+  - Last updated: 2026-04-19
+  - Change type: new
+- docs/_tmp/resolution/routes/star-literal-auth.resolution.md
+  - Last updated: 2026-04-19
+  - Change type: new
+- docs/_tmp/resolution/routes/star-routes-entry.resolution.md
+  - Last updated: 2026-04-19
+  - Change type: new
 - docs/adr/0001-standards-and-response-contract.md
   - Last updated: 2025-11-08
   - Change type: unchanged
@@ -783,7 +831,7 @@
   - Last updated: 2026-04-12
   - Change type: unchanged
 - docs/audit/auth_audit_last_run.md
-  - Last updated: 2026-04-17
+  - Last updated: 2026-04-19
   - Change type: modified
 - docs/audit/news_audit_last_run.md
   - Last updated: 2026-04-11
@@ -1612,7 +1660,7 @@
   - Change type: unchanged
 - docs/inventory.md
   - Last updated: 2026-04-17
-  - Change type: new
+  - Change type: unchanged
 - docs/inventory/README.md
   - Last updated: 2026-04-15
   - Change type: unchanged
@@ -1883,6 +1931,9 @@
 - docs/mobile/README.md
   - Last updated: 2026-04-15
   - Change type: unchanged
+- docs/mobile/overlap-app.md
+  - Last updated: 2026-04-19
+  - Change type: new
 - docs/mobile/replit/00_overview.md
   - Last updated: 2026-01-04
   - Change type: unchanged
