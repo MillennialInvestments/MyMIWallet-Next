@@ -12,3 +12,21 @@ public/assets/js/login-init.js:33:  var authForms = document.querySelectorAll('f
 public/assets/js/login-init.js:38:          kind: form.getAttribute('data-auth-form') || 'unknown',
 app/Config/Routes.php:18:$routes->post('index.php/login', 'AuthController::attemptLogin');
 app/Config/Routes.php:210:    $routes->post('login', 'AuthController::attemptLogin', ['as' => 'login-submit']);
+
+================ RESOLUTION NOTES ================
+Date: 2026-04-19
+Status: Reviewed; resolution file created.
+Confirmed root cause: No new auth-flow defect confirmed in this review pass.
+Files changed: Paired *.resolution.md created under docs/_tmp/resolution/*.
+Validation: Route/controller/view/js path checks completed.
+Next step: Keep raw file in place; move only after a new fix+validation cycle if required.
+==================================================
+
+================ RESOLUTION NOTES ================
+Date: 2026-04-19 (follow-up)
+Status: Code fix applied for shared redirect_url sanitizer + writer normalization.
+Confirmed root cause: Upstream writers were storing raw current_url()/with('redirect_url') values inconsistently.
+Files changed: shared helper + filters/controllers/tests + auth/js diagnostics update.
+Validation: php -l checks passed; PHPUnit auth sanitizer/route unit tests passed.
+Next step: keep raw file in auth-debug until production validation confirms expected redirect behavior.
+==================================================

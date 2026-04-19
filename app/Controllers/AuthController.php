@@ -43,6 +43,7 @@ class AuthController extends BaseController
         // Most services in this controller require
         // the session to be started - so fire it up!
         $this->session = service('session');
+        helper('redirect_url');
 
         $this->config = config(\App\Legacy\Auth\Config\Auth::class);
         try {
@@ -82,14 +83,16 @@ class AuthController extends BaseController
         }
 
         $request = $this->request;
-        $next    = $this->sanitizeRedirectTarget($request->getGet('next'));
-
-        if (! empty($next)) {
-            session()->set('redirect_url', $next);
-            log_message('debug', 'Auth login() captured next param: ' . $next);
+        $nextRaw = is_scalar($request->getGet('next')) ? (string) $request->getGet('next') : null;
+        if ($nextRaw !== null && trim($nextRaw) !== '') {
+            redirect_url_store($nextRaw, [
+                'writer' => 'AuthController::login[next]',
+                'route' => trim((string) $request->getUri()->getPath(), '/'),
+                'request_id' => $this->ensureAuthRequestId(),
+            ]);
         }
 
-        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($request->getGet('redirect_url')));
+        $this->rememberRedirectUrl(is_scalar($request->getGet('redirect_url')) ? (string) $request->getGet('redirect_url') : null);
 
         $previous = $this->sanitizeRedirectTarget(previous_url());
 
@@ -254,13 +257,24 @@ class AuthController extends BaseController
         );
 
         // Capture redirect targets if provided
-        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($this->request->getPost('redirect_url')));
-        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($this->request->getPost('next')));
+        $postRedirectRaw = is_scalar($this->request->getPost('redirect_url')) ? (string) $this->request->getPost('redirect_url') : null;
+        $postNextRaw = is_scalar($this->request->getPost('next')) ? (string) $this->request->getPost('next') : null;
 
-        log_message(
-            'debug',
-            'Auth attemptLogin() called. redirect_url in session: ' . (session('redirect_url') ?? 'none')
-        );
+        log_message('debug', '[AUTH_LOGIN_REDIRECT_CAPTURE]', [
+            'request_id' => $requestId,
+            'route' => trim((string) $this->request->getUri()->getPath(), '/'),
+            'posted_redirect_url_raw' => $postRedirectRaw,
+            'posted_next_raw' => $postNextRaw,
+            'session_redirect_before' => $this->session->get('redirect_url'),
+        ]);
+
+        $this->rememberRedirectUrl($postRedirectRaw);
+        $this->rememberRedirectUrl($postNextRaw);
+
+        log_message('debug', '[AUTH_LOGIN_REDIRECT_CAPTURE_AFTER]', [
+            'request_id' => $requestId,
+            'session_redirect_after' => $this->session->get('redirect_url'),
+        ]);
 
         $credentials = [
             $type      => $login,
@@ -549,6 +563,7 @@ class AuthController extends BaseController
 
         $this->session->destroy();
         $this->session = service('session');
+        helper('redirect_url');
         $this->setAuthMessage('success', 'You have been logged out.');
 
         service('eventTracker')->track('auth.logout', [], $userId > 0 ? $userId : null);
@@ -766,6 +781,22 @@ class AuthController extends BaseController
         $this->authLog('AUTH_REGISTER', 'entry', 'attemptRegister reached', [
             'post_keys' => array_keys($this->request->getPost() ?? []),
         ], 'info', __LINE__);
+
+        $registerRedirectRaw = is_scalar($this->request->getPost('redirect_url')) ? (string) $this->request->getPost('redirect_url') : null;
+        $registerNextRaw = is_scalar($this->request->getPost('next')) ? (string) $this->request->getPost('next') : null;
+        log_message('debug', '[AUTH_REGISTER_REDIRECT_CAPTURE]', [
+            'request_id' => $requestId,
+            'route' => trim((string) $this->request->getUri()->getPath(), '/'),
+            'posted_redirect_url_raw' => $registerRedirectRaw,
+            'posted_next_raw' => $registerNextRaw,
+            'session_redirect_before' => $this->session->get('redirect_url'),
+        ]);
+        $this->rememberRedirectUrl($registerRedirectRaw);
+        $this->rememberRedirectUrl($registerNextRaw);
+        log_message('debug', '[AUTH_REGISTER_REDIRECT_CAPTURE_AFTER]', [
+            'request_id' => $requestId,
+            'session_redirect_after' => $this->session->get('redirect_url'),
+        ]);
 
         $this->ipHistoryModel->record(
             null,
@@ -1792,7 +1823,11 @@ class AuthController extends BaseController
 
         $this->session->remove('redirect_url');
 
-        log_message('debug', 'Auth redirect destination: ' . $redirectURL);
+        log_message('debug', '[AUTH_REDIRECT_DESTINATION_FINAL]', [
+            'request_id' => $this->ensureAuthRequestId(),
+            'route' => trim((string) $this->request->getUri()->getPath(), '/'),
+            'destination' => $redirectURL,
+        ]);
 
         return $redirectURL;
     }
@@ -1800,17 +1835,18 @@ class AuthController extends BaseController
 
     private function rememberRedirectUrl(?string $url): void
     {
-        $url = $this->sanitizeRedirectTarget($url);
-        if ($url === null || $url === '') {
+        $sanitized = redirect_url_store($url, [
+            'writer' => 'AuthController::rememberRedirectUrl',
+            'route' => trim((string) $this->request->getUri()->getPath(), '/'),
+            'request_id' => $this->ensureAuthRequestId(),
+        ]);
+
+        if ($sanitized === null || $sanitized === '') {
             return;
         }
 
-        if ($this->session->has('redirect_url')) {
+        if (! $this->isValidRedirectTarget($sanitized)) {
             return;
-        }
-
-        if ($this->isValidRedirectTarget($url)) {
-            $this->session->set('redirect_url', $url);
         }
     }
 
@@ -1848,42 +1884,7 @@ class AuthController extends BaseController
     
     protected function sanitizeRedirectTarget(?string $url): ?string
     {
-        $url = is_string($url) ? trim($url) : '';
-
-        if ($url === '' || $url === '*' || $url === '/*') {
-            return null;
-        }
-
-        $parts = parse_url($url);
-        if ($parts === false) {
-            return null;
-        }
-
-        $path = (string) ($parts['path'] ?? '');
-        if ($path === '') {
-            return null;
-        }
-
-        $query = [];
-        if (! empty($parts['query'])) {
-            parse_str((string) $parts['query'], $query);
-        }
-
-        foreach (array_keys($query) as $key) {
-            if (
-                in_array($key, ['_gl', '_ga', 'gclid', 'fbclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'redirect_url', 'next'], true)
-                || str_starts_with($key, '_ga_')
-            ) {
-                unset($query[$key]);
-            }
-        }
-
-        $clean = $path;
-        if (! empty($query)) {
-            $clean .= '?' . http_build_query($query);
-        }
-
-        return $clean !== '' ? $clean : null;
+        return redirect_url_sanitize($url);
     }
 
     protected function cleanLoginQueryRedirect(): ?RedirectResponse

@@ -1,25 +1,22 @@
-# Redirect URL Writers Resolution
+# Resolution: redirect-url-writers.txt
 
-## Source File
-docs/_tmp/auth-debug/redirect-url-writers.txt
-
-## Status
-- [ ] Open
-- [ ] Root cause confirmed
-- [ ] Fix applied
-- [ ] Verified
-
-## Findings
-- 
+## Scope
+- All upstream `redirect_url` writers across filters/controllers.
 
 ## Confirmed Root Cause
-- 
+- Multiple writers were storing raw `current_url()` (or flash `with('redirect_url', current_url())`) without shared normalization, allowing inconsistent values and tracking pollution.
 
-## Code/File Changes
-- 
+## Fix Applied
+- Added shared sanitizer/writer helper: `app/Helpers/redirect_url_helper.php`.
+- Updated writers to use `redirect_url_store()` in:
+  - `PermissionFilter`, `LoginFilter`, `RoleFilter`, `AuthCheckFilter`
+  - `AlertsController`, `WalletsController`
+  - `HowTosAdminController`, `AlertsAdminController`, `DiscordAdminController`
+- Added structured writer logs (`source_url`, `sanitized_url`, `accepted`, `request_id`, `route`).
 
-## Validation Performed
-- 
+## Validation
+- Syntax checks passed for all touched PHP files.
+- Unit tests passed for sanitizer behavior and active auth route surface.
 
-## Follow-up
-- 
+## Next Step
+- Validate writer logs in staging/production and move raw file only after runtime verification.

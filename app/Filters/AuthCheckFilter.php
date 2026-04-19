@@ -26,10 +26,10 @@ class AuthCheckFilter implements FilterInterface
                 ]);
         }
 
-        $session = session();
-        if ($session && ! $session->has('redirect_url')) {
-            $session->set('redirect_url', current_url());
-        }
+        redirect_url_store((string) current_url(), [
+            'writer' => 'AuthCheckFilter::before',
+            'route' => trim((string) $request->getUri()->getPath(), '/'),
+        ]);
 
         return redirect()->to(site_url('login'));
     }

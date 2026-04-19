@@ -46,7 +46,19 @@ class HowTosAdminController extends BaseAdminController
         $this->logSnippet('debug', 'HowTosController init cuID', $this->cuID);
         if (empty($this->cuID)) {
             log_message('error', 'Failed to retrieve user ID.');
-            return redirect()->to('/login')->with('redirect_url', current_url())->send();
+            $raw = (string) current_url();
+            $sanitized = redirect_url_store($raw, [
+                'writer' => 'HowTosAdminController::initController',
+                'route' => trim((string) $this->request->getUri()->getPath(), '/'),
+                'request_id' => (string) ($this->request->getHeaderLine('X-Request-Id') ?: ''),
+            ]);
+
+            $redirect = redirect()->to('/login');
+            if ($sanitized) {
+                $redirect = $redirect->with('redirect_url', $sanitized);
+            }
+
+            return $redirect->send();
         }
 
         $this->accountService = new AccountService();
@@ -714,7 +726,19 @@ $this->userService = new UserService($this->siteSettings, $this->cuID, Services:
         if (empty($this->cuID)) {
             log_message('error', 'Failed to retrieve user ID.');
             // Perform the redirect and stop further execution
-            redirect()->to('/login')->with('redirect_url', current_url())->send();
+            $raw = (string) current_url();
+            $sanitized = redirect_url_store($raw, [
+                'writer' => 'HowTosAdminController::checkUserAuthentication',
+                'route' => trim((string) $this->request->getUri()->getPath(), '/'),
+                'request_id' => (string) ($this->request->getHeaderLine('X-Request-Id') ?: ''),
+            ]);
+
+            $redirect = redirect()->to('/login');
+            if ($sanitized) {
+                $redirect = $redirect->with('redirect_url', $sanitized);
+            }
+
+            $redirect->send();
             exit; // Ensure the script stops running after the redirect
         }
     }

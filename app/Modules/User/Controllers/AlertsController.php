@@ -342,11 +342,12 @@ class AlertsController extends BaseUserController
                 return $resp;
             }
             // If this is a page action, fall back to redirect (or show a friendly message)
-            $session     = session();
-            $currentUrl  = current_url();
-            if (! $session->has('redirect_url')) {
-                $session->set('redirect_url', $currentUrl);
-            }
+            $currentUrl  = (string) current_url();
+            redirect_url_store($currentUrl, [
+                'writer' => 'AlertsController::index',
+                'route' => trim((string) $this->request->getUri()->getPath(), '/'),
+                'request_id' => (string) ($this->request->getHeaderLine('X-Request-Id') ?: ''),
+            ]);
 
             log_message('debug', 'AlertsController::index() redirecting guest to login from: ' . $currentUrl);
 

@@ -29,3 +29,21 @@ app/Legacy/Auth/Controllers/AuthController.php:1554:        if ($this->session->
 app/Legacy/Auth/Controllers/AuthController.php:1559:            $this->session->set('redirect_url', $url);
 app/Legacy/Auth/Controllers/AuthController.php:1588:                in_array($key, ['_gl', '_ga', 'gclid', 'fbclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'redirect_url', 'next'], true)
 app/Views/Auth/login.php:57:						<input type="hidden" name="redirect_url" value="<?= session('redirect_url') ?>">
+
+================ RESOLUTION NOTES ================
+Date: 2026-04-19
+Status: Reviewed; resolution file created.
+Confirmed root cause: No new auth-flow defect confirmed in this review pass.
+Files changed: Paired *.resolution.md created under docs/_tmp/resolution/*.
+Validation: Route/controller/view/js path checks completed.
+Next step: Keep raw file in place; move only after a new fix+validation cycle if required.
+==================================================
+
+================ RESOLUTION NOTES ================
+Date: 2026-04-19 (follow-up)
+Status: Code fix applied for shared redirect_url sanitizer + writer normalization.
+Confirmed root cause: Upstream writers were storing raw current_url()/with('redirect_url') values inconsistently.
+Files changed: shared helper + filters/controllers/tests + auth/js diagnostics update.
+Validation: php -l checks passed; PHPUnit auth sanitizer/route unit tests passed.
+Next step: keep raw file in auth-debug until production validation confirms expected redirect behavior.
+==================================================
