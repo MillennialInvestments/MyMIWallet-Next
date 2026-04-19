@@ -1,0 +1,2 @@
+app/Controllers/AuthController.php:1768:        if ($redirectURL === '*' || $redirectURL === '/*') {
+app/Controllers/AuthController.php:1853:        if ($url === '' || $url === '*' || $url === '/*') {

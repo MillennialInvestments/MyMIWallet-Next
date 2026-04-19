@@ -1,0 +1,31 @@
+app/Controllers/AuthController.php:85:        $next    = $this->sanitizeRedirectTarget($request->getGet('next'));
+app/Controllers/AuthController.php:92:        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($request->getGet('redirect_url')));
+app/Controllers/AuthController.php:94:        $previous = $this->sanitizeRedirectTarget(previous_url());
+app/Controllers/AuthController.php:106:            'redirect_url'      => $this->session->get('redirect_url'),
+app/Controllers/AuthController.php:113:        log_message('debug', '[AUTH_LOGIN_VIEW_REDIRECT_URL] ' . print_r($this->session->get('redirect_url'), true));
+app/Controllers/AuthController.php:257:        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($this->request->getPost('redirect_url')));
+app/Controllers/AuthController.php:258:        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($this->request->getPost('next')));
+app/Controllers/AuthController.php:262:            'Auth attemptLogin() called. redirect_url in session: ' . (session('redirect_url') ?? 'none')
+app/Controllers/AuthController.php:465:                'redirect_target' => $this->session->get('redirect_url') ?? $this->dashboardUrl(),
+app/Controllers/AuthController.php:518:        $destination = $this->determineRedirectDestination();
+app/Controllers/AuthController.php:1759:        $destination = $this->determineRedirectDestination();
+app/Controllers/AuthController.php:1764:    private function determineRedirectDestination(): string
+app/Controllers/AuthController.php:1766:        $redirectURL = (string) ($this->session->get('redirect_url') ?? '');
+app/Controllers/AuthController.php:1803:        $url = $this->sanitizeRedirectTarget($url);
+app/Controllers/AuthController.php:1849:    protected function sanitizeRedirectTarget(?string $url): ?string
+app/Controllers/AuthController.php:1922:        $next = $this->sanitizeRedirectTarget(is_scalar($query['next'] ?? null) ? (string) $query['next'] : null);
+app/Controllers/AuthController.php:1923:        $redirectUrl = $this->sanitizeRedirectTarget(is_scalar($query['redirect_url'] ?? null) ? (string) $query['redirect_url'] : null);
+app/Views/Auth/login.php:57:						<input type="hidden" name="redirect_url" value="<?= session('redirect_url') ?>">
+app/Filters/PermissionFilter.php:53:                    $redirectURL = session('redirect_url') ?? route_to($this->landingRoute);
+app/Commands/Auth/FlowSmoke.php:36:        $method = new ReflectionMethod($controller, 'determineRedirectDestination');
+app/Legacy/Auth/Controllers/AuthController.php:69:        $next    = $this->sanitizeRedirectTarget($request->getGet('next'));
+app/Legacy/Auth/Controllers/AuthController.php:76:        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($request->getGet('redirect_url')));
+app/Legacy/Auth/Controllers/AuthController.php:78:        $previous = $this->sanitizeRedirectTarget(previous_url());
+app/Legacy/Auth/Controllers/AuthController.php:164:        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($this->request->getPost('redirect_url')));
+app/Legacy/Auth/Controllers/AuthController.php:165:        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($this->request->getPost('next')));
+app/Legacy/Auth/Controllers/AuthController.php:169:            'Auth attemptLogin() called. redirect_url in session: ' . (session('redirect_url') ?? 'none')
+app/Legacy/Auth/Controllers/AuthController.php:1509:        $destination = $this->determineRedirectDestination();
+app/Legacy/Auth/Controllers/AuthController.php:1514:    private function determineRedirectDestination(): string
+app/Legacy/Auth/Controllers/AuthController.php:1516:        $redirectURL = (string) ($this->session->get('redirect_url') ?? '');
+app/Legacy/Auth/Controllers/AuthController.php:1549:        $url = $this->sanitizeRedirectTarget($url);
+app/Legacy/Auth/Controllers/AuthController.php:1563:    protected function sanitizeRedirectTarget(?string $url): ?string

@@ -21,3 +21,12 @@ app/Legacy/Auth/Controllers/AuthController.php:164:        $this->rememberRedire
 app/Legacy/Auth/Controllers/AuthController.php:165:        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($this->request->getPost('next')));
 app/Legacy/Auth/Controllers/AuthController.php:1547:    private function rememberRedirectUrl(?string $url): void
 app/Legacy/Auth/Controllers/AuthController.php:1559:            $this->session->set('redirect_url', $url);
+
+================ RESOLUTION NOTES ================
+Date:
+Status:
+Confirmed root cause:
+Files changed:
+Validation:
+Next step:
+==================================================
