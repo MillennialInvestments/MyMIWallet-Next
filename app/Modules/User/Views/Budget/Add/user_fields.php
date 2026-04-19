@@ -1,5 +1,18 @@
 <!-- app/Modules/User/Views/Budget/Add/user_fields.php -->
 <?php 
+$siteSettings                    = $siteSettings ?? null;
+$uri                             = $uri ?? service('uri');
+$requestUriForLog                = service('request')->getUri()->getPath();
+$cuID                            = $cuID ?? null;
+$cuEmail                         = $cuEmail ?? '';
+$cuUsername                      = $cuUsername ?? '';
+$cuUserType                      = $cuUserType ?? '';
+$configMode                      = $configMode ?? (method_exists($uri, 'getSegment') ? ($uri->getSegment(2) ?: 'Add') : 'Add');
+$accountType                     = $accountType ?? (method_exists($uri, 'getSegment') ? $uri->getSegment(3) : null);
+$accountType                     = in_array($accountType, ['Income', 'Expense'], true) ? $accountType : 'Expense';
+$siteSettingsObject              = is_object($siteSettings) ? $siteSettings : (object) [];
+log_message('debug', 'Budget\\Add\\user_fields view bootstrap: accountType=' . $accountType . ' configMode=' . $configMode . ' requestUri=' . $requestUriForLog);
+
 $date                           = date("F jS, Y");
 $hostTime                       = date("g:i A");
 $time                           = date("g:i A");
@@ -16,21 +29,21 @@ if ($configMode === 'Add') {
     $formTitle                  = $accountName . ' - Account Information';
 }
 // Set Form Config
-$formGroup				        = $siteSettings->formContainer;
-$formLabel				        = $siteSettings->formLabel;
-$formConCol				        = $siteSettings->formControlColumn;
-$formControl			        = $siteSettings->formControl;
-$formSelect				        = $siteSettings->formSelect;
-$formSelectPicker		        = $siteSettings->formSelectpicker;
-$formText				        = $siteSettings->formText;
-$formCustomText			        = $siteSettings->formCustomText;
-$formMode                       = $uri->getSegment(2);
-log_message('info', '$uri: ' . $uri);
-log_message('info', '$formMode: ' . $formMode);
+$formGroup				        = $siteSettingsObject->formContainer ?? 'form-group row';
+$formLabel				        = $siteSettingsObject->formLabel ?? 'col-form-label';
+$formConCol				        = $siteSettingsObject->formControlColumn ?? 'col-6';
+$formControl			        = $siteSettingsObject->formControl ?? 'form-control';
+$formSelect				        = $siteSettingsObject->formSelect ?? 'form-select';
+$formSelectPicker		        = $siteSettingsObject->formSelectpicker ?? 'selectpicker';
+$formText				        = $siteSettingsObject->formText ?? 'form-text';
+$formCustomText			        = $siteSettingsObject->formCustomText ?? 'text-muted';
+$formMode                       = $configMode;
 if ($formMode === 'Add') {
     $accountID                  = '';
 } elseif ($formMode === 'Edit') {
-    $accountID                  = $uri->getSegment(3);
+    $accountID                  = method_exists($uri, 'getSegment') ? $uri->getSegment(3) : '';
+} else {
+    $accountID                  = '';
 }
 ?>
 <input id="beta" name="beta" value="<?php echo set_value('beta', $cuUserType === 'Beta' ? 'Yes' : 'No'); ?>" type="hidden">

@@ -1,14 +1,25 @@
 <!-- app/Modules/User/Views/Budget/Add.php -->
 <?php
 // print_r($_SESSION['allSessionData']); 
-$redirectURL                            = $userAgent->getReferrer(); 
+$siteSettings                           = $siteSettings ?? null;
+$uri                                    = $uri ?? service('uri');
+$userAgent                              = $userAgent ?? service('request')->getUserAgent();
+$cuID                                   = $cuID ?? null;
+$cuEmail                                = $cuEmail ?? '';
+$cuUsername                             = $cuUsername ?? '';
+$cuUserType                             = $cuUserType ?? '';
+$configMode                             = $configMode ?? null;
+$accountTypeFromController              = $accountType ?? null;
+$requestUriForLog                       = service('request')->getUri()->getPath();
+
+$redirectURL                            = method_exists($userAgent, 'getReferrer') ? ($userAgent->getReferrer() ?: site_url('/Budget')) : site_url('/Budget');
 $errorClass                             = empty($errorClass) ? ' error' : $errorClass;
 $controlClass                           = empty($controlClass) ? 'span6' : $controlClass;
-$pageURIA                               = $uri->getSegment(1);
-$beta                                   = $siteSettings->beta;
+$pageURIA                               = method_exists($uri, 'getSegment') ? $uri->getSegment(1) : '';
+$beta                                   = $siteSettings->beta ?? 'No';
 if ($pageURIA === 'Dashboard') {
-    $configMode                             = $uri->getSegment(4);
-    $accountType                            = $uri->getSegment(6);
+    $configMode                             = $configMode ?: $uri->getSegment(4);
+    $accountType                            = $accountTypeFromController ?: $uri->getSegment(6);
     if ($accountType === 'Income') {
         $accountTypeAltText                 = 'Switch to Expense';
         $accountTypeAltURl                  = site_url('/Budget/Add/Expense');
@@ -22,7 +33,7 @@ if ($pageURIA === 'Dashboard') {
     $addModalTitle                          = $configMode . ' ' . $accountType . ' Account';
     log_message('debug', 'Budget\Add - L12: MADE IT HERE!');
 } else {
-    $accountType                            = $uri->getSegment(3);
+    $accountType                            = $accountTypeFromController ?: $uri->getSegment(3);
     if ($accountType === 'Income') {
         $accountTypeAltText                 = 'Switch to Expense';
         $accountTypeAltURl                  = site_url('/Budget/Add/Expense');
@@ -33,9 +44,13 @@ if ($pageURIA === 'Dashboard') {
         $accountTypeAltText                 = 'Switch to Expense';
         $accountTypeAltURl                  = site_url('/Budget/Add/Expense');
     }
-    $configMode                             = $uri->getSegment(2);
+    $configMode                             = $configMode ?: $uri->getSegment(2);
     $addModalTitle                          = $configMode . ' ' . $accountType . ' Account';
 }
+$accountType = in_array($accountType, ['Income', 'Expense'], true) ? $accountType : 'Expense';
+$configMode = $configMode ?: 'Add';
+$formAction = site_url('Budget/Add/' . $accountType);
+log_message('debug', 'Budget\\Add view bootstrap: accountType=' . $accountType . ' configMode=' . $configMode . ' requestUri=' . $requestUriForLog);
 // !! - REACTIVATE MyMILogger HERE!!! !! //
 // $this->mymilogger
 //      ->user($cuID) //Set UserID, who created this  Action
@@ -89,8 +104,8 @@ $fieldData = array(
     </button>
 </div>
 <div class="modal-body">
-    <form class="form-horizontal" id="add_user_budgeting_account" action="<?= site_url('Wallets/Add'); ?>" method="POST">
-        <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
+    <?= form_open($formAction, ['class' => 'form-horizontal', 'id' => 'add_user_budgeting_account', 'method' => 'post']); ?>
+        <?= csrf_field(); ?>
 
         <!-- Account Information Section -->
         <div class="nk-block">
@@ -104,8 +119,6 @@ $fieldData = array(
             </div>
             <hr>
             <fieldset>
-                <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
-
                 <?php echo view('UserModule\Views\Budget\Add\user_fields', $fieldData); ?>
             </fieldset>
             <fieldset>
@@ -121,7 +134,7 @@ $fieldData = array(
             <?php echo validation_errors(); ?>
         </div>
         <?php endif; ?>
-    </form>
+    <?= form_close(); ?>
 
     <!-- Budgeting Tips Section -->
     <div class="nk-block">
@@ -211,7 +224,8 @@ $fieldData = array(
                             </div>
                         </div>
                         <div class="pricing-body">                                
-                            <form class="form-horizontal" id="add_user_budgeting_account">
+                            <?= form_open($formAction, ['class' => 'form-horizontal', 'id' => 'add_user_budgeting_account', 'method' => 'post']); ?>
+                                <?= csrf_field(); ?>
                                 <fieldset>
                                     <?php echo view('UserModule\Views\Budget\Add\user_fields', $fieldData); ?>
                                 </fieldset>
@@ -231,7 +245,7 @@ $fieldData = array(
                                         <input class="btn btn-primary btn-sm" type="submit" name="register" id="addAccountSubmit" value="Submit" />
                                     </div>
                                 </fieldset>
-                            <?php echo form_close(); ?>	
+                            <?= form_close(); ?>	
                             <?php if (validation_errors()) : ?>
                             <div class="alert alert-error fade in">
                                 <?php echo validation_errors(); ?>
@@ -311,58 +325,6 @@ $fieldData = array(
             scheduleDiv.style.display = 'none';
             scheduleSelect.value = '';
         }
-    }
-
-    const addAccountForm = document.querySelector("#add_user_budgeting_account");
-
-    if (addAccountForm) {
-        addAccountForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            const formData = new FormData(addAccountForm);
-            const recurringAccount = formData.get("recurring_account");
-
-            try {
-                const response = await fetch("<?= site_url('Budget/Account-Manager'); ?>", {
-                    method: "POST",
-                    headers: {
-                        "X-Requested-With": "XMLHttpRequest"
-                    },
-                    body: formData,
-                    credentials: "same-origin"
-                });
-
-                const contentType = response.headers.get("content-type") || "";
-
-                if (!response.ok) {
-                    console.error("Server responded:", response.status);
-                    return;
-                }
-
-                if (!contentType.includes("application/json")) {
-                    const text = await response.text();
-                    console.error("Expected JSON but got:", text);
-                    return;
-                }
-
-                const data = await response.json();
-                const accountID = data.accountID;
-
-                if (!accountID) {
-                    console.error("Missing accountID in response");
-                    return;
-                }
-
-                if (recurringAccount === "Yes") {
-                    window.location.href = `<?= site_url('/Budget/Recurring-Account/Schedule/'); ?>${accountID}`;
-                } else {
-                    window.location.href = "<?= site_url('/Budget'); ?>";
-                }
-
-            } catch (err) {
-                console.error(err);
-            }
-        });
     }
 
     document.addEventListener('DOMContentLoaded', () => {
