@@ -35,7 +35,13 @@
 ?>
 
 <!-- SCRIPTS -->
-<?php $cspNonce = $cspNonce ?? (service('renderer')->getData('cspNonce') ?? ''); ?>
+<?php
+$resolvedNonce = $cspNonce ?? (service('renderer')->getData('cspNonce') ?? '');
+if (! is_scalar($resolvedNonce)) {
+    $resolvedNonce = '';
+}
+$cspNonce = (string) $resolvedNonce;
+?>
 <script nonce="<?= esc($cspNonce) ?>">
     function toggleMenu() {
         var menuItems = document.getElementsByClassName('menu-item');
