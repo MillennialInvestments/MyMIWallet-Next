@@ -1,0 +1,60 @@
+modules = ["php-8.2", "nodejs-20", "web", "python-3.12"]
+[agent]
+expertMode = true
+
+[nix]
+channel = "stable-25_05"
+
+[userenv]
+
+[userenv.shared]
+CI_ENVIRONMENT = "production"
+CI_DEBUG = "false"
+"app.baseURL" = "https://357b340f-1d45-400f-9d43-4992ca05a838-00-wqatxt9zec7b.janeway.replit.dev/"
+"app.indexPage" = ""
+"app.debug" = "true"
+"app.debugHUD" = "false"
+"app.enableKint" = "false"
+"database.default.hostname" = "127.0.0.1"
+"database.default.database" = "mymiwallet"
+"database.default.username" = "root"
+"database.default.password" = ""
+"database.default.DBDriver" = "MySQLi"
+"database.default.port" = "3306"
+"database.default.DBDebug" = "false"
+LOG_THRESHOLD = "emergency,alert,critical,error"
+CSP_STRICT_MODE = "false"
+AI_ENABLE_N8N = "false"
+AI_ENABLE_KIMI_K2 = "false"
+AIOPS_AUTOPR_ENABLED = "false"
+AIOPS_CRON_ENABLED = "false"
+"app.forceGlobalSecureRequests" = "false"
+"app.cookieSecure" = "false"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "php spark serve --host 0.0.0.0 --port 5000"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"

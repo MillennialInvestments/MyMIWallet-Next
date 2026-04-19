@@ -130,6 +130,7 @@ try {
 } catch (\Throwable $e) {
 
     error_log('EMERGENCY BOOT FAILURE: ' . $e->getMessage());
+    error_log('BOOT TRACE: ' . $e->getTraceAsString());
 
     if (class_exists(\App\Libraries\EmergencyLogger::class)) {
         \App\Libraries\EmergencyLogger::write(

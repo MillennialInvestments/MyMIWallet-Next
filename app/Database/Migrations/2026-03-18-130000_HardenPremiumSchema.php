@@ -213,8 +213,16 @@ class HardenPremiumSchema extends Migration
             return;
         }
 
-        $columnList = implode(', ', array_map(static fn (string $column): string => "`{$column}`", $existingColumns));
-        $this->db->query("CREATE INDEX `{$indexName}` ON `{$table}` ({$columnList})");
+        $driver = get_class($this->db);
+        $isPostgre = stripos($driver, 'postgre') !== false;
+
+        if ($isPostgre) {
+            $columnList = implode(', ', $existingColumns);
+            $this->db->query("CREATE INDEX IF NOT EXISTS \"{$indexName}\" ON \"{$table}\" ({$columnList})");
+        } else {
+            $columnList = implode(', ', array_map(static fn (string $column): string => "`{$column}`", $existingColumns));
+            $this->db->query("CREATE INDEX `{$indexName}` ON `{$table}` ({$columnList})");
+        }
     }
 
     private function dropIndexIfExists(string $table, string $indexName): void
@@ -223,12 +231,30 @@ class HardenPremiumSchema extends Migration
             return;
         }
 
-        $this->db->query("DROP INDEX `{$indexName}` ON `{$table}`");
+        $driver = get_class($this->db);
+        $isPostgre = stripos($driver, 'postgre') !== false;
+
+        if ($isPostgre) {
+            $this->db->query("DROP INDEX IF EXISTS \"{$indexName}\"");
+        } else {
+            $this->db->query("DROP INDEX `{$indexName}` ON `{$table}`");
+        }
     }
 
     private function indexExists(string $table, string $indexName): bool
     {
+        $driver = get_class($this->db);
+        $isPostgre = stripos($driver, 'postgre') !== false;
+
+        if ($isPostgre) {
+            $result = $this->db->query(
+                "SELECT 1 FROM pg_indexes WHERE tablename = ? AND indexname = ?",
+                [$table, $indexName]
+            );
+            return $result && ! empty($result->getResultArray());
+        }
+
         $result = $this->db->query("SHOW INDEX FROM `{$table}` WHERE Key_name = ?", [$indexName]);
-        return ! empty($result->getResultArray());
+        return $result && ! empty($result->getResultArray());
     }
 }

@@ -64,32 +64,56 @@ class Database extends Config
     {
         parent::__construct();
 
-        // env() values are strings; normalize MySQLi port to strict ?int.
-        $port = (int) env('database.default.port', 3306);
+        // Support Replit PostgreSQL via PGHOST / DATABASE_URL env vars
+        $pgHost = getenv('PGHOST');
+        if ($pgHost) {
+            $this->default = [
+                'DSN'      => '',
+                'hostname' => $pgHost,
+                'username' => getenv('PGUSER') ?: 'postgres',
+                'password' => getenv('PGPASSWORD') ?: '',
+                'database' => getenv('PGDATABASE') ?: 'heliumdb',
+                'DBDriver' => 'Postgre',
+                'DBPrefix' => '',
+                'pConnect' => false,
+                'DBDebug'  => false,
+                'charset'  => 'utf8',
+                'DBCollat' => '',
+                'swapPre'  => '',
+                'encrypt'  => false,
+                'compress' => false,
+                'strictOn' => false,
+                'failover' => [],
+                'port'     => (int)(getenv('PGPORT') ?: 5432),
+            ];
+        } else {
+            // env() values are strings; normalize MySQLi port to strict ?int.
+            $port = (int) env('database.default.port', 3306);
 
-        if ($port <= 0) {
-            $port = 3306;
+            if ($port <= 0) {
+                $port = 3306;
+            }
+
+            $this->default = [
+                'DSN'      => '',
+                'hostname' => env('database.default.hostname', '127.0.0.1'),
+                'username' => env('database.default.username', ''),
+                'password' => env('database.default.password', ''),
+                'database' => env('database.default.database', ''),
+                'DBDriver' => env('database.default.DBDriver', 'MySQLi'),
+                'DBPrefix' => '',
+                'pConnect' => false,
+                'DBDebug'  => false,
+                'charset'  => 'utf8mb4',
+                'DBCollat' => 'utf8mb4_general_ci',
+                'swapPre'  => '',
+                'encrypt'  => false,
+                'compress' => false,
+                'strictOn' => false,
+                'failover' => [],
+                'port'     => $port,
+            ];
         }
-
-        $this->default = [
-            'DSN'      => '',
-            'hostname' => env('database.default.hostname', '127.0.0.1'),
-            'username' => env('database.default.username', ''),
-            'password' => env('database.default.password', ''),
-            'database' => env('database.default.database', ''),
-            'DBDriver' => env('database.default.DBDriver', 'MySQLi'),
-            'DBPrefix' => '',
-            'pConnect' => false,
-            'DBDebug'  => true,
-            'charset'  => 'utf8mb4',
-            'DBCollat' => 'utf8mb4_general_ci',
-            'swapPre'  => '',
-            'encrypt'  => false,
-            'compress' => false,
-            'strictOn' => false,
-            'failover' => [],
-            'port'     => $port,
-        ];
 
         if (ENVIRONMENT === 'testing') {
             $this->default = [
