@@ -98,15 +98,23 @@ class BudgetController extends BaseAPIController
 
     protected function handleRequest(string $method, string $failureMessage, callable $resolver): ResponseInterface
     {
-        log_message('debug', '[APIs\\BudgetController] method entered: {method} uri: {uri}', [
-            'method' => $method,
-            'uri' => (string) $this->request->getUri(),
-        ]);
+        $requestUri = (string) $this->request->getUri();
+        $requestMethod = (string) $this->request->getMethod();
+        $sessionId = method_exists($this->session, 'getId') ? (string) $this->session->getId() : '';
+        $cookieHeader = (string) ($this->request->getHeaderLine('Cookie') ?? '');
+        $sessionKeys = method_exists($this->session, 'get') ? array_keys((array) $this->session->get()) : [];
 
-        $userId = $this->resolveCurrentUserId();
-        log_message('debug', '[APIs\\BudgetController] {method} resolved user id: {userId}', [
+        [$userId, $source] = $this->resolveAuthenticatedUserId();
+
+        log_message('debug', '[APIs\\BudgetController] {method} request: uri={uri} http_method={http_method} session_id={session_id} cookie_header_present={cookie_header_present} resolved_user_id={resolved_user_id} source={source} session_keys={session_keys}', [
             'method' => $method,
-            'userId' => $userId,
+            'uri' => $requestUri,
+            'http_method' => $requestMethod,
+            'session_id' => $sessionId,
+            'cookie_header_present' => $cookieHeader !== '' ? 'yes' : 'no',
+            'resolved_user_id' => $userId ?? 'null',
+            'source' => $source ?? 'none',
+            'session_keys' => implode(',', $sessionKeys),
         ]);
 
         if ($userId === null) {
@@ -163,25 +171,83 @@ class BudgetController extends BaseAPIController
         }
     }
 
-    protected function resolveCurrentUserId(): ?int
+    /**
+     * Resolve using the same path as authenticated page controllers first,
+     * then fallback to known app compatibility session/auth keys.
+     *
+     * @return array{0:int|null,1:string|null}
+     */
+    protected function resolveAuthenticatedUserId(): array
     {
-        $userId = null;
+        if (isset($this->cuID) && is_numeric($this->cuID) && (int) $this->cuID > 0) {
+            return [(int) $this->cuID, 'cuID'];
+        }
+
+        $parentResolvedId = parent::resolveCurrentUserId();
+        if (is_numeric($parentResolvedId) && (int) $parentResolvedId > 0) {
+            return [(int) $parentResolvedId, 'parent::resolveCurrentUserId'];
+        }
+
+        if (function_exists('auth')) {
+            try {
+                $auth = auth();
+                if ($auth && method_exists($auth, 'id')) {
+                    $authId = $auth->id();
+                    if (is_numeric($authId) && (int) $authId > 0) {
+                        return [(int) $authId, 'auth()->id()'];
+                    }
+                }
+            } catch (\Throwable $e) {
+                log_message('debug', '[APIs\\BudgetController] auth() lookup failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
+        }
 
         if ($this->auth && method_exists($this->auth, 'id')) {
-            $id = $this->auth->id();
-            if ($id !== null && $id !== '') {
-                $userId = (int) $id;
+            $serviceAuthId = $this->auth->id();
+            if (is_numeric($serviceAuthId) && (int) $serviceAuthId > 0) {
+                return [(int) $serviceAuthId, 'service(authentication)->id()'];
             }
         }
 
-        if ($userId === null) {
-            $sessionUserId = $this->session->get('user_id');
-            if ($sessionUserId !== null && $sessionUserId !== '') {
-                $userId = (int) $sessionUserId;
+        foreach (['cuID', 'user_id', 'userId', 'id', 'currentUserID', 'currentUserId'] as $sessionKey) {
+            $value = $this->session->get($sessionKey);
+            if (is_numeric($value) && (int) $value > 0) {
+                return [(int) $value, "session:{$sessionKey}"];
             }
         }
 
-        return $userId;
+        $sessionUser = $this->session->get('user');
+        if (is_array($sessionUser)) {
+            foreach (['id', 'user_id', 'cuID'] as $userIdKey) {
+                $candidate = $sessionUser[$userIdKey] ?? null;
+                if (is_numeric($candidate) && (int) $candidate > 0) {
+                    return [(int) $candidate, "session:user.{$userIdKey}"];
+                }
+            }
+        } elseif (is_object($sessionUser)) {
+            foreach (['id', 'user_id', 'cuID'] as $userIdKey) {
+                $candidate = $sessionUser->{$userIdKey} ?? null;
+                if (is_numeric($candidate) && (int) $candidate > 0) {
+                    return [(int) $candidate, "session:user->{$userIdKey}"];
+                }
+            }
+        }
+
+        $loggedIn = $this->session->get('logged_in');
+        if (is_array($loggedIn)) {
+            foreach (['id', 'user_id', 'cuID'] as $loggedInIdKey) {
+                $candidate = $loggedIn[$loggedInIdKey] ?? null;
+                if (is_numeric($candidate) && (int) $candidate > 0) {
+                    return [(int) $candidate, "session:logged_in.{$loggedInIdKey}"];
+                }
+            }
+        } elseif (is_numeric($loggedIn) && (int) $loggedIn > 0) {
+            return [(int) $loggedIn, 'session:logged_in'];
+        }
+
+        return [null, null];
     }
 
     protected function showExceptionDetails(): bool

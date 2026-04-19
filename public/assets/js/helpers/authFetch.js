@@ -12,12 +12,13 @@ export async function authFetch(url, options = {}) {
   const tokenMeta = document.querySelector('meta[name="csrf-token"]');
   const csrf = tokenMeta ? tokenMeta.getAttribute('content') : '';
   const headers = new Headers(options.headers || {});
+  if (!headers.has('Accept')) headers.set('Accept', 'application/json');
   headers.set('X-Requested-With', 'XMLHttpRequest');
   if (csrf) headers.set('X-CSRF-TOKEN', csrf);
   return fetch(url, {
     ...options,
     headers,
     credentials: 'same-origin',
-    cache: 'no-cache',
+    cache: 'no-store',
   });
 }
