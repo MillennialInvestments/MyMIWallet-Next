@@ -328,6 +328,39 @@
             "source": "docs"
         },
         {
+            "file": "docs/APIs/reports/canva-dev-docs-apps-api-latest-20260419-194931-integration-report.md",
+            "title": "API Integration Research Report",
+            "slug": "canva-dev-docs-apps-api-latest-20260419-194931-integration-report",
+            "category": null,
+            "headings": [
+                "API Integration Research Report",
+                "Core Findings",
+                "Authentication",
+                "Base Urls",
+                "Rate Limits",
+                "Pagination",
+                "Webhooks",
+                "Formats",
+                "Errors",
+                "Sandbox",
+                "Sdk",
+                "MyMI Wallet Application Notes",
+                "Source URLs"
+            ],
+            "topics": [
+                "ntegration",
+                "esearch",
+                "eport",
+                "indings",
+                "uthentication",
+                "imits",
+                "agination",
+                "ebhooks",
+                "ormats"
+            ],
+            "source": "docs"
+        },
+        {
             "file": "docs/APIs/reports/developer-20260412-120844-report.md",
             "title": "API Research Report: Developer",
             "slug": "developer-20260412-120844-report",
@@ -86627,8 +86660,44 @@
         "orphanViewsFile": "docs/_orphan_views.json",
         "undocumentedControllersFile": "docs/_undocumented_controllers.json",
         "orphanRoutes": {
-            "generated_at": "2026-03-08T16:13:50+00:00",
+            "generated_at": "2026-04-19T20:01:11+00:00",
             "orphanRoutes": [
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/index.php",
+                    "controller": "Home",
+                    "method": "index"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/index.php/",
+                    "controller": "Home",
+                    "method": "index"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/index.php/login",
+                    "controller": "AuthController",
+                    "method": "login"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/index.php/login",
+                    "controller": "AuthController",
+                    "method": "attemptLogin"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/index.php/register",
+                    "controller": "AuthController",
+                    "method": "register"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/index.php/register",
+                    "controller": "AuthController",
+                    "method": "attemptRegister"
+                },
                 {
                     "file": "app/Config/Routes.php",
                     "uri": "/assets/(.*)",
@@ -86859,6 +86928,18 @@
                 },
                 {
                     "file": "app/Config/Routes.php",
+                    "uri": "/How-It-Works",
+                    "controller": "App\\\\Modules\\\\Blog\\\\Controllers\\\\HowItWorksController",
+                    "method": "index"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/How-It-Works/(:segment)",
+                    "controller": "App\\\\Modules\\\\Blog\\\\Controllers\\\\HowItWorksController",
+                    "method": "show"
+                },
+                {
+                    "file": "app/Config/Routes.php",
                     "uri": "/Sector/(:segment)",
                     "controller": "Home",
                     "method": "sector"
@@ -86904,6 +86985,24 @@
                     "uri": "/common-data/smoke",
                     "controller": "CommonDataController",
                     "method": "smoke"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/debug/register-success-probe",
+                    "controller": "AuthController",
+                    "method": "registerSuccessProbe"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/API/Management/error-heatmap",
+                    "controller": "SystemDebugController",
+                    "method": "errorHeatmap"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/Management/System-Debug",
+                    "controller": "SystemDebugController",
+                    "method": "index"
                 },
                 {
                     "file": "app/Config/Routes.php",
@@ -87003,6 +87102,30 @@
                 },
                 {
                     "file": "app/Config/Routes.php",
+                    "uri": "/login-shield",
+                    "controller": "App\\\\Controllers\\\\ShieldAuth\\\\Login",
+                    "method": "index"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/login-shield",
+                    "controller": "App\\\\Controllers\\\\ShieldAuth\\\\Login",
+                    "method": "attempt"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/register-shield",
+                    "controller": "App\\\\Controllers\\\\ShieldAuth\\\\Register",
+                    "method": "index"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/register-shield",
+                    "controller": "App\\\\Controllers\\\\ShieldAuth\\\\Register",
+                    "method": "attempt"
+                },
+                {
+                    "file": "app/Config/Routes.php",
                     "uri": "/test-create-user",
                     "controller": "AuthController",
                     "method": "createTempUser"
@@ -87027,25 +87150,49 @@
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/(:any)/register",
+                    "uri": "/Discord/register",
                     "controller": "AuthController",
                     "method": "register"
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/(:any)/register/(:segment)",
+                    "uri": "/Discord/register/(:segment)",
                     "controller": "AuthController",
                     "method": "register"
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/(:any)/register",
+                    "uri": "/Discord/register",
                     "controller": "AuthController",
                     "method": "attemptRegister"
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/(:any)/register/(:segment)",
+                    "uri": "/Discord/register/(:segment)",
+                    "controller": "AuthController",
+                    "method": "attemptRegister"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/(:segment)/register",
+                    "controller": "AuthController",
+                    "method": "register"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/(:segment)/register/(:segment)",
+                    "controller": "AuthController",
+                    "method": "register"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/(:segment)/register",
+                    "controller": "AuthController",
+                    "method": "attemptRegister"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/(:segment)/register/(:segment)",
                     "controller": "AuthController",
                     "method": "attemptRegister"
                 },
@@ -87345,6 +87492,60 @@
                 },
                 {
                     "file": "app/Config/Routes.php",
+                    "uri": "/auth/login",
+                    "controller": "MobileAuthController",
+                    "method": "login"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/auth/register",
+                    "controller": "MobileAuthController",
+                    "method": "register"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/auth/logout",
+                    "controller": "MobileAuthController",
+                    "method": "logout"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/me",
+                    "controller": "MobileAuthController",
+                    "method": "me"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/dashboard",
+                    "controller": "MobileController",
+                    "method": "dashboard"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/budget",
+                    "controller": "MobileController",
+                    "method": "budget"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/investments",
+                    "controller": "MobileController",
+                    "method": "investments"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/alerts",
+                    "controller": "MobileController",
+                    "method": "alerts"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/Discord/interactions",
+                    "controller": "DiscordAPIController",
+                    "method": "interactions"
+                },
+                {
+                    "file": "app/Config/Routes.php",
                     "uri": "/Health",
                     "controller": "HealthAPIController",
                     "method": "index"
@@ -87477,6 +87678,12 @@
                 },
                 {
                     "file": "app/Config/Routes.php",
+                    "uri": "/Management/debugLogs",
+                    "controller": "ManagementAPIController",
+                    "method": "debugLogs"
+                },
+                {
+                    "file": "app/Config/Routes.php",
                     "uri": "/status",
                     "controller": "ScannerController",
                     "method": "status"
@@ -87525,12 +87732,6 @@
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/Discord/completeOnboardingStep",
-                    "controller": "DiscordAPIController",
-                    "method": "completeOnboardingStep"
-                },
-                {
-                    "file": "app/Config/Routes.php",
                     "uri": "/Investments/getForecastDetails/(:segment)",
                     "controller": "InvestmentsAPIController",
                     "method": "getForecastDetails"
@@ -87576,6 +87777,120 @@
                     "uri": "/LinkSettings",
                     "controller": "AIAPIController",
                     "method": "updateLinkSettings"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/commandsCatalog",
+                    "controller": "DiscordAPIController",
+                    "method": "commandsCatalog"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/onboardingSteps",
+                    "controller": "DiscordAPIController",
+                    "method": "onboardingSteps"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/sharingGuide",
+                    "controller": "DiscordAPIController",
+                    "method": "sharingGuide"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/enqueue",
+                    "controller": "DiscordAPIController",
+                    "method": "enqueue"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/broadcast",
+                    "controller": "DiscordAPIController",
+                    "method": "broadcast"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/completeOnboardingStep",
+                    "controller": "DiscordAPIController",
+                    "method": "completeOnboardingStep"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/health",
+                    "controller": "DiscordAPIController",
+                    "method": "health"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/interactions",
+                    "controller": "DiscordAPIController",
+                    "method": "interactions"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/register-guild-commands",
+                    "controller": "DiscordAPIController",
+                    "method": "registerGuildCommands"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/messageHook",
+                    "controller": "DiscordAPIController",
+                    "method": "messageHook"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/lookup/ticker",
+                    "controller": "DiscordAPIController",
+                    "method": "tickerLookup"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/lookup/crypto",
+                    "controller": "DiscordAPIController",
+                    "method": "cryptoLookup"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/lookup/quote",
+                    "controller": "DiscordAPIController",
+                    "method": "quoteLookup"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/webhook",
+                    "controller": "DiscordAPIController",
+                    "method": "webhookProxy"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/createLinkToken",
+                    "controller": "DiscordAPIController",
+                    "method": "createLinkToken"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/process-queue",
+                    "controller": "DiscordAPIController",
+                    "method": "processQueue"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/coalesce-now",
+                    "controller": "DiscordAPIController",
+                    "method": "coalesceNow"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/purge-dead",
+                    "controller": "DiscordAPIController",
+                    "method": "purgeDead"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/test",
+                    "controller": "DiscordAPIController",
+                    "method": "test"
                 },
                 {
                     "file": "app/Config/Routes.php",
@@ -88773,30 +89088,6 @@
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/getUserBudgetRecords",
-                    "controller": "BudgetAPIController",
-                    "method": "getUserBudgetRecords"
-                },
-                {
-                    "file": "app/Config/Routes.php",
-                    "uri": "/getUserCreditBalances",
-                    "controller": "BudgetAPIController",
-                    "method": "getUserCreditBalances"
-                },
-                {
-                    "file": "app/Config/Routes.php",
-                    "uri": "/getUserAvailableBalances",
-                    "controller": "BudgetAPIController",
-                    "method": "getUserAvailableBalances"
-                },
-                {
-                    "file": "app/Config/Routes.php",
-                    "uri": "/getUserRepaymentSummary",
-                    "controller": "BudgetAPIController",
-                    "method": "getUserRepaymentSummary"
-                },
-                {
-                    "file": "app/Config/Routes.php",
                     "uri": "/ingestScanner",
                     "controller": "ContentEngineAPIController",
                     "method": "ingestScanner"
@@ -88842,90 +89133,6 @@
                     "uri": "/runDaily",
                     "controller": "ContentEngineAPIController",
                     "method": "runDaily"
-                },
-                {
-                    "file": "app/Config/Routes.php",
-                    "uri": "/commandsCatalog",
-                    "controller": "DiscordAPIController",
-                    "method": "commandsCatalog"
-                },
-                {
-                    "file": "app/Config/Routes.php",
-                    "uri": "/onboardingSteps",
-                    "controller": "DiscordAPIController",
-                    "method": "onboardingSteps"
-                },
-                {
-                    "file": "app/Config/Routes.php",
-                    "uri": "/sharingGuide",
-                    "controller": "DiscordAPIController",
-                    "method": "sharingGuide"
-                },
-                {
-                    "file": "app/Config/Routes.php",
-                    "uri": "/enqueue",
-                    "controller": "DiscordAPIController",
-                    "method": "enqueue"
-                },
-                {
-                    "file": "app/Config/Routes.php",
-                    "uri": "/broadcast",
-                    "controller": "DiscordAPIController",
-                    "method": "broadcast"
-                },
-                {
-                    "file": "app/Config/Routes.php",
-                    "uri": "/interactions",
-                    "controller": "DiscordAPIController",
-                    "method": "handleInteraction"
-                },
-                {
-                    "file": "app/Config/Routes.php",
-                    "uri": "/messageHook",
-                    "controller": "DiscordAPIController",
-                    "method": "messageHook"
-                },
-                {
-                    "file": "app/Config/Routes.php",
-                    "uri": "/webhook",
-                    "controller": "DiscordAPIController",
-                    "method": "webhookProxy"
-                },
-                {
-                    "file": "app/Config/Routes.php",
-                    "uri": "/createLinkToken",
-                    "controller": "DiscordAPIController",
-                    "method": "createLinkToken"
-                },
-                {
-                    "file": "app/Config/Routes.php",
-                    "uri": "/process-queue",
-                    "controller": "DiscordAPIController",
-                    "method": "processQueue"
-                },
-                {
-                    "file": "app/Config/Routes.php",
-                    "uri": "/coalesce-now",
-                    "controller": "DiscordAPIController",
-                    "method": "coalesceNow"
-                },
-                {
-                    "file": "app/Config/Routes.php",
-                    "uri": "/purge-dead",
-                    "controller": "DiscordAPIController",
-                    "method": "purgeDead"
-                },
-                {
-                    "file": "app/Config/Routes.php",
-                    "uri": "/health",
-                    "controller": "DiscordAPIController",
-                    "method": "health"
-                },
-                {
-                    "file": "app/Config/Routes.php",
-                    "uri": "/test",
-                    "controller": "DiscordAPIController",
-                    "method": "test"
                 },
                 {
                     "file": "app/Config/Routes.php",
@@ -89433,6 +89640,78 @@
                 },
                 {
                     "file": "app/Config/Routes.php",
+                    "uri": "/generateVideoContent",
+                    "controller": "MarketingAPIController",
+                    "method": "generateVideoContent"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/generateTikTokContent",
+                    "controller": "MarketingAPIController",
+                    "method": "generateTikTokContent"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/saveVideoDraft",
+                    "controller": "MarketingAPIController",
+                    "method": "saveVideoDraft"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/updateVideoContent/(:num)",
+                    "controller": "MarketingAPIController",
+                    "method": "updateVideoContent"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/approveVideoContent/(:num)",
+                    "controller": "MarketingAPIController",
+                    "method": "approveVideoContent"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/archiveVideoContent/(:num)",
+                    "controller": "MarketingAPIController",
+                    "method": "archiveVideoContent"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/duplicateVideoContent/(:num)",
+                    "controller": "MarketingAPIController",
+                    "method": "duplicateVideoContent"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/getVideoContent/(:num)",
+                    "controller": "MarketingAPIController",
+                    "method": "getVideoContent"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/getVideoQueue",
+                    "controller": "MarketingAPIController",
+                    "method": "getVideoQueue"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/exportVideoPackage/(:num)",
+                    "controller": "MarketingAPIController",
+                    "method": "exportVideoPackage"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/getTemplates",
+                    "controller": "MarketingAPIController",
+                    "method": "getTemplates"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/deleteTemplate/(:num)",
+                    "controller": "MarketingAPIController",
+                    "method": "deleteTemplate"
+                },
+                {
+                    "file": "app/Config/Routes.php",
                     "uri": "/forceGenerateFromTemp",
                     "controller": "MarketingAPIController",
                     "method": "forceGenerateFromTemp"
@@ -89793,6 +90072,48 @@
                 },
                 {
                     "file": "app/Config/Routes.php",
+                    "uri": "/uploadNotification",
+                    "controller": "MarketingAPIController",
+                    "method": "uploadNotification"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/getStoryUpdates",
+                    "controller": "MarketingAPIController",
+                    "method": "getStoryUpdates"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/generateMarketingPackage",
+                    "controller": "MarketingAPIController",
+                    "method": "generateMarketingPackage"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/distributionSummary",
+                    "controller": "MarketingAPIController",
+                    "method": "distributionSummary"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/distributionHistory/(:num)",
+                    "controller": "MarketingAPIController",
+                    "method": "distributionHistory"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/distributionFailedSummary",
+                    "controller": "MarketingAPIController",
+                    "method": "distributionFailedSummary"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/distributionChannelTotals",
+                    "controller": "MarketingAPIController",
+                    "method": "distributionChannelTotals"
+                },
+                {
+                    "file": "app/Config/Routes.php",
                     "uri": "/",
                     "controller": "MarketingAPIController",
                     "method": "index"
@@ -89892,6 +90213,12 @@
                     "uri": "/generateContent",
                     "controller": "MarketingAPIController",
                     "method": "generateContent"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/generateMarketingPackage",
+                    "controller": "MarketingAPIController",
+                    "method": "generateMarketingPackage"
                 },
                 {
                     "file": "app/Config/Routes.php",
@@ -90915,8 +91242,14 @@
                 },
                 {
                     "file": "app/Config/Routes.php",
+                    "uri": "/onboarding/source-welcome/complete",
+                    "controller": "OnboardingWalkthroughController",
+                    "method": "completeSourceWelcome"
+                },
+                {
+                    "file": "app/Config/Routes.php",
                     "uri": "/",
-                    "controller": "ManagementController",
+                    "controller": "ManagementAdminController",
                     "method": "index"
                 },
                 {
@@ -91149,6 +91482,12 @@
                 },
                 {
                     "file": "app/Config/Routes.php",
+                    "uri": "/weeklyTopPerformance",
+                    "controller": "AlertsAdminController",
+                    "method": "topPerformanceWeekly"
+                },
+                {
+                    "file": "app/Config/Routes.php",
                     "uri": "/",
                     "controller": "AssetsAdminController",
                     "method": "index"
@@ -91179,49 +91518,49 @@
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/Discord/Channels/Save",
+                    "uri": "/Channels/Save",
                     "controller": "DiscordAdminController",
                     "method": "saveDiscordChannel"
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/Discord/Channels/Delete",
+                    "uri": "/Channels/Delete",
                     "controller": "DiscordAdminController",
                     "method": "deleteDiscordChannel"
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/Discord/Templates/Save",
+                    "uri": "/Templates/Save",
                     "controller": "DiscordAdminController",
                     "method": "saveDiscordTemplate"
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/Discord/Templates/Delete",
+                    "uri": "/Templates/Delete",
                     "controller": "DiscordAdminController",
                     "method": "deleteDiscordTemplate"
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/Discord/Subscriptions/Save",
+                    "uri": "/Subscriptions/Save",
                     "controller": "DiscordAdminController",
                     "method": "saveDiscordSubscription"
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/Discord/Subscriptions/Delete",
+                    "uri": "/Subscriptions/Delete",
                     "controller": "DiscordAdminController",
                     "method": "deleteDiscordSubscription"
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/Discord/Policies/Save",
+                    "uri": "/Policies/Save",
                     "controller": "DiscordAdminController",
                     "method": "saveDiscordPolicy"
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/Discord/Policies/Delete",
+                    "uri": "/Policies/Delete",
                     "controller": "DiscordAdminController",
                     "method": "deleteDiscordPolicy"
                 },
@@ -91446,6 +91785,12 @@
                     "uri": "/Content/Generator",
                     "controller": "MarketingAdminController",
                     "method": "contentGenerator"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/Content-Studio",
+                    "controller": "MarketingAdminController",
+                    "method": "contentStudio"
                 },
                 {
                     "file": "app/Config/Routes.php",
@@ -91785,6 +92130,78 @@
                 },
                 {
                     "file": "app/Config/Routes.php",
+                    "uri": "/Fund",
+                    "controller": "ProjectsAdminController",
+                    "method": "fundOverview"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/Fund/(:num)",
+                    "controller": "ProjectsAdminController",
+                    "method": "fundOverview"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/UpdateFundNAV",
+                    "controller": "ProjectsAdminController",
+                    "method": "updateFundNAV"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/RecordFundDistribution",
+                    "controller": "ProjectsAdminController",
+                    "method": "recordFundDistribution"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/SeedPrimaryFundProject",
+                    "controller": "ProjectsAdminController",
+                    "method": "seedPrimaryFundProject"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/HideTestProjects",
+                    "controller": "ProjectsAdminController",
+                    "method": "hideTestProjects"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/UpdateInvestorCompliance",
+                    "controller": "ProjectsAdminController",
+                    "method": "updateInvestorCompliance"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/RecordFundCapitalFlow",
+                    "controller": "ProjectsAdminController",
+                    "method": "recordFundCapitalFlow"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/ValidateFundIntegrity",
+                    "controller": "ProjectsAdminController",
+                    "method": "validateFundIntegrity"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/ValidateFundIntegrity/(:num)",
+                    "controller": "ProjectsAdminController",
+                    "method": "validateFundIntegrity"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/ReconcileFundExchange/(:num)",
+                    "controller": "ProjectsAdminController",
+                    "method": "reconcileFundExchange"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/RegisterFundExchangeAsset/(:num)",
+                    "controller": "ProjectsAdminController",
+                    "method": "registerFundExchangeAsset"
+                },
+                {
+                    "file": "app/Config/Routes.php",
                     "uri": "/",
                     "controller": "ReferralsController",
                     "method": "index"
@@ -91998,6 +92415,12 @@
                     "uri": "/Forecast/(:segment)",
                     "controller": "BudgetController",
                     "method": "forecast"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/Projects/(:any)",
+                    "controller": "ExchangeController",
+                    "method": "project"
                 },
                 {
                     "file": "app/Config/Routes.php",
@@ -92511,7 +92934,7 @@
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/View/(:segment)",
+                    "uri": "/View/(:num)",
                     "controller": "ProjectsController",
                     "method": "view"
                 },
@@ -92544,6 +92967,24 @@
                     "uri": "/Accept-Private-Allocation/(:num)",
                     "controller": "ProjectsController",
                     "method": "acceptPrivateAllocation"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/Fund",
+                    "controller": "ProjectsController",
+                    "method": "fund"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/Fund/(:num)",
+                    "controller": "ProjectsController",
+                    "method": "fund"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/PurchaseFundUnits",
+                    "controller": "ProjectsController",
+                    "method": "purchaseFundUnits"
                 },
                 {
                     "file": "app/Config/Routes.php",
@@ -92625,55 +93066,85 @@
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/",
+                    "uri": "/Daily-Financial-News",
                     "controller": "HowItWorksController",
-                    "method": "index"
+                    "method": "DailyFinancialNews"
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/budgeting",
+                    "uri": "/Investing",
                     "controller": "HowItWorksController",
-                    "method": "budgeting"
+                    "method": "InvestmentPortfolioManagement"
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/investing",
+                    "uri": "/Investment-Portfolio-Management",
                     "controller": "HowItWorksController",
-                    "method": "investing"
+                    "method": "InvestmentPortfolioManagement"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/MyMI-Gold",
+                    "controller": "HowItWorksController",
+                    "method": "MyMIGold"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/What-Is-MyMI-Gold",
+                    "controller": "HowItWorksController",
+                    "method": "MyMIGold"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/Personal-Budgeting",
+                    "controller": "HowItWorksController",
+                    "method": "PersonalBudgeting"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/Purchase-MyMI-Gold",
+                    "controller": "HowItWorksController",
+                    "method": "PurchaseMyMIGold"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/Setting-Financial-Goals",
+                    "controller": "HowItWorksController",
+                    "method": "SettingFinancialGoals"
                 },
                 {
                     "file": "app/Config/Routes.php",
                     "uri": "/crypto",
                     "controller": "HowItWorksController",
-                    "method": "crypto"
+                    "method": "show"
                 },
                 {
                     "file": "app/Config/Routes.php",
                     "uri": "/alerts",
                     "controller": "HowItWorksController",
-                    "method": "alerts"
+                    "method": "show"
                 },
                 {
                     "file": "app/Config/Routes.php",
                     "uri": "/projects",
                     "controller": "HowItWorksController",
-                    "method": "projects"
+                    "method": "show"
                 },
                 {
                     "file": "app/Config/Routes.php",
                     "uri": "/security",
                     "controller": "HowItWorksController",
-                    "method": "security"
+                    "method": "show"
                 },
                 {
                     "file": "app/Config/Routes.php",
                     "uri": "/pricing",
                     "controller": "HowItWorksController",
-                    "method": "pricing"
+                    "method": "show"
                 },
                 {
                     "file": "app/Config/Routes.php",
-                    "uri": "/(:any)",
+                    "uri": "/(:segment)",
                     "controller": "HowItWorksController",
                     "method": "show"
                 },
@@ -92710,6 +93181,12 @@
                 {
                     "file": "app/Config/Routes.php",
                     "uri": "/Article/(:segment)",
+                    "controller": "SupportController",
+                    "method": "article"
+                },
+                {
+                    "file": "app/Config/Routes.php",
+                    "uri": "/Article",
                     "controller": "SupportController",
                     "method": "article"
                 },
@@ -93828,6 +94305,174 @@
                     "uri": "/",
                     "controller": "Blog",
                     "method": "index"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/PropFirms",
+                    "controller": "PropFirmsController",
+                    "method": "index"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/propfirms",
+                    "controller": "PropFirmsController",
+                    "method": "index"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/",
+                    "controller": "PropFirmsController",
+                    "method": "index"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/RuleSets",
+                    "controller": "PropFirmsController",
+                    "method": "ruleSets"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Accounts",
+                    "controller": "AccountsController",
+                    "method": "index"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Accounts/create",
+                    "controller": "AccountsController",
+                    "method": "create"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Accounts",
+                    "controller": "AccountsController",
+                    "method": "store"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Accounts/(:num)",
+                    "controller": "AccountsController",
+                    "method": "detail"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Accounts/(:num)/edit",
+                    "controller": "AccountsController",
+                    "method": "edit"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Accounts/(:num)",
+                    "controller": "AccountsController",
+                    "method": "update"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Accounts/(:num)",
+                    "controller": "AccountsController",
+                    "method": "delete"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Accounts/(:num)/refresh-state",
+                    "controller": "AccountsController",
+                    "method": "refreshState"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Accounts/(:num)/connect-broker",
+                    "controller": "AccountsController",
+                    "method": "connectBroker"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Accounts/(:num)/tradovate/connect",
+                    "controller": "TradovateController",
+                    "method": "connect"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Accounts/(:num)/tradovate/disconnect",
+                    "controller": "TradovateController",
+                    "method": "disconnect"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Accounts/(:num)/tradovate/sync",
+                    "controller": "TradovateController",
+                    "method": "sync"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Accounts/(:num)/tradovate/sync-orders",
+                    "controller": "TradovateController",
+                    "method": "syncOrders"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Accounts/(:num)/tradovate/sync-fills",
+                    "controller": "TradovateController",
+                    "method": "syncFills"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Accounts/(:num)/tradovate/sync-positions",
+                    "controller": "TradovateController",
+                    "method": "syncPositions"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Replay/(:num)/(:segment)",
+                    "controller": "ReplayController",
+                    "method": "index"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Replay/(:num)/save-review",
+                    "controller": "ReplayController",
+                    "method": "saveReview"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Signals/scan/(:num)",
+                    "controller": "SignalsController",
+                    "method": "scan"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Notifications",
+                    "controller": "NotificationsController",
+                    "method": "index"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Notifications/(:num)/read",
+                    "controller": "NotificationsController",
+                    "method": "markRead"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/Rules/SeedDefaults",
+                    "controller": "PropFirmsController",
+                    "method": "seedDefaults"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/account-state/(:num)",
+                    "controller": "AccountsController",
+                    "method": "accountState"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/PropFirms/replay/(:num)/(:segment)",
+                    "controller": "ReplayController",
+                    "method": "apiReplay"
+                },
+                {
+                    "file": "app/Modules/PropFirms/Config/Routes.php",
+                    "uri": "/PropFirms/replay/(:num)/diagnostics",
+                    "controller": "ReplayController",
+                    "method": "diagnosticsSummary"
                 },
                 {
                     "file": "app/Modules/ScriptStudio/Config/Routes.php",
