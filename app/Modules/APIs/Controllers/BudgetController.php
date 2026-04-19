@@ -110,6 +110,10 @@ class BudgetController extends BaseAPIController
         ]);
 
         if ($userId === null) {
+            log_message('debug', '[APIs\\BudgetController] {method} response status chosen: 401', [
+                'method' => $method,
+            ]);
+
             return $this->response
                 ->setStatusCode(401)
                 ->setContentType('application/json')
@@ -121,6 +125,10 @@ class BudgetController extends BaseAPIController
 
         try {
             $data = $resolver($userId);
+
+            log_message('debug', '[APIs\\BudgetController] {method} response status chosen: 200', [
+                'method' => $method,
+            ]);
 
             return $this->response
                 ->setStatusCode(200)
@@ -143,6 +151,10 @@ class BudgetController extends BaseAPIController
             if ($this->showExceptionDetails()) {
                 $payload['error'] = $e->getMessage();
             }
+
+            log_message('debug', '[APIs\\BudgetController] {method} response status chosen: 500', [
+                'method' => $method,
+            ]);
 
             return $this->response
                 ->setStatusCode(500)
