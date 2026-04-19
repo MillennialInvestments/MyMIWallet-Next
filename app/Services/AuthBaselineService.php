@@ -15,7 +15,7 @@ class AuthBaselineService
      */
     public function criticalFiles(): array
     {
-        $files = [
+        return [
             'app/Config/App.php',
             'app/Config/Auth.php',
             'app/Config/Services.php',
@@ -38,8 +38,17 @@ class AuthBaselineService
             'public/assets/js/login-init.js',
             'public/.htaccess',
         ];
+    }
 
-        return array_values(array_filter($files, static fn (string $path): bool => is_file(ROOTPATH . $path)));
+    /**
+     * @return array<int, string>
+     */
+    public function existingCriticalFiles(): array
+    {
+        return array_values(array_filter(
+            $this->criticalFiles(),
+            static fn (string $path): bool => is_file(ROOTPATH . $path)
+        ));
     }
 
     public function timestamp(): string
@@ -55,20 +64,18 @@ class AuthBaselineService
         $this->ensureDir($historyDir . '/files');
         $this->ensureDir($currentDir);
 
-        $files = $this->criticalFiles();
-        $fileHashes = [];
-        $copied = [];
+        $capturedFiles = $this->existingCriticalFiles();
+        $hashes = [];
 
-        foreach ($files as $relativePath) {
+        foreach ($capturedFiles as $relativePath) {
             $source = ROOTPATH . $relativePath;
-            $dest = $historyDir . '/files/' . $relativePath;
-            $this->ensureDir(dirname($dest));
-            copy($source, $dest);
-
-            $hash = hash_file('sha256', $source) ?: '';
-            $fileHashes[$relativePath] = $hash;
-            $copied[] = $relativePath;
+            $destination = $historyDir . '/files/' . $relativePath;
+            $this->ensureDir(dirname($destination));
+            copy($source, $destination);
+            $hashes[$relativePath] = hash_file('sha256', $source) ?: '';
         }
+
+        $missingFromRuntime = array_values(array_diff($this->criticalFiles(), $capturedFiles));
 
         $routesRaw = $this->captureRoutesRaw();
         $routesAuthOnly = $this->parseAuthRoutes($routesRaw);
@@ -87,16 +94,22 @@ class AuthBaselineService
         $manifest = [
             'captured_at_utc' => gmdate('c'),
             'timestamp' => $timestamp,
-            'files' => $copied,
-            'file_hashes_sha256' => $fileHashes,
-            'routes_snapshot_sha256' => hash('sha256', $routesRaw),
-            'env_snapshot_sha256' => hash('sha256', json_encode($envSnapshot, JSON_UNESCAPED_SLASHES) ?: '{}'),
-            'package_snapshot_sha256' => hash('sha256', json_encode($packageSnapshot, JSON_UNESCAPED_SLASHES) ?: '{}'),
-            'smoke_status' => $smoke['status'] ?? 'UNKNOWN',
-            'auth_runtime' => [
-                'auth_service' => $this->serviceClass('auth'),
-                'authentication_service' => $this->serviceClass('authentication'),
+            'baseline_scope' => $this->criticalFiles(),
+            'captured_files' => $capturedFiles,
+            'missing_from_runtime' => $missingFromRuntime,
+            'file_hashes_sha256' => $hashes,
+            'runtime_metadata' => [
+                'routes_snapshot_sha256' => hash('sha256', $routesRaw),
+                'env_snapshot_sha256' => hash('sha256', json_encode($envSnapshot, JSON_UNESCAPED_SLASHES) ?: '{}'),
+                'package_snapshot_sha256' => hash('sha256', json_encode($packageSnapshot, JSON_UNESCAPED_SLASHES) ?: '{}'),
+                'surface_snapshot_sha256' => hash('sha256', json_encode($surface, JSON_UNESCAPED_SLASHES) ?: '{}'),
+                'smoke_snapshot_sha256' => hash('sha256', json_encode($smoke, JSON_UNESCAPED_SLASHES) ?: '{}'),
+                'service_runtime' => [
+                    'auth' => $this->serviceClass('auth'),
+                    'authentication' => $this->serviceClass('authentication'),
+                ],
             ],
+            'smoke_status' => $smoke['status'] ?? 'UNKNOWN',
         ];
 
         file_put_contents($historyDir . '/manifest.json', json_encode($manifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
@@ -123,19 +136,20 @@ class AuthBaselineService
         $manifest = json_decode((string) file_get_contents($manifestPath), true) ?: [];
         $expectedHashes = $manifest['file_hashes_sha256'] ?? [];
 
-        $changed = [];
-        $missing = [];
+        $changedFiles = [];
+        $missingFiles = [];
 
         foreach ($expectedHashes as $relativePath => $expectedHash) {
-            $full = ROOTPATH . $relativePath;
-            if (! is_file($full)) {
-                $missing[] = $relativePath;
+            $fullPath = ROOTPATH . $relativePath;
+
+            if (! is_file($fullPath)) {
+                $missingFiles[] = $relativePath;
                 continue;
             }
 
-            $actualHash = hash_file('sha256', $full) ?: '';
+            $actualHash = hash_file('sha256', $fullPath) ?: '';
             if (! hash_equals((string) $expectedHash, $actualHash)) {
-                $changed[] = [
+                $changedFiles[] = [
                     'file' => $relativePath,
                     'expected' => (string) $expectedHash,
                     'actual' => $actualHash,
@@ -143,50 +157,65 @@ class AuthBaselineService
             }
         }
 
-        $baselineEnv = json_decode((string) file_get_contents($currentDir . '/env.auth.json'), true) ?: [];
+        $baselineEnv = json_decode((string) @file_get_contents($currentDir . '/env.auth.json'), true) ?: [];
         $currentEnv = $this->captureEnvSnapshot();
+        $envDrift = $this->buildAssocDrift($baselineEnv, $currentEnv);
 
-        $envDrift = [];
-        $allEnvKeys = array_unique(array_merge(array_keys($baselineEnv), array_keys($currentEnv)));
-        sort($allEnvKeys);
-        foreach ($allEnvKeys as $key) {
-            $baseline = $baselineEnv[$key] ?? null;
-            $actual = $currentEnv[$key] ?? null;
-            if ((string) $baseline !== (string) $actual) {
-                $envDrift[$key] = ['baseline' => $baseline, 'current' => $actual];
-            }
-        }
-
-        $baselineRoutes = $this->normalizeRoutesSnapshot((string) @file_get_contents($currentDir . '/routes.snapshot.txt'));
-        $currentRoutes = $this->normalizeRoutesSnapshot($this->captureRoutesRaw());
-        $routeDrift = hash('sha256', $baselineRoutes) !== hash('sha256', $currentRoutes);
-
-        $baselinePackages = json_decode((string) file_get_contents($currentDir . '/packages.auth.json'), true) ?: [];
+        $baselinePackages = json_decode((string) @file_get_contents($currentDir . '/packages.auth.json'), true) ?: [];
         $currentPackages = $this->capturePackageSnapshot();
         $packageDrift = [];
-        $allPkg = array_unique(array_merge(array_keys($baselinePackages), array_keys($currentPackages)));
-        sort($allPkg);
-        foreach ($allPkg as $name) {
-            $baseline = $baselinePackages[$name]['version'] ?? null;
-            $current = $currentPackages[$name]['version'] ?? null;
-            if ((string) $baseline !== (string) $current) {
-                $packageDrift[$name] = ['baseline' => $baseline, 'current' => $current];
+        $allPackages = array_unique(array_merge(array_keys($baselinePackages), array_keys($currentPackages)));
+        sort($allPackages);
+
+        foreach ($allPackages as $package) {
+            $baselineVersion = $baselinePackages[$package]['version'] ?? null;
+            $currentVersion = $currentPackages[$package]['version'] ?? null;
+            $baselineReference = $baselinePackages[$package]['reference'] ?? null;
+            $currentReference = $currentPackages[$package]['reference'] ?? null;
+
+            if ((string) $baselineVersion !== (string) $currentVersion || (string) $baselineReference !== (string) $currentReference) {
+                $packageDrift[$package] = [
+                    'baseline' => [
+                        'version' => $baselineVersion,
+                        'reference' => $baselineReference,
+                    ],
+                    'current' => [
+                        'version' => $currentVersion,
+                        'reference' => $currentReference,
+                    ],
+                ];
             }
         }
 
+        $baselineRoutesRaw = (string) @file_get_contents($currentDir . '/routes.snapshot.txt');
+        $currentRoutesRaw = $this->captureRoutesRaw();
+
+        $baselineRoutes = $this->parseAuthRoutes($baselineRoutesRaw);
+        $currentRoutes = $this->parseAuthRoutes($currentRoutesRaw);
+
+        $baselineSignatures = $this->routeSignatures($baselineRoutes);
+        $currentSignatures = $this->routeSignatures($currentRoutes);
+
+        $routeAdded = array_values(array_diff($currentSignatures, $baselineSignatures));
+        $routeMissing = array_values(array_diff($baselineSignatures, $currentSignatures));
+
         return [
-            'changed_files' => $changed,
-            'missing_files' => $missing,
+            'changed_files' => $changedFiles,
+            'missing_files' => $missingFiles,
             'env_drift' => $envDrift,
-            'route_drift' => $routeDrift,
+            'route_drift' => [
+                'changed' => $routeAdded !== [] || $routeMissing !== [],
+                'added' => $routeAdded,
+                'missing' => $routeMissing,
+            ],
             'package_drift' => $packageDrift,
         ];
     }
 
     public function restore(array $options): array
     {
-        $timestamp = (string) ($options['from'] ?? '');
-        $singleFile = (string) ($options['file'] ?? '');
+        $timestamp = trim((string) ($options['from'] ?? ''));
+        $singleFile = trim((string) ($options['file'] ?? ''));
         $dryRun = (bool) ($options['dry_run'] ?? false);
 
         $sourceDir = $timestamp !== ''
@@ -198,22 +227,22 @@ class AuthBaselineService
         }
 
         $allowed = $this->criticalFiles();
-        $restoreTargets = [];
+        $targets = [];
 
         if ($singleFile !== '') {
             if (! in_array($singleFile, $allowed, true)) {
                 return ['error' => '--file is not auth-critical: ' . $singleFile];
             }
 
-            $restoreTargets[] = $singleFile;
+            $targets[] = $singleFile;
         } else {
-            $restoreTargets = $allowed;
+            $targets = $allowed;
         }
 
         $restored = [];
         $skipped = [];
 
-        foreach ($restoreTargets as $relativePath) {
+        foreach ($targets as $relativePath) {
             $source = $sourceDir . '/files/' . $relativePath;
             if (! is_file($source)) {
                 $skipped[] = $relativePath;
@@ -241,24 +270,26 @@ class AuthBaselineService
     public function scanSurface(?string $routesRaw = null): array
     {
         $routesRaw ??= $this->captureRoutesRaw();
-
         $authRoutes = $this->parseAuthRoutes($routesRaw);
+
         $loginRegisterRoutes = array_values(array_filter($authRoutes, static function (array $route): bool {
             $uri = strtolower((string) ($route['uri'] ?? ''));
             return str_contains($uri, 'login') || str_contains($uri, 'register');
         }));
 
         $dashboardRoutes = array_values(array_filter($authRoutes, static function (array $route): bool {
-            return str_contains(strtolower((string) ($route['uri'] ?? '')), 'dashboard');
+            $uri = strtolower((string) ($route['uri'] ?? ''));
+            $handler = strtolower((string) ($route['handler'] ?? ''));
+            return str_contains($uri, 'dashboard') || str_contains($handler, 'dashboard');
         }));
 
-        $filtersFile = is_file(ROOTPATH . 'app/Config/Filters.php')
-            ? (string) file_get_contents(ROOTPATH . 'app/Config/Filters.php')
-            : '';
+        $filtersPath = ROOTPATH . 'app/Config/Filters.php';
         $filterTouches = [];
-        foreach (explode("\n", $filtersFile) as $lineNo => $line) {
-            $lineLower = strtolower($line);
-            if (str_contains($lineLower, 'auth') || str_contains($lineLower, 'dashboard') || str_contains($lineLower, 'login')) {
+        $filtersContent = is_file($filtersPath) ? (string) file_get_contents($filtersPath) : '';
+
+        foreach (preg_split('/\R/', $filtersContent) ?: [] as $lineNo => $line) {
+            $lower = strtolower($line);
+            if (str_contains($lower, 'auth') || str_contains($lower, 'login') || str_contains($lower, 'dashboard') || str_contains($lower, 'permission') || str_contains($lower, 'role')) {
                 $filterTouches[] = [
                     'line' => $lineNo + 1,
                     'content' => trim($line),
@@ -266,33 +297,43 @@ class AuthBaselineService
             }
         }
 
+        $views = [
+            'app/Views/Auth/login.php',
+            'app/Views/Auth/register.php',
+            'app/Views/Auth/layout.php',
+        ];
+
         $viewBindings = [];
-        foreach (['app/Views/Auth/login.php', 'app/Views/Auth/register.php', 'app/Views/Auth/layout.php'] as $view) {
-            $contents = (string) @file_get_contents(ROOTPATH . $view);
+        foreach ($views as $view) {
+            $content = (string) @file_get_contents(ROOTPATH . $view);
             $viewBindings[] = [
                 'view' => $view,
-                'has_form' => stripos($contents, '<form') !== false,
-                'has_csrf' => stripos($contents, 'csrf') !== false,
+                'exists' => is_file(ROOTPATH . $view),
+                'has_form' => stripos($content, '<form') !== false,
+                'mentions_login_or_register' => stripos($content, 'login') !== false || stripos($content, 'register') !== false,
+                'has_csrf_hint' => stripos($content, 'csrf') !== false,
             ];
         }
 
-        $jsFile = 'public/assets/js/login-init.js';
-        $jsContents = (string) @file_get_contents(ROOTPATH . $jsFile);
+        $jsPath = 'public/assets/js/login-init.js';
+        $jsContent = (string) @file_get_contents(ROOTPATH . $jsPath);
 
         return [
-            'login_register_routes' => $loginRegisterRoutes,
-            'dashboard_routes' => $dashboardRoutes,
-            'auth_controller_namespace' => class_exists(\App\Controllers\AuthController::class)
+            'active_login_register_routes' => $loginRegisterRoutes,
+            'dashboard_redirect_routes' => $dashboardRoutes,
+            'active_auth_controller_namespace' => class_exists(\App\Controllers\AuthController::class)
                 ? \App\Controllers\AuthController::class
                 : 'not found',
-            'filters_touching_auth_dashboard' => $filterTouches,
+            'filters_touching_auth_and_dashboard' => $filterTouches,
             'service_auth_runtime' => $this->serviceClass('auth'),
             'service_authentication_runtime' => $this->serviceClass('authentication'),
-            'view_bindings' => $viewBindings,
-            'js_binding' => [
-                'file' => $jsFile,
-                'exists' => is_file(ROOTPATH . $jsFile),
-                'binds_login_form' => str_contains(strtolower($jsContents), 'login'),
+            'views_bound_to_auth_forms' => $viewBindings,
+            'js_bound_to_auth_forms' => [
+                'file' => $jsPath,
+                'exists' => is_file(ROOTPATH . $jsPath),
+                'mentions_login' => str_contains(strtolower($jsContent), 'login'),
+                'mentions_register' => str_contains(strtolower($jsContent), 'register'),
+                'mentions_form' => str_contains(strtolower($jsContent), 'form'),
             ],
         ];
     }
@@ -303,12 +344,18 @@ class AuthBaselineService
         $checks = [];
 
         $checks[] = $this->probe('GET', $base . '/login', null, 'GET /login');
-        $checks[] = $this->probe('POST', $base . '/login', ['login' => 'invalid@example.com', 'password' => 'invalid-password'], 'POST /login invalid credentials');
+        $checks[] = $this->probe('POST', $base . '/login', [
+            'login' => 'invalid@example.com',
+            'password' => 'invalid-password',
+        ], 'POST /login invalid credentials');
         $checks[] = $this->probe('GET', $base . '/register', null, 'GET /register');
-        $checks[] = $this->probe('POST', $base . '/register', ['email' => 'invalid', 'password' => 'x', 'pass_confirm' => 'y'], 'POST /register invalid payload');
+        $checks[] = $this->probe('POST', $base . '/register', [
+            'email' => 'invalid-email',
+            'password' => 'x',
+            'pass_confirm' => 'y',
+        ], 'POST /register invalid payload');
         $checks[] = $this->probe('GET', $base . '/activate-account', null, 'activation route probe');
         $checks[] = $this->probe('GET', $base . '/forgot-password', null, 'reset password probe');
-
         $checks[] = $this->checkCanonicalHost();
         $checks[] = $this->checkCsrfPath($base . '/login');
         $checks[] = $this->checkDashboardDefaultTarget();
@@ -331,7 +378,7 @@ class AuthBaselineService
         $envHost = parse_url($envBase, PHP_URL_HOST) ?: '';
 
         return [
-            'key' => 'canonical_host_baseurl_consistency',
+            'key' => 'canonical_host/baseURL_consistency',
             'pass' => $baseHost !== '' && $baseHost === $envHost,
             'details' => [
                 'config_baseURL' => $base,
@@ -342,15 +389,16 @@ class AuthBaselineService
 
     private function checkCsrfPath(string $url): array
     {
-        $probe = $this->probe('GET', $url, null, 'csrf probe source /login');
+        $probe = $this->probe('GET', $url, null, 'CSRF probe source /login');
         $body = strtolower((string) ($probe['body'] ?? ''));
         $hasCsrf = str_contains($body, 'csrf') || str_contains($body, '_token') || str_contains($body, 'csrf_test_name');
 
         return [
             'key' => 'csrf_presence_path',
-            'pass' => $probe['pass'] === true && $hasCsrf,
+            'pass' => ($probe['pass'] ?? false) === true && $hasCsrf,
             'details' => [
                 'status' => $probe['status'] ?? 0,
+                'path' => $url,
             ],
         ];
     }
@@ -363,10 +411,10 @@ class AuthBaselineService
             try {
                 $controller = new \App\Controllers\AuthController();
                 $controller->initController(Services::request(), Services::response(), Services::logger());
-                $method = new \ReflectionMethod($controller, 'determineRedirectDestination');
-                $method->setAccessible(true);
+                $reflection = new \ReflectionMethod($controller, 'determineRedirectDestination');
+                $reflection->setAccessible(true);
                 session()->set('redirect_url', '/login');
-                $destination = (string) $method->invoke($controller);
+                $destination = (string) $reflection->invoke($controller);
             } catch (\Throwable $e) {
                 return [
                     'key' => 'dashboard_redirect_default_target',
@@ -403,11 +451,10 @@ class AuthBaselineService
                 : $client->get($url, $options);
 
             $status = $response->getStatusCode();
-            $ok = in_array($status, [200, 302, 303, 400, 401, 403, 404, 422], true);
 
             return [
                 'key' => $label,
-                'pass' => $ok,
+                'pass' => in_array($status, [200, 302, 303, 400, 401, 403, 404, 422], true),
                 'status' => $status,
                 'location' => $response->getHeaderLine('Location'),
                 'body' => (string) $response->getBody(),
@@ -434,19 +481,15 @@ class AuthBaselineService
 
     private function normalizeRoutesSnapshot(string $raw): string
     {
-        $lines = preg_split('/\r\n|\r|\n/', $raw) ?: [];
+        $lines = preg_split('/\R/', $raw) ?: [];
         $normalized = [];
+
         foreach ($lines as $line) {
             $trimmed = trim($line);
-            if ($trimmed === '') {
+            if ($trimmed === '' || str_contains($trimmed, 'Server Time:') || str_starts_with($trimmed, 'stty:')) {
                 continue;
             }
-            if (str_contains($trimmed, 'Server Time:')) {
-                continue;
-            }
-            if (str_starts_with($trimmed, 'stty:')) {
-                continue;
-            }
+
             $normalized[] = rtrim($line);
         }
 
@@ -459,10 +502,10 @@ class AuthBaselineService
     private function parseAuthRoutes(string $routesRaw): array
     {
         $items = [];
-        $lines = preg_split('/\r\n|\r|\n/', $routesRaw) ?: [];
 
-        foreach ($lines as $line) {
+        foreach (preg_split('/\R/', $routesRaw) ?: [] as $line) {
             $trimmed = trim($line);
+
             if ($trimmed === '' || str_starts_with($trimmed, '+') || str_starts_with($trimmed, '| Method')) {
                 continue;
             }
@@ -471,21 +514,22 @@ class AuthBaselineService
                 continue;
             }
 
-            $parts = array_values(array_filter(array_map('trim', explode('|', $trimmed)), static fn ($p): bool => $p !== ''));
+            $parts = array_values(array_filter(array_map('trim', explode('|', $trimmed)), static fn ($part): bool => $part !== ''));
             if (count($parts) < 3) {
                 continue;
             }
 
+            $method = $parts[0] ?? '';
             $uri = $parts[1] ?? '';
             $handler = $parts[2] ?? '';
-            $needle = strtolower($uri . ' ' . $handler);
+            $needle = strtolower($method . ' ' . $uri . ' ' . $handler);
 
-            if (! preg_match('/auth|login|register|activate|reset|dashboard/', $needle)) {
+            if (! preg_match('/auth|login|register|activate|reset|password|dashboard/', $needle)) {
                 continue;
             }
 
             $items[] = [
-                'method' => $parts[0] ?? '',
+                'method' => $method,
                 'uri' => $uri,
                 'handler' => $handler,
             ];
@@ -518,6 +562,8 @@ class AuthBaselineService
             $snapshot[$key] = (string) (env($key) ?? '');
         }
 
+        ksort($snapshot);
+
         return $snapshot;
     }
 
@@ -526,12 +572,12 @@ class AuthBaselineService
      */
     private function capturePackageSnapshot(): array
     {
-        $path = ROOTPATH . 'composer.lock';
-        if (! is_file($path)) {
+        $lockPath = ROOTPATH . 'composer.lock';
+        if (! is_file($lockPath)) {
             return [];
         }
 
-        $lock = json_decode((string) file_get_contents($path), true) ?: [];
+        $lock = json_decode((string) file_get_contents($lockPath), true) ?: [];
         $packages = array_merge($lock['packages'] ?? [], $lock['packages-dev'] ?? []);
 
         $wanted = [
@@ -541,21 +587,66 @@ class AuthBaselineService
         ];
 
         $snapshot = [];
-        foreach ($packages as $pkg) {
-            $name = (string) ($pkg['name'] ?? '');
+        foreach ($packages as $package) {
+            $name = (string) ($package['name'] ?? '');
             if (! in_array($name, $wanted, true)) {
                 continue;
             }
 
             $snapshot[$name] = [
-                'version' => (string) ($pkg['version'] ?? ''),
-                'reference' => (string) ($pkg['source']['reference'] ?? ''),
+                'version' => (string) ($package['version'] ?? ''),
+                'reference' => (string) ($package['source']['reference'] ?? ''),
             ];
         }
 
         ksort($snapshot);
 
         return $snapshot;
+    }
+
+    /**
+     * @param array<string, mixed> $baseline
+     * @param array<string, mixed> $current
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    private function buildAssocDrift(array $baseline, array $current): array
+    {
+        $drift = [];
+        $keys = array_unique(array_merge(array_keys($baseline), array_keys($current)));
+        sort($keys);
+
+        foreach ($keys as $key) {
+            $left = $baseline[$key] ?? null;
+            $right = $current[$key] ?? null;
+            if ((string) $left !== (string) $right) {
+                $drift[$key] = [
+                    'baseline' => $left,
+                    'current' => $right,
+                ];
+            }
+        }
+
+        return $drift;
+    }
+
+    /**
+     * @param array<int, array<string, string>> $routes
+     *
+     * @return array<int, string>
+     */
+    private function routeSignatures(array $routes): array
+    {
+        $signatures = [];
+
+        foreach ($routes as $route) {
+            $signatures[] = trim(($route['method'] ?? '') . ' ' . ($route['uri'] ?? '') . ' -> ' . ($route['handler'] ?? ''));
+        }
+
+        $signatures = array_values(array_unique($signatures));
+        sort($signatures);
+
+        return $signatures;
     }
 
     private function serviceClass(string $serviceName): string
@@ -593,22 +684,19 @@ class AuthBaselineService
         );
 
         foreach ($iterator as $item) {
-            $dest = $target . DIRECTORY_SEPARATOR . $iterator->getSubPathName();
+            $destination = $target . DIRECTORY_SEPARATOR . $iterator->getSubPathName();
             if ($item->isDir()) {
-                $this->ensureDir($dest);
-            } else {
-                $this->ensureDir(dirname($dest));
-                copy($item->getPathname(), $dest);
+                $this->ensureDir($destination);
+                continue;
             }
+
+            $this->ensureDir(dirname($destination));
+            copy($item->getPathname(), $destination);
         }
     }
 
     private function deleteTree(string $dir): void
     {
-        if (! is_dir($dir)) {
-            return;
-        }
-
         $iterator = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS),
             \RecursiveIteratorIterator::CHILD_FIRST

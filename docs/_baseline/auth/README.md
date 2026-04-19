@@ -1,18 +1,31 @@
 # Auth/Authz Golden Baseline
 
-This directory stores MyMI Wallet auth/authz baseline artifacts for drift detection and safe restore.
+This directory stores the **known-good** authentication/authorization runtime baseline for MyMI Wallet.
 
 ## Spark Commands
 
 - `php spark auth:baseline:capture`
+  - Captures baseline artifacts under:
+    - `docs/_baseline/auth/history/<timestamp>/`
+    - `docs/_baseline/auth/current/` (latest copy)
 - `php spark auth:baseline:diff`
-- `php spark auth:baseline:restore [--dry-run] [--file=<path>] [--from=<timestamp>]`
+  - Compares current runtime against `docs/_baseline/auth/current/`
+  - Reports:
+    - changed files
+    - missing files
+    - env drift
+    - route drift (added/missing)
+    - package drift
+- `php spark auth:baseline:restore [--dry-run] [--from=<timestamp>] [--file=<path>]`
+  - Restores only auth-critical files from baseline artifacts.
 - `php spark auth:surface:scan`
+  - Reports auth surface bindings/routes/services and writes `surface.scan.runtime.json`.
 - `php spark auth:smoke`
+  - Runs auth smoke probes and writes `smoke.runtime.json`.
 
-## Scope
+## Baseline Scope
 
-Baseline capture is intentionally limited to auth/authz-critical files:
+Auth-critical files (only):
 
 - `app/Config/App.php`
 - `app/Config/Auth.php`
@@ -36,27 +49,31 @@ Baseline capture is intentionally limited to auth/authz-critical files:
 - `public/assets/js/login-init.js`
 - `public/.htaccess`
 
-## Artifacts
+## Artifacts Produced by Capture
 
-Each capture writes:
+Each `history/<timestamp>/` contains:
 
-- file copies under `files/`
-- `manifest.json` with runtime fingerprints
-- `routes.snapshot.txt` and `routes.auth.json`
+- `files/` (copied auth-critical files)
+- `manifest.json` (known-good auth runtime contract)
+- `routes.snapshot.txt`
+- `routes.auth.json`
 - `env.auth.json`
 - `packages.auth.json`
 - `surface.scan.json`
 - `smoke.report.json`
 
-## Locations
+`current/` is a full copy of the latest successful capture.
 
-- Current golden baseline: `docs/_baseline/auth/current/`
-- Timestamped history: `docs/_baseline/auth/history/<timestamp>/`
+## Smoke Coverage
 
-## Safe Restore
+`auth:smoke` probes:
 
-`auth:baseline:restore` only restores files listed in the auth-critical scope and supports:
-
-- `--dry-run` to preview
-- `--file=<path>` for targeted restore
-- `--from=<timestamp>` to restore from a specific history snapshot
+- `GET /login`
+- `POST /login` (invalid credentials)
+- `GET /register`
+- `POST /register` (invalid payload)
+- activation route probe
+- reset password probe
+- canonical host / `baseURL` consistency
+- CSRF presence path
+- dashboard redirect default target
