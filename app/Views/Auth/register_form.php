@@ -10,8 +10,10 @@
             <div class="alert alert-danger"><?= esc((string) $error) ?></div>
         <?php endforeach; endif; ?>
 
-        <form action="<?= site_url('register') ?>" method="post" accept-charset="utf-8" novalidate>
+        <form id="register-form" data-auth-form="register" action="<?= site_url('register') ?>" method="post" accept-charset="utf-8" novalidate>
             <?= csrf_field() ?>
+            <input type="text" name="company_website" value="" class="d-none" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <input type="hidden" name="auth_form_loaded_at" value="<?= esc((string) (session()->get('auth_form_loaded_at') ?? time())) ?>">
             <?php $registrationAttribution = is_array($registrationAttribution ?? null) ? $registrationAttribution : []; ?>
             <input type="hidden" name="referralCode" value="<?= esc($referralCode ?? set_value('referralCode')) ?>">
             <input type="hidden" id="referral" name="referral" value="<?= esc($registrationAttribution['referral_slug'] ?? $referralCode ?? '') ?>">
