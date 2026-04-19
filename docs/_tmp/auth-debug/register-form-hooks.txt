@@ -1,0 +1,11 @@
+app/Views/Auth/register_form.php:13:        <form id="register-form" data-auth-form="register" action="<?= site_url('register') ?>" method="post" accept-charset="utf-8" novalidate>
+app/Controllers/AuthController.php:676:    // public function attemptRegister()
+app/Controllers/AuthController.php:735:    public function attemptRegister()
+app/Controllers/AuthController.php:738:        $this->logAuthSubmitDiagnostics('attemptRegister', $requestId);
+app/Controllers/AuthController.php:766:        $this->authLog('AUTH_REGISTER', 'entry', 'attemptRegister reached', [
+app/Config/Routes.php:20:$routes->post('index.php/register', 'AuthController::attemptRegister');
+app/Config/Routes.php:216:    $routes->post('register', 'AuthController::attemptRegister', ['as' => 'register-submit']);
+app/Config/Routes.php:246:    $routes->post('Discord/register', 'AuthController::attemptRegister', ['as' => 'discord-register-attempt']);
+app/Config/Routes.php:247:    $routes->post('Discord/register/(:segment)', 'AuthController::attemptRegister');
+app/Config/Routes.php:253:    // $routes->post('(:segment)/register', 'AuthController::attemptRegister');
+app/Config/Routes.php:254:    // $routes->post('(:segment)/register/(:segment)', 'AuthController::attemptRegister');

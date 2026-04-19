@@ -110,6 +110,7 @@ class AuthController extends BaseController
 
         service('eventTracker')->track('auth.login_view');
 
+        log_message('debug', '[AUTH_LOGIN_VIEW_REDIRECT_URL] ' . print_r($this->session->get('redirect_url'), true));
         return $this->_render($this->config->views['login'], ['config' => $this->config]);
     }
 
@@ -120,6 +121,7 @@ class AuthController extends BaseController
     public function attemptLogin()
     {
         helper('auth');
+        log_message('debug', '[AUTH_LOGIN_POST_REDIRECT_URL] ' . print_r($this->request->getPost('redirect_url'), true));
         $requestId = $this->ensureAuthRequestId();
         $this->logAuthSubmitDiagnostics('attemptLogin', $requestId);
         $post = (array) ($this->request->getPost() ?? []);
@@ -1762,6 +1764,10 @@ class AuthController extends BaseController
     private function determineRedirectDestination(): string
     {
         $redirectURL = (string) ($this->session->get('redirect_url') ?? '');
+        
+        if ($redirectURL === '*' || $redirectURL === '/*') {
+            $redirectURL = $this->dashboardUrl();
+        }
 
         log_message('debug', '[REDIRECT_FINAL] ' . ($redirectURL !== '' ? $redirectURL : '[empty]'));
 
@@ -1844,7 +1850,7 @@ class AuthController extends BaseController
     {
         $url = is_string($url) ? trim($url) : '';
 
-        if ($url === '') {
+        if ($url === '' || $url === '*' || $url === '/*') {
             return null;
         }
 

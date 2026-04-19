@@ -1,0 +1,23 @@
+app/Controllers/BaseController.php:418:            //     $session->set('redirect_url', $currentUrl);
+app/Controllers/AuthController.php:88:            session()->set('redirect_url', $next);
+app/Controllers/AuthController.php:92:        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($request->getGet('redirect_url')));
+app/Controllers/AuthController.php:102:            $this->rememberRedirectUrl($previous);
+app/Controllers/AuthController.php:257:        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($this->request->getPost('redirect_url')));
+app/Controllers/AuthController.php:258:        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($this->request->getPost('next')));
+app/Controllers/AuthController.php:1801:    private function rememberRedirectUrl(?string $url): void
+app/Controllers/AuthController.php:1813:            $this->session->set('redirect_url', $url);
+app/Modules/User/Controllers/AlertsController.php:348:                $session->set('redirect_url', $currentUrl);
+app/Filters/PermissionFilter.php:23:            session()->set('redirect_url', current_url());
+app/Filters/LoginFilter.php:61:                    $session->set('redirect_url', $currentUrl);
+app/Filters/LoginFilter.php:84:                $session->set('redirect_url', $currentUrl);
+app/Filters/RoleFilter.php:21:            session()->set('redirect_url', current_url());
+app/Filters/AuthCheckFilter.php:31:            $session->set('redirect_url', current_url());
+app/Commands/Auth/FlowSmoke.php:39:        session()->set('redirect_url', '/login');
+app/Commands/Auth/FlowSmoke.php:43:        session()->set('redirect_url', 'https://evil.example');
+app/Legacy/Auth/Controllers/AuthController.php:72:            session()->set('redirect_url', $next);
+app/Legacy/Auth/Controllers/AuthController.php:76:        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($request->getGet('redirect_url')));
+app/Legacy/Auth/Controllers/AuthController.php:86:            $this->rememberRedirectUrl($previous);
+app/Legacy/Auth/Controllers/AuthController.php:164:        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($this->request->getPost('redirect_url')));
+app/Legacy/Auth/Controllers/AuthController.php:165:        $this->rememberRedirectUrl($this->sanitizeRedirectTarget($this->request->getPost('next')));
+app/Legacy/Auth/Controllers/AuthController.php:1547:    private function rememberRedirectUrl(?string $url): void
+app/Legacy/Auth/Controllers/AuthController.php:1559:            $this->session->set('redirect_url', $url);

@@ -1,0 +1,132 @@
+app/Config/Routes.php:9:/**
+app/Config/Routes.php:10: * @var RouteCollection $routes
+app/Config/Routes.php:11: */
+app/Config/Routes.php:22:// $routes->get('assets/(.*)', 'Assets::file/$1');
+app/Config/Routes.php:69:            ->setBody("/* 404 Not Found: {$path} */");
+app/Config/Routes.php:332:// Backward-compatible legacy aliases (deprecated; migrate to /API/v1/*)
+public/index.php:3:/**
+public/index.php:4: * MyMI Wallet Front Controller
+public/index.php:5: * Hardened + DreamHost-Compatible + CI4 Safe
+public/index.php:6: */
+app/Config/Filters.php:23:    /**
+app/Config/Filters.php:24:     * Configures aliases for Filter classes to
+app/Config/Filters.php:25:     * make reading things nicer and simpler.
+app/Config/Filters.php:26:     *
+app/Config/Filters.php:27:     * @var array<string, class-string|list<class-string>> [filter_name => classname]
+app/Config/Filters.php:28:     *                                                     or [filter_name => [classname1, classname2, ...]]
+app/Config/Filters.php:29:     */
+app/Config/Filters.php:74:    /**
+app/Config/Filters.php:75:     * List of filter aliases that are always
+app/Config/Filters.php:76:     * applied before and after every request.
+app/Config/Filters.php:77:     *
+app/Config/Filters.php:78:     * @var array<string, array<string, array<string, string>>>|array<string, list<string>>
+app/Config/Filters.php:79:     */
+app/Config/Filters.php:87:                    'Support/*',
+app/Config/Filters.php:88:                    'API/*',
+app/Config/Filters.php:89:                    'api/*',
+app/Config/Filters.php:90:                    'Management/*',
+app/Config/Filters.php:91:                    'Ops/*',
+app/Config/Filters.php:92:                    'chat/*',
+app/Config/Filters.php:104:                    'API/*',
+app/Config/Filters.php:105:                    'api/*',
+app/Config/Filters.php:106:                    'debugbar*',
+app/Config/Filters.php:107:                    '_debugbar*',
+app/Config/Filters.php:130:            //         'API/Alerts/*',
+app/Config/Filters.php:131:            //         'API/Management/*',
+app/Config/Filters.php:132:            //         'API/Webhooks/*',
+app/Config/Filters.php:134:            //         'Management/Users/*',
+app/Config/Filters.php:137:            //         'activate-account/*',
+app/Config/Filters.php:139:            //         'Auth/activate-account/*',
+app/Config/Filters.php:150:                    'register/*',
+app/Config/Filters.php:151:                    '*/register',
+app/Config/Filters.php:152:                    '*/register/*',
+app/Config/Filters.php:159:                    'activate/*',
+app/Config/Filters.php:166:                    'landing/*',
+app/Config/Filters.php:173:                    'activate-account/*',
+app/Config/Filters.php:177:                    'Auth/activate-account/*',
+app/Config/Filters.php:178:                    'auth/provider/*',
+app/Config/Filters.php:179:                    'auth/provider/*/callback',
+app/Config/Filters.php:180:                    'Auth/provider/*',
+app/Config/Filters.php:181:                    'Auth/provider/*/callback',
+app/Config/Filters.php:182:                    '/Apex/*',
+app/Config/Filters.php:183:                    '/API/*',
+app/Config/Filters.php:184:                    '/API/Management/*',
+app/Config/Filters.php:185:                    '/APIs/*',
+app/Config/Filters.php:188:                    '/Blog/*',
+app/Config/Filters.php:190:                    '/Corporate-Earnings/*',
+app/Config/Filters.php:192:                    '/Economic-Calendar/*',
+app/Config/Filters.php:194:                    '/Getting-Started/*',
+app/Config/Filters.php:196:                    '/How-It-Works/*',
+app/Config/Filters.php:199:                    '/Memberships/*',
+app/Config/Filters.php:200:                    '/Preview/*',
+app/Config/Filters.php:204:                    'Blog/*',
+app/Config/Filters.php:206:                    'blog/*',
+app/Config/Filters.php:208:                    'News/*',
+app/Config/Filters.php:210:                    'news/*',
+app/Config/Filters.php:212:                    'Support/*',
+app/Config/Filters.php:214:                    'help/account/*',
+app/Config/Filters.php:216:                    '/help/account/*',
+app/Config/Filters.php:218:                    '/TBI/*',
+app/Config/Filters.php:220:                    '/Tim/*',
+app/Config/Filters.php:222:                    '/Discord/*',
+app/Config/Filters.php:225:                    '/Facebook/*',
+app/Config/Filters.php:227:                    '/ITT/*',
+app/Config/Filters.php:229:                    '/Monetized-Creators/*',
+app/Config/Filters.php:231:                    '/Alicia/*',
+app/Config/Filters.php:233:                    '/AnneAlicia/*',
+app/Config/Filters.php:235:                    '/Deon/*',
+app/Config/Filters.php:237:                    '/Dubose/*',
+app/Config/Filters.php:239:                    '/Jasmine/*',
+app/Config/Filters.php:241:                    '/Jailin/*',
+app/Config/Filters.php:243:                    '/Jeremy/*',
+app/Config/Filters.php:245:                    '/Kristie/*',
+app/Config/Filters.php:247:                    '/Ken/*',
+app/Config/Filters.php:249:                    '/Manee/*',
+app/Config/Filters.php:251:                    '/MattCardon/*',
+app/Config/Filters.php:253:                    '/MattHill/*',
+app/Config/Filters.php:255:                    '/Michael/*',
+app/Config/Filters.php:257:                    '/LinkedIn/*',
+app/Config/Filters.php:259:                    '/Support/*',
+app/Config/Filters.php:261:                    '/Twitter/*',
+app/Config/Filters.php:263:                    '/X/*',
+app/Config/Filters.php:265:                    '/YouTube/*',
+app/Config/Filters.php:267:                    'debugbar*',
+app/Config/Filters.php:268:                    '_debugbar*',
+app/Config/Filters.php:279:                    'debugbar*',
+app/Config/Filters.php:282:            // 'csp' => ['except' => ['API/*', 'assets/*']],
+app/Config/Filters.php:293:    /**
+app/Config/Filters.php:294:     * List of filter aliases that works on a
+app/Config/Filters.php:295:     * particular HTTP method (GET, POST, etc.).
+app/Config/Filters.php:296:     *
+app/Config/Filters.php:297:     * Example:
+app/Config/Filters.php:298:     * 'post' => ['foo', 'bar']
+app/Config/Filters.php:299:     *
+app/Config/Filters.php:300:     * If you use this, you should disable auto-routing because auto-routing
+app/Config/Filters.php:301:     * permits any HTTP method to access a controller. Accessing the controller
+app/Config/Filters.php:302:     * with a method you don't expect could bypass the filter.
+app/Config/Filters.php:303:     */
+app/Config/Filters.php:306:    /**
+app/Config/Filters.php:307:     * List of filter aliases that should run on any
+app/Config/Filters.php:308:     * before or after URI patterns.
+app/Config/Filters.php:309:     *
+app/Config/Filters.php:310:     * Example:
+app/Config/Filters.php:311:     * 'isLoggedIn' => ['before' => ['account/*', 'profiles/*']]
+app/Config/Filters.php:312:     */
+app/Config/Filters.php:318:                'Dashboard/*',
+app/Config/Filters.php:320:                'Account/*',
+app/Config/Filters.php:322:                'Budget/*',
+app/Config/Filters.php:324:                'Investments/*',
+app/Config/Filters.php:326:                'Wallets/*',
+app/Config/Filters.php:334:                'auth/*',
+app/Config/Filters.php:335:                'Auth/*',
+app/Config/Filters.php:341:                'activate-account/*',
+app/Config/Filters.php:355:                'API/Alerts/sendDiscordAlertsBySymbol/*',
+app/Config/Filters.php:363:                'register/*',
+app/Config/Filters.php:364:                '*/register',
+app/Config/Filters.php:365:                '*/register/*',
+app/Config/Filters.php:371:                'activate-account/*',
+app/Config/Filters.php:374:                'Auth/*',
+app/Config/Filters.php:379:                'API/*',
+app/Config/Filters.php:380:                'api/*',
+app/Config/Filters.php:381:                'debugbar*',
+app/Config/Filters.php:382:                '_debugbar*',

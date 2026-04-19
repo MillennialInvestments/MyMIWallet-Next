@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Legacy\Auth\Config\Auth as LegacyMythAuthConfig;
 use App\Libraries\{CrudCacheInvalidator, KimiClient, MyMIAnalytics, MyMIInvestments, SafeCache};
 use App\Services\AuthAuditService;
 use App\Services\AlertService;
@@ -28,9 +29,12 @@ use App\Services\Scanning\Providers\AlphaVantageProvider as ScannerAlphaVantageP
 use App\Services\Scanning\Providers\FinnhubProvider;
 use App\Services\Scanning\Providers\ProviderRouter;
 use App\Services\Scanning\Providers\StooqProvider;
-use App\Auth\CompatAuthAdapter;
 use Config\Cache;
 use CodeIgniter\Config\Services as CoreServices;
+use CodeIgniter\Shield\Auth as ShieldAuth;
+use CodeIgniter\Shield\Config\Auth as ShieldAuthConfig;
+use Myth\Auth\Models\LoginModel;
+use Myth\Auth\Models\UserModel;
 use function is_ci;
 
 /**
@@ -53,13 +57,20 @@ class Services extends CoreServices
      *
      * Runtime auth is Myth/Auth in this application.
      */
-    public static function auth(bool $getShared = true): CompatAuthAdapter
+    /**
+     * Compatibility auth() service for legacy Shield helper consumers.
+     *
+     * Runtime auth is Myth/Auth in this application.
+     */
+    public static function auth(bool $getShared = true): ShieldAuth
     {
         if ($getShared) {
             return static::getSharedInstance('auth');
         }
 
-        return new CompatAuthAdapter(static::authentication('local', null, null, false));
+        $config = new \Config\Auth();
+
+        return new ShieldAuth($config);
     }
 
     public static function authentication(
@@ -68,22 +79,35 @@ class Services extends CoreServices
         ?\CodeIgniter\Model $loginModel = null,
         bool $getShared = true
     ) {
-        if ($lib === '') {
-            $lib = 'local';
-        }
-
         if ($getShared) {
             return static::getSharedInstance('authentication', $lib, $userModel, $loginModel);
         }
 
-        return new \Myth\Auth\Authentication\LocalAuthenticator(
-            config(\App\Legacy\Auth\Config\Auth::class),
-            $userModel ?? model(\Myth\Auth\Models\UserModel::class),
-            $loginModel ?? model(\Myth\Auth\Models\LoginModel::class),
-            service('request'),
-            service('response'),
-            service('session')
-        );
+        $userModel ??= model(UserModel::class);
+        $loginModel ??= model(LoginModel::class);
+
+        /** @var LegacyMythAuthConfig $config */
+        $config = config(LegacyMythAuthConfig::class);
+
+        if (! isset($config->authenticationLibs) || ! is_array($config->authenticationLibs)) {
+            throw new \RuntimeException('Legacy Myth/Auth config is missing authenticationLibs.');
+        }
+
+        if (! array_key_exists($lib, $config->authenticationLibs)) {
+            throw new \RuntimeException('Invalid Myth/Auth authentication library key: ' . $lib);
+        }
+
+        $class = $config->authenticationLibs[$lib];
+
+        if (! is_string($class) || $class === '' || ! class_exists($class)) {
+            throw new \RuntimeException('Invalid Myth/Auth authentication library class: ' . print_r($class, true));
+        }
+
+        $instance = new $class($config);
+
+        return $instance
+            ->setUserModel($userModel)
+            ->setLoginModel($loginModel);
     }
 
     // public static function authentication($lib = 'session', bool $getShared = true)

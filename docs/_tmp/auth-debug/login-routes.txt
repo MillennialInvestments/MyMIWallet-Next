@@ -1,0 +1,4 @@
+17:$routes->get('index.php/login', 'AuthController::login');
+18:$routes->post('index.php/login', 'AuthController::attemptLogin');
+209:    $routes->get('login', 'AuthController::login', ['as' => 'login']);
+210:    $routes->post('login', 'AuthController::attemptLogin', ['as' => 'login-submit']);

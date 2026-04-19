@@ -2,11 +2,11 @@
 
 ## Executive summary
 - Tests executed: 29
-- Passed: 18
-- Failed: 10
+- Passed: 20
+- Failed: 8
 - Warnings: 1
 - Info: 1
-- Health score: 62% (FAIL)
+- Health score: 69% (FAIL)
 
 ## Failing test cases
 - **Registration: Valid registration** (FAILURE): Stored password hash does not verify.
@@ -15,21 +15,17 @@
 - **Login: Non-existent user** (FAILURE): Exception thrown.
 - **Login: Remember-me enabled** (FAILURE): Exception thrown.
 - **Logout: Logout after login** (FAILURE): Exception thrown.
-- **Logout: Double logout** (FAILURE): Exception thrown.
-- **Logout: Logout without session** (FAILURE): Exception thrown.
 - **Reset Password: Valid token reset** (FAILURE): Valid reset failed: Validation failed
 - **Reset Password: Token reuse attempt** (FAILURE): Initial reset failed: Validation failed
 - **Session & Cookie: Secure cookie alignment** (WARNING): App/Session secure cookie flags are not aligned.
 
 ## Error signatures
 - Registration: Valid registration: Stored password hash does not verify.
-- Login: Valid login: {"message":"Config\\Services::authentication(): Argument #1 ($lib) must be of type string, bool given, called in \/home\/mymiteam\/mymiwallet\/site\/current\/vendor\/codeigniter4\/framework\/system\/Config\/BaseService.php on line 264","file":"\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Config\/Services.php","line":50}
-- Login: Wrong password: {"message":"Config\\Services::authentication(): Argument #1 ($lib) must be of type string, bool given, called in \/home\/mymiteam\/mymiwallet\/site\/current\/vendor\/codeigniter4\/framework\/system\/Config\/BaseService.php on line 264","file":"\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Config\/Services.php","line":50}
-- Login: Non-existent user: {"message":"Config\\Services::authentication(): Argument #1 ($lib) must be of type string, bool given, called in \/home\/mymiteam\/mymiwallet\/site\/current\/vendor\/codeigniter4\/framework\/system\/Config\/BaseService.php on line 264","file":"\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Config\/Services.php","line":50}
-- Login: Remember-me enabled: {"message":"Config\\Services::authentication(): Argument #1 ($lib) must be of type string, bool given, called in \/home\/mymiteam\/mymiwallet\/site\/current\/vendor\/codeigniter4\/framework\/system\/Config\/BaseService.php on line 264","file":"\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Config\/Services.php","line":50}
-- Logout: Logout after login: {"message":"Config\\Services::authentication(): Argument #1 ($lib) must be of type string, bool given, called in \/home\/mymiteam\/mymiwallet\/site\/current\/vendor\/codeigniter4\/framework\/system\/Config\/BaseService.php on line 264","file":"\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Config\/Services.php","line":50}
-- Logout: Double logout: {"message":"Config\\Services::authentication(): Argument #1 ($lib) must be of type string, bool given, called in \/home\/mymiteam\/mymiwallet\/site\/current\/vendor\/codeigniter4\/framework\/system\/Config\/BaseService.php on line 264","file":"\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Config\/Services.php","line":50}
-- Logout: Logout without session: {"message":"Config\\Services::authentication(): Argument #1 ($lib) must be of type string, bool given, called in \/home\/mymiteam\/mymiwallet\/site\/current\/vendor\/codeigniter4\/framework\/system\/Config\/BaseService.php on line 264","file":"\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Config\/Services.php","line":50}
+- Login: Valid login: {"message":"Call to a member function where() on null","file":"\/home\/mymiteam\/mymiwallet\/site\/current\/vendor\/myth\/auth\/src\/Authentication\/LocalAuthenticator.php","line":140}
+- Login: Wrong password: {"message":"Call to a member function where() on null","file":"\/home\/mymiteam\/mymiwallet\/site\/current\/vendor\/myth\/auth\/src\/Authentication\/LocalAuthenticator.php","line":140}
+- Login: Non-existent user: {"message":"Call to a member function where() on null","file":"\/home\/mymiteam\/mymiwallet\/site\/current\/vendor\/myth\/auth\/src\/Authentication\/LocalAuthenticator.php","line":140}
+- Login: Remember-me enabled: {"message":"Call to a member function where() on null","file":"\/home\/mymiteam\/mymiwallet\/site\/current\/vendor\/myth\/auth\/src\/Authentication\/LocalAuthenticator.php","line":140}
+- Logout: Logout after login: {"message":"Call to a member function where() on null","file":"\/home\/mymiteam\/mymiwallet\/site\/current\/vendor\/myth\/auth\/src\/Authentication\/LocalAuthenticator.php","line":140}
 - Reset Password: Valid token reset: Valid reset failed: Validation failed
 - Reset Password: Token reuse attempt: Initial reset failed: Validation failed
 - Session & Cookie: Secure cookie alignment: {"app_cookie_secure":true,"session_cookie_secure":false}

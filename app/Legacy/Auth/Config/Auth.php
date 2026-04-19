@@ -2,6 +2,7 @@
 
 namespace App\Legacy\Auth\Config;
 
+use Myth\Auth\Authentication\LocalAuthenticator;
 
 class Auth extends \Myth\Auth\Config\Auth
 {
@@ -95,7 +96,7 @@ class Auth extends \Myth\Auth\Config\Auth
      * @var array
      */
     public $authenticationLibs = [
-        'local' => 'Myth\Auth\Authentication\LocalAuthenticator',
+        'local' => LocalAuthenticator::class,
     ];
 
     /**

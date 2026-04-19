@@ -1,0 +1,4 @@
+19:$routes->get('index.php/register', 'AuthController::register');
+20:$routes->post('index.php/register', 'AuthController::attemptRegister');
+215:    $routes->get('register', 'AuthController::register', ['as' => 'register']);
+216:    $routes->post('register', 'AuthController::attemptRegister', ['as' => 'register-submit']);

@@ -117,7 +117,9 @@ try {
     }
 
     require $paths->systemDirectory . '/Boot.php';
-
+    $reqUri = $_SERVER['REQUEST_URI'] ?? '[missing]';
+    error_log('[BOOT_URI_DEBUG] REQUEST_METHOD=' . ($_SERVER['REQUEST_METHOD'] ?? '[missing]'));
+    error_log('[BOOT_URI_DEBUG] QUERY_STRING=' . ($_SERVER['QUERY_STRING'] ?? '[missing]'));
     $exitCode = \CodeIgniter\Boot::bootWeb($paths);
 
 } catch (\CodeIgniter\Exceptions\PageNotFoundException $e) {

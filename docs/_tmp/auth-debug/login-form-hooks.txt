@@ -1,0 +1,14 @@
+app/Views/Auth/login.php:54:					 <form id="login-form" data-auth-form="login" action="<?= site_url('login') ?>" method="post" accept-charset="utf-8" novalidate>
+app/Views/Auth/register_form.php:13:        <form id="register-form" data-auth-form="register" action="<?= site_url('register') ?>" method="post" accept-charset="utf-8" novalidate>
+app/Controllers/AuthController.php:121:    public function attemptLogin()
+app/Controllers/AuthController.php:126:        $this->logAuthSubmitDiagnostics('attemptLogin', $requestId);
+app/Controllers/AuthController.php:128:        $this->authLog('AUTH_LOGIN', 'entry', 'attemptLogin reached', [
+app/Controllers/AuthController.php:250:                'Auth attemptLogin() called with login identifier: %s, remember: %s',
+app/Controllers/AuthController.php:262:            'Auth attemptLogin() called. redirect_url in session: ' . (session('redirect_url') ?? 'none')
+app/Controllers/AuthController.php:452:            log_message('debug', 'Auth attemptLogin() - session user_id set to: ' . $userId);
+app/Controllers/AuthController.php:454:            log_message('error', 'Auth attemptLogin() - login succeeded but userId could not be resolved.');
+app/Controllers/AuthController.php:489:                log_message('info', 'Auth attemptLogin() onboarding walkthrough queued for user_id={id}', [
+public/assets/js/login-init.js:33:  var authForms = document.querySelectorAll('form[data-auth-form]');
+public/assets/js/login-init.js:38:          kind: form.getAttribute('data-auth-form') || 'unknown',
+app/Config/Routes.php:18:$routes->post('index.php/login', 'AuthController::attemptLogin');
+app/Config/Routes.php:210:    $routes->post('login', 'AuthController::attemptLogin', ['as' => 'login-submit']);
