@@ -1183,6 +1183,24 @@ public/assets/vendor/swiper/core/events/onTouchMove.js:122:    e.preventDefault(
 public/assets/vendor/swiper/core/events/onTouchStart.js:77:      event.preventDefault();
 public/assets/vendor/swiper/core/events/onTouchStart.js:99:    let preventDefault = true;
 public/assets/vendor/swiper/core/events/onTouchStart.js:100:    if ($targetEl.is(data.focusableElements)) preventDefault = false;
+
+================ RESOLUTION NOTES ================
+Date: 2026-04-19
+Status: Reviewed; resolution file created.
+Confirmed root cause: No new auth-flow defect confirmed in this review pass.
+Files changed: Paired *.resolution.md created under docs/_tmp/resolution/*.
+Validation: Route/controller/view/js path checks completed.
+Next step: Keep raw file in place; move only after a new fix+validation cycle if required.
+==================================================
+
+================ RESOLUTION NOTES ================
+Date: 2026-04-19 (follow-up)
+Status: Code fix applied for shared redirect_url sanitizer + writer normalization.
+Confirmed root cause: Upstream writers were storing raw current_url()/with('redirect_url') values inconsistently.
+Files changed: shared helper + filters/controllers/tests + auth/js diagnostics update.
+Validation: php -l checks passed; PHPUnit auth sanitizer/route unit tests passed.
+Next step: keep raw file in auth-debug until production validation confirms expected redirect behavior.
+==================================================
 public/assets/vendor/swiper/core/events/onTouchStart.js:106:    const shouldPreventDefault = preventDefault && swiper.allowTouchMove && params.touchStartPreventDefault;
 public/assets/vendor/swiper/core/events/onTouchStart.js:109:      e.preventDefault();
 public/assets/vendor/swiper/modules/history/history.js:29:      location = window.location;

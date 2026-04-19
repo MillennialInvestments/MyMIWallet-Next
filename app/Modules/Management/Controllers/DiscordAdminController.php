@@ -53,7 +53,19 @@ class DiscordAdminController extends BaseAdminController
         $this->logSnippet('debug', 'DiscordController init cuID', $this->cuID);
         if (empty($this->cuID)) {
             log_message('error', 'Failed to retrieve user ID.');
-            return redirect()->to('/login')->with('redirect_url', current_url())->send();
+            $raw = (string) current_url();
+            $sanitized = redirect_url_store($raw, [
+                'writer' => 'DiscordAdminController::initController',
+                'route' => trim((string) $this->request->getUri()->getPath(), '/'),
+                'request_id' => (string) ($this->request->getHeaderLine('X-Request-Id') ?: ''),
+            ]);
+
+            $redirect = redirect()->to('/login');
+            if ($sanitized) {
+                $redirect = $redirect->with('redirect_url', $sanitized);
+            }
+
+            return $redirect->send();
         }
         
         // $this->accountService = new AccountService();
@@ -74,7 +86,19 @@ class DiscordAdminController extends BaseAdminController
         // log_message('debug', 'HowTosController L47 - $this->cuID: ' . (print_r($this->cuID, true)));
         // if (empty($this->cuID)) {
         //     log_message('error', 'Failed to retrieve user ID.');
-        //     return redirect()->to('/login')->with('redirect_url', current_url())->send();
+        //     $raw = (string) current_url();
+            $sanitized = redirect_url_store($raw, [
+                'writer' => 'DiscordAdminController::initController',
+                'route' => trim((string) $this->request->getUri()->getPath(), '/'),
+                'request_id' => (string) ($this->request->getHeaderLine('X-Request-Id') ?: ''),
+            ]);
+
+            $redirect = redirect()->to('/login');
+            if ($sanitized) {
+                $redirect = $redirect->with('redirect_url', $sanitized);
+            }
+
+            return $redirect->send();
         // }
 
         $this->discordModel = new DiscordModel();

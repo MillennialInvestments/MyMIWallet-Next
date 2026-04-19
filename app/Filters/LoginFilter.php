@@ -54,12 +54,11 @@ class LoginFilter implements FilterInterface
         // 2) If Myth/Auth is present, use it (preferred)
         if (function_exists('logged_in')) {
             if (! logged_in()) {
-                $session    = session();
-                $currentUrl = current_url();
-
-                if (! $session->has('redirect_url')) {
-                    $session->set('redirect_url', $currentUrl);
-                }
+                $currentUrl = (string) current_url();
+                redirect_url_store($currentUrl, [
+                    'writer' => 'LoginFilter::before[myth]',
+                    'route' => trim((string) $request->getUri()->getPath(), '/'),
+                ]);
 
                 log_message('debug', 'LoginFilter redirecting guest to login from: ' . $currentUrl);
 
@@ -70,7 +69,6 @@ class LoginFilter implements FilterInterface
         }
 
         // 3) Fallback: session-based login checks (covers non-Myth setups)
-        $session = session();
         $isLoggedIn =
             (bool) $session->get('logged_in')
             || (bool) $session->get('isLoggedIn')
@@ -78,11 +76,11 @@ class LoginFilter implements FilterInterface
             || (bool) $session->get('cuID');
 
         if (! $isLoggedIn) {
-            $currentUrl = current_url();
-
-            if (! $session->has('redirect_url')) {
-                $session->set('redirect_url', $currentUrl);
-            }
+            $currentUrl = (string) current_url();
+            redirect_url_store($currentUrl, [
+                'writer' => 'LoginFilter::before[fallback]',
+                'route' => trim((string) $request->getUri()->getPath(), '/'),
+            ]);
 
             log_message('debug', 'LoginFilter redirecting guest to login from: ' . $currentUrl);
 

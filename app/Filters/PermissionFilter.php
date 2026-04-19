@@ -20,7 +20,10 @@ class PermissionFilter extends BaseFilter implements FilterInterface
         $isAuthenticated = $this->safeAuthenticateCheck();
 
         if (! $isAuthenticated) {
-            session()->set('redirect_url', current_url());
+            redirect_url_store((string) current_url(), [
+                'writer' => 'PermissionFilter::before',
+                'route' => trim((string) $request->getUri()->getPath(), '/'),
+            ]);
             return redirect($this->reservedRoutes['login']);
         }
 

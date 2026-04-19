@@ -294,7 +294,15 @@ class WalletsController extends BaseUserController
 
         log_message('warning', 'WalletsController guard failed; redirecting to login.');
 
-        return redirect()->to('/login')->with('redirect_url', current_url());
+        $raw = (string) current_url();
+        $sanitized = redirect_url_store($raw, [
+            'writer' => 'WalletsController::guardAuthenticated',
+            'route' => trim((string) $this->request->getUri()->getPath(), '/'),
+            'request_id' => (string) ($this->request->getHeaderLine('X-Request-Id') ?: ''),
+        ]);
+
+        $redirect = redirect()->to('/login');
+        return $sanitized ? $redirect->with('redirect_url', $sanitized) : $redirect;
     }
 
     private function loadUserCommonData(): array

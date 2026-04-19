@@ -94,7 +94,19 @@ class AlertsAdminController extends BaseAdminController
         $this->logSnippet('debug', 'AlertsController init cuID', $this->cuID);
         if (empty($this->cuID)) {
             log_message('error', 'Failed to retrieve user ID.');
-            return redirect()->to('/login')->with('redirect_url', current_url())->send();
+            $raw = (string) current_url();
+            $sanitized = redirect_url_store($raw, [
+                'writer' => 'AlertsAdminController::initController',
+                'route' => trim((string) $this->request->getUri()->getPath(), '/'),
+                'request_id' => (string) ($this->request->getHeaderLine('X-Request-Id') ?: ''),
+            ]);
+
+            $redirect = redirect()->to('/login');
+            if ($sanitized) {
+                $redirect = $redirect->with('redirect_url', $sanitized);
+            }
+
+            return $redirect->send();
         }
         $this->userAccount                          = $this->getMyMIUser()->getUserInformation($this->cuID); 
         $this->userAssessment                       = $this->getMyMIUser()->getUserFinancialAssessment($this->cuID);

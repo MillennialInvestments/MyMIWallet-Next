@@ -18,7 +18,10 @@ class RoleFilter extends BaseFilter implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         if (! function_exists('user_id') || ! user_id()) {
-            session()->set('redirect_url', current_url());
+            redirect_url_store((string) current_url(), [
+                'writer' => 'RoleFilter::before',
+                'route' => trim((string) $request->getUri()->getPath(), '/'),
+            ]);
             return redirect()->to('/login');
         }
 
