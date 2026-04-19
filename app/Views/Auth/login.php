@@ -51,8 +51,9 @@
 						</div>
 					<?php endif; ?>
 
-					 <form action="<?= site_url('login') ?>" method="post" accept-charset="utf-8" novalidate>
+					 <form id="login-form" data-auth-form="login" action="<?= site_url('login') ?>" method="post" accept-charset="utf-8" novalidate>
 						<?= csrf_field() ?>
+						<input type="text" name="company_website" value="" class="d-none" tabindex="-1" autocomplete="off" aria-hidden="true">
 						<input type="hidden" name="redirect_url" value="<?= session('redirect_url') ?>">
 
 						<?php if ($config->validFields === ['email']): ?>

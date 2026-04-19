@@ -13,6 +13,11 @@ $routes = Services::routes();
 helper('ai');
 $routes->get('index.php', 'Home::index');
 $routes->get('index.php/', 'Home::index');
+// Preserve legacy index.php auth POST submits without downgrading to GET redirects.
+$routes->get('index.php/login', 'AuthController::login');
+$routes->post('index.php/login', 'AuthController::attemptLogin');
+$routes->get('index.php/register', 'AuthController::register');
+$routes->post('index.php/register', 'AuthController::attemptRegister');
 // app/Config/Routes.php
 // $routes->get('assets/(.*)', 'Assets::file/$1');
 // $routes->get('favicon.ico', 'Assets::favicon');
