@@ -494,7 +494,7 @@ $agent                  = service('request')->getUserAgent();
                             </a>
                             <ul class="nk-menu-sub">
                                 <li class="nk-menu-item">
-                                    <a class="nk-menu-link" href="<?php echo site_url('/PropFirm'); ?>">
+                                    <a class="nk-menu-link" href="<?php echo site_url('/Dashboard/PropFirms'); ?>">
                                         <span class="nk-menu-text">Home</span>
                                     </a>
                                 </li>

@@ -1816,7 +1816,14 @@ class AuthController extends BaseController
     private function determineRedirectDestination(): string
     {
         $redirectURL = (string) ($this->session->get('redirect_url') ?? '');
-        
+        $requestedPath = trim((string) $this->request->getUri()->getPath(), '/');
+        $role = $this->session->get('role')
+            ?? $this->session->get('role_name')
+            ?? $this->session->get('user_role')
+            ?? 'unknown';
+        $router = service('router');
+        $resolvedRoute = method_exists($router, 'getMatchedRoute') ? $router->getMatchedRoute() : null;
+
         if ($redirectURL === '*' || $redirectURL === '/*') {
             $redirectURL = $this->dashboardUrl();
         }
@@ -1825,7 +1832,18 @@ class AuthController extends BaseController
 
         if ($redirectURL === '') {
             $this->session->remove('redirect_url');
-            return $this->dashboardUrl();
+            $destination = $this->dashboardUrl();
+            log_message('debug', '[DASHBOARD_REDIRECT_TRACE]', [
+                'requested_url' => current_url(),
+                'request_path' => $requestedPath,
+                'resolved_route' => is_array($resolvedRoute) ? implode(' | ', array_map('strval', $resolvedRoute)) : (string) $resolvedRoute,
+                'resolved_controller' => static::class,
+                'resolved_method' => __FUNCTION__,
+                'redirect_source' => __METHOD__,
+                'user_role' => $role,
+                'final_destination' => $destination,
+            ]);
+            return $destination;
         }
 
         if (! $this->isValidRedirectTarget($redirectURL)) {
@@ -1848,6 +1866,16 @@ class AuthController extends BaseController
             'request_id' => $this->ensureAuthRequestId(),
             'route' => trim((string) $this->request->getUri()->getPath(), '/'),
             'destination' => $redirectURL,
+        ]);
+        log_message('debug', '[DASHBOARD_REDIRECT_TRACE]', [
+            'requested_url' => current_url(),
+            'request_path' => $requestedPath,
+            'resolved_route' => is_array($resolvedRoute) ? implode(' | ', array_map('strval', $resolvedRoute)) : (string) $resolvedRoute,
+            'resolved_controller' => static::class,
+            'resolved_method' => __FUNCTION__,
+            'redirect_source' => __METHOD__,
+            'user_role' => $role,
+            'final_destination' => $redirectURL,
         ]);
 
         return $redirectURL;

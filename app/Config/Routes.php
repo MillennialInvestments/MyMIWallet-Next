@@ -311,10 +311,6 @@ $routes->group('', ['namespace' => 'App\Modules\User\Controllers', 'filter' => [
 });
 
 
-$routes->group('', ['namespace' => 'App\Modules\PropFirms\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
-    $routes->get('/', 'PropFirmsController::index', ['as' => 'dashboard']);
-    $routes->get('/(:segment)', 'PropFirmsController::index/$1');
-});
 $routes->group('Advisor', static function($routes) {
     $routes->get('/', 'AdvisorController::index');
     $routes->post('generateInsight', 'AdvisorController::generateAdvisorInsight');
@@ -1225,6 +1221,8 @@ $routes->get('index.php/Blog/(:segment)/(:segment)', static fn($a, $b) => redire
 // Dashboard
 $routes->group('Dashboard', ['namespace' => 'App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
     $routes->get('/', 'DashboardController::index', ['as' => 'dashboard']);
+    // Backward-compatible alias for legacy singular path
+    $routes->addRedirect('PropFirm', 'PropFirms', 302);
     $routes->get('Transaction-Modal/(:segment)', 'DashboardController::loadModalContent/$1', ['as' => 'load-modal-1-segment']);
     $routes->get('Transaction-Modal/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2', ['as' => 'load-modal-2-segment']);
     $routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3', ['as' => 'load-modal-3-segment']);
