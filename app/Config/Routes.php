@@ -1786,10 +1786,6 @@ $routes->group('How-It-Works', ['namespace' => 'App\\Modules\\Blog\\Controllers'
 
 // Legacy API aliases for external callers that still hit exact historical paths.
 $routes->group('API', ['namespace' => 'App\\Modules\\APIs\\Controllers'], static function ($routes) {
-    $routes->get('Budget/getUserBudgetRecords', '\App\Modules\APIs\Controllers\BudgetController::getUserBudgetRecords');
-    $routes->get('Budget/getUserCreditBalances', '\App\Modules\APIs\Controllers\BudgetController::getUserCreditBalances');
-    $routes->get('Budget/getUserRepaymentSummary', '\App\Modules\APIs\Controllers\BudgetController::getUserRepaymentSummary');
-    $routes->get('Budget/getUserAvailableBalances', '\App\Modules\APIs\Controllers\BudgetController::getUserAvailableBalances');
     $routes->match(['GET', 'POST'], 'Alerts/fetchEmailAlerts', 'AlertsAPIController::fetchEmailAlerts');
     $routes->match(['GET', 'POST'], 'Management/Run-CRON-Tasks', 'ManagementAPIController::Run_CRON_Tasks', ['filter' => 'cronKey']);
     $routes->match(['GET', 'POST'], 'management/run-cron-tasks', 'ManagementAPIController::Run_CRON_Tasks', ['filter' => 'cronKey']);
