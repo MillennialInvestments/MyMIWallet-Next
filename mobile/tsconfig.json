@@ -3,13 +3,10 @@
   "compilerOptions": {
     "strict": true,
     "jsx": "react-jsx",
+    "baseUrl": ".",
     "paths": {
-      "mymi-sdk": ["../packages/mymi-sdk/src"],
-      "@/components/*": ["./src/components/*"],
-      "@/screens/*": ["./src/screens/*"],
-      "@/hooks/*": ["./src/hooks/*"]
+      "@/*": ["src/*"]
     }
   },
-  "include": ["./app", "./src", "expo-env.d.ts"],
-  "exclude": ["node_modules"]
+  "include": ["app", "src", "expo-env.d.ts"]
 }

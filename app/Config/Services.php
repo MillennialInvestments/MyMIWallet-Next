@@ -806,4 +806,27 @@ class Services extends CoreServices
     }
 
 
+    public static function mobileAuthContext(bool $getShared = true): \App\Services\MobileAuthContext
+    {
+        if ($getShared) {
+            /** @var \App\Services\MobileAuthContext $service */
+            $service = static::getSharedInstance('mobileAuthContext');
+            return $service;
+        }
+
+        return new \App\Services\MobileAuthContext();
+    }
+
+    public static function mobileAuthTokens(bool $getShared = true): \App\Services\MobileAuthTokenService
+    {
+        if ($getShared) {
+            /** @var \App\Services\MobileAuthTokenService $service */
+            $service = static::getSharedInstance('mobileAuthTokens');
+            return $service;
+        }
+
+        return new \App\Services\MobileAuthTokenService();
+    }
+
+
 }

@@ -2,31 +2,25 @@
   "expo": {
     "name": "MyMI Wallet Mobile",
     "slug": "mymiwallet-mobile",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "scheme": "mymiwallet",
     "orientation": "portrait",
     "platforms": ["ios", "android", "web"],
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#000000"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
+      "backgroundColor": "#0a0f1d"
     },
     "assetBundlePatterns": ["**/*"],
+    "plugins": ["expo-router", "expo-notifications", "expo-secure-store"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#000000"
+        "backgroundColor": "#0a0f1d"
       }
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static"
     },
     "extra": {
       "eas": {
