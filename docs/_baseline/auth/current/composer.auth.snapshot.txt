@@ -1,0 +1,7 @@
+codeigniter4/framework             4.7.0   The CodeIgniter framework v4
+codeigniter4/settings              2.3.0   Settings library for CodeIgniter 4
+codeigniter4/shield                1.3.0   Authentication and Authorization for CodeIgniter 4
+deployed/myth-to-shield            1.0.1   Tool to migrate from MythAuth to CodeIgniter Shield
+myth/auth                          1.2.1   Flexible authentication/authorization system for CodeIgniter 4.
+tatter/alerts                      3.1.0   Lightweight user alerts for CodeIgniter 4
+tatter/audits                      1.1.3   Lightweight object logging for CodeIgniter 4
