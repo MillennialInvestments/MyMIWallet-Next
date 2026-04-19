@@ -40,7 +40,7 @@ class ThinkOrSwimImport extends SafeBaseCommand
                 }
 
                 $db->table('bf_investment_trade_alerts')->insert([
-                    'symbol' => $symbol,
+                    'ticker' => $symbol,
                     'source' => 'thinkorswim',
                     'created_at' => date('Y-m-d H:i:s')
                 ]);

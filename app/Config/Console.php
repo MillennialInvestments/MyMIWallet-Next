@@ -180,6 +180,7 @@ class Console extends BaseConfig
         \App\Commands\Docs\FullDocsAudit::class,
         \App\Commands\Docs\Generate\ArchitectureMap::class,
         \App\Commands\Docs\Generate\DocsReadmeBuilder::class,
+        \App\Commands\Docs\Generate\FormInventory::class,
         \App\Commands\Docs\Generate\KnowledgeGraph::class,
         \App\Commands\Docs\Generate\MissingDocs::class,
         \App\Commands\Docs\InventoryDocs::class,

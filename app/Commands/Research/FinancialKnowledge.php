@@ -18,7 +18,7 @@ class FinancialKnowledge extends SafeBaseCommand
         $db = Database::connect();
 
         $tickers = $db->table('bf_investment_trade_alerts')
-            ->select('symbol')
+            ->select('ticker')
             ->distinct()
             ->get()
             ->getResultArray();
@@ -36,7 +36,7 @@ class FinancialKnowledge extends SafeBaseCommand
                 ->getResultArray();
 
             $alerts = $db->table('bf_investment_trade_alerts')
-                ->where('symbol', $symbol)
+                ->where('ticker', $symbol)
                 ->limit(10)
                 ->get()
                 ->getResultArray();
