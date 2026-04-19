@@ -53,7 +53,7 @@ $subViewData = [
 */ ?>
 
 <!-- Optional page init without inline: put any previous inline jQuery/DOM code here -->
-<script src="<?= base_url('assets/js/login-init.js'); ?>" defer></script>
+<!-- <script src="<?= base_url('assets/js/login-init.js'); ?>" defer></script> -->
 
 <?= view('App\Views\themes\public\layouts\footer', $subViewData) ?>
 <?= $this->renderSection('pageScripts') ?>

@@ -144,14 +144,9 @@ class AuthController extends BaseController
                 ->withInput()
                 ->with('error', 'Your request could not be processed. Please refresh the page and try again.');
         }
-        if (! $this->isCsrfPresent()) {
-            $this->authLog('AUTH_FAIL', 'csrf_missing', 'Login request missing CSRF token', [
-                'redirect_target' => site_url('login'),
-            ], 'warning', __LINE__);
-            return redirect()->to(site_url('login'))
-                ->withInput()
-                ->with('error', 'Your request could not be processed. Please refresh the page and try again.');
-        }
+
+        log_message('debug', '[AUTH_CSRF] Framework-level CSRF already verified before controller execution.');
+
         if ($this->isHoneypotTriggered()) {
             $this->authLog('AUTH_SPAM', 'login_honeypot', 'Login blocked by honeypot trigger', [
                 'redirect_target' => site_url('login'),
@@ -761,14 +756,7 @@ class AuthController extends BaseController
                 ->withInput()
                 ->with('error', 'Your request could not be processed. Please refresh the page and try again.');
         }
-        if (! $this->isCsrfPresent()) {
-            $this->authLog('AUTH_FAIL', 'register_csrf_missing', 'Register request missing CSRF token', [
-                'redirect_target' => site_url('register'),
-            ], 'warning', __LINE__);
-            return redirect()->to(site_url('register'))
-                ->withInput()
-                ->with('error', 'Your request could not be processed. Please refresh the page and try again.');
-        }
+        log_message('debug', '[AUTH_CSRF] Framework-level CSRF already verified before controller execution.');
         if ($this->isHoneypotTriggered()) {
             $this->authLog('AUTH_SPAM', 'register_honeypot', 'Registration blocked by honeypot trigger', [
                 'redirect_target' => site_url('register'),

@@ -96,7 +96,22 @@
 						<br>
 
 						<button type="submit" class="btn btn-primary btn-block"><?=lang('Auth.loginAction')?></button>
-					</form>
+					    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            var form = document.getElementById('login-form');
+                            if (!form) return;
+
+                            form.addEventListener('submit', function (event) {
+                                console.log('[LOGIN_NATIVE_SUBMIT_CAPTURE]', {
+                                    action: form.getAttribute('action'),
+                                    resolvedAction: form.action,
+                                    method: form.getAttribute('method'),
+                                    activeElement: document.activeElement ? document.activeElement.outerHTML : null
+                                }, true);
+                            }, true);
+                        });
+                        </script>
+                    </form>
 
 					<hr>
 
