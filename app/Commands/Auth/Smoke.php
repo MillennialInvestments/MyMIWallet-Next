@@ -4,68 +4,44 @@ declare(strict_types=1);
 
 namespace App\Commands\Auth;
 
-use App\Services\AuthSmokeService;
 use App\Commands\SafeBaseCommand;
+use App\Services\AuthBaselineService;
 use CodeIgniter\CLI\CLI;
 
 class Smoke extends SafeBaseCommand
 {
-    protected $group       = 'auth';
-    protected $name        = 'auth:smoke';
-    protected $description = 'Run a safe authentication smoke test and record health results for ops visibility.';
-
-    protected $arguments = [];
-    protected $options = [
-        '--dry-run' => 'Preview actions without writing data',
-    ];
+    protected $group = 'auth';
+    protected $name = 'auth:smoke';
+    protected $description = 'Probe auth-critical routes and runtime expectations for login/register/reset/redirect safety.';
 
     public function run(array $params)
     {
-        log_message('info', '[spark:auth:smoke] Started', ['params' => $params]);
-        CLI::write('Starting auth:smoke', 'yellow');
+        $this->parseParams($params);
 
-        [$args, $flags] = $this->parseParams($params);
-        $dryRun = $this->resolveDryRun($flags);
-        if ($dryRun) {
-            CLI::write('Dry-run enabled. Smoke test will not execute.', 'yellow');
-            log_message('info', '[spark:auth:smoke] Completed', ['dry_run' => true]);
-            return EXIT_SUCCESS;
+        $service = service('authBaseline');
+        if (! $service instanceof AuthBaselineService) {
+            $service = new AuthBaselineService();
         }
 
-        $service = new AuthSmokeService();
-        $result = $service->run();
+        $report = $service->runSmokeProbes();
 
-        CLI::newLine();
-        CLI::write('Auth smoke test');
-        CLI::write('----------------------------------------');
-        CLI::write('status: ' . ($result['status'] ?? 'UNKNOWN'));
-        CLI::write('score: ' . ($result['score'] ?? 0));
-        CLI::write('summary: ' . ($result['summary'] ?? ''));
-        CLI::write('run_id: ' . (($result['run_id'] ?? null) ?: 'n/a'));
-        CLI::write('duration_ms: ' . ($result['duration_ms'] ?? 0));
-        CLI::write('server: ' . ($result['server'] ?? 'n/a'));
-        if (! empty($result['build_tag'])) {
-            CLI::write('build_tag: ' . $result['build_tag']);
+        CLI::write('Auth smoke report: ' . ($report['status'] ?? 'UNKNOWN'), ($report['status'] ?? '') === 'PASS' ? 'green' : 'red');
+
+        foreach (($report['checks'] ?? []) as $check) {
+            $label = (string) ($check['key'] ?? 'unknown');
+            $status = ($check['pass'] ?? false) ? 'PASS' : 'FAIL';
+            $extra = isset($check['status']) ? ' [' . $check['status'] . ']' : '';
+            CLI::write(sprintf('- %s %s%s', $status, $label, $extra), $status === 'PASS' ? 'green' : 'red');
         }
 
-        CLI::newLine();
-        foreach (($result['details']['steps'] ?? []) as $step) {
-            $line = sprintf(
-                '- %s: %s (%s)',
-                $step['key'] ?? 'unknown',
-                $step['status'] ?? 'FAIL',
-                $step['message'] ?? ''
-            );
-            CLI::write($line);
+        $outPath = ROOTPATH . 'docs/_baseline/auth/current/smoke.runtime.json';
+        if (! is_dir(dirname($outPath))) {
+            mkdir(dirname($outPath), 0775, true);
         }
+        file_put_contents($outPath, json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        CLI::write('Saved: docs/_baseline/auth/current/smoke.runtime.json');
 
-        log_message('info', '[spark:auth:smoke] Completed', [
-            'status' => $result['status'] ?? 'UNKNOWN',
-            'score'  => $result['score'] ?? 0,
-            'dry_run' => false,
-        ]);
-
-        return ($result['status'] ?? '') === 'PASS' ? EXIT_SUCCESS : EXIT_ERROR;
+        return (($report['status'] ?? 'FAIL') === 'PASS') ? EXIT_SUCCESS : EXIT_ERROR;
     }
 
     protected function isDestructive(): bool
