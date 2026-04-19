@@ -2,6 +2,10 @@
 // app/Views/themes/public/layouts/footer.php
 $nonce = $nonce ?? ['style' => '', 'script' => ''];
 $cspNonce = $cspNonce ?? ($csp['script'] ?? (service('renderer')->getData('cspNonce') ?? ''));
+if (! is_scalar($cspNonce)) {
+    $cspNonce = '';
+}
+$cspNonce = (string) $cspNonce;
 // Prepare data for views
 $viewFileData = [
     'siteSettings'          => $siteSettings,

@@ -973,13 +973,14 @@ class AuthController extends BaseController
             ]);
 
             // Save the user
-            $allowedPostFields = array_merge(['password'], $this->config->validFields, $this->config->personalFields);
+            $allowedPostFields = array_merge($this->config->validFields, $this->config->personalFields);
             $postData          = $this->request->getPost($allowedPostFields);
             $postData['email'] = $email;
             if ($referralCode !== '') {
                 $postData['referral_code'] = $referralCode;
             }
             $user              = new User($postData);
+            $user->password    = (string) ($request->getPost('password') ?? '');
 
             $this->config->requireActivation === null ? $user->activate() : $user->generateActivateHash();
 
@@ -1013,6 +1014,30 @@ class AuthController extends BaseController
             }
 
             $newUserId       = (int) ($users->getInsertID() ?? 0);
+            $storedUser      = $newUserId > 0 ? $users->find($newUserId) : null;
+            $storedHash      = is_object($storedUser) ? (string) ($storedUser->password_hash ?? '') : '';
+
+            if ($newUserId > 0 && ($storedHash === '' || ! password_verify((string) ($request->getPost('password') ?? ''), $storedHash))) {
+                $this->authLog('AUTH_FAIL', 'register_password_hash_invalid', 'Stored password hash failed post-registration verification', [
+                    'email' => $email,
+                    'user_id' => $newUserId,
+                    'hash_length' => strlen($storedHash),
+                ], 'error', __LINE__);
+
+                log_message('error', '[REGISTRATION] Stored password hash failed verification', [
+                    'request_id' => $requestId,
+                    'user_id' => $newUserId,
+                    'email' => $email,
+                    'hash_prefix' => substr($storedHash, 0, 4),
+                    'hash_length' => strlen($storedHash),
+                ]);
+
+                $users->delete($newUserId, true);
+
+                $this->forceSupportAlert('danger', 'Registration failed', 'We could not create your account at this time.', 'AUTH-REG-HASH-001', null, ['request_id' => $requestId, 'user_id' => $newUserId]);
+                return redirect()->to(site_url('register'))->withInput()->with('errors', ['password' => 'We could not securely store your password. Please try again.'])->with('error', 'We could not securely store your password. Please try again.');
+            }
+
             service('eventTracker')->track('auth.register_success', [], $newUserId);
             $loginIdentifier = $this->config->validFields === ['email'] ? 'email' : 'username';
             log_message(
@@ -1490,6 +1515,13 @@ class AuthController extends BaseController
             (string) $this->request->getUserAgent()
         );
 
+        $payload = [
+            'token' => trim((string) ($this->request->getPost('token') ?? '')),
+            'email' => strtolower(trim((string) ($this->request->getPost('email') ?? ''))),
+            'password' => (string) ($this->request->getPost('password') ?? ''),
+            'pass_confirm' => (string) ($this->request->getPost('pass_confirm') ?? $this->request->getPost('password_confirm') ?? ''),
+        ];
+
         $rules = [
             'token'        => 'required',
             'email'        => 'required|valid_email',
@@ -1497,25 +1529,26 @@ class AuthController extends BaseController
             'pass_confirm' => 'required|matches[password]',
         ];
 
-        if (! $this->validate($rules)) {
-            $errors = $this->validator->getErrors();
+        $validation = service('validation');
+        if (! $validation->setRules($rules)->run($payload)) {
+            $errors = $validation->getErrors();
             log_message('error', '[AUTH] Reset validation failed', [
                 'errors' => $errors,
                 'fields_present' => array_keys(array_filter([
-                    'token' => $this->request->getPost('token'),
-                    'email' => $this->request->getPost('email'),
-                    'password' => $this->request->getPost('password') ? '__present__' : null,
-                    'pass_confirm' => $this->request->getPost('pass_confirm') ? '__present__' : null,
+                    'token' => $payload['token'],
+                    'email' => $payload['email'],
+                    'password' => $payload['password'] !== '' ? '__present__' : null,
+                    'pass_confirm' => $payload['pass_confirm'] !== '' ? '__present__' : null,
                 ])),
             ]);
             $this->setAuthMessage('danger', $this->formatValidationErrors($errors));
-            return redirect()->back()->withInput()->with('errors', $errors);
+            return redirect()->back()->withInput()->with('errors', $errors)->with('old', $payload);
         }
 
-        $this->ipHistoryModel->record(null, (string) $this->request->getPost('email'), $this->request->getIPAddress(), (string) $this->request->getUserAgent());
+        $this->ipHistoryModel->record(null, $payload['email'], $this->request->getIPAddress(), (string) $this->request->getUserAgent());
 
-        $user = $users->where('email', $this->request->getPost('email'))
-            ->where('reset_hash', $this->request->getPost('token'))
+        $user = $users->where('email', $payload['email'])
+            ->where('reset_hash', $payload['token'])
             ->first();
 
         if (null === $user) {
@@ -1530,7 +1563,7 @@ class AuthController extends BaseController
         }
 
         // Success! Save the new password, and cleanup the reset hash.
-        $user->password         = $this->request->getPost('password');
+        $user->password         = $payload['password'];
         $user->reset_hash       = null;
         $user->reset_at         = date('Y-m-d H:i:s');
         $user->reset_expires    = null;
@@ -1539,7 +1572,7 @@ class AuthController extends BaseController
 
         $this->setAuthMessage('success', lang('Auth.resetSuccess'));
         log_message('info', '[AUTH] Password reset completed', [
-            'email' => $this->request->getPost('email'),
+            'email' => $payload['email'],
         ]);
         return redirect()->route('login');
     }

@@ -101,7 +101,7 @@ class AuthAuditRunner
                 return $this->resultFailure('Password hash missing or matches plaintext.');
             }
 
-            if (! password_verify($plaintext, $passwordHash)) {
+            if (! $this->isPasswordHashVerifiable($plaintext, $passwordHash)) {
                 log_message('error', '[AUTH AUDIT] Password verify failed', [
                     'hash_prefix' => substr($passwordHash, 0, 4),
                     'hash_length' => strlen($passwordHash),
@@ -777,8 +777,8 @@ class AuthAuditRunner
             $user = new User([
                 'email' => $email,
                 'username' => $username,
-                'password' => $password,
             ]);
+            $user->password = $password;
 
             if ($authConfig->requireActivation === null) {
                 $user->activate();
@@ -801,12 +801,15 @@ class AuthAuditRunner
                 return null;
             }
 
+            $storedHashRow = $this->db->table('users')->select('password_hash')->where('id', $insertId)->get()->getRowArray();
+            $storedHash = (string) ($storedHashRow['password_hash'] ?? ($stored->password_hash ?? ''));
+
             return [
                 'id' => $insertId,
                 'email' => $email,
                 'username' => $username,
                 'password' => $password,
-                'password_hash' => $stored->password_hash ?? '',
+                'password_hash' => $storedHash,
                 'activate_hash' => $stored->activate_hash ?? null,
             ];
         } catch (Throwable $e) {
@@ -1001,13 +1004,7 @@ class AuthAuditRunner
             'pass_confirm' => 'required|matches[password]',
         ];
 
-        $payload = [
-            'token' => $token,
-            'email' => $email,
-            'password' => $password,
-            'pass_confirm' => $password,
-        ];
-
+        $payload = $this->buildResetPayload($email, $token, $password);
         if (! $validation->setRules($rules)->run($payload)) {
             return ['success' => false, 'message' => 'Validation failed', 'errors' => $validation->getErrors()];
         }
@@ -1029,6 +1026,25 @@ class AuthAuditRunner
         $users->save($user);
 
         return ['success' => true, 'message' => 'Reset completed'];
+    }
+
+    private function buildResetPayload(string $email, string $token, string $password): array
+    {
+        return [
+            'token' => trim($token),
+            'email' => strtolower(trim($email)),
+            'password' => (string) $password,
+            'pass_confirm' => (string) $password,
+        ];
+    }
+
+    private function isPasswordHashVerifiable(string $plaintext, string $hash): bool
+    {
+        if ($plaintext === '' || $hash === '') {
+            return false;
+        }
+
+        return password_verify($plaintext, $hash);
     }
 
     private function runTest(string $name, callable $callback): void
