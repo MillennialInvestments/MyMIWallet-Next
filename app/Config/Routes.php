@@ -336,6 +336,19 @@ $routes->addRedirect('API/Health', 'API/v1/Health', 302);
 $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function($routes) {
     $routes->get('/', 'APIController::index');
     $routes->match(['GET', 'POST'], '/', 'APIController::index');
+    $routes->group('mobile', static function($routes) {
+        $routes->post('auth/login', 'MobileAuthController::login', ['filter' => 'ratelimit']);
+        $routes->post('auth/register', 'MobileAuthController::register', ['filter' => 'ratelimit']);
+        $routes->post('auth/logout', 'MobileAuthController::logout', ['filter' => 'apiToken']);
+        $routes->get('me', 'MobileAuthController::me', ['filter' => 'apiToken']);
+
+        $routes->group('', ['filter' => 'apiToken'], static function($routes) {
+            $routes->get('dashboard', 'MobileController::dashboard');
+            $routes->get('budget', 'MobileController::budget');
+            $routes->get('investments', 'MobileController::investments');
+            $routes->get('alerts', 'MobileController::alerts');
+        });
+    });
     $routes->post('Discord/interactions', 'DiscordAPIController::interactions');
     $routes->match(['GET', 'POST'], 'Status', 'APIController::status');
     $routes->get('Health', 'HealthAPIController::index');              // /API/Health
