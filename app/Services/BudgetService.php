@@ -89,6 +89,94 @@ class BudgetService
         return budget_normalize_money($value ?? 0);
     }
 
+    /**
+     * Returns the default well-shaped user budget array used by Budget views.
+     * All numeric keys default to 0.0 (float), array keys default to [], and
+     * formatted "*FMT" keys default to '$0.00'. This guarantees views can
+     * access keys directly without nested ?? defaults.
+     *
+     * @return array<string, mixed>
+     */
+    public static function defaultUserBudgetShape(): array
+    {
+        $numericKeys = [
+            'thisMonthsIncome', 'thisMonthsExpense', 'thisMonthsSurplus',
+            'thisMonthsInvestments', 'thisMonthsInvestmentsSplit',
+            'lastMonthsIncome', 'lastMonthsExpense', 'lastMonthsSurplus',
+            'lastMonthsInvestments',
+            'nextMonthsIncome', 'nextMonthsExpense', 'nextMonthsSurplus',
+            'nextMonthsInvestments',
+            'totalIncome', 'totalExpense', 'totalSurplus', 'totalInvestments',
+            'incomeYTDSummary', 'expenseYTDSummary',
+            'checkingSummary', 'cryptoSummary',
+            'debtSummary', 'debtAvailable', 'debtCreditLimit',
+            'investSummary',
+            'creditLimit', 'creditAvailable',
+            'initialBankBalance', 'totalAccountBalance',
+        ];
+
+        $shape = [
+            'userBudgetRecords'        => [],
+            'userActiveBudgetRecords'  => [],
+        ];
+
+        foreach ($numericKeys as $k) {
+            $shape[$k]          = 0.0;
+            $shape[$k . 'FMT']  = '$0.00';
+        }
+
+        $shape['thisMonthsInvestmentsSplitFMT'] = '$0.00';
+
+        return $shape;
+    }
+
+    /**
+     * Merges a partial user budget array with the default shape so all keys exist
+     * with sensible types. Useful in views that may receive partial data.
+     *
+     * @param mixed $userBudget
+     * @return array<string, mixed>
+     */
+    public static function ensureUserBudgetShape($userBudget): array
+    {
+        if (!is_array($userBudget)) {
+            $userBudget = [];
+        }
+
+        $defaults = self::defaultUserBudgetShape();
+        $merged   = array_merge($defaults, $userBudget);
+
+        // Coerce values that arrived as null or wrong type back to their
+        // expected default. This guarantees views can rely on the contract
+        // even when upstream code passes ['key' => null] explicitly.
+        foreach ($defaults as $key => $defaultValue) {
+            $value = $merged[$key] ?? null;
+
+            if (is_array($defaultValue)) {
+                if (!is_array($value)) {
+                    $merged[$key] = $defaultValue;
+                }
+                continue;
+            }
+
+            if (is_float($defaultValue)) {
+                $merged[$key] = is_numeric($value) ? (float) $value : $defaultValue;
+                continue;
+            }
+
+            if (is_string($defaultValue)) {
+                $merged[$key] = is_string($value) && $value !== '' ? $value : $defaultValue;
+                continue;
+            }
+
+            if ($value === null) {
+                $merged[$key] = $defaultValue;
+            }
+        }
+
+        return $merged;
+    }
+
     private function parseRecordDate(array $record): DateTimeImmutable
     {
         $dateStr = trim((string) ($record['designated_date'] ?? ''));
@@ -2033,10 +2121,16 @@ class BudgetService
     }
     
     // Method to calculate available balances based on repayment schedules
-    public function getAvailableBalances($repaymentSchedules) {
+    public function getAvailableBalances($repaymentSchedules): array {
         $availableBalances = [];
+        if (!is_array($repaymentSchedules)) {
+            return $availableBalances;
+        }
         foreach ($repaymentSchedules as $schedule) {
-            $availableBalances[$schedule['account_id']] = $schedule['remaining_balance'];
+            if (!is_array($schedule) || !isset($schedule['account_id'])) {
+                continue;
+            }
+            $availableBalances[(int) $schedule['account_id']] = $this->asFloat($schedule['remaining_balance'] ?? 0);
         }
         return $availableBalances;
     }
@@ -2075,10 +2169,16 @@ class BudgetService
     }
 
     // Method to get current balances for credit accounts
-    public function getCurrentBalances($creditAccounts) {
+    public function getCurrentBalances($creditAccounts): array {
         $currentBalances = [];
+        if (!is_array($creditAccounts)) {
+            return $currentBalances;
+        }
         foreach ($creditAccounts as $account) {
-            $currentBalances[$account['id']] = $account['current_balance'];
+            if (!is_array($account) || !isset($account['id'])) {
+                continue;
+            }
+            $currentBalances[(int) $account['id']] = $this->asFloat($account['current_balance'] ?? 0);
         }
         return $currentBalances;
     }
@@ -2193,16 +2293,21 @@ class BudgetService
         ];
     }
  
-    public function getRepaymentSummary($userId) {
-        $creditAccounts = $this->accountsModel->getUserCreditAccounts($userId);
+    public function getRepaymentSummary($userId): array {
+        $creditAccounts = $this->accountsModel->getUserCreditAccounts($userId) ?? [];
         $repaymentSchedules = $this->calculateRepaymentSchedules($creditAccounts);
-        
+
         $repaymentSummary = [];
+        if (!is_array($repaymentSchedules)) {
+            return $repaymentSummary;
+        }
         foreach ($repaymentSchedules as $schedule) {
-            if (!isset($repaymentSummary[$schedule['account_id']])) {
-                $repaymentSummary[$schedule['account_id']] = 0;
+            if (!is_array($schedule) || !isset($schedule['account_id'])) {
+                continue;
             }
-            $repaymentSummary[$schedule['account_id']] += $schedule['remaining_balance'];
+            $accountId = (int) $schedule['account_id'];
+            $repaymentSummary[$accountId] = ($repaymentSummary[$accountId] ?? 0.0)
+                + $this->asFloat($schedule['remaining_balance'] ?? 0);
         }
 
         return $repaymentSummary;
@@ -2255,24 +2360,27 @@ class BudgetService
     }
 
     // Method to calculate total available balance from debt accounts
-    public function getTotalAvailableBalance($debtAccounts) {
-        $totalAvailableBalance = 0;
+    public function getTotalAvailableBalance($debtAccounts): float {
+        $totalAvailableBalance = 0.0;
 
-        if (!empty($debtAccounts) && is_array($debtAccounts)) {
-            foreach ($debtAccounts as $debt) {
-                if (!isset($debt['available_balance']) || !is_numeric($debt['available_balance'])) {
-                    log_message('error', 'BudgetService L568: Non-numeric available_balance encountered for account ID: ' . ($debt['id'] ?? 'UNKNOWN') . '. Value: ' . print_r($debt['available_balance'], true));
+        if (!is_array($debtAccounts) || empty($debtAccounts)) {
+            return $totalAvailableBalance;
+        }
 
-                    // **Fallback Mechanism:**
-                    $debt['available_balance'] = 0;
-                }
-
-                $totalAvailableBalance += floatval($debt['available_balance']);
+        foreach ($debtAccounts as $debt) {
+            if (!is_array($debt)) {
+                continue;
             }
+            if (!isset($debt['available_balance']) || !is_numeric($debt['available_balance'])) {
+                log_message('error', 'BudgetService::getTotalAvailableBalance non-numeric available_balance for account ID: '
+                    . ($debt['id'] ?? 'UNKNOWN'));
+                continue;
+            }
+            $totalAvailableBalance += $this->asFloat($debt['available_balance']);
         }
 
         return $totalAvailableBalance;
-    }    
+    }
 
     public function getUserBankAccounts($userId)
     {
@@ -2398,19 +2506,21 @@ class BudgetService
         $initialBankBalance = $this->getInitialBankBalance($userId);
         $userBudget['initialBankBalance'] = $initialBankBalance;
 
-        $userBudget['checkingSummary'] = $this->asFloat($this->budgetModel->getCheckingSummary($userId)['balance'] ?? 0);
-        $userBudget['cryptoSummary']   = $this->asFloat($this->budgetModel->getCryptoSummary($userId) ?? 0);
-        $debtSummaryRow = $this->budgetModel->getDebtAccountsSummary($userId) ?? [];
-        $userBudget['debtSummary']     = $this->asFloat(($debtSummaryRow['current_balance'] ?? $debtSummaryRow['available_balance'] ?? 0));
-        $userBudget['debtAvailable']   = $this->asFloat($debtSummaryRow['available_balance'] ?? 0);
-        $userBudget['debtCreditLimit'] = $this->asFloat($debtSummaryRow['credit_limit'] ?? 0);
-        $userBudget['investSummary']   = $this->asFloat($this->budgetModel->getInvestAccountsSummary($userId)['net_worth'] ?? 0);
+        $userBudget['checkingSummary'] = $this->budgetModel->getCheckingSummary($userId);
+        $userBudget['cryptoSummary']   = $this->budgetModel->getCryptoSummary($userId);
 
-        $userBudget['creditLimit']     = $this->asFloat($this->budgetModel->getCreditLimitSummary($userId)['credit_limit'] ?? 0);
-        $userBudget['creditAvailable'] = $this->asFloat($this->budgetModel->getCreditAvailableSummary($userId)['available_balance'] ?? 0);
+        $debtSummaryRow = $this->budgetModel->getDebtAccountsSummary($userId);
+        $userBudget['debtSummary']     = $debtSummaryRow['current_balance'] !== 0.0
+            ? $debtSummaryRow['current_balance']
+            : $debtSummaryRow['available_balance'];
+        $userBudget['debtAvailable']   = $debtSummaryRow['available_balance'];
+        $userBudget['debtCreditLimit'] = $debtSummaryRow['credit_limit'];
+        $userBudget['investSummary']   = $this->budgetModel->getInvestAccountsSummary($userId)['net_worth'];
 
-        $totalAccountBalance = $this->budgetModel->getTotalAccountBalance($userId);
-        $userBudget['totalAccountBalance'] = $this->asFloat($totalAccountBalance ?? 0);
+        $userBudget['creditLimit']     = $this->budgetModel->getCreditLimitSummary($userId)['credit_limit'];
+        $userBudget['creditAvailable'] = $this->budgetModel->getCreditAvailableSummary($userId)['available_balance'];
+
+        $userBudget['totalAccountBalance'] = $this->budgetModel->getTotalAccountBalance($userId);
 
         // Format values
         $userBudget = $this->formatBudgetData($userBudget);

@@ -30,56 +30,58 @@ if (isset($debug) && (int)$debug === 1) {
     log_message('debug', 'Budget\index L23 - $userBudget Array: ' . (print_r($userBudget ?? [], true)));
 }
 
-$userBudgetRecords              = $userBudget['userBudgetRecords']           ?? [];
-$userActiveBudgetRecords        = $userBudget['userActiveBudgetRecords']     ?? [];
-$thisMonthsIncome               = $userBudget['thisMonthsIncome']            ?? 0;
-$thisMonthsIncomeFMT            = $userBudget['thisMonthsIncomeFMT']         ?? '$0.00';
-$thisMonthsExpense              = $userBudget['thisMonthsExpense']           ?? 0;
-$thisMonthsExpenseFMT           = $userBudget['thisMonthsExpenseFMT']        ?? '$0.00';
-$thisMonthsSurplus              = $userBudget['thisMonthsSurplus']           ?? 0;
-$thisMonthsSurplusFMT           = $userBudget['thisMonthsSurplusFMT']        ?? '$0.00';
-$thisMonthsInvestments          = $userBudget['thisMonthsInvestments']       ?? 0;
-$thisMonthsInvestmentsFMT       = $userBudget['thisMonthsInvestmentsFMT']    ?? '$0.00';
-$thisMonthsInvestmentsSplitFMT  = $userBudget['thisMonthsInvestmentsSplitFMT'] ?? [];
+$userBudget = \App\Services\BudgetService::ensureUserBudgetShape($userBudget ?? null);
 
-$lastMonthsIncomeFMT            = $userBudget['lastMonthsIncomeFMT']         ?? '$0.00';
-$lastMonthsExpense              = $userBudget['lastMonthsExpense']           ?? 0;
-$lastMonthsExpenseFMT           = $userBudget['lastMonthsExpenseFMT']        ?? '$0.00';
-$lastMonthsSurplusFMT           = $userBudget['lastMonthsSurplusFMT']        ?? '$0.00';
-$lastMonthsInvestmentsFMT       = $userBudget['lastMonthsInvestmentsFMT']    ?? '$0.00';
+$userBudgetRecords              = $userBudget['userBudgetRecords'];
+$userActiveBudgetRecords        = $userBudget['userActiveBudgetRecords'];
+$thisMonthsIncome               = $userBudget['thisMonthsIncome'];
+$thisMonthsIncomeFMT            = $userBudget['thisMonthsIncomeFMT'];
+$thisMonthsExpense              = $userBudget['thisMonthsExpense'];
+$thisMonthsExpenseFMT           = $userBudget['thisMonthsExpenseFMT'];
+$thisMonthsSurplus              = $userBudget['thisMonthsSurplus'];
+$thisMonthsSurplusFMT           = $userBudget['thisMonthsSurplusFMT'];
+$thisMonthsInvestments          = $userBudget['thisMonthsInvestments'];
+$thisMonthsInvestmentsFMT       = $userBudget['thisMonthsInvestmentsFMT'];
+$thisMonthsInvestmentsSplitFMT  = $userBudget['thisMonthsInvestmentsSplitFMT'];
 
-$nextMonthsIncomeFMT            = $userBudget['nextMonthsIncomeFMT']         ?? '$0.00';
-$nextMonthsExpense              = $userBudget['nextMonthsExpense']           ?? 0;
-$nextMonthsExpenseFMT           = $userBudget['nextMonthsExpenseFMT']        ?? '$0.00';
-$nextMonthsSurplusFMT           = $userBudget['nextMonthsSurplusFMT']        ?? '$0.00';
-$nextMonthsInvestmentsFMT       = $userBudget['nextMonthsInvestmentsFMT']    ?? '$0.00';
+$lastMonthsIncomeFMT            = $userBudget['lastMonthsIncomeFMT'];
+$lastMonthsExpense              = $userBudget['lastMonthsExpense'];
+$lastMonthsExpenseFMT           = $userBudget['lastMonthsExpenseFMT'];
+$lastMonthsSurplusFMT           = $userBudget['lastMonthsSurplusFMT'];
+$lastMonthsInvestmentsFMT       = $userBudget['lastMonthsInvestmentsFMT'];
 
-$totalIncomeFMT                 = $userBudget['totalIncomeFMT']              ?? '$0.00';
-$totalExpense                   = $userBudget['totalExpense']                ?? 0;
-$totalExpenseFMT                = $userBudget['totalExpenseFMT']             ?? '$0.00';
-$totalSurplusFMT                = $userBudget['totalSurplusFMT']             ?? '$0.00';
-$totalInvestmentsFMT            = $userBudget['totalInvestmentsFMT']         ?? '$0.00';
+$nextMonthsIncomeFMT            = $userBudget['nextMonthsIncomeFMT'];
+$nextMonthsExpense              = $userBudget['nextMonthsExpense'];
+$nextMonthsExpenseFMT           = $userBudget['nextMonthsExpenseFMT'];
+$nextMonthsSurplusFMT           = $userBudget['nextMonthsSurplusFMT'];
+$nextMonthsInvestmentsFMT       = $userBudget['nextMonthsInvestmentsFMT'];
 
-$checkingSummary                = $userBudget['checkingSummary']             ?? 0;
-$checkingSummaryFMT             = $userBudget['checkingSummaryFMT']          ?? '$0.00';
-$incomeYTDSummaryFMT            = $userBudget['incomeYTDSummaryFMT']         ?? '$0.00';
-$expenseYTDSummaryFMT           = $userBudget['expenseYTDSummaryFMT']        ?? '$0.00';
+$totalIncomeFMT                 = $userBudget['totalIncomeFMT'];
+$totalExpense                   = $userBudget['totalExpense'];
+$totalExpenseFMT                = $userBudget['totalExpenseFMT'];
+$totalSurplusFMT                = $userBudget['totalSurplusFMT'];
+$totalInvestmentsFMT            = $userBudget['totalInvestmentsFMT'];
 
-$creditLimit                    = $userBudget['creditLimit']                 ?? 0;
-$creditLimitFMT                 = $userBudget['creditLimitFMT']              ?? '$0.00';
-$creditAvailable                = $userBudget['creditAvailable']             ?? 0;
-$creditAvailableFMT             = $userBudget['creditAvailableFMT']          ?? '$0.00';
+$checkingSummary                = $userBudget['checkingSummary'];
+$checkingSummaryFMT             = $userBudget['checkingSummaryFMT'];
+$incomeYTDSummaryFMT            = $userBudget['incomeYTDSummaryFMT'];
+$expenseYTDSummaryFMT           = $userBudget['expenseYTDSummaryFMT'];
 
-$debtSummary                    = $userBudget['debtSummary']                 ?? 0;
-$debtSummaryFMT                 = $userBudget['debtSummaryFMT']              ?? '$0.00';
-$investSummary                  = $userBudget['investSummary']               ?? 0;
-$investSummaryFMT               = $userBudget['investSummaryFMT']            ?? '$0.00';
+$creditLimit                    = $userBudget['creditLimit'];
+$creditLimitFMT                 = $userBudget['creditLimitFMT'];
+$creditAvailable                = $userBudget['creditAvailable'];
+$creditAvailableFMT             = $userBudget['creditAvailableFMT'];
 
-$totalAccountBalance            = $userBudget['totalAccountBalance']         ?? 0;
-$totalAccountBalanceFMT         = $userBudget['totalAccountBalanceFMT']      ?? '$0.00';
+$debtSummary                    = $userBudget['debtSummary'];
+$debtSummaryFMT                 = $userBudget['debtSummaryFMT'];
+$investSummary                  = $userBudget['investSummary'];
+$investSummaryFMT               = $userBudget['investSummaryFMT'];
 
-$initialBankBalance             = $initialBankBalance ?? ($userBudget['initialBankBalance'] ?? $totalAccountBalance);
-$initialBankBalanceFMT          = $initialBankBalanceFMT ?? ($userBudget['initialBankBalanceFMT'] ?? '$0.00');
+$totalAccountBalance            = $userBudget['totalAccountBalance'];
+$totalAccountBalanceFMT         = $userBudget['totalAccountBalanceFMT'];
+
+$initialBankBalance             = $initialBankBalance ?? ($userBudget['initialBankBalance'] ?: $totalAccountBalance);
+$initialBankBalanceFMT          = $initialBankBalanceFMT ?? $userBudget['initialBankBalanceFMT'];
 $initialBankBalanceAsOf         = $initialBankBalanceAsOf ?? ($asOf ?? date('Y-m-d'));
 
 $monthlySavingsPercentage       = 0.3;

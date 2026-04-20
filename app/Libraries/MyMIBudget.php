@@ -670,12 +670,10 @@ class MyMIBudget
 
         $sourceType = $incomeAccount['source_type'];
         // Ensuring a default value for calculation and avoiding null
-        $getTMIncomeAccountSummary = $this->budgetModel->getThisMonthIncomeAccountSummary($cuID) ?? ['net_amount' => 0];
-        $thisMonthIncome = $getTMIncomeAccountSummary['net_amount'] ?? 0.00;
+        $thisMonthIncome = (float) $this->budgetModel->getThisMonthIncomeAccountSummary($cuID);
 
         // Similar approach for last month's income
-        $getLMIncomeAccountSummary = $this->budgetModel->getLastMonthIncomeAccountSummary($cuID) ?? ['net_amount' => 0];
-        $lastMonthIncome = $getLMIncomeAccountSummary['net_amount'] ?? 0.00;
+        $lastMonthIncome = (float) $this->budgetModel->getLastMonthIncomeAccountSummary($cuID);
 
         // Calculation with proper checking to avoid division by zero
         if ($lastMonthIncome > 0) {
@@ -708,11 +706,9 @@ class MyMIBudget
         $getExpenseAccountSummary = $this->budgetModel->getExpenseAccountsSummary($cuID) ?? ['total_expense' => 0];
         $expenses = $getExpenseAccountSummary['total_expense'] ?? 0.00;
 
-        $getTMExpenseAccountSummary = $this->budgetModel->getThisMonthExpenseAccountSummary($cuID) ?? ['net_amount' => 0];
-        $thisMonthExpenses = $getTMExpenseAccountSummary['net_amount'] ?? 0.00;
+        $thisMonthExpenses = (float) $this->budgetModel->getThisMonthExpenseAccountSummary($cuID);
 
-        $getLMExpenseAccountSummary = $this->budgetModel->getLastMonthExpenseAccountSummary($cuID) ?? ['net_amount' => 0];
-        $lastMonthExpenses = $getLMExpenseAccountSummary['net_amount'] ?? 0.00;
+        $lastMonthExpenses = (float) $this->budgetModel->getLastMonthExpenseAccountSummary($cuID);
 
         if (!empty($lastMonthExpenses)) {
             $momExpenseAverages = ($thisMonthExpenses - $lastMonthExpenses) / $lastMonthExpenses * 100;
@@ -780,46 +776,48 @@ class MyMIBudget
         $userBudget['userActiveBudgetRecords'] = $this->budgetModel->getUserActiveBudgetRecords($userId);
 
         // Get this month's income, expense, and investments
-        $userBudget['thisMonthsIncome'] = $this->budgetModel->getThisMonthsIncome($userId)['net_amount'] ?? 0;
-        $userBudget['thisMonthsExpense'] = $this->budgetModel->getThisMonthsExpense($userId)['net_amount'] ?? 0;
-        $userBudget['thisMonthsInvestments'] = $this->budgetModel->getThisMonthsInvestments($userId)['net_amount'] ?? 0;  // Add investment-related data
-        $userBudget['thisMonthsSurplus'] = $userBudget['thisMonthsIncome'] - $userBudget['thisMonthsExpense'];
+        $userBudget['thisMonthsIncome']      = $this->budgetModel->getThisMonthsIncome($userId);
+        $userBudget['thisMonthsExpense']     = $this->budgetModel->getThisMonthsExpense($userId);
+        $userBudget['thisMonthsInvestments'] = $this->budgetModel->getThisMonthsInvestments($userId);
+        $userBudget['thisMonthsSurplus']     = $userBudget['thisMonthsIncome'] - $userBudget['thisMonthsExpense'];
 
         // Get last month's income, expense, and investments
-        $userBudget['lastMonthsIncome'] = $this->budgetModel->getLastMonthsIncome($userId)['net_amount'] ?? 0;
-        $userBudget['lastMonthsExpense'] = $this->budgetModel->getLastMonthsExpense($userId)['net_amount'] ?? 0;
-        $userBudget['lastMonthsInvestments'] = $this->budgetModel->getLastMonthsInvestments($userId)['net_amount'] ?? 0;  // Add investment-related data
-        $userBudget['lastMonthsSurplus'] = $userBudget['lastMonthsIncome'] - $userBudget['lastMonthsExpense'];
+        $userBudget['lastMonthsIncome']      = $this->budgetModel->getLastMonthsIncome($userId);
+        $userBudget['lastMonthsExpense']     = $this->budgetModel->getLastMonthsExpense($userId);
+        $userBudget['lastMonthsInvestments'] = $this->budgetModel->getLastMonthsInvestments($userId);
+        $userBudget['lastMonthsSurplus']     = $userBudget['lastMonthsIncome'] - $userBudget['lastMonthsExpense'];
 
         // Get next month's income, expense, and investments
-        $userBudget['nextMonthsIncome'] = $this->budgetModel->getNextMonthsIncome($userId)['net_amount'] ?? 0;
-        $userBudget['nextMonthsExpense'] = $this->budgetModel->getNextMonthsExpense($userId)['net_amount'] ?? 0;
-        $userBudget['nextMonthsInvestments'] = $this->budgetModel->getNextMonthsInvestments($userId)['net_amount'] ?? 0;  // Add investment-related data
-        $userBudget['nextMonthsSurplus'] = $userBudget['nextMonthsIncome'] - $userBudget['nextMonthsExpense'];
+        $userBudget['nextMonthsIncome']      = $this->budgetModel->getNextMonthsIncome($userId);
+        $userBudget['nextMonthsExpense']     = $this->budgetModel->getNextMonthsExpense($userId);
+        $userBudget['nextMonthsInvestments'] = $this->budgetModel->getNextMonthsInvestments($userId);
+        $userBudget['nextMonthsSurplus']     = $userBudget['nextMonthsIncome'] - $userBudget['nextMonthsExpense'];
 
         // Total income, expense, surplus, and investments
-        $userBudget['totalIncome'] = $this->budgetModel->getAnnualIncome($userId)['net_amount'] ?? 0;
-        $userBudget['totalExpense'] = $this->budgetModel->getAnnualExpense($userId)['net_amount'] ?? 0;
-        $userBudget['totalSurplus'] = $userBudget['totalIncome'] - $userBudget['totalExpense'];
-        $userBudget['totalInvestments'] = $this->budgetModel->getTotalInvestments($userId)['net_amount'] ?? 0;  // Add total investment-related data
+        $userBudget['totalIncome']      = $this->budgetModel->getAnnualIncome($userId);
+        $userBudget['totalExpense']     = $this->budgetModel->getAnnualExpense($userId);
+        $userBudget['totalSurplus']     = $userBudget['totalIncome'] - $userBudget['totalExpense'];
+        $userBudget['totalInvestments'] = $this->budgetModel->getTotalInvestments($userId);
 
         // YTD summaries
-        $userBudget['incomeYTDSummary'] = $this->budgetModel->getAnnualIncomeYTD($userId)['net_amount'] ?? 0;
-        $userBudget['expenseYTDSummary'] = $this->budgetModel->getAnnualExpenseYTD($userId)['net_amount'] ?? 0;
+        $userBudget['incomeYTDSummary']  = $this->budgetModel->getAnnualIncomeYTD($userId);
+        $userBudget['expenseYTDSummary'] = $this->budgetModel->getAnnualExpenseYTD($userId);
 
         // Account summaries
-        $userBudget['checkingSummary'] = $this->budgetModel->getCheckingSummary($userId)['balance'] ?? 0;
-        $userBudget['cryptoSummary'] = $this->budgetModel->getCryptoSummary($userId) ?? 0;
+        $userBudget['checkingSummary'] = $this->budgetModel->getCheckingSummary($userId);
+        $userBudget['cryptoSummary']   = $this->budgetModel->getCryptoSummary($userId);
 
-        $debtSummaryRow = $this->budgetModel->getDebtAccountsSummary($userId) ?? [];
-        $userBudget['debtSummary']      = $debtSummaryRow['current_balance'] ?? $debtSummaryRow['available_balance'] ?? 0;
-        $userBudget['debtAvailable']    = $debtSummaryRow['available_balance'] ?? 0;
-        $userBudget['debtCreditLimit']  = $debtSummaryRow['credit_limit'] ?? 0;
-        $userBudget['investSummary'] = $this->budgetModel->getInvestAccountsSummary($userId)['net_worth'] ?? 0;
+        $debtSummaryRow = $this->budgetModel->getDebtAccountsSummary($userId);
+        $userBudget['debtSummary']     = $debtSummaryRow['current_balance'] !== 0.0
+            ? $debtSummaryRow['current_balance']
+            : $debtSummaryRow['available_balance'];
+        $userBudget['debtAvailable']   = $debtSummaryRow['available_balance'];
+        $userBudget['debtCreditLimit'] = $debtSummaryRow['credit_limit'];
+        $userBudget['investSummary']   = $this->budgetModel->getInvestAccountsSummary($userId)['net_worth'];
 
         // Credit limit and available credit
-        $userBudget['creditLimit'] = $this->budgetModel->getCreditLimitSummary($userId)['credit_limit'] ?? 0;
-        $userBudget['creditAvailable'] = $this->budgetModel->getCreditAvailableSummary($userId)['available_balance'] ?? 0;
+        $userBudget['creditLimit']     = $this->budgetModel->getCreditLimitSummary($userId)['credit_limit'];
+        $userBudget['creditAvailable'] = $this->budgetModel->getCreditAvailableSummary($userId)['available_balance'];
 
         // Total account balance
         $userBudget['totalAccountBalance'] = $this->budgetModel->getTotalAccountBalance($userId);

@@ -212,6 +212,46 @@ class BudgetModel extends ObservedModel
         return 0.0;
     }
 
+    /**
+     * Extracts a single scalar from a query-builder ->first() row, defaulting to 0.0
+     * when the row is missing or the value is null/non-numeric.
+     */
+    private function rowScalar($row, string $key): float
+    {
+        if (is_object($row)) {
+            $row = (array) $row;
+        }
+        if (!is_array($row) || !array_key_exists($key, $row)) {
+            return 0.0;
+        }
+
+        return $this->toFloat($row[$key]);
+    }
+
+    /**
+     * Coerces a query-builder summary row into a well-shaped associative array
+     * of floats keyed by the requested columns. Missing columns default to 0.0.
+     *
+     * @param array<int, string> $columns
+     * @return array<string, float>
+     */
+    private function shapeSummaryRow($row, array $columns): array
+    {
+        if (is_object($row)) {
+            $row = (array) $row;
+        }
+        if (!is_array($row)) {
+            $row = [];
+        }
+
+        $out = [];
+        foreach ($columns as $col) {
+            $out[$col] = $this->toFloat($row[$col] ?? 0);
+        }
+
+        return $out;
+    }
+
     protected function classifyRecordType(string $accountType, string $sourceType, float $amount): string
     {
         $accountType = strtolower(trim($accountType));
@@ -330,26 +370,28 @@ class BudgetModel extends ObservedModel
         return $result;
     }
 
-    public function getAnnualExpense($cuID) {
-        return $this->selectSum('net_amount', 'total_expense')
+    public function getAnnualExpense($cuID): float {
+        $row = $this->selectSum('net_amount', 'total_expense')
                     ->where('created_by', $cuID)
                     ->where('account_type', 'Expense')
                     ->where('status', 1)
                     ->where('year', date("Y"))
                     ->first();
+        return $this->rowScalar($row, 'total_expense');
     }
-    
-    public function getAnnualExpenseYTD($cuID) {
-        $startDate = date('Y-01-01'); // January 1st of the current year
-        $endDate = date('Y-m-d'); // Today's date
-    
-        return $this->selectSum('net_amount', 'total_expense')
+
+    public function getAnnualExpenseYTD($cuID): float {
+        $startDate = date('Y-01-01');
+        $endDate = date('Y-m-d');
+
+        $row = $this->selectSum('net_amount', 'total_expense')
                     ->where('created_by', $cuID)
                     ->where('account_type', 'Expense')
                     ->where('status', 1)
                     ->where('designated_date >=', $startDate)
                     ->where('designated_date <=', $endDate)
                     ->first();
+        return $this->rowScalar($row, 'total_expense');
     }
     
     public function getAnnualForecast(int $userId): array
@@ -360,28 +402,30 @@ class BudgetModel extends ObservedModel
             ->limit(20)->get()->getResultArray();
     }
     
-    public function getAnnualIncome($cuID) {
-        return $this->selectSum('net_amount')
+    public function getAnnualIncome($cuID): float {
+        $row = $this->selectSum('net_amount')
                     ->where([
-                        'created_by' => $cuID, 
+                        'created_by' => $cuID,
                         'account_type' => 'Income',
-                        'status' => 1, 
+                        'status' => 1,
                         'year' => date("Y")
                     ])
                     ->first();
-    } 
-    
-    public function getAnnualIncomeYTD($cuID) {
-        $startDate = date('Y-01-01'); // January 1st of the current year
-        $endDate = date('Y-m-d'); // Today's date
-    
-        return $this->selectSum('net_amount')
+        return $this->rowScalar($row, 'net_amount');
+    }
+
+    public function getAnnualIncomeYTD($cuID): float {
+        $startDate = date('Y-01-01');
+        $endDate = date('Y-m-d');
+
+        $row = $this->selectSum('net_amount')
                     ->where('created_by', $cuID)
                     ->where('account_type', 'Income')
                     ->where('status', 1)
                     ->where('designated_date >=', $startDate)
                     ->where('designated_date <=', $endDate)
                     ->first();
+        return $this->rowScalar($row, 'net_amount');
     }
     
     public function getAvailableBalances($cuID)
@@ -404,24 +448,16 @@ class BudgetModel extends ObservedModel
                         ->getResultArray();
     }
     
-    public function getCheckingSummary($cuID) {
-        // Bank account rows already persist the most recent cleared balance. The
-        // $asOf parameter is preserved for API compatibility should historical
-        // snapshots become available in the future.
+    public function getCheckingSummary($cuID): float {
+        // Bank account rows already persist the most recent cleared balance.
+        $row = $this->db->table('bf_users_bank_accounts')
+                        ->selectSum('balance')
+                        ->where('user_id', $cuID)
+                        ->where('status', 1)
+                        ->get()
+                        ->getRowArray();
 
-        $builder = $this->db->table('bf_users_bank_accounts')
-                            ->selectSum('balance')
-                            ->where('user_id', $cuID)
-                            ->where('status', 1)
-                            ->get()
-                            ->getRowArray();
-
-        // Ensure a valid result is always returned
-        if (!isset($builder['balance']) || is_null($builder['balance'])) {
-            return ['balance' => 0]; // Return a default value if the sum is NULL
-        }
-
-        return $builder;
+        return $this->rowScalar($row, 'balance');
     }
 
     public function getInitialBankBalance(int $userId, ?string $asOf = null, ?int $accountId = null): float
@@ -492,75 +528,62 @@ class BudgetModel extends ObservedModel
         return $result;
     }
 
-    public function getCreditAccountsSummary($cuID) {
-        $builder = $this->db->table('bf_users_credit_accounts');
-        $builder->select('status, id, wallet_id, account_type, bank_name, nickname, account_number, SUM(available_balance) as available_balance, SUM(current_balance) as current_balance', false);
-        $builder->where('user_id', $cuID);
-        $builder->where('status', 1);
-        $result = $builder->get()->getRowArray();
+    public function getCreditAccountsSummary($cuID): array {
+        $row = $this->db->table('bf_users_credit_accounts')
+            ->select('SUM(available_balance) as available_balance, SUM(current_balance) as current_balance', false)
+            ->where('user_id', $cuID)
+            ->where('status', 1)
+            ->get()
+            ->getRowArray();
 
-        return $result;
+        return $this->shapeSummaryRow($row, ['available_balance', 'current_balance']);
     }
-    
-    public function getCreditAvailableSummary($cuID) {
-        // Access the database connection and Query Builder for a specific table
-        $builder = $this->db->table('bf_users_credit_accounts');
 
-        // Construct the query using the Query Builder
-        $result = $builder->selectSum('credit_limit', 'current_balance', 'available_balance')
-                ->where('user_id', $cuID)
-                ->where('status', 1)
-                ->where('deleted', 0)
-                ->get()
-                ->getRowArray();
+    public function getCreditAvailableSummary($cuID): array {
+        $row = $this->db->table('bf_users_credit_accounts')
+            ->selectSum('credit_limit')
+            ->selectSum('current_balance')
+            ->selectSum('available_balance')
+            ->where('user_id', $cuID)
+            ->where('status', 1)
+            ->where('deleted', 0)
+            ->get()
+            ->getRowArray();
 
-        return $result;
+        return $this->shapeSummaryRow($row, ['credit_limit', 'current_balance', 'available_balance']);
     }
-    
-    public function getCreditLimitSummary($cuID) {
-        $builder = $this->db->table('bf_users_credit_accounts');
-        $builder->select('status, id, wallet_id, account_type, bank_name, nickname, account_number, SUM(available_balance) as available_balance, SUM(credit_limit) as credit_limit, SUM(current_balance) as current_balance', false);
-        $builder->where('user_id', $cuID);
-        $builder->where('status', 1);
-        $result = $builder->get()->getResultArray();
-    
-        // log_message('info', 'WalletsModel - getUserCreditAccountsSummary() $result: ' . print_r($result, true));
-    
-        // // Initialize sums to 0 if not present to avoid undefined index errors
-        // $result['available_balance'] = $result['available_balance'] ?? 0;
-        // $result['credit_limit'] = $result['credit_limit'] ?? 0;
-        // $result['current_balance'] = $result['current_balance'] ?? 0;
-    
-        return $result;
-    }
-    
-    public function getCryptoAccountsSummary($cuID) {
-        // Access the database connection and Query Builder for a specific table
-        $builder = $this->db->table('bf_users_crypto_accounts');
 
-        // Construct the query using the Query Builder
-        $result = $builder->select('account_type')
-                ->selectSum('net_worth')
-                ->where('user_id', $cuID)
-                ->where('status', 1)
-                ->get()
-                ->getRowArray();
+    public function getCreditLimitSummary($cuID): array {
+        $row = $this->db->table('bf_users_credit_accounts')
+            ->select('SUM(available_balance) as available_balance, SUM(credit_limit) as credit_limit, SUM(current_balance) as current_balance', false)
+            ->where('user_id', $cuID)
+            ->where('status', 1)
+            ->get()
+            ->getRowArray();
 
-        return $result;
+        return $this->shapeSummaryRow($row, ['available_balance', 'credit_limit', 'current_balance']);
     }
-    
+
+    public function getCryptoAccountsSummary($cuID): array {
+        $row = $this->db->table('bf_users_crypto_accounts')
+            ->selectSum('net_worth')
+            ->where('user_id', $cuID)
+            ->where('status', 1)
+            ->get()
+            ->getRowArray();
+
+        return $this->shapeSummaryRow($row, ['net_worth']);
+    }
+
     // Fetch the summary of user's crypto accounts from the bf_users_crypto_accounts table
-    public function getCryptoSummary($userId) {
-        // Define the table where crypto accounts are stored
-        $db = \Config\Database::connect();
-        $builder = $db->table('bf_users_crypto_accounts'); // This is your table for crypto accounts
+    public function getCryptoSummary($userId): float {
+        $row = $this->db->table('bf_users_crypto_accounts')
+            ->selectSum('amount')
+            ->where('user_id', $userId)
+            ->get()
+            ->getRowArray();
 
-        // Query to get crypto summary (e.g., total amount)
-        return $builder->selectSum('amount') // Sum of the 'amount' field
-                       ->where('user_id', $userId)
-                       ->get()
-                       ->getRow()
-                       ->amount; // Returns the total amount across all crypto accounts
+        return $this->rowScalar($row, 'amount');
     }
     // public function getDebtAccounts($cuID) {
     //     $debtAccountsModel = new \App\Models\DebtAccountsModel();
@@ -611,14 +634,15 @@ class BudgetModel extends ObservedModel
             ->getResultArray();
     }    
     
-    public function getDebtAccountsSummary($cuID) {
-        $builder = $this->db->table('bf_users_debt_accounts');
-        $builder->select('status, id, wallet_id, account_type, debtor, nickname, account_number, SUM(available_balance) as available_balance, SUM(credit_limit) as credit_limit, SUM(current_balance) as current_balance', false);
-        $builder->where('user_id', $cuID);
-        $builder->where('status', 1);
-        $result = $builder->get()->getRowArray();
+    public function getDebtAccountsSummary($cuID): array {
+        $row = $this->db->table('bf_users_debt_accounts')
+            ->select('SUM(available_balance) as available_balance, SUM(credit_limit) as credit_limit, SUM(current_balance) as current_balance', false)
+            ->where('user_id', $cuID)
+            ->where('status', 1)
+            ->get()
+            ->getRowArray();
 
-        return $result;
+        return $this->shapeSummaryRow($row, ['available_balance', 'credit_limit', 'current_balance']);
     }
 
     public function getExpenseAccounts($cuID) {
@@ -644,8 +668,8 @@ class BudgetModel extends ObservedModel
                     ->findAll();
     }
     
-    public function getExpenseYTDSummary($cuID) {
-        return $this->selectSum('net_amount', 'ytd_expense')
+    public function getExpenseYTDSummary($cuID): float {
+        $row = $this->selectSum('net_amount', 'ytd_expense')
                     ->where('paid', 1)
                     ->where('deleted', 0)
                     ->where('created_by', $cuID)
@@ -653,7 +677,8 @@ class BudgetModel extends ObservedModel
                     ->where('year', date("Y"))
                     ->where("month <=", date('n'))
                     ->where("day <=", date('j'))
-                    ->findAll();
+                    ->first();
+        return $this->rowScalar($row, 'ytd_expense');
     }
 
     public function getFirstBudgetAccount($cuID) {
@@ -708,8 +733,8 @@ class BudgetModel extends ObservedModel
         return $result;
     }  
 
-    public function getIncomeYTDSummary($cuID) {
-        return $this->selectSum('net_amount', 'ytd_income')
+    public function getIncomeYTDSummary($cuID): float {
+        $row = $this->selectSum('net_amount', 'ytd_income')
                     ->where('paid', 1)
                     ->where('deleted', 0)
                     ->where('created_by', $cuID)
@@ -717,71 +742,72 @@ class BudgetModel extends ObservedModel
                     ->where('year', date("Y"))
                     ->where("month <=", date('n'))
                     ->where("day <=", date('j'))
-                    ->findAll();
+                    ->first();
+        return $this->rowScalar($row, 'ytd_income');
     }
-    
-    public function getInvestAccountsSummary($cuID) {
-        // Access the database connection and Query Builder for a specific table
-        $builder = $this->db->table('bf_users_invest_accounts');
 
-        // Construct the query using the Query Builder
-        $result = $builder->select('account_type')
-                ->selectSum('net_worth')
-                ->where('user_id', $cuID)
-                ->where('status', 1)
-                ->get()
-                ->getRowArray();
+    public function getInvestAccountsSummary($cuID): array {
+        $row = $this->db->table('bf_users_invest_accounts')
+            ->selectSum('net_worth')
+            ->where('user_id', $cuID)
+            ->where('status', 1)
+            ->get()
+            ->getRowArray();
 
-        return $result;
+        return $this->shapeSummaryRow($row, ['net_worth']);
     }
-    
-    public function getLastMonthsExpense($cuID) {
-        return $this->selectSum('net_amount')
+
+    public function getLastMonthsExpense($cuID): float {
+        $row = $this->selectSum('net_amount')
                     ->where([
-                        'created_by' => $cuID, 
+                        'created_by' => $cuID,
                         'account_type' => 'Expense',
-                        'status' => 1, 
+                        'status' => 1,
                         'month' => date("m", strtotime("-1 month"))
                     ])
                     ->first();
-    }
-    
-    public function getLastMonthsIncome($cuID) {
-        return $this->selectSum('net_amount')
-                    ->where([
-                        'created_by' => $cuID, 
-                        'account_type' => 'Income',
-                        'status' => 1, 
-                        'month' => date("m", strtotime("-1 month"))
-                    ])
-                    ->first();
+        return $this->rowScalar($row, 'net_amount');
     }
 
-    public function getLastMonthExpenseAccountSummary($cuID) {
-        return $this->selectSum('net_amount')
+    public function getLastMonthsIncome($cuID): float {
+        $row = $this->selectSum('net_amount')
                     ->where([
-                        'created_by' => $cuID, 
+                        'created_by' => $cuID,
+                        'account_type' => 'Income',
+                        'status' => 1,
+                        'month' => date("m", strtotime("-1 month"))
+                    ])
+                    ->first();
+        return $this->rowScalar($row, 'net_amount');
+    }
+
+    public function getLastMonthExpenseAccountSummary($cuID): float {
+        $row = $this->selectSum('net_amount')
+                    ->where([
+                        'created_by' => $cuID,
                         'account_type' => 'Expense',
                         'month' => date("m", strtotime("-1 month")),
                         'year' => date("Y", strtotime("-1 month"))
                     ])
                     ->first();
+        return $this->rowScalar($row, 'net_amount');
     }
 
-    public function getLastMonthIncomeAccountSummary($cuID) {
-        return $this->selectSum('net_amount')
+    public function getLastMonthIncomeAccountSummary($cuID): float {
+        $row = $this->selectSum('net_amount')
                     ->where([
-                        'created_by' => $cuID, 
+                        'created_by' => $cuID,
                         'account_type' => 'Income',
                         'month' => date("m", strtotime("-1 month")),
                         'year' => date("Y", strtotime("-1 month"))
                     ])
                     ->first();
+        return $this->rowScalar($row, 'net_amount');
     }
 
     // Fetch last month's investments for a user
-    public function getLastMonthsInvestments($cuID) {
-        return $this->selectSum('net_amount')
+    public function getLastMonthsInvestments($cuID): float {
+        $row = $this->selectSum('net_amount')
             ->where([
                 'created_by' => $cuID,
                 'account_type' => 'Investment',
@@ -790,7 +816,8 @@ class BudgetModel extends ObservedModel
                 'status' => 1
             ])
             ->first();
-    }    
+        return $this->rowScalar($row, 'net_amount');
+    }
     
     public function getLastRecurringAccountInfo($cuID)
     {
@@ -799,30 +826,32 @@ class BudgetModel extends ObservedModel
                     ->first();
     }
     
-    public function getLastYTDExpenseSummary($cuID) {
+    public function getLastYTDExpenseSummary($cuID): float {
         $lastYear = date("Y", strtotime("-1 year"));
-        $startDate = $lastYear . '-01-01'; // January 1st of last year
-        $endDate = $lastYear . '-12-31'; // December 31st of last year
-        return $this->selectSum('net_amount', 'ytd_expense')
+        $startDate = $lastYear . '-01-01';
+        $endDate = $lastYear . '-12-31';
+        $row = $this->selectSum('net_amount', 'ytd_expense')
                     ->where('created_by', $cuID)
                     ->where('account_type', 'Expense')
                     ->where('designated_date >=', $startDate)
                     ->where('designated_date <=', $endDate)
                     ->where('year', $lastYear)
-                    ->findAll();
+                    ->first();
+        return $this->rowScalar($row, 'ytd_expense');
     }
-    
-    public function getLastYTDIncomeSummary($cuID) {
+
+    public function getLastYTDIncomeSummary($cuID): float {
         $lastYear = date("Y", strtotime("-1 year"));
-        $startDate = $lastYear . '-01-01'; // January 1st of last year
-        $endDate = $lastYear . '-12-31'; // December 31st of last year
-        return $this->selectSum('net_amount', 'ytd_income')
+        $startDate = $lastYear . '-01-01';
+        $endDate = $lastYear . '-12-31';
+        $row = $this->selectSum('net_amount', 'ytd_income')
                     ->where('created_by', $cuID)
                     ->where('account_type', 'Income')
                     ->where('designated_date >=', $startDate)
                     ->where('designated_date <=', $endDate)
                     ->where('year', $lastYear)
-                    ->findAll();
+                    ->first();
+        return $this->rowScalar($row, 'ytd_income');
     }
 
     public function getLoanAccounts($cuID) {
@@ -843,31 +872,33 @@ class BudgetModel extends ObservedModel
                     ->findAll();
     }
 
-    public function getNextMonthsIncome($cuID) {
-        return $this->selectSum('net_amount')
+    public function getNextMonthsIncome($cuID): float {
+        $row = $this->selectSum('net_amount')
                     ->where([
-                        'created_by' => $cuID, 
+                        'created_by' => $cuID,
                         'account_type' => 'Income',
-                        'status' => 1, 
+                        'status' => 1,
                         'month' => date("m", strtotime("+1 month"))
                     ])
                     ->first();
+        return $this->rowScalar($row, 'net_amount');
     }
-    
-    public function getNextMonthsExpense($cuID) {
-        return $this->selectSum('net_amount')
+
+    public function getNextMonthsExpense($cuID): float {
+        $row = $this->selectSum('net_amount')
                     ->where([
-                        'created_by' => $cuID, 
+                        'created_by' => $cuID,
                         'account_type' => 'Expense',
-                        'status' => 1, 
+                        'status' => 1,
                         'month' => date("m", strtotime("+1 month"))
                     ])
                     ->first();
+        return $this->rowScalar($row, 'net_amount');
     }
 
     // Fetch next month's investments for a user
-    public function getNextMonthsInvestments($cuID) {
-        return $this->selectSum('net_amount')
+    public function getNextMonthsInvestments($cuID): float {
+        $row = $this->selectSum('net_amount')
             ->where([
                 'created_by' => $cuID,
                 'account_type' => 'Investment',
@@ -876,6 +907,7 @@ class BudgetModel extends ObservedModel
                 'status' => 1
             ])
             ->first();
+        return $this->rowScalar($row, 'net_amount');
     }
 
     public function getPaginatedData($limit, $offset) {
@@ -938,55 +970,59 @@ class BudgetModel extends ObservedModel
         ];
     }
     
-    public function getThisMonthsExpense($cuID) {
-        return $this->selectSum('net_amount')
+    public function getThisMonthsExpense($cuID): float {
+        $row = $this->selectSum('net_amount')
                     ->where([
-                        'created_by' => $cuID, 
+                        'created_by' => $cuID,
                         'account_type' => 'Expense',
-                        'status' => 1, 
+                        'status' => 1,
                         'month' => date("m"),
                         'year' => date("Y")
                     ])
                     ->first();
+        return $this->rowScalar($row, 'net_amount');
     }
 
-    public function getThisMonthsIncome($cuID) {
-        return $this->selectSum('net_amount')
+    public function getThisMonthsIncome($cuID): float {
+        $row = $this->selectSum('net_amount')
                     ->where([
-                        'created_by' => $cuID, 
+                        'created_by' => $cuID,
                         'account_type' => 'Income',
-                        'status' => 1, 
+                        'status' => 1,
                         'month' => date("m"),
                         'year' => date("Y")
                     ])
                     ->first();
+        return $this->rowScalar($row, 'net_amount');
     }
 
-    public function getThisMonthExpenseAccountSummary($cuID) {
-        return $this->selectSum('net_amount')
+    public function getThisMonthExpenseAccountSummary($cuID): float {
+        $row = $this->selectSum('net_amount')
                     ->where([
-                        'created_by' => $cuID, 
+                        'created_by' => $cuID,
                         'account_type' => 'Expense',
                         'month' => date("m"),
                         'year' => date("Y")
                     ])
                     ->first();
+        return $this->rowScalar($row, 'net_amount');
     }
-    
-    public function getThisMonthIncomeAccountSummary($cuID) {
-        return $this->selectSum('net_amount')
+
+    public function getThisMonthIncomeAccountSummary($cuID): float {
+        $row = $this->selectSum('net_amount')
                     ->where([
-                        'created_by' => $cuID, 
+                        'created_by' => $cuID,
                         'account_type' => 'Income',
                         'month' => date("m"),
                         'year' => date("Y")
                     ])
                     ->first();
+        return $this->rowScalar($row, 'net_amount');
     }
 
     // Fetch this month's investments for a user
-    public function getThisMonthsInvestments($cuID) {
-        return $this->selectSum('net_amount')
+    public function getThisMonthsInvestments($cuID): float {
+        $row = $this->selectSum('net_amount')
             ->where([
                 'created_by' => $cuID,
                 'account_type' => 'Investment',
@@ -995,30 +1031,32 @@ class BudgetModel extends ObservedModel
                 'status' => 1
             ])
             ->first();
+        return $this->rowScalar($row, 'net_amount');
     }
 
     // Fetch the total account balance for a specific user
-    public function getTotalAccountBalance($userId) {
-        return $this->db->table('bf_users_budgeting')
+    public function getTotalAccountBalance($userId): float {
+        $row = $this->db->table('bf_users_budgeting')
                     ->where('status', 1)
                     ->where('paid', 0)
                     ->where('deleted', 0)
                     ->where('created_by', $userId)
-                    ->selectSum('net_amount') // Adjust based on your database structure
+                    ->selectSum('net_amount')
                     ->get()
-                    ->getRow()
-                    ->net_amount; // This returns the total of net_amount
+                    ->getRowArray();
+        return $this->rowScalar($row, 'net_amount');
     }
 
     // Fetch total investments for a user (all-time)
-    public function getTotalInvestments($cuID) {
-        return $this->selectSum('net_amount')
+    public function getTotalInvestments($cuID): float {
+        $row = $this->selectSum('net_amount')
             ->where([
                 'created_by' => $cuID,
                 'account_type' => 'Investment',
                 'status' => 1
             ])
             ->first();
+        return $this->rowScalar($row, 'net_amount');
     }
 
     public function getUserActiveBudgetRecords($cuID) {
@@ -1160,12 +1198,12 @@ class BudgetModel extends ObservedModel
 
     public function getUserMonthlyIncome(int $userId): float
     {
-        return (float) ($this->getThisMonthsIncome($userId)['net_amount'] ?? 0);
+        return $this->getThisMonthsIncome($userId);
     }
 
     public function getUserMonthlyExpenses(int $userId): float
     {
-        return (float) ($this->getThisMonthsExpense($userId)['net_amount'] ?? 0);
+        return $this->getThisMonthsExpense($userId);
     }
     // public function getUserMonthlyExpenses(int $userId): float
     // {
