@@ -377,11 +377,11 @@ if (!function_exists('miw_is_outflow')) {
             <div class="col-sm-12 col-md-12 my-sm-3">
                 <?php
                 if (!empty($userAgent) && method_exists($userAgent, 'isMobile') && $userAgent->isMobile()) {
-                    echo view('UserModule\Budget\index\mobile_table', $allViewData);
+                    echo view('UserModule\Views\Budget\index\mobile_table', $allViewData);
                 } elseif (!empty($userAgent) && method_exists($userAgent, 'isBrowser') && $userAgent->isBrowser()) {
-                    echo view('UserModule\Budget\index\browser_table', $allViewData);
+                    echo view('UserModule\Views\Budget\index\browser_table', $allViewData);
                 } else {
-                    echo view('UserModule\Budget\index\browser_table', $allViewData);
+                    echo view('UserModule\Views\Budget\index\browser_table', $allViewData);
                 }
                 ?>
             </div>

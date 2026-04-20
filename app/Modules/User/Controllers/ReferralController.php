@@ -379,7 +379,7 @@ class ReferralController extends BaseUserController {
             'referral_email' => $referralEmail
         ];
     
-        if ($this->debug = 1) {
+        if (!empty($this->debug)) {
             log_message('info', 'Storing referral data: ' . print_r($referralData, true));
         }
     
@@ -398,7 +398,7 @@ class ReferralController extends BaseUserController {
             'user_ip' => $ipAddress
         ];
     
-        if ($this->debug = 1) {
+        if (!empty($this->debug)) {
             log_message('info', 'Storing referral data: ' . print_r($subscriberData, true));
         }
 

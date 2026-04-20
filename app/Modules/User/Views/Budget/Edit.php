@@ -65,10 +65,33 @@ if ($uriSegmentB === 'Recurring-Account') {
     $copyButtonText                     = 'Edit';
     $copyButtonIcon                     = 'icon ni ni-pen';
 }
-if ($this->debug = 1) {
-log_message('info', 'View File - $getAccountInfo: ' . print_r($getAccountInfo, true));
+if (!empty($siteSettings->debug)) {
+    log_message('info', 'View File - $getAccountInfo: ' . print_r($getAccountInfo, true));
 }
-if(!empty($getAccountInfo)) {
+$accountID = $accountID ?? null;
+$userID = '';
+$userEmail = '';
+$accountPaidStatus = '';
+$accountMonth = '';
+$accountDay = '';
+$accountYear = '';
+$accountTime = '';
+$accountName = '';
+$accountNetAmount = '';
+$accountGrossAmount = '';
+$accountSummary = '';
+$accountRecurringAccount = 'No';
+$accountRecurringPrimary = '';
+$accountType = $accountType ?? '';
+$accountSourceType = '';
+$accountIsDebt = 0;
+$accountIsCCPayment = 0;
+$accountWeeksLeft = 0;
+$accountIsDebtText = 'No';
+$accountIntervals = '';
+$accountRecurringSchedule = '';
+$accountDesignatedDate = '';
+if (!empty($getAccountInfo) && is_array($getAccountInfo)) {
     $userID                         = $getAccountInfo['accountCreator']; 
     $userEmail                      = $getAccountInfo['accountCreatorEmail']; 
     $accountPaidStatus              = $getAccountInfo['accountPaidStatus'];
@@ -107,9 +130,13 @@ $accountTypeAltURl                          = site_url('/Budget/Add/' . $account
 $budgetService = new \App\Services\BudgetService($cuID ?? null);
 $recurringScheduleOptions = $budgetService->getRecurringSchedules(strtolower((string) $accountType));
 
-// Fetch related records based on name or source_type
-$relatedRecords = array_filter($userBudget['userBudgetRecords'], function ($record) use ($accountName, $accountSourceType) {
-    return $record['name'] === $accountName || $record['source_type'] === $accountSourceType;
+// Fetch related records based on name or source_type (defensive against missing data)
+$userBudget = is_array($userBudget ?? null) ? $userBudget : [];
+$_budgetRecordsForFilter = is_array($userBudget['userBudgetRecords'] ?? null) ? $userBudget['userBudgetRecords'] : [];
+$relatedRecords = array_filter($_budgetRecordsForFilter, function ($record) use ($accountName, $accountSourceType) {
+    if (!is_array($record)) { return false; }
+    return (($record['name'] ?? null) === $accountName)
+        || (($record['source_type'] ?? null) === $accountSourceType);
 });
 
 // $this->mymilogger
@@ -125,7 +152,7 @@ $relatedRecords = array_filter($userBudget['userBudgetRecords'], function ($reco
 $fieldData = array(
     'errorClass'                        => $errorClass,
     'controlClass'                      => $controlClass,
-    'configMode'	                    => $configMode,
+    'configMode'                            => $configMode,
     'redirectURL'                       => $redirectURL,
     'cuID'                              => $cuID,
     'cuEmail'                           => $cuEmail,
@@ -152,7 +179,7 @@ $fieldData = array(
     'accountIntervals'                  => $accountIntervals,
     'accountDesDate'                    => $accountDesignatedDate,
     'accountWeeksLeft'                  => $accountWeeksLeft,
-    'accountType'	                    => $accountType,
+    'accountType'                           => $accountType,
     'recurringScheduleOptions'          => $recurringScheduleOptions,
 );
 
@@ -220,7 +247,7 @@ $addModalTitle                          = $configMode . ' Your ' . $accountName 
                                         <a href="<?php echo site_url('/Budget'); ?>" class="btn btn-danger btn-dim btn-outline-primary text-white"><em class="icon ni ni-cross"></em><span>Cancel</span></a></li>
                                     </div>
                                 </fieldset>
-                            <?php echo form_close(); ?>	
+                            <?php echo form_close(); ?> 
                             <?php if (validation_errors()) : ?>
                             <div class="alert alert-error fade in">
                                 <?php echo validation_errors(); ?>
@@ -274,52 +301,38 @@ function isDisallowed(referrer) {
 }
 const csrfTokenName                         = '<?php echo csrf_token(); ?>';
 const csrfTokenValue                        = '<?php echo csrf_hash(); ?>';
-const addAccountForm		                = document.querySelector("#edit_user_budgeting_account");
-const addAccountSubmit	                    = {};
-if (addAccountForm) { 
+const addAccountForm = document.querySelector("#edit_user_budgeting_account");
+if (addAccountForm) {
     addAccountForm.addEventListener("submit", async (e) => {
-        //Do no refresh
+        // Standardized to native FormData (matches Add.php), so the browser
+        // serializes the form, CSRF works the same way as every other POST,
+        // and BudgetController::accountManager() reads it via $request->getPost()
+        // without needing the JSON fallback.
         e.preventDefault();
-		const formData 		= new FormData(); 
-        //Get Form data in object OR
-		addAccountForm.querySelectorAll("input").forEach((inputField) => {
-            formData.append(inputField.name,inputField.value);
-            addAccountSubmit[inputField.name] = inputField.value;
-        });  
-        addAccountForm.querySelectorAll("select").forEach((inputField) => {
-            formData.append(inputField.name,inputField.value);
-            addAccountSubmit[inputField.name] = inputField.value;
-        });  
-        // Add CSRF token to the request
-        formData[csrfTokenName] = csrfTokenValue;
-        // console.log(redirectURL);
-        // console.log(...formData);
-        //Fetch
+        const formData = new FormData(addAccountForm);
+        // Always include the CSRF token in case the form template lacks it.
+        formData.append(csrfTokenName, csrfTokenValue);
+
         try {
             const url = "<?php echo site_url('Budget/Account-Manager'); ?>";
-            console.log("Submitting form to:", url);
-            console.log("FormData:", Object.fromEntries(formData.entries()));
-            const result = await fetch(url, {
-			
-			method: "POST",
-			body: JSON.stringify(addAccountSubmit),
-            headers: { "Content-Type": "application/json" },
-			credentials: "same-origin",
-			redirect: "manual",
+            const response = await fetch(url, {
+                method: "POST",
+                body: formData,
+                credentials: "same-origin",
+                redirect: "manual",
+                headers: { "X-Requested-With": "XMLHttpRequest" },
             });
-            const rawResponse = await result.text();
-            console.log("RAW RESPONSE:", rawResponse);
-            const data = rawResponse;
-            const accountID                     = document.getElementById('account_id').value;
-            const formMode                      = document.getElementById('form_mode').value;
-            const recurringAccountPrimary       = <?php echo '"' . $accountRecurringPrimary . '"'; ?>;
-            console.log(recurringAccountPrimary);
+            let data = null;
+            const contentType = response.headers.get("content-type") || "";
+            if (contentType.includes("application/json")) {
+                data = await response.json();
+            } else {
+                data = { raw: await response.text() };
+            }
+            console.log("Edit accountManager response:", data);
             location.href = redirectURL;
-            // location.href = <?php // echo '\'' . site_url('/Budget') . '\'';?>;
-            console.log(data);
         } catch (err) {
-            //If fetch doesn't work, maker 
-            console.log(err);
+            console.error("Edit form submit failed:", err);
         }
     });
 }

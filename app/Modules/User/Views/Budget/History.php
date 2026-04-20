@@ -5,20 +5,23 @@ $pageURIB                           = $uri->getSegment(2);
 // Site Settings 
 $beta                               = $siteSettings->beta;
 $investmentOperations               = $siteSettings->investmentOperations;
-// Time Configurations
-$current_year                       = date('Y');
-$thisMonth                          = strtotime(date("m/1/Y"));
-$sixMonthsAgo                       = date($thisMonth, strtotime("-6 months"));
-$sixMonthsAhead                     = date($thisMonth, strtotime("-6 months"));
-$last_year                          = date('Y') - 1;
-$next_year                          = date('Y') + 1;
-$current_date                       = date('m/d/Y');
-$last_year_date                     = date('m/d' . $last_year);
-$next_year_date                     = date('m/d' . $next_year);
-$end_of_year                        = date('m/d/Y', strtotime('12/31'));
-$daysLeft                           = date('dd', strtotime($end_of_year)) - date('dd', strtotime($current_date));
-$weeksLeft                          = date('W', strtotime($end_of_year)) - date('W', strtotime($current_date));
-$monthsLeft                         = date('m', strtotime($end_of_year)) - date('m', strtotime($current_date));
+// Time Configurations (CI4 safe DateTime math)
+$current_year                       = (int) date('Y');
+$todayDT                            = new DateTime('today');
+$thisMonthStart                     = new DateTime($todayDT->format('Y-m-01'));
+$sixMonthsAgo                       = (clone $thisMonthStart)->modify('-6 months')->format('Y-m-d');
+$sixMonthsAhead                     = (clone $thisMonthStart)->modify('+6 months')->format('Y-m-d');
+$last_year                          = $current_year - 1;
+$next_year                          = $current_year + 1;
+$current_date                       = $todayDT->format('m/d/Y');
+$last_year_date                     = $todayDT->format("m/d/{$last_year}");
+$next_year_date                     = $todayDT->format("m/d/{$next_year}");
+$end_of_year_dt                     = new DateTime("{$current_year}-12-31");
+$end_of_year                        = $end_of_year_dt->format('m/d/Y');
+$intervalEoy                        = $todayDT->diff($end_of_year_dt);
+$daysLeft                           = (int) $intervalEoy->format('%a');
+$weeksLeft                          = (int) floor($daysLeft / 7);
+$monthsLeft                         = ((int) $intervalEoy->y * 12) + (int) $intervalEoy->m;
 // Management Configurations
 // $managementActionItems              = $this->config->item('managementActionItems');
 // ***New Library Configurations***
@@ -26,49 +29,48 @@ $monthsLeft                         = date('m', strtotime($end_of_year)) - date(
 // Temporary Selection of 30%
 $monthlySavingsPercentage           = 0.3;
 $monthlySavingsPercentageFMT        = number_format($monthlySavingsPercentage * 100,0) . '%';
-// !! MyMI Budget Variable Configuration (applications/libraries/MyMIBudget.php -> Function: all_user_budget_info($cuID)
-$userBudgetRecords                  = $userBudget['userBudgetRecords'];
-$thisMonthsIncome                   = $userBudget['thisMonthsIncome'];
-$thisMonthsIncomeFMT                = $userBudget['thisMonthsIncomeFMT'];
-$thisMonthsExpense                  = $userBudget['thisMonthsExpense'];
-$thisMonthsExpenseFMT               = $userBudget['thisMonthsExpenseFMT'];
-$thisMonthsExpense                  = $userBudget['thisMonthsExpense'];
-$thisMonthsExpenseFMT               = $userBudget['thisMonthsExpenseFMT'];
-$thisMonthsSurplus                  = $userBudget['thisMonthsSurplus'];
-$thisMonthsSurplusFMT               = $userBudget['thisMonthsSurplusFMT'];
-$thisMonthsInvestments              = $userBudget['thisMonthsInvestments'];
-$thisMonthsInvestmentsFMT           = $userBudget['thisMonthsInvestmentsFMT'];
-$thisMonthsInvestmentsSplitFMT      = $userBudget['thisMonthsInvestmentsSplitFMT'];
-$lastMonthsIncome                   = $userBudget['lastMonthsIncome'];
-$lastMonthsIncomeFMT                = $userBudget['lastMonthsIncomeFMT'];
-$lastMonthsExpense                  = $userBudget['lastMonthsExpense'];
-$lastMonthsExpenseFMT               = $userBudget['lastMonthsExpenseFMT'];
-$lastMonthsSurplus                  = $userBudget['lastMonthsSurplus'];
-$lastMonthsSurplusFMT               = $userBudget['lastMonthsSurplusFMT'];
-$lastMonthsInvestments              = $userBudget['lastMonthsInvestments'];
-$lastMonthsInvestmentsFMT           = $userBudget['lastMonthsInvestmentsFMT'];
-$totalIncome                        = $userBudget['totalIncome'];
-$totalIncomeFMT                     = $userBudget['totalIncomeFMT'];
-$totalExpense                       = $userBudget['totalExpense'];
-$totalExpenseFMT                    = $userBudget['totalExpenseFMT'];
-$totalSurplus                       = $userBudget['totalSurplus'];
-$totalSurplusFMT                    = $userBudget['totalSurplusFMT'];
-$totalInvestments                   = $userBudget['totalInvestments'];
-$totalInvestmentsFMT                = $userBudget['totalInvestmentsFMT'];
-$checkingSummary                    = $userBudget['checkingSummary'];
-$checkingSummaryFMT                 = $userBudget['checkingSummaryFMT'];
-$incomeYTDSummary                   = $userBudget['incomeYTDSummary'];
-$incomeYTDSummaryFMT                = $userBudget['incomeYTDSummaryFMT'];
-$expenseYTDSummary                  = $userBudget['expenseYTDSummary'];
-$expenseYTDSummaryFMT               = $userBudget['expenseYTDSummaryFMT'];
-$creditLimit                        = $userBudget['creditLimit'];
-$creditLimitFMT                     = $userBudget['creditLimitFMT'];
-$creditAvailable                    = $userBudget['creditAvailable'];
-$creditAvailableFMT                 = $userBudget['creditAvailableFMT'];
-$debtSummary                        = $userBudget['debtSummary'];
-$debtSummaryFMT                     = $userBudget['debtSummaryFMT'];
-$totalAccountBalance                = $userBudget['totalAccountBalance'];
-$totalAccountBalanceFMT             = $userBudget['totalAccountBalanceFMT'];
+// !! MyMI Budget Variable Configuration -- safe defaults so the view never fatals on missing keys
+$userBudget                         = is_array($userBudget ?? null) ? $userBudget : [];
+$userBudgetRecords                  = $userBudget['userBudgetRecords']           ?? [];
+$thisMonthsIncome                   = $userBudget['thisMonthsIncome']            ?? 0;
+$thisMonthsIncomeFMT                = $userBudget['thisMonthsIncomeFMT']         ?? '$0.00';
+$thisMonthsExpense                  = $userBudget['thisMonthsExpense']           ?? 0;
+$thisMonthsExpenseFMT               = $userBudget['thisMonthsExpenseFMT']        ?? '$0.00';
+$thisMonthsSurplus                  = $userBudget['thisMonthsSurplus']           ?? 0;
+$thisMonthsSurplusFMT               = $userBudget['thisMonthsSurplusFMT']        ?? '$0.00';
+$thisMonthsInvestments              = $userBudget['thisMonthsInvestments']       ?? 0;
+$thisMonthsInvestmentsFMT           = $userBudget['thisMonthsInvestmentsFMT']    ?? '$0.00';
+$thisMonthsInvestmentsSplitFMT      = $userBudget['thisMonthsInvestmentsSplitFMT'] ?? [];
+$lastMonthsIncome                   = $userBudget['lastMonthsIncome']            ?? 0;
+$lastMonthsIncomeFMT                = $userBudget['lastMonthsIncomeFMT']         ?? '$0.00';
+$lastMonthsExpense                  = $userBudget['lastMonthsExpense']           ?? 0;
+$lastMonthsExpenseFMT               = $userBudget['lastMonthsExpenseFMT']        ?? '$0.00';
+$lastMonthsSurplus                  = $userBudget['lastMonthsSurplus']           ?? 0;
+$lastMonthsSurplusFMT               = $userBudget['lastMonthsSurplusFMT']        ?? '$0.00';
+$lastMonthsInvestments              = $userBudget['lastMonthsInvestments']       ?? 0;
+$lastMonthsInvestmentsFMT           = $userBudget['lastMonthsInvestmentsFMT']    ?? '$0.00';
+$totalIncome                        = $userBudget['totalIncome']                 ?? 0;
+$totalIncomeFMT                     = $userBudget['totalIncomeFMT']              ?? '$0.00';
+$totalExpense                       = $userBudget['totalExpense']                ?? 0;
+$totalExpenseFMT                    = $userBudget['totalExpenseFMT']             ?? '$0.00';
+$totalSurplus                       = $userBudget['totalSurplus']                ?? 0;
+$totalSurplusFMT                    = $userBudget['totalSurplusFMT']             ?? '$0.00';
+$totalInvestments                   = $userBudget['totalInvestments']            ?? 0;
+$totalInvestmentsFMT                = $userBudget['totalInvestmentsFMT']         ?? '$0.00';
+$checkingSummary                    = $userBudget['checkingSummary']             ?? 0;
+$checkingSummaryFMT                 = $userBudget['checkingSummaryFMT']          ?? '$0.00';
+$incomeYTDSummary                   = $userBudget['incomeYTDSummary']            ?? 0;
+$incomeYTDSummaryFMT                = $userBudget['incomeYTDSummaryFMT']         ?? '$0.00';
+$expenseYTDSummary                  = $userBudget['expenseYTDSummary']           ?? 0;
+$expenseYTDSummaryFMT               = $userBudget['expenseYTDSummaryFMT']        ?? '$0.00';
+$creditLimit                        = $userBudget['creditLimit']                 ?? 0;
+$creditLimitFMT                     = $userBudget['creditLimitFMT']              ?? '$0.00';
+$creditAvailable                    = $userBudget['creditAvailable']             ?? 0;
+$creditAvailableFMT                 = $userBudget['creditAvailableFMT']          ?? '$0.00';
+$debtSummary                        = $userBudget['debtSummary']                 ?? 0;
+$debtSummaryFMT                     = $userBudget['debtSummaryFMT']              ?? '$0.00';
+$totalAccountBalance                = $userBudget['totalAccountBalance']         ?? 0;
+$totalAccountBalanceFMT             = $userBudget['totalAccountBalanceFMT']      ?? '$0.00';
 $allViewData                        = array(
     'beta'                          => $beta,
     'investmentOperations'          => $investmentOperations,
@@ -232,7 +234,7 @@ $allViewData                        = array(
                                     </div> -->
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">';
-                                            echo view('UserModule/Budget/index/historical_table', $allViewData);
+                                            echo view('UserModule\Views\Budget\index\historical_table', $allViewData);
                                             echo '
                                         </div>
                                         <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">';

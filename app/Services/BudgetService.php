@@ -2421,41 +2421,40 @@ class BudgetService
 
     public function getUserBudgetRecord($cuID, $accountID) {
         $accountInformation = $this->budgetModel->getUserBudgetRecord($cuID, $accountID);
-        $userBudgetRecord = array();
-        if ($this->debug === 1) {
-            // log_message('debug', '$accountInformation: ' . print_r($accountInformation, true));
+        $userBudgetRecord = [];
+        if (empty($accountInformation) || !is_array($accountInformation)) {
+            return null;
         }
-        if ($accountInformation === null) {
-            return null; // Ensure we return an empty array if no record is found
-        } else {
-            foreach ($accountInformation as $accountInfo) {
-                $userBudgetRecord = array(
-                    'accountID' => $accountInfo['id'],
-                    'accountPaidStatus' => $accountInfo['paid'] ?? 0,
-                    'accountDesDate' => $accountInfo['designated_date'],
-                    'accountMonth' => $accountInfo['month'],
-                    'accountDay' => $accountInfo['day'],
-                    'accountYear' => $accountInfo['year'],
-                    'accountTime' => $accountInfo['time'],
-                    'accountCreator' => $accountInfo['created_by'],
-                    'accountCreatorEmail' => $accountInfo['created_by_email'],
-                    'accountName' => $accountInfo['name'],
-                    'accountNetAmount' => $accountInfo['net_amount'],
-                    'accountGrossAmount' => $accountInfo['gross_amount'] ?? 0, // Assuming you might also need this
-                    'accountSummary' => $accountInfo['account_summary'],
-                    'accountWallet' => $accountInfo['wallet_id'],
-                    'accountRecurring' => $accountInfo['recurring_account'],
-                    'accountRecurringPrimary' => $accountInfo['recurring_account_primary'] ?? 'No', // Assuming you might also need this
-                    'accountRecurringID' => $accountInfo['recurring_account_id'],
-                    'accountRecurringSchedule' => $accountInfo['recurring_schedule'],
-                    'accountType' => $accountInfo['account_type'],
-                    'accountSource' => $accountInfo['source_type'],
-                    'accountIsDebt' => $accountInfo['is_debt'] ?? 0, // Assuming you might also need this
-                    'accountIsCCPay' => $accountInfo['is_cc_payment'] ?? 0, // Assuming you might also need this
-                    'accountIntervals' => $accountInfo['intervals'],
-                    'accountWeeksLeft' => $accountInfo['initial_weeks_left'],
-                );
+        foreach ($accountInformation as $accountInfo) {
+            if (!is_array($accountInfo)) {
+                continue;
             }
+            $userBudgetRecord = [
+                'accountID'                 => $accountInfo['id']                          ?? null,
+                'accountPaidStatus'         => $accountInfo['paid']                        ?? 0,
+                'accountDesDate'            => $accountInfo['designated_date']             ?? null,
+                'accountMonth'              => $accountInfo['month']                       ?? null,
+                'accountDay'                => $accountInfo['day']                         ?? null,
+                'accountYear'               => $accountInfo['year']                        ?? null,
+                'accountTime'               => $accountInfo['time']                        ?? null,
+                'accountCreator'            => $accountInfo['created_by']                  ?? null,
+                'accountCreatorEmail'       => $accountInfo['created_by_email']            ?? null,
+                'accountName'               => $accountInfo['name']                        ?? null,
+                'accountNetAmount'          => (float) ($accountInfo['net_amount']         ?? 0),
+                'accountGrossAmount'        => (float) ($accountInfo['gross_amount']       ?? 0),
+                'accountSummary'            => $accountInfo['account_summary']             ?? null,
+                'accountWallet'             => $accountInfo['wallet_id']                   ?? null,
+                'accountRecurring'          => $accountInfo['recurring_account']           ?? 'No',
+                'accountRecurringPrimary'   => $accountInfo['recurring_account_primary']   ?? 'No',
+                'accountRecurringID'        => $accountInfo['recurring_account_id']        ?? null,
+                'accountRecurringSchedule'  => $accountInfo['recurring_schedule']          ?? null,
+                'accountType'               => $accountInfo['account_type']                ?? null,
+                'accountSource'             => $accountInfo['source_type']                 ?? null,
+                'accountIsDebt'             => (int) ($accountInfo['is_debt']              ?? 0),
+                'accountIsCCPay'            => (int) ($accountInfo['is_cc_payment']        ?? 0),
+                'accountIntervals'          => $accountInfo['intervals']                   ?? null,
+                'accountWeeksLeft'          => (int) ($accountInfo['initial_weeks_left']   ?? 0),
+            ];
         }
         if ($this->debug === 1) {
             // log_message('debug', 'MyMIBudget L539 - $userBudgetRecord: ' . print_r($userBudgetRecord, true));

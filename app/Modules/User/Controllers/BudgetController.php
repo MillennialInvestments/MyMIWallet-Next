@@ -390,7 +390,7 @@ class BudgetController extends BaseUserController
         ]);
 
         $this->logMemory('before-view-render:monthly-overview');
-        return $this->renderTheme('User/Budget/monthly_overview', $this->data);
+        return $this->renderTheme('App\Modules\User\Views\Budget\monthly_overview', $this->data);
     }
 
     private function normalizeBudgetFilterType(?string $type): ?string
@@ -1039,11 +1039,25 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
     public function details($accountID) {
         log_message('debug', '[BudgetController::METHOD_ENTRY] details');
         $this->data['pageTitle'] = 'Account Details & History | MyMI Wallet | The Future of Finance';
-        $this->data['userBudgetRecord'] = $this->getBudgetService()->getUserBudgetRecord($this->cuID, $accountID);
 
-        // Get related budget records for display
-        $userBudgetRecordName = $this->data['userBudgetRecord']['accountName'];
-        $this->data['userRelatedBudgetAccounts'] = $this->getBudgetService()->getUserRelatedBudgetRecords($this->cuID, $userBudgetRecordName);
+        $userBudgetRecord = $this->getBudgetService()->getUserBudgetRecord($this->cuID, $accountID);
+        // Guard: getUserBudgetRecord may return null or an empty array when the
+        // account does not exist or does not belong to $this->cuID. Coerce to a
+        // safe shape so neither this controller nor the view dereferences nulls.
+        if (!is_array($userBudgetRecord)) {
+            $userBudgetRecord = [];
+        }
+        $this->data['userBudgetRecord'] = $userBudgetRecord;
+
+        // Get related budget records for display (only if we have a name to look up).
+        $userBudgetRecordName = $userBudgetRecord['accountName'] ?? null;
+        $this->data['userRelatedBudgetAccounts'] = !empty($userBudgetRecordName)
+            ? ($this->getBudgetService()->getUserRelatedBudgetRecords($this->cuID, $userBudgetRecordName) ?: [])
+            : [];
+
+        if (empty($userBudgetRecord)) {
+            log_message('warning', 'BudgetController::details - no record for cuID=' . $this->cuID . ' accountID=' . $accountID);
+        }
 
         $common = $this->ensureCommonDataReady();
         if ($common instanceof ResponseInterface) {

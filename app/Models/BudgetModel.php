@@ -251,8 +251,8 @@ class BudgetModel extends ObservedModel
     }
 
     public function approveRecurringAccount($accountID) {
-        if (!$data) {
-            log_message('error', 'No data provided for recurring schedule approval.');
+        if (empty($accountID)) {
+            log_message('error', 'No accountID provided for recurring account approval.');
             return false;
         }
         // Ensure we're updating only the specific account by using a "where" clause
@@ -1125,10 +1125,19 @@ class BudgetModel extends ObservedModel
     }
     
     public function getUserBudgetRecord($cuID, $accountID) {
-        $builder = $this->db->table('bf_users_budgeting');
-        return $builder->where('id', $accountID)
-                       ->get()
-                       ->getResultArray(); 
+        // Enforce ownership: only return the row when it belongs to $cuID
+        // and is not soft-deleted. Previously this method queried only by
+        // `id`, which allowed any authenticated user to read any other
+        // user's budget record (IDOR / broken access control).
+        if (empty($cuID) || empty($accountID)) {
+            return [];
+        }
+        return $this->db->table('bf_users_budgeting')
+                        ->where('id', $accountID)
+                        ->where('created_by', $cuID)
+                        ->where('deleted', 0)
+                        ->get()
+                        ->getResultArray();
     }
 
     public function getUserBudgetRecords($cuID) {
