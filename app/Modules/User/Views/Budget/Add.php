@@ -55,7 +55,7 @@ $fieldData = array(
     'errorClass'                        => $errorClass,
     'controlClass'                      => $controlClass,
     'redirectURL'                       => $redirectURL,
-    'configMode'	                    => $configMode,
+    'configMode'                            => $configMode,
     'siteSettings'                      => $siteSettings,
     'uri'                               => $uri,
     'cuID'                              => $cuID,
@@ -231,7 +231,7 @@ $fieldData = array(
                                         <input class="btn btn-primary btn-sm" type="submit" name="register" id="addAccountSubmit" value="Submit" />
                                     </div>
                                 </fieldset>
-                            <?php echo form_close(); ?>	
+                            <?php echo form_close(); ?> 
                             <?php if (validation_errors()) : ?>
                             <div class="alert alert-error fade in">
                                 <?php echo validation_errors(); ?>
@@ -313,11 +313,45 @@ $fieldData = array(
         }
     }
 
+    function clearFieldErrors(form) {
+        form.querySelectorAll('.field-error').forEach(el => el.remove());
+        form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+        const banner = form.querySelector('.form-error-banner');
+        if (banner) { banner.remove(); }
+    }
+
+    function renderFieldErrors(form, errors) {
+        if (!errors || typeof errors !== 'object') { return; }
+        const remaining = [];
+        Object.keys(errors).forEach(field => {
+            const message = errors[field];
+            const input = form.querySelector('[name="' + field + '"]');
+            if (input) {
+                input.classList.add('is-invalid');
+                const small = document.createElement('small');
+                small.className = 'field-error text-danger d-block mt-1';
+                small.setAttribute('data-field', field);
+                small.textContent = message;
+                const host = input.closest('.col-6') || input.parentNode;
+                host.appendChild(small);
+            } else {
+                remaining.push(field + ': ' + message);
+            }
+        });
+        if (remaining.length > 0) {
+            const banner = document.createElement('div');
+            banner.className = 'form-error-banner alert alert-danger mt-2';
+            banner.textContent = remaining.join(' | ');
+            form.prepend(banner);
+        }
+    }
+
     const addAccountForm = document.querySelector("#add_user_budgeting_account");
 
     if (addAccountForm) {
         addAccountForm.addEventListener("submit", async (e) => {
             e.preventDefault();
+            clearFieldErrors(addAccountForm);
 
             const formData = new FormData(addAccountForm);
             const recurringAccount = formData.get("recurring_account");
@@ -326,41 +360,38 @@ $fieldData = array(
                 const response = await fetch("<?= site_url('Budget/Account-Manager'); ?>", {
                     method: "POST",
                     headers: {
-                        "X-Requested-With": "XMLHttpRequest"
+                        "X-Requested-With": "XMLHttpRequest",
+                        "Accept": "application/json"
                     },
                     body: formData,
                     credentials: "same-origin"
                 });
 
                 const contentType = response.headers.get("content-type") || "";
-
-                if (!response.ok) {
-                    console.error("Server responded:", response.status);
-                    return;
-                }
-
-                if (!contentType.includes("application/json")) {
+                let data = null;
+                if (contentType.includes("application/json")) {
+                    data = await response.json();
+                } else {
                     const text = await response.text();
                     console.error("Expected JSON but got:", text);
+                    renderFieldErrors(addAccountForm, { server: 'Unexpected server response. Please try again.' });
                     return;
                 }
 
-                const data = await response.json();
-                const accountID = data.accountID;
-
-                if (!accountID) {
-                    console.error("Missing accountID in response");
+                if (data && data.status === 'success' && data.accountID) {
+                    if (recurringAccount === "Yes") {
+                        window.location.href = `<?= site_url('/Budget/Recurring-Account/Schedule/'); ?>${data.accountID}`;
+                    } else {
+                        window.location.href = "<?= site_url('/Budget'); ?>";
+                    }
                     return;
                 }
 
-                if (recurringAccount === "Yes") {
-                    window.location.href = `<?= site_url('/Budget/Recurring-Account/Schedule/'); ?>${accountID}`;
-                } else {
-                    window.location.href = "<?= site_url('/Budget'); ?>";
-                }
-
+                // Validation or server error: surface inline, do NOT redirect.
+                renderFieldErrors(addAccountForm, (data && data.errors) || { server: 'Unable to save the budget record.' });
             } catch (err) {
                 console.error(err);
+                renderFieldErrors(addAccountForm, { server: 'Network error while saving the budget record.' });
             }
         });
     }

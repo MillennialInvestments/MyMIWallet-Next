@@ -223,38 +223,47 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             try {
-                const payload = {
-                    accountID,
-                    recurringData: recurringData.map(record => ({
-                        dueDate: record.dueDate,
-                        netAmount: parseFloat(record.netAmount),
-                        grossAmount: parseFloat(record.grossAmount),
-                        accountName: record.accountName,
-                        accountType: record.accountType,
-                        accountSourceType: record.accountSourceType,
-                    })),
-                };
-
-                console.log("Payload to be sent:", payload);
+                // Standardized to native FormData (matches Add.php / Edit.php), so
+                // CSRF and the controller's $request->getPost(true) path handle the
+                // payload uniformly. Nested array notation lets PHP rebuild the
+                // recurringData array without a JSON branch.
+                const formData = new FormData();
+                formData.append('accountID', accountID);
+                formData.append('<?= csrf_token(); ?>', csrfToken);
+                recurringData.forEach((record, index) => {
+                    formData.append(`recurringData[${index}][dueDate]`, record.dueDate ?? '');
+                    formData.append(`recurringData[${index}][netAmount]`, parseFloat(record.netAmount));
+                    formData.append(`recurringData[${index}][grossAmount]`, parseFloat(record.grossAmount));
+                    formData.append(`recurringData[${index}][accountName]`, record.accountName ?? '');
+                    formData.append(`recurringData[${index}][accountType]`, record.accountType ?? '');
+                    formData.append(`recurringData[${index}][accountSourceType]`, record.accountSourceType ?? '');
+                });
 
                 const response = await fetch("<?= site_url('/Budget/Approve-Recurring-Schedule/' . $accountID); ?>", {
                     method: "POST",
                     headers: {
-                        'Content-Type': 'application/json',
-                        "X-CSRF-TOKEN": csrfToken, // Include the CSRF token in the headers
+                        "X-Requested-With": "XMLHttpRequest",
+                        "Accept": "application/json",
+                        "X-CSRF-TOKEN": csrfToken,
                     },
-                    body: JSON.stringify(payload),
+                    body: formData,
                     credentials: "same-origin",
-                    redirect: "manual",
                 });
 
-                if (response.ok) {
-                    console.log("Response received:", response);
+                let data = null;
+                const contentType = response.headers.get("content-type") || "";
+                if (contentType.includes("application/json")) {
+                    data = await response.json();
+                }
+
+                const ok = response.ok && (!data || data.status !== 'error');
+                if (ok) {
                     alert("Recurring schedules approved successfully.");
                     window.location.href = "<?= site_url('/Budget'); ?>";
                 } else {
-                    console.error("Failed to approve recurring schedules. Status:", response.status);
-                    alert("Approval failed. Check logs for details.");
+                    console.error("Approval failed:", response.status, data);
+                    const errors = (data && data.errors) ? Object.values(data.errors).join(' | ') : 'Approval failed. Check logs for details.';
+                    alert(errors);
                 }
             } catch (error) {
                 console.error("Error during approval:", error);
