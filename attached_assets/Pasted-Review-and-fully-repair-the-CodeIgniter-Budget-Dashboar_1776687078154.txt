@@ -1,0 +1,131 @@
+Review and fully repair the CodeIgniter Budget Dashboard module and all subsidiary pages/forms, then open a GitHub Pull Request with the fixes for my review.
+
+Project goal:
+Stabilize the entire /Budget Dashboard flow so that the main dashboard, all child pages, all forms, and all related AJAX/API interactions work end-to-end without PHP errors, broken views, missing data, bad routing, or failed submissions.
+
+Scope:
+Review and correct all Budget-related controller, service, model, and view logic tied to the Budget Dashboard and its subpages.
+
+Priority files to review first:
+- app/Modules/User/Controllers/BudgetController.php
+- app/Services/BudgetService.php
+- app/Models/BudgetModel.php
+- app/Modules/User/Views/Budget/index.php
+- app/Modules/User/Views/Budget/Add.php
+- app/Modules/User/Views/Budget/Edit.php
+- app/Modules/User/Views/Budget/Details.php
+- app/Modules/User/Views/Budget/History.php
+- app/Modules/User/Views/Budget/Recurring_Account/Schedule.php
+- app/Modules/User/Views/Budget/Add/user_fields.php
+- any Budget partials referenced by view() calls such as:
+  - Budget/index/control_center
+  - Budget/index/overview_chart
+  - Budget/index/browser_table
+  - Budget/index/mobile_table
+  - Budget/index/historical_table
+  - Budget/Edit/related_records
+  - Budget/Details/accounts
+
+Specific issues already suspected and must be verified/fixed:
+1. Mixed/incorrect view namespaces and paths
+   - There are inconsistent view references like:
+     - UserModule\Views\Budget\...
+     - UserModule\Budget\...
+     - UserModule/Budget/...
+   - Normalize all view() calls so they resolve correctly in CI4.
+   - Remove any legacy CI3-style loading that no longer belongs in CI4.
+
+2. Legacy/broken view code
+   - Details.php appears to contain legacy `$this->load->view(...)` usage. Remove/replace with proper CI4 `view()` usage.
+   - Ensure every partial exists and receives the variables it expects.
+
+3. Dashboard data population problems
+   - The main Budget dashboard currently has signs of duplicate/overwritten assignments and possible missing data in subsidiary tables.
+   - Verify that browser_table, mobile_table, control_center, overview_chart, and historical_table all receive complete data and render correctly.
+
+4. Form submission mismatches
+   - Review all Add/Edit/Recurring Schedule forms and confirm whether they submit JSON, standard POST, or AJAX.
+   - `BudgetController::accountManager()` currently expects JSON. If current forms submit standard POST or FormData, make the controller handle both cleanly or standardize the frontend and backend to one consistent format.
+   - Ensure validation errors are surfaced clearly and the user is redirected or responded to properly.
+
+5. Broken or risky model/service logic
+   - Audit BudgetModel and BudgetService for invalid Query Builder usage, bad null handling, missing defaults, unsafe assumptions, and methods that can return malformed data.
+   - Fix any methods that call model methods on Query Builder objects or otherwise misuse CI4 APIs.
+   - Ensure summary/account/balance methods always return safe defaults instead of null structures that break views.
+
+6. Date/math issues in views
+   - Audit index.php and related views for incorrect date handling and calculations.
+   - Replace any broken expressions that misuse `date()` or produce invalid day/week/month calculations.
+
+7. Route/controller/page coverage
+   - Test all BudgetController page methods and ensure they render correctly:
+     - index()
+     - add()
+     - edit()
+     - details()
+     - history()
+     - recurringSchedule()
+     - accountOverview()
+     - settings()
+     - financialAnalysis()
+     - financialForecaster()
+     - forecastBudget()
+   - Confirm the routes or links pointing to these pages are valid.
+
+8. End-to-end functional repair
+   - Confirm the following user flows work:
+     - Load Budget dashboard without errors
+     - Open each child page from the dashboard
+     - Submit Add form successfully
+     - Submit Edit form successfully
+     - View Details page without missing partials
+     - Open History page and see data
+     - Open Recurring Schedule page and save schedule data
+     - Mark paid/unpaid
+     - Delete/cancel where supported
+     - Bulk actions operate correctly
+     - Any browser table/mobile table loads data correctly
+
+Required implementation approach:
+- Keep changes focused on Budget module stability and correctness.
+- Do not introduce unrelated refactors.
+- Preserve existing UI/theme structure where possible.
+- Add defensive guards so missing/null values do not fatal the page.
+- Add useful logging where necessary to identify future Budget failures quickly.
+- Fix root causes, not just symptoms.
+
+Required diagnostics:
+- Trace all variables passed from BudgetController -> BudgetService -> BudgetModel -> Budget views.
+- Identify every missing variable, mismatched array key, invalid partial reference, bad query, and broken submit endpoint.
+- Repair them systematically.
+- If a partial or route is missing, create or correct it.
+- If form actions are inconsistent, standardize them.
+
+Required deliverables:
+1. Code changes committed on a dedicated branch.
+2. A GitHub Pull Request opened against the correct main development branch.
+3. PR title:
+   Fix Budget Dashboard subsidiary pages, forms, and data flow
+4. PR description must include:
+   - summary of root causes found
+   - files changed
+   - pages/forms fixed
+   - how form submission was standardized
+   - how data flow was corrected
+   - manual test checklist completed
+   - any remaining known issues, if any
+
+Acceptance criteria:
+- No broken Budget page loads
+- No missing view/partial errors
+- No undefined variable/array key errors in Budget pages
+- No form submission failures on Add/Edit/Recurring flows
+- Subsidiary pages and tables render actual data correctly
+- Controller/service/model/view flow is internally consistent
+- Pull Request is created and ready for human review
+
+Also create a short markdown report in the repo documenting:
+- all root causes found
+- exact fixes applied
+- test steps performed
+- recommended next hardening improvements for the Budget module
