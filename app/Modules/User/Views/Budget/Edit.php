@@ -194,6 +194,17 @@ $addModalTitle                          = $configMode . ' Your ' . $accountName 
                             <?= form_open(site_url('Budget/Account-Manager'), ['class' => 'form-horizontal', 'id' => 'edit_user_budgeting_account', 'method' => 'post']); ?>
                                 <fieldset>
                                     <?= csrf_field(); ?>
+                                    <div id="budget-account-errors" class="alert alert-danger d-none" role="alert"></div>
+                                    <?php $formErrors = session('formErrors') ?? []; ?>
+                                    <?php if (!empty($formErrors) && is_array($formErrors)) : ?>
+                                        <div class="alert alert-danger" role="alert">
+                                            <ul class="mb-0">
+                                                <?php foreach ($formErrors as $errorMessage) : ?>
+                                                    <li><?= esc((string) $errorMessage); ?></li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </div>
+                                    <?php endif; ?>
 
                                     <?php
                                     if ($uriSegmentB === 'Copy') { 
@@ -308,7 +319,17 @@ if (addAccountForm) {
 
             if (!result.ok || responseData.status !== 'success') {
                 console.error("Server responded with error:", result.status, responseData);
-                alert(responseData.message || 'Unable to save account changes.');
+                const errorBox = document.getElementById('budget-account-errors');
+                const errors = responseData.errors || {};
+                if (errorBox) {
+                    const list = Object.values(errors).length
+                        ? `<ul class="mb-0">${Object.values(errors).map((error) => `<li>${error}</li>`).join('')}</ul>`
+                        : `<span>${responseData.message || 'Unable to save account changes.'}</span>`;
+                    errorBox.innerHTML = list;
+                    errorBox.classList.remove('d-none');
+                } else {
+                    alert(responseData.message || 'Unable to save account changes.');
+                }
                 return;
             }
 
