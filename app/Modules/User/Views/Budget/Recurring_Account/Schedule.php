@@ -117,6 +117,8 @@ log_message('debug', 'Schedule L27 - View File - Extracted Account Info: ' . jso
                                     <h6 class="title">Please Confirm Your Recurring Schedule</h6>
                                 </div>
                                 <div class="card-tools me-n1">
+                                    <input type="hidden" id="budgetRecurringCsrfName" value="<?= esc(csrf_token()); ?>">
+                                    <input type="hidden" id="budgetRecurringCsrfValue" value="<?= esc(csrf_hash()); ?>">
                                     <a class="btn btn-success text-white" id="approveSchedule">Approve</a>
                                     <a class="btn btn-danger text-white" href="<?= site_url('/Budget/Cancel-Account/' . $accountID); ?>">Cancel</a>
                                 </div>
@@ -200,8 +202,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const recurringData = <?= json_encode($recurringSchedule); ?>;
             const accountID = <?= json_encode($accountID); ?>;
-            const csrfTokenName = <?= json_encode(csrf_token()) ?>;
-            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+            const csrfNameInput = document.getElementById('budgetRecurringCsrfName');
+            const csrfValueInput = document.getElementById('budgetRecurringCsrfValue');
+            const csrfTokenName = csrfNameInput ? csrfNameInput.value : <?= json_encode(csrf_token()) ?>;
+            const csrfToken = csrfValueInput?.value
+                || document.querySelector('input[name="<?= esc(csrf_token()); ?>"]')?.value
+                || document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+                || '';
 
             console.log("Recurring data to be sent:", recurringData);
             console.log("Account ID to be sent:", accountID);
@@ -251,6 +258,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
 
                 if (response.ok) {
+                    const responseData = await response.json().catch(() => ({}));
+                    if (responseData.csrfHash && csrfValueInput) {
+                        csrfValueInput.value = responseData.csrfHash;
+                    }
                     console.log("Response received:", response);
                     alert("Recurring schedules approved successfully.");
                     window.location.href = "<?= site_url('/Budget'); ?>";

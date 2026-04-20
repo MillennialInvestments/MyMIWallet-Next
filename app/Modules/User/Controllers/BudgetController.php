@@ -488,7 +488,15 @@ class BudgetController extends BaseUserController
         
         $accountType = isset($payload['account_type']) ? trim((string) $payload['account_type']) : null;
         $sourceType  = isset($payload['source_type']) ? trim((string) $payload['source_type']) : null;
-        $isDebt      = $sourceType ? (preg_match('/(Debt|Loan|Mortgage)/i', $sourceType) === 1 ? 1 : 0) : 0;
+        $isDebt = $sourceType ? (preg_match('/(Debt|Loan|Mortgage)/i', $sourceType) === 1 ? 1 : 0) : 0;
+        if (isset($payload['is_debt']) && in_array((string) $payload['is_debt'], ['0', '1'], true)) {
+            $isDebt = (int) $payload['is_debt'];
+        }
+        $isCcPayment = isset($payload['is_cc_payment']) && in_array((string) $payload['is_cc_payment'], ['0', '1'], true)
+            ? (int) $payload['is_cc_payment']
+            : 0;
+        $paidStatus = (string) ($payload['paid'] ?? '0');
+        $paid = ($paidStatus === '1') ? 1 : 0;
         $intervals   = isset($payload['intervals']) ? trim((string) $payload['intervals']) : null;
 
         $validationPayload = [
@@ -497,13 +505,15 @@ class BudgetController extends BaseUserController
             'nickname' => $nickname,
             'net_amount' => $payload['net_amount'] ?? null,
             'gross_amount' => $payload['gross_amount'] ?? null,
-            'paid' => (string) ($payload['paid'] ?? '0'),
+            'paid' => $paidStatus,
             'recurring_account' => $recurringAccount,
             'recurring_schedule' => $recurringSchedule,
             'intervals' => $intervals,
             'account_type' => $accountType,
             'form_mode' => $formMode,
             'account_id' => $payload['account_id'] ?? null,
+            'is_debt' => $payload['is_debt'] ?? null,
+            'is_cc_payment' => $payload['is_cc_payment'] ?? null,
         ];
 
         $rules = [
@@ -519,6 +529,8 @@ class BudgetController extends BaseUserController
             'account_type' => 'required|in_list[Income,Expense]',
             'form_mode' => 'required|in_list[Add,Edit,Copy]',
             'account_id' => 'permit_empty|integer',
+            'is_debt' => 'permit_empty|in_list[0,1,N/A]',
+            'is_cc_payment' => 'permit_empty|in_list[0,1,N/A]',
         ];
 
         if (! $this->validateData($validationPayload, $rules)) {
@@ -555,12 +567,13 @@ class BudgetController extends BaseUserController
             'name'              => $nickname,
             'net_amount'        => $netAmount,
             'gross_amount'      => $grossAmount,
-            'paid'              => 0,
+            'paid'              => $paid,
             'recurring_account' => $recurringAccount,
             'recurring_schedule'=> $recurringSchedule,
             'account_type'      => $accountType,
             'source_type'       => $sourceType,
             'is_debt'           => $isDebt,
+            'is_cc_payment'     => $isCcPayment,
             'intervals'         => $intervals,
             'due_date_estimated'=> $dueDateEstimated ? 1 : 0,
         ];
@@ -649,6 +662,17 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
                             'Account identifier is required for updates.',
                             ['account_id' => 'Account identifier is required for updates.'],
                             400,
+                            $wantsJson,
+                            $payload
+                        );
+                    }
+
+                    $existingRecord = $this->budgetService->getUserBudgetRecord($userId, $accountId);
+                    if (empty($existingRecord)) {
+                        return $this->respondAccountManagerFailure(
+                            'Unable to locate the requested budget record.',
+                            ['account_id' => 'Unable to locate the requested budget record.'],
+                            404,
                             $wantsJson,
                             $payload
                         );
@@ -1038,6 +1062,8 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
                 'recurring_account'=> 'permit_empty|in_list[Yes,No,N/A]',
                 'recurring_schedule'=> 'permit_empty|string|max_length[50]',
                 'intervals'        => 'permit_empty|string|max_length[50]',
+                'is_debt'          => 'permit_empty|in_list[0,1,N/A]',
+                'is_cc_payment'    => 'permit_empty|in_list[0,1,N/A]',
             ];
 
             $isValid = $this->validateData($postPayload, $rules);
@@ -1054,6 +1080,12 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
                 [$designatedDateFormatted, $month, $day, $year] = $this->normalizeDesignatedDate($designatedDate);
                 $sourceType = isset($postPayload['source_type']) ? trim((string) $postPayload['source_type']) : null;
                 $isDebt = $sourceType ? (preg_match('/(Debt|Loan|Mortgage)/i', $sourceType) === 1 ? 1 : 0) : 0;
+                if (isset($postPayload['is_debt']) && in_array((string) $postPayload['is_debt'], ['0', '1'], true)) {
+                    $isDebt = (int) $postPayload['is_debt'];
+                }
+                $isCcPayment = isset($postPayload['is_cc_payment']) && in_array((string) $postPayload['is_cc_payment'], ['0', '1'], true)
+                    ? (int) $postPayload['is_cc_payment']
+                    : 0;
 
                 $netAmount = (float) preg_replace('/[^0-9.\-]/', '', (string) ($postPayload['net_amount'] ?? '0'));
                 $grossAmount = (float) preg_replace('/[^0-9.\-]/', '', (string) ($postPayload['gross_amount'] ?? '0'));
@@ -1079,6 +1111,7 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
                     'account_type'       => $normalizedType,
                     'source_type'        => $sourceType,
                     'is_debt'            => $isDebt,
+                    'is_cc_payment'      => $isCcPayment,
                     'intervals'          => $postPayload['intervals'] ?? ($postPayload['recurring_schedule'] ?? null),
                 ];
 
@@ -1128,13 +1161,22 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
         log_message('debug', '[BudgetController::METHOD_ENTRY] approveRecurringSchedule');
         log_message('debug', 'BudgetController::approveRecurringSchedule - Start processing for AccountID: ' . $accountID);
     
-        // Check if the request content type is JSON
-        if ($this->request->getHeaderLine('Content-Type') === 'application/json') {
-            $formData = json_decode($this->request->getBody(), true);
-        } else {
-            // Fallback to default POST retrieval
-            $formData = $this->request->getPost(true);
-        }
+        $contentType = strtolower($this->request->getHeaderLine('Content-Type'));
+        $isJsonRequest = str_contains($contentType, 'application/json');
+        $formData = $isJsonRequest ? $this->request->getJSON(true) : $this->request->getPost(true);
+        $formData = is_array($formData) ? $formData : [];
+        $csrfTokenName = csrf_token();
+        $csrfInPayload = array_key_exists($csrfTokenName, $formData);
+        $csrfInHeader = $this->request->hasHeader('X-CSRF-TOKEN') || $this->request->hasHeader('X-XSRF-TOKEN');
+        log_message('debug', 'BudgetController::approveRecurringSchedule diagnostics: ' . json_encode([
+            'method' => strtoupper((string) $this->request->getMethod()),
+            'contentType' => $contentType,
+            'isJson' => $isJsonRequest,
+            'payloadKeys' => array_keys($formData),
+            'csrfPayloadName' => $csrfTokenName,
+            'csrfInPayload' => $csrfInPayload,
+            'csrfHeaderPresent' => $csrfInHeader,
+        ]));
     
         // Log the raw input if formData is invalid
         if (!$formData) {
@@ -1203,6 +1245,7 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
         return $this->response->setJSON([
             'success' => true,
             'message' => 'Recurring schedules successfully created.',
+            'csrfHash' => csrf_hash(),
         ]);
     }
     
