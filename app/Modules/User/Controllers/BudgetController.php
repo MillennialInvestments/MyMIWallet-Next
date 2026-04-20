@@ -409,81 +409,135 @@ class BudgetController extends BaseUserController
             return $this->featureGuardResponse;
         }
         $this->trace('[METHOD_ENTRY] ' . __FUNCTION__);
-        $this->trace('[AJAX CHECK] isAJAX=' . ($this->request->isAJAX() ? 'YES' : 'NO'));
-        $this->trace('[AJAX_HEADERS] ' . json_encode($this->request->headers()));
-        $this->trace('[AJAX_POST] ' . json_encode($this->request->getPost()));
 
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
             return $this->respondUnauthorized('Authentication required to manage budget accounts.');
         }
 
-        if (! $this->request->isAJAX()) {
+        $requestMethod = strtoupper((string) $this->request->getMethod());
+        $contentType = strtolower($this->request->getHeaderLine('Content-Type'));
+        $isAjaxRequest = $this->request->isAJAX();
+        $isJsonRequest = str_contains($contentType, 'application/json');
+        $wantsJson = $this->wantsJsonResponse();
+
+        [$payload, $post, $json] = $this->collectAccountManagerPayload();
+        $csrfPayloadName = csrf_token();
+        $csrfInPayload = array_key_exists($csrfPayloadName, $payload);
+        $csrfInHeader = $this->request->hasHeader('X-CSRF-TOKEN') || $this->request->hasHeader('X-XSRF-TOKEN');
+        $recurringKeys = ['recurring_account', 'recurring_schedule', 'intervals', 'designated_date'];
+        $presentRecurringKeys = array_values(array_intersect($recurringKeys, array_keys($payload)));
+
+        log_message('debug', 'BudgetController::accountManager request diagnostics: ' . json_encode([
+            'method' => $requestMethod,
+            'contentType' => $contentType,
+            'isAjax' => $isAjaxRequest,
+            'isJson' => $isJsonRequest,
+            'wantsJson' => $wantsJson,
+            'postKeys' => array_keys($post),
+            'jsonKeys' => array_keys($json),
+            'payloadKeys' => array_keys($payload),
+            'csrfPayloadName' => $csrfPayloadName,
+            'csrfInPayload' => $csrfInPayload,
+            'csrfHeaderPresent' => $csrfInHeader,
+            'recurringKeysPresent' => $presentRecurringKeys,
+        ]));
+
+        if ($requestMethod !== 'POST') {
+            if ($wantsJson) {
+                return $this->response->setStatusCode(405)->setJSON([
+                    'status' => 'error',
+                    'errors' => ['method' => 'POST is required for account manager requests.'],
+                ]);
+            }
             return redirect()->to('/Budget');
         }
- 
-        $post = $this->request->getPost();
-        $json = $this->request->getJSON(true);
 
-        log_message('debug', 'Budget/Account-Manager POST: ' . json_encode($post));
-        log_message('debug', 'Budget/Account-Manager JSON: ' . json_encode($json));
-
-        if (!is_array($post) || $post === []) {
-            $post = (array) $json;
+        if ($payload === []) {
+            return $this->respondAccountManagerFailure(
+                'Invalid request payload.',
+                ['payload' => 'Invalid request payload.'],
+                422,
+                $wantsJson
+            );
         }
 
-        if (!is_array($post) || $post === []) {
-            return $this->response->setStatusCode(422)->setJSON([
-                'status' => 'error',
-                'errors' => [
-                    'payload' => 'Invalid request payload.',
-                ],
-            ]);
-        }
-
-        $json = $post;
-
-        if (isset($json['user_id']) && (int) $json['user_id'] !== $userId) {
-            $this->logSecurityEvent('accountManager', 'User ID mismatch detected during payload validation.', $userId, $json);
-            return $this->response->setStatusCode(422)->setJSON([
-                'status' => 'error',
-                'errors' => [
-                    'user_id' => 'User mismatch detected for this session.',
-                ],
-            ]);
+        if (isset($payload['user_id']) && (int) $payload['user_id'] !== $userId) {
+            $this->logSecurityEvent('accountManager', 'User ID mismatch detected during payload validation.', $userId, $payload);
+            return $this->respondAccountManagerFailure(
+                'User mismatch detected for this session.',
+                ['user_id' => 'User mismatch detected for this session.'],
+                422,
+                $wantsJson,
+                $payload
+            );
         }
 
         $status     = 1;
-        $beta       = $json['beta'] ?? 'No';
-        $formMode   = $json['form_mode'] ?? 'Add';
-        $username   = $this->session->get('username') ?? ($json['username'] ?? '');
-        $userEmail  = $this->session->get('email') ?? ($json['user_email'] ?? '');
-        $nickname   = $json['nickname'] ?? $username;
-        $netAmount  = $this->sanitizeCurrency($json['net_amount'] ?? 0);
-        $grossAmount= $this->sanitizeCurrency($json['gross_amount'] ?? 0);
+        $beta       = $payload['beta'] ?? 'No';
+        $formMode   = ucfirst(strtolower((string) ($payload['form_mode'] ?? 'Add')));
+        $username   = $this->session->get('username') ?? ($payload['username'] ?? '');
+        $userEmail  = $this->session->get('email') ?? ($payload['user_email'] ?? '');
+        $nickname   = trim((string) ($payload['nickname'] ?? $username));
+        $netAmount  = $this->sanitizeCurrency($payload['net_amount'] ?? 0);
+        $grossAmount= $this->sanitizeCurrency($payload['gross_amount'] ?? 0);
         // Recurring schedule inventory: recurring_schedule is stored alongside recurring_account,
         // while intervals remains the legacy schedule engine field.
-        $recurringAccount = $json['recurring_account'] ?? 'No';
-        $recurringSchedule = $json['recurring_schedule'] ?? null;
+        $recurringAccount = trim((string) ($payload['recurring_account'] ?? 'No'));
+        $recurringSchedule = isset($payload['recurring_schedule']) ? trim((string) $payload['recurring_schedule']) : null;
         
-        $accountType = isset($json['account_type']) ? trim((string) $json['account_type']) : null;
-        $sourceType  = isset($json['source_type']) ? trim((string) $json['source_type']) : null;
+        $accountType = isset($payload['account_type']) ? trim((string) $payload['account_type']) : null;
+        $sourceType  = isset($payload['source_type']) ? trim((string) $payload['source_type']) : null;
         $isDebt      = $sourceType ? (preg_match('/(Debt|Loan|Mortgage)/i', $sourceType) === 1 ? 1 : 0) : 0;
-        $intervals   = $json['intervals'] ?? null;
+        $intervals   = isset($payload['intervals']) ? trim((string) $payload['intervals']) : null;
 
-        $designatedDateRaw = $json['designated_date'] ?? null;
-        $dueDateEstimated = false;
-        if ($designatedDateRaw) {
-            $dateTranslator = strtotime($designatedDateRaw);
-            if ($dateTranslator === false) {
-                $dueDateEstimated = true;
-                [$designatedDate, $month, $day, $year] = $this->defaultDueDate();
-            } else {
-                $dueDateEstimated = true;
-                [$designatedDate, $month, $day, $year] = $this->defaultDueDate();
-            }
-        } else {
-           $designatedDate = $month = $day = $year = null; // Default values if no date provided
+        $validationPayload = [
+            'designated_date' => $payload['designated_date'] ?? null,
+            'source_type' => $sourceType,
+            'nickname' => $nickname,
+            'net_amount' => $payload['net_amount'] ?? null,
+            'gross_amount' => $payload['gross_amount'] ?? null,
+            'paid' => (string) ($payload['paid'] ?? '0'),
+            'recurring_account' => $recurringAccount,
+            'recurring_schedule' => $recurringSchedule,
+            'intervals' => $intervals,
+            'account_type' => $accountType,
+            'form_mode' => $formMode,
+            'account_id' => $payload['account_id'] ?? null,
+        ];
+
+        $rules = [
+            'designated_date' => 'required|valid_date[Y-m-d]',
+            'source_type' => 'required|string|max_length[100]',
+            'nickname' => 'permit_empty|string|max_length[255]',
+            'net_amount' => 'permit_empty|decimal',
+            'gross_amount' => 'permit_empty|decimal',
+            'paid' => 'required|in_list[0,1,N/A]',
+            'recurring_account' => 'permit_empty|in_list[Yes,No,N/A]',
+            'recurring_schedule' => 'permit_empty|string|max_length[50]',
+            'intervals' => 'permit_empty|string|max_length[50]',
+            'account_type' => 'required|in_list[Income,Expense]',
+            'form_mode' => 'required|in_list[Add,Edit,Copy]',
+            'account_id' => 'permit_empty|integer',
+        ];
+
+        if (! $this->validateData($validationPayload, $rules)) {
+            $errors = $this->validator ? $this->validator->getErrors() : ['validation' => 'Validation failed.'];
+            log_message('debug', 'BudgetController::accountManager validation fail: ' . json_encode($errors));
+            return $this->respondAccountManagerFailure(
+                'Please correct the highlighted form errors.',
+                $errors,
+                422,
+                $wantsJson,
+                $payload
+            );
+        }
+
+        $designatedDateRaw = isset($payload['designated_date']) ? (string) $payload['designated_date'] : '';
+        [$designatedDate, $month, $day, $year, $dueDateEstimated] = $this->normalizeDesignatedDate($designatedDateRaw);
+
+        if ($intervals === null || $intervals === '') {
+            $intervals = $recurringSchedule;
         }
     
         $accountData = [
@@ -508,6 +562,7 @@ class BudgetController extends BaseUserController
             'source_type'       => $sourceType,
             'is_debt'           => $isDebt,
             'intervals'         => $intervals,
+            'due_date_estimated'=> $dueDateEstimated ? 1 : 0,
         ];
         // Insert or update logic as before, ensuring the array keys match your table column names
         try {
@@ -518,7 +573,6 @@ class BudgetController extends BaseUserController
                 'account_type' => $accountType,
             ]));
 
-            $formMode                           = $json['form_mode'];
             switch ($formMode) {
                 case 'Add':
                     if ($isDebt) {
@@ -565,25 +619,39 @@ class BudgetController extends BaseUserController
                         session()->setFlashdata('message', 'Budget record added successfully.');
                         session()->setFlashdata('alert-class', 'success');
                         $accountId = $insertedID;
-
+                        $redirectUrl = $this->buildBudgetSuccessRedirect($accountId, $recurringAccount, $formMode);
+                        log_message('debug', 'BudgetController::accountManager response mode=' . ($wantsJson ? 'json' : 'redirect') . ' redirectUrl=' . $redirectUrl);
 $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
                         $this->trace('[METHOD_EXIT] ' . __FUNCTION__);
-                        return $this->response->setJSON([
-                            'status' => 'success',
-                            'accountID' => $accountId,
-                        ]);
+                        if ($wantsJson) {
+                            return $this->response->setJSON([
+                                'status' => 'success',
+                                'accountID' => $accountId,
+                                'redirectURL' => $redirectUrl,
+                                'csrfHash' => csrf_hash(),
+                            ]);
+                        }
+
+                        return redirect()->to($redirectUrl);
                     }
-                    return $this->response->setStatusCode(422)->setJSON([
-                        'status' => 'error',
-                        'errors' => [
-                            'account' => 'Unable to create the budget record.',
-                        ],
-                    ]);
+                    return $this->respondAccountManagerFailure(
+                        'Unable to create the budget record.',
+                        ['account' => 'Unable to create the budget record.'],
+                        422,
+                        $wantsJson,
+                        $payload
+                    );
         
                 case 'Edit':
-                    $accountId = isset($json['account_id']) ? (int) $json['account_id'] : 0;
+                    $accountId = isset($payload['account_id']) ? (int) $payload['account_id'] : 0;
                     if ($accountId <= 0) {
-                        return $this->respondFailure('Account identifier is required for updates.', 400);
+                        return $this->respondAccountManagerFailure(
+                            'Account identifier is required for updates.',
+                            ['account_id' => 'Account identifier is required for updates.'],
+                            400,
+                            $wantsJson,
+                            $payload
+                        );
                     }
 
                     $updated = $this->budgetService->update($accountId, $accountData);
@@ -594,20 +662,29 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
                         ]));
                         session()->setFlashdata('message', 'Budget record updated successfully.');
                         session()->setFlashdata('alert-class', 'success');
+                        $redirectUrl = $this->buildBudgetSuccessRedirect($accountId, $recurringAccount, $formMode);
+                        log_message('debug', 'BudgetController::accountManager response mode=' . ($wantsJson ? 'json' : 'redirect') . ' redirectUrl=' . $redirectUrl);
 $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
                         $this->trace('[METHOD_EXIT] ' . __FUNCTION__);
-                        return $this->response->setJSON([
-                            'status' => 'success',
-                            'accountID' => $accountId,
-                        ]);
+                        if ($wantsJson) {
+                            return $this->response->setJSON([
+                                'status' => 'success',
+                                'accountID' => $accountId,
+                                'redirectURL' => $redirectUrl,
+                                'csrfHash' => csrf_hash(),
+                            ]);
+                        }
+
+                        return redirect()->to($redirectUrl);
                     }
 
-                    return $this->response->setStatusCode(422)->setJSON([
-                        'status' => 'error',
-                        'errors' => [
-                            'account' => 'Unable to update the budget record.',
-                        ],
-                    ]);
+                    return $this->respondAccountManagerFailure(
+                        'Unable to update the budget record.',
+                        ['account' => 'Unable to update the budget record.'],
+                        422,
+                        $wantsJson,
+                        $payload
+                    );
         
                  case 'Copy':
                     $this->logMemory('before-db-insert');
@@ -619,48 +696,59 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
                             $userId > 0 ? 'user:' . $userId : null,
                         ]));
                         $accountId = $insertedID;
-
+                        $redirectUrl = $this->buildBudgetSuccessRedirect($accountId, $recurringAccount, $formMode);
+                        log_message('debug', 'BudgetController::accountManager response mode=' . ($wantsJson ? 'json' : 'redirect') . ' redirectUrl=' . $redirectUrl);
 $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
                         $this->trace('[METHOD_EXIT] ' . __FUNCTION__);
-                        return $this->response->setJSON([
-                            'status' => 'success',
-                            'accountID' => $accountId,
-                        ]);
+                        if ($wantsJson) {
+                            return $this->response->setJSON([
+                                'status' => 'success',
+                                'accountID' => $accountId,
+                                'redirectURL' => $redirectUrl,
+                                'csrfHash' => csrf_hash(),
+                            ]);
+                        }
+
+                        return redirect()->to($redirectUrl);
                     }
 
-                    return $this->response->setStatusCode(422)->setJSON([
-                        'status' => 'error',
-                        'errors' => [
-                            'account' => 'Unable to duplicate the budget record.',
-                        ],
-                    ]);
+                    return $this->respondAccountManagerFailure(
+                        'Unable to duplicate the budget record.',
+                        ['account' => 'Unable to duplicate the budget record.'],
+                        422,
+                        $wantsJson,
+                        $payload
+                    );
 
                 default:
                     session()->setFlashdata('message', 'There was an error submitting your changes. Contact support by clicking <a href="' . site_url('/Support') . '">here!</a>');
                     session()->setFlashdata('alert-class', 'danger');
-                    return $this->response->setStatusCode(422)->setJSON([
-                        'status' => 'error',
-                        'errors' => [
-                            'form_mode' => 'Invalid form mode supplied.',
-                        ],
-                    ]);
+                    return $this->respondAccountManagerFailure(
+                        'Invalid form mode supplied.',
+                        ['form_mode' => 'Invalid form mode supplied.'],
+                        422,
+                        $wantsJson,
+                        $payload
+                    );
             }
         } catch (\UnexpectedValueException $e) {
             log_message('debug', 'BudgetController::accountManager recurring validation failed: ' . $e->getMessage());
-            return $this->response->setStatusCode(422)->setJSON([
-                'status' => 'error',
-                'errors' => [
-                    'validation' => $e->getMessage(),
-                ],
-            ]);
+            return $this->respondAccountManagerFailure(
+                $e->getMessage(),
+                ['validation' => $e->getMessage()],
+                422,
+                $wantsJson,
+                $payload
+            );
         } catch (\Throwable $e) {
-            $this->logException('accountManager', $e, $userId, ['payloadKeys' => array_keys($json)]);
-            return $this->response->setStatusCode(422)->setJSON([
-                'status' => 'error',
-                'errors' => [
-                    'server' => 'An unexpected error occurred while processing the account.',
-                ],
-            ]);
+            $this->logException('accountManager', $e, $userId, ['payloadKeys' => array_keys($payload)]);
+            return $this->respondAccountManagerFailure(
+                'An unexpected error occurred while processing the account.',
+                ['server' => 'An unexpected error occurred while processing the account.'],
+                422,
+                $wantsJson,
+                $payload
+            );
         }
     }
 
@@ -738,34 +826,117 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
         return Time::now('America/Chicago')->toDateTimeString();
     }
 
-    // protected function sanitizeCurrency($value): float
-    // {
-    //     if (is_string($value)) {
-    //         $value = preg_replace('/[^0-9.\-]/', '', $value);
-    //     }
+    protected function sanitizeCurrency($value): float
+    {
+        if (is_string($value)) {
+            $value = preg_replace('/[^0-9.\-]/', '', $value);
+        }
 
-    //     return round((float) $value, 2);
-    // }
+        return round((float) $value, 2);
+    }
 
-    // /**
-    //  * Returns an estimated due date when one is missing or invalid.
-    //  * Defaults to the 28th of the current month in America/Chicago.
-    //  */
-    // protected function defaultDueDate(): array
-    // {
-    //     $timezone = new DateTimeZone('America/Chicago');
-    //     $now      = new DateTime('now', $timezone);
-    //     $lastDay  = (int) $now->format('t');
-    //     $targetDay= min(28, $lastDay);
-    //     $now->setDate((int) $now->format('Y'), (int) $now->format('m'), $targetDay);
+    protected function normalizeDesignatedDate(?string $dateInput): array
+    {
+        $dateInput = trim((string) $dateInput);
+        if ($dateInput === '') {
+            [$fallbackDate, $month, $day, $year] = $this->defaultDueDate();
+            return [$fallbackDate, $month, $day, $year, true];
+        }
 
-    //     return [
-    //         $now->format('m/d/Y'),
-    //         (int) $now->format('m'),
-    //         $targetDay,
-    //         (int) $now->format('Y'),
-    //     ];
-    // }
+        $date = \DateTime::createFromFormat('Y-m-d', $dateInput, new DateTimeZone('America/Chicago'));
+        if (! $date instanceof \DateTime) {
+            [$fallbackDate, $month, $day, $year] = $this->defaultDueDate();
+            return [$fallbackDate, $month, $day, $year, true];
+        }
+
+        return [
+            $date->format('m/d/Y'),
+            (int) $date->format('m'),
+            (int) $date->format('d'),
+            (int) $date->format('Y'),
+            false,
+        ];
+    }
+
+    /**
+     * Returns an estimated due date when one is missing or invalid.
+     * Defaults to the 28th of the current month in America/Chicago.
+     */
+    protected function defaultDueDate(): array
+    {
+        $timezone = new DateTimeZone('America/Chicago');
+        $now      = new DateTime('now', $timezone);
+        $lastDay  = (int) $now->format('t');
+        $targetDay= min(28, $lastDay);
+        $now->setDate((int) $now->format('Y'), (int) $now->format('m'), $targetDay);
+
+        return [
+            $now->format('m/d/Y'),
+            (int) $now->format('m'),
+            $targetDay,
+            (int) $now->format('Y'),
+        ];
+    }
+
+    protected function buildBudgetSuccessRedirect(int $accountId, string $recurringAccount, string $formMode): string
+    {
+        if (strcasecmp($recurringAccount, 'Yes') === 0 && in_array($formMode, ['Add', 'Copy'], true)) {
+            return site_url('/Budget/Recurring-Account/Schedule/' . $accountId);
+        }
+
+        return site_url('/Budget');
+    }
+
+    protected function wantsJsonResponse(): bool
+    {
+        if ($this->request->isAJAX()) {
+            return true;
+        }
+
+        $accept = strtolower($this->request->getHeaderLine('Accept'));
+        $contentType = strtolower($this->request->getHeaderLine('Content-Type'));
+
+        return str_contains($accept, 'application/json') || str_contains($contentType, 'application/json');
+    }
+
+    protected function collectAccountManagerPayload(): array
+    {
+        $post = $this->request->getPost();
+        $json = $this->request->getJSON(true);
+
+        $post = is_array($post) ? $post : [];
+        $json = is_array($json) ? $json : [];
+
+        $payload = $post;
+        if ($payload === [] && $json !== []) {
+            $payload = $json;
+        } elseif ($payload !== [] && $json !== []) {
+            $payload = array_merge($json, $payload);
+        }
+
+        return [$payload, $post, $json];
+    }
+
+    protected function respondAccountManagerFailure(
+        string $message,
+        array $errors,
+        int $statusCode,
+        bool $wantsJson,
+        array $payload = []
+    ): ResponseInterface {
+        log_message('debug', 'BudgetController::accountManager failure response mode=' . ($wantsJson ? 'json' : 'redirect') . ' status=' . $statusCode . ' errors=' . json_encode(array_keys($errors)));
+
+        if ($wantsJson) {
+            return $this->response->setStatusCode($statusCode)->setJSON([
+                'status' => 'error',
+                'message' => $message,
+                'errors' => $errors,
+                'csrfHash' => csrf_hash(),
+            ]);
+        }
+
+        return redirect()->back()->withInput()->with('error', $message)->with('formErrors', $errors);
+    }
 
     protected function logSecurityEvent(string $action, string $message, int $userId, array $payload = []): void
     {
@@ -854,6 +1025,9 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
                 return redirect()->to('/Login')->with('error', 'Please log in to add a budget record.');
             }
 
+            $csrfTokenName = csrf_token();
+            log_message('debug', 'BudgetController::add csrf diagnostics: tokenName=' . $csrfTokenName . ' tokenPresent=' . (array_key_exists($csrfTokenName, $postPayload) ? 'yes' : 'no'));
+
             $rules = [
                 'designated_date'  => 'required|valid_date[Y-m-d]',
                 'source_type'      => 'required|string|max_length[100]',
@@ -877,10 +1051,7 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
 
             try {
                 $designatedDate = (string) ($postPayload['designated_date'] ?? '');
-                $timestamp = strtotime($designatedDate);
-                $month = $timestamp ? (int) date('m', $timestamp) : null;
-                $day = $timestamp ? (int) date('d', $timestamp) : null;
-                $year = $timestamp ? (int) date('Y', $timestamp) : null;
+                [$designatedDateFormatted, $month, $day, $year] = $this->normalizeDesignatedDate($designatedDate);
                 $sourceType = isset($postPayload['source_type']) ? trim((string) $postPayload['source_type']) : null;
                 $isDebt = $sourceType ? (preg_match('/(Debt|Loan|Mortgage)/i', $sourceType) === 1 ? 1 : 0) : 0;
 
@@ -894,7 +1065,7 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
                     'created_by'         => $userId,
                     'created_by_email'   => $this->session->get('email') ?? ($postPayload['user_email'] ?? ''),
                     'unix_timestamp'     => time(),
-                    'designated_date'    => $designatedDate ?: null,
+                    'designated_date'    => $designatedDateFormatted ?: null,
                     'month'              => $month,
                     'day'                => $day,
                     'year'               => $year,
@@ -908,7 +1079,7 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
                     'account_type'       => $normalizedType,
                     'source_type'        => $sourceType,
                     'is_debt'            => $isDebt,
-                    'intervals'          => $postPayload['intervals'] ?? null,
+                    'intervals'          => $postPayload['intervals'] ?? ($postPayload['recurring_schedule'] ?? null),
                 ];
 
                 $insertId = (int) $this->budgetService->save($insertData);
@@ -919,7 +1090,9 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
                         'budget',
                         $userId > 0 ? 'user:' . $userId : null,
                     ]));
-                    return redirect()->to('/Budget')->with('message', 'Budget record added successfully.')->with('alert-class', 'success');
+                    $redirectUrl = $this->buildBudgetSuccessRedirect($insertId, (string) ($insertData['recurring_account'] ?? 'No'), 'Add');
+                    log_message('debug', 'BudgetController::add redirect selected=' . $redirectUrl);
+                    return redirect()->to($redirectUrl)->with('message', 'Budget record added successfully.')->with('alert-class', 'success');
                 }
 
                 return redirect()->back()->withInput()->with('error', 'Unable to add budget record at this time.');

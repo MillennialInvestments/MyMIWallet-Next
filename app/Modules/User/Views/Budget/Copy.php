@@ -127,7 +127,8 @@ $addModalTitle                          = $configMode . ' ' . $accountType . ' A
                             </div>
                         </div>
                         <div class="pricing-body">                               
-                            <form class="form-horizontal" id="add_user_budgeting_account">
+                            <?= form_open(site_url('Budget/Account-Manager'), ['class' => 'form-horizontal', 'id' => 'add_user_budgeting_account', 'method' => 'post']); ?>
+                                <?= csrf_field(); ?>
                                 <fieldset>
                                     <?php
                                         Template::block('User/Budget/' . $configMode . '/user_fields', 'User/Budget/' . $configMode . '/user_fields', $fieldData);
@@ -149,7 +150,7 @@ $addModalTitle                          = $configMode . ' ' . $accountType . ' A
                                         <input class="btn btn-primary btn-sm" type="submit" name="register" id="addAccountSubmit" value="Submit" />
                                     </div>
                                 </fieldset>
-                            <?php echo form_close(); ?>	
+                            <?= form_close(); ?>	
                             <?php if (validation_errors()) : ?>
                             <div class="alert alert-error fade in">
                                 <?php echo validation_errors(); ?>
@@ -179,23 +180,13 @@ $addModalTitle                          = $configMode . ' ' . $accountType . ' A
     }
 
     const addAccountForm = document.querySelector("#add_user_budgeting_account");
-    const addAccountSubmit = {};
-
     if (addAccountForm) {
         addAccountForm.addEventListener("submit", async (e) => {
             e.preventDefault();
-            const formData = new FormData();
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');    
-
-            addAccountForm.querySelectorAll("input").forEach((inputField) => {
-                formData.append(inputField.name, inputField.value);
-                addAccountSubmit[inputField.name] = inputField.value;
-            });
-
-            addAccountForm.querySelectorAll("select").forEach((inputField) => {
-                formData.append(inputField.name, inputField.value);
-                addAccountSubmit[inputField.name] = inputField.value;
-            });
+            const formData = new FormData(addAccountForm);
+            const payload = Object.fromEntries(formData.entries());
+            const csrfTokenName = '<?php echo csrf_token(); ?>';
+            const csrfToken = payload[csrfTokenName] || '';
 
             // Get the value from the "recurring_account" select field
             const recurringAccountSelect = document.getElementById("recurring_account");
@@ -205,29 +196,43 @@ $addModalTitle                          = $configMode . ' ' . $accountType . ' A
             try {
                 const response = await fetch("<?php echo site_url('Budget/Account-Manager'); ?>", {
                     method: "POST",
-                    body: JSON.stringify(addAccountSubmit),
+                    body: JSON.stringify(payload),
                     headers: {
                         'Content-Type': 'application/json',
-                        "X-CSRF-TOKEN": csrfToken, // Include the CSRF token in the headers
+                        'Accept': 'application/json',
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-TOKEN": csrfToken,
                     },
                     credentials: "same-origin",
                     redirect: "manual",
                 });
 
-                if (response.ok) {
-                    const responseData = await response.json();
-                    const accountID = responseData.accountID;
+                const responseData = await response.json().catch(() => ({}));
+                if (responseData.csrfHash) {
+                    const csrfInput = addAccountForm.querySelector(`input[name="${csrfTokenName}"]`);
+                    if (csrfInput) {
+                        csrfInput.value = responseData.csrfHash;
+                    }
+                }
 
-                    if (recurringAccount === "Yes") {
+                if (response.ok && responseData.status === 'success') {
+                    const accountID = responseData.accountID;
+                    const serverRedirect = responseData.redirectURL || null;
+
+                    if (serverRedirect) {
+                        location.href = serverRedirect;
+                    } else if (recurringAccount === "Yes") {
                         location.href = `<?php echo site_url('/Budget/Recurring-Account/Schedule/'); ?>${accountID}`;
                     } else {
                         location.href = `<?php echo site_url('/Budget'); ?>`;
                     }
                 } else {
-                    console.error("Server responded with status: ", response.status);
+                    console.error("Server responded with status: ", response.status, responseData);
+                    alert(responseData.message || "Unable to save the copied account.");
                 }
             } catch (err) {
                 console.error(err);
+                addAccountForm.submit();
             }
         });
     }
