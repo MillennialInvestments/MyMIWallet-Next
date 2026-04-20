@@ -200,7 +200,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const recurringData = <?= json_encode($recurringSchedule); ?>;
             const accountID = <?= json_encode($accountID); ?>;
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            const csrfTokenName = <?= json_encode(csrf_token()) ?>;
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
 
             console.log("Recurring data to be sent:", recurringData);
             console.log("Account ID to be sent:", accountID);
@@ -225,6 +226,7 @@ document.addEventListener("DOMContentLoaded", function () {
             try {
                 const payload = {
                     accountID,
+                    [csrfTokenName]: csrfToken,
                     recurringData: recurringData.map(record => ({
                         dueDate: record.dueDate,
                         netAmount: parseFloat(record.netAmount),
@@ -266,4 +268,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 </script>
-

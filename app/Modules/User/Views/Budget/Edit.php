@@ -191,9 +191,9 @@ $addModalTitle                          = $configMode . ' Your ' . $accountName 
                 <div class="nk-block nk-block-lg">   
                     <div class="card card-bordered pricing px-2">
                         <div class="pricing-body">                               
-                            <form class="form-horizontal" id="edit_user_budgeting_account">
+                            <?= form_open(site_url('Budget/Account-Manager'), ['class' => 'form-horizontal', 'id' => 'edit_user_budgeting_account', 'method' => 'post']); ?>
                                 <fieldset>
-                                    <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
+                                    <?= csrf_field(); ?>
 
                                     <?php
                                     if ($uriSegmentB === 'Copy') { 
@@ -220,7 +220,7 @@ $addModalTitle                          = $configMode . ' Your ' . $accountName 
                                         <a href="<?php echo site_url('/Budget'); ?>" class="btn btn-danger btn-dim btn-outline-primary text-white"><em class="icon ni ni-cross"></em><span>Cancel</span></a></li>
                                     </div>
                                 </fieldset>
-                            <?php echo form_close(); ?>	
+                            <?= form_close(); ?>	
                             <?php if (validation_errors()) : ?>
                             <div class="alert alert-error fade in">
                                 <?php echo validation_errors(); ?>
@@ -273,53 +273,50 @@ function isDisallowed(referrer) {
     }
 }
 const csrfTokenName                         = '<?php echo csrf_token(); ?>';
-const csrfTokenValue                        = '<?php echo csrf_hash(); ?>';
 const addAccountForm		                = document.querySelector("#edit_user_budgeting_account");
-const addAccountSubmit	                    = {};
 if (addAccountForm) { 
     addAccountForm.addEventListener("submit", async (e) => {
-        //Do no refresh
         e.preventDefault();
-		const formData 		= new FormData(); 
-        //Get Form data in object OR
-		addAccountForm.querySelectorAll("input").forEach((inputField) => {
-            formData.append(inputField.name,inputField.value);
-            addAccountSubmit[inputField.name] = inputField.value;
-        });  
-        addAccountForm.querySelectorAll("select").forEach((inputField) => {
-            formData.append(inputField.name,inputField.value);
-            addAccountSubmit[inputField.name] = inputField.value;
-        });  
-        // Add CSRF token to the request
-        formData[csrfTokenName] = csrfTokenValue;
-        // console.log(redirectURL);
-        // console.log(...formData);
-        //Fetch
+        const formData = new FormData(addAccountForm);
+        const payload = Object.fromEntries(formData.entries());
+        const csrfTokenValue = payload[csrfTokenName] || '';
+
         try {
             const url = "<?php echo site_url('Budget/Account-Manager'); ?>";
             console.log("Submitting form to:", url);
-            console.log("FormData:", Object.fromEntries(formData.entries()));
+            console.log("FormData keys:", Object.keys(payload));
             const result = await fetch(url, {
-			
-			method: "POST",
-			body: JSON.stringify(addAccountSubmit),
-            headers: { "Content-Type": "application/json" },
-			credentials: "same-origin",
-			redirect: "manual",
+                method: "POST",
+                body: JSON.stringify(payload),
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "X-Requested-With": "XMLHttpRequest",
+                    "X-CSRF-TOKEN": csrfTokenValue
+                },
+                credentials: "same-origin",
+                redirect: "manual",
             });
-            const rawResponse = await result.text();
-            console.log("RAW RESPONSE:", rawResponse);
-            const data = rawResponse;
-            const accountID                     = document.getElementById('account_id').value;
-            const formMode                      = document.getElementById('form_mode').value;
-            const recurringAccountPrimary       = <?php echo '"' . $accountRecurringPrimary . '"'; ?>;
-            console.log(recurringAccountPrimary);
-            location.href = redirectURL;
-            // location.href = <?php // echo '\'' . site_url('/Budget') . '\'';?>;
-            console.log(data);
+
+            const responseData = await result.json().catch(() => ({}));
+            if (responseData.csrfHash) {
+                const csrfInput = addAccountForm.querySelector(`input[name="${csrfTokenName}"]`);
+                if (csrfInput) {
+                    csrfInput.value = responseData.csrfHash;
+                }
+            }
+
+            if (!result.ok || responseData.status !== 'success') {
+                console.error("Server responded with error:", result.status, responseData);
+                alert(responseData.message || 'Unable to save account changes.');
+                return;
+            }
+
+            const responseRedirect = responseData.redirectURL || redirectURL;
+            location.href = responseRedirect;
         } catch (err) {
-            //If fetch doesn't work, maker 
             console.log(err);
+            addAccountForm.submit();
         }
     });
 }
