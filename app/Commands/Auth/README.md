@@ -11,10 +11,14 @@ Provide operators and developers with command intent, dependencies, workflows, a
 ## Command Inventory
 
 - `auth:audit` (Diagnostic)
+- `auth:baseline:capture` (Operational)
+- `auth:baseline:diff` (Operational)
+- `auth:baseline:restore` (Operational)
 - `auth:flow-smoke` (Operational)
 - `auth:funnel-check` (Operational)
 - `auth:smoke` (Operational)
 - `auth:smoke-test` (Operational)
+- `auth:surface:scan` (Operational)
 
 ## Command Reference
 

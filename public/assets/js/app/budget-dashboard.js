@@ -1,40 +1,67 @@
 import { fetchJSON } from '/assets/js/app/fetch-helper.js';
 
-function hasBudgetDashboard() {
+function shouldBootBudgetDashboard() {
   return document.querySelector('[data-budget-dashboard]') !== null;
 }
 
+function getBudgetEndpoints() {
+  const el = document.querySelector('[data-budget-dashboard]');
+
+  if (!el) {
+    return null;
+  }
+
+  return {
+    budgetData: el.dataset.endpointBudgetData || '',
+    creditData: el.dataset.endpointCreditData || '',
+    availableData: el.dataset.endpointAvailableData || '',
+    repaymentSummary: el.dataset.endpointRepaymentSummary || ''
+  };
+}
+
 async function fetchAllBudgetData() {
+  const endpoints = getBudgetEndpoints();
+
+  if (!endpoints) {
+    console.warn('⚠️ Budget dashboard container not found.');
+    return null;
+  }
+
   try {
-    const [budget, credit, available, repayment] = await Promise.all([
-      fetchJSON('/API/Budget/getUserBudgetRecords'),
-      fetchJSON('/API/Budget/getUserCreditBalances'),
-      fetchJSON('/API/Budget/getUserAvailableBalances'),
-      fetchJSON('/API/Budget/getUserRepaymentSummary')
+    const [budgetData, creditData, availableData, repaymentSummary] = await Promise.all([
+      fetchJSON(endpoints.budgetData),
+      fetchJSON(endpoints.creditData),
+      fetchJSON(endpoints.availableData),
+      fetchJSON(endpoints.repaymentSummary)
     ]);
 
-
     const payload = {
-      budget,
-      credit,
-      available,
-      repayment,
+      budgetData,
+      creditData,
+      availableData,
+      repaymentSummary
     };
-    window.MyMIBudget = Object.assign(window.MyMIBudget || {}, payload);
-    document.dispatchEvent(new CustomEvent('mymi:budget-data-ready', { detail: payload }));
-  } catch (error) {
-    if (error?.name === 'PremiumAccessError' && window.MyMIFetch?.redirectToUpgrade) {
-      window.MyMIFetch.redirectToUpgrade(error.payload);
-      return;
-    }
 
+    window.budgetDashboardData = payload;
+    document.dispatchEvent(new CustomEvent('budget:data-loaded', { detail: payload }));
+
+    return payload;
+  } catch (error) {
     console.error('⚠️ Budget fetch failure:', error);
-    document.dispatchEvent(new CustomEvent('mymi:budget-data-error', { detail: error }));
+    throw error;
   }
 }
 
-if (hasBudgetDashboard()) {
-  fetchAllBudgetData();
-}
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!shouldBootBudgetDashboard()) {
+    return;
+  }
+
+  try {
+    await fetchAllBudgetData();
+  } catch (error) {
+    console.error('⚠️ Budget dashboard initialization failed:', error);
+  }
+});
 
 export { fetchAllBudgetData };

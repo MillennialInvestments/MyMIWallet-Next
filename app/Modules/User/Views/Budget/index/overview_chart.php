@@ -21,7 +21,14 @@ $lastMonthMonthly    = $lastMonthsExpense;
 $nextMonthMonthly    = $nextMonthsExpense;
 ?>
 <!-- app/Modules/User/Views/Budget/index/overview_chart.php -->
-<div class="h-100 card card-bordered">
+<div
+    class="h-100 card card-bordered"
+    data-budget-dashboard
+    data-endpoint-budget-data="<?= site_url('API/Budget/getUserBudgetRecords'); ?>"
+    data-endpoint-credit-data="<?= site_url('API/Budget/getUserCreditBalances'); ?>"
+    data-endpoint-available-data="<?= site_url('API/Budget/getUserAvailableBalances'); ?>"
+    data-endpoint-repayment-summary="<?= site_url('API/Budget/getUserRepaymentSummary'); ?>"
+>
     <div class="card-inner">
         <div class="align-start card-title-group mb-3">
             <div class="card-title">
@@ -221,25 +228,30 @@ document.addEventListener('DOMContentLoaded', function () {
   ensureChart(function () {
     // ====== YOUR ORIGINAL CODE STARTS HERE ======
     // Shared state object
-    const state = { budgetData: [], creditData: [], availableData: [], repaymentSummary: [] };
-
-    const fetchAndStore = async (url, key) => {
-      try {
-        const res  = await fetch(url);
-        const json = await res.json();
-        if (json.status === 'success') { state[key] = json.data; }
-      } catch (err) { console.error(`⚠️ Error fetching ${key}:`, err); }
+    // Shared state object
+    const state = {
+        budgetData: [],
+        creditData: [],
+        availableData: [],
+        repaymentSummary: []
     };
 
-    const fetchAllBudgetData = async () => {
-      await Promise.all([
-        fetchAndStore('<?= site_url('API/Budget/getUserBudgetRecords') ?>', 'budgetData'),
-        fetchAndStore('<?= site_url('API/Budget/getUserCreditBalances') ?>', 'creditData'),
-        fetchAndStore('<?= site_url('API/Budget/getUserAvailableBalances') ?>', 'availableData'),
-        fetchAndStore('<?= site_url('API/Budget/getUserRepaymentSummary') ?>', 'repaymentSummary')
-      ]);
-      updateChartData();
-    };
+    document.addEventListener('budget:data-loaded', function (event) {
+        const payload = event.detail || window.budgetDashboardData || {};
+
+        state.budgetData = Array.isArray(payload.budgetData) ? payload.budgetData : [];
+        state.creditData = Array.isArray(payload.creditData) ? payload.creditData : [];
+        state.availableData = Array.isArray(payload.availableData) ? payload.availableData : [];
+        state.repaymentSummary = Array.isArray(payload.repaymentSummary) ? payload.repaymentSummary : [];
+
+        updateChartData();  
+    });
+
+    document.addEventListener('budget:data-loaded', function (event) {
+        if (typeof updateChartData === 'function') {
+            updateChartData(event.detail || window.budgetDashboardData || null);
+        }
+    });
 
     const isValidRecord = (r) =>
       r && r.account_type && r.year && r.month && r.day && r.net_amount !== undefined;
@@ -342,7 +354,18 @@ document.addEventListener('DOMContentLoaded', function () {
       };
     })();
 
-    const updateChartData = () => {
+    function updateChartData(payload = null) {
+      const budgetPayload = payload || window.budgetDashboardData || {};
+
+      const budgetData = budgetPayload.budgetData || [];
+      const creditData = budgetPayload.creditData || [];
+      const availableData = budgetPayload.availableData || [];
+      const repaymentSummary = budgetPayload.repaymentSummary || [];
+
+      console.log('budgetData', budgetData);
+      console.log('creditData', creditData);
+      console.log('availableData', availableData);
+      console.log('repaymentSummary', repaymentSummary);
       const cleanData   = state.budgetData.filter(isValidRecord);
       const lowerAmount = getSelectedValue('#chart-lower-options') || -1;
       const upperAmount = getSelectedValue('#chart-upper-options') || 12;
@@ -389,7 +412,17 @@ document.addEventListener('DOMContentLoaded', function () {
     initializeDropdown('#chart-lower-options', updateChartData);
     initializeDropdown('#chart-upper-options', updateChartData);
     setDefaultDropdown();
-    fetchAllBudgetData();
+
+    if (window.budgetDashboardData) {
+        const payload = window.budgetDashboardData;
+
+        state.budgetData = Array.isArray(payload.budgetData) ? payload.budgetData : [];
+        state.creditData = Array.isArray(payload.creditData) ? payload.creditData : [];
+        state.availableData = Array.isArray(payload.availableData) ? payload.availableData : [];
+        state.repaymentSummary = Array.isArray(payload.repaymentSummary) ? payload.repaymentSummary : [];
+
+        updateChartData();
+    }
     // ====== YOUR ORIGINAL CODE ENDS HERE ======
   });
 });

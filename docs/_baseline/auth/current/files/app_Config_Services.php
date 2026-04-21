@@ -1,0 +1,832 @@
+<?php
+
+namespace Config;
+
+use App\Legacy\Auth\Config\Auth as LegacyMythAuthConfig;
+use App\Libraries\{CrudCacheInvalidator, KimiClient, MyMIAnalytics, MyMIInvestments, SafeCache};
+use App\Services\AuthAuditService;
+use App\Services\AlertService;
+use App\Services\DashboardService;
+use App\Services\AutoloadHealthService;
+use App\Services\EventTracker;
+use App\Services\OnboardingProgressService;
+use App\Services\Psr4AuditService;
+use App\Services\SetupStatusService;
+use App\Services\PremiumEntitlementService;
+use App\Services\RegistrationAttributionService;
+use App\Services\RegistrationSourceContentService;
+use App\Modules\PropFirms\Libraries\PropFirmsService;
+use App\Services\ForecastAccuracyEvaluator;
+use App\Services\ForecastAggregationService;
+use App\Services\Forecasting\MyMIForecaster;
+use App\Services\Forecasting\Providers\AlphaVantageProvider;
+use App\Services\Scanning\CacheLayer;
+use App\Services\Scanning\RateLimiter;
+use App\Services\Scanning\ScannerAlertBridge;
+use App\Services\Scanning\ScannerService;
+use App\Services\Scanning\SignalEngine;
+use App\Services\Scanning\Providers\AlphaVantageProvider as ScannerAlphaVantageProvider;
+use App\Services\Scanning\Providers\FinnhubProvider;
+use App\Services\Scanning\Providers\ProviderRouter;
+use App\Services\Scanning\Providers\StooqProvider;
+use Config\Cache;
+use CodeIgniter\Config\Services as CoreServices;
+use CodeIgniter\Shield\Auth as ShieldAuth;
+use CodeIgniter\Shield\Config\Auth as ShieldAuthConfig;
+use Myth\Auth\Models\LoginModel;
+use Myth\Auth\Models\UserModel;
+use function is_ci;
+
+/**
+ * Services Configuration file.
+ *
+ * Services are simply other classes/libraries that the system uses
+ * to do its job. This is used by CodeIgniter to allow the core of the
+ * framework to be swapped out easily without affecting the usage within
+ * the rest of your application.
+ *
+ * This file holds any application-specific services, or service overrides
+ * that you might need. An example has been included with the general
+ * method format you should use for your service methods. For more examples,
+ * see the core Services file at system/Config/Services.php.
+ */
+class Services extends CoreServices
+{
+    /**
+     * Compatibility auth() service for legacy Shield helper consumers.
+     *
+     * Runtime auth is Myth/Auth in this application.
+     */
+    /**
+     * Compatibility auth() service for legacy Shield helper consumers.
+     *
+     * Runtime auth is Myth/Auth in this application.
+     */
+    public static function auth(bool $getShared = true): ShieldAuth
+    {
+        if ($getShared) {
+            return static::getSharedInstance('auth');
+        }
+
+        $config = new \Config\Auth();
+
+        return new ShieldAuth($config);
+    }
+
+    public static function authentication(
+        string $lib = 'local',
+        ?\CodeIgniter\Model $userModel = null,
+        ?\CodeIgniter\Model $loginModel = null,
+        bool $getShared = true
+    ) {
+        if ($getShared) {
+            return static::getSharedInstance('authentication', $lib, $userModel, $loginModel);
+        }
+
+        $userModel ??= model(UserModel::class);
+        $loginModel ??= model(LoginModel::class);
+
+        /** @var LegacyMythAuthConfig $config */
+        $config = config(LegacyMythAuthConfig::class);
+
+        if (! isset($config->authenticationLibs) || ! is_array($config->authenticationLibs)) {
+            throw new \RuntimeException('Legacy Myth/Auth config is missing authenticationLibs.');
+        }
+
+        if (! array_key_exists($lib, $config->authenticationLibs)) {
+            throw new \RuntimeException('Invalid Myth/Auth authentication library key: ' . $lib);
+        }
+
+        $class = $config->authenticationLibs[$lib];
+
+        if (! is_string($class) || $class === '' || ! class_exists($class)) {
+            throw new \RuntimeException('Invalid Myth/Auth authentication library class: ' . print_r($class, true));
+        }
+
+        $instance = new $class($config);
+
+        return $instance
+            ->setUserModel($userModel)
+            ->setLoginModel($loginModel);
+    }
+
+    // public static function authentication($lib = 'session', bool $getShared = true)
+    // {
+    //     if (is_bool($lib)) {
+    //         $getShared = $lib;
+    //         $lib = 'session';
+    //     }
+
+    //     if (! is_string($lib) || $lib === '') {
+    //         $lib = 'session';
+    //     }
+
+    //     if ($getShared) {
+    //         return static::getSharedInstance('authentication', $lib);
+    //     }
+
+    //     // Keep your existing underlying auth library here.
+    //     // If you already return a Myth/Auth authentication service, preserve that.
+    //     // Example:
+    //     return new \Myth\Auth\Authentication\LocalAuthenticator(
+    //         config('Auth'),
+    //         service('request'),
+    //         service('response'),
+    //         service('session'),
+    //         model(\Myth\Auth\Models\UserModel::class)
+    //     );
+    // }
+
+    public static function cache(?Cache $config = null, bool $getShared = true)
+    {
+        if (! function_exists('is_ci')) {
+            require APPPATH . 'Helpers/ci_guard_helper.php';
+        }
+
+        $config ??= config(\Config\Cache::class);
+
+        if (is_ci()) {
+            $config->handler = 'file';
+            $config->backupHandler = 'file';
+        }
+
+        try {
+            return parent::cache($config, $getShared);
+        } catch (\Throwable $e) {
+            log_message('critical', 'Cache boot failure: {error}', ['error' => $e->getMessage()]);
+            return new \CodeIgniter\Cache\Handlers\FileHandler(config(\Config\Cache::class));
+        }
+    }
+
+    public static function aiopsDocsScanner(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsDocsScanner');
+        return new \App\Services\AIOps\DocsScannerService();
+    }
+
+    public static function aiopsRepoVerifier(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsRepoVerifier');
+        return new \App\Services\AIOps\RepoVerifierService();
+    }
+
+    public static function aiopsOllamaCodeGen(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsOllamaCodeGen');
+        $ollamaConfig = config(\Config\Ollama::class);
+
+        return new \App\Services\AIOps\OllamaCodeGenService(
+            $ollamaConfig->getResolvedBaseUrl(false),
+            (string) env('OLLAMA_MODEL', $ollamaConfig->defaultChatModel),
+            $ollamaConfig->timeout,
+            $ollamaConfig->maxTokens,
+            $ollamaConfig->mode
+        );
+    }
+
+    public static function aiopsPriorityWriter(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsPriorityWriter');
+        return new \App\Services\AIOps\PriorityWriterService();
+    }
+
+
+    public static function aiopsOllamaPatchRunner(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsOllamaPatchRunner');
+        return new \App\Services\AIOps\OllamaPatchRunner();
+    }
+
+    public static function aiopsManualRunNotifier(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsManualRunNotifier');
+        return new \App\Services\AIOps\ManualRunNotifier(config(\Config\AiOps::class));
+    }
+
+    public static function aiopsPublicPagesPipeline(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsPublicPagesPipeline');
+        return new \App\Services\AIOps\PublicPagesPipelineService();
+    }
+
+    public static function aiopsObservabilityState(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsObservabilityState');
+        return new \App\Services\AIOps\ObservabilityStateService();
+    }
+
+    public static function aiopsFingerprint(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsFingerprint');
+        return new \App\Services\AIOps\FingerprintService();
+    }
+
+    public static function aiopsRegressionEvaluator(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsRegressionEvaluator');
+        return new \App\Services\AIOps\RegressionEvaluator();
+    }
+
+    public static function aiopsPRComposer(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsPRComposer');
+        return new \App\Services\AIOps\PRComposerService();
+    }
+
+    public static function aiopsReleaseNotes(bool $getShared = true)
+    {
+        if ($getShared) return static::getSharedInstance('aiopsReleaseNotes');
+        return new \App\Services\AIOps\ReleaseNotesService();
+    }
+
+    public static function crudCacheInvalidator(bool $getShared = true): CrudCacheInvalidator
+    {
+        if ($getShared) {
+            /** @var CrudCacheInvalidator $service */
+            $service = static::getSharedInstance('crudCacheInvalidator');
+            return $service;
+        }
+
+        return new CrudCacheInvalidator();
+    }
+
+    public static function docsParser($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('docsParser');
+        }
+
+        return new \App\Services\Docs\DocsParserService();
+    }
+
+    public static function docsScanner(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('docsScanner');
+        }
+
+        return new \App\Services\Docs\DocsScanner();
+    }
+
+    public static function docsSyncEngine(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('docsSyncEngine');
+        }
+
+        return new \App\Services\Docs\DocsSyncEngine(
+            static::docsScanner(false)
+        );
+    }
+    
+    public static function institutionalResearch($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('institutionalResearch');
+        }
+
+        return new \App\Services\Research\InstitutionalResearchService();
+    }
+
+    public static function financialIntelligence($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('financialIntelligence');
+        }
+
+        return new \App\Services\Research\FinancialIntelligenceService();
+    }
+
+    public static function researchService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('researchService');
+        }
+
+        return new \App\Services\Research\InstitutionalResearchService();
+    }
+    
+    public static function myMIAnalytics(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('myMIAnalytics');
+        }
+        return new MyMIAnalytics();
+    }
+
+    public static function myMIInvestments(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('myMIInvestments');
+        }
+
+        return new MyMIInvestments();
+    }
+
+    public static function kimiClient(bool $getShared = true): KimiClient
+    {
+        if ($getShared) {
+            /** @var KimiClient $service */
+            $service = static::getSharedInstance('kimiClient');
+            return $service;
+        }
+
+        return new KimiClient();
+    }
+
+    public static function authAuditService(bool $getShared = true): AuthAuditService
+    {
+        if ($getShared) {
+            /** @var AuthAuditService $service */
+            $service = static::getSharedInstance('authAuditService');
+            return $service;
+        }
+
+        return new AuthAuditService();
+    }
+
+    public static function psr4AuditService(bool $getShared = true): Psr4AuditService
+    {
+        if ($getShared) {
+            /** @var Psr4AuditService $service */
+            $service = static::getSharedInstance('psr4AuditService');
+            return $service;
+        }
+
+        return new Psr4AuditService();
+    }
+
+    public static function autoloadHealthService(bool $getShared = true): AutoloadHealthService
+    {
+        if ($getShared) {
+            /** @var AutoloadHealthService $service */
+            $service = static::getSharedInstance('autoloadHealthService');
+            return $service;
+        }
+
+        return new AutoloadHealthService();
+    }
+
+    public static function eventTracker(bool $getShared = true): EventTracker
+    {
+        if ($getShared) {
+            /** @var EventTracker $service */
+            $service = static::getSharedInstance('eventTracker');
+            return $service;
+        }
+
+        return new EventTracker();
+    }
+
+    public static function onboardingProgressService(bool $getShared = true): OnboardingProgressService
+    {
+        if ($getShared) {
+            /** @var OnboardingProgressService $service */
+            $service = static::getSharedInstance('onboardingProgressService');
+            return $service;
+        }
+
+        return new OnboardingProgressService();
+    }
+
+    public static function premiumEntitlementService(bool $getShared = true): PremiumEntitlementService
+    {
+        if ($getShared) {
+            /** @var PremiumEntitlementService $service */
+            $service = static::getSharedInstance('premiumEntitlementService');
+            return $service;
+        }
+
+        return new PremiumEntitlementService();
+    }
+
+
+    public static function registrationSourceContentService(bool $getShared = true): RegistrationSourceContentService
+    {
+        if ($getShared) {
+            /** @var RegistrationSourceContentService $service */
+            $service = static::getSharedInstance('registrationSourceContentService');
+            return $service;
+        }
+
+        return new RegistrationSourceContentService();
+    }
+    public static function registrationAttributionService(bool $getShared = true): RegistrationAttributionService
+    {
+        if ($getShared) {
+            /** @var RegistrationAttributionService $service */
+            $service = static::getSharedInstance('registrationAttributionService');
+            return $service;
+        }
+
+        return new RegistrationAttributionService();
+    }
+
+
+    public static function dashboardService(bool $getShared = true): DashboardService
+    {
+        if ($getShared) {
+            /** @var DashboardService $service */
+            $service = static::getSharedInstance('dashboardService');
+            return $service;
+        }
+
+        return new DashboardService();
+    }
+
+    public static function propFirmsService(bool $getShared = true): PropFirmsService
+    {
+        if ($getShared) {
+            /** @var PropFirmsService $service */
+            $service = static::getSharedInstance('propFirmsService');
+            return $service;
+        }
+
+        return new PropFirmsService();
+    }
+
+    public static function setupStatusService(bool $getShared = true): SetupStatusService
+    {
+        if ($getShared) {
+            /** @var SetupStatusService $service */
+            $service = static::getSharedInstance('setupStatusService');
+            return $service;
+        }
+
+        return new SetupStatusService();
+    }
+
+
+    public static function alertService(bool $getShared = true): AlertService
+    {
+        if ($getShared) {
+            /** @var AlertService $service */
+            $service = static::getSharedInstance('alertService');
+            return $service;
+        }
+
+        return new AlertService();
+    }
+
+    public static function mailService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('mailService');
+        }
+
+        return new \App\Libraries\MailService();
+    }
+
+    public static function safeCache(bool $getShared = true): SafeCache
+    {
+        if ($getShared) {
+            /** @var SafeCache $service */
+            $service = static::getSharedInstance('safeCache');
+            return $service;
+        }
+
+        return new SafeCache();
+    }
+
+    public static function mymiForecaster(bool $getShared = true): MyMIForecaster
+    {
+        if ($getShared) {
+            /** @var MyMIForecaster $service */
+            $service = static::getSharedInstance('mymiForecaster');
+            return $service;
+        }
+
+        $provider = new AlphaVantageProvider();
+        $forecastModel = model(\App\Models\InvestmentPriceForecastModel::class);
+        $alertsModel = model(\App\Models\AlertsModel::class);
+        $cache = cache();
+        $config = config('MyMIForecasting');
+
+        return new MyMIForecaster($provider, $forecastModel, $alertsModel, $cache, $config);
+    }
+
+    public static function forecastAggregation(bool $getShared = true)
+    {
+        return static::forecastAggregationService($getShared);
+    }
+    public static function forecastAccuracyEvaluator(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('forecastAccuracyEvaluator');
+        }
+
+        return new ForecastAccuracyEvaluator();
+    }
+    
+    public static function forecastAggregationService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('forecastAggregationService');
+        }
+
+        return new \App\Services\ForecastAggregationService();
+    }
+    
+    public static function formIntelligenceService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('formIntelligenceService');
+        }
+
+        return new \App\Services\AIOps\FormIntelligenceService();
+    }
+    
+    public static function formPatchPlanner($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('formPatchPlanner');
+        }
+
+        return new \App\Services\AIOps\FormPatchPlanner();
+    }
+    
+    public static function formTestExecutor($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('formTestExecutor');
+        }
+
+        return new \App\Services\AIOps\FormTestExecutor();
+    }
+
+    public static function scannerCacheLayer(bool $getShared = true): CacheLayer
+    {
+        if ($getShared) {
+            /** @var CacheLayer $service */
+            $service = static::getSharedInstance('scannerCacheLayer');
+            return $service;
+        }
+
+        return new CacheLayer(static::cache());
+    }
+
+    public static function scannerRateLimiter(bool $getShared = true): RateLimiter
+    {
+        if ($getShared) {
+            /** @var RateLimiter $service */
+            $service = static::getSharedInstance('scannerRateLimiter');
+            return $service;
+        }
+
+        return new RateLimiter(75);
+    }
+
+    public static function scannerSignalEngine(bool $getShared = true): SignalEngine
+    {
+        if ($getShared) {
+            /** @var SignalEngine $service */
+            $service = static::getSharedInstance('scannerSignalEngine');
+            return $service;
+        }
+
+        return new SignalEngine();
+    }
+
+    public static function scannerProviderRouter(bool $getShared = true): ProviderRouter
+    {
+        if ($getShared) {
+            /** @var ProviderRouter $service */
+            $service = static::getSharedInstance('scannerProviderRouter');
+            return $service;
+        }
+
+        return new ProviderRouter(
+            static::scannerCacheLayer(),
+            static::scannerRateLimiter(),
+            new ScannerAlphaVantageProvider(service('curlrequest')),
+            new FinnhubProvider(service('curlrequest')),
+            new StooqProvider(service('curlrequest')),
+        );
+    }
+
+
+    public static function scannerAlertBridge(bool $getShared = true): ScannerAlertBridge
+    {
+        if ($getShared) {
+            /** @var ScannerAlertBridge $service */
+            $service = static::getSharedInstance('scannerAlertBridge');
+            return $service;
+        }
+
+        return new ScannerAlertBridge(
+            \Config\Database::connect(),
+            service('mymialerts'),
+        );
+    }
+
+    public static function scannerService(bool $getShared = true): ScannerService
+    {
+        if ($getShared) {
+            /** @var ScannerService $service */
+            $service = static::getSharedInstance('scannerService');
+            return $service;
+        }
+
+        return new ScannerService(
+            new \App\Modules\APIs\Models\ScannerModel(),
+            static::scannerProviderRouter(),
+            static::scannerSignalEngine(),
+            static::scannerAlertBridge(),
+        );
+    }
+    /*
+     * public static function example($getShared = true)
+     * {
+     *     if ($getShared) {
+     *         return static::getSharedInstance('example');
+     *     }
+     *
+     *     return new \CodeIgniter\Example();
+     * }
+     */
+    public static function git(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('git');
+        }
+
+        return new \App\Services\GitService();
+    }
+
+    public static function github(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('github');
+        }
+
+        return new \App\Services\GitHubService();
+    }
+
+    public static function externalApiGuard(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('externalApiGuard');
+        }
+
+        return new \App\Services\ExternalApiGuard(config(\Config\ExternalApiPolicy::class));
+    }
+
+    public static function calendarEmailTriggerService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('calendarEmailTriggerService');
+        }
+
+        return new \App\Services\CalendarEmailTriggerService();
+    }
+
+    public static function marketingNotificationService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('marketingNotificationService');
+        }
+
+        return new \App\Services\MarketingNotificationService();
+    }
+
+    public static function marketingStoryService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('marketingStoryService');
+        }
+
+        return new \App\Services\MarketingStoryService(new \App\Models\MarketingModel());
+    }
+
+    public static function marketingPackageService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('marketingPackageService');
+        }
+
+        return new \App\Services\MarketingPackageService(
+            new \App\Libraries\MyMIMarketing(),
+            new \App\Models\MarketingModel(),
+            static::marketingNotificationService(false),
+            static::marketingStoryService(false),
+        );
+    }
+
+    public static function marketingDistributionService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('marketingDistributionService');
+        }
+
+        return new \App\Services\MarketingDistributionService(
+            new \App\Models\MarketingModel(),
+            new \App\Models\MarketingDistributionTargetModel(),
+            config('MarketingDistribution'),
+            static::blueskyDistributionService(false),
+            static::mastodonDistributionService(false),
+            static::linkedinDistributionService(false),
+            static::webhookDistributionService(false),
+        );
+    }
+
+    public static function blueskyDistributionService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('blueskyDistributionService');
+        }
+
+        return new \App\Services\Marketing\Distribution\BlueskyDistributionService(config('MarketingDistribution'));
+    }
+
+    public static function mastodonDistributionService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('mastodonDistributionService');
+        }
+
+        return new \App\Services\Marketing\Distribution\MastodonDistributionService(config('MarketingDistribution'));
+    }
+
+    public static function linkedinDistributionService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('linkedinDistributionService');
+        }
+
+        return new \App\Services\Marketing\Distribution\LinkedInDistributionService(config('MarketingDistribution'));
+    }
+
+    public static function webhookDistributionService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('webhookDistributionService');
+        }
+
+        return new \App\Services\Marketing\Distribution\WebhookDistributionService(config('MarketingDistribution'));
+    }
+
+    public static function marketingPipelineService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('marketingPipelineService');
+        }
+
+        return new \App\Services\MarketingPipelineService(
+            new \App\Models\MarketingModel(),
+            static::marketingPackageService(false),
+            static::marketingNotificationService(false),
+            static::marketingStoryService(false),
+            static::marketingDistributionService(false),
+        );
+    }
+
+    public static function marketingNewsScrapeService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('marketingNewsScrapeService');
+        }
+
+        return new \App\Services\MarketingNewsScrapeService(
+            new \App\Models\MarketingModel(),
+            new \App\Services\Marketing\OcrService(),
+            config('Marketing'),
+        );
+    }
+
+    public static function marketingNewsGenerateService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('marketingNewsGenerateService');
+        }
+
+        return new \App\Services\MarketingNewsGenerateService(
+            new \App\Models\MarketingModel(),
+            new \App\Libraries\MyMIMarketing(),
+        );
+    }
+
+
+    public static function mobileAuthContext(bool $getShared = true): \App\Services\MobileAuthContext
+    {
+        if ($getShared) {
+            /** @var \App\Services\MobileAuthContext $service */
+            $service = static::getSharedInstance('mobileAuthContext');
+            return $service;
+        }
+
+        return new \App\Services\MobileAuthContext();
+    }
+
+    public static function mobileAuthTokens(bool $getShared = true): \App\Services\MobileAuthTokenService
+    {
+        if ($getShared) {
+            /** @var \App\Services\MobileAuthTokenService $service */
+            $service = static::getSharedInstance('mobileAuthTokens');
+            return $service;
+        }
+
+        return new \App\Services\MobileAuthTokenService();
+    }
+
+
+}

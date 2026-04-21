@@ -835,12 +835,117 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
 
     public function add($type = null) {
         log_message('debug', '[BudgetController::METHOD_ENTRY] add');
+        $requestMethod = strtoupper((string) $this->request->getMethod());
+        $normalizedType = in_array((string) $type, ['Income', 'Expense'], true) ? (string) $type : 'Expense';
+        $postPayload = $this->request->getPost() ?? [];
+        $postKeys = array_keys(is_array($postPayload) ? $postPayload : []);
+
+        log_message('debug', 'BudgetController::add request diagnostics: method=' . $requestMethod . ' normalizedType=' . $normalizedType . ' postKeys=' . json_encode($postKeys));
+
         $this->data['pageTitle'] = 'Add Budget Record | MyMI Wallet | The Future of Finance';
-        $common = $this->ensureCommonDataReady();
-        if ($common instanceof ResponseInterface) {
-            return $common;
+        $this->data['accountType'] = $normalizedType;
+        $this->data['configMode'] = 'Add';
+
+        if ($requestMethod === 'POST') {
+            $userId = $this->resolveAuthenticatedUserId();
+            if ($userId === null) {
+                return redirect()->to('/Login')->with('error', 'Please log in to add a budget record.');
+            }
+
+            $rules = [
+                'designated_date'  => 'required|valid_date[Y-m-d]',
+                'source_type'      => 'required|string|max_length[100]',
+                'nickname'         => 'permit_empty|string|max_length[255]',
+                'net_amount'       => 'permit_empty|decimal',
+                'gross_amount'     => 'permit_empty|decimal',
+                'paid'             => 'required|in_list[0,1,N/A]',
+                'recurring_account'=> 'permit_empty|in_list[Yes,No,N/A]',
+                'recurring_schedule'=> 'permit_empty|string|max_length[50]',
+                'intervals'        => 'permit_empty|string|max_length[50]',
+            ];
+
+            $isValid = $this->validateData($postPayload, $rules);
+            log_message('debug', 'BudgetController::add validation=' . ($isValid ? 'pass' : 'fail'));
+
+            if (! $isValid) {
+                $errors = $this->validator ? $this->validator->getErrors() : [];
+                log_message('error', 'BudgetController::add validation errors: ' . json_encode($errors));
+                return redirect()->back()->withInput()->with('error', 'Please correct the highlighted form errors.');
+            }
+
+            try {
+                $designatedDate = (string) ($postPayload['designated_date'] ?? '');
+                $timestamp = strtotime($designatedDate);
+                $month = $timestamp ? (int) date('m', $timestamp) : null;
+                $day = $timestamp ? (int) date('d', $timestamp) : null;
+                $year = $timestamp ? (int) date('Y', $timestamp) : null;
+                $sourceType = isset($postPayload['source_type']) ? trim((string) $postPayload['source_type']) : null;
+                $isDebt = $sourceType ? (preg_match('/(Debt|Loan|Mortgage)/i', $sourceType) === 1 ? 1 : 0) : 0;
+
+                $netAmount = (float) preg_replace('/[^0-9.\-]/', '', (string) ($postPayload['net_amount'] ?? '0'));
+                $grossAmount = (float) preg_replace('/[^0-9.\-]/', '', (string) ($postPayload['gross_amount'] ?? '0'));
+
+                $insertData = [
+                    'status'             => 1,
+                    'beta'               => ($postPayload['beta'] ?? '') === 'Yes' ? 'Yes' : 'No',
+                    'mode'               => 'Add',
+                    'created_by'         => $userId,
+                    'created_by_email'   => $this->session->get('email') ?? ($postPayload['user_email'] ?? ''),
+                    'unix_timestamp'     => time(),
+                    'designated_date'    => $designatedDate ?: null,
+                    'month'              => $month,
+                    'day'                => $day,
+                    'year'               => $year,
+                    'username'           => $this->session->get('username') ?? ($postPayload['username'] ?? ''),
+                    'name'               => trim((string) ($postPayload['nickname'] ?? '')),
+                    'net_amount'         => round($netAmount, 2),
+                    'gross_amount'       => round($grossAmount, 2),
+                    'paid'               => ((string) ($postPayload['paid'] ?? '0') === '1') ? 1 : 0,
+                    'recurring_account'  => $postPayload['recurring_account'] ?? 'No',
+                    'recurring_schedule' => $postPayload['recurring_schedule'] ?? null,
+                    'account_type'       => $normalizedType,
+                    'source_type'        => $sourceType,
+                    'is_debt'            => $isDebt,
+                    'intervals'          => $postPayload['intervals'] ?? null,
+                ];
+
+                $insertId = (int) $this->budgetService->save($insertData);
+                log_message('debug', 'BudgetController::add insert=' . ($insertId > 0 ? 'success' : 'failure') . ' insertId=' . $insertId);
+
+                if ($insertId > 0) {
+                    $this->invalidateCrudCache(array_filter([
+                        'budget',
+                        $userId > 0 ? 'user:' . $userId : null,
+                    ]));
+                    return redirect()->to('/Budget')->with('message', 'Budget record added successfully.')->with('alert-class', 'success');
+                }
+
+                return redirect()->back()->withInput()->with('error', 'Unable to add budget record at this time.');
+            } catch (\Throwable $exception) {
+                log_message('error', 'BudgetController::add insert exception: ' . $exception->getMessage() . ' file=' . $exception->getFile() . ' line=' . $exception->getLine() . ' trace=' . $exception->getTraceAsString());
+                return redirect()->back()->withInput()->with('error', 'Unexpected error while adding budget record.');
+            }
         }
-        return $this->renderTheme('App\Modules\User\Views\Budget\Add', $this->data);
+
+        try {
+            log_message('debug', 'BudgetController::add GET before commonData');
+            $common = $this->ensureCommonDataReady();
+            log_message('debug', 'BudgetController::add GET after commonData');
+            if ($common instanceof ResponseInterface) {
+                return $common;
+            }
+
+            $this->data['accountType'] = $normalizedType;
+
+            log_message('debug', 'BudgetController::add GET before renderTheme');
+            $response = $this->renderTheme('App\Modules\User\Views\Budget\Add', $this->data);
+            log_message('debug', 'BudgetController::add GET after renderTheme');
+
+            return $response;
+        } catch (\Throwable $exception) {
+            log_message('error', 'BudgetController::add render exception: ' . $exception->getMessage() . ' file=' . $exception->getFile() . ' line=' . $exception->getLine() . ' trace=' . $exception->getTraceAsString());
+            throw $exception;
+        }
     }
 
     public function approveRecurringSchedule($accountID)
@@ -1735,74 +1840,6 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
     
     
 
-    public function getUserBudgetRecords()
-    {
-        log_message('debug', '[BudgetController::METHOD_ENTRY] getUserBudgetRecords');
-        $userId = $this->resolveAuthenticatedUserId();
-        if ($userId === null) {
-            return $this->respondUnauthorized('User not logged in.');
-        }
-
-        try {
-            $result = $this->rememberUserData('budget-records', $userId, fn () => $this->budgetModel->getUserBudgetData($userId) ?? []);
-            return $this->respondSuccess($result['data'], $result['fromCache']);
-        } catch (\Throwable $e) {
-            $this->logException('getUserBudgetRecords', $e, $userId);
-            return $this->respondFailure('Server error retrieving budget records.', 500, [], 'degraded');
-        }
-    }
-
-    public function getUserAvailableBalances()
-    {
-        log_message('debug', '[BudgetController::METHOD_ENTRY] getUserAvailableBalances');
-        $userId = $this->resolveAuthenticatedUserId();
-        if ($userId === null) {
-            return $this->respondUnauthorized('Unauthorized. User not found.');
-        }
-
-        try {
-            $result = $this->rememberUserData('available-balances', $userId, fn () => $this->budgetModel->getAvailableBalances($userId) ?? []);
-            return $this->respondSuccess($result['data'], $result['fromCache']);
-        } catch (\Throwable $e) {
-            $this->logException('getUserAvailableBalances', $e, $userId);
-            return $this->respondFailure('Server error. Failed to retrieve available balances.', 500, [], 'degraded');
-        }
-    }
-
-    public function getUserCreditBalances()
-    {
-        log_message('debug', '[BudgetController::METHOD_ENTRY] getUserCreditBalances');
-        $userId = $this->resolveAuthenticatedUserId();
-        if ($userId === null) {
-            return $this->respondUnauthorized('Unauthorized. User not found.');
-        }
-
-        try {
-            $result = $this->rememberUserData('credit-balances', $userId, fn () => $this->budgetModel->getCurrentCreditBalances($userId) ?? []);
-            return $this->respondSuccess($result['data'], $result['fromCache']);
-        } catch (\Throwable $e) {
-            $this->logException('getUserCreditBalances', $e, $userId);
-            return $this->respondFailure('Server error. Failed to retrieve credit balances.', 500, [], 'degraded');
-        }
-    }
-
-    public function getUserRepaymentSummary()
-    {
-        log_message('debug', '[BudgetController::METHOD_ENTRY] getUserRepaymentSummary');
-        $userId = $this->resolveAuthenticatedUserId();
-        if ($userId === null) {
-            return $this->respondUnauthorized('Unauthorized. User not found.');
-        }
-
-        try {
-            $result = $this->rememberUserData('repayment-summary', $userId, fn () => $this->budgetModel->getRepaymentSummary($userId) ?? []);
-            return $this->respondSuccess($result['data'], $result['fromCache']);
-        } catch (\Throwable $e) {
-            $this->logException('getUserRepaymentSummary', $e, $userId);
-            return $this->respondFailure('Server error. Failed to retrieve repayment summary.', 500, [], 'degraded');
-        }
-    }
-    
     // public function add()
     public function history($type = null) {
         log_message('debug', '[BudgetController::METHOD_ENTRY] history');

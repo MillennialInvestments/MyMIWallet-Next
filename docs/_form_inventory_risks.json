@@ -1,0 +1,2994 @@
+{
+    "generated_at": "2026-04-19T20:18:18+00:00",
+    "risks": [
+        {
+            "id": "subscribeForm",
+            "file": "app/Modules/Advertise/Views/content_banner.php",
+            "module": "Advertise",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_85a674e500e016f075c6675371f566e8",
+            "file": "app/Modules/Blog/Views/Earnings/update_earnings_form.php",
+            "module": "Blog",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_0f5981f5c3da08237c1fada494d6fda4",
+            "file": "app/Modules/Docs/Views/index.php",
+            "module": "Docs",
+            "action": "/Docs/Search",
+            "method": "GET",
+            "risks": [
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_215232e65833608210398de535faabfa",
+            "file": "app/Modules/Exchange/Views/Account_Information.php",
+            "module": "Exchange",
+            "action": "$cuID",
+            "method": "POST",
+            "risks": [
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "ask-question-form",
+            "file": "app/Modules/Exchange/Views/Buy.php",
+            "module": "Exchange",
+            "action": "Exchange/Buy",
+            "method": "POST",
+            "risks": [
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "exchange_buy_order_form",
+            "file": "app/Modules/Exchange/Views/Buy.php",
+            "module": "Exchange",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "coin_listing_asset_information",
+            "file": "app/Modules/Exchange/Views/Coin_Listing_Asset_Information.php",
+            "module": "Exchange",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "coin_listing_asset_information",
+            "file": "app/Modules/Exchange/Views/Coin_Listing_Asset_Information_Modal.php",
+            "module": "Exchange",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "coin_listing_request",
+            "file": "app/Modules/Exchange/Views/Coin_Listing_Request.php",
+            "module": "Exchange",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "ask-question-form",
+            "file": "app/Modules/Exchange/Views/Sell.php",
+            "module": "Exchange",
+            "action": "Exchange/Buy",
+            "method": "POST",
+            "risks": [
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "exchange_sell_order_form",
+            "file": "app/Modules/Exchange/Views/Sell.php",
+            "module": "Exchange",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "solanaCoinSwapForm",
+            "file": "app/Modules/Exchange/Views/Solana/coinSwap.php",
+            "module": "Exchange",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "form_d121f717d59005e79f6a96c248ee18c6",
+            "file": "app/Modules/Exchange/Views/Solana/createToken.php",
+            "module": "Exchange",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_23816765827598ac8eacc1f13aafde51",
+            "file": "app/Modules/Exchange/Views/Solana/createWallet.php",
+            "module": "Exchange",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_e16e6d7e904b257ea4b1100414b8ed2a",
+            "file": "app/Modules/Exchange/Views/Solana/executeSwap.php",
+            "module": "Exchange",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_37fe07d05f9867d7290f355d12832580",
+            "file": "app/Modules/Exchange/Views/Solana/importWallet.php",
+            "module": "Exchange",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "solanaCoinSwapForm",
+            "file": "app/Modules/Exchange/Views/Solana/swap-working.php",
+            "module": "Exchange",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "walletApprovalForm",
+            "file": "app/Modules/Exchange/Views/Solana/swap-working.php",
+            "module": "Exchange",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "solanaCoinSwapForm",
+            "file": "app/Modules/Exchange/Views/Solana/swap.php",
+            "module": "Exchange",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "buyForm",
+            "file": "app/Modules/Exchange/Views/Solana/trade.php",
+            "module": "Exchange",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "buyForm",
+            "file": "app/Modules/Exchange/Views/Solana/trade.php",
+            "module": "Exchange",
+            "action": "/Exchange/Solana/Buy",
+            "method": "POST",
+            "risks": [
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "sellForm",
+            "file": "app/Modules/Exchange/Views/Solana/trade.php",
+            "module": "Exchange",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "sellForm",
+            "file": "app/Modules/Exchange/Views/Solana/trade.php",
+            "module": "Exchange",
+            "action": "/Exchange/Solana/Sell",
+            "method": "POST",
+            "risks": [
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "form_de58530951596f09e9a32fd950e7990c",
+            "file": "app/Modules/Exchange/Views/Solana/verifyWalletOwnership.php",
+            "module": "Exchange",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_e3b11a266ae15c94c15d6ad97d630524",
+            "file": "app/Modules/Exchange/Views/Solana/viewWallet.php",
+            "module": "Exchange",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_1a276fc950836d6ce3bd84bc907683a6",
+            "file": "app/Modules/Management/TaxAdmin/Views/jurisdictions/index.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_d9bb8488873a61ad94bf993ca0f89a1f",
+            "file": "app/Modules/Management/TaxAdmin/Views/rates/edit.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_c0d49eb94a76cde690eee70ad77ac484",
+            "file": "app/Modules/Management/TaxAdmin/Views/templates/edit.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_de1ccb01a0a05e57f23072eaff636bee",
+            "file": "app/Modules/Management/Views/AccountRescue/index.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_8bfdfd647b5640a5c3f3e57eef8021a4",
+            "file": "app/Modules/Management/Views/AccountRescue/index.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_5e9af72515391a66896b10f2a9cdeab4",
+            "file": "app/Modules/Management/Views/AccountRescue/index.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_cfd93bb0e2059b4a0b56129576828100",
+            "file": "app/Modules/Management/Views/AccountRescue/index.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_96278fed141c7a99b23a249109892210",
+            "file": "app/Modules/Management/Views/AccountRescue/index.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "addTradeAlertForm",
+            "file": "app/Modules/Management/Views/Alerts/add.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "form_f8321468b89f91c1b0e4df40486b4de8",
+            "file": "app/Modules/Management/Views/Alerts/index.php",
+            "module": "Management",
+            "action": null,
+            "method": "GET",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_6c6e4015b5352696daff976eb86782d6",
+            "file": "app/Modules/Management/Views/Alerts/index.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "addChartForm",
+            "file": "app/Modules/Management/Views/Alerts/modals/addTrade.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "createTradeAlertForm",
+            "file": "app/Modules/Management/Views/Alerts/modals/createTradeAlert.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "#coin_listing_request",
+            "file": "app/Modules/Management/Views/Assets/Create.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "form_8cb55c81fc142c58952e2d28b3b62196",
+            "file": "app/Modules/Management/Views/Assets/Distribute/By_User.php",
+            "module": "Management",
+            "action": "#",
+            "method": null,
+            "risks": [
+                "missing_method",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_584d212ba3b39b216144cde88407ffab",
+            "file": "app/Modules/Management/Views/Discord/index.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_db19f25ede4ae22639eb611b49b13ea8",
+            "file": "app/Modules/Management/Views/Discord/index.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_6ab731f44a2ff171bfbda8d52474efd3",
+            "file": "app/Modules/Management/Views/Discord/index.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_085b9b054e9700f49356895f9ce8d907",
+            "file": "app/Modules/Management/Views/Discord/index.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_2ba417a7ccb7dca478563e0f780633b4",
+            "file": "app/Modules/Management/Views/Discord/index.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_3365243333b626132c207d3724f2385d",
+            "file": "app/Modules/Management/Views/Discord/index.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_eec2a830ca3e6230b9671e7514a898fe",
+            "file": "app/Modules/Management/Views/Discord/index.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_075794f733324334e62ab86fb0af4cd5",
+            "file": "app/Modules/Management/Views/Discord/index.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "addMemberForm",
+            "file": "app/Modules/Management/Views/Email/modals/addMember.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "cloneCampaignForm",
+            "file": "app/Modules/Management/Views/Email/modals/cloneCampaign.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "createDraftCampaignForm",
+            "file": "app/Modules/Management/Views/Email/modals/createDraftCampaign.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "createListForm",
+            "file": "app/Modules/Management/Views/Email/modals/createQuickList.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "editCampaignForm",
+            "file": "app/Modules/Management/Views/Email/modals/editCampaign.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "form_097036bcdefad661832c187e99b2d201",
+            "file": "app/Modules/Management/Views/Email/modals/scheduleCampaign.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "createDraftCampaignForm",
+            "file": "app/Modules/Management/Views/Email/modals/sendCampaign.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_34bdf556598d31506a824f14eeba972b",
+            "file": "app/Modules/Management/Views/EmailOutbox/index.php",
+            "module": "Management",
+            "action": null,
+            "method": "GET",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "sendTestEmailForm",
+            "file": "app/Modules/Management/Views/EmailOutbox/index.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "news-edit-form",
+            "file": "app/Modules/Management/Views/Investments/news.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "add_marketing_form",
+            "file": "app/Modules/Management/Views/Marketing/Add.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "add_marketing_form",
+            "file": "app/Modules/Management/Views/Marketing/Add.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "cfa_customer_analysis",
+            "file": "app/Modules/Management/Views/Marketing/Blog/Subscribe.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "mymiblogger-form",
+            "file": "app/Modules/Management/Views/Marketing/Blogger/_campaign_form.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "form_a3c15f132de74fd621adc9f80a2d9810",
+            "file": "app/Modules/Management/Views/Marketing/Content_Edit.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_156cf22be55eafde61a25881830ab6c1",
+            "file": "app/Modules/Management/Views/Marketing/Drip/add_step.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_b8e013ae7833142068f9e4a1de655bd9",
+            "file": "app/Modules/Management/Views/Marketing/Drip/create.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_b4e6278a5c221e2f0b90162e5bed46bb",
+            "file": "app/Modules/Management/Views/Marketing/Drip/modals/deleteCampaign.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_52378db489bc09fae90b2d8b1f587fb2",
+            "file": "app/Modules/Management/Views/Marketing/Drip/modals/deleteCampaignStep.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "editCampaignForm",
+            "file": "app/Modules/Management/Views/Marketing/Drip/modals/editCampaign.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "editStepForm",
+            "file": "app/Modules/Management/Views/Marketing/Drip/modals/editCampaignStep.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "form_12b55c461af5444d2b21dee4781350d4",
+            "file": "app/Modules/Management/Views/Marketing/Drip/modals/generateCampaignContent.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_2822b04f20cb4823fef1d619e041a2ff",
+            "file": "app/Modules/Management/Views/Marketing/Drip/modals/generateCampaignStepContent.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "edit_exchange_form",
+            "file": "app/Modules/Management/Views/Marketing/Edit.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "form_7e324ca2ea94a921ce1f5f6c06c966aa",
+            "file": "app/Modules/Management/Views/Marketing/Edit_Blog.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_8a327f104d15e3bb9e6524abf892403f",
+            "file": "app/Modules/Management/Views/Marketing/Email_Queue/create.php",
+            "module": "Management",
+            "action": "/email-queue/store",
+            "method": "POST",
+            "risks": [
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_0374ae32102aab884fbb5a3c67dd5d22",
+            "file": "app/Modules/Management/Views/Marketing/Email_Queue/index.php",
+            "module": "Management",
+            "action": "/email-queue/processQueue",
+            "method": "POST",
+            "risks": [
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_ece2ff764e3ceaa1588dbb787005521d",
+            "file": "app/Modules/Management/Views/Marketing/Email_Templates/create.php",
+            "module": "Management",
+            "action": "/email-templates/store",
+            "method": "POST",
+            "risks": [
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_e379092eccb8f2ba7a9f1a3c0a3f3ac9",
+            "file": "app/Modules/Management/Views/Marketing/Exchanges/includes/website.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_6e471e9f48bd70ee6bdba4d537cbab81",
+            "file": "app/Modules/Management/Views/Marketing/Forms/send_notifications.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_484e5ec7eb5852901995b5f288f31a99",
+            "file": "app/Modules/Management/Views/Marketing/Post.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_ef484569087be97efc42ecf6984a5073",
+            "file": "app/Modules/Management/Views/Marketing/Post.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "announcementForm",
+            "file": "app/Modules/Management/Views/Marketing/Promote/Templates/Announcements.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "promotionForm",
+            "file": "app/Modules/Management/Views/Marketing/Promote/Templates/Promotions.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "updateForm",
+            "file": "app/Modules/Management/Views/Marketing/Promote/Templates/Updates.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_9668e47ae64e449c14ae4cc4b80d70a4",
+            "file": "app/Modules/Management/Views/Marketing/Schedule/Add.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_2fe61454eb98bd811be3ad93b6087b26",
+            "file": "app/Modules/Management/Views/Marketing/Twitter.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_b6a91255ad408178bbe1180b65321cd5",
+            "file": "app/Modules/Management/Views/Marketing/Twitter.php",
+            "module": "Management",
+            "action": "/Management/Marketing/GenerateContentFromTweet",
+            "method": "POST",
+            "risks": [
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_dcf5d675e21df0c0fab3114a46a60238",
+            "file": "app/Modules/Management/Views/Marketing/Twitter.php",
+            "module": "Management",
+            "action": "/Management/Marketing/GenerateContentFromTweet",
+            "method": "POST",
+            "risks": [
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_51b7a23df570d2846d8554f7ab025b9f",
+            "file": "app/Modules/Management/Views/Marketing/contentGenerator.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "marketingVideoGeneratorForm",
+            "file": "app/Modules/Management/Views/Marketing/contentStudio.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "marketingGeneratedOutputPanel",
+            "file": "app/Modules/Management/Views/Marketing/contentStudio.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "marketingQueueFilterForm",
+            "file": "app/Modules/Management/Views/Marketing/contentStudio.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "postMediaForm",
+            "file": "app/Modules/Management/Views/Marketing/modals/generatePostMedia.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "insightEditorForm",
+            "file": "app/Modules/Management/Views/Marketing/modals/insightPreview.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "standaloneAddSubscriberForm",
+            "file": "app/Modules/Management/Views/Marketing/resources/standaloneAddSubscriberForm.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "form_378c7801d8ff247fec78ea81812e7230",
+            "file": "app/Modules/Management/Views/Marketing/resources/standaloneCreateEmailForm.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "dailyLogForm",
+            "file": "app/Modules/Management/Views/Marketing/resources/standaloneDailyLogForm.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "form_506c5cc938863acadc9cb26f5fb83e53",
+            "file": "app/Modules/Management/Views/Marketing/resources/standaloneEmailScheduleForm.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "largeContentForm",
+            "file": "app/Modules/Management/Views/Marketing/resources/standaloneLargeContentForm.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "standaloneScraperForm",
+            "file": "app/Modules/Management/Views/Marketing/resources/standaloneScraper.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "standaloneScraperForm",
+            "file": "app/Modules/Management/Views/Marketing/resources/standaloneScraperForm.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "manualContentForm",
+            "file": "app/Modules/Management/Views/Marketing/resources/standaloneShortLongPostForm.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "form_e00abc6bf640b254cb50661088ecf3da",
+            "file": "app/Modules/Management/Views/Marketing/resources/viewTempScrapedEmails.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_94f8faf60a785517e0954732c18e25c3",
+            "file": "app/Modules/Management/Views/Marketing/resources/viewTempScrapedEmails.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_177e1d60b1b89d1765121f020595842a",
+            "file": "app/Modules/Management/Views/OpsInbox/show.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_f8d300dc5dcf024304773d55f561b683",
+            "file": "app/Modules/Management/Views/OpsInbox/show.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_dc4dc8b588682d9dd82fcc4cf99d9072",
+            "file": "app/Modules/Management/Views/OpsInbox/show.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_1bb27019786411bbee777a26fe6f4a82",
+            "file": "app/Modules/Management/Views/OpsInbox/show.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "add_new_project_form",
+            "file": "app/Modules/Management/Views/Projects/Add.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "add_new_project_form",
+            "file": "app/Modules/Management/Views/Projects/Add.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "reQuickIntake",
+            "file": "app/Modules/Management/Views/Projects/_quick_intake.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "form_c65b763342b7db7f926e5816d09ad068",
+            "file": "app/Modules/Management/Views/Projects/fund_overview.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_86f3a7018b3b631dd3bed6ff7b37e5c8",
+            "file": "app/Modules/Management/Views/Projects/fund_overview.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_7d9254cf1b7234a48896b146df49c5b3",
+            "file": "app/Modules/Management/Views/Projects/fund_overview.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_433bcc9b0daa073d1777f23b398ecbdb",
+            "file": "app/Modules/Management/Views/Projects/fund_overview.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_b6f60810a247a1bf3b36dc422e0eff38",
+            "file": "app/Modules/Management/Views/Projects/fund_overview.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_43723d34328184e9e4d3aaac2ee19e63",
+            "file": "app/Modules/Management/Views/Projects/fund_overview.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_8a9082673abba775a32bf81473483630",
+            "file": "app/Modules/Management/Views/Projects/fund_overview.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_44dd64cb994b4b54f6c1804656f6969f",
+            "file": "app/Modules/Management/Views/Projects/index/investment_commitment.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_32e3dbc23a551c23935758289bf466f9",
+            "file": "app/Modules/Management/Views/Projects/index/project_creation.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_473318de2b7b536c86915dbc1fd9d86b",
+            "file": "app/Modules/Management/Views/Projects/management/project_control.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_79ef2ca10acf5011c4f69c523e841162",
+            "file": "app/Modules/Management/Views/Referrals/index.php",
+            "module": "Management",
+            "action": null,
+            "method": "GET",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_0f62215b50db03a6c2db589fca9fd371",
+            "file": "app/Modules/Management/Views/Users/Referral_Report.php",
+            "module": "Management",
+            "action": null,
+            "method": "GET",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_07cd4b968ffc43561c4a62bc7a710e50",
+            "file": "app/Modules/Management/Views/Wallets/Reconcile_Report.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_e037e4d118fe5a959aaf7917462675c3",
+            "file": "app/Modules/Management/Views/Web_Design/Examples.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_3871a69cfd4f54f0123d733ad03cc6ef",
+            "file": "app/Modules/Management/Views/Web_Design/Examples.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_06bdfbd174f46c3c2d3c1643f0ed583d",
+            "file": "app/Modules/Management/Views/Web_Design/Examples.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "file_input_without_multipart"
+            ]
+        },
+        {
+            "id": "form_e5805b6cb658dbd513c1f8967d59ee73",
+            "file": "app/Modules/Management/Views/Web_Design/Examples.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_b509991a8e72c5622844958537e03264",
+            "file": "app/Modules/Management/Views/Web_Design/Examples.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_e041a7c28f194f83df2b73ea2a264338",
+            "file": "app/Modules/Management/Views/Web_Design/Examples.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_f3f72630608920e33b7239e7e6aafb8d",
+            "file": "app/Modules/Management/Views/Web_Design/Examples.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_7df5802b6964e7e94fe16d70adc94eb8",
+            "file": "app/Modules/Management/Views/Web_Design/Forms.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_0cc4277952adab28f51cd1357b1e5d57",
+            "file": "app/Modules/Management/Views/Web_Design/Forms.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_1211a634d4693adf1ea8036263d9df1c",
+            "file": "app/Modules/Management/Views/Web_Design/Forms.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "file_input_without_multipart"
+            ]
+        },
+        {
+            "id": "form_c6a8e5b09083562d3196540f68523ab4",
+            "file": "app/Modules/Management/Views/Web_Design/Forms.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_5fdf7c84b145b10fa8969ef70a12894a",
+            "file": "app/Modules/Management/Views/Web_Design/Forms.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_0a7ef31dbe5516c73c8267e9c8f84a17",
+            "file": "app/Modules/Management/Views/Web_Design/Forms.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_5c5492c235e46b3fde36d2b79ae9fd35",
+            "file": "app/Modules/Management/Views/Web_Design/Forms.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "ask-question-form",
+            "file": "app/Modules/Management/Views/Web_Design/Test_Page_Email.php",
+            "module": "Management",
+            "action": "Web_Design/Test_Page_Email",
+            "method": "POST",
+            "risks": [
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_7d6e2e6925fa75aebc16bb31282eba3e",
+            "file": "app/Modules/Management/Views/Web_Design/UI_Elements.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_b45cf3fa77c80cd56c7574d68d2f154f",
+            "file": "app/Modules/Management/Views/Web_Design/UI_Elements.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "chat-admin-form",
+            "file": "app/Modules/Management/Views/admin/chat.php",
+            "module": "Management",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "form_cc0ad113cb8d81221872c86e00820dec",
+            "file": "app/Modules/Management/Views/chat_usage.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_7d2ee6eb022f6ef48f75e0141afc9ec0",
+            "file": "app/Modules/Management/Views/chat_usage.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_654f65cac6cdcb622fa608d473ea1e03",
+            "file": "app/Modules/Management/Views/chat_usage.php",
+            "module": "Management",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "project-form",
+            "file": "app/Modules/Ops/Views/Management/index.php",
+            "module": "Ops",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "subproject-form",
+            "file": "app/Modules/Ops/Views/Management/index.php",
+            "module": "Ops",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "xlsx-upload-form",
+            "file": "app/Modules/Ops/Views/Management/index.php",
+            "module": "Ops",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "account-form",
+            "file": "app/Modules/PropFirms/Views/accounts/index.php",
+            "module": "PropFirms",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_3df4125d774d9e925083887382fb49bb",
+            "file": "app/Modules/ScriptStudio/Views/create_edit.php",
+            "module": "ScriptStudio",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "searchForm",
+            "file": "app/Modules/Search/Views/index.php",
+            "module": "Search",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_d8467563833557ad301e39d3b8cf49aa",
+            "file": "app/Modules/Support/Views/Support/account_help.php",
+            "module": "Support",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "support-ticket-form",
+            "file": "app/Modules/Support/Views/Support/index.php",
+            "module": "Support",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "file_input_without_multipart"
+            ]
+        },
+        {
+            "id": "support-kb-search",
+            "file": "app/Modules/Support/Views/Support/index.php",
+            "module": "Support",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_2a403884551285d83e72c0ec633a6246",
+            "file": "app/Modules/Support/Views/_partials/_feedback.php",
+            "module": "Support",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "lineForm",
+            "file": "app/Modules/User/Tax/Views/edit.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_909e113d0ac03197218c06d21525da0c",
+            "file": "app/Modules/User/Tax/Views/index.php",
+            "module": "User",
+            "action": "/Tax/create",
+            "method": "POST",
+            "risks": [
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_e0490fda025214e93fca56d91ede3b00",
+            "file": "app/Modules/User/Views/Account/twofactor.php",
+            "module": "User",
+            "action": "/Account/2fa/disable",
+            "method": "POST",
+            "risks": [
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_8b8faabfbb2b15421c13663b99e5f968",
+            "file": "app/Modules/User/Views/Account/twofactor.php",
+            "module": "User",
+            "action": "/Account/2fa/backup/regenerate",
+            "method": "POST",
+            "risks": [
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_d66ddbd66a555725a53590eae31dd649",
+            "file": "app/Modules/User/Views/Account/twofactor.php",
+            "module": "User",
+            "action": "/Account/2fa/enable",
+            "method": "POST",
+            "risks": [
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "bid-form",
+            "file": "app/Modules/User/Views/Auctions/item.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "topup-form",
+            "file": "app/Modules/User/Views/Auctions/item.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "add_user_budgeting_account",
+            "file": "app/Modules/User/Views/Budget/Add-New.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "add_user_budgeting_account",
+            "file": "app/Modules/User/Views/Budget/Add.php",
+            "module": "User",
+            "action": "/Budget/Add/",
+            "method": "POST",
+            "risks": [
+                "hidden_fields_not_read:form_mode,user_id,account_id,account_type",
+                "controller_expected_keys_missing:intervals"
+            ]
+        },
+        {
+            "id": "add_user_budgeting_account",
+            "file": "app/Modules/User/Views/Budget/Add.php",
+            "module": "User",
+            "action": "/Budget/Add/",
+            "method": "POST",
+            "risks": [
+                "hidden_fields_not_read:form_mode,user_id,account_id,account_type",
+                "controller_expected_keys_missing:intervals"
+            ]
+        },
+        {
+            "id": "updateInvestorProfileForm",
+            "file": "app/Modules/User/Views/Budget/Assessment/assessment_content.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "updateInvestorProfileForm",
+            "file": "app/Modules/User/Views/Budget/Assessment/assessment_content.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "updateInvestorProfileForm",
+            "file": "app/Modules/User/Views/Budget/Assessment/kyc_verification.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "updateInvestorProfileForm",
+            "file": "app/Modules/User/Views/Budget/Assessment/personal_information.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "add_user_budgeting_account",
+            "file": "app/Modules/User/Views/Budget/Copy-12242023.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "add_user_budgeting_account",
+            "file": "app/Modules/User/Views/Budget/Copy.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "edit_user_budgeting_account",
+            "file": "app/Modules/User/Views/Budget/Edit.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "form_77e52cf14f207c4342b15cca847dba77",
+            "file": "app/Modules/User/Views/Budget/Financial_Forecaster.php",
+            "module": "User",
+            "action": null,
+            "method": "GET",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "budget-settings-form",
+            "file": "app/Modules/User/Views/Budget/Settings.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_557004f2498ab7514b76512f658f1af8",
+            "file": "app/Modules/User/Views/Budget/forecast.php",
+            "module": "User",
+            "action": null,
+            "method": "GET",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "discordScopesForm",
+            "file": "app/Modules/User/Views/Dashboard/Account/Social.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_375e9b436b65856ffa711718e3a41e50",
+            "file": "app/Modules/User/Views/Dashboard/modals/onboarding.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_9daf56bfe69ce28f0f6f4bdd0412ac99",
+            "file": "app/Modules/User/Views/Dashboard/modals/onboarding.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_ed99fc2c1c3885118aab6403f45bb589",
+            "file": "app/Modules/User/Views/Dashboard/modals/onboarding.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_a9d8776e42e1bba31e37c81d1e8d4bcf",
+            "file": "app/Modules/User/Views/Dashboard/modals/onboarding.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_bc0a00960676d1ee274ae0091aa2b2d0",
+            "file": "app/Modules/User/Views/Dashboard/modals/onboarding.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "addInvestmentForm",
+            "file": "app/Modules/User/Views/Investments/Add.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "add_investment_record",
+            "file": "app/Modules/User/Views/Investments/Add/form.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "form_3ff71ebfb4b4234f776461388164be61",
+            "file": "app/Modules/User/Views/Investments/Add/user_fields-04042024.php",
+            "module": "User",
+            "action": "path/to/form/submit",
+            "method": "POST",
+            "risks": [
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_12e11a9871148d12b71a6fe3b0dbde77",
+            "file": "app/Modules/User/Views/Investments/Add/user_fields.php",
+            "module": "User",
+            "action": "path/to/form/submit",
+            "method": "POST",
+            "risks": [
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "updateInvestorProfileForm",
+            "file": "app/Modules/User/Views/Investments/Assessment/assessment_content.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "updateInvestorProfileForm",
+            "file": "app/Modules/User/Views/Investments/Assessment/kyc_verification.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "updateInvestorProfileForm",
+            "file": "app/Modules/User/Views/Investments/Assessment/personal_information.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_d6fe8c93dc34b8b4740af9ec86b75418",
+            "file": "app/Modules/User/Views/Investments/resources/goal_based_investing.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_d366bea6221e414925ae5703defeb192",
+            "file": "app/Modules/User/Views/Investments/resources/import_investments.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_4f82cb822b9ffe062a293c41d5fb0cf0",
+            "file": "app/Modules/User/Views/Investments/resources/retirement_planner.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_0a884ef94a94a58284c4f3db69b1fe99",
+            "file": "app/Modules/User/Views/Investments/resources/retirement_planner_manual.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_8e84e00607b85578e571e8e22f4028f4",
+            "file": "app/Modules/User/Views/Investments/resources/retirement_planner_premium.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_2582ebfaf7e3a781a361d35e564f769e",
+            "file": "app/Modules/User/Views/Investments/resources/set_alerts.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "strategy-form",
+            "file": "app/Modules/User/Views/Investments/resources/strategizer.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "goal-form",
+            "file": "app/Modules/User/Views/Investments/resources/strategizer.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_0a53e7a22ee26a16efeedca7e6958b7a",
+            "file": "app/Modules/User/Views/Investments/resources/watchlist.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_a6308058e880a21f7b7b04f635819660",
+            "file": "app/Modules/User/Views/Investments/resources/watchlist.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "ask-question-form",
+            "file": "app/Modules/User/Views/Knowledgebase/Response.php",
+            "module": "User",
+            "action": "Support/Response",
+            "method": "POST",
+            "risks": [
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_86d9fa369e433eb1e7cce88198974d13",
+            "file": "app/Modules/User/Views/Predictions/markets.php",
+            "module": "User",
+            "action": null,
+            "method": "GET",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "placeOrderForm",
+            "file": "app/Modules/User/Views/Predictions/view.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "add_new_project_form",
+            "file": "app/Modules/User/Views/Projects/Add.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "add_new_project_form",
+            "file": "app/Modules/User/Views/Projects/Add.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "commit_project_form",
+            "file": "app/Modules/User/Views/Projects/forms/project_commit.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "commit_project_form",
+            "file": "app/Modules/User/Views/Projects/forms/project_commit.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "discuss_project_form",
+            "file": "app/Modules/User/Views/Projects/forms/project_discuss.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "discuss_project_form",
+            "file": "app/Modules/User/Views/Projects/forms/project_discuss.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "invest_project_form",
+            "file": "app/Modules/User/Views/Projects/forms/project_invest.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "invest_project_form",
+            "file": "app/Modules/User/Views/Projects/forms/project_invest.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "sell_project_form",
+            "file": "app/Modules/User/Views/Projects/forms/project_sell.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "sell_project_form",
+            "file": "app/Modules/User/Views/Projects/forms/project_sell.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "form_d965604ea06ca4922a00fd2a00c08e4d",
+            "file": "app/Modules/User/Views/Projects/fund_dashboard.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "formCommit",
+            "file": "app/Modules/User/Views/Projects/holdings.php",
+            "module": "User",
+            "action": "",
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "formInvest",
+            "file": "app/Modules/User/Views/Projects/holdings.php",
+            "module": "User",
+            "action": "",
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "formSell",
+            "file": "app/Modules/User/Views/Projects/holdings.php",
+            "module": "User",
+            "action": "",
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "form_bc40b0d76a7234b694eca3a406a2ff11",
+            "file": "app/Modules/User/Views/Projects/holdings.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_8fb544ff799e0a7c899fae65131d13cd",
+            "file": "app/Modules/User/Views/Projects/index/investment_commitment.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_86b72e84ae19d604eaa4e3f4d1f71622",
+            "file": "app/Modules/User/Views/Projects/index/project_creation.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_5f18c37d4e3fe47b1744e548ac833168",
+            "file": "app/Modules/User/Views/Projects/management/project_control.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_674a48325fb14a672a57c3b061167a33",
+            "file": "app/Modules/User/Views/Projects/view.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "referral-program-application-form",
+            "file": "app/Modules/User/Views/Referral_Program/Apply.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "referralForm",
+            "file": "app/Modules/User/Views/Referral_Program/Create.php",
+            "module": "User",
+            "action": null,
+            "method": "POST",
+            "risks": [
+                "missing_action",
+                "post_without_csrf",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "ask-question-form",
+            "file": "app/Modules/User/Views/Referral_Program/New_Affiliate_Information.php",
+            "module": "User",
+            "action": "Referral_Program/New_Affiliate_Information",
+            "method": "POST",
+            "risks": [
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "email_subscribe_form",
+            "file": "app/Modules/User/Views/Subscribe/header_subscribe.php",
+            "module": "User",
+            "action": "#",
+            "method": "POST",
+            "risks": [
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "add_user_feedback",
+            "file": "app/Modules/User/Views/Support/Feedback.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "customer_support_request",
+            "file": "app/Modules/User/Views/Support/Request.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "support-ticket-form",
+            "file": "app/Modules/User/Views/Support/index.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "file_input_without_multipart"
+            ]
+        },
+        {
+            "id": "support-kb-search",
+            "file": "app/Modules/User/Views/Support/index.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "add_user_wallet",
+            "file": "app/Modules/User/Views/Wallets/Add.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "add_user_wallet",
+            "file": "app/Modules/User/Views/Wallets/Add/form.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "add_user_wallet",
+            "file": "app/Modules/User/Views/Wallets/Add_Account.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "ask-question-form",
+            "file": "app/Modules/User/Views/Wallets/Add_Deposit_Fetch.php",
+            "module": "User",
+            "action": "User/Wallets/Add_Deposit",
+            "method": "POST",
+            "risks": [
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "track_wallet_deposit",
+            "file": "app/Modules/User/Views/Wallets/Add_Deposit_Fetch.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "add_user_fiat_wallet",
+            "file": "app/Modules/User/Views/Wallets/Add_Fiat_Wallet.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "track_withdraw_form",
+            "file": "app/Modules/User/Views/Wallets/Add_Withdraw_Fetch.php",
+            "module": "User",
+            "action": "User/Wallets/Add_Withdraw",
+            "method": "POST",
+            "risks": [
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "track_wallet_withdraw",
+            "file": "app/Modules/User/Views/Wallets/Add_Withdraw_Fetch.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "purchase_order_form",
+            "file": "app/Modules/User/Views/Wallets/Coin_Swap.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "deposit-funds-form",
+            "file": "app/Modules/User/Views/Wallets/Create_Bank_Account.php",
+            "module": "User",
+            "action": "Wallets/Connect-Bank-Account",
+            "method": "POST",
+            "risks": [
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "deposit-funds-form",
+            "file": "app/Modules/User/Views/Wallets/Create_Bank_Account_Modal.php",
+            "module": "User",
+            "action": "Wallets/Connect-Bank-Account",
+            "method": "POST",
+            "risks": [
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "deposit-funds-form",
+            "file": "app/Modules/User/Views/Wallets/Deposit_Funds.php",
+            "module": "User",
+            "action": "Deposit-Funds",
+            "method": "POST",
+            "risks": [
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_611a818a949d7617664d90a8d133c84c",
+            "file": "app/Modules/User/Views/Wallets/Edit.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "add_user_wallet",
+            "file": "app/Modules/User/Views/Wallets/Edit_Account.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "generate_digibyte_wallet_address",
+            "file": "app/Modules/User/Views/Wallets/Generate_Wallet.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "add_user_wallet",
+            "file": "app/Modules/User/Views/Wallets/Link_Account (Original)/Import-Trades.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "add_user_wallet",
+            "file": "app/Modules/User/Views/Wallets/Link_Account/Import-Trades.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "purchase_mymi_gold_b",
+            "file": "app/Modules/User/Views/Wallets/MyMI_Gold/order_form.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "purchase_order_form",
+            "file": "app/Modules/User/Views/Wallets/Purchase.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "membershipForm",
+            "file": "app/Modules/User/Views/Wallets/Purchase/Memberships/Customize.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "purchase_mymi_gold",
+            "file": "app/Modules/User/Views/Wallets/Purchase_Gold.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match",
+                "js_submit_no_backend_endpoint"
+            ]
+        },
+        {
+            "id": "withdraw-funds-form",
+            "file": "app/Modules/User/Views/Wallets/Withdraw_Funds.php",
+            "module": "User",
+            "action": "Withdraw-Funds",
+            "method": "POST",
+            "risks": [
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_1087f2914a7d7b0fd2d099330d49a38b",
+            "file": "app/Modules/User/Views/Wallets/types/wallets_block.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "form_4b8a317e93d5b49f85fb83ac32254f61",
+            "file": "app/Modules/User/Views/Wallets/types/wallets_block.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        }
+    ]
+}

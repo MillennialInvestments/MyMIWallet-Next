@@ -52,6 +52,17 @@ use function is_ci;
  */
 class Services extends CoreServices
 {
+    public static function authBaseline(bool $getShared = true): \App\Services\AuthBaselineService
+    {
+        if ($getShared) {
+            /** @var \App\Services\AuthBaselineService $service */
+            $service = static::getSharedInstance('authBaseline');
+            return $service;
+        }
+
+        return new \App\Services\AuthBaselineService();
+    }
+
     /**
      * Compatibility auth() service for legacy Shield helper consumers.
      *

@@ -151,7 +151,13 @@ $showSetupBanner = ! empty($setupStatus)
     && ! ($setupPrefs['dismiss_budget'] ?? false)
     && ($setupStatus['missing']['budget'] ?? false);
 ?>
-<div data-budget-dashboard hidden></div>
+<div
+    data-budget-dashboard
+    data-endpoint-budget-data="<?= site_url('API/Budget/getUserBudgetRecords'); ?>"
+    data-endpoint-credit-data="<?= site_url('API/Budget/getUserCreditBalances'); ?>"
+    data-endpoint-available-data="<?= site_url('API/Budget/getUserAvailableBalances'); ?>"
+    data-endpoint-repayment-summary="<?= site_url('API/Budget/getUserRepaymentSummary'); ?>"
+>
 <!-- <div class="alert alert-info mt-3" data-budget-session-note>Budget data requires a logged-in session. If you're in Incognito or blocked third-party cookies, sign in again in a normal window.</div> -->
 <style <?= $nonce['style'] ?? '' ?>>
     @media only screen and (max-width: 768px) {

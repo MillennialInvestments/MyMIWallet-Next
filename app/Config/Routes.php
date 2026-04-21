@@ -311,10 +311,6 @@ $routes->group('', ['namespace' => 'App\Modules\User\Controllers', 'filter' => [
 });
 
 
-$routes->group('', ['namespace' => 'App\Modules\PropFirms\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
-    $routes->get('/', 'PropFirmsController::index', ['as' => 'dashboard']);
-    $routes->get('/(:segment)', 'PropFirmsController::index/$1');
-});
 $routes->group('Advisor', static function($routes) {
     $routes->get('/', 'AdvisorController::index');
     $routes->post('generateInsight', 'AdvisorController::generateAdvisorInsight');
@@ -752,10 +748,10 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('Available', 'BudgetAPIController::apiAvailableData');
         $routes->get('Repayment', 'BudgetAPIController::apiRepaymentSummary');   
 
-        $routes->get('getUserBudgetRecords', 'BudgetAPIController::getUserBudgetRecords');
-        $routes->get('getUserCreditBalances', 'BudgetAPIController::getUserCreditBalances');
-        $routes->get('getUserAvailableBalances', 'BudgetAPIController::getUserAvailableBalances');
-        $routes->get('getUserRepaymentSummary', 'BudgetAPIController::getUserRepaymentSummary');
+        $routes->get('getUserBudgetRecords', '\App\Modules\APIs\Controllers\BudgetController::getUserBudgetRecords');
+        $routes->get('getUserCreditBalances', '\App\Modules\APIs\Controllers\BudgetController::getUserCreditBalances');
+        $routes->get('getUserAvailableBalances', '\App\Modules\APIs\Controllers\BudgetController::getUserAvailableBalances');
+        $routes->get('getUserRepaymentSummary', '\App\Modules\APIs\Controllers\BudgetController::getUserRepaymentSummary');
     });
 
     $routes->group('ContentEngine', function($routes) {
@@ -1225,6 +1221,8 @@ $routes->get('index.php/Blog/(:segment)/(:segment)', static fn($a, $b) => redire
 // Dashboard
 $routes->group('Dashboard', ['namespace' => 'App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
     $routes->get('/', 'DashboardController::index', ['as' => 'dashboard']);
+    // Backward-compatible alias for legacy singular path
+    $routes->addRedirect('PropFirm', 'PropFirms', 302);
     $routes->get('Transaction-Modal/(:segment)', 'DashboardController::loadModalContent/$1', ['as' => 'load-modal-1-segment']);
     $routes->get('Transaction-Modal/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2', ['as' => 'load-modal-2-segment']);
     $routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3', ['as' => 'load-modal-3-segment']);
@@ -1788,10 +1786,6 @@ $routes->group('How-It-Works', ['namespace' => 'App\\Modules\\Blog\\Controllers'
 
 // Legacy API aliases for external callers that still hit exact historical paths.
 $routes->group('API', ['namespace' => 'App\\Modules\\APIs\\Controllers'], static function ($routes) {
-    $routes->get('Budget/getUserBudgetRecords', 'BudgetAPIController::getUserBudgetRecords');
-    $routes->get('Budget/getUserCreditBalances', 'BudgetAPIController::getUserCreditBalances');
-    $routes->get('Budget/getUserRepaymentSummary', 'BudgetAPIController::getUserRepaymentSummary');
-    $routes->get('Budget/getUserAvailableBalances', 'BudgetAPIController::getUserAvailableBalances');
     $routes->match(['GET', 'POST'], 'Alerts/fetchEmailAlerts', 'AlertsAPIController::fetchEmailAlerts');
     $routes->match(['GET', 'POST'], 'Management/Run-CRON-Tasks', 'ManagementAPIController::Run_CRON_Tasks', ['filter' => 'cronKey']);
     $routes->match(['GET', 'POST'], 'management/run-cron-tasks', 'ManagementAPIController::Run_CRON_Tasks', ['filter' => 'cronKey']);

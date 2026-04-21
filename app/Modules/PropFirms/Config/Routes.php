@@ -4,6 +4,7 @@ use CodeIgniter\Router\RouteCollection;
 
 /** @var RouteCollection $routes */
 $routes->group('Dashboard', ['namespace' => 'App\Modules\PropFirms\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) {
+    $routes->addRedirect('PropFirm', 'PropFirms', 302);
     $routes->get('PropFirms', 'PropFirmsController::index');
     $routes->get('propfirms', 'PropFirmsController::index');
 });
