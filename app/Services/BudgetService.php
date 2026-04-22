@@ -2399,6 +2399,13 @@ class BudgetService
             return (int) ($row['paid'] ?? 0) === 0;
         }));
 
+        log_message('debug', '[BudgetService::getUserBudget] user_id={userId} records={records} active={active} open={open}', [
+            'userId'  => (int) $userId,
+            'records' => count($records),
+            'active'  => count($activeRecords),
+            'open'    => count($openRecords),
+        ]);
+
         $sorter = function (array $a, array $b): int {
             $da = $this->parseRecordDate($a);
             $db = $this->parseRecordDate($b);

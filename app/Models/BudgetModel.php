@@ -1061,8 +1061,12 @@ class BudgetModel extends ObservedModel
 
     public function getUserActiveBudgetRecords($cuID) {
         // log_message('info', 'BudgetModel - L20: ' . $cuID);
-        $builder = $this->where(['status' => 1, 'paid' => 0, 'created_by' => $cuID, 'deleted' => 0]);
-        $result = $builder->limit(20)->get()->getResultArray();        
+        $builder = $this->where(['status' => 1, 'paid' => 0, 'created_by' => $cuID, 'deleted' => 0])
+                        ->orderBy('year', 'DESC')
+                        ->orderBy('month', 'DESC')
+                        ->orderBy('day', 'DESC')
+                        ->orderBy('id', 'DESC');
+        $result = $builder->get()->getResultArray();
         // log_message('info', 'BudgetModel - L23: ' . print_r($result, true));
         return $result; 
     } 
@@ -1070,10 +1074,11 @@ class BudgetModel extends ObservedModel
     public function getUserBudgetData($cuID)
     {
         return $this->where(['created_by' => $cuID, 'deleted' => 0])
-                    ->orderBy('year', 'ASC')
-                    ->orderBy('month', 'ASC')
-                    ->orderBy('day', 'ASC')
-                    ->findAll(20);
+                    ->orderBy('year', 'DESC')
+                    ->orderBy('month', 'DESC')
+                    ->orderBy('day', 'DESC')
+                    ->orderBy('id', 'DESC')
+                    ->findAll();
     }
 
     /**
@@ -1180,8 +1185,12 @@ class BudgetModel extends ObservedModel
 
     public function getUserBudgetRecords($cuID) {
         // log_message('info', 'BudgetModel - L20: ' . $cuID);
-        $builder = $this->where(['status' => 1, 'created_by' => $cuID, 'deleted' => 0]);
-        $result = $builder->limit(20)->get()->getResultArray();        
+        $builder = $this->where(['status' => 1, 'created_by' => $cuID, 'deleted' => 0])
+                        ->orderBy('year', 'DESC')
+                        ->orderBy('month', 'DESC')
+                        ->orderBy('day', 'DESC')
+                        ->orderBy('id', 'DESC');
+        $result = $builder->get()->getResultArray();
         // log_message('info', 'BudgetModel - L23: ' . print_r($result, true));
         return $result; 
     }         
