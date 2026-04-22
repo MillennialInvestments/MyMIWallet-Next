@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-04-15 12:09:25",
+    "generated_at": "2026-04-19 21:21:34",
     "app_path": "/home/mymiteam/mymiwallet/site/current/app/",
     "root_path": "/home/mymiteam/mymiwallet/site/current/",
     "controllers": [
@@ -84,6 +84,7 @@
                 "session",
                 "authentication",
                 "eventTracker",
+                "throttler",
                 "request",
                 "onboardingProgressService",
                 "safeCache",
@@ -91,9 +92,10 @@
                 "registrationSourceContentService",
                 "activator",
                 "authAuditService",
-                "throttler",
                 "resetter",
+                "validation",
                 "response",
+                "router",
                 "security"
             ],
             "methods": [
@@ -113,7 +115,8 @@
                 "activateAccount",
                 "resendActivateAccount",
                 "resendActivation",
-                "resendActivationCode"
+                "resendActivationCode",
+                "authDiagnostics"
             ]
         },
         {
@@ -219,7 +222,6 @@
             "uses_models": [],
             "uses_views": [],
             "uses_services": [
-                "authentication",
                 "authAuditService"
             ],
             "methods": [
@@ -311,6 +313,34 @@
                 "index",
                 "score",
                 "run"
+            ]
+        },
+        {
+            "name": "Login",
+            "path": "app/Controllers/ShieldAuth/Login.php",
+            "namespace": "App\\Controllers\\ShieldAuth",
+            "class": "Login",
+            "extends": "BaseController",
+            "uses_models": [],
+            "uses_views": [],
+            "uses_services": [],
+            "methods": [
+                "index",
+                "attempt"
+            ]
+        },
+        {
+            "name": "Register",
+            "path": "app/Controllers/ShieldAuth/Register.php",
+            "namespace": "App\\Controllers\\ShieldAuth",
+            "class": "Register",
+            "extends": "BaseController",
+            "uses_models": [],
+            "uses_views": [],
+            "uses_services": [],
+            "methods": [
+                "index",
+                "attempt"
             ]
         },
         {
@@ -656,6 +686,25 @@
                 "apiCreditData",
                 "apiAvailableData",
                 "apiRepaymentSummary"
+            ]
+        },
+        {
+            "name": "BudgetController",
+            "path": "app/Modules/APIs/Controllers/BudgetController.php",
+            "namespace": "App\\Modules\\APIs\\Controllers",
+            "class": "BudgetController",
+            "extends": "BaseAPIController",
+            "uses_models": [],
+            "uses_views": [],
+            "uses_services": [
+                "authentication"
+            ],
+            "methods": [
+                "initController",
+                "getUserBudgetRecords",
+                "getUserCreditBalances",
+                "getUserAvailableBalances",
+                "getUserRepaymentSummary"
             ]
         },
         {
@@ -1345,6 +1394,42 @@
             "methods": [
                 "initController",
                 "onramp"
+            ]
+        },
+        {
+            "name": "MobileAuthController",
+            "path": "app/Modules/APIs/Controllers/MobileAuthController.php",
+            "namespace": "App\\Modules\\APIs\\Controllers",
+            "class": "MobileAuthController",
+            "extends": "BaseAPIController",
+            "uses_models": [],
+            "uses_views": [],
+            "uses_services": [
+                "mobileAuthContext"
+            ],
+            "methods": [
+                "register",
+                "login",
+                "logout",
+                "me"
+            ]
+        },
+        {
+            "name": "MobileController",
+            "path": "app/Modules/APIs/Controllers/MobileController.php",
+            "namespace": "App\\Modules\\APIs\\Controllers",
+            "class": "MobileController",
+            "extends": "BaseAPIController",
+            "uses_models": [],
+            "uses_views": [],
+            "uses_services": [
+                "mobileAuthContext"
+            ],
+            "methods": [
+                "dashboard",
+                "budget",
+                "investments",
+                "alerts"
             ]
         },
         {
@@ -4589,10 +4674,6 @@
                 "removeLinkedAccount",
                 "refreshLinkedAccount",
                 "forecastBudget",
-                "getUserBudgetRecords",
-                "getUserAvailableBalances",
-                "getUserCreditBalances",
-                "getUserRepaymentSummary",
                 "history",
                 "paid",
                 "recurringSchedule",
@@ -6043,6 +6124,13 @@
             "table": "bf_users_budgeting"
         },
         {
+            "name": "MobileAuthTokenModel",
+            "path": "app/Models/MobileAuthTokenModel.php",
+            "namespace": "App\\Models",
+            "class": "MobileAuthTokenModel",
+            "table": "bf_mobile_auth_tokens"
+        },
+        {
             "name": "MyMICoinModel",
             "path": "app/Models/MyMICoinModel.php",
             "namespace": "App\\Models",
@@ -6849,6 +6937,12 @@
             "class": "AIOpsGuardrailService"
         },
         {
+            "name": "MobileAppService",
+            "path": "app/Modules/APIs/Services/MobileAppService.php",
+            "namespace": "App\\Modules\\APIs\\Services",
+            "class": "MobileAppService"
+        },
+        {
             "name": "index",
             "path": "app/Modules/Management/Views/Services/index.php",
             "namespace": null,
@@ -7245,6 +7339,12 @@
             "class": "AuthAuditService"
         },
         {
+            "name": "AuthBaselineService",
+            "path": "app/Services/AuthBaselineService.php",
+            "namespace": "App\\Services",
+            "class": "AuthBaselineService"
+        },
+        {
             "name": "AuthSmokeService",
             "path": "app/Services/AuthSmokeService.php",
             "namespace": "App\\Services",
@@ -7399,6 +7499,12 @@
             "path": "app/Services/Docs/DocsSyncEngine.php",
             "namespace": "App\\Services\\Docs",
             "class": "DocsSyncEngine"
+        },
+        {
+            "name": "FormInventoryScanner",
+            "path": "app/Services/Docs/FormInventoryScanner.php",
+            "namespace": "App\\Services\\Docs",
+            "class": "FormInventoryScanner"
         },
         {
             "name": "DocsService",
@@ -7795,6 +7901,18 @@
             "path": "app/Services/MetaService.php",
             "namespace": "App\\Services",
             "class": "MetaService"
+        },
+        {
+            "name": "MobileAuthContext",
+            "path": "app/Services/MobileAuthContext.php",
+            "namespace": "App\\Services",
+            "class": "MobileAuthContext"
+        },
+        {
+            "name": "MobileAuthTokenService",
+            "path": "app/Services/MobileAuthTokenService.php",
+            "namespace": "App\\Services",
+            "class": "MobileAuthTokenService"
         },
         {
             "name": "NotificationService",
@@ -9308,6 +9426,33 @@
             "description": "Audit Myth:Auth authentication and account lifecycle flows end-to-end, including registration, login, and reset flows."
         },
         {
+            "name": "BaselineCapture",
+            "path": "app/Commands/Auth/BaselineCapture.php",
+            "namespace": "App\\Commands\\Auth",
+            "class": "BaselineCapture",
+            "group": "auth",
+            "command": "auth:baseline:capture",
+            "description": "Capture auth/authz golden baseline artifacts."
+        },
+        {
+            "name": "BaselineDiff",
+            "path": "app/Commands/Auth/BaselineDiff.php",
+            "namespace": "App\\Commands\\Auth",
+            "class": "BaselineDiff",
+            "group": "auth",
+            "command": "auth:baseline:diff",
+            "description": "Diff current auth/authz runtime against current golden baseline."
+        },
+        {
+            "name": "BaselineRestore",
+            "path": "app/Commands/Auth/BaselineRestore.php",
+            "namespace": "App\\Commands\\Auth",
+            "class": "BaselineRestore",
+            "group": "auth",
+            "command": "auth:baseline:restore",
+            "description": "Restore auth-critical files from auth baseline artifacts."
+        },
+        {
             "name": "FlowSmoke",
             "path": "app/Commands/Auth/FlowSmoke.php",
             "namespace": "App\\Commands\\Auth",
@@ -9332,7 +9477,7 @@
             "class": "Smoke",
             "group": "auth",
             "command": "auth:smoke",
-            "description": "Run a safe authentication smoke test and record health results for ops visibility."
+            "description": "Probe auth-critical routes and runtime expectations for login/register/reset/redirect safety."
         },
         {
             "name": "SmokeTest",
@@ -9342,6 +9487,15 @@
             "group": "auth",
             "command": "auth:smoke-test",
             "description": "Deterministic Myth/Auth smoke test for login/session/reset flow."
+        },
+        {
+            "name": "SurfaceScan",
+            "path": "app/Commands/Auth/SurfaceScan.php",
+            "namespace": "App\\Commands\\Auth",
+            "class": "SurfaceScan",
+            "group": "auth",
+            "command": "auth:surface:scan",
+            "description": "Scan and report auth/authz runtime surface area."
         },
         {
             "name": "CacheAudit",
@@ -9828,6 +9982,15 @@
             "group": "Docs Generate",
             "command": "docs:readme:build",
             "description": null
+        },
+        {
+            "name": "FormInventory",
+            "path": "app/Commands/Docs/Generate/FormInventory.php",
+            "namespace": "App\\Commands\\Docs\\Generate",
+            "class": "FormInventory",
+            "group": "Docs",
+            "command": "docs:inventory-forms",
+            "description": "Inventory repository forms, submit dependencies, and risk flags."
         },
         {
             "name": "KnowledgeGraph",
@@ -12382,6 +12545,26 @@
         {
             "file": "app/Config/Routes.php",
             "method": "get",
+            "definition": "'index.php/login', 'AuthController::login'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'index.php/login', 'AuthController::attemptLogin'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'index.php/register', 'AuthController::register'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'index.php/register', 'AuthController::attemptRegister'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
             "definition": "'assets/(.*)', 'Assets::file/$1'"
         },
         {
@@ -12786,6 +12969,26 @@
         },
         {
             "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'login-shield', '\\\\App\\\\Controllers\\\\ShieldAuth\\\\Login::index', ['as' => 'login-shield']"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'login-shield', '\\\\App\\\\Controllers\\\\ShieldAuth\\\\Login::attempt', ['as' => 'login-shield-submit']"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'register-shield', '\\\\App\\\\Controllers\\\\ShieldAuth\\\\Register::index', ['as' => 'register-shield']"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'register-shield', '\\\\App\\\\Controllers\\\\ShieldAuth\\\\Register::attempt', ['as' => 'register-shield-submit']"
+        },
+        {
+            "file": "app/Config/Routes.php",
             "method": "group",
             "definition": "'', ['namespace' => 'App\\Controllers'], static function ($routes) { // TEMP: handle accidental /Login and redirect to lowercase $routes->get('Login', static function () { return redirect()->to(site_url('login')"
         },
@@ -13062,16 +13265,6 @@
         {
             "file": "app/Config/Routes.php",
             "method": "group",
-            "definition": "'', ['namespace' => 'App\\Modules\\PropFirms\\Controllers', 'filter' => ['login', 'noStore']], function($routes) { $routes->get('/', 'PropFirmsController::index', ['as' => 'dashboard']"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "get",
-            "definition": "'/(:segment)', 'PropFirmsController::index/$1'"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "group",
             "definition": "'Advisor', static function($routes) { $routes->get('/', 'AdvisorController::index'"
         },
         {
@@ -13118,6 +13311,46 @@
             "file": "app/Config/Routes.php",
             "method": "match",
             "definition": "['GET', 'POST'], '/', 'APIController::index'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "group",
+            "definition": "'mobile', static function($routes) { $routes->post('auth/login', 'MobileAuthController::login', ['filter' => 'ratelimit']"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'auth/register', 'MobileAuthController::register', ['filter' => 'ratelimit']"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "post",
+            "definition": "'auth/logout', 'MobileAuthController::logout', ['filter' => 'apiToken']"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'me', 'MobileAuthController::me', ['filter' => 'apiToken']"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "group",
+            "definition": "'', ['filter' => 'apiToken'], static function($routes) { $routes->get('dashboard', 'MobileController::dashboard'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'budget', 'MobileController::budget'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'investments', 'MobileController::investments'"
+        },
+        {
+            "file": "app/Config/Routes.php",
+            "method": "get",
+            "definition": "'alerts', 'MobileController::alerts'"
         },
         {
             "file": "app/Config/Routes.php",
@@ -14747,22 +14980,22 @@
         {
             "file": "app/Config/Routes.php",
             "method": "get",
-            "definition": "'getUserBudgetRecords', 'BudgetAPIController::getUserBudgetRecords'"
+            "definition": "'getUserBudgetRecords', '\\App\\Modules\\APIs\\Controllers\\BudgetController::getUserBudgetRecords'"
         },
         {
             "file": "app/Config/Routes.php",
             "method": "get",
-            "definition": "'getUserCreditBalances', 'BudgetAPIController::getUserCreditBalances'"
+            "definition": "'getUserCreditBalances', '\\App\\Modules\\APIs\\Controllers\\BudgetController::getUserCreditBalances'"
         },
         {
             "file": "app/Config/Routes.php",
             "method": "get",
-            "definition": "'getUserAvailableBalances', 'BudgetAPIController::getUserAvailableBalances'"
+            "definition": "'getUserAvailableBalances', '\\App\\Modules\\APIs\\Controllers\\BudgetController::getUserAvailableBalances'"
         },
         {
             "file": "app/Config/Routes.php",
             "method": "get",
-            "definition": "'getUserRepaymentSummary', 'BudgetAPIController::getUserRepaymentSummary'"
+            "definition": "'getUserRepaymentSummary', '\\App\\Modules\\APIs\\Controllers\\BudgetController::getUserRepaymentSummary'"
         },
         {
             "file": "app/Config/Routes.php",
@@ -18507,27 +18740,7 @@
         {
             "file": "app/Config/Routes.php",
             "method": "group",
-            "definition": "'API', ['namespace' => 'App\\\\Modules\\\\APIs\\\\Controllers'], static function ($routes) { $routes->get('Budget/getUserBudgetRecords', 'BudgetAPIController::getUserBudgetRecords'"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "get",
-            "definition": "'Budget/getUserCreditBalances', 'BudgetAPIController::getUserCreditBalances'"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "get",
-            "definition": "'Budget/getUserRepaymentSummary', 'BudgetAPIController::getUserRepaymentSummary'"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "get",
-            "definition": "'Budget/getUserAvailableBalances', 'BudgetAPIController::getUserAvailableBalances'"
-        },
-        {
-            "file": "app/Config/Routes.php",
-            "method": "match",
-            "definition": "['GET', 'POST'], 'Alerts/fetchEmailAlerts', 'AlertsAPIController::fetchEmailAlerts'"
+            "definition": "'API', ['namespace' => 'App\\\\Modules\\\\APIs\\\\Controllers'], static function ($routes) { $routes->match(['GET', 'POST'], 'Alerts/fetchEmailAlerts', 'AlertsAPIController::fetchEmailAlerts'"
         },
         {
             "file": "app/Config/Routes.php",
@@ -20272,7 +20485,12 @@
         {
             "file": "app/Modules/PropFirms/Config/Routes.php",
             "method": "group",
-            "definition": "'Dashboard', ['namespace' => 'App\\Modules\\PropFirms\\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) { $routes->get('PropFirms', 'PropFirmsController::index'"
+            "definition": "'Dashboard', ['namespace' => 'App\\Modules\\PropFirms\\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) { $routes->addRedirect('PropFirm', 'PropFirms', 302"
+        },
+        {
+            "file": "app/Modules/PropFirms/Config/Routes.php",
+            "method": "get",
+            "definition": "'PropFirms', 'PropFirmsController::index'"
         },
         {
             "file": "app/Modules/PropFirms/Config/Routes.php",
@@ -20452,10 +20670,10 @@
         {
             "name": "APIs",
             "path": "app/Modules/APIs",
-            "controllers": 45,
+            "controllers": 48,
             "models": 4,
             "views": 1,
-            "services": 0
+            "services": 1
         },
         {
             "name": "Admin",
@@ -20689,6 +20907,13 @@
             "from_type": "controller",
             "from": "AuthController",
             "to_type": "service",
+            "to": "throttler",
+            "relation": "uses_service"
+        },
+        {
+            "from_type": "controller",
+            "from": "AuthController",
+            "to_type": "service",
             "to": "request",
             "relation": "uses_service"
         },
@@ -20738,13 +20963,6 @@
             "from_type": "controller",
             "from": "AuthController",
             "to_type": "service",
-            "to": "throttler",
-            "relation": "uses_service"
-        },
-        {
-            "from_type": "controller",
-            "from": "AuthController",
-            "to_type": "service",
             "to": "resetter",
             "relation": "uses_service"
         },
@@ -20752,7 +20970,21 @@
             "from_type": "controller",
             "from": "AuthController",
             "to_type": "service",
+            "to": "validation",
+            "relation": "uses_service"
+        },
+        {
+            "from_type": "controller",
+            "from": "AuthController",
+            "to_type": "service",
             "to": "response",
+            "relation": "uses_service"
+        },
+        {
+            "from_type": "controller",
+            "from": "AuthController",
+            "to_type": "service",
+            "to": "router",
             "relation": "uses_service"
         },
         {
@@ -20901,13 +21133,6 @@
             "to_type": "view",
             "to": "blog/category",
             "relation": "renders_view"
-        },
-        {
-            "from_type": "controller",
-            "from": "Debug",
-            "to_type": "service",
-            "to": "authentication",
-            "relation": "uses_service"
         },
         {
             "from_type": "controller",
@@ -21194,6 +21419,13 @@
             "from": "BitcoinAPIController",
             "to_type": "service",
             "to": "BitcoinService",
+            "relation": "uses_service"
+        },
+        {
+            "from_type": "controller",
+            "from": "BudgetController",
+            "to_type": "service",
+            "to": "authentication",
             "relation": "uses_service"
         },
         {
@@ -21804,6 +22036,20 @@
             "to_type": "model",
             "to": "MditWebhookEventModel",
             "relation": "uses_model"
+        },
+        {
+            "from_type": "controller",
+            "from": "MobileAuthController",
+            "to_type": "service",
+            "to": "mobileAuthContext",
+            "relation": "uses_service"
+        },
+        {
+            "from_type": "controller",
+            "from": "MobileController",
+            "to_type": "service",
+            "to": "mobileAuthContext",
+            "relation": "uses_service"
         },
         {
             "from_type": "controller",
@@ -27956,6 +28202,13 @@
             "from": "MgmtBudgetModel",
             "to_type": "table",
             "to": "bf_users_budgeting",
+            "relation": "maps_table"
+        },
+        {
+            "from_type": "model",
+            "from": "MobileAuthTokenModel",
+            "to_type": "table",
+            "to": "bf_mobile_auth_tokens",
             "relation": "maps_table"
         },
         {

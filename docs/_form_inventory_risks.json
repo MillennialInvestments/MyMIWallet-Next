@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-04-19T20:18:18+00:00",
+    "generated_at": "2026-04-19T21:20:43+00:00",
     "risks": [
         {
             "id": "subscribeForm",
@@ -52,8 +52,7 @@
             "action": "Exchange/Buy",
             "method": "POST",
             "risks": [
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -65,8 +64,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -78,8 +76,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -91,8 +88,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -104,8 +100,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -115,8 +110,7 @@
             "action": "Exchange/Buy",
             "method": "POST",
             "risks": [
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -128,8 +122,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -141,8 +134,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -202,8 +194,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -227,8 +218,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -263,8 +253,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -275,8 +264,7 @@
             "method": "POST",
             "risks": [
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -403,8 +391,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -462,8 +449,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -617,8 +603,7 @@
             "method": "POST",
             "risks": [
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -663,8 +648,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -688,8 +672,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -700,8 +683,7 @@
             "method": "POST",
             "risks": [
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -713,8 +695,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -726,8 +707,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -799,8 +779,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -812,8 +791,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -849,8 +827,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -1072,8 +1049,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -1097,8 +1073,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -1110,8 +1085,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -1135,8 +1109,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -1160,8 +1133,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -1173,8 +1145,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -1186,8 +1157,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -1199,8 +1169,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -1280,8 +1249,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -1293,8 +1261,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -1306,8 +1273,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -1668,8 +1634,7 @@
             "method": "POST",
             "risks": [
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -1717,8 +1682,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -1730,8 +1694,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -1915,8 +1878,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -1926,8 +1888,7 @@
             "action": "/Budget/Add/",
             "method": "POST",
             "risks": [
-                "hidden_fields_not_read:form_mode,user_id,account_id,account_type",
-                "controller_expected_keys_missing:intervals"
+                "controller_method_not_found"
             ]
         },
         {
@@ -1937,8 +1898,7 @@
             "action": "/Budget/Add/",
             "method": "POST",
             "risks": [
-                "hidden_fields_not_read:form_mode,user_id,account_id,account_type",
-                "controller_expected_keys_missing:intervals"
+                "controller_method_not_found"
             ]
         },
         {
@@ -1998,8 +1958,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2011,8 +1970,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2024,8 +1982,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2150,8 +2107,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2291,8 +2247,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2361,8 +2316,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2374,8 +2328,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2387,8 +2340,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2400,8 +2352,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2413,8 +2364,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2426,8 +2376,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2439,8 +2388,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2452,8 +2400,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2465,8 +2412,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2478,8 +2424,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2491,8 +2436,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2515,8 +2459,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2528,8 +2471,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2541,8 +2483,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2613,8 +2554,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2626,8 +2566,7 @@
             "risks": [
                 "missing_action",
                 "post_without_csrf",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2647,8 +2586,7 @@
             "action": "#",
             "method": "POST",
             "risks": [
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2660,8 +2598,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2673,8 +2610,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2711,8 +2647,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2724,8 +2659,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2737,8 +2671,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2760,8 +2693,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2773,8 +2705,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2796,8 +2727,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2863,8 +2793,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2876,8 +2805,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2889,8 +2817,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2902,8 +2829,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2915,8 +2841,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2952,8 +2877,7 @@
             "risks": [
                 "missing_method",
                 "missing_action",
-                "action_no_route_match",
-                "js_submit_no_backend_endpoint"
+                "action_no_route_match"
             ]
         },
         {
@@ -2963,6 +2887,30 @@
             "action": "Withdraw-Funds",
             "method": "POST",
             "risks": [
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "formRobinhoodLink",
+            "file": "app/Modules/User/Views/Wallets/types/wallets_block copy.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
+                "action_no_route_match"
+            ]
+        },
+        {
+            "id": "formSnapTradeLink",
+            "file": "app/Modules/User/Views/Wallets/types/wallets_block copy.php",
+            "module": "User",
+            "action": null,
+            "method": null,
+            "risks": [
+                "missing_method",
+                "missing_action",
                 "action_no_route_match"
             ]
         },

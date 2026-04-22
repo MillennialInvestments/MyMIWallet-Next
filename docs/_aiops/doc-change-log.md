@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-04-19T07:00:02Z
+> Run: 2026-04-22T07:00:01Z
 
 - docs/APIs/README.md
   - Last updated: 2026-04-15
@@ -56,6 +56,9 @@
 - docs/APIs/reports/api-tradovate-com-20260412-111828-integration-report.md
   - Last updated: 2026-04-12
   - Change type: unchanged
+- docs/APIs/reports/canva-dev-docs-apps-api-latest-20260419-194931-integration-report.md
+  - Last updated: 2026-04-19
+  - Change type: unchanged
 - docs/APIs/reports/developer-20260412-120844-report.md
   - Last updated: 2026-04-12
   - Change type: unchanged
@@ -70,6 +73,9 @@
   - Change type: unchanged
 - docs/APIs/scraped/api-tradovate-com-20260412-111828-raw.md
   - Last updated: 2026-04-12
+  - Change type: unchanged
+- docs/APIs/scraped/canva-dev-docs-apps-api-latest-20260419-194931-raw.md
+  - Last updated: 2026-04-19
   - Change type: unchanged
 - docs/APIs/scraped/developer-webull-com-apis-docs-20260415-132825-raw.md
   - Last updated: 2026-04-15
@@ -121,6 +127,12 @@
   - Change type: unchanged
 - docs/_audit_report.md
   - Last updated: 2026-04-15
+  - Change type: unchanged
+- docs/_baseline/auth/README.md
+  - Last updated: 2026-04-19
+  - Change type: unchanged
+- docs/_form_inventory.md
+  - Last updated: 2026-04-20
   - Change type: unchanged
 - docs/_gap-tracker/README.md
   - Last updated: 2026-04-15
@@ -370,52 +382,52 @@
   - Change type: unchanged
 - docs/_tmp/auth-debug/auth-audit-resolution-2026-04-19.md
   - Last updated: 2026-04-19
-  - Change type: new
+  - Change type: unchanged
 - docs/_tmp/resolution/auth/redirect-url-auth.resolution.md
   - Last updated: 2026-04-19
-  - Change type: new
+  - Change type: unchanged
 - docs/_tmp/resolution/auth/redirect-url-readers.resolution.md
   - Last updated: 2026-04-19
-  - Change type: new
+  - Change type: unchanged
 - docs/_tmp/resolution/auth/redirect-url-writers.resolution.md
   - Last updated: 2026-04-19
-  - Change type: new
+  - Change type: unchanged
 - docs/_tmp/resolution/frontend/auth-js-hooks.resolution.md
   - Last updated: 2026-04-19
-  - Change type: new
+  - Change type: unchanged
 - docs/_tmp/resolution/frontend/js-submit-redirect-public.resolution.md
   - Last updated: 2026-04-19
-  - Change type: new
+  - Change type: unchanged
 - docs/_tmp/resolution/frontend/js-submit-redirect-views.resolution.md
   - Last updated: 2026-04-19
-  - Change type: new
+  - Change type: unchanged
 - docs/_tmp/resolution/frontend/js-submit-redirect.resolution.md
   - Last updated: 2026-04-19
-  - Change type: new
+  - Change type: unchanged
 - docs/_tmp/resolution/frontend/login-form-hooks.resolution.md
   - Last updated: 2026-04-19
-  - Change type: new
+  - Change type: unchanged
 - docs/_tmp/resolution/frontend/register-form-hooks.resolution.md
   - Last updated: 2026-04-19
-  - Change type: new
+  - Change type: unchanged
 - docs/_tmp/resolution/routes/auth-routes.resolution.md
   - Last updated: 2026-04-19
-  - Change type: new
+  - Change type: unchanged
 - docs/_tmp/resolution/routes/login-routes.resolution.md
   - Last updated: 2026-04-19
-  - Change type: new
+  - Change type: unchanged
 - docs/_tmp/resolution/routes/register-routes.resolution.md
   - Last updated: 2026-04-19
-  - Change type: new
+  - Change type: unchanged
 - docs/_tmp/resolution/routes/star-auth-surface.resolution.md
   - Last updated: 2026-04-19
-  - Change type: new
+  - Change type: unchanged
 - docs/_tmp/resolution/routes/star-literal-auth.resolution.md
   - Last updated: 2026-04-19
-  - Change type: new
+  - Change type: unchanged
 - docs/_tmp/resolution/routes/star-routes-entry.resolution.md
   - Last updated: 2026-04-19
-  - Change type: new
+  - Change type: unchanged
 - docs/adr/0001-standards-and-response-contract.md
   - Last updated: 2025-11-08
   - Change type: unchanged
@@ -832,7 +844,7 @@
   - Change type: unchanged
 - docs/audit/auth_audit_last_run.md
   - Last updated: 2026-04-19
-  - Change type: modified
+  - Change type: unchanged
 - docs/audit/news_audit_last_run.md
   - Last updated: 2026-04-11
   - Change type: unchanged
@@ -1933,7 +1945,7 @@
   - Change type: unchanged
 - docs/mobile/overlap-app.md
   - Last updated: 2026-04-19
-  - Change type: new
+  - Change type: unchanged
 - docs/mobile/replit/00_overview.md
   - Last updated: 2026-01-04
   - Change type: unchanged

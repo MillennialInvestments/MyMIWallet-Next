@@ -89,7 +89,8 @@ $fieldData = array(
                             </div>
                         </div>
                         <div class="pricing-body">                                
-                            <form class="form-horizontal" id="add_user_budgeting_account">
+                            <form class="form-horizontal" id="add_user_budgeting_account_new">
+                                <?= csrf_field(); ?>
                                 <fieldset>
                                     <?php
                                     Template::block('User/Budget/Add/user_fields', 'User/Budget/Add/user_fields', $fieldData);

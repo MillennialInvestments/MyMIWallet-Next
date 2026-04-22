@@ -1,7 +1,7 @@
 # Form Inventory Report
 
-- Generated: 2026-04-19T20:18:18+00:00
-- Total forms: 251
+- Generated: 2026-04-19T21:20:43+00:00
+- Total forms: 253
 
 ## Module: Advertise
 
@@ -53,7 +53,7 @@
 - Form: id=`ask-question-form` action=`Exchange/Buy` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### exchange_buy_order_form
@@ -62,7 +62,7 @@
 - Form: id=`exchange_buy_order_form` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### coin_listing_asset_information
@@ -71,7 +71,7 @@
 - Form: id=`coin_listing_asset_information` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### coin_listing_asset_information
@@ -80,7 +80,7 @@
 - Form: id=`coin_listing_asset_information` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### coin_listing_request
@@ -89,7 +89,7 @@
 - Form: id=`coin_listing_request` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### ask-question-form
@@ -98,7 +98,7 @@
 - Form: id=`ask-question-form` action=`Exchange/Buy` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### exchange_sell_order_form
@@ -107,7 +107,7 @@
 - Form: id=`exchange_sell_order_form` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### solanaCoinSwapForm
@@ -116,7 +116,7 @@
 - Form: id=`solanaCoinSwapForm` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### form_d121f717d59005e79f6a96c248ee18c6
@@ -161,7 +161,7 @@
 - Form: id=`solanaCoinSwapForm` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### walletApprovalForm
@@ -179,7 +179,7 @@
 - Form: id=`solanaCoinSwapForm` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### buyForm
@@ -206,7 +206,7 @@
 - Form: id=`sellForm` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### sellForm
@@ -215,7 +215,7 @@
 - Form: id=`sellForm` action=`/Exchange/Solana/Sell` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### form_de58530951596f09e9a32fd950e7990c
@@ -316,7 +316,7 @@
 - Form: id=`addTradeAlertForm` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### form_f8321468b89f91c1b0e4df40486b4de8
@@ -361,7 +361,7 @@
 - Form: id=`#coin_listing_request` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### form_8cb55c81fc142c58952e2d28b3b62196
@@ -487,7 +487,7 @@
 - Form: id=`editCampaignForm` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### form_097036bcdefad661832c187e99b2d201
@@ -523,7 +523,7 @@
 - Form: id=`sendTestEmailForm` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### news-edit-form
@@ -541,7 +541,7 @@
 - Form: id=`add_marketing_form` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### add_marketing_form
@@ -550,7 +550,7 @@
 - Form: id=`add_marketing_form` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### cfa_customer_analysis
@@ -559,7 +559,7 @@
 - Form: id=`cfa_customer_analysis` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### mymiblogger-form
@@ -568,7 +568,7 @@
 - Form: id=`mymiblogger-form` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### form_a3c15f132de74fd621adc9f80a2d9810
@@ -622,7 +622,7 @@
 - Form: id=`editCampaignForm` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### editStepForm
@@ -631,7 +631,7 @@
 - Form: id=`editStepForm` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### form_12b55c461af5444d2b21dee4781350d4
@@ -658,7 +658,7 @@
 - Form: id=`edit_exchange_form` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### form_7e324ca2ea94a921ce1f5f6c06c966aa
@@ -829,7 +829,7 @@
 - Form: id=`marketingQueueFilterForm` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### postMediaForm
@@ -847,7 +847,7 @@
 - Form: id=`insightEditorForm` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### standaloneAddSubscriberForm
@@ -856,7 +856,7 @@
 - Form: id=`standaloneAddSubscriberForm` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### form_378c7801d8ff247fec78ea81812e7230
@@ -874,7 +874,7 @@
 - Form: id=`dailyLogForm` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### form_506c5cc938863acadc9cb26f5fb83e53
@@ -892,7 +892,7 @@
 - Form: id=`largeContentForm` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### standaloneScraperForm
@@ -901,7 +901,7 @@
 - Form: id=`standaloneScraperForm` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### standaloneScraperForm
@@ -910,7 +910,7 @@
 - Form: id=`standaloneScraperForm` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### manualContentForm
@@ -919,7 +919,7 @@
 - Form: id=`manualContentForm` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### form_e00abc6bf640b254cb50661088ecf3da
@@ -982,7 +982,7 @@
 - Form: id=`add_new_project_form` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### add_new_project_form
@@ -991,7 +991,7 @@
 - Form: id=`add_new_project_form` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### reQuickIntake
@@ -1000,7 +1000,7 @@
 - Form: id=`reQuickIntake` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### form_c65b763342b7db7f926e5816d09ad068
@@ -1279,7 +1279,7 @@
 - Form: id=`chat-admin-form` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### form_cc0ad113cb8d81221872c86e00820dec
@@ -1317,7 +1317,7 @@
 - Form: id=`project-form` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### subproject-form
@@ -1326,7 +1326,7 @@
 - Form: id=`subproject-form` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### xlsx-upload-form
@@ -1480,7 +1480,7 @@
 - Form: id=`add_user_budgeting_account` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### add_user_budgeting_account
@@ -1488,18 +1488,18 @@
 - View file: `app/Modules/User/Views/Budget/Add.php`
 - Form: id=`add_user_budgeting_account` action=`/Budget/Add/` method=`POST`
 - Route/controller target: `/Budget/Add` -> `App\Modules\User\Controllers\BudgetController::add`
-- Services/models/validation: services=`` models=`` validation=`$postPayload, $rules`
-- Risk summary: hidden_fields_not_read:form_mode,user_id,account_id,account_type, controller_expected_keys_missing:intervals
-- Suggested remediation: Sync view field names with controller expected POST keys.
+- Services/models/validation: services=`` models=`` validation=``
+- Risk summary: controller_method_not_found
+- Suggested remediation: Review flagged form/controller mismatches and standardize submit flow contracts.
 
 ### add_user_budgeting_account
 
 - View file: `app/Modules/User/Views/Budget/Add.php`
 - Form: id=`add_user_budgeting_account` action=`/Budget/Add/` method=`POST`
 - Route/controller target: `/Budget/Add` -> `App\Modules\User\Controllers\BudgetController::add`
-- Services/models/validation: services=`` models=`` validation=`$postPayload, $rules`
-- Risk summary: hidden_fields_not_read:form_mode,user_id,account_id,account_type, controller_expected_keys_missing:intervals
-- Suggested remediation: Sync view field names with controller expected POST keys.
+- Services/models/validation: services=`` models=`` validation=``
+- Risk summary: controller_method_not_found
+- Suggested remediation: Review flagged form/controller mismatches and standardize submit flow contracts.
 
 ### updateInvestorProfileForm
 
@@ -1543,7 +1543,7 @@
 - Form: id=`add_user_budgeting_account` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### add_user_budgeting_account
@@ -1552,7 +1552,7 @@
 - Form: id=`add_user_budgeting_account` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### edit_user_budgeting_account
@@ -1561,7 +1561,7 @@
 - Form: id=`edit_user_budgeting_account` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### form_77e52cf14f207c4342b15cca847dba77
@@ -1660,7 +1660,7 @@
 - Form: id=`add_investment_record` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### form_3ff71ebfb4b4234f776461388164be61
@@ -1768,7 +1768,7 @@
 - Form: id=`strategy-form` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### goal-form
@@ -1822,7 +1822,7 @@
 - Form: id=`placeOrderForm` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### add_new_project_form
@@ -1831,7 +1831,7 @@
 - Form: id=`add_new_project_form` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### add_new_project_form
@@ -1840,7 +1840,7 @@
 - Form: id=`add_new_project_form` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### commit_project_form
@@ -1849,7 +1849,7 @@
 - Form: id=`commit_project_form` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### commit_project_form
@@ -1858,7 +1858,7 @@
 - Form: id=`commit_project_form` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### discuss_project_form
@@ -1867,7 +1867,7 @@
 - Form: id=`discuss_project_form` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### discuss_project_form
@@ -1876,7 +1876,7 @@
 - Form: id=`discuss_project_form` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### invest_project_form
@@ -1885,7 +1885,7 @@
 - Form: id=`invest_project_form` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### invest_project_form
@@ -1894,7 +1894,7 @@
 - Form: id=`invest_project_form` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### sell_project_form
@@ -1903,7 +1903,7 @@
 - Form: id=`sell_project_form` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### sell_project_form
@@ -1912,7 +1912,7 @@
 - Form: id=`sell_project_form` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### form_d965604ea06ca4922a00fd2a00c08e4d
@@ -1930,7 +1930,7 @@
 - Form: id=`formCommit` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### formInvest
@@ -1939,7 +1939,7 @@
 - Form: id=`formInvest` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### formSell
@@ -1948,7 +1948,7 @@
 - Form: id=`formSell` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### form_bc40b0d76a7234b694eca3a406a2ff11
@@ -2002,7 +2002,7 @@
 - Form: id=`referral-program-application-form` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### referralForm
@@ -2011,7 +2011,7 @@
 - Form: id=`referralForm` action=`` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_action, post_without_csrf, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_action, post_without_csrf, action_no_route_match
 - Suggested remediation: Add `csrf_field()` or verify framework CSRF injection for this submit flow.
 
 ### ask-question-form
@@ -2029,7 +2029,7 @@
 - Form: id=`email_subscribe_form` action=`#` method=`POST`
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### add_user_feedback
@@ -2038,7 +2038,7 @@
 - Form: id=`add_user_feedback` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### customer_support_request
@@ -2047,7 +2047,7 @@
 - Form: id=`customer_support_request` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### support-ticket-form
@@ -2074,7 +2074,7 @@
 - Form: id=`add_user_wallet` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### add_user_wallet
@@ -2083,7 +2083,7 @@
 - Form: id=`add_user_wallet` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### add_user_wallet
@@ -2092,7 +2092,7 @@
 - Form: id=`add_user_wallet` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### ask-question-form
@@ -2110,7 +2110,7 @@
 - Form: id=`track_wallet_deposit` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### add_user_fiat_wallet
@@ -2119,7 +2119,7 @@
 - Form: id=`add_user_fiat_wallet` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### track_withdraw_form
@@ -2137,7 +2137,7 @@
 - Form: id=`track_wallet_withdraw` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### purchase_order_form
@@ -2191,7 +2191,7 @@
 - Form: id=`add_user_wallet` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### generate_digibyte_wallet_address
@@ -2200,7 +2200,7 @@
 - Form: id=`generate_digibyte_wallet_address` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### add_user_wallet
@@ -2209,7 +2209,7 @@
 - Form: id=`add_user_wallet` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### add_user_wallet
@@ -2218,7 +2218,7 @@
 - Form: id=`add_user_wallet` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### purchase_mymi_gold_b
@@ -2227,7 +2227,7 @@
 - Form: id=`purchase_mymi_gold_b` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### purchase_order_form
@@ -2254,7 +2254,7 @@
 - Form: id=`purchase_mymi_gold` action=`` method=``
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
-- Risk summary: missing_method, missing_action, action_no_route_match, js_submit_no_backend_endpoint
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### withdraw-funds-form
@@ -2264,6 +2264,24 @@
 - Route/controller target: `unresolved` -> `unresolved::unresolved`
 - Services/models/validation: services=`` models=`` validation=``
 - Risk summary: action_no_route_match
+- Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
+
+### formRobinhoodLink
+
+- View file: `app/Modules/User/Views/Wallets/types/wallets_block copy.php`
+- Form: id=`formRobinhoodLink` action=`` method=``
+- Route/controller target: `unresolved` -> `unresolved::unresolved`
+- Services/models/validation: services=`` models=`` validation=``
+- Risk summary: missing_method, missing_action, action_no_route_match
+- Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
+
+### formSnapTradeLink
+
+- View file: `app/Modules/User/Views/Wallets/types/wallets_block copy.php`
+- Form: id=`formSnapTradeLink` action=`` method=``
+- Route/controller target: `unresolved` -> `unresolved::unresolved`
+- Services/models/validation: services=`` models=`` validation=``
+- Risk summary: missing_method, missing_action, action_no_route_match
 - Suggested remediation: Align form action with a defined route and ensure controller mapping is valid.
 
 ### form_1087f2914a7d7b0fd2d099330d49a38b

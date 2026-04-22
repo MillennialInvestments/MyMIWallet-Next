@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-04-19T07:00:02Z
+> Run: 2026-04-22T07:00:01Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -440,6 +440,8 @@
   - ❌ No obvious code match found (heuristic)
 - docs/APIs/reports/api-tradovate-com-20260412-111828-integration-report.md
   - ❌ No obvious code match found (heuristic)
+- docs/APIs/reports/canva-dev-docs-apps-api-latest-20260419-194931-integration-report.md
+  - ❌ No obvious code match found (heuristic)
 - docs/APIs/reports/developer-20260412-120844-report.md
   - ❌ No obvious code match found (heuristic)
 - docs/APIs/reports/developer-20260412-121200-report.md
@@ -449,6 +451,8 @@
 - docs/APIs/reports/developer-webull-com-apis-docs-20260415-132825-integration-report.md
   - ❌ No obvious code match found (heuristic)
 - docs/APIs/scraped/api-tradovate-com-20260412-111828-raw.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/scraped/canva-dev-docs-apps-api-latest-20260419-194931-raw.md
   - ❌ No obvious code match found (heuristic)
 - docs/APIs/scraped/developer-webull-com-apis-docs-20260415-132825-raw.md
   - ❌ No obvious code match found (heuristic)
@@ -481,6 +485,10 @@
 - docs/_audit/ci4-logger-hardening-2026-02-18.md
   - ❌ No obvious code match found (heuristic)
 - docs/_audit_report.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_baseline/auth/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_form_inventory.md
   - ❌ No obvious code match found (heuristic)
 - docs/_gap-tracker/README.md
   - ❌ No obvious code match found (heuristic)
@@ -798,12 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/chatgpt/prompt_template.md
   - ❌ No obvious code match found (heuristic)
-- docs/chatgpt/prompt_templates.md
-  - ❌ No obvious code match found (heuristic)
-- docs/chatgpt/unified_collaboration.md
-  - ❌ No obvious code match found (heuristic)
-- docs/chatgpt/unresolved_threads.md
-  - ❌ No obvious code match found (heuristic)
-- docs/chatgpt/workflows/export_to_csv.md
-  - ❌ No obvious code match found (heuristic)
-- … and 1031 more
+- … and 1035 more
