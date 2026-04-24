@@ -77,7 +77,7 @@ class MyMIDiscord
     /**
      * Send immediately to a specific channel key or channel id with a structured result.
      *
-     * @return array{success:bool,external_message_id:?string,response_json:array<string,mixed>|null,error_message:?string}
+     * @return array<string,mixed>
      */
     public function sendToChannel(string $channelKey, array $payload, ?string $forcedChannelId = null): array
     {
@@ -91,6 +91,9 @@ class MyMIDiscord
                 'response_json' => null,
                 'error_message' => 'Empty content after sanitize/policy filters.',
                 'transport' => 'failed',
+                'http_status' => null,
+                'response_headers' => [],
+                'response_body' => null,
             ];
         }
 
@@ -101,6 +104,9 @@ class MyMIDiscord
                 'response_json' => ['dry_run' => true, 'channel_key' => $channelKey, 'payload' => $payload],
                 'error_message' => null,
                 'transport' => 'failed',
+                'http_status' => null,
+                'response_headers' => [],
+                'response_body' => null,
             ];
         }
 
@@ -125,6 +131,9 @@ class MyMIDiscord
                 'response_json' => null,
                 'error_message' => 'Forced channel send unavailable: no channel webhook and bot API is not configured.',
                 'transport' => 'failed',
+                'http_status' => null,
+                'response_headers' => [],
+                'response_body' => null,
             ];
         }
 
@@ -152,6 +161,9 @@ class MyMIDiscord
                 'response_json' => null,
                 'error_message' => 'No webhook or bot channel configured for channel key: ' . $channelKey,
                 'transport' => 'failed',
+                'http_status' => null,
+                'response_headers' => [],
+                'response_body' => null,
             ];
         }
 
@@ -537,7 +549,7 @@ class MyMIDiscord
         }
     }
 
-    /** @return array{success:bool,external_message_id:?string,response_json:array<string,mixed>|null,error_message:?string} */
+    /** @return array<string,mixed> */
     protected function postJSONWithResult(string $url, array $body): array
     {
         try {
@@ -547,7 +559,8 @@ class MyMIDiscord
                 'json'    => $body,
             ]);
             $code = $resp->getStatusCode();
-            $decoded = json_decode((string) $resp->getBody(), true);
+            $rawBody = (string) $resp->getBody();
+            $decoded = json_decode($rawBody, true);
             $ok = $code >= 200 && $code < 300;
 
             return [
@@ -555,6 +568,9 @@ class MyMIDiscord
                 'external_message_id' => $ok ? (string) ($decoded['id'] ?? '') ?: null : null,
                 'response_json' => is_array($decoded) ? $decoded : ['status_code' => $code],
                 'error_message' => $ok ? null : 'Discord webhook HTTP ' . $code,
+                'http_status' => $code,
+                'response_headers' => $resp->getHeaders(),
+                'response_body' => mb_substr($rawBody, 0, 4000),
             ];
         } catch (\Throwable $e) {
             return [
@@ -562,6 +578,9 @@ class MyMIDiscord
                 'external_message_id' => null,
                 'response_json' => null,
                 'error_message' => $e->getMessage(),
+                'http_status' => null,
+                'response_headers' => [],
+                'response_body' => null,
             ];
         }
     }
@@ -588,7 +607,7 @@ class MyMIDiscord
         }
     }
 
-    /** @return array{success:bool,external_message_id:?string,response_json:array<string,mixed>|null,error_message:?string} */
+    /** @return array<string,mixed> */
     protected function postBotMessageWithResult(string $channelId, array $body): array
     {
         try {
@@ -605,7 +624,8 @@ class MyMIDiscord
                 ],
             ]);
             $code = $resp->getStatusCode();
-            $decoded = json_decode((string) $resp->getBody(), true);
+            $rawBody = (string) $resp->getBody();
+            $decoded = json_decode($rawBody, true);
             $ok = $code >= 200 && $code < 300;
 
             return [
@@ -613,6 +633,9 @@ class MyMIDiscord
                 'external_message_id' => $ok ? (string) ($decoded['id'] ?? '') ?: null : null,
                 'response_json' => is_array($decoded) ? $decoded : ['status_code' => $code],
                 'error_message' => $ok ? null : 'Discord bot HTTP ' . $code,
+                'http_status' => $code,
+                'response_headers' => $resp->getHeaders(),
+                'response_body' => mb_substr($rawBody, 0, 4000),
             ];
         } catch (\Throwable $e) {
             return [
@@ -620,6 +643,9 @@ class MyMIDiscord
                 'external_message_id' => null,
                 'response_json' => null,
                 'error_message' => $e->getMessage(),
+                'http_status' => null,
+                'response_headers' => [],
+                'response_body' => null,
             ];
         }
     }

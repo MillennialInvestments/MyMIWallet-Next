@@ -12,6 +12,7 @@ class Commands extends BaseConfig
      * @var array<string, class-string>
      */
     public $commands = [
+        'marketing:audit:distribution' => \App\Commands\Marketing\AuditDistribution::class,
         'auth:baseline:capture' => \App\Commands\Auth\BaselineCapture::class,
         'auth:baseline:diff' => \App\Commands\Auth\BaselineDiff::class,
         'auth:baseline:restore' => \App\Commands\Auth\BaselineRestore::class,

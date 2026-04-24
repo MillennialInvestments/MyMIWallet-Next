@@ -45,8 +45,18 @@ final class MarketingDiscordDistributionTest extends CIUnitTestCase
             channel VARCHAR(50) NOT NULL,
             destination VARCHAR(100) NOT NULL,
             payload_json TEXT NULL,
+            idempotency_key VARCHAR(64) NULL,
             status VARCHAR(50) NOT NULL,
+            attempt_count INTEGER DEFAULT 0,
+            max_attempts INTEGER DEFAULT 3,
             queued_at DATETIME NULL,
+            next_retry_at DATETIME NULL,
+            last_attempt_at DATETIME NULL,
+            http_status INTEGER NULL,
+            failure_class VARCHAR(80) NULL,
+            response_excerpt TEXT NULL,
+            response_headers TEXT NULL,
+            response_body TEXT NULL,
             sent_at DATETIME NULL,
             failed_at DATETIME NULL,
             response_json TEXT NULL,
@@ -119,22 +129,49 @@ final class MarketingDiscordDistributionTest extends CIUnitTestCase
         $target = (new MarketingDistributionTargetModel())->where('generated_content_id', $id)->first();
         $this->assertSame('sent', $target['status']);
         $this->assertSame('msg-123', $target['external_id']);
+        $this->assertSame(204, (int) $target['http_status']);
     }
 
-    public function testFailedSendRetryHandling(): void
+    public function testDiscord403MarkedPermanentAndNotRetriedEndlessly(): void
     {
-        $this->discord->shouldFail = true;
+        $this->discord->forcedHttpStatus = 403;
         $id = $this->seedApprovedContent('financial_news', []);
         $record = Database::connect()->table('bf_marketing_generated_content')->where('id', $id)->get()->getRowArray();
 
         $this->service->distributeGeneratedContent($record ?: []);
         $first = (new MarketingDistributionTargetModel())->where('generated_content_id', $id)->first();
-        $this->assertSame('failed', $first['status']);
+        $this->assertSame('failed_permanent', $first['status']);
         $this->assertSame(1, (int) $first['retry_count']);
+        $this->assertSame('discord_permission_denied', $first['failure_class']);
 
         $this->service->retryFailedTargets($id, 10);
         $second = (new MarketingDistributionTargetModel())->where('generated_content_id', $id)->first();
-        $this->assertSame(2, (int) $second['retry_count']);
+        $this->assertSame(1, (int) $second['retry_count']);
+    }
+
+    public function testDiscord429CreatesRetrySchedule(): void
+    {
+        $this->discord->forcedHttpStatus = 429;
+        $id = $this->seedApprovedContent('financial_news', []);
+        $record = Database::connect()->table('bf_marketing_generated_content')->where('id', $id)->get()->getRowArray();
+
+        $this->service->distributeGeneratedContent($record ?: []);
+        $target = (new MarketingDistributionTargetModel())->where('generated_content_id', $id)->first();
+        $this->assertSame('failed_retryable', $target['status']);
+        $this->assertSame('discord_rate_limited', $target['failure_class']);
+        $this->assertNotEmpty($target['next_retry_at']);
+    }
+
+    public function testIdempotencyPreventsDuplicateResend(): void
+    {
+        $id = $this->seedApprovedContent('community_news', []);
+        $record = Database::connect()->table('bf_marketing_generated_content')->where('id', $id)->get()->getRowArray();
+        $this->service->distributeGeneratedContent($record ?: []);
+        $this->service->distributeGeneratedContent($record ?: []);
+
+        $target = (new MarketingDistributionTargetModel())->where('generated_content_id', $id)->first();
+        $this->assertSame(1, $this->discord->sendCallCount);
+        $this->assertSame('sent', $target['status']);
     }
 
     public function testActivationAnnouncementBehavior(): void
@@ -190,7 +227,8 @@ final class MarketingDiscordDistributionTest extends CIUnitTestCase
 
 class TestDiscordClient extends MyMIDiscord
 {
-    public bool $shouldFail = false;
+    public ?int $forcedHttpStatus = null;
+    public int $sendCallCount = 0;
     /** @var array<string,mixed> */
     public array $lastPayload = [];
 
@@ -201,13 +239,17 @@ class TestDiscordClient extends MyMIDiscord
     public function sendToChannel(string $channelKey, array $payload, ?string $forcedChannelId = null): array
     {
         $this->lastPayload = $payload;
+        $this->sendCallCount++;
 
-        if ($this->shouldFail) {
+        if ($this->forcedHttpStatus !== null && $this->forcedHttpStatus >= 400) {
             return [
                 'success' => false,
                 'external_message_id' => null,
                 'response_json' => ['error' => 'forced_failure'],
                 'error_message' => 'forced_failure',
+                'http_status' => $this->forcedHttpStatus,
+                'response_headers' => $this->forcedHttpStatus === 429 ? ['Retry-After' => ['120']] : [],
+                'response_body' => 'forced_failure',
             ];
         }
 
@@ -216,6 +258,9 @@ class TestDiscordClient extends MyMIDiscord
             'external_message_id' => 'msg-123',
             'response_json' => ['id' => 'msg-123', 'channel_key' => $channelKey, 'channel_id' => $forcedChannelId],
             'error_message' => null,
+            'http_status' => 204,
+            'response_headers' => [],
+            'response_body' => '',
         ];
     }
 }
