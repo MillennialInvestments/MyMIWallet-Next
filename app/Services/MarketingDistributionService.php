@@ -5,7 +5,13 @@ namespace App\Services;
 use App\Libraries\MyMIDiscord;
 use App\Models\MarketingDistributionTargetModel;
 use App\Models\MarketingModel;
+use App\Services\Marketing\Distribution\Adapters\BlogDestinationAdapter;
+use App\Services\Marketing\Distribution\Adapters\DiscordDestinationAdapter;
+use App\Services\Marketing\Distribution\Adapters\EmailDestinationAdapter;
+use App\Services\Marketing\Distribution\Adapters\InAppDestinationAdapter;
+use App\Services\Marketing\Distribution\Adapters\WebhookDestinationAdapter;
 use App\Services\Marketing\Distribution\BlueskyDistributionService;
+use App\Services\Marketing\Distribution\DestinationDispatcher;
 use App\Services\Marketing\Distribution\DiscordMessageBuilder;
 use App\Services\Marketing\Distribution\LinkedInDistributionService;
 use App\Services\Marketing\Distribution\MastodonDistributionService;
@@ -15,7 +21,7 @@ use Config\MarketingDistribution;
 
 class MarketingDistributionService
 {
-    private const PROCESSABLE_STATUSES = ['pending', 'queued', 'retrying'];
+    private const PROCESSABLE_STATUSES = ['pending', 'sending', 'failed_retryable'];
     private const VALID_CATEGORIES = [
         'community_news',
         'announcements',
@@ -24,6 +30,7 @@ class MarketingDistributionService
         'financial_news',
         'stock_news',
     ];
+    private DestinationDispatcher $dispatcher;
 
     public function __construct(
         private ?MarketingModel $marketingModel = null,
@@ -45,6 +52,13 @@ class MarketingDistributionService
         $this->webhookService ??= new WebhookDistributionService($this->distributionConfig);
         $this->discordService ??= new MyMIDiscord();
         $this->discordMessageBuilder ??= new DiscordMessageBuilder($this->distributionConfig);
+        $this->dispatcher = new DestinationDispatcher([
+            'discord' => new DiscordDestinationAdapter($this->discordService, $this->distributionConfig),
+            'blog' => new BlogDestinationAdapter($this->marketingModel),
+            'in_app' => new InAppDestinationAdapter(),
+            'email' => new EmailDestinationAdapter($this->distributionConfig),
+            'webhook' => new WebhookDestinationAdapter($this->webhookService),
+        ]);
     }
 
     public function queueDistribution(int $generatedContentId, array $destinations = []): array
@@ -109,7 +123,7 @@ class MarketingDistributionService
 
     public function retryFailedTargets(?int $generatedContentId = null, int $limit = 25): array
     {
-        $builder = $this->targetModel->builder()->where('status', 'failed');
+        $builder = $this->targetModel->builder()->where('status', 'failed_retryable');
         if ($generatedContentId !== null) {
             $builder->where('generated_content_id', $generatedContentId);
         }
@@ -119,16 +133,17 @@ class MarketingDistributionService
 
         foreach ($rows as $row) {
             if ((int) ($row['retry_count'] ?? 0) >= $this->distributionConfig->maxRetries) {
+                $this->targetModel->update((int) $row['id'], ['status' => 'dead_letter', 'failed_at' => date('Y-m-d H:i:s'), 'modified_on' => date('Y-m-d H:i:s')]);
                 $results[] = ['id' => (int) $row['id'], 'status' => 'skipped', 'reason' => 'max_retries_reached'];
                 continue;
             }
 
             $this->targetModel->update((int) $row['id'], [
-                'status' => 'retrying',
+                'status' => 'failed_retryable',
                 'modified_on' => date('Y-m-d H:i:s'),
             ]);
 
-            $results[] = $this->processTarget(array_merge($row, ['status' => 'retrying']));
+            $results[] = $this->processTarget(array_merge($row, ['status' => 'failed_retryable']));
         }
 
         if ($generatedContentId !== null) {
@@ -177,7 +192,7 @@ class MarketingDistributionService
     /** @return array<string,mixed> */
     public function getFailedRetryableSummary(): array
     {
-        $rows = $this->targetModel->whereIn('status', ['failed', 'retrying'])->findAll();
+        $rows = $this->targetModel->whereIn('status', ['failed_retryable', 'failed_permanent', 'dead_letter'])->findAll();
         $maxRetries = max(0, (int) $this->distributionConfig->maxRetries);
         $retryable = array_filter($rows, static fn(array $row): bool => (int) ($row['retry_count'] ?? 0) < $maxRetries);
 
@@ -229,7 +244,7 @@ class MarketingDistributionService
 
         if ($db->tableExists('bf_marketing_distribution_targets')) {
             $assertions['failed_target_accumulation'] = $db->table('bf_marketing_distribution_targets')
-                ->whereIn('status', ['failed', 'retrying'])
+                ->whereIn('status', ['failed_retryable', 'failed_permanent', 'dead_letter'])
                 ->countAllResults();
 
             $assertions['duplicate_distribution_targets'] = (int) $db->query(
@@ -284,7 +299,7 @@ class MarketingDistributionService
                 ->first();
 
             if ($existingRow) {
-                if (in_array((string) ($existingRow['status'] ?? ''), ['failed', 'retrying'], true)) {
+                if (in_array((string) ($existingRow['status'] ?? ''), ['failed_retryable'], true)) {
                     $this->targetModel->update((int) $existingRow['id'], [
                         'payload_json' => json_encode($this->buildPayload($record, $destination, $channel)),
                         'status' => 'pending',
@@ -305,6 +320,9 @@ class MarketingDistributionService
                 'payload_json' => json_encode($this->buildPayload($record, $destination, $channel)),
                 'status' => 'pending',
                 'retry_count' => 0,
+                'attempt_count' => 0,
+                'max_attempts' => max(1, (int) $this->distributionConfig->maxRetries),
+                'idempotency_key' => $this->buildIdempotencyKey($generatedContentId, $destination, $channel, $this->buildPayload($record, $destination, $channel)),
                 'created_on' => date('Y-m-d H:i:s'),
                 'modified_on' => date('Y-m-d H:i:s'),
             ], true);
@@ -329,56 +347,49 @@ class MarketingDistributionService
 
         $retryCount = (int) ($target['retry_count'] ?? 0);
 
+        $attempt = ((int) ($target['attempt_count'] ?? 0)) + 1;
         $this->targetModel->update($targetId, [
-            'status' => 'queued',
+            'status' => 'sending',
             'queued_at' => date('Y-m-d H:i:s'),
+            'attempt_count' => $attempt,
+            'last_attempt_at' => date('Y-m-d H:i:s'),
             'modified_on' => date('Y-m-d H:i:s'),
         ]);
-
-        try {
-            if ($this->shouldInjectFailureForDestination($destination)) {
-                throw new \RuntimeException('Failure injection enabled for destination: ' . $destination);
+        if (!empty($target['idempotency_key'])) {
+            $sent = $this->targetModel->where('idempotency_key', (string) $target['idempotency_key'])->where('status', 'sent')->first();
+            if ($sent) {
+                return ['id' => $targetId, 'generated_content_id' => (int) ($target['generated_content_id'] ?? 0), 'destination' => $destination, 'channel' => $channel, 'status' => 'sent', 'retry_count' => (int) ($target['retry_count'] ?? 0), 'error' => null];
             }
-
-            if ($channel === 'discord') {
-                $result = $this->handleDiscordDestination($target, $payload);
-            } else {
-                $result = match ($destination) {
-                    'blog' => $this->handleBlogDestination($target, $payload),
-                    'in_app' => $this->handleInAppDestination($target, $payload),
-                    'email' => $this->handleEmailDestination($target, $payload),
-                    'bluesky' => $this->blueskyService->publish($payload),
-                    'mastodon' => $this->mastodonService->publish($payload),
-                    'linkedin' => $this->linkedinService->publish($payload),
-                    'webhook' => $this->webhookService->publish($this->buildWebhookPayload($target, $payload)),
-                    default => [
-                        'status' => 'failed',
-                        'response' => null,
-                        'error' => 'Unknown destination: ' . $destination,
-                    ],
-                };
-            }
-        } catch (\Throwable $e) {
-            $result = ['status' => 'failed', 'response' => null, 'error' => $e->getMessage()];
         }
 
-        $nextRetry = $result['status'] === 'failed' ? $retryCount + 1 : $retryCount;
-
+        $result = $this->dispatcher->dispatch($target, $payload);
+        $newRetryCount = $result->success ? $retryCount : ($retryCount + 1);
+        $terminalStatus = $result->success
+            ? 'sent'
+            : ($result->retryable ? 'failed_retryable' : 'failed_permanent');
+        if ($terminalStatus === 'failed_retryable' && $newRetryCount >= max(1, (int) ($target['max_attempts'] ?? $this->distributionConfig->maxRetries))) {
+            $terminalStatus = 'dead_letter';
+        }
         $update = [
-            'status' => $result['status'],
-            'response_json' => isset($result['response']) ? json_encode($result['response']) : null,
-            'external_id' => $result['external_id'] ?? null,
-            'external_uri' => $result['external_uri'] ?? null,
-            'error_message' => $result['error'] ?? null,
-            'retry_count' => $nextRetry,
+            'status' => $terminalStatus,
+            'response_json' => $result->responseBody ? json_encode(['body' => $result->responseBody, 'headers' => $result->responseHeaders]) : null,
+            'external_id' => $result->externalId,
+            'error_message' => $result->responseExcerpt,
+            'retry_count' => $newRetryCount,
+            'http_status' => $result->httpStatus,
+            'failure_class' => $result->failureClass,
+            'response_excerpt' => $result->responseExcerpt,
+            'response_headers' => $result->responseHeaders ? json_encode($result->responseHeaders) : null,
+            'response_body' => $result->responseBody,
+            'next_retry_at' => $result->nextRetryAt,
             'modified_on' => date('Y-m-d H:i:s'),
         ];
 
-        if (in_array($result['status'], ['sent', 'skipped'], true)) {
+        if ($terminalStatus === 'sent') {
             $update['sent_at'] = date('Y-m-d H:i:s');
         }
 
-        if ($result['status'] === 'failed') {
+        if (in_array($terminalStatus, ['failed_retryable', 'failed_permanent', 'dead_letter'], true)) {
             $update['failed_at'] = date('Y-m-d H:i:s');
         }
 
@@ -389,122 +400,9 @@ class MarketingDistributionService
             'generated_content_id' => (int) ($target['generated_content_id'] ?? 0),
             'destination' => $destination,
             'channel' => $channel,
-            'status' => $update['status'],
-            'retry_count' => $nextRetry,
+            'status' => $terminalStatus,
+            'retry_count' => $newRetryCount,
             'error' => $update['error_message'] ?? null,
-        ];
-    }
-
-    private function handleBlogDestination(array $target, array $payload): array
-    {
-        $db = Database::connect();
-        $generatedContentId = (int) ($target['generated_content_id'] ?? 0);
-
-        $existing = $db->table('bf_marketing_blog_posts')->where('generated_content_id', $generatedContentId)->get()->getRowArray();
-
-        $data = [
-            'generated_content_id' => $generatedContentId,
-            'title' => (string) ($payload['title'] ?? 'Marketing Update'),
-            'content' => (string) ($payload['content'] ?? $payload['summary'] ?? ''),
-            'excerpt' => mb_substr((string) ($payload['summary'] ?? ''), 0, 220),
-            'status' => 'published',
-            'meta_json' => json_encode(['source' => 'distribution_engine', 'generated_content_id' => $generatedContentId]),
-            'modified_on' => date('Y-m-d H:i:s'),
-        ];
-
-        if (empty($existing)) {
-            $data['slug'] = $this->marketingModel->createSlug((string) $data['title']);
-            $data['created_on'] = date('Y-m-d H:i:s');
-            $db->table('bf_marketing_blog_posts')->insert($data);
-            $blogPostId = (int) $db->insertID();
-        } else {
-            $blogPostId = (int) $existing['id'];
-            $db->table('bf_marketing_blog_posts')->where('id', $blogPostId)->update($data);
-        }
-
-        return ['status' => 'sent', 'response' => ['blog_post_id' => $blogPostId], 'error' => null];
-    }
-
-    private function handleInAppDestination(array $target, array $payload): array
-    {
-        $db = Database::connect();
-        $db->table('bf_marketing_in_app_notifications')->insert([
-            'generated_content_id' => (int) ($target['generated_content_id'] ?? 0),
-            'target_group' => (string) ($payload['target_group'] ?? 'internal_team'),
-            'title' => (string) ($payload['title'] ?? 'Marketing update available'),
-            'message' => (string) ($payload['summary'] ?? ''),
-            'status' => 'sent',
-            'created_on' => date('Y-m-d H:i:s'),
-            'modified_on' => date('Y-m-d H:i:s'),
-        ]);
-
-        return ['status' => 'sent', 'response' => ['notification_id' => (int) $db->insertID()], 'error' => null];
-    }
-
-    private function handleEmailDestination(array $target, array $payload): array
-    {
-        $db = Database::connect();
-        $recipients = $this->distributionConfig->internalEmailRecipients;
-        if ($recipients === []) {
-            return ['status' => 'failed', 'response' => null, 'error' => 'No internal email recipients configured'];
-        }
-
-        $inserted = 0;
-        foreach ($recipients as $recipient) {
-            $db->table('bf_email_outbox')->insert([
-                'user_id' => null,
-                'to_email' => $recipient,
-                'subject' => (string) ($payload['title'] ?? 'Marketing distribution update'),
-                'type' => 'marketing_internal_distribution',
-                'status' => 'queued',
-                'error_message' => null,
-                'provider' => 'smtp',
-                'meta_json' => json_encode([
-                    'generated_content_id' => (int) ($target['generated_content_id'] ?? 0),
-                    'summary' => $payload['summary'] ?? '',
-                    'destination' => 'email',
-                ]),
-                'created_at' => date('Y-m-d H:i:s'),
-                'sent_at' => null,
-            ]);
-            $inserted++;
-        }
-
-        return ['status' => 'sent', 'response' => ['queued_emails' => $inserted], 'error' => null];
-    }
-
-    private function handleDiscordDestination(array $target, array $payload): array
-    {
-        if (! $this->isDiscordStreamEnabled()) {
-            return ['status' => 'skipped', 'response' => ['reason' => 'discord_stream_disabled'], 'error' => null];
-        }
-
-        $channelKey = (string) ($target['destination'] ?? $payload['discord_channel_key'] ?? '');
-        if ($channelKey === '') {
-            $channelKey = (string) ($this->distributionConfig->discord['fallback_channel'] ?? 'community_news');
-        }
-
-        $messagePayload = [
-            'content' => (string) ($payload['message'] ?? $payload['summary'] ?? ''),
-            'allowed_mentions' => $payload['allowed_mentions'] ?? ['parse' => []],
-        ];
-
-        $channelId = (string) ($this->distributionConfig->discord['channels'][$channelKey] ?? '');
-        $result = $this->discordService->sendToChannel($channelKey, $messagePayload, $channelId !== '' ? $channelId : null);
-
-        if (! $result['success']) {
-            return [
-                'status' => 'failed',
-                'response' => $result['response_json'],
-                'error' => $result['error_message'] ?? 'Discord send failed',
-            ];
-        }
-
-        return [
-            'status' => 'sent',
-            'response' => $result['response_json'],
-            'external_id' => $result['external_message_id'],
-            'error' => null,
         ];
     }
 
@@ -523,10 +421,10 @@ class MarketingDistributionService
         if (count(array_diff($statuses, ['sent', 'skipped'])) === 0) {
             $distributionStatus = 'distributed';
             $contentStatus = 'distributed';
-        } elseif (in_array('failed', $statuses, true) || in_array('retrying', $statuses, true)) {
+        } elseif (in_array('failed_permanent', $statuses, true) || in_array('failed_retryable', $statuses, true) || in_array('dead_letter', $statuses, true)) {
             $distributionStatus = 'partial_failed';
             $contentStatus = 'distribution_failed';
-        } elseif (in_array('queued', $statuses, true)) {
+        } elseif (in_array('sending', $statuses, true)) {
             $distributionStatus = 'scheduled';
             $contentStatus = 'scheduled';
         }
@@ -699,6 +597,14 @@ class MarketingDistributionService
         }
 
         return array_values(array_unique($normalized));
+    }
+
+    /** @param array<string,mixed> $payload */
+    private function buildIdempotencyKey(int $generatedContentId, string $destination, string $channel, array $payload): string
+    {
+        $normalizedPayload = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        return hash('sha256', implode('|', [$generatedContentId, $destination, $channel, (string) $normalizedPayload]));
     }
 
     private function isDiscordStreamEnabled(): bool
