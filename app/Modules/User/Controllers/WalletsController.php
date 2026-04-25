@@ -916,32 +916,66 @@ class WalletsController extends BaseUserController
         log_message('debug', 'WalletsController::add - START');
 
         if (strtolower($this->request->getMethod()) === 'post') {
-            log_message('debug', 'WalletsController::add - POST detected.');
+            $post = $this->request->getPost();
 
-            $post       = $this->request->getPost();
-            $walletType = (string) ($post['wallet_type'] ?? '');
-            $data       = $this->mapFormToWalletData(strtolower($walletType), $post);
+            $walletTypeRaw = (string) ($post['wallet_type'] ?? '');
+            $type = match (strtolower($walletTypeRaw)) {
+                'bank', 'banking', 'checking', 'savings', 'fiat' => 'bank',
+                'credit'                                       => 'credit',
+                'debt', 'loan'                                  => 'debt',
+                'investment', 'invest', 'brokerage'             => 'investment',
+                'crypto', 'cryptocurrency'                      => 'crypto',
+                default                                         => null,
+            };
 
-            $data['created_on'] = date('Y-m-d H:i:s');
+            if ($type === null) {
+                log_message('error', 'WalletsController::add invalid wallet_type: {wallet_type}', [
+                    'wallet_type' => $walletTypeRaw,
+                ]);
+
+                return redirect()->back()->withInput()->with('error', 'Invalid wallet type.');
+            }
 
             try {
                 $service = $this->resolveWalletService();
 
-                if (method_exists($service, 'create')) {
-                    $id = $service->create($data);
-                } else {
-                    $id = $this->walletModel->insert($data, true);
+                $prepared = method_exists($service, 'prepareAccountData')
+                    ? $service->prepareAccountData($post, $type)
+                    : $this->prepareAccountData($post, $type);
+
+                $prepared += [
+                    'status'     => 1,
+                    'active'     => in_array($post['active'] ?? '1', ['1', 1, true, 'true', 'on', 'Yes', 'yes'], true) ? 1 : 0,
+                    'beta'       => in_array($post['beta'] ?? '0', ['1', 1, true, 'true', 'on', 'Yes', 'yes'], true) ? 1 : 0,
+                    'user_id'    => (int) ($post['user_id'] ?? $this->currentWalletUserId()),
+                    'user_email' => (string) ($post['user_email'] ?? ''),
+                    'username'   => (string) ($post['username'] ?? ''),
+                ];
+
+                $method = match ($type) {
+                    'bank'       => 'addBankWallet',
+                    'credit'     => 'addCreditWallet',
+                    'debt'       => 'addDebtWallet',
+                    'investment' => 'addInvestmentWallet',
+                    'crypto'     => 'addCryptoWallet',
+                };
+
+                if (! method_exists($service, $method)) {
+                    throw new \RuntimeException("Wallet service method missing: {$method}");
                 }
 
-                $userId = (int) ($data['user_id'] ?? $this->currentWalletUserId());
+                $result = $service->{$method}($prepared);
 
+                $userId = (int) ($prepared['user_id'] ?? $this->currentWalletUserId());
                 $this->invalidateWalletCache($userId);
 
-                log_message('info', 'WalletsController::add - Wallet added successfully. ID: {id}', [
-                    'id' => $id,
+                log_message('info', 'WalletsController::add wallet created', [
+                    'type'   => $type,
+                    'user'   => $userId,
+                    'result' => $result,
                 ]);
 
-                return redirect()->to('/Wallets')->with('message', ucfirst($walletType ?: 'Wallet') . ' wallet added successfully.');
+                return redirect()->to('/Wallets')->with('message', ucfirst($type) . ' wallet added successfully.');
             } catch (Throwable $e) {
                 log_message('error', 'WalletsController::add failed: {message}', [
                     'message' => $e->getMessage(),
@@ -1058,48 +1092,69 @@ class WalletsController extends BaseUserController
         ]);
 
         if (strtolower($this->request->getMethod()) === 'post') {
-            $post       = $this->request->getPost();
-            $walletId   = (int) ($post['wallet_id'] ?? $accountID ?? 0);
-            $walletType = (string) ($post['wallet_type'] ?? $this->request->getVar('wallet_type') ?? $accountType ?? '');
+            $post = $this->request->getPost();
 
-            if ($walletId <= 0) {
-                return redirect()->back()->withInput()->with('error', 'Missing or invalid wallet ID.');
+            $incomingType = (string) (
+                $post['accountType']
+                ?? $post['wallet_type']
+                ?? $accountType
+                ?? ''
+            );
+
+            $type = $this->mapType($incomingType);
+
+            if ($type === null) {
+                $type = match (strtolower($incomingType)) {
+                    'bank', 'banking', 'checking', 'savings', 'fiat' => 'bank',
+                    'credit'                                       => 'credit',
+                    'debt', 'loan'                                  => 'debt',
+                    'investment', 'invest', 'brokerage'             => 'investment',
+                    'crypto', 'cryptocurrency'                      => 'crypto',
+                    default                                         => null,
+                };
             }
 
-            $data = $this->mapFormToWalletData(strtolower($walletType), $post);
+            $id = (int) (
+                $post['accountID']
+                ?? $post['account_id']
+                ?? $post['wallet_id']
+                ?? $accountID
+                ?? 0
+            );
+
+            if ($type === null || $id <= 0) {
+                log_message('error', 'WalletsController::edit invalid type or id', [
+                    'incoming_type' => $incomingType,
+                    'resolved_type' => $type,
+                    'id'            => $id,
+                ]);
+
+                return redirect()->back()->withInput()->with('error', 'Invalid account type or ID.');
+            }
 
             try {
                 $service = $this->resolveWalletService();
 
-                if (method_exists($service, 'update')) {
-                    $ok = (bool) $service->update($walletId, $data);
-                } else {
-                    $ok = (bool) $this->walletModel->update($walletId, $data);
+                $prepared = method_exists($service, 'prepareAccountData')
+                    ? $service->prepareAccountData($post, $type)
+                    : $this->prepareAccountData($post, $type);
+
+                $wm = model(WalletModel::class);
+
+                $ok = $wm->updateAccountAndWallet(
+                    $type,
+                    $id,
+                    $prepared,
+                    $this->currentWalletUserId()
+                );
+
+                if (! $ok) {
+                    return redirect()->back()->withInput()->with('error', 'Failed to update wallet.');
                 }
 
-                log_message('info', 'WalletsController::edit - Wallet updated {status} for WalletID: {id}', [
-                    'status' => $ok ? 'successfully' : 'FAILED',
-                    'id'     => $walletId,
-                ]);
+                $this->invalidateWalletCache($this->currentWalletUserId());
 
-                if ($ok) {
-                    $userId = (int) ($post['user_id'] ?? 0);
-
-                    if ($userId <= 0) {
-                        $row = $this->walletModel->find($walletId);
-                        $userId = (int) ($row['user_id'] ?? 0);
-                    }
-
-                    if ($userId <= 0) {
-                        $userId = $this->currentWalletUserId();
-                    }
-
-                    $this->invalidateWalletCache($userId);
-
-                    return redirect()->to('/Wallets')->with('message', ucfirst($walletType ?: 'Wallet') . ' wallet updated successfully.');
-                }
-
-                return redirect()->back()->withInput()->with('error', 'Failed to update wallet.');
+                return redirect()->to('/Wallets')->with('message', ucfirst($type) . ' wallet updated successfully.');
             } catch (Throwable $e) {
                 log_message('error', 'WalletsController::edit failed: {message}', [
                     'message' => $e->getMessage(),
@@ -1321,6 +1376,12 @@ class WalletsController extends BaseUserController
             'editdebtaccount'   => 'debt',
             'editinvestaccount' => 'investment',
             'editcryptoaccount' => 'crypto',
+            'bank'              => 'bank',
+            'credit'            => 'credit',
+            'debt'              => 'debt',
+            'invest'            => 'investment',
+            'investment'        => 'investment',
+            'crypto'            => 'crypto',
             default             => null,
         };
     }

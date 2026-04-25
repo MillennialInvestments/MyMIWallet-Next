@@ -79,6 +79,19 @@ class WalletService
                 ];
                 break;
 
+            case 'crypto':
+                $map = [
+                    'nickname'       => $nickname,
+                    'account_number' => $payload['account_number'] ?? null,
+                    'exchange'       => $payload['exchange'] ?? $payload['accountExchange'] ?? null,
+                    'network'        => $payload['network'] ?? $payload['accountNetwork'] ?? null,
+                    'address'        => $payload['address'] ?? $payload['wallet_address'] ?? $payload['coin_address'] ?? null,
+                    'coin_address'   => $payload['coin_address'] ?? $payload['wallet_address'] ?? $payload['address'] ?? null,
+                    'wallet_address' => $payload['wallet_address'] ?? $payload['coin_address'] ?? $payload['address'] ?? null,
+                    'balance'        => $payload['balance'] ?? $payload['accountBalance'] ?? null,
+                ];
+                break;
+
             case 'debt':
                 $map = [
                     'account_status'   => $payload['account_status'] ?? $payload['accountStatus'] ?? null,
@@ -104,14 +117,6 @@ class WalletService
                     'initial_value'   => $payload['initial_value'] ?? $payload['accountInitialValue'] ?? null,
                     'available_funds' => $payload['available_funds'] ?? $payload['accountAvailableFunds'] ?? null,
                     'net_worth'       => $payload['net_worth'] ?? $payload['accountNetWorth'] ?? null,
-                ];
-                break;
-
-            case 'crypto':
-                $map = [
-                    'nickname'       => $nickname,
-                    'account_number' => $payload['account_number'] ?? null,
-                    'balance'        => $payload['balance'] ?? null,
                 ];
                 break;
 
@@ -386,6 +391,11 @@ class WalletService
             'wallet_id'      => $walletId,
             'nickname'       => $accountData['nickname'] ?? null,
             'account_number' => $accountData['account_number'] ?? null,
+            'exchange'       => $accountData['exchange'] ?? null,
+            'network'        => $accountData['network'] ?? null,
+            'address'        => $accountData['address'] ?? $accountData['coin_address'] ?? $accountData['wallet_address'] ?? null,
+            'coin_address'   => $accountData['coin_address'] ?? $accountData['address'] ?? $accountData['wallet_address'] ?? null,
+            'wallet_address' => $accountData['wallet_address'] ?? $accountData['address'] ?? $accountData['coin_address'] ?? null,
             'balance'        => $accountData['balance'] ?? null,
             'created_on'     => $now,
             'updated_on'     => $now,

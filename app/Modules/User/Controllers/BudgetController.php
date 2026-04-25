@@ -472,10 +472,30 @@ class BudgetController extends BaseUserController
         $nickname   = $json['nickname'] ?? $username;
         $netAmount  = $this->sanitizeCurrency($json['net_amount'] ?? 0);
         $grossAmount= $this->sanitizeCurrency($json['gross_amount'] ?? 0);
-        // Recurring schedule inventory: recurring_schedule is stored alongside recurring_account,
-        // while intervals remains the legacy schedule engine field.
-        $recurringAccount = $json['recurring_account'] ?? 'No';
-        $recurringSchedule = $json['recurring_schedule'] ?? null;
+
+        $recurringAccount  = $json['recurring_account'] ?? 'No';
+        $recurringSchedule = isset($json['recurring_schedule']) ? trim((string) $json['recurring_schedule']) : '';
+
+        $existingRecord = null;
+        if ($formMode === 'Edit' && !empty($json['account_id'])) {
+            $existingRecord = $this->getBudgetService()->getUserBudgetRecord($userId, (int) $json['account_id']);
+            if (!is_array($existingRecord)) {
+                $existingRecord = null;
+            }
+        }
+
+        if (
+            $formMode === 'Edit'
+            && $recurringAccount === 'Yes'
+            && $recurringSchedule === ''
+            && is_array($existingRecord)
+        ) {
+            $recurringSchedule = trim((string) (
+                $existingRecord['accountRecurringSchedule']
+                ?? $existingRecord['recurring_schedule']
+                ?? ''
+            ));
+        }
         
         $accountType = isset($json['account_type']) ? trim((string) $json['account_type']) : null;
         $sourceType  = isset($json['source_type']) ? trim((string) $json['source_type']) : null;
@@ -1002,10 +1022,11 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
         log_message('debug', 'BudgetController::approveRecurringSchedule - Start processing for AccountID: ' . $accountID);
     
         // Check if the request content type is JSON
-        if ($this->request->getHeaderLine('Content-Type') === 'application/json') {
+        $contentType = strtolower((string) $this->request->getHeaderLine('Content-Type'));
+
+        if (str_contains($contentType, 'application/json')) {
             $formData = json_decode($this->request->getBody(), true);
         } else {
-            // Fallback to default POST retrieval
             $formData = $this->request->getPost(true);
         }
     

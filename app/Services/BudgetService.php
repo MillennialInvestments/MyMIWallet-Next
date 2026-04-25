@@ -339,38 +339,51 @@ class BudgetService
         };
     }
 
-    public function applyRecurringScheduleRules(array $data): array
+    protected function applyRecurringScheduleRules(array $accountData): array
     {
-        $recurringAccount = trim((string) ($data['recurring_account'] ?? 'No'));
-        $scheduleValue = $data['recurring_schedule'] ?? ($data['intervals'] ?? null);
-        $accountType = (string) ($data['account_type'] ?? ($data['accountType'] ?? ''));
-        $allowedSchedules = $this->getRecurringSchedules($accountType);
-
         log_message('debug', 'BudgetService::applyRecurringScheduleRules input: ' . json_encode([
-            'recurring_account' => $recurringAccount,
-            'recurring_schedule' => $scheduleValue,
-            'account_type' => $accountType,
+            'mode'               => $accountData['mode'] ?? null,
+            'recurring_account'  => $accountData['recurring_account'] ?? null,
+            'recurring_schedule' => $accountData['recurring_schedule'] ?? null,
+            'account_type'       => $accountData['account_type'] ?? null,
         ]));
 
-        if (strcasecmp($recurringAccount, 'Yes') !== 0) {
-            $data['recurring_schedule'] = null;
-            $data['intervals'] = null;
-            return $data;
+        $mode = (string) ($accountData['mode'] ?? 'Add');
+        $recurringAccount = (string) ($accountData['recurring_account'] ?? 'No');
+        $recurringSchedule = trim((string) ($accountData['recurring_schedule'] ?? ''));
+
+        if ($recurringAccount !== 'Yes') {
+            $accountData['recurring_schedule'] = null;
+            return $accountData;
         }
 
-        $normalizedSchedule = $this->normalizeRecurringScheduleValue($scheduleValue, $allowedSchedules);
-        if ($normalizedSchedule === null) {
-            throw new UnexpectedValueException('Recurring schedule is required and must match the allowed options.');
+        if ($mode === 'Edit' && $recurringSchedule === '') {
+            return $accountData;
         }
 
-        if (strcasecmp($normalizedSchedule, '15/Last') === 0 && strcasecmp($accountType, 'Income') !== 0) {
-            throw new \RuntimeException('15/Last is allowed only for Income accounts.');
+        $allowedSchedules = [
+            'Daily',
+            'Weekly',
+            'Bi-Weekly',
+            'Monthly',
+            'Quarterly',
+            'Semi-Annual',
+            'Annually',
+            '15th/Last',
+            '15/Last',
+        ];
+
+        if ($recurringSchedule === '' || !in_array($recurringSchedule, $allowedSchedules, true)) {
+            throw new \UnexpectedValueException('Recurring schedule is required and must match the allowed options.');
         }
 
-        $data['recurring_schedule'] = $normalizedSchedule;
-        $data['intervals'] = (strcasecmp($normalizedSchedule, '15/Last') === 0) ? 'Monthly' : $normalizedSchedule;
+        if ($recurringSchedule === '15/Last') {
+            $recurringSchedule = '15th/Last';
+        }
 
-        return $data;
+        $accountData['recurring_schedule'] = $recurringSchedule;
+
+        return $accountData;
     }
 
     public function save(array $data): int

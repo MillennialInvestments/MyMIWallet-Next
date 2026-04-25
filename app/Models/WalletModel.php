@@ -284,7 +284,9 @@ class WalletModel extends Model
 
     public function addCryptoWallet($data)
     {
-        return $this->db->table('bf_users_credit_accounts')->insert($data);
+        $data = array_intersect_key($data, $this->getColumns('bf_users_crypto_accounts'));
+
+        return $this->db->table('bf_users_crypto_accounts')->insert($data);
     }
 
     public function editCryptoWallet($walletId, $data)
@@ -297,7 +299,13 @@ class WalletModel extends Model
     public function deleteCryptoWallet($walletId)
     {
         $data = ['status' => 0, 'deleted' => 1];
-        return $this->db->table('bf_users_credit_accounts')->where('id', $walletId)->update($data);
+
+        return $this->db->table('bf_users_crypto_accounts')
+            ->groupStart()
+                ->where('id', (int) $walletId)
+                ->orWhere('wallet_id', (int) $walletId)
+            ->groupEnd()
+            ->update($data);
     }
 
     public function addDebtWallet($data)
@@ -1424,14 +1432,22 @@ class WalletModel extends Model
             case 'bank':
                 $row = $this->getBankAccountByIdOrWallet($id);
                 break;
+
             case 'credit':
                 $row = $this->getCreditAccountByIdOrWallet($id);
                 break;
+
             case 'debt':
                 $row = $this->getDebtAccountByIdOrWallet($id);
                 break;
+
             case 'invest':
+            case 'investment':
                 $row = $this->getInvestAccountByIdOrWallet($id);
+                break;
+
+            case 'crypto':
+                $row = $this->getCryptoAccountByIdOrWallet($id);
                 break;
         }
 
@@ -1477,6 +1493,7 @@ class WalletModel extends Model
             'editcreditaccount' => ['credit', 'UserModule\Views\Wallets\Edit_Account\credit_fields',     'Edit Credit Account'],
             'editdebtaccount'   => ['debt',   'UserModule\Views\Wallets\Edit_Account\debt_fields',       'Edit Debt Account'],
             'editinvestaccount' => ['invest', 'UserModule\Views\Wallets\Edit_Account\investment_fields', 'Edit Investment Account'],
+            'editcryptoaccount' => ['crypto', 'UserModule\Views\Wallets\Edit_Account\crypto_fields',     'Edit Crypto Account'],
         ];
 
         // Also allow "editBankAccount" with original casing
@@ -1521,6 +1538,18 @@ class WalletModel extends Model
                     'payment_due'       => 0,
                     'interest_rate'     => 0,
                     'wallet_id'         => (int)($wr['id'] ?? 0),
+                ];
+            case 'crypto':
+                return [
+                    'user_id'        => $userId,
+                    'nickname'       => $nickname,
+                    'account_number' => $wr['account_number'] ?? '',
+                    'exchange'       => $wr['provider'] ?? $wr['broker'] ?? '',
+                    'network'        => $wr['network'] ?? '',
+                    'address'        => $wr['address'] ?? $wr['coin_address'] ?? '',
+                    'coin_address'   => $wr['coin_address'] ?? $wr['address'] ?? '',
+                    'balance'        => $amount,
+                    'wallet_id'      => (int) ($wr['id'] ?? 0),
                 ];
             case 'debt':
                 return [
@@ -1837,11 +1866,12 @@ class WalletModel extends Model
     private function subsidiaryTableForType(string $type): string
     {
         return match (strtolower($type)) {
-            'bank'   => 'bf_users_bank_accounts',
-            'credit' => 'bf_users_credit_accounts',
-            'debt'   => 'bf_users_debt_accounts',
-            'invest' => 'bf_users_invest_accounts',
-            default  => throw new \InvalidArgumentException("Unknown type: {$type}"),
+            'bank'                 => 'bf_users_bank_accounts',
+            'credit'               => 'bf_users_credit_accounts',
+            'debt'                 => 'bf_users_debt_accounts',
+            'invest', 'investment' => 'bf_users_invest_accounts',
+            'crypto'               => 'bf_users_crypto_accounts',
+            default                => throw new \InvalidArgumentException("Unknown type: {$type}"),
         };
     }
 
@@ -1852,6 +1882,7 @@ class WalletModel extends Model
     private function filterSubsidiaryColumns(string $type, array $data): array
     {
         $t = strtolower($type);
+        $t = $t === 'investment' ? 'invest' : $t;
 
         // Whitelists are conservative on purpose; add more keys if your tables have them.
         $allow = match ($t) {
@@ -1865,6 +1896,11 @@ class WalletModel extends Model
                 'bank_name','account_number','nickname','credit_limit','current_balance',
                 'available_balance','credit_status','due_date','payment_due','interest_rate',
                 'wallet_id','deleted',
+            ],
+            'crypto' => [
+                'status','active','beta','user_id','user_email','username','updated_on',
+                'exchange','network','address','coin_address','wallet_address',
+                'account_number','balance','nickname','wallet_id','deleted',
             ],
             'debt' => [
                 'status','active','beta','user_id','user_email','username','updated_on',
@@ -1951,89 +1987,148 @@ class WalletModel extends Model
     public function updateAccountAndWallet(string $type, int $id, array $prepared, int $userId): bool
     {
         $type = strtolower($type);
+        $type = $type === 'investment' ? 'invest' : $type;
 
         $subsTableMap = [
-            'bank'        => 'bf_users_bank_accounts',
-            'credit'      => 'bf_users_credit_accounts',
-            'debt'        => 'bf_users_debt_accounts',
-            'investment'  => 'bf_users_invest_accounts',
-            'invest'      => 'bf_users_invest_accounts',
-            'crypto'      => 'bf_users_crypto_accounts',
+            'bank'   => 'bf_users_bank_accounts',
+            'credit' => 'bf_users_credit_accounts',
+            'debt'   => 'bf_users_debt_accounts',
+            'invest' => 'bf_users_invest_accounts',
+            'crypto' => 'bf_users_crypto_accounts',
         ];
-        if (!isset($subsTableMap[$type])) {
+
+        if (! isset($subsTableMap[$type])) {
             log_message('error', "WalletModel::updateAccountAndWallet unsupported type: {$type}");
             return false;
         }
+
         $subsTable = $subsTableMap[$type];
 
-        // 1) Find subsidiary row by subsidiary id OR wallet_id
-        $subsRow = null;
-        switch ($type) {
-            case 'bank':       $subsRow = $this->getBankAccountByIdOrWallet($id); break;
-            case 'credit':     $subsRow = $this->getCreditAccountByIdOrWallet($id); break;
-            case 'debt':       $subsRow = $this->getDebtAccountByIdOrWallet($id); break;
-            case 'investment':
-            case 'invest':     $subsRow = $this->getInvestAccountByIdOrWallet($id); break;
-            case 'crypto':     // if you add crypto later, also add getCryptoAccountByIdOrWallet
-                            $subsRow = $this->db->table('bf_users_crypto_accounts')
-                                ->groupStart()->where('id',$id)->orWhere('wallet_id',$id)->groupEnd()
-                                ->get()->getRowArray() ?: null;
-                            break;
+        $safePrepared = $this->filterSubsidiaryColumns($type, $prepared);
+
+        if (empty($safePrepared)) {
+            log_message('warning', 'WalletModel::updateAccountAndWallet no safe subsidiary fields after filtering', [
+                'type'     => $type,
+                'id'       => $id,
+                'user_id'  => $userId,
+                'prepared' => array_keys($prepared),
+            ]);
         }
 
-        // 2) Try to read wallet row treating $id as wallet id (for fallback and mirror)
-        $walletRow = $this->db->table('bf_users_wallet')->where('id', $id)->get()->getRowArray();
+        $subsRow = null;
+
+        switch ($type) {
+            case 'bank':
+                $subsRow = $this->getBankAccountByIdOrWallet($id);
+                break;
+
+            case 'credit':
+                $subsRow = $this->getCreditAccountByIdOrWallet($id);
+                break;
+
+            case 'debt':
+                $subsRow = $this->getDebtAccountByIdOrWallet($id);
+                break;
+
+            case 'invest':
+                $subsRow = $this->getInvestAccountByIdOrWallet($id);
+                break;
+
+            case 'crypto':
+                $subsRow = $this->getCryptoAccountByIdOrWallet($id);
+                break;
+        }
+
+        $walletRow = $this->db->table('bf_users_wallet')
+            ->where('id', $id)
+            ->where('user_id', $userId)
+            ->get()
+            ->getRowArray();
 
         $this->db->transStart();
 
         $walletIdForMirror = 0;
 
         if ($subsRow) {
-            // Update subsidiary by its primary key
-            $subsId  = (int) $subsRow['id'];
-            $walletIdForMirror = (int) ($subsRow['wallet_id'] ?: ($walletRow['id'] ?? 0) ?: $id);
+            $subsId = (int) $subsRow['id'];
 
-            // Ensure backref wallet_id is set if we know it
-            if ($walletIdForMirror && (int)($subsRow['wallet_id'] ?? 0) !== $walletIdForMirror) {
-                $this->db->table($subsTable)->where('id', $subsId)->update(['wallet_id' => $walletIdForMirror]);
+            if (isset($subsRow['user_id']) && (int) $subsRow['user_id'] !== (int) $userId) {
+                log_message('error', 'WalletModel::updateAccountAndWallet user mismatch', [
+                    'type'     => $type,
+                    'id'       => $id,
+                    'user_id'  => $userId,
+                    'row_user' => $subsRow['user_id'],
+                ]);
+
+                $this->db->transRollback();
+                return false;
             }
 
-            // Update subsidiary with prepared data
-            $this->db->table($subsTable)->where('id', $subsId)->update($prepared);
+            $walletIdForMirror = (int) (
+                $subsRow['wallet_id']
+                ?? $walletRow['id']
+                ?? $id
+            );
+
+            if ($walletIdForMirror && (int) ($subsRow['wallet_id'] ?? 0) !== $walletIdForMirror) {
+                $this->db->table($subsTable)
+                    ->where('id', $subsId)
+                    ->update(['wallet_id' => $walletIdForMirror]);
+            }
+
+            if (! empty($safePrepared)) {
+                $this->db->table($subsTable)
+                    ->where('id', $subsId)
+                    ->update($safePrepared);
+            }
         } else {
-            // No subsidiary row. Treat $id as wallet id if we have a wallet row.
             $walletIdForMirror = $walletRow ? (int) $walletRow['id'] : $id;
 
-            // Create new subsidiary row linked back to wallet
-            $insert = $prepared + [
+            $insert = $safePrepared + [
                 'user_id'   => $userId,
                 'wallet_id' => $walletIdForMirror ?: null,
                 'status'    => 1,
             ];
-            $this->db->table($subsTable)->insert($insert);
-            $subsId = (int) $this->db->insertID();
 
-            // If we learned a wallet id later, persist it just in case
-            if ($walletIdForMirror && empty($insert['wallet_id'])) {
-                $this->db->table($subsTable)->where('id', $subsId)->update(['wallet_id' => $walletIdForMirror]);
+            $insert = array_intersect_key($insert, $this->getColumns($subsTable));
+
+            if (! empty($insert)) {
+                $this->db->table($subsTable)->insert($insert);
             }
         }
 
-        // 3) Mirror a small, safe subset of fields back to bf_users_wallet
         if ($walletIdForMirror) {
             $mirror = $this->computeWalletMirror($type, $prepared);
-            if (!empty($mirror)) {
-                $mirror['updated_on'] = date('Y-m-d H:i:s');
-                $this->db->table('bf_users_wallet')->where('id', $walletIdForMirror)->update($mirror);
+
+            if (! empty($mirror)) {
+                $walletColumns = $this->getColumns('bf_users_wallet');
+
+                if (isset($walletColumns['modified_on'])) {
+                    $mirror['modified_on'] = date('Y-m-d H:i:s');
+                } elseif (isset($walletColumns['updated_on'])) {
+                    $mirror['updated_on'] = date('Y-m-d H:i:s');
+                }
+
+                $mirror = array_intersect_key($mirror, $walletColumns);
+
+                if (! empty($mirror)) {
+                    $this->db->table('bf_users_wallet')
+                        ->where('id', $walletIdForMirror)
+                        ->where('user_id', $userId)
+                        ->update($mirror);
+                }
             }
         }
 
         $this->db->transComplete();
+
         $ok = $this->db->transStatus();
-        if (!$ok) {
+
+        if (! $ok) {
             $err = $this->db->error();
             log_message('error', "WalletModel::updateAccountAndWallet failed: {$err['message']} ({$err['code']})");
         }
+
         return $ok;
     }
 

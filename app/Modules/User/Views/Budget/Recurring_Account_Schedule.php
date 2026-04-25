@@ -324,6 +324,8 @@ while ($i <= $timeInterval) {
                                 </tr>
                             </tfoot>
                         </table>
+                        <input type="hidden" id="scheduleCsrfName" value="<?= esc(csrf_token()); ?>">
+                        <input type="hidden" id="scheduleCsrfHash" value="<?= esc(csrf_hash()); ?>">
                     </div>
                 </div>
             </div>

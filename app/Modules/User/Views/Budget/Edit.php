@@ -264,13 +264,25 @@ $addModalTitle                          = $configMode . ' Your ' . $accountName 
         </div>
     </div>
 </div>
-<script <?= $nonce['script'] ?? '' ?>> 
+<script <?= $nonce['script'] ?? '' ?>>
 let redirectURL = "<?= site_url('/Budget'); ?>";
 if (document.referrer && !isDisallowed(document.referrer)) {
     redirectURL = document.referrer;
 }
 
-console.log("Redirect URL: " + redirectURL);
+function isDisallowed(referrer) {
+    const disallowedPrefixes = [
+        '/Dashboard/Transaction-Modal',
+        '/Dashboard/LoadingScreen'
+    ];
+    try {
+        const refPath = new URL(referrer).pathname;
+        return disallowedPrefixes.some(prefix => refPath.startsWith(prefix));
+    } catch (e) {
+        return true;
+    }
+}
+
 function toggleRecurringSchedule(selectEl) {
     const scheduleDiv = document.getElementById('recurring_schedule_wrapper');
     const scheduleSelect = document.getElementById('recurring_schedule');
@@ -286,47 +298,44 @@ function toggleRecurringSchedule(selectEl) {
         scheduleSelect.value = "";
     }
 }
-// Determine redirect URL client-side
-function isDisallowed(referrer) {
-    const disallowedPrefixes = [
-        '/Dashboard/Transaction-Modal',
-        '/Dashboard/LoadingScreen'
-    ];
-    try {
-        const refPath = new URL(referrer).pathname;
-        return disallowedPrefixes.some(prefix => refPath.startsWith(prefix));
-    } catch (e) {
-        return true;
-    }
-}
-const csrfTokenName                         = '<?php echo csrf_token(); ?>';
-const csrfTokenValue                        = '<?php echo csrf_hash(); ?>';
+
+const csrfTokenName = '<?= csrf_token(); ?>';
+const csrfTokenValue = '<?= csrf_hash(); ?>';
 
 function clearFieldErrors(form) {
     form.querySelectorAll('.field-error').forEach(el => el.remove());
     form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
     const banner = form.querySelector('.form-error-banner');
-    if (banner) { banner.remove(); }
+    if (banner) {
+        banner.remove();
+    }
 }
 
 function renderFieldErrors(form, errors) {
-    if (!errors || typeof errors !== 'object') { return; }
+    if (!errors || typeof errors !== 'object') {
+        return;
+    }
+
     const remaining = [];
+
     Object.keys(errors).forEach(field => {
         const message = errors[field];
         const input = form.querySelector('[name="' + field + '"]');
+
         if (input) {
             input.classList.add('is-invalid');
             const small = document.createElement('small');
             small.className = 'field-error text-danger d-block mt-1';
             small.setAttribute('data-field', field);
             small.textContent = message;
+
             const host = input.closest('.col-6') || input.parentNode;
             host.appendChild(small);
         } else {
             remaining.push(field + ': ' + message);
         }
     });
+
     if (remaining.length > 0) {
         const banner = document.createElement('div');
         banner.className = 'form-error-banner alert alert-danger mt-2';
@@ -336,19 +345,20 @@ function renderFieldErrors(form, errors) {
 }
 
 const addAccountForm = document.querySelector("#edit_user_budgeting_account");
+
 if (addAccountForm) {
     addAccountForm.addEventListener("submit", async (e) => {
-        // Standardized to native FormData (matches Add.php), so the browser
-        // serializes the form, CSRF works the same way as every other POST,
-        // and BudgetController::accountManager() reads it via $request->getPost().
         e.preventDefault();
         clearFieldErrors(addAccountForm);
+
         const formData = new FormData(addAccountForm);
-        // Always include the CSRF token in case the form template lacks it.
-        formData.append(csrfTokenName, csrfTokenValue);
+
+        if (!formData.has(csrfTokenName)) {
+            formData.append(csrfTokenName, csrfTokenValue);
+        }
 
         try {
-            const url = "<?php echo site_url('Budget/Account-Manager'); ?>";
+            const url = "<?= site_url('Budget/Account-Manager'); ?>";
             const response = await fetch(url, {
                 method: "POST",
                 body: formData,
@@ -356,10 +366,12 @@ if (addAccountForm) {
                 headers: {
                     "X-Requested-With": "XMLHttpRequest",
                     "Accept": "application/json"
-                },
+                }
             });
+
             let data = null;
             const contentType = response.headers.get("content-type") || "";
+
             if (contentType.includes("application/json")) {
                 data = await response.json();
             } else {
@@ -373,7 +385,6 @@ if (addAccountForm) {
                 return;
             }
 
-            // Validation or server failure: render inline, never silently redirect.
             renderFieldErrors(addAccountForm, (data && data.errors) || { server: 'Unable to update the budget record.' });
         } catch (err) {
             console.error("Edit form submit failed:", err);
@@ -388,4 +399,4 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleRecurringSchedule(recurringAccountSelect);
     }
 });
-</script> 
+</script>

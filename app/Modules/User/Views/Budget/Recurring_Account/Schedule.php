@@ -194,85 +194,72 @@ log_message('debug', 'Schedule L27 - View File - Extracted Account Info: ' . jso
 document.addEventListener("DOMContentLoaded", function () {
     const approveButton = document.querySelector("#approveSchedule");
 
-    if (approveButton) {
-        approveButton.addEventListener("click", async () => {
-            console.log("Approve button clicked.");
-
-            const recurringData = <?= json_encode($recurringSchedule); ?>;
-            const accountID = <?= json_encode($accountID); ?>;
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-            console.log("Recurring data to be sent:", recurringData);
-            console.log("Account ID to be sent:", accountID);
-
-            if (!Array.isArray(recurringData) || recurringData.length === 0) {
-                console.error("Recurring data is empty or invalid.");
-                alert("Recurring data is missing. Cannot approve.");
-                return;
-            }
-
-            // Validate each record
-            const isValid = recurringData.every(record =>
-                record.dueDate && record.netAmount !== undefined && record.grossAmount !== undefined
-            );
-
-            if (!isValid) {
-                console.error("Recurring data contains invalid entries:", recurringData);
-                alert("Invalid recurring schedule data. Please check the logs.");
-                return;
-            }
-
-            try {
-                // Standardized to native FormData (matches Add.php / Edit.php), so
-                // CSRF and the controller's $request->getPost(true) path handle the
-                // payload uniformly. Nested array notation lets PHP rebuild the
-                // recurringData array without a JSON branch.
-                const formData = new FormData();
-                formData.append('accountID', accountID);
-                formData.append('<?= csrf_token(); ?>', csrfToken);
-                recurringData.forEach((record, index) => {
-                    formData.append(`recurringData[${index}][dueDate]`, record.dueDate ?? '');
-                    formData.append(`recurringData[${index}][netAmount]`, parseFloat(record.netAmount));
-                    formData.append(`recurringData[${index}][grossAmount]`, parseFloat(record.grossAmount));
-                    formData.append(`recurringData[${index}][accountName]`, record.accountName ?? '');
-                    formData.append(`recurringData[${index}][accountType]`, record.accountType ?? '');
-                    formData.append(`recurringData[${index}][accountSourceType]`, record.accountSourceType ?? '');
-                });
-
-                const response = await fetch("<?= site_url('/Budget/Approve-Recurring-Schedule/' . $accountID); ?>", {
-                    method: "POST",
-                    headers: {
-                        "X-Requested-With": "XMLHttpRequest",
-                        "Accept": "application/json",
-                        "X-CSRF-TOKEN": csrfToken,
-                    },
-                    body: formData,
-                    credentials: "same-origin",
-                });
-
-                let data = null;
-                const contentType = response.headers.get("content-type") || "";
-                if (contentType.includes("application/json")) {
-                    data = await response.json();
-                }
-
-                const ok = response.ok && (!data || data.status !== 'error');
-                if (ok) {
-                    alert("Recurring schedules approved successfully.");
-                    window.location.href = "<?= site_url('/Budget'); ?>";
-                } else {
-                    console.error("Approval failed:", response.status, data);
-                    const errors = (data && data.errors) ? Object.values(data.errors).join(' | ') : 'Approval failed. Check logs for details.';
-                    alert(errors);
-                }
-            } catch (error) {
-                console.error("Error during approval:", error);
-                alert("An unexpected error occurred. Check the console for details.");
-            }
-        });
-    } else {
-        console.error("Approve button not found.");
+    if (!approveButton) {
+        return;
     }
+
+    approveButton.addEventListener("click", async function (e) {
+        e.preventDefault();
+
+        const csrfNameEl = document.getElementById("scheduleCsrfName");
+        const csrfHashEl = document.getElementById("scheduleCsrfHash");
+
+        const csrfName = csrfNameEl ? csrfNameEl.value : "<?= esc(csrf_token()); ?>";
+        const csrfHash = csrfHashEl ? csrfHashEl.value : "<?= esc(csrf_hash()); ?>";
+
+        const payload = {
+            accountID: "<?= (int) $accountID; ?>",
+            recurringData: <?= json_encode($recurringSchedule); ?>
+        };
+
+        try {
+            const response = await fetch("<?= site_url('/Budget/Approve-Recurring-Schedule/' . $accountID); ?>", {
+                method: "POST",
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "X-Requested-With": "XMLHttpRequest",
+                    "X-CSRF-TOKEN": csrfHash
+                },
+                body: JSON.stringify({
+                    [csrfName]: csrfHash,
+                    ...payload
+                })
+            });
+
+            const contentType = response.headers.get("content-type") || "";
+            let data = null;
+
+            if (contentType.includes("application/json")) {
+                data = await response.json();
+            } else {
+                const raw = await response.text();
+                console.error("Expected JSON but got:", raw);
+                alert("Unexpected server response while approving recurring schedule.");
+                return;
+            }
+
+            if (response.ok && data && (data.success === true || data.status === "success")) {
+                alert("Recurring schedules approved successfully.");
+                window.location.href = "<?= site_url('/Budget'); ?>";
+                return;
+            }
+
+            console.error("Failed to approve recurring schedules:", {
+                status: response.status,
+                data: data
+            });
+
+            alert(
+                (data && data.message)
+                || (data && data.errors && JSON.stringify(data.errors))
+                || "Failed to approve recurring schedules."
+            );
+        } catch (error) {
+            console.error("Error approving recurring schedules:", error);
+            alert("Error approving recurring schedules.");
+        }
+    });
 });
 </script>
-
