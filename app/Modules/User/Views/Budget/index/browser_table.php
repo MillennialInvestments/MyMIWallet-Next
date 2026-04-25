@@ -54,24 +54,41 @@ $firstOfMonth = new DateTime('first day of this month');
 /** helper: epoch at midnight UTC for DataTables numeric sort */
 $epochOf = static function (?string $mdy): int {
     $d = DateTime::createFromFormat('m/d/Y', $mdy ?? '');
-    if (!$d) return PHP_INT_MAX; // unknown => push to bottom
+    if (!$d) return PHP_INT_MAX;
     $d->setTime(0,0,0);
     return $d->getTimestamp();
 };
 ?>
+
 <div class="card card-bordered">
   <div class="card-inner">
-    <div class="d-flex flex-wrap justify-content-end gap-2 mb-3">
-      <a class="btn btn-success btn-sm text-white me-md-2" href="<?= site_url('Budget/Add/Income'); ?>">+ Add Income</a>
-      <a class="btn btn-danger btn-sm text-white me-md-2" href="<?= site_url('Budget/Add/Expense'); ?>">+ Add Expense</a>
-      <a class="btn btn-secondary btn-sm" href="<?= site_url('Budget/History'); ?>">View History</a>
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center gap-3 mb-3">
+        <div class="input-group" style="max-width: 300px; width: 100%;">
+            <input
+                type="text"
+                class="form-control mt-4"
+                id="searchInputField"
+                value="<?= esc($searchQuery ?? '') ?>"
+                placeholder="Search budget..."
+            />
+            <button class="btn btn-primary mt-4 pb-1" id="redirectSearchBtn" type="button">
+                <em class="icon ni ni-search"></em>
+            </button>
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-lg-end gap-2 w-100 w-lg-auto">
+            <a class="btn btn-success btn-sm text-white" href="<?= site_url('Budget/Add/Income'); ?>">+ Add Income</a>
+            <a class="btn btn-danger btn-sm text-white" href="<?= site_url('Budget/Add/Expense'); ?>">+ Add Expense</a>
+            <a class="btn btn-secondary btn-sm" href="<?= site_url('Budget/History'); ?>">View History</a>
+        </div>
     </div>
+
     <div class="table-responsive mt-5">
       <table class="table table-striped" id="userBudgetingDatatable"
              data-start-sum="<?= htmlspecialchars($sumStart, ENT_QUOTES, 'UTF-8'); ?>">
         <thead>
           <tr>
-            <th class="d-none">_bucket</th> <!-- 0 bank, 1 credit, 2 rest -->
+            <th class="d-none">_bucket</th>
             <th>Due Date</th>
             <th class="d-none">Type</th>
             <th>Source</th>
@@ -83,7 +100,6 @@ $epochOf = static function (?string $mdy): int {
         </thead>
         <tbody>
 
-          <!-- Bucket 0: Bank Accounts (date order = -1 so it never interferes) -->
           <tr data-role="bank">
             <td data-order="0" class="d-none"></td>
             <td data-order="-1">
@@ -108,7 +124,6 @@ $epochOf = static function (?string $mdy): int {
             </td>
           </tr>
 
-          <!-- Bucket 1: Credit Accounts (informational; does not change subtotal) -->
           <tr data-role="credit">
             <td data-order="1" class="d-none"></td>
             <td data-order="-1">
@@ -130,53 +145,74 @@ $epochOf = static function (?string $mdy): int {
             </td>
           </tr>
 
-          <!-- Bucket 2: Dated entries -->
           <?php foreach ($userActiveBudgetRecords as $account):
-                $dateStr  = $account['designated_date'] ?? '';
-                $epoch    = $epochOf($dateStr);
-                $prettyRaw = $epoch === PHP_INT_MAX
-                    ? ($dateStr !== '' ? $dateStr : 'Invalid Date')
-                    : date('F jS, Y', $epoch);
-                $pretty   = esc($prettyRaw);
-                $amount   = (float)($account['net_amount'] ?? 0);
-                $isOut    = miw_is_outflow($account);
-                $delta    = $isOut ? -$amount : $amount;
-                $amountOrder = $fmtNum($delta);
+            $dateStr  = $account['designated_date'] ?? '';
+            $epoch    = $epochOf($dateStr);
+            $prettyRaw = $epoch === PHP_INT_MAX
+                ? ($dateStr !== '' ? $dateStr : 'Invalid Date')
+                : date('F jS, Y', $epoch);
+            $pretty   = esc($prettyRaw);
+            $amount   = (float)($account['net_amount'] ?? 0);
+            $isOut    = miw_is_outflow($account);
+            $delta    = $isOut ? -$amount : $amount;
+            $amountOrder = $fmtNum($delta);
 
-                // server-side subtotal for initial render (will be re-evaluated client-side on sort/search)
-                $running += $delta;
-                $displaySum = $fmtSigned($running);
+            $running += $delta;
+            $displaySum = $fmtSigned($running);
 
-                $accountId = (string)($account['id'] ?? '');
-                $accountIdUrl = rawurlencode($accountId);
+            $accountId = (string)($account['id'] ?? '');
+            $accountIdInt = (int)($account['id'] ?? 0);
+            $accountIdUrl = rawurlencode($accountId);
 
-                $paidLink = !empty($account['paid']) ? '' :
-                  '<a href="' . site_url('Budget/Status/Paid/' . $accountIdUrl) . '" class="js-mark-paid" title="Mark Paid"><i class="icon myfs-md ni ni-check-thick"></i></a>';          ?>
-          <tr data-role="entry"
-              data-flow="<?= $isOut ? 'out' : 'in'; ?>"
-              data-amount="<?= htmlspecialchars(abs($amount), ENT_QUOTES, 'UTF-8'); ?>">
+            $paidLink = !empty($account['paid']) ? '' :
+            '<a href="' . site_url('Budget/Status/Paid/' . $accountIdUrl) . '"
+                class="js-mark-paid js-action"
+                data-account-id="' . $accountIdInt . '"
+                title="Mark Paid"
+                aria-label="Mark Paid">
+                    <i class="icon myfs-md ni ni-check-thick"></i>
+            </a>';
+
+            $deleteLink =
+            '<a href="' . site_url('Budget/Delete-Account/' . $accountIdUrl) . '"
+                class="text-red js-delete-account js-action"
+                data-account-id="' . $accountIdInt . '"
+                title="Delete"
+                aria-label="Delete">
+                    <i class="icon myfs-md ni ni-trash"></i>
+            </a>';
+        ?>
+        <tr
+            data-role="entry"
+            data-budget-row-id="<?= $accountIdInt; ?>"
+            data-flow="<?= $isOut ? 'out' : 'in'; ?>"
+            data-amount="<?= htmlspecialchars(abs($amount), ENT_QUOTES, 'UTF-8'); ?>">
             <td data-order="2" class="d-none"></td>
             <td data-order="<?= $epoch; ?>">
-              <span class="d-none"><?= $epoch; ?></span>
-              <?= $pretty; ?>
+                <span class="d-none"><?= $epoch; ?></span>
+                <?= $pretty; ?>
             </td>
             <td class="d-none"><?= esc($account['account_type'] ?? ''); ?></td>
             <td>
-              <a href="<?= site_url('Budget/Details/' . $accountIdUrl); ?>">
-                <?= esc($account['name'] ?? ''); ?>
-              </a>
+                <a href="<?= site_url('Budget/Details/' . $accountIdUrl); ?>">
+                    <?= esc($account['name'] ?? ''); ?>
+                </a>
             </td>
             <td><?= esc($account['source_type'] ?? ''); ?></td>
             <td data-order="<?= $amountOrder; ?>"><?= $fmtSigned($delta); ?></td>
             <td class="js-subtotal" data-order="<?= $fmtNum($running); ?>"><?= $displaySum; ?></td>
             <td class="js-actions">
-              <?= $paidLink; ?>
-              <a href="<?= site_url('Budget/Edit/' . $accountIdUrl); ?>" class="js-action" title="Edit"><i class="icon myfs-md ni ni-edit"></i></a>
-              <a href="<?= site_url('Budget/Copy/' . $accountIdUrl); ?>" class="js-action" title="Copy"><i class="icon myfs-md ni ni-copy"></i></a>
-              <a class="text-red js-action" href="<?= site_url('Budget/Delete-Account/' . $accountIdUrl); ?>" title="Delete"><i class="icon myfs-md ni ni-trash">
+                <?= $paidLink; ?>
+                <a href="<?= site_url('Budget/Edit/' . $accountIdUrl); ?>" class="js-action" title="Edit" aria-label="Edit">
+                    <i class="icon myfs-md ni ni-edit"></i>
+                </a>
+                <a href="<?= site_url('Budget/Copy/' . $accountIdUrl); ?>" class="js-action" title="Copy" aria-label="Copy">
+                    <i class="icon myfs-md ni ni-copy"></i>
+                </a>
+                <?= $deleteLink; ?>
             </td>
-          </tr>
-          <?php endforeach; ?>
+        </tr>
+        <?php endforeach; ?>
 
         </tbody>
       </table>
@@ -186,41 +222,40 @@ $epochOf = static function (?string $mdy): int {
 
 <script <?= $nonce['script'] ?? '' ?>>
 (function () {
-  // Robust jQuery/DataTables init (avoids "$ is not defined")
   function readyDT(cb) {
     if (window.jQuery && jQuery.fn && (jQuery.fn.DataTable || jQuery.fn.dataTable)) {
       jQuery(cb);
       return true;
     }
     document.addEventListener('DOMContentLoaded', function () {
-      if (window.jQuery && jQuery.fn && (jQuery.fn.DataTable || jQuery.fn.dataTable)) jQuery(cb);
+      if (window.jQuery && jQuery.fn && (jQuery.fn.DataTable || jQuery.fn.dataTable)) {
+        jQuery(cb);
+      }
     });
     return false;
   }
 
   readyDT(function ($) {
     var $table = $('#userBudgetingDatatable');
-    var table  = initDataTableSafe($table,{
-      orderFixed: { pre: [[0, 'asc']] },   // keep buckets (bank/credit/entries) fixed
-      order: [[1, 'asc']],                 // then date ascending (by numeric epoch)
+    var table  = initDataTableSafe($table, {
+      orderFixed: { pre: [[0, 'asc']] },
+      order: [[1, 'asc']],
       columnDefs: [
-        { targets: 0, visible: false, searchable: false }, // _bucket hidden
-        { targets: 2, visible: false, searchable: true  }, // Type hidden but searchable
-        { targets: [1,5,6], type: 'num' }                  // date/amount/subtotal sort numerically (data-order)
+        { targets: 0, visible: false, searchable: false },
+        { targets: 2, visible: false, searchable: true },
+        { targets: [1, 5, 6], type: 'num' }
       ],
       paging: true,
       searching: true,
-      lengthMenu: [[25,50,100,500,-1],[25,50,100,500,'All']],
+      lengthMenu: [[25, 50, 100, 500, -1], [25, 50, 100, 500, 'All']],
       info: true
     });
 
-    // Format a number to $x,xxx.xx
     function fmtCash(n) {
-      var s = (Math.abs(n).toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      var s = (Math.abs(n).toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       return (n < 0 ? '-$' + s : '$' + s);
     }
 
-    // Recalculate running subtotal based on VISIBLE order
     function recalcSubtotals() {
       var start = parseFloat($table.data('start-sum')) || 0;
       var nodes = table.rows({ order: 'current', search: 'applied' }).nodes();
@@ -229,51 +264,204 @@ $epochOf = static function (?string $mdy): int {
       for (var i = 0; i < nodes.length; i++) {
         var tr = nodes[i];
 
-        // bank row: show the start sum and continue
         if (tr.getAttribute('data-role') === 'bank') {
-          var td = tr.querySelector('td.js-subtotal');
-          if (td) { td.dataset.order = running.toFixed(2); td.innerHTML = fmtCash(running); }
+          var tdBank = tr.querySelector('td.js-subtotal');
+          if (tdBank) {
+            tdBank.dataset.order = running.toFixed(2);
+            tdBank.innerHTML = fmtCash(running);
+          }
           continue;
         }
 
-        // credit row: informational only — keep same subtotal as current running
         if (tr.getAttribute('data-role') === 'credit') {
-          var tdC = tr.querySelector('td.js-subtotal');
-          if (tdC) { tdC.dataset.order = running.toFixed(2); tdC.innerHTML = fmtCash(running); }
+          var tdCredit = tr.querySelector('td.js-subtotal');
+          if (tdCredit) {
+            tdCredit.dataset.order = running.toFixed(2);
+            tdCredit.innerHTML = fmtCash(running);
+          }
           continue;
         }
 
-        // entry rows
-        var flow   = tr.getAttribute('data-flow'); // 'in' or 'out'
+        var flow = tr.getAttribute('data-flow');
         var amount = parseFloat(tr.getAttribute('data-amount')) || 0;
+
         running += (flow === 'out' ? -amount : amount);
 
-        var tdS = tr.querySelector('td.js-subtotal');
-        if (tdS) {
-          tdS.dataset.order = running.toFixed(2);
-          if (running < 0) {
-            tdS.innerHTML = '<span class="statusRed">' + fmtCash(running) + '</span>';
-          } else {
-            tdS.innerHTML = fmtCash(running);
-          }
+        var td = tr.querySelector('td.js-subtotal');
+        if (td) {
+          td.dataset.order = running.toFixed(2);
+          td.innerHTML = running < 0
+            ? '<span class="statusRed">' + fmtCash(running) + '</span>'
+            : fmtCash(running);
         }
       }
-      // tell DataTables we changed order data in-place
+
       table.rows().invalidate('dom');
     }
 
-    // Initial compute + recompute on any draw/order/search
+    function bindSearchRedirect() {
+      var searchBtn = document.getElementById('redirectSearchBtn');
+      var searchInput = document.getElementById('searchInputField');
+      var searchBaseUrl = "<?= rtrim(site_url('Budget/Search'), '/') ?>/";
+      var budgetUrl = "<?= site_url('Budget') ?>";
+
+      function runBudgetSearch() {
+        var val = (searchInput && searchInput.value ? searchInput.value : '').trim();
+
+        if (val !== '') {
+          window.location.href = searchBaseUrl + encodeURIComponent(val);
+        } else {
+          window.location.href = budgetUrl;
+        }
+      }
+
+      if (searchBtn && !searchBtn.dataset.boundSearch) {
+        searchBtn.dataset.boundSearch = 'true';
+        searchBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          runBudgetSearch();
+        });
+      }
+
+      if (searchInput && !searchInput.dataset.boundSearch) {
+        searchInput.dataset.boundSearch = 'true';
+        searchInput.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            runBudgetSearch();
+          }
+        });
+      }
+    }
+
+    function bindRowActions() {
+      $table.find('.js-mark-paid').off('click.budgetPaid').on('click.budgetPaid', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        var $link = $(this);
+        var url = $link.attr('href');
+        var accountId = String($link.data('account-id') || '');
+        var rowNode = document.querySelector('[data-budget-row-id="' + accountId + '"]');
+
+        if (!url || !accountId || !rowNode) {
+          return false;
+        }
+
+        if ($link.data('busy') === true) {
+          return false;
+        }
+
+        $link.data('busy', true).css({
+          pointerEvents: 'none',
+          opacity: 0.5
+        });
+
+        $.ajax({
+          url: url,
+          type: 'GET',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json'
+          },
+          xhrFields: {
+            withCredentials: true
+          }
+        }).done(function (response) {
+          if (!response || response.status !== 'success') {
+            throw new Error((response && response.message) ? response.message : 'Mark paid failed.');
+          }
+
+          table.row($(rowNode)).remove().draw(false);
+          recalcSubtotals();
+        }).fail(function (xhr) {
+          console.error('Mark paid request failed:', xhr);
+          window.location.reload();
+        }).always(function () {
+          $link.data('busy', false).css({
+            pointerEvents: '',
+            opacity: ''
+          });
+        });
+
+        return false;
+      });
+
+      $table.find('.js-delete-account').off('click.budgetDelete').on('click.budgetDelete', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        var $link = $(this);
+        var url = $link.attr('href');
+        var accountId = String($link.data('account-id') || '');
+        var rowNode = document.querySelector('[data-budget-row-id="' + accountId + '"]');
+
+        if (!url || !accountId || !rowNode) {
+          return false;
+        }
+
+        if (!window.confirm('Are you sure you want to delete this account?')) {
+          return false;
+        }
+
+        if ($link.data('busy') === true) {
+          return false;
+        }
+
+        $link.data('busy', true).css({
+          pointerEvents: 'none',
+          opacity: 0.5
+        });
+
+        $.ajax({
+          url: url,
+          type: 'GET',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json'
+          },
+          xhrFields: {
+            withCredentials: true
+          }
+        }).done(function (response) {
+          if (!response || response.status !== 'success') {
+            throw new Error((response && response.message) ? response.message : 'Delete failed.');
+          }
+
+          table.row($(rowNode)).remove().draw(false);
+          recalcSubtotals();
+        }).fail(function (xhr) {
+          console.error('Delete request failed:', xhr);
+          window.location.reload();
+        }).always(function () {
+          $link.data('busy', false).css({
+            pointerEvents: '',
+            opacity: ''
+          });
+        });
+
+        return false;
+      });
+    }
+
     recalcSubtotals();
-    table.on('order.dt search.dt draw.dt', recalcSubtotals);
+    bindSearchRedirect();
+    bindRowActions();
 
-    // Prevent “two clicks” by stopping row-level handlers from swallowing anchor clicks
-    $table
-      .off('click', 'a')
-      .on('click', 'a', function (e) { e.stopPropagation(); });
+    table.on('order.dt search.dt draw.dt', function () {
+      recalcSubtotals();
+      bindRowActions();
+    });
 
-    // Also guard against accidental double-submits
+    $table.off('click', 'a').on('click', 'a', function (e) {
+      e.stopPropagation();
+    });
+
     $(document).on('submit', 'form', function (e) {
-      if (this.dataset.submitted === 'true') { e.preventDefault(); return false; }
+      if (this.dataset.submitted === 'true') {
+        e.preventDefault();
+        return false;
+      }
       this.dataset.submitted = 'true';
     });
   });

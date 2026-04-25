@@ -292,7 +292,13 @@ class BudgetController extends BaseUserController
             $this->data['setupPrefs'] = $setupService->getDismissPreferences((int) $activeUserId);
             $this->data['setupContext'] = 'budget';
         }
+        $userBudget = $this->budgetService->getUserBudget($this->cuID) ?: [];
+        $userBudgetRecords = $userBudget['userBudgetRecords'] ?? $this->budgetService->getUserBudgetRecords($this->cuID) ?? [];
+        $userActiveBudgetRecords = $userBudget['userActiveBudgetRecords'] ?? $userBudgetRecords ?? [];
 
+        $this->data['userBudget'] = $userBudget;
+        $this->data['userBudgetRecords'] = is_array($userBudgetRecords) ? $userBudgetRecords : [];
+        $this->data['userActiveBudgetRecords'] = is_array($userActiveBudgetRecords) ? $userActiveBudgetRecords : [];
         // Render the page
         return $this->renderTheme('App\Modules\User\Views\Budget\index', $this->data);
     }
@@ -423,13 +429,28 @@ class BudgetController extends BaseUserController
         }
  
         $post = $this->request->getPost();
-        $json = $this->request->getJSON(true);
+        $json = [];
 
+        $contentType = strtolower((string) $this->request->getHeaderLine('Content-Type'));
+
+        if (str_contains($contentType, 'application/json')) {
+            try {
+                $parsedJson = $this->request->getJSON(true);
+                if (is_array($parsedJson)) {
+                    $json = $parsedJson;
+                }
+            } catch (\Throwable $e) {
+                log_message('error', 'Budget/Account-Manager JSON parse failed: ' . $e->getMessage());
+                return $this->budgetEnvelope('error', null, ['payload' => 'Invalid JSON payload.'], 422);
+            }
+        }
+
+        log_message('debug', 'Budget/Account-Manager Content-Type: ' . $contentType);
         log_message('debug', 'Budget/Account-Manager POST: ' . json_encode($post));
         log_message('debug', 'Budget/Account-Manager JSON: ' . json_encode($json));
 
         if (!is_array($post) || $post === []) {
-            $post = (array) $json;
+            $post = $json;
         }
 
         if (!is_array($post) || $post === []) {
@@ -466,46 +487,65 @@ class BudgetController extends BaseUserController
         // Field-level validation. Surface every issue in one round-trip so the
         // forms can render inline errors next to each offending field.
         $errors = [];
+
         if ($formMode === 'Edit' && (!isset($json['account_id']) || (int) $json['account_id'] <= 0)) {
             $errors['account_id'] = 'Account identifier is required for updates.';
         }
+
         if (empty($designatedDateRaw) || trim((string) $designatedDateRaw) === '') {
             $errors['designated_date'] = 'Due date is required.';
         } elseif (strtotime((string) $designatedDateRaw) === false) {
             $errors['designated_date'] = 'Due date is not a recognized date.';
         }
+
         if ($accountType === null || $accountType === '' || $accountType === 'N/A') {
             $errors['account_type'] = 'Account type is required.';
         }
+
         if ($sourceType === null || $sourceType === '' || $sourceType === 'N/A') {
             $errors['source_type'] = 'Source type is required.';
         }
+
         $nicknameInput = trim((string) ($json['nickname'] ?? ''));
         if ($nicknameInput === '') {
             $errors['nickname'] = 'Account name is required.';
         }
+
         if ((float) $netAmount <= 0 && (float) $grossAmount <= 0) {
             $errors['net_amount'] = 'Provide a net or gross amount greater than zero.';
         }
-        if ($recurringAccount === 'Yes' && trim((string) $recurringSchedule) === '') {
+
+        $isRecurringValidationRequired = in_array($formMode, ['Add', 'Copy'], true);
+
+        if (
+            $isRecurringValidationRequired
+            && $recurringAccount === 'Yes'
+            && trim((string) $recurringSchedule) === ''
+        ) {
             $errors['recurring_schedule'] = 'A recurring schedule is required when recurring is enabled.';
         }
+
         if (!empty($errors)) {
             return $this->budgetEnvelope('error', null, $errors, 422);
         }
 
         $dueDateEstimated = false;
-        if ($designatedDateRaw) {
-            $dateTranslator = strtotime($designatedDateRaw);
+
+        if (!empty($designatedDateRaw)) {
+            $dateTranslator = strtotime((string) $designatedDateRaw);
+
             if ($dateTranslator === false) {
                 $dueDateEstimated = true;
                 [$designatedDate, $month, $day, $year] = $this->defaultDueDate();
             } else {
-                $dueDateEstimated = true;
-                [$designatedDate, $month, $day, $year] = $this->defaultDueDate();
+                $designatedDate = date('m/d/Y', $dateTranslator);
+                $month = (int) date('m', $dateTranslator);
+                $day = (int) date('d', $dateTranslator);
+                $year = (int) date('Y', $dateTranslator);
             }
         } else {
-           $designatedDate = $month = $day = $year = null; // Default values if no date provided
+            $dueDateEstimated = true;
+            [$designatedDate, $month, $day, $year] = $this->defaultDueDate();
         }
     
         $accountData = [
@@ -523,7 +563,7 @@ class BudgetController extends BaseUserController
             'name'              => $nickname,
             'net_amount'        => $netAmount,
             'gross_amount'      => $grossAmount,
-            'paid'              => 0,
+            'paid'              =>  isset($json['paid']) ? (((string) $json['paid'] === '1' || (string) $json['paid'] === 'Yes') ? 1 : 0) : 0,
             'recurring_account' => $recurringAccount,
             'recurring_schedule'=> $recurringSchedule,
             'account_type'      => $accountType,
@@ -736,34 +776,42 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
         return Time::now('America/Chicago')->toDateTimeString();
     }
 
-    // protected function sanitizeCurrency($value): float
-    // {
-    //     if (is_string($value)) {
-    //         $value = preg_replace('/[^0-9.\-]/', '', $value);
-    //     }
+    protected function sanitizeCurrency($value): float
+    {
+        if (is_string($value)) {
+            $value = preg_replace('/[^0-9.\-]/', '', $value);
+        }
 
-    //     return round((float) $value, 2);
-    // }
+        return round((float) $value, 2);
+    }
 
-    // /**
-    //  * Returns an estimated due date when one is missing or invalid.
-    //  * Defaults to the 28th of the current month in America/Chicago.
-    //  */
-    // protected function defaultDueDate(): array
-    // {
-    //     $timezone = new DateTimeZone('America/Chicago');
-    //     $now      = new DateTime('now', $timezone);
-    //     $lastDay  = (int) $now->format('t');
-    //     $targetDay= min(28, $lastDay);
-    //     $now->setDate((int) $now->format('Y'), (int) $now->format('m'), $targetDay);
+    /**
+     * Returns a default due date when one is missing or invalid.
+     * Defaults to the 28th of the current month in America/Chicago.
+     *
+     * @return array{0:string,1:int,2:int,3:int}
+     */
+    protected function defaultDueDate(): array
+    {
+        $timezone = new \DateTimeZone('America/Chicago');
+        $now = new \DateTime('now', $timezone);
 
-    //     return [
-    //         $now->format('m/d/Y'),
-    //         (int) $now->format('m'),
-    //         $targetDay,
-    //         (int) $now->format('Y'),
-    //     ];
-    // }
+        $lastDay = (int) $now->format('t');
+        $targetDay = min(28, $lastDay);
+
+        $now->setDate(
+            (int) $now->format('Y'),
+            (int) $now->format('m'),
+            $targetDay
+        );
+
+        return [
+            $now->format('m/d/Y'),
+            (int) $now->format('m'),
+            (int) $now->format('d'),
+            (int) $now->format('Y'),
+        ];
+    }
 
     protected function logSecurityEvent(string $action, string $message, int $userId, array $payload = []): void
     {
@@ -1115,21 +1163,6 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
         }
     }
 
-    public function deleteAccount($accountID) {
-        log_message('debug', '[BudgetController::METHOD_ENTRY] deleteAccount');
-        if ($this->getBudgetService()->cancelAccount($accountID)) {
-            $this->invalidateCrudCache(array_filter([
-                'budget',
-                $this->cuID ? 'user:' . $this->cuID : null,
-            ]));
-            session()->setFlashdata('message', 'Recurring Account deleted.');
-            return redirect()->back()->withInput()->with('message', 'Account deleted successfully!');
-        } else {
-            session()->setFlashdata('message', 'Account could not be deleted.');
-            return redirect()->back()->withInput()->with('message', 'Account could not be deleted');
-        }
-    }
-
     public function details($accountID) {
         log_message('debug', '[BudgetController::METHOD_ENTRY] details');
         $this->data['pageTitle'] = 'Account Details & History | MyMI Wallet | The Future of Finance';
@@ -1160,43 +1193,51 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
         return $this->renderTheme('App\Modules\User\Views\Budget\Details', $this->data);
     }
 
-    public function edit($type = null) {
+    public function edit($type = null)
+    {
         log_message('debug', '[BudgetController::METHOD_ENTRY] edit');
+
         $uri = $this->request->getUri();
-        $formMode = $uri->getSegment(2);
+        $formMode = $uri->getSegment(2); // Edit or Recurring-Account
         $accountID = ($formMode === 'Recurring-Account') ? $uri->getSegment(4) : $uri->getSegment(3);
-    
+        $accountID = is_numeric($accountID) ? (int) $accountID : 0;
+
         if ($this->debug === 1) {
-            log_message('debug', 'BudgetController::edit - $accountID: ' . $accountID);
+            log_message('debug', 'BudgetController::edit - accountID: ' . $accountID);
         }
-    
-        // Fetch the budget record
+
+        if ($accountID <= 0) {
+            log_message('error', 'BudgetController::edit - Invalid account ID.');
+            return redirect()->back()->with('error', 'Invalid account ID supplied.');
+        }
+
         $userBudgetRecord = $this->getBudgetService()->getUserBudgetRecord($this->cuID, $accountID);
-        if (!$userBudgetRecord) {
+
+        if (!is_array($userBudgetRecord) || empty($userBudgetRecord)) {
             log_message('error', 'BudgetController::edit - Budget record not found for account ID: ' . $accountID);
             return redirect()->back()->with('error', 'The budget record you are trying to access does not exist.');
         }
+
         if ($this->debug === 1) {
-            log_message('debug', 'BudgetController L172 - $userBudgetRecord: ' . (print_r($userBudgetRecord, true)));
+            log_message('debug', 'BudgetController::edit - userBudgetRecord: ' . print_r($userBudgetRecord, true));
         }
-        // if (!$userBudgetRecord) {
-        //     log_message('error', 'BudgetController::edit - Budget record not found for account ID: ' . $accountID);
-        //     return redirect()->back()->with('error', 'The budget record you are trying to access does not exist. Please try again.');
-        // }
-    
-        $userBudgetRecordID = $userBudgetRecord['accountID'] ?? null;
-        $userBudgetRecordName = $userBudgetRecord['accountName'] ?? null;
-    
+
+        $userBudgetRecordID = $userBudgetRecord['accountID'] ?? $userBudgetRecord['id'] ?? $accountID;
+        $userBudgetRecordName = $userBudgetRecord['accountName'] ?? $userBudgetRecord['name'] ?? null;
+
+        $userRelatedBudgetAccounts = [];
+        if (!empty($userBudgetRecordName)) {
+            $userRelatedBudgetAccounts = $this->getBudgetService()->getUserRelatedBudgetRecords($this->cuID, $userBudgetRecordName);
+        } elseif (!empty($userBudgetRecordID)) {
+            $userRelatedBudgetAccounts = $this->getBudgetService()->getUserRelatedBudgetRecords($this->cuID, $userBudgetRecordID);
+        }
+
         if ($this->debug === 1) {
-            log_message('debug', 'BudgetController::edit - $userBudgetRecord: ' . print_r($userBudgetRecord, true));
-            log_message('debug', 'BudgetController::edit - $userBudgetRecordName: ' . $userBudgetRecordName);
+            log_message('debug', 'BudgetController::edit - userBudgetRecordID: ' . print_r($userBudgetRecordID, true));
+            log_message('debug', 'BudgetController::edit - userBudgetRecordName: ' . print_r($userBudgetRecordName, true));
+            log_message('debug', 'BudgetController::edit - userRelatedBudgetAccounts: ' . print_r($userRelatedBudgetAccounts, true));
         }
-    
-        $userRelatedBudgetAccounts = $this->getBudgetService()->getUserRelatedBudgetRecords($this->cuID, $userBudgetRecordID);
-    
-        if ($this->debug === 1) {
-            log_message('debug', 'BudgetController::edit - $userRelatedBudgetAccounts: ' . print_r($userRelatedBudgetAccounts, true));
-        }
+
         $referrer = $this->request->getServer('HTTP_REFERER');
         if ($referrer && !str_contains($referrer, '/Dashboard/')) {
             session()->setFlashdata('return_to', $referrer);
@@ -1205,18 +1246,18 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
         $this->data['pageTitle'] = 'Edit Budget Record | MyMI Wallet | The Future of Finance';
         $this->data['getAccountInfo'] = $userBudgetRecord;
         $this->data['userBudgetRecord'] = $userBudgetRecord;
-        $this->data['userRelatedBudgetAccounts'] = $userRelatedBudgetAccounts;
+        $this->data['userRelatedBudgetAccounts'] = is_array($userRelatedBudgetAccounts) ? $userRelatedBudgetAccounts : [];
         $this->data['formMode'] = $formMode;
         $this->data['accountID'] = $accountID;
-        
+
         $common = $this->ensureCommonDataReady();
         if ($common instanceof ResponseInterface) {
             return $common;
         }
-    
+
         return $this->renderTheme('App\Modules\User\Views\Budget\Edit', $this->data);
     }
-    
+
     public function financialAnalysis() {
         log_message('debug', '[BudgetController::METHOD_ENTRY] financialAnalysis');
         $this->data['pageTitle'] = 'My Financial Analysis | MyMI Wallet | The Future of Finance';
@@ -1856,14 +1897,201 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
         return $this->renderTheme('App\Modules\User\Views\Budget\History', $this->data);
     }
 
-    public function paid($accountID) {
+    public function paid($accountID)
+    {
         log_message('debug', '[BudgetController::METHOD_ENTRY] paid');
-        if ($this->getBudgetService()->markAsPaid($accountID)) {
-            session()->setFlashdata('message', 'Account status changed to: "Paid"');
-            return redirect()->back()->withInput()->with('message', 'Account status changed to: "Paid"');
-        } else {
+
+        $accountID = (int) $accountID;
+
+        if ($accountID <= 0) {
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'status'    => 'error',
+                    'accountID' => $accountID,
+                    'message'   => 'Invalid account ID.',
+                ]);
+            }
+
+            session()->setFlashdata('message', 'Invalid account ID.');
+            return redirect()->back()->withInput();
+        }
+
+        try {
+            $updated = $this->getBudgetService()->markAsPaid($accountID);
+
+            if ($updated) {
+                $this->invalidateCrudCache(array_filter([
+                    'budget',
+                    $this->cuID ? 'user:' . $this->cuID : null,
+                ]));
+
+                if ($this->request->isAJAX()) {
+                    return $this->response->setJSON([
+                        'status'    => 'success',
+                        'accountID' => $accountID,
+                        'message'   => 'Account marked paid.',
+                    ]);
+                }
+
+                session()->setFlashdata('message', 'Account status changed to: "Paid"');
+                return redirect()->back()->withInput()->with('message', 'Account status changed to: "Paid"');
+            }
+
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(422)->setJSON([
+                    'status'    => 'error',
+                    'accountID' => $accountID,
+                    'message'   => 'Account could not be updated.',
+                ]);
+            }
+
             session()->setFlashdata('message', 'Account could not be updated.');
             return redirect()->back()->withInput()->with('message', 'Account could not be updated.');
+        } catch (\Throwable $e) {
+            log_message('error', 'BudgetController::paid exception: ' . $e->getMessage());
+
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(500)->setJSON([
+                    'status'    => 'error',
+                    'accountID' => $accountID,
+                    'message'   => 'Unexpected server error while marking account paid.',
+                ]);
+            }
+
+            session()->setFlashdata('message', 'Unexpected server error while marking account paid.');
+            return redirect()->back()->withInput();
+        }
+    }
+
+    public function unpaid($accountID)
+    {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] unpaid');
+
+        $accountID = (int) $accountID;
+
+        if ($accountID <= 0) {
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'status'    => 'error',
+                    'accountID' => $accountID,
+                    'message'   => 'Invalid account ID.',
+                ]);
+            }
+
+            session()->setFlashdata('message', 'Invalid account ID.');
+            return redirect()->back()->withInput();
+        }
+
+        try {
+            $updated = $this->getBudgetService()->markAsUnpaid($accountID);
+
+            if ($updated) {
+                $this->invalidateCrudCache(array_filter([
+                    'budget',
+                    $this->cuID ? 'user:' . $this->cuID : null,
+                ]));
+
+                if ($this->request->isAJAX()) {
+                    return $this->response->setJSON([
+                        'status'    => 'success',
+                        'accountID' => $accountID,
+                        'message'   => 'Account marked unpaid.',
+                    ]);
+                }
+
+                session()->setFlashdata('message', 'Account status changed to: "Unpaid"');
+                return redirect()->back()->withInput()->with('message', 'Account status changed to: "Unpaid"');
+            }
+
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(422)->setJSON([
+                    'status'    => 'error',
+                    'accountID' => $accountID,
+                    'message'   => 'Account could not be updated.',
+                ]);
+            }
+
+            session()->setFlashdata('message', 'Account could not be updated.');
+            return redirect()->back()->withInput()->with('message', 'Account could not be updated.');
+        } catch (\Throwable $e) {
+            log_message('error', 'BudgetController::unpaid exception: ' . $e->getMessage());
+
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(500)->setJSON([
+                    'status'    => 'error',
+                    'accountID' => $accountID,
+                    'message'   => 'Unexpected server error while marking account unpaid.',
+                ]);
+            }
+
+            session()->setFlashdata('message', 'Unexpected server error while marking account unpaid.');
+            return redirect()->back()->withInput();
+        }
+    }
+
+    public function deleteAccount($accountID)
+    {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] deleteAccount');
+
+        $accountID = (int) $accountID;
+
+        if ($accountID <= 0) {
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'status'    => 'error',
+                    'accountID' => $accountID,
+                    'message'   => 'Invalid account ID.',
+                ]);
+            }
+
+            session()->setFlashdata('message', 'Invalid account ID.');
+            return redirect()->back()->withInput();
+        }
+
+        try {
+            $deleted = $this->getBudgetService()->cancelAccount($accountID);
+
+            if ($deleted) {
+                $this->invalidateCrudCache(array_filter([
+                    'budget',
+                    $this->cuID ? 'user:' . $this->cuID : null,
+                ]));
+
+                if ($this->request->isAJAX()) {
+                    return $this->response->setJSON([
+                        'status'    => 'success',
+                        'accountID' => $accountID,
+                        'message'   => 'Account deleted successfully.',
+                    ]);
+                }
+
+                session()->setFlashdata('message', 'Account deleted successfully.');
+                return redirect()->back()->withInput()->with('message', 'Account deleted successfully!');
+            }
+
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(422)->setJSON([
+                    'status'    => 'error',
+                    'accountID' => $accountID,
+                    'message'   => 'Account could not be deleted.',
+                ]);
+            }
+
+            session()->setFlashdata('message', 'Account could not be deleted.');
+            return redirect()->back()->withInput()->with('message', 'Account could not be deleted');
+        } catch (\Throwable $e) {
+            log_message('error', 'BudgetController::deleteAccount exception: ' . $e->getMessage());
+
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(500)->setJSON([
+                    'status'    => 'error',
+                    'accountID' => $accountID,
+                    'message'   => 'Unexpected server error while deleting account.',
+                ]);
+            }
+
+            session()->setFlashdata('message', 'Unexpected server error while deleting account.');
+            return redirect()->back()->withInput();
         }
     }
 
@@ -1993,17 +2221,6 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
             return $common;
         }
         return $this->renderTheme('App\Modules\User\Views\Budget\Settings', $this->data);
-    }
-
-    public function unpaid($accountID) {
-        log_message('debug', '[BudgetController::METHOD_ENTRY] unpaid');
-        if ($this->getBudgetService()->markAsUnpaid($accountID)) {
-            session()->setFlashdata('message', 'Account status changed to: "Unpaid"');
-            return redirect()->back()->withInput()->with('message', 'Account status changed to: "Unpaid"');
-        } else {
-            session()->setFlashdata('message', 'Account could not be updated.');
-            return redirect()->back()->withInput()->with('message', 'Account could not be updated');
-        }
     }
 
     /**

@@ -32,8 +32,13 @@ if (isset($debug) && (int)$debug === 1) {
 
 $userBudget = \App\Services\BudgetService::ensureUserBudgetShape($userBudget ?? null);
 
-$userBudgetRecords              = $userBudget['userBudgetRecords'];
-$userActiveBudgetRecords        = $userBudget['userActiveBudgetRecords'];
+$userBudgetRecords = !empty($userBudgetRecords) && is_array($userBudgetRecords)
+    ? $userBudgetRecords
+    : ($userBudget['userBudgetRecords'] ?? []);
+
+$userActiveBudgetRecords = !empty($userActiveBudgetRecords) && is_array($userActiveBudgetRecords)
+    ? $userActiveBudgetRecords
+    : ($userBudget['userActiveBudgetRecords'] ?? []);
 $thisMonthsIncome               = $userBudget['thisMonthsIncome'];
 $thisMonthsIncomeFMT            = $userBudget['thisMonthsIncomeFMT'];
 $thisMonthsExpense              = $userBudget['thisMonthsExpense'];
@@ -141,7 +146,6 @@ $allViewData = array(
     'totalAccountBalance' => $totalAccountBalance,
     'totalAccountBalanceFMT' => $totalAccountBalanceFMT,
     'userAgent' => $userAgent ?? null,
-    'creditAvailableFMT' => $creditAvailableFMT,
 );
 $setupStatus = $setupStatus ?? [];
 $setupPrefs = $setupPrefs ?? [];
@@ -151,13 +155,7 @@ $showSetupBanner = ! empty($setupStatus)
     && ! ($setupPrefs['dismiss_budget'] ?? false)
     && ($setupStatus['missing']['budget'] ?? false);
 ?>
-<div
-    data-budget-dashboard
-    data-endpoint-budget-data="<?= site_url('API/Budget/getUserBudgetRecords'); ?>"
-    data-endpoint-credit-data="<?= site_url('API/Budget/getUserCreditBalances'); ?>"
-    data-endpoint-available-data="<?= site_url('API/Budget/getUserAvailableBalances'); ?>"
-    data-endpoint-repayment-summary="<?= site_url('API/Budget/getUserRepaymentSummary'); ?>"
->
+<div>
 <!-- <div class="alert alert-info mt-3" data-budget-session-note>Budget data requires a logged-in session. If you're in Incognito or blocked third-party cookies, sign in again in a normal window.</div> -->
 <style <?= $nonce['style'] ?? '' ?>>
     @media only screen and (max-width: 768px) {
@@ -169,6 +167,24 @@ $showSetupBanner = ! empty($setupStatus)
     .nk-order-ovwg-data.investments { border-color: #f4bd0e; }
     .nk-order-ovwg-data .amount { font-size: 1.25rem; font-weight: 700; }
     .statusRed { color: #e85347; font-weight: 600; }
+    #budgetTopRowWrap,
+    #budgetControlCenterCol,
+    #budgetOverviewCol {
+        transition: all 0.25s ease-in-out;
+    }
+    .budget-layout-toolbar .btn {
+        margin-bottom: 0;
+    }
+
+    .budget-layout-toolbar .col-lg-8 {
+        padding-top: 0.15rem;
+    }
+
+    @media (max-width: 991.98px) {
+        .budget-layout-toolbar .col-lg-8 {
+            padding-top: 0;
+        }
+    }
 </style>
 <?php if ($showSetupBanner): ?>
 <div class="alert alert-info d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4" data-setup-banner="budget">
@@ -201,8 +217,7 @@ if (!empty($searchQuery)) {
     ];
     $searchMonthNumber = $monthMap[$searchQueryLower] ?? null;
 
-    $userActiveBudgetRecords = array_values(array_filter($userActiveBudgetRecords, function($record) use ($searchQueryLower, $searchMonthNumber) {
-        return (
+    $filteredUserActiveBudgetRecords = array_values(array_filter($userActiveBudgetRecords, function($record) use ($searchQueryLower, $searchMonthNumber) {        return (
             stripos($record['name'] ?? '', $searchQueryLower) !== false ||
             stripos($record['source_type'] ?? '', $searchQueryLower) !== false ||
             stripos($record['designated_date'] ?? '', $searchQueryLower) !== false ||
@@ -211,8 +226,8 @@ if (!empty($searchQuery)) {
     }));
 
     if ($debug === 1) {
-        log_message('debug', 'Budget\\index View - Enhanced Filtered Count: ' . count($userActiveBudgetRecords));
-        log_message('debug', 'Budget\\index View - Enhanced Filtered Records: ' . print_r(array_slice($userActiveBudgetRecords, 0, 5), true));
+        log_message('debug', 'Budget\\index View - Enhanced Filtered Count: ' . count($filteredUserActiveBudgetRecords));
+        log_message('debug', 'Budget\\index View - Enhanced Filtered Records: ' . print_r(array_slice($filteredUserActiveBudgetRecords, 0, 5), true));
     }
 }
 
@@ -233,19 +248,22 @@ if (!function_exists('miw_is_outflow')) {
         return true;
     }
 }
-?>
+$renderUserActiveBudgetRecords = $filteredUserActiveBudgetRecords ?? $userActiveBudgetRecords;
 
+$allViewData['userBudgetRecords'] = $userBudgetRecords;
+$allViewData['userActiveBudgetRecords'] = $renderUserActiveBudgetRecords;
+?>
 <?php if (!empty($searchQuery)): ?>
     <!-- SEARCH MODE ONLY VIEW -->
     <div class="card card-bordered">
         <div class="card-inner">
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <!-- <div class="d-flex justify-content-between align-items-center mb-3">
                 <h6 class="title">Search Budget Records</h6>
                 <div class="input-group" style="max-width: 300px;">
                     <input type="text" class="form-control" id="searchInputField" value="<?= esc($searchQuery) ?>" placeholder="Search budget..." />
                     <button class="btn btn-primary" id="redirectSearchBtn">Search</button>
                 </div>
-            </div>
+            </div> -->
 
             <div class="table-responsive">
                 <table class="table table-striped" id="userBudgetingDatatable">
@@ -262,7 +280,7 @@ if (!function_exists('miw_is_outflow')) {
                     <tbody>
                         <?php
                         $sum = 0.0;
-                        foreach ($userActiveBudgetRecords as $account):
+                        foreach ($renderUserActiveBudgetRecords as $account):
                             $accountDate = DateTime::createFromFormat('m/d/Y', $account['designated_date'] ?? '');
                             $formattedDate = $accountDate ? $accountDate->format('F jS, Y') : 'Invalid Date';
 
@@ -302,14 +320,6 @@ if (!function_exists('miw_is_outflow')) {
     </div>
 
     <script <?= $nonce['script'] ?? '' ?>>
-    // jQuery-safe redirect
-    document.getElementById('redirectSearchBtn').addEventListener('click', function () {
-      var input = document.getElementById('searchInputField');
-      var val = (input && input.value ? input.value : '').trim();
-      if (val !== '') {
-        window.location.href = "<?= site_url('Budget/Search/') ?>" + encodeURIComponent(val);
-      }
-    });
 
     // Safe DataTables init for search table
     document.addEventListener('DOMContentLoaded', function () {
@@ -358,7 +368,7 @@ if (!function_exists('miw_is_outflow')) {
         </div>
         <div class="btn-group" role="group" aria-label="Next month quick links">
             <?php
-                $nextMonthUrl = site_url('Budget/Next-Month/' . $nextMonthKey);
+                //$nextMonthUrl = site_url('Budget/Next-Month/' . $nextMonthKey);
             ?>
             <a class="btn btn-outline-primary" href="<?= $nextMonthUrl; ?>">Next Month (All)</a>
             <a class="btn btn-outline-success" href="<?= $nextMonthUrl . '/Income'; ?>">Income</a>
@@ -366,12 +376,43 @@ if (!function_exists('miw_is_outflow')) {
         </div>
     </div> -->
     <?php if (!empty($userAgent) && method_exists($userAgent, 'isBrowser') && $userAgent->isBrowser()): ?>
-    <div class="nk-block d-none d-sm-block">
-        <div class="row">
-            <div class="d-none d-md-block col-md-12 col-xl-3 my-sm-3">
+    <div class="nk-block d-none d-sm-block mb-2 budget-layout-toolbar">
+        <div class="card card-bordered">
+            <div class="card-inner py-2">
+                <div class="row gy-2 align-items-start">
+                    <div class="col-lg-4">
+                        <div class="pe-lg-3">
+                            <h6 class="mb-0">Layout Options</h6>
+                            <small class="text-muted d-block mt-1">Control what is visible above the budget table.</small>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8 d-flex justify-content-lg-end">
+                        <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+                            <button type="button" class="btn btn-outline-primary btn-xs" id="toggleBudgetTopRowBtn">
+                                Hide Top Row
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-xs" id="toggleBudgetControlCenterBtn">
+                                Hide Command Center
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-xs" id="toggleBudgetOverviewBtn">
+                                Hide Overview Chart
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary btn-xs" id="resetBudgetLayoutBtn">
+                                Reset Layout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nk-block d-none d-sm-block" id="budgetTopRowWrap">
+        <div class="row" id="budgetTopRow">
+            <div class="my-sm-3" id="budgetControlCenterCol">
                 <?= view('UserModule\Views\Budget\index\control_center', $allViewData); ?>
             </div>
-            <div class="d-none d-sm-block col-md-12 col-xl-9 my-sm-3">
+            <div class="my-sm-3" id="budgetOverviewCol">
                 <?= view('UserModule\Views\Budget\index\overview_chart', $allViewData); ?>
             </div>
         </div>
@@ -380,7 +421,30 @@ if (!function_exists('miw_is_outflow')) {
 
     <div id="budgeting-monthly-financial-overview"></div>
 
-    <div class="nk-block">
+    <!-- <div class="nk-block">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 my-sm-3">
+                <div class="card card-bordered">
+                    <div class="card-inner">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="title mb-0">Search Budget Records</h6>
+                            <div class="input-group" style="max-width: 300px;">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="searchInputField"
+                                    value="<?= esc($searchQuery ?? '') ?>"
+                                    placeholder="Search budget..."
+                                />
+                                <button class="btn btn-primary" id="redirectSearchBtn" type="button">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="nk-block pt-0">
         <div class="row">
             <div class="col-sm-12 col-md-12 my-sm-3">
                 <?php
@@ -427,3 +491,172 @@ if (!function_exists('miw_is_outflow')) {
         </div>
     </div>
 </div>
+<script <?= $nonce['script'] ?? '' ?>>
+document.addEventListener('DOMContentLoaded', function () {
+    var searchBtn = document.getElementById('redirectSearchBtn');
+    var searchInput = document.getElementById('searchInputField');
+    var searchBaseUrl = "<?= rtrim(site_url('Budget/Search'), '/') ?>/";
+    var budgetUrl = "<?= site_url('Budget') ?>";
+
+    function runBudgetSearch() {
+        var val = (searchInput && searchInput.value ? searchInput.value : '').trim();
+
+        if (val !== '') {
+            window.location.href = searchBaseUrl + encodeURIComponent(val);
+        } else {
+            window.location.href = budgetUrl;
+        }
+    }
+
+    if (searchBtn) {
+        searchBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            runBudgetSearch();
+        });
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                runBudgetSearch();
+            }
+        });
+    }
+});
+</script>
+<?php if (!empty($userAgent) && method_exists($userAgent, 'isBrowser') && $userAgent->isBrowser()): ?>
+<script <?= $nonce['script'] ?? '' ?>>
+document.addEventListener('DOMContentLoaded', function () {
+    const STORAGE_KEY = 'budget_layout_preferences_v1';
+
+    const topRowWrap = document.getElementById('budgetTopRowWrap');
+    const controlCol = document.getElementById('budgetControlCenterCol');
+    const overviewCol = document.getElementById('budgetOverviewCol');
+
+    const toggleTopRowBtn = document.getElementById('toggleBudgetTopRowBtn');
+    const toggleControlBtn = document.getElementById('toggleBudgetControlCenterBtn');
+    const toggleOverviewBtn = document.getElementById('toggleBudgetOverviewBtn');
+    const resetLayoutBtn = document.getElementById('resetBudgetLayoutBtn');
+
+    if (!topRowWrap || !controlCol || !overviewCol) {
+        return;
+    }
+
+    function getDefaultState() {
+        return {
+            topRowHidden: false,
+            controlHidden: false,
+            overviewHidden: false
+        };
+    }
+
+    function loadState() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return getDefaultState();
+            return Object.assign(getDefaultState(), JSON.parse(raw));
+        } catch (e) {
+            return getDefaultState();
+        }
+    }
+
+    function saveState(state) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function applyColClasses(state) {
+        controlCol.className = 'my-sm-3';
+        overviewCol.className = 'my-sm-3';
+
+        const controlVisible = !state.controlHidden;
+        const overviewVisible = !state.overviewHidden;
+
+        controlCol.style.display = controlVisible ? '' : 'none';
+        overviewCol.style.display = overviewVisible ? '' : 'none';
+        topRowWrap.style.display = state.topRowHidden ? 'none' : '';
+
+        if (state.topRowHidden) {
+            return;
+        }
+
+        if (controlVisible && overviewVisible) {
+            controlCol.classList.add('d-none', 'd-md-block', 'col-md-12', 'col-xl-3');
+            overviewCol.classList.add('d-none', 'd-sm-block', 'col-md-12', 'col-xl-9');
+        } else if (controlVisible && !overviewVisible) {
+            controlCol.classList.add('d-none', 'd-md-block', 'col-md-12', 'col-xl-12');
+        } else if (!controlVisible && overviewVisible) {
+            overviewCol.classList.add('d-none', 'd-sm-block', 'col-md-12', 'col-xl-12');
+        }
+    }
+
+    function updateButtonLabels(state) {
+        if (toggleTopRowBtn) {
+            toggleTopRowBtn.textContent = state.topRowHidden ? 'Show Top Row' : 'Hide Top Row';
+        }
+        if (toggleControlBtn) {
+            toggleControlBtn.textContent = state.controlHidden ? 'Show Command Center' : 'Hide Command Center';
+        }
+        if (toggleOverviewBtn) {
+            toggleOverviewBtn.textContent = state.overviewHidden ? 'Show Overview Chart' : 'Hide Overview Chart';
+        }
+    }
+
+    function applyState(state) {
+        applyColClasses(state);
+        updateButtonLabels(state);
+        saveState(state);
+    }
+
+    let state = loadState();
+    applyState(state);
+
+    if (toggleTopRowBtn) {
+        toggleTopRowBtn.addEventListener('click', function () {
+            state.topRowHidden = !state.topRowHidden;
+
+            if (!state.topRowHidden && state.controlHidden && state.overviewHidden) {
+                state.overviewHidden = false;
+            }
+
+            applyState(state);
+        });
+    }
+
+    if (toggleControlBtn) {
+        toggleControlBtn.addEventListener('click', function () {
+            state.controlHidden = !state.controlHidden;
+
+            if (state.controlHidden && state.overviewHidden) {
+                state.topRowHidden = true;
+            } else if (state.topRowHidden && (!state.controlHidden || !state.overviewHidden)) {
+                state.topRowHidden = false;
+            }
+
+            applyState(state);
+        });
+    }
+
+    if (toggleOverviewBtn) {
+        toggleOverviewBtn.addEventListener('click', function () {
+            state.overviewHidden = !state.overviewHidden;
+
+            if (state.controlHidden && state.overviewHidden) {
+                state.topRowHidden = true;
+            } else if (state.topRowHidden && (!state.controlHidden || !state.overviewHidden)) {
+                state.topRowHidden = false;
+            }
+
+            applyState(state);
+        });
+    }
+
+    if (resetLayoutBtn) {
+        resetLayoutBtn.addEventListener('click', function () {
+            state = getDefaultState();
+            applyState(state);
+        });
+    }
+});
+</script>
+<?php endif; ?>
