@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-04-15 12:09:26",
+    "generated_at": "2026-04-23 03:19:45",
     "commands": [
         {
             "path": "app/Commands/Marketing/AutomationAudit.php",
@@ -818,12 +818,6 @@
             "description": "Check auth funnel sanity using recent user events and emit alerts on drop-offs."
         },
         {
-            "path": "app/Commands/Auth/Smoke.php",
-            "group": "auth",
-            "name": "auth:smoke",
-            "description": "Run a safe authentication smoke test and record health results for ops visibility."
-        },
-        {
             "path": "app/Commands/Auth/SmokeTest.php",
             "group": "auth",
             "name": "auth:smoke-test",
@@ -834,6 +828,36 @@
             "group": "auth",
             "name": "auth:flow-smoke",
             "description": "Smoke test for auth redirect safety and login route no-cache headers."
+        },
+        {
+            "path": "app/Commands/Auth/BaselineCapture.php",
+            "group": "auth",
+            "name": "auth:baseline:capture",
+            "description": "Capture auth/authz golden baseline artifacts."
+        },
+        {
+            "path": "app/Commands/Auth/BaselineRestore.php",
+            "group": "auth",
+            "name": "auth:baseline:restore",
+            "description": "Restore auth-critical files from auth baseline artifacts."
+        },
+        {
+            "path": "app/Commands/Auth/Smoke.php",
+            "group": "auth",
+            "name": "auth:smoke",
+            "description": "Probe auth-critical routes and runtime expectations for login/register/reset/redirect safety."
+        },
+        {
+            "path": "app/Commands/Auth/BaselineDiff.php",
+            "group": "auth",
+            "name": "auth:baseline:diff",
+            "description": "Diff current auth/authz runtime against current golden baseline."
+        },
+        {
+            "path": "app/Commands/Auth/SurfaceScan.php",
+            "group": "auth",
+            "name": "auth:surface:scan",
+            "description": "Scan and report auth/authz runtime surface area."
         },
         {
             "path": "app/Commands/Database/ApplyDocs.php",
@@ -1466,12 +1490,6 @@
             "description": "Generate trade-signal intelligence from research rankings and the financial knowledge graph"
         },
         {
-            "path": "app/Commands/Research/FinancialKnowledge.php",
-            "group": "research",
-            "name": "research:knowledge:build",
-            "description": "Build financial knowledge graph"
-        },
-        {
             "path": "app/Commands/Research/FinancialNewsCollect.php",
             "group": "research",
             "name": "research:news:collect",
@@ -1499,12 +1517,6 @@
             "path": "app/Commands/Research/ResearchPipeline.php",
             "group": "research",
             "name": "research:pipeline:run",
-            "description": null
-        },
-        {
-            "path": "app/Commands/Research/ThinkOrSwimImport.php",
-            "group": "research",
-            "name": "research:alerts:watchlist-import",
             "description": null
         },
         {
@@ -1536,6 +1548,18 @@
             "group": "research",
             "name": "research:short-interest:scan",
             "description": "Scan short-interest candidates"
+        },
+        {
+            "path": "app/Commands/Research/FinancialKnowledge.php",
+            "group": "research",
+            "name": "research:knowledge:build",
+            "description": "Build financial knowledge graph"
+        },
+        {
+            "path": "app/Commands/Research/ThinkOrSwimImport.php",
+            "group": "research",
+            "name": "research:alerts:watchlist-import",
+            "description": null
         },
         {
             "path": "app/Commands/Chat/Audit.php",
@@ -2594,16 +2618,22 @@
             "description": "Generate docs/_architecture_map.json from read-only repository scans."
         },
         {
-            "path": "app/Commands/Docs/Generate/KnowledgeGraph.php",
-            "group": "Docs",
-            "name": "docs:generate-knowledge-graph",
-            "description": "Generate docs/_knowledge_graph.json linking docs, views, routes, controllers, services, and health scans."
-        },
-        {
             "path": "app/Commands/Docs/Generate/MissingDocs.php",
             "group": "Docs",
             "name": "docs:generate-missing",
             "description": "Generate documentation for undocumented controllers"
+        },
+        {
+            "path": "app/Commands/Docs/Generate/FormInventory.php",
+            "group": "Docs",
+            "name": "docs:inventory-forms",
+            "description": "Inventory repository forms, submit dependencies, and risk flags."
+        },
+        {
+            "path": "app/Commands/Docs/Generate/KnowledgeGraph.php",
+            "group": "Docs",
+            "name": "docs:generate-knowledge-graph",
+            "description": "Generate docs/_knowledge_graph.json linking docs, views, routes, controllers, services, and health scans."
         },
         {
             "path": "app/Commands/Docs/ModulesMap.php",

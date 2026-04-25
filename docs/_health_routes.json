@@ -1,9 +1,9 @@
 {
-    "generated_at": "2026-04-15 12:09:26",
+    "generated_at": "2026-04-23 03:19:45",
     "files": [
         {
             "path": "app/Config/Routes.php",
-            "route_count": 1732,
+            "route_count": 1743,
             "has_closure": true
         },
         {

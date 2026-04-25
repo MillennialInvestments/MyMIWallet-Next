@@ -1,6 +1,6 @@
 # ops Documentation
 
-Last Generated: 2026-04-15 12:09:25
+Last Generated: 2026-04-23 03:19:45
 
 - 01-foundation.report.md
 - 01-psr4-autoload-audit.md
@@ -12,6 +12,7 @@ Last Generated: 2026-04-15 12:09:25
 - ai_usage_snapshot.md
 - aiops-guardrails-architecture.md
 - aiops-n8n-workflows.md
+- aiops-orchestrator.md
 - aiops-remote-health-contract.md
 - aiops-schema-endpoints-spec.md
 - app-update.md
@@ -38,6 +39,7 @@ Last Generated: 2026-04-15 12:09:25
 - n8n-capabilities-for-mymiwallet.md
 - n8n_responsibilities.md
 - npm-stack-recommendations.md
+- ollama-service.md
 - post-deploy-checklist.md
 - scripts.md
 - scripts_index.md

@@ -1,10 +1,9 @@
 {
-    "generated_at": "2026-04-15 12:09:26",
+    "generated_at": "2026-04-23 03:19:45",
     "controllers": [
         {
             "path": "app/Controllers/Debug.php",
             "services": [
-                "authentication",
                 "authAuditService"
             ],
             "views": [],
@@ -81,14 +80,6 @@
             "models": [
                 "WalletModel"
             ]
-        },
-        {
-            "path": "app/Controllers/MaintenanceController.php",
-            "services": [],
-            "views": [
-                "maintenance/index"
-            ],
-            "models": []
         },
         {
             "path": "app/Controllers/Test.php",
@@ -172,11 +163,32 @@
             "models": []
         },
         {
+            "path": "app/Controllers/ShieldAuth/Login.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Controllers/ShieldAuth/Register.php",
+            "services": [],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Controllers/MaintenanceController.php",
+            "services": [],
+            "views": [
+                "maintenance/index"
+            ],
+            "models": []
+        },
+        {
             "path": "app/Controllers/AuthController.php",
             "services": [
                 "session",
                 "authentication",
                 "eventTracker",
+                "throttler",
                 "request",
                 "onboardingProgressService",
                 "safeCache",
@@ -184,9 +196,10 @@
                 "registrationSourceContentService",
                 "activator",
                 "authAuditService",
-                "throttler",
                 "resetter",
+                "validation",
                 "response",
+                "router",
                 "security"
             ],
             "views": [
@@ -209,28 +222,6 @@
             "views": [],
             "models": [
                 "MditWebhookEventModel"
-            ]
-        },
-        {
-            "path": "app/Modules/APIs/Controllers/InvestmentsAPIController.php",
-            "services": [
-                "authentication",
-                "request",
-                "session",
-                "forecastAggregationService",
-                "forecastAccuracyEvaluator",
-                "mymiInvestments",
-                "authorization",
-                "mymiForecaster"
-            ],
-            "views": [],
-            "models": [
-                "InvestmentModel",
-                "ReferralModel",
-                "PageSEOModel",
-                "SubscribeModel",
-                "InvestmentsNewsModel",
-                "AlertsModel"
             ]
         },
         {
@@ -277,6 +268,20 @@
             ]
         },
         {
+            "path": "app/Modules/APIs/Controllers/WalletsAPIController.php",
+            "services": [
+                "authentication",
+                "crudCacheInvalidator",
+                "renderer",
+                "logger",
+                "walletService"
+            ],
+            "views": [],
+            "models": [
+                "WalletModel"
+            ]
+        },
+        {
             "path": "app/Modules/APIs/Controllers/ChatAPIController.php",
             "services": [],
             "views": [],
@@ -284,12 +289,6 @@
                 "ChatToolRunModel",
                 "OpsQueueModel"
             ]
-        },
-        {
-            "path": "app/Modules/APIs/Controllers/AiOpsAPIController.php",
-            "services": [],
-            "views": [],
-            "models": []
         },
         {
             "path": "app/Modules/APIs/Controllers/PredictionsAPIController.php",
@@ -356,6 +355,14 @@
             ]
         },
         {
+            "path": "app/Modules/APIs/Controllers/MobileAuthController.php",
+            "services": [
+                "mobileAuthContext"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
             "path": "app/Modules/APIs/Controllers/AIAPIController.php",
             "services": [],
             "views": [],
@@ -390,16 +397,6 @@
             "services": [],
             "views": [],
             "models": []
-        },
-        {
-            "path": "app/Modules/APIs/Controllers/ContentEngineAPIController.php",
-            "services": [
-                "authentication"
-            ],
-            "views": [],
-            "models": [
-                "GroupModel"
-            ]
         },
         {
             "path": "app/Modules/APIs/Controllers/DocsAPIController.php",
@@ -463,19 +460,6 @@
             "models": []
         },
         {
-            "path": "app/Modules/APIs/Controllers/OpsAPIController.php",
-            "services": [
-                "authentication"
-            ],
-            "views": [],
-            "models": [
-                "OpsJobsModel",
-                "OpsQueueModel",
-                "OpsRunsModel",
-                "AiOpsIngestRunModel"
-            ]
-        },
-        {
             "path": "app/Modules/APIs/Controllers/OpsPublicPagesAPIController.php",
             "services": [],
             "views": [],
@@ -490,40 +474,18 @@
             "models": []
         },
         {
-            "path": "app/Modules/APIs/Controllers/WalletsAPIController.php",
-            "services": [
-                "authentication",
-                "crudCacheInvalidator",
-                "renderer",
-                "logger",
-                "walletService"
-            ],
+            "path": "app/Modules/APIs/Controllers/AIOpsAPIController.php",
+            "services": [],
             "views": [],
-            "models": [
-                "WalletModel"
-            ]
+            "models": []
         },
         {
-            "path": "app/Modules/APIs/Controllers/AlertsAPIController.php",
+            "path": "app/Modules/APIs/Controllers/MobileController.php",
             "services": [
-                "authorization",
-                "alertService",
-                "MyMIMarketing",
-                "authentication",
-                "mailService",
-                "email"
+                "mobileAuthContext"
             ],
-            "views": [
-                "ManagementModule\\\\Views\\\\Alerts\\\\modals\\\\createTradeAlert",
-                "ManagementModule\\\\Views\\\\Alerts\\\\modals\\\\viewTradeChart",
-                "ManagementModule\\\\Views\\\\Alerts\\\\modals\\\\manageTradeAlert",
-                "ManagementModule\\\\Views\\\\Alerts\\\\modals\\\\updateExchange",
-                "App\\\\Modules\\\\Management\\\\Views\\\\Signals\\\\modals\\\\preview_file"
-            ],
-            "models": [
-                "SignalsModel",
-                "SignalFilesModel"
-            ]
+            "views": [],
+            "models": []
         },
         {
             "path": "app/Modules/APIs/Controllers/MditAdminAPIController.php",
@@ -559,6 +521,28 @@
             "models": []
         },
         {
+            "path": "app/Modules/APIs/Controllers/InvestmentsAPIController.php",
+            "services": [
+                "authentication",
+                "request",
+                "session",
+                "forecastAggregationService",
+                "forecastAccuracyEvaluator",
+                "mymiInvestments",
+                "authorization",
+                "mymiForecaster"
+            ],
+            "views": [],
+            "models": [
+                "InvestmentModel",
+                "ReferralModel",
+                "PageSEOModel",
+                "SubscribeModel",
+                "InvestmentsNewsModel",
+                "AlertsModel"
+            ]
+        },
+        {
             "path": "app/Modules/APIs/Controllers/SupportAPIController.php",
             "services": [],
             "views": [],
@@ -579,10 +563,42 @@
             ]
         },
         {
-            "path": "app/Modules/APIs/Controllers/AIOpsAPIController.php",
+            "path": "app/Modules/APIs/Controllers/AiOpsAPIController.php",
             "services": [],
             "views": [],
             "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/AlertsAPIController.php",
+            "services": [
+                "authorization",
+                "alertService",
+                "MyMIMarketing",
+                "authentication",
+                "mailService",
+                "email"
+            ],
+            "views": [
+                "ManagementModule\\\\Views\\\\Alerts\\\\modals\\\\createTradeAlert",
+                "ManagementModule\\\\Views\\\\Alerts\\\\modals\\\\viewTradeChart",
+                "ManagementModule\\\\Views\\\\Alerts\\\\modals\\\\manageTradeAlert",
+                "ManagementModule\\\\Views\\\\Alerts\\\\modals\\\\updateExchange",
+                "App\\\\Modules\\\\Management\\\\Views\\\\Signals\\\\modals\\\\preview_file"
+            ],
+            "models": [
+                "SignalsModel",
+                "SignalFilesModel"
+            ]
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/ContentEngineAPIController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": [
+                "GroupModel"
+            ]
         },
         {
             "path": "app/Modules/APIs/Controllers/SearchAPIController.php",
@@ -609,10 +625,31 @@
             "models": []
         },
         {
+            "path": "app/Modules/APIs/Controllers/BudgetController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
             "path": "app/Modules/APIs/Controllers/AlertsPublicAPIController.php",
             "services": [],
             "views": [],
             "models": []
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/OpsAPIController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": [
+                "OpsJobsModel",
+                "OpsQueueModel",
+                "OpsRunsModel",
+                "AiOpsIngestRunModel"
+            ]
         },
         {
             "path": "app/Modules/Admin/Controllers/BackupsController.php",
@@ -669,6 +706,20 @@
             ]
         },
         {
+            "path": "app/Modules/Blog/Controllers/BlogController.php",
+            "services": [
+                "authentication",
+                "auth"
+            ],
+            "views": [],
+            "models": [
+                "UserModel",
+                "PageSEOModel",
+                "SubscribeModel",
+                "BlogModel"
+            ]
+        },
+        {
             "path": "app/Modules/Blog/Controllers/HowItWorksController.php",
             "services": [
                 "authentication",
@@ -681,20 +732,6 @@
                 "SubscribeModel",
                 "UserModel",
                 "MyMIGoldModel"
-            ]
-        },
-        {
-            "path": "app/Modules/Blog/Controllers/BlogController.php",
-            "services": [
-                "authentication",
-                "auth"
-            ],
-            "views": [],
-            "models": [
-                "UserModel",
-                "PageSEOModel",
-                "SubscribeModel",
-                "BlogModel"
             ]
         },
         {
@@ -867,6 +904,18 @@
             "models": []
         },
         {
+            "path": "app/Modules/Management/Controllers/OpsAdminController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": [
+                "OpsJobsModel",
+                "OpsQueueModel",
+                "OpsRunsModel"
+            ]
+        },
+        {
             "path": "app/Modules/Management/Controllers/TradovateAdminController.php",
             "services": [],
             "views": [],
@@ -923,6 +972,14 @@
             ]
         },
         {
+            "path": "app/Modules/Management/Controllers/PublicPagesAdminController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
             "path": "app/Modules/Management/Controllers/APIAdminController.php",
             "services": [
                 "authentication",
@@ -953,23 +1010,6 @@
             ]
         },
         {
-            "path": "app/Modules/Management/Controllers/AlertsAdminController.php",
-            "services": [
-                "authentication",
-                "request",
-                "alertService",
-                "mailService"
-            ],
-            "views": [],
-            "models": [
-                "AccountsModel",
-                "BudgetModel",
-                "UserModel",
-                "SignalsModel",
-                "AlertsModel"
-            ]
-        },
-        {
             "path": "app/Modules/Management/Controllers/MarketingAdminController.php",
             "services": [
                 "authentication",
@@ -996,6 +1036,14 @@
                 "UserModel",
                 "CampaignModel"
             ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/SmtpTestAdminController.php",
+            "services": [
+                "email"
+            ],
+            "views": [],
+            "models": []
         },
         {
             "path": "app/Modules/Management/Controllers/Marketing/BloggerAdminController.php",
@@ -1047,6 +1095,32 @@
             ]
         },
         {
+            "path": "app/Modules/Management/Controllers/AuthFunnelAdminController.php",
+            "services": [
+                "request",
+                "authentication"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/Management/Controllers/AlertsAdminController.php",
+            "services": [
+                "authentication",
+                "request",
+                "alertService",
+                "mailService"
+            ],
+            "views": [],
+            "models": [
+                "AccountsModel",
+                "BudgetModel",
+                "UserModel",
+                "SignalsModel",
+                "AlertsModel"
+            ]
+        },
+        {
             "path": "app/Modules/Management/Controllers/ErrorOpsController.php",
             "services": [],
             "views": [],
@@ -1063,17 +1137,22 @@
             "models": []
         },
         {
+            "path": "app/Modules/Management/Controllers/DiscordAdminController.php",
+            "services": [
+                "authentication",
+                "logger"
+            ],
+            "views": [],
+            "models": [
+                "BudgetModel",
+                "WalletModel",
+                "DiscordModel"
+            ]
+        },
+        {
             "path": "app/Modules/Management/Controllers/AdminController.php",
             "services": [
                 "authentication"
-            ],
-            "views": [],
-            "models": []
-        },
-        {
-            "path": "app/Modules/Management/Controllers/SmtpTestAdminController.php",
-            "services": [
-                "email"
             ],
             "views": [],
             "models": []
@@ -1119,6 +1198,29 @@
             ]
         },
         {
+            "path": "app/Modules/Management/Controllers/ChatAdminController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": [
+                "AIOpsChatAdminModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/HowTosAdminController.php",
+            "services": [
+                "authentication",
+                "logger",
+                "solanaService"
+            ],
+            "views": [],
+            "models": [
+                "BudgetModel",
+                "WalletModel"
+            ]
+        },
+        {
             "path": "app/Modules/Management/Controllers/AccountRescueAdminController.php",
             "services": [
                 "activator",
@@ -1137,27 +1239,6 @@
             "models": []
         },
         {
-            "path": "app/Modules/Management/Controllers/AuthFunnelAdminController.php",
-            "services": [
-                "request",
-                "authentication"
-            ],
-            "views": [],
-            "models": []
-        },
-        {
-            "path": "app/Modules/Management/Controllers/AuthHealthAdminController.php",
-            "services": [
-                "authentication"
-            ],
-            "views": [
-                "App\\Modules\\Management\\Views\\AuthHealth\\modals\\details"
-            ],
-            "models": [
-                "AuthHealthRunModel"
-            ]
-        },
-        {
             "path": "app/Modules/Management/Controllers/BudgetingAdminController.php",
             "services": [
                 "authentication",
@@ -1168,16 +1249,6 @@
                 "AccountsModel",
                 "BudgetModel",
                 "UserModel"
-            ]
-        },
-        {
-            "path": "app/Modules/Management/Controllers/ChatAdminController.php",
-            "services": [
-                "authentication"
-            ],
-            "views": [],
-            "models": [
-                "AIOpsChatAdminModel"
             ]
         },
         {
@@ -1199,19 +1270,6 @@
             "services": [],
             "views": [],
             "models": []
-        },
-        {
-            "path": "app/Modules/Management/Controllers/DiscordAdminController.php",
-            "services": [
-                "authentication",
-                "logger"
-            ],
-            "views": [],
-            "models": [
-                "BudgetModel",
-                "WalletModel",
-                "DiscordModel"
-            ]
         },
         {
             "path": "app/Modules/Management/Controllers/DocsAdminController.php",
@@ -1243,16 +1301,6 @@
             ]
         },
         {
-            "path": "app/Modules/Management/Controllers/EmailOutboxAdminController.php",
-            "services": [
-                "authentication"
-            ],
-            "views": [],
-            "models": [
-                "EmailOutboxModel"
-            ]
-        },
-        {
             "path": "app/Modules/Management/Controllers/ExchangeAdminController.php",
             "services": [
                 "authentication",
@@ -1279,19 +1327,6 @@
             "services": [],
             "views": [],
             "models": []
-        },
-        {
-            "path": "app/Modules/Management/Controllers/HowTosAdminController.php",
-            "services": [
-                "authentication",
-                "logger",
-                "solanaService"
-            ],
-            "views": [],
-            "models": [
-                "BudgetModel",
-                "WalletModel"
-            ]
         },
         {
             "path": "app/Modules/Management/Controllers/InvestmentsAdminController.php",
@@ -1329,18 +1364,6 @@
             ]
         },
         {
-            "path": "app/Modules/Management/Controllers/OpsAdminController.php",
-            "services": [
-                "authentication"
-            ],
-            "views": [],
-            "models": [
-                "OpsJobsModel",
-                "OpsQueueModel",
-                "OpsRunsModel"
-            ]
-        },
-        {
             "path": "app/Modules/Management/Controllers/PartnersAdminController.php",
             "services": [
                 "authentication",
@@ -1353,14 +1376,6 @@
                 "MarketingModel",
                 "UserModel"
             ]
-        },
-        {
-            "path": "app/Modules/Management/Controllers/PublicPagesAdminController.php",
-            "services": [
-                "authentication"
-            ],
-            "views": [],
-            "models": []
         },
         {
             "path": "app/Modules/Management/Controllers/SecurityAdminController.php",
@@ -1379,6 +1394,18 @@
                 "AccountsModel",
                 "BudgetModel",
                 "UserModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/AuthHealthAdminController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [
+                "App\\Modules\\Management\\Views\\AuthHealth\\modals\\details"
+            ],
+            "models": [
+                "AuthHealthRunModel"
             ]
         },
         {
@@ -1428,6 +1455,16 @@
                 "AccountsModel",
                 "BudgetModel",
                 "UserModel"
+            ]
+        },
+        {
+            "path": "app/Modules/Management/Controllers/EmailOutboxAdminController.php",
+            "services": [
+                "authentication"
+            ],
+            "views": [],
+            "models": [
+                "EmailOutboxModel"
             ]
         },
         {
@@ -1555,54 +1592,16 @@
             ]
         },
         {
-            "path": "app/Modules/User/Controllers/PredictionsController.php",
-            "services": [
-                "mymipredictions",
-                "request"
-            ],
-            "views": [],
-            "models": []
-        },
-        {
-            "path": "app/Modules/User/Controllers/PrivacyController.php",
-            "services": [],
-            "views": [],
-            "models": [
-                "PrivacyRequestModel"
-            ]
-        },
-        {
-            "path": "app/Modules/User/Controllers/ReferralController.php",
-            "services": [
-                "authentication",
-                "solanaService",
-                "logger"
-            ],
-            "views": [],
-            "models": [
-                "BudgetModel",
-                "UserModel"
-            ]
-        },
-        {
-            "path": "app/Modules/User/Controllers/SearchController.php",
-            "services": [],
-            "views": [],
-            "models": []
-        },
-        {
-            "path": "app/Modules/User/Controllers/BudgetController.php",
+            "path": "app/Modules/User/Controllers/AlertsController.php",
             "services": [
                 "authentication",
                 "request",
-                "safeCache",
-                "logger",
-                "solanaService",
-                "setupStatusService"
+                "myMIUser",
+                "mymialerts"
             ],
             "views": [],
             "models": [
-                "AccountsModel",
+                "AlertsModel",
                 "BudgetModel"
             ]
         },
@@ -1622,6 +1621,58 @@
                 "WalletModel",
                 "MyMIGoldModel"
             ]
+        },
+        {
+            "path": "app/Modules/User/Controllers/BudgetController.php",
+            "services": [
+                "authentication",
+                "request",
+                "safeCache",
+                "logger",
+                "solanaService",
+                "setupStatusService"
+            ],
+            "views": [],
+            "models": [
+                "AccountsModel",
+                "BudgetModel"
+            ]
+        },
+        {
+            "path": "app/Modules/User/Controllers/ReferralController.php",
+            "services": [
+                "authentication",
+                "solanaService",
+                "logger"
+            ],
+            "views": [],
+            "models": [
+                "BudgetModel",
+                "UserModel"
+            ]
+        },
+        {
+            "path": "app/Modules/User/Controllers/PredictionsController.php",
+            "services": [
+                "mymipredictions",
+                "request"
+            ],
+            "views": [],
+            "models": []
+        },
+        {
+            "path": "app/Modules/User/Controllers/PrivacyController.php",
+            "services": [],
+            "views": [],
+            "models": [
+                "PrivacyRequestModel"
+            ]
+        },
+        {
+            "path": "app/Modules/User/Controllers/SearchController.php",
+            "services": [],
+            "views": [],
+            "models": []
         },
         {
             "path": "app/Modules/User/Controllers/KnowledgebaseController.php",
@@ -1651,20 +1702,6 @@
                 "AuctionItemModel",
                 "AuctionLotModel",
                 "AuctionBidModel"
-            ]
-        },
-        {
-            "path": "app/Modules/User/Controllers/AlertsController.php",
-            "services": [
-                "authentication",
-                "request",
-                "myMIUser",
-                "mymialerts"
-            ],
-            "views": [],
-            "models": [
-                "AlertsModel",
-                "BudgetModel"
             ]
         },
         {
@@ -1873,12 +1910,6 @@
             "models": []
         },
         {
-            "path": "app/Modules/PropFirms/Controllers/PropFirmsController.php",
-            "services": [],
-            "views": [],
-            "models": []
-        },
-        {
             "path": "app/Modules/PropFirms/Controllers/AccountsController.php",
             "services": [],
             "views": [],
@@ -1919,6 +1950,12 @@
             "models": [
                 "UserPropAccountModel"
             ]
+        },
+        {
+            "path": "app/Modules/PropFirms/Controllers/PropFirmsController.php",
+            "services": [],
+            "views": [],
+            "models": []
         }
     ]
 }

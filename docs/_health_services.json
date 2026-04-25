@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-04-15 12:09:26",
+    "generated_at": "2026-04-23 03:19:45",
     "services": [
         {
             "name": "AIOpsService",
@@ -60,6 +60,11 @@
             "name": "AuthAuditService",
             "path": "app/Services/AuthAuditService.php",
             "registered": true
+        },
+        {
+            "name": "AuthBaselineService",
+            "path": "app/Services/AuthBaselineService.php",
+            "registered": false
         },
         {
             "name": "AuthSmokeService",
@@ -352,6 +357,16 @@
             "registered": false
         },
         {
+            "name": "MobileAuthContext",
+            "path": "app/Services/MobileAuthContext.php",
+            "registered": true
+        },
+        {
+            "name": "MobileAuthTokenService",
+            "path": "app/Services/MobileAuthTokenService.php",
+            "registered": false
+        },
+        {
             "name": "NotificationService",
             "path": "app/Services/NotificationService.php",
             "registered": false
@@ -553,6 +568,7 @@
         "ApiOpsService may not be registered in Services.php",
         "ApplePayService may not be registered in Services.php",
         "AuctionService may not be registered in Services.php",
+        "AuthBaselineService may not be registered in Services.php",
         "AuthSmokeService may not be registered in Services.php",
         "AutoloadAuditService may not be registered in Services.php",
         "BirdeyeService may not be registered in Services.php",
@@ -596,6 +612,7 @@
         "MarketingScraper may not be registered in Services.php",
         "MarketingService may not be registered in Services.php",
         "MetaService may not be registered in Services.php",
+        "MobileAuthTokenService may not be registered in Services.php",
         "NotificationService may not be registered in Services.php",
         "OnboardingService may not be registered in Services.php",
         "OpsCommandService may not be registered in Services.php",

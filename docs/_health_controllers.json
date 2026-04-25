@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-04-15 12:09:26",
+    "generated_at": "2026-04-23 03:19:45",
     "controllers": [
         {
             "path": "app/Controllers/Api/AdminChatUsageController.php",
@@ -45,7 +45,7 @@
             "path": "app/Controllers/AuthController.php",
             "has_namespace": true,
             "has_class": true,
-            "public_methods": 18,
+            "public_methods": 19,
             "uses_responsetrait": false,
             "uses_logging": true
         },
@@ -127,6 +127,22 @@
             "has_class": true,
             "public_methods": 3,
             "uses_responsetrait": true,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Controllers/ShieldAuth/Login.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Controllers/ShieldAuth/Register.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 2,
+            "uses_responsetrait": false,
             "uses_logging": false
         },
         {
@@ -255,6 +271,14 @@
             "has_class": true,
             "public_methods": 4,
             "uses_responsetrait": false,
+            "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/BudgetController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 5,
+            "uses_responsetrait": true,
             "uses_logging": true
         },
         {
@@ -416,6 +440,22 @@
             "public_methods": 2,
             "uses_responsetrait": false,
             "uses_logging": true
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/MobileAuthController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 4,
+            "uses_responsetrait": false,
+            "uses_logging": false
+        },
+        {
+            "path": "app/Modules/APIs/Controllers/MobileController.php",
+            "has_namespace": true,
+            "has_class": true,
+            "public_methods": 4,
+            "uses_responsetrait": false,
+            "uses_logging": false
         },
         {
             "path": "app/Modules/APIs/Controllers/OpsAPIController.php",
@@ -1247,7 +1287,7 @@
             "has_class": true,
             "public_methods": 4,
             "uses_responsetrait": false,
-            "uses_logging": false
+            "uses_logging": true
         },
         {
             "path": "app/Modules/PropFirms/Controllers/ReplayController.php",
@@ -1365,7 +1405,7 @@
             "path": "app/Modules/User/Controllers/BudgetController.php",
             "has_namespace": true,
             "has_class": true,
-            "public_methods": 52,
+            "public_methods": 48,
             "uses_responsetrait": true,
             "uses_logging": true
         },

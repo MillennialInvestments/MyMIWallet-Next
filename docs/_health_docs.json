@@ -1,11 +1,11 @@
 {
-    "generated_at": "2026-04-15 12:09:26",
-    "total_md_files": 1614,
-    "readme_files": 124,
+    "generated_at": "2026-04-23 03:19:45",
+    "total_md_files": 1654,
+    "readme_files": 130,
     "directories": [
         {
             "directory": "docs/ops",
-            "md_files": 45,
+            "md_files": 47,
             "has_readme": true
         },
         {
@@ -94,6 +94,11 @@
             "has_readme": true
         },
         {
+            "directory": "docs",
+            "md_files": 28,
+            "has_readme": true
+        },
+        {
             "directory": "docs/predictions",
             "md_files": 3,
             "has_readme": true
@@ -134,8 +139,28 @@
             "has_readme": true
         },
         {
-            "directory": "docs",
-            "md_files": 24,
+            "directory": "docs/_tmp/auth-debug",
+            "md_files": 1,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_tmp/resolution/auth",
+            "md_files": 3,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_tmp/resolution/routes",
+            "md_files": 6,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_tmp/resolution/frontend",
+            "md_files": 6,
+            "has_readme": false
+        },
+        {
+            "directory": "docs/_tmp",
+            "md_files": 1,
             "has_readme": true
         },
         {
@@ -1185,7 +1210,7 @@
         },
         {
             "directory": "docs/mobile",
-            "md_files": 1,
+            "md_files": 2,
             "has_readme": true
         },
         {
@@ -1880,12 +1905,12 @@
         },
         {
             "directory": "docs/APIs/scraped",
-            "md_files": 1,
+            "md_files": 4,
             "has_readme": false
         },
         {
             "directory": "docs/APIs/reports",
-            "md_files": 4,
+            "md_files": 7,
             "has_readme": false
         },
         {
@@ -1986,6 +2011,31 @@
         {
             "directory": "docs/platform",
             "md_files": 5,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/_baseline/auth",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/_baseline",
+            "md_files": 1,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/agents",
+            "md_files": 4,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/schemas",
+            "md_files": 2,
+            "has_readme": true
+        },
+        {
+            "directory": "docs/runbooks",
+            "md_files": 2,
             "has_readme": true
         }
     ]

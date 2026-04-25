@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-04-15 12:09:26",
+    "generated_at": "2026-04-23 03:19:45",
     "models": [
         {
             "path": "app/Models/AIOps/FormTestModel.php",
@@ -599,6 +599,11 @@
         {
             "path": "app/Models/MgmtBudgetModel.php",
             "table": "bf_users_budgeting",
+            "primary_key": "id"
+        },
+        {
+            "path": "app/Models/MobileAuthTokenModel.php",
+            "table": "bf_mobile_auth_tokens",
             "primary_key": "id"
         },
         {

@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-04-22T07:00:01Z
+> Run: 2026-04-25T07:00:02Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -450,11 +450,17 @@
   - ❌ No obvious code match found (heuristic)
 - docs/APIs/reports/developer-webull-com-apis-docs-20260415-132825-integration-report.md
   - ❌ No obvious code match found (heuristic)
+- docs/APIs/reports/github-com-mempalace-mempalace-20260422-172023-integration-report.md
+  - ❌ No obvious code match found (heuristic)
 - docs/APIs/scraped/api-tradovate-com-20260412-111828-raw.md
   - ❌ No obvious code match found (heuristic)
 - docs/APIs/scraped/canva-dev-docs-apps-api-latest-20260419-194931-raw.md
   - ❌ No obvious code match found (heuristic)
 - docs/APIs/scraped/developer-webull-com-apis-docs-20260415-132825-raw.md
+  - ❌ No obvious code match found (heuristic)
+- docs/APIs/scraped/github-com-mempalace-mempalace-20260422-172023-raw.md
+  - ❌ No obvious code match found (heuristic)
+- docs/Budget-Dashboard-Repair-Report.md
   - ❌ No obvious code match found (heuristic)
 - docs/CRON.md
   - ❌ No obvious code match found (heuristic)
@@ -485,6 +491,8 @@
 - docs/_audit/ci4-logger-hardening-2026-02-18.md
   - ❌ No obvious code match found (heuristic)
 - docs/_audit_report.md
+  - ❌ No obvious code match found (heuristic)
+- docs/_baseline/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/_baseline/auth/README.md
   - ❌ No obvious code match found (heuristic)
@@ -524,6 +532,8 @@
   - ❌ No obvious code match found (heuristic)
 - docs/_support/aiops-init.md
   - ❌ No obvious code match found (heuristic)
+- docs/_tmp/README.md
+  - ❌ No obvious code match found (heuristic)
 - docs/_tmp/auth-debug/auth-audit-resolution-2026-04-19.md
   - ❌ No obvious code match found (heuristic)
 - docs/_tmp/resolution/auth/redirect-url-auth.resolution.md
@@ -561,6 +571,14 @@
 - docs/adr/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/adr/_index.md
+  - ❌ No obvious code match found (heuristic)
+- docs/agents/README.md
+  - ❌ No obvious code match found (heuristic)
+- docs/agents/alert-ingestion-agent.md
+  - ❌ No obvious code match found (heuristic)
+- docs/agents/daily-debug-pr-agent.md
+  - ❌ No obvious code match found (heuristic)
+- docs/agents/marketing-curator-agent.md
   - ❌ No obvious code match found (heuristic)
 - docs/ai-cost-controls.md
   - ❌ No obvious code match found (heuristic)
@@ -788,22 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/chatgpt/extraction/Step5_human_requirements.md
   - ❌ No obvious code match found (heuristic)
-- docs/chatgpt/extraction/Step6_validation_signoff.md
-  - ❌ No obvious code match found (heuristic)
-- docs/chatgpt/extraction/Step7_rollback_recovery.md
-  - ❌ No obvious code match found (heuristic)
-- docs/chatgpt/extraction/Step8_indexing_metrcs.md
-  - ❌ No obvious code match found (heuristic)
-- docs/chatgpt/extraction_standards_step_1.md
-  - ❌ No obvious code match found (heuristic)
-- docs/chatgpt/extraction_standards_step_2.md
-  - ❌ No obvious code match found (heuristic)
-- docs/chatgpt/extraction_standards_step_3.md
-  - ❌ No obvious code match found (heuristic)
-- docs/chatgpt/mymi_alert_system/standards.md
-  - ❌ No obvious code match found (heuristic)
-- docs/chatgpt/processed/unresolved.md
-  - ❌ No obvious code match found (heuristic)
-- docs/chatgpt/prompt_template.md
-  - ❌ No obvious code match found (heuristic)
-- … and 1035 more
+- … and 1050 more
