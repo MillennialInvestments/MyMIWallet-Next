@@ -74,8 +74,8 @@ $subViewData = [
             <div class="content">
                 <div class="ratio ratio-16x9 mb-5">
                     <iframe width="560" height="315" src="https://www.youtube.com/embed/example_video_id" 
-                            title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
-                            encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+                            title="YouTube video player" frameborder="0" allow="autoplay; clipboard-write; 
+                            gyroscope; picture-in-picture; web-share" allowfullscreen>
                     </iframe>
                 </div>
                 <h2>Need Help?</h2>

@@ -80,6 +80,38 @@ $deleteType = $mapDeleteType[$walletCategory] ?? 'Bank';
   .skeleton { background: linear-gradient(90deg, #eee 25%, #f6f6f6 37%, #eee 63%); background-size: 400% 100%; animation: shimmer 1.2s infinite; border-radius:.5rem; }
   @keyframes shimmer { 0%{background-position:100% 0} 100%{background-position:-100% 0} }
   .card-dashed { border: 2px dashed #ced4da; }
+  iframe[id^="plaid-link-iframe"] {
+    position: fixed !important;
+    inset: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 2147483647 !important;
+    background: transparent !important;
+    transform: none !important;
+}
+
+html.plaid-link-open,
+body.plaid-link-open {
+    overflow: hidden !important;
+}
+
+body.plaid-link-open .nk-wrap,
+body.plaid-link-open .nk-main,
+body.plaid-link-open .nk-content,
+body.plaid-link-open .modal,
+body.plaid-link-open .modal-dialog,
+body.plaid-link-open .modal-content {
+    transform: none !important;
+    filter: none !important;
+    perspective: none !important;
+}
 </style>
 
 <div id="walletSection-<?= esc($dom) ?>"><!-- wrapper used by JS scoping -->
@@ -320,7 +352,7 @@ $deleteType = $mapDeleteType[$walletCategory] ?? 'Bank';
 <script <?= $nonce['script'] ?? '' ?>>
 window.addEventListener('load', function(){  // <-- wait until ALL scripts (Bootstrap, etc.) are ready
   // --- Bootstrap safety helpers ---
-  function hasBS(){ return !!(window.bootstrap && bootstrap.Modal && bootstrap.Toast && bootstrap.Tooltip); }
+  // function hasBS(){ return !!(window.bootstrap && bootstrap.Modal && bootstrap.Toast && bootstrap.Tooltip); }
   function safeTooltip(el){ try { return hasBS() ? new bootstrap.Tooltip(el) : null; } catch(_) { return null; } }
   function safeModal(el){ try { return hasBS() ? new bootstrap.Modal(el) : { show(){}, hide(){} }; } catch(_) { return { show(){}, hide(){} }; } }
   function safeToast(el, opts){ try { return hasBS() ? new bootstrap.Toast(el, opts) : { show(){}, hide(){} }; } catch(_) { return { show(){}, hide(){} }; } }
@@ -410,54 +442,76 @@ window.addEventListener('load', function(){  // <-- wait until ALL scripts (Boot
     safeToast(el, { delay: 2000 }).show();
   }
 
-  function renderWalletCard(w){
+    function renderWalletCard(w){
     const id = w.id;
     const displayNameRaw = w.nickname || w.label || w.account_name || w.name || w.provider || 'Wallet';
     const displayName = String(displayNameRaw).replace(/</g, '&lt;');
     const provider = (w.provider || '').toLowerCase();
     const isLiability = /credit|debt|loan|card/i.test(w.wallet_type || '');
-    const amountRaw   = getAmount(w);
-    const amount      = isLiability ? -Math.abs(amountRaw) : Math.abs(amountRaw);
+    const amountRaw = getAmount(w);
+    const amount = isLiability ? -Math.abs(amountRaw) : Math.abs(amountRaw);
     const amountClass = amount < 0 ? 'text-danger' : '';
-    const iconCls  = cardIcon(provider);
-    const details  = detailsUrlFor(id);
-    const updated  = w.updated_on ? new Date(w.updated_on).toLocaleString() : '';
+    const iconCls = cardIcon(provider);
+    const details = detailsUrlFor(id);
+    const updated = w.updated_on ? new Date(w.updated_on).toLocaleString() : '';
+    const isPlaid = provider === 'plaid';
 
     return `
-<div class="col-xxl-3 col-lg-4 col-sm-6" data-wallet-id="${id}">
-  <div class="card card-bordered h-100">
-    <div class="card-body d-flex flex-column">
-      <div class="d-flex align-items-center mb-2">
-        <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center me-2" style="width:40px;height:40px;">
-          <i class="icon ${iconCls}" style="width:40px; padding: 1em"></i>
+    <div class="col-xxl-3 col-lg-4 col-sm-6" data-wallet-id="${id}">
+    <div class="card card-bordered h-100">
+        <div class="card-body d-flex flex-column">
+        <div class="d-flex align-items-center mb-2">
+            <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center me-2" style="width:40px;height:40px;">
+            <i class="icon ${iconCls}" style="width:40px; padding: 1em"></i>
+            </div>
+            <div class="flex-grow-1">
+            <h6 class="mb-0">${displayName}</h6>
+            <div class="text-muted small text-truncate">${provider ? provider.toUpperCase() : '—'} · <span class="text-nowrap">Updated: ${updated || '—'}</span></div>
+            </div>
         </div>
-        <div class="flex-grow-1">
-          <h6 class="mb-0">${displayName}</h6>
-          <div class="text-muted small text-truncate">${provider ? provider.toUpperCase() : '—'} · <span class="text-nowrap">Updated: ${updated || '—'}</span></div>
+
+        <div class="mt-1">
+            <div class="d-flex align-items-end justify-content-between">
+            <div>
+                <div class="fs-5 fw-semibold ${amountClass}">${fmtUSD(amount)}</div>
+                <div class="text-muted small">Estimated Balance</div>
+            </div>
+            <span class="wallet-pill bg-${w.status==='linked'?'success':'secondary'}-subtle text-${w.status==='linked'?'success':'secondary'}">${w.status ?? 'linked'}</span>
+            </div>
+
+            <div class="h-50 d-flex flex-wrap gap-2 mt-3">
+            <a href="${details}" class="btn btn-outline-primary btn-sm">
+                <i class="icon ni ni-list-index me-1"></i> Details
+            </a>
+
+            <button class="btn btn-outline-secondary btn-sm dynamicModalLoader"
+                    data-formtype="Edit"
+                    data-endpoint="edit${walletEndpointTokenForCategory()}"
+                    data-accountid="${id}">
+                <i class="icon ni ni-pen me-1"></i> Edit
+            </button>
+
+            ${isPlaid ? `
+                <button class="btn btn-outline-info btn-sm refresh-wallet-button" data-id="${id}">
+                <i class="icon ni ni-reload me-1"></i> Refresh
+                </button>
+                <button class="btn btn-outline-dark btn-sm sync-wallet-transactions-button" data-id="${id}">
+                <i class="icon ni ni-list-check me-1"></i> Sync Txns
+                </button>
+            ` : ''}
+
+            <a href="#" class="btn btn-outline-danger btn-sm delete-wallet-button"
+                data-id="${id}"
+                data-name="${displayName}"
+                data-type="<?=esc($deleteType)?>">
+                <i class="icon ni ni-minus me-1"></i> Delete
+            </a>
+            </div>
         </div>
-      </div>
-      <div class="mt-1">
-        <div class="d-flex align-items-end justify-content-between">
-          <div>
-            <div class="fs-5 fw-semibold ${amountClass}">${fmtUSD(amount)}</div>
-            <div class="text-muted small">Estimated Balance</div>
-          </div>
-          <span class="wallet-pill bg-${w.status==='linked'?'success':'secondary'}-subtle text-${w.status==='linked'?'success':'secondary'}">${w.status ?? 'linked'}</span>
         </div>
-        <div class="h-50 d-flex flex-wrap gap-2 mt-3">
-          <a href="${details}" class="btn btn-outline-primary btn-sm"><i class="icon ni ni-list-index me-1"></i> Details</a>
-          <button class="btn btn-outline-secondary btn-sm dynamicModalLoader" data-formtype="Edit" data-endpoint="edit${walletEndpointTokenForCategory()}" data-accountid="${id}">
-            <i class="icon ni ni-pen me-1"></i> Edit
-          </button>
-          <a href="#" class="btn btn-outline-danger btn-sm delete-wallet-button" data-id="${id}" data-name="${displayName}" data-type="<?=esc($deleteType)?>">
-            <i class="icon ni ni-minus me-1"></i> Delete
-          </a>
-        </div>
-      </div>
     </div>
-  </div>
-</div>`;
-  }
+    </div>`;
+    }
 
   async function loadWallets(){
     const apiUrl = getApiUrl();
@@ -597,96 +651,253 @@ window.addEventListener('load', function(){  // <-- wait until ALL scripts (Boot
     if (node) node.remove();
   });
 
-  document.getElementById('walletsList-<?=esc($dom)?>')?.addEventListener('click', async (e) => {
-    const btn = e.target.closest('.delete-wallet-button'); if (!btn) return;
-    e.preventDefault();
-    const id = btn.dataset.id, name = btn.dataset.name || 'this wallet', type = btn.dataset.type || 'Bank';
-    if (!id) return;
-    if (!window.confirm(`Delete ${name}? This will mark it deleted.`)) return;
+    document.getElementById('walletsList-<?=esc($dom)?>')?.addEventListener('click', async function (e) {
+    var deleteBtn = e.target.closest('.delete-wallet-button');
+    if (deleteBtn) {
+        e.preventDefault();
 
-    const url  = siteUrl("Wallets/Delete/" + encodeURIComponent(type) + "/" + encodeURIComponent(id));
-    const body = buildFormBody({ [CSRF_FIELD]: currentCsrfValue() });
+        var id = deleteBtn.dataset.id;
+        var name = deleteBtn.dataset.name || 'this wallet';
+        var type = deleteBtn.dataset.type || 'Bank';
 
-    try {
-      const res = await fetch(url, {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          'X-CSRF-TOKEN': csrfValue,
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-        },
-        body
-      });
-      const j = await res.json().catch(()=>({}));
-      updateCsrfFromResponse(res, j);
+        if (!id) return;
+        if (!window.confirm('Delete ' + name + '? This will mark it deleted.')) return;
 
-      if (res.ok && j.status === 'success') {
-        window.dispatchEvent(new CustomEvent('wallet:deleted', { detail: { id: Number(id) } }));
-        const t = byId('walletToast'); safeToast(t, { delay: 1500 }).show();
-      } else {
-        alert(j.message || 'Delete failed');
-      }
-    } catch {
-      alert('Network error deleting wallet.');
-    }
-  });
+        var url = siteUrl('Wallets/Delete/' + encodeURIComponent(type) + '/' + encodeURIComponent(id));
+        var body = buildFormBody({});
+        body += (body ? '&' : '') + encodeURIComponent(CSRF_FIELD) + '=' + encodeURIComponent(currentCsrfValue());
 
-  // ---- Plaid Link ----
-  async function ensurePlaidLinkLoaded(){
-    if (window.Plaid && window.Plaid.create) return true;
-    await new Promise((resolve, reject) => {
-      const s = document.createElement('script');
-      s.src = 'https://cdn.plaid.com/link/v2/stable/link-initialize.js';
-      s.async = true;
-      s.onload = resolve; s.onerror = reject;
-      document.head.appendChild(s);
-    });
-    return !!(window.Plaid && window.Plaid.create);
-  }
-
-  async function startPlaidLink(){
-    const res = await fetch(siteUrl('API/Wallets/Plaid/Link-Token'), {
-      method: 'GET', credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' }
-    });
-    const j = await res.json().catch(()=>({}));
-    updateCsrfFromResponse(res, j);
-    if (!res.ok || j.status !== 'success' || !j.link_token) { toast(j.message || 'Could not start Plaid.'); return; }
-
-    const ok = await ensurePlaidLinkLoaded(); if (!ok) { toast('Plaid script failed to load.'); return; }
-
-    const handler = Plaid.create({
-      token: j.link_token,
-      onSuccess: async (public_token, metadata) => {
         try {
-          const body = new URLSearchParams();
-          body.append(CSRF_FIELD, csrfValue);
-          body.append('public_token', public_token);
-          if (metadata) body.append('metadata', JSON.stringify(metadata));
-
-          const res2 = await fetch(siteUrl('API/Wallets/Plaid/Exchange'), {
+        var res = await fetch(url, {
             method: 'POST',
             credentials: 'same-origin',
             headers: {
-              'X-Requested-With': 'XMLHttpRequest',
-              'X-CSRF-TOKEN': csrfValue,
-              'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': csrfValue,
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
             },
-            body: body.toString()
-          });
-          const j2 = await res2.json().catch(()=>({}));
-          if (res2.ok && j2.status === 'success') { toast('Accounts linked.'); loadWallets(); }
-          else { toast(j2.message || 'Linking failed.'); }
-        } catch { toast('Network error during linking.'); }
-      },
-      onExit: (err) => { if (err) toast(err.display_message || err.error_message || 'Plaid exited.'); }
+            body: body
+        });
+
+        var j = await res.json().catch(function(){ return {}; });
+        updateCsrfFromResponse(res, j);
+
+        if (res.ok && j.status === 'success') {
+            window.dispatchEvent(new CustomEvent('wallet:deleted', { detail: { id: Number(id) } }));
+            safeToast(byId('walletToast'), { delay: 1500 }).show();
+        } else {
+            alert(j.message || 'Delete failed');
+        }
+        } catch (err) {
+        console.error('Delete wallet error:', err);
+        alert('Network error deleting wallet.');
+        }
+
+        return;
+    }
+
+    var refreshBtn = e.target.closest('.refresh-wallet-button');
+    if (refreshBtn) {
+        e.preventDefault();
+
+        var refreshId = refreshBtn.dataset.id;
+        if (!refreshId) return;
+
+        try {
+        var resRefresh = await fetch(siteUrl('API/Wallets/Plaid/Refresh/' + encodeURIComponent(refreshId)), {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': csrfValue
+            }
+        });
+
+        var jRefresh = await resRefresh.json().catch(function(){ return {}; });
+        updateCsrfFromResponse(resRefresh, jRefresh);
+
+        if (resRefresh.ok && jRefresh.status === 'success') {
+            toast('Balance refreshed.');
+            loadWallets();
+        } else {
+            toast(jRefresh.message || 'Refresh failed.');
+        }
+        } catch (err) {
+        console.error('Refresh wallet error:', err);
+        toast('Network error refreshing wallet.');
+        }
+
+        return;
+    }
+
+    var syncBtn = e.target.closest('.sync-wallet-transactions-button');
+    if (syncBtn) {
+        e.preventDefault();
+
+        var syncId = syncBtn.dataset.id;
+        if (!syncId) return;
+
+        try {
+        var resSync = await fetch(siteUrl('API/Wallets/Plaid/Sync-Transactions/' + encodeURIComponent(syncId)), {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': csrfValue
+            }
+        });
+
+        var jSync = await resSync.json().catch(function(){ return {}; });
+        updateCsrfFromResponse(resSync, jSync);
+
+        if (resSync.ok && jSync.status === 'success') {
+            var inserted = (jSync.data && jSync.data.inserted) ? jSync.data.inserted : 0;
+            toast('Transactions synced' + (inserted ? ': ' + inserted + ' new' : '.'));
+        } else {
+            toast(jSync.message || 'Transaction sync failed.');
+        }
+        } catch (err) {
+        console.error('Sync wallet transactions error:', err);
+        toast('Network error syncing transactions.');
+        }
+
+        return;
+    }
     });
-    handler.open();
+
+  // ---- Plaid Link ----
+  function openPlaidLink(handler) {
+    document.querySelectorAll('.modal.show').forEach(function (modalEl) {
+      if (window.bootstrap && bootstrap.Modal) {
+        var modalInstance = bootstrap.Modal.getInstance(modalEl);
+        if (modalInstance) {
+          modalInstance.hide();
+        }
+      }
+    });
+
+    document.documentElement.classList.add('plaid-link-open');
+    document.body.classList.add('plaid-link-open');
+
+    setTimeout(function () {
+      handler.open();
+    }, 250);
+  }
+
+  function ensurePlaidLinkLoaded() {
+    return new Promise(function (resolve, reject) {
+      if (window.Plaid && window.Plaid.create) {
+        resolve(true);
+        return;
+      }
+
+      var s = document.createElement('script');
+      s.src = 'https://cdn.plaid.com/link/v2/stable/link-initialize.js';
+      s.async = true;
+      s.onload = function () {
+        resolve(!!(window.Plaid && window.Plaid.create));
+      };
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  function startPlaidLink() {
+    fetch(siteUrl('API/Wallets/Plaid/Link-Token'), {
+      method: 'GET',
+      credentials: 'same-origin',
+      headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+    .then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (j) {
+        updateCsrfFromResponse(res, j);
+        return { res: res, j: j };
+      });
+    })
+    .then(function (payload) {
+      var res = payload.res;
+      var j = payload.j;
+
+      if (!res.ok || j.status !== 'success' || !j.link_token) {
+        toast(j.message || 'Could not start Plaid.');
+        return null;
+      }
+
+      return ensurePlaidLinkLoaded().then(function (ok) {
+        if (!ok) {
+          toast('Plaid script failed to load.');
+          return null;
+        }
+
+        var handler = Plaid.create({
+          token: j.link_token,
+          onSuccess: function (public_token, metadata) {
+            document.documentElement.classList.remove('plaid-link-open');
+            document.body.classList.remove('plaid-link-open');
+
+            var body = new URLSearchParams();
+            body.append(CSRF_FIELD, csrfValue);
+            body.append('public_token', public_token);
+            if (metadata) {
+              body.append('metadata', JSON.stringify(metadata));
+            }
+
+            fetch(siteUrl('API/Wallets/Plaid/Exchange'), {
+              method: 'POST',
+              credentials: 'same-origin',
+              headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': csrfValue,
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+              },
+              body: body.toString()
+            })
+            .then(function (res2) {
+              return res2.json().catch(function () { return {}; }).then(function (j2) {
+                updateCsrfFromResponse(res2, j2);
+
+                if (res2.ok && j2.status === 'success') {
+                  toast('Accounts linked.');
+                  loadWallets();
+                } else {
+                  toast(j2.message || 'Linking failed.');
+                }
+              });
+            })
+            .catch(function () {
+              toast('Network error during linking.');
+            });
+          },
+          onExit: function (err, metadata) {
+            document.documentElement.classList.remove('plaid-link-open');
+            document.body.classList.remove('plaid-link-open');
+
+            if (err) {
+              console.error('Plaid exit error:', err, metadata);
+            }
+          }
+        });
+
+        openPlaidLink(handler);
+        return true;
+      });
+    })
+    .catch(function (err) {
+      console.error('Plaid start error:', err);
+      document.documentElement.classList.remove('plaid-link-open');
+      document.body.classList.remove('plaid-link-open');
+      toast('Could not start Plaid.');
+    });
   }
 
   if (section) {
-    section.querySelectorAll(`#link-button-${DOM}, #link-button-card-${DOM}`)
-      .forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); startPlaidLink(); }));
+    var plaidButtons = section.querySelectorAll('#link-button-' + DOM + ', #link-button-card-' + DOM);
+    plaidButtons.forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        startPlaidLink();
+      });
+    });
   }
 
   // Initial load AFTER everything is ready

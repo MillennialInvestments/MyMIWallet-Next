@@ -131,69 +131,64 @@ class WalletService
 
     /* ----------------------- CREATE (MAIN + SUBSIDIARY) ----------------------- */
 
-    public function addBankWallet(array $accountData): array
+    public function addBankWallet(array $payload): int
     {
-        $db  = db_connect();
-        $db->transStart();
-        $now = date('Y-m-d H:i:s');
+        $walletModel = model(\App\Models\WalletModel::class);
 
-        // Normalize credentials for storage
-        $provider    = $accountData['provider']    ?? null;
-        $credentials = $accountData['credentials'] ?? null;
-        if (is_array($credentials)) {
-            $credentials = json_encode($credentials, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        $credentials = $payload['credentials'] ?? [];
+        if (is_string($credentials)) {
+            $credentials = json_decode($credentials, true) ?: [];
         }
 
-        // Main wallet row
-        $walletRow = [
+        $walletData = [
             'status'      => 1,
             'active'      => 1,
             'deleted'     => 0,
-            'beta'        => ($accountData['beta'] ?? 'No') === 'Yes' ? 1 : 0,
-            'user_id'     => (int)($accountData['user_id'] ?? 0),
-            'user_email'  => $accountData['user_email'] ?? null,
-            'username'    => $accountData['username'] ?? null,
+            'beta'        => $payload['beta'] ?? 'No',
+            'user_id'     => (int) ($payload['user_id'] ?? 0),
+            'user_email'  => (string) ($payload['user_email'] ?? ''),
+            'username'    => (string) ($payload['username'] ?? ''),
             'wallet_type' => 'Banking',
-            'amount'      => (float)($accountData['balance'] ?? 0),
-            'nickname'    => $accountData['nickname'] ?? null,
-            'broker'      => $accountData['bank_name'] ?? null,
-            'provider'    => $provider,           // NEW
-            'credentials' => $credentials,        // NEW (JSON string or null)
-            'created_on'  => $now,
-            'modified_on' => $now,
+            'category'    => 'financial',
+            'amount'      => (float) ($payload['amount'] ?? 0),
+            'nickname'    => (string) ($payload['nickname'] ?? ''),
+            'broker'      => (string) ($payload['broker'] ?? ''),
+            'provider'    => 'plaid',
+            'label'       => (string) ($payload['nickname'] ?? ''),
+            'credentials' => json_encode($credentials, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+            'created_on'  => date('Y-m-d H:i:s'),
+            'modified_on' => date('Y-m-d H:i:s'),
         ];
 
-        $walletId = $this->walletModel->addWalletReturnId($walletRow);
+        $walletId = $walletModel->addWalletReturnId($walletData);
 
-        // Subsidiary bank row
-        $bankRow = [
-            'status'            => 1,
-            'deleted'           => 0,
-            'user_id'           => (int)($accountData['user_id'] ?? 0),
-            'user_email'        => $accountData['user_email'] ?? null,
-            'username'          => $accountData['username'] ?? null,
-            'wallet_id'         => $walletId,
-            'bank_name'         => $accountData['bank_name'] ?? null,
-            'account_type'      => $accountData['account_type'] ?? null,
-            'account_number'    => $accountData['account_number'] ?? null,
-            'routing_number'    => $accountData['routing_number'] ?? null,
-            'bank_account_owner'=> $accountData['bank_account_owner'] ?? null,
-            'balance'           => (float)($accountData['balance'] ?? 0),
-            'nickname'          => $accountData['nickname'] ?? null,
-            'created_on'        => $now,
-            'updated_on'        => $now,
-        ];
-
-        $accountId = $this->walletModel->addBankWalletReturnId($bankRow);
-
-        $db->transComplete();
-        if ($db->transStatus() === false) {
-            throw new \RuntimeException('Failed to add bank wallet.');
+        if ($walletId <= 0) {
+            throw new \RuntimeException('Failed to add wallet.');
         }
-        return ['wallet_id' => $walletId, 'account_id' => $accountId];
+
+        $bankData = [
+            'status'        => 1,
+            'deleted'       => 0,
+            'user_id'       => (int) ($payload['user_id'] ?? 0),
+            'user_email'    => (string) ($payload['user_email'] ?? ''),
+            'username'      => (string) ($payload['username'] ?? ''),
+            'wallet_id'     => $walletId,
+            'bank_name'     => (string) ($payload['broker'] ?? ''),
+            'account_type'  => (string) ($payload['account_type'] ?? 'Checking'),
+            'account_number'=> (string) ($payload['mask'] ?? ''),
+            'nickname'      => (string) ($payload['nickname'] ?? ''),
+            'balance'       => (float) ($payload['amount'] ?? 0),
+            'created_on'    => date('Y-m-d H:i:s'),
+        ];
+
+        if (method_exists($walletModel, 'addBankWalletReturnId')) {
+            $walletModel->addBankWalletReturnId($bankData);
+        } else {
+            $walletModel->addBankWallet($bankData);
+        }
+
+        return $walletId;
     }
-
-
     public function addCreditWallet($accountData): array
     {
         $db  = db_connect();
@@ -968,7 +963,200 @@ class WalletService
     }
 
     /* ------------------------------- EDIT FLOWS ------------------------------- */
+    public function refreshPlaidWalletBalance(int $userId, int $walletId): array
+    {
+        $walletModel = model(\App\Models\WalletModel::class);
+        $wallet = $walletModel->getWalletById($walletId);
 
+        if (! $wallet || (int) ($wallet['user_id'] ?? 0) !== $userId) {
+            throw new \RuntimeException('Wallet not found.');
+        }
+
+        $credentials = is_string($wallet['credentials'] ?? null)
+            ? json_decode($wallet['credentials'], true)
+            : ($wallet['credentials'] ?? []);
+
+        if (! is_array($credentials)) {
+            $credentials = [];
+        }
+
+        $encryptedAccessToken = (string) ($credentials['access_token'] ?? '');
+        $accountId = (string) ($credentials['account_id'] ?? '');
+
+        if ($encryptedAccessToken === '' || $accountId === '') {
+            throw new \RuntimeException('Plaid credentials are incomplete.');
+        }
+
+        $plaid = new \App\Libraries\MyMIPlaid();
+        $accessToken = $plaid->decryptToken($encryptedAccessToken);
+
+        $accounts = $plaid->getAccountsWithBalances($accessToken);
+
+        $matched = null;
+        foreach ($accounts as $account) {
+            if ((string) ($account['account_id'] ?? '') === $accountId) {
+                $matched = $account;
+                break;
+            }
+        }
+
+        if (! $matched) {
+            throw new \RuntimeException('Plaid account not found during refresh.');
+        }
+
+        $current = (float) ($matched['balances']['current'] ?? 0);
+        $available = isset($matched['balances']['available']) ? (float) $matched['balances']['available'] : null;
+        $name = (string) ($matched['name'] ?? ($wallet['nickname'] ?? 'Plaid Account'));
+        $mask = (string) ($matched['mask'] ?? '');
+
+        $walletPatch = [
+            'amount'            => $current,
+            'nickname'          => $name,
+            'last_balance_sync' => date('Y-m-d H:i:s'),
+            'sync_status'       => 'ok',
+            'last_sync_error'   => null,
+        ];
+
+        $walletModel->editWallet($walletId, $walletPatch);
+
+        $subsidiary = $walletModel->findSubsidiaryForWallet($wallet);
+        if (!empty($subsidiary['row']) && !empty($subsidiary['table'])) {
+            $subsTable = $subsidiary['table'];
+            $subsId = (int) ($subsidiary['row']['id'] ?? 0);
+
+            if ($subsId > 0) {
+                $subsPatch = [];
+
+                if ($subsTable === 'bf_users_bank_accounts') {
+                    $subsPatch = [
+                        'nickname' => $name,
+                        'balance'  => $current,
+                    ];
+                    if ($mask !== '' && array_key_exists('account_number', $walletModel->getColumns($subsTable))) {
+                        $subsPatch['account_number'] = $mask;
+                    }
+                } elseif ($subsTable === 'bf_users_credit_accounts') {
+                    $subsPatch = [
+                        'nickname'          => $name,
+                        'current_balance'   => $current,
+                    ];
+                    if ($available !== null) {
+                        $subsPatch['available_balance'] = $available;
+                    }
+                }
+
+                if (!empty($subsPatch)) {
+                    $subsPatch = array_intersect_key($subsPatch, $walletModel->getColumns($subsTable));
+                    $walletModel->db->table($subsTable)->where('id', $subsId)->update($subsPatch);
+                }
+            }
+        }
+
+        return [
+            'walletId'   => $walletId,
+            'balance'    => $current,
+            'available'  => $available,
+            'account_id' => $accountId,
+            'name'       => $name,
+        ];
+    }
+
+    public function syncPlaidTransactions(
+        int $userId,
+        int $walletId,
+        int $daysBack = 90
+    ): array {
+        $walletModel = model(\App\Models\WalletModel::class);
+        $wallet = $walletModel->getWalletById($walletId);
+
+        if (! $wallet || (int) ($wallet['user_id'] ?? 0) !== $userId) {
+            throw new \RuntimeException('Wallet not found.');
+        }
+
+        $credentials = is_string($wallet['credentials'] ?? null)
+            ? json_decode($wallet['credentials'], true)
+            : ($wallet['credentials'] ?? []);
+
+        if (! is_array($credentials)) {
+            $credentials = [];
+        }
+
+        $encryptedAccessToken = (string) ($credentials['access_token'] ?? '');
+        $accountId = (string) ($credentials['account_id'] ?? '');
+
+        if ($encryptedAccessToken === '' || $accountId === '') {
+            throw new \RuntimeException('Plaid credentials are incomplete.');
+        }
+
+        $plaid = new \App\Libraries\MyMIPlaid();
+        $accessToken = $plaid->decryptToken($encryptedAccessToken);
+
+        $startDate = date('Y-m-d', strtotime('-' . $daysBack . ' days'));
+        $endDate   = date('Y-m-d');
+
+        $result = $plaid->getTransactions($accessToken, $startDate, $endDate, [
+            'account_ids' => [$accountId],
+            'count'       => 500,
+            'offset'      => 0,
+        ]);
+
+        $inserted = 0;
+        $skipped = 0;
+
+        foreach (($result['transactions'] ?? []) as $txn) {
+            $externalId = (string) ($txn['transaction_id'] ?? '');
+            if ($externalId === '') {
+                $skipped++;
+                continue;
+            }
+
+            if ($walletModel->walletTransactionExists($userId, $walletId, $externalId)) {
+                $skipped++;
+                continue;
+            }
+
+            $amount = (float) ($txn['amount'] ?? 0);
+            $name   = (string) ($txn['name'] ?? 'Plaid Transaction');
+            $date   = (string) ($txn['date'] ?? date('Y-m-d'));
+            $cat    = isset($txn['personal_finance_category']['primary'])
+                ? (string) $txn['personal_finance_category']['primary']
+                : ((isset($txn['category'][0])) ? (string) $txn['category'][0] : '');
+
+            $payload = [
+                'user_id'        => $userId,
+                'wallet_id'      => $walletId,
+                'external_id'    => $externalId,
+                'transaction_id' => $externalId,
+                'provider'       => 'plaid',
+                'trans_type'     => $amount < 0 ? 'Deposit' : 'Withdraw',
+                'amount'         => abs($amount),
+                'description'    => $name,
+                'category'       => $cat,
+                'posted_date'    => $date,
+                'active'         => 'Yes',
+                'raw_payload'    => json_encode($txn, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+                'created_on'     => date('Y-m-d H:i:s'),
+            ];
+
+            if ($walletModel->insertWalletTransaction($payload) > 0) {
+                $inserted++;
+            } else {
+                $skipped++;
+            }
+        }
+
+        $walletModel->editWallet($walletId, [
+            'last_transaction_sync' => date('Y-m-d H:i:s'),
+            'sync_status'           => 'ok',
+            'last_sync_error'       => null,
+        ]);
+
+        return [
+            'inserted' => $inserted,
+            'skipped'  => $skipped,
+            'total'    => count($result['transactions'] ?? []),
+        ];
+    }
     private function syncMainWallet(string $type, int $walletId, array $subsData, array $ctx = []): bool
     {
         // IMPORTANT: banks use 'Banking' type to match the list filters.

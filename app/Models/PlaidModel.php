@@ -168,7 +168,7 @@ class PlaidModel extends Model
     {
         $curl = curl_init();
         curl_setopt_array($curl, [
-            CURLOPT_URL => 'https://sandbox.plaid.com/link/token/create',
+            CURLOPT_URL => $this->getPlaidBaseUrl() . '/link/token/create',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => json_encode([
@@ -187,9 +187,20 @@ class PlaidModel extends Model
         return json_decode($response, true);
     }
 
+    private function getPlaidBaseUrl(): string
+    {
+        $env = strtolower((string) env('PLAID_ENVIRONMENT', 'production'));
+
+        return match ($env) {
+            'production' => 'https://production.plaid.com',
+            'development' => 'https://development.plaid.com',
+            default => 'https://sandbox.plaid.com',
+        };
+    }
+    
     public function fetchBalanceData($accessToken)
     {
-        $url = "https://sandbox.plaid.com/accounts/balance/get";
+        $url = $this->getPlaidBaseUrl() . "/accounts/balance/get";
         $payload = json_encode([
             'client_id' => $this->client_id,
             'secret' => $this->secret,
@@ -213,7 +224,7 @@ class PlaidModel extends Model
 
     public function fetchTransactions($accessToken)
     {
-        $url = "https://sandbox.plaid.com/transactions/get";
+        $url = $this->getPlaidBaseUrl() . "/transactions/get";
         $startDate = date('Y-m-d', strtotime('-30 days'));
         $endDate = date('Y-m-d');
         $payload = json_encode([

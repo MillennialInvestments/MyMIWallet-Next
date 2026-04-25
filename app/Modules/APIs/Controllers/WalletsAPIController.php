@@ -184,7 +184,7 @@ class WalletsAPIController extends BaseAPIController
             'class'  => get_class($cfg),
             'file'   => $ref->getFileName(),
             'values' => [
-                'plaidEnvironment' => 'production' ?? null,
+                'plaidEnvironment' => $cfg->plaidEnvironment ?? null,
                 'plaidClientID'    => $cfg->plaidClientID ?? null,
                 'plaidSecret'      => (bool)($cfg->plaidSecret ?? null),        // true/false only
                 'plaidSandboxSecret'=> (bool)($cfg->plaidSandboxSecret ?? null),
@@ -298,88 +298,148 @@ class WalletsAPIController extends BaseAPIController
         }
     }
 
-    public function plaidExchange(): ResponseInterface
+    public function plaidExchange(): \CodeIgniter\HTTP\ResponseInterface
     {
         try {
-            $uid = $this->currentUserId();
-            if (!$uid) return $this->failUnauthorized('Unauthorized');
+            $uid = (int) (auth()->id() ?? session('user_id') ?? 0);
+            if ($uid <= 0) {
+                return $this->respond(['status' => 'error', 'message' => 'Unauthorized'], 401);
+            }
 
             $publicToken = (string) $this->request->getPost('public_token');
-            if (!$publicToken) return $this->failValidationErrors('Missing public_token');
+            $metadataRaw = (string) $this->request->getPost('metadata');
+            $metadata = $metadataRaw !== '' ? json_decode($metadataRaw, true) : [];
 
-            $plaid = new MyMIPlaid();
-            $ex = $plaid->exchangePublicToken($publicToken);
-            if (empty($ex['access_token'])) return $this->failServerError('Token exchange failed');
+            if ($publicToken === '') {
+                return $this->respond(['status' => 'error', 'message' => 'Missing public token.'], 422);
+            }
 
-            $access = $ex['access_token'];
-            $itemId = $ex['item_id'] ?? null;
+            $plaid = new \App\Libraries\MyMIPlaid();
+            $exchange = $plaid->exchangePublicToken($publicToken);
 
-            // Accounts with balances from Plaid
-            $accounts = $plaid->getAccountsWithBalances($access);
-            if (!is_array($accounts)) $accounts = [];
+            $accessToken = (string) ($exchange['access_token'] ?? '');
+            $itemId = (string) ($exchange['item_id'] ?? '');
 
-            // Build user context
-            $email = null; $username = null;
-            try { $u = $this->auth?->user(); if ($u){ $email = $u->email ?? null; $username = $u->username ?? null; } } catch (\Throwable $e) {}
+            if ($accessToken === '' || $itemId === '') {
+                return $this->respond([
+                    'status'  => 'error',
+                    'message' => 'Plaid token exchange failed.',
+                    'data'    => $exchange,
+                ], 500);
+            }
 
-            // Insert (or just insert) depository accounts as Bank wallets
-            $svc = new WalletService(service('logger'), new \App\Models\WalletModel());
-            $created = [];
+            $accountMeta = $metadata['account'] ?? (($metadata['accounts'][0] ?? []) ?: []);
+            $accountId   = (string) ($metadata['account_id'] ?? ($accountMeta['id'] ?? ''));
+            $accountName = (string) ($accountMeta['name'] ?? 'Plaid Account');
+            $mask        = (string) ($accountMeta['mask'] ?? '');
+            $institution = (string) ($metadata['institution']['name'] ?? 'Plaid');
 
-            foreach ($accounts as $acct) {
-                // Normalized getters whether object or array:
-                $type     = is_array($acct) ? ($acct['type'] ?? '') : ($acct->type ?? '');
-                $subtype  = is_array($acct) ? ($acct['subtype'] ?? '') : ($acct->subtype ?? '');
-                $name     = is_array($acct) ? ($acct['name'] ?? '') : ($acct->name ?? '');
-                $offName  = is_array($acct) ? ($acct['official_name'] ?? null) : ($acct->official_name ?? null);
-                $mask     = is_array($acct) ? ($acct['mask'] ?? null) : ($acct->mask ?? null);
-                $acctId   = is_array($acct) ? ($acct['account_id'] ?? null) : ($acct->account_id ?? null);
-                $balBlock = is_array($acct) ? ($acct['balances'] ?? []) : ($acct->balances ?? (object)[]);
-                $current  = is_array($balBlock) ? ($balBlock['current'] ?? null) : ($balBlock->current ?? null);
-                $avail    = is_array($balBlock) ? ($balBlock['available'] ?? null) : ($balBlock->available ?? null);
-                $balance  = $current ?? $avail ?? 0;
-
-                if (strtolower($type) !== 'depository') {
-                    // You can extend here to handle credit/loan/investment types if needed.
-                    continue;
+            $accounts = $plaid->getAccountsWithBalances($accessToken);
+            $matched = null;
+            foreach ($accounts as $account) {
+                if ((string) ($account['account_id'] ?? '') === $accountId) {
+                    $matched = $account;
+                    break;
                 }
-
-                $payload = [
-                    'beta'               => 'No',
-                    'user_id'            => $uid,
-                    'user_email'         => $email,
-                    'username'           => $username,
-                    'bank_name'          => $offName ?: $name ?: 'Bank',
-                    'account_type'       => $subtype ?: 'checking',
-                    'account_number'     => null,
-                    'routing_number'     => null,
-                    'bank_account_owner' => 'Yes',
-                    'balance'            => $balance,
-                    'nickname'           => $name ?: 'Bank',
-                    // Plaid-specific:
-                    'provider'           => 'plaid',
-                    'credentials'        => [
-                        'provider'     => 'plaid',
-                        'access_token' => $access,
-                        'item_id'      => $itemId,
-                        'account_id'   => $acctId,
-                        'mask'         => $mask,
-                    ],
-                ];
-
-                // Creates both bf_users_wallet (main) and bank subsidiary
-                $ids = $svc->addBankWallet($payload);
-                if (!empty($ids['wallet_id'])) $created[] = (int) $ids['wallet_id'];
+            }
+            if (!$matched && !empty($accounts)) {
+                $matched = $accounts[0];
+                $accountId = (string) ($matched['account_id'] ?? $accountId);
             }
 
-            if (!empty($created)) {
-                $this->invalidateCaches(['wallets', 'user:' . $uid]);
+            $currentBalance = (float) ($matched['balances']['current'] ?? 0);
+            $subtype = (string) ($matched['subtype'] ?? ($accountMeta['subtype'] ?? 'checking'));
+            $encryptedAccessToken = $plaid->encryptToken($accessToken);
+
+            $credentials = [
+                'access_token'     => $encryptedAccessToken,
+                'item_id'          => $itemId,
+                'account_id'       => $accountId,
+                'institution_name' => $institution,
+                'mask'             => $mask,
+                'raw_metadata'     => $metadata,
+            ];
+
+            $payload = [
+                'user_id'      => $uid,
+                'user_email'   => (string) (auth()->user()->email ?? session('email') ?? ''),
+                'username'     => (string) (auth()->user()->username ?? session('username') ?? ''),
+                'beta'         => 'No',
+                'amount'       => $currentBalance,
+                'nickname'     => $accountName,
+                'broker'       => $institution,
+                'account_type' => ucfirst($subtype),
+                'mask'         => $mask,
+                'credentials'  => $credentials,
+            ];
+
+            $walletService = service('walletService');
+            $walletId = $walletService->addBankWallet($payload);
+
+            if ($walletId <= 0) {
+                throw new \RuntimeException('Failed to add bank wallet.');
             }
 
-            return $this->respond(['status' => 'success', 'created' => $created]);
+            $refresh = $walletService->refreshPlaidWalletBalance($uid, $walletId);
+            $sync = $walletService->syncPlaidTransactions($uid, $walletId, 90);
+
+            return $this->respond([
+                'status'  => 'success',
+                'message' => 'Plaid account linked successfully.',
+                'walletId'=> $walletId,
+                'refresh' => $refresh,
+                'sync'    => $sync,
+            ]);
         } catch (\Throwable $e) {
             log_message('error', 'plaidExchange error: {m}', ['m' => $e->getMessage()]);
-            return $this->failServerError($e->getMessage());
+            return $this->respond([
+                'status'  => 'error',
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function refreshPlaidWallet($walletId): \CodeIgniter\HTTP\ResponseInterface
+    {
+        try {
+            $uid = (int) (auth()->id() ?? session('user_id') ?? 0);
+            if ($uid <= 0) {
+                return $this->respond(['status' => 'error', 'message' => 'Unauthorized'], 401);
+            }
+
+            $service = service('walletService');
+            $result = $service->refreshPlaidWalletBalance($uid, (int) $walletId);
+
+            return $this->respond([
+                'status'  => 'success',
+                'message' => 'Wallet balance refreshed.',
+                'data'    => $result,
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'refreshPlaidWallet error: {m}', ['m' => $e->getMessage()]);
+            return $this->respond(['status' => 'error', 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function syncPlaidTransactions($walletId): \CodeIgniter\HTTP\ResponseInterface
+    {
+        try {
+            $uid = (int) (auth()->id() ?? session('user_id') ?? 0);
+            if ($uid <= 0) {
+                return $this->respond(['status' => 'error', 'message' => 'Unauthorized'], 401);
+            }
+
+            $service = service('walletService');
+            $result = $service->syncPlaidTransactions($uid, (int) $walletId, 90);
+
+            return $this->respond([
+                'status'  => 'success',
+                'message' => 'Wallet transactions synced.',
+                'data'    => $result,
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'syncPlaidTransactions error: {m}', ['m' => $e->getMessage()]);
+            return $this->respond(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
     }
 

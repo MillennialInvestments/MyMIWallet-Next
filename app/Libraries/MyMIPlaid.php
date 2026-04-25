@@ -20,30 +20,31 @@ class MyMIPlaid
     {
         $cfg = config('APISettings');
 
-        $this->env = strtolower(env('PLAID_ENVIRONMENT') ?: ($cfg->plaidEnvironment ?? 'production'));
+        $this->env = strtolower((string) (env('PLAID_ENVIRONMENT') ?: ($cfg->plaidEnvironment ?? 'production')));
+
         $this->baseUrl = match ($this->env) {
-        'production'  => 'https://production.plaid.com',
-        'development' => 'https://development.plaid.com',
-        default       => 'https://sandbox.plaid.com',
+            'production'  => 'https://production.plaid.com',
+            'development' => 'https://development.plaid.com',
+            default       => 'https://sandbox.plaid.com',
         };
 
-
-        $this->clientId = (string) ($cfg->plaidClientID ?? env('PLAID_CLIENT_ID') ?? '');
-        // pick the correct secret for the active environment
         $this->clientId = (string) (env('PLAID_CLIENT_ID') ?: ($cfg->plaidClientID ?? ''));
-        $this->secret   = $this->env === 'sandbox'
+
+        $this->secret = $this->env === 'sandbox'
             ? (string) (env('PLAID_SANDBOX_SECRET') ?: ($cfg->plaidSandboxSecret ?? (env('PLAID_SECRET') ?: ($cfg->plaidSecret ?? ''))))
             : (string) (env('PLAID_SECRET') ?: ($cfg->plaidSecret ?? ''));
 
         $prods = env('PLAID_PRODUCTS') ?: ($cfg->plaidProducts ?? 'auth,transactions');
         $codes = env('PLAID_COUNTRY_CODES') ?: ($cfg->plaidCountryCodes ?? 'US');
 
-        $this->products     = array_values(array_filter(array_map('trim', is_array($prods) ? $prods : explode(',', (string)$prods))));
-        $this->countryCodes = array_values(array_filter(array_map('trim', is_array($codes) ? $codes : explode(',', (string)$codes))));
-        $this->redirectUri = (property_exists($cfg,'plaidRedirectUri') && $cfg->plaidRedirectUri)
-            ? $cfg->plaidRedirectUri
-            : null;
+        $this->products = array_values(array_filter(array_map('trim', is_array($prods) ? $prods : explode(',', (string) $prods))));
+        $this->countryCodes = array_values(array_filter(array_map('trim', is_array($codes) ? $codes : explode(',', (string) $codes))));
 
+        $this->redirectUri = (string) (
+            env('PLAID_REDIRECT_URI')
+            ?: ($cfg->plaidRedirectUri ?? '')
+        );
+        $this->redirectUri = $this->redirectUri !== '' ? $this->redirectUri : null;
 
         $this->http = service('curlrequest', [
             'baseURI' => $this->baseUrl,
@@ -52,7 +53,7 @@ class MyMIPlaid
             'timeout' => 15,
         ]);
 
-        log_message('debug', 'MyMIPlaid init env='.$this->env.' base='.$this->baseUrl);
+        log_message('debug', 'MyMIPlaid init env=' . $this->env . ' base=' . $this->baseUrl);
     }
 
     private function post(string $path, array $payload): array
@@ -99,16 +100,42 @@ class MyMIPlaid
         return $j;
     }
 
-    public function getAccountsWithBalances(string $accessToken): array
-    {
-        $j = $this->post('/accounts/balance/get', [
+    public function getTransactions(
+        string $accessToken,
+        string $startDate,
+        string $endDate,
+        array $options = []
+    ): array {
+        $payload = [
             'client_id'    => $this->clientId,
             'secret'       => $this->secret,
             'access_token' => $accessToken,
-        ]);
-        return $j['accounts'] ?? [];
+            'start_date'   => $startDate,
+            'end_date'     => $endDate,
+            'options'      => $options,
+        ];
+
+        $j = $this->post('/transactions/get', $payload);
+
+        return [
+            'accounts'           => $j['accounts'] ?? [],
+            'transactions'       => $j['transactions'] ?? [],
+            'total_transactions' => (int) ($j['total_transactions'] ?? 0),
+            'request_id'         => $j['request_id'] ?? null,
+            'raw'                => $j,
+        ];
     }
 
+    public function encryptToken(string $token): string
+    {
+        return base64_encode(service('encrypter')->encrypt($token));
+    }
+
+    public function decryptToken(string $token): string
+    {
+        return service('encrypter')->decrypt(base64_decode($token));
+    }
+ 
     // Small helper to let you confirm which env the server is using
     public function envInfo(): array
     {

@@ -241,7 +241,8 @@ class APISettings extends BaseConfig
 
     public string $plaidSandboxSecret = '0a10554c2dd48888bc13c5c29bdbbc';
 
-    public string $plaidEnvironment = 'sandbox';
+    // public string $plaidEnvironment = 'sandbox';
+    public string $plaidEnvironment = 'production';
 
 
 

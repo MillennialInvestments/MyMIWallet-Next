@@ -28,7 +28,7 @@ class WalletModel extends Model
         'withdraw_date','amount','initial_amount','current_amount','fees','total_cost','created_on','modified_on',
         'deleted_on', 'provider','credentials','category','label'
     ];
-    protected $useTimestamps   = false;
+    protected $useTimestamps   = true;
 
     protected $validationRules      = [];
     protected $validationMessages   = [];
@@ -208,7 +208,23 @@ class WalletModel extends Model
 
     public function addWallet($data)
     {
-        $data['active'] = isset($data['active']) && $data['active'] === 'Yes' ? 1 : 0;
+        $data['active'] = isset($data['active']) && ($data['active'] === 'Yes' || $data['active'] === 1) ? 1 : 0;
+
+        $walletColumns = $this->getColumns('bf_users_wallet');
+        $data = array_intersect_key($data, $walletColumns);
+
+        if (isset($walletColumns['created_on']) && empty($data['created_on'])) {
+            $data['created_on'] = date('Y-m-d H:i:s');
+        }
+
+        if (!isset($walletColumns['modified_on'])) {
+            unset($data['modified_on']);
+        }
+
+        if (!isset($walletColumns['updated_on'])) {
+            unset($data['updated_on']);
+        }
+
         return $this->db->table('bf_users_wallet')->insert($data);
     }
 
@@ -357,6 +373,38 @@ class WalletModel extends Model
         return $this->db->table('bf_users_invest_accounts')->where('id', $walletId)->update($data);
     }
 
+    public function insertWalletTransaction(array $data): int
+    {
+        $cols = $this->getColumns('bf_users_wallet_transactions');
+        $data = array_intersect_key($data, $cols);
+
+        if (isset($cols['created_on']) && empty($data['created_on'])) {
+            $data['created_on'] = date('Y-m-d H:i:s');
+        }
+
+        $ok = $this->db->table('bf_users_wallet_transactions')->insert($data);
+
+        if (! $ok) {
+            $err = $this->db->error();
+            log_message('error', 'WalletModel::insertWalletTransaction failed: {message} ({code}) payload={payload}', [
+                'message' => $err['message'] ?? 'unknown',
+                'code'    => $err['code'] ?? 0,
+                'payload' => json_encode($data),
+            ]);
+            return 0;
+        }
+
+        return (int) $this->db->insertID();
+    }
+
+    public function walletTransactionExists(int $userId, int $walletId, string $externalId): bool
+    {
+        return (bool) $this->db->table('bf_users_wallet_transactions')
+            ->where('user_id', $userId)
+            ->where('wallet_id', $walletId)
+            ->where('external_id', $externalId)
+            ->countAllResults();
+    }
     // --- Sums / lookups ------------------------------------------------------
 
     public function getWalletDeposits($cuID, $walletID = null)
@@ -692,11 +740,37 @@ class WalletModel extends Model
      */
     public function addWalletReturnId(array $data): int
     {
-        // normalize active like your addWallet()
         if (isset($data['active'])) {
             $data['active'] = ($data['active'] === 'Yes' || $data['active'] === 1) ? 1 : 0;
         }
-        $this->db->table('bf_users_wallet')->insert($data);
+
+        $walletColumns = $this->getColumns('bf_users_wallet');
+        $data = array_intersect_key($data, $walletColumns);
+
+        if (isset($walletColumns['created_on']) && empty($data['created_on'])) {
+            $data['created_on'] = date('Y-m-d H:i:s');
+        }
+
+        if (!isset($walletColumns['modified_on'])) {
+            unset($data['modified_on']);
+        }
+
+        if (!isset($walletColumns['updated_on'])) {
+            unset($data['updated_on']);
+        }
+
+        $ok = $this->db->table('bf_users_wallet')->insert($data);
+
+        if (!$ok) {
+            $err = $this->db->error();
+            log_message('error', 'WalletModel::addWalletReturnId insert failed: {message} ({code}) payload={payload}', [
+                'message' => $err['message'] ?? 'unknown',
+                'code'    => $err['code'] ?? 0,
+                'payload' => json_encode($data),
+            ]);
+            return 0;
+        }
+
         return (int) $this->db->insertID();
     }
 

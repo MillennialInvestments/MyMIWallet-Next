@@ -41,9 +41,9 @@ class AccountController extends BaseUserController
         $this->plaid->clientID = $this->API->plaidClientID;
         $this->plaid->environment = $this->API->plaidEnvironment;
         if ($this->plaid->environment === 'sandbox') {
-            $this->plaid->secret = $this->API->plaidSecret;
-        } elseif ($this->plaid->environment === 'production') {
             $this->plaid->secret = $this->API->plaidSandboxSecret;
+        } elseif ($this->plaid->environment === 'production') {
+            $this->plaid->secret = $this->API->plaidSecret;
         }
     }
 
