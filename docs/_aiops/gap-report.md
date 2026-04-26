@@ -1,6 +1,6 @@
 # AI-Ops: Gap Report
 > Auto-generated. Do not edit manually.
-> Run: 2026-04-25T07:00:02Z
+> Run: 2026-04-26T07:00:02Z
 
 ## Undocumented Code (best-effort)
 - app/Modules/AIOps/Controllers/AIOpsController.php
@@ -532,6 +532,8 @@
   - ❌ No obvious code match found (heuristic)
 - docs/_support/aiops-init.md
   - ❌ No obvious code match found (heuristic)
+- docs/_support/marketing-pipeline-audit-20260423-031601.md
+  - ❌ No obvious code match found (heuristic)
 - docs/_tmp/README.md
   - ❌ No obvious code match found (heuristic)
 - docs/_tmp/auth-debug/auth-audit-resolution-2026-04-19.md
@@ -804,6 +806,4 @@
   - ❌ No obvious code match found (heuristic)
 - docs/chatgpt/extraction/Step4_mysql_databases.md
   - ❌ No obvious code match found (heuristic)
-- docs/chatgpt/extraction/Step5_human_requirements.md
-  - ❌ No obvious code match found (heuristic)
-- … and 1050 more
+- … and 1052 more
