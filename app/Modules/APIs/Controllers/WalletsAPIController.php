@@ -301,7 +301,7 @@ class WalletsAPIController extends BaseAPIController
     public function plaidExchange(): \CodeIgniter\HTTP\ResponseInterface
     {
         try {
-            $uid = (int) (auth()->id() ?? session('user_id') ?? 0);
+            $uid = (int) ($this->currentUserId() ?? 0);
             if ($uid <= 0) {
                 return $this->respond(['status' => 'error', 'message' => 'Unauthorized'], 401);
             }
@@ -324,7 +324,6 @@ class WalletsAPIController extends BaseAPIController
                 return $this->respond([
                     'status'  => 'error',
                     'message' => 'Plaid token exchange failed.',
-                    'data'    => $exchange,
                 ], 500);
             }
 
@@ -402,7 +401,7 @@ class WalletsAPIController extends BaseAPIController
     public function refreshPlaidWallet($walletId): \CodeIgniter\HTTP\ResponseInterface
     {
         try {
-            $uid = (int) (auth()->id() ?? session('user_id') ?? 0);
+            $uid = (int) ($this->currentUserId() ?? 0);
             if ($uid <= 0) {
                 return $this->respond(['status' => 'error', 'message' => 'Unauthorized'], 401);
             }
@@ -424,7 +423,7 @@ class WalletsAPIController extends BaseAPIController
     public function syncPlaidTransactions($walletId): \CodeIgniter\HTTP\ResponseInterface
     {
         try {
-            $uid = (int) (auth()->id() ?? session('user_id') ?? 0);
+            $uid = (int) ($this->currentUserId() ?? 0);
             if ($uid <= 0) {
                 return $this->respond(['status' => 'error', 'message' => 'Unauthorized'], 401);
             }

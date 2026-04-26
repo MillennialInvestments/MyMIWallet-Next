@@ -704,13 +704,17 @@ window.addEventListener('load', function(){  // <-- wait until ALL scripts (Boot
         if (!refreshId) return;
 
         try {
+        var refreshBody = new URLSearchParams();
+        refreshBody.append(CSRF_FIELD, currentCsrfValue());
         var resRefresh = await fetch(siteUrl('API/Wallets/Plaid/Refresh/' + encodeURIComponent(refreshId)), {
             method: 'POST',
             credentials: 'same-origin',
             headers: {
             'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-TOKEN': csrfValue
-            }
+            'X-CSRF-TOKEN': csrfValue,
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            },
+            body: refreshBody.toString()
         });
 
         var jRefresh = await resRefresh.json().catch(function(){ return {}; });
@@ -738,13 +742,17 @@ window.addEventListener('load', function(){  // <-- wait until ALL scripts (Boot
         if (!syncId) return;
 
         try {
+        var syncBody = new URLSearchParams();
+        syncBody.append(CSRF_FIELD, currentCsrfValue());
         var resSync = await fetch(siteUrl('API/Wallets/Plaid/Sync-Transactions/' + encodeURIComponent(syncId)), {
             method: 'POST',
             credentials: 'same-origin',
             headers: {
             'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-TOKEN': csrfValue
-            }
+            'X-CSRF-TOKEN': csrfValue,
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            },
+            body: syncBody.toString()
         });
 
         var jSync = await resSync.json().catch(function(){ return {}; });

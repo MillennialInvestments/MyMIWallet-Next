@@ -1161,8 +1161,8 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('Plaid/Webhook', 'WalletsAPIController::plaidWebhook');
         $routes->get('Plaid/Link-Token', 'WalletsAPIController::plaidLinkToken');
         $routes->post('Plaid/Exchange', 'WalletsAPIController::plaidExchange');
-        $routes->post('Wallets/Plaid/Refresh/(:num)', 'WalletsAPIController::refreshPlaidWallet/$1');
-        $routes->post('Wallets/Plaid/Sync-Transactions/(:num)', 'WalletsAPIController::syncPlaidTransactions/$1');
+        $routes->post('Plaid/Refresh/(:num)', 'WalletsAPIController::refreshPlaidWallet/$1');
+        $routes->post('Plaid/Sync-Transactions/(:num)', 'WalletsAPIController::syncPlaidTransactions/$1');
 
         $routes->get('/(:segment)/(:segment)', 'WalletsAPIController::index/$1/$2');
 

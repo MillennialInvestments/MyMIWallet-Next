@@ -134,10 +134,40 @@ class WalletService
     public function addBankWallet(array $payload): int
     {
         $walletModel = model(\App\Models\WalletModel::class);
+        $db = db_connect();
 
         $credentials = $payload['credentials'] ?? [];
         if (is_string($credentials)) {
             $credentials = json_decode($credentials, true) ?: [];
+        }
+
+        $userId = (int) ($payload['user_id'] ?? 0);
+        $itemId = (string) ($credentials['item_id'] ?? '');
+        $accountId = (string) ($credentials['account_id'] ?? '');
+        $now = date('Y-m-d H:i:s');
+
+        $existingWallet = null;
+        if ($userId > 0 && $itemId !== '' && $accountId !== '') {
+            $existingCandidates = $db->table('bf_users_wallet')
+                ->where('user_id', $userId)
+                ->where('provider', 'plaid')
+                ->where('deleted', 0)
+                ->get()
+                ->getResultArray();
+
+            foreach ($existingCandidates as $candidate) {
+                $creds = is_string($candidate['credentials'] ?? null)
+                    ? json_decode((string) $candidate['credentials'], true)
+                    : ($candidate['credentials'] ?? []);
+                if (!is_array($creds)) {
+                    continue;
+                }
+
+                if ((string) ($creds['item_id'] ?? '') === $itemId && (string) ($creds['account_id'] ?? '') === $accountId) {
+                    $existingWallet = $candidate;
+                    break;
+                }
+            }
         }
 
         $walletData = [
@@ -156,14 +186,17 @@ class WalletService
             'provider'    => 'plaid',
             'label'       => (string) ($payload['nickname'] ?? ''),
             'credentials' => json_encode($credentials, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
-            'created_on'  => date('Y-m-d H:i:s'),
-            'modified_on' => date('Y-m-d H:i:s'),
+            'created_on'  => $now,
+            'modified_on' => $now,
         ];
-
-        $walletId = $walletModel->addWalletReturnId($walletData);
-
-        if ($walletId <= 0) {
-            throw new \RuntimeException('Failed to add wallet.');
+        $walletId = (int) ($existingWallet['id'] ?? 0);
+        if ($walletId > 0) {
+            $walletModel->editWallet($walletId, $walletData);
+        } else {
+            $walletId = $walletModel->addWalletReturnId($walletData);
+            if ($walletId <= 0) {
+                throw new \RuntimeException('Failed to add wallet.');
+            }
         }
 
         $bankData = [
@@ -178,13 +211,31 @@ class WalletService
             'account_number'=> (string) ($payload['mask'] ?? ''),
             'nickname'      => (string) ($payload['nickname'] ?? ''),
             'balance'       => (float) ($payload['amount'] ?? 0),
-            'created_on'    => date('Y-m-d H:i:s'),
+            'created_on'    => $now,
         ];
+        $bankCols = $this->getTableColumns('bf_users_bank_accounts');
+        $bankData = array_intersect_key($bankData, $bankCols);
+        if (isset($bankCols['updated_on'])) {
+            $bankData['updated_on'] = $now;
+        }
 
-        if (method_exists($walletModel, 'addBankWalletReturnId')) {
-            $walletModel->addBankWalletReturnId($bankData);
+        $existingBank = $db->table('bf_users_bank_accounts')
+            ->where('wallet_id', $walletId)
+            ->where('user_id', $userId)
+            ->where('deleted', 0)
+            ->get()
+            ->getRowArray();
+
+        if ($existingBank) {
+            $db->table('bf_users_bank_accounts')
+                ->where('id', (int) $existingBank['id'])
+                ->update($bankData);
         } else {
-            $walletModel->addBankWallet($bankData);
+            if (method_exists($walletModel, 'addBankWalletReturnId')) {
+                $walletModel->addBankWalletReturnId($bankData);
+            } else {
+                $walletModel->addBankWallet($bankData);
+            }
         }
 
         return $walletId;
@@ -965,6 +1016,7 @@ class WalletService
     /* ------------------------------- EDIT FLOWS ------------------------------- */
     public function refreshPlaidWalletBalance(int $userId, int $walletId): array
     {
+        $db = db_connect();
         $walletModel = model(\App\Models\WalletModel::class);
         $wallet = $walletModel->getWalletById($walletId);
 
@@ -1023,6 +1075,7 @@ class WalletService
         if (!empty($subsidiary['row']) && !empty($subsidiary['table'])) {
             $subsTable = $subsidiary['table'];
             $subsId = (int) ($subsidiary['row']['id'] ?? 0);
+            $subsCols = $this->getTableColumns($subsTable);
 
             if ($subsId > 0) {
                 $subsPatch = [];
@@ -1032,7 +1085,7 @@ class WalletService
                         'nickname' => $name,
                         'balance'  => $current,
                     ];
-                    if ($mask !== '' && array_key_exists('account_number', $walletModel->getColumns($subsTable))) {
+                    if ($mask !== '' && isset($subsCols['account_number'])) {
                         $subsPatch['account_number'] = $mask;
                     }
                 } elseif ($subsTable === 'bf_users_credit_accounts') {
@@ -1046,8 +1099,11 @@ class WalletService
                 }
 
                 if (!empty($subsPatch)) {
-                    $subsPatch = array_intersect_key($subsPatch, $walletModel->getColumns($subsTable));
-                    $walletModel->db->table($subsTable)->where('id', $subsId)->update($subsPatch);
+                    if (isset($subsCols['updated_on'])) {
+                        $subsPatch['updated_on'] = date('Y-m-d H:i:s');
+                    }
+                    $subsPatch = array_intersect_key($subsPatch, $subsCols);
+                    $db->table($subsTable)->where('id', $subsId)->update($subsPatch);
                 }
             }
         }
@@ -1156,6 +1212,17 @@ class WalletService
             'skipped'  => $skipped,
             'total'    => count($result['transactions'] ?? []),
         ];
+    }
+
+    private function getTableColumns(string $table): array
+    {
+        $db = db_connect();
+        try {
+            $names = $db->getFieldNames($table) ?: [];
+            return array_fill_keys($names, true);
+        } catch (\Throwable $e) {
+            return [];
+        }
     }
     private function syncMainWallet(string $type, int $walletId, array $subsData, array $ctx = []): bool
     {
