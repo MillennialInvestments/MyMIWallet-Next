@@ -61,7 +61,7 @@ class MyMIPlaid
         $resp = $this->http->post($path, ['json' => $payload]);
         $json = json_decode($resp->getBody() ?? '[]', true) ?: [];
         if ($resp->getStatusCode() >= 400) {
-            log_message('error', 'Plaid '.$path.' error '.$resp->getStatusCode().': '.($json['error_message'] ?? $resp->getBody()));
+            log_message('error', 'Plaid {path} error {code}: {message}', ['path' => $path, 'code' => $resp->getStatusCode(), 'message' => $json['error_message'] ?? 'Unknown Plaid error']);
         }
         return $json;
     }
@@ -100,6 +100,20 @@ class MyMIPlaid
         return $j;
     }
 
+
+
+    public function getAccountsWithBalances(string $accessToken): array
+    {
+        $payload = [
+            'client_id'    => $this->clientId,
+            'secret'       => $this->secret,
+            'access_token' => $accessToken,
+        ];
+
+        $j = $this->post('/accounts/balance/get', $payload);
+        return $j['accounts'] ?? [];
+    }
+
     public function getTransactions(
         string $accessToken,
         string $startDate,
@@ -133,7 +147,7 @@ class MyMIPlaid
 
     public function decryptToken(string $token): string
     {
-        return service('encrypter')->decrypt(base64_decode($token));
+        return (string) service('encrypter')->decrypt(base64_decode($token));
     }
  
     // Small helper to let you confirm which env the server is using

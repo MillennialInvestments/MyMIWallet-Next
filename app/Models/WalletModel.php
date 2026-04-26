@@ -256,6 +256,13 @@ class WalletModel extends Model
         if (isset($data['active'])) {
             $data['active'] = ($data['active'] === 'Yes' || $data['active'] === 1) ? 1 : 0;
         }
+        $walletColumns = $this->getColumns('bf_users_wallet');
+        if (isset($walletColumns['modified_on']) && !isset($data['modified_on'])) {
+            $data['modified_on'] = date('Y-m-d H:i:s');
+        } elseif (isset($walletColumns['updated_on']) && !isset($data['updated_on'])) {
+            $data['updated_on'] = date('Y-m-d H:i:s');
+        }
+        $data = array_intersect_key($data, $walletColumns);
         return $this->db->table('bf_users_wallet')->where('id', $walletId)->update($data);
     }
 
@@ -263,6 +270,11 @@ class WalletModel extends Model
 
     public function addBankWallet($data)
     {
+        $cols = $this->getColumns('bf_users_bank_accounts');
+        $data = array_intersect_key($data, $cols);
+        if (isset($cols['created_on']) && empty($data['created_on'])) {
+            $data['created_on'] = date('Y-m-d H:i:s');
+        }
         return $this->db->table('bf_users_bank_accounts')->insert($data);
     }
 
@@ -779,6 +791,11 @@ class WalletModel extends Model
      */
     public function addBankWalletReturnId(array $data): int
     {
+        $cols = $this->getColumns('bf_users_bank_accounts');
+        $data = array_intersect_key($data, $cols);
+        if (isset($cols['created_on']) && empty($data['created_on'])) {
+            $data['created_on'] = date('Y-m-d H:i:s');
+        }
         $this->db->table('bf_users_bank_accounts')->insert($data);
         return (int) $this->db->insertID();
     }
