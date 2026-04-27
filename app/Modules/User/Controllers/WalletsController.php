@@ -1386,40 +1386,115 @@ class WalletsController extends BaseUserController
         };
     }
 
-    public function delete($id = null): ResponseInterface
+    public function delete($accountType = null, $walletID = null)
     {
-        if ($blocked = $this->guardWalletFeature()) {
-            return $blocked;
-        }
-
-        $id = (int) ($id ?? $this->request->getPost('wallet_id'));
-
-        if ($id <= 0) {
-            return $this->response->setJSON([
-                'status'  => 'error',
-                'message' => 'Missing wallet_id',
-            ])->setStatusCode(422);
-        }
-
-        $row = $this->walletModel->find($id);
-
-        if (! $row || (int) ($row['user_id'] ?? 0) !== $this->currentWalletUserId()) {
-            return $this->response->setJSON([
-                'status'  => 'error',
-                'message' => 'Not found or not permitted',
-            ])->setStatusCode(404);
-        }
-
-        $this->walletModel->delete($id);
-        $this->invalidateWalletCache((int) ($row['user_id'] ?? $this->currentWalletUserId()));
-
-        log_message('info', 'WalletsController::delete - Deleted wallet {id}', [
-            'id' => $id,
+        log_message('debug', 'WalletsController::delete - START', [
+            'account_type' => $accountType,
+            'wallet_id'    => $walletID,
+            'query'        => $this->request->getGet(),
         ]);
 
-        return $this->response->setJSON([
-            'status' => 'success',
-        ]);
+        if (!$accountType || !$walletID) {
+            log_message('error', 'WalletsController::delete - Missing account type or wallet ID.', [
+                'account_type' => $accountType,
+                'wallet_id'    => $walletID,
+            ]);
+
+            return redirect()
+                ->back()
+                ->with('error', 'Invalid request. Account type or wallet ID is missing.');
+        }
+
+        try {
+            $walletID = (int) $walletID;
+
+            if ($walletID <= 0) {
+                log_message('error', 'WalletsController::delete - Invalid wallet ID.', [
+                    'wallet_id' => $walletID,
+                ]);
+
+                return redirect()
+                    ->back()
+                    ->with('error', 'Invalid wallet ID.');
+            }
+
+            $subsidiaryId = (int) (
+                $this->request->getGet('account_id')
+                ?? $this->request->getPost('account_id')
+                ?? 0
+            );
+
+            $cuID = (int) ($this->cuID ?? 0);
+
+            if ($cuID <= 0 && method_exists($this, 'currentUserId')) {
+                $cuID = (int) $this->currentUserId();
+            }
+
+            if ($cuID <= 0 && function_exists('auth')) {
+                try {
+                    $cuID = (int) (auth()->id() ?? 0);
+                } catch (\Throwable $authError) {
+                    log_message('warning', 'WalletsController::delete - auth()->id() lookup skipped: {m}', [
+                        'm' => $authError->getMessage(),
+                    ]);
+                }
+            }
+
+            if ($cuID <= 0) {
+                log_message('error', 'WalletsController::delete - Unable to resolve current user ID.');
+                return redirect()
+                    ->back()
+                    ->with('error', 'Unauthorized wallet delete request.');
+            }
+
+            $deleteReport = $this->getWalletService()->deleteWalletCascade(
+                (string) $accountType,
+                $walletID,
+                $cuID,
+                $subsidiaryId > 0 ? $subsidiaryId : null
+            );
+
+            if (empty($deleteReport['success'])) {
+                log_message('error', 'WalletsController::delete - Cascade delete failed.', [
+                    'account_type'  => $accountType,
+                    'wallet_id'     => $walletID,
+                    'subsidiary_id' => $subsidiaryId,
+                    'report'        => $deleteReport,
+                ]);
+
+                return redirect()
+                    ->back()
+                    ->with('error', $deleteReport['message'] ?? 'Failed to delete wallet.');
+            }
+
+            $resolvedWalletId = (int) ($deleteReport['wallet_id'] ?? $walletID);
+
+            if (method_exists($this->getWalletService(), 'logWalletDeletion')) {
+                $this->getWalletService()->logWalletDeletion($cuID, $resolvedWalletId, (string) $accountType);
+            }
+
+            log_message('info', 'WalletsController::delete - Wallet deleted successfully.', [
+                'account_type'       => $accountType,
+                'requested_id'       => $walletID,
+                'subsidiary_id'      => $subsidiaryId,
+                'resolved_wallet_id' => $resolvedWalletId,
+                'report'             => $deleteReport,
+            ]);
+
+            return redirect()
+                ->to(site_url('/Wallets'))
+                ->with('message', 'Wallet deleted successfully.');
+        } catch (\Throwable $e) {
+            log_message('error', 'WalletsController::delete - Exception: {m}', [
+                'm'            => $e->getMessage(),
+                'account_type' => $accountType,
+                'wallet_id'    => $walletID,
+            ]);
+
+            return redirect()
+                ->back()
+                ->with('error', 'An error occurred while deleting the wallet. Please try again.');
+        }
     }
 
     public function copy($accountID): ResponseInterface|string|null
@@ -1564,51 +1639,201 @@ class WalletsController extends BaseUserController
         }
     }
 
-    public function details($accountID): ResponseInterface|string
+    public function details($accountID = null): ResponseInterface|string
     {
         if ($blocked = $this->guardWalletFeature()) {
             return $blocked;
         }
 
-        $uri = $this->request->getUri();
-        $accountType = $uri->getSegment(2);
-        $accountInfoMethod = '';
+        try {
+            $accountID = (int) $accountID;
 
-        switch ($accountType) {
-            case 'Banking':
-            case 'Bank':
-                $accountInfoMethod = 'getBankAccountInfo';
-                break;
+            if ($accountID <= 0) {
+                log_message('error', 'WalletsController::details - Invalid account ID.', [
+                    'account_id' => $accountID,
+                ]);
 
-            case 'Credit':
-                $accountInfoMethod = 'getCreditAccountInfo';
-                break;
+                return redirect()
+                    ->to(site_url('Wallets'))
+                    ->with('error', 'Invalid wallet/account ID.');
+            }
 
-            case 'Crypto':
-                $accountInfoMethod = 'getCryptoAccountInfo';
-                break;
+            $uri = $this->request->getUri();
 
-            case 'Debt':
-                $accountInfoMethod = 'getDebtAccountInfo';
-                break;
+            $accountTypeRaw = (string) $uri->getSegment(2);
+            $accountTypeKey = strtolower($accountTypeRaw);
 
-            case 'Investment':
-                $accountInfoMethod = 'getInvestmentAccountInfo';
-                break;
+            $typeMap = [
+                'bank'        => 'bank',
+                'banking'     => 'bank',
+                'checking'    => 'bank',
+                'financial'   => 'bank',
+                'fiat'        => 'bank',
+                'credit'      => 'credit',
+                'debt'        => 'debt',
+                'loan'        => 'debt',
+                'investment'  => 'investment',
+                'investments' => 'investment',
+                'invest'      => 'investment',
+                'crypto'      => 'crypto',
+            ];
+
+            $normalizedType = $typeMap[$accountTypeKey] ?? null;
+
+            if ($normalizedType === null) {
+                log_message('error', 'WalletsController::details - Unsupported account type.', [
+                    'account_type' => $accountTypeRaw,
+                    'account_id'   => $accountID,
+                ]);
+
+                return redirect()
+                    ->to(site_url('Wallets'))
+                    ->with('error', 'Unsupported wallet/account type.');
+            }
+
+            $walletModel = $this->walletModel instanceof WalletModel
+                ? $this->walletModel
+                : new WalletModel();
+
+            $previousData = null;
+
+            switch ($normalizedType) {
+                case 'bank':
+                    $previousData = $walletModel->getBankAccountByIdOrWallet($accountID);
+                    break;
+
+                case 'credit':
+                    $previousData = $walletModel->getCreditAccountByIdOrWallet($accountID);
+                    break;
+
+                case 'debt':
+                    $previousData = $walletModel->getDebtAccountByIdOrWallet($accountID);
+                    break;
+
+                case 'investment':
+                    $previousData = $walletModel->getInvestAccountByIdOrWallet($accountID);
+                    break;
+
+                case 'crypto':
+                    $previousData = $walletModel->getCryptoAccountByIdOrWallet($accountID);
+                    break;
+            }
+
+            if (empty($previousData) || ! is_array($previousData)) {
+                log_message('warning', 'WalletsController::details - No account row found.', [
+                    'account_type'    => $accountTypeRaw,
+                    'normalized_type' => $normalizedType,
+                    'account_id'      => $accountID,
+                    'user_id'         => $this->currentWalletUserId(),
+                ]);
+
+                return redirect()
+                    ->to(site_url('Wallets'))
+                    ->with('error', 'Wallet/account record not found.');
+            }
+
+            $rowUserId     = (int) ($previousData['user_id'] ?? 0);
+            $currentUserId = (int) $this->currentWalletUserId();
+
+            if ($rowUserId > 0 && $currentUserId > 0 && $rowUserId !== $currentUserId) {
+                log_message('error', 'WalletsController::details - User mismatch.', [
+                    'account_type' => $accountTypeRaw,
+                    'account_id'   => $accountID,
+                    'row_user_id'  => $rowUserId,
+                    'current_user' => $currentUserId,
+                ]);
+
+                return redirect()
+                    ->to(site_url('Wallets'))
+                    ->with('error', 'You are not authorized to view this wallet/account.');
+            }
+
+            $transactionWalletId = (int) ($previousData['wallet_id'] ?? 0);
+
+            if ($transactionWalletId <= 0) {
+                $parentWallet = $walletModel->where('id', $accountID)
+                    ->where('user_id', (string) $currentUserId)
+                    ->first();
+
+                if (is_array($parentWallet) && ! empty($parentWallet['id'])) {
+                    $transactionWalletId = (int) $parentWallet['id'];
+                }
+            }
+
+            if ($transactionWalletId <= 0 && ! empty($previousData['account_id'])) {
+                $parentWallet = $walletModel->where('account_id', (string) $previousData['account_id'])
+                    ->where('user_id', (string) $currentUserId)
+                    ->first();
+
+                if (is_array($parentWallet) && ! empty($parentWallet['id'])) {
+                    $transactionWalletId = (int) $parentWallet['id'];
+                }
+            }
+
+            if ($transactionWalletId <= 0) {
+                $parentWallet = $walletModel->where('account_id', (string) $accountID)
+                    ->where('user_id', (string) $currentUserId)
+                    ->first();
+
+                if (is_array($parentWallet) && ! empty($parentWallet['id'])) {
+                    $transactionWalletId = (int) $parentWallet['id'];
+                }
+            }
+
+            if ($transactionWalletId <= 0) {
+                $transactionWalletId = $accountID;
+            }
+
+            $transactionHistory = [];
+
+            try {
+                $transactionHistory = $this->resolveWalletService()
+                    ->getWalletTransactionHistory($transactionWalletId, $currentUserId, 100);
+            } catch (Throwable $transactionError) {
+                log_message('error', 'WalletsController::details - Transaction history load failed: {m}', [
+                    'm'                     => $transactionError->getMessage(),
+                    'account_id'            => $accountID,
+                    'transaction_wallet_id' => $transactionWalletId,
+                    'user_id'               => $currentUserId,
+                ]);
+
+                $transactionHistory = [];
+            }
+
+            log_message('debug', 'WalletsController::details - Loaded wallet/account details.', [
+                'account_type'          => $accountTypeRaw,
+                'normalized_type'       => $normalizedType,
+                'account_id'            => $accountID,
+                'transaction_wallet_id' => $transactionWalletId,
+                'transaction_count'     => is_array($transactionHistory) ? count($transactionHistory) : 0,
+                'user_id'               => $currentUserId,
+            ]);
+
+            $baseData = $this->commonData();
+
+            $this->data = array_merge($baseData, [
+                'previousData'        => $previousData,
+                'accountType'         => $normalizedType,
+                'accountTypeRaw'      => $accountTypeRaw,
+                'accountID'           => $accountID,
+                'transactionWalletId' => $transactionWalletId,
+                'transactionHistory'  => $transactionHistory,
+                'useDataTables'       => true,
+                'pageTitle'           => 'Wallet Details | MyMI Wallet | The Future of Finance',
+            ]);
+
+            return $this->renderTheme('App\\Modules\\User\\Views\\Wallets\\Details', $this->data);
+        } catch (Throwable $e) {
+            log_message('error', 'WalletsController::details - Exception: {m}', [
+                'm'          => $e->getMessage(),
+                'account_id' => $accountID,
+            ]);
+
+            return redirect()
+                ->to(site_url('Wallets'))
+                ->with('error', 'Unable to load wallet/account details.');
         }
-
-        if ($accountInfoMethod === '' || ! method_exists($this->resolveWalletService(), $accountInfoMethod)) {
-            throw PageNotFoundException::forPageNotFound('Wallet details method not found.');
-        }
-
-        $this->data['previousData'] = $this->resolveWalletService()->{$accountInfoMethod}($accountID);
-        $this->data['pageTitle'] = 'Wallet Details | MyMI Wallet | The Future of Finance';
-
-        $this->commonData();
-
-        return $this->renderTheme('App\\Modules\\User\\Views\\Wallets\\Details', $this->data);
     }
-
     public function transferFunds(): ResponseInterface|string
     {
         if ($blocked = $this->guardWalletFeature()) {

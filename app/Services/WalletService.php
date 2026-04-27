@@ -551,6 +551,11 @@ class WalletService
         return $okSub && $okMain;
     }
 
+    public function deleteWalletCascade(string $accountType, int $walletId, int $userId, ?int $subsidiaryId = null): array
+    {
+        return $this->walletModel->deleteWalletCascade($accountType, $walletId, $userId, $subsidiaryId);
+    }
+    
     // Legacy soft-delete API used elsewhere
     public function softDeleteWallet(string $type, int $id): bool
     {
@@ -660,9 +665,21 @@ class WalletService
     }
 
     // 14. Fetch Wallet Transaction History
-    public function getWalletTransactionHistory($walletId)
+    public function getWalletTransactionHistory($walletId, ?int $userId = null, int $limit = 100): array
     {
-        return $this->walletModel->getTransactionHistory($walletId);
+        $walletId = (int) $walletId;
+        $limit    = max(1, min((int) $limit, 500));
+
+        if ($walletId <= 0) {
+            return [];
+        }
+
+        if (! method_exists($this->walletModel, 'getTransactionHistory')) {
+            log_message('error', 'WalletService::getWalletTransactionHistory missing WalletModel::getTransactionHistory.');
+            return [];
+        }
+
+        return $this->walletModel->getTransactionHistory($walletId, $userId, $limit);
     }
 
     // 15. Generate a New Wallet

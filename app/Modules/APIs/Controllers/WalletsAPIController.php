@@ -22,6 +22,9 @@ class WalletsAPIController extends BaseAPIController
     /** @var \Myth\Auth\Authentication\AuthenticationInterface|\CodeIgniter\Shield\Authentication\Authentication|null */
     protected $auth;
 
+    protected $walletModel; 
+    protected $walletService;
+
     private ?CrudCacheInvalidator $crudCacheInvalidator = null;
     private ?WalletSummaryService $walletSummaryService = null;
 
@@ -30,6 +33,13 @@ class WalletsAPIController extends BaseAPIController
         parent::initController($request, $response, $logger);
         $this->wallets = new WalletModel();
         $this->auth    = service('authentication'); // Myth\Auth
+        $this->walletModel = $this->walletModel instanceof WalletModel
+            ? $this->walletModel
+            : new WalletModel();
+
+        $this->walletService = $this->walletService instanceof WalletService
+            ? $this->walletService
+            : new WalletService(service('logger'), $this->walletModel);
         helper(['text', 'url']);
     }
 
@@ -298,27 +308,54 @@ class WalletsAPIController extends BaseAPIController
         }
     }
 
+    protected function getWalletModel(): WalletModel
+    {
+        if (! $this->walletModel instanceof WalletModel) {
+            $this->walletModel = new WalletModel();
+        }
+
+        return $this->walletModel;
+    }
+
+    protected function getWalletService(): WalletService
+    {
+        if (! $this->walletService instanceof WalletService) {
+            $this->walletService = new WalletService(service('logger'), $this->getWalletModel());
+        }
+
+        return $this->walletService;
+    }
+
     public function plaidExchange(): \CodeIgniter\HTTP\ResponseInterface
     {
         try {
             $uid = (int) ($this->currentUserId() ?? 0);
+
             if ($uid <= 0) {
-                return $this->respond(['status' => 'error', 'message' => 'Unauthorized'], 401);
+                return $this->respond([
+                    'status'  => 'error',
+                    'message' => 'Unauthorized',
+                ], 401);
             }
 
             $publicToken = (string) $this->request->getPost('public_token');
             $metadataRaw = (string) $this->request->getPost('metadata');
-            $metadata = $metadataRaw !== '' ? json_decode($metadataRaw, true) : [];
+
+            $metadataDecoded = $metadataRaw !== '' ? json_decode($metadataRaw, true) : [];
+            $metadata = is_array($metadataDecoded) ? $metadataDecoded : [];
 
             if ($publicToken === '') {
-                return $this->respond(['status' => 'error', 'message' => 'Missing public token.'], 422);
+                return $this->respond([
+                    'status'  => 'error',
+                    'message' => 'Missing public token.',
+                ], 422);
             }
 
             $plaid = new \App\Libraries\MyMIPlaid();
             $exchange = $plaid->exchangePublicToken($publicToken);
 
             $accessToken = (string) ($exchange['access_token'] ?? '');
-            $itemId = (string) ($exchange['item_id'] ?? '');
+            $itemId      = (string) ($exchange['item_id'] ?? '');
 
             if ($accessToken === '' || $itemId === '') {
                 return $this->respond([
@@ -328,27 +365,70 @@ class WalletsAPIController extends BaseAPIController
             }
 
             $accountMeta = $metadata['account'] ?? (($metadata['accounts'][0] ?? []) ?: []);
+
             $accountId   = (string) ($metadata['account_id'] ?? ($accountMeta['id'] ?? ''));
             $accountName = (string) ($accountMeta['name'] ?? 'Plaid Account');
             $mask        = (string) ($accountMeta['mask'] ?? '');
+            $subtype     = (string) ($accountMeta['subtype'] ?? 'checking');
             $institution = (string) ($metadata['institution']['name'] ?? 'Plaid');
 
-            $accounts = $plaid->getAccountsWithBalances($accessToken);
+            $accountsResponse = $plaid->getAccountsWithBalances($accessToken);
+            $accounts = $accountsResponse['accounts'] ?? $accountsResponse;
+            $accounts = is_array($accounts) ? $accounts : [];
+
             $matched = null;
+
             foreach ($accounts as $account) {
                 if ((string) ($account['account_id'] ?? '') === $accountId) {
                     $matched = $account;
                     break;
                 }
             }
-            if (!$matched && !empty($accounts)) {
+
+            if (! $matched && ! empty($accounts)) {
                 $matched = $accounts[0];
                 $accountId = (string) ($matched['account_id'] ?? $accountId);
             }
 
+            if ($matched) {
+                $accountName = (string) ($matched['name'] ?? $accountName);
+                $mask        = (string) ($matched['mask'] ?? $mask);
+                $subtype     = (string) ($matched['subtype'] ?? $subtype);
+            }
+
             $currentBalance = (float) ($matched['balances']['current'] ?? 0);
-            $subtype = (string) ($matched['subtype'] ?? ($accountMeta['subtype'] ?? 'checking'));
             $encryptedAccessToken = $plaid->encryptToken($accessToken);
+
+            $user = null;
+
+            try {
+                if (function_exists('auth')) {
+                    $user = auth()->user();
+                }
+            } catch (\Throwable $authError) {
+                log_message('warning', 'plaidExchange auth user lookup skipped: {m}', [
+                    'm' => $authError->getMessage(),
+                ]);
+            }
+
+            $userEmail = '';
+            $username  = '';
+
+            if (is_object($user)) {
+                $userEmail = (string) ($user->email ?? '');
+                $username  = (string) ($user->username ?? '');
+            } elseif (is_array($user)) {
+                $userEmail = (string) ($user['email'] ?? '');
+                $username  = (string) ($user['username'] ?? '');
+            }
+
+            if ($userEmail === '') {
+                $userEmail = (string) (session('email') ?? '');
+            }
+
+            if ($username === '') {
+                $username = (string) (session('username') ?? '');
+            }
 
             $credentials = [
                 'access_token'     => $encryptedAccessToken,
@@ -359,45 +439,137 @@ class WalletsAPIController extends BaseAPIController
                 'raw_metadata'     => $metadata,
             ];
 
-            $payload = [
-                'user_id'      => $uid,
-                'user_email'   => (string) (auth()->user()->email ?? session('email') ?? ''),
-                'username'     => (string) (auth()->user()->username ?? session('username') ?? ''),
-                'beta'         => 'No',
-                'amount'       => $currentBalance,
-                'nickname'     => $accountName,
-                'broker'       => $institution,
-                'account_type' => ucfirst($subtype),
-                'mask'         => $mask,
-                'credentials'  => $credentials,
+            $credentialsJson = json_encode(
+                $credentials,
+                JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
+            );
+
+            $now = date('Y-m-d H:i:s');
+
+            $walletPayload = [
+                'status'         => 'linked',
+                'active'         => 1,
+                'deleted'        => 0,
+                'beta'           => 'No',
+                'user_id'        => $uid,
+                'user_email'     => $userEmail,
+                'username'       => $username,
+                'wallet_type'    => 'Banking',
+                'category'       => 'financial',
+                'provider'       => 'plaid',
+                'label'          => $accountName,
+                'nickname'       => $accountName,
+                'broker'         => $institution,
+                'amount'         => $currentBalance,
+                'current_amount' => $currentBalance,
+                'account_id'     => substr($accountId, 0, 45),
+                'credentials'    => $credentialsJson,
+                'created_on'     => $now,
+                'modified_on'    => $now,
             ];
 
-            $walletService = service('walletService');
-            $walletId = $walletService->addBankWallet($payload);
+            $bankPayload = [
+                'status'           => 1,
+                'active'           => 1,
+                'deleted'          => 0,
+                'beta'             => 'No',
+                'user_id'          => $uid,
+                'user_email'       => $userEmail,
+                'username'         => $username,
+                'bank_name'        => $institution,
+                'account_type'     => ucfirst($subtype ?: 'checking'),
+                'account_number'   => $mask !== '' ? '****' . $mask : null,
+                'balance'          => $currentBalance,
+                'nickname'         => $accountName,
+                'provider'         => 'plaid',
+                'account_id'       => substr($accountId, 0, 45),
+                'plaid_account_id' => $accountId,
+                'plaid_item_id'    => $itemId,
+                'credentials'      => $credentialsJson,
+                'created_on'       => $now,
+                'modified_on'      => $now,
+            ];
+
+            $db = db_connect();
+            $model = $this->getWalletModel();
+
+            $db->transBegin();
+
+            $walletId = $model->addWalletReturnId($walletPayload);
 
             if ($walletId <= 0) {
-                throw new \RuntimeException('Failed to add bank wallet.');
+                $db->transRollback();
+                throw new \RuntimeException('Failed to create Plaid parent wallet.');
             }
 
-            $refresh = $walletService->refreshPlaidWalletBalance($uid, $walletId);
-            $sync = $walletService->syncPlaidTransactions($uid, $walletId, 90);
+            $bankPayload['wallet_id'] = $walletId;
+
+            $bankAccountId = $model->addBankWalletReturnId($bankPayload);
+
+            if ($bankAccountId <= 0) {
+                $db->transRollback();
+                throw new \RuntimeException('Failed to create Plaid bank account.');
+            }
+
+            if ($db->transStatus() === false) {
+                $db->transRollback();
+                throw new \RuntimeException('Plaid wallet database transaction failed.');
+            }
+
+            $db->transCommit();
+
+            $refresh = null;
+            $sync    = null;
+
+            $walletService = $this->getWalletService();
+
+            if (method_exists($walletService, 'refreshPlaidWalletBalance')) {
+                try {
+                    $refresh = $walletService->refreshPlaidWalletBalance($uid, $walletId);
+                } catch (\Throwable $refreshError) {
+                    log_message('warning', 'Plaid balance refresh skipped after successful link: {m}', [
+                        'm' => $refreshError->getMessage(),
+                    ]);
+                }
+            }
+
+            if (method_exists($walletService, 'syncPlaidTransactions')) {
+                try {
+                    $sync = $walletService->syncPlaidTransactions($uid, $walletId, 90);
+                } catch (\Throwable $syncError) {
+                    log_message('warning', 'Plaid transaction sync skipped after successful link: {m}', [
+                        'm' => $syncError->getMessage(),
+                    ]);
+                }
+            }
+
+            if (method_exists($this, 'invalidateCaches')) {
+                $this->invalidateCaches([
+                    'wallets',
+                    'user:' . $uid,
+                ]);
+            }
 
             return $this->respond([
-                'status'  => 'success',
-                'message' => 'Plaid account linked successfully.',
-                'walletId'=> $walletId,
-                'refresh' => $refresh,
-                'sync'    => $sync,
+                'status'        => 'success',
+                'message'       => 'Plaid account linked successfully.',
+                'walletId'      => $walletId,
+                'bankAccountId' => $bankAccountId,
+                'refresh'       => $refresh,
+                'sync'          => $sync,
             ]);
         } catch (\Throwable $e) {
-            log_message('error', 'plaidExchange error: {m}', ['m' => $e->getMessage()]);
+            log_message('error', 'plaidExchange error: {m}', [
+                'm' => $e->getMessage(),
+            ]);
+
             return $this->respond([
                 'status'  => 'error',
                 'message' => $e->getMessage(),
             ], 500);
         }
     }
-
+    
     public function refreshPlaidWallet($walletId): \CodeIgniter\HTTP\ResponseInterface
     {
         try {

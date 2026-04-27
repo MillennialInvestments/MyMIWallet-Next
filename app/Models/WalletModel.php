@@ -62,6 +62,287 @@ class WalletModel extends Model
         return $this->db->table('bf_users_wallet')->where('id', $walletId)->update($data);
     }
 
+    public function deleteWalletCascade(string $accountType, int $id, int $userId, ?int $subsidiaryId = null): array
+    {
+        $rawType = trim($accountType);
+
+        $typeMap = [
+            'bank'       => 'bank',
+            'banking'    => 'bank',
+            'financial'  => 'bank',
+            'fiat'       => 'bank',
+            'credit'     => 'credit',
+            'debt'       => 'debt',
+            'loan'       => 'debt',
+            'investment' => 'investment',
+            'invest'     => 'investment',
+            'brokerage'  => 'investment',
+            'crypto'     => 'crypto',
+        ];
+
+        $normalizedKey = strtolower($rawType);
+        $type = $typeMap[$normalizedKey] ?? null;
+
+        if ($type === null) {
+            return [
+                'success' => false,
+                'message' => 'Invalid account type.',
+                'type'    => $rawType,
+            ];
+        }
+
+        $tableMap = [
+            'bank'       => 'bf_users_bank_accounts',
+            'credit'     => 'bf_users_credit_accounts',
+            'debt'       => 'bf_users_debt_accounts',
+            'investment' => 'bf_users_invest_accounts',
+            'crypto'     => 'bf_users_crypto_accounts',
+        ];
+
+        $childTable = $tableMap[$type] ?? null;
+
+        if ($childTable === null) {
+            return [
+                'success' => false,
+                'message' => 'Unable to resolve child wallet table.',
+                'type'    => $type,
+            ];
+        }
+
+        if ($id <= 0 || $userId <= 0) {
+            return [
+                'success' => false,
+                'message' => 'Invalid wallet or user ID.',
+                'type'    => $type,
+            ];
+        }
+
+        $db = $this->db ?? db_connect();
+
+        $walletTable = 'bf_users_wallet';
+        $walletCols  = $this->getColumns($walletTable);
+        $childCols   = $this->getColumns($childTable);
+
+        $candidateIds = [$id];
+
+        if ($subsidiaryId !== null && $subsidiaryId > 0) {
+            $candidateIds[] = $subsidiaryId;
+        }
+
+        $candidateIds = array_values(array_unique(array_filter($candidateIds, static function ($value) {
+            return (int) $value > 0;
+        })));
+
+        $walletRow = $db->table($walletTable)
+            ->where('id', $id)
+            ->where('user_id', (string) $userId)
+            ->get()
+            ->getRowArray();
+
+        $childRows = [];
+
+        foreach ($candidateIds as $candidateId) {
+            $row = $db->table($childTable)
+                ->where('id', (int) $candidateId)
+                ->where('user_id', (string) $userId)
+                ->get()
+                ->getRowArray();
+
+            if ($row) {
+                $childRows[(int) $row['id']] = $row;
+
+                if (!$walletRow && !empty($row['wallet_id'])) {
+                    $maybeWallet = $db->table($walletTable)
+                        ->where('id', (int) $row['wallet_id'])
+                        ->where('user_id', (string) $userId)
+                        ->get()
+                        ->getRowArray();
+
+                    if ($maybeWallet) {
+                        $walletRow = $maybeWallet;
+                    }
+                }
+            }
+        }
+
+        if ($walletRow && isset($childCols['wallet_id'])) {
+            $linkedRows = $db->table($childTable)
+                ->where('wallet_id', (string) $walletRow['id'])
+                ->where('user_id', (string) $userId)
+                ->get()
+                ->getResultArray();
+
+            foreach ($linkedRows as $linkedRow) {
+                if (isset($linkedRow['id'])) {
+                    $childRows[(int) $linkedRow['id']] = $linkedRow;
+                }
+            }
+        }
+
+        if ($walletRow && !empty($walletRow['account_id'])) {
+            $walletAccountId = (string) $walletRow['account_id'];
+
+            if (ctype_digit($walletAccountId)) {
+                $accountIdRow = $db->table($childTable)
+                    ->where('id', (int) $walletAccountId)
+                    ->where('user_id', (string) $userId)
+                    ->get()
+                    ->getRowArray();
+
+                if ($accountIdRow) {
+                    $childRows[(int) $accountIdRow['id']] = $accountIdRow;
+                }
+            }
+
+            if (isset($childCols['account_id'])) {
+                $accountColumnRows = $db->table($childTable)
+                    ->where('account_id', $walletAccountId)
+                    ->where('user_id', (string) $userId)
+                    ->get()
+                    ->getResultArray();
+
+                foreach ($accountColumnRows as $accountColumnRow) {
+                    if (isset($accountColumnRow['id'])) {
+                        $childRows[(int) $accountColumnRow['id']] = $accountColumnRow;
+                    }
+                }
+            }
+        }
+
+        /*
+        * Special orphan support:
+        * If the delete request passed a child account ID and that child has no wallet_id,
+        * this method still soft-deletes it because it was already found by primary id above.
+        *
+        * We intentionally do NOT broad-delete all user rows where wallet_id is NULL,
+        * because that could delete unrelated orphan records.
+        */
+
+        $childIds = array_keys($childRows);
+
+        $walletId = $walletRow ? (int) $walletRow['id'] : 0;
+
+        $now = date('Y-m-d H:i:s');
+
+        $walletUpdate = [];
+
+        if (isset($walletCols['active'])) {
+            $walletUpdate['active'] = 0;
+        }
+
+        if (isset($walletCols['deleted'])) {
+            $walletUpdate['deleted'] = 1;
+        }
+
+        if (isset($walletCols['status'])) {
+            $walletUpdate['status'] = 'deleted';
+        }
+
+        if (isset($walletCols['modified_on'])) {
+            $walletUpdate['modified_on'] = $now;
+        } elseif (isset($walletCols['updated_on'])) {
+            $walletUpdate['updated_on'] = $now;
+        }
+
+        $childUpdate = [];
+
+        if (isset($childCols['active'])) {
+            $childUpdate['active'] = 0;
+        }
+
+        if (isset($childCols['deleted'])) {
+            $childUpdate['deleted'] = 1;
+        }
+
+        if (isset($childCols['status'])) {
+            $childUpdate['status'] = 0;
+        }
+
+        if (isset($childCols['updated_on'])) {
+            $childUpdate['updated_on'] = $now;
+        }
+
+        if (isset($childCols['modified_on'])) {
+            $childUpdate['modified_on'] = $now;
+        }
+
+        $db->transBegin();
+
+        $walletAffected = 0;
+        $childAffected  = 0;
+
+        if ($walletId > 0 && !empty($walletUpdate)) {
+            $db->table($walletTable)
+                ->where('id', $walletId)
+                ->where('user_id', (string) $userId)
+                ->update($walletUpdate);
+
+            $walletAffected = $db->affectedRows();
+        }
+
+        if (!empty($childIds) && !empty($childUpdate)) {
+            $db->table($childTable)
+                ->whereIn('id', $childIds)
+                ->where('user_id', (string) $userId)
+                ->update($childUpdate);
+
+            $childAffected = $db->affectedRows();
+        }
+
+        if ($db->transStatus() === false) {
+            $db->transRollback();
+
+            $err = $db->error();
+
+            log_message('error', 'WalletModel::deleteWalletCascade transaction failed: {message} ({code})', [
+                'message' => $err['message'] ?? 'unknown',
+                'code'    => $err['code'] ?? 0,
+            ]);
+
+            return [
+                'success' => false,
+                'message' => 'Wallet delete transaction failed.',
+                'type'    => $type,
+            ];
+        }
+
+        $db->transCommit();
+
+        $matchedSomething = $walletId > 0 || !empty($childIds);
+
+        if (!$matchedSomething) {
+            log_message('warning', 'WalletModel::deleteWalletCascade found no matching parent or child rows.', [
+                'type'          => $type,
+                'requested_id'  => $id,
+                'subsidiary_id' => $subsidiaryId,
+                'user_id'       => $userId,
+                'child_table'   => $childTable,
+            ]);
+
+            return [
+                'success'        => false,
+                'message'        => 'No matching wallet/account record found for this user.',
+                'type'           => $type,
+                'wallet_id'      => 0,
+                'child_table'    => $childTable,
+                'child_ids'      => [],
+                'wallet_changed' => 0,
+                'child_changed'  => 0,
+            ];
+        }
+
+        return [
+            'success'        => true,
+            'message'        => 'Wallet/account records soft-deleted successfully.',
+            'type'           => $type,
+            'wallet_id'      => $walletId,
+            'child_table'    => $childTable,
+            'child_ids'      => $childIds,
+            'wallet_changed' => $walletAffected,
+            'child_changed'  => $childAffected,
+        ];
+    }
+
     public function submitMyMIGold($data)
     {
         return $this->db->table('bf_users_wallet_transactions')->insert($data);
@@ -171,6 +452,72 @@ class WalletModel extends Model
             ->get()->getRowArray();
     }
 
+    public function getTransactionHistory($walletId, ?int $userId = null, int $limit = 100): array
+    {
+        $walletId = (int) $walletId;
+        $limit    = max(1, min((int) $limit, 500));
+
+        if ($walletId <= 0) {
+            return [];
+        }
+
+        $table = 'bf_users_wallet_transactions';
+
+        try {
+            $fieldNames = $this->db->getFieldNames($table);
+        } catch (\Throwable $e) {
+            log_message('error', 'WalletModel::getTransactionHistory unable to read table fields: {m}', [
+                'm' => $e->getMessage(),
+            ]);
+
+            return [];
+        }
+
+        $cols = array_fill_keys($fieldNames, true);
+
+        $builder = $this->db->table($table)
+            ->where('wallet_id', $walletId);
+
+        if ($userId !== null && $userId > 0 && isset($cols['user_id'])) {
+            $builder->where('user_id', (string) $userId);
+        }
+
+        if (isset($cols['deleted'])) {
+            $builder->groupStart()
+                ->where('deleted', 0)
+                ->orWhere('deleted', '0')
+                ->orWhere('deleted', 'No')
+                ->orWhere('deleted IS NULL', null, false)
+                ->groupEnd();
+        }
+
+        if (isset($cols['active'])) {
+            $builder->groupStart()
+                ->where('active', 1)
+                ->orWhere('active', '1')
+                ->orWhere('active', 'Yes')
+                ->orWhere('active', 'yes')
+                ->orWhere('active IS NULL', null, false)
+                ->groupEnd();
+        }
+
+        if (isset($cols['transaction_date'])) {
+            $builder->orderBy('transaction_date', 'DESC');
+        } elseif (isset($cols['date'])) {
+            $builder->orderBy('date', 'DESC');
+        } elseif (isset($cols['submitted_date'])) {
+            $builder->orderBy('submitted_date', 'DESC');
+        } elseif (isset($cols['created_on'])) {
+            $builder->orderBy('created_on', 'DESC');
+        }
+
+        return $builder
+            ->orderBy('id', 'DESC')
+            ->limit($limit)
+            ->get()
+            ->getResultArray();
+    }
+
     public function getTransactionSummaryByWallet($walletID)
     {
         $builder = $this->db->table('bf_users_wallet_transactions');
@@ -267,15 +614,69 @@ class WalletModel extends Model
     }
 
     // --- Bank / Credit / Debt / Invest tables --------------------------------
-
     public function addBankWallet($data)
     {
-        $cols = $this->getColumns('bf_users_bank_accounts');
-        $data = array_intersect_key($data, $cols);
+        $table = 'bf_users_bank_accounts';
+
+        if (! is_array($data) || empty($data)) {
+            log_message('error', 'WalletModel::addBankWallet received empty or invalid data.');
+            return false;
+        }
+
+        if (isset($data['credentials']) && is_array($data['credentials'])) {
+            $data['credentials'] = json_encode($data['credentials'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        }
+
+        if (! isset($data['status'])) {
+            $data['status'] = 1;
+        }
+
+        if (! isset($data['active'])) {
+            $data['active'] = 1;
+        }
+
+        if (! isset($data['deleted'])) {
+            $data['deleted'] = 0;
+        }
+
+        if (isset($data['active'])) {
+            $data['active'] = ($data['active'] === 'Yes' || $data['active'] === 1 || $data['active'] === '1') ? 1 : 0;
+        }
+
+        $cols = $this->getColumns($table);
+
         if (isset($cols['created_on']) && empty($data['created_on'])) {
             $data['created_on'] = date('Y-m-d H:i:s');
         }
-        return $this->db->table('bf_users_bank_accounts')->insert($data);
+
+        if (isset($cols['modified_on']) && empty($data['modified_on'])) {
+            $data['modified_on'] = date('Y-m-d H:i:s');
+        } elseif (isset($cols['updated_on']) && empty($data['updated_on'])) {
+            $data['updated_on'] = date('Y-m-d H:i:s');
+        }
+
+        $data = array_intersect_key($data, $cols);
+
+        if (empty($data)) {
+            log_message('error', 'WalletModel::addBankWallet has no valid columns after filtering.');
+            return false;
+        }
+
+        $ok = $this->db->table($table)->insert($data);
+
+        if (! $ok) {
+            $err = $this->db->error();
+
+            log_message('error', 'WalletModel::addBankWallet insert failed: {message} ({code}) payload={payload}', [
+                'message' => $err['message'] ?? 'unknown',
+                'code'    => $err['code'] ?? 0,
+                'payload' => json_encode($data),
+            ]);
+
+            return false;
+        }
+
+        return true;
     }
 
     public function editBankWallet($walletId, $data)
@@ -752,34 +1153,63 @@ class WalletModel extends Model
      */
     public function addWalletReturnId(array $data): int
     {
-        if (isset($data['active'])) {
-            $data['active'] = ($data['active'] === 'Yes' || $data['active'] === 1) ? 1 : 0;
+        $table = 'bf_users_wallet';
+
+        if (! is_array($data) || empty($data)) {
+            log_message('error', 'WalletModel::addWalletReturnId received empty or invalid data.');
+            return 0;
         }
 
-        $walletColumns = $this->getColumns('bf_users_wallet');
-        $data = array_intersect_key($data, $walletColumns);
+        if (isset($data['credentials']) && is_array($data['credentials'])) {
+            $data['credentials'] = json_encode($data['credentials'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        }
+
+        if (! isset($data['status'])) {
+            $data['status'] = 'linked';
+        }
+
+        if (! isset($data['active'])) {
+            $data['active'] = 1;
+        }
+
+        if (! isset($data['deleted'])) {
+            $data['deleted'] = 0;
+        }
+
+        if (isset($data['active'])) {
+            $data['active'] = ($data['active'] === 'Yes' || $data['active'] === 1 || $data['active'] === '1') ? 1 : 0;
+        }
+
+        $walletColumns = $this->getColumns($table);
 
         if (isset($walletColumns['created_on']) && empty($data['created_on'])) {
             $data['created_on'] = date('Y-m-d H:i:s');
         }
 
-        if (!isset($walletColumns['modified_on'])) {
-            unset($data['modified_on']);
+        if (isset($walletColumns['modified_on']) && empty($data['modified_on'])) {
+            $data['modified_on'] = date('Y-m-d H:i:s');
+        } elseif (isset($walletColumns['updated_on']) && empty($data['updated_on'])) {
+            $data['updated_on'] = date('Y-m-d H:i:s');
         }
 
-        if (!isset($walletColumns['updated_on'])) {
-            unset($data['updated_on']);
+        $data = array_intersect_key($data, $walletColumns);
+
+        if (empty($data)) {
+            log_message('error', 'WalletModel::addWalletReturnId has no valid columns after filtering.');
+            return 0;
         }
 
-        $ok = $this->db->table('bf_users_wallet')->insert($data);
+        $ok = $this->db->table($table)->insert($data);
 
-        if (!$ok) {
+        if (! $ok) {
             $err = $this->db->error();
+
             log_message('error', 'WalletModel::addWalletReturnId insert failed: {message} ({code}) payload={payload}', [
                 'message' => $err['message'] ?? 'unknown',
                 'code'    => $err['code'] ?? 0,
                 'payload' => json_encode($data),
             ]);
+
             return 0;
         }
 
@@ -791,12 +1221,144 @@ class WalletModel extends Model
      */
     public function addBankWalletReturnId(array $data): int
     {
-        $cols = $this->getColumns('bf_users_bank_accounts');
-        $data = array_intersect_key($data, $cols);
+        $table = 'bf_users_bank_accounts';
+
+        if (! is_array($data) || empty($data)) {
+            log_message('error', 'WalletModel::addBankWalletReturnId received empty or invalid data.');
+            return 0;
+        }
+
+        if (isset($data['credentials']) && is_array($data['credentials'])) {
+            $data['credentials'] = json_encode($data['credentials'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        }
+
+        if (! isset($data['status'])) {
+            $data['status'] = 1;
+        }
+
+        if (! isset($data['active'])) {
+            $data['active'] = 1;
+        }
+
+        if (! isset($data['deleted'])) {
+            $data['deleted'] = 0;
+        }
+
+        if (isset($data['active'])) {
+            $data['active'] = ($data['active'] === 'Yes' || $data['active'] === 1 || $data['active'] === '1') ? 1 : 0;
+        }
+
+        $cols = $this->getColumns($table);
+
+        if (isset($cols['date']) && empty($data['date'])) {
+            $data['date'] = date('Y-m-d');
+        }
+
+        if (isset($cols['time']) && empty($data['time'])) {
+            $data['time'] = date('H:i:s');
+        }
+
         if (isset($cols['created_on']) && empty($data['created_on'])) {
             $data['created_on'] = date('Y-m-d H:i:s');
         }
-        $this->db->table('bf_users_bank_accounts')->insert($data);
+
+        if (isset($cols['updated_on']) && empty($data['updated_on'])) {
+            $data['updated_on'] = date('Y-m-d H:i:s');
+        }
+
+        if (isset($data['user_id'])) {
+            $data['user_id'] = substr((string) $data['user_id'], 0, 32);
+        }
+
+        if (isset($data['user_email'])) {
+            $data['user_email'] = substr((string) $data['user_email'], 0, 32);
+        }
+
+        if (isset($data['username'])) {
+            $data['username'] = substr((string) $data['username'], 0, 512);
+        }
+
+        if (isset($data['wallet_id'])) {
+            $data['wallet_id'] = substr((string) $data['wallet_id'], 0, 128);
+        }
+
+        if (isset($data['fl_loginId'])) {
+            $data['fl_loginId'] = substr((string) $data['fl_loginId'], 0, 128);
+        }
+
+        if (isset($data['fl_institution_id'])) {
+            $data['fl_institution_id'] = substr((string) $data['fl_institution_id'], 0, 64);
+        }
+
+        if (isset($data['provider'])) {
+            $data['provider'] = substr((string) $data['provider'], 0, 255);
+        }
+
+        if (isset($data['account_type'])) {
+            $data['account_type'] = substr((string) $data['account_type'], 0, 32);
+        }
+
+        if (isset($data['bank_account_owner'])) {
+            $data['bank_account_owner'] = substr((string) $data['bank_account_owner'], 0, 32);
+        }
+
+        if (isset($data['bank_name'])) {
+            $data['bank_name'] = substr((string) $data['bank_name'], 0, 512);
+        }
+
+        if (isset($data['routing_number'])) {
+            $data['routing_number'] = substr((string) $data['routing_number'], 0, 512);
+        }
+
+        if (isset($data['account_number'])) {
+            $data['account_number'] = substr((string) $data['account_number'], 0, 512);
+        }
+
+        if (isset($data['verify_account'])) {
+            $data['verify_account'] = substr((string) $data['verify_account'], 0, 32);
+        }
+
+        if (isset($data['ach_enabled'])) {
+            $data['ach_enabled'] = substr((string) $data['ach_enabled'], 0, 45);
+        }
+
+        if (isset($data['nickname'])) {
+            $data['nickname'] = substr((string) $data['nickname'], 0, 32);
+        }
+
+        if (isset($data['balance'])) {
+            $data['balance'] = substr((string) $data['balance'], 0, 45);
+        }
+
+        if (isset($data['current_balance'])) {
+            $data['current_balance'] = substr((string) $data['current_balance'], 0, 32);
+        }
+
+        if (isset($data['available_balance'])) {
+            $data['available_balance'] = substr((string) $data['available_balance'], 0, 32);
+        }
+
+        $data = array_intersect_key($data, $cols);
+
+        if (empty($data)) {
+            log_message('error', 'WalletModel::addBankWalletReturnId has no valid columns after filtering.');
+            return 0;
+        }
+
+        $ok = $this->db->table($table)->insert($data);
+
+        if (! $ok) {
+            $err = $this->db->error();
+
+            log_message('error', 'WalletModel::addBankWalletReturnId insert failed: {message} ({code}) payload={payload}', [
+                'message' => $err['message'] ?? 'unknown',
+                'code'    => $err['code'] ?? 0,
+                'payload' => json_encode($data),
+            ]);
+
+            return 0;
+        }
+
         return (int) $this->db->insertID();
     }
 

@@ -103,39 +103,85 @@ $showSetupBanner = ! empty($setupStatus)
   </div>
 </div>
 
-<!-- Delete Modal (shared legacy fallback) -->
+<!-- Delete Wallet Modal -->
 <div class="modal fade" id="deleteWalletModal" tabindex="-1" aria-labelledby="deleteWalletModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="deleteWalletModalLabel">Delete This Wallet?</h3>
-        <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure you want to delete <strong id="walletName">this wallet</strong>?</p>
-      </div>
-      <div class="modal-footer">
-        <a class="btn btn-success" href="#" id="confirmDeleteButton">Yes</a>
-        <button class="btn btn-danger" data-bs-dismiss="modal" type="button">No</button>
-      </div>
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="deleteWalletModalLabel">Delete This Wallet?</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <p class="mb-0">
+                    Are you sure you want to delete <strong id="walletName">this wallet</strong>?
+                </p>
+                <p class="small text-muted mt-2 mb-0">
+                    This will remove the wallet from your active account list.
+                </p>
+            </div>
+
+            <div class="modal-footer">
+                <a id="confirmDeleteButton" class="btn btn-success" href="#">Yes</a>
+                <button class="btn btn-danger" data-bs-dismiss="modal" type="button">No</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
-<script <?= $nonce['script'] ?? '' ?>>
-  // Backward-compatible delete modal hook (legacy route)
-  function openDeleteModal(event) {
-    event.preventDefault();
-    const el = event.currentTarget;
-    const walletId   = el.getAttribute('data-id');
-    const walletName = el.getAttribute('data-name') || 'Unknown Wallet';
-    const accountType= el.getAttribute('data-type') || 'Wallet';
-    const btn = document.getElementById('confirmDeleteButton');
-    if (btn && walletId) {
-      btn.setAttribute('href', `/index.php/Wallets/Delete/${accountType}/${walletId}`);
+<!-- Delete Modal JavaScript Handler -->
+<script>
+    function openDeleteModal(event) {
+        event.preventDefault();
+
+        const element = event.currentTarget;
+
+        const accountType = element.getAttribute('data-type') || '';
+        const walletName  = element.getAttribute('data-name') || 'Unknown Wallet';
+
+        /*
+         * data-wallet-id = parent bf_users_wallet.id when known.
+         * data-account-id = child/subsidiary table id when known.
+         * data-id remains a backward-compatible fallback.
+         */
+        const walletId  = element.getAttribute('data-wallet-id') || element.getAttribute('data-id') || '';
+        const accountId = element.getAttribute('data-account-id') || '';
+
+        console.log('delete accountType:', accountType);
+        console.log('delete walletId:', walletId);
+        console.log('delete accountId:', accountId);
+        console.log('delete walletName:', walletName);
+
+        if (!walletId || !accountType) {
+            console.error('Missing walletId or accountType. Cannot proceed with delete modal.');
+            return;
+        }
+
+        const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+
+        if (confirmDeleteButton) {
+            let deleteUrl = `<?= site_url('Wallets/Delete') ?>/${encodeURIComponent(accountType)}/${encodeURIComponent(walletId)}`;
+
+            if (accountId) {
+                deleteUrl += `?account_id=${encodeURIComponent(accountId)}`;
+            }
+
+            confirmDeleteButton.setAttribute('href', deleteUrl);
+        }
+
+        const walletNameElement = document.getElementById('walletName');
+
+        if (walletNameElement) {
+            walletNameElement.textContent = walletName;
+        }
+
+        const deleteWalletModalElement = document.getElementById('deleteWalletModal');
+
+        if (deleteWalletModalElement && window.bootstrap && bootstrap.Modal) {
+            const deleteWalletModal = new bootstrap.Modal(deleteWalletModalElement, {});
+            deleteWalletModal.show();
+        } else {
+            console.error('Delete Wallet Modal element or Bootstrap 5 runtime not found.');
+        }
     }
-    const nameEl = document.getElementById('walletName');
-    if (nameEl) nameEl.textContent = walletName;
-    new bootstrap.Modal(document.getElementById('deleteWalletModal')).show();
-  }
 </script>
