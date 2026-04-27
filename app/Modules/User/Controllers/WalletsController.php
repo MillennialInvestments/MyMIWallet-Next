@@ -1691,9 +1691,9 @@ class WalletsController extends BaseUserController
                     ->with('error', 'Unsupported wallet/account type.');
             }
 
-            $walletModel = $this->walletModel instanceof WalletModel
+            $walletModel = $this->walletModel instanceof \App\Models\WalletModel
                 ? $this->walletModel
-                : new WalletModel();
+                : new \App\Models\WalletModel();
 
             $previousData = null;
 
@@ -1701,19 +1701,15 @@ class WalletsController extends BaseUserController
                 case 'bank':
                     $previousData = $walletModel->getBankAccountByIdOrWallet($accountID);
                     break;
-
                 case 'credit':
                     $previousData = $walletModel->getCreditAccountByIdOrWallet($accountID);
                     break;
-
                 case 'debt':
                     $previousData = $walletModel->getDebtAccountByIdOrWallet($accountID);
                     break;
-
                 case 'investment':
                     $previousData = $walletModel->getInvestAccountByIdOrWallet($accountID);
                     break;
-
                 case 'crypto':
                     $previousData = $walletModel->getCryptoAccountByIdOrWallet($accountID);
                     break;
@@ -1789,7 +1785,7 @@ class WalletsController extends BaseUserController
             try {
                 $transactionHistory = $this->resolveWalletService()
                     ->getWalletTransactionHistory($transactionWalletId, $currentUserId, 100);
-            } catch (Throwable $transactionError) {
+            } catch (\Throwable $transactionError) {
                 log_message('error', 'WalletsController::details - Transaction history load failed: {m}', [
                     'm'                     => $transactionError->getMessage(),
                     'account_id'            => $accountID,
@@ -1822,8 +1818,8 @@ class WalletsController extends BaseUserController
                 'pageTitle'           => 'Wallet Details | MyMI Wallet | The Future of Finance',
             ]);
 
-            return $this->renderTheme('App\\Modules\\User\\Views\\Wallets\\Details', $this->data);
-        } catch (Throwable $e) {
+            return $this->renderTheme('App\Modules\User\Views\Wallets\Details', $this->data);
+        } catch (\Throwable $e) {
             log_message('error', 'WalletsController::details - Exception: {m}', [
                 'm'          => $e->getMessage(),
                 'account_id' => $accountID,

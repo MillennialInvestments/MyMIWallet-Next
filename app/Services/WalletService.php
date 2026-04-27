@@ -1137,12 +1137,12 @@ class WalletService
     private function resolvePlaidTransactionDate(array $transaction): ?string
     {
         $dateKeys = [
+            'posted_date',
             'date',
             'authorized_date',
             'datetime',
             'authorized_datetime',
             'transaction_date',
-            'posted_date',
             'posted_at',
         ];
 
@@ -1154,11 +1154,14 @@ class WalletService
             }
 
             if (in_array(strtolower($value), [
+                '0',
+                '0000',
                 '0000-00-00',
                 '0000-00-00 00:00:00',
                 'null',
                 'n/a',
                 'na',
+                'none',
             ], true)) {
                 continue;
             }
@@ -1211,6 +1214,7 @@ class WalletService
         $plaid = new \App\Libraries\MyMIPlaid();
         $accessToken = $plaid->decryptToken($encryptedAccessToken);
 
+        $daysBack = max(1, min($daysBack, 730));
         $startDate = date('Y-m-d', strtotime('-' . $daysBack . ' days'));
         $endDate   = date('Y-m-d');
 
@@ -1221,57 +1225,61 @@ class WalletService
         ]);
 
         $inserted = 0;
-        $skipped = 0;
+        $updated  = 0;
+        $skipped  = 0;
 
         foreach (($result['transactions'] ?? []) as $txn) {
+            if (! is_array($txn)) {
+                $skipped++;
+                continue;
+            }
+
             $externalId = (string) ($txn['transaction_id'] ?? '');
+
             if ($externalId === '') {
                 $skipped++;
                 continue;
             }
 
-            $transactionDate = $this->resolvePlaidTransactionDate($transaction);
+            $transactionDate = $this->resolvePlaidTransactionDate($txn);
 
             if ($walletModel->walletTransactionExists($userId, $walletId, $externalId)) {
                 if (method_exists($walletModel, 'updateWalletTransactionDateIfMissing')) {
-                    $walletModel->updateWalletTransactionDateIfMissing(
+                    $didUpdate = $walletModel->updateWalletTransactionDateIfMissing(
                         $userId,
                         $walletId,
                         $externalId,
                         $transactionDate
                     );
+
+                    if ($didUpdate) {
+                        $updated++;
+                    }
                 }
 
+                $skipped++;
                 continue;
             }
 
             $amount = (float) ($txn['amount'] ?? 0);
-            $name   = (string) ($txn['name'] ?? 'Plaid Transaction');
-            $cat    = isset($txn['personal_finance_category']['primary'])
-                ? (string) $txn['personal_finance_category']['primary']
-                : ((isset($txn['category'][0])) ? (string) $txn['category'][0] : '');
+            $description = (string) (
+                $txn['name']
+                ?? $txn['merchant_name']
+                ?? 'Plaid Transaction'
+            );
 
-            $dateCandidates = [
-                (string) ($txn['date'] ?? ''),
-                (string) ($txn['authorized_date'] ?? ''),
-                (string) ($txn['datetime'] ?? ''),
-                (string) ($txn['authorized_datetime'] ?? ''),
-            ];
+            $merchantName = (string) ($txn['merchant_name'] ?? '');
 
-            $transactionDate = null;
-            foreach ($dateCandidates as $candidate) {
-                $candidate = trim($candidate);
-                if ($candidate === '' || $candidate === '0000-00-00' || $candidate === '0000-00-00 00:00:00') {
-                    continue;
-                }
-                $ts = strtotime($candidate);
-                if ($ts !== false && (int) date('Y', $ts) >= 1900) {
-                    $transactionDate = date('Y-m-d H:i:s', $ts);
-                    break;
-                }
+            $category = '';
+
+            if (isset($txn['personal_finance_category']['primary'])) {
+                $category = (string) $txn['personal_finance_category']['primary'];
+            } elseif (isset($txn['category'][0])) {
+                $category = (string) $txn['category'][0];
             }
 
-            $transactionDate = $this->resolvePlaidTransactionDate($transaction);
+            $transactionType = $amount < 0 ? 'Deposit' : 'Withdraw';
+            $absoluteAmount  = abs($amount);
 
             $payload = [
                 'user_id'          => $userId,
@@ -1279,17 +1287,24 @@ class WalletService
                 'external_id'      => $externalId,
                 'transaction_id'   => $externalId,
                 'provider'         => 'plaid',
-                'trans_type'       => $amount < 0 ? 'Deposit' : 'Withdraw',
-                'amount'           => abs($amount),
-                'description'      => $name,
-                'category'         => $cat,
+                'trans_type'       => $transactionType,
+                'amount'           => $absoluteAmount,
+                'description'      => $description,
+                'category'         => $category,
+                'posted_date'      => $transactionDate,
+                'date'             => $transactionDate,
                 'transaction_date' => $transactionDate,
                 'submitted_date'   => $transactionDate !== null ? $transactionDate . ' 00:00:00' : date('Y-m-d H:i:s'),
-                'posted_date'      => $transactionDate !== null ? $transactionDate . ' 00:00:00' : date('Y-m-d H:i:s'),
                 'active'           => 'Yes',
+                'status'           => '',
                 'raw_payload'      => json_encode($txn, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
-                'created_on'       => date('Y-m-d H:i:s'),
+                'created_on'       => $transactionDate !== null ? $transactionDate . ' 00:00:00' : date('Y-m-d H:i:s'),
+                'currency'         => (string) ($txn['iso_currency_code'] ?? 'USD'),
             ];
+
+            if ($merchantName !== '') {
+                $payload['merchant_name'] = $merchantName;
+            }
 
             if ($walletModel->insertWalletTransaction($payload) > 0) {
                 $inserted++;
@@ -1306,6 +1321,7 @@ class WalletService
 
         return [
             'inserted' => $inserted,
+            'updated'  => $updated,
             'skipped'  => $skipped,
             'total'    => count($result['transactions'] ?? []),
         ];
