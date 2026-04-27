@@ -1134,6 +1134,53 @@ class WalletService
         ];
     }
 
+    private function resolvePlaidTransactionDate(array $transaction): ?string
+    {
+        $dateKeys = [
+            'date',
+            'authorized_date',
+            'datetime',
+            'authorized_datetime',
+            'transaction_date',
+            'posted_date',
+            'posted_at',
+        ];
+
+        foreach ($dateKeys as $key) {
+            $value = trim((string) ($transaction[$key] ?? ''));
+
+            if ($value === '') {
+                continue;
+            }
+
+            if (in_array(strtolower($value), [
+                '0000-00-00',
+                '0000-00-00 00:00:00',
+                'null',
+                'n/a',
+                'na',
+            ], true)) {
+                continue;
+            }
+
+            $timestamp = strtotime($value);
+
+            if ($timestamp === false || $timestamp <= 0) {
+                continue;
+            }
+
+            $year = (int) date('Y', $timestamp);
+
+            if ($year < 1900) {
+                continue;
+            }
+
+            return date('Y-m-d', $timestamp);
+        }
+
+        return null;
+    }
+
     public function syncPlaidTransactions(
         int $userId,
         int $walletId,
@@ -1183,8 +1230,18 @@ class WalletService
                 continue;
             }
 
+            $transactionDate = $this->resolvePlaidTransactionDate($transaction);
+
             if ($walletModel->walletTransactionExists($userId, $walletId, $externalId)) {
-                $skipped++;
+                if (method_exists($walletModel, 'updateWalletTransactionDateIfMissing')) {
+                    $walletModel->updateWalletTransactionDateIfMissing(
+                        $userId,
+                        $walletId,
+                        $externalId,
+                        $transactionDate
+                    );
+                }
+
                 continue;
             }
 
@@ -1214,6 +1271,8 @@ class WalletService
                 }
             }
 
+            $transactionDate = $this->resolvePlaidTransactionDate($transaction);
+
             $payload = [
                 'user_id'          => $userId,
                 'wallet_id'        => $walletId,
@@ -1225,8 +1284,8 @@ class WalletService
                 'description'      => $name,
                 'category'         => $cat,
                 'transaction_date' => $transactionDate,
-                'posted_date'      => $transactionDate ? date('Y-m-d', strtotime($transactionDate)) : null,
-                'date'             => $transactionDate ? date('Y-m-d', strtotime($transactionDate)) : null,
+                'submitted_date'   => $transactionDate !== null ? $transactionDate . ' 00:00:00' : date('Y-m-d H:i:s'),
+                'posted_date'      => $transactionDate !== null ? $transactionDate . ' 00:00:00' : date('Y-m-d H:i:s'),
                 'active'           => 'Yes',
                 'raw_payload'      => json_encode($txn, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
                 'created_on'       => date('Y-m-d H:i:s'),

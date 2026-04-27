@@ -786,6 +786,78 @@ class WalletModel extends Model
         return $this->db->table('bf_users_invest_accounts')->where('id', $walletId)->update($data);
     }
 
+    public function updateWalletTransactionDateIfMissing(int $userId, int $walletId, string $externalId, ?string $transactionDate): bool
+    {
+        $externalId = trim($externalId);
+
+        if ($userId <= 0 || $walletId <= 0 || $externalId === '' || $transactionDate === null || $transactionDate === '') {
+            return false;
+        }
+
+        $table = 'bf_users_wallet_transactions';
+
+        try {
+            $fieldNames = $this->db->getFieldNames($table);
+        } catch (\Throwable $e) {
+            log_message('error', 'WalletModel::updateWalletTransactionDateIfMissing unable to read table fields: {m}', [
+                'm' => $e->getMessage(),
+            ]);
+
+            return false;
+        }
+
+        $cols = array_fill_keys($fieldNames, true);
+
+        $row = $this->db->table($table)
+            ->where('user_id', $userId)
+            ->where('wallet_id', $walletId)
+            ->where('external_id', $externalId)
+            ->get()
+            ->getRowArray();
+
+        if (! is_array($row) || empty($row)) {
+            return false;
+        }
+
+        $isBadDate = static function ($value): bool {
+            $value = trim((string) ($value ?? ''));
+
+            return $value === ''
+                || $value === '0000-00-00'
+                || $value === '0000-00-00 00:00:00'
+                || strtolower($value) === 'null'
+                || strtolower($value) === 'n/a';
+        };
+
+        $updates = [];
+
+        if (isset($cols['date']) && $isBadDate($row['date'] ?? null)) {
+            $updates['date'] = $transactionDate;
+        }
+
+        if (isset($cols['transaction_date']) && $isBadDate($row['transaction_date'] ?? null)) {
+            $updates['transaction_date'] = $transactionDate;
+        }
+
+        if (isset($cols['submitted_date']) && $isBadDate($row['submitted_date'] ?? null)) {
+            $updates['submitted_date'] = $transactionDate . ' 00:00:00';
+        }
+
+        if (isset($cols['updated_on'])) {
+            $updates['updated_on'] = date('Y-m-d H:i:s');
+        }
+
+        if (empty($updates)) {
+            return false;
+        }
+
+        $this->db->table($table)
+            ->where('id', (int) $row['id'])
+            ->update($updates);
+
+        return $this->db->affectedRows() > 0;
+    }
+    
     public function insertWalletTransaction(array $data): int
     {
         $cols = $this->getColumns('bf_users_wallet_transactions');

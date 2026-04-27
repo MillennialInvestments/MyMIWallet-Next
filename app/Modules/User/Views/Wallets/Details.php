@@ -198,9 +198,6 @@ $getJsonValue = static function ($json, array $keys) {
 };
 
 $transactionDate = static function (array $transaction) use ($isInvalidDateValue, $getJsonValue): string {
-    /*
-     * Check current Plaid-style and app-style date columns first.
-     */
     $dateKeys = [
         'transaction_date',
         'authorized_date',
@@ -230,9 +227,6 @@ $transactionDate = static function (array $transaction) use ($isInvalidDateValue
         }
     }
 
-    /*
-     * Support legacy month/day/year storage.
-     */
     $year  = trim((string) ($transaction['year'] ?? ''));
     $month = trim((string) ($transaction['month'] ?? ''));
     $day   = trim((string) ($transaction['day'] ?? ''));
@@ -247,9 +241,6 @@ $transactionDate = static function (array $transaction) use ($isInvalidDateValue
         }
     }
 
-    /*
-     * Support transactions where Plaid payload was stored as JSON.
-     */
     $jsonColumns = [
         'raw',
         'raw_data',
@@ -532,6 +523,7 @@ echo view($detailView, $accountInformation);
                             <th>Category</th>
                             <th>Status</th>
                             <th class="text-end">Amount</th>
+                            <th class="text-end">Running Subtotal</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -574,6 +566,7 @@ echo view($detailView, $accountInformation);
                                             </div>
                                         <?php endif; ?>
                                     </td>
+
                                     <td>
                                         <span class="fw-medium"><?= esc($description) ?></span>
 
@@ -589,18 +582,28 @@ echo view($detailView, $accountInformation);
                                             </div>
                                         <?php endif; ?>
                                     </td>
+
                                     <td><?= esc((string) $category) ?></td>
+
                                     <td>
                                         <span class="badge bg-light text-dark"><?= esc($pendingText) ?></span>
                                     </td>
-                                    <td class="text-end" data-order="<?= esc((string) $amount) ?>">
+
+                                    <td class="text-end js-transaction-amount"
+                                        data-order="<?= esc((string) $amount) ?>"
+                                        data-amount="<?= esc((string) $amount) ?>">
                                         <?= esc($formatMoney($amount)) ?>
+                                    </td>
+
+                                    <td class="text-end js-running-subtotal"
+                                        data-order="0">
+                                        $0.00
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="5" class="text-center text-muted py-4">
+                                <td colspan="6" class="text-center text-muted py-4">
                                     No transactions found for this wallet yet.
 
                                     <?php if ($transactionWalletId > 0 && in_array($pageAccountType, ['Banking', 'Credit'], true)): ?>
@@ -612,6 +615,16 @@ echo view($detailView, $accountInformation);
                             </tr>
                         <?php endif; ?>
                     </tbody>
+
+                    <?php if (! empty($transactionHistory)): ?>
+                        <tfoot>
+                            <tr>
+                                <th colspan="4" class="text-end">Filtered Total</th>
+                                <th class="text-end" id="walletTransactionFilteredTotal">$0.00</th>
+                                <th class="text-end" id="walletTransactionFinalSubtotal">$0.00</th>
+                            </tr>
+                        </tfoot>
+                    <?php endif; ?>
                 </table>
             </div>
 
@@ -676,4 +689,112 @@ function syncPlaidTransactionsFromDetails(button) {
     });
 }
 
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const tableSelector = '#walletTransactionDatabase';
+
+    if (!document.querySelector(tableSelector)) {
+        return;
+    }
+
+    if (!window.jQuery || !jQuery.fn || !jQuery.fn.DataTable) {
+        console.warn('DataTablesJS is not loaded on this page. Transaction table will remain a standard table.');
+        return;
+    }
+
+    const formatCurrency = function (value) {
+        const amount = Number(value || 0);
+
+        return amount.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        });
+    };
+
+    const recalculateRunningSubtotal = function (table) {
+        let runningSubtotal = 0;
+
+        const visibleRows = table.rows({
+            search: 'applied',
+            order: 'applied'
+        }).nodes();
+
+        jQuery(visibleRows).each(function () {
+            const $row = jQuery(this);
+            const amountRaw = $row.find('.js-transaction-amount').attr('data-amount') || '0';
+            const amount = Number(String(amountRaw).replace(/[^0-9.-]/g, '')) || 0;
+
+            runningSubtotal += amount;
+
+            $row.find('.js-running-subtotal')
+                .attr('data-order', runningSubtotal)
+                .text(formatCurrency(runningSubtotal));
+        });
+
+        jQuery('#walletTransactionFilteredTotal').text(formatCurrency(runningSubtotal));
+        jQuery('#walletTransactionFinalSubtotal').text(formatCurrency(runningSubtotal));
+    };
+
+    const $table = jQuery(tableSelector);
+
+    if (jQuery.fn.DataTable.isDataTable(tableSelector)) {
+        const existingTable = $table.DataTable();
+        recalculateRunningSubtotal(existingTable);
+        return;
+    }
+
+    const dataTableOptions = {
+        order: [[0, 'desc']],
+        pageLength: 25,
+        lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
+        responsive: true,
+        autoWidth: false,
+        stateSave: true,
+        columnDefs: [
+            {
+                targets: 4,
+                className: 'text-end'
+            },
+            {
+                targets: 5,
+                className: 'text-end'
+            }
+        ],
+        language: {
+            search: 'Filter transactions:',
+            lengthMenu: 'Show _MENU_ transactions',
+            info: 'Showing _START_ to _END_ of _TOTAL_ transactions',
+            infoEmpty: 'No transactions available',
+            zeroRecords: 'No matching transactions found'
+        },
+        drawCallback: function () {
+            recalculateRunningSubtotal(this.api());
+        },
+        initComplete: function () {
+            recalculateRunningSubtotal(this.api());
+        }
+    };
+
+    let table;
+
+    if (window.initDataTableSafe) {
+        table = window.initDataTableSafe($table, dataTableOptions);
+
+        if (table && typeof table.on === 'function') {
+            table.on('draw', function () {
+                recalculateRunningSubtotal(table);
+            });
+        }
+
+        if (table) {
+            recalculateRunningSubtotal(table);
+        }
+
+        return;
+    }
+
+    table = $table.DataTable(dataTableOptions);
+    recalculateRunningSubtotal(table);
+});
 </script>
