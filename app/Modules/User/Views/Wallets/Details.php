@@ -199,9 +199,9 @@ $getJsonValue = static function ($json, array $keys) {
 
 $transactionDate = static function (array $transaction) use ($isInvalidDateValue, $getJsonValue): string {
     $dateKeys = [
+        'posted_date',
         'transaction_date',
         'authorized_date',
-        'posted_date',
         'post_date',
         'date',
         'trans_date',
@@ -211,12 +211,12 @@ $transactionDate = static function (array $transaction) use ($isInvalidDateValue
         'transaction_datetime',
         'authorized_datetime',
         'posted_at',
-        'created_on',
-        'created_at',
         'submitted_date',
         'deposit_date',
         'withdraw_date',
         'transfer_date',
+        'created_at',
+        'created_on',
         'updated_on',
         'modified_on',
     ];
@@ -273,6 +273,18 @@ $transactionDate = static function (array $transaction) use ($isInvalidDateValue
     }
 
     return '';
+};
+
+$transactionDescription = static function (array $transaction): string {
+    $keys = ['description', 'name', 'merchant_name', 'title', 'memo', 'notes', 'trans_type'];
+
+    foreach ($keys as $key) {
+        if (array_key_exists($key, $transaction) && $transaction[$key] !== null && trim((string) $transaction[$key]) !== '') {
+            return trim((string) $transaction[$key]);
+        }
+    }
+
+    return 'Transaction';
 };
 
 $transactionAmount = static function (array $transaction): float {

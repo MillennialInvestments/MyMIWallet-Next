@@ -487,6 +487,7 @@ class WalletModel extends Model
                 ->where('deleted', 0)
                 ->orWhere('deleted', '0')
                 ->orWhere('deleted', 'No')
+                ->orWhere('deleted', '')
                 ->orWhere('deleted IS NULL', null, false)
                 ->groupEnd();
         }
@@ -497,11 +498,18 @@ class WalletModel extends Model
                 ->orWhere('active', '1')
                 ->orWhere('active', 'Yes')
                 ->orWhere('active', 'yes')
+                ->orWhere('active', '')
                 ->orWhere('active IS NULL', null, false)
                 ->groupEnd();
         }
 
-        if (isset($cols['transaction_date'])) {
+        /*
+         * Plaid transactions currently store the reliable transaction date in posted_date.
+         * created_on may be 0000-00-00 00:00:00, so keep it low-priority.
+         */
+        if (isset($cols['posted_date'])) {
+            $builder->orderBy('posted_date', 'DESC');
+        } elseif (isset($cols['transaction_date'])) {
             $builder->orderBy('transaction_date', 'DESC');
         } elseif (isset($cols['date'])) {
             $builder->orderBy('date', 'DESC');
@@ -821,26 +829,44 @@ class WalletModel extends Model
 
         $isBadDate = static function ($value): bool {
             $value = trim((string) ($value ?? ''));
+            $lower = strtolower($value);
 
             return $value === ''
+                || $value === '0'
+                || $value === '0000'
                 || $value === '0000-00-00'
                 || $value === '0000-00-00 00:00:00'
-                || strtolower($value) === 'null'
-                || strtolower($value) === 'n/a';
+                || $lower === 'null'
+                || $lower === 'n/a'
+                || $lower === 'na'
+                || $lower === 'none';
         };
+
+        $dateOnly = substr($transactionDate, 0, 10);
+        $dateTime = strlen($transactionDate) === 10
+            ? $transactionDate . ' 00:00:00'
+            : $transactionDate;
 
         $updates = [];
 
+        if (isset($cols['posted_date']) && $isBadDate($row['posted_date'] ?? null)) {
+            $updates['posted_date'] = $dateOnly;
+        }
+
         if (isset($cols['date']) && $isBadDate($row['date'] ?? null)) {
-            $updates['date'] = $transactionDate;
+            $updates['date'] = $dateOnly;
         }
 
         if (isset($cols['transaction_date']) && $isBadDate($row['transaction_date'] ?? null)) {
-            $updates['transaction_date'] = $transactionDate;
+            $updates['transaction_date'] = $dateOnly;
         }
 
         if (isset($cols['submitted_date']) && $isBadDate($row['submitted_date'] ?? null)) {
-            $updates['submitted_date'] = $transactionDate . ' 00:00:00';
+            $updates['submitted_date'] = $dateTime;
+        }
+
+        if (isset($cols['created_on']) && $isBadDate($row['created_on'] ?? null)) {
+            $updates['created_on'] = $dateTime;
         }
 
         if (isset($cols['updated_on'])) {
@@ -860,22 +886,80 @@ class WalletModel extends Model
     
     public function insertWalletTransaction(array $data): int
     {
-        $cols = $this->getColumns('bf_users_wallet_transactions');
-        $data = array_intersect_key($data, $cols);
+        $table = 'bf_users_wallet_transactions';
+        $cols  = $this->getColumns($table);
 
-        if (isset($cols['created_on']) && empty($data['created_on'])) {
+        if (empty($cols)) {
+            log_message('error', 'WalletModel::insertWalletTransaction could not resolve table columns.');
+            return 0;
+        }
+
+        $normalizeDate = static function ($value): ?string {
+            $value = trim((string) ($value ?? ''));
+
+            if ($value === '' || $value === '0000-00-00' || $value === '0000-00-00 00:00:00') {
+                return null;
+            }
+
+            $timestamp = strtotime($value);
+
+            if ($timestamp === false || $timestamp <= 0 || (int) date('Y', $timestamp) < 1900) {
+                return null;
+            }
+
+            return date('Y-m-d', $timestamp);
+        };
+
+        $postedDate = $normalizeDate(
+            $data['posted_date']
+            ?? $data['transaction_date']
+            ?? $data['date']
+            ?? $data['submitted_date']
+            ?? null
+        );
+
+        if ($postedDate !== null) {
+            if (isset($cols['posted_date'])) {
+                $data['posted_date'] = $postedDate;
+            }
+
+            if (isset($cols['transaction_date']) && empty($data['transaction_date'])) {
+                $data['transaction_date'] = $postedDate;
+            }
+
+            if (isset($cols['date']) && empty($data['date'])) {
+                $data['date'] = $postedDate;
+            }
+
+            if (isset($cols['submitted_date']) && empty($data['submitted_date'])) {
+                $data['submitted_date'] = $postedDate . ' 00:00:00';
+            }
+
+            if (isset($cols['created_on']) && (empty($data['created_on']) || $data['created_on'] === '0000-00-00 00:00:00')) {
+                $data['created_on'] = $postedDate . ' 00:00:00';
+            }
+        } elseif (isset($cols['created_on']) && (empty($data['created_on']) || $data['created_on'] === '0000-00-00 00:00:00')) {
             $data['created_on'] = date('Y-m-d H:i:s');
         }
 
-        $ok = $this->db->table('bf_users_wallet_transactions')->insert($data);
+        $data = array_intersect_key($data, $cols);
+
+        if (empty($data)) {
+            log_message('error', 'WalletModel::insertWalletTransaction has no valid columns after filtering.');
+            return 0;
+        }
+
+        $ok = $this->db->table($table)->insert($data);
 
         if (! $ok) {
             $err = $this->db->error();
+
             log_message('error', 'WalletModel::insertWalletTransaction failed: {message} ({code}) payload={payload}', [
                 'message' => $err['message'] ?? 'unknown',
                 'code'    => $err['code'] ?? 0,
                 'payload' => json_encode($data),
             ]);
+
             return 0;
         }
 
