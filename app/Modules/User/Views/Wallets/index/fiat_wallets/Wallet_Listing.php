@@ -31,11 +31,14 @@ echo '
 					<li class="' . $btnSizing . '">
                         <a href="#"
                            data-id="' . $walletID . '"
-                           data-type="Wallets"
+                           class="delete-wallet-button"
+                           data-wallet-id="' . $walletID . '"
+                           data-account-id="' . $walletID . '"
+                           data-type="Bank"
                            data-name="' . $addWalletTitle . '"
                            onclick="openDeleteModal(event)"
                            data-bs-toggle="modal"
-                           data-bs-target="#deleteWalletModal' . $walletID . '">
+                           data-bs-target="#deleteWalletModal">
                             <i class="icon ni ni-cross"></i> <span>Delete</span>
                         </a>
 					</li>
@@ -56,11 +59,14 @@ echo '
 						<li>
                             <a href="#"
                                data-id="' . $walletID . '"
-                               data-type="Wallets"
+                               class="delete-wallet-button"
+                           data-wallet-id="' . $walletID . '"
+                           data-account-id="' . $walletID . '"
+                           data-type="Bank"
                                data-name="' . $addWalletTitle . '"
                                onclick="openDeleteModal(event)"
                                data-bs-toggle="modal"
-                               data-bs-target="#deleteWalletModal' . $walletID . '">
+                               data-bs-target="#deleteWalletModal">
                                 Delete
                             </a>
                         </li>
