@@ -1190,25 +1190,46 @@ class WalletService
 
             $amount = (float) ($txn['amount'] ?? 0);
             $name   = (string) ($txn['name'] ?? 'Plaid Transaction');
-            $date   = (string) ($txn['date'] ?? date('Y-m-d'));
             $cat    = isset($txn['personal_finance_category']['primary'])
                 ? (string) $txn['personal_finance_category']['primary']
                 : ((isset($txn['category'][0])) ? (string) $txn['category'][0] : '');
 
+            $dateCandidates = [
+                (string) ($txn['date'] ?? ''),
+                (string) ($txn['authorized_date'] ?? ''),
+                (string) ($txn['datetime'] ?? ''),
+                (string) ($txn['authorized_datetime'] ?? ''),
+            ];
+
+            $transactionDate = null;
+            foreach ($dateCandidates as $candidate) {
+                $candidate = trim($candidate);
+                if ($candidate === '' || $candidate === '0000-00-00' || $candidate === '0000-00-00 00:00:00') {
+                    continue;
+                }
+                $ts = strtotime($candidate);
+                if ($ts !== false && (int) date('Y', $ts) >= 1900) {
+                    $transactionDate = date('Y-m-d H:i:s', $ts);
+                    break;
+                }
+            }
+
             $payload = [
-                'user_id'        => $userId,
-                'wallet_id'      => $walletId,
-                'external_id'    => $externalId,
-                'transaction_id' => $externalId,
-                'provider'       => 'plaid',
-                'trans_type'     => $amount < 0 ? 'Deposit' : 'Withdraw',
-                'amount'         => abs($amount),
-                'description'    => $name,
-                'category'       => $cat,
-                'posted_date'    => $date,
-                'active'         => 'Yes',
-                'raw_payload'    => json_encode($txn, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
-                'created_on'     => date('Y-m-d H:i:s'),
+                'user_id'          => $userId,
+                'wallet_id'        => $walletId,
+                'external_id'      => $externalId,
+                'transaction_id'   => $externalId,
+                'provider'         => 'plaid',
+                'trans_type'       => $amount < 0 ? 'Deposit' : 'Withdraw',
+                'amount'           => abs($amount),
+                'description'      => $name,
+                'category'         => $cat,
+                'transaction_date' => $transactionDate,
+                'posted_date'      => $transactionDate ? date('Y-m-d', strtotime($transactionDate)) : null,
+                'date'             => $transactionDate ? date('Y-m-d', strtotime($transactionDate)) : null,
+                'active'           => 'Yes',
+                'raw_payload'      => json_encode($txn, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+                'created_on'       => date('Y-m-d H:i:s'),
             ];
 
             if ($walletModel->insertWalletTransaction($payload) > 0) {

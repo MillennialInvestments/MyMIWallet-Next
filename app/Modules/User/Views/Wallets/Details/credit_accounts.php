@@ -26,7 +26,7 @@ $updatedOn          = (string) ($updatedOn ?? '');
 
 $detailsUrl = (string) ($detailsUrl ?? site_url('Wallets/Banking/Details/' . $accountID));
 $editUrl    = (string) ($editUrl ?? site_url('Wallets/Banking/Edit/Account/' . $accountID));
-$deleteHref = (string) ($deleteHref ?? site_url('Wallets/Delete/Bank/' . ($accountWalletID ?: $accountID) . '?account_id=' . $accountID));
+$deleteHref = (string) ($deleteHref ?? site_url('Wallets/Delete/Credit/' . ($accountWalletID ?: $accountID) . '?account_id=' . $accountID));
 
 $transactionHistory = is_array($transactionHistory ?? null) ? $transactionHistory : [];
 $transactionCount = count($transactionHistory);
