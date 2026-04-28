@@ -296,7 +296,62 @@ $transactionAmount = static function (array $transaction): float {
 
     return 0.0;
 };
+$publicTransactionText = static function ($value, string $fallback = 'Not Provided'): string {
+    if (is_array($value) || is_object($value)) {
+        $value = json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    }
 
+    $value = trim((string) ($value ?? ''));
+
+    if ($value === '') {
+        return $fallback;
+    }
+
+    /*
+     * Public display cleanup:
+     * FOOD_AND_DRINK => FOOD AND DRINK
+     * loan_payments  => loan payments
+     */
+    $value = str_replace('_', ' ', $value);
+    $value = preg_replace('/\s+/', ' ', $value);
+
+    return trim($value) !== '' ? trim($value) : $fallback;
+};
+
+$publicTransactionLabel = static function ($value, string $fallback = 'Not Provided') use ($publicTransactionText): string {
+    $value = $publicTransactionText($value, $fallback);
+
+    /*
+     * Make category/status labels easier to scan.
+     * FOOD AND DRINK => Food And Drink
+     */
+    return ucwords(strtolower($value));
+};
+
+$getTransactionMonthMeta = static function (string $sortDate): array {
+    $sortDate = trim($sortDate);
+
+    if ($sortDate === '' || $sortDate === '1900-01-01 00:00:00') {
+        return [
+            'key'   => '',
+            'label' => '',
+        ];
+    }
+
+    $timestamp = strtotime($sortDate);
+
+    if ($timestamp === false || $timestamp <= 0 || (int) date('Y', $timestamp) < 1900) {
+        return [
+            'key'   => '',
+            'label' => '',
+        ];
+    }
+
+    return [
+        'key'   => date('Y-m', $timestamp),
+        'label' => date('M Y', $timestamp),
+    ];
+};
 $pageAccountType = (string) ($accountTypeRaw ?? $accountType ?? $uri->getSegment(2) ?? '');
 $pageAccountTypeKey = strtolower($pageAccountType);
 
@@ -544,7 +599,8 @@ echo view($detailView, $accountInformation);
                                 <?php
                                     $rawDate = $transactionDate($transaction);
 
-                                    $description = $transactionDescription($transaction);
+                                    $descriptionRaw = $transactionDescription($transaction);
+                                    $description    = $publicTransactionText($descriptionRaw, 'Transaction');
 
                                     $category = $transaction['category']
                                         ?? $transaction['personal_finance_category']
@@ -555,6 +611,9 @@ echo view($detailView, $accountInformation);
                                         $category = $category['primary'] ?? json_encode($category);
                                     }
 
+                                    $categoryLabel  = $publicTransactionLabel($category, 'Uncategorized');
+                                    $categoryFilter = strtolower($categoryLabel);
+
                                     $pending = $transaction['pending']
                                         ?? $transaction['status']
                                         ?? '';
@@ -563,13 +622,21 @@ echo view($detailView, $accountInformation);
                                         ? 'Pending'
                                         : ((string) $pending !== '' ? (string) $pending : 'Posted');
 
+                                    $pendingLabel = $publicTransactionLabel($pendingText, 'Posted');
+
                                     $amount = $transactionAmount($transaction);
 
                                     $displayDate = $formatDate($rawDate);
                                     $sortDate    = $formatDateSortValue($rawDate);
+
+                                    $monthMeta  = $getTransactionMonthMeta($sortDate);
+                                    $monthKey   = $monthMeta['key'];
+                                    $monthLabel = $monthMeta['label'];
                                 ?>
                                 <tr>
-                                    <td data-order="<?= esc($sortDate) ?>">
+                                    <td data-order="<?= esc($sortDate) ?>"
+                                        data-month-filter="<?= esc($monthKey) ?>"
+                                        data-month-label="<?= esc($monthLabel) ?>">
                                         <?= esc($displayDate) ?>
 
                                         <?php if ($displayDate === 'N/A'): ?>
@@ -590,15 +657,18 @@ echo view($detailView, $accountInformation);
 
                                         <?php if (! empty($transaction['merchant_name'])): ?>
                                             <div class="small text-muted">
-                                                Merchant: <?= esc((string) $transaction['merchant_name']) ?>
+                                                Merchant: <?= esc($publicTransactionText($transaction['merchant_name'], 'Merchant')) ?>
                                             </div>
                                         <?php endif; ?>
                                     </td>
 
-                                    <td><?= esc((string) $category) ?></td>
+                                    <td data-category-filter="<?= esc($categoryFilter) ?>"
+                                        data-category-label="<?= esc($categoryLabel) ?>">
+                                        <?= esc($categoryLabel) ?>
+                                    </td>
 
                                     <td>
-                                        <span class="badge bg-light text-dark"><?= esc($pendingText) ?></span>
+                                        <span class="badge bg-light text-dark"><?= esc($pendingLabel) ?></span>
                                     </td>
 
                                     <td class="text-end js-transaction-amount"
@@ -710,10 +780,23 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
-    if (!window.jQuery || !jQuery.fn || !jQuery.fn.DataTable) {
-        console.warn('DataTablesJS is not loaded on this page. Transaction table will remain a standard table.');
-        return;
-    }
+    const waitForDataTables = function (callback, attemptsLeft) {
+        attemptsLeft = typeof attemptsLeft === 'number' ? attemptsLeft : 25;
+
+        if (window.jQuery && jQuery.fn && jQuery.fn.DataTable) {
+            callback();
+            return;
+        }
+
+        if (attemptsLeft <= 0) {
+            console.warn('DataTablesJS is not loaded on this page. Transaction table will remain a standard table.');
+            return;
+        }
+
+        setTimeout(function () {
+            waitForDataTables(callback, attemptsLeft - 1);
+        }, 100);
+    };
 
     const formatCurrency = function (value) {
         const amount = Number(value || 0);
@@ -725,6 +808,10 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const recalculateRunningSubtotal = function (table) {
+        if (!table || typeof table.rows !== 'function') {
+            return;
+        }
+
         let runningSubtotal = 0;
 
         const visibleRows = table.rows({
@@ -748,65 +835,222 @@ document.addEventListener('DOMContentLoaded', function () {
         jQuery('#walletTransactionFinalSubtotal').text(formatCurrency(runningSubtotal));
     };
 
-    const $table = jQuery(tableSelector);
+    const buildWalletTransactionFilters = function (table) {
+        const $table = jQuery(tableSelector);
+        const $container = jQuery(table.table().container());
+        const $filterArea = $container.find('.dataTables_filter');
 
-    if (jQuery.fn.DataTable.isDataTable(tableSelector)) {
-        const existingTable = $table.DataTable();
-        recalculateRunningSubtotal(existingTable);
-        return;
-    }
+        if (!$filterArea.length) {
+            return;
+        }
 
-    const dataTableOptions = {
-        order: [[0, 'desc']],
-        pageLength: 25,
-        lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-        responsive: true,
-        autoWidth: false,
-        stateSave: true,
-        columnDefs: [
-            {
-                targets: 4,
-                className: 'text-end'
-            },
-            {
-                targets: 5,
-                className: 'text-end'
+        if (document.getElementById('walletTransactionCategoryFilter')) {
+            return;
+        }
+
+        const categories = new Map();
+        const months = new Map();
+
+        $table.find('tbody tr').each(function () {
+            const $row = jQuery(this);
+
+            const categoryKey = ($row.find('[data-category-filter]').attr('data-category-filter') || '').trim();
+            const categoryLabel = ($row.find('[data-category-filter]').attr('data-category-label') || '').trim();
+
+            if (categoryKey !== '' && categoryLabel !== '') {
+                categories.set(categoryKey, categoryLabel);
             }
-        ],
-        language: {
-            search: 'Filter transactions:',
-            lengthMenu: 'Show _MENU_ transactions',
-            info: 'Showing _START_ to _END_ of _TOTAL_ transactions',
-            infoEmpty: 'No transactions available',
-            zeroRecords: 'No matching transactions found'
-        },
-        drawCallback: function () {
-            recalculateRunningSubtotal(this.api());
-        },
-        initComplete: function () {
-            recalculateRunningSubtotal(this.api());
+
+            const monthKey = ($row.find('[data-month-filter]').attr('data-month-filter') || '').trim();
+            const monthLabel = ($row.find('[data-month-filter]').attr('data-month-label') || '').trim();
+
+            if (monthKey !== '' && monthLabel !== '') {
+                months.set(monthKey, monthLabel);
+            }
+        });
+
+        const sortedCategories = Array.from(categories.entries()).sort(function (a, b) {
+            return a[1].localeCompare(b[1]);
+        });
+
+        const sortedMonths = Array.from(months.entries()).sort(function (a, b) {
+            return b[0].localeCompare(a[0]);
+        });
+
+        const $filterWrap = jQuery(
+            '<div class="wallet-transaction-filter-wrap d-flex flex-wrap gap-2 align-items-center justify-content-end ms-md-2 mt-2 mt-md-0"></div>'
+        );
+
+        const $categorySelect = jQuery(
+            '<select id="walletTransactionCategoryFilter" class="form-select form-select-sm w-auto" aria-label="Filter by transaction category">' +
+                '<option value="">All Categories</option>' +
+            '</select>'
+        );
+
+        sortedCategories.forEach(function (entry) {
+            $categorySelect.append(
+                jQuery('<option></option>')
+                    .attr('value', entry[0])
+                    .text(entry[1])
+            );
+        });
+
+        const $monthSelect = jQuery(
+            '<select id="walletTransactionMonthFilter" class="form-select form-select-sm w-auto" aria-label="Filter by transaction month">' +
+                '<option value="">All Months</option>' +
+            '</select>'
+        );
+
+        sortedMonths.forEach(function (entry) {
+            $monthSelect.append(
+                jQuery('<option></option>')
+                    .attr('value', entry[0])
+                    .text(entry[1])
+            );
+        });
+
+        $filterWrap.append($categorySelect);
+        $filterWrap.append($monthSelect);
+
+        /*
+         * Put filters beside the native DataTables search box.
+         */
+        $filterArea
+            .addClass('d-flex flex-wrap gap-2 align-items-center justify-content-end')
+            .append($filterWrap);
+
+        $categorySelect.on('change', function () {
+            table.draw();
+        });
+
+        $monthSelect.on('change', function () {
+            table.draw();
+        });
+    };
+
+    const registerWalletTransactionFilter = function () {
+        if (window.walletTransactionFilterRegistered === true) {
+            return;
+        }
+
+        jQuery.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            if (!settings || !settings.nTable || settings.nTable.id !== 'walletTransactionDatabase') {
+                return true;
+            }
+
+            const categoryFilter = (jQuery('#walletTransactionCategoryFilter').val() || '').toString();
+            const monthFilter = (jQuery('#walletTransactionMonthFilter').val() || '').toString();
+
+            if (categoryFilter === '' && monthFilter === '') {
+                return true;
+            }
+
+            const row = settings.aoData[dataIndex] ? settings.aoData[dataIndex].nTr : null;
+
+            if (!row) {
+                return true;
+            }
+
+            const rowCategory = (
+                jQuery(row).find('[data-category-filter]').attr('data-category-filter') || ''
+            ).toString();
+
+            const rowMonth = (
+                jQuery(row).find('[data-month-filter]').attr('data-month-filter') || ''
+            ).toString();
+
+            if (categoryFilter !== '' && rowCategory !== categoryFilter) {
+                return false;
+            }
+
+            if (monthFilter !== '' && rowMonth !== monthFilter) {
+                return false;
+            }
+
+            return true;
+        });
+
+        window.walletTransactionFilterRegistered = true;
+    };
+
+    const initializeWalletTransactionTable = function () {
+        const $table = jQuery(tableSelector);
+
+        registerWalletTransactionFilter();
+
+        /*
+         * Required because the dashboard DataTables helper may already initialize:
+         * - .defaultDTTable
+         * - #walletTransactionDatabase
+         */
+        if (jQuery.fn.DataTable.isDataTable(tableSelector)) {
+            const existingTable = $table.DataTable();
+
+            existingTable.order([[0, 'desc']]).draw();
+
+            existingTable.off('draw.walletSubtotal');
+            existingTable.on('draw.walletSubtotal', function () {
+                recalculateRunningSubtotal(existingTable);
+            });
+
+            buildWalletTransactionFilters(existingTable);
+            recalculateRunningSubtotal(existingTable);
+            return;
+        }
+
+        const dataTableOptions = {
+            order: [[0, 'desc']],
+            pageLength: 25,
+            lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
+            responsive: true,
+            autoWidth: false,
+            stateSave: true,
+            columnDefs: [
+                {
+                    targets: 4,
+                    className: 'text-end'
+                },
+                {
+                    targets: 5,
+                    className: 'text-end'
+                }
+            ],
+            language: {
+                search: 'Filter transactions:',
+                lengthMenu: 'Show _MENU_ transactions',
+                info: 'Showing _START_ to _END_ of _TOTAL_ transactions',
+                infoEmpty: 'No transactions available',
+                zeroRecords: 'No matching transactions found'
+            },
+            drawCallback: function () {
+                recalculateRunningSubtotal(this.api());
+            },
+            initComplete: function () {
+                buildWalletTransactionFilters(this.api());
+                recalculateRunningSubtotal(this.api());
+            }
+        };
+
+        let table;
+
+        if (typeof window.initDataTableSafe === 'function') {
+            table = window.initDataTableSafe($table, dataTableOptions);
+        } else {
+            table = $table.DataTable(dataTableOptions);
+        }
+
+        if (table && typeof table.on === 'function') {
+            table.off('draw.walletSubtotal');
+            table.on('draw.walletSubtotal', function () {
+                recalculateRunningSubtotal(table);
+            });
+
+            table.order([[0, 'desc']]).draw();
+            buildWalletTransactionFilters(table);
+            recalculateRunningSubtotal(table);
         }
     };
 
-    let table;
-
-    if (window.initDataTableSafe) {
-        table = window.initDataTableSafe($table, dataTableOptions);
-
-        if (table && typeof table.on === 'function') {
-            table.on('draw', function () {
-                recalculateRunningSubtotal(table);
-            });
-        }
-
-        if (table) {
-            recalculateRunningSubtotal(table);
-        }
-
-        return;
-    }
-
-    table = $table.DataTable(dataTableOptions);
-    recalculateRunningSubtotal(table);
+    waitForDataTables(initializeWalletTransactionTable);
 });
 </script>

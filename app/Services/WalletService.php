@@ -551,9 +551,22 @@ class WalletService
         return $okSub && $okMain;
     }
 
-    public function deleteWalletCascade(string $accountType, int $walletId, int $userId, ?int $subsidiaryId = null): array
+    public function deleteWalletCascade(string $accountType, int $walletId, int $userId, ?int $childAccountId = null): array
     {
-        return $this->walletModel->deleteWalletCascade($accountType, $walletId, $userId, $subsidiaryId);
+        if (! method_exists($this->walletModel, 'deleteWalletCascade')) {
+            log_message('error', 'WalletService::deleteWalletCascade missing WalletModel::deleteWalletCascade.');
+            return [
+                'success' => false,
+                'message' => 'Wallet delete cascade is not available.',
+            ];
+        }
+
+        return $this->walletModel->deleteWalletCascade(
+            $accountType,
+            $walletId,
+            $userId,
+            $childAccountId
+        );
     }
     
     // Legacy soft-delete API used elsewhere

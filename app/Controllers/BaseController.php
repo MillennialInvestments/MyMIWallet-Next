@@ -681,6 +681,37 @@ abstract class BaseController extends Controller
 
         $this->data['totalAccountBalanceFMT'] = number_format((float)$this->data['totalAccountBalance'], 2);
         $this->logTelemetryMemory('commonData:end');
+
+        $userIdForSidebarBalance = 0;
+
+        try {
+            if (isset($this->cuID) && (int) $this->cuID > 0) {
+                $userIdForSidebarBalance = (int) $this->cuID;
+            } elseif (session()->get('user_id')) {
+                $userIdForSidebarBalance = (int) session()->get('user_id');
+            } elseif (function_exists('auth') && auth()->loggedIn()) {
+                $userIdForSidebarBalance = (int) (auth()->id() ?? 0);
+            }
+        } catch (\Throwable $e) {
+            $userIdForSidebarBalance = 0;
+        }
+
+        if ($userIdForSidebarBalance > 0) {
+            try {
+                $walletModel = new \App\Models\WalletModel();
+
+                if (method_exists($walletModel, 'getSidebarBalanceSnapshot')) {
+                    $this->data['balance'] = $walletModel->getSidebarBalanceSnapshot($userIdForSidebarBalance);
+                    $this->data['sidebarBalance'] = $this->data['balance'];
+                    $this->data['totalAccountBalance'] = (float) ($this->data['balance']['amount'] ?? 0.0);
+                    $this->data['totalAccountBalanceFMT'] = number_format((float) ($this->data['balance']['amount'] ?? 0.0), 2);
+                }
+            } catch (\Throwable $e) {
+                log_message('error', 'BaseController::commonData sidebar balance failed: {message}', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
+        }
         return $this->data;
     }
 

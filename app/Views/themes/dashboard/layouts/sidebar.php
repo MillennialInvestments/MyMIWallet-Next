@@ -84,9 +84,22 @@ $agent                  = service('request')->getUserAgent();
 					<div class="user-account-info between-center">
 						<div class="user-account-main">
                             <h6 class="overline-title-alt">Current Balance</h6>
-                            <div class="user-balance" title="As of <?= esc(date('g:i A', strtotime($balance['asOf'] ?? 'now'))) ?>">
-                                <?= '$' . number_format((float) ($balance['amount'] ?? 0), 2); ?>
-                                <small class="currency currency-usd"><?= esc($balance['currency'] ?? 'USD'); ?></small>
+                            <?php
+                            $sidebarBalance = is_array($balance ?? null) ? $balance : [];
+
+                            $sidebarBalanceAmount = (float) ($sidebarBalance['amount'] ?? 0.0);
+                            $sidebarBalanceCurrency = (string) ($sidebarBalance['currency'] ?? 'USD');
+                            $sidebarBalanceAsOfRaw = (string) ($sidebarBalance['asOf'] ?? date(DATE_ATOM));
+
+                            $sidebarBalanceTimestamp = strtotime($sidebarBalanceAsOfRaw);
+                            $sidebarBalanceAsOf = $sidebarBalanceTimestamp !== false
+                                ? date('g:i A', $sidebarBalanceTimestamp)
+                                : date('g:i A');
+                            ?>
+
+                            <div class="user-balance" title="As of <?= esc($sidebarBalanceAsOf) ?>">
+                                $<?= esc(number_format($sidebarBalanceAmount, 2)); ?>
+                                <small class="currency currency-usd"><?= esc($sidebarBalanceCurrency); ?></small>
                             </div>
 
 						</div>
@@ -124,9 +137,22 @@ $agent                  = service('request')->getUserAgent();
 						<div class="user-account-info between-center">
 							<div class="user-account-main">
                                 <h6 class="overline-title-alt">Current Balance</h6>
-                                <div class="user-balance" title="As of <?= esc(date('g:i A', strtotime($balance['asOf'] ?? 'now'))) ?>">
-                                    <?= '$' . number_format((float) ($balance['amount'] ?? 0), 2); ?>
-                                    <small class="currency currency-usd"><?= esc($balance['currency'] ?? 'USD'); ?></small>
+                                <?php
+                                $sidebarBalance = is_array($balance ?? null) ? $balance : [];
+
+                                $sidebarBalanceAmount = (float) ($sidebarBalance['amount'] ?? 0.0);
+                                $sidebarBalanceCurrency = (string) ($sidebarBalance['currency'] ?? 'USD');
+                                $sidebarBalanceAsOfRaw = (string) ($sidebarBalance['asOf'] ?? date(DATE_ATOM));
+
+                                $sidebarBalanceTimestamp = strtotime($sidebarBalanceAsOfRaw);
+                                $sidebarBalanceAsOf = $sidebarBalanceTimestamp !== false
+                                    ? date('g:i A', $sidebarBalanceTimestamp)
+                                    : date('g:i A');
+                                ?>
+
+                                <div class="user-balance" title="As of <?= esc($sidebarBalanceAsOf) ?>">
+                                    $<?= esc(number_format($sidebarBalanceAmount, 2)); ?>
+                                    <small class="currency currency-usd"><?= esc($sidebarBalanceCurrency); ?></small>
                                 </div>
 								<div class="user-balance-alt">
 									<?php

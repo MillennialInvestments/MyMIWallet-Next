@@ -104,6 +104,7 @@ $showSetupBanner = ! empty($setupStatus)
 </div>
 
 <!-- Delete Wallet Modal -->
+<!-- Delete Wallet Modal -->
 <div class="modal fade" id="deleteWalletModal" tabindex="-1" aria-labelledby="deleteWalletModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">
@@ -122,7 +123,7 @@ $showSetupBanner = ! empty($setupStatus)
             </div>
 
             <div class="modal-footer">
-                <a id="confirmDeleteButton" class="btn btn-success" href="#">Yes</a>
+                <a id="confirmDeleteButton" class="btn btn-success" href="#" data-delete-url="#">Yes</a>
                 <button class="btn btn-danger" data-bs-dismiss="modal" type="button">No</button>
             </div>
         </div>
@@ -130,58 +131,134 @@ $showSetupBanner = ! empty($setupStatus)
 </div>
 
 <!-- Delete Modal JavaScript Handler -->
-<script>
-    function openDeleteModal(event) {
+<script <?= $nonce['script'] ?? '' ?>>
+function openDeleteModal(event) {
+    event.preventDefault();
+
+    const trigger = event.currentTarget;
+
+    const accountType = trigger.getAttribute('data-type') || 'Bank';
+    const walletId    = trigger.getAttribute('data-wallet-id') || trigger.getAttribute('data-id') || '';
+    const accountId   = trigger.getAttribute('data-account-id') || '';
+    const walletName  = trigger.getAttribute('data-name') || 'Wallet';
+
+    const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+    const walletNameElement   = document.getElementById('walletName');
+
+    if (walletNameElement) {
+        walletNameElement.textContent = walletName;
+    }
+
+    if (!walletId || !confirmDeleteButton) {
+        console.error('Delete modal missing wallet ID or confirm button.', {
+            accountType,
+            walletId,
+            accountId,
+            walletName
+        });
+        return;
+    }
+
+    const deleteUrl = "<?= site_url('Wallets/Delete') ?>/"
+        + encodeURIComponent(accountType)
+        + "/"
+        + encodeURIComponent(walletId)
+        + (accountId ? "?account_id=" + encodeURIComponent(accountId) : "");
+
+    confirmDeleteButton.setAttribute('href', deleteUrl);
+    confirmDeleteButton.setAttribute('data-delete-url', deleteUrl);
+
+    console.log('Wallet delete prepared:', {
+        accountType,
+        walletId,
+        accountId,
+        walletName,
+        deleteUrl
+    });
+
+    const modalElement = document.getElementById('deleteWalletModal');
+
+    if (!modalElement) {
+        console.error('Delete Wallet Modal element not found.');
+        return;
+    }
+
+    if (window.bootstrap && bootstrap.Modal) {
+        const existingModal = bootstrap.Modal.getInstance(modalElement);
+        const deleteWalletModal = existingModal || new bootstrap.Modal(modalElement, {});
+        deleteWalletModal.show();
+        return;
+    }
+
+    console.error('Bootstrap 5 modal runtime not detected.');
+
+    if (confirm('Are you sure you want to delete this wallet?')) {
+        window.location.href = deleteUrl;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+
+    if (!confirmDeleteButton) {
+        return;
+    }
+
+    confirmDeleteButton.addEventListener('click', function (event) {
         event.preventDefault();
 
-        const element = event.currentTarget;
+        const deleteUrl = confirmDeleteButton.getAttribute('data-delete-url')
+            || confirmDeleteButton.getAttribute('href');
 
-        const accountType = element.getAttribute('data-type') || '';
-        const walletName  = element.getAttribute('data-name') || 'Unknown Wallet';
-
-        /*
-         * data-wallet-id = parent bf_users_wallet.id when known.
-         * data-account-id = child/subsidiary table id when known.
-         * data-id remains a backward-compatible fallback.
-         */
-        const walletId  = element.getAttribute('data-wallet-id') || element.getAttribute('data-id') || '';
-        const accountId = element.getAttribute('data-account-id') || '';
-
-        console.log('delete accountType:', accountType);
-        console.log('delete walletId:', walletId);
-        console.log('delete accountId:', accountId);
-        console.log('delete walletName:', walletName);
-
-        if (!walletId || !accountType) {
-            console.error('Missing walletId or accountType. Cannot proceed with delete modal.');
+        if (!deleteUrl || deleteUrl === '#') {
+            alert('Delete URL is missing.');
             return;
         }
 
-        const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+        confirmDeleteButton.classList.add('disabled');
+        confirmDeleteButton.setAttribute('aria-disabled', 'true');
+        confirmDeleteButton.textContent = 'Deleting...';
 
-        if (confirmDeleteButton) {
-            let deleteUrl = `<?= site_url('Wallets/Delete') ?>/${encodeURIComponent(accountType)}/${encodeURIComponent(walletId)}`;
+        fetch(deleteUrl, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+                <?php if (function_exists('csrf_header') && function_exists('csrf_hash')): ?>
+                , '<?= csrf_header() ?>': '<?= csrf_hash() ?>'
+                <?php endif; ?>
+            }
+        })
+        .then(function (response) {
+            return response.json().then(function (json) {
+                return {
+                    ok: response.ok,
+                    status: response.status,
+                    json: json
+                };
+            });
+        })
+        .then(function (result) {
+            if (!result.ok || !result.json || result.json.status === 'error') {
+                console.error('Wallet delete failed:', result);
+                alert((result.json && result.json.message) ? result.json.message : 'Wallet delete failed.');
 
-            if (accountId) {
-                deleteUrl += `?account_id=${encodeURIComponent(accountId)}`;
+                confirmDeleteButton.classList.remove('disabled');
+                confirmDeleteButton.removeAttribute('aria-disabled');
+                confirmDeleteButton.textContent = 'Yes';
+                return;
             }
 
-            confirmDeleteButton.setAttribute('href', deleteUrl);
-        }
+            window.location.reload();
+        })
+        .catch(function (error) {
+            console.error('Wallet delete request failed:', error);
+            alert('Unable to delete wallet right now.');
 
-        const walletNameElement = document.getElementById('walletName');
-
-        if (walletNameElement) {
-            walletNameElement.textContent = walletName;
-        }
-
-        const deleteWalletModalElement = document.getElementById('deleteWalletModal');
-
-        if (deleteWalletModalElement && window.bootstrap && bootstrap.Modal) {
-            const deleteWalletModal = new bootstrap.Modal(deleteWalletModalElement, {});
-            deleteWalletModal.show();
-        } else {
-            console.error('Delete Wallet Modal element or Bootstrap 5 runtime not found.');
-        }
-    }
+            confirmDeleteButton.classList.remove('disabled');
+            confirmDeleteButton.removeAttribute('aria-disabled');
+            confirmDeleteButton.textContent = 'Yes';
+        });
+    });
+});
 </script>

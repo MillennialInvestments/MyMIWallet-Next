@@ -14,8 +14,8 @@ $gdInvestV        = is_file($gdInvestPath) ? filemtime($gdInvestPath) : '1';
 ?>
 
 <!-- Core vendors (LOCAL, load once) -->
-<script src="<?= base_url('assets/vendor/jquery/jquery-3.6.0.min.js'); ?>"        <?= $nonce['script'] ?> defer></script>
-<script src="<?= base_url('assets/vendor/bootstrap5/bootstrap.bundle.min.js'); ?>" <?= $nonce['script'] ?> defer></script>
+<script src="<?= base_url('assets/vendor/jquery/jquery-3.6.0.min.js'); ?>"        <?= $nonce['script'] ?>></script>
+<script src="<?= base_url('assets/vendor/bootstrap5/bootstrap.bundle.min.js'); ?>" <?= $nonce['script'] ?>></script>
 
 <!-- App bootstrap/init -->
 <script src="<?= base_url('assets/js/app-bootstrap-init.js'); ?>"                  <?= $nonce['script'] ?> defer></script>

@@ -62,285 +62,345 @@ class WalletModel extends Model
         return $this->db->table('bf_users_wallet')->where('id', $walletId)->update($data);
     }
 
-    public function deleteWalletCascade(string $accountType, int $id, int $userId, ?int $subsidiaryId = null): array
+    private function normalizeDeleteWalletType(string $accountType): ?array
     {
-        $rawType = trim($accountType);
+        $key = strtolower(trim($accountType));
 
-        $typeMap = [
-            'bank'       => 'bank',
-            'banking'    => 'bank',
-            'financial'  => 'bank',
-            'fiat'       => 'bank',
-            'credit'     => 'credit',
-            'debt'       => 'debt',
-            'loan'       => 'debt',
-            'investment' => 'investment',
-            'invest'     => 'investment',
-            'brokerage'  => 'investment',
-            'crypto'     => 'crypto',
+        $map = [
+            'bank'       => ['key' => 'bank',       'table' => 'bf_users_bank_accounts'],
+            'banking'    => ['key' => 'bank',       'table' => 'bf_users_bank_accounts'],
+            'checking'   => ['key' => 'bank',       'table' => 'bf_users_bank_accounts'],
+            'financial'  => ['key' => 'bank',       'table' => 'bf_users_bank_accounts'],
+            'fiat'       => ['key' => 'bank',       'table' => 'bf_users_bank_accounts'],
+
+            'credit'     => ['key' => 'credit',     'table' => 'bf_users_credit_accounts'],
+
+            'debt'       => ['key' => 'debt',       'table' => 'bf_users_debt_accounts'],
+            'loan'       => ['key' => 'debt',       'table' => 'bf_users_debt_accounts'],
+
+            'investment' => ['key' => 'investment', 'table' => 'bf_users_invest_accounts'],
+            'invest'     => ['key' => 'investment', 'table' => 'bf_users_invest_accounts'],
+
+            'crypto'     => ['key' => 'crypto',     'table' => 'bf_users_crypto_accounts'],
         ];
 
-        $normalizedKey = strtolower($rawType);
-        $type = $typeMap[$normalizedKey] ?? null;
+        return $map[$key] ?? null;
+    }
 
-        if ($type === null) {
-            return [
-                'success' => false,
-                'message' => 'Invalid account type.',
-                'type'    => $rawType,
-            ];
+    private function getWalletDeleteColumns(string $table): array
+    {
+        try {
+            return array_fill_keys($this->db->getFieldNames($table), true);
+        } catch (\Throwable $e) {
+            log_message('error', 'WalletModel::getWalletDeleteColumns failed for {table}: {message}', [
+                'table'   => $table,
+                'message' => $e->getMessage(),
+            ]);
+
+            return [];
+        }
+    }
+
+    private function buildSoftDeletePayload(string $table, bool $isParent = false): array
+    {
+        $columns = $this->getWalletDeleteColumns($table);
+
+        if (empty($columns)) {
+            return [];
         }
 
-        $tableMap = [
-            'bank'       => 'bf_users_bank_accounts',
-            'credit'     => 'bf_users_credit_accounts',
-            'debt'       => 'bf_users_debt_accounts',
-            'investment' => 'bf_users_invest_accounts',
-            'crypto'     => 'bf_users_crypto_accounts',
-        ];
+        $data = [];
 
-        $childTable = $tableMap[$type] ?? null;
-
-        if ($childTable === null) {
-            return [
-                'success' => false,
-                'message' => 'Unable to resolve child wallet table.',
-                'type'    => $type,
-            ];
+        if (isset($columns['active'])) {
+            $data['active'] = 0;
         }
 
+        if (isset($columns['deleted'])) {
+            $data['deleted'] = 1;
+        }
+
+        if (isset($columns['status'])) {
+            /*
+            * Parent wallet status is varchar and should become deleted.
+            * Child table status is usually numeric/varchar and should become 0.
+            */
+            $data['status'] = $isParent ? 'deleted' : 0;
+        }
+
+        $now = date('Y-m-d H:i:s');
+
+        if (isset($columns['modified_on'])) {
+            $data['modified_on'] = $now;
+        }
+
+        if (isset($columns['updated_on'])) {
+            $data['updated_on'] = $now;
+        }
+
+        if (isset($columns['deleted_on'])) {
+            $data['deleted_on'] = $now;
+        }
+
+        return $data;
+    }
+
+    private function fetchOwnedRowById(string $table, int $id, int $userId): ?array
+    {
         if ($id <= 0 || $userId <= 0) {
-            return [
-                'success' => false,
-                'message' => 'Invalid wallet or user ID.',
-                'type'    => $type,
-            ];
+            return null;
         }
 
-        $db = $this->db ?? db_connect();
+        $columns = $this->getWalletDeleteColumns($table);
 
-        $walletTable = 'bf_users_wallet';
-        $walletCols  = $this->getColumns($walletTable);
-        $childCols   = $this->getColumns($childTable);
-
-        $candidateIds = [$id];
-
-        if ($subsidiaryId !== null && $subsidiaryId > 0) {
-            $candidateIds[] = $subsidiaryId;
+        if (empty($columns) || ! isset($columns['id']) || ! isset($columns['user_id'])) {
+            return null;
         }
 
-        $candidateIds = array_values(array_unique(array_filter($candidateIds, static function ($value) {
-            return (int) $value > 0;
-        })));
-
-        $walletRow = $db->table($walletTable)
+        $row = $this->db->table($table)
             ->where('id', $id)
             ->where('user_id', (string) $userId)
             ->get()
             ->getRowArray();
 
-        $childRows = [];
+        return is_array($row) && ! empty($row) ? $row : null;
+    }
 
-        foreach ($candidateIds as $candidateId) {
-            $row = $db->table($childTable)
-                ->where('id', (int) $candidateId)
-                ->where('user_id', (string) $userId)
-                ->get()
-                ->getRowArray();
+    private function uniquePositiveIds(array $ids): array
+    {
+        $clean = [];
 
-            if ($row) {
-                $childRows[(int) $row['id']] = $row;
+        foreach ($ids as $id) {
+            $id = (int) $id;
 
-                if (!$walletRow && !empty($row['wallet_id'])) {
-                    $maybeWallet = $db->table($walletTable)
-                        ->where('id', (int) $row['wallet_id'])
-                        ->where('user_id', (string) $userId)
-                        ->get()
-                        ->getRowArray();
+            if ($id > 0) {
+                $clean[$id] = $id;
+            }
+        }
 
-                    if ($maybeWallet) {
-                        $walletRow = $maybeWallet;
-                    }
+        return array_values($clean);
+    }
+
+    public function deleteWalletCascade(string $accountType, int $targetId, int $userId, ?int $childAccountId = null): array
+    {
+        $targetId       = (int) $targetId;
+        $userId         = (int) $userId;
+        $childAccountId = $childAccountId !== null ? (int) $childAccountId : null;
+
+        $type = $this->normalizeDeleteWalletType($accountType);
+
+        if ($type === null || $targetId <= 0 || $userId <= 0) {
+            return [
+                'success' => false,
+                'message' => 'Invalid wallet delete parameters.',
+                'details' => [
+                    'account_type' => $accountType,
+                    'target_id'    => $targetId,
+                    'user_id'      => $userId,
+                    'child_id'     => $childAccountId,
+                ],
+            ];
+        }
+
+        $parentTable = 'bf_users_wallet';
+        $childTable  = $type['table'];
+
+        $parentColumns = $this->getWalletDeleteColumns($parentTable);
+        $childColumns  = $this->getWalletDeleteColumns($childTable);
+
+        if (empty($parentColumns) || empty($childColumns)) {
+            return [
+                'success' => false,
+                'message' => 'Unable to resolve wallet table columns.',
+                'details' => [
+                    'parent_table' => $parentTable,
+                    'child_table'  => $childTable,
+                ],
+            ];
+        }
+
+        $parentIds = [];
+        $childIds  = [];
+
+        $parentRow = $this->fetchOwnedRowById($parentTable, $targetId, $userId);
+
+        if ($parentRow !== null) {
+            $parentIds[] = (int) $parentRow['id'];
+        }
+
+        $childRowFromTarget = $this->fetchOwnedRowById($childTable, $targetId, $userId);
+
+        if ($childRowFromTarget !== null) {
+            $childIds[] = (int) $childRowFromTarget['id'];
+
+            if (! empty($childRowFromTarget['wallet_id'])) {
+                $parentIds[] = (int) $childRowFromTarget['wallet_id'];
+            }
+        }
+
+        if ($childAccountId !== null && $childAccountId > 0) {
+            $childRowFromExplicitId = $this->fetchOwnedRowById($childTable, $childAccountId, $userId);
+
+            if ($childRowFromExplicitId !== null) {
+                $childIds[] = (int) $childRowFromExplicitId['id'];
+
+                if (! empty($childRowFromExplicitId['wallet_id'])) {
+                    $parentIds[] = (int) $childRowFromExplicitId['wallet_id'];
                 }
             }
         }
 
-        if ($walletRow && isset($childCols['wallet_id'])) {
-            $linkedRows = $db->table($childTable)
-                ->where('wallet_id', (string) $walletRow['id'])
+        $parentIds = $this->uniquePositiveIds($parentIds);
+
+        /*
+        * If we have a parent wallet ID, delete linked child rows by wallet_id.
+        * This is safe because it requires the exact parent wallet id and current user.
+        */
+        if (! empty($parentIds) && isset($childColumns['wallet_id'])) {
+            $linkedChildren = $this->db->table($childTable)
+                ->select('id, wallet_id')
                 ->where('user_id', (string) $userId)
+                ->whereIn('wallet_id', $parentIds)
                 ->get()
                 ->getResultArray();
 
-            foreach ($linkedRows as $linkedRow) {
-                if (isset($linkedRow['id'])) {
-                    $childRows[(int) $linkedRow['id']] = $linkedRow;
+            foreach ($linkedChildren as $linkedChild) {
+                if (! empty($linkedChild['id'])) {
+                    $childIds[] = (int) $linkedChild['id'];
                 }
             }
         }
 
-        if ($walletRow && !empty($walletRow['account_id'])) {
-            $walletAccountId = (string) $walletRow['account_id'];
+        $childIds  = $this->uniquePositiveIds($childIds);
+        $parentIds = $this->uniquePositiveIds($parentIds);
 
-            if (ctype_digit($walletAccountId)) {
-                $accountIdRow = $db->table($childTable)
-                    ->where('id', (int) $walletAccountId)
+        if (empty($parentIds) && empty($childIds)) {
+            return [
+                'success' => false,
+                'message' => 'No matching wallet or account record was found for this user.',
+                'details' => [
+                    'account_type' => $accountType,
+                    'target_id'    => $targetId,
+                    'child_id'     => $childAccountId,
+                    'user_id'      => $userId,
+                    'child_table'  => $childTable,
+                ],
+            ];
+        }
+
+        $parentPayload = $this->buildSoftDeletePayload($parentTable, true);
+        $childPayload  = $this->buildSoftDeletePayload($childTable, false);
+
+        $this->db->transBegin();
+
+        try {
+            $parentAffected = 0;
+            $childAffected  = 0;
+
+            if (! empty($parentIds) && ! empty($parentPayload)) {
+                $this->db->table($parentTable)
                     ->where('user_id', (string) $userId)
-                    ->get()
-                    ->getRowArray();
+                    ->whereIn('id', $parentIds)
+                    ->update($parentPayload);
 
-                if ($accountIdRow) {
-                    $childRows[(int) $accountIdRow['id']] = $accountIdRow;
-                }
+                $parentAffected = $this->db->affectedRows();
             }
 
-            if (isset($childCols['account_id'])) {
-                $accountColumnRows = $db->table($childTable)
-                    ->where('account_id', $walletAccountId)
+            if (! empty($childIds) && ! empty($childPayload)) {
+                $this->db->table($childTable)
                     ->where('user_id', (string) $userId)
+                    ->whereIn('id', $childIds)
+                    ->update($childPayload);
+
+                $childAffected = $this->db->affectedRows();
+            }
+
+            /*
+            * If a child row pointed to a parent wallet_id that was not initially loaded,
+            * try to soft-delete that parent too. This protects child-first deletes.
+            */
+            if (! empty($childIds) && isset($childColumns['wallet_id'])) {
+                $childRowsAfterResolve = $this->db->table($childTable)
+                    ->select('wallet_id')
+                    ->where('user_id', (string) $userId)
+                    ->whereIn('id', $childIds)
                     ->get()
                     ->getResultArray();
 
-                foreach ($accountColumnRows as $accountColumnRow) {
-                    if (isset($accountColumnRow['id'])) {
-                        $childRows[(int) $accountColumnRow['id']] = $accountColumnRow;
+                $additionalParentIds = [];
+
+                foreach ($childRowsAfterResolve as $childRow) {
+                    if (! empty($childRow['wallet_id'])) {
+                        $additionalParentIds[] = (int) $childRow['wallet_id'];
                     }
                 }
+
+                $additionalParentIds = array_values(array_diff(
+                    $this->uniquePositiveIds($additionalParentIds),
+                    $parentIds
+                ));
+
+                if (! empty($additionalParentIds) && ! empty($parentPayload)) {
+                    $this->db->table($parentTable)
+                        ->where('user_id', (string) $userId)
+                        ->whereIn('id', $additionalParentIds)
+                        ->update($parentPayload);
+
+                    $parentAffected += $this->db->affectedRows();
+                    $parentIds = $this->uniquePositiveIds(array_merge($parentIds, $additionalParentIds));
+                }
             }
-        }
 
-        /*
-        * Special orphan support:
-        * If the delete request passed a child account ID and that child has no wallet_id,
-        * this method still soft-deletes it because it was already found by primary id above.
-        *
-        * We intentionally do NOT broad-delete all user rows where wallet_id is NULL,
-        * because that could delete unrelated orphan records.
-        */
+            if ($this->db->transStatus() === false) {
+                $this->db->transRollback();
 
-        $childIds = array_keys($childRows);
+                return [
+                    'success' => false,
+                    'message' => 'Wallet delete transaction failed.',
+                    'details' => [
+                        'parent_ids' => $parentIds,
+                        'child_ids'  => $childIds,
+                    ],
+                ];
+            }
 
-        $walletId = $walletRow ? (int) $walletRow['id'] : 0;
+            $this->db->transCommit();
 
-        $now = date('Y-m-d H:i:s');
+            return [
+                'success' => true,
+                'message' => 'Wallet deleted successfully.',
+                'details' => [
+                    'account_type'    => $accountType,
+                    'normalized_type' => $type['key'],
+                    'parent_table'    => $parentTable,
+                    'child_table'     => $childTable,
+                    'parent_ids'      => $parentIds,
+                    'child_ids'       => $childIds,
+                    'parent_affected' => $parentAffected,
+                    'child_affected'  => $childAffected,
+                ],
+            ];
+        } catch (\Throwable $e) {
+            $this->db->transRollback();
 
-        $walletUpdate = [];
-
-        if (isset($walletCols['active'])) {
-            $walletUpdate['active'] = 0;
-        }
-
-        if (isset($walletCols['deleted'])) {
-            $walletUpdate['deleted'] = 1;
-        }
-
-        if (isset($walletCols['status'])) {
-            $walletUpdate['status'] = 'deleted';
-        }
-
-        if (isset($walletCols['modified_on'])) {
-            $walletUpdate['modified_on'] = $now;
-        } elseif (isset($walletCols['updated_on'])) {
-            $walletUpdate['updated_on'] = $now;
-        }
-
-        $childUpdate = [];
-
-        if (isset($childCols['active'])) {
-            $childUpdate['active'] = 0;
-        }
-
-        if (isset($childCols['deleted'])) {
-            $childUpdate['deleted'] = 1;
-        }
-
-        if (isset($childCols['status'])) {
-            $childUpdate['status'] = 0;
-        }
-
-        if (isset($childCols['updated_on'])) {
-            $childUpdate['updated_on'] = $now;
-        }
-
-        if (isset($childCols['modified_on'])) {
-            $childUpdate['modified_on'] = $now;
-        }
-
-        $db->transBegin();
-
-        $walletAffected = 0;
-        $childAffected  = 0;
-
-        if ($walletId > 0 && !empty($walletUpdate)) {
-            $db->table($walletTable)
-                ->where('id', $walletId)
-                ->where('user_id', (string) $userId)
-                ->update($walletUpdate);
-
-            $walletAffected = $db->affectedRows();
-        }
-
-        if (!empty($childIds) && !empty($childUpdate)) {
-            $db->table($childTable)
-                ->whereIn('id', $childIds)
-                ->where('user_id', (string) $userId)
-                ->update($childUpdate);
-
-            $childAffected = $db->affectedRows();
-        }
-
-        if ($db->transStatus() === false) {
-            $db->transRollback();
-
-            $err = $db->error();
-
-            log_message('error', 'WalletModel::deleteWalletCascade transaction failed: {message} ({code})', [
-                'message' => $err['message'] ?? 'unknown',
-                'code'    => $err['code'] ?? 0,
+            log_message('error', 'WalletModel::deleteWalletCascade exception: {message}', [
+                'message'      => $e->getMessage(),
+                'account_type' => $accountType,
+                'target_id'    => $targetId,
+                'child_id'     => $childAccountId,
+                'user_id'      => $userId,
             ]);
 
             return [
                 'success' => false,
-                'message' => 'Wallet delete transaction failed.',
-                'type'    => $type,
+                'message' => 'Wallet delete failed: ' . $e->getMessage(),
+                'details' => [
+                    'account_type' => $accountType,
+                    'target_id'    => $targetId,
+                    'child_id'     => $childAccountId,
+                    'user_id'      => $userId,
+                ],
             ];
         }
-
-        $db->transCommit();
-
-        $matchedSomething = $walletId > 0 || !empty($childIds);
-
-        if (!$matchedSomething) {
-            log_message('warning', 'WalletModel::deleteWalletCascade found no matching parent or child rows.', [
-                'type'          => $type,
-                'requested_id'  => $id,
-                'subsidiary_id' => $subsidiaryId,
-                'user_id'       => $userId,
-                'child_table'   => $childTable,
-            ]);
-
-            return [
-                'success'        => false,
-                'message'        => 'No matching wallet/account record found for this user.',
-                'type'           => $type,
-                'wallet_id'      => 0,
-                'child_table'    => $childTable,
-                'child_ids'      => [],
-                'wallet_changed' => 0,
-                'child_changed'  => 0,
-            ];
-        }
-
-        return [
-            'success'        => true,
-            'message'        => 'Wallet/account records soft-deleted successfully.',
-            'type'           => $type,
-            'wallet_id'      => $walletId,
-            'child_table'    => $childTable,
-            'child_ids'      => $childIds,
-            'wallet_changed' => $walletAffected,
-            'child_changed'  => $childAffected,
-        ];
     }
 
     public function submitMyMIGold($data)
@@ -3041,5 +3101,267 @@ class WalletModel extends Model
             ->update(['status' => 0, 'deleted' => 1]);
     }
 
+    private function parseSidebarMoneyValue($value): float
+    {
+        if ($value === null || $value === '') {
+            return 0.0;
+        }
+
+        if (is_array($value) || is_object($value)) {
+            return 0.0;
+        }
+
+        $value = str_replace(['$', ',', ' '], '', (string) $value);
+
+        if ($value === '' || ! is_numeric($value)) {
+            return 0.0;
+        }
+
+        return (float) $value;
+    }
+
+    private function getTableColumnMap(string $table): array
+    {
+        try {
+            return array_fill_keys($this->db->getFieldNames($table), true);
+        } catch (\Throwable $e) {
+            log_message('error', 'WalletModel::getTableColumnMap failed for {table}: {message}', [
+                'table'   => $table,
+                'message' => $e->getMessage(),
+            ]);
+
+            return [];
+        }
+    }
+
+    private function firstExistingColumn(array $columns, array $candidates): ?string
+    {
+        foreach ($candidates as $candidate) {
+            if (isset($columns[$candidate])) {
+                return $candidate;
+            }
+        }
+
+        return null;
+    }
+
+    private function sumUserAccountTableFlexible(int $userId, string $table, array $moneyColumnPriority): float
+    {
+        if ($userId <= 0) {
+            return 0.0;
+        }
+
+        $columns = $this->getTableColumnMap($table);
+
+        if (empty($columns) || ! isset($columns['user_id'])) {
+            return 0.0;
+        }
+
+        $validMoneyColumns = array_values(array_filter($moneyColumnPriority, static function ($column) use ($columns) {
+            return isset($columns[$column]);
+        }));
+
+        if (empty($validMoneyColumns)) {
+            log_message('debug', 'WalletModel::sumUserAccountTableFlexible no valid money columns for {table}', [
+                'table'              => $table,
+                'moneyColumnPriority'=> json_encode($moneyColumnPriority),
+                'availableColumns'   => json_encode(array_keys($columns)),
+            ]);
+
+            return 0.0;
+        }
+
+        $select = array_values(array_unique(array_merge(
+            ['id', 'user_id'],
+            $validMoneyColumns,
+            array_intersect(['wallet_id', 'active', 'status', 'deleted'], array_keys($columns))
+        )));
+
+        $builder = $this->db->table($table)
+            ->select($select)
+            ->where('user_id', (string) $userId);
+
+        /*
+        * deleted is the only filter we can safely enforce across your older wallet tables.
+        * active/status are inconsistent in your schema and may default to 0 while still representing usable rows.
+        */
+        if (isset($columns['deleted'])) {
+            $builder->groupStart()
+                ->where('deleted', 0)
+                ->orWhere('deleted', '0')
+                ->orWhere('deleted', '')
+                ->orWhere('deleted', 'No')
+                ->orWhere('deleted IS NULL', null, false)
+                ->groupEnd();
+        }
+
+        if (isset($columns['status'])) {
+            $builder->groupStart()
+                ->where('status !=', 'deleted')
+                ->orWhere('status IS NULL', null, false)
+                ->groupEnd();
+        }
+
+        $rows = $builder->get()->getResultArray();
+
+        $sum = 0.0;
+
+        foreach ($rows as $row) {
+            foreach ($validMoneyColumns as $column) {
+                $value = $this->parseSidebarMoneyValue($row[$column] ?? null);
+
+                /*
+                * Use the first populated balance field in priority order.
+                * This prevents double-counting balance + current_balance + amount on the same row.
+                */
+                if ($value !== 0.0) {
+                    $sum += $value;
+                    continue 2;
+                }
+            }
+        }
+
+        return round($sum, 2);
+    }
+
+    public function getSidebarBalanceSnapshot(int $userId): array
+    {
+        if ($userId <= 0) {
+            return [
+                'amount'    => 0.0,
+                'currency'  => 'USD',
+                'asOf'      => date(DATE_ATOM),
+                'breakdown' => [
+                    'bank'       => 0.0,
+                    'crypto'     => 0.0,
+                    'investment' => 0.0,
+                    'parent'     => 0.0,
+                ],
+            ];
+        }
+
+        /*
+        * Asset balance only.
+        * Credit/debt should not be added into a sidebar "available/current balance"
+        * unless you intentionally want a net-worth number.
+        */
+        $bank = $this->sumUserAccountTableFlexible($userId, 'bf_users_bank_accounts', [
+            'current_balance',
+            'available_balance',
+            'balance',
+            'amount',
+        ]);
+
+        $crypto = $this->sumUserAccountTableFlexible($userId, 'bf_users_crypto_accounts', [
+            'current_balance',
+            'available_balance',
+            'balance',
+            'amount',
+            'wallet_balance',
+            'coin_balance',
+        ]);
+
+        $investment = $this->sumUserAccountTableFlexible($userId, 'bf_users_invest_accounts', [
+            'net_worth',
+            'current_balance',
+            'available_funds',
+            'available_balance',
+            'balance',
+            'amount',
+            'initial_value',
+        ]);
+
+        /*
+        * Parent wallet fallback is intentionally low-priority.
+        * It helps older/manual wallets, but Plaid-linked balances should come from child account tables.
+        */
+        $parent = $this->sumUserParentWalletFallback($userId);
+
+        $amount = round($bank + $crypto + $investment + $parent, 2);
+
+        return [
+            'amount'    => $amount,
+            'currency'  => 'USD',
+            'asOf'      => date(DATE_ATOM),
+            'breakdown' => [
+                'bank'       => $bank,
+                'crypto'     => $crypto,
+                'investment' => $investment,
+                'parent'     => $parent,
+            ],
+        ];
+    }
+
+    private function sumUserParentWalletFallback(int $userId): float
+    {
+        $table = 'bf_users_wallet';
+        $columns = $this->getTableColumnMap($table);
+
+        if (empty($columns) || ! isset($columns['user_id'])) {
+            return 0.0;
+        }
+
+        $moneyColumns = array_values(array_filter([
+            'amount',
+            'balance',
+            'current_balance',
+            'available_balance',
+            'net_worth',
+        ], static function ($column) use ($columns) {
+            return isset($columns[$column]);
+        }));
+
+        if (empty($moneyColumns)) {
+            return 0.0;
+        }
+
+        $select = array_values(array_unique(array_merge(
+            ['id', 'user_id'],
+            $moneyColumns,
+            array_intersect(['provider', 'category', 'wallet_type', 'active', 'status', 'deleted'], array_keys($columns))
+        )));
+
+        $builder = $this->db->table($table)
+            ->select($select)
+            ->where('user_id', (string) $userId);
+
+        if (isset($columns['deleted'])) {
+            $builder->groupStart()
+                ->where('deleted', 0)
+                ->orWhere('deleted', '0')
+                ->orWhere('deleted', '')
+                ->orWhere('deleted', 'No')
+                ->orWhere('deleted IS NULL', null, false)
+                ->groupEnd();
+        }
+
+        /*
+        * Avoid double-counting Plaid parent wallet rows because Plaid balances should come from bf_users_bank_accounts.
+        */
+        if (isset($columns['provider'])) {
+            $builder->groupStart()
+                ->where('provider !=', 'plaid')
+                ->orWhere('provider IS NULL', null, false)
+                ->orWhere('provider', '')
+                ->groupEnd();
+        }
+
+        $rows = $builder->get()->getResultArray();
+
+        $sum = 0.0;
+
+        foreach ($rows as $row) {
+            foreach ($moneyColumns as $column) {
+                $value = $this->parseSidebarMoneyValue($row[$column] ?? null);
+
+                if ($value !== 0.0) {
+                    $sum += $value;
+                    continue 2;
+                }
+            }
+        }
+
+        return round($sum, 2);
+    }
 }
 ?>

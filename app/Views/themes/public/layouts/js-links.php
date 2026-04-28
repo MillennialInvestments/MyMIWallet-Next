@@ -46,7 +46,7 @@ $useSummernote     = $useSummernote ?? false;
 <script src="<?= base_url('assets/vendor/jquery/jquery-3.6.0.min.js'); ?>"></script>
 
 <?php // 2) Bootstrap bundle & core helpers (can stay deferred) ?>
-<!-- <script src="<?= base_url('assets/vendor/bootstrap5/bootstrap.bundle.min.js'); ?>" <?= $scriptNonceAttr ?> defer></script> -->
+<!-- <script src="<?= base_url('assets/vendor/bootstrap5/bootstrap.bundle.min.js'); ?>" <?= $scriptNonceAttr ?>></script> -->
 
 <?php // 3) Theme base (defines NioApp) BEFORE any code that requires it ?>
 <script src="<?= base_url('assets/js/scripts.js'); ?>" defer></script>

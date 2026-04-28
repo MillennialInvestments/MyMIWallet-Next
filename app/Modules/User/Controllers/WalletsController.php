@@ -718,6 +718,40 @@ class WalletsController extends BaseUserController
         $base['getUserDebtAccounts']   = $accounts['debt'];
         $base['getUserInvestAccounts'] = $accounts['investment'];
 
+        $base['balance'] = [
+            'amount'    => 0.0,
+            'currency'  => 'USD',
+            'asOf'      => date(DATE_ATOM),
+            'breakdown' => [
+                'bank'       => 0.0,
+                'crypto'     => 0.0,
+                'investment' => 0.0,
+                'parent'     => 0.0,
+            ],
+        ];
+
+        try {
+            $walletModel = $this->walletModel instanceof \App\Models\WalletModel
+                ? $this->walletModel
+                : new \App\Models\WalletModel();
+
+            if (method_exists($walletModel, 'getSidebarBalanceSnapshot')) {
+                $base['balance'] = $walletModel->getSidebarBalanceSnapshot((int) $cuID);
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'WalletsController::commonData sidebar balance failed: {message}', [
+                'message' => $e->getMessage(),
+            ]);
+        }
+
+        $base['sidebarBalance']         = $base['balance'];
+        $base['totalAccountBalance']    = (float) ($base['balance']['amount'] ?? 0.0);
+        $base['totalAccountBalanceFMT'] = number_format((float) ($base['balance']['amount'] ?? 0.0), 2);
+
+        log_message('debug', 'WalletsController::commonData sidebar balance snapshot: {balance}', [
+            'balance' => json_encode($base['balance']),
+        ]);
+
         try {
             $base['getBudgetRecordsIsDebt'] = method_exists($this, 'getMyMIBudget')
                 ? $this->getMyMIBudget()->getBudgetRecordsIsDebt($cuID)
@@ -1450,163 +1484,99 @@ class WalletsController extends BaseUserController
 
     public function delete($accountType = null, $walletID = null)
     {
-        $expectsJson = $this->request->isAJAX()
-            || str_contains(strtolower((string) $this->request->getHeaderLine('Accept')), 'application/json');
-
         log_message('debug', 'WalletsController::delete - START', [
             'account_type' => $accountType,
             'wallet_id'    => $walletID,
-            'query'        => $this->request->getGet(),
+            'method'       => $this->request->getMethod(),
+            'is_ajax'      => $this->request->isAJAX(),
         ]);
 
-        if (!$accountType || !$walletID) {
-            log_message('error', 'WalletsController::delete - Missing account type or wallet ID.', [
-                'account_type' => $accountType,
-                'wallet_id'    => $walletID,
-            ]);
+        $respond = function (bool $success, string $message, int $statusCode = 200, array $extra = []) {
+            $payload = array_merge([
+                'status'  => $success ? 'success' : 'error',
+                'message' => $message,
+            ], $extra);
 
-            if ($expectsJson) {
-                return $this->response->setStatusCode(422)->setJSON([
-                    'status' => 'error',
-                    'message' => 'Invalid request. Account type or wallet ID is missing.',
-                    'csrfHash' => csrf_hash(),
-                ]);
+            if ($this->request->isAJAX() || strtolower($this->request->getHeaderLine('X-Requested-With')) === 'xmlhttprequest') {
+                return $this->response
+                    ->setStatusCode($statusCode)
+                    ->setJSON($payload);
             }
 
-            return redirect()
-                ->back()
-                ->with('error', 'Invalid request. Account type or wallet ID is missing.');
-        }
+            if ($success) {
+                return redirect()->to(site_url('Wallets'))->with('message', $message);
+            }
+
+            return redirect()->back()->with('error', $message);
+        };
 
         try {
-            $walletID = (int) $walletID;
+            $accountType = trim((string) ($accountType ?? ''));
+            $walletID    = (int) $walletID;
+            $userId      = (int) ($this->cuID ?? $this->currentWalletUserId() ?? 0);
 
-            if ($walletID <= 0) {
-                log_message('error', 'WalletsController::delete - Invalid wallet ID.', [
-                    'wallet_id' => $walletID,
+            if ($accountType === '' || $walletID <= 0 || $userId <= 0) {
+                log_message('error', 'WalletsController::delete - Invalid delete request.', [
+                    'account_type' => $accountType,
+                    'wallet_id'    => $walletID,
+                    'user_id'      => $userId,
                 ]);
 
-                if ($expectsJson) {
-                    return $this->response->setStatusCode(422)->setJSON([
-                        'status' => 'error',
-                        'message' => 'Invalid wallet ID.',
-                        'csrfHash' => csrf_hash(),
-                    ]);
-                }
-
-                return redirect()
-                    ->back()
-                    ->with('error', 'Invalid wallet ID.');
+                return $respond(false, 'Invalid wallet delete request.', 422);
             }
 
-            $subsidiaryId = (int) (
-                $this->request->getGet('account_id')
-                ?? $this->request->getPost('account_id')
+            $jsonBody = $this->request->getJSON(true);
+            $jsonBody = is_array($jsonBody) ? $jsonBody : [];
+
+            $childAccountId = (int) (
+                $this->request->getPost('account_id')
+                ?? $this->request->getGet('account_id')
+                ?? $jsonBody['account_id']
                 ?? 0
             );
 
-            $cuID = (int) ($this->cuID ?? 0);
-
-            if ($cuID <= 0 && method_exists($this, 'currentUserId')) {
-                $cuID = (int) $this->currentUserId();
-            }
-
-            if ($cuID <= 0 && function_exists('auth')) {
-                try {
-                    $cuID = (int) (auth()->id() ?? 0);
-                } catch (\Throwable $authError) {
-                    log_message('warning', 'WalletsController::delete - auth()->id() lookup skipped: {m}', [
-                        'm' => $authError->getMessage(),
-                    ]);
-                }
-            }
-
-            if ($cuID <= 0) {
-                log_message('error', 'WalletsController::delete - Unable to resolve current user ID.');
-                if ($expectsJson) {
-                    return $this->response->setStatusCode(401)->setJSON([
-                        'status' => 'error',
-                        'message' => 'Unauthorized wallet delete request.',
-                        'csrfHash' => csrf_hash(),
-                    ]);
-                }
-                return redirect()
-                    ->back()
-                    ->with('error', 'Unauthorized wallet delete request.');
-            }
-
-            $deleteReport = $this->getWalletService()->deleteWalletCascade(
-                (string) $accountType,
+            $result = $this->getWalletService()->deleteWalletCascade(
+                $accountType,
                 $walletID,
-                $cuID,
-                $subsidiaryId > 0 ? $subsidiaryId : null
+                $userId,
+                $childAccountId > 0 ? $childAccountId : null
             );
 
-            if (empty($deleteReport['success'])) {
+            if (empty($result['success'])) {
                 log_message('error', 'WalletsController::delete - Cascade delete failed.', [
-                    'account_type'  => $accountType,
-                    'wallet_id'     => $walletID,
-                    'subsidiary_id' => $subsidiaryId,
-                    'report'        => $deleteReport,
+                    'account_type' => $accountType,
+                    'wallet_id'    => $walletID,
+                    'account_id'   => $childAccountId,
+                    'user_id'      => $userId,
+                    'result'       => json_encode($result),
                 ]);
 
-                if ($expectsJson) {
-                    return $this->response->setStatusCode(500)->setJSON([
-                        'status' => 'error',
-                        'message' => $deleteReport['message'] ?? 'Failed to delete wallet.',
-                        'csrfHash' => csrf_hash(),
-                    ]);
-                }
-
-                return redirect()
-                    ->back()
-                    ->with('error', $deleteReport['message'] ?? 'Failed to delete wallet.');
+                return $respond(false, $result['message'] ?? 'Failed to delete wallet.', 500, [
+                    'debug' => $result,
+                ]);
             }
 
-            $resolvedWalletId = (int) ($deleteReport['wallet_id'] ?? $walletID);
-
-            if (method_exists($this->getWalletService(), 'logWalletDeletion')) {
-                $this->getWalletService()->logWalletDeletion($cuID, $resolvedWalletId, (string) $accountType);
-            }
+            $this->getWalletService()->logWalletDeletion($userId, $walletID, $accountType);
 
             log_message('info', 'WalletsController::delete - Wallet deleted successfully.', [
-                'account_type'       => $accountType,
-                'requested_id'       => $walletID,
-                'subsidiary_id'      => $subsidiaryId,
-                'resolved_wallet_id' => $resolvedWalletId,
-                'report'             => $deleteReport,
+                'account_type' => $accountType,
+                'wallet_id'    => $walletID,
+                'account_id'   => $childAccountId,
+                'user_id'      => $userId,
+                'result'       => json_encode($result),
             ]);
 
-            if ($expectsJson) {
-                return $this->response->setJSON([
-                    'status' => 'success',
-                    'message' => 'Wallet deleted successfully.',
-                    'redirect' => site_url('/Wallets'),
-                    'csrfHash' => csrf_hash(),
-                ]);
-            }
-
-            return redirect()
-                ->to(site_url('/Wallets'))
-                ->with('message', 'Wallet deleted successfully.');
+            return $respond(true, 'Wallet deleted successfully.', 200, [
+                'result' => $result,
+            ]);
         } catch (\Throwable $e) {
-            log_message('error', 'WalletsController::delete - Exception: {m}', [
-                'm'            => $e->getMessage(),
+            log_message('error', 'WalletsController::delete - Exception: {message}', [
+                'message'      => $e->getMessage(),
                 'account_type' => $accountType,
                 'wallet_id'    => $walletID,
             ]);
 
-            if ($expectsJson) {
-                return $this->response->setStatusCode(500)->setJSON([
-                    'status' => 'error',
-                    'message' => 'An error occurred while deleting the wallet. Please try again.',
-                    'csrfHash' => csrf_hash(),
-                ]);
-            }
-
-            return redirect()
-                ->back()
-                ->with('error', 'An error occurred while deleting the wallet. Please try again.');
+            return $respond(false, 'An error occurred while deleting the wallet.', 500);
         }
     }
 
