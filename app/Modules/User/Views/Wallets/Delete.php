@@ -1,59 +1,28 @@
-<!-- app/Modules/User/Views/Wallets/Delete.php -->
-<div class="modal fade" id="deleteWalletModal" tabindex="-1" aria-labelledby="deleteWalletModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="deleteWalletModalLabel">Delete This Wallet?</h3>
-                <button class="close" data-dismiss="modal" type="button" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to delete this wallet?</p>
-            </div>
-            <div class="modal-footer">
-                <a id="confirmDeleteButton" class="btn btn-success" href="#">Yes</a>
-                <button class="btn btn-danger" data-dismiss="modal" type="button">No</button>
-            </div>
-        </div>
+<?php
+$uri = service('uri');
+$walletID = (int) ($uri->getSegment(5) ?? 0);
+$accountType = (string) ($uri->getSegment(6) ?? 'Bank');
+
+$deleteUrl = $walletID > 0
+    ? site_url('Wallets/Delete/' . rawurlencode($accountType) . '/' . $walletID)
+    : '#';
+?>
+<div class="modal-header">
+    <h3 class="modal-title" id="deleteWalletModalLabel">Delete This Wallet?</h3>
+    <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <div class="alert alert-warning mb-0">
+        This action permanently deletes the wallet and related records.
+    </div>
+    <div class="small text-muted mt-2" id="walletDeleteTargetText">
+        Wallet ID: <?= esc((string) $walletID) ?> | Type: <?= esc($accountType) ?>
     </div>
 </div>
-<script <?= $nonce['script'] ?? '' ?>>
-    function openDeleteModal(event) {
-        event.preventDefault();
-
-        // Get attributes from the clicked element
-        const walletId = event.target.getAttribute('data-id');
-        const walletName = event.target.getAttribute('data-name');
-        const accountType = event.target.getAttribute('data-type');
-
-        console.log('walletID:', walletId);
-        console.log('walletName:', walletName);
-        console.log('accountType:', accountType);
-
-        if (!walletId || !accountType) {
-            console.error('Missing walletId or accountType. Cannot proceed with delete modal.');
-            return;
-        }
-
-        // Update modal with wallet details
-        const confirmDeleteButton = document.getElementById('confirmDeleteButton');
-        if (confirmDeleteButton) {
-            confirmDeleteButton.setAttribute('href', `/index.php/Wallets/Delete/${accountType}/${walletId}`);
-        }
-
-        const walletNameElement = document.getElementById('walletName');
-        if (walletNameElement) {
-            walletNameElement.textContent = walletName || 'Unknown Wallet';
-        }
-
-        // Show the modal
-        const deleteWalletModalElement = document.getElementById('deleteWalletModal');
-        if (deleteWalletModalElement) {
-            const deleteWalletModal = new bootstrap.Modal(deleteWalletModalElement, {});
-            deleteWalletModal.show();
-        } else {
-            console.error('Delete Wallet Modal element not found.');
-        }
-    }
-</script>
+<div class="modal-footer">
+    <form id="delete_wallet_form" action="<?= esc($deleteUrl) ?>" method="post" class="w-100 d-flex justify-content-end gap-2">
+        <?= csrf_field() ?>
+        <button class="btn btn-danger" type="submit" <?= $walletID > 0 ? '' : 'disabled' ?>>Yes, delete</button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Cancel</button>
+    </form>
+</div>

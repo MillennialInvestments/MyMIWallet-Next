@@ -916,6 +916,8 @@ class WalletsController extends BaseUserController
         log_message('debug', 'WalletsController::add - START');
 
         if (strtolower($this->request->getMethod()) === 'post') {
+            $expectsJson = $this->request->isAJAX()
+                || str_contains(strtolower((string) $this->request->getHeaderLine('Accept')), 'application/json');
             $post = $this->request->getPost();
 
             $walletTypeRaw = (string) ($post['wallet_type'] ?? '');
@@ -932,6 +934,14 @@ class WalletsController extends BaseUserController
                 log_message('error', 'WalletsController::add invalid wallet_type: {wallet_type}', [
                     'wallet_type' => $walletTypeRaw,
                 ]);
+
+                if ($expectsJson) {
+                    return $this->response->setStatusCode(422)->setJSON([
+                        'status' => 'error',
+                        'message' => 'Invalid wallet type.',
+                        'csrfHash' => csrf_hash(),
+                    ]);
+                }
 
                 return redirect()->back()->withInput()->with('error', 'Invalid wallet type.');
             }
@@ -975,11 +985,28 @@ class WalletsController extends BaseUserController
                     'result' => $result,
                 ]);
 
+                if ($expectsJson) {
+                    return $this->response->setJSON([
+                        'status' => 'success',
+                        'message' => ucfirst($type) . ' wallet added successfully.',
+                        'redirect' => site_url('/Wallets'),
+                        'csrfHash' => csrf_hash(),
+                    ]);
+                }
+
                 return redirect()->to('/Wallets')->with('message', ucfirst($type) . ' wallet added successfully.');
             } catch (Throwable $e) {
                 log_message('error', 'WalletsController::add failed: {message}', [
                     'message' => $e->getMessage(),
                 ]);
+
+                if ($expectsJson) {
+                    return $this->response->setStatusCode(500)->setJSON([
+                        'status' => 'error',
+                        'message' => 'Unable to add wallet. Please try again.',
+                        'csrfHash' => csrf_hash(),
+                    ]);
+                }
 
                 return redirect()->back()->withInput()->with('error', 'Unable to add wallet. Please try again.');
             }
@@ -1092,6 +1119,8 @@ class WalletsController extends BaseUserController
         ]);
 
         if (strtolower($this->request->getMethod()) === 'post') {
+            $expectsJson = $this->request->isAJAX()
+                || str_contains(strtolower((string) $this->request->getHeaderLine('Accept')), 'application/json');
             $post = $this->request->getPost();
 
             $incomingType = (string) (
@@ -1129,6 +1158,14 @@ class WalletsController extends BaseUserController
                     'id'            => $id,
                 ]);
 
+                if ($expectsJson) {
+                    return $this->response->setStatusCode(422)->setJSON([
+                        'status' => 'error',
+                        'message' => 'Invalid account type or ID.',
+                        'csrfHash' => csrf_hash(),
+                    ]);
+                }
+
                 return redirect()->back()->withInput()->with('error', 'Invalid account type or ID.');
             }
 
@@ -1149,16 +1186,41 @@ class WalletsController extends BaseUserController
                 );
 
                 if (! $ok) {
+                    if ($expectsJson) {
+                        return $this->response->setStatusCode(500)->setJSON([
+                            'status' => 'error',
+                            'message' => 'Failed to update wallet.',
+                            'csrfHash' => csrf_hash(),
+                        ]);
+                    }
+
                     return redirect()->back()->withInput()->with('error', 'Failed to update wallet.');
                 }
 
                 $this->invalidateWalletCache($this->currentWalletUserId());
+
+                if ($expectsJson) {
+                    return $this->response->setJSON([
+                        'status' => 'success',
+                        'message' => ucfirst($type) . ' wallet updated successfully.',
+                        'redirect' => site_url('/Wallets'),
+                        'csrfHash' => csrf_hash(),
+                    ]);
+                }
 
                 return redirect()->to('/Wallets')->with('message', ucfirst($type) . ' wallet updated successfully.');
             } catch (Throwable $e) {
                 log_message('error', 'WalletsController::edit failed: {message}', [
                     'message' => $e->getMessage(),
                 ]);
+
+                if ($expectsJson) {
+                    return $this->response->setStatusCode(500)->setJSON([
+                        'status' => 'error',
+                        'message' => 'An error occurred while updating the wallet.',
+                        'csrfHash' => csrf_hash(),
+                    ]);
+                }
 
                 return redirect()->back()->withInput()->with('error', 'An error occurred while updating the wallet.');
             }
@@ -1388,6 +1450,9 @@ class WalletsController extends BaseUserController
 
     public function delete($accountType = null, $walletID = null)
     {
+        $expectsJson = $this->request->isAJAX()
+            || str_contains(strtolower((string) $this->request->getHeaderLine('Accept')), 'application/json');
+
         log_message('debug', 'WalletsController::delete - START', [
             'account_type' => $accountType,
             'wallet_id'    => $walletID,
@@ -1399,6 +1464,14 @@ class WalletsController extends BaseUserController
                 'account_type' => $accountType,
                 'wallet_id'    => $walletID,
             ]);
+
+            if ($expectsJson) {
+                return $this->response->setStatusCode(422)->setJSON([
+                    'status' => 'error',
+                    'message' => 'Invalid request. Account type or wallet ID is missing.',
+                    'csrfHash' => csrf_hash(),
+                ]);
+            }
 
             return redirect()
                 ->back()
@@ -1412,6 +1485,14 @@ class WalletsController extends BaseUserController
                 log_message('error', 'WalletsController::delete - Invalid wallet ID.', [
                     'wallet_id' => $walletID,
                 ]);
+
+                if ($expectsJson) {
+                    return $this->response->setStatusCode(422)->setJSON([
+                        'status' => 'error',
+                        'message' => 'Invalid wallet ID.',
+                        'csrfHash' => csrf_hash(),
+                    ]);
+                }
 
                 return redirect()
                     ->back()
@@ -1442,6 +1523,13 @@ class WalletsController extends BaseUserController
 
             if ($cuID <= 0) {
                 log_message('error', 'WalletsController::delete - Unable to resolve current user ID.');
+                if ($expectsJson) {
+                    return $this->response->setStatusCode(401)->setJSON([
+                        'status' => 'error',
+                        'message' => 'Unauthorized wallet delete request.',
+                        'csrfHash' => csrf_hash(),
+                    ]);
+                }
                 return redirect()
                     ->back()
                     ->with('error', 'Unauthorized wallet delete request.');
@@ -1462,6 +1550,14 @@ class WalletsController extends BaseUserController
                     'report'        => $deleteReport,
                 ]);
 
+                if ($expectsJson) {
+                    return $this->response->setStatusCode(500)->setJSON([
+                        'status' => 'error',
+                        'message' => $deleteReport['message'] ?? 'Failed to delete wallet.',
+                        'csrfHash' => csrf_hash(),
+                    ]);
+                }
+
                 return redirect()
                     ->back()
                     ->with('error', $deleteReport['message'] ?? 'Failed to delete wallet.');
@@ -1481,6 +1577,15 @@ class WalletsController extends BaseUserController
                 'report'             => $deleteReport,
             ]);
 
+            if ($expectsJson) {
+                return $this->response->setJSON([
+                    'status' => 'success',
+                    'message' => 'Wallet deleted successfully.',
+                    'redirect' => site_url('/Wallets'),
+                    'csrfHash' => csrf_hash(),
+                ]);
+            }
+
             return redirect()
                 ->to(site_url('/Wallets'))
                 ->with('message', 'Wallet deleted successfully.');
@@ -1490,6 +1595,14 @@ class WalletsController extends BaseUserController
                 'account_type' => $accountType,
                 'wallet_id'    => $walletID,
             ]);
+
+            if ($expectsJson) {
+                return $this->response->setStatusCode(500)->setJSON([
+                    'status' => 'error',
+                    'message' => 'An error occurred while deleting the wallet. Please try again.',
+                    'csrfHash' => csrf_hash(),
+                ]);
+            }
 
             return redirect()
                 ->back()

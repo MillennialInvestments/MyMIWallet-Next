@@ -165,9 +165,7 @@ if ($accountType === 'addBankAccount') {
 ?>
 <div class="modal-header">
 	<h3 class="modal-title" id="useCoinModalLabel"><?= $addModalTitle; ?></h3>
-	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	  <span aria-hidden="true">&times;</span>
-	</button>
+	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div> 
 <div class="modal-body">
     <form class="form-horizontal" id="add_user_wallet" action="<?= site_url('Wallets/Add'); ?>" method="POST">
@@ -222,6 +220,5 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 </script> -->
-
 
 

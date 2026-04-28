@@ -178,9 +178,7 @@ $formAction = $formAction ?? site_url("Wallets/Edit/{$finalFieldData['accountTyp
 ?>
 <div class="modal-header">
   <h3 class="modal-title" id="useCoinModalLabel"><?= esc($addModalTitle) ?></h3>
-  <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-    <span aria-hidden="true">×</span>
-  </button>
+  <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
 </div>
 
 <div class="modal-body">
@@ -200,45 +198,4 @@ $formAction = $formAction ?? site_url("Wallets/Edit/{$finalFieldData['accountTyp
     </div>
   <?php endif; ?>
 </div>
-
-<script <?= $nonce['script'] ?? '' ?>>
-document.getElementById('edit_user_wallet')?.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const form = e.currentTarget;
-
-  try {
-    const res = await fetch(form.action, {
-      method: 'POST',
-      body: new FormData(form),
-      credentials: 'same-origin',
-      headers: {'X-Requested-With': 'XMLHttpRequest'}
-    });
-
-    let j = {};
-    try { j = await res.json(); } catch (_) {}
-
-    if (res.ok && j.status === 'success') {
-      // Figure out which card to refresh (prefer hidden field, else parse URL)
-      const idField = form.querySelector('[name="account_id"],[name="wallet_id"],[name="accountID"]');
-      let targetId  = idField?.value;
-      if (!targetId) {
-        const m = form.action.match(/\/(\d+)\s*$/);
-        targetId = m ? m[1] : null;
-      }
-      if (targetId) {
-        window.dispatchEvent(new CustomEvent('wallet:updated', { detail: { id: Number(targetId) } }));
-      }
-
-      // close the modal
-      (window.bootstrap?.Modal?.getInstance(document.getElementById('transactionModal'))
-        || new (window.bootstrap?.Modal)(document.getElementById('transactionModal'))
-      )?.hide();
-    } else {
-      alert(j.message || 'Update failed');
-    }
-  } catch (err) {
-    alert('Network error. Please try again.');
-  }
-});
-</script>
 

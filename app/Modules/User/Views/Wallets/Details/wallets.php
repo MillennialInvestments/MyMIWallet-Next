@@ -64,7 +64,12 @@
                                                     <a href="' . site_url('/Wallet/Edit/' . $walletID) . '">Edit</a>
                                                 </li>
                                                 <li>
-                                                    <a id="deleteWalletBtn" href="#" data-bs-toggle="modal" data-bs-target="#transactionModal">Delete</a>
+                                                    <a class="deleteWalletBtn"
+                                                       href="#"
+                                                       data-bs-toggle="modal"
+                                                       data-bs-target="#transactionModal"
+                                                       data-accountid="' . esc((string) ($walletID ?? 0)) . '"
+                                                       data-category="' . esc((string) ($walletType ?? 'Bank')) . '">Delete</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -73,7 +78,12 @@
                                 } elseif ($this->uri->segment(2) === 'Edit') {
                                     echo '                                   
                                     <li class="btn-wrap">
-                                        <a id="deleteWalletBtn" href="#" data-bs-toggle="modal" data-bs-target="#transactionModal">Delete</a>
+                                        <a class="deleteWalletBtn"
+                                           href="#"
+                                           data-bs-toggle="modal"
+                                           data-bs-target="#transactionModal"
+                                           data-accountid="' . esc((string) ($walletID ?? 0)) . '"
+                                           data-category="' . esc((string) ($walletType ?? 'Bank')) . '">Delete</a>
                                     </li>
                                     ';
                                 }

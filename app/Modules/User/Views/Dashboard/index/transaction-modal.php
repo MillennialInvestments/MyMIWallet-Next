@@ -17,6 +17,10 @@ helper('url_guard');
 
 <script <?= $nonce['script'] ?? '' ?>>
 (function () {
+    if (window.__transactionModalBound === true) {
+        return;
+    }
+
     if (!window.bootstrap?.Modal) {
         console.warn('Bootstrap 5 modal runtime not detected.');
         return;
@@ -32,9 +36,10 @@ helper('url_guard');
     }
 
     const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
+    window.__transactionModalBound = true;
     const modalBaseUrl = "<?= rtrim(mymi_url_guard(site_url('Dashboard/Transaction-Modal'), ['source' => __FILE__, 'line' => __LINE__]), '/') ?>";
     const csrfHeaderName = <?= json_encode(csrf_header()) ?>;
-    const csrfHash = <?= json_encode(csrf_hash()) ?>;
+    let csrfHash = <?= json_encode(csrf_hash()) ?>;
 
     const placeholderPattern = /\(:?(segment|num)\)/i;
     const encodedPlaceholderPattern = /%28:(segment|num)%29/i;
@@ -139,6 +144,52 @@ helper('url_guard');
         transactionContainer.innerHTML = '';
     }
 
+    function showInlineError(message) {
+        loadingContent.classList.add('d-none');
+        transactionContainer.innerHTML = `
+            <div class="modal-body">
+                <div class="alert alert-danger mb-0">${message}</div>
+            </div>
+        `;
+        transactionContainer.classList.remove('d-none');
+    }
+
+    function updateCsrfFromPayload(payload) {
+        if (!payload || typeof payload !== 'object') {
+            return;
+        }
+
+        if (typeof payload.csrfHash === 'string' && payload.csrfHash.trim() !== '') {
+            csrfHash = payload.csrfHash;
+        }
+    }
+
+    function parseJsonSafely(response, rawText) {
+        const contentType = String(response.headers.get('content-type') || '').toLowerCase();
+        if (!contentType.includes('application/json')) {
+            return null;
+        }
+
+        try {
+            return JSON.parse(rawText);
+        } catch (error) {
+            return null;
+        }
+    }
+
+    function refreshTransactionViews() {
+        if (window.jQuery && jQuery.fn?.DataTable && jQuery.fn.DataTable.isDataTable('#walletTransactionDatabase')) {
+            const dt = jQuery('#walletTransactionDatabase').DataTable();
+            if (typeof dt.ajax?.reload === 'function') {
+                dt.ajax.reload(null, false);
+            } else {
+                dt.draw(false);
+            }
+        }
+
+        window.dispatchEvent(new CustomEvent('wallet:updated'));
+    }
+
     async function loadModalFromUrl(url) {
         setLoadingState();
         modalInstance.show();
@@ -147,6 +198,7 @@ helper('url_guard');
             method: 'GET',
             credentials: 'same-origin',
             headers: {
+                'Accept': 'text/html,application/xhtml+xml',
                 'X-Requested-With': 'XMLHttpRequest',
                 [csrfHeaderName]: csrfHash,
             }
@@ -194,9 +246,7 @@ helper('url_guard');
             await loadModalFromUrl(url);
         } catch (error) {
             console.error('Failed to load transaction modal content.', error);
-            loadingContent.classList.add('d-none');
-            transactionContainer.innerHTML = '<div class="modal-body"><div class="alert alert-danger text-center mb-0">Unable to load this action right now.</div></div>';
-            transactionContainer.classList.remove('d-none');
+            showInlineError('Unable to load this action right now.');
         }
     }
 
@@ -212,6 +262,74 @@ helper('url_guard');
 
     modalElement.addEventListener('hidden.bs.modal', function () {
         setLoadingState();
+    });
+
+    transactionContainer.addEventListener('submit', async function (event) {
+        const form = event.target.closest('form');
+        if (!form) {
+            return;
+        }
+
+        const method = String(form.getAttribute('method') || 'GET').toUpperCase();
+        if (method !== 'POST') {
+            return;
+        }
+
+        event.preventDefault();
+
+        const submitButton = form.querySelector('[type="submit"]');
+        const originalButtonHtml = submitButton ? submitButton.innerHTML : '';
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'Saving...';
+        }
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    [csrfHeaderName]: csrfHash,
+                },
+                body: new FormData(form),
+            });
+
+            const rawText = await response.text();
+            const payload = parseJsonSafely(response, rawText);
+
+            if (!payload) {
+                throw new Error(`Expected JSON response, received: ${response.status}`);
+            }
+
+            updateCsrfFromPayload(payload);
+
+            if (!response.ok || payload.status === 'error') {
+                showInlineError(payload.message || 'We could not save your changes.');
+                return;
+            }
+
+            modalInstance.hide();
+            refreshTransactionViews();
+
+            if (payload.redirect && typeof payload.redirect === 'string') {
+                window.location.href = payload.redirect;
+                return;
+            }
+
+            if (!document.querySelector('#walletTransactionDatabase')) {
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error('Transaction modal form submission failed.', error);
+            showInlineError('A network or server error occurred. Please try again.');
+        } finally {
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonHtml;
+            }
+        }
     });
 
     window.dynamicModalLoader = function (urlOrPath) {
