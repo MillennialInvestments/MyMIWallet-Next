@@ -27,3 +27,26 @@ php spark aiops:form:test --url="/Budget/Account-Manager" --no-ingest
 ## Output
 - Stores a record in `bf_aiops_form_tests`
 - If errors detected: creates patch job in `docs/_aiops/patch_jobs/FORM_TEST_*.md`
+## Form Debug + Seeder Audit (CI4 Spark)
+
+New command:
+
+```bash
+php spark aiops:form:test --scan-all --dry-run
+```
+
+Capabilities:
+- Accepts a seeder class/file with `--seeder=SeederName` and runs it only when dry-run is off (scan-all mode).
+- Discovers forms in `app/Views` and `app/Modules`.
+- Reviews detected form inputs/action/method and maps route info via existing form intelligence service.
+- Evaluates likely table seed sufficiency using tokenized form/action/input heuristics against current table row counts.
+- Provides seeder recommendations (existing seeder match or a new-seeder hint).
+- Optionally executes submissions only when all are provided: `--submit --allow-destructive --approve` and dry-run is disabled.
+
+Safety defaults:
+- Dry-run is enabled by default.
+- No live form submissions unless explicitly enabled.
+
+Reports:
+- Markdown: `docs/_aiops/form-tests/form-debug-seeder-audit-*.md`
+- JSON: `writable/aiops/form-tests/form-debug-seeder-audit-*.json`

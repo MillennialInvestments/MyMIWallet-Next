@@ -63,3 +63,19 @@ Forms["Forms Pipeline"]
 ## Console Registry Verification
 
 - Console registry is auto-discovered in CI4; explicit `$commands` entries in `app/Config/Console.php` should be added for any commands that fail `ops:commands:missing`.
+
+## Added Mode: `aiops:form:test --scan-all`
+
+Purpose:
+- End-to-end form debugging workflow with optional seeding preparation.
+
+Example usage:
+- `php spark aiops:form:test --scan-all --dry-run`
+- `php spark aiops:form:test --scan-all --seeder=OpsJobsSeeder --dry-run`
+- `php spark aiops:form:test --scan-all --seeder=OpsJobsSeeder --submit --allow-destructive --approve`
+
+Behavior:
+- Dry-run by default in scan-all mode.
+- Seeder execution is skipped in dry-run.
+- Live submissions require explicit opt-in and approval flags.
+- Writes reports to `docs/_aiops/form-tests` and `writable/aiops/form-tests`.
