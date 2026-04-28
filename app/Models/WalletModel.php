@@ -69,19 +69,24 @@ class WalletModel extends Model
         $map = [
             'bank'       => ['key' => 'bank',       'table' => 'bf_users_bank_accounts'],
             'banking'    => ['key' => 'bank',       'table' => 'bf_users_bank_accounts'],
+            'banks'      => ['key' => 'bank',       'table' => 'bf_users_bank_accounts'],
             'checking'   => ['key' => 'bank',       'table' => 'bf_users_bank_accounts'],
             'financial'  => ['key' => 'bank',       'table' => 'bf_users_bank_accounts'],
             'fiat'       => ['key' => 'bank',       'table' => 'bf_users_bank_accounts'],
 
             'credit'     => ['key' => 'credit',     'table' => 'bf_users_credit_accounts'],
+            'credits'    => ['key' => 'credit',     'table' => 'bf_users_credit_accounts'],
 
             'debt'       => ['key' => 'debt',       'table' => 'bf_users_debt_accounts'],
+            'debts'      => ['key' => 'debt',       'table' => 'bf_users_debt_accounts'],
             'loan'       => ['key' => 'debt',       'table' => 'bf_users_debt_accounts'],
 
             'investment' => ['key' => 'investment', 'table' => 'bf_users_invest_accounts'],
+            'investments'=> ['key' => 'investment', 'table' => 'bf_users_invest_accounts'],
             'invest'     => ['key' => 'investment', 'table' => 'bf_users_invest_accounts'],
 
             'crypto'     => ['key' => 'crypto',     'table' => 'bf_users_crypto_accounts'],
+            'cryptos'    => ['key' => 'crypto',     'table' => 'bf_users_crypto_accounts'],
         ];
 
         return $map[$key] ?? null;
@@ -225,6 +230,13 @@ class WalletModel extends Model
 
         if ($parentRow !== null) {
             $parentIds[] = (int) $parentRow['id'];
+
+            if (isset($parentColumns['account_id'])) {
+                $parentLinkedChildId = (int) ($parentRow['account_id'] ?? 0);
+                if ($parentLinkedChildId > 0) {
+                    $childIds[] = $parentLinkedChildId;
+                }
+            }
         }
 
         $childRowFromTarget = $this->fetchOwnedRowById($childTable, $targetId, $userId);
@@ -245,6 +257,54 @@ class WalletModel extends Model
 
                 if (! empty($childRowFromExplicitId['wallet_id'])) {
                     $parentIds[] = (int) $childRowFromExplicitId['wallet_id'];
+                }
+            }
+        }
+
+        /*
+         * Some historical records store the child id in bf_users_wallet.account_id
+         * while the child wallet_id can be 0/NULL/blank. Resolve both directions.
+         */
+        if (isset($parentColumns['account_id'])) {
+            $parentFromTargetChild = $this->db->table($parentTable)
+                ->select('id')
+                ->where('user_id', (string) $userId)
+                ->where('account_id', (string) $targetId)
+                ->get()
+                ->getRowArray();
+
+            if (! empty($parentFromTargetChild['id'])) {
+                $parentIds[] = (int) $parentFromTargetChild['id'];
+                $childIds[]  = $targetId;
+            }
+
+            if ($childAccountId !== null && $childAccountId > 0) {
+                $parentFromExplicitChild = $this->db->table($parentTable)
+                    ->select('id')
+                    ->where('user_id', (string) $userId)
+                    ->where('account_id', (string) $childAccountId)
+                    ->get()
+                    ->getRowArray();
+
+                if (! empty($parentFromExplicitChild['id'])) {
+                    $parentIds[] = (int) $parentFromExplicitChild['id'];
+                    $childIds[]  = $childAccountId;
+                }
+            }
+
+            if (! empty($parentIds)) {
+                $parentRows = $this->db->table($parentTable)
+                    ->select('account_id')
+                    ->where('user_id', (string) $userId)
+                    ->whereIn('id', $parentIds)
+                    ->get()
+                    ->getResultArray();
+
+                foreach ($parentRows as $parentCandidate) {
+                    $linkedChildId = (int) ($parentCandidate['account_id'] ?? 0);
+                    if ($linkedChildId > 0) {
+                        $childIds[] = $linkedChildId;
+                    }
                 }
             }
         }
