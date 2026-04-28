@@ -66,7 +66,7 @@ $mapDeleteType = [
   'credit'     => 'Credit',
   'debt'       => 'Debt',
   'crypto'     => 'Crypto',
-  'investment' => 'Investments',
+  'investment' => 'Investment',
 ];
 $deleteType = $mapDeleteType[$walletCategory] ?? 'Bank';
 ?>
@@ -443,7 +443,10 @@ window.addEventListener('load', function(){  // <-- wait until ALL scripts (Boot
   }
 
     function renderWalletCard(w){
-    const id = w.id;
+    const id = Number(w.id || 0);
+    const childAccountId = Number(w.child_account_id || w.account_id || 0);
+    const detailAccountId = childAccountId > 0 ? childAccountId : id;
+    const deleteTargetId = id > 0 ? id : detailAccountId;
     const displayNameRaw = w.nickname || w.label || w.account_name || w.name || w.provider || 'Wallet';
     const displayName = String(displayNameRaw).replace(/</g, '&lt;');
     const provider = (w.provider || '').toLowerCase();
@@ -452,7 +455,7 @@ window.addEventListener('load', function(){  // <-- wait until ALL scripts (Boot
     const amount = isLiability ? -Math.abs(amountRaw) : Math.abs(amountRaw);
     const amountClass = amount < 0 ? 'text-danger' : '';
     const iconCls = cardIcon(provider);
-    const details = detailsUrlFor(id);
+    const details = detailsUrlFor(detailAccountId);
     const updated = w.updated_on ? new Date(w.updated_on).toLocaleString() : '';
     const isPlaid = provider === 'plaid';
 
@@ -487,7 +490,7 @@ window.addEventListener('load', function(){  // <-- wait until ALL scripts (Boot
             <button class="btn btn-outline-secondary btn-sm dynamicModalLoader"
                     data-formtype="Edit"
                     data-endpoint="edit${walletEndpointTokenForCategory()}"
-                    data-accountid="${id}">
+                    data-accountid="${detailAccountId}">
                 <i class="icon ni ni-pen me-1"></i> Edit
             </button>
 
@@ -501,9 +504,14 @@ window.addEventListener('load', function(){  // <-- wait until ALL scripts (Boot
             ` : ''}
 
             <a href="#" class="btn btn-outline-danger btn-sm delete-wallet-button"
-                data-id="${id}"
+                data-id="${deleteTargetId}"
+                data-wallet-id="${deleteTargetId}"
+                data-account-id="${childAccountId > 0 ? childAccountId : ''}"
                 data-name="${displayName}"
-                data-type="<?=esc($deleteType)?>">
+                data-type="<?=esc($deleteType)?>"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteWalletModal"
+                onclick="openDeleteModal(event)">
                 <i class="icon ni ni-minus me-1"></i> Delete
             </a>
             </div>
@@ -651,51 +659,7 @@ window.addEventListener('load', function(){  // <-- wait until ALL scripts (Boot
     if (node) node.remove();
   });
 
-    document.getElementById('walletsList-<?=esc($dom)?>')?.addEventListener('click', async function (e) {
-    var deleteBtn = e.target.closest('.delete-wallet-button');
-    if (deleteBtn) {
-        e.preventDefault();
-
-        var id = deleteBtn.dataset.id;
-        var name = deleteBtn.dataset.name || 'this wallet';
-        var type = deleteBtn.dataset.type || 'Bank';
-
-        if (!id) return;
-        if (!window.confirm('Delete ' + name + '? This will mark it deleted.')) return;
-
-        var url = siteUrl('Wallets/Delete/' + encodeURIComponent(type) + '/' + encodeURIComponent(id));
-        var body = buildFormBody({});
-        body += (body ? '&' : '') + encodeURIComponent(CSRF_FIELD) + '=' + encodeURIComponent(currentCsrfValue());
-
-        try {
-        var res = await fetch(url, {
-            method: 'POST',
-            credentials: 'same-origin',
-            headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-TOKEN': csrfValue,
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-            },
-            body: body
-        });
-
-        var j = await res.json().catch(function(){ return {}; });
-        updateCsrfFromResponse(res, j);
-
-        if (res.ok && j.status === 'success') {
-            window.dispatchEvent(new CustomEvent('wallet:deleted', { detail: { id: Number(id) } }));
-            safeToast(byId('walletToast'), { delay: 1500 }).show();
-        } else {
-            alert(j.message || 'Delete failed');
-        }
-        } catch (err) {
-        console.error('Delete wallet error:', err);
-        alert('Network error deleting wallet.');
-        }
-
-        return;
-    }
-
+  document.getElementById('walletsList-<?=esc($dom)?>')?.addEventListener('click', async function (e) {
     var refreshBtn = e.target.closest('.refresh-wallet-button');
     if (refreshBtn) {
         e.preventDefault();

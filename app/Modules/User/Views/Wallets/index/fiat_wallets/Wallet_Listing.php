@@ -1,5 +1,16 @@
 <!-- app/Modules/User/Views/Wallets/index/fiat_wallets/Wallet_Listing.php -->
 <?php
+$accountInfo = is_array($accountInfo ?? null) ? $accountInfo : [];
+$childAccountId = (int) ($accountID ?? ($accountInfo['id'] ?? 0));
+$parentWalletId = (int) ($walletID ?? ($accountInfo['wallet_id'] ?? 0));
+$deleteTargetId = $parentWalletId > 0 ? $parentWalletId : ($walletID ?? $childAccountId);
+$deleteName     = (string) (
+    $accountName
+    ?? $accountInfo['nickname']
+    ?? $accountInfo['label']
+    ?? $addWalletTitle
+    ?? 'Bank Wallet'
+);
 echo '
 <div class="col-xxl-3 col-lg-4 col-sm-6 mt-3">
 	<div class="card card-bordered">
@@ -30,12 +41,12 @@ echo '
 					</li>
 					<li class="' . $btnSizing . '">
                         <a href="#"
-                           data-id="' . $walletID . '"
+                           data-id="' . esc($deleteTargetId) . '"
                            class="delete-wallet-button"
-                           data-wallet-id="' . $walletID . '"
-                           data-account-id="' . $walletID . '"
+                           data-wallet-id="' . esc($deleteTargetId) . '"
+                           data-account-id="' . esc($childAccountId) . '"
                            data-type="Bank"
-                           data-name="' . $addWalletTitle . '"
+                           data-name="' . esc($deleteName) . '"
                            onclick="openDeleteModal(event)"
                            data-bs-toggle="modal"
                            data-bs-target="#deleteWalletModal">
@@ -58,12 +69,12 @@ echo '
                         </li>
 						<li>
                             <a href="#"
-                               data-id="' . $walletID . '"
+                               data-id="' . esc($deleteTargetId) . '"
                                class="delete-wallet-button"
-                           data-wallet-id="' . $walletID . '"
-                           data-account-id="' . $walletID . '"
+                           data-wallet-id="' . esc($deleteTargetId) . '"
+                           data-account-id="' . esc($childAccountId) . '"
                            data-type="Bank"
-                               data-name="' . $addWalletTitle . '"
+                               data-name="' . esc($deleteName) . '"
                                onclick="openDeleteModal(event)"
                                data-bs-toggle="modal"
                                data-bs-target="#deleteWalletModal">

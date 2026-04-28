@@ -1697,6 +1697,16 @@ class WalletModel extends Model
                     $r['credentials'] = $dec;
                 }
             }
+
+            $subsidiary = $this->findSubsidiaryForWallet($r);
+            $childId    = (int) ($subsidiary['row']['id'] ?? 0);
+
+            if ($childId > 0) {
+                $r['child_account_id'] = $childId;
+                if (empty($r['account_id'])) {
+                    $r['account_id'] = $childId;
+                }
+            }
         }
         return $rows;
     }
