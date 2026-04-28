@@ -146,3 +146,19 @@
     width: 100%;
   }
 }
+
+.wallet-transaction-filter-wrap select {
+    min-width: 150px;
+}
+
+@media (max-width: 767.98px) {
+    .dataTables_filter {
+        width: 100%;
+    }
+
+    .dataTables_filter label,
+    .wallet-transaction-filter-wrap,
+    .wallet-transaction-filter-wrap select {
+        width: 100%;
+    }
+}

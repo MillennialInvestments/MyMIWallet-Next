@@ -1,6 +1,6 @@
 # AI-Ops: Doc Change Log
 > Auto-generated. Do not edit manually.
-> Run: 2026-04-26T07:00:02Z
+> Run: 2026-04-28T07:00:02Z
 
 - docs/APIs/README.md
   - Last updated: 2026-04-25
@@ -292,7 +292,7 @@
   - Change type: unchanged
 - docs/_support/marketing-pipeline-audit-20260423-031601.md
   - Last updated: 2026-04-25
-  - Change type: new
+  - Change type: unchanged
 - docs/_support/ops-spark-reset/20260210-130402/summary.md
   - Last updated: 2026-02-10
   - Change type: unchanged
@@ -3895,7 +3895,7 @@
   - Change type: unchanged
 - docs/runbooks/marketing-distribution-operations.md
   - Last updated: 2026-04-25
-  - Change type: new
+  - Change type: unchanged
 - docs/schemas/README.md
   - Last updated: 2026-04-25
   - Change type: unchanged
