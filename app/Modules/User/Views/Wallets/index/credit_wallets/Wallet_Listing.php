@@ -1,18 +1,16 @@
 <!-- app/Modules/User/Views/Wallets/index/credit_wallets/Wallet_Listing.php -->
 <?php
+$accountInfo = is_array($accountInfo ?? null) ? $accountInfo : [];
 $childAccountId = (int) ($accountID ?? ($accountInfo['id'] ?? 0));
 $parentWalletId = (int) ($walletID ?? ($accountInfo['wallet_id'] ?? 0));
 $deleteTargetId = $parentWalletId > 0 ? $parentWalletId : $childAccountId;
-$deleteName     = (string) ($accountName ?? $accountBankName ?? 'Credit Wallet');
-log_message('debug', 'Credit Wallet_Listing delete IDs', [
-    'accountID'       => $accountID ?? null,
-    'walletID'        => $walletID ?? null,
-    'childAccountId'  => $childAccountId ?? null,
-    'parentWalletId'  => $parentWalletId ?? null,
-    'deleteTargetId'  => $deleteTargetId ?? null,
-    'accountName'     => $accountName ?? null,
-    'accountBankName' => $accountBankName ?? null,
-]);
+$deleteName     = (string) (
+    $accountName
+    ?? $accountInfo['nickname']
+    ?? $accountInfo['label']
+    ?? $accountInfo['bank_name']
+    ?? 'Credit Wallet'
+);
 echo '
 <div class="col-xxl-3 col-lg-4 col-sm-6 mt-3">
     <div class="card card-bordered">

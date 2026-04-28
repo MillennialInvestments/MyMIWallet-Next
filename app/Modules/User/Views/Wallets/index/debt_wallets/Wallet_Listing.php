@@ -1,9 +1,16 @@
 <!-- app/Modules/User/Views/Wallets/index/debt_wallets/Wallet_Listing.php -->
 <?php
+$accountInfo = is_array($accountInfo ?? null) ? $accountInfo : [];
 $childAccountId = (int) ($accountID ?? ($accountInfo['id'] ?? 0));
 $parentWalletId = (int) ($walletID ?? ($accountInfo['wallet_id'] ?? 0));
 $deleteTargetId = $parentWalletId > 0 ? $parentWalletId : $childAccountId;
-$deleteName     = (string) ($accountName ?? $accountBankName ?? 'Debt Wallet');
+$deleteName     = (string) (
+    $accountName
+    ?? $accountInfo['nickname']
+    ?? $accountInfo['label']
+    ?? $accountInfo['debtor']
+    ?? 'Debt Wallet'
+);
 
 echo '
 <div class="col-xxl-3 col-lg-4 col-sm-6 mt-3">

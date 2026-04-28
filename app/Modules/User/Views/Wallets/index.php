@@ -215,6 +215,8 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
+        const originalText = confirmDeleteButton.textContent;
+
         confirmDeleteButton.classList.add('disabled');
         confirmDeleteButton.setAttribute('aria-disabled', 'true');
         confirmDeleteButton.textContent = 'Deleting...';
@@ -245,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 confirmDeleteButton.classList.remove('disabled');
                 confirmDeleteButton.removeAttribute('aria-disabled');
-                confirmDeleteButton.textContent = 'Yes';
+                confirmDeleteButton.textContent = originalText || 'Yes';
                 return;
             }
 
@@ -257,7 +259,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             confirmDeleteButton.classList.remove('disabled');
             confirmDeleteButton.removeAttribute('aria-disabled');
-            confirmDeleteButton.textContent = 'Yes';
+            confirmDeleteButton.textContent = originalText || 'Yes';
         });
     });
 });
