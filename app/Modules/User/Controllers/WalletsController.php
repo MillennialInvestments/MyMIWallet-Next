@@ -1538,23 +1538,17 @@ class WalletsController extends BaseUserController
                 return $respond(false, 'Invalid wallet delete request.', 422);
             }
 
-            /*
-            * Do NOT blindly call getJSON(true).
-            * The frontend POST normally sends no JSON body, so getJSON(true)
-            * can throw: "Failed to parse JSON string. Error: Syntax error".
-            */
             $jsonBody = [];
-            $contentType = strtolower((string) $this->request->getHeaderLine('Content-Type'));
             $rawBody = trim((string) $this->request->getBody());
-
-            if ($rawBody !== '' && str_contains($contentType, 'application/json')) {
-                $decoded = json_decode($rawBody, true);
-
-                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-                    $jsonBody = $decoded;
-                } else {
-                    log_message('warning', 'WalletsController::delete - Ignoring invalid JSON body: {error}', [
-                        'error' => json_last_error_msg(),
+            if ($rawBody !== '') {
+                try {
+                    $decoded = $this->request->getJSON(true);
+                    $jsonBody = is_array($decoded) ? $decoded : [];
+                } catch (\Throwable $jsonException) {
+                    log_message('notice', 'WalletsController::delete received invalid JSON payload; falling back to form/query params.', [
+                        'wallet_id' => $walletID,
+                        'account_type' => $accountType,
+                        'error' => $jsonException->getMessage(),
                     ]);
                 }
             }

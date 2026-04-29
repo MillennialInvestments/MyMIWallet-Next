@@ -23,7 +23,7 @@ class CsrfDebugFilter extends CSRF
         try {
             return parent::before($request, $arguments);
         } catch (SecurityException $exception) {
-            log_message('critical', '[CSRF][EXCEPTION] ' . $exception->getMessage());
+            log_message('warning', '[CSRF][EXCEPTION] ' . $exception->getMessage());
             $this->logCsrfDebug($request, $exception);
 
             throw $exception;
