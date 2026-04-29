@@ -1489,6 +1489,8 @@ class WalletsController extends BaseUserController
             'wallet_id'    => $walletID,
             'method'       => $this->request->getMethod(),
             'is_ajax'      => $this->request->isAJAX(),
+            'query'        => $this->request->getGet(),
+            'post'         => $this->request->getPost(),
         ]);
 
         $respond = function (bool $success, string $message, int $statusCode = 200, array $extra = []) {
@@ -1496,6 +1498,13 @@ class WalletsController extends BaseUserController
                 'status'  => $success ? 'success' : 'error',
                 'message' => $message,
             ], $extra);
+
+            if (function_exists('csrf_token') && function_exists('csrf_hash')) {
+                $payload['csrf'] = [
+                    'name' => csrf_token(),
+                    'hash' => csrf_hash(),
+                ];
+            }
 
             if ($this->request->isAJAX() || strtolower($this->request->getHeaderLine('X-Requested-With')) === 'xmlhttprequest') {
                 return $this->response
@@ -1513,7 +1522,11 @@ class WalletsController extends BaseUserController
         try {
             $accountType = trim((string) ($accountType ?? ''));
             $walletID    = (int) $walletID;
-            $userId      = (int) ($this->cuID ?? $this->currentWalletUserId() ?? 0);
+            $userId      = (int) ($this->cuID ?? 0);
+
+            if ($userId <= 0 && method_exists($this, 'currentWalletUserId')) {
+                $userId = (int) $this->currentWalletUserId();
+            }
 
             if ($accountType === '' || $walletID <= 0 || $userId <= 0) {
                 log_message('error', 'WalletsController::delete - Invalid delete request.', [
@@ -1543,9 +1556,15 @@ class WalletsController extends BaseUserController
             $childAccountId = (int) (
                 $this->request->getPost('account_id')
                 ?? $this->request->getGet('account_id')
-                ?? $jsonBody['account_id']
-                ?? 0
+                ?? ($jsonBody['account_id'] ?? 0)
             );
+
+            log_message('debug', 'WalletsController::delete - Parsed delete request.', [
+                'account_type'     => $accountType,
+                'wallet_id'        => $walletID,
+                'child_account_id' => $childAccountId,
+                'user_id'          => $userId,
+            ]);
 
             $result = $this->getWalletService()->deleteWalletCascade(
                 $accountType,
@@ -1564,11 +1583,13 @@ class WalletsController extends BaseUserController
                 ]);
 
                 return $respond(false, $result['message'] ?? 'Failed to delete wallet.', 500, [
-                    'debug' => $result,
+                    'result' => $result,
                 ]);
             }
 
-            $this->getWalletService()->logWalletDeletion($userId, $walletID, $accountType);
+            if (method_exists($this->getWalletService(), 'logWalletDeletion')) {
+                $this->getWalletService()->logWalletDeletion($userId, $walletID, $accountType);
+            }
 
             log_message('info', 'WalletsController::delete - Wallet deleted successfully.', [
                 'account_type' => $accountType,
@@ -1588,7 +1609,9 @@ class WalletsController extends BaseUserController
                 'wallet_id'    => $walletID,
             ]);
 
-            return $respond(false, 'An error occurred while deleting the wallet.', 500);
+            return $respond(false, 'An error occurred while deleting the wallet.', 500, [
+                'error' => $e->getMessage(),
+            ]);
         }
     }
 
