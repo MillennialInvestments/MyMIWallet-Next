@@ -1609,7 +1609,7 @@ class AuthController extends BaseController
             service('eventTracker')->track('auth.activate_fail', [
                 'reason' => 'invalid',
             ]);
-            log_message('notice', '[ACTIVATION] Activation failed: missing token', [
+            log_message('info', '[ACTIVATION] Activation failed: missing token', [
                 'ip' => $this->request->getIPAddress(),
             ]);
             return redirect()->to(site_url('Support/Account'));

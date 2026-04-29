@@ -583,11 +583,15 @@ class MyMISolana implements CryptoCurrencyInterface
         
         // Ensure that the market data is an array before processing
         $getMarketVolume = is_string($getMarketData['volume'] ?? null) ? json_decode($getMarketData['volume'], true) : ($getMarketData['volume'] ?? []);
+        if (! is_array($getMarketVolume)) {
+            $getMarketVolume = [];
+        }
+
         $getMarketVolumeArray = is_string($getMarketData['volume_array'] ?? null) ? json_decode($getMarketData['volume_array'], true) : ($getMarketData['volume_array'] ?? []);
 
         // Handle cases where the volume data may not be an array (e.g., float or other types)
         if (!is_array($getMarketVolumeArray)) {
-            log_message('error', 'Expected volume_array to be an array but received: ' . print_r($getMarketVolumeArray, true));
+            log_message('warning', 'Expected volume_array to be an array; using zeroed fallback.');
             $getMarketVolumeArray = [
                 'h24' => 0,
                 'h6' => 0,
@@ -601,16 +605,6 @@ class MyMISolana implements CryptoCurrencyInterface
         $hourlyVolume = $getMarketVolumeArray['h1'] ?? 0;
         $fiveMinuteVolume = $getMarketVolumeArray['m5'] ?? 0;
     
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            log_message('critical', 'Failed to decode volume_array JSON: ' . json_last_error_msg());
-            $getMarketVolumeArray = [
-                'h24' => 0,
-                'h6'  => 0,
-                'h1'  => 0,
-                'm5'  => 0,
-            ];
-        }
-
         // Construct the market data array
         $marketData = [
             'currentPrice' => $getMarketData['coin_value'] ?? 0.0,

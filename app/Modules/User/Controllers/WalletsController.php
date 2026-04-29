@@ -1525,8 +1525,20 @@ class WalletsController extends BaseUserController
                 return $respond(false, 'Invalid wallet delete request.', 422);
             }
 
-            $jsonBody = $this->request->getJSON(true);
-            $jsonBody = is_array($jsonBody) ? $jsonBody : [];
+            $jsonBody = [];
+            $rawBody = trim((string) $this->request->getBody());
+            if ($rawBody !== '') {
+                try {
+                    $decoded = $this->request->getJSON(true);
+                    $jsonBody = is_array($decoded) ? $decoded : [];
+                } catch (\Throwable $jsonException) {
+                    log_message('notice', 'WalletsController::delete received invalid JSON payload; falling back to form/query params.', [
+                        'wallet_id' => $walletID,
+                        'account_type' => $accountType,
+                        'error' => $jsonException->getMessage(),
+                    ]);
+                }
+            }
 
             $childAccountId = (int) (
                 $this->request->getPost('account_id')

@@ -54,12 +54,25 @@ $routes->set404Override(function () {
             ->setBody('Gone');
     }
 
-    log_message('error', '[404_ROUTE]', [
+    $noisePatterns = [
+        '.env', '.git', 'composer.json', 'composer.lock', 'phpinfo.php', 'server.js',
+        'docker-compose', '.yaml', '.yml', '.ini', '.sql', '/vendor/', '/storage/', '/backup',
+    ];
+    $isHostileProbe = false;
+    foreach ($noisePatterns as $needle) {
+        if (str_contains($lowerPath, $needle)) {
+            $isHostileProbe = true;
+            break;
+        }
+    }
+
+    log_message($isHostileProbe ? 'notice' : 'error', '[404_ROUTE]', [
         'uri' => current_url(),
         'path' => $path,
         'query' => $query,
         'referrer' => $_SERVER['HTTP_REFERER'] ?? null,
         'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
+        'probe' => $isHostileProbe,
     ]);
 
     if (preg_match('/\.(js|mjs)$/i', $path) === 1) {

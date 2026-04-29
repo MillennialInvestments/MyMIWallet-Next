@@ -89,7 +89,7 @@ class RateLimitFilter implements FilterInterface
                 $context['trace'] = $e->getTraceAsString();
             }
 
-            log_message('critical', '[AUTH_RESOLUTION_FAILED] RateLimitFilter fell back to guest', $context);
+            log_message('warning', '[AUTH_RESOLUTION_FAILED] RateLimitFilter fell back to guest', $context);
 
             return ['authenticated' => false, 'source' => 'fallback_guest'];
         }
