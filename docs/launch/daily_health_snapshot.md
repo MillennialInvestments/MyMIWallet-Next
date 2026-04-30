@@ -1,10 +1,10 @@
 # Daily Health Snapshot
 
-- Generated: 2026-03-01 17:03:12 UTC
+- Generated: 2026-04-30 11:17:32 UTC
 - Command: `php spark gtm:health:snapshot`
 
 ## Environment Flags
-- APP_ENV: `unset`
+- APP_ENV: `codex`
 - CI_ENVIRONMENT: `development`
 - ENVIRONMENT_CONSTANT: `development`
 
@@ -14,65 +14,75 @@
 ## Logger Handlers In Use
 - `CodeIgniter\Log\Handlers\FileHandler` handles: debug, info, notice, warning, error, critical, alert, emergency
 - `App\Log\Handlers\MyMIDBLoggerHandler` handles: warning, error, critical, alert, emergency
-- `App\Log\Handlers\DatabaseLoggerHandler` handles: [none]
-- `App\Log\Handlers\UnifiedLoggerHandler` handles: [none]
+- `App\Log\Handlers\DatabaseLoggerHandler` handles: warning, error, critical, alert, emergency
+- `App\Log\Handlers\UnifiedLoggerHandler` handles: warning, error, critical, alert, emergency
 
 ## Filter Summary
-- Aliases: 29
-- Global before filters: 7
+- Aliases: 40
+- Global before filters: 9
 - Global after filters: 6
 - Route-specific filter entries: 4
 
 ### Global Before
 - maintenance
+- botBlocker
 - requestLifecycle
 - observability
 - ratelimit
+- throttle
 - sessionRevoked
 - csrf
 - authcheck
 
 ### Global After
+- toolbar
 - cspoff
 - sessionTracker
 - requestLifecycle
 - observability
 - jsonException
-- toolbar
 
 ## Route Count + List
-- Route count: 1234
+- Route count: 1350
 
 - CLI Run-CRON-Tasks => ManagementAPIController::runCRONTasks
 - DELETE Goals/(:num) => InvestmentController::deleteGoal/$1
 - DELETE Strategies/(:num) => InvestmentController::deleteGoal/$1
 - DELETE Unlink/(:num) => WalletsAPIController::unlink/$1
-- DELETE deleteCampaign/(:num) => EmailAPIController:deleteCampaign/$1
+- DELETE deleteCampaign/(:num) => EmailAPIController::deleteCampaign/$1
 - DELETE deletePlatform/(:num) => ManagementAPIController::deletePlatform/$1
 - DELETE deletePlatformRule/(:num) => ManagementAPIController::deletePlatformRule/$1
 - DELETE deleteScrape/(:num) => MarketingAPIController::deleteScrape/$1
 - DELETE deleteSuggestion/(:num) => ManagementAPIController::deleteSuggestion/$1
 - DELETE deleteTaxonomy/(:num) => ManagementAPIController::deleteTaxonomy/$1
+- DELETE deleteTemplate/(:num) => MarketingAPIController::deleteTemplate/$1
 - DELETE news/(:num) => InvestmentsAPIController::deleteNews/$1
 - DELETE purge-dead => DiscordAPIController::purgeDead
 - GET '', 'ExchangeController::index', ['as' => 'mymi-exchange']
+- GET '', 'HowItWorksController::index'
 - GET '', 'MetaMaskController::index', ['as' => 'mymi-metamask']
+- GET '', 'OpsDashboardController::index'
 - GET '', 'SolanaController::index', ['as' => 'mymi-solana']
-- GET '/How-It-Works/Purchase/MyMIGold', static fn() => redirect()->to('/How-It-Works/Purchase-MyMI-Gold', 301)
-- GET '/Investments/News', static fn() => redirect()->to('/News', 301)
-- GET '/Purchase/MyMIGold', static fn() => redirect()->to('/Wallets/Purchase/MyMI-Gold', 301)
-- GET (:any) => HowItWorksController::show/$1
+- GET '/How-It-Works/', static fn() => redirect()->to(site_url('How-It-Works'), 301)
+- GET '/How-It-Works/Purchase/MyMIGold', static fn() => redirect()->to(site_url('How-It-Works/Purchase-MyMI-Gold'), 301)
+- GET '/Investments/News', static fn() => redirect()->to(site_url('News'), 301)
+- GET '/Purchase/MyMIGold', static fn() => redirect()->to(site_url('Wallets/Purchase/MyMI-Gold'), 301)
+- GET '/Support/Article', static fn() => redirect()->to(site_url('Support/Article/welcome'), 301)
+- GET '/Wallets/Purchase/Memberships/Pro', static fn() => redirect()->to(site_url('Memberships/Pro'), 301)
+- GET '/index.php/How-It-Works', static fn() => redirect()->to(site_url('How-It-Works'), 301)
+- GET '/index.php/How-It-Works/(:segment)', static fn($slug) => redirect()->to(site_url('How-It-Works/' . $slug), 301)
+- GET 'index.php/Blog', static fn() => redirect()->to(site_url('Blog'), 301)
+- GET 'index.php/Blog/(:segment)', static fn($slug) => redirect()->to(site_url('Blog/' . $slug), 301)
+- GET 'index.php/Blog/(:segment)/(:segment)', static fn($a, $b) => redirect()->to(site_url('Blog/' . $a . '/' . $b), 301)
 - GET (:any) => KnowledgebaseController::show/$1
 - GET (:any) => SupportController::view/$1
-- GET (:any)/register => AuthController::register
-- GET (:any)/register/(:segment) => AuthController::register/$2
 - GET (:num)/Steps => DripCampaignAdminController::viewSteps/$1
 - GET (:segment) => BlogController::view/$1
 - GET (:segment) => EarningsController::viewByDate
+- GET (:segment) => HowItWorksController::show/$1
 - GET (:segment)/(:segment) => BlogController::view/$1/$2
 - GET / => APIController::index
 - GET / => AccountRescueAdminController::index
-- GET / => AdminController::index
 - GET / => AdvisorController::index
 - GET / => AlertsAdminController::index
 - GET / => AnnouncementsController::index
@@ -91,11 +101,10 @@
 - GET / => EmailController::index
 - GET / => ErrorOpsController::index
 - GET / => ExchangeAdminController::index
-- GET / => Features::index
+- GET / => FeaturesController::index
 - GET / => FinanceAdminController::index
 - GET / => HRAdminController::index
 - GET / => Home::index
-- GET / => HowItWorksController::index
 - GET / => HowTosAdminController::index
 - GET / => InvestingController::index
 - GET / => InvestmentsAPIController:index
@@ -147,6 +156,8 @@
 - GET /Getting-Started => Home::gettingStarted
 - GET /Getting-Started/(:segment) => Home::gettingStarted
 - GET /Getting-Started/(:segment)/(:segment) => Home::gettingStarted
+- GET /How-It-Works => \\App\\Modules\\Blog\\Controllers\\HowItWorksController::index
+- GET /How-It-Works/(:segment) => \\App\\Modules\\Blog\\Controllers\\HowItWorksController::show/$1
 - GET /Legal/Privacy-Policy => Home::privacyPolicy
 - GET /Legal/Terms-And-Conditions => Home::terms
 - GET /Memberships => Home::memberships
@@ -165,9 +176,12 @@
 - GET /Trade-Tracker/getTradeData => InvestmentsController::getTradeData
 - GET /resend-activation => AuthController::resendActivation
 - GET /sw.js => ServiceWorker::index
-- GET API/Ops/filesystem-status => Api\OpsFilesystemStatusController::index
-- GET API/Ops/health-score => OpsHealth::score
-- GET API/docs => Api\SwaggerDocsController::index
+- GET API => APIAdminController::index
+- GET API/(:segment) => APIAdminController::index
+- GET API/Management/error-heatmap => SystemDebugController::errorHeatmap
+- GET API/Ops/filesystem-status => \\App\\Controllers\\Api\\OpsFilesystemStatusController::index
+- GET API/Ops/health-score => \\App\\Controllers\\OpsHealthController::score
+- GET API/docs => \\App\\Controllers\\Api\\SwaggerDocsController::index
 - GET Account => AccountSupportController::index
 - GET Account-And-Billing => KnowledgebaseController::accountBilling
 - GET Add/(:segment) => AlertsAdminController::add
@@ -177,6 +191,7 @@
 - GET Alerts/Preview/(:segment) => AlertsController::preview/$1
 - GET Approve-Content/(:num) => MarketingAPIController::approveContent/$1
 - GET Approve-Content/(:num) => MarketingAdminController::approveContent/$1
+- GET Article => SupportController::article
 - GET Article/(:segment) => SupportController::article/$1
 - GET Assets => AssetsController::index
 - GET Assets => KnowledgebaseController::assets
@@ -186,7 +201,8 @@
 - GET Blog-Creator => MarketingAdminController::blogCreator
 - GET Blogs => MarketingAPIController::blogs
 - GET Blogs => MarketingAdminController::blogs
-- GET Brokerage-Integrations => Features::BrokerageIntegrations
+- GET Brokerage-Integration => FeaturesController::BrokerageIntegrations
+- GET Brokerage-Integrations => FeaturesController::BrokerageIntegrations
 - GET Campaigns => MarketingAPIController::campaigns
 - GET Campaigns => MarketingAdminController::campaigns
 - GET Chat => ChatAdminController::index
@@ -197,6 +213,7 @@
 - GET Communities => MarketingAPIController::communities
 - GET Content-Review => MarketingAPIController::contentReview
 - GET Content-Review => MarketingAdminController::contentReview
+- GET Content-Studio => MarketingAdminController::contentStudio
 - GET Content/Generator => MarketingAPIController::contentGenerator
 - GET Content/Generator => MarketingAdminController::contentGenerator
 - GET Content/Listing => MarketingAPIController::contentListing
@@ -238,6 +255,7 @@
 - GET Cron/Update-User-Stats => PredictionsAPIController::cronUpdateUserStats
 - GET Crypto-Overview => InvestmentsController::cryptoOverview
 - GET Crypto/(:segment)/(:segment) => Management\AlertsAdminController::stockOverview/$1/$2
+- GET Daily-Financial-News => HowItWorksController::DailyFinancialNews
 - GET Daily-Log => MarketingAPIController::viewDailyLogs
 - GET Daily-Log => MarketingAdminController::viewDailyLogs
 - GET Data => BudgetAPIController::apiBudgetData
@@ -245,6 +263,10 @@
 - GET Debug/whoami => Debug::whoami
 - GET Dev/BitcoinTest => App\Controllers\Dev\BitcoinTest::index
 - GET Discord => SupportController::discordOnboarding
+- GET Discord/register => AuthController::register
+- GET Discord/register/(:segment) => AuthController::register/$1
+- GET Docs => DocsAdminController::index
+- GET Docs/(:any) => DocsAdminController::browse/$1
 - GET Economic-Data => InvestmentsController::economicData
 - GET Economy/latest => EconomyController::latest
 - GET Edit-Content/(:num) => MarketingAPIController::editContent/$1
@@ -267,6 +289,10 @@
 - GET ForceGenerateFromTemp/(:num) => MarketingAPIController::ForceGenerateFromTemp/$1
 - GET Forecast => BudgetController::forecast
 - GET Forecast/(:segment) => BudgetController::forecast/$1
+- GET Fund => ProjectsAdminController::fundOverview
+- GET Fund => ProjectsController::fund
+- GET Fund/(:num) => ProjectsAdminController::fundOverview/$1
+- GET Fund/(:num) => ProjectsController::fund/$1
 - GET GenerateFromSimilar/(:num) => MarketingAPIController::generateFromSimilar/$1
 - GET GetUserWatchlist/(:segment) => InvestmentsController::getUserWatchlist/$1
 - GET Goals => InvestmentController::getGoals
@@ -283,6 +309,8 @@
 - GET Import/Wallet => SolanaController::importWallet
 - GET Integrating-Wallets => KnowledgebaseController::integratingWallets
 - GET Integrating-With-Plaid => NewsAndUpdates::IntegratingWithPlaid
+- GET Investing => HowItWorksController::InvestmentPortfolioManagement
+- GET Investment-Portfolio-Management => HowItWorksController::InvestmentPortfolioManagement
 - GET Investments/getConfidenceDistribution => InvestmentsAPIController::getConfidenceDistribution
 - GET Investments/getConfidenceHeatmap => InvestmentsAPIController::getConfidenceHeatmap
 - GET Investments/getForecastAccuracySummary => InvestmentsAPIController::getForecastAccuracySummary
@@ -301,6 +329,8 @@
 - GET LoadingScreen => DashboardController::LoadingScreen
 - GET Logs/summary => App\Modules\Logs\Controllers\LogsController::summary
 - GET Maintenance => MaintenanceController::index
+- GET Management/System-Debug => SystemDebugController::index
+- GET Management/debugLogs => ManagementAPIController::debugLogs
 - GET Management/getAutoloadHealth => ManagementAPIController::getAutoloadHealth
 - GET Management/subsystems/status => ManagementAPIController::subsystemsStatus
 - GET Manual-Content/Form => MarketingAPIController::shortLongContentForm
@@ -314,6 +344,7 @@
 - GET Markets/Settle/(:num) => PredictionsAPIController::settle/$1
 - GET My/Commitments => ProjectsController::myCommitments
 - GET MyMI-Gold => HowItWorks::MyMIGold
+- GET MyMI-Gold => HowItWorksController::MyMIGold
 - GET MyMI-News => InvestmentsController::MyMINews
 - GET MyMI-Partnerships => KnowledgebaseController::partnerships
 - GET MyMI-Research => InvestmentsController::MyMIResearch
@@ -329,6 +360,7 @@
 - GET Ops/status => OpsAPIController::status
 - GET Orders/Cancel => PredictionsAPIController::cancelOrder
 - GET Orders/Place => PredictionsAPIController::placeOrder
+- GET Personal-Budgeting => HowItWorksController::PersonalBudgeting
 - GET Plaid/Config-Debug => WalletsAPIController::plaidConfigDebug
 - GET Plaid/Env => WalletsAPIController::plaidEnv
 - GET Plaid/Link-Token => WalletsAPIController::plaidLinkToken
@@ -343,16 +375,19 @@
 - GET Preview/(:num) => ScriptStudioController::preview/$1
 - GET Preview/Alert/(:segment) => AlertsController::preview/$1
 - GET Profile/(:segment) => UsersController::profile
+- GET Projects/(:any) => ExchangeController::project/$1
 - GET Promote => MarketingAPIController::promote
 - GET Promote => MarketingAdminController::promote
 - GET Promote/(:segment) => MarketingAPIController::promote
 - GET Promote/(:segment) => MarketingAdminController::promote
 - GET Promoted-Articles => KnowledgebaseController::promotedArticles
+- GET Purchase-MyMI-Gold => HowItWorksController::PurchaseMyMIGold
 - GET Quick-Intake => ProjectsController::realEstateQuickIntake
 - GET Quick-Scraper => MarketingAPIController::standaloneScrape
 - GET Quick-Scraper => MarketingAdminController::standaloneScrape
 - GET Rates => TaxConfig::rates
 - GET Reconcile => WalletsController::reconcile
+- GET ReconcileFundExchange/(:num) => ProjectsAdminController::reconcileFundExchange/$1
 - GET Reject-Content/(:num) => MarketingAPIController::rejectContent/$1
 - GET Reject-Content/(:num) => MarketingAdminController::rejectContent/$1
 - GET Repayment => BudgetAPIController::apiRepaymentSummary
@@ -368,6 +403,7 @@
 - GET Search/(:any) => BudgetController::index
 - GET Search/(:segment)/(:any) => ManagementController::index/$1/$2
 - GET Sector/(:segment) => Home::sector/$1
+- GET Setting-Financial-Goals => HowItWorksController::SettingFinancialGoals
 - GET Settlements => PredictionsAPIController::settlements
 - GET Settlements => PredictionsController::settlements
 - GET Signals => SignalsAdminController::index
@@ -417,17 +453,20 @@
 - GET Twitter => MarketingAdminController::twitterDashboard
 - GET Types-Of-Accounts => KnowledgebaseController::typesOfAccounts
 - GET Usage => ChatUsageController::index
+- GET ValidateFundIntegrity => ProjectsAdminController::validateFundIntegrity
+- GET ValidateFundIntegrity/(:num) => ProjectsAdminController::validateFundIntegrity/$1
 - GET Video-Creator => MarketingAPIController::videoCreator
 - GET Video-Creator => MarketingAdminController::videoCreator
 - GET View-Email/(:segment)/(:segment) => MarketingAPIController::viewEmail/$1/$2
 - GET View-Email/(:segment)/(:segment) => MarketingAdminController::viewEmail/$1/$2
 - GET View-Grouped-Summaries => MarketingAPIController::View-Grouped-Summaries
 - GET View-Grouped-Summaries => MarketingAdminController::View-Grouped-Summaries
-- GET View/(:segment) => ProjectsController::view/$1
+- GET View/(:num) => ProjectsController::view/$1
 - GET Wallet/Disconnect/(:segment) => SolanaController::disconnectWallet/$1
 - GET Wallet/Execute-Swap => SolanaController::executeSwap
 - GET Wallet/Verify-Ownership => SolanaController::verifyWalletOwnership
 - GET Wallet/ViewAssets => SolanaController::viewAssets
+- GET What-Is-MyMI-Gold => HowItWorksController::MyMIGold
 - GET Widget => EconomyController::dashboardWidget
 - GET _ops/opcache-reset => Ops::opcacheReset
 - GET activate => AuthController::activateAccount
@@ -437,7 +476,8 @@
 - GET addTradeAlert => AlertsAdminController::addTradeAlert
 - GET ajax/recalc/(:num) => Tax::ajaxRecalc/$1
 - GET ajaxStatus => OpsController::ajaxStatus
-- GET alerts => HowItWorksController::alerts
+- GET alerts => HowItWorksController::show/alerts
+- GET alerts => MobileController::alerts
 - GET api/admin/chat-usage => Api\\AdminChatUsageController::index
 - GET api/health => Api\\HealthController::index
 - GET apiHeatmap => ErrorOpsController::apiHeatmap
@@ -448,7 +488,7 @@
 - GET auth/provider/(:segment) => AuthController::redirectToProvider/$1
 - GET auth/provider/(:segment)/callback => AuthController::handleProviderCallback/$1
 - GET auth/unlink/(:segment) => AuthController::unlinkProvider/$1
-- GET autoScheduleDraftCampaigns => EmailAPIController:autoScheduleDraftCampaigns
+- GET autoScheduleDraftCampaigns => EmailAPIController::autoScheduleDraftCampaigns
 - GET autoScheduleDrafts => EmailAdminController::autoScheduleDrafts
 - GET autoScheduleLogs => EmailAdminController::autoScheduleLogs
 - GET available => BrokerAPIController::available
@@ -458,20 +498,20 @@
 - GET blog => Blog::index
 - GET blog/(:segment) => Blog::post/$1
 - GET blog/category/(:segment) => Blog::category/$1
-- GET budgeting => HowItWorksController::budgeting
+- GET budget => MobileController::budget
 - GET budgets => BudgetAPIController::budgets
 - GET budgets => BudgetController::budgets
 - GET cache/get => AiOpsAPIController::cacheGet
 - GET campaignStats/(:num) => EmailAdminController::campaignStats/$1
 - GET campaigns => EmailAdminController::campaigns
-- GET cancelScheduledCampaign/(:num) => EmailAPIController:cancelScheduledCampaign/$1
+- GET cancelScheduledCampaign/(:num) => EmailAPIController::cancelScheduledCampaign/$1
 - GET cash-flow => BudgetAPIController::cashFlow
 - GET cash-flow => BudgetController::cashFlow
 - GET categories => BrokerAPIController::categories
 - GET categories => BudgetAPIController::categories
 - GET checkOnboardingStatus => DashboardController::checkOnboardingStatus
 - GET click/(:segment) => DripCampaignAPIController::click/$1
-- GET cloneCampaign/(:num) => EmailAPIController:cloneCampaign/$1
+- GET cloneCampaign/(:num) => EmailAPIController::cloneCampaign/$1
 - GET coalesce-now => DiscordAPIController::coalesceNow
 - GET commands => App\Modules\Ops\Controllers\OpsController::commands
 - GET commandsCatalog => DiscordAPIController::commandsCatalog
@@ -488,26 +528,35 @@
 - GET cronGenerateDailyCommunityPosts => MarketingAPIController::cronGenerateDailyCommunityPosts
 - GET cronProcessSMSMarketingIdeas => MarketingAPIController::cronProcessSMSMarketingIdeas
 - GET cronQueueDistribution => MarketingAPIController::cronQueueDistribution
-- GET crypto => HowItWorksController::crypto
+- GET crypto => HowItWorksController::show/crypto
+- GET dashboard => MobileController::dashboard
+- GET debug/register-success-probe => AuthController::registerSuccessProbe
 - GET deposits/pending => MditAdminAPIController::pendingDeposits
 - GET diag => System\HealthController::diag
 - GET distributeHighScoreContent => MarketingAPIController::distributeHighScoreContent
 - GET distributeTodaysNewsContent => ManagementAPIController::distributeTodaysNewsContent
+- GET distributionChannelTotals => MarketingAPIController::distributionChannelTotals
+- GET distributionFailedSummary => MarketingAPIController::distributionFailedSummary
+- GET distributionHistory/(:num) => MarketingAPIController::distributionHistory/$1
+- GET distributionSummary => MarketingAPIController::distributionSummary
 - GET downloadVoiceover/(:any) => MarketingAPIController::downloadVoiceover/$1
 - GET edit/(:num) => Tax::edit/$1
 - GET editCampaign/(:num) => EmailAdminController::editCampaign/$1
 - GET emailPostForApproval/(:num) => MarketingAPIController::emailPostForApproval/$1
-- GET event/(:num) => EsportsAPIController:getEvent/$1
-- GET events => EsportsAPIController:listEvents
+- GET event/(:num) => EsportsAPIController::getEvent/$1
+- GET events => EsportsAPIController::listEvents
 - GET export/csv/(:num) => Tax::exportCsv/$1
 - GET export/json/(:num) => Tax::exportJson/$1
+- GET export/tasks.csv => OpsDashboardController::exportTasksCsv
+- GET export/workbook.xlsx => OpsDashboardController::exportWorkbookXlsx
 - GET exportGeneratedPostJson/(:num) => MarketingAPIController::exportGeneratedPostJson/$1
 - GET exportPostJson/(:num) => ManagementAPIController::exportPostJson/$1
+- GET exportVideoPackage/(:num) => MarketingAPIController::exportVideoPackage/$1
 - GET exportWeeklyWatchlistCSV => ManagementAPIController::exportWeeklyWatchlistCSV
 - GET fade => SqueezeController::fade
 - GET fetchAlphaVantageNewsForTradeAlerts => ManagementAPIController::fetchAlphaVantageNewsForTradeAlerts
 - GET fetchBufferPaginated => MarketingAPIController::fetchBufferPaginated
-- GET fetchCampaignAnalytics => EmailAPIController:fetchCampaignAnalytics
+- GET fetchCampaignAnalytics => EmailAPIController::fetchCampaignAnalytics
 - GET fetchCoffeeAndStocksNewsletter => ManagementAPIController::fetchCoffeeAndStocksNewsletter
 - GET fetchData => AlertsAdminController::fetchData
 - GET fetchEmails => MarketingAPIController::fetchEmails
@@ -538,8 +587,8 @@
 - GET fetchPlaidLinkToken/(:segment) => BrokerAPIController::fetchPlaidLinkToken/$1
 - GET fetchPlaidTransactions => BrokerAPIController::fetchPlaidTransactions
 - GET fetchPlaidTransactions/(:segment) => BrokerAPIController::fetchPlaidTransactions/$1
-- GET fetchQueuedEmailById/(:num) => EmailAPIController:fetchQueuedEmailById/$1
-- GET fetchQueuedEmails => EmailAPIController:fetchQueuedEmails
+- GET fetchQueuedEmailById/(:num) => EmailAPIController::fetchQueuedEmailById/$1
+- GET fetchQueuedEmails => EmailAPIController::fetchQueuedEmails
 - GET fetchRobinhoodACHRelationships => BrokerAPIController::fetchRobinhoodACHRelationships
 - GET fetchRobinhoodACHRelationships/(:segment) => BrokerAPIController::fetchRobinhoodACHRelationships/$1
 - GET fetchRobinhoodAccountDetails/(:segment) => BrokerAPIController::fetchRobinhoodAccountDetails/$1
@@ -614,18 +663,18 @@
 - GET generateVoiceScriptManually => ManagementAPIController::generateVoiceScriptManually
 - GET generateWeeklyStreamData => ManagementAPIController::generateWeeklyStreamData
 - GET getAlerts => ManagementAPIController::getAlerts
-- GET getAllCampaigns => EmailAPIController:getAllCampaigns
+- GET getAllCampaigns => EmailAPIController::getAllCampaigns
 - GET getAssets => ManagementAPIController::getAssets
 - GET getAssetsData => SolanaAPIController::getAssetsData
-- GET getCampaignMetrics/(:num) => EmailAPIController:getCampaignMetrics/$1
-- GET getCampaignStats/(:num) => EmailAPIController:getCampaignStats/$1
+- GET getCampaignMetrics/(:num) => EmailAPIController::getCampaignMetrics/$1
+- GET getCampaignStats/(:num) => EmailAPIController::getCampaignStats/$1
 - GET getCleanedScrapedContent => MarketingAPIController::getCleanedScrapedContent
 - GET getCoinAmount/(:segment) => SolanaAPIController::getCoinAmount/$1
 - GET getConfidenceDistribution => InvestmentsAPIController::getConfidenceDistribution
 - GET getConfidenceHeatmap => InvestmentsAPIController::getConfidenceHeatmap
 - GET getContentPerformanceAnalytics => MarketingAPIController::getContentPerformanceAnalytics
-- GET getEmailQueueStats => EmailAPIController:getEmailQueueStats
-- GET getEmailQueueTrend => EmailAPIController:getEmailQueueTrend
+- GET getEmailQueueStats => EmailAPIController::getEmailQueueStats
+- GET getEmailQueueTrend => EmailAPIController::getEmailQueueTrend
 - GET getExchangePrice/(:segment) => SolanaAPIController::getExchangePrice/$1
 - GET getForecastAccuracySummary => InvestmentsAPIController::getForecastAccuracySummary
 - GET getForecastDetails/(:segment) => InvestmentsAPIController::getForecastDetails/$1
@@ -647,33 +696,40 @@
 - GET getStoryboardPackage/(:num) => MarketingAPIController::getStoryboardPackage/$1
 - GET getSupport => ManagementAPIController::getSupport
 - GET getSymbolsByTradeType/(:segment) => InvestmentsAPIController::getSymbolsByTradeType/$1
+- GET getTemplates => MarketingAPIController::getTemplates
 - GET getTokenPrice/(:segment) => SolanaAPIController::getTokenPrice/$1
 - GET getTopConfidenceBySector => InvestmentsAPIController::getTopConfidenceBySector
 - GET getTopGeneratedPosts => MarketingAPIController::getTopGeneratedPosts
 - GET getTopKeywordChart/(:num) => MarketingAPIController::getTopKeywordChart/$1
-- GET getUserAvailableBalances => BudgetAPIController::getUserAvailableBalances
-- GET getUserBudgetRecords => BudgetAPIController::getUserBudgetRecords
-- GET getUserCreditBalances => BudgetAPIController::getUserCreditBalances
-- GET getUserRepaymentSummary => BudgetAPIController::getUserRepaymentSummary
+- GET getUserAvailableBalances => \App\Modules\APIs\Controllers\BudgetController::getUserAvailableBalances
+- GET getUserBudgetRecords => \App\Modules\APIs\Controllers\BudgetController::getUserBudgetRecords
+- GET getUserCreditBalances => \App\Modules\APIs\Controllers\BudgetController::getUserCreditBalances
+- GET getUserRepaymentSummary => \App\Modules\APIs\Controllers\BudgetController::getUserRepaymentSummary
 - GET getUsers => ManagementAPIController::getUsers
+- GET getVideoContent/(:num) => MarketingAPIController::getVideoContent/$1
+- GET getVideoQueue => MarketingAPIController::getVideoQueue
 - GET goals => BrokerAPIController::goals
 - GET goals => BudgetAPIController::goals
 - GET groupSimilarSummariesByCosine => MarketingAPIController::groupSimilarSummariesByCosine
 - GET health => AiOpsAPIController::health
 - GET health => DiscordAPIController::health
 - GET health => Health::index
-- GET health => OpsHealth::index
 - GET health => SolanaAPIController::health
+- GET health => \\App\\Controllers\\OpsHealthController::index
 - GET healthcheck => App\Modules\Ops\Controllers\OpsController::healthcheck
 - GET healthz => System\HealthController::healthz
 - GET help/account => App\\Modules\\Support\\Controllers\\AccountSupportController::index
 - GET index => DocsController::index
+- GET index.php => Home::index
+- GET index.php/ => Home::index
+- GET index.php/login => AuthController::login
+- GET index.php/register => AuthController::register
 - GET ingestCsvSignals => AlertsAPIController::ingestCsvSignals
 - GET insights => BrokerAPIController::insights
 - GET insights => BudgetAPIController::insights
-- GET investing => HowItWorksController::investing
 - GET investment-accounts => BrokerAPIController::investmentAccounts
 - GET investment-accounts => BudgetAPIController::investmentAccounts
+- GET investments => MobileController::investments
 - GET kb => SupportAPIController::kb
 - GET kb/(:segment) => SupportAPIController::kbArticle/$1
 - GET kyc/status => MditInvestorAPIController::kycStatus
@@ -681,8 +737,13 @@
 - GET linked-accounts => BudgetAPIController::linkedAccounts
 - GET listSuggestions/(:segment)/(:segment) => ManagementAPIController::listSuggestions/$1/$2
 - GET login => AuthController::login
+- GET login-shield => \\App\\Controllers\\ShieldAuth\\Login::index
 - GET logout => AuthController::logout
+- GET lookup/crypto => DiscordAPIController::cryptoLookup
+- GET lookup/quote => DiscordAPIController::quoteLookup
+- GET lookup/ticker => DiscordAPIController::tickerLookup
 - GET massResendActivationEmails => MarketingAPIController::massResendActivationEmails
+- GET me => MobileAuthController::me
 - GET monitorKeywords => MarketingAPIController::monitorKeywordsAndScrape
 - GET net-worth => BudgetAPIController::netWorth
 - GET net-worth => BudgetController::netWorth
@@ -692,8 +753,8 @@
 - GET onboarding/progress => OnboardingWalkthroughController::progress
 - GET onboardingSteps => DiscordAPIController::onboardingSteps
 - GET open/(:segment) => DripCampaignAPIController::open/$1
-- GET ops/health => OpsController::health
-- GET ops/health => OpsHealth::index
+- GET ops/health => OpsHealthController::index
+- GET ops/health => \\App\\Controllers\\OpsHealthController::index
 - GET portfolio/summary => MditInvestorAPIController::portfolioSummary
 - GET posts => ContentEngineAPIController::posts
 - GET posts/(:num) => ContentEngineAPIController::posts/$1
@@ -705,15 +766,16 @@
 - GET previewQueuedEmail/(:num) => EmailAdminController::previewQueuedEmail/$1
 - GET previewScraper/(:num) => AlertsController::previewScraper/$1
 - GET previewSignalFile/(:num) => AlertsAPIController::previewSignalFile/$1
-- GET pricing => HowItWorksController::pricing
+- GET pricing => HowItWorksController::show/pricing
 - GET process-queue => DiscordAPIController::processQueue
 - GET processAllTradeAlerts => ManagementAPIController::processAllTradeAlerts
 - GET processBatch => DripCampaignAPIController::processBatch
 - GET processMarketingTempEmails/(:num)/(:segment) => MarketingAPIController::processMarketingTempEmails/$1/$2
 - GET processMarketingTempEmails/(:num)/(:segment)/(:num) => MarketingAPIController::processMarketingTempEmails/$1/$2/$3
 - GET processQueuedEmails => ManagementAdminController::processQueuedEmails
-- GET processScheduledCampaigns => EmailAPIController:processScheduledCampaigns
-- GET projects => HowItWorksController::projects
+- GET processScheduledCampaigns => EmailAPIController::processScheduledCampaigns
+- GET projects => HowItWorksController::show/projects
+- GET projects => OpsDashboardController::projects
 - GET providers => WalletsAPIController::providers
 - GET provisionDefaultWallet => SolanaAPIController::provisionDefaultWallet
 - GET public-pages/report => App\Modules\APIs\Controllers\OpsPublicPagesController::report
@@ -726,6 +788,7 @@
 - GET refresh-linked-account/(:segment) => BudgetAPIController::refreshLinkedAccount/$1
 - GET refreshPlaidAccount/(:segment) => BrokerAPIController::refreshPlaidAccount/$1
 - GET register => AuthController::register
+- GET register-shield => \\App\\Controllers\\ShieldAuth\\Register::index
 - GET register/(:segment) => AuthController::register/$1
 - GET register/success => AuthController::registerSuccess
 - GET remove-linked-account/(:segment) => BrokerAPIController::removeLinkedAccount/$1
@@ -757,9 +820,9 @@
 - GET scorecard => SqueezeController::scorecard
 - GET scrapeAndGenerateTodaysStoryFromInbox => ManagementAPIController::scrapeAndGenerateTodaysStoryFromInbox
 - GET searchTickers => InvestmentsAPIController::searchTickers
-- GET security => HowItWorksController::security
+- GET security => HowItWorksController::show/security
 - GET sendAllDiscordAlerts => ManagementAPIController::sendAllDiscordAlerts
-- GET sendMassTestCampaign => EmailAPIController:sendMassTestCampaign
+- GET sendMassTestCampaign => EmailAPIController::sendMassTestCampaign
 - GET sendNewsletter => MarketingAPIController::sendScheduleNewsletter
 - GET sendNewsletter => MarketingAdminController::sendScheduleNewsletter
 - GET sendNotification => MarketingAPIController::sendNotification
@@ -778,9 +841,11 @@
 - GET status => ScannerController::status
 - GET submitDailyLog => MarketingAPIController::submitDailyLog
 - GET submitDailyLog => MarketingAdminController::submitDailyLog
+- GET subprojects => OpsDashboardController::subprojects
 - GET summary => BrokerAPIController::summary
 - GET summary => BudgetAPIController::summary
 - GET summary => WalletsAPIController::summary
+- GET tasks => OpsDashboardController::tasks
 - GET test-create-user => AuthController::createTempUser
 - GET test/crash => Test::crash
 - GET testGenerateDailyDigest => MarketingAPIController::testGenerateDailyDigest
@@ -789,7 +854,7 @@
 - GET testTfIdfEdgeCases => MarketingAPIController::testTfIdfEdgeCases
 - GET ticket/(:num) => SupportTicketController::show/$1
 - GET topIdeas => ContentEngineAPIController::topIdeas
-- GET trackBounceWebhook => EmailAPIController:trackBounceWebhook
+- GET trackBounceWebhook => EmailAPIController::trackBounceWebhook
 - GET transactions => BrokerAPIController::transactions
 - GET transactions => BudgetAPIController::transactions
 - GET trends => BudgetAPIController::trends
@@ -798,7 +863,7 @@
 - GET triggerPostAutogenOnEmpty => ManagementAPIController::triggerPostAutogenOnEmpty
 - GET triggerPostAutogenOnEmpty => MarketingAPIController::triggerPostAutogenOnEmpty
 - GET unlinkPlaidAccount/(:segment) => BrokerAPIController::unlinkPlaidAccount/$1
-- GET unsubscribe/(:any) => EmailAPIController:unsubscribe/$1
+- GET unsubscribe/(:any) => EmailAPIController::unsubscribe/$1
 - GET updateMarketDataForAlerts => ManagementAPIController::updateMarketDataForAlerts
 - GET updatePrices => SolanaAPIController::updateSolanaPrices
 - GET updateTokens => SolanaAPIController::updateSolanaTokens
@@ -806,6 +871,7 @@
 - GET view/(:num) => Tax::view/$1
 - GET wallet/(:segment)/balance => SolanaAPIController::getBalance/$1
 - GET wallet/(:segment)/tokens => SolanaAPIController::getTokenAccounts/$1
+- GET weeklyTopPerformance => AlertsAdminController::topPerformanceWeekly
 - GET zoomout => SqueezeController::zoomout
 - MATCH ['GET', 'POST'], '(:num)/Steps/Add', 'DripCampaignAdminController::addStep/$1'
 - MATCH ['GET', 'POST'], '/', 'APIController::index'
@@ -826,6 +892,7 @@
 - MATCH ['GET', 'POST'], 'Add/(:segment)', 'WalletsController::add/$1', ['as' => 'wallets.add.segment']
 - MATCH ['GET', 'POST'], 'Add/(:segment)/(:segment)', 'WalletsController::addFetch/$1/$2', ['as' => 'wallets.add.segment.segment']
 - MATCH ['GET', 'POST'], 'Add/Bank-Account', 'WalletsController::createBankeAccount', ['as' => 'wallets.add.bank-account']
+- MATCH ['GET', 'POST'], 'Alerts/fetchEmailAlerts', 'AlertsAPIController::fetchEmailAlerts'
 - MATCH ['GET', 'POST'], 'All', 'WalletsController::all', ['as' => 'wallets.all']
 - MATCH ['GET', 'POST'], 'Approve-Recurring-Schedule/(:num)', 'BudgetController::approveRecurringSchedule/$1'
 - MATCH ['GET', 'POST'], 'Attach-Account', 'WalletsController::attachAccount', ['as' => 'wallets.attach-account']
@@ -852,14 +919,15 @@
 - MATCH ['GET', 'POST'], 'Create', 'WalletsController::generateWallet', ['as' => 'wallets.create']
 - MATCH ['GET', 'POST'], 'Credit', 'WalletsController::index', ['as' => 'wallets.credit']
 - MATCH ['GET', 'POST'], 'Credit/Details/(:segment)', 'WalletsController::details/$1'
+- MATCH ['GET', 'POST'], 'Credit/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.credit.details.segment']
 - MATCH ['GET', 'POST'], 'Credit/Edit/Account/(:segment)', 'WalletsController::editCreditAccount/$1'
 - MATCH ['GET', 'POST'], 'Crypto', 'WalletsController::crypto', ['as' => 'wallets.crypto']
+- MATCH ['GET', 'POST'], 'Crypto/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.crypto.details.segment']
 - MATCH ['GET', 'POST'], 'Debt', 'WalletsController::debt', ['as' => 'wallets.debt']
 - MATCH ['GET', 'POST'], 'Debt/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.debt.details.segment']
 - MATCH ['GET', 'POST'], 'Debt/Edit/Account/(:segment)', 'WalletsController::editDebtAccount/$1', ['as' => 'wallets.debt.edit.account.segment']
 - MATCH ['GET', 'POST'], 'Delete-Account', 'BudgetController::deleteAccount'
 - MATCH ['GET', 'POST'], 'Delete-Account/(:segment)', 'BudgetController::deleteAccount/$1'
-- MATCH ['GET', 'POST'], 'Delete/(:segment)/(:segment)', 'WalletsController::delete/$1/$2'
 - MATCH ['GET', 'POST'], 'Deposit', 'WalletsController::deposit', ['as' => 'wallets.deposit']
 - MATCH ['GET', 'POST'], 'Deposit/(:segment)', 'WalletsController::deposit/$1', ['as' => 'wallets.deposit.segment']
 - MATCH ['GET', 'POST'], 'Deposit/Complete', 'WalletsController::depositComplete', ['as' => 'wallets.deposit.complete']
@@ -885,6 +953,7 @@
 - MATCH ['GET', 'POST'], 'History/(:segment)', 'BudgetController::history'
 - MATCH ['GET', 'POST'], 'Income', 'BudgetController::accountOverview'
 - MATCH ['GET', 'POST'], 'Investment/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.investment.details']
+- MATCH ['GET', 'POST'], 'Investment/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.investment.details.segment']
 - MATCH ['GET', 'POST'], 'Investment/Edit/Account/(:segment)', 'WalletsController::editInvestAccount/$1', ['as' => 'wallets.investment.edit']
 - MATCH ['GET', 'POST'], 'Investments', 'WalletsController::investments', ['as' => 'wallets.investments']
 - MATCH ['GET', 'POST'], 'Investments/getSymbolsByTradeType/(:segment)', 'APIController::getSymbolsByTradeType/$1'
@@ -894,6 +963,7 @@
 - MATCH ['GET', 'POST'], 'Link-Account/(:segment)/(:segment)', 'WalletsController::linkAccount/$1', ['as' => 'wallets.link-account.segment.segment']
 - MATCH ['GET', 'POST'], 'Link-Account/Success', 'WalletsController::linkAccountSuccess', ['as' => 'wallets.link-account.success']
 - MATCH ['GET', 'POST'], 'Link-Account/Success/(:segment)', 'WalletsController::linkAccountSuccess/$1', ['as' => 'wallets.link-account.success.segment']
+- MATCH ['GET', 'POST'], 'Management/Run-CRON-Tasks', 'ManagementAPIController::Run_CRON_Tasks', ['filter' => 'cronKey']
 - MATCH ['GET', 'POST'], 'Manager', 'WalletsController::walletManager', ['as' => 'wallets.manager']
 - MATCH ['GET', 'POST'], 'Marketing/cronAnalyzeContent', 'ManagementAPIController::cronAnalyzeContent'
 - MATCH ['GET', 'POST'], 'Marketing/cronFetchAndGenerateNews', 'ManagementAPIController::cronFetchAndGenerateNews'
@@ -967,6 +1037,9 @@
 - MATCH ['GET', 'POST'], 'generateCampaignContent', 'MarketingAPIController::generateCampaignContent'
 - MATCH ['GET', 'POST'], 'generateCampaignStepContent', 'MarketingAPIController::generateCampaignStepContent'
 - MATCH ['GET', 'POST'], 'generateDailyMarketCampaign', 'MarketingAPIController::generateDailyMarketCampaign'
+- MATCH ['GET', 'POST'], 'generateFromScrapedSource/(:num)', 'MarketingAPIController::generateFromScrapedSource/$1'
+- MATCH ['GET', 'POST'], 'generateFromTicker', 'MarketingAPIController::generateFromTicker'
+- MATCH ['GET', 'POST'], 'generateFromTopic', 'MarketingAPIController::generateFromTopic'
 - MATCH ['GET', 'POST'], 'generateMarketingForAlert/(:num)', 'AlertsAPIController::generateMarketingForAlert/$1'
 - MATCH ['GET', 'POST'], 'generateNow', 'AlertsAPIController::generateNow'
 - MATCH ['GET', 'POST'], 'generatePostMediaContent', 'MarketingAPIController::generatePostMediaContent'
@@ -983,21 +1056,33 @@
 - MATCH ['GET', 'POST'], 'getTradeAlertDetails', 'AlertsAPIController::getTradeAlertDetails'
 - MATCH ['GET', 'POST'], 'hideTradeAlert', 'AlertsAPIController::hideTradeAlert'
 - MATCH ['GET', 'POST'], 'manageTradeAlert', 'AlertsAPIController::manageTradeAlert'
+- MATCH ['GET', 'POST'], 'management/run-cron-tasks', 'ManagementAPIController::Run_CRON_Tasks', ['filter' => 'cronKey']
 - MATCH ['GET', 'POST'], 'markAlertAsSentAndSendEmail/(:segment)', 'AlertsAPIController::markAlertAsSentAndSendEmail/$1'
 - MATCH ['GET', 'POST'], 'postMarketingContentToSocials', 'AlertsAPIController::postMarketingContentToSocials'
 - MATCH ['GET', 'POST'], 'processAlerts', 'AlertsAPIController::processAlerts'
 - MATCH ['GET', 'POST'], 'processAllEmails', 'AlertsController::processAllEmails'
 - MATCH ['GET', 'POST'], 'processBrokerEmails', 'AlertsController::processBrokerEmails'
 - MATCH ['GET', 'POST'], 'processEmailAlerts', 'AlertsAPIController::processEmailAlerts'
+- MATCH ['GET', 'POST'], 'processPendingCampaigns', 'MarketingAPIController::processPendingCampaigns'
+- MATCH ['GET', 'POST'], 'processPendingGeneratedContent', 'MarketingAPIController::processPendingGeneratedContent'
+- MATCH ['GET', 'POST'], 'processPendingNotifications', 'MarketingAPIController::processPendingNotifications'
+- MATCH ['GET', 'POST'], 'processPendingTempScraper', 'MarketingAPIController::processPendingTempScraper'
 - MATCH ['GET', 'POST'], 'processQueuedEmails', 'ManagementAPIController::processQueuedEmails'
 - MATCH ['GET', 'POST'], 'processTempEmailsToScraper', 'ManagementAPIController::processTempEmailsToScraper'
 - MATCH ['GET', 'POST'], 'processTradeAlerts', 'AlertsAPIController::processTradeAlerts'
 - MATCH ['GET', 'POST'], 'processTradeBatch', 'AlertsAPIController::processTradeBatch'
 - MATCH ['GET', 'POST'], 'resendActivationEmailsBatch', 'ManagementAPIController::resendActivationEmailsBatch'
 - MATCH ['GET', 'POST'], 'resendActivationEmailsBatchQueued', 'ManagementAPIController::resendActivationEmailsBatchQueued'
+- MATCH ['GET', 'POST'], 'retryDistributionTargets', 'MarketingAPIController::retryDistributionTargets'
+- MATCH ['GET', 'POST'], 'retryDistributionTargets/(:num)', 'MarketingAPIController::retryDistributionTargets/$1'
+- MATCH ['GET', 'POST'], 'runMarketingPipeline', 'MarketingAPIController::runMarketingPipeline'
+- MATCH ['GET', 'POST'], 'runNewsGenerate', 'MarketingAPIController::runNewsGenerate'
+- MATCH ['GET', 'POST'], 'runNewsPipeline', 'MarketingAPIController::runNewsPipeline'
+- MATCH ['GET', 'POST'], 'runNewsScrape', 'MarketingAPIController::runNewsScrape'
 - MATCH ['GET', 'POST'], 'savePostTemplate', 'MarketingAPIController::savePostTemplate'
 - MATCH ['GET', 'POST'], 'saveSocialCommunity', 'MarketingAPIController::saveSocialCommunity'
 - MATCH ['GET', 'POST'], 'saveSuggestion', 'ManagementAPIController::saveSuggestion'
+- MATCH ['GET', 'POST'], 'saveTemplate', 'MarketingAPIController::saveTemplate'
 - MATCH ['GET', 'POST'], 'sendAlert', 'AlertsAPIController::sendAlert'
 - MATCH ['GET', 'POST'], 'sendDiscordAlerts', 'AlertsAPIController::sendDiscordAlerts'
 - MATCH ['GET', 'POST'], 'sendDiscordAlertsBySymbol/(:segment)', 'AlertsAPIController::sendDiscordAlertsBySymbol/$1'
@@ -1015,8 +1100,6 @@
 - MATCH ['POST'], 'Add-Subscriber', 'MarketingAPIController::addSubscriber'
 - MATCH ['POST'], 'Add-Subscriber', 'MarketingAdminController::addSubscriber'
 - POST 'generateNow', [AdvisorController::class, 'generateNow']
-- POST (:any)/register => AuthController::attemptRegister
-- POST (:any)/register/(:segment) => AuthController::attemptRegister
 - POST / => MarketingAPIController::index
 - POST /Email-Templates/store => EmailTemplateController::store
 - POST /Trade-Tracker/saveTradeData => InvestmentsController::saveTradeData
@@ -1033,6 +1116,8 @@
 - POST Bid/(:num) => AuctionsController::bid/$1
 - POST CancelOrder => PredictionsAPIController::cancelOrder
 - POST CancelOrder => PredictionsController::cancelOrder
+- POST Channels/Delete => DiscordAdminController::deleteDiscordChannel
+- POST Channels/Save => DiscordAdminController::saveDiscordChannel
 - POST Chat => AIAPIController::postChat
 - POST Chat/submit => ChatAdminController::submit
 - POST Chat/tool => ChatController::tool
@@ -1052,21 +1137,16 @@
 - POST Disconnect/Phantom => SolanaController::disconnectWallet
 - POST Disconnect/Solflare => SolanaController::disconnectWallet
 - POST Disconnect/TrustWallet => SolanaController::disconnectWallet
-- POST Discord/Channels/Delete => DiscordAdminController::deleteDiscordChannel
-- POST Discord/Channels/Save => DiscordAdminController::saveDiscordChannel
-- POST Discord/Policies/Delete => DiscordAdminController::deleteDiscordPolicy
-- POST Discord/Policies/Save => DiscordAdminController::saveDiscordPolicy
-- POST Discord/Subscriptions/Delete => DiscordAdminController::deleteDiscordSubscription
-- POST Discord/Subscriptions/Save => DiscordAdminController::saveDiscordSubscription
-- POST Discord/Templates/Delete => DiscordAdminController::deleteDiscordTemplate
-- POST Discord/Templates/Save => DiscordAdminController::saveDiscordTemplate
-- POST Discord/completeOnboardingStep => DiscordAPIController::completeOnboardingStep
+- POST Discord/interactions => DiscordAPIController::interactions
+- POST Discord/register => AuthController::attemptRegister
+- POST Discord/register/(:segment) => AuthController::attemptRegister
 - POST Edit/(:segment) => ProjectsController::approveProject/$1
 - POST Email-Queue/processQueue => EmailQueueController::processQueue
 - POST Email-Queue/store => EmailQueueController::store
 - POST EmailUserAboutIssue/(:num)/(:num) => WalletsController::emailUserAboutIssue/$1/$2
 - POST Generate-Advisor-Package => AlertsAdminController::generateAdvisorPackage
 - POST Goals => InvestmentController::createGoal
+- POST HideTestProjects => ProjectsAdminController::hideTestProjects
 - POST Import/Wallet => SolanaController::importWallet
 - POST Investments/Update/(:num) => WalletsAPIController::updateInvestment/$1
 - POST Link-Robinhood => WalletsAPIController::linkRobinhood
@@ -1081,13 +1161,21 @@
 - POST PlaceOrder => PredictionsAPIController::placeOrder
 - POST PlaceOrder => PredictionsController::placeOrder
 - POST Plaid/Exchange => WalletsAPIController::plaidExchange
+- POST Plaid/Refresh/(:num) => WalletsAPIController::refreshPlaidWallet/$1
+- POST Plaid/Sync-Transactions/(:num) => WalletsAPIController::syncPlaidTransactions/$1
+- POST Policies/Delete => DiscordAdminController::deleteDiscordPolicy
+- POST Policies/Save => DiscordAdminController::saveDiscordPolicy
 - POST PublishBlog/(:num) => Management\MarketingAPIController::publishBlog/$1
 - POST PublishBlog/(:num) => Management\MarketingAdminController::publishBlog/$1
+- POST PurchaseFundUnits => ProjectsController::purchaseFundUnits
 - POST Quick-Intake => ProjectsController::realEstateQuickSubmit
+- POST RecordFundCapitalFlow => ProjectsAdminController::recordFundCapitalFlow
+- POST RecordFundDistribution => ProjectsAdminController::recordFundDistribution
 - POST Refresh/MetaMask => SolanaController::refreshWallet
 - POST Refresh/Phantom => SolanaController::refreshWallet
 - POST Refresh/Solflare => SolanaController::refreshWallet
 - POST Refresh/TrustWallet => SolanaController::refreshWallet
+- POST RegisterFundExchangeAsset/(:num) => ProjectsAdminController::registerFundExchangeAsset/$1
 - POST Reject/(:segment) => ProjectsController::rejectProject/$1
 - POST Request-Monthly-Withdrawal/(:num) => ProjectsController::requestMonthlyWithdrawal/$1
 - POST ResetUser => ChatUsageController::resetUser
@@ -1095,11 +1183,18 @@
 - POST Save-Content-Edit/(:num) => MarketingAdminController::saveContentEdit/$1
 - POST Scrape-Link => MarketingAPIController::scrapeLink
 - POST Scrape-Link => MarketingAdminController::scrapeLink
+- POST SeedPrimaryFundProject => ProjectsAdminController::seedPrimaryFundProject
 - POST Settings => ChatUsageController::saveSettings
 - POST Snaptrade/Connect-URL => WalletsAPIController::getSnapTradeConnectUrl
 - POST Store => ScriptStudioController::store
 - POST Strategies => InvestmentController::createStrategy
+- POST Subscriptions/Delete => DiscordAdminController::deleteDiscordSubscription
+- POST Subscriptions/Save => DiscordAdminController::saveDiscordSubscription
+- POST Templates/Delete => DiscordAdminController::deleteDiscordTemplate
+- POST Templates/Save => DiscordAdminController::saveDiscordTemplate
 - POST Update/(:num) => ScriptStudioController::update/$1
+- POST UpdateFundNAV => ProjectsAdminController::updateFundNAV
+- POST UpdateInvestorCompliance => ProjectsAdminController::updateInvestorCompliance
 - POST Wallet/Connect => SolanaController::connectWallet
 - POST Wallet/Disconnect => SolanaController::disconnectWallet
 - POST Wallet/Execute-Swap => SolanaController::executeSwap
@@ -1119,6 +1214,11 @@
 - POST approveBufferItem/(:num) => MarketingAPIController::approveBufferItem/$1
 - POST approvePost/(:num) => ContentEngineAPIController::approvePost/$1
 - POST approvePost/(:num) => MarketingAPIController::approvePost/$1
+- POST approveVideoContent/(:num) => MarketingAPIController::approveVideoContent/$1
+- POST archiveVideoContent/(:num) => MarketingAPIController::archiveVideoContent/$1
+- POST auth/login => MobileAuthController::login
+- POST auth/logout => MobileAuthController::logout
+- POST auth/register => MobileAuthController::register
 - POST auth/resend-activation => AuthController::resendActivationCode
 - POST autoScheduleNextApproved => MarketingAPIController::autoScheduleNextApproved
 - POST broadcast => DiscordAPIController::broadcast
@@ -1128,25 +1228,27 @@
 - POST bulk-update-status => ReferralController::bulkUpdateStatus
 - POST cache/store => AiOpsAPIController::cacheStore
 - POST callContractFunction => MetaMaskController::callContractFunction
-- POST cancelEvent => EsportsAPIController:cancelEvent
+- POST cancelEvent => EsportsAPIController::cancelEvent
 - POST checkThreshold/(:num) => ProjectsController::checkThreshold/$1
+- POST completeOnboardingStep => DiscordAPIController::completeOnboardingStep
 - POST completeOnboardingStep/(:segment) => DashboardController::completeOnboardingStep/$1
 - POST composePost => ManagementAPIController::composePost
 - POST connectWallet => DigiByteController::connectWallet
 - POST connectWallet => MetaMaskController::connectWallet
-- POST createDraftCampaign => EmailAPIController:createDraftCampaign
-- POST createEvent => EsportsAPIController:createEvent
+- POST createDraftCampaign => EmailAPIController::createDraftCampaign
+- POST createEvent => EsportsAPIController::createEvent
 - POST createLinkToken => DiscordAPIController::createLinkToken
 - POST createList => EmailAdminController::createList
 - POST createQuarterlyDistribution/(:num) => ProjectsController::createQuarterlyDistribution/$1
 - POST createSolanaWallet => SolanaController::createSolanaWallet
 - POST createWallet => DigiByteController::createWallet
-- POST cronProcessJobs => EsportsAPIController:cronProcessJobs
+- POST cronProcessJobs => EsportsAPIController::cronProcessJobs
 - POST deployContract => MetaMaskController::deployContract
 - POST deposits/confirm => MditDepositAPIController::confirm
 - POST deposits/initiate => MditDepositAPIController::initiate
 - POST disconnectWallet => DigiByteController::disconnectWallet
 - POST disconnectWallet => MetaMaskController::disconnectWallet
+- POST duplicateVideoContent/(:num) => MarketingAPIController::duplicateVideoContent/$1
 - POST enqueue => DiscordAPIController::enqueue
 - POST escrow/refund/(:num) => AuctionsAPIController::refundEscrow/$1
 - POST escrow/release/(:num) => AuctionsAPIController::releaseEscrow/$1
@@ -1162,7 +1264,10 @@
 - POST generateAutomatedContent => MarketingAPIController::generateAutomatedContent
 - POST generateAutomatedContent => MarketingAdminController::generateAutomatedContent
 - POST generateInsight => AdvisorController::generateAdvisorInsight
+- POST generateMarketingPackage => MarketingAPIController::generateMarketingPackage
 - POST generateStoryboard => AdvisorController::generateNewsStoryboard
+- POST generateTikTokContent => MarketingAPIController::generateTikTokContent
+- POST generateVideoContent => MarketingAPIController::generateVideoContent
 - POST generateWallet => MetaMaskController::generateWallet
 - POST get2FAQRCode => AuthController::get2FAQRCode
 - POST getAssets => DigiByteController::getAssets
@@ -1171,17 +1276,21 @@
 - POST getCurrentBlock => MetaMaskController::getCurrentBlock
 - POST getNetworkStatus => MetaMaskController::getNetworkStatus
 - POST getPostingPlan => ManagementAPIController::getPostingPlan
+- POST getStoryUpdates => MarketingAPIController::getStoryUpdates
 - POST getTransactionStatus => MetaMaskController::getTransactionStatus
-- POST health/run => OpsHealth::run
+- POST health/run => \\App\\Controllers\\OpsHealthController::run
+- POST import/xlsx => OpsDashboardController::importXlsx
+- POST index.php/login => AuthController::attemptLogin
+- POST index.php/register => AuthController::attemptRegister
 - POST ingestScanner => ContentEngineAPIController::ingestScanner
-- POST interactions => DiscordAPIController::handleInteraction
 - POST issuance/mint => MditIssuanceAPIController::mint
-- POST joinEvent => EsportsAPIController:joinEvent
+- POST joinEvent => EsportsAPIController::joinEvent
 - POST kyc/start => MditInvestorAPIController::startKyc
 - POST launchPrivateAuction/(:num) => ProjectsController::launchPrivateAuction/$1
 - POST linkPlaidAccount => BrokerAPIController::linkPlaidAccount
-- POST lockEscrow => EsportsAPIController:lockEscrow
+- POST lockEscrow => EsportsAPIController::lockEscrow
 - POST login => AuthController::attemptLogin
+- POST login-shield => \\App\\Controllers\\ShieldAuth\\Login::attempt
 - POST logout => AuthController::logout
 - POST lookup => AccountRescueAdminController::lookup
 - POST manual-activate => AccountRescueAdminController::manualActivate
@@ -1194,19 +1303,21 @@
 - POST onboarding/credit-debt => OnboardingWalkthroughController::saveCreditDebt
 - POST onboarding/profile => OnboardingWalkthroughController::saveProfile
 - POST onboarding/recurring-expense => OnboardingWalkthroughController::saveRecurringExpense
+- POST onboarding/source-welcome/complete => OnboardingWalkthroughController::completeSourceWelcome
 - POST onboarding/watchlist => OnboardingWalkthroughController::saveWatchlist
 - POST openCommitments/(:num) => ProjectsController::openCommitments/$1
 - POST parseInbox => ProjectsController::parseProjectEmails
 - POST policy/check => AiOpsAPIController::policyCheck
 - POST processIngest/(:num) => ContentEngineAPIController::processIngest/$1
 - POST processMonthlyWithdrawals/(:num) => ProjectsController::processMonthlyWithdrawals/$1
+- POST projects/save => OpsDashboardController::saveProject
 - POST promoteLead/(:num) => ProjectsController::promoteLead/$1
 - POST provisionDefaultWallet => DigiByteController::provisionDefaultWallet
 - POST provisionDefaultWallet => SolanaController::provisionDefaultWallet
 - POST public-pages/import => App\Modules\APIs\Controllers\OpsPublicPagesController::import
 - POST public-pages/run => App\Modules\APIs\Controllers\OpsPublicPagesController::run
 - POST receiveResult => AiOpsAPIController::receiveResult
-- POST receiveResultWebhook => EsportsAPIController:receiveResultWebhook
+- POST receiveResultWebhook => EsportsAPIController::receiveResultWebhook
 - POST redemptions/approve => MditAdminAPIController::approveRedemption
 - POST redemptions/request => MditRedemptionAPIController::requestRedemption
 - POST reforecastTicker => InvestmentsAPIController::reforecastTicker
@@ -1214,6 +1325,8 @@
 - POST refreshWallet => DigiByteController::refreshWallet
 - POST refreshWallet => MetaMaskController::refreshWallet
 - POST register => AuthController::attemptRegister
+- POST register-guild-commands => DiscordAPIController::registerGuildCommands
+- POST register-shield => \\App\\Controllers\\ShieldAuth\\Register::attempt
 - POST register/resend-activation => AuthController::resendRegistrationActivation
 - POST rejectBufferItem/(:num) => MarketingAPIController::rejectBufferItem/$1
 - POST resend-activation => AccountRescueAdminController::resendActivation
@@ -1229,8 +1342,9 @@
 - POST saveSuggestion => ManagementAPIController::saveSuggestion
 - POST saveSuggestion => ManagementAdminController::saveSuggestion
 - POST saveTaxonomy => ManagementAPIController::saveTaxonomy
+- POST saveVideoDraft => MarketingAPIController::saveVideoDraft
 - POST scheduleCampaign/(:num) => EmailAdminController::scheduleCampaign/$1
-- POST scheduleCampaignApi/(:num) => EmailAPIController:scheduleCampaignApi/$1
+- POST scheduleCampaignApi/(:num) => EmailAPIController::scheduleCampaignApi/$1
 - POST scheduleCampaignSubmit/(:num) => EmailAdminController::scheduleCampaignSubmit/$1
 - POST searchTaxonomy => ManagementAPIController::searchTaxonomy
 - POST sendAsset => MetaMaskController::sendAsset
@@ -1238,14 +1352,16 @@
 - POST sendPasswordReset => AccountSupportController::sendPasswordReset
 - POST sendPost/(:num) => ContentEngineAPIController::sendPost/$1
 - POST settle/(:num) => AuctionsAPIController::settle/$1
-- POST settlePayouts => EsportsAPIController:settlePayouts
+- POST settlePayouts => EsportsAPIController::settlePayouts
 - POST settlePrivateAuction/(:num) => ProjectsController::settlePrivateAuction/$1
 - POST setup/dismiss => DashboardController::dismissSetup
 - POST signTransaction => MetaMaskController::signTransaction
 - POST submitLargeContent => MarketingAPIController::submitLargeContent
 - POST submitManualContent => MarketingAPIController::submitManualContent
+- POST subprojects/save => OpsDashboardController::saveSubproject
 - POST swap/execute => SolanaAPIController::swap
 - POST swap/quote => SolanaAPIController::quote
+- POST tasks/save => OpsDashboardController::saveTask
 - POST test => DiscordAPIController::test
 - POST test/policy => AiOpsAPIController::testPolicy
 - POST toggle => AiOpsAPIController::toggle
@@ -1265,6 +1381,8 @@
 - POST updatePrices => SolanaController::updateSolanaPrices
 - POST updateProject/(:num) => ProjectsController::updateProject/$1
 - POST updateTokens => SolanaController::updateSolanaTokens
+- POST updateVideoContent/(:num) => MarketingAPIController::updateVideoContent/$1
+- POST uploadNotification => MarketingAPIController::uploadNotification
 - POST upsertPlatformRule => ManagementAPIController::upsertPlatformRule
 - POST usage/log => AiOpsAPIController::logUsage
 - POST validateAddress => MetaMaskController::validateAddress
@@ -1279,7 +1397,7 @@
 - PUT Update/(:num) => WalletsAPIController::update/$1
 
 ## External API Policy Summary
-- ExternalApiPolicy.enableBackoff: `false`
+- ExternalApiPolicy.enableBackoff: `true`
 - ExternalApiPolicy.microSleepBackoffUs: `0`
 - ExternalApiPolicy.providerCaps.alphavantage: `120`
 - ExternalApiPolicy.providerCaps.discord: `200`
