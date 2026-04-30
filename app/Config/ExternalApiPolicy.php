@@ -30,5 +30,5 @@ class ExternalApiPolicy extends BaseConfig
     /**
      * Whether to apply micro-sleep backoff automatically.
      */
-    public bool $enableBackoff = false;
+    public bool $enableBackoff = true;
 }

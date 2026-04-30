@@ -31,12 +31,12 @@ class Logger extends BaseConfig
 
         DatabaseLoggerHandler::class => [
             'class' => DatabaseLoggerHandler::class,
-            'handles' => [],
+            'handles' => ['warning','error','critical','alert','emergency'],
         ],
 
         UnifiedLoggerHandler::class => [
             'class' => UnifiedLoggerHandler::class,
-            'handles' => [],
+            'handles' => ['warning','error','critical','alert','emergency'],
         ],
     ];
 }

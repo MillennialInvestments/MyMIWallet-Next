@@ -1,17 +1,21 @@
 # Launch Readiness Audit (Phase A)
 
 ## run_meta
-- timestamp_utc: `2026-04-02T09:57:00+00:00`
-- git_commit: `633d3262c`
+- timestamp_utc: `2026-04-30T11:17:32+00:00`
+- git_commit: `ece1b2408`
 - env: `development`
 - command: `php spark gtm:launch:audit`
 
 ## route scan summary
-- total routes discovered: 1103
-- Phase A routes included: 38
-- Excluded routes: 1065
+- total routes discovered: 1126
+- Phase A routes included: 44
+- Excluded routes: 1082
 
 ### Included user-facing routes (Phase A)
+- `GET /index.php/login` => `AuthController::login`
+- `POST /index.php/login` => `AuthController::attemptLogin`
+- `GET /index.php/register` => `AuthController::register`
+- `POST /index.php/register` => `AuthController::attemptRegister`
 - `GET /debug/register-success-probe` => `AuthController::registerSuccessProbe`
 - `GET /login` => `AuthController::login`
 - `POST /login` => `AuthController::attemptLogin`
@@ -21,24 +25,30 @@
 - `POST /register` => `AuthController::attemptRegister`
 - `GET /register/success` => `AuthController::registerSuccess`
 - `POST /register/resend-activation` => `AuthController::resendRegistrationActivation`
+- `GET /login-shield` => `\\App\\Controllers\\ShieldAuth\\Login::index`
+- `POST /login-shield` => `\\App\\Controllers\\ShieldAuth\\Login::attempt`
+- `GET /register-shield` => `\\App\\Controllers\\ShieldAuth\\Register::index`
+- `POST /register-shield` => `\\App\\Controllers\\ShieldAuth\\Register::attempt`
 - `GET /register/(:segment)` => `AuthController::register/$1`
 - `GET /Discord/register` => `AuthController::register`
 - `GET /Discord/register/(:segment)` => `AuthController::register/$1`
 - `POST /Discord/register` => `AuthController::attemptRegister`
 - `POST /Discord/register/(:segment)` => `AuthController::attemptRegister`
-- `GET /(:segment)/register` => `AuthController::register`
-- `GET /(:segment)/register/(:segment)` => `AuthController::register/$2`
-- `POST /(:segment)/register` => `AuthController::attemptRegister`
-- `POST /(:segment)/register/(:segment)` => `AuthController::attemptRegister`
 - `GET /forgot-password` => `AuthController::forgotPassword`
 - `GET /reset-password` => `AuthController::resetPassword`
 - `POST /forgot` => `AuthController::attemptForgot`
 - `POST /reset-password` => `AuthController::attemptReset`
+- `POST /auth/login` => `MobileAuthController::login`
+- `POST /auth/register` => `MobileAuthController::register`
+- `POST /auth/logout` => `MobileAuthController::logout`
+- `GET /budget` => `MobileController::budget`
+- `GET /investments` => `MobileController::investments`
 - `GET /Investments/getForecastDetails/(:segment)` => `InvestmentsAPIController::getForecastDetails/$1`
 - `GET /Investments/getConfidenceHeatmap` => `InvestmentsAPIController::getConfidenceHeatmap`
 - `GET /Investments/getTopConfidenceBySector` => `InvestmentsAPIController::getTopConfidenceBySector`
 - `GET /Investments/getConfidenceDistribution` => `InvestmentsAPIController::getConfidenceDistribution`
 - `GET /Investments/getForecastAccuracySummary` => `InvestmentsAPIController::getForecastAccuracySummary`
+- `POST /register-guild-commands` => `DiscordAPIController::registerGuildCommands`
 - `POST /ResetUser` => `ChatUsageController::resetUser`
 - `GET /budgets` => `BudgetController::budgets`
 - `GET /budgets` => `BudgetAPIController::budgets`
@@ -46,10 +56,6 @@
 - `POST /onboarding/budget-income` => `OnboardingWalkthroughController::saveBudgetIncome`
 - `POST /onboarding/watchlist` => `OnboardingWalkthroughController::saveWatchlist`
 - `POST /RegisterFundExchangeAsset/(:num)` => `ProjectsAdminController::registerFundExchangeAsset/$1`
-- `GET /Budget/getUserBudgetRecords` => `BudgetAPIController::getUserBudgetRecords`
-- `GET /Budget/getUserCreditBalances` => `BudgetAPIController::getUserCreditBalances`
-- `GET /Budget/getUserRepaymentSummary` => `BudgetAPIController::getUserRepaymentSummary`
-- `GET /Budget/getUserAvailableBalances` => `BudgetAPIController::getUserAvailableBalances`
 
 ### Excluded route samples
 - `GET /index.php` => `Home::index`
@@ -94,28 +100,14 @@
 - `GET /How-It-Works` => `\\App\\Modules\\Blog\\Controllers\\HowItWorksController::index`
 
 ## route->controller integrity scan
-- scanned: 1102
-- missing targets: 492
-- ❌ `GET /healthz => System\HealthController::healthz`
-- ❌ `GET /ops/health => \\App\\Controllers\\OpsHealthController::index`
-- ❌ `GET /API/Ops/health-score => \\App\\Controllers\\OpsHealthController::score`
-- ❌ `GET /API/Ops/filesystem-status => \\App\\Controllers\\Api\\OpsFilesystemStatusController::index`
-- ❌ `GET /API/docs => \\App\\Controllers\\Api\\SwaggerDocsController::index`
-- ❌ `GET /health => \\App\\Controllers\\OpsHealthController::index`
-- ❌ `POST /health/run => \\App\\Controllers\\OpsHealthController::run`
+- scanned: 1125
+- missing targets: 415
 - ❌ `GET /index => DocsController::index`
 - ❌ `GET /view => DocsController::view`
 - ❌ `GET /sw.js => ServiceWorker::index`
-- ❌ `GET /Learn/(:segment) => App\Modules\Public\Controllers\PublicPagesController::show/$1`
-- ❌ `GET /Customer-Support => App\Modules\Support\Controllers\SupportController::index`
-- ❌ `GET /Profile => App\Modules\User\Controllers\DashboardController::profile`
-- ❌ `GET /How-It-Works => \\App\\Modules\\Blog\\Controllers\\HowItWorksController::index`
-- ❌ `GET /How-It-Works/(:segment) => \\App\\Modules\\Blog\\Controllers\\HowItWorksController::show/$1`
 - ❌ `GET /Dev/BitcoinTest => App\Controllers\Dev\BitcoinTest::index`
 - ❌ `GET /common-data/smoke => CommonDataController::smoke`
 - ❌ `GET /api/health => Api\\HealthController::index`
-- ❌ `GET /api/admin/chat-usage => Api\\AdminChatUsageController::index`
-- ❌ `POST /api/aiops/manual-run => Api\\AiOpsManualRunController::run`
 - ❌ `GET /_ops/opcache-reset => Ops::opcacheReset`
 - ❌ `GET /test-create-user => AuthController::createTempUser`
 - ❌ `POST /Auth/link-robinhood => AuthController::linkRobinhood`
@@ -273,10 +265,6 @@
 - ❌ `GET /add-linked-account => BudgetAPIController::addLinkedAccount`
 - ❌ `GET /remove-linked-account/(:segment) => BudgetAPIController::removeLinkedAccount/$1`
 - ❌ `GET /refresh-linked-account/(:segment) => BudgetAPIController::refreshLinkedAccount/$1`
-- ❌ `GET /getUserBudgetRecords => BudgetAPIController::getUserBudgetRecords`
-- ❌ `GET /getUserCreditBalances => BudgetAPIController::getUserCreditBalances`
-- ❌ `GET /getUserAvailableBalances => BudgetAPIController::getUserAvailableBalances`
-- ❌ `GET /getUserRepaymentSummary => BudgetAPIController::getUserRepaymentSummary`
 - ❌ `GET /Enroll/(:num) => DripCampaignAPIController::enrollUser/$1`
 - ❌ `GET /TestCron => DripCampaignAPIController::testDripCron`
 - ❌ `GET /SMTP/test => SmtpTestController::probe`
@@ -366,24 +354,9 @@
 - ❌ `POST /swap/quote => SolanaAPIController::quote`
 - ❌ `POST /swap/execute => SolanaAPIController::swap`
 - ❌ `POST /token/mint => SolanaAPIController::mint`
-- ❌ `GET / => BlogController::index`
-- ❌ `GET /Post/(:segment) => BlogController::viewBlog/$1`
-- ❌ `GET / => EarningsController::index`
-- ❌ `GET /Test => EarningsController::test`
-- ❌ `GET /(:segment) => EarningsController::viewByDate`
-- ❌ `GET / => InvestingController::index`
 - ❌ `GET /The-Beginners-Guide-To-Option-Trading => InvestingController::TheBeginnersGuideToOptionTrading`
 - ❌ `GET /The-Fundamentals-Of-Investing => InvestingController::TheFundamentalsOfInvesting`
 - ❌ `GET /Tips-For-Effective-Investment-Portfolio-Management => InvestingController::TipsForEffectiveInvestmentPortfolioManagement`
-- ❌ `GET /IRS-Expanded-Home-Energy-Tax-Credits => IRSController::IRSExpandedHomeEnergyTaxCredits`
-- ❌ `GET / => UpdatesController::index`
-- ❌ `GET / => NewsAndUpdates::index`
-- ❌ `GET /Integrating-With-Plaid => NewsAndUpdates::IntegratingWithPlaid`
-- ❌ `GET /The-Roadmap-To-The-Future-Of-Finance => NewsAndUpdates::TheRoadmapToTheFutureOfFinance`
-- ❌ `GET / => PersonalBudgetingController::index`
-- ❌ `GET /The-Importance-of-Personal-Financial-Budgeting => PersonalBudgetingController::TheImportanceOfPersonalFinancialBudgeting`
-- ❌ `GET /(:segment)/(:segment) => BlogController::view/$1/$2`
-- ❌ `GET /(:segment) => BlogController::view/$1`
 - ❌ `GET /banUnverifiedUsers => ManagementAdminController::banUnverifiedUsers`
 - ❌ `GET /processQueuedEmails => ManagementAdminController::processQueuedEmails`
 - ❌ `GET /resendActivationEmailsBatch => ManagementAdminController::resendActivationEmailsBatch`
@@ -523,45 +496,12 @@
 - ❌ `POST /Update/(:num) => ScriptStudioController::update/$1`
 - ❌ `GET /Preview/(:num) => ScriptStudioController::preview/$1`
 - ❌ `GET /Export/(:num)/(:segment) => ScriptStudioController::export/$1/$2`
-- ❌ `GET /Daily-Financial-News => HowItWorksController::DailyFinancialNews`
-- ❌ `GET /Investing => HowItWorksController::InvestmentPortfolioManagement`
-- ❌ `GET /Investment-Portfolio-Management => HowItWorksController::InvestmentPortfolioManagement`
-- ❌ `GET /MyMI-Gold => HowItWorksController::MyMIGold`
-- ❌ `GET /What-Is-MyMI-Gold => HowItWorksController::MyMIGold`
-- ❌ `GET /Personal-Budgeting => HowItWorksController::PersonalBudgeting`
-- ❌ `GET /Purchase-MyMI-Gold => HowItWorksController::PurchaseMyMIGold`
-- ❌ `GET /Setting-Financial-Goals => HowItWorksController::SettingFinancialGoals`
-- ❌ `GET /crypto => HowItWorksController::show/crypto`
-- ❌ `GET /alerts => HowItWorksController::show/alerts`
-- ❌ `GET /projects => HowItWorksController::show/projects`
-- ❌ `GET /security => HowItWorksController::show/security`
-- ❌ `GET /pricing => HowItWorksController::show/pricing`
-- ❌ `GET /(:segment) => HowItWorksController::show/$1`
-- ❌ `GET /Budget/getUserBudgetRecords => BudgetAPIController::getUserBudgetRecords`
-- ❌ `GET /Budget/getUserCreditBalances => BudgetAPIController::getUserCreditBalances`
-- ❌ `GET /Budget/getUserRepaymentSummary => BudgetAPIController::getUserRepaymentSummary`
-- ❌ `GET /Budget/getUserAvailableBalances => BudgetAPIController::getUserAvailableBalances`
-- ❌ `GET /ticket/(:num) => SupportTicketController::show/$1`
-- ❌ `GET / => SupportController::index`
-- ❌ `GET /Account => AccountSupportController::index`
-- ❌ `POST /resendActivation => AccountSupportController::resendActivation`
-- ❌ `POST /sendPasswordReset => AccountSupportController::sendPasswordReset`
-- ❌ `GET /Article/(:segment) => SupportController::article/$1`
-- ❌ `GET /Discord => SupportController::discordOnboarding`
-- ❌ `GET /FAQ => SupportController::view/FAQ`
-- ❌ `GET /Feedback => SupportController::view/Feedback`
-- ❌ `GET /Test => SupportController::view/Test`
-- ❌ `GET /Test-Email => SupportController::view/Test-Email`
-- ❌ `GET /(:any) => SupportController::view/$1`
-- ❌ `GET /help/account => App\\Modules\\Support\\Controllers\\AccountSupportController::index`
 - ❌ `GET / => FeaturesController::index`
 - ❌ `GET /Brokerage-Integrations => FeaturesController::BrokerageIntegrations`
 - ❌ `GET /Brokerage-Integration => FeaturesController::BrokerageIntegrations`
-- ❌ `GET /MyMI-Gold => HowItWorks::MyMIGold`
 - ❌ `POST /buildUnsignedPsbt => App\Modules\APIs\Controllers\BitcoinController::buildUnsignedPsbt`
 - ❌ `POST /broadcastSignedTx => App\Modules\APIs\Controllers\BitcoinController::broadcastSignedTx`
 - ❌ `GET /previewScraper/(:num) => AlertsController::previewScraper/$1`
-- ❌ `GET /diag => System\HealthController::diag`
 - ❌ `GET / => Tax::index`
 - ❌ `GET /edit/(:num) => Tax::edit/$1`
 - ❌ `GET /view/(:num) => Tax::view/$1`
@@ -574,26 +514,15 @@
 - ❌ `GET / => TaxConfig::index`
 - ❌ `GET /Templates => TaxConfig::templates`
 - ❌ `GET /Rates => TaxConfig::rates`
-- ❌ `GET /healthcheck => App\Modules\Ops\Controllers\OpsController::healthcheck`
-- ❌ `POST /app/update => App\Modules\Ops\Controllers\OpsController::appUpdate`
-- ❌ `GET /commands => App\Modules\Ops\Controllers\OpsController::commands`
 - ❌ `POST /public-pages/import => App\Modules\APIs\Controllers\OpsPublicPagesController::import`
 - ❌ `POST /public-pages/run => App\Modules\APIs\Controllers\OpsPublicPagesController::run`
 - ❌ `GET /public-pages/report => App\Modules\APIs\Controllers\OpsPublicPagesController::report`
-- ❌ `GET /snapshot => App\Modules\AIOps\Controllers\AIOpsController::snapshot`
-- ❌ `GET /gaps/docs => App\Modules\AIOps\Controllers\AIOpsController::docsGaps`
-- ❌ `POST /watch => App\Modules\AIOps\Controllers\AIOpsController::watch`
-- ❌ `GET /Logs/summary => App\Modules\Logs\Controllers\LogsController::summary`
-- ❌ `POST /ContentEngine/run => App\Modules\ContentEngine\Controllers\ContentEngineController::run`
-- ❌ `GET /ContentEngine/drafts/(:segment) => App\Modules\ContentEngine\Controllers\ContentEngineController::draft/$1`
-- ❌ `GET /Chat/health => App\Modules\Chat\Controllers\ChatController::health`
-- ❌ `GET /Chat/usage => App\Modules\Chat\Controllers\ChatController::usage`
 
 ## feature toggles state summary
 - FEATURE_BUDGET: `enabled`
 - FEATURE_INVESTMENTS: `enabled`
 - FEATURE_WATCHLIST: `enabled`
-- FEATURE_TRADE_ALERTS: `disabled`
+- FEATURE_TRADE_ALERTS: `enabled`
 - FEATURE_WALLETS: `disabled`
 - FEATURE_PREDICTIONS: `disabled`
 - FEATURE_MARKETING_AUTOMATION: `enabled`
@@ -605,14 +534,14 @@
 - robinhood: `80`
 - discord: `200`
 - llm: `100`
-- enableBackoff: `false`
+- enableBackoff: `true`
 - microSleepBackoffUs: `0`
 
 ## logger handler summary
 - `CodeIgniter\Log\Handlers\FileHandler` handles `debug,info,notice,warning,error,critical,alert,emergency`
 - `App\Log\Handlers\MyMIDBLoggerHandler` handles `warning,error,critical,alert,emergency`
-- `App\Log\Handlers\DatabaseLoggerHandler` handles ``
-- `App\Log\Handlers\UnifiedLoggerHandler` handles ``
+- `App\Log\Handlers\DatabaseLoggerHandler` handles `warning,error,critical,alert,emergency`
+- `App\Log\Handlers\UnifiedLoggerHandler` handles `warning,error,critical,alert,emergency`
 
 ## CRON command existence check
 - gtm:health:snapshot: `present`
@@ -621,7 +550,7 @@
 - gtm:launch:smoke: `present`
 
 ## blockers list
-- Missing route targets detected: 492
+- Missing route targets detected: 415
 
 ## decision
 - **HOLD**

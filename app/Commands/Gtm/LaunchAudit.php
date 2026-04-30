@@ -204,14 +204,31 @@ class LaunchAudit extends SafeBaseCommand
     /** @return array{0:?string,1:bool} */
     private function resolveControllerFile(string $controller): array
     {
-        $relativeCandidates = [
-            'app/Controllers/' . $controller . '.php',
-            'app/Modules/User/Controllers/' . $controller . '.php',
-            'app/Modules/APIs/Controllers/' . $controller . '.php',
-            'app/Modules/Management/Controllers/' . $controller . '.php',
-        ];
+        $normalized = ltrim(trim($controller), '\\');
 
-        foreach ($relativeCandidates as $relativePath) {
+        if ($normalized === '') {
+            return [null, false];
+        }
+
+        $candidates = [];
+
+        if (str_starts_with($normalized, 'App\\')) {
+            $candidates[] = 'app/' . str_replace('\\', '/', substr($normalized, 4)) . '.php';
+        }
+
+        $controllerPath = str_replace('\\', '/', $normalized);
+        $candidates[] = 'app/Controllers/' . $controllerPath . '.php';
+
+        if (! str_contains($normalized, '\\')) {
+            $candidates[] = 'app/Modules/User/Controllers/' . $normalized . '.php';
+            $candidates[] = 'app/Modules/APIs/Controllers/' . $normalized . '.php';
+            $candidates[] = 'app/Modules/Management/Controllers/' . $normalized . '.php';
+            $candidates[] = 'app/Modules/Blog/Controllers/' . $normalized . '.php';
+            $candidates[] = 'app/Modules/Public/Controllers/' . $normalized . '.php';
+            $candidates[] = 'app/Modules/Support/Controllers/' . $normalized . '.php';
+        }
+
+        foreach (array_values(array_unique($candidates)) as $relativePath) {
             $absolute = ROOTPATH . $relativePath;
             if (is_file($absolute)) {
                 return [$absolute, true];
