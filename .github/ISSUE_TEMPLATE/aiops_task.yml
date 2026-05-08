@@ -1,0 +1,70 @@
+name: AIOps Task
+description: Queue or describe work for Teddy's centralized Codex ⇄ AIOps workflow.
+title: "[AIOps] "
+labels:
+  - aiops
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this issue type for work that may require Codex, AIOps, or Ollama follow-up. Do not include secrets or production credentials.
+  - type: input
+    id: objective
+    attributes:
+      label: Objective
+      description: What should Codex or AIOps complete?
+      placeholder: Describe the desired outcome.
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - low
+        - normal
+        - high
+        - urgent
+      default: 1
+    validations:
+      required: true
+  - type: dropdown
+    id: risk_level
+    attributes:
+      label: Risk Level
+      options:
+        - low
+        - medium
+        - high
+      default: 0
+    validations:
+      required: true
+  - type: textarea
+    id: background
+    attributes:
+      label: Background
+      description: Provide context, links, logs, or affected workflows. Redact sensitive values.
+    validations:
+      required: false
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What must be true before this task is complete?
+      placeholder: |
+        - Existing behavior remains intact.
+        - Tests/checks pass or limitations are documented.
+    validations:
+      required: true
+  - type: textarea
+    id: commands
+    attributes:
+      label: Suggested Commands
+      description: Commands Codex or AIOps should run when applicable.
+      value: |
+        php spark cache:clear
+        php spark routes
+        php spark list
+        git diff --name-only -- '*.php' | xargs -r -n1 php -l
+    validations:
+      required: false
