@@ -1260,6 +1260,7 @@ $routes->group('Dashboard', ['namespace' => 'App\Modules\User\Controllers', 'fil
     $routes->post('onboarding/recurring-expense', 'OnboardingWalkthroughController::saveRecurringExpense', ['as' => 'onboarding-save-recurring']);
     $routes->post('onboarding/watchlist', 'OnboardingWalkthroughController::saveWatchlist', ['as' => 'onboarding-save-watchlist']);
     $routes->post('onboarding/source-welcome/complete', 'OnboardingWalkthroughController::completeSourceWelcome', ['as' => 'onboarding-complete-source-welcome']);
+    $routes->post('account-completion/dismiss', 'OnboardingWalkthroughController::dismissAccountCompletion', ['as' => 'account-completion-dismiss']);
 });
 
 $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers'],  function($routes) {
