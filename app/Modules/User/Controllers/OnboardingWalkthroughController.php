@@ -5,6 +5,7 @@ namespace App\Modules\User\Controllers;
 use App\Controllers\BaseUserController;
 
 use App\Services\OnboardingProgressService;
+use App\Services\AccountCompletionService;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Database\ConnectionInterface;
 use DateTimeImmutable;
@@ -352,6 +353,23 @@ class OnboardingWalkthroughController extends BaseUserController
         ], $userId, 'onboarding');
 
         return $this->respondSuccess('Watchlist saved.', $progress->computeProgress($userId));
+    }
+
+
+    public function dismissAccountCompletion()
+    {
+        $userId = (int) ($this->cuID ?? session('user_id') ?? 0);
+        if ($userId <= 0) {
+            return $this->respondError('Unauthorized', 401);
+        }
+
+        $action = trim((string) $this->request->getPost('action')) ?: 'snooze';
+
+        /** @var AccountCompletionService $completion */
+        $completion = service('accountCompletionService');
+        $state = $completion->dismiss($userId, $action);
+
+        return $this->respondSuccess('Account completion reminder updated.', $state);
     }
 
     public function completeSourceWelcome()

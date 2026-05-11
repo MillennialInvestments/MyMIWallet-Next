@@ -10,6 +10,7 @@ use App\Services\DashboardService;
 use App\Services\AutoloadHealthService;
 use App\Services\EventTracker;
 use App\Services\OnboardingProgressService;
+use App\Services\AccountCompletionService;
 use App\Services\Psr4AuditService;
 use App\Services\SetupStatusService;
 use App\Services\PremiumEntitlementService;
@@ -387,6 +388,17 @@ class Services extends CoreServices
         }
 
         return new EventTracker();
+    }
+
+    public static function accountCompletionService(bool $getShared = true): AccountCompletionService
+    {
+        if ($getShared) {
+            /** @var AccountCompletionService $service */
+            $service = static::getSharedInstance('accountCompletionService');
+            return $service;
+        }
+
+        return new AccountCompletionService();
     }
 
     public static function onboardingProgressService(bool $getShared = true): OnboardingProgressService

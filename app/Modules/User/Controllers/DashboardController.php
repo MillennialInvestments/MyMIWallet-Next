@@ -6,7 +6,7 @@ use Config\Services;
 use Config\{Auth, SiteSettings, SocialMedia};
 use App\Libraries\{MyMIAlerts, MyMIAnalytics, MyMIAssistant, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIGold, MyMIInvestments, MyMIMarketing, MyMIOnboarding, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets};
 use App\Models\{AccountsModel, AlertsModel, DashboardModel, DiscordLinkModel, MarketingModel, SolanaModel, UserModel};
-use App\Services\{AccountService, BudgetService, DashboardService, EmailService, OnboardingProgressService, SolanaService, UserService};
+use App\Services\{AccountCompletionService, AccountService, BudgetService, DashboardService, EmailService, OnboardingProgressService, SolanaService, UserService};
 use App\Services\Ops\EnvDoctorService;
 use CodeIgniter\API\ResponseTrait;
 use Myth\Auth\Authorization\GroupModel;
@@ -131,6 +131,10 @@ class DashboardController extends BaseUserController
         $this->data['onboardingProgress'] = $progressPayload;
         $this->data['onboardingIncomplete'] = ! ($progressPayload['isComplete'] ?? false);
         $this->data['sourceAwareWelcome'] = $onboardingProgress->getSourceAwareWelcomeState($cuID);
+
+        /** @var AccountCompletionService $accountCompletion */
+        $accountCompletion = service('accountCompletionService');
+        $this->data['accountCompletion'] = $accountCompletion->evaluate((int) $cuID);
 
         try {
             $this->data['opsHealth'] = (new EnvDoctorService())->latestSummary();

@@ -50,6 +50,7 @@ $subViewData = [
     'useCustomIcons' => $useCustomIcons ?? false, // Default to false if not set    
     'onboardingProgress' => $onboardingProgress ?? [],
     'onboardingShowModal' => $onboardingShowModal ?? false,
+    'accountCompletion' => $accountCompletion ?? [],
 ];
 
 echo view('themes/dashboard/partials/custom-js/Digibyte-js', $subViewData);
