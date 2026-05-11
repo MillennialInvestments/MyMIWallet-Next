@@ -1,6 +1,6 @@
 # AI-Ops: Nightly Summary
 > Auto-generated. Do not edit manually.
-> Run: 2026-04-28T07:00:02Z
+> Run: 2026-05-02T07:00:01Z
 
 ## Docs
 - Changed docs: 0
@@ -11,7 +11,7 @@
 - Docs with no code match candidates: 1252
 
 ## Stale Docs
-- Docs older than 60 days: 1126
+- Docs older than 60 days: 1161
 
 ## Suggestions
 - See: `docs/_aiops/next-steps.md`

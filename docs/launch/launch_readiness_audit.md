@@ -109,6 +109,10 @@
 - ❌ `GET /common-data/smoke => CommonDataController::smoke`
 - ❌ `GET /api/health => Api\\HealthController::index`
 - ❌ `GET /_ops/opcache-reset => Ops::opcacheReset`
+- ❌ `GET /login-shield => \\App\\Controllers\\ShieldAuth\\Login::index`
+- ❌ `POST /login-shield => \\App\\Controllers\\ShieldAuth\\Login::attempt`
+- ❌ `GET /register-shield => \\App\\Controllers\\ShieldAuth\\Register::index`
+- ❌ `POST /register-shield => \\App\\Controllers\\ShieldAuth\\Register::attempt`
 - ❌ `GET /test-create-user => AuthController::createTempUser`
 - ❌ `POST /Auth/link-robinhood => AuthController::linkRobinhood`
 - ❌ `POST /Auth/link-snaptrade => AuthController::linkSnapTrade`

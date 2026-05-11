@@ -1,404 +1,404 @@
 # AI-Ops: Stale Docs
 > Auto-generated. Do not edit manually.
-> Run: 2026-04-28T07:00:02Z
+> Run: 2026-05-02T07:00:01Z
 
+- docs/APIs/_inventory_controllers.md
+  - Doc last updated: 2026-02-28 (62 days ago)
+- docs/APIs/_inventory_filters.md
+  - Doc last updated: 2026-02-28 (62 days ago)
+- docs/APIs/_inventory_rate_limits.md
+  - Doc last updated: 2026-02-28 (62 days ago)
+- docs/APIs/_inventory_routes.md
+  - Doc last updated: 2026-02-28 (62 days ago)
 - docs/APIs/api_audit_latest.md
-  - Doc last updated: 2026-02-21 (65 days ago)
+  - Doc last updated: 2026-02-21 (69 days ago)
+- docs/APIs/audit/20260226-032119_bdb17080249dcd27/report.md
+  - Doc last updated: 2026-02-28 (62 days ago)
+- docs/APIs/audit/latest.md
+  - Doc last updated: 2026-02-28 (62 days ago)
+- docs/APIs/deprecations.md
+  - Doc last updated: 2026-02-28 (62 days ago)
+- docs/APIs/list/latest.md
+  - Doc last updated: 2026-02-28 (62 days ago)
+- docs/APIs/rate-limit-coverage.md
+  - Doc last updated: 2026-02-28 (62 days ago)
 - docs/CRON.md
-  - Doc last updated: 2026-01-30 (87 days ago)
+  - Doc last updated: 2026-01-30 (91 days ago)
+- docs/Github/temporary/gtm_gap-001/validation.md
+  - Doc last updated: 2026-02-28 (62 days ago)
+- docs/Github/temporary/gtm_gap-002/validation.md
+  - Doc last updated: 2026-02-28 (62 days ago)
+- docs/Github/temporary/gtm_gap-003/validation.md
+  - Doc last updated: 2026-02-28 (62 days ago)
+- docs/Github/temporary/gtm_gap-004/validation.md
+  - Doc last updated: 2026-03-01 (62 days ago)
+- docs/Github/temporary/ollama-patch-pipeline-fallback/README.md
+  - Doc last updated: 2026-02-28 (62 days ago)
 - docs/Kimi/audit-2025-12-11.md
-  - Doc last updated: 2025-12-11 (137 days ago)
+  - Doc last updated: 2025-12-11 (141 days ago)
 - docs/Kimi/suggestions/continuous-improvement-roadmap-2025-12-11.md
-  - Doc last updated: 2025-12-11 (137 days ago)
+  - Doc last updated: 2025-12-11 (141 days ago)
 - docs/OVERVIEW.md
-  - Doc last updated: 2025-11-08 (170 days ago)
+  - Doc last updated: 2025-11-08 (174 days ago)
 - docs/README.md
-  - Doc last updated: 2025-11-08 (170 days ago)
+  - Doc last updated: 2025-11-08 (174 days ago)
 - docs/_audit/ci4-logger-audit-2026-02-18.md
-  - Doc last updated: 2026-02-18 (68 days ago)
+  - Doc last updated: 2026-02-18 (72 days ago)
 - docs/_audit/ci4-logger-hardening-2026-02-18.md
-  - Doc last updated: 2026-02-18 (68 days ago)
+  - Doc last updated: 2026-02-18 (72 days ago)
 - docs/_ops/filesystem-lint-summary.md
-  - Doc last updated: 2026-02-10 (76 days ago)
+  - Doc last updated: 2026-02-10 (80 days ago)
 - docs/_ops/filesystem-lint.md
-  - Doc last updated: 2026-02-17 (70 days ago)
+  - Doc last updated: 2026-02-17 (74 days ago)
 - docs/_ops/filesystem-trend.md
-  - Doc last updated: 2026-02-10 (76 days ago)
+  - Doc last updated: 2026-02-10 (80 days ago)
 - docs/_support/aiops-init.md
-  - Doc last updated: 2026-02-20 (66 days ago)
+  - Doc last updated: 2026-02-20 (70 days ago)
 - docs/_support/aiops-init/20260220-234314/summary.md
-  - Doc last updated: 2026-02-20 (66 days ago)
+  - Doc last updated: 2026-02-20 (70 days ago)
 - docs/_support/api-audit/20260211-023725/summary.md
-  - Doc last updated: 2026-02-11 (76 days ago)
+  - Doc last updated: 2026-02-11 (80 days ago)
 - docs/_support/api-audit/20260217-175526/summary.md
-  - Doc last updated: 2026-02-17 (69 days ago)
+  - Doc last updated: 2026-02-17 (73 days ago)
 - docs/_support/api-audit/20260217-200919/summary.md
-  - Doc last updated: 2026-02-17 (69 days ago)
+  - Doc last updated: 2026-02-17 (73 days ago)
 - docs/_support/config-clear/20260221-034317/summary.md
-  - Doc last updated: 2026-02-21 (66 days ago)
+  - Doc last updated: 2026-02-21 (70 days ago)
 - docs/_support/config-clear/20260221-123013/summary.md
-  - Doc last updated: 2026-02-21 (65 days ago)
+  - Doc last updated: 2026-02-21 (69 days ago)
 - docs/_support/config-clear/20260221-123209/summary.md
-  - Doc last updated: 2026-02-21 (65 days ago)
+  - Doc last updated: 2026-02-21 (69 days ago)
 - docs/_support/config-clear/20260221-141447/summary.md
-  - Doc last updated: 2026-02-21 (65 days ago)
+  - Doc last updated: 2026-02-21 (69 days ago)
 - docs/_support/config-clear/20260221-175340/summary.md
-  - Doc last updated: 2026-02-21 (65 days ago)
+  - Doc last updated: 2026-02-21 (69 days ago)
 - docs/_support/config-clear/20260222-004516/summary.md
-  - Doc last updated: 2026-02-22 (65 days ago)
+  - Doc last updated: 2026-02-22 (69 days ago)
 - docs/_support/config-clear/20260222-033759/summary.md
-  - Doc last updated: 2026-02-22 (65 days ago)
+  - Doc last updated: 2026-02-22 (69 days ago)
 - docs/_support/config-clear/20260222-224306/summary.md
-  - Doc last updated: 2026-02-22 (64 days ago)
+  - Doc last updated: 2026-02-22 (68 days ago)
 - docs/_support/config-clear/20260222-230252/summary.md
-  - Doc last updated: 2026-02-22 (64 days ago)
+  - Doc last updated: 2026-02-22 (68 days ago)
 - docs/_support/config-clear/20260222-230405/summary.md
-  - Doc last updated: 2026-02-22 (64 days ago)
+  - Doc last updated: 2026-02-22 (68 days ago)
 - docs/_support/config-clear/20260222-230452/summary.md
-  - Doc last updated: 2026-02-22 (64 days ago)
+  - Doc last updated: 2026-02-22 (68 days ago)
 - docs/_support/config-clear/20260223-002620/summary.md
-  - Doc last updated: 2026-02-23 (64 days ago)
+  - Doc last updated: 2026-02-23 (68 days ago)
 - docs/_support/config-clear/20260223-005145/summary.md
-  - Doc last updated: 2026-02-23 (64 days ago)
+  - Doc last updated: 2026-02-23 (68 days ago)
 - docs/_support/config-clear/20260225-005807/summary.md
-  - Doc last updated: 2026-02-25 (62 days ago)
+  - Doc last updated: 2026-02-25 (66 days ago)
 - docs/_support/config-clear/20260225-011911/summary.md
-  - Doc last updated: 2026-02-25 (62 days ago)
+  - Doc last updated: 2026-02-25 (66 days ago)
 - docs/_support/fix-503/20260215-005841/summary.md
-  - Doc last updated: 2026-02-15 (72 days ago)
+  - Doc last updated: 2026-02-15 (76 days ago)
 - docs/_support/ops-spark-reset/20260210-130402/summary.md
-  - Doc last updated: 2026-02-10 (76 days ago)
+  - Doc last updated: 2026-02-10 (80 days ago)
 - docs/_support/ops-spark-reset/20260210-133819/summary.md
-  - Doc last updated: 2026-02-10 (76 days ago)
+  - Doc last updated: 2026-02-10 (80 days ago)
 - docs/_support/ops-spark-reset/20260212-005323/summary.md
-  - Doc last updated: 2026-02-12 (75 days ago)
+  - Doc last updated: 2026-02-12 (79 days ago)
 - docs/_support/ops-spark-reset/20260212-010136/summary.md
-  - Doc last updated: 2026-02-12 (75 days ago)
+  - Doc last updated: 2026-02-12 (79 days ago)
 - docs/_support/ops-spark-reset/20260212-010223/summary.md
-  - Doc last updated: 2026-02-12 (75 days ago)
+  - Doc last updated: 2026-02-12 (79 days ago)
 - docs/_support/ops-spark-reset/20260212-010317/summary.md
-  - Doc last updated: 2026-02-12 (75 days ago)
+  - Doc last updated: 2026-02-12 (79 days ago)
 - docs/_support/ops-spark-reset/20260212-010628/summary.md
-  - Doc last updated: 2026-02-12 (75 days ago)
+  - Doc last updated: 2026-02-12 (79 days ago)
 - docs/_support/ops-spark-reset/20260212-023503/summary.md
-  - Doc last updated: 2026-02-12 (75 days ago)
+  - Doc last updated: 2026-02-12 (79 days ago)
 - docs/_support/ops-spark-reset/20260213-050023/summary.md
-  - Doc last updated: 2026-02-14 (72 days ago)
+  - Doc last updated: 2026-02-14 (76 days ago)
 - docs/_support/ops-spark-reset/20260213-050826/summary.md
-  - Doc last updated: 2026-02-14 (72 days ago)
+  - Doc last updated: 2026-02-14 (76 days ago)
 - docs/_support/ops-spark-reset/20260217-000858/summary.md
-  - Doc last updated: 2026-02-17 (70 days ago)
+  - Doc last updated: 2026-02-17 (74 days ago)
 - docs/_support/ops-spark-reset/20260217-001035/summary.md
-  - Doc last updated: 2026-02-17 (70 days ago)
+  - Doc last updated: 2026-02-17 (74 days ago)
 - docs/_support/ops-spark-reset/20260217-014932/summary.md
-  - Doc last updated: 2026-02-17 (70 days ago)
+  - Doc last updated: 2026-02-17 (74 days ago)
 - docs/_support/ops-spark-reset/20260217-032014/summary.md
-  - Doc last updated: 2026-02-17 (70 days ago)
+  - Doc last updated: 2026-02-17 (74 days ago)
 - docs/_support/ops-spark-reset/20260217-041857/summary.md
-  - Doc last updated: 2026-02-17 (70 days ago)
+  - Doc last updated: 2026-02-17 (74 days ago)
 - docs/_support/ops-spark-reset/20260217-042717/summary.md
-  - Doc last updated: 2026-02-17 (70 days ago)
+  - Doc last updated: 2026-02-17 (74 days ago)
 - docs/_support/ops-spark-reset/20260217-042932/summary.md
-  - Doc last updated: 2026-02-17 (70 days ago)
+  - Doc last updated: 2026-02-17 (74 days ago)
 - docs/_support/ops-spark-reset/20260217-043056/summary.md
-  - Doc last updated: 2026-02-17 (70 days ago)
+  - Doc last updated: 2026-02-17 (74 days ago)
 - docs/_support/ops-spark-reset/20260217-043328/summary.md
-  - Doc last updated: 2026-02-17 (70 days ago)
+  - Doc last updated: 2026-02-17 (74 days ago)
 - docs/_support/ops-spark-reset/20260217-133855/summary.md
-  - Doc last updated: 2026-02-17 (69 days ago)
+  - Doc last updated: 2026-02-17 (73 days ago)
 - docs/_support/runtime-cache-boot/20260215-010126/summary.md
-  - Doc last updated: 2026-02-15 (72 days ago)
+  - Doc last updated: 2026-02-15 (76 days ago)
 - docs/_support/runtime-triage/20260215-010146/summary.md
-  - Doc last updated: 2026-02-15 (72 days ago)
+  - Doc last updated: 2026-02-15 (76 days ago)
 - docs/_support/spark-reset/20260221-034349/summary.md
-  - Doc last updated: 2026-02-21 (66 days ago)
+  - Doc last updated: 2026-02-21 (70 days ago)
 - docs/_support/spark-reset/20260221-123005/summary.md
-  - Doc last updated: 2026-02-21 (65 days ago)
+  - Doc last updated: 2026-02-21 (69 days ago)
 - docs/_support/spark-reset/20260221-123211/summary.md
-  - Doc last updated: 2026-02-21 (65 days ago)
+  - Doc last updated: 2026-02-21 (69 days ago)
 - docs/_support/spark-reset/20260221-141452/summary.md
-  - Doc last updated: 2026-02-21 (65 days ago)
+  - Doc last updated: 2026-02-21 (69 days ago)
 - docs/_support/spark-reset/20260221-175347/summary.md
-  - Doc last updated: 2026-02-21 (65 days ago)
+  - Doc last updated: 2026-02-21 (69 days ago)
 - docs/_support/spark-reset/20260222-033804/summary.md
-  - Doc last updated: 2026-02-22 (65 days ago)
+  - Doc last updated: 2026-02-22 (69 days ago)
 - docs/_support/spark-reset/20260223-002623/summary.md
-  - Doc last updated: 2026-02-23 (64 days ago)
+  - Doc last updated: 2026-02-23 (68 days ago)
 - docs/_support/spark-reset/20260225-005815/summary.md
-  - Doc last updated: 2026-02-25 (62 days ago)
+  - Doc last updated: 2026-02-25 (66 days ago)
 - docs/_support/spark-reset/20260226-024907/summary.md
-  - Doc last updated: 2026-02-26 (61 days ago)
+  - Doc last updated: 2026-02-26 (65 days ago)
 - docs/adr/0001-standards-and-response-contract.md
-  - Doc last updated: 2025-11-08 (170 days ago)
+  - Doc last updated: 2025-11-08 (174 days ago)
 - docs/adr/_index.md
-  - Doc last updated: 2025-11-08 (170 days ago)
+  - Doc last updated: 2025-11-08 (174 days ago)
 - docs/ai-cost-controls.md
-  - Doc last updated: 2026-01-04 (113 days ago)
+  - Doc last updated: 2026-01-04 (117 days ago)
 - docs/ai-ops/api-automations.md
-  - Doc last updated: 2026-01-01 (116 days ago)
+  - Doc last updated: 2026-01-01 (120 days ago)
 - docs/ai-ops/cost-budget.md
-  - Doc last updated: 2026-01-01 (116 days ago)
+  - Doc last updated: 2026-01-01 (120 days ago)
 - docs/ai-ops/dashboard.md
-  - Doc last updated: 2026-01-02 (116 days ago)
+  - Doc last updated: 2026-01-02 (120 days ago)
 - docs/ai-ops/observability-policy.md
-  - Doc last updated: 2026-01-01 (116 days ago)
+  - Doc last updated: 2026-01-01 (120 days ago)
 - docs/ai/codex_prompts/spark_rules.md
-  - Doc last updated: 2026-01-30 (87 days ago)
+  - Doc last updated: 2026-01-30 (91 days ago)
 - docs/ai/contracts/spark_commands_contract.md
-  - Doc last updated: 2026-01-30 (87 days ago)
+  - Doc last updated: 2026-01-30 (91 days ago)
 - docs/aiops-budgeting.md
-  - Doc last updated: 2026-01-04 (113 days ago)
+  - Doc last updated: 2026-01-04 (117 days ago)
 - docs/aiops/ARTIFACT_SANDBOX.md
-  - Doc last updated: 2026-02-02 (84 days ago)
+  - Doc last updated: 2026-02-02 (88 days ago)
 - docs/aiops/api-audit.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/api-audit/20260209-112136/next-steps.md
-  - Doc last updated: 2026-02-09 (77 days ago)
+  - Doc last updated: 2026-02-09 (81 days ago)
 - docs/aiops/artifacts/api-audit/20260209-112136/summary.md
-  - Doc last updated: 2026-02-09 (77 days ago)
+  - Doc last updated: 2026-02-09 (81 days ago)
 - docs/aiops/artifacts/config-drift/20260201-180724/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/config-drift/20260201-183558/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/config-drift/20260201-184056/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/db-drift/20260201-181038/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/db-drift/20260201-184402/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/db-drift/20260205-024725/summary.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/artifacts/fix-503/20260208-195751/summary.md
-  - Doc last updated: 2026-02-09 (77 days ago)
+  - Doc last updated: 2026-02-09 (81 days ago)
 - docs/aiops/artifacts/growth-retention-watch/20260201-180732/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/growth-retention-watch/20260201-183610/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/growth-retention-watch/20260201-184102/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/growth-retention-watch/20260205-024348/summary.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/artifacts/growth-retention-watch/20260205-024413/summary.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/artifacts/marketing-automation-audit/20260201-185227/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/marketing-automation-audit/20260205-024948/summary.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260201-143924/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260201-164836/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260201-165206/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260201-180030/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260201-185612/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260201-234406/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260202-022437/summary.md
-  - Doc last updated: 2026-02-02 (85 days ago)
+  - Doc last updated: 2026-02-02 (89 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260207-135815/summary.md
-  - Doc last updated: 2026-02-07 (79 days ago)
+  - Doc last updated: 2026-02-07 (83 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260207-140038/summary.md
-  - Doc last updated: 2026-02-07 (79 days ago)
+  - Doc last updated: 2026-02-07 (83 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260207-140215/summary.md
-  - Doc last updated: 2026-02-07 (79 days ago)
+  - Doc last updated: 2026-02-07 (83 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260207-151413/summary.md
-  - Doc last updated: 2026-02-07 (79 days ago)
+  - Doc last updated: 2026-02-07 (83 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260207-152502/summary.md
-  - Doc last updated: 2026-02-07 (79 days ago)
+  - Doc last updated: 2026-02-07 (83 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260207-153004/summary.md
-  - Doc last updated: 2026-02-07 (79 days ago)
+  - Doc last updated: 2026-02-07 (83 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260207-212657/summary.md
-  - Doc last updated: 2026-02-07 (79 days ago)
+  - Doc last updated: 2026-02-07 (83 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260207-231039/summary.md
-  - Doc last updated: 2026-02-07 (79 days ago)
+  - Doc last updated: 2026-02-07 (83 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260208-033458/summary.md
-  - Doc last updated: 2026-02-08 (78 days ago)
+  - Doc last updated: 2026-02-08 (82 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260208-131051/summary.md
-  - Doc last updated: 2026-02-08 (78 days ago)
+  - Doc last updated: 2026-02-08 (82 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260208-132515/summary.md
-  - Doc last updated: 2026-02-08 (78 days ago)
+  - Doc last updated: 2026-02-08 (82 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260208-134346/summary.md
-  - Doc last updated: 2026-02-08 (78 days ago)
+  - Doc last updated: 2026-02-08 (82 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260208-135706/summary.md
-  - Doc last updated: 2026-02-08 (78 days ago)
+  - Doc last updated: 2026-02-08 (82 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260208-141537/summary.md
-  - Doc last updated: 2026-02-08 (78 days ago)
+  - Doc last updated: 2026-02-08 (82 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260208-141808/summary.md
-  - Doc last updated: 2026-02-08 (78 days ago)
+  - Doc last updated: 2026-02-08 (82 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260208-142038/summary.md
-  - Doc last updated: 2026-02-08 (78 days ago)
+  - Doc last updated: 2026-02-08 (82 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260208-142127/summary.md
-  - Doc last updated: 2026-02-08 (78 days ago)
+  - Doc last updated: 2026-02-08 (82 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260208-142148/summary.md
-  - Doc last updated: 2026-02-08 (78 days ago)
+  - Doc last updated: 2026-02-08 (82 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260208-143848/summary.md
-  - Doc last updated: 2026-02-08 (78 days ago)
+  - Doc last updated: 2026-02-08 (82 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260208-154553/summary.md
-  - Doc last updated: 2026-02-08 (78 days ago)
+  - Doc last updated: 2026-02-08 (82 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260208-165510/summary.md
-  - Doc last updated: 2026-02-08 (78 days ago)
+  - Doc last updated: 2026-02-08 (82 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260208-201007/summary.md
-  - Doc last updated: 2026-02-09 (77 days ago)
+  - Doc last updated: 2026-02-09 (81 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260209-005441/summary.md
-  - Doc last updated: 2026-02-09 (78 days ago)
+  - Doc last updated: 2026-02-09 (82 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260209-110400/summary.md
-  - Doc last updated: 2026-02-09 (77 days ago)
+  - Doc last updated: 2026-02-09 (81 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260209-160123/summary.md
-  - Doc last updated: 2026-02-09 (77 days ago)
+  - Doc last updated: 2026-02-09 (81 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260209-191653/summary.md
-  - Doc last updated: 2026-02-09 (77 days ago)
+  - Doc last updated: 2026-02-09 (81 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260209-191902/summary.md
-  - Doc last updated: 2026-02-09 (77 days ago)
+  - Doc last updated: 2026-02-09 (81 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260209-195604/summary.md
-  - Doc last updated: 2026-02-09 (77 days ago)
+  - Doc last updated: 2026-02-09 (81 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260209-211333/summary.md
-  - Doc last updated: 2026-02-09 (77 days ago)
+  - Doc last updated: 2026-02-09 (81 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260209-211618/summary.md
-  - Doc last updated: 2026-02-10 (77 days ago)
+  - Doc last updated: 2026-02-10 (81 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260209-221128/summary.md
-  - Doc last updated: 2026-02-10 (77 days ago)
+  - Doc last updated: 2026-02-10 (81 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260209-222751/summary.md
-  - Doc last updated: 2026-02-10 (77 days ago)
+  - Doc last updated: 2026-02-10 (81 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260210-002222/summary.md
-  - Doc last updated: 2026-02-10 (77 days ago)
+  - Doc last updated: 2026-02-10 (81 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260210-015456/summary.md
-  - Doc last updated: 2026-02-10 (77 days ago)
+  - Doc last updated: 2026-02-10 (81 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260210-015513/summary.md
-  - Doc last updated: 2026-02-10 (77 days ago)
+  - Doc last updated: 2026-02-10 (81 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260210-112114/summary.md
-  - Doc last updated: 2026-02-10 (76 days ago)
+  - Doc last updated: 2026-02-10 (80 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260210-112241/summary.md
-  - Doc last updated: 2026-02-10 (76 days ago)
+  - Doc last updated: 2026-02-10 (80 days ago)
 - docs/aiops/artifacts/ops-spark-reset/20260210-130237/summary.md
-  - Doc last updated: 2026-02-10 (76 days ago)
+  - Doc last updated: 2026-02-10 (80 days ago)
 - docs/aiops/artifacts/revenue-cost-forecast/20260201-180746/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/revenue-cost-forecast/20260201-183620/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/revenue-cost-forecast/20260201-184109/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/revenue-cost-forecast/20260205-024422/summary.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/artifacts/revenue-scan/20260205-025010/README.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_by_module.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_by_pricing_tier.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_by_user_type.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/artifacts/revenue-scan/20260205-025010/revenue_streams_full.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/artifacts/revenue-scan/20260205-025010/summary.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/artifacts/runtime-cache-boot/20260201-185706/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/runtime-cache-boot/20260208-195646/summary.md
-  - Doc last updated: 2026-02-09 (77 days ago)
+  - Doc last updated: 2026-02-09 (81 days ago)
 - docs/aiops/artifacts/runtime-triage/20260201-185742/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/runtime-triage/20260208-195714/summary.md
-  - Doc last updated: 2026-02-09 (77 days ago)
+  - Doc last updated: 2026-02-09 (81 days ago)
 - docs/aiops/artifacts/scraper-audit-emails/20260205-024438/summary.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/artifacts/security-secrets-audit/20260201-185757/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/security-secrets-audit/20260208-195737/summary.md
-  - Doc last updated: 2026-02-09 (77 days ago)
+  - Doc last updated: 2026-02-09 (81 days ago)
 - docs/aiops/artifacts/ux-journey-audit/20260201-180810/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/ux-journey-audit/20260201-183649/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/ux-journey-audit/20260201-184200/summary.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/artifacts/ux-journey-audit/20260205-024451/summary.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/automation/_index.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/automation/alerts_playbook.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/automation/marketing_playbook.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/automation/news_playbook.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/automation/social_distribution_playbook.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/automation/watchlist_paths.md
-  - Doc last updated: 2026-02-06 (80 days ago)
+  - Doc last updated: 2026-02-06 (84 days ago)
 - docs/aiops/command-inventory.md
-  - Doc last updated: 2026-01-31 (87 days ago)
+  - Doc last updated: 2026-01-31 (91 days ago)
 - docs/aiops/control-plane.md
-  - Doc last updated: 2026-01-31 (87 days ago)
+  - Doc last updated: 2026-01-31 (91 days ago)
 - docs/aiops/email-scraper-audit.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/filesystem_rules.md
-  - Doc last updated: 2026-01-31 (86 days ago)
+  - Doc last updated: 2026-01-31 (90 days ago)
 - docs/aiops/migration_model_audit.md
-  - Doc last updated: 2026-02-01 (85 days ago)
+  - Doc last updated: 2026-02-01 (89 days ago)
 - docs/aiops/repair-report.md
-  - Doc last updated: 2026-02-08 (78 days ago)
+  - Doc last updated: 2026-02-08 (82 days ago)
 - docs/aiops/runbooks/dreamhost-proxy-ports.md
-  - Doc last updated: 2026-01-02 (116 days ago)
+  - Doc last updated: 2026-01-02 (120 days ago)
 - docs/aiops/runbooks/operations.md
-  - Doc last updated: 2026-01-01 (116 days ago)
+  - Doc last updated: 2026-01-01 (120 days ago)
 - docs/aiops/runbooks/security-hardening.md
-  - Doc last updated: 2026-01-01 (116 days ago)
+  - Doc last updated: 2026-01-01 (120 days ago)
 - docs/aiops/runtime-architecture.md
-  - Doc last updated: 2026-02-08 (78 days ago)
+  - Doc last updated: 2026-02-08 (82 days ago)
 - docs/aiops/scrapers/_index.md
-  - Doc last updated: 2026-02-03 (84 days ago)
+  - Doc last updated: 2026-02-03 (88 days ago)
 - docs/aiops/selfhosted-stack.md
-  - Doc last updated: 2026-01-02 (116 days ago)
+  - Doc last updated: 2026-01-02 (120 days ago)
 - docs/aiops/spark_bootstrap_rules.md
-  - Doc last updated: 2026-01-31 (86 days ago)
+  - Doc last updated: 2026-01-31 (90 days ago)
 - docs/aiops/spark_command_invariants.md
-  - Doc last updated: 2026-01-31 (86 days ago)
+  - Doc last updated: 2026-01-31 (90 days ago)
 - docs/aiops/spark_rules.md
-  - Doc last updated: 2026-01-31 (86 days ago)
+  - Doc last updated: 2026-01-31 (90 days ago)
 - docs/aiops/triage/spark-command-audit.md
-  - Doc last updated: 2026-02-17 (69 days ago)
+  - Doc last updated: 2026-02-17 (73 days ago)
 - docs/aiops/workflows/n8n-workflows.md
-  - Doc last updated: 2026-01-01 (116 days ago)
+  - Doc last updated: 2026-01-01 (120 days ago)
 - docs/alerts/alerts_marketing_pipline.md
-  - Doc last updated: 2025-11-22 (156 days ago)
+  - Doc last updated: 2025-11-22 (160 days ago)
 - docs/api/internal-orchestration.md
-  - Doc last updated: 2026-02-09 (77 days ago)
+  - Doc last updated: 2026-02-09 (81 days ago)
 - docs/architecture/marketing_module_lifecycle.md
-  - Doc last updated: 2026-01-21 (96 days ago)
+  - Doc last updated: 2026-01-21 (100 days ago)
 - docs/architecture/psr4-remediation.md
-  - Doc last updated: 2026-02-07 (79 days ago)
+  - Doc last updated: 2026-02-07 (83 days ago)
 - docs/auctions/_index.md
-  - Doc last updated: 2025-11-08 (170 days ago)
+  - Doc last updated: 2025-11-08 (174 days ago)
 - docs/auctions/auction-schema.md
-  - Doc last updated: 2025-11-08 (170 days ago)
-- docs/audits/model_limit_patch_report_20260218.md
-  - Doc last updated: 2026-02-18 (68 days ago)
-- docs/auth-flow.md
-  - Doc last updated: 2026-02-10 (76 days ago)
-- docs/auth/auth_smoke.md
-  - Doc last updated: 2026-01-21 (97 days ago)
-- docs/auth/onboarding_first_login_modal.md
-  - Doc last updated: 2026-01-17 (100 days ago)
-- docs/auth/register_success_page.md
-  - Doc last updated: 2026-01-17 (100 days ago)
-- docs/auth/registration_flow_audit.md
-  - Doc last updated: 2026-01-17 (100 days ago)
-- docs/automation/ai_code_review.md
-  - Doc last updated: 2026-01-25 (93 days ago)
-- docs/automation/communities/cron_plan.md
-  - Doc last updated: 2025-12-27 (122 days ago)
-- docs/automation/communities/distribution_matrix.md
-  - Doc last updated: 2025-12-27 (122 days ago)
-- docs/automation/communities/post_generation_rules.md
-  - Doc last updated: 2025-12-27 (122 days ago)
-- docs/bitcoin-standardization.md
-  - Doc last updated: 2025-11-08 (170 days ago)
-- docs/budget/UI-Suggestions.md
-  - Doc last updated: 2025-11-08 (170 days ago)
-- docs/budget/_index.md
-  - Doc last updated: 2025-11-08 (170 days ago)
-- docs/budget/budget-controller.md
-  - Doc last updated: 2025-11-08 (170 days ago)
+  - Doc last updated: 2025-11-08 (174 days ago)

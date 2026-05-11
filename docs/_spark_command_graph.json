@@ -1,1470 +1,1794 @@
 {
-    "generated_at": "2026-03-08T14:01:10+00:00",
-    "command_count": 366,
+    "generated_at": "2026-04-29T12:27:05+00:00",
+    "command_count": 447,
     "commands": [
         {
-            "class": "App\\Commands\\Health\\GitSafety",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Health\/GitSafety.php"
-        },
-        {
-            "class": "App\\Commands\\Health\\Services",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Health\/Services.php"
-        },
-        {
-            "class": "App\\Commands\\Health\\Disk",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Health\/Disk.php"
-        },
-        {
-            "class": "App\\Commands\\Health\\Cache",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Health\/Cache.php"
-        },
-        {
             "class": "App\\Commands\\Marketing\\AutomationAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Marketing\/AutomationAudit.php"
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/AutomationAudit.php"
         },
         {
-            "class": "App\\Commands\\CompatAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/CompatAudit.php"
+            "class": "App\\Commands\\Marketing\\GeneratePackage",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/GeneratePackage.php"
         },
         {
-            "class": "App\\Commands\\Research\\EarningsCalendar",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Research\/EarningsCalendar.php"
+            "class": "App\\Commands\\Marketing\\NewsDebug",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/NewsDebug.php"
         },
         {
-            "class": "App\\Commands\\Research\\GoogleFinancialScan",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Research\/GoogleFinancialScan.php"
+            "class": "App\\Commands\\Marketing\\NewsGenerate",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/NewsGenerate.php"
         },
         {
-            "class": "App\\Commands\\Research\\ShortInterestScan",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Research\/ShortInterestScan.php"
+            "class": "App\\Commands\\Marketing\\Distribute",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/Distribute.php"
         },
         {
-            "class": "App\\Commands\\Research\\ResearchPipeline",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Research\/ResearchPipeline.php"
+            "class": "App\\Commands\\Marketing\\Pipeline",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/Pipeline.php"
         },
         {
-            "class": "App\\Commands\\Research\\FinancialKnowledge",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Research\/FinancialKnowledge.php"
+            "class": "App\\Commands\\Marketing\\NewsScrape",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/NewsScrape.php"
         },
         {
-            "class": "App\\Commands\\Research\\WatchlistCleanup",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Research\/WatchlistCleanup.php"
+            "class": "App\\Commands\\Marketing\\NewsImapTest",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/NewsImapTest.php"
         },
         {
-            "class": "App\\Commands\\Research\\FinancialNewsCollect",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Research\/FinancialNewsCollect.php"
+            "class": "App\\Commands\\Marketing\\ProcessNotifications",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/ProcessNotifications.php"
         },
         {
-            "class": "App\\Commands\\Research\\ThinkOrSwimImport",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Research\/ThinkOrSwimImport.php"
+            "class": "App\\Commands\\Marketing\\NewsSeedTest",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/NewsSeedTest.php"
         },
         {
-            "class": "App\\Commands\\Research\\MarketDataCompile",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Research\/MarketDataCompile.php"
+            "class": "App\\Commands\\Marketing\\EmailClean",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/EmailClean.php"
         },
         {
-            "class": "App\\Commands\\Research\\BaseResearchTaskCommand",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Research\/BaseResearchTaskCommand.php"
+            "class": "App\\Commands\\Marketing\\NotificationTest",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/NotificationTest.php"
         },
         {
-            "class": "App\\Commands\\Research\\WeeklyMarketReport",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Research\/WeeklyMarketReport.php"
+            "class": "App\\Commands\\Marketing\\PromotionsAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/PromotionsAudit.php"
         },
         {
-            "class": "App\\Commands\\Research\\GoogleScan",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Research\/GoogleScan.php"
+            "class": "App\\Commands\\Marketing\\PromotionsGenerate",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/PromotionsGenerate.php"
         },
         {
-            "class": "App\\Commands\\Research\\DailyMarketReport",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Research\/DailyMarketReport.php"
+            "class": "App\\Commands\\Marketing\\PromotionsTest",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/PromotionsTest.php"
         },
         {
-            "class": "App\\Commands\\Research\\FinancialIntelligenceSignals",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Research\/FinancialIntelligenceSignals.php"
+            "class": "App\\Commands\\Marketing\\ApproveGenerated",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/ApproveGenerated.php"
         },
         {
-            "class": "App\\Commands\\GtmCronRouteSecurityValidation",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/GtmCronRouteSecurityValidation.php"
+            "class": "App\\Commands\\Marketing\\BlueskyHealthcheck",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/BlueskyHealthcheck.php"
         },
         {
-            "class": "App\\Commands\\TestEmail",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/TestEmail.php"
+            "class": "App\\Commands\\Marketing\\MastodonHealthcheck",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/MastodonHealthcheck.php"
         },
         {
-            "class": "App\\Commands\\Repo\\ClassScan",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Repo\/ClassScan.php"
+            "class": "App\\Commands\\Marketing\\RetryDistribution",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/RetryDistribution.php"
         },
         {
-            "class": "App\\Commands\\Repo\\Health",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Repo\/Health.php"
+            "class": "App\\Commands\\Marketing\\ApproveGeneratedContent",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/ApproveGeneratedContent.php"
         },
         {
-            "class": "App\\Commands\\Repo\\DiffSplit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Repo\/DiffSplit.php"
+            "class": "App\\Commands\\Marketing\\DailyAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/DailyAudit.php"
         },
         {
-            "class": "App\\Commands\\Repo\\ClassTrace",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Repo\/ClassTrace.php"
+            "class": "App\\Commands\\Marketing\\DiscordActivationAnnouncement",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/DiscordActivationAnnouncement.php"
         },
         {
-            "class": "App\\Commands\\Errors\\DispatchAlerts",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Errors\/DispatchAlerts.php"
+            "class": "App\\Commands\\Marketing\\DistributionFailureInjectTest",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/DistributionFailureInjectTest.php"
         },
         {
-            "class": "App\\Commands\\Errors\\ConsolidateErrors",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Errors\/ConsolidateErrors.php"
+            "class": "App\\Commands\\Marketing\\DistributionSqlAssert",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/DistributionSqlAssert.php"
         },
         {
-            "class": "App\\Commands\\Errors\\Diagnose502",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Errors\/Diagnose502.php"
+            "class": "App\\Commands\\Marketing\\RegressionSmoke",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/RegressionSmoke.php"
         },
         {
-            "class": "App\\Commands\\Errors\\Diagnose503",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Errors\/Diagnose503.php"
+            "class": "App\\Commands\\Marketing\\DiscordTestAllCategories",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/DiscordTestAllCategories.php"
         },
         {
-            "class": "App\\Commands\\Errors\\LearnPatterns",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Errors\/LearnPatterns.php"
+            "class": "App\\Commands\\Marketing\\DiscordTestCategory",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/DiscordTestCategory.php"
         },
         {
-            "class": "App\\Commands\\Growth\\RetentionWatch",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Growth\/RetentionWatch.php"
-        },
-        {
-            "class": "App\\Commands\\WalletsWarmSummaryCache",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/WalletsWarmSummaryCache.php"
-        },
-        {
-            "class": "App\\Commands\\Performance\\K6Run",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Performance\/K6Run.php"
-        },
-        {
-            "class": "App\\Commands\\Fix503",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Fix503.php"
-        },
-        {
-            "class": "App\\Commands\\MditNavComputeDaily",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/MditNavComputeDaily.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Embed",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Embed.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Ping",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Ping.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\CircuitStatus",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/CircuitStatus.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Stream",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Stream.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Doctor",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Doctor.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Policy\\Check",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Policy\/Check.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Policy\\Export",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Policy\/Export.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\RagQuery",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/RagQuery.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Queue\\Work",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Queue\/Work.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Queue\\Retry",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Queue\/Retry.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Queue\\Stats",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Queue\/Stats.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Queue\\Push",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Queue\/Push.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Diagnose",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Diagnose.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Circuit\\Status",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Circuit\/Status.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Circuit\\Reset",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Circuit\/Reset.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\EmbedFile",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/EmbedFile.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Health",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Health.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\BaseOllamaCommand",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/BaseOllamaCommand.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Chat",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Chat.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Version",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Version.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Bench",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Bench.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Logs",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Logs.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Docs\\Inventory",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Docs\/Inventory.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Docs\\Sync",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Docs\/Sync.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Sessions\\ListSessions",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Sessions\/ListSessions.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Sessions\\ShowSession",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Sessions\/ShowSession.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Sessions\\RmSession",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Sessions\/RmSession.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Modelfile\\Validate",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Modelfile\/Validate.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Logs\\Tail",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Logs\/Tail.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Logs\\Export",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Logs\/Export.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Generate",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Generate.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\CircuitReset",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/CircuitReset.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Models\\PullModel",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Models\/PullModel.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Models\\ListModels",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Models\/ListModels.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Models\\PruneModels",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Models\/PruneModels.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Models\\ExportModels",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Models\/ExportModels.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Models\\ShowModel",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Models\/ShowModel.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Models\\RmModel",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Models\/RmModel.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Models\\EnsureModels",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Models\/EnsureModels.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Models\\CreateModel",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Models\/CreateModel.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Models\\PushModel",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Models\/PushModel.php"
-        },
-        {
-            "class": "App\\Commands\\Ollama\\Models\\DiffModels",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ollama\/Models\/DiffModels.php"
-        },
-        {
-            "class": "App\\Commands\\Auth\\Smoke",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Auth\/Smoke.php"
-        },
-        {
-            "class": "App\\Commands\\Auth\\Audit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Auth\/Audit.php"
-        },
-        {
-            "class": "App\\Commands\\Auth\\FlowSmoke",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Auth\/FlowSmoke.php"
-        },
-        {
-            "class": "App\\Commands\\Auth\\SmokeTest",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Auth\/SmokeTest.php"
-        },
-        {
-            "class": "App\\Commands\\Auth\\FunnelCheck",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Auth\/FunnelCheck.php"
-        },
-        {
-            "class": "App\\Commands\\Alerts\\Forecast",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Alerts\/Forecast.php"
-        },
-        {
-            "class": "App\\Commands\\Alerts\\Ingest",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Alerts\/Ingest.php"
-        },
-        {
-            "class": "App\\Commands\\Alerts\\Audit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Alerts\/Audit.php"
-        },
-        {
-            "class": "App\\Commands\\Alerts\\ParseTest",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Alerts\/ParseTest.php"
-        },
-        {
-            "class": "App\\Commands\\Spark\\Doctor",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Spark\/Doctor.php"
-        },
-        {
-            "class": "App\\Commands\\Spark\\Fix",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Spark\/Fix.php"
-        },
-        {
-            "class": "App\\Commands\\Spark\\RegistryAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Spark\/RegistryAudit.php"
-        },
-        {
-            "class": "App\\Commands\\Spark\\Reset",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Spark\/Reset.php"
-        },
-        {
-            "class": "App\\Commands\\Spark\\CommandGraph",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Spark\/CommandGraph.php"
-        },
-        {
-            "class": "App\\Commands\\Spark\\InfraServerAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Spark\/InfraServerAudit.php"
-        },
-        {
-            "class": "App\\Commands\\Scrapers\\EmailScraperAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Scrapers\/EmailScraperAudit.php"
-        },
-        {
-            "class": "App\\Commands\\Test\\RedisPing",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Test\/RedisPing.php"
-        },
-        {
-            "class": "App\\Commands\\Discord\\WireCheck",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Discord\/WireCheck.php"
-        },
-        {
-            "class": "App\\Commands\\Discord\\Test",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Discord\/Test.php"
-        },
-        {
-            "class": "App\\Commands\\Discord\\ProcessQueue",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Discord\/ProcessQueue.php"
-        },
-        {
-            "class": "App\\Commands\\Discord\\TestLiquidity",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Discord\/TestLiquidity.php"
-        },
-        {
-            "class": "App\\Commands\\Discord\\GetList",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Discord\/GetList.php"
-        },
-        {
-            "class": "App\\Commands\\ContentIngestSample",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/ContentIngestSample.php"
-        },
-        {
-            "class": "App\\Commands\\RoutesAuthAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/RoutesAuthAudit.php"
-        },
-        {
-            "class": "App\\Commands\\Revenue\\CostForecast",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Revenue\/CostForecast.php"
-        },
-        {
-            "class": "App\\Commands\\Investments\\EconomyUpdateAll",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Investments\/EconomyUpdateAll.php"
-        },
-        {
-            "class": "App\\Commands\\Env\\EnvDoctor",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Env\/EnvDoctor.php"
-        },
-        {
-            "class": "App\\Commands\\CacheAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/CacheAudit.php"
-        },
-        {
-            "class": "App\\Commands\\TrafficSpikeGuard",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/TrafficSpikeGuard.php"
-        },
-        {
-            "class": "App\\Commands\\Audit\\NodeAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Audit\/NodeAudit.php"
-        },
-        {
-            "class": "App\\Commands\\Audit\\All",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Audit\/All.php"
-        },
-        {
-            "class": "App\\Commands\\Chat\\Unblock",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Chat\/Unblock.php"
-        },
-        {
-            "class": "App\\Commands\\Chat\\Restart",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Chat\/Restart.php"
-        },
-        {
-            "class": "App\\Commands\\Chat\\Status",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Chat\/Status.php"
-        },
-        {
-            "class": "App\\Commands\\Chat\\Repair",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Chat\/Repair.php"
-        },
-        {
-            "class": "App\\Commands\\Chat\\Audit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Chat\/Audit.php"
-        },
-        {
-            "class": "App\\Commands\\Chat\\Logs",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Chat\/Logs.php"
-        },
-        {
-            "class": "App\\Commands\\Chat\\Stop",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Chat\/Stop.php"
-        },
-        {
-            "class": "App\\Commands\\Chat\\Start",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Chat\/Start.php"
-        },
-        {
-            "class": "App\\Commands\\Routes\\Reconcile",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Routes\/Reconcile.php"
-        },
-        {
-            "class": "App\\Commands\\Routes\\Docs",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Routes\/Docs.php"
-        },
-        {
-            "class": "App\\Commands\\Routes\\Benchmark",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Routes\/Benchmark.php"
-        },
-        {
-            "class": "App\\Commands\\Routes\\Debug",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Routes\/Debug.php"
-        },
-        {
-            "class": "App\\Commands\\Routes\\Repair",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Routes\/Repair.php"
-        },
-        {
-            "class": "App\\Commands\\Codex\\ReviewPublish",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Codex\/ReviewPublish.php"
-        },
-        {
-            "class": "App\\Commands\\Codex\\Instructions\\Audit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Codex\/Instructions\/Audit.php"
-        },
-        {
-            "class": "App\\Commands\\Codex\\Instructions\\Summarize",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Codex\/Instructions\/Summarize.php"
-        },
-        {
-            "class": "App\\Commands\\Codex\\Instructions\\DevOpsReview",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Codex\/Instructions\/DevOpsReview.php"
-        },
-        {
-            "class": "App\\Commands\\Codex\\GateSeverity",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Codex\/GateSeverity.php"
-        },
-        {
-            "class": "App\\Commands\\Codex\\Index",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Codex\/Index.php"
-        },
-        {
-            "class": "App\\Commands\\Codex\\ContinueAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Codex\/ContinueAudit.php"
-        },
-        {
-            "class": "App\\Commands\\Codex\\ReviewList",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Codex\/ReviewList.php"
-        },
-        {
-            "class": "App\\Commands\\Codex\\Status",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Codex\/Status.php"
-        },
-        {
-            "class": "App\\Commands\\Codex\\Audit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Codex\/Audit.php"
-        },
-        {
-            "class": "App\\Commands\\Codex\\ReviewCommit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Codex\/ReviewCommit.php"
-        },
-        {
-            "class": "App\\Commands\\Codex\\ReviewPrOutbox",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Codex\/ReviewPrOutbox.php"
-        },
-        {
-            "class": "App\\Commands\\Codex\\Gate",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Codex\/Gate.php"
-        },
-        {
-            "class": "App\\Commands\\Codex\\Review",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Codex\/Review.php"
-        },
-        {
-            "class": "App\\Commands\\Ux\\JourneyAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ux\/JourneyAudit.php"
-        },
-        {
-            "class": "App\\Commands\\GtmLaunchAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/GtmLaunchAudit.php"
-        },
-        {
-            "class": "App\\Commands\\GtmLaunchSmoke",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/GtmLaunchSmoke.php"
-        },
-        {
-            "class": "App\\Commands\\RestartSafe",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/RestartSafe.php"
-        },
-        {
-            "class": "App\\Commands\\ConfigLint",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/ConfigLint.php"
-        },
-        {
-            "class": "App\\Commands\\RevenueStreamsScan",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/RevenueStreamsScan.php"
-        },
-        {
-            "class": "App\\Commands\\GtmHealthSnapshot",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/GtmHealthSnapshot.php"
-        },
-        {
-            "class": "App\\Commands\\GitHub\\SearchRepo",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/GitHub\/SearchRepo.php"
-        },
-        {
-            "class": "App\\Commands\\GitHub\\WorkspaceRepair",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/GitHub\/WorkspaceRepair.php"
-        },
-        {
-            "class": "App\\Commands\\GitHub\\WorkspaceGuard",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/GitHub\/WorkspaceGuard.php"
-        },
-        {
-            "class": "App\\Commands\\GitHub\\PullSafe",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/GitHub\/PullSafe.php"
-        },
-        {
-            "class": "App\\Commands\\Scanning\\RunScanner",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Scanning\/RunScanner.php"
-        },
-        {
-            "class": "App\\Commands\\LogsFullReport",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/LogsFullReport.php"
-        },
-        {
-            "class": "App\\Commands\\Security\\GenerateKey",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Security\/GenerateKey.php"
-        },
-        {
-            "class": "App\\Commands\\Security\\SecretsAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Security\/SecretsAudit.php"
-        },
-        {
-            "class": "App\\Commands\\Security\\GenerateCI4Key",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Security\/GenerateCI4Key.php"
-        },
-        {
-            "class": "App\\Commands\\Config\\Drift",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Config\/Drift.php"
-        },
-        {
-            "class": "App\\Commands\\Mail\\SendTest",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Mail\/SendTest.php"
-        },
-        {
-            "class": "App\\Commands\\Mail\\Test",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Mail\/Test.php"
-        },
-        {
-            "class": "App\\Commands\\Mail\\Send",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Mail\/Send.php"
-        },
-        {
-            "class": "App\\Commands\\Mail\\Verify",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Mail\/Verify.php"
-        },
-        {
-            "class": "App\\Commands\\NewsAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/NewsAudit.php"
-        },
-        {
-            "class": "App\\Commands\\AuditPsr4",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AuditPsr4.php"
-        },
-        {
-            "class": "App\\Commands\\RuntimeCheck",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/RuntimeCheck.php"
-        },
-        {
-            "class": "App\\Commands\\ContentEngineSmoke",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/ContentEngineSmoke.php"
-        },
-        {
-            "class": "App\\Commands\\Logger\\Audit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Logger\/Audit.php"
-        },
-        {
-            "class": "App\\Commands\\API\\ApiRateLimitCheck",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/API\/ApiRateLimitCheck.php"
-        },
-        {
-            "class": "App\\Commands\\API\\ApiList",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/API\/ApiList.php"
-        },
-        {
-            "class": "App\\Commands\\API\\ApiPermissions",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/API\/ApiPermissions.php"
-        },
-        {
-            "class": "App\\Commands\\API\\ApiFiltersCheck",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/API\/ApiFiltersCheck.php"
-        },
-        {
-            "class": "App\\Commands\\API\\ApiVersioningCheck",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/API\/ApiVersioningCheck.php"
-        },
-        {
-            "class": "App\\Commands\\API\\ApiAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/API\/ApiAudit.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\SyncPerfRoutes",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/SyncPerfRoutes.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\CommandIndex",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/CommandIndex.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\GovernanceAnalyze",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/GovernanceAnalyze.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\DedupeReport",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/DedupeReport.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\RepairRunSafe",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/RepairRunSafe.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Rollback",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Rollback.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Unlock",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Unlock.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\PRAuto",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/PRAuto.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Init",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Init.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Watch",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Watch.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Alerts\\Check",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Alerts\/Check.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Alerts\\Worker",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Alerts\/Worker.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Alerts\\Health",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Alerts\/Health.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Alerts\\Clean",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Alerts\/Clean.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\RepairRun",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/RepairRun.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Doctor",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Doctor.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Observe",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Observe.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Redis\\Stats",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Redis\/Stats.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Backlog",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Backlog.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\HealthFull",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/HealthFull.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Patch\\Validate",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Patch\/Validate.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Patch\\DryRun",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Patch\/DryRun.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Patch\\Hallucination",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Patch\/Hallucination.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Patch\\RiskScore",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Patch\/RiskScore.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Patch\\Apply",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Patch\/Apply.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\ContinueAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/ContinueAudit.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Worker",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Worker.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Ingest",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Ingest.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Routes\\Scan",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Routes\/Scan.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Routes\\Compare",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Routes\/Compare.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Routes\\Gate",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Routes\/Gate.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Routes\\Regress",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Routes\/Regress.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Routes\\ScanAuth",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Routes\/ScanAuth.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\GateCost",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/GateCost.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\N8n\\Restart",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/N8n\/Restart.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\N8n\\Logs",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/N8n\/Logs.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\N8n\\Stop",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/N8n\/Stop.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\N8n\\Start",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/N8n\/Start.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Seed",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Seed.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\WorkerLogs",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/WorkerLogs.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\DepsAdd",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/DepsAdd.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\ScanCells",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/ScanCells.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Status",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Status.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Forms\\TestScan",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Forms\/TestScan.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Repair",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Repair.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Audit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Audit.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\DiffFormat",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/DiffFormat.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\CopilotValidate",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/CopilotValidate.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\DB\\SlowScan",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/DB\/SlowScan.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\BuildCommand",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/BuildCommand.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\SelfHeal",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/SelfHeal.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\CspAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/CspAudit.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\API\\SchemaValidate",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/API\/SchemaValidate.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\AutoRun",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/AutoRun.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\PriorityBuildCommand",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/PriorityBuildCommand.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\EmailScan",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/EmailScan.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\PublicPages\\Import",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/PublicPages\/Import.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\PublicPages\\Report",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/PublicPages\/Report.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\PublicPages\\Audit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/PublicPages\/Audit.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\PublicPages\\Run",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/PublicPages\/Run.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Docs\\AutoSync",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Docs\/AutoSync.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\PRCreate",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/PRCreate.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\ChatGovernanceIndex",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/ChatGovernanceIndex.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\FormTestScan",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/FormTestScan.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Run",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Run.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\ManualIndex",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/ManualIndex.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\ManualRun",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/ManualRun.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\SqlCheck",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/SqlCheck.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Observe\\Patch",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Observe\/Patch.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Observe\\Scan",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Observe\/Scan.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Observe\\Map",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Observe\/Map.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Observe\\Cost",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Observe\/Cost.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Observe\\Snapshot",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Observe\/Snapshot.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Observe\\Regression",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Observe\/Regression.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Observe\\Hash",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Observe\/Hash.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\Observe\\Suggest",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/Observe\/Suggest.php"
-        },
-        {
-            "class": "App\\Commands\\AIOps\\RunGraph",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AIOps\/RunGraph.php"
-        },
-        {
-            "class": "App\\Commands\\Master\\Health\\Docs",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Master\/Health\/Docs.php"
-        },
-        {
-            "class": "App\\Commands\\Master\\Health\\Models",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Master\/Health\/Models.php"
-        },
-        {
-            "class": "App\\Commands\\Master\\Health\\Dependencies",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Master\/Health\/Dependencies.php"
-        },
-        {
-            "class": "App\\Commands\\Master\\Health\\Routes",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Master\/Health\/Routes.php"
-        },
-        {
-            "class": "App\\Commands\\Master\\Health\\Views",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Master\/Health\/Views.php"
-        },
-        {
-            "class": "App\\Commands\\Master\\Health\\Services",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Master\/Health\/Services.php"
-        },
-        {
-            "class": "App\\Commands\\Master\\Health\\Commands",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Master\/Health\/Commands.php"
-        },
-        {
-            "class": "App\\Commands\\Master\\Health\\Controllers",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Master\/Health\/Controllers.php"
-        },
-        {
-            "class": "App\\Commands\\Master\\Health\\Logs",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Master\/Health\/Logs.php"
-        },
-        {
-            "class": "App\\Commands\\Master\\KnowledgeGraphBuild",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Master\/KnowledgeGraphBuild.php"
-        },
-        {
-            "class": "App\\Commands\\Master\\RunAll",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Master\/RunAll.php"
-        },
-        {
-            "class": "App\\Commands\\GapTrackerSync",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/GapTrackerSync.php"
-        },
-        {
-            "class": "App\\Commands\\App\\APIList",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/App\/APIList.php"
-        },
-        {
-            "class": "App\\Commands\\App\\Test",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/App\/Test.php"
-        },
-        {
-            "class": "App\\Commands\\App\\CoverageGate",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/App\/CoverageGate.php"
-        },
-        {
-            "class": "App\\Commands\\App\\ControllerAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/App\/ControllerAudit.php"
-        },
-        {
-            "class": "App\\Commands\\App\\APIAuditPro",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/App\/APIAuditPro.php"
-        },
-        {
-            "class": "App\\Commands\\App\\Healthcheck",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/App\/Healthcheck.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\SyncAllDocs",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/SyncAllDocs.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\ModulesMap",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/ModulesMap.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\RoutesInventory",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/RoutesInventory.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\FullDocsAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/FullDocsAudit.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\Generate\\DocsReadmeBuilder",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/Generate\/DocsReadmeBuilder.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\SyncDocsSystem",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/SyncDocsSystem.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\DatabaseMap",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/DatabaseMap.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\ArchitectureMap",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/ArchitectureMap.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\Exports\\ExportViewTxt",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/Exports\/ExportViewTxt.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\SparkCommandsInventory",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/SparkCommandsInventory.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\GenerateMissingDocs",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/GenerateMissingDocs.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\DependenciesMap",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/DependenciesMap.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\SyncCodeFromDocs",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/SyncCodeFromDocs.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\ArchitectureGraph",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/ArchitectureGraph.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\Scan\\ViewFiles",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/Scan\/ViewFiles.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\Scan\\ViewDirectories",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/Scan\/ViewDirectories.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\Scan\\ControllersList",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/Scan\/ControllersList.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\Scan\\ServiceList",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/Scan\/ServiceList.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\InventoryDocs",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/InventoryDocs.php"
-        },
-        {
-            "class": "App\\Commands\\Docs\\AuditDocs",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Docs\/AuditDocs.php"
-        },
-        {
-            "class": "App\\Commands\\PurgeFastCGI",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/PurgeFastCGI.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Health\\Healthcheck",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Health\/Healthcheck.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\BaseOpsCommand",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/BaseOpsCommand.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\ProposePr",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/ProposePr.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\FetchCommands",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/FetchCommands.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\PHPExtensionsAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/PHPExtensionsAudit.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Diagnostics\\FilesystemScan",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Diagnostics\/FilesystemScan.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Email\\Test",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Email\/Test.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Email\\QueueScan",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Email\/QueueScan.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Email\\Healthcheck",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Email\/Healthcheck.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\WalletIntegrity",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/WalletIntegrity.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Sync",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Sync.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\NextSteps",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/NextSteps.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Report",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Report.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\ModelLimitAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/ModelLimitAudit.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\ConfigLint",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/ConfigLint.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Subs\\Doctor",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Subs\/Doctor.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Subs\\Status",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Subs\/Status.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Subs\\Repair",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Subs\/Repair.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Subs\\Audit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Subs\/Audit.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\DriftScan",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/DriftScan.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\EnvSnapshot",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/EnvSnapshot.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\SelfHeal",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/SelfHeal.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Server\\NginxStatus",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Server\/NginxStatus.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\VPSSnapshot",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/VPSSnapshot.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Work",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Work.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\BuildConsoleRegistry",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/BuildConsoleRegistry.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\NextStepsSync",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/NextStepsSync.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\FilesystemLint",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/FilesystemLint.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\DoctorFull",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/DoctorFull.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Commands\\Inventory",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Commands\/Inventory.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Commands\\MissingFromConsole",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Commands\/MissingFromConsole.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Commands\\Audit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Commands\/Audit.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Commands\\Autofix",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Commands\/Autofix.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Commands\\Lint",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Commands\/Lint.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\NextStepsSyncManual",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/NextStepsSyncManual.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\DiffWallet",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/DiffWallet.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\LoggerTest",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/LoggerTest.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\AnalyzeCommands",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/AnalyzeCommands.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\CiPrepare",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/CiPrepare.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\PHP\\FpmHealth",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/PHP\/FpmHealth.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Diff",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Diff.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\NetworkMatrix",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/NetworkMatrix.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\AppUpdate",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/AppUpdate.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\FilesystemFix",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/FilesystemFix.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Logs\\Watch",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Logs\/Watch.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\Logs\\Scan",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/Logs\/Scan.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\DreamHost\\DnsVerify",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/DreamHost\/DnsVerify.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\DreamHost\\EmailAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/DreamHost\/EmailAudit.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\DreamHost\\EmailList",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/DreamHost\/EmailList.php"
-        },
-        {
-            "class": "App\\Commands\\Ops\\DreamHost\\Limits",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Ops\/DreamHost\/Limits.php"
-        },
-        {
-            "class": "App\\Commands\\ForecastEvaluate",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/ForecastEvaluate.php"
-        },
-        {
-            "class": "App\\Commands\\SecurityCspAudit",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/SecurityCspAudit.php"
-        },
-        {
-            "class": "App\\Commands\\ControllerProfile",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/ControllerProfile.php"
-        },
-        {
-            "class": "App\\Commands\\LogsTest",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/LogsTest.php"
+            "class": "App\\Commands\\Marketing\\AuditDistribution",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Marketing\/AuditDistribution.php"
         },
         {
             "class": "App\\Commands\\SafeBaseCommand",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/SafeBaseCommand.php"
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/SafeBaseCommand.php"
         },
         {
-            "class": "App\\Commands\\Runtime\\SparkDoctor",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Runtime\/SparkDoctor.php"
+            "class": "App\\Commands\\RunAutomationQueue",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/RunAutomationQueue.php"
         },
         {
-            "class": "App\\Commands\\Runtime\\SparkOptimize",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Runtime\/SparkOptimize.php"
+            "class": "App\\Commands\\Env\\EnvDoctor",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Env\/EnvDoctor.php"
         },
         {
-            "class": "App\\Commands\\Runtime\\Diagnose502",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Runtime\/Diagnose502.php"
+            "class": "App\\Commands\\Ops\\NetworkMatrix",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/NetworkMatrix.php"
         },
         {
-            "class": "App\\Commands\\Runtime\\SparkDoctorRuntime",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Runtime\/SparkDoctorRuntime.php"
+            "class": "App\\Commands\\Ops\\ConfigLint",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/ConfigLint.php"
         },
         {
-            "class": "App\\Commands\\Runtime\\CacheBoot",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Runtime\/CacheBoot.php"
+            "class": "App\\Commands\\Ops\\WalletIntegrity",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/WalletIntegrity.php"
         },
         {
-            "class": "App\\Commands\\Runtime\\SparkFix",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Runtime\/SparkFix.php"
+            "class": "App\\Commands\\Ops\\Sync",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Sync.php"
         },
         {
-            "class": "App\\Commands\\Runtime\\Triage",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Runtime\/Triage.php"
+            "class": "App\\Commands\\Ops\\BuildConsoleRegistry",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/BuildConsoleRegistry.php"
         },
         {
-            "class": "App\\Commands\\AppUpdate",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/AppUpdate.php"
+            "class": "App\\Commands\\Ops\\ModelLimitAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/ModelLimitAudit.php"
         },
         {
-            "class": "App\\Commands\\Database\\Inventory",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Database\/Inventory.php"
+            "class": "App\\Commands\\Ops\\NextStepsSync",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/NextStepsSync.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\NextStepsSyncManual",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/NextStepsSyncManual.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Report",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Report.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\SelfHeal",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/SelfHeal.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\DoctorFull",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/DoctorFull.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\ProposePr",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/ProposePr.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Work",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Work.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Diff",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Diff.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\AppUpdate",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/AppUpdate.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Commands\\Audit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Commands\/Audit.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Commands\\Autofix",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Commands\/Autofix.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Commands\\Inventory",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Commands\/Inventory.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Commands\\Lint",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Commands\/Lint.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Commands\\MissingFromConsole",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Commands\/MissingFromConsole.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\AnalyzeCommands",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/AnalyzeCommands.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\DriftScan",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/DriftScan.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\FetchCommands",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/FetchCommands.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Grep",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Grep.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\BaseOpsCommand",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/BaseOpsCommand.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Diagnostics\\FilesystemScan",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Diagnostics\/FilesystemScan.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\DreamHost\\DnsVerify",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/DreamHost\/DnsVerify.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\DreamHost\\EmailAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/DreamHost\/EmailAudit.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\DreamHost\\EmailList",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/DreamHost\/EmailList.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\DreamHost\\Limits",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/DreamHost\/Limits.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Email\\Healthcheck",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Email\/Healthcheck.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Email\\QueueScan",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Email\/QueueScan.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Email\\Test",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Email\/Test.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Health\\Healthcheck",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Health\/Healthcheck.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Logs\\Scan",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Logs\/Scan.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Logs\\Watch",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Logs\/Watch.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\PHP\\FpmHealth",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/PHP\/FpmHealth.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Server\\NginxStatus",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Server\/NginxStatus.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\TailLogs",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/TailLogs.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\VPSSnapshot",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/VPSSnapshot.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\PHPExtensionsAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/PHPExtensionsAudit.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\NextSteps",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/NextSteps.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Subs\\Audit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Subs\/Audit.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Subs\\Doctor",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Subs\/Doctor.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Subs\\Repair",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Subs\/Repair.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\Subs\\Status",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/Subs\/Status.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\FilesystemLint",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/FilesystemLint.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\LoggerTest",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/LoggerTest.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\EnvSnapshot",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/EnvSnapshot.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\CiPrepare",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/CiPrepare.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\FilesystemFix",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/FilesystemFix.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\DiffWallet",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/DiffWallet.php"
+        },
+        {
+            "class": "App\\Commands\\Ops\\GrepSearch",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ops\/GrepSearch.php"
+        },
+        {
+            "class": "App\\Commands\\Master\\Health\\Commands",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Master\/Health\/Commands.php"
+        },
+        {
+            "class": "App\\Commands\\Master\\Health\\Controllers",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Master\/Health\/Controllers.php"
+        },
+        {
+            "class": "App\\Commands\\Master\\Health\\Dependencies",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Master\/Health\/Dependencies.php"
+        },
+        {
+            "class": "App\\Commands\\Master\\Health\\Docs",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Master\/Health\/Docs.php"
+        },
+        {
+            "class": "App\\Commands\\Master\\Health\\Logs",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Master\/Health\/Logs.php"
+        },
+        {
+            "class": "App\\Commands\\Master\\Health\\Models",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Master\/Health\/Models.php"
+        },
+        {
+            "class": "App\\Commands\\Master\\Health\\Routes",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Master\/Health\/Routes.php"
+        },
+        {
+            "class": "App\\Commands\\Master\\Health\\Services",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Master\/Health\/Services.php"
+        },
+        {
+            "class": "App\\Commands\\Master\\Health\\Views",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Master\/Health\/Views.php"
+        },
+        {
+            "class": "App\\Commands\\Master\\KnowledgeGraphBuild",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Master\/KnowledgeGraphBuild.php"
+        },
+        {
+            "class": "App\\Commands\\Master\\RunAll",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Master\/RunAll.php"
+        },
+        {
+            "class": "App\\Commands\\Gtm\\CronRouteSecurityValidation",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Gtm\/CronRouteSecurityValidation.php"
+        },
+        {
+            "class": "App\\Commands\\Gtm\\HealthSnapshot",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Gtm\/HealthSnapshot.php"
+        },
+        {
+            "class": "App\\Commands\\Gtm\\LaunchAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Gtm\/LaunchAudit.php"
+        },
+        {
+            "class": "App\\Commands\\Gtm\\LaunchSmoke",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Gtm\/LaunchSmoke.php"
+        },
+        {
+            "class": "App\\Commands\\Content\\EngineSmoke",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Content\/EngineSmoke.php"
+        },
+        {
+            "class": "App\\Commands\\Content\\IngestSample",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Content\/IngestSample.php"
+        },
+        {
+            "class": "App\\Commands\\Growth\\RetentionWatch",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Growth\/RetentionWatch.php"
+        },
+        {
+            "class": "App\\Commands\\Audit\\NodeAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Audit\/NodeAudit.php"
+        },
+        {
+            "class": "App\\Commands\\Audit\\All",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Audit\/All.php"
+        },
+        {
+            "class": "App\\Commands\\Audit\\Psr4",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Audit\/Psr4.php"
+        },
+        {
+            "class": "App\\Commands\\GitHub\\SearchRepo",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/GitHub\/SearchRepo.php"
+        },
+        {
+            "class": "App\\Commands\\GitHub\\WorkspaceRepair",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/GitHub\/WorkspaceRepair.php"
+        },
+        {
+            "class": "App\\Commands\\GitHub\\WorkspaceGuard",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/GitHub\/WorkspaceGuard.php"
+        },
+        {
+            "class": "App\\Commands\\GitHub\\PullSafe",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/GitHub\/PullSafe.php"
+        },
+        {
+            "class": "App\\Commands\\GitHub\\SyncSafe",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/GitHub\/SyncSafe.php"
+        },
+        {
+            "class": "App\\Commands\\GitHub\\Branch",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/GitHub\/Branch.php"
+        },
+        {
+            "class": "App\\Commands\\GitHub\\Commit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/GitHub\/Commit.php"
+        },
+        {
+            "class": "App\\Commands\\GitHub\\CreatePR",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/GitHub\/CreatePR.php"
+        },
+        {
+            "class": "App\\Commands\\GitHub\\Health",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/GitHub\/Health.php"
+        },
+        {
+            "class": "App\\Commands\\GitHub\\Pull",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/GitHub\/Pull.php"
+        },
+        {
+            "class": "App\\Commands\\GitHub\\Push",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/GitHub\/Push.php"
+        },
+        {
+            "class": "App\\Commands\\GitHub\\Status",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/GitHub\/Status.php"
+        },
+        {
+            "class": "App\\Commands\\GitHub\\Sync",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/GitHub\/Sync.php"
+        },
+        {
+            "class": "App\\Commands\\Test\\RedisPing",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Test\/RedisPing.php"
+        },
+        {
+            "class": "App\\Commands\\Test\\Email",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Test\/Email.php"
+        },
+        {
+            "class": "App\\Commands\\PurgeFastCGI",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/PurgeFastCGI.php"
+        },
+        {
+            "class": "App\\Commands\\NewsAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/NewsAudit.php"
+        },
+        {
+            "class": "App\\Commands\\SecurityCspAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/SecurityCspAudit.php"
+        },
+        {
+            "class": "App\\Commands\\RestartSafe",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/RestartSafe.php"
+        },
+        {
+            "class": "App\\Commands\\Ux\\JourneyAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ux\/JourneyAudit.php"
+        },
+        {
+            "class": "App\\Commands\\MditNavComputeDaily",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/MditNavComputeDaily.php"
+        },
+        {
+            "class": "App\\Commands\\Investments\\EconomyUpdateAll",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Investments\/EconomyUpdateAll.php"
+        },
+        {
+            "class": "App\\Commands\\Auth\\Audit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Auth\/Audit.php"
+        },
+        {
+            "class": "App\\Commands\\Auth\\FunnelCheck",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Auth\/FunnelCheck.php"
+        },
+        {
+            "class": "App\\Commands\\Auth\\SmokeTest",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Auth\/SmokeTest.php"
+        },
+        {
+            "class": "App\\Commands\\Auth\\FlowSmoke",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Auth\/FlowSmoke.php"
+        },
+        {
+            "class": "App\\Commands\\Auth\\BaselineCapture",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Auth\/BaselineCapture.php"
+        },
+        {
+            "class": "App\\Commands\\Auth\\BaselineRestore",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Auth\/BaselineRestore.php"
+        },
+        {
+            "class": "App\\Commands\\Auth\\Smoke",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Auth\/Smoke.php"
+        },
+        {
+            "class": "App\\Commands\\Auth\\BaselineDiff",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Auth\/BaselineDiff.php"
+        },
+        {
+            "class": "App\\Commands\\Auth\\SurfaceScan",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Auth\/SurfaceScan.php"
         },
         {
             "class": "App\\Commands\\Database\\ApplyDocs",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Database\/ApplyDocs.php"
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Database\/ApplyDocs.php"
+        },
+        {
+            "class": "App\\Commands\\Database\\Inventory",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Database\/Inventory.php"
         },
         {
             "class": "App\\Commands\\Database\\MigrateDryRun",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Database\/MigrateDryRun.php"
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Database\/MigrateDryRun.php"
         },
         {
             "class": "App\\Commands\\Database\\Drift",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Database\/Drift.php"
-        },
-        {
-            "class": "App\\Commands\\Logs\\CheckServerLogs",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Logs\/CheckServerLogs.php"
-        },
-        {
-            "class": "App\\Commands\\Logs\\Doctor",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Logs\/Doctor.php"
-        },
-        {
-            "class": "App\\Commands\\Logs\\EnableFullLogging",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Logs\/EnableFullLogging.php"
-        },
-        {
-            "class": "App\\Commands\\Logs\\Summarize",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Logs\/Summarize.php"
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Database\/Drift.php"
         },
         {
             "class": "App\\Commands\\Logs\\SummarizeAll",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Logs\/SummarizeAll.php"
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Logs\/SummarizeAll.php"
         },
         {
             "class": "App\\Commands\\Logs\\Healthcheck",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/Logs\/Healthcheck.php"
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Logs\/Healthcheck.php"
         },
         {
-            "class": "App\\Commands\\ConfigClear",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/ConfigClear.php"
+            "class": "App\\Commands\\Logs\\Doctor",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Logs\/Doctor.php"
         },
         {
-            "class": "App\\Commands\\DreamHost\\EnvDebug",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/DreamHost\/EnvDebug.php"
+            "class": "App\\Commands\\Logs\\EnableFullLogging",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Logs\/EnableFullLogging.php"
         },
         {
-            "class": "App\\Commands\\DreamHost\\ImapTest",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/DreamHost\/ImapTest.php"
+            "class": "App\\Commands\\Logs\\CheckServerLogs",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Logs\/CheckServerLogs.php"
+        },
+        {
+            "class": "App\\Commands\\Logs\\Summarize",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Logs\/Summarize.php"
+        },
+        {
+            "class": "App\\Commands\\Logs\\Errors",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Logs\/Errors.php"
+        },
+        {
+            "class": "App\\Commands\\Logs\\FullReport",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Logs\/FullReport.php"
+        },
+        {
+            "class": "App\\Commands\\Logs\\Test",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Logs\/Test.php"
+        },
+        {
+            "class": "App\\Commands\\AppUpdate",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AppUpdate.php"
+        },
+        {
+            "class": "App\\Commands\\App\\Healthcheck",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/App\/Healthcheck.php"
+        },
+        {
+            "class": "App\\Commands\\App\\Test",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/App\/Test.php"
+        },
+        {
+            "class": "App\\Commands\\App\\CoverageGate",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/App\/CoverageGate.php"
+        },
+        {
+            "class": "App\\Commands\\App\\APIList",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/App\/APIList.php"
+        },
+        {
+            "class": "App\\Commands\\App\\APIAuditPro",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/App\/APIAuditPro.php"
+        },
+        {
+            "class": "App\\Commands\\App\\ControllerAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/App\/ControllerAudit.php"
+        },
+        {
+            "class": "App\\Commands\\CompatAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/CompatAudit.php"
+        },
+        {
+            "class": "App\\Commands\\DiscordCustomSend",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/DiscordCustomSend.php"
+        },
+        {
+            "class": "App\\Commands\\Runtime\\SparkFix",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Runtime\/SparkFix.php"
+        },
+        {
+            "class": "App\\Commands\\Runtime\\CacheBoot",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Runtime\/CacheBoot.php"
+        },
+        {
+            "class": "App\\Commands\\Runtime\\SparkDoctorRuntime",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Runtime\/SparkDoctorRuntime.php"
+        },
+        {
+            "class": "App\\Commands\\Runtime\\Diagnose502",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Runtime\/Diagnose502.php"
+        },
+        {
+            "class": "App\\Commands\\Runtime\\SparkDoctor",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Runtime\/SparkDoctor.php"
+        },
+        {
+            "class": "App\\Commands\\Runtime\\SparkOptimize",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Runtime\/SparkOptimize.php"
+        },
+        {
+            "class": "App\\Commands\\Runtime\\Triage",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Runtime\/Triage.php"
+        },
+        {
+            "class": "App\\Commands\\Runtime\\Check",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Runtime\/Check.php"
+        },
+        {
+            "class": "App\\Commands\\Config\\Drift",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Config\/Drift.php"
+        },
+        {
+            "class": "App\\Commands\\Config\\Clear",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Config\/Clear.php"
+        },
+        {
+            "class": "App\\Commands\\Config\\Lint",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Config\/Lint.php"
+        },
+        {
+            "class": "App\\Commands\\Security\\SecretsAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Security\/SecretsAudit.php"
+        },
+        {
+            "class": "App\\Commands\\Security\\GenerateCI4Key",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Security\/GenerateCI4Key.php"
+        },
+        {
+            "class": "App\\Commands\\Security\\GenerateKey",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Security\/GenerateKey.php"
+        },
+        {
+            "class": "App\\Commands\\API\\ApiAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/API\/ApiAudit.php"
+        },
+        {
+            "class": "App\\Commands\\API\\ApiFiltersCheck",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/API\/ApiFiltersCheck.php"
+        },
+        {
+            "class": "App\\Commands\\API\\ApiList",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/API\/ApiList.php"
+        },
+        {
+            "class": "App\\Commands\\API\\ApiPermissions",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/API\/ApiPermissions.php"
+        },
+        {
+            "class": "App\\Commands\\API\\ApiRateLimitCheck",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/API\/ApiRateLimitCheck.php"
+        },
+        {
+            "class": "App\\Commands\\API\\ApiVersioningCheck",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/API\/ApiVersioningCheck.php"
+        },
+        {
+            "class": "App\\Commands\\API\\ApiTestUrl",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/API\/ApiTestUrl.php"
+        },
+        {
+            "class": "App\\Commands\\API\\DocsScrapeApi",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/API\/DocsScrapeApi.php"
+        },
+        {
+            "class": "App\\Commands\\API\\ApiResearch",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/API\/ApiResearch.php"
+        },
+        {
+            "class": "App\\Commands\\API\\ApiInventory",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/API\/ApiInventory.php"
+        },
+        {
+            "class": "App\\Commands\\API\\ApiDiff",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/API\/ApiDiff.php"
+        },
+        {
+            "class": "App\\Commands\\Scrapers\\EmailScraperAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Scrapers\/EmailScraperAudit.php"
+        },
+        {
+            "class": "App\\Commands\\Fix503",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Fix503.php"
+        },
+        {
+            "class": "App\\Commands\\Health\\Cache",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Health\/Cache.php"
+        },
+        {
+            "class": "App\\Commands\\Health\\Disk",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Health\/Disk.php"
+        },
+        {
+            "class": "App\\Commands\\Health\\GitSafety",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Health\/GitSafety.php"
+        },
+        {
+            "class": "App\\Commands\\Health\\Services",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Health\/Services.php"
+        },
+        {
+            "class": "App\\Commands\\CacheAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/CacheAudit.php"
+        },
+        {
+            "class": "App\\Commands\\Performance\\K6Run",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Performance\/K6Run.php"
+        },
+        {
+            "class": "App\\Commands\\Logger\\Audit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Logger\/Audit.php"
+        },
+        {
+            "class": "App\\Commands\\Routes\\Benchmark",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Routes\/Benchmark.php"
+        },
+        {
+            "class": "App\\Commands\\Routes\\Debug",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Routes\/Debug.php"
+        },
+        {
+            "class": "App\\Commands\\Routes\\Docs",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Routes\/Docs.php"
+        },
+        {
+            "class": "App\\Commands\\Routes\\Repair",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Routes\/Repair.php"
+        },
+        {
+            "class": "App\\Commands\\Routes\\Reconcile",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Routes\/Reconcile.php"
+        },
+        {
+            "class": "App\\Commands\\Routes\\AuthAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Routes\/AuthAudit.php"
+        },
+        {
+            "class": "App\\Commands\\ForecastEvaluate",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/ForecastEvaluate.php"
+        },
+        {
+            "class": "App\\Commands\\Spark\\InfraServerAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Spark\/InfraServerAudit.php"
+        },
+        {
+            "class": "App\\Commands\\Spark\\Reset",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Spark\/Reset.php"
+        },
+        {
+            "class": "App\\Commands\\Spark\\Doctor",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Spark\/Doctor.php"
+        },
+        {
+            "class": "App\\Commands\\Spark\\Fix",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Spark\/Fix.php"
+        },
+        {
+            "class": "App\\Commands\\Spark\\CommandGraph",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Spark\/CommandGraph.php"
+        },
+        {
+            "class": "App\\Commands\\Spark\\RegistryAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Spark\/RegistryAudit.php"
+        },
+        {
+            "class": "App\\Commands\\WalletsWarmSummaryCache",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/WalletsWarmSummaryCache.php"
+        },
+        {
+            "class": "App\\Commands\\Revenue\\CostForecast",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Revenue\/CostForecast.php"
+        },
+        {
+            "class": "App\\Commands\\Revenue\\StreamsScan",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Revenue\/StreamsScan.php"
+        },
+        {
+            "class": "App\\Commands\\Codex\\ReviewCommit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Codex\/ReviewCommit.php"
+        },
+        {
+            "class": "App\\Commands\\Codex\\ReviewList",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Codex\/ReviewList.php"
+        },
+        {
+            "class": "App\\Commands\\Codex\\ReviewPrOutbox",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Codex\/ReviewPrOutbox.php"
+        },
+        {
+            "class": "App\\Commands\\Codex\\ReviewPublish",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Codex\/ReviewPublish.php"
+        },
+        {
+            "class": "App\\Commands\\Codex\\Instructions\\Summarize",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Codex\/Instructions\/Summarize.php"
+        },
+        {
+            "class": "App\\Commands\\Codex\\Instructions\\DevOpsReview",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Codex\/Instructions\/DevOpsReview.php"
+        },
+        {
+            "class": "App\\Commands\\Codex\\Instructions\\Audit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Codex\/Instructions\/Audit.php"
+        },
+        {
+            "class": "App\\Commands\\Codex\\Index",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Codex\/Index.php"
+        },
+        {
+            "class": "App\\Commands\\Codex\\Status",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Codex\/Status.php"
+        },
+        {
+            "class": "App\\Commands\\Codex\\Gate",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Codex\/Gate.php"
+        },
+        {
+            "class": "App\\Commands\\Codex\\GateSeverity",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Codex\/GateSeverity.php"
+        },
+        {
+            "class": "App\\Commands\\Codex\\Audit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Codex\/Audit.php"
+        },
+        {
+            "class": "App\\Commands\\Codex\\ContinueAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Codex\/ContinueAudit.php"
+        },
+        {
+            "class": "App\\Commands\\Codex\\Review",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Codex\/Review.php"
+        },
+        {
+            "class": "App\\Commands\\Platform\\ControlAnalyze",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Platform\/ControlAnalyze.php"
+        },
+        {
+            "class": "App\\Commands\\Platform\\ControlCollect",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Platform\/ControlCollect.php"
+        },
+        {
+            "class": "App\\Commands\\Platform\\ControlDispatch",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Platform\/ControlDispatch.php"
+        },
+        {
+            "class": "App\\Commands\\Platform\\ControlRun",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Platform\/ControlRun.php"
+        },
+        {
+            "class": "App\\Commands\\Platform\\CronDispatch",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Platform\/CronDispatch.php"
+        },
+        {
+            "class": "App\\Commands\\Platform\\EdgeSnapshot",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Platform\/EdgeSnapshot.php"
+        },
+        {
+            "class": "App\\Commands\\Platform\\RunPlatform",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Platform\/RunPlatform.php"
+        },
+        {
+            "class": "App\\Commands\\Platform\\RunReport",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Platform\/RunReport.php"
+        },
+        {
+            "class": "App\\Commands\\Platform\\RunSubsystem",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Platform\/RunSubsystem.php"
+        },
+        {
+            "class": "App\\Commands\\Mail\\Send",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Mail\/Send.php"
+        },
+        {
+            "class": "App\\Commands\\Mail\\SendTest",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Mail\/SendTest.php"
+        },
+        {
+            "class": "App\\Commands\\Mail\\Test",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Mail\/Test.php"
+        },
+        {
+            "class": "App\\Commands\\Mail\\Verify",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Mail\/Verify.php"
+        },
+        {
+            "class": "App\\Commands\\Research\\DailyMarketReport",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Research\/DailyMarketReport.php"
+        },
+        {
+            "class": "App\\Commands\\Research\\FinancialIntelligenceSignals",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Research\/FinancialIntelligenceSignals.php"
+        },
+        {
+            "class": "App\\Commands\\Research\\FinancialNewsCollect",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Research\/FinancialNewsCollect.php"
+        },
+        {
+            "class": "App\\Commands\\Research\\GoogleFinancialScan",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Research\/GoogleFinancialScan.php"
+        },
+        {
+            "class": "App\\Commands\\Research\\GoogleScan",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Research\/GoogleScan.php"
+        },
+        {
+            "class": "App\\Commands\\Research\\MarketDataCompile",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Research\/MarketDataCompile.php"
+        },
+        {
+            "class": "App\\Commands\\Research\\ResearchPipeline",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Research\/ResearchPipeline.php"
+        },
+        {
+            "class": "App\\Commands\\Research\\WatchlistCleanup",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Research\/WatchlistCleanup.php"
+        },
+        {
+            "class": "App\\Commands\\Research\\WeeklyMarketReport",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Research\/WeeklyMarketReport.php"
+        },
+        {
+            "class": "App\\Commands\\Research\\BaseResearchTaskCommand",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Research\/BaseResearchTaskCommand.php"
+        },
+        {
+            "class": "App\\Commands\\Research\\EarningsCalendar",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Research\/EarningsCalendar.php"
+        },
+        {
+            "class": "App\\Commands\\Research\\ShortInterestScan",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Research\/ShortInterestScan.php"
+        },
+        {
+            "class": "App\\Commands\\Research\\FinancialKnowledge",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Research\/FinancialKnowledge.php"
+        },
+        {
+            "class": "App\\Commands\\Research\\ThinkOrSwimImport",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Research\/ThinkOrSwimImport.php"
+        },
+        {
+            "class": "App\\Commands\\Chat\\Audit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Chat\/Audit.php"
+        },
+        {
+            "class": "App\\Commands\\Chat\\Repair",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Chat\/Repair.php"
+        },
+        {
+            "class": "App\\Commands\\Chat\\Restart",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Chat\/Restart.php"
+        },
+        {
+            "class": "App\\Commands\\Chat\\Start",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Chat\/Start.php"
+        },
+        {
+            "class": "App\\Commands\\Chat\\Stop",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Chat\/Stop.php"
+        },
+        {
+            "class": "App\\Commands\\Chat\\Logs",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Chat\/Logs.php"
+        },
+        {
+            "class": "App\\Commands\\Chat\\Status",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Chat\/Status.php"
+        },
+        {
+            "class": "App\\Commands\\Chat\\Unblock",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Chat\/Unblock.php"
         },
         {
             "class": "App\\Commands\\DreamHost\\DNSTest",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/DreamHost\/DNSTest.php"
-        },
-        {
-            "class": "App\\Commands\\DreamHost\\ImapCapabilities",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/DreamHost\/ImapCapabilities.php"
-        },
-        {
-            "class": "App\\Commands\\DreamHost\\SSLTest",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/DreamHost\/SSLTest.php"
-        },
-        {
-            "class": "App\\Commands\\DreamHost\\SmtpProbe",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/DreamHost\/SmtpProbe.php"
-        },
-        {
-            "class": "App\\Commands\\DreamHost\\ImapFlagSweep",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/DreamHost\/ImapFlagSweep.php"
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/DreamHost\/DNSTest.php"
         },
         {
             "class": "App\\Commands\\DreamHost\\PortTest",
-            "file": "\/workspace\/MyMIWallet-Next\/app\/Commands\/DreamHost\/PortTest.php"
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/DreamHost\/PortTest.php"
+        },
+        {
+            "class": "App\\Commands\\DreamHost\\SSLTest",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/DreamHost\/SSLTest.php"
+        },
+        {
+            "class": "App\\Commands\\DreamHost\\SmtpProbe",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/DreamHost\/SmtpProbe.php"
+        },
+        {
+            "class": "App\\Commands\\DreamHost\\EnvDebug",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/DreamHost\/EnvDebug.php"
+        },
+        {
+            "class": "App\\Commands\\DreamHost\\ImapCapabilities",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/DreamHost\/ImapCapabilities.php"
+        },
+        {
+            "class": "App\\Commands\\DreamHost\\ImapFlagSweep",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/DreamHost\/ImapFlagSweep.php"
+        },
+        {
+            "class": "App\\Commands\\DreamHost\\ImapTest",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/DreamHost\/ImapTest.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\RepairRun",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/RepairRun.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Ingest",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Ingest.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Forms\\TestScan",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Forms\/TestScan.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\DedupeReport",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/DedupeReport.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\MissingViewScan",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/MissingViewScan.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\ExecuteDocs",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/ExecuteDocs.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Status",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Status.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Repair",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Repair.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Watch",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Watch.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\ManualRun",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/ManualRun.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\ScanCells",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/ScanCells.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Unlock",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Unlock.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Doctor",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Doctor.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\HealthFull",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/HealthFull.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\CspAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/CspAudit.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\WorkerLogs",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/WorkerLogs.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\SqlCheck",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/SqlCheck.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Docs\\AutoSync",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Docs\/AutoSync.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\AutoFixAnalyze",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/AutoFixAnalyze.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\SuggestRoutes",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/SuggestRoutes.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\PyOps",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/PyOps.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Audit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Audit.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\SelfHeal",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/SelfHeal.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\BuildCommand",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/BuildCommand.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\All",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/All.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\AiopsRepairs",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/AiopsRepairs.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\SyncPerfRoutes",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/SyncPerfRoutes.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\ManualIndex",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/ManualIndex.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Observe\\Scan",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Observe\/Scan.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Observe\\Map",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Observe\/Map.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Observe\\Patch",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Observe\/Patch.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Observe\\Cost",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Observe\/Cost.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Observe\\Hash",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Observe\/Hash.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Observe\\Snapshot",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Observe\/Snapshot.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Observe\\Regression",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Observe\/Regression.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Observe\\Suggest",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Observe\/Suggest.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\DiffFormat",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/DiffFormat.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\GateCost",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/GateCost.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Rollback",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Rollback.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Patch\\Apply",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Patch\/Apply.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Patch\\RiskScore",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Patch\/RiskScore.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Patch\\Validate",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Patch\/Validate.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Patch\\DryRun",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Patch\/DryRun.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Patch\\Hallucination",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Patch\/Hallucination.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\GovernanceAnalyze",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/GovernanceAnalyze.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Routes\\Scan",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Routes\/Scan.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Routes\\Gate",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Routes\/Gate.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Routes\\Regress",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Routes\/Regress.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Routes\\Compare",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Routes\/Compare.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Routes\\ScanAuth",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Routes\/ScanAuth.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\API\\SchemaValidate",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/API\/SchemaValidate.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\DB\\SlowScan",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/DB\/SlowScan.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Redis\\Stats",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Redis\/Stats.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Alerts\\Clean",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Alerts\/Clean.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Alerts\\Worker",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Alerts\/Worker.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Alerts\\Health",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Alerts\/Health.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Alerts\\Check",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Alerts\/Check.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\PublicPages\\Audit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/PublicPages\/Audit.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\PublicPages\\Import",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/PublicPages\/Import.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\PublicPages\\Report",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/PublicPages\/Report.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\PublicPages\\Run",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/PublicPages\/Run.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\N8n\\Logs",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/N8n\/Logs.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\N8n\\Restart",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/N8n\/Restart.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\N8n\\Stop",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/N8n\/Stop.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\N8n\\Start",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/N8n\/Start.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\LogsErrors",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/LogsErrors.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\EmailScan",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/EmailScan.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\ContinueAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/ContinueAudit.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Init",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Init.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\PRAuto",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/PRAuto.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\PRCreate",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/PRCreate.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\ChatGovernanceIndex",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/ChatGovernanceIndex.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\PriorityBuildCommand",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/PriorityBuildCommand.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Seed",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Seed.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\DepsAdd",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/DepsAdd.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\RunGraph",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/RunGraph.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Observe",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Observe.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\AutoRun",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/AutoRun.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Backlog",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Backlog.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\CommandIndex",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/CommandIndex.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\CopilotValidate",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/CopilotValidate.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Run",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Run.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\RepairRunSafe",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/RepairRunSafe.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Worker",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Worker.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\IntegrityScan",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/IntegrityScan.php"
+        },
+        {
+            "class": "App\\Commands\\AIOps\\Errors",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/AIOps\/Errors.php"
+        },
+        {
+            "class": "App\\Commands\\TrafficSpikeGuard",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/TrafficSpikeGuard.php"
+        },
+        {
+            "class": "App\\Commands\\Scanning\\RunScanner",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Scanning\/RunScanner.php"
+        },
+        {
+            "class": "App\\Commands\\Errors\\DispatchAlerts",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Errors\/DispatchAlerts.php"
+        },
+        {
+            "class": "App\\Commands\\Errors\\LearnPatterns",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Errors\/LearnPatterns.php"
+        },
+        {
+            "class": "App\\Commands\\Errors\\ConsolidateErrors",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Errors\/ConsolidateErrors.php"
+        },
+        {
+            "class": "App\\Commands\\Errors\\Diagnose502",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Errors\/Diagnose502.php"
+        },
+        {
+            "class": "App\\Commands\\Errors\\Diagnose503",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Errors\/Diagnose503.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Bench",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Bench.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Chat",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Chat.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Circuit\\Reset",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Circuit\/Reset.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Circuit\\Status",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Circuit\/Status.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Diagnose",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Diagnose.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Docs\\Inventory",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Docs\/Inventory.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Docs\\Sync",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Docs\/Sync.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Doctor",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Doctor.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Embed",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Embed.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\EmbedFile",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/EmbedFile.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Health",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Health.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Logs",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Logs.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Logs\\Export",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Logs\/Export.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Logs\\Tail",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Logs\/Tail.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Modelfile\\Validate",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Modelfile\/Validate.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Models\\CreateModel",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Models\/CreateModel.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Models\\DiffModels",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Models\/DiffModels.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Models\\EnsureModels",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Models\/EnsureModels.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Models\\ExportModels",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Models\/ExportModels.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Models\\ListModels",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Models\/ListModels.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Models\\PruneModels",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Models\/PruneModels.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Models\\PullModel",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Models\/PullModel.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Models\\PushModel",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Models\/PushModel.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Models\\RmModel",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Models\/RmModel.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Models\\ShowModel",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Models\/ShowModel.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Ping",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Ping.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Policy\\Check",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Policy\/Check.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Policy\\Export",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Policy\/Export.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Queue\\Push",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Queue\/Push.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Queue\\Retry",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Queue\/Retry.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Queue\\Stats",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Queue\/Stats.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Queue\\Work",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Queue\/Work.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\RagQuery",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/RagQuery.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Sessions\\ListSessions",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Sessions\/ListSessions.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Sessions\\RmSession",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Sessions\/RmSession.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Sessions\\ShowSession",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Sessions\/ShowSession.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Stream",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Stream.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Version",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Version.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\CircuitStatus",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/CircuitStatus.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\CircuitReset",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/CircuitReset.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\Generate",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/Generate.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\BaseOllamaCommand",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/BaseOllamaCommand.php"
+        },
+        {
+            "class": "App\\Commands\\Ollama\\OllamaRun",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Ollama\/OllamaRun.php"
+        },
+        {
+            "class": "App\\Commands\\Repo\\Health",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Repo\/Health.php"
+        },
+        {
+            "class": "App\\Commands\\Repo\\ClassScan",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Repo\/ClassScan.php"
+        },
+        {
+            "class": "App\\Commands\\Repo\\DiffSplit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Repo\/DiffSplit.php"
+        },
+        {
+            "class": "App\\Commands\\Repo\\ClassTrace",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Repo\/ClassTrace.php"
+        },
+        {
+            "class": "App\\Commands\\Discord\\ProcessQueue",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Discord\/ProcessQueue.php"
+        },
+        {
+            "class": "App\\Commands\\Discord\\Test",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Discord\/Test.php"
+        },
+        {
+            "class": "App\\Commands\\Discord\\TestLiquidity",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Discord\/TestLiquidity.php"
+        },
+        {
+            "class": "App\\Commands\\Discord\\CustomSend",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Discord\/CustomSend.php"
+        },
+        {
+            "class": "App\\Commands\\Discord\\WireCheck",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Discord\/WireCheck.php"
+        },
+        {
+            "class": "App\\Commands\\Discord\\GetList",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Discord\/GetList.php"
+        },
+        {
+            "class": "App\\Commands\\Alerts\\Forecast",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Alerts\/Forecast.php"
+        },
+        {
+            "class": "App\\Commands\\Alerts\\ParseTest",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Alerts\/ParseTest.php"
+        },
+        {
+            "class": "App\\Commands\\Alerts\\Audit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Alerts\/Audit.php"
+        },
+        {
+            "class": "App\\Commands\\Alerts\\FetchRawEmails",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Alerts\/FetchRawEmails.php"
+        },
+        {
+            "class": "App\\Commands\\Alerts\\Ingest",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Alerts\/Ingest.php"
+        },
+        {
+            "class": "App\\Commands\\ControllerProfile",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/ControllerProfile.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\AuditDocs",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/AuditDocs.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\InventoryDocs",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/InventoryDocs.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\DatabaseMap",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/DatabaseMap.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\DependenciesMap",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/DependenciesMap.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Exports\\ExportViewTxt",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Exports\/ExportViewTxt.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\FullDocsAudit",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/FullDocsAudit.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Generate\\DocsReadmeBuilder",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Generate\/DocsReadmeBuilder.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Generate\\ArchitectureMap",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Generate\/ArchitectureMap.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Generate\\MissingDocs",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Generate\/MissingDocs.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Generate\\FormInventory",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Generate\/FormInventory.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Generate\\KnowledgeGraph",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Generate\/KnowledgeGraph.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\ModulesMap",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/ModulesMap.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\RoutesInventory",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/RoutesInventory.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Scan\\ControllersList",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Scan\/ControllersList.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Scan\\ServiceList",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Scan\/ServiceList.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Scan\\ViewDirectories",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Scan\/ViewDirectories.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Scan\\ViewFiles",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Scan\/ViewFiles.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Scan\\OrphanRoutes",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Scan\/OrphanRoutes.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Scan\\OrphanViews",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Scan\/OrphanViews.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Scan\\Routes",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Scan\/Routes.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Scan\\UndocumentedControllers",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Scan\/UndocumentedControllers.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\SparkCommandsInventory",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/SparkCommandsInventory.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\BuildHowItWorksNavigation",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/BuildHowItWorksNavigation.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Test",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Test.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Sync\\CodeFromDocs",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Sync\/CodeFromDocs.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Sync\\AllDocs",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Sync\/AllDocs.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Sync\\DocsSystem",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Sync\/DocsSystem.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Architecture\\Graph",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Architecture\/Graph.php"
+        },
+        {
+            "class": "App\\Commands\\Docs\\Architecture\\Map",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/Docs\/Architecture\/Map.php"
+        },
+        {
+            "class": "App\\Commands\\GapTrackerSync",
+            "file": "\/home\/mymiteam\/mymiwallet\/site\/current\/app\/Commands\/GapTrackerSync.php"
         }
     ]
 }

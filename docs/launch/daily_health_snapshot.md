@@ -261,6 +261,7 @@
 - GET Data => BudgetAPIController::apiBudgetData
 - GET Debug/auth-audit-cache => Debug::authAuditCacheSelfTest
 - GET Debug/whoami => Debug::whoami
+- GET Delete/(:segment)/(:segment) => WalletsController::delete/$1/$2
 - GET Dev/BitcoinTest => App\Controllers\Dev\BitcoinTest::index
 - GET Discord => SupportController::discordOnboarding
 - GET Discord/register => AuthController::register
