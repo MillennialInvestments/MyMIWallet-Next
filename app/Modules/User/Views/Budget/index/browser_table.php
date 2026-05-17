@@ -77,8 +77,8 @@ $epochOf = static function (?string $mdy): int {
         </div>
 
         <div class="d-flex flex-wrap justify-content-lg-end gap-2 w-100 w-lg-auto">
-            <a class="btn btn-success btn-sm text-white" href="<?= site_url('Budget/Add/Income'); ?>">+ Add Income</a>
-            <a class="btn btn-danger btn-sm text-white" href="<?= site_url('Budget/Add/Expense'); ?>">+ Add Expense</a>
+            <a href="#" class="btn btn-success btn-sm text-white dynamicModalLoader" data-formtype="Budget" data-endpoint="Add" data-category="Income" data-accountid="<?= esc($cuID); ?>">+ Add Income</a>
+            <a href="#" class="btn btn-danger btn-sm text-white dynamicModalLoader" data-formtype="Budget" data-endpoint="Add" data-category="Expense" data-accountid="<?= esc($cuID); ?>">+ Add Expense</a>
             <a class="btn btn-secondary btn-sm" href="<?= site_url('Budget/History'); ?>">View History</a>
         </div>
     </div>

@@ -488,7 +488,7 @@ window.addEventListener('load', function(){  // <-- wait until ALL scripts (Boot
             </a>
 
             <button class="btn btn-outline-secondary btn-sm dynamicModalLoader"
-                    data-formtype="Edit"
+                    data-formtype="Wallets"
                     data-endpoint="edit${walletEndpointTokenForCategory()}"
                     data-accountid="${detailAccountId}">
                 <i class="icon ni ni-pen me-1"></i> Edit
@@ -503,15 +503,16 @@ window.addEventListener('load', function(){  // <-- wait until ALL scripts (Boot
                 </button>
             ` : ''}
 
-            <a href="#" class="btn btn-outline-danger btn-sm delete-wallet-button"
+            <a href="#" class="btn btn-outline-danger btn-sm dynamicModalLoader delete-wallet-button"
                 data-id="${deleteTargetId}"
                 data-wallet-id="${deleteTargetId}"
+                data-formtype="Wallets"
+                data-endpoint="deleteWallet"
+                data-accountid="${deleteTargetId}"
                 data-account-id="${childAccountId > 0 ? childAccountId : ''}"
                 data-name="${displayName}"
                 data-type="<?=esc($deleteType)?>"
-                data-bs-toggle="modal"
-                data-bs-target="#deleteWalletModal"
-                onclick="openDeleteModal(event)">
+                data-category="<?=esc($deleteType)?>">
                 <i class="icon ni ni-minus me-1"></i> Delete
             </a>
             </div>

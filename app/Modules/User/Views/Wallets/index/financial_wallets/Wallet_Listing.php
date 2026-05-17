@@ -39,7 +39,7 @@ echo '
                     </li>
                     <li class="' . esc($btnSizing ?? '') . '">
                         <button class="btn dynamicModalLoader"
-                                data-formtype="Edit"
+                                data-formtype="Wallets"
                                 data-endpoint="' . esc($btnID ?? 'editBankAccount') . '"
                                 data-accountid="' . esc($childAccountId) . '">
                             <i class="icon ni ni-pen"></i>
@@ -48,15 +48,16 @@ echo '
                     </li>
                     <li class="' . esc($btnSizing ?? '') . '">
                         <a href="#"
-                           class="delete-wallet-button"
+                           class="dynamicModalLoader delete-wallet-button"
                            data-id="' . esc($deleteTargetId) . '"
                            data-wallet-id="' . esc($deleteTargetId) . '"
+                           data-formtype="Wallets"
+                           data-endpoint="deleteWallet"
+                           data-accountid="' . esc($deleteTargetId) . '"
                            data-account-id="' . esc($childAccountId) . '"
                            data-name="' . esc($deleteName) . '"
                            data-type="Bank"
-                           data-bs-toggle="modal"
-                           data-bs-target="#deleteWalletModal"
-                           onclick="openDeleteModal(event)">
+                           data-category="Bank">
                             <i class="icon ni ni-minus mr-1"></i> <span>Delete</span>
                         </a>
                     </li>
@@ -73,21 +74,22 @@ echo '
                         <li>
                             <a href="#"
                                class="dynamicModalLoader"
-                               data-formtype="Edit"
+                               data-formtype="Wallets"
                                data-endpoint="' . esc($btnID ?? 'editBankAccount') . '"
                                data-accountid="' . esc($childAccountId) . '">Edit</a>
                         </li>
                         <li>
                             <a href="#"
-                               class="delete-wallet-button"
+                               class="dynamicModalLoader delete-wallet-button"
                                data-id="' . esc($deleteTargetId) . '"
                                data-wallet-id="' . esc($deleteTargetId) . '"
+                               data-formtype="Wallets"
+                               data-endpoint="deleteWallet"
+                               data-accountid="' . esc($deleteTargetId) . '"
                                data-account-id="' . esc($childAccountId) . '"
                                data-name="' . esc($deleteName) . '"
                                data-type="Bank"
-                               data-bs-toggle="modal"
-                               data-bs-target="#deleteWalletModal"
-                               onclick="openDeleteModal(event)">Delete</a>
+                               data-category="Bank">Delete</a>
                         </li>
                     </ul>
                 </div>
