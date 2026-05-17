@@ -110,8 +110,8 @@ $subtotalColumnIndex = $isMobile ? 6 : 8;
 <div>
 <?php endif; ?>
   <div class="d-flex flex-wrap justify-content-end gap-2 mb-3">
-    <a class="btn btn-success btn-sm text-white me-md-2" href="<?= site_url('Budget/Add/Income'); ?>">+ Add Income</a>
-    <a class="btn btn-danger btn-sm text-white me-md-2" href="<?= site_url('Budget/Add/Expense'); ?>">+ Add Expense</a>
+    <a href="#" class="btn btn-success btn-sm text-white me-md-2 dynamicModalLoader" data-formtype="Budget" data-endpoint="Add" data-category="Income" data-accountid="<?= esc($cuID); ?>">+ Add Income</a>
+    <a href="#" class="btn btn-danger btn-sm text-white me-md-2 dynamicModalLoader" data-formtype="Budget" data-endpoint="Add" data-category="Expense" data-accountid="<?= esc($cuID); ?>">+ Add Expense</a>
     <a class="btn btn-secondary btn-sm" href="<?= site_url('Budget/History'); ?>">View History</a>
   </div>
   <table class="table table-default budgeting-table default" id="userBudgetingDatatable"

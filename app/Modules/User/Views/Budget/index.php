@@ -483,8 +483,8 @@ $allViewData['userActiveBudgetRecords'] = $renderUserActiveBudgetRecords;
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <a href="<?= site_url('Budget/Add/Income'); ?>" class="btn btn-success mb-2">Add Income</a>
-                <a href="<?= site_url('Budget/Add/Expense'); ?>" class="btn btn-danger mb-2">Add Expense</a>
+                <a href="#" class="btn btn-success mb-2 dynamicModalLoader" data-formtype="Budget" data-endpoint="Add" data-category="Income" data-accountid="<?= esc($cuID); ?>">Add Income</a>
+                <a href="#" class="btn btn-danger mb-2 dynamicModalLoader" data-formtype="Budget" data-endpoint="Add" data-category="Expense" data-accountid="<?= esc($cuID); ?>">Add Expense</a>
                 <a href="<?= site_url('Budget/Add/Debt'); ?>" class="btn btn-warning mb-2">Add Debt</a>
                 <a href="<?= site_url('Budget/Add/Investment'); ?>" class="btn btn-info mb-2">Add Investment</a>
             </div>
