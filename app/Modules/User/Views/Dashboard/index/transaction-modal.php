@@ -7,22 +7,20 @@ helper('url_guard');
 <?php define('TRANSACTION_MODAL_RENDERED', true); ?>
 
 <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" id="transModalDialog">
-        <div class="modal-content" id="loading-content">
-            <?= view('UserModule\Views\Dashboard\index\modal-loading-page'); ?>
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" id="transModalDialog">
+        <div class="modal-content">
+            <div id="loading-content">
+                <?= view('UserModule\Views\Dashboard\index\modal-loading-page'); ?>
+            </div>
+
+            <div id="transactionContainer" class="d-none"></div>
         </div>
-        <div class="modal-content d-none" id="transactionContainer"></div>
     </div>
 </div>
 
 <script <?= $nonce['script'] ?? '' ?>>
 (function () {
     if (window.__transactionModalBound === true) {
-        return;
-    }
-
-    if (!window.bootstrap?.Modal) {
-        console.warn('Bootstrap 5 modal runtime not detected.');
         return;
     }
 
@@ -35,7 +33,6 @@ helper('url_guard');
         return;
     }
 
-    const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
     window.__transactionModalBound = true;
     const modalBaseUrl = "<?= rtrim(mymi_url_guard(site_url('Dashboard/Transaction-Modal'), ['source' => __FILE__, 'line' => __LINE__]), '/') ?>";
     const csrfHeaderName = <?= json_encode(csrf_header()) ?>;
@@ -50,6 +47,25 @@ helper('url_guard');
         '.addCreditAccount': { formtype: 'Add', endpoint: 'addCreditAccount' },
         '.deleteWalletBtn, #deleteWalletBtn': { formtype: 'Delete', endpoint: 'deleteWallet' }
     };
+
+    function getModalAdapter(modalElement) {
+        if (window.bootstrap && window.bootstrap.Modal) {
+            const instance = window.bootstrap.Modal.getOrCreateInstance(modalElement);
+            return {
+                show: () => instance.show(),
+                hide: () => instance.hide()
+            };
+        }
+
+        if (window.jQuery && typeof window.jQuery.fn.modal === 'function') {
+            return {
+                show: () => window.jQuery(modalElement).modal('show'),
+                hide: () => window.jQuery(modalElement).modal('hide')
+            };
+        }
+
+        return null;
+    }
 
     function guardUrl(url, meta = {}) {
         if (!url || placeholderPattern.test(url) || encodedPlaceholderPattern.test(url)) {
@@ -89,9 +105,21 @@ helper('url_guard');
 
     function getActionConfigFromTrigger(trigger) {
         const dataset = {
-            formtype: trigger.dataset.formtype || '',
-            endpoint: trigger.dataset.endpoint || '',
-            accountid: trigger.dataset.accountid || trigger.dataset.cuid || '',
+            formtype: trigger.dataset.formtype ||
+                trigger.dataset.formType ||
+                trigger.dataset.modalFormtype ||
+                '',
+            endpoint: trigger.dataset.endpoint ||
+                trigger.dataset.modalEndpoint ||
+                trigger.dataset.action ||
+                '',
+            accountid: trigger.dataset.accountid ||
+                trigger.dataset.accountId ||
+                trigger.dataset.walletId ||
+                trigger.dataset.walletid ||
+                trigger.dataset.id ||
+                trigger.dataset.cuid ||
+                '',
             category: trigger.dataset.category || '',
             platform: trigger.dataset.platform || ''
         };
@@ -191,8 +219,14 @@ helper('url_guard');
     }
 
     async function loadModalFromUrl(url) {
+        const modalAdapter = getModalAdapter(modalElement);
+        if (!modalAdapter) {
+            console.warn('[transactionModal] No Bootstrap modal runtime detected.');
+            return;
+        }
+
         setLoadingState();
-        modalInstance.show();
+        modalAdapter.show();
 
         const response = await fetch(url, {
             method: 'GET',
@@ -211,7 +245,7 @@ helper('url_guard');
         }
 
         if (response.headers.get('X-Session-Expired') === '1' || /login/i.test(html)) {
-            modalInstance.hide();
+            modalAdapter.hide();
             window.location.href = <?= json_encode(site_url('/login')) ?>;
             return;
         }
@@ -310,7 +344,10 @@ helper('url_guard');
                 return;
             }
 
-            modalInstance.hide();
+            const modalAdapter = getModalAdapter(modalElement);
+            if (modalAdapter) {
+                modalAdapter.hide();
+            }
             refreshTransactionViews();
 
             if (payload.redirect && typeof payload.redirect === 'string') {
