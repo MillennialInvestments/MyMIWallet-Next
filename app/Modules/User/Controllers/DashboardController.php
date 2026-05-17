@@ -581,37 +581,6 @@ class DashboardController extends BaseUserController
                 }
             } elseif ($pageURIC === 'Solana') {
                 log_message('debug', 'DashboardController L285: We are here now!');
-            } elseif ($pageURIC === 'Wallets') {
-                $pageURID = $this->uri->getSegment(4);
-                // inside loadModalContent(...)
-                if ($formtype === 'Edit' && str_starts_with($endpoint, 'edit')) {
-                    $uid = $this->cuID;
-                    $row = $this->findAccountRowForEdit($endpoint, (int)$accountid, (int)$uid);
-
-                    if (!$row) {
-                        // return a small error view to the modal and stop
-                        return $this->renderTheme('UserModule\Views\Errors\CannotLoadPage', [
-                            'message' => 'We couldn’t find that account. Please refresh and try again.',
-                        ]);
-                    }
-
-                    // Build field payload:
-                    $fieldData = $this->buildEditFieldData($endpoint, $row, [
-                        'siteSettings' => $this->siteSettings,
-                        'cuID'         => $this->cuID,
-                        'cuEmail'      => $this->data['cuEmail'] ?? '',
-                        'cuUsername'   => $this->data['cuUsername'] ?? '',
-                        'accountID'    => (int)$accountid,
-                    ]);
-
-                    // hand off to the view
-                    $this->data['pageView']      = $row['__pageView'];         // e.g. banking_fields
-                    $this->data['addModalTitle'] = $row['__title'];            // e.g. Edit Bank Account
-                    $this->data['fieldData']     = $fieldData;
-
-                    // (optional) if you prefer API submit, pass a formAction to the view
-                    $this->data['formAction']    = site_url("API/Wallets/Banking/Update/{$accountid}");
-                }
 
             }
         }
@@ -854,308 +823,374 @@ class DashboardController extends BaseUserController
     public function loadModalContent($formtype, $endpoint, $accountid = null, $category = null, $platform = null)
     {
         if ($this->debug == 1) {
-            log_message('debug', "DashboardController L516 - loadModalContent called with formtype: $formtype, endpoint: $endpoint, accountid: $accountid, category: $category, platform: $platform");
+            log_message('debug', "DashboardController::loadModalContent formtype={$formtype} endpoint={$endpoint} accountid={$accountid} category={$category} platform={$platform}");
         }
+
+        $cuID = $this->resolveCuID($this->cuID);
+        if ($cuID === null) {
+            return $this->response
+                ->setStatusCode(401)
+                ->setHeader('X-Session-Expired', '1')
+                ->setBody($this->modalErrorHtml('Your session has expired. Please sign in again.'));
+        }
+
+        $this->commonData();
 
         if ($formtype === 'Setup' && $endpoint === 'continueSetup') {
             $context = $category ?: $accountid;
             return $this->continueSetupModal(is_string($context) ? $context : null);
         }
 
-        $cuID = $this->resolveCuID($this->cuID);
-        // Define a mapping array for all possible endpoints to their corresponding view paths
-        $mapping = [
+        $payloadResponse = $this->prepareModalPayload(
+            (string) $formtype,
+            (string) $endpoint,
+            is_scalar($accountid) ? (string) $accountid : null,
+            is_scalar($category) ? (string) $category : null,
+            is_scalar($platform) ? (string) $platform : null,
+            (int) $cuID
+        );
 
-            // Alert Management 
-            'addChart' => 'ManagementModule\Views\Alerts\modals\createTradeAlert',
-            'createTradeAlert' => 'ManagementModule\Views\Alerts\modals\createTradeAlert',
-            'manageTradeAlert' => 'ManagementModule\Views\Alerts\modals\manageTradeAlert',
-            'sendDiscordAlert' => 'ManagementModule\Views\Alerts\sendDiscordAlert',
-            'tradeDetails' => 'ManagementModule\Views\Alerts\tradeDetails',
-            'updateExchange' => 'ManagementModule\Views\Alerts\modals\updateExchange',
-            'viewTradeChart' => 'ManagementModule\Views\Alerts\modals\viewTradeChart',
+        if ($payloadResponse instanceof \CodeIgniter\HTTP\ResponseInterface) {
+            return $payloadResponse;
+        }
+
+        $viewPath = $this->resolveModalViewPath((string) $formtype, (string) $endpoint, is_scalar($category) ? (string) $category : null);
+        if ($viewPath === null) {
+            log_message('error', 'DashboardController::loadModalContent missing mapping formtype={formtype} endpoint={endpoint} category={category}', [
+                'formtype' => $formtype,
+                'endpoint'  => $endpoint,
+                'category'  => $category,
+            ]);
+
+            return $this->response
+                ->setStatusCode(404)
+                ->setBody($this->modalErrorHtml('This modal is not available. Please refresh and try again.'));
+        }
+
+        if ($this->debug == 1) {
+            log_message('debug', 'DashboardController::loadModalContent resolved viewPath=' . $viewPath);
+        }
+
+        $this->data['pageTitle'] = 'MyMI Transaction Model | MyMI Wallet | The Future of Finance';
+
+        if (! $this->request->isAJAX()) {
+            log_message('warning', 'DashboardController::loadModalContent non-AJAX modal request formtype={formtype} endpoint={endpoint}', [
+                'formtype' => $formtype,
+                'endpoint'  => $endpoint,
+            ]);
+        }
+
+        return view($viewPath, $this->data);
+    }
+
+    private function resolveModalViewPath(string $formtype, string $endpoint, ?string $category = null): ?string
+    {
+        $mapping = [
+            // Alert Management
+            'addChart' => 'ManagementModule\\Views\\Alerts\\modals\\createTradeAlert',
+            'createTradeAlert' => 'ManagementModule\\Views\\Alerts\\modals\\createTradeAlert',
+            'manageTradeAlert' => 'ManagementModule\\Views\\Alerts\\modals\\manageTradeAlert',
+            'sendDiscordAlert' => 'ManagementModule\\Views\\Alerts\\sendDiscordAlert',
+            'tradeDetails' => 'ManagementModule\\Views\\Alerts\\tradeDetails',
+            'updateExchange' => 'ManagementModule\\Views\\Alerts\\modals\\updateExchange',
+            'viewTradeChart' => 'ManagementModule\\Views\\Alerts\\modals\\viewTradeChart',
 
             // Budget Models
-            'addBudgetIncome' => 'UserModule\Views\Budget\Add',
-            'addBudgetExpense' => 'UserModule\Views\Budget\Add',
-            'viewHistory' => 'UserModule\Views\Budget\History',
-            
-            // Email Management 
-            'addMember'     => 'ManagementModule\Views\Email\modals\addMember',
-            'campaignStats' => 'ManagementModule\Views\Email\modals\campaignStats',
-            'cloneCampaign'     => 'ManagementModule\Views\Email\modals\cloneCampaign',
-            'createDraftCampaign' => 'ManagementModule\Views\Email\modals\createDraftCampaign',
-            'createList'    => 'ManagementModule\Views\Email\modals\createQuickList',
-            'editCampaign' => 'ManagementModule\Views\Email\modals\editCampaign',
-            'scheduleCampaign' => 'ManagementModule\Views\Email\modals\scheduleCampaign',
-            'sendCampaign'  => 'ManagementModule\Views\Email\modals\sendCampaign',
+            'addBudgetIncome' => 'UserModule\\Views\\Budget\\Add',
+            'addBudgetExpense' => 'UserModule\\Views\\Budget\\Add',
+            'viewHistory' => 'UserModule\\Views\\Budget\\History',
+
+            // Email Management
+            'addMember' => 'ManagementModule\\Views\\Email\\modals\\addMember',
+            'campaignStats' => 'ManagementModule\\Views\\Email\\modals\\campaignStats',
+            'cloneCampaign' => 'ManagementModule\\Views\\Email\\modals\\cloneCampaign',
+            'createDraftCampaign' => 'ManagementModule\\Views\\Email\\modals\\createDraftCampaign',
+            'createList' => 'ManagementModule\\Views\\Email\\modals\\createQuickList',
+            'editCampaign' => 'ManagementModule\\Views\\Email\\modals\\editCampaign',
+            'scheduleCampaign' => 'ManagementModule\\Views\\Email\\modals\\scheduleCampaign',
+            'sendCampaign' => 'ManagementModule\\Views\\Email\\modals\\sendCampaign',
 
             // Marketing Management
-            'addCampaign' => 'ManagementModule\Views\Marketing\Add',
-            'viewCampaign' => 'ManagementModule\Views\Marketing\Campaigns\View',
-            'activeCampaigns' => 'ManagementModule\Views\Marketing\Campaigns\Overview',
-            'addCampaignStep' => 'ManagementModule\Views\Marketing\Add',
-            'viewCampaignStep' => 'ManagementModule\Views\Marketing\Campaigns\View',
-            'activeCampaignsStep' => 'ManagementModule\Views\Marketing\Campaigns\Overview',
-            'addIdea' => 'ManagementModule\Views\Marketing\AddIdea',
-            'addSchedule' => 'ManagementModule\Views\Marketing\Schedule\Add',
-            'generateContent' => 'ManagementModule\Views\Marketing\Promote\Generate_Content',
-            'generatePostMedia' => 'ManagementModule\Views\Marketing\modals\generatePostMedia',
-            'generateScheduleContent' => 'ManagementModule\Views\Marketing\Promote\Default\Generate_Content',
-            'generateVideo' => 'ManagementModule\Views\Marketing\Promote\Generate_Video',
-            'previewGeneratedPost' => 'ManagementModule\Views\Marketing\modals\previewGeneratedPost',
-            'shareTo' => 'ManagementModule\Views\Marketing\Promote\Share_To',
+            'addCampaign' => 'ManagementModule\\Views\\Marketing\\Add',
+            'viewCampaign' => 'ManagementModule\\Views\\Marketing\\Campaigns\\View',
+            'activeCampaigns' => 'ManagementModule\\Views\\Marketing\\Campaigns\\Overview',
+            'addCampaignStep' => 'ManagementModule\\Views\\Marketing\\Add',
+            'viewCampaignStep' => 'ManagementModule\\Views\\Marketing\\Campaigns\\View',
+            'activeCampaignsStep' => 'ManagementModule\\Views\\Marketing\\Campaigns\\Overview',
+            'addIdea' => 'ManagementModule\\Views\\Marketing\\AddIdea',
+            'addSchedule' => 'ManagementModule\\Views\\Marketing\\Schedule\\Add',
+            'generateContent' => 'ManagementModule\\Views\\Marketing\\Promote\\Generate_Content',
+            'generatePostMedia' => 'ManagementModule\\Views\\Marketing\\modals\\generatePostMedia',
+            'generateScheduleContent' => 'ManagementModule\\Views\\Marketing\\Promote\\Default\\Generate_Content',
+            'generateVideo' => 'ManagementModule\\Views\\Marketing\\Promote\\Generate_Video',
+            'previewGeneratedPost' => 'ManagementModule\\Views\\Marketing\\modals\\previewGeneratedPost',
+            'shareTo' => 'ManagementModule\\Views\\Marketing\\Promote\\Share_To',
 
             // Investment Models
-            'addBondTrade' => 'UserModule\Views\Investments\Add',
-            'addCryptoTrade' => 'UserModule\Views\Investments\Add',
-            'addOptionsTrade' => 'UserModule\Views\Investments\Add',
-            'addStockTrade' => 'UserModule\Views\Investments\Add',
-            'editBondTrade' => 'UserModule\Views\Investments\Edit',
-            'editCryptoTrade' => 'UserModule\Views\Investments\Edit',
-            'editOptionsTrade' => 'UserModule\Views\Investments\Edit',
-            'editStockTrade' => 'UserModule\Views\Investments\Edit',
-            'addWatchlist' => 'UserModule\Views\Investments\Add', 
+            'addBondTrade' => 'UserModule\\Views\\Investments\\Add',
+            'addCryptoTrade' => 'UserModule\\Views\\Investments\\Add',
+            'addOptionsTrade' => 'UserModule\\Views\\Investments\\Add',
+            'addStockTrade' => 'UserModule\\Views\\Investments\\Add',
+            'editBondTrade' => 'UserModule\\Views\\Investments\\Edit',
+            'editCryptoTrade' => 'UserModule\\Views\\Investments\\Edit',
+            'editOptionsTrade' => 'UserModule\\Views\\Investments\\Edit',
+            'editStockTrade' => 'UserModule\\Views\\Investments\\Edit',
+            'addWatchlist' => 'UserModule\\Views\\Investments\\Add',
 
-            // Projects Models 
-            'newProject' => 'UserModule\Views\Projects\Add',
-            'commitProject' => 'UserModule\Views\Projects\forms\project_commit',
-            'discussProject' => 'UserModule\Views\Projects\forms\project_discuss',
-            'investProject' => 'UserModule\Views\Projects\forms\project_invest',
-            'sellProject' => 'UserModule\Views\Projects\forms\project_sell',
-            'viewProject' => 'UserModule\Views\Projects\index\project_overview',
-            'adminViewProject' => 'ManagementModule\Views\Projects\management\project_overview',
+            // Projects Models
+            'newProject' => 'UserModule\\Views\\Projects\\Add',
+            'commitProject' => 'UserModule\\Views\\Projects\\forms\\project_commit',
+            'discussProject' => 'UserModule\\Views\\Projects\\forms\\project_discuss',
+            'investProject' => 'UserModule\\Views\\Projects\\forms\\project_invest',
+            'sellProject' => 'UserModule\\Views\\Projects\\forms\\project_sell',
+            'viewProject' => 'UserModule\\Views\\Projects\\index\\project_overview',
+            'adminViewProject' => 'ManagementModule\\Views\\Projects\\management\\project_overview',
 
             // Wallet Models
-            'addBankAccount' => 'UserModule\Views\Wallets\Add',
-            'addCreditAccount' => 'UserModule\Views\Wallets\Add',
-            'addDebtAccount' => 'UserModule\Views\Wallets\Add',
-            'addInvestAccount' => 'UserModule\Views\Wallets\Add',
-            'addCryptoAccount' => 'UserModule\Views\Wallets\Add',
-            'deleteWallet' => 'UserModule\Views\Wallets\Delete',
-            'editBankAccount' => 'UserModule\Views\Wallets\Edit',
-            'editCreditAccount' => 'UserModule\Views\Wallets\Edit',
-            'editDebtAccount' => 'UserModule\Views\Wallets\Edit',
-            'editCryptoAccount' => 'UserModule\Views\Wallets\Edit',
-            'editInvestAccount' => 'UserModule\Views\Wallets\Edit',
-            'purchasePaypal' => 'UserModule\Views\Wallets\Purchase',
-            'walletSelection' => 'UserModule\Views\Dashboard\walletSelection',
+            'addBankAccount' => 'UserModule\\Views\\Wallets\\Add',
+            'addCreditAccount' => 'UserModule\\Views\\Wallets\\Add',
+            'addDebtAccount' => 'UserModule\\Views\\Wallets\\Add',
+            'addInvestAccount' => 'UserModule\\Views\\Wallets\\Add',
+            'addCryptoAccount' => 'UserModule\\Views\\Wallets\\Add',
+            'deleteWallet' => 'UserModule\\Views\\Wallets\\Delete',
+            'editBankAccount' => 'UserModule\\Views\\Wallets\\Edit',
+            'editCreditAccount' => 'UserModule\\Views\\Wallets\\Edit',
+            'editDebtAccount' => 'UserModule\\Views\\Wallets\\Edit',
+            'editCryptoAccount' => 'UserModule\\Views\\Wallets\\Edit',
+            'editInvestAccount' => 'UserModule\\Views\\Wallets\\Edit',
+            'purchasePaypal' => 'UserModule\\Views\\Wallets\\Purchase',
+            'walletSelection' => 'UserModule\\Views\\Dashboard\\walletSelection',
 
             // Referral Models
-            'createReferral' => 'UserModule\Views\Referral_Program\Create',
-
-            // !! Old
-            // 'Wallets/Add/Credit' => 'UserModule\Views\Dashboard\addCreditAccount',
-            // 'Add-Wallet/Digital' => 'UserModule\Views\Dashboard\addDigitalWallet',
-            // 'Add-Wallet/Fiat' => 'UserModule\Views\Dashboard\addFiatWallet',
-            // 'Admin/Add-External-Site' => 'UserModule\Views\Dashboard\addExternalSite',
-            // 'Wallets/Investment/Add/Account/Modal' => 'UserModule\Views\Dashboard\addInvestmentAccount',
-            // 'Exchange/Coin-Listing/Request' => 'UserModule\Views\Dashboard\createAssetRequest',
-            // 'Exchange/Coin-Listing/Asset-Information-Modal/Existing' => 'UserModule\Views\Dashboard\completeAssetRequest',
-            // 'Wallets/Delete' => 'UserModule\Views\Dashboard\deleteWallet',
-            // 'Wallets/Address-Generator' => 'UserModule\Views\Dashboard\generateWalletAddress',
-            // 'Announcements/Post' => 'UserModule\Views\Dashboard\postAnnouncement',
-            // 'Purchase-Wallet/Digital' => 'UserModule\Views\Dashboard\purchaseDigitalWallet',
-            // 'Purchase-Wallet/Fiat' => 'UserModule\Views\Dashboard\purchaseFiatWallet',
-            // 'MyMI-Gold/Purchase' => 'UserModule\Views\Dashboard\purchaseMyMIGold',
-            // 'Add-Wallet-Deposit-Fetch' => 'UserModule\Views\Dashboard\trackDeposit',
-            // 'Add-Wallet-Withdraw-Fetch' => 'UserModule\Views\Dashboard\trackWithdraw',
-            // 'Wallet-Selection/Digital' => 'UserModule\Views\Dashboard\walletSelectionDigital',
-            // 'Wallet-Selection/Fiat' => 'UserModule\Views\Dashboard\walletSelectionFiat',
-            // 'Withdraw-Funds' => 'UserModule\Views\Dashboard\withdrawFunds',
+            'createReferral' => 'UserModule\\Views\\Referral_Program\\Create',
         ];
 
-        if ($formtype === 'Alerts') {
-            if ($endpoint === 'createTradeAlert') {
-                $viewPath = $mapping['createTradeAlert'];
-            }
-            if ($endpoint === 'manageTradeAlert') {
-                $viewPath = $mapping['manageTradeAlert'];
-            }
-            if ($endpoint === 'updateExchange') {
-                $viewPath = $mapping['updateExchange'];
-                // Fetch trade alert details
-                $tradeAlert = $this->alertsModel->getAlertById($accountid);
-                if (!$tradeAlert) {
-                    return "Error: Trade alert not found.";
-                }
-        
-                // Send ticker data
-                $this->data['ticker'] = $tradeAlert['ticker'];
-            }
-            if ($endpoint === 'viewTradeChart') {
-                $viewPath = $mapping['viewTradeChart'];
-    
-                // Fetch trade alert details
-                $tradeAlert = $this->alertsModel->getAlertById($accountid);
-                if (!$tradeAlert) {
-                    return "Error: Trade alert not found.";
-                }
-    
-                // Fetch ticker details (including exchange)
-                $tickerInfo = $this->alertsModel->getTickerInfo($tradeAlert['ticker']);
-                if (!$tickerInfo || empty($tickerInfo->exchange)) {
-                    $this->data['exchange_missing'] = true;
-                    $this->data['ticker'] = $tradeAlert['ticker'];
-                } else {
-                    $this->data['exchange_missing'] = false;
-                    $this->data['exchange'] = $tickerInfo->exchange;
-                    $this->data['ticker'] = $tradeAlert['ticker'];
-                }
-    
-                return $this->renderTheme($viewPath, $this->data);
-            }
-        }
         if ($formtype === 'Budget') {
-            log_message('debug', 'DashboardController L743 - $formtype: ' . $formtype);
-            if ($endpoint === 'Add') {
-                log_message('debug', 'DashboardController L745 - $endpoint: ' . $endpoint);
-                if ($category === 'Income') {
-                    log_message('debug', 'DashboardController L747 - $category: ' . $category);
-                    $viewPath = $mapping['addBudgetIncome'];
-                    log_message('debug', 'DashboardController L749 - $viewPath: ' . $viewPath);
-                } elseif ($category === 'Expense') {
-                    log_message('debug', 'DashboardController L751 - $category: ' . $category);
-                    $viewPath = $mapping['addBudgetExpense'];
-                    log_message('debug', 'DashboardController L753 - $viewPath: ' . $viewPath);
-                } else {                    
-                    log_message('debug', "DashboardController L755 - No mapping found for formtype: $formtype, endpoint: $endpoint");
-                }
-            } elseif ($endpoint === 'View') {
-                if ($category === 'History') {
-                    $viewPath = $mapping['viewHistory']; 
-                }
+            if ($endpoint === 'Add' && $category === 'Income') {
+                return $mapping['addBudgetIncome'];
             }
+
+            if ($endpoint === 'Add' && $category === 'Expense') {
+                return $mapping['addBudgetExpense'];
+            }
+
+            if ($endpoint === 'View' && $category === 'History') {
+                return $mapping['viewHistory'];
+            }
+
+            return null;
         }
 
-        // Handle Marketing-specific mappings
-        elseif ($formtype === 'Marketing') {
-            if ($endpoint === 'activeCampaigns' && $category === 'View') {
-                log_message('debug', 'DashboardController L767 - $activeCampaigns reached! Category: ' . $category);
-                $viewPath = $mapping['viewCampaign'];
-            } elseif (isset($mapping[$endpoint])) {
-                $viewPath = $mapping[$endpoint];
-            } elseif ($endpoint === 'generatePostMedia') {
-                log_message('debug', 'DashboardController L772 - $activeCampaigns reached! Category: ' . $category);
-                $viewPath = $mapping['generatePostMedia'];
-            } elseif ($endpoint === 'previewGeneratedPost') {
-                log_message('debug', 'DashboardController L772 - $activeCampaigns reached! Category: ' . $category);
-                $viewPath = $mapping['previewGeneratedPost'];
-            } else {
-                log_message('error', "DashboardController - No mapping found for formtype: $formtype, endpoint: $endpoint");
-            }
+        if ($formtype === 'Marketing' && $endpoint === 'activeCampaigns' && $category === 'View') {
+            return $mapping['viewCampaign'];
         }
 
-        elseif ($formtype === 'Projects') {
-            if ($endpoint === 'Add' && $category === 'newProject') {
-                log_message('debug', 'DashboardController L781 - Add New Project reached.'); 
-                $viewPath = $mapping[$category];
-            } elseif ($endpoint === 'Add' && $category === 'commitProject') {
-                log_message('debug', 'DashboardController L784 - Add New Project reached.'); 
-                $viewPath = $mapping[$category];
-            } elseif ($endpoint === 'Add' && $category === 'discussProject') {
-                log_message('debug', 'DashboardController L787 - Add New Project reached.'); 
-                $viewPath = $mapping[$category];
-            } elseif ($endpoint === 'Add' && $category === 'investProject') {
-                log_message('debug', 'DashboardController L790 - Add New Project reached.'); 
-                $viewPath = $mapping[$category];
-            } elseif ($endpoint === 'Add' && $category === 'sellProject') {
-                log_message('debug', 'DashboardController L793 - Add New Project reached.'); 
-                $viewPath = $mapping[$category];
-            } elseif ($endpoint === 'Admin' && $category === 'adminViewProject') {
-                log_message('debug', 'DashboardController L796 - Add New Project reached.'); 
-                $viewPath = $mapping[$category];
+        if ($formtype === 'Projects') {
+            if (in_array($category, ['newProject', 'commitProject', 'discussProject', 'investProject', 'sellProject'], true) && $endpoint === 'Add') {
+                return $mapping[$category] ?? null;
             }
+
+            if ($endpoint === 'Admin' && $category === 'adminViewProject') {
+                return $mapping['adminViewProject'];
+            }
+
+            return $mapping[$endpoint] ?? null;
         }
 
-        // Handle Solana-specific mappings
-        elseif ($formtype === 'Solana') {
+        if ($formtype === 'Solana') {
             $solanaMapping = [
-                'addSolanaWallet' => 'ExchangeModule\Views\Solana\walletSelect',
-                'coinSwap' => 'ExchangeModule\Views\Solana\swap',
-                'connectWalletModal' => 'ExchangeModule\Views\Solana\connectWallet',
-                'createSolanaToken' => 'ExchangeModule\Views\Solana\createToken',
-                'disconnectSolanaWallet' => 'ExchangeModule\Views\Solana\Disconnect\wallet',
-                'tradeSolana' => 'ExchangeModule\Views\Solana\trade',
-                'viewSolanaOrders' => 'ExchangeModule\Views\Solana\orders',
-                'viewSolanaToken' => 'ExchangeModule\Views\Solana\token',
-                'viewSolanaWallet' => 'ExchangeModule\Views\Solana\viewWallet',
+                'addSolanaWallet' => 'ExchangeModule\\Views\\Solana\\walletSelect',
+                'coinSwap' => 'ExchangeModule\\Views\\Solana\\swap',
+                'connectWalletModal' => 'ExchangeModule\\Views\\Solana\\connectWallet',
+                'createSolanaToken' => 'ExchangeModule\\Views\\Solana\\createToken',
+                'disconnectSolanaWallet' => 'ExchangeModule\\Views\\Solana\\Disconnect\\wallet',
+                'tradeSolana' => 'ExchangeModule\\Views\\Solana\\trade',
+                'viewSolanaOrders' => 'ExchangeModule\\Views\\Solana\\orders',
+                'viewSolanaToken' => 'ExchangeModule\\Views\\Solana\\token',
+                'viewSolanaWallet' => 'ExchangeModule\\Views\\Solana\\viewWallet',
             ];
-            $viewPath = $solanaMapping[$endpoint] ?? null;
+
+            return $solanaMapping[$endpoint] ?? null;
         }
 
-        // Handle ProductDetails-specific mappings
-        elseif ($formtype === 'ProductDetails') {
-            $getFeatures = $this->getMyMIDashboard()->getFeatures();
-            if (!empty($getFeatures)) {
-                if ($this->debug == 1) {
-                    log_message('debug', 'DashboardController L180 - $this->getFeatures(): ' . print_r($getFeatures, true));
-                }
-                foreach ($getFeatures as $feature) {
-                    $mapping[$feature['identifier']] = 'UserModule\Views\Wallets\Purchase\Memberships\Features';
-                }
-            }
-        } else {            
-            $viewPath = $mapping[$endpoint] ?? null;
-        }
-
-        // Log and render the view
-        if ($this->debug == 1) {
-            log_message('debug', 'DashboardController L489 - $viewPath: ' . $viewPath);
-        }
-        if ($viewPath === 'UserModule\Views\Errors\CannotLoadPage') {
-            $this->sendErrorNotification($endpoint);
-        }
-        if ($viewPath && $this->request->isAJAX()) {
-            if ($this->debug == 1) {
-                log_message('debug', '$viewPath: ' . $viewPath . ' | $this->data: ' . print_r($this->data, true));
-            }
-            if ($formtype === 'Solana') {
-                $cuID = $this->currentUserId();
-                $row = model(\App\Models\SolanaModel::class)->getDefaultAddressFromExchangeTable($cuID);
-                $address = $row['address'] ?? null;
-                session()->set('solana_public_key', $address);
-                $this->data['address'] = $address;
-
-//                 $this->MyMISolana = new MyMISolana(); // replaced by BaseController getter
-                $userSolana = $this->MyMISolana->getUserDefaultSolana($cuID);
-                $this->data['userSolana'] = $userSolana;
-
-                // Fetch and verify the Solana price and transactions
-                $this->data['solanaPrice'] = $this->getSolanaService()->getSolanaPrice();
-                $solPrice = $this->MyMISolana->getSolanaPrice();
-                $this->data['solanaPrice'] = is_numeric($solPrice) ? (float)$solPrice : null;
-                $transactions = service('myMISolana')->getTransactions($cuID, $address);
-                $this->data['cryptoTransactions'] = $transactions;
-
-                if (!isset($this->data['cryptoAccount']['coin_address']) || empty($this->data['cryptoAccount']['coin_address'])) {
-                    $exchange = 'Solana';
-                    $this->data['cryptoAccount']['coin_address'] = $this->getMyMIDashboard()->getCryptoAccount($cuID, $exchange)['accountInfo'] ?? ['User Address Not Defined'];
-                } 
-                log_message('debug', 'DashboardController L199 - $cryptoAccount: ' . print_r($this->data['cryptoAccount'], true));
-
-                if ($endpoint === 'coinSwap') {
-                    $exchange = $formtype;
-                    $cryptoTokens = $this->getMyMIDashboard()->getAllTokensByBlock($exchange);
-                    log_message('error', 'DashboardController L485 - $cryptoTokens: ' . print_r($cryptoTokens, true));
-
-                    $this->data['cryptoTokens'] = $cryptoTokens ?? [];
-                    $this->data['cryptoPT'] = $userSolana['cuSolanaDW']['public_token'];
-                }
-
-                if ($endpoint === 'viewSwap') {
-                    $this->data['cuSolanaDW'] = $userSolana['cuSolanaDW']; 
+        if ($formtype === 'ProductDetails') {
+            foreach ($this->getMyMIDashboard()->getFeatures() ?: [] as $feature) {
+                if (($feature['identifier'] ?? null) === $endpoint) {
+                    return 'UserModule\\Views\\Wallets\\Purchase\\Memberships\\Features';
                 }
             }
 
-            $this->data['pageTitle'] = 'MyMI Transaction Model | MyMI Wallet | The Future of Finance';
-            $this->commonData();
-            echo view($viewPath, $this->data);
-        } else {
-            log_message('error', 'Failed to load content. $viewPath: ' . $viewPath . ' | Data: ' . print_r($this->data, true));
-            echo "Content could not be loaded.";
+            return null;
         }
+
+        return $mapping[$endpoint] ?? null;
     }
+
+    private function prepareModalPayload(
+        string $formtype,
+        string $endpoint,
+        ?string $accountid,
+        ?string $category,
+        ?string $platform,
+        int $cuID
+    ) {
+        if ($formtype === 'Alerts') {
+            if (in_array($endpoint, ['updateExchange', 'viewTradeChart'], true)) {
+                $tradeAlert = $this->alertsModel->getAlertById($accountid);
+                if (!$tradeAlert) {
+                    log_message('error', 'DashboardController::prepareModalPayload trade alert not found endpoint={endpoint} accountid={accountid}', [
+                        'endpoint' => $endpoint,
+                        'accountid' => $accountid,
+                    ]);
+
+                    return $this->response
+                        ->setStatusCode(404)
+                        ->setBody($this->modalErrorHtml('Trade alert not found. Please refresh and try again.'));
+                }
+
+                $this->data['ticker'] = $tradeAlert['ticker'];
+
+                if ($endpoint === 'viewTradeChart') {
+                    $tickerInfo = $this->alertsModel->getTickerInfo($tradeAlert['ticker']);
+                    $this->data['exchange_missing'] = ! $tickerInfo || empty($tickerInfo->exchange);
+                    if (! $this->data['exchange_missing']) {
+                        $this->data['exchange'] = $tickerInfo->exchange;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        if ($formtype === 'Budget') {
+            $this->data['budgetModalCategory'] = $category;
+            return null;
+        }
+
+        if ($formtype === 'Marketing' && in_array($endpoint, ['generatePostMedia', 'previewGeneratedPost'], true)) {
+            $postId = (int) ($accountid ?? 0);
+            $post = $this->marketingModel->findFinalizedById($postId);
+            if (!$post) {
+                log_message('error', 'DashboardController::prepareModalPayload marketing post not found endpoint={endpoint} accountid={accountid}', [
+                    'endpoint' => $endpoint,
+                    'accountid' => $accountid,
+                ]);
+
+                return $this->response
+                    ->setStatusCode(404)
+                    ->setBody($this->modalErrorHtml('Marketing post not found. Please refresh and try again.'));
+            }
+
+            $marketing = service('MyMIMarketing');
+            $cleanedSummary = $marketing->cleanHtmlSummaryPreview($post['summary'] ?? '');
+            $sentences = $marketing->splitIntoSentences($cleanedSummary);
+            $topKeywords = $marketing->extractKeywords($sentences);
+
+            $post['cta'] = $marketing->generateCTA($post['summary'] ?? '');
+            $post['voiceover'] = $post['voice_script'] ?? null;
+
+            $this->data['post'] = $post;
+            $this->data['summary'] = $post['summary'] ?? '';
+            $this->data['formatted_summary'] = esc(format_summary_preview($post['summary'] ?? ''));
+            $this->data['cleaned_summary'] = $cleanedSummary;
+            $this->data['keywords'] = $topKeywords;
+            $this->data['voiceover_url'] = $post['voiceover_url'] ?? null;
+
+            return null;
+        }
+
+        if ($formtype === 'Projects' && $endpoint === 'Admin' && $category === 'adminViewProject') {
+            $projectId = (int) ($accountid ?? 0);
+            $project = $this->getMyMIProjects()->getProjectFullDetails($projectId);
+            if (! empty($project)) {
+                $this->data['project'] = $project;
+                $this->data['owner'] = $this->getMyMIUser()->getUserInformation($project['created_by'] ?? 0);
+            }
+
+            return null;
+        }
+
+        if ($formtype === 'Solana') {
+            $row = model(\App\Models\SolanaModel::class)->getDefaultAddressFromExchangeTable($cuID);
+            $address = $row['address'] ?? null;
+            session()->set('solana_public_key', $address);
+            $this->data['address'] = $address;
+
+            $userSolana = $this->getMyMISolana()->getUserDefaultSolana($cuID);
+            $this->data['userSolana'] = $userSolana;
+
+            $this->data['solanaPrice'] = $this->getSolanaService()->getSolanaPrice();
+            $solPrice = $this->getMyMISolana()->getSolanaPrice();
+            $this->data['solanaPrice'] = is_numeric($solPrice) ? (float) $solPrice : null;
+            $this->data['cryptoTransactions'] = service('myMISolana')->getTransactions($cuID, $address);
+
+            if (!isset($this->data['cryptoAccount']['coin_address']) || empty($this->data['cryptoAccount']['coin_address'])) {
+                $this->data['cryptoAccount']['coin_address'] = $this->getMyMIDashboard()->getCryptoAccount($cuID, 'Solana')['accountInfo'] ?? ['User Address Not Defined'];
+            }
+
+            if ($endpoint === 'coinSwap') {
+                $cryptoTokens = $this->getMyMIDashboard()->getAllTokensByBlock($formtype);
+                $this->data['cryptoTokens'] = $cryptoTokens ?? [];
+                $this->data['cryptoPT'] = $userSolana['cuSolanaDW']['public_token'] ?? null;
+            }
+
+            if ($endpoint === 'viewSwap') {
+                $this->data['cuSolanaDW'] = $userSolana['cuSolanaDW'] ?? [];
+            }
+
+            return null;
+        }
+
+        if ($formtype === 'Wallets') {
+            $accountID = (int) ($accountid ?? 0);
+            $this->data['accountID'] = $accountID;
+            $this->data['walletID'] = $accountID;
+            $this->data['accountType'] = $category ?: $endpoint;
+            $this->data['walletCategory'] = $category;
+            $this->data['platform'] = $platform;
+
+            if ($endpoint === 'deleteWallet') {
+                $this->data['deleteWalletID'] = $accountID;
+                $this->data['deleteWalletCategory'] = $category;
+                return null;
+            }
+
+            if (str_starts_with($endpoint, 'edit')) {
+                $row = $this->findAccountRowForEdit($endpoint, $accountID, $cuID);
+                if (!$row) {
+                    return $this->response
+                        ->setStatusCode(404)
+                        ->setBody($this->modalErrorHtml('We couldn’t find that account. Please refresh and try again.'));
+                }
+
+                $fieldData = $this->buildEditFieldData($endpoint, $row, [
+                    'siteSettings' => $this->siteSettings,
+                    'cuID' => $cuID,
+                    'cuEmail' => $this->data['cuEmail'] ?? '',
+                    'cuUsername' => $this->data['cuUsername'] ?? '',
+                    'accountID' => $accountID,
+                    'beta' => $this->siteSettings->beta ?? 0,
+                ]);
+
+                $this->data['pageView'] = $row['__pageView'];
+                $this->data['addModalTitle'] = $row['__title'];
+                $this->data['fieldData'] = $fieldData;
+                $this->data['formAction'] = site_url("API/Wallets/Banking/Update/{$accountID}");
+            }
+        }
+
+        return null;
+    }
+
+    private function modalErrorHtml(string $message): string
+    {
+        return '<div class="modal-header"><h3 class="modal-title">Unable to Load</h3>'
+            . '<button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button></div>'
+            . '<div class="modal-body"><div class="alert alert-warning mb-0">'
+            . esc($message)
+            . '</div></div>';
+    }
+
 
     // Added method to process notifications if needed
     public function notifications()
@@ -1399,161 +1434,19 @@ class DashboardController extends BaseUserController
      */
     private function findAccountRowForEdit(string $endpoint, int $accountId, int $userId): ?array
     {
-        // Map endpoint -> table + pageView + title
-        $map = [
-            'editBankAccount'   => ['table' => 'bf_users_bank_accounts',   'pageView' => 'UserModule\Views\Wallets\Edit_Account\banking_fields',    'title' => 'Edit Bank Account'],
-            'editCreditAccount' => ['table' => 'bf_users_credit_accounts', 'pageView' => 'UserModule\Views\Wallets\Edit_Account\credit_fields',     'title' => 'Edit Credit Account'],
-            'editDebtAccount'   => ['table' => 'bf_users_debt_accounts',   'pageView' => 'UserModule\Views\Wallets\Edit_Account\debt_fields',       'title' => 'Edit Debt Account'],
-            'editInvestAccount' => ['table' => 'bf_users_invest_accounts', 'pageView' => 'UserModule\Views\Wallets\Edit_Account\investment_fields', 'title' => 'Edit Investment Account'],
-            // add editCryptoAccount if you have one
-        ];
-
-        if (!isset($map[$endpoint])) return null;
-
-        $db  = db_connect();
-        $row = $db->table($map[$endpoint]['table'])
-            ->groupStart()
-                ->where('id', $accountId)
-                ->orWhere('wallet_id', $accountId)
-            ->groupEnd()
-            ->where('user_id', $userId)     // safety
-            ->get()
-            ->getRowArray();
-
-        if (!$row) {
-            log_message('error', "Edit modal: {$endpoint} not found for accountId={$accountId} (matched on id OR wallet_id) user={$userId}");
-            return null;
-        }
-
-        // annotate for later use
-        $row['__pageView'] = $map[$endpoint]['pageView'];
-        $row['__title']    = $map[$endpoint]['title'];
-        return $row;
+        /** @var \App\Models\WalletModel $walletModel */
+        $walletModel = model(\App\Models\WalletModel::class);
+        return $walletModel->findAccountRowForEdit($endpoint, $accountId, $userId);
     }
 
     /**
-     * Build the $fieldData array the partial expects, from the per-type row.
+     * Build the $fieldData array the edit partial expects from the resolved account row.
      */
-    private function buildEditFieldData(string $endpoint, int $accountID, int $cuID, string $cuEmail, string $cuUsername, $beta): array
+    private function buildEditFieldData(string $endpoint, array $row, array $ctx): array
     {
-        $wm = new \App\Models\WalletModel();
-        $redirectURL = site_url('/Wallets');
-
-        switch ($endpoint) {
-            case 'editBankAccount':
-                $info = $wm->getBankAccountByIdOrWallet($accountID);
-                if (!$info) { return []; }
-                return [
-                    'errorClass'        => 'error',
-                    'controlClass'      => 'span6',
-                    'redirectURL'       => $redirectURL,
-                    'cuID'              => $cuID,
-                    'cuEmail'           => $cuEmail,
-                    'accountBeta'       => $beta,
-                    'accountID'         => $accountID,
-                    'accountWalletID'   => $accountID,
-                    'accountUserID'     => $cuID,
-                    'accountUserEmail'  => $cuEmail,
-                    'accountUsername'   => $cuUsername,
-                    'accountType'       => 'editBankAccount',
-                    'accountTypeText'   => 'Bank Account',
-                    'accountBank'       => $info['bank_name']         ?? '',
-                    'accountOwner'      => $info['bank_account_owner']?? '',
-                    'accountRouting'    => $info['routing_number']    ?? '',
-                    'accountNumber'     => $info['account_number']    ?? '',
-                    'accountName'       => $info['nickname']          ?? '',
-                    'accountNickname'   => $info['nickname']          ?? '',
-                    'accountBalance'    => $info['balance']           ?? '',
-                ];
-
-            case 'editCreditAccount':
-                $info = $wm->getCreditAccountByIdOrWallet($accountID);
-                if (!$info) { return []; }
-                return [
-                    'errorClass'        => 'error',
-                    'controlClass'      => 'span6',
-                    'redirectURL'       => $redirectURL,
-                    'cuID'              => $cuID,
-                    'cuEmail'           => $cuEmail,
-                    'accountBeta'       => $beta,
-                    'accountID'         => $accountID,
-                    'accountWalletID'   => $accountID,
-                    'accountUserID'     => $cuID,
-                    'accountUserEmail'  => $cuEmail,
-                    'accountUsername'   => $cuUsername,
-                    'accountType'       => 'editCreditAccount',
-                    'accountTypeText'   => 'Credit Account',
-                    'accountBank'             => $info['bank_name']         ?? '',
-                    'accountNumber'           => $info['account_number']    ?? '',
-                    'accountName'             => $info['nickname']          ?? '',
-                    'accountNickname'         => $info['nickname']          ?? '',
-                    'accountCreditLimit'      => $info['credit_limit']      ?? '',
-                    'accountCurrentBalance'   => $info['current_balance']   ?? '',
-                    'accountAvailableBalance' => $info['available_balance'] ?? '',
-                    'accountCreditStatus'     => $info['credit_status']     ?? '',
-                    'accountDueDate'          => $info['due_date']          ?? '',
-                    'accountPaymentDue'       => $info['payment_due']       ?? '',
-                    'accountInterestRate'     => $info['interest_rate']     ?? '',
-                ];
-
-            case 'editDebtAccount':
-                $info = $wm->getDebtAccountByIdOrWallet($accountID);
-                if (!$info) { return []; }
-                return [
-                    'errorClass'        => 'error',
-                    'controlClass'      => 'span6',
-                    'redirectURL'       => $redirectURL,
-                    'cuID'              => $cuID,
-                    'cuEmail'           => $cuEmail,
-                    'accountBeta'       => $beta,
-                    'accountID'         => $accountID,
-                    'accountWalletID'   => $accountID,
-                    'accountUserID'     => $cuID,
-                    'accountUserEmail'  => $cuEmail,
-                    'accountUsername'   => $cuUsername,
-                    'accountStatus'           => $info['account_status']   ?? '',
-                    'accountSourceType'       => $info['account_type']     ?? '',
-                    'accountTypeText'         => 'Debt Account',
-                    'accountDebtor'           => $info['debtor']           ?? '',
-                    'accountName'             => $info['nickname']         ?? '',
-                    'accountNickname'         => $info['nickname']         ?? '',
-                    'accountNumber'           => $info['account_number']   ?? '',
-                    'accountDueDate'          => $info['due_date']         ?? '',
-                    'accountCreditLimit'      => $info['credit_limit']     ?? '',
-                    'accountCurrentBalance'   => $info['current_balance']  ?? '',
-                    'accountAvailableBalance' => $info['available_balance']?? '',
-                    'accountMonthlyPayment'   => $info['monthly_payment']  ?? '',
-                    'accountInterestRate'     => $info['interest_rate']    ?? '',
-                ];
-
-            case 'editInvestAccount':
-                $info = $wm->getInvestAccountByIdOrWallet($accountID);
-                if (!$info) { return []; }
-                return [
-                    'errorClass'        => 'error',
-                    'controlClass'      => 'span6',
-                    'redirectURL'       => $redirectURL,
-                    'cuID'              => $cuID,
-                    'cuEmail'           => $cuEmail,
-                    'accountBeta'       => $beta,
-                    'accountID'         => $accountID,
-                    'accountWalletID'   => $accountID,
-                    'accountUserID'     => $cuID,
-                    'accountUserEmail'  => $cuEmail,
-                    'accountUsername'   => $cuUsername,
-                    'accountType'       => 'editInvestAccount',
-                    'accountTypeText'   => 'Investment Account',
-                    'accountName'       => $info['nickname']        ?? '',
-                    'accountNickname'   => $info['nickname']        ?? '',
-                    'accountBroker'     => $info['broker']          ?? '',
-                    'accountNumber'     => $info['account_number']  ?? '',
-                    'accountAmount'     => $info['amount']          ?? '',
-                    'accountInitialValue'=> $info['initial_value']  ?? '',
-                    'accountAvailableFunds'=> $info['available_funds'] ?? '',
-                    'accountNetWorth'   => $info['net_worth']       ?? '',
-                ];
-        }
-        return [];
+        /** @var \App\Models\WalletModel $walletModel */
+        $walletModel = model(\App\Models\WalletModel::class);
+        return $walletModel->buildEditFieldData($endpoint, $row, $ctx);
     }
 
     /********* ADD THIS HELPER *********/
