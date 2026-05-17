@@ -125,6 +125,25 @@ $routes->group('admin/ops', ['filter' => 'permission:admin.access'], static func
     $routes->post('health/run', '\\App\\Controllers\\OpsHealthController::run');
 });
 
+
+// CoinVault project coin vault routes. Keep explicit because auto-routing is disabled.
+$routes->group('Admin/CoinVault', ['namespace' => 'App\Modules\CoinVault\Controllers', 'filter' => 'permission:admin.access'], static function ($routes) {
+    $routes->get('/', 'CoinVaultController::index');
+    $routes->get('Projects', 'CoinVaultController::projects');
+    $routes->get('Project/(:num)', 'CoinVaultController::project/$1');
+    $routes->get('Contributions', 'CoinVaultController::contributions');
+    $routes->get('Payouts', 'CoinVaultController::payouts');
+    $routes->get('Wallet/(:num)', 'CoinVaultController::wallet/$1');
+});
+$routes->group('API/CoinVault', ['namespace' => 'App\Modules\CoinVault\Controllers\Api'], static function ($routes) {
+    $routes->post('contributionEvent', 'CoinVaultApiController::contributionEvent');
+    $routes->post('approveContribution/(:num)', 'CoinVaultApiController::approveContribution/$1', ['filter' => 'permission:admin.access']);
+    $routes->post('rejectContribution/(:num)', 'CoinVaultApiController::rejectContribution/$1', ['filter' => 'permission:admin.access']);
+    $routes->post('requestPayout', 'CoinVaultApiController::requestPayout', ['filter' => 'login']);
+    $routes->post('approvePayout/(:num)', 'CoinVaultApiController::approvePayout/$1', ['filter' => 'permission:admin.access']);
+    $routes->post('rejectPayout/(:num)', 'CoinVaultApiController::rejectPayout/$1', ['filter' => 'permission:admin.access']);
+});
+
 // Docs index for AI orchestration
 $routes->group('API/Docs', ['namespace' => 'App\Modules\APIs\Controllers'], static function($routes) {
     $routes->get('index', 'DocsController::index');
