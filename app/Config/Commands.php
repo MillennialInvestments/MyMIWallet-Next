@@ -19,5 +19,7 @@ class Commands extends BaseConfig
         'auth:surface:scan' => \App\Commands\Auth\SurfaceScan::class,
         'auth:smoke' => \App\Commands\Auth\Smoke::class,
         'docs:inventory-forms' => \App\Commands\Docs\Generate\FormInventory::class,
+        'db:table-list' => \App\Commands\Database\TableList::class,
+        'coinvault:audit' => \App\Commands\CoinVault\Audit::class,
     ];
 }
