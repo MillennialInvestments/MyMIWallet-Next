@@ -37,6 +37,7 @@ helper('url_guard');
     const modalBaseUrl = "<?= rtrim(mymi_url_guard(site_url('Dashboard/Transaction-Modal'), ['source' => __FILE__, 'line' => __LINE__]), '/') ?>";
     const csrfHeaderName = <?= json_encode(csrf_header()) ?>;
     let csrfHash = <?= json_encode(csrf_hash()) ?>;
+    let activeModalUrl = null;
 
     const placeholderPattern = /\(:?(segment|num)\)/i;
     const encodedPlaceholderPattern = /%28:(segment|num)%29/i;
@@ -218,15 +219,20 @@ helper('url_guard');
         window.dispatchEvent(new CustomEvent('wallet:updated'));
     }
 
-    async function loadModalFromUrl(url) {
+    async function loadModalFromUrl(url, options = {}) {
+        const shouldShowModal = options.show !== false;
         const modalAdapter = getModalAdapter(modalElement);
         if (!modalAdapter) {
             console.warn('[transactionModal] No Bootstrap modal runtime detected.');
             return;
         }
 
+        activeModalUrl = url;
         setLoadingState();
-        modalAdapter.show();
+
+        if (shouldShowModal) {
+            modalAdapter.show();
+        }
 
         const response = await fetch(url, {
             method: 'GET',
@@ -255,7 +261,7 @@ helper('url_guard');
         transactionContainer.classList.remove('d-none');
     }
 
-    async function openFromTrigger(trigger) {
+    async function loadFromTrigger(trigger, options = {}) {
         const action = getActionConfigFromTrigger(trigger);
 
         if (!isAllowedAction(action)) {
@@ -263,11 +269,17 @@ helper('url_guard');
                 classes: trigger.className,
                 dataset: trigger.dataset
             });
+
+            if (options.showError === true) {
+                setLoadingState();
+                showInlineError('This modal action is not available yet. Please refresh and try again.');
+            }
+
             return;
         }
 
         const url = guardUrl(buildModalUrl(action), {
-            source: 'trigger',
+            source: options.source || 'trigger',
             classes: trigger.className,
             action
         });
@@ -276,12 +288,21 @@ helper('url_guard');
             return;
         }
 
+        if (activeModalUrl === url) {
+            return;
+        }
+
         try {
-            await loadModalFromUrl(url);
+            await loadModalFromUrl(url, { show: options.show !== false });
         } catch (error) {
+            activeModalUrl = null;
             console.error('Failed to load transaction modal content.', error);
             showInlineError('Unable to load this action right now.');
         }
+    }
+
+    async function openFromTrigger(trigger) {
+        return loadFromTrigger(trigger, { source: 'click', show: true });
     }
 
     document.addEventListener('click', function (event) {
@@ -294,7 +315,21 @@ helper('url_guard');
         openFromTrigger(trigger);
     });
 
+    modalElement.addEventListener('show.bs.modal', function (event) {
+        const trigger = event.relatedTarget;
+        if (!trigger || !trigger.matches?.('.dynamicModalLoader, .postAnnouncementBtn, .addBankAccount, .addCreditAccount, .depositFundsBtn, .withdrawFundsBtn, .deleteWalletBtn, #deleteWalletBtn')) {
+            return;
+        }
+
+        loadFromTrigger(trigger, {
+            source: 'bootstrap-show',
+            show: false,
+            showError: true
+        });
+    });
+
     modalElement.addEventListener('hidden.bs.modal', function () {
+        activeModalUrl = null;
         setLoadingState();
     });
 
