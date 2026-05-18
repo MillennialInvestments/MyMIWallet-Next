@@ -115,7 +115,7 @@ $epochOf = static function (?string $mdy): int {
             <td data-order="<?= $fmtNum($initialBalance); ?>"><?= esc($initialBankBalanceFMT ?? $initialBalanceFmt); ?></td>
             <td class="js-subtotal" data-order="<?= $fmtNum($sumStart); ?>"><?= $fmtCash($sumStart); ?></td>
             <td>
-              <a class="badge badge-sm bg-success text-white" data-bs-toggle="modal" data-bs-target="#transactionModal" title="Add Bank Account">
+              <a class="badge badge-sm bg-success text-white addBankAccount" data-bs-toggle="modal" data-bs-target="#transactionModal" title="Add Bank Account">
                 <i class="icon ni ni-plus"></i>
               </a>
               <a class="badge badge-sm bg-primary text-white" href="<?= site_url('Wallets'); ?>" title="Manage Wallets">
@@ -136,7 +136,7 @@ $epochOf = static function (?string $mdy): int {
             <td data-order="<?= $fmtNum($creditAvailable ?? 0); ?>"><?= esc($creditAvailableFMT ?? '$0.00'); ?></td>
             <td class="js-subtotal" data-order="<?= $fmtNum($sumStart); ?>"><?= $fmtCash($sumStart); ?></td>
             <td>
-              <a class="badge badge-sm bg-success text-white" data-bs-toggle="modal" data-bs-target="#transactionModal" title="Add Credit Account">
+              <a class="badge badge-sm bg-success text-white addCreditAccount" data-bs-toggle="modal" data-bs-target="#transactionModal" title="Add Credit Account">
                 <i class="icon ni ni-plus"></i>
               </a>
               <a class="badge badge-sm bg-primary text-white" href="<?= site_url('Wallets'); ?>" title="Manage Wallets">

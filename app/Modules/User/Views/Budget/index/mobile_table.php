@@ -229,7 +229,7 @@ $epochOf = static function (?string $mdy): int {
         actions += '<a href="<?= site_url('Budget/Copy/'); ?>'+id+'" class="btn btn-secondary btn-xs me-1"><i class="ni ni-copy"></i> Copy</a>';
         actions += '<a href="<?= site_url('Budget/Delete-Account/'); ?>'+id+'" class="btn btn-danger btn-xs text-white"><i class="ni ni-trash"></i> Delete</a>';
       } else if (role === 'bank' || role === 'credit') {
-        actions += '<a class="btn btn-success btn-xs text-white me-1" data-bs-toggle="modal" data-bs-target="#transactionModal"><i class="ni ni-plus"></i> Add</a>';
+        actions += '<a class="btn btn-success btn-xs text-white me-1 '+(role === 'credit' ? 'addCreditAccount' : 'addBankAccount')+'" data-bs-toggle="modal" data-bs-target="#transactionModal"><i class="ni ni-plus"></i> Add</a>';
         actions += '<a href="<?= site_url('Wallets'); ?>" class="btn btn-primary btn-xs"><i class="ni ni-edit"></i> Manage</a>';
       }
 
