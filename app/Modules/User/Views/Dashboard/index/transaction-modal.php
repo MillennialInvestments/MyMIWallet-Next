@@ -7,7 +7,7 @@ helper('url_guard');
 <?php define('TRANSACTION_MODAL_RENDERED', true); ?>
 
 <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable" id="transModalDialog">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" id="transactionModalDialog">
         <div class="modal-content">
             <div id="loading-content">
                 <?= view('UserModule\Views\Dashboard\index\modal-loading-page'); ?>
@@ -206,6 +206,50 @@ helper('url_guard');
         }
     }
 
+    function runModalDiagnostics() {
+        const ids = ['transactionModal', 'transactionModalDialog', 'transactionContainer', 'loading-content'];
+
+        ids.forEach(function (id) {
+            const el = document.getElementById(id);
+            if (!el) {
+                console.warn('[MODAL DEBUG] Missing element:', id);
+                return;
+            }
+
+            const cs = window.getComputedStyle(el);
+            console.log('[MODAL DEBUG]', id, {
+                display: cs.display,
+                visibility: cs.visibility,
+                opacity: cs.opacity,
+                zIndex: cs.zIndex,
+                position: cs.position,
+                pointerEvents: cs.pointerEvents,
+                transform: cs.transform,
+                overflow: cs.overflow,
+                width: cs.width,
+                height: cs.height,
+                className: el.className,
+                inlineStyle: el.getAttribute('style')
+            });
+        });
+
+        document.querySelectorAll('.modal-backdrop').forEach(function (el, index) {
+            const cs = window.getComputedStyle(el);
+            console.log('[MODAL DEBUG] modal-backdrop #' + index, {
+                display: cs.display,
+                visibility: cs.visibility,
+                opacity: cs.opacity,
+                zIndex: cs.zIndex,
+                position: cs.position,
+                className: el.className,
+                inlineStyle: el.getAttribute('style')
+            });
+        });
+
+        const topElement = document.elementFromPoint(Math.floor(window.innerWidth / 2), Math.floor(window.innerHeight / 2));
+        console.log('[MODAL DEBUG] Top center element:', topElement);
+    }
+
     function refreshTransactionViews() {
         if (window.jQuery && jQuery.fn?.DataTable && jQuery.fn.DataTable.isDataTable('#walletTransactionDatabase')) {
             const dt = jQuery('#walletTransactionDatabase').DataTable();
@@ -259,6 +303,12 @@ helper('url_guard');
         loadingContent.classList.add('d-none');
         transactionContainer.innerHTML = html;
         transactionContainer.classList.remove('d-none');
+
+        modalElement.style.display = 'block';
+        modalElement.style.visibility = 'visible';
+        modalElement.style.opacity = '1';
+
+        runModalDiagnostics();
     }
 
     async function loadFromTrigger(trigger, options = {}) {
