@@ -47,6 +47,6 @@ if ($cuUserType === 'Beta') {
 	<label for="broker" class="col-6 form-label">Delete this Wallet? </label>
 	<div class="col-6">
 	    <input class="btn btn-primary" type="submit" name="register" id="deleteWalletSubmit" value="Yes" />
-        <button class="btn btn-default" data-dismiss="modal">No</button>
+        <button class="btn btn-default" data-bs-dismiss="modal">No</button>
 	</div>
 </div>

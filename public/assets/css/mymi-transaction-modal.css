@@ -1,0 +1,24 @@
+/* Scoped defensive styles for global transaction modal visibility. */
+#transactionModal.modal.show {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 2000 !important;
+}
+
+#transactionModal .modal-dialog {
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 2005 !important;
+    pointer-events: auto !important;
+}
+
+#transactionModal .modal-content {
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+.modal-backdrop.show {
+    z-index: 1990 !important;
+}
