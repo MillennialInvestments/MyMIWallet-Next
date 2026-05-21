@@ -25,7 +25,16 @@ echo '
                     <button class="btn dynamicModalLoader" data-formtype="Edit" data-endpoint="' . $btnID . '" data-accountid="' . $accountID . '"><i class="icon ni ni-pen"></i> <span style="padding-top: 2px; padding-left: 5px;">Edit</span></button>
 					</li>
 					<li class="' . $btnSizing . '">
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#deleteWalletModal' . $accountID . '"><i class="icon ni ni-cross mr-1"></i> <span>Delete</span></a>
+                        <a href="#"
+                           class="dynamicModalLoader delete-wallet-button"
+                           data-formtype="Wallets"
+                           data-endpoint="deleteWallet"
+                           data-accountid="' . $accountID . '"
+                           data-wallet-id="' . $accountID . '"
+                           data-account-id="' . $accountID . '"
+                           data-type="Crypto"
+                           data-category="Crypto"
+                           data-name="' . esc($walletTitle ?? 'MyMI Gold Wallet') . '"><i class="icon ni ni-cross mr-1"></i> <span>Delete</span></a>
 					</li>
 				</ul>
 			</div>
@@ -37,7 +46,16 @@ echo '
                     <ul class="link-list-plain sm">
                         <li><a href="' . site_url('Wallets/Crypto/Details/' . $accountID) . '">Details</a></li>   
                         <li><a href="' . site_url('/Wallets/Crypto/Edit/Account/' . $walletID) . '">Edit</a></li>
-                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#deleteWalletModal' . $accountID . '">Delete</a></li>
+                        <li><a href="#"
+                               class="dynamicModalLoader delete-wallet-button"
+                               data-formtype="Wallets"
+                               data-endpoint="deleteWallet"
+                               data-accountid="' . $accountID . '"
+                               data-wallet-id="' . $accountID . '"
+                               data-account-id="' . $accountID . '"
+                               data-type="Crypto"
+                               data-category="Crypto"
+                               data-name="' . esc($walletTitle ?? 'MyMI Gold Wallet') . '">Delete</a></li>
                     </ul>
                 </div>
             </div>
@@ -46,5 +64,4 @@ echo '
 </div> 
 ';
 ?>
-
 

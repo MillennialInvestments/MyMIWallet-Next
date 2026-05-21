@@ -42,14 +42,15 @@ echo '
 					<li class="' . $btnSizing . '">
                         <a href="#"
                            data-id="' . esc($deleteTargetId) . '"
-                           class="delete-wallet-button"
+                           class="dynamicModalLoader delete-wallet-button"
                            data-wallet-id="' . esc($deleteTargetId) . '"
+                           data-formtype="Wallets"
+                           data-endpoint="deleteWallet"
+                           data-accountid="' . esc($deleteTargetId) . '"
                            data-account-id="' . esc($childAccountId) . '"
                            data-type="Bank"
                            data-name="' . esc($deleteName) . '"
-                           onclick="openDeleteModal(event)"
-                           data-bs-toggle="modal"
-                           data-bs-target="#deleteWalletModal">
+                           data-category="Bank">
                             <i class="icon ni ni-cross"></i> <span>Delete</span>
                         </a>
 					</li>
@@ -70,14 +71,15 @@ echo '
 						<li>
                             <a href="#"
                                data-id="' . esc($deleteTargetId) . '"
-                               class="delete-wallet-button"
+                               class="dynamicModalLoader delete-wallet-button"
                            data-wallet-id="' . esc($deleteTargetId) . '"
+                           data-formtype="Wallets"
+                           data-endpoint="deleteWallet"
+                           data-accountid="' . esc($deleteTargetId) . '"
                            data-account-id="' . esc($childAccountId) . '"
                            data-type="Bank"
                                data-name="' . esc($deleteName) . '"
-                               onclick="openDeleteModal(event)"
-                               data-bs-toggle="modal"
-                               data-bs-target="#deleteWalletModal">
+                               data-category="Bank">
                                 Delete
                             </a>
                         </li>
