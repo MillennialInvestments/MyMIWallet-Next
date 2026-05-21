@@ -180,92 +180,49 @@ class BudgetModuleModel extends ObservedModel {
                 ])->findAll();
     }
     
+    // app/Models/BudgetModel.php
     public function getThisMonthsIncome($cuID)
     {
-        return $this->selectSum('net_amount')
-                    ->where([
-                        'created_by' => $cuID,
-                        'account_type' => 'Income',
-                        'status' => 1,
-                        'month' => date("m")
-                    ])->first();
+        return $this->sumBudgetNetAmount((int) $cuID, ['Income'], (int) date('n'), (int) date('Y'));
     }
-    
+
     public function getThisMonthsExpense($cuID)
     {
-        return $this->selectSum('net_amount')
-                    ->where([
-                        'created_by' => $cuID,
-                        'account_type' => 'Expense',
-                        'status' => 1,
-                        'month' => date("m")
-                    ])->first();
+        return $this->sumBudgetNetAmount((int) $cuID, ['Expense', 'Expenses'], (int) date('n'), (int) date('Y'));
     }
-    
+
     public function getLastMonthsIncome($cuID)
     {
-        return $this->selectSum('net_amount')
-                    ->where([
-                        'created_by' => $cuID,
-                        'account_type' => 'Income',
-                        'status' => 1,
-                        'month' => date("m", strtotime("-1 months"))
-                    ])->first();
+        $date = new \DateTime('first day of last month');
+        return $this->sumBudgetNetAmount((int) $cuID, ['Income'], (int) $date->format('n'), (int) $date->format('Y'));
     }
-    
+
     public function getLastMonthsExpense($cuID)
     {
-        return $this->selectSum('net_amount')
-                    ->where([
-                        'created_by' => $cuID,
-                        'account_type' => 'Expense',
-                        'status' => 1,
-                        'month' => date("m", strtotime("-1 months"))
-                    ])->first();
+        $date = new \DateTime('first day of last month');
+        return $this->sumBudgetNetAmount((int) $cuID, ['Expense', 'Expenses'], (int) $date->format('n'), (int) $date->format('Y'));
     }
 
     public function getNextMonthsIncome($cuID)
     {
-        return $this->selectSum('net_amount')
-                    ->where([
-                        'created_by' => $cuID,
-                        'account_type' => 'Income',
-                        'status' => 1,
-                        'month' => date("m", strtotime("+1 months"))
-                    ])->first();
+        $date = new \DateTime('first day of next month');
+        return $this->sumBudgetNetAmount((int) $cuID, ['Income'], (int) $date->format('n'), (int) $date->format('Y'));
     }
 
     public function getNextMonthsExpense($cuID)
     {
-        return $this->selectSum('net_amount')
-                    ->where([
-                        'created_by' => $cuID,
-                        'account_type' => 'Expense',
-                        'status' => 1,
-                        'month' => date("m", strtotime("+1 months"))
-                    ])->first();
+        $date = new \DateTime('first day of next month');
+        return $this->sumBudgetNetAmount((int) $cuID, ['Expense', 'Expenses'], (int) $date->format('n'), (int) $date->format('Y'));
     }
 
     public function getAnnualIncome($cuID)
     {
-        return $this->selectSum('net_amount')
-                    ->where([
-                        'created_by' => $cuID,
-                        'account_type' => 'Income',
-                        'status' => 1,
-                        'year' => date("Y")
-                    ])->first();
+        return $this->sumBudgetNetAmount((int) $cuID, ['Income'], null, (int) date('Y'));
     }
 
     public function getAnnualExpense($cuID)
     {
-        return $this->selectSum('net_amount')
-                    ->where([
-                        'created_by' => $cuID,
-                        'account_type' => 'Expense',
-                        'status' => 1,
-                        'year' => date("Y")
-                    ])->first();
+        return $this->sumBudgetNetAmount((int) $cuID, ['Expense', 'Expenses'], null, (int) date('Y'));
     }
 
     public function getCheckingSummary($cuID)

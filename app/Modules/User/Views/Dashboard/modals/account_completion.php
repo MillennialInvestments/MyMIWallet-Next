@@ -1,6 +1,7 @@
 <?php
 $completion = is_array($accountCompletion ?? null) ? $accountCompletion : [];
-$shouldDisplay = (bool) ($completion['should_display'] ?? false);
+$shouldDisplay = (bool) false;
+// $shouldDisplay = (bool) ($completion['should_display'] ?? false);
 $nextAction = is_array($completion['next_action'] ?? null) ? $completion['next_action'] : [];
 $checks = is_array($completion['checks'] ?? null) ? $completion['checks'] : [];
 $modalId = 'accountCompletionModal';

@@ -1535,6 +1535,195 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
         return $rows;
     } 
 
+    public function getUserBudgetRecords(): ResponseInterface
+    {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] getUserBudgetRecords');
+
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->respondUnauthorized('User not logged in.');
+        }
+
+        try {
+            $result = $this->rememberUserData(
+                'budget-records',
+                $userId,
+                fn () => $this->normalizeBudgetRecordsForApi(
+                    $this->budgetService->getUserBudgetRecords($userId) ?: []
+                )
+            );
+
+            return $this->respondSuccess([
+                'records' => $result['data'],
+            ], $result['fromCache']);
+        } catch (\Throwable $e) {
+            $this->logException('getUserBudgetRecords', $e, $userId);
+            return $this->respondFailure('Failed to load budget records.', 500, [], 'degraded');
+        }
+    }
+
+    public function getUserCreditBalances(): ResponseInterface
+    {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] getUserCreditBalances');
+
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->respondUnauthorized('User not logged in.');
+        }
+
+        try {
+            $result = $this->rememberUserData(
+                'credit-balances',
+                $userId,
+                function () use ($userId) {
+                    $creditAccounts = $this->accountService->getUserCreditAccounts($userId) ?: [];
+                    return $this->budgetService->getCurrentBalances($creditAccounts) ?: [];
+                }
+            );
+
+            return $this->respondSuccess([
+                'records' => $result['data'],
+            ], $result['fromCache']);
+        } catch (\Throwable $e) {
+            $this->logException('getUserCreditBalances', $e, $userId);
+            return $this->respondFailure('Failed to load credit balances.', 500, [], 'degraded');
+        }
+    }
+
+    public function getUserAvailableBalances(): ResponseInterface
+    {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] getUserAvailableBalances');
+
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->respondUnauthorized('User not logged in.');
+        }
+
+        try {
+            $result = $this->rememberUserData(
+                'available-balances',
+                $userId,
+                function () use ($userId) {
+                    $creditAccounts = $this->accountService->getUserCreditAccounts($userId) ?: [];
+                    $repaymentSchedules = $this->budgetService->calculateRepaymentSchedules($creditAccounts) ?: [];
+                    return $this->budgetService->getAvailableBalances($repaymentSchedules) ?: [];
+                }
+            );
+
+            return $this->respondSuccess([
+                'records' => $result['data'],
+            ], $result['fromCache']);
+        } catch (\Throwable $e) {
+            $this->logException('getUserAvailableBalances', $e, $userId);
+            return $this->respondFailure('Failed to load available balances.', 500, [], 'degraded');
+        }
+    }
+
+    public function getUserRepaymentSummary(): ResponseInterface
+    {
+        log_message('debug', '[BudgetController::METHOD_ENTRY] getUserRepaymentSummary');
+
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->respondUnauthorized('User not logged in.');
+        }
+
+        try {
+            $result = $this->rememberUserData(
+                'repayment-summary',
+                $userId,
+                fn () => $this->budgetService->getRepaymentSummary($userId) ?: []
+            );
+
+            return $this->respondSuccess([
+                'records' => $result['data'],
+            ], $result['fromCache']);
+        } catch (\Throwable $e) {
+            $this->logException('getUserRepaymentSummary', $e, $userId);
+            return $this->respondFailure('Failed to load repayment summary.', 500, [], 'degraded');
+        }
+    }
+
+    protected function normalizeBudgetRecordsForApi(array $records): array
+    {
+        $normalized = [];
+
+        foreach ($records as $record) {
+            if (!is_array($record)) {
+                continue;
+            }
+
+            $month = isset($record['month']) && is_numeric($record['month']) ? (int) $record['month'] : 0;
+            $day   = isset($record['day']) && is_numeric($record['day']) ? (int) $record['day'] : 1;
+            $year  = isset($record['year']) && is_numeric($record['year']) ? (int) $record['year'] : 0;
+
+            if (($month <= 0 || $year <= 0) && !empty($record['designated_date'])) {
+                $timestamp = strtotime((string) $record['designated_date']);
+                if ($timestamp !== false) {
+                    $month = (int) date('n', $timestamp);
+                    $day   = (int) date('j', $timestamp);
+                    $year  = (int) date('Y', $timestamp);
+                }
+            }
+
+            if ($month <= 0 || $month > 12 || $year <= 0) {
+                continue;
+            }
+
+            $accountType = $this->normalizeBudgetRecordType((string) ($record['account_type'] ?? ''));
+
+            if ($accountType === '') {
+                continue;
+            }
+
+            $amount = $this->parseBudgetAmountForApi($record['net_amount'] ?? $record['amount'] ?? 0);
+
+            $record['account_type'] = $accountType;
+            $record['month'] = $month;
+            $record['day'] = max(1, min(31, $day));
+            $record['year'] = $year;
+            $record['net_amount'] = $amount;
+            $record['date_key'] = sprintf('%04d-%02d', $year, $month);
+
+            $normalized[] = $record;
+        }
+
+        usort($normalized, static function (array $a, array $b): int {
+            return [$a['year'], $a['month'], $a['day'], $a['id'] ?? 0]
+                <=> [$b['year'], $b['month'], $b['day'], $b['id'] ?? 0];
+        });
+
+        return $normalized;
+    }
+
+    protected function normalizeBudgetRecordType(string $type): string
+    {
+        $type = strtolower(trim($type));
+
+        if (str_contains($type, 'income')) {
+            return 'Income';
+        }
+
+        if (str_contains($type, 'expense')) {
+            return 'Expense';
+        }
+
+        if (str_contains($type, 'investment')) {
+            return 'Investment';
+        }
+
+        return '';
+    }
+
+    protected function parseBudgetAmountForApi($value): float
+    {
+        if (is_string($value)) {
+            $value = preg_replace('/[^0-9.\-]/', '', $value);
+        }
+
+        return round((float) $value, 2);
+    }
+
     public function summary()
     {
         if ($this->featureGuardResponse instanceof ResponseInterface) {

@@ -31,7 +31,7 @@ class SiteSettings extends BaseConfig
         public $educateOperations               = 0;
         public $exchangeOperations              = 0;
         public $exchangeTab                     = 1;
-        public $integrationOperations           = 1;
+        public $integrationOperations           = 0;
         public $investmentOperations            = 0;
         public $marketplaceOperations           = 0;
         public $monthlyGoals                    = 0; 
@@ -284,7 +284,7 @@ class SiteSettings extends BaseConfig
                     $this->referralOperations = 1;
                     $this->exchangeOperations = 1;
                     $this->marketplaceOperations = 1;
-                    $this->integrationOperations = 1;
+                    // $this->integrationOperations = 1; // Pending Premium Integration to Unlock
                     $this->alertOperations = 1; 
                     break;
                 case 6: // !! NEEDS TO BE ADJUSTED BELOW HERE
