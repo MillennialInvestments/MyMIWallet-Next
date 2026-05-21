@@ -1,0 +1,60 @@
+{
+  "generated_at_utc": "2026-05-21T12:35:00Z",
+  "repository": {
+    "name": "MyMI Wallet",
+    "key": "mymiwallet"
+  },
+  "baseline_source": {
+    "name": "timothyburks.com Spark command baseline",
+    "status": "not-yet-ingested-directly-in-this-pass"
+  },
+  "classification": [
+    {
+      "area": "AIOps core",
+      "status": "exists",
+      "examples": ["aiops:run", "aiops:worker", "aiops:status"],
+      "action": "keep"
+    },
+    {
+      "area": "Command governance",
+      "status": "exists",
+      "examples": ["ops:commands:inventory", "ops:commands:lint", "ops:commands:audit"],
+      "action": "keep"
+    },
+    {
+      "area": "Central baseline parity aliases",
+      "status": "unknown_until_baseline_ingest",
+      "examples": [],
+      "action": "evaluate_shim_candidates"
+    },
+    {
+      "area": "Central reporting transport",
+      "status": "partial",
+      "examples": ["aiops:status"],
+      "action": "add_direct_or_shim"
+    },
+    {
+      "area": "Control-plane-only workflows",
+      "status": "not_applicable_candidate",
+      "examples": ["centralized fleet-only commands"],
+      "action": "document_na"
+    }
+  ],
+  "gaps_to_queue_as_aiops_tasks": [
+    "Ingest authoritative baseline command manifest from timothyburks.com",
+    "Build repeatable spark command for local-vs-baseline diff and classification",
+    "Implement standardized report upload path to central command center",
+    "Create shim aliases only for validated missing command names"
+  ],
+  "requires_shared_modules_services": [
+    "CommandBaselineProvider",
+    "CommandGapClassifier",
+    "CentralReportClient"
+  ],
+  "should_report_to_timothyburks": [
+    "command_surface_snapshot",
+    "command_gap_matrix",
+    "repo_health_summary",
+    "deferred_aiops_tasks"
+  ]
+}
