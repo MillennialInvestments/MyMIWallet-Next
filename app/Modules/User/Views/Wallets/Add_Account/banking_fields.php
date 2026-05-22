@@ -41,7 +41,7 @@ $form_mode                      = 'Add';
 <div class="form-group">
     <label for="account_type" class="col-12">Account Type</label>
     <div class="col-12">
-        <?= form_dropdown('account_type', ['N/A' => 'Select-An-Option', 'Checking' => 'Checking', 'Saving' => 'Saving'], set_value('account_type', ''), ['class' => 'form-control', 'id' => 'account_type', 'required' => 'required']) ?>
+        <?= form_dropdown('account_type', ['N/A' => 'Select-An-Option', 'Checking' => 'Checking', 'Saving' => 'Saving'], set_value('account_type', ''), ['class' => 'form-select', 'id' => 'account_type', 'required' => 'required']) ?>
     </div>
 </div>
 
@@ -85,10 +85,10 @@ $form_mode                      = 'Add';
     <div class="col-12 col-md-8">
         <div class="row">
             <div class="col-6 px-1">
-                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary w-100" data-dismiss="modal" data-bs-dismiss="modal">Cancel</button>            
             </div>
             <div class="col-6 px-1">
-                <button type="submit" class="btn btn-primary btn-block" id="addNewWalletSubmit">Submit</button>
+                <button type="submit" class="btn btn-primary w-100" id="addNewWalletSubmit">Submit</button>
             </div>
         </div>
     </div>
@@ -102,4 +102,3 @@ By proceeding, you acknowledge and agree that your transaction is governed by th
 Your card-issuing bank may charge a foreign transaction fee or another type of fee. Any fees charged by your bank are separate from and in addition to the card processing fee charged by Bittrex. By proceeding, you also acknowledge that you are solely responsible for paying any fees charged by your bank.
 </p>
 -->
-
