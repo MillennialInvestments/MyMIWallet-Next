@@ -7,7 +7,7 @@
 ?>
 
 <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" id="transModalDialog">
+    <div class="modal-dialog" id="transModalDialog">
         <div class="modal-content" id="transactionModalContent">
             <div id="transactionContainer">
                 <!-- AJAX modal content is injected here only after click. -->
@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', function () {
         console.warn('[transactionModal] Modal shell or container missing.');
         return;
     }
+
+    let activeRequestController = null;
 
     function getModalAdapter() {
         if (window.bootstrap && window.bootstrap.Modal) {
@@ -120,6 +122,27 @@ document.addEventListener('DOMContentLoaded', function () {
         return baseUrl + '/' + parts.map(encodeURIComponent).join('/');
     }
 
+    function abortInFlightRequest() {
+        if (activeRequestController) {
+            activeRequestController.abort();
+            activeRequestController = null;
+        }
+    }
+
+    function cleanupModalArtifacts() {
+        document.querySelectorAll('.modal-backdrop').forEach(function (backdrop, index, arr) {
+            if (index < arr.length - 1) {
+                backdrop.remove();
+            }
+        });
+
+        const hasOpenModal = document.querySelector('.modal.show') !== null;
+        if (!hasOpenModal) {
+            document.body.classList.remove('modal-open');
+            document.body.style.removeProperty('padding-right');
+        }
+    }
+
     async function loadModal(url) {
         const adapter = getModalAdapter();
 
@@ -132,12 +155,16 @@ document.addEventListener('DOMContentLoaded', function () {
         adapter.show();
 
         try {
+            abortInFlightRequest();
+            activeRequestController = new AbortController();
+
             const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 },
-                credentials: 'same-origin'
+                credentials: 'same-origin',
+                signal: activeRequestController.signal
             });
 
             const html = await response.text();
@@ -159,8 +186,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
             container.innerHTML = html;
         } catch (error) {
+            if (error && error.name === 'AbortError') {
+                return;
+            }
+
             console.error('[transactionModal] load failed', error);
             container.innerHTML = errorHtml('Unable to load this action right now. Please refresh and try again.');
+        } finally {
+            activeRequestController = null;
         }
     }
 
@@ -200,8 +233,17 @@ document.addEventListener('DOMContentLoaded', function () {
         loadModal(url);
     });
 
+    modalElement.addEventListener('hide.bs.modal', function () {
+        abortInFlightRequest();
+    });
+
+    modalElement.addEventListener('shown.bs.modal', function () {
+        cleanupModalArtifacts();
+    });
+
     modalElement.addEventListener('hidden.bs.modal', function () {
         container.innerHTML = '';
+        cleanupModalArtifacts();
     });
 });
 </script>
