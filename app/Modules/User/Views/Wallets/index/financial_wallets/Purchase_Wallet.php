@@ -16,7 +16,7 @@ echo '
 						<a href="#" id="link-button"><i class="icon ni ni-search mr-1"></i> <span>Search</span></a>
 					</li>
 					<li class="' . $btnSizing . '">
-                        <a class="' . $btnID . ' dynamicModalLoader" data-endpoint="' . $btnEndpoint . '" data-cuid="<?= $cuID; ?>"<i class="icon ni ni-note-add mr-1"></i> <span>Manually Add</span></a>
+                        <a href="#" class="' . $btnID . ' dynamicModalLoader" data-formtype="Wallets" data-endpoint="' . $btnEndpoint . '" data-accountid="' . $cuID . '"><i class="icon ni ni-note-add mr-1"></i> <span>Manually Add</span></a>
 					</li>
 				</ul>
 			</div>
@@ -25,5 +25,3 @@ echo '
 </div>
 ';
 ?>
-
-
