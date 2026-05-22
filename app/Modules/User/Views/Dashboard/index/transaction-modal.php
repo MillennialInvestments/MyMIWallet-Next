@@ -7,7 +7,7 @@
 ?>
 
 <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" id="transModalDialog">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" id="transModalDialog">
         <div class="modal-content" id="transactionModalContent">
             <div id="transactionContainer">
                 <!-- AJAX modal content is injected here only after click. -->

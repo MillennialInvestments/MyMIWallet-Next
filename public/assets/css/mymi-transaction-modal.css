@@ -1,5 +1,5 @@
 /* =========================================================
-   MyMI Wallet - Transaction Modal Final Layout Fix
+   MyMI Wallet - Transaction Modal Stable Form Layout
    Scope: #transactionModal only
    Load AFTER Bootstrap / DashLite CSS.
 ========================================================= */
@@ -24,7 +24,6 @@
     opacity: 1 !important;
 }
 
-/* Do NOT force full-height dialog */
 #transactionModal .modal-dialog {
     position: relative !important;
     width: min(92vw, 960px) !important;
@@ -32,11 +31,14 @@
     margin: 1.75rem auto !important;
     pointer-events: auto !important;
     z-index: 2005 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    align-items: initial !important;
 }
 
-/* Let content fit naturally, but cap it to viewport */
 #transactionModal .modal-content {
     width: 100% !important;
+    height: auto !important;
     max-height: calc(100dvh - 3.5rem) !important;
     display: flex !important;
     flex-direction: column !important;
@@ -44,39 +46,63 @@
     border-radius: 0.75rem !important;
 }
 
-/* Header stays visible */
 #transactionModal .modal-header {
     flex: 0 0 auto !important;
 }
 
-/* Body scrolls only when necessary */
 #transactionModal .modal-body {
     flex: 1 1 auto !important;
     overflow-y: auto !important;
     max-height: calc(100dvh - 10rem) !important;
     padding: 1.5rem !important;
+    min-height: 0 !important;
+    height: auto !important;
 }
 
-/* Footer, if a partial has one */
 #transactionModal .modal-footer {
     flex: 0 0 auto !important;
 }
 
-/* Dynamic container should not create fake height */
 #transactionModal #transactionContainer {
     width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
 }
 
-/* Forms should not stretch the modal */
 #transactionModal form,
+#transactionModal form.form-horizontal,
 #transactionModal fieldset {
     margin: 0 !important;
     padding: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    max-width: 100% !important;
+    border: 0 !important;
+}
+
+#transactionModal .card-title {
+    margin-top: 0 !important;
+    margin-bottom: 0.35rem !important;
+    padding-top: 0 !important;
+}
+
+#transactionModal .card-description {
+    margin-top: 0 !important;
+    margin-bottom: 1rem !important;
+    padding-top: 0 !important;
+}
+
+#transactionModal hr {
+    margin: 1rem 0 !important;
+}
+
+#transactionModal .form-group {
+    margin-top: 0 !important;
+    margin-bottom: 1rem !important;
+    padding-top: 0 !important;
     max-width: 100% !important;
 }
 
-/* Keep controls within modal width */
-#transactionModal .form-group,
 #transactionModal .form-control,
 #transactionModal .form-select,
 #transactionModal select,
@@ -85,20 +111,6 @@
     max-width: 100% !important;
 }
 
-/* Optional spacing cleanup for legacy form groups */
-#transactionModal .form-group {
-    margin-bottom: 1rem !important;
-}
-
-#transactionModal .card-title {
-    margin-bottom: 0.35rem !important;
-}
-
-#transactionModal .card-description {
-    margin-bottom: 1rem !important;
-}
-
-/* Backdrop */
 .modal-backdrop {
     position: fixed !important;
     inset: 0 !important;
@@ -114,7 +126,6 @@ body.modal-open {
     padding-right: 0 !important;
 }
 
-/* Mobile */
 @media (max-width: 575.98px) {
     #transactionModal.modal {
         padding: 0 !important;
