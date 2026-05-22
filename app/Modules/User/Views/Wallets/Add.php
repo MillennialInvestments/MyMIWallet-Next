@@ -164,12 +164,12 @@ if ($accountType === 'addBankAccount') {
 }
 ?>
 <div class="modal-header">
-	<h3 class="modal-title" id="useCoinModalLabel"><?= $addModalTitle; ?></h3>
+	<h5 class="modal-title" id="transactionModalLabel"><?= $addModalTitle; ?></h5>
 	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div> 
 <div class="modal-body">
-    <form class="form-horizontal" id="add_user_wallet" action="<?= site_url('Wallets/Add'); ?>" method="POST">
-        <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
+    <form class="form-horizontal" id="add_user_wallet" action="<?= site_url('API/Wallets/Add') ?>" method="POST">
+        <?= csrf_field() ?>
 
 		<fieldset>
 			<?php echo view($pageView, $fieldData); ?>
