@@ -40,6 +40,7 @@
     width: 100% !important;
     height: auto !important;
     max-height: calc(100dvh - 3.5rem) !important;
+    min-height: 0 !important;
     display: flex !important;
     flex-direction: column !important;
     overflow: hidden !important;
