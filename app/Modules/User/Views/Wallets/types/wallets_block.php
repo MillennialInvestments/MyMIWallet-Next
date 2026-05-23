@@ -148,7 +148,7 @@ body.plaid-link-open .modal-content {
 
       <button
         class="btn btn-primary btn-sm dynamicModalLoader"
-        data-formtype="Add"
+        data-formtype="Wallets"
         data-endpoint="<?= esc($btnEndpointToken) ?>"
         data-cuid="<?= esc($cuID) ?>">
         <i class="icon ni ni-plus text-white me-1"></i> Add Manually
@@ -177,7 +177,7 @@ body.plaid-link-open .modal-content {
               </button>
             <?php endif; ?>
             <button class="btn btn-outline-secondary btn-sm dynamicModalLoader"
-                    data-formtype="Add"
+                    data-formtype="Wallets"
                     data-endpoint="<?= esc($btnEndpointToken) ?>"
                     data-cuid="<?= esc($cuID) ?>">
               <i class="icon ni ni-plus text-white me-1"></i> Add Manually

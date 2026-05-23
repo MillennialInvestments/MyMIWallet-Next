@@ -21,7 +21,7 @@ echo '
                     }; 
                 echo '
                     <li class="' . $btnSizing . '">
-                        <button class="btn dynamicModalLoader" data-formtype="Add" data-endpoint="' . $btnID . '" data-cuid="' . $cuID . '"><i class="icon ni ni-plus"></i> <span style="padding-top: 2px; padding-left: 5px;">Manually Add</span></button>
+                        <button class="btn dynamicModalLoader" data-formtype="Wallets" data-endpoint="' . $btnID . '" data-accountid="' . $cuID . '"><i class="icon ni ni-plus"></i> <span style="padding-top: 2px; padding-left: 5px;">Manually Add</span></button>
                     </li>
                 </ul>
             </div>
