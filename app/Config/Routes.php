@@ -561,6 +561,13 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
             $routes->post('createQuarterlyDistribution/(:num)', 'ProjectsController::createQuarterlyDistribution/$1');
             $routes->post('runPayouts/(:num)', 'ProjectsController::runPayouts/$1');
             $routes->post('processMonthlyWithdrawals/(:num)', 'ProjectsController::processMonthlyWithdrawals/$1');
+            $routes->post('TBI-Coins/Create-Defaults/(:num)', 'TbiProjectCoinsAPIController::createDefaults/$1', ['filter' => 'permission:admin.access']);
+            $routes->get('TBI-Coins/(:num)', 'TbiProjectCoinsAPIController::getProjectCoins/$1');
+            $routes->post('TBI-Coins/Record-Contribution', 'TbiProjectCoinsAPIController::recordContribution', ['filter' => 'login']);
+            $routes->post('TBI-Coins/Approve-Contribution/(:num)', 'TbiProjectCoinsAPIController::approveContribution/$1', ['filter' => 'permission:admin.access']);
+            $routes->post('TBI-Coins/Reject-Contribution/(:num)', 'TbiProjectCoinsAPIController::rejectContribution/$1', ['filter' => 'permission:admin.access']);
+            $routes->post('TBI-Coins/Prepare-Solana-Mint/(:num)', 'TbiProjectCoinsAPIController::prepareSolanaMint/$1', ['filter' => 'permission:admin.access']);
+            $routes->post('TBI-Coins/Prepare-Exchange-Asset/(:num)', 'TbiProjectCoinsAPIController::prepareExchangeAsset/$1', ['filter' => 'permission:admin.access']);
         });
         
     });
