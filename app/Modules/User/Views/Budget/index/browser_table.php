@@ -464,6 +464,50 @@ $epochOf = static function (?string $mdy): int {
       }
       this.dataset.submitted = 'true';
     });
+
+    // Budget mobile/browser plus action support.
+    // Delegated binding survives DataTables redraws and lets users tap either the plus icon or the cell.
+    $table.on('click', '.dt-control, .dt-control .toggle, .budget-row-actions-toggle', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+
+      var $target = $(this);
+      var $btn = $target.hasClass('toggle') ? $target : $target.find('.toggle').first();
+
+      if (!$btn.length) {
+        $btn = $target;
+      }
+
+      var tr = $target.closest('tr');
+
+      if (!tr.length) {
+        return false;
+      }
+
+      var row = table.row(tr);
+
+      if (!row || !row.node()) {
+        return false;
+      }
+
+      if (row.child.isShown()) {
+        row.child.hide();
+        tr.removeClass('shown');
+        $btn.find('i').removeClass('ni-minus').addClass('ni-plus');
+      } else {
+        row.child(buildChildHTML(tr[0])).show();
+        tr.addClass('shown');
+        $btn.find('i').removeClass('ni-plus').addClass('ni-minus');
+      }
+
+      return false;
+    });
+
+    // Prevent links, buttons, and dynamic modal actions from being swallowed by row/cell handlers.
+    $table.on('click', 'a, button, .dynamicModalLoader', function(e){
+      e.stopPropagation();
+    });
+
   });
 })();
 </script>
