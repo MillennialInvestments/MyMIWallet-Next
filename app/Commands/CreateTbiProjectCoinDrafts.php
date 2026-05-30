@@ -15,12 +15,15 @@ class CreateTbiProjectCoinDrafts extends BaseCommand
 
     public function run(array $params)
     {
-        $apply = in_array('--apply', $params, true) || isset($params['apply']);
-        $dryRun = ! $apply || in_array('--dry-run', $params, true) || isset($params['dry-run']);
-        if ($apply && (in_array('--dry-run', $params, true) || isset($params['dry-run']))) {
+        $apply = $this->hasCliFlag('apply', $params);
+        $explicitDryRun = $this->hasCliFlag('dry-run', $params);
+        $dryRun = ! $apply || $explicitDryRun;
+
+        if ($apply && $explicitDryRun) {
             $dryRun = true;
             $apply = false;
         }
+
 
         $timestamp = date('Ymd-His');
         $reportDir = ROOTPATH . 'docs/_aiops/reports/solana-phase-03b';
@@ -147,4 +150,34 @@ class CreateTbiProjectCoinDrafts extends BaseCommand
             ['coin_key' => 'tbi_invest_coin', 'coin_name' => 'TBI Invest Coin', 'symbol' => 'TBIINV', 'coin_type' => 'investment', 'unit_value_usd' => '1.000000', 'solana_mint_address' => null, 'exchange_asset_id' => null, 'project_exchange_symbol' => 'TBIINV-DEV', 'primary_issuance_enabled' => 0, 'secondary_trading_enabled' => 0, 'compliance_required' => 1, 'status' => 'draft'],
         ];
     }
+
+    /**
+     * Detect boolean CLI flags reliably across CI4 command wrappers.
+     *
+     * Some app-level command runners do not pass long options into $params,
+     * so this checks both the provided params array and raw argv.
+     */
+    private function hasCliFlag(string $name, array $params = []): bool
+    {
+        $name = ltrim($name, '-');
+
+        if (in_array('--' . $name, $params, true) || in_array($name, $params, true)) {
+            return true;
+        }
+
+        if (array_key_exists($name, $params) || array_key_exists('--' . $name, $params)) {
+            return true;
+        }
+
+        $argv = $_SERVER['argv'] ?? [];
+
+        foreach ($argv as $arg) {
+            if ($arg === '--' . $name || str_starts_with($arg, '--' . $name . '=')) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
