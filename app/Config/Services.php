@@ -13,6 +13,7 @@ use App\Services\OnboardingProgressService;
 use App\Services\AccountCompletionService;
 use App\Services\Psr4AuditService;
 use App\Services\SetupStatusService;
+use App\Services\SolanaService;
 use App\Services\PremiumEntitlementService;
 use App\Services\RegistrationAttributionService;
 use App\Services\RegistrationSourceContentService;
@@ -849,6 +850,17 @@ class Services extends CoreServices
         }
 
         return new \App\Services\MobileAuthTokenService();
+    }
+
+    public static function solanaService(bool $getShared = true): SolanaService
+    {
+        if ($getShared) {
+            /** @var SolanaService $service */
+            $service = static::getSharedInstance('solanaService');
+            return $service;
+        }
+
+        return new SolanaService();
     }
 
 

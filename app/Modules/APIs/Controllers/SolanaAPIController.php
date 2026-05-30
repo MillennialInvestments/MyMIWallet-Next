@@ -11,6 +11,7 @@ use App\Libraries\{
     MyMISolflare, MyMITrustWallet, MyMIUser, MyMIWallets
 };
 use App\Models\{AccountsModel, APIModel, ExchangeModel, SolanaModel, UserModel, WalletModel};
+use App\Services\SolanaService;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\API\RequestTrait;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -55,6 +56,7 @@ class SolanaAPIController extends BaseAPIController {
     protected $userBudget;
     protected $userDashboard;
     protected $userWallets;
+    protected $solanaService;
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
@@ -79,6 +81,7 @@ class SolanaAPIController extends BaseAPIController {
 //         $this->MyMITrustWallet = new MyMITrustWallet(); // replaced by BaseController getter
         $this->exchangeModel = new ExchangeModel();
         $this->solanaModel = new SolanaModel();
+        $this->solanaService = $this->resolveSolanaService();
         
         if ($this->siteSettings->beta === 1) {
             $this->apiUrl = $this->betaApiUrl; 
@@ -463,11 +466,36 @@ class SolanaAPIController extends BaseAPIController {
 
     public function health()
     {
+        $service = $this->resolveSolanaService();
+
+        if (! is_object($service)) {
+            return $this->response->setJSON($this->jsonEnvelope(false, 'Solana health check degraded.', [
+                'status' => $this->degradedSolanaStatus('service_unavailable'),
+            ]));
+        }
+
         try {
-            $status = service('solanaService')->getSafeNetworkStatus();
-            return $this->response->setJSON($this->jsonEnvelope(true, 'Solana health check completed.', ['status' => $status]));
+            if (method_exists($service, 'getSafeNetworkStatus')) {
+                $status = $service->getSafeNetworkStatus();
+            } elseif (method_exists($service, 'getNetworkStatus')) {
+                $status = $service->getNetworkStatus();
+            } else {
+                $status = $this->degradedSolanaStatus('network_status_method_unavailable');
+            }
+
+            if (! is_array($status) || $status === []) {
+                $status = $this->degradedSolanaStatus('network_status_empty');
+            }
+
+            $healthy = (bool) ($status['healthy'] ?? false);
+
+            return $this->response->setJSON($this->jsonEnvelope($healthy, $healthy ? 'Solana health check completed.' : 'Solana health check degraded.', ['status' => $status]));
         } catch (\Throwable $e) {
-            return $this->response->setJSON($this->jsonEnvelope(false, 'Solana health check failed.', [], ['exception' => $e->getMessage()]));
+            log_message('warning', 'SolanaAPIController::health degraded: {msg}', ['msg' => $e->getMessage()]);
+
+            return $this->response->setJSON($this->jsonEnvelope(false, 'Solana health check degraded.', [
+                'status' => $this->degradedSolanaStatus('network_status_unavailable'),
+            ]));
         }
     }
 
@@ -519,11 +547,46 @@ class SolanaAPIController extends BaseAPIController {
         return $this->response->setJSON($this->jsonEnvelope((bool) ($result['success'] ?? false), (string) ($result['message'] ?? 'Mint request processed.'), $result));
     }
 
+    private function resolveSolanaService(): ?object
+    {
+        if (is_object($this->solanaService)) {
+            return $this->solanaService;
+        }
+
+        try {
+            $service = service('solanaService');
+            if (is_object($service)) {
+                return $this->solanaService = $service;
+            }
+        } catch (\Throwable $e) {
+            log_message('warning', 'Solana service factory unavailable: {msg}', ['msg' => $e->getMessage()]);
+        }
+
+        try {
+            return $this->solanaService = new SolanaService();
+        } catch (\Throwable $e) {
+            log_message('error', 'Solana service construction failed: {msg}', ['msg' => $e->getMessage()]);
+            $this->solanaService = null;
+
+            return null;
+        }
+    }
+
+    private function degradedSolanaStatus(string $reason): array
+    {
+        return [
+            'healthy' => false,
+            'status' => 'degraded',
+            'degraded' => true,
+            'reason' => $reason,
+        ];
+    }
+
     private function jsonEnvelope(bool $success, string $message, array $data = [], array $errors = []): array
     {
         $network = 'devnet';
         try {
-            $service = service('solanaService');
+            $service = $this->resolveSolanaService();
             if (is_object($service) && method_exists($service, 'currentNetwork')) {
                 $network = $service->currentNetwork();
             }
