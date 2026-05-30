@@ -301,6 +301,9 @@ $routes->group('', ['namespace' => 'App\Controllers'], static function($routes) 
     $routes->get('_ops/opcache-reset', 'Ops::opcacheReset');
 });
 
+// Explicit Solana API smoke-test route for production case-sensitive URLs.
+$routes->get('API/Solana/health', '\App\Modules\APIs\Controllers\SolanaAPIController::health');
+
 // --- Auth Routes ---
 // $routes->group('', ['namespace' => 'Myth\Auth\Controllers'], static function ($routes) {
 $routes->group('', ['namespace' => 'App\Controllers', 'filter' => 'no-cache'], static function ($routes) {
@@ -1684,6 +1687,12 @@ $routes->group('Budget', ['namespace' => 'App\Modules\User\Controllers', 'filter
     $routes->match(['GET', 'POST'], 'Status/Unpaid/(:segment)', 'BudgetController::unpaid/$1');
     // Add other necessary route definitions here
 });
+
+// Explicit Solana Exchange smoke-test routes for production case-sensitive URLs.
+$routes->get('Exchange/Solana', '\App\Modules\Exchange\Controllers\SolanaController::index', ['filter' => 'login']);
+$routes->get('Exchange/Solana/Swap', '\App\Modules\Exchange\Controllers\SolanaController::coinSwap', ['filter' => 'login']);
+$routes->get('Exchange/Solana/Assets', '\App\Modules\Exchange\Controllers\SolanaController::assets', ['filter' => 'login']);
+$routes->get('Exchange/Solana/Create', '\App\Modules\Exchange\Controllers\SolanaController::create', ['filter' => 'login']);
 
 // MyMI Exchanges 
 $routes->group('Exchange', ['namespace' => 'App\Modules\Exchange\Controllers', 'filter' => 'login'], function($routes) {
