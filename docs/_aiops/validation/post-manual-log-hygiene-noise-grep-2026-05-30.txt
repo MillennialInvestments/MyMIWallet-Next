@@ -1,0 +1,8 @@
+app/Config/Routes.php:119:    log_message($logLevel, '[404_ROUTE]', [
+app/Controllers/AuthController.php:2189:            log_message('debug', '[AUTH_RENDER] Final render config', [
+app/Controllers/BaseController.php:213:        log_message('debug', '[TRACE]', [
+app/Controllers/BaseController.php:1211:                $this->logRenderFailureToChannels('debug', 'Optional view path missing; using default path', [
+app/Controllers/BaseController.php:1245:        log_message('debug', '[VIEW_RESOLUTION] Render configuration', [
+app/Legacy/Auth/Controllers/AuthController.php:1797:            log_message('debug', '[AUTH_RENDER] Final render config', [
+app/Libraries/MyMICoin.php:40:            log_message('debug', 'MyMICoin initialized ONCE');
+app/Libraries/MyMIUser.php:56:                log_message('debug', 'MyMIUser L52 - initialized (first log).');

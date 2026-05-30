@@ -1,0 +1,305 @@
+diff --git a/app/Config/Routes.php b/app/Config/Routes.php
+index 5c9071389..efd7c93c4 100644
+--- a/app/Config/Routes.php
++++ b/app/Config/Routes.php
+@@ -38,27 +38,40 @@ $routes->setDefaultMethod('index');
+ $routes->setTranslateURIDashes(false);
+ $routes->set404Override(function () {
+     $request = service('request');
++    $method = strtoupper((string) $request->getMethod());
+     $path = '/' . ltrim((string) $request->getUri()->getPath(), '/');
+     $query = (string) ($request->getUri()->getQuery() ?? '');
+     $lowerPath = strtolower($path);
+     $lowerQuery = strtolower($query);
++    $trimmedPath = trim($lowerPath, '/');
++
++    $isHealthProbe = $method === 'HEAD'
++        && in_array($lowerPath, ['/', '/index.php', '/index.php/'], true);
+ 
+     $isWpProbe = str_contains($lowerPath, 'wp-json')
+         || str_contains($lowerPath, '/wp/')
++        || str_starts_with($lowerPath, '/wp-')
++        || str_starts_with($lowerPath, '/wp-content/')
+         || str_contains($lowerQuery, 'rest_route=/wp/v2/');
+ 
+-    if ($isWpProbe) {
+-        return service('response')
+-            ->setStatusCode(410)
+-            ->setContentType('text/plain')
+-            ->setBody('Gone');
+-    }
+-
+     $noisePatterns = [
+         '.env', '.git', 'composer.json', 'composer.lock', 'phpinfo.php', 'server.js',
+         'docker-compose', '.yaml', '.yml', '.ini', '.sql', '/vendor/', '/storage/', '/backup',
+     ];
+-    $isHostileProbe = false;
++
++    $suspiciousRootPhpFiles = [
++        '/adminfuns.php',
++        '/sx_pms.php',
++        '/wp-info.php',
++        '/wp-test.php',
++        '/like.php',
++        '/we.php',
++        '/wp.php',
++        '/wp-indx.php',
++        '/zoo.php',
++    ];
++
++    $isHostileProbe = $isWpProbe || in_array($lowerPath, $suspiciousRootPhpFiles, true);
+     foreach ($noisePatterns as $needle) {
+         if (str_contains($lowerPath, $needle)) {
+             $isHostileProbe = true;
+@@ -66,15 +79,68 @@ $routes->set404Override(function () {
+         }
+     }
+ 
+-    log_message($isHostileProbe ? 'notice' : 'error', '[404_ROUTE]', [
++    $appRoutePrefixes = [
++        'api/',
++        'user/',
++        'users/',
++        'investments/',
++        'management/',
++        'exchange/',
++        'features/',
++        'premium-features/',
++        'premium_features/',
++        'dashboard/',
++        'wallets/',
++        'knowledgebase/',
++    ];
++
++    $isLikelyAppRoute = false;
++    foreach ($appRoutePrefixes as $prefix) {
++        if (str_starts_with($trimmedPath, $prefix)) {
++            $isLikelyAppRoute = true;
++            break;
++        }
++    }
++
++    $classification = match (true) {
++        $isHealthProbe => 'health_probe',
++        $isHostileProbe => 'security_probe',
++        $isLikelyAppRoute => 'app_route_missing',
++        default => 'unknown_404',
++    };
++
++    $logLevel = match ($classification) {
++        'health_probe' => 'debug',
++        'security_probe' => 'notice',
++        'app_route_missing' => 'error',
++        default => 'warning',
++    };
++
++    log_message($logLevel, '[404_ROUTE]', [
++        'method' => $method,
+         'uri' => current_url(),
+         'path' => $path,
+         'query' => $query,
+         'referrer' => $_SERVER['HTTP_REFERER'] ?? null,
+         'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
+-        'probe' => $isHostileProbe,
++        'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? null,
++        'classification' => $classification,
+     ]);
+ 
++    if ($isHealthProbe) {
++        return service('response')
++            ->setStatusCode(204)
++            ->setContentType('text/plain')
++            ->setBody('');
++    }
++
++    if ($isWpProbe) {
++        return service('response')
++            ->setStatusCode(410)
++            ->setContentType('text/plain')
++            ->setBody('Gone');
++    }
++
+     if (preg_match('/\.(js|mjs)$/i', $path) === 1) {
+         return service('response')
+             ->setStatusCode(404)
+diff --git a/app/Controllers/AuthController.php b/app/Controllers/AuthController.php
+index 194c649b5..aa247cd18 100644
+--- a/app/Controllers/AuthController.php
++++ b/app/Controllers/AuthController.php
+@@ -2185,19 +2185,21 @@ class AuthController extends BaseController
+             'introView' => $resolvedIntroView,
+         ]);
+ 
+-        log_message('debug', '[AUTH_RENDER] Final render config', [
+-            'route' => (string) $this->request->getUri(),
+-            'view' => $normalizedView,
+-            'pageTitle' => $data['pageTitle'] ?? null,
+-            'metaTitle' => $data['metaTitle'] ?? null,
+-            'metaDescription' => $data['metaDescription'] ?? null,
+-            'layout' => $resolvedLayout,
+-            'headerView' => $resolvedHeader,
+-            'footerView' => $resolvedFooter,
+-            'authLayout' => $resolvedAuthLayout,
+-            'contentView' => $resolvedContentView,
+-            'introView' => $resolvedIntroView,
+-        ]);
++        if ($this->aiopsVerboseLoggingEnabled()) {
++            log_message('debug', '[AUTH_RENDER] Final render config', [
++                'route' => (string) $this->request->getUri(),
++                'view' => $normalizedView,
++                'pageTitle' => $data['pageTitle'] ?? null,
++                'metaTitle' => $data['metaTitle'] ?? null,
++                'metaDescription' => $data['metaDescription'] ?? null,
++                'layout' => $resolvedLayout,
++                'headerView' => $resolvedHeader,
++                'footerView' => $resolvedFooter,
++                'authLayout' => $resolvedAuthLayout,
++                'contentView' => $resolvedContentView,
++                'introView' => $resolvedIntroView,
++            ]);
++        }
+ 
+         return $this->safeView($normalizedView, $data);
+     }
+diff --git a/app/Controllers/BaseController.php b/app/Controllers/BaseController.php
+index 9c4d30ec2..0c3ece08f 100644
+--- a/app/Controllers/BaseController.php
++++ b/app/Controllers/BaseController.php
+@@ -189,13 +189,27 @@ abstract class BaseController extends Controller
+         return $this->resolveCurrentUserId();
+     }
+ 
++    protected function aiopsVerboseLoggingEnabled(): bool
++    {
++        return ENVIRONMENT !== 'production'
++            || filter_var(env('AIOPS_VERBOSE_LOGGING', false), FILTER_VALIDATE_BOOLEAN);
++    }
++
+     protected function trace($message, $level = 'debug'): void
+     {
++        if (! $this->aiopsVerboseLoggingEnabled()) {
++            return;
++        }
++
+         log_message($level, '[REQ_ID=' . ($this->requestId ?? 'N/A') . '] ' . $message);
+     }
+ 
+     protected function logRequestTrace(): void
+     {
++        if (! $this->aiopsVerboseLoggingEnabled()) {
++            return;
++        }
++
+         log_message('debug', '[TRACE]', [
+             'url' => current_url(),
+             'method' => $this->request->getMethod(),
+@@ -1192,11 +1206,15 @@ abstract class BaseController extends Controller
+ 
+         if (is_string($default) && trim($default) !== '') {
+             $resolvedDefault = trim($default, "/\\ \t\n\r\0\x0B");
+-            $this->logRenderFailureToChannels('warning', 'Optional view path missing; using default path', [
+-                'controller' => static::class,
+-                'variable' => $variableName,
+-                'default' => $resolvedDefault,
+-            ]);
++
++            if ($this->aiopsVerboseLoggingEnabled()) {
++                $this->logRenderFailureToChannels('debug', 'Optional view path missing; using default path', [
++                    'controller' => static::class,
++                    'variable' => $variableName,
++                    'default' => $resolvedDefault,
++                ]);
++            }
++
+             return $resolvedDefault;
+         }
+ 
+@@ -1213,6 +1231,10 @@ abstract class BaseController extends Controller
+ 
+     protected function logRenderDiagnostics(string $requestedView, ?string $resolvedLayout, array $partials = []): void
+     {
++        if (! $this->aiopsVerboseLoggingEnabled()) {
++            return;
++        }
++
+         $emptyPartials = [];
+         foreach ($partials as $name => $value) {
+             if (! is_string($value) || trim($value) === '') {
+diff --git a/app/Legacy/Auth/Controllers/AuthController.php b/app/Legacy/Auth/Controllers/AuthController.php
+index f6b55f769..5b639f4a0 100644
+--- a/app/Legacy/Auth/Controllers/AuthController.php
++++ b/app/Legacy/Auth/Controllers/AuthController.php
+@@ -1793,19 +1793,21 @@ class AuthController extends BaseController
+             'introView' => $resolvedIntroView,
+         ]);
+ 
+-        log_message('debug', '[AUTH_RENDER] Final render config', [
+-            'route' => (string) $this->request->getUri(),
+-            'view' => $normalizedView,
+-            'pageTitle' => $data['pageTitle'] ?? null,
+-            'metaTitle' => $data['metaTitle'] ?? null,
+-            'metaDescription' => $data['metaDescription'] ?? null,
+-            'layout' => $resolvedLayout,
+-            'headerView' => $resolvedHeader,
+-            'footerView' => $resolvedFooter,
+-            'authLayout' => $resolvedAuthLayout,
+-            'contentView' => $resolvedContentView,
+-            'introView' => $resolvedIntroView,
+-        ]);
++        if ($this->aiopsVerboseLoggingEnabled()) {
++            log_message('debug', '[AUTH_RENDER] Final render config', [
++                'route' => (string) $this->request->getUri(),
++                'view' => $normalizedView,
++                'pageTitle' => $data['pageTitle'] ?? null,
++                'metaTitle' => $data['metaTitle'] ?? null,
++                'metaDescription' => $data['metaDescription'] ?? null,
++                'layout' => $resolvedLayout,
++                'headerView' => $resolvedHeader,
++                'footerView' => $resolvedFooter,
++                'authLayout' => $resolvedAuthLayout,
++                'contentView' => $resolvedContentView,
++                'introView' => $resolvedIntroView,
++            ]);
++        }
+ 
+         return $this->safeView($normalizedView, $data);
+     }
+diff --git a/app/Libraries/MyMICoin.php b/app/Libraries/MyMICoin.php
+index 4c2c29a91..d976bbf78 100644
+--- a/app/Libraries/MyMICoin.php
++++ b/app/Libraries/MyMICoin.php
+@@ -36,7 +36,9 @@ class MyMICoin
+         }
+ 
+         self::$initialized = true;
+-        log_message('debug', 'MyMICoin initialized ONCE');
++        if (ENVIRONMENT !== 'production' || filter_var(env('AIOPS_VERBOSE_LOGGING', false), FILTER_VALIDATE_BOOLEAN)) {
++            log_message('debug', 'MyMICoin initialized ONCE');
++        }
+ 
+         $this->auth = service('authentication');
+         $this->session = Services::session();
+@@ -48,7 +50,7 @@ class MyMICoin
+         // Assuming you have services like 'auth' properly configured in CI4
+         
+         $this->cuID = service('authentication')->id();
+-        if (empty($this->cuID)) {
++        if (empty($this->cuID) && (ENVIRONMENT !== 'production' || filter_var(env('AIOPS_VERBOSE_LOGGING', false), FILTER_VALIDATE_BOOLEAN))) {
+             log_message('debug', 'MyMICoin: guest context detected; skipping user-specific preload.');
+         }
+     }
+diff --git a/app/Libraries/MyMIUser.php b/app/Libraries/MyMIUser.php
+index 49106c35d..44375ca5a 100644
+--- a/app/Libraries/MyMIUser.php
++++ b/app/Libraries/MyMIUser.php
+@@ -52,7 +52,9 @@ class MyMIUser
+         // To this (only logs once per session for now):
+         if (!defined('MYMIUSER_LOGGED')) {
+             define('MYMIUSER_LOGGED', true);
+-            log_message('debug', 'MyMIUser L52 - initialized (first log).');
++            if (ENVIRONMENT !== 'production' || filter_var(env('AIOPS_VERBOSE_LOGGING', false), FILTER_VALIDATE_BOOLEAN)) {
++                log_message('debug', 'MyMIUser L52 - initialized (first log).');
++            }
+         }
+     }
+ 

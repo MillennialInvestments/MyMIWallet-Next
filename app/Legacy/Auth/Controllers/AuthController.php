@@ -1793,19 +1793,21 @@ class AuthController extends BaseController
             'introView' => $resolvedIntroView,
         ]);
 
-        log_message('debug', '[AUTH_RENDER] Final render config', [
-            'route' => (string) $this->request->getUri(),
-            'view' => $normalizedView,
-            'pageTitle' => $data['pageTitle'] ?? null,
-            'metaTitle' => $data['metaTitle'] ?? null,
-            'metaDescription' => $data['metaDescription'] ?? null,
-            'layout' => $resolvedLayout,
-            'headerView' => $resolvedHeader,
-            'footerView' => $resolvedFooter,
-            'authLayout' => $resolvedAuthLayout,
-            'contentView' => $resolvedContentView,
-            'introView' => $resolvedIntroView,
-        ]);
+        if ($this->aiopsVerboseLoggingEnabled()) {
+            log_message('debug', '[AUTH_RENDER] Final render config', [
+                'route' => (string) $this->request->getUri(),
+                'view' => $normalizedView,
+                'pageTitle' => $data['pageTitle'] ?? null,
+                'metaTitle' => $data['metaTitle'] ?? null,
+                'metaDescription' => $data['metaDescription'] ?? null,
+                'layout' => $resolvedLayout,
+                'headerView' => $resolvedHeader,
+                'footerView' => $resolvedFooter,
+                'authLayout' => $resolvedAuthLayout,
+                'contentView' => $resolvedContentView,
+                'introView' => $resolvedIntroView,
+            ]);
+        }
 
         return $this->safeView($normalizedView, $data);
     }
