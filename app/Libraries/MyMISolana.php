@@ -65,7 +65,7 @@ class MyMISolana implements CryptoCurrencyInterface
         $this->MyMIUser = new MyMIUser();
         $this->cache = \Config\Services::cache();
 
-        $primary  = env('SOLANA_RPC_PRIMARY') ?: ($this->apiUrl ?? 'https://api.mainnet-beta.solana.com');
+        $primary  = env('SOLANA_RPC_PRIMARY') ?: ($this->apiUrl ?? 'https://api.devnet.solana.com');
         $fallback = env('SOLANA_RPC_FALLBACKS') ?: ($this->backupUrl ?? '');
 
         $endpoints = array_merge([$primary], array_map('trim', explode(',', $fallback)));
@@ -73,6 +73,36 @@ class MyMISolana implements CryptoCurrencyInterface
 
     }
     
+
+    private function currentNetwork(): string
+    {
+        $endpoint = (string) ($this->apiUrl ?? ($this->rpcEndpoints[0] ?? 'https://api.devnet.solana.com'));
+        if (str_contains($endpoint, 'mainnet-beta')) {
+            return 'mainnet-beta';
+        }
+        if (str_contains($endpoint, 'testnet')) {
+            return 'testnet';
+        }
+
+        return 'devnet';
+    }
+
+    private function guardMainnetAction(string $action, ?string $network = null): array
+    {
+        if (method_exists($this->solanaService, 'guardMainnetAction')) {
+            return $this->solanaService->guardMainnetAction($action, $network ?? $this->currentNetwork());
+        }
+
+        $network = $network ?? $this->currentNetwork();
+        $isMainnet = in_array($network, ['mainnet', 'mainnet-beta'], true) || str_contains($network, 'mainnet-beta');
+        $envKey = strtolower($action) === 'mint' ? 'SOLANA_ALLOW_MAINNET_MINTING' : 'SOLANA_ALLOW_MAINNET_BROADCAST';
+        if (! $isMainnet || env($envKey) === 'true') {
+            return ['allowed' => true, 'success' => true, 'network' => $network, 'action' => $action];
+        }
+
+        return ['allowed' => false, 'success' => false, 'status' => 'blocked', 'network' => 'mainnet-beta', 'action' => $action, 'message' => 'Mainnet ' . $action . ' is disabled by safety guardrails.'];
+    }
+
     private function resolveCuID(?int $cuID): ?int
     {
         if (!empty($cuID) && $cuID > 0) return $cuID;
@@ -252,8 +282,13 @@ class MyMISolana implements CryptoCurrencyInterface
     //     }
     // }
 
-    public function sendAsset($privateKey, $fromAddress, $toAddress, $assetId, $amount)
+    public function sendAsset($privateKey, $fromAddress, $toAddress, $assetId, $amount, ?string $network = null)
     {
+        $guard = $this->guardMainnetAction('broadcast', $network);
+        if (! $guard['allowed']) {
+            return $guard;
+        }
+
         $transactionData = [
             'from' => $fromAddress,
             'to' => $toAddress,
@@ -890,53 +925,36 @@ class MyMISolana implements CryptoCurrencyInterface
     }
 
     public function createSPLToken($privateKey, $decimals = 9) {
-        $url = $this->apiUrl . '/createToken';
-        $client = \Config\Services::curlrequest();
-        $params = [
-            'privateKey' => $privateKey,
-            'decimals' => $decimals
-        ];
-    
-        try {
-            $response = $client->post($url, [
-                'json' => $params,
-                'headers' => ['Content-Type' => 'application/json'],
-            ]);
-            $body = json_decode($response->getBody(), true);
-            if ($response->getStatusCode() == 200) {
-                return ['status' => 'success', 'tokenAddress' => $body['result']['tokenAddress']];
-            } else {
-                log_message('debug', 'MyMISolana L594 - $response Array: ' . (print_r($response, true))); 
-                return ['status' => 'error', 'message' => $body['error']];
-            }
-        } catch (\Exception $e) {
-            return ['status' => 'error', 'message' => $e->getMessage()];
+        $guard = $this->guardMainnetAction('mint');
+        if (! $guard['allowed']) {
+            return $guard;
         }
+
+        return [
+            'success' => true,
+            'status' => 'draft',
+            'network' => $guard['network'] ?? 'devnet',
+            'decimals' => $decimals,
+            'broadcast' => false,
+            'message' => 'Draft SPL token payload prepared only; no mint was performed.',
+        ];
     }
     
     public function mintTokens($privateKey, $mintAddress, $amount) {
-        $url = $this->apiUrl . '/mint';
-        $client = \Config\Services::curlrequest();
-        $params = [
-            'privateKey' => $privateKey,
-            'mintAddress' => $mintAddress,
-            'amount' => $amount
-        ];
-    
-        try {
-            $response = $client->post($url, [
-                'json' => $params,
-                'headers' => ['Content-Type' => 'application/json'],
-            ]);
-            $body = json_decode($response->getBody(), true);
-            if ($response->getStatusCode() == 200) {
-                return ['status' => 'success', 'transactionId' => $body['result']['transactionId']];
-            } else {
-                return ['status' => 'error', 'message' => $body['error']];
-            }
-        } catch (\Exception $e) {
-            return ['status' => 'error', 'message' => $e->getMessage()];
+        $guard = $this->guardMainnetAction('mint');
+        if (! $guard['allowed']) {
+            return $guard;
         }
+
+        return [
+            'success' => true,
+            'status' => 'draft',
+            'network' => $guard['network'] ?? 'devnet',
+            'mintAddress' => $mintAddress,
+            'amount' => $amount,
+            'broadcast' => false,
+            'message' => 'Draft mint payload prepared only; no token mint or transaction broadcast was performed.',
+        ];
     }
     
     public function connectSolflareWallet() {
@@ -1060,6 +1078,11 @@ class MyMISolana implements CryptoCurrencyInterface
 
     public function transfer(string $from, string $to, string $amount, array $opts = []): array
     {
+        $guard = $this->guardMainnetAction('broadcast', (string) ($opts['network'] ?? $this->currentNetwork()));
+        if (! $guard['allowed']) {
+            return $guard;
+        }
+
         return $this->solanaService->transfer($from, $to, $amount, $opts);
     }
 
@@ -1070,6 +1093,11 @@ class MyMISolana implements CryptoCurrencyInterface
 
     public function swap(array $params): array
     {
+        $guard = $this->guardMainnetAction('broadcast', (string) ($params['network'] ?? $this->currentNetwork()));
+        if (! $guard['allowed']) {
+            return $guard;
+        }
+
         return $this->solanaService->swap($params);
     }
 
@@ -1080,12 +1108,13 @@ class MyMISolana implements CryptoCurrencyInterface
 
     public function createToken(array $spec): array
     {
+        $spec['network'] = $spec['network'] ?? 'devnet';
         return $this->solanaService->createToken($spec);
     }
 
     public function mintTo(string $mint, string $dest, string $amount): array
     {
-        return $this->solanaService->mintTo($mint, $dest, $amount);
+        return $this->solanaService->mintTo($mint, $dest, $amount, $this->currentNetwork());
     }
 
 

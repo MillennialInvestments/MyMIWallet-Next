@@ -21,5 +21,9 @@ class Commands extends BaseConfig
         'docs:inventory-forms' => \App\Commands\Docs\Generate\FormInventory::class,
         'db:table-list' => \App\Commands\Database\TableList::class,
         'coinvault:audit' => \App\Commands\CoinVault\Audit::class,
+        'aiops:solana-healthcheck' => \App\Commands\SolanaHealthcheck::class,
+        'aiops:solana-digest' => \App\Commands\SolanaDigest::class,
+        'aiops:solana-transaction-audit' => \App\Commands\SolanaTransactionAudit::class,
+        'exchange:create-tbi-project-coin-drafts' => \App\Commands\CreateTbiProjectCoinDrafts::class,
     ];
 }
