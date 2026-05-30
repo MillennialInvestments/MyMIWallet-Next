@@ -1,0 +1,632 @@
+===== MYMI SOLANA EXCHANGE COMPILED REPORT =====
+Sat May 30 12:52:23 PM UTC 2026
+
+===== PATH / BRANCH / STATUS =====
+/home/mymiteam/mymiwallet/site/current
+main
+ M writable/logs/emergency.log
+?? docs/_aiops/bin/
+?? docs/_aiops/checklists/
+?? docs/_aiops/instructions/solana-exchange-phase-01.md
+?? docs/_aiops/reports/compiled/
+?? docs/_aiops/reports/solana-exchange-healthcheck-20260530-054727.txt
+?? docs/_aiops/reports/solana-route-summary.txt
+?? docs/_aiops/reports/terminal/
+
+===== LATEST SOLANA HEALTHCHECK =====
+File: docs/_aiops/reports/solana-exchange-healthcheck-20260530-054727.txt
+
+===== MYMI SOLANA / EXCHANGE HEALTHCHECK =====
+/home/mymiteam/mymiwallet/site/current
+?? docs/_aiops/reports/solana-exchange-healthcheck-20260530-054727.txt
+--- Searching: MyMISolana.php ---
+app/Libraries/MyMISolana.php
+--- Searching: MyMIRaydium.php ---
+app/Libraries/MyMIRaydium.php
+--- Searching: MyMIPhantom.php ---
+app/Libraries/MyMIPhantom.php
+--- Searching: MyMISolflare.php ---
+app/Libraries/MyMISolflare.php
+app/Modules/User/Views/Wallets/index/crypto_wallets/MyMIGold.php
+app/Modules/User/Views/Wallets/index-orig/crypto_wallets/MyMIGold.php
+--- Searching: SolanaService.php ---
+app/Services/SolanaService.php
+--- Searching: SolanaController.php ---
+app/Modules/Exchange/Controllers/SolanaController.php
+--- Searching: SolanaModel.php ---
+app/Models/SolanaModel.php
+app/Modules/Exchange/Views/Solana/trade.php
+--- Searching: swap.php ---
+app/Modules/Exchange/Views/Solana/swap.php
+app/Modules/Exchange/Views/Solana/orders.php
+--- Searching: connectWallet.php ---
+app/Modules/Exchange/Views/Solana/connectWallet.php
+--- Searching: viewWallet.php ---
+app/Modules/Exchange/Views/Solana/viewWallet.php
+===== SOLANA REFERENCES =====
+app/Controllers/Blog.php:26:        $metaDescription = 'Explore trade alerts, investment strategies, and financial tools from MyMI Wallet to level up your crypto wallet, budgeting, and portfolio management.';
+app/Controllers/Traits/HasUserContext.php:11:    protected ?WalletService $walletService = null;
+app/Controllers/Traits/HasUserContext.php:31:        if ($this->walletService === null) {
+app/Controllers/Traits/HasUserContext.php:33:                $this->walletService = $this->getWalletService();
+app/Controllers/Traits/HasUserContext.php:35:                $this->walletService = new WalletService(service('logger'), new WalletModel());
+app/Controllers/Home.php:165:                'description' => 'Budgeting & Investments, AI-driven insights, and tokenized assets — all in one secure wallet.',
+app/Controllers/BaseController.php:15:use App\Libraries\{CrudCacheInvalidator, MyMIAdvisor, MyMIAlerts, MyMIAlphaVantage, MyMIAnalytics, MyMIBudget, MyMICoin, MyMIDashboard, MyMIExchange, MyMIInvestments, MyMIMarketing, MyMIProjects, MyMISolana, MyMIUser, MyMIWallet, MyMIWallets, SiteSettingsRuntime};
+app/Controllers/BaseController.php:16:use App\Services\{AccountService, BudgetService, DashboardService, GoalTrackingService, MarketingService, SolanaService, UserService, WalletService};
+app/Controllers/BaseController.php:70:    private ?MyMISolana $myMISolana = null;
+app/Controllers/BaseController.php:80:    private ?SolanaService $solanaService = null;
+app/Controllers/BaseController.php:83:    /** Properly-declared properties for wallet dependencies */
+app/Controllers/BaseController.php:84:    private ?WalletService $walletService = null;
+app/Controllers/BaseController.php:85:    private ?WalletModel   $walletModel   = null;
+app/Controllers/BaseController.php:238:            'MyMISolana'   => fn() => $this->getMyMISolana(),
+app/Controllers/BaseController.php:472:            'cuSolanaDW' => $this->data['cuSolanaDW'] ?? [],
+app/Controllers/BaseController.php:473:            'cuSolanaTotal' => (float)($this->data['cuSolanaTotal'] ?? 0),
+app/Controllers/BaseController.php:474:            'cuSolanaValue' => (float)($this->data['cuSolanaValue'] ?? 0),
+app/Controllers/BaseController.php:475:            'solanaNetworkStatus' => $this->data['solanaNetworkStatus'] ?? ['healthy' => false, 'slot' => null, 'version' => null],
+app/Controllers/BaseController.php:591:        // --- Solana summary (non-fatal)
+app/Controllers/BaseController.php:593:            $solanaSummary = [];
+app/Controllers/BaseController.php:594:            $solService    = $this->getSolanaService();
+app/Controllers/BaseController.php:597:            $solService = $this->getSolanaService();
+app/Controllers/BaseController.php:599:                log_message('notice', 'BaseController commonData(): Solana network degraded, skipping live calls');
+app/Controllers/BaseController.php:602:                    $solanaSummaryRaw = $this->getMyMISolana()->getUserSolana($this->cuID);
+app/Controllers/BaseController.php:603:                    if (! is_array($solanaSummaryRaw)) {
+app/Controllers/BaseController.php:604:                        log_message('debug', 'BaseController commonData(): MyMISolana returned non-array, applying defaults');
+app/Controllers/BaseController.php:605:                        $solanaSummaryRaw = [];
+app/Controllers/BaseController.php:607:                    $solanaSummary = array_merge([
+app/Controllers/BaseController.php:608:                        'cuSolanaDW'          => [],
+app/Controllers/BaseController.php:609:                        'cuSolanaTotal'       => 0.0,
+app/Controllers/BaseController.php:610:                        'cuSolanaValue'       => 0.0,
+app/Controllers/BaseController.php:611:                        'solanaNetworkStatus' => ['healthy' => false, 'status' => 'unavailable'],
+app/Controllers/BaseController.php:612:                    ], $solanaSummaryRaw);
+app/Controllers/BaseController.php:614:                    log_message('error', 'BaseController commonData(): MyMISolana getUserSolana failed: '.$inner->getMessage());
+app/Controllers/BaseController.php:617:                if (!empty($solanaSummary)) {
+app/Controllers/BaseController.php:618:                    if (!empty($solanaSummary['cuSolanaDW'])) $setValue('cuSolanaDW', $solanaSummary['cuSolanaDW']);
+app/Controllers/BaseController.php:619:                    if (array_key_exists('cuSolanaTotal', $solanaSummary)) $this->data['cuSolanaTotal'] = (float)$solanaSummary['cuSolanaTotal'];
+app/Controllers/BaseController.php:620:                    if (array_key_exists('cuSolanaValue', $solanaSummary)) $this->data['cuSolanaValue'] = (float)$solanaSummary['cuSolanaValue'];
+app/Controllers/BaseController.php:621:                    if (!empty($solanaSummary['solanaNetworkStatus'])) $setValue('solanaNetworkStatus', $solanaSummary['solanaNetworkStatus']);
+app/Controllers/BaseController.php:624:                $walletRow = is_array($solanaSummary['cuSolanaDW'] ?? null) ? $solanaSummary['cuSolanaDW'] : [];
+app/Controllers/BaseController.php:625:                $address = $walletRow['public_token']
+app/Controllers/BaseController.php:626:                    ?? $walletRow['address']
+app/Controllers/BaseController.php:627:                    ?? $solanaSummary['address_b58']
+app/Controllers/BaseController.php:632:                        $snapshot = $solService->getSolanaData($address) ?? null;
+app/Controllers/BaseController.php:635:                                $this->data['cuSolanaTotal'] = (float)$snapshot['nativeSOL'];
+app/Controllers/BaseController.php:637:                            if (!empty($snapshot['solanaNetworkStatus'])) {
+app/Controllers/BaseController.php:638:                                $setValue('solanaNetworkStatus', $snapshot['solanaNetworkStatus']);
+app/Controllers/BaseController.php:641:                            log_message('debug', 'BaseController commonData(): Solana data unavailable for address {address}', ['address' => $address]);
+app/Controllers/BaseController.php:644:                        log_message('debug', 'BaseController commonData(): Solana snapshot failed for {address}: {msg}', ['address' => $address, 'msg' => $inner->getMessage()]);
+app/Controllers/BaseController.php:650:            if (!empty($network)) $setValue('solanaNetworkStatus', $network);
+app/Controllers/BaseController.php:652:            if ($this->data['cuSolanaValue'] === 0.0 && $this->data['cuSolanaTotal'] !== 0.0) {
+app/Controllers/BaseController.php:654:                    $price = $solService->getSolanaPrice();
+app/Controllers/BaseController.php:655:                    if (is_numeric($price)) $this->data['cuSolanaValue'] = $this->data['cuSolanaTotal'] * (float)$price;
+app/Controllers/BaseController.php:657:                    log_message('error', 'BaseController commonData(): Solana price lookup failed: '.$inner->getMessage());
+app/Controllers/BaseController.php:661:            log_message('debug', 'BaseController commonData(): Solana calls failed: '.$e->getMessage());
+app/Controllers/BaseController.php:715:                $walletModel = new \App\Models\WalletModel();
+app/Controllers/BaseController.php:717:                if (method_exists($walletModel, 'getSidebarBalanceSnapshot')) {
+app/Controllers/BaseController.php:718:                    $this->data['balance'] = $walletModel->getSidebarBalanceSnapshot($userIdForSidebarBalance);
+app/Controllers/BaseController.php:945:            'wallets',
+app/Controllers/BaseController.php:948:            'mymi-wallet',
+app/Controllers/BaseController.php:1159:    protected function getMyMISolana(): MyMISolana
+app/Controllers/BaseController.php:1161:        return $this->myMISolana ??= new MyMISolana();
+app/Controllers/BaseController.php:1316:    protected function getSolanaService(): SolanaService
+app/Controllers/BaseController.php:1318:        return $this->solanaService ??= new SolanaService();
+app/Controllers/BaseController.php:1344:        $this->walletModel ??= new WalletModel();
+app/Controllers/BaseController.php:1346:        return $this->walletService ??= new WalletService($this->logger, $this->walletModel);
+app/Controllers/BaseController.php:1349:    private function summarizeWalletGroups(array $walletGroups): float
+app/Controllers/BaseController.php:1353:        foreach ($walletGroups as $group) {
+app/Controllers/BaseController.php:1358:            foreach ($group as $wallet) {
+app/Controllers/BaseController.php:1359:                if (is_array($wallet)) {
+app/Controllers/BaseController.php:1360:                    $total += (float)($wallet['walletAmount'] ?? 0);
+app/Controllers/BaseController.php:1377:        if ($name === 'walletService') {
+app/Controllers/BaseController.php:1378:            $this->walletService = $this->getWalletService();
+app/Controllers/BaseController.php:1379:            return $this->walletService;
+app/Controllers/BaseController.php:1406:            'solanaService'   => 'solanaService',
+app/Controllers/BaseController.php:1407:            'walletService'   => 'walletService', // <-- allow legacy access
+app/Controllers/AuthController.php:508:                ->to(route_to('reset-password') . '?token=' . $authUser->reset_hash)
+app/Controllers/AuthController.php:1612:            log_message('info', '[ACTIVATION] Activation failed: missing token', [
+app/Database/Migrations/2026-02-15-000210_CreateUserSetupPreferences.php:34:                'dismiss_wallets' => [
+app/Database/Migrations/2026-04-01-000105_CreateMditPhase1Tables.php:29:        if (! $this->db->tableExists('bf_mdit_wallets')) {
+app/Database/Migrations/2026-04-01-000105_CreateMditPhase1Tables.php:33:                'wallet_address' => ['type' => 'VARCHAR', 'constraint' => 128],
+app/Database/Migrations/2026-04-01-000105_CreateMditPhase1Tables.php:40:            $this->forge->addUniqueKey('wallet_address', 'uq_mdit_wallets_wallet_address');
+app/Database/Migrations/2026-04-01-000105_CreateMditPhase1Tables.php:41:            $this->forge->addKey('user_id', false, false, 'idx_mdit_wallets_user_id');
+app/Database/Migrations/2026-04-01-000105_CreateMditPhase1Tables.php:42:            $this->forge->addKey('status', false, false, 'idx_mdit_wallets_status');
+app/Database/Migrations/2026-04-01-000105_CreateMditPhase1Tables.php:43:            $this->forge->addKey('created_on', false, false, 'idx_mdit_wallets_created_on');
+app/Database/Migrations/2026-04-01-000105_CreateMditPhase1Tables.php:44:            $this->forge->createTable('bf_mdit_wallets', true);
+app/Database/Migrations/2026-04-01-000105_CreateMditPhase1Tables.php:51:                'wallet_address'   => ['type' => 'VARCHAR', 'constraint' => 128],
+app/Database/Migrations/2026-04-01-000105_CreateMditPhase1Tables.php:76:                'wallet_address'       => ['type' => 'VARCHAR', 'constraint' => 128],
+app/Database/Migrations/2026-04-01-000105_CreateMditPhase1Tables.php:98:                'wallet_address'=> ['type' => 'VARCHAR', 'constraint' => 128],
+app/Database/Migrations/2026-04-01-000105_CreateMditPhase1Tables.php:176:        $this->forge->dropTable('bf_mdit_wallets', true);
+app/Database/Migrations/2026-06-21-000100_CreateApiGovernanceTables.php:24:            $this->forge->addUniqueKey(['uri', 'http_methods', 'controller', 'action'], 'uq_endpoint_signature');
+app/Database/Migrations/2026-03-26-000110_CreateProjectFundLedgerTables.php:30:        if (! $this->db->tableExists('bf_projects_fund_transactions')) {
+app/Database/Migrations/2026-03-26-000110_CreateProjectFundLedgerTables.php:35:                'transaction_type' => ['type' => 'VARCHAR', 'constraint' => 50],
+app/Database/Migrations/2026-03-26-000110_CreateProjectFundLedgerTables.php:49:            $this->forge->addKey('transaction_type', false, false, 'idx_type');
+app/Database/Migrations/2026-03-26-000110_CreateProjectFundLedgerTables.php:50:            $this->forge->createTable('bf_projects_fund_transactions');
+app/Database/Migrations/2026-03-26-000110_CreateProjectFundLedgerTables.php:90:        foreach (['bf_projects_fund_distributions', 'bf_projects_fund_nav_history', 'bf_projects_fund_transactions', 'bf_projects_fund_holders'] as $table) {
+app/Database/Migrations/2026-03-26-000130_AddFundTransactionIdempotencyAndNavLock.php:11:        if ($this->db->tableExists('bf_projects_fund_transactions')) {
+app/Database/Migrations/2026-03-26-000130_AddFundTransactionIdempotencyAndNavLock.php:12:            $fields = $this->db->getFieldNames('bf_projects_fund_transactions');
+app/Database/Migrations/2026-03-26-000130_AddFundTransactionIdempotencyAndNavLock.php:14:                $this->forge->addColumn('bf_projects_fund_transactions', [
+app/Database/Migrations/2026-03-26-000130_AddFundTransactionIdempotencyAndNavLock.php:21:                $this->db->query('CREATE INDEX idx_idempotency_key ON bf_projects_fund_transactions (idempotency_key)');
+app/Database/Migrations/2026-03-26-000130_AddFundTransactionIdempotencyAndNavLock.php:42:        if ($this->db->tableExists('bf_projects_fund_transactions')) {
+app/Database/Migrations/2026-03-26-000130_AddFundTransactionIdempotencyAndNavLock.php:43:            $fields = $this->db->getFieldNames('bf_projects_fund_transactions');
+app/Database/Migrations/2026-03-26-000130_AddFundTransactionIdempotencyAndNavLock.php:45:                $this->forge->dropColumn('bf_projects_fund_transactions', 'idempotency_key');
+app/Database/Migrations/2026-05-27-000100_CreateTbiProjectCoinTables.php:20:                'solana_mint_address' => ['type' => 'VARCHAR', 'constraint' => 80, 'null' => true],
+app/Helpers/security_helper.php:14:        $sensitiveKeys = ['password', 'pass_confirm', 'secret', 'token', 'bank_account', 'routing_number', 'account_number'];
+app/Helpers/uri_guard_helper.php:72:                || $path === 'xmlrpc.php'
+app/Helpers/uri_guard_helper.php:111:            log_message('warning', 'URI guard: placeholder token detected in URL: {url}', [
+app/Libraries/Backups/BackupService.php:25:            $cmd = sprintf('%s --single-transaction --quick --routines --events --skip-lock-tables -h%s -u%s %s %s > %s 2>/dev/null',
+app/Libraries/Privacy/DataExportService.php:19:            'wallets'      => $this->db->table('bf_wallets')->where('user_id',$userId)
+app/Libraries/Security/Redactor.php:51:            elseif (str_contains($ks,'address') || str_contains($ks,'wallet')) $out[$k] = self::addr($sv);
+app/Libraries/Traits/TextProcessor.php:547:        <p>Discover more at <a href="https://www.mymiwallet.com" target="_blank">MyMI Wallet</a>.</p>
+app/Libraries/Traits/TextProcessor.php:558:        Explore more financial tools and insights at https://www.mymiwallet.com
+app/Libraries/Traits/TextProcessor.php:570:                return "{$headline} — {$shortSummary}...\nhttps://www.mymiwallet.com\n{$hashtags}";
+app/Libraries/Traits/TextProcessor.php:573:                return "{$headline}\n\n{$summary}\n\nLearn more: https://www.mymiwallet.com\n\n{$hashtags}";
+app/Libraries/Traits/TextProcessor.php:575:                return "**{$headline}**\n\n{$summary}\n\n👉 <https://www.mymiwallet.com>";
+app/Libraries/Traits/TextProcessor.php:577:                return "{$headline}\n\n{$summary}\nhttps://www.mymiwallet.com";
+app/Libraries/Traits/TextProcessor.php:583:        return "**{$headline}**\n\n{$summary}\n\n🔗 Visit: <https://www.mymiwallet.com>";
+app/Libraries/Webhooks/WebhookDispatcher.php:25:            'signature'       => $sig,
+app/Libraries/CacheKey.php:7:    private const PREFIX = 'mymiwallet';
+app/Libraries/CryptoCurrencyInterface.php:5:    // public function signTransaction($transaction, $privateKey);
+app/Libraries/CryptoCurrencyInterface.php:6:    // public function verifySignature($transaction, $signature, $publicKey);
+app/Libraries/CryptoCurrencyInterface.php:8:    // public function getTransactionStatus($transactionId);
+app/Libraries/CryptoCurrencyInterface.php:16:    public function connect(array $opts = []): array;             // wallet/session info
+app/Libraries/CryptoCurrencyInterface.php:22:    public function swap(array $params): array;                   // srcMint, dstMint, amount, slippage, etc.
+app/Libraries/CryptoCurrencyInterface.php:23:    public function getQuote(array $params): array;               // for swaps
+app/Libraries/MyMIGold.php:47:        'solana'   => 'So11111111111111111111111111111111111111112',
+app/Libraries/MyMIGold.php:77:            case 'solana':
+app/Libraries/MyMIGold.php:78:                $svc  = service('myMISolana');
+app/Libraries/MyMIGold.php:81:                $res  = $svc->getBalance($addr, $this->mints['solana']);
+app/Libraries/MyMIGold.php:240:                'wallet_id'                         => $userLastOrder['wallet_id'],
+app/Libraries/MyMIGold.php:284:                    'wallet_id'                     => $userLastCompletedOrder['wallet_id'],
+app/Libraries/MyMIGold.php:339:        $builder = $this->db->table('user_wallets');
+app/Libraries/GitHelper.php:10:            'path'   => '/home/mymiteam/mymiwallet/site/current/public/MyMI-Media',
+app/Libraries/GitHelper.php:14:            'path'   => '/home/mymiteam/mymiwallet/site/current',
+app/Libraries/LogTriage.php:15:        'BudgetController', 'BudgetModel', 'MyMIUser', 'SolanaService',
+app/Libraries/MyMIAdvisors.php:3:use App\Libraries\{BaseLoader, MyMICoin, MyMIGold, MyMINotifications, MyMISolana, MyMIWallet};
+app/Libraries/MailService.php:29:        $this->fromEmail = (string) ($emailConfig->fromEmail ?? 'support@mymiwallet.com');
+app/Libraries/MailService.php:62:    public function sendPasswordResetEmail($user, string $token, array $context = []): array
+app/Libraries/MailService.php:66:        $actionUrl = $this->buildUrl('reset-password', ['token' => $token]);
+app/Libraries/MailService.php:329:        $host = gethostname() ?: 'mymiwallet.local';
+app/Libraries/MyMIAnalytics.php:54:        $totalTransOrders = $this->get_total_transactions();
+app/Libraries/MyMIAnalytics.php:120:        $activeWallets = $this->get_total_active_wallets();
+app/Libraries/MyMIAnalytics.php:124:        $defaultWallets = $this->get_total_default_wallets(); 
+app/Libraries/MyMIAnalytics.php:128:        $walletTransactions = $this->get_total_wallet_transactions(); 
+app/Libraries/MyMIAnalytics.php:129:        $getTotalWalletTransactions = $walletTransactions['getTotalWalletTransactions'] ?? 0; 
+app/Libraries/MyMIAnalytics.php:130:        $totalWalletTransactions = $walletTransactions['totalWalletTransactions'] ?? 0;
+app/Libraries/MyMIAnalytics.php:141:        $transactionPercentage                          = number_format((($totalTransactions / $target['targetTransactions']) * 100),2) . '%'; 
+app/Libraries/MyMIAnalytics.php:144:        $walletsPercentage                              = number_format((($totalWalletsCreated / $target['targetWallets']) * 100),2) . '%'; 
+app/Libraries/MyMIAnalytics.php:202:            'transactionPercentage'                     => $transactionPercentage,
+app/Libraries/MyMIAnalytics.php:205:            'walletsPercentage'                         => $walletsPercentage,
+app/Libraries/MyMIAnalytics.php:271:        $wallets        = new MyMIWallets();
+app/Libraries/MyMIAnalytics.php:277:        // Wallet balances (sum of wallet amounts)
+app/Libraries/MyMIAnalytics.php:278:        $walletData  = $wallets->getUserWallets();
+app/Libraries/MyMIAnalytics.php:279:        $walletTotal = 0.0;
+app/Libraries/MyMIAnalytics.php:280:        foreach ($walletData as $group) {
+app/Libraries/MyMIAnalytics.php:282:                $walletTotal += (float) ($w['walletAmount'] ?? 0);
+app/Libraries/MyMIAnalytics.php:298:        $amount = $cash + $walletTotal - $credit - $shortTermDebt;
+app/Libraries/MyMIAnalytics.php:305:                'wallets'       => $walletTotal,
+app/Libraries/MyMIAnalytics.php:427:    public function get_total_transactions()
+app/Libraries/MyMIAnalytics.php:518:    public function get_total_active_wallets()
+app/Libraries/MyMIAnalytics.php:523:    public function get_total_default_wallets()
+app/Libraries/MyMIAnalytics.php:528:    public function get_total_wallet_transactions()
+app/Libraries/MyMIAssets.php:27:            throw new Exception('DigiByte Core wallet is not available');
+app/Libraries/MyMIAssets.php:31:        $transactionHex = $this->createAssetIssuanceTransaction($issuerAddress, $name, $amount, $metadata);
+app/Libraries/MyMIAssets.php:32:        $signedTransactionHex = $this->signTransaction($transactionHex);
+app/Libraries/MyMIAssets.php:33:        $transactionId = $this->sendTransaction($signedTransactionHex);
+app/Libraries/MyMIAssets.php:34:        $assetId = $this->assetsModel->addAsset($name, $issuerAddress, $amount, $metadata, $transactionId);
+app/Libraries/MyMIBitcoin.php:10: * Bitcoin service mirroring Solana integration patterns.
+app/Libraries/MyMIBitcoin.php:157:     * Fetch recent transactions for an address (max 100 records).
+app/Libraries/MyMIBitcoin.php:202:     * Broadcast a signed raw transaction hex via the server-side service.
+app/Libraries/MyMIBudget.php:31:    protected $walletModel;
+app/Libraries/MyMIBudget.php:44:        $this->walletModel                      = new WalletModel();
+app/Libraries/MyMIBudget.php:955:                    'accountWallet' => $accountInfo['wallet_id'],
+app/Libraries/MyMIBudget.php:1082:        // Assuming there's a method in the wallet_model to get account summary by type
+app/Libraries/MyMIBudget.php:1083:        $accountSummary = $this->walletModel->getAccountSummary($cuID, $type);
+app/Libraries/MyMIBudget.php:1088:        // Assuming there's a method in the wallet_model to get credit summary
+app/Libraries/MyMIBudget.php:1089:        $creditSummary = $this->walletModel->getCreditSummary($cuID);
+app/Libraries/MyMIBudget.php:1094:        // Assuming there's a method in the wallet_model to calculate total balance
+app/Libraries/MyMIBudget.php:1095:        $totalBalance = $this->walletModel->calculateTotalBalance($cuID);
+app/Libraries/MyMIUser.php:28:    protected $walletModel; 
+app/Libraries/MyMIUser.php:46:        $this->walletModel = new WalletModel();
+app/Libraries/MyMIUser.php:178:        $getUserDefaultWallet = $this->walletModel->getUserDefaultWallet($cuID);
+app/Libraries/MyMIUser.php:180:            log_message('error', 'No default wallet found for user ID: ' . $cuID);
+app/Libraries/MyMIUser.php:183:        $walletID = $getUserDefaultWallet['id'] ?? 0;
+app/Libraries/MyMIUser.php:184:        $walletBroker = $getUserDefaultWallet['broker'] ?? 'N/A';
+app/Libraries/MyMIUser.php:185:        $walletNickname = $getUserDefaultWallet['nickname'] ?? 'N/A';
+app/Libraries/MyMIUser.php:186:        $walletDefault = $getUserDefaultWallet['default_wallet'] ?? 'N/A';
+app/Libraries/MyMIUser.php:187:        $walletExchange = $getUserDefaultWallet['exchange_wallet'] ?? 'N/A';
+app/Libraries/MyMIUser.php:188:        $walletMarketPair = $getUserDefaultWallet['market_pair'] ?? 'N/A';
+app/Libraries/MyMIUser.php:189:        $walletMarket = $getUserDefaultWallet['market'] ?? 'N/A';
+app/Libraries/MyMIUser.php:190:        $walletTitle = $walletNickname !== "N/A" ? $walletNickname : $walletBroker . ' - ' . $walletNickname;
+app/Libraries/MyMIUser.php:192:        // Fetch the transaction summary for the wallet
+app/Libraries/MyMIUser.php:193:        $transactions = $this->walletModel->getTransactionSummaryByWallet($walletID);
+app/Libraries/MyMIUser.php:195:        $walletDepositAmount = 0;
+app/Libraries/MyMIUser.php:196:        $walletWithdrawAmount = 0;
+app/Libraries/MyMIUser.php:198:        foreach ($transactions as $transaction) {
+app/Libraries/MyMIUser.php:199:            if ($transaction['trans_type'] === 'Deposit') {
+app/Libraries/MyMIUser.php:200:                $walletDepositAmount += $transaction['amount'];
+app/Libraries/MyMIUser.php:201:            } elseif ($transaction['trans_type'] === 'Withdraw') {
+app/Libraries/MyMIUser.php:202:                $walletWithdrawAmount += $transaction['amount'];
+app/Libraries/MyMIUser.php:221:        $walletFunds = $walletDepositAmount - $walletWithdrawAmount;
+app/Libraries/MyMIUser.php:222:        $walletAmount = $walletFunds + $MyMICCurrentValue + $MyMIGCurrentValue;
+app/Libraries/MyMIUser.php:223:        $walletPercentChange = $walletAmount > 0 ? (($walletFunds - $walletAmount) / $walletAmount * 100) + $MyMICPercentChange : $MyMICPercentChange;
+app/Libraries/MyMIUser.php:234:            'walletID' => $walletID,
+app/Libraries/MyMIUser.php:235:            'walletTitle' => $walletTitle,
+app/Libraries/MyMIUser.php:236:            'walletBroker' => $walletBroker,
+app/Libraries/MyMIUser.php:237:            'walletNickname' => $walletNickname,
+app/Libraries/MyMIUser.php:238:            'walletDefault' => $walletDefault,
+app/Libraries/MyMIUser.php:239:            'walletExchange' => $walletExchange,
+app/Libraries/MyMIUser.php:240:            'walletMarketPair' => $walletMarketPair,
+app/Libraries/MyMIUser.php:241:            'walletMarket' => $walletMarket,
+app/Libraries/MyMIUser.php:242:            'walletFunds' => $walletFunds,
+app/Libraries/MyMIUser.php:243:            'walletDepositAmount' => $walletDepositAmount,
+app/Libraries/MyMIUser.php:244:            'walletWithdrawAmount' => $walletWithdrawAmount,
+app/Libraries/MyMIUser.php:245:            'walletPercentChange' => $walletPercentChange,
+app/Libraries/MyMIUser.php:316:        // Fetch default wallet info. Adjust method name if necessary.
+app/Libraries/MyMIUser.php:320:            // Insert new wallet data if no default wallet exists
+app/Libraries/MyMIUser.php:324:                'default_wallet'            => 'Yes',
+app/Libraries/MyMIUser.php:325:                'exchange_wallet'           => 'Yes',
+app/Libraries/MyMIUser.php:333:                'wallet_type'               => 'Binary',
+app/Libraries/MyMIUser.php:337:            $this->db->table('bf_users_wallet')->insert($newWalletData);
+app/Libraries/MyMIUser.php:340:        // Repeat the correct method call to retrieve updated wallet information if necessary
+app/Libraries/MyMIUser.php:342:        $getWalletCount                     = $this->walletModel->getNonDefaultWalletCount($this->cuID); // ! Create this function in Model
+app/Libraries/MyMIUser.php:361:        // $userLastActivity		    = $this->CI->mymiwallet->get_last_activity($cuID, $walletID);
+app/Libraries/MyMIUser.php:376:            'walletID'                      => $userInfo['walletID'],
+app/Libraries/MyMIUser.php:383:            'walletTitle'                   => $walletTitle ?? '',
+app/Libraries/MyMIUser.php:384:            'walletBroker'                  => $walletBroker ?? '',
+app/Libraries/MyMIUser.php:385:            'walletNickname'                => $walletNickname ?? '',
+app/Libraries/MyMIUser.php:386:            'walletDefault'                 => $walletDefault ?? '',
+app/Libraries/MyMIUser.php:387:            'walletExchange'                => $walletExchange ?? '',
+app/Libraries/MyMIUser.php:388:            'walletMarketPair'              => $walletMarketPair ?? '',
+app/Libraries/MyMIUser.php:389:            'walletMarket'                  => $walletMarket ?? '',
+app/Libraries/MyMIUser.php:390:            'walletFunds'                   => $walletFunds ?? '',
+app/Libraries/MyMIUser.php:391:            'walletInitialAmount'           => $walletInitialAmount ?? '',
+app/Libraries/MyMIUser.php:392:            'walletAmount'                  => $walletAmount ?? '',
+app/Libraries/MyMIUser.php:393:            'walletPercentChange'           => $walletPercentChange ?? '',
+app/Libraries/MyMIUser.php:394:            'walletGains'                   => $walletGains ?? '',
+app/Libraries/MyMIUser.php:397:            'walletDepositAmount'           => $walletDepositAmount ?? '',
+app/Libraries/MyMIUser.php:398:            'walletWithdrawAmount'          => $walletWithdrawAmount ?? '',
+app/Libraries/MyMIUser.php:414:        $builder                            = $this->db->table('bf_exchanges_listing_request'); // ! Migrate This Table to mymiwallet database // Adjust the table name as needed
+app/Libraries/MyMIUser.php:443:            'banking_wallets' => 'No',
+app/Libraries/MyMIUser.php:447:            'credit_wallets' => 'No',
+app/Libraries/MyMIUser.php:451:            'debt_wallets' => 'No',
+app/Libraries/MyMIUser.php:456:            'investment_wallets' => 'No',
+app/Libraries/MyMIUser.php:484:                    'banking_wallets'           => $financialAssessment['banking_wallets'],
+app/Libraries/MyMIUser.php:488:                    'credit_wallets'            => $financialAssessment['credit_wallets'],
+app/Libraries/MyMIUser.php:492:                    'debt_wallets'              => $financialAssessment['debt_wallets'],
+app/Libraries/MyMIUser.php:497:                    'investment_wallets'        => $financialAssessment['investment_wallets'],
+app/Libraries/MyMIUser.php:534:        $getWalletCount                     = $this->walletModel->getNonDefaultWalletCount($cuID);
+app/Libraries/MyMIUser.php:577:            'cuWalletID'                    => $userData['wallet_id'], // Assuming this is the correct field
+app/Libraries/MyMIUser.php:578:            'walletID'                      => $userData['wallet_id'],
+app/Libraries/MyMIUser.php:579:            'cuPublicKey'                   => $userData['wallet_id'], // Double-check this'], seems like a duplicate
+app/Libraries/MyMIDashboard.php:5:use App\Libraries\{BaseLoader, MyMIBudget, MyMICoin, MyMIGold, MyMIInvestments, MyMINotifications, MyMIProjects, MyMISolana, MyMIWallet};
+app/Libraries/MyMIDashboard.php:6:use App\Models\{AlertsModel, BudgetModel, DashboardModel, ExchangeModel, InvestmentModel, InvestorModel, MarketingModel, MyMICoinModel, SolanaModel, TrackerModel, UserModel, WalletModel};
+app/Libraries/MyMIDashboard.php:29:    protected $solanaModel;
+app/Libraries/MyMIDashboard.php:32:    protected $walletModel;
+app/Libraries/MyMIDashboard.php:37:    protected $MyMISolana;
+app/Libraries/MyMIDashboard.php:39:    protected $userSolana;
+app/Libraries/MyMIDashboard.php:53:        $this->solanaModel = new SolanaModel();
+app/Libraries/MyMIDashboard.php:61:        $this->walletModel = new WalletModel();
+app/Libraries/MyMIDashboard.php:96:        if ($exchange === 'Solana') {
+app/Libraries/MyMIDashboard.php:97:            if ($this->siteSettings->solanaExchange === 1) {
+app/Libraries/MyMIDashboard.php:98:                $this->solanaModel          = new SolanaModel(); 
+app/Libraries/MyMIDashboard.php:100:                $getListedTokens            = $this->solanaModel->getListedTokens($exchange);
+app/Libraries/MyMIDashboard.php:107:        if ($exchange === 'Solana') {
+app/Libraries/MyMIDashboard.php:108:            $this->solanaModel              = new SolanaModel();
+app/Libraries/MyMIDashboard.php:109:            $getTokenDetails                = $this->solanaModel->getTokenInfoBySymbol($symbol);
+app/Libraries/MyMIDashboard.php:115:        if ($exchange === 'Solana') {
+app/Libraries/MyMIDashboard.php:116:            $this->solanaModel              = new SolanaModel();
+app/Libraries/MyMIDashboard.php:117:            $getTokenDetails                = $this->solanaModel->getTokenInfoByID($tokenID);
+app/Libraries/MyMIDashboard.php:138:        if ($exchange === 'Solana' && $this->siteSettings->solanaExchange === 1) {
+app/Libraries/MyMIDashboard.php:139:            $this->MyMISolana = new MyMISolana();
+app/Libraries/MyMIDashboard.php:140:            $cuSolanaDW = $this->MyMISolana->getUserDefaultSolana($cuID)['cuSolanaDW'];
+app/Libraries/MyMIDashboard.php:144:                    'id' => $cuSolanaDW['id'] ?? 0,
+app/Libraries/MyMIDashboard.php:145:                    'status' => $cuSolanaDW['status'] ?? 0,
+app/Libraries/MyMIDashboard.php:146:                    'public_token' => $cuSolanaDW['public_token'] ?? 'N/A',
+app/Libraries/MyMIDashboard.php:147:                    'nickname' => $cuSolanaDW['nickname'] ?? 'N/A',
+app/Libraries/MyMIDashboard.php:148:                    'auto_staking' => $cuSolanaDW['auto_staking'] ?? 'N/A',
+app/Libraries/MyMIDashboard.php:149:                    'notifications' => $cuSolanaDW['notifications'] ?? 'N/A',
+app/Libraries/MyMIDashboard.php:172:        if ($exchange === 'Solana') {
+app/Libraries/MyMIDashboard.php:173:            $cryptoTransactions             = $this->MyMISolana->getTransactions($cuID, $publicKey);
+app/Libraries/MyMIDashboard.php:175:                'transactions'              => $cryptoTransactions,
+app/Libraries/MyMIDashboard.php:182:        if ($exchange === 'Solana') {
+app/Libraries/MyMIDashboard.php:184:            $cryptoTransactions             = $this->MyMISolana->getTransactionsBySymbol($cuID, $getTokenDetails['address']);
+app/Libraries/MyMIDashboard.php:186:                'transactions'              => $cryptoTransactions,
+app/Libraries/MyMIDexScreener.php:35:    public function topTokens(string $chain = 'solana', int $limit = 50): array
+app/Libraries/MyMIDexScreener.php:94:            log_message('error', 'MyMIDexScreener::tokenDetails failure: {msg}', ['msg' => $e->getMessage()]);
+app/Libraries/MyMIDexScreener.php:114:        $url = 'https://raw.githubusercontent.com/solana-labs/token-list/main/src/tokens/solana.tokenlist.json';
+app/Libraries/MyMIDexScreener.php:126:    public function updateSolanaTokenPrices()
+app/Libraries/MyMIDexScreener.php:167:            'dex_swap_name' => $pair['quoteToken']['name'] ?? 'N/A',
+app/Libraries/MyMIDexScreener.php:168:            'dex_swap_symbol' => $pair['quoteToken']['symbol'] ?? 'N/A',
+app/Libraries/MyMIDexScreener.php:169:            'dex_swap_address' => $pair['quoteToken']['address'] ?? 'N/A',
+app/Libraries/MyMIDigibyte.php:95:    public function signTransaction($transaction, $privateKey) {
+app/Libraries/MyMIDigibyte.php:97:        $signature = $keyPair->sign($transaction);
+app/Libraries/MyMIDigibyte.php:98:        return $signature->toDER('hex');
+app/Libraries/MyMIDigibyte.php:101:    public function verifySignature($transaction, $signature, $publicKey) {
+app/Libraries/MyMIDigibyte.php:103:        return $keyPair->verify($transaction, $signature);
+app/Libraries/MyMIDigibyte.php:107:        $transaction = [
+app/Libraries/MyMIDigibyte.php:114:        $transactionJson = json_encode($transaction);
+app/Libraries/MyMIDigibyte.php:115:        $signature = $this->signTransaction($transactionJson, $privateKey);
+app/Libraries/MyMIDigibyte.php:116:        $transaction['signature'] = $signature;
+app/Libraries/MyMIDigibyte.php:117:        return 'Transaction ID: ' . hash('sha256', $transactionJson);
+app/Libraries/MyMIDigibyte.php:120:    public function getTransactionStatus($transactionId) {
+app/Libraries/MyMIDigibyte.php:122:        return "Status of transaction $transactionId";
+app/Libraries/MyMIEsportsStartGG.php:14:            ?? $headers['x-startgg-signature']
+app/Libraries/MyMIEsportsStartGG.php:16:            ?? $headers['x-hub-signature-256']
+app/Libraries/MyMIEthereum.php:46:     * Placeholder transaction fetcher.
+app/Libraries/MyMIEthereum.php:78:    public function signTransaction($transaction, $privateKey) {
+app/Libraries/MyMIEthereum.php:79:        // Sign the transaction
+app/Libraries/MyMIEthereum.php:81:        return $account->sign($transaction);
+app/Libraries/MyMIEthereum.php:85:        $transaction = [
+app/Libraries/MyMIEthereum.php:92:        $signedTransaction = $this->signTransaction($transaction, $privateKey);
+app/Libraries/MyMIEthereum.php:93:        return $this->web3->eth->sendSignedTransaction($signedTransaction);
+app/Libraries/MyMIEthereum.php:116:        $transaction = [
+app/Libraries/MyMIEthereum.php:121:        $signedTransaction = $this->signTransaction($transaction, $privateKey);
+app/Libraries/MyMIEthereum.php:122:        return $this->web3->eth->sendSignedTransaction($signedTransaction);
+app/Libraries/MyMIEthereum.php:132:        $transaction = [
+app/Libraries/MyMIEthereum.php:137:        $signedTransaction = $this->signTransaction($transaction, $privateKey);
+app/Libraries/MyMIEthereum.php:138:        return $this->web3->eth->sendSignedTransaction($signedTransaction);
+app/Libraries/MyMIEthereum.php:147:        $transaction = [
+app/Libraries/MyMIEthereum.php:153:        $signedTransaction = $this->signTransaction($transaction, $fromPrivateKey);
+app/Libraries/MyMIEthereum.php:154:        return $this->web3->eth->sendSignedTransaction($signedTransaction);
+app/Libraries/MyMIExchange.php:14:    MyMISolana,
+app/Libraries/MyMIExchange.php:47:    protected ?MyMISolana $MyMISolana = null;
+app/Config/Services.php:46: * framework to be swapped out easily without affecting the usage within
+app/Config/RegistrationSources.php:60:                    'title' => 'Exchange / Wallet Features',
+app/Config/RegistrationSources.php:62:                        ['title' => 'Digital Wallet Direction', 'body' => 'Manage wallet-related features and connected asset data as the ecosystem grows.'],
+app/Config/Solana.php:6:class Solana extends BaseConfig
+app/Config/DynamicDataConfig.php:25:            'Solana' => [
+app/Config/EmailIntake.php:14: *  - EMAIL_INTAKE_PASSWORD (app password or OAuth token)
+app/Config/HybridAuth.php:4:    'callback' => 'https://mymiwallet.com/auth/callback',
+app/Config/ReferralLinks.php:18:    public string $topOneTrader = 'https://toponetrader.com/?linkId=lp_148658&sourceId=mymiwallet&tenantId=toponetrader';
+app/Config/WalletConnect.php:8:    public string $relay = 'wss://relay.walletconnect.com';
+app/Config/Ops.php:23:    public string $siteRoot = '/home/mymiteam/mymiwallet/site/current';
+app/Config/DiscordHelp.php:110:            'url'         => 'https://www.mymiwallet.com/Register',
+app/Config/DiscordHelp.php:116:            'url'         => 'https://www.mymiwallet.com/Account/Social-Media',
+app/Config/DiscordHelp.php:122:            'url'         => 'https://www.mymiwallet.com/Budget',
+app/Config/DiscordHelp.php:125:        // - Linking wallets
+app/Config/DiscordOps.php:12:    public string $aiopsFallbackBaseUrl = 'https://aiops.mymiwallet.com';
+app/Config/DatabaseTesting.php:24:        'swapPre'  => '',
+app/Config/MarketingDistribution.php:31:        'ops@mymiwallet.com',
+app/Config/ContentEngine.php:114:            'dollar_volume' => 1500.0,  // scale at $1.5B notional traded
+app/Config/App.php:14:    public string $baseURL = 'https://www.mymiwallet.com/';
+app/Config/App.php:78:    public string $cookieDomain   = '.mymiwallet.com';
+app/Config/Email.php:7:    public string $fromEmail  = 'support@mymiwallet.com';
+app/Config/Email.php:9:    public string $replyToEmail = 'support@mymiwallet.com';
+app/Config/Solana copy.bak:6:class Solana extends BaseConfig
+app/Config/Routes.php:93:        'wallets/',
+app/Config/Routes.php:202:    $routes->get('Wallet/(:num)', 'CoinVaultController::wallet/$1');
+app/Config/Routes.php:393:    $routes->get('/MyMI-Wallet', 'WalletsController::MyMIWallet', ['as' => 'mymi-wallet']);
+app/Config/Routes.php:635:            $routes->post('TBI-Coins/Prepare-Solana-Mint/(:num)', 'TbiProjectCoinsAPIController::prepareSolanaMint/$1', ['filter' => 'permission:admin.access']);
+app/Config/Routes.php:1208:    $routes->group('Solana', function($routes) {
+app/Config/Routes.php:1209:        $routes->get('getMarketPrice/(:segment)', 'SolanaAPIController::get/$1');
+app/Config/Routes.php:1210:        $routes->get('getCoinAmount/(:segment)', 'SolanaAPIController::getCoinAmount/$1');
+app/Config/Routes.php:1211:        $routes->get('getMarketPrice', 'SolanaAPIController::getMarketPrice');
+app/Config/Routes.php:1212:        $routes->get('getTokenPrice/(:segment)', 'SolanaAPIController::getTokenPrice/$1');
+app/Config/Routes.php:1213:        $routes->get('getExchangePrice/(:segment)', 'SolanaAPIController::getExchangePrice/$1');
+app/Config/Routes.php:1214:        $routes->get('getAssetsData', 'SolanaAPIController::getAssetsData');
+app/Config/Routes.php:1215:        $routes->get('provisionDefaultWallet', 'SolanaAPIController::provisionDefaultWallet');
+app/Config/Routes.php:1216:        $routes->get('updatePrices', 'SolanaAPIController::updateSolanaPrices');
+app/Config/Routes.php:1217:        $routes->get('updateTokens', 'SolanaAPIController::updateSolanaTokens');
+app/Config/Routes.php:1220:        $routes->get('health', 'SolanaAPIController::health');
+app/Config/Routes.php:1221:        $routes->get('wallet/(:segment)/balance', 'SolanaAPIController::getBalance/$1');
+app/Config/Routes.php:1222:        $routes->get('wallet/(:segment)/tokens', 'SolanaAPIController::getTokenAccounts/$1');
+app/Config/Routes.php:1223:        $routes->post('transfer', 'SolanaAPIController::transfer');
+app/Config/Routes.php:1224:        $routes->post('swap/quote', 'SolanaAPIController::quote');
+app/Config/Routes.php:1225:        $routes->post('swap/execute', 'SolanaAPIController::swap');
+app/Config/Routes.php:1226:        $routes->post('token/create', 'SolanaAPIController::createToken');
+app/Config/Routes.php:1227:        $routes->post('token/mint', 'SolanaAPIController::mint');
+app/Config/Routes.php:1252:        $routes->post('Link-Snaptrade', 'WalletsAPIController::linkSnapTrade');
+app/Config/Routes.php:1253:        $routes->post('Snaptrade/Connect-URL', 'WalletsAPIController::getSnapTradeConnectUrl');
+app/Config/Routes.php:1268:        $routes->post('Plaid/Exchange', 'WalletsAPIController::plaidExchange');
+app/Config/Routes.php:1720:    $routes->group('Solana', function($routes) {
+app/Config/Routes.php:1721:        $routes->get('', 'SolanaController::index', ['as' => 'mymi-solana']);
+app/Config/Routes.php:1722:        $routes->get('Test-Page', 'SolanaController::testPage', ['as' => 'mymi-solana-test-page']);
+app/Config/Routes.php:1723:        $routes->get('Assets', 'SolanaController::assets', ['as' => 'mymi-solana-assets']);
+app/Config/Routes.php:1724:        $routes->get('Create', 'SolanaController::create', ['as' => 'mymi-solana-create']);
+app/Config/Routes.php:1725:        $routes->get('Wallet/Disconnect/(:segment)', 'SolanaController::disconnectWallet/$1', ['as' => 'mymi-solana-create']);
+app/Config/Routes.php:1726:        $routes->get('Import', 'SolanaController::import', ['as' => 'mymi-solana-import']);
+app/Config/Routes.php:1727:        $routes->get('Swap', 'SolanaController::coinSwap', ['as' => 'mymi-solana-coin-swap']);
+app/Config/Routes.php:1728:        $routes->get('Create/Wallet', 'SolanaController::create', ['as' => 'mymi-solana-create-wallet']);
+app/Config/Routes.php:1729:        $routes->post('Create/Wallet', 'SolanaController::create');
+app/Config/Routes.php:1730:        $routes->post('createSolanaWallet', 'SolanaController::createSolanaWallet');
+app/Config/Routes.php:1731:        $routes->post('fetchFrontendData', 'SolanaController::fetchFrontendData', ['filter' => 'csrf']);
+app/Config/Routes.php:1732:        $routes->post('provisionDefaultWallet', 'SolanaController::provisionDefaultWallet', ['filter' => 'csrf']);
+app/Config/Routes.php:1733:        $routes->get('Import/Wallet', 'SolanaController::importWallet', ['as' => 'mymi-solana-import-wallet']);
+app/Config/Routes.php:1734:        $routes->post('Import/Wallet', 'SolanaController::importWallet');
+app/Config/Routes.php:1735:        $routes->post('updatePrices', 'SolanaController::updateSolanaPrices');
+app/Config/Routes.php:1736:        $routes->post('updateTokens', 'SolanaController::updateSolanaTokens');
+app/Config/Routes.php:1737:        $routes->get('Wallet/Verify-Ownership', 'SolanaController::verifyWalletOwnership', ['as' => 'mymi-solana-verify-wallet']);
+app/Config/Routes.php:1738:        $routes->post('Wallet/Verify-Ownership', 'SolanaController::verifyWalletOwnership');
+app/Config/Routes.php:1739:        $routes->get('Wallet/Execute-Swap', 'SolanaController::executeSwap', ['as' => 'mymi-solana-execute-swap']);
+app/Config/Routes.php:1740:        $routes->post('Wallet/Execute-Swap', 'SolanaController::executeSwap');
+app/Config/Routes.php:1741:        $routes->get('Wallet/ViewAssets', 'SolanaController::viewAssets', ['as' => 'mymi-solana-view-assets']);
+app/Config/Routes.php:1742:        $routes->post('Wallet/ViewAssets', 'SolanaController::viewAssets');
+app/Config/Routes.php:1743:        $routes->post('Wallet/Connect', 'SolanaController::connectWallet', ['as' => 'mymi-solana-connect-wallet']);
+app/Config/Routes.php:1744:        $routes->post('Wallet/Disconnect', 'SolanaController::disconnectWallet', ['as' => 'mymi-solana-disconnect-wallet']);
+app/Config/Routes.php:1745:        $routes->post('Wallet/Refresh', 'SolanaController::refreshWallet', ['as' => 'mymi-solana-refresh-wallet']);
+app/Config/Routes.php:1749:        $routes->post('Connect/MetaMask', 'SolanaController::connectWallet', ['as' => 'connect-wallet-metamask']);
+app/Config/Routes.php:1750:        $routes->post('Disconnect/MetaMask', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-metamask']);
+app/Config/Routes.php:1751:        $routes->post('Refresh/MetaMask', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-metamask']);
+app/Config/Routes.php:1753:        $routes->post('Connect/Solflare', 'SolanaController::connectWallet', ['as' => 'connect-wallet-solflare']);
+app/Config/Routes.php:1754:        $routes->post('Disconnect/Solflare', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-solflare']);
+app/Config/Routes.php:1755:        $routes->post('Refresh/Solflare', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-solflare']);
+app/Config/Routes.php:1757:        $routes->post('Connect/Phantom', 'SolanaController::connectWallet', ['as' => 'connect-wallet-phantom']);
+app/Config/Routes.php:1758:        $routes->post('Disconnect/Phantom', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-phantom']);
+app/Config/Routes.php:1759:        $routes->post('Refresh/Phantom', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-phantom']);
+app/Config/Routes.php:1761:        $routes->post('Connect/TrustWallet', 'SolanaController::connectWallet', ['as' => 'connect-wallet-trustwallet']);
+app/Config/Routes.php:1762:        $routes->post('Disconnect/TrustWallet', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-trustwallet']);
+app/Config/Routes.php:1763:        $routes->post('Refresh/TrustWallet', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-trustwallet']);
+app/Config/Routes.php:1935:    $routes->get('/', 'WalletsController::index', ['as' => 'wallets.index']);
+app/Config/Routes.php:1936:    $routes->match(['GET', 'POST'], 'All', 'WalletsController::all', ['as' => 'wallets.all']);
+app/Config/Routes.php:1937:    $routes->match(['GET', 'POST'], 'Account-Manager', 'WalletsController::accountManager', ['as' => 'wallets.account-manager']);
+app/Config/Routes.php:1938:    $routes->match(['GET', 'POST'], 'Add', 'WalletsController::add', ['as' => 'wallets.add']);
+app/Config/Routes.php:1939:    $routes->match(['GET', 'POST'], 'Add/(:segment)', 'WalletsController::add/$1', ['as' => 'wallets.add.segment']);
+app/Config/Routes.php:1940:    $routes->match(['GET', 'POST'], 'Add/(:segment)/(:segment)', 'WalletsController::addFetch/$1/$2', ['as' => 'wallets.add.segment.segment']);
+app/Config/Routes.php:1941:    $routes->match(['GET', 'POST'], 'Add/Bank-Account', 'WalletsController::createBankeAccount', ['as' => 'wallets.add.bank-account']);
+app/Config/Routes.php:1942:    $routes->match(['GET', 'POST'], 'Attach-Account', 'WalletsController::attachAccount', ['as' => 'wallets.attach-account']);
+app/Config/Routes.php:1943:    $routes->match(['GET', 'POST'], 'Attach-Account/(:segment)/(:segment)/(:segment)', 'WalletsController::attachAccount/$1/$2/$3', ['as' => 'wallets.attach-account.segment.segment.segment']);
+app/Config/Routes.php:1944:    $routes->match(['GET', 'POST'], 'Bank', 'WalletsController::bank', ['as' => 'wallets.bank']);
+app/Config/Routes.php:1945:    $routes->match(['GET', 'POST'], 'Banking', 'WalletsController::banking', ['as' => 'wallets.banking']);
+app/Config/Routes.php:1946:    $routes->match(['GET', 'POST'], 'Banking/Add/Account/(:segment)', 'WalletsController::add', ['as' => 'wallets.banking.add.account.segment']);
+app/Config/Routes.php:1947:    $routes->match(['GET', 'POST'], 'Banking/(:segment)', 'WalletsController::addAccount', ['as' => 'wallets.banking.segment']);
+app/Config/Routes.php:1948:    $routes->match(['GET', 'POST'], 'Banking/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.banking.details.segment']);
+app/Config/Routes.php:1949:    $routes->match(['GET', 'POST'], 'Credit/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.credit.details.segment']);
+app/Config/Routes.php:1950:    $routes->match(['GET', 'POST'], 'Debt/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.debt.details.segment']);
+app/Config/Routes.php:1951:    $routes->match(['GET', 'POST'], 'Investment/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.investment.details.segment']);
+app/Config/Routes.php:1952:    $routes->match(['GET', 'POST'], 'Crypto/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.crypto.details.segment']);
+app/Config/Routes.php:1954:        'as' => 'wallets.delete.type.id',
+app/Config/Routes.php:1956:    $routes->match(['GET', 'POST'], 'Banking/Edit/Account/(:segment)', 'WalletsController::editBankAccount/$1', ['as' => 'wallets.banking.edit.account.segment']);
+app/Config/Routes.php:1957:    $routes->match(['GET', 'POST'], 'Checking', 'WalletsController::checking', ['as' => 'wallets.checking']);
+app/Config/Routes.php:1959:    $routes->match(['GET', 'POST'], 'Crypto', 'WalletsController::crypto', ['as' => 'wallets.crypto']);
+app/Config/Routes.php:1960:    $routes->match(['GET', 'POST'], 'Create', 'WalletsController::generateWallet', ['as' => 'wallets.create']); // Previously /Wallets/Address-Generator
+app/Config/Routes.php:1961:    $routes->match(['GET', 'POST'], 'Credit', 'WalletsController::index', ['as' => 'wallets.credit']);
+app/Config/Routes.php:1963:    $routes->match(['GET', 'POST'], 'Coin-Swap', 'WalletsController::coinSwap', ['as' => 'wallets.coin-swap']);
+app/Config/Routes.php:1964:    $routes->match(['GET', 'POST'], 'Coin-Swap/(:segment)', 'WalletsController::coinSwap/$1', ['as' => 'wallets.coin-swap.segment']);
+app/Config/Routes.php:1965:    $routes->match(['GET', 'POST'], 'Complete/Purchase', 'WalletsController::completePurchase', ['as' => 'wallets.complete.purchase']);
+app/Config/Routes.php:1966:    $routes->match(['GET', 'POST'], 'Confirm-Deposit', 'WalletsController::confirmDeposit', ['as' => 'wallets.confirm.deposit']);
+app/Config/Routes.php:1967:    $routes->match(['GET', 'POST'], 'Debt', 'WalletsController::debt', ['as' => 'wallets.debt']);
+app/Config/Routes.php:1968:    $routes->match(['GET', 'POST'], 'Debt/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.debt.details.segment']);
+app/Config/Routes.php:1969:    $routes->match(['GET', 'POST'], 'Debt/Edit/Account/(:segment)', 'WalletsController::editDebtAccount/$1', ['as' => 'wallets.debt.edit.account.segment']);
+app/Config/Routes.php:1970:    $routes->match(['GET', 'POST'], 'Deposit', 'WalletsController::deposit', ['as' => 'wallets.deposit']);
+app/Config/Routes.php:1971:    $routes->match(['GET', 'POST'], 'Deposit/Fetch', 'WalletsController::addDepositFetch', ['as' => 'wallets.deposit.fetch']);
+app/Config/Routes.php:1972:    $routes->match(['GET', 'POST'], 'Deposit/Complete', 'WalletsController::depositComplete', ['as' => 'wallets.deposit.complete']);
+app/Config/Routes.php:1973:    $routes->match(['GET', 'POST'], 'Deposit/Complete/(:segment)', 'WalletsController::depositComplete/$1', ['as' => 'wallets.deposit.complete.segment']);
+app/Config/Routes.php:1974:    $routes->match(['GET', 'POST'], 'Deposit/(:segment)', 'WalletsController::deposit/$1', ['as' => 'wallets.deposit.segment']);
+app/Config/Routes.php:1975:    $routes->match(['GET', 'POST'], 'Deposit/Funds', 'WalletsController::deposit', ['as' => 'wallets.deposit.funds']);
+app/Config/Routes.php:1976:    $routes->match(['GET', 'POST'], 'Details', 'WalletsController::details', ['as' => 'wallets.details']);
+app/Config/Routes.php:1977:    $routes->match(['GET', 'POST'], 'Edit', 'WalletsController::edit', ['as' => 'wallets.edit']);
+app/Config/Routes.php:1978:    $routes->match(['GET', 'POST'], 'Edit/(:segment)', 'WalletsController::edit/$1', ['as' => 'wallets.edit.segment']); // Previously /Wallets/Address-Generator
+app/Config/Routes.php:1979:    $routes->match(['GET', 'POST'], 'Edit/(:segment)/(:segment)', 'WalletsController::edit/$1/$2', ['as' => 'wallets.edit.segment.segment']); // Previously /Wallets/Address-Generator
+app/Config/Routes.php:1980:    $routes->match(['GET', 'POST'], 'Feature-Manager', 'WalletsController::featureManager', ['as' => 'wallets.feature-manager']);
+app/Config/Routes.php:1981:    $routes->match(['GET', 'POST'], 'Generate-Wallet', 'WalletsController::generateWallet', ['as' => 'wallets.generate-wallet']);
+app/Config/Routes.php:1982:    $routes->match(['GET', 'POST'], 'Investments', 'WalletsController::investments', ['as' => 'wallets.investments']);
+app/Config/Routes.php:1983:    $routes->match(['GET', 'POST'], 'Investment/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.investment.details']);
+app/Config/Routes.php:1984:    $routes->match(['GET', 'POST'], 'Investment/Edit/Account/(:segment)', 'WalletsController::editInvestAccount/$1', ['as' => 'wallets.investment.edit']);
+app/Config/Routes.php:1985:    $routes->match(['GET', 'POST'], 'Link-Account', 'WalletsController::linkAccount', ['as' => 'wallets.link-account']);
+app/Config/Routes.php:1986:    $routes->match(['GET', 'POST'], 'Link-Account/(:segment)', 'WalletsController::linkAccount/$1', ['as' => 'wallets.link-account.segment']);
+app/Config/Routes.php:1987:    $routes->match(['GET', 'POST'], 'Link-Account/(:segment)/(:segment)', 'WalletsController::linkAccount/$1', ['as' => 'wallets.link-account.segment.segment']);
+app/Config/Routes.php:1988:    $routes->match(['GET', 'POST'], 'Link-Account/Success', 'WalletsController::linkAccountSuccess', ['as' => 'wallets.link-account.success']);
+app/Config/Routes.php:1989:    $routes->match(['GET', 'POST'], 'Link-Account/Success/(:segment)', 'WalletsController::linkAccountSuccess/$1', ['as' => 'wallets.link-account.success.segment']);
+app/Config/Routes.php:1990:    $routes->match(['GET', 'POST'], 'Manager', 'WalletsController::walletManager', ['as' => 'wallets.manager']);
+app/Config/Routes.php:2008:    $routes->match(['GET', 'POST'], 'Transfer-Funds', 'WalletsController::transferFunds', ['as' => 'wallets.transfer-funds']);
+app/Config/Routes.php:2009:    $routes->match(['GET', 'POST'], 'Wallet-Generator', 'WalletsController::walletGenerator', ['as' => 'wallets.generator']);
+app/Config/Routes.php:2010:    $routes->match(['GET', 'POST'], 'Wallet-Selection', 'WalletsController::walletSelections', ['as' => 'wallets.selection']);
+app/Config/Routes.php:2011:    $routes->match(['GET', 'POST'], 'Wallet-Transactions', 'WalletsController::walletTransaction', ['as' => 'wallets.transactions']);
+app/Config/Routes.php:2012:    $routes->match(['GET', 'POST'], 'Wallet-Transaction/(:segment)', 'WalletsController::walletTransaction/$1', ['as' => 'wallets.transactions.segment']);
+app/Config/Routes.php:2013:    $routes->match(['GET', 'POST'], 'Withdraw', 'WalletsController::withdraw', ['as' => 'wallets.withdraw']); // Previously /Wallets/Withdraw-Funds
+app/Config/Routes.php:2014:    $routes->match(['GET', 'POST'], 'Withdraw/(:segment)', 'WalletsController::withdraw/$1', ['as' => 'wallets.withdraw.segment']); // Previously /Wallets/Withdraw-Funds
+app/Config/Routes.php:2015:    $routes->match(['GET', 'POST'], 'Withdraw/Fetch', 'WalletsController::addWithdrawFetch', ['as' => 'wallets.withdraw.fetch']);
+app/Config/Exceptions.php:87:     * ex. ['server', 'setup/password', 'secret_token']
+app/Config/Cookie.php:48:    public string $domain = '.mymiwallet.com';
+
+===== SOLANA ROUTE SUMMARY =====
+| GET     | API/Solana/updatePrices                                                     | »                                              | \App\Modules\APIs\Controllers\SolanaAPIController::updateSolanaPrices                                 | botBlocker requestLifecycle observability ratelimit throttle sessionRevoked                                                    | cspoff sessionTracker requestLifecycle observability jsonException toolbar                                 |
+| GET     | API/Solana/updateTokens                                                     | »                                              | \App\Modules\APIs\Controllers\SolanaAPIController::updateSolanaTokens                                 | botBlocker requestLifecycle observability ratelimit throttle sessionRevoked                                                    | cspoff sessionTracker requestLifecycle observability jsonException toolbar                                 |
+| GET     | Exchange/Solana                                                             | mymi-solana                                    | \App\Modules\Exchange\Controllers\SolanaController::index                                             | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| GET     | Exchange/Solana/Test-Page                                                   | mymi-solana-test-page                          | \App\Modules\Exchange\Controllers\SolanaController::testPage                                          | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| GET     | Exchange/Solana/Assets                                                      | mymi-solana-assets                             | \App\Modules\Exchange\Controllers\SolanaController::assets                                            | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| GET     | Exchange/Solana/Create                                                      | mymi-solana-create                             | \App\Modules\Exchange\Controllers\SolanaController::create                                            | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| GET     | Exchange/Solana/Import                                                      | mymi-solana-import                             | \App\Modules\Exchange\Controllers\SolanaController::import                                            | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| GET     | Exchange/Solana/Swap                                                        | mymi-solana-coin-swap                          | \App\Modules\Exchange\Controllers\SolanaController::coinSwap                                          | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| GET     | Exchange/Solana/Create/Wallet                                               | mymi-solana-create-wallet                      | \App\Modules\Exchange\Controllers\SolanaController::create                                            | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| GET     | Exchange/Solana/Import/Wallet                                               | mymi-solana-import-wallet                      | \App\Modules\Exchange\Controllers\SolanaController::importWallet                                      | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| GET     | Exchange/Solana/Wallet/Verify-Ownership                                     | mymi-solana-verify-wallet                      | \App\Modules\Exchange\Controllers\SolanaController::verifyWalletOwnership                             | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| GET     | Exchange/Solana/Wallet/Execute-Swap                                         | mymi-solana-execute-swap                       | \App\Modules\Exchange\Controllers\SolanaController::executeSwap                                       | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| GET     | Exchange/Solana/Wallet/ViewAssets                                           | mymi-solana-view-assets                        | \App\Modules\Exchange\Controllers\SolanaController::viewAssets                                        | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/DigiByte/fetchFrontendData                                         | »                                              | \App\Modules\Exchange\Controllers\DigiByteController::fetchFrontendData                               | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | csrf login cspoff sessionTracker requestLifecycle observability jsonException toolbar                      |
+| POST    | Exchange/Solana/Create/Wallet                                               | »                                              | \App\Modules\Exchange\Controllers\SolanaController::create                                            | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Solana/createSolanaWallet                                          | »                                              | \App\Modules\Exchange\Controllers\SolanaController::createSolanaWallet                                | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Solana/fetchFrontendData                                           | »                                              | \App\Modules\Exchange\Controllers\SolanaController::fetchFrontendData                                 | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | csrf login cspoff sessionTracker requestLifecycle observability jsonException toolbar                      |
+| POST    | Exchange/Solana/provisionDefaultWallet                                      | »                                              | \App\Modules\Exchange\Controllers\SolanaController::provisionDefaultWallet                            | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | csrf login cspoff sessionTracker requestLifecycle observability jsonException toolbar                      |
+| POST    | Exchange/Solana/Import/Wallet                                               | »                                              | \App\Modules\Exchange\Controllers\SolanaController::importWallet                                      | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Solana/updatePrices                                                | »                                              | \App\Modules\Exchange\Controllers\SolanaController::updateSolanaPrices                                | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Solana/updateTokens                                                | »                                              | \App\Modules\Exchange\Controllers\SolanaController::updateSolanaTokens                                | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Solana/Wallet/Verify-Ownership                                     | »                                              | \App\Modules\Exchange\Controllers\SolanaController::verifyWalletOwnership                             | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Solana/Wallet/Execute-Swap                                         | »                                              | \App\Modules\Exchange\Controllers\SolanaController::executeSwap                                       | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Solana/Wallet/ViewAssets                                           | »                                              | \App\Modules\Exchange\Controllers\SolanaController::viewAssets                                        | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Solana/Wallet/Connect                                              | mymi-solana-connect-wallet                     | \App\Modules\Exchange\Controllers\SolanaController::connectWallet                                     | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Solana/Wallet/Disconnect                                           | mymi-solana-disconnect-wallet                  | \App\Modules\Exchange\Controllers\SolanaController::disconnectWallet                                  | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Solana/Wallet/Refresh                                              | mymi-solana-refresh-wallet                     | \App\Modules\Exchange\Controllers\SolanaController::refreshWallet                                     | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Wallet/Connect/MetaMask                                            | connect-wallet-metamask                        | \App\Modules\Exchange\Controllers\SolanaController::connectWallet                                     | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Wallet/Disconnect/MetaMask                                         | disconnect-wallet-metamask                     | \App\Modules\Exchange\Controllers\SolanaController::disconnectWallet                                  | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Wallet/Refresh/MetaMask                                            | refresh-wallet-metamask                        | \App\Modules\Exchange\Controllers\SolanaController::refreshWallet                                     | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Wallet/Connect/Solflare                                            | connect-wallet-solflare                        | \App\Modules\Exchange\Controllers\SolanaController::connectWallet                                     | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Wallet/Disconnect/Solflare                                         | disconnect-wallet-solflare                     | \App\Modules\Exchange\Controllers\SolanaController::disconnectWallet                                  | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Wallet/Refresh/Solflare                                            | refresh-wallet-solflare                        | \App\Modules\Exchange\Controllers\SolanaController::refreshWallet                                     | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Wallet/Connect/Phantom                                             | connect-wallet-phantom                         | \App\Modules\Exchange\Controllers\SolanaController::connectWallet                                     | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Wallet/Disconnect/Phantom                                          | disconnect-wallet-phantom                      | \App\Modules\Exchange\Controllers\SolanaController::disconnectWallet                                  | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Wallet/Refresh/Phantom                                             | refresh-wallet-phantom                         | \App\Modules\Exchange\Controllers\SolanaController::refreshWallet                                     | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Wallet/Connect/TrustWallet                                         | connect-wallet-trustwallet                     | \App\Modules\Exchange\Controllers\SolanaController::connectWallet                                     | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Wallet/Disconnect/TrustWallet                                      | disconnect-wallet-trustwallet                  | \App\Modules\Exchange\Controllers\SolanaController::disconnectWallet                                  | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+| POST    | Exchange/Wallet/Refresh/TrustWallet                                         | refresh-wallet-trustwallet                     | \App\Modules\Exchange\Controllers\SolanaController::refreshWallet                                     | maintenance botBlocker requestLifecycle observability ratelimit throttle sessionRevoked csrf authcheck login                   | login cspoff sessionTracker requestLifecycle observability jsonException toolbar                           |
+
+===== LATEST TERMINAL CAPTURES =====
+total 960K
+drwxr-xr-x 2 mymiteam pg9881444  102 May 30 05:52 .
+drwxr-xr-x 5 mymiteam pg9881444 4.0K May 30 05:52 ..
+-rw-r--r-- 1 mymiteam pg9881444 825K May 30 05:52 20260530-055202-spark-routes-solana.log
+-rw-r--r-- 1 mymiteam pg9881444 127K May 30 05:52 20260530-055211-solana-file-discovery.log
+
+===== CHECKLIST =====
+# MyMI Solana Exchange State-of-the-Art Checklist
+
+## Production Safety
+
+- [ ] Solana network mode is explicit: devnet, testnet, or mainnet-beta.
+- [ ] Mainnet minting is blocked unless an authenticated admin confirms it.
+- [ ] Private keys are never stored in repo, views, JavaScript, logs, or database.
+- [ ] RPC URLs and API keys are loaded only from `.env`.
+- [ ] Every transaction write has an audit record.
+- [ ] Every failed Solana transaction records signature, wallet, error code, error message, RPC provider, and timestamp.
+- [ ] Team notifications fire on transaction failure, mint failure, swap failure, API outage, or abnormal user wallet activity.
+
+## MyMISolana / SolanaService
+
+- [ ] RPC health check exists.
+- [ ] Wallet balance lookup exists.
+- [ ] Token mint lookup exists.
+- [ ] SPL token metadata retrieval exists.
+- [ ] Transaction confirmation lookup exists.
+- [ ] RPC timeout, 403, 429, 500, and malformed responses are handled.
+- [ ] RPC provider fallback/rotation exists.
+- [ ] Short TTL caching exists for repeated RPC reads.
+
+## TBI Solutions Project / Coins
+
+- [ ] TBI Solutions Project draft record exists.
+- [ ] TBI Coin draft record exists.
+- [ ] TBI Invest Coin draft record exists.
+- [ ] Draft coin creation is admin-only.
+- [ ] Devnet mint workflow is separated from mainnet workflow.
+- [ ] Token metadata, decimals, supply, status, creator, mint address, and signatures are stored.
+- [ ] Mainnet minting remains blocked until launch checklist is complete.
+
+## Exchange Front-End
+
+- [ ] Phantom wallet connection works.
+- [ ] Solflare wallet connection works.
+- [ ] Wallet state refreshes without page reload.
+- [ ] Balances update in near real time.
+- [ ] Open orders update automatically.
+- [ ] Transaction status updates from pending to confirming to confirmed or failed.
+- [ ] Duplicate submits are blocked.
+- [ ] Missing wallet extension has a clear fallback message.
+- [ ] RPC outage has a clear fallback message.
+- [ ] Browser-side errors are logged to backend support endpoint.
+
+## Support / Notifications
+
+- [ ] Team notification on Solana RPC outage.
+- [ ] Team notification on mint failure.
+- [ ] Team notification on failed user transaction.
+- [ ] Support dashboard can search by user, wallet, signature, token, date, and status.
+- [ ] Support team can view transaction lifecycle timeline.
+- [ ] Support team can recheck confirmation status.
+
+===== GIT STATUS END =====
+ M writable/logs/emergency.log
+?? docs/_aiops/bin/
+?? docs/_aiops/checklists/
+?? docs/_aiops/instructions/solana-exchange-phase-01.md
+?? docs/_aiops/reports/compiled/
+?? docs/_aiops/reports/solana-exchange-healthcheck-20260530-054727.txt
+?? docs/_aiops/reports/solana-route-summary.txt
+?? docs/_aiops/reports/terminal/
