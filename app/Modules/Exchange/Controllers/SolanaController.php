@@ -319,7 +319,7 @@ $addr = $svc->normalizeAddress($row);
 
                 $this->db->table('bf_users_wallet')->insert($data);
 
-                return $this->response->setJSON(['status' => 'success', 'publicKey' => $publicKey, 'privateKey' => $privateKey]);
+                return $this->response->setJSON(['success' => true, 'message' => 'Solana wallet created. Private key was stored securely and is not returned to the browser.', 'data' => ['publicKey' => $publicKey], 'errors' => [], 'meta' => ['request_id' => bin2hex(random_bytes(8)), 'network' => $this->solanaService->resolveNetwork(), 'timestamp' => date('c')]]);
             } catch (\Exception $e) {
                 return $this->response->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
             }
@@ -327,68 +327,29 @@ $addr = $svc->normalizeAddress($row);
     }
 
     public function createToken() {
-        $name = $this->request->getPost('token_name');
-        $symbol = $this->request->getPost('token_symbol');
-        $supply = $this->request->getPost('token_supply');
-        $blockchain = $this->request->getPost('blockchain');
-        $adminWallet = $this->request->getPost('admin_wallet');
-        $description = $this->request->getPost('description');
-        $logoFile = $this->request->getFile('logo_file');
-        $logoUrl = $this->request->getPost('logo_url');
-        $attributes = $this->request->getPost('attributes');
+        $this->data['pageTitle'] = 'Create Token | MyMI Wallet';
+        $this->commonData();
 
-        $logo = $logoFile && $logoFile->isValid() ? $logoFile->store() : $logoUrl;
-
-        $metadata = [
-            'name' => $name,
-            'symbol' => $symbol,
-            'description' => $description,
-            'image' => $logo,
-            'attributes' => json_decode($attributes, true),
-        ];
-
-        $metadataUri = $this->generateMetadataUri($metadata);
-
-        $result = $this->tokenModel->createToken([
-            'name' => $name,
-            'symbol' => $symbol,
-            'total_supply' => $supply,
-            'blockchain' => $blockchain,
-            'admin_wallet' => $adminWallet,
-            'metadata_uri' => $metadataUri,
-        ]);
-
-        if ($result) {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'Token created successfully.']);
-        } else {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to create token.']);
+        if ($this->request->getMethod() == 'POST') {
+            $payload = [
+                'name' => $this->request->getPost('token_name'),
+                'symbol' => $this->request->getPost('token_symbol'),
+                'supply' => $this->request->getPost('token_supply'),
+                'network' => $this->request->getPost('network') ?: 'devnet',
+                'admin_confirmed' => (bool) $this->request->getPost('admin_confirmed'),
+            ];
+            $result = $this->solanaService->createToken($payload);
+            return $this->response->setStatusCode(($result['success'] ?? false) ? 200 : 403)->setJSON([
+                'success' => (bool) ($result['success'] ?? false),
+                'message' => (string) ($result['message'] ?? 'Token request processed.'),
+                'data' => (array) ($result['data'] ?? []),
+                'errors' => (array) ($result['errors'] ?? []),
+                'meta' => ['request_id' => bin2hex(random_bytes(8)), 'network' => $this->solanaService->resolveNetwork(), 'timestamp' => date('c')],
+            ]);
         }
+        return $this->renderTheme('App\Modules\Exchange\Views\Solana\createToken', $this->data);
     }
     
-    public function confirmation($transactionId) {
-        $transactionDetails = $this->exchangeModel->getTransactionDetails($transactionId);
-    
-        if (!$transactionDetails) {
-            return redirect()->to('/Exchange/Solana')->with('error', 'Transaction not found.');
-        }
-    
-        $this->data['transactionDetails'] = $transactionDetails;
-        $this->data['pageTitle'] = 'Transaction Confirmation';
-        
-        return $this->renderTheme('App\Modules\Exchange\Views\Solana\confirmation', $this->data);
-    }
-    
-    public function disconnectWallet($walletID = null) {
-        $getWalletInfo  = $this->solanaModel->disconnectWallet($walletID); 
-        if ($getWalletInfo) {
-            // Redirect the user back to /Exchange/Solana after disconnecting the wallet
-            return redirect()->to('/Exchange/Solana')->with('message', 'Wallet disconnected successfully.');
-        } else {
-            // Handle the error case, for example, by redirecting back with an error message
-            return redirect()->to('/Exchange/Solana')->with('error', 'Failed to disconnect the wallet.');
-        }
-    }    
-
     public function executeSwap() {
         if ($premiumGuard = premium_guard('exchange.swap')) {
             return $premiumGuard;
@@ -467,15 +428,18 @@ $addr = $svc->normalizeAddress($row);
             log_message('debug', 'SolanaController L400 - fetchFrontendData() Fetch Started!');
         }
         if (!$this->request->isAJAX()) {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'Invalid Request']);
+            return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Invalid Request', 'data' => [], 'errors' => ['request' => 'ajax_required'], 'meta' => ['request_id' => bin2hex(random_bytes(8)), 'network' => $this->solanaService->resolveNetwork(), 'timestamp' => date('c')]]);
         }
 
         $cuID = $this->currentUserId();
         if ($cuID <= 0) {
             log_message('error', 'fetchFrontendData: missing user context; aborting.');
             return $this->response->setStatusCode(401)->setJSON([
-                'status'  => 'error',
-                'message' => 'Authentication required.'
+                'success'  => false,
+                'message' => 'Authentication required.',
+                'data' => [],
+                'errors' => ['auth' => 'required'],
+                'meta' => ['request_id' => bin2hex(random_bytes(8)), 'network' => $this->solanaService->resolveNetwork(), 'timestamp' => date('c')]
             ]);
         }
 
@@ -537,9 +501,12 @@ $addr = $svc->normalizeAddress($row);
 
         // Include a fresh CSRF hash so the page can rotate its token client-side
         return $this->response->setJSON([
-            'status' => 'success',
+            'success' => true,
+            'message' => 'Solana frontend data refreshed.',
             'data'   => $data,
-            'csrf'   => csrf_hash(),
+            'errors' => [],
+            'csrfHash'   => csrf_hash(),
+            'meta' => ['request_id' => bin2hex(random_bytes(8)), 'network' => $this->solanaService->resolveNetwork(), 'timestamp' => date('c')],
         ]);
     }
 
@@ -696,7 +663,7 @@ $addr = $svc->normalizeAddress($row);
                 }
 
                 $wallet = $result['wallet'];
-                log_message('debug', 'SolanaController L194 - Wallet imported successfully: ' . json_encode($wallet));
+                log_message('debug', 'SolanaController L194 - Wallet imported successfully for public key: ' . ($wallet['publicKey'] ?? '[missing]'));
 
                 $data = [
                     'status' => 1,
@@ -729,8 +696,7 @@ $addr = $svc->normalizeAddress($row);
                     return $response->setJSON([
                         'status' => 'exists_inactive',
                         'message' => $result['message'],
-                        'publicKey' => $wallet['publicKey'],
-                        'privateKey' => $wallet['privateKey']
+                        'publicKey' => $wallet['publicKey']
                     ]);
                 } elseif ($result['status'] === 'exists_active') {
                     if ($this->debug === 1) {
@@ -739,8 +705,7 @@ $addr = $svc->normalizeAddress($row);
                     return $response->setJSON([
                         'status' => 'exists_active',
                         'message' => $result['message'],
-                        'publicKey' => $wallet['publicKey'],
-                        'privateKey' => $wallet['privateKey']
+                        'publicKey' => $wallet['publicKey']
                     ]);
                 } else {
                     if ($this->debug === 1) {
@@ -749,8 +714,7 @@ $addr = $svc->normalizeAddress($row);
                     return $response->setJSON([
                         'status' => 'success',
                         'message' => $result['message'],
-                        'publicKey' => $wallet['publicKey'],
-                        'privateKey' => $wallet['privateKey']
+                        'publicKey' => $wallet['publicKey']
                     ]);
                 }
             } catch (\Exception $e) {
@@ -793,6 +757,7 @@ $addr = $svc->normalizeAddress($row);
         if ($result['status'] === 'success') {
             return $this->response->setJSON(['status' => 'success', 'transactionId' => $result['transactionId']]);
         } else {
+            $this->solanaService->notifyTeam('mint_failure', 'Solana mint endpoint returned an error.', ['message' => $result['message'] ?? 'unknown', 'mint_address' => $mintAddress ?? null]);
             return $this->response->setJSON(['status' => 'error', 'message' => $result['message']]);
         }
     }

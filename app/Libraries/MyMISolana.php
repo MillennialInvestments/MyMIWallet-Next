@@ -890,6 +890,12 @@ class MyMISolana implements CryptoCurrencyInterface
     }
 
     public function createSPLToken($privateKey, $decimals = 9) {
+        $guard = $this->solanaService->assertMintAllowed(null, false);
+        if (! $guard['allowed']) {
+            $this->solanaService->notifyTeam('mint_failure', 'Blocked createSPLToken call before RPC broadcast.', ['network' => $guard['network'], 'reason' => $guard['reason']]);
+            return ['status' => 'error', 'message' => $guard['message'], 'network' => $guard['network']];
+        }
+
         $url = $this->apiUrl . '/createToken';
         $client = \Config\Services::curlrequest();
         $params = [
@@ -915,6 +921,12 @@ class MyMISolana implements CryptoCurrencyInterface
     }
     
     public function mintTokens($privateKey, $mintAddress, $amount) {
+        $guard = $this->solanaService->assertMintAllowed(null, false);
+        if (! $guard['allowed']) {
+            $this->solanaService->notifyTeam('mint_failure', 'Blocked mintTokens call before RPC broadcast.', ['network' => $guard['network'], 'reason' => $guard['reason'], 'mintAddress' => $mintAddress]);
+            return ['status' => 'error', 'message' => $guard['message'], 'network' => $guard['network']];
+        }
+
         $url = $this->apiUrl . '/mint';
         $client = \Config\Services::curlrequest();
         $params = [

@@ -1,3 +1,4 @@
+<?= view('App\Modules\Exchange\Views\Solana\_status') ?>
 <!-- app/Modules/Exchange/Views/Solana/swap.php -->
 <?php if($uri->getTotalSegments() >= 3){
     $current_url = $uri->getSegment(1).'/'.$uri->getSegment(2).'/'.$uri->getSegment(3).'/'.$uri->getSegment(4).'/'.$uri->getSegment(5);
@@ -49,7 +50,7 @@ log_message('debug', 'Solana\swap.php L7: ' . (print_r($cryptoTokens, true)));
                             </div>
                         </div>
                         <div class="card-inner">
-                            <form id="solanaCoinSwapForm" action="<?= base_url('Exchange/Solana/Wallet/Execute-Swap') ?>" class="form-horizontal gy-3" method="post">
+                            <form id="solanaCoinSwapForm" data-solana-lock="swap" action="<?= base_url('Exchange/Solana/Wallet/Execute-Swap') ?>" class="form-horizontal gy-3" method="post">
                                 <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
 
                                 <!-- Hidden Fields -->

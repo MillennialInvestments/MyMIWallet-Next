@@ -1,3 +1,4 @@
+<?= view('App\Modules\Exchange\Views\Solana\_status') ?>
 <?php 
 $solanaPrice = isset($solanaPrice) ? $solanaPrice : 0.0; // Fallback to $0.0 if not set
 $formattedPrice = is_numeric($solanaPrice) ? number_format($solanaPrice, 8) : 'N/A'; // Display up to 8 decimals
@@ -26,7 +27,7 @@ $formattedPrice = is_numeric($solanaPrice) ? number_format($solanaPrice, 8) : 'N
                 <div class="row border-top">
                     <!-- Buy Form -->
                     <div class="col border-right">
-                        <form class="form-horizontal" id="buyForm" method="POST">
+                        <form class="form-horizontal" id="buyForm" data-solana-lock="order" method="POST">
                         <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
 
                         <!-- <form class="form-horizontal" id="buyForm" action="/Exchange/Solana/Buy" method="POST"> -->
@@ -49,7 +50,7 @@ $formattedPrice = is_numeric($solanaPrice) ? number_format($solanaPrice, 8) : 'N
                     </div>
                     <!-- Sell Form -->
                     <div class="col">
-                        <form class="form-horizontal" id="sellForm" method="POST">
+                        <form class="form-horizontal" id="sellForm" data-solana-lock="order" method="POST">
                         <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
 
                         <!-- <form class="form-horizontal" id="sellForm" action="/Exchange/Solana/Sell" method="POST"> -->

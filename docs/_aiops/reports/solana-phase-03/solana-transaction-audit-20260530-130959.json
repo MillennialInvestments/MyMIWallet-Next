@@ -1,0 +1,16 @@
+{
+    "generated_at": "2026-05-30T13:09:59+00:00",
+    "filters": {
+        "user_id": null,
+        "wallet": null,
+        "signature": null,
+        "mint_address": null,
+        "status": null,
+        "date_from": null,
+        "date_to": null,
+        "limit": 100
+    },
+    "count": 0,
+    "rows": [],
+    "error": "Unable to connect to the database.\nMain connection [MySQLi]: Connection refused"
+}

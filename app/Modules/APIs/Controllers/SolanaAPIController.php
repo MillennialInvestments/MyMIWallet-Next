@@ -11,6 +11,7 @@ use App\Libraries\{
     MyMISolflare, MyMITrustWallet, MyMIUser, MyMIWallets
 };
 use App\Models\{AccountsModel, APIModel, ExchangeModel, SolanaModel, UserModel, WalletModel};
+use App\Services\SolanaService;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\API\RequestTrait;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -177,22 +178,17 @@ class SolanaAPIController extends BaseAPIController {
     public function createToken() {
         $this->data['pageTitle'] = 'Create Token | MyMI Wallet';
         $this->commonData();
-    
-        if ($this->request->getMethod() == 'POST') {
-            $tokenName = $this->request->getPost('token_name');
-            $tokenSymbol = $this->request->getPost('token_symbol');
-            $tokenSupply = $this->request->getPost('token_supply');
-    
-            try {
-                $result = $this->MyMISolana->createToken($tokenName, $tokenSymbol, $tokenSupply);
-                if ($result['status'] == 'success') {
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'Token created successfully', 'token' => $result['token']]);
-                } else {
-                    return $this->response->setJSON(['status' => 'error', 'message' => $result['message']]);
-                }
-            } catch (\Exception $e) {
-                return $this->response->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
-            }
+
+        if ($this->request->getMethod() === 'POST') {
+            $payload = [
+                'name' => $this->request->getPost('token_name'),
+                'symbol' => $this->request->getPost('token_symbol'),
+                'supply' => $this->request->getPost('token_supply'),
+                'network' => $this->request->getPost('network') ?: 'devnet',
+                'admin_confirmed' => (bool) $this->request->getPost('admin_confirmed'),
+            ];
+            $result = (new SolanaService())->createToken($payload);
+            return $this->standardJson((bool) ($result['success'] ?? false), (string) ($result['message'] ?? 'Token request processed.'), (array) ($result['data'] ?? []), (array) ($result['errors'] ?? []), ($result['success'] ?? false) ? 200 : 403);
         }
         return $this->renderTheme('App\Modules\Exchange\Views\Solana\createToken', $this->data);
     }
@@ -501,4 +497,91 @@ class SolanaAPIController extends BaseAPIController {
         $this->email->setMessage('Your transaction was successful. Transaction ID: ' . $transactionResult);
         $this->email->send();
     }
+
+
+    private function standardJson(bool $success, string $message, array $data = [], array $errors = [], int $status = 200)
+    {
+        $service = new SolanaService();
+        return $this->response->setStatusCode($status)->setJSON([
+            'success' => $success,
+            'message' => $message,
+            'data' => $data,
+            'errors' => $errors,
+            'meta' => [
+                'request_id' => service('request')->getHeaderLine('X-Request-ID') ?: bin2hex(random_bytes(8)),
+                'network' => $service->resolveNetwork(),
+                'timestamp' => date('c'),
+            ],
+        ]);
+    }
+
+    public function health()
+    {
+        $service = new SolanaService();
+        $status = $service->getSafeNetworkStatus();
+        if (! empty($status['degraded'])) {
+            $service->notifyTeam('solana_rpc_outage', 'API health endpoint detected degraded Solana RPC.', ['status' => $status]);
+        }
+        return $this->standardJson(true, 'Solana health loaded.', ['status' => $status]);
+    }
+
+    public function getBalance($address)
+    {
+        $service = new SolanaService();
+        if (! $service->validateWalletAddress($address)) {
+            return $this->standardJson(false, 'Invalid wallet address.', [], ['address' => 'invalid_address'], 422);
+        }
+        return $this->standardJson(true, 'Wallet balance loaded.', ['balance' => $service->getBalance((string) $address)]);
+    }
+
+    public function getTokenAccounts($address)
+    {
+        $service = new SolanaService();
+        if (! $service->validateWalletAddress($address)) {
+            return $this->standardJson(false, 'Invalid wallet address.', [], ['address' => 'invalid_address'], 422);
+        }
+        return $this->standardJson(true, 'Token accounts loaded.', ['tokens' => $service->getTokenAccounts((string) $address)]);
+    }
+
+    public function transactionStatus($signature)
+    {
+        $service = new SolanaService();
+        $status = $service->getTransactionStatus((string) $signature);
+        return $this->standardJson((bool) ($status['success'] ?? false), (string) ($status['message'] ?? 'Transaction status loaded.'), (array) ($status['data'] ?? []), (array) ($status['errors'] ?? []), ($status['success'] ?? false) ? 200 : 422);
+    }
+
+    public function transfer()
+    {
+        return $this->standardJson(false, 'Server-side Solana transfers are disabled until launch approval.', [], ['transfer' => 'disabled'], 403);
+    }
+
+    public function quote()
+    {
+        try {
+            $data = (new SolanaService())->getQuote((array) $this->request->getPost());
+            return $this->standardJson(true, 'Quote loaded. Quotes may expire quickly.', ['quote' => $data]);
+        } catch (\Throwable $e) {
+            (new SolanaService())->notifyTeam('swap_trade_failure', 'Solana quote failed.', ['error' => $e->getMessage()]);
+            return $this->standardJson(false, 'Unable to load quote. The token quote may be expired or RPC may be degraded.', [], ['quote' => 'quote_failed'], 502);
+        }
+    }
+
+    public function swap()
+    {
+        try {
+            $data = (new SolanaService())->swap((array) $this->request->getPost());
+            return $this->standardJson(true, 'Swap request prepared.', ['swap' => $data]);
+        } catch (\Throwable $e) {
+            (new SolanaService())->notifyTeam('swap_trade_failure', 'Solana swap failed.', ['error' => $e->getMessage()]);
+            return $this->standardJson(false, 'Failed swap. Please refresh the quote and try again.', [], ['swap' => 'swap_failed'], 502);
+        }
+    }
+
+    public function mint()
+    {
+        $service = new SolanaService();
+        $result = $service->mintTo((string) $this->request->getPost('mint'), (string) $this->request->getPost('dest'), (string) $this->request->getPost('amount'));
+        return $this->standardJson((bool) ($result['success'] ?? false), (string) ($result['message'] ?? 'Mint request processed.'), (array) ($result['data'] ?? []), (array) ($result['errors'] ?? []), ($result['success'] ?? false) ? 200 : 403);
+    }
+
 }
