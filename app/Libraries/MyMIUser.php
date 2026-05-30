@@ -31,6 +31,12 @@ class MyMIUser
     protected $MyMIGold;
     protected $MyMIWallet;
 
+    private static function verboseOperationalLoggingEnabled(): bool
+    {
+        return ENVIRONMENT !== 'production'
+            || filter_var(env('AIOPS_VERBOSE_LOGGING', false), FILTER_VALIDATE_BOOLEAN);
+    }
+
     public function __construct()
     {
         $this->auth = service('authentication');
@@ -50,9 +56,11 @@ class MyMIUser
         $this->MyMIWallet = null;
     
         // To this (only logs once per session for now):
-        if (!defined('MYMIUSER_LOGGED')) {
+        if (! defined('MYMIUSER_LOGGED')) {
             define('MYMIUSER_LOGGED', true);
-            log_message('debug', 'MyMIUser L52 - initialized (first log).');
+            if (self::verboseOperationalLoggingEnabled()) {
+                log_message('debug', 'MyMIUser L52 - initialized (first log).');
+            }
         }
     }
 

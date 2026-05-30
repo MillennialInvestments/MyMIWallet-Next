@@ -194,8 +194,18 @@ abstract class BaseController extends Controller
         log_message($level, '[REQ_ID=' . ($this->requestId ?? 'N/A') . '] ' . $message);
     }
 
+    protected function verboseOperationalLoggingEnabled(): bool
+    {
+        return ENVIRONMENT !== 'production'
+            || filter_var(env('AIOPS_VERBOSE_LOGGING', false), FILTER_VALIDATE_BOOLEAN);
+    }
+
     protected function logRequestTrace(): void
     {
+        if (! $this->verboseOperationalLoggingEnabled()) {
+            return;
+        }
+
         log_message('debug', '[TRACE]', [
             'url' => current_url(),
             'method' => $this->request->getMethod(),
@@ -1192,11 +1202,13 @@ abstract class BaseController extends Controller
 
         if (is_string($default) && trim($default) !== '') {
             $resolvedDefault = trim($default, "/\\ \t\n\r\0\x0B");
-            $this->logRenderFailureToChannels('warning', 'Optional view path missing; using default path', [
-                'controller' => static::class,
-                'variable' => $variableName,
-                'default' => $resolvedDefault,
-            ]);
+            if ($this->verboseOperationalLoggingEnabled()) {
+                $this->logRenderFailureToChannels('debug', 'Optional view path missing; using default path', [
+                    'controller' => static::class,
+                    'variable' => $variableName,
+                    'default' => $resolvedDefault,
+                ]);
+            }
             return $resolvedDefault;
         }
 
@@ -1218,6 +1230,10 @@ abstract class BaseController extends Controller
             if (! is_string($value) || trim($value) === '') {
                 $emptyPartials[] = $name;
             }
+        }
+
+        if (! $this->verboseOperationalLoggingEnabled()) {
+            return;
         }
 
         log_message('debug', '[VIEW_RESOLUTION] Render configuration', [
