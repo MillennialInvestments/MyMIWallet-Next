@@ -36,7 +36,9 @@ class MyMICoin
         }
 
         self::$initialized = true;
-        log_message('debug', 'MyMICoin initialized ONCE');
+        if (ENVIRONMENT !== 'production' || filter_var(env('AIOPS_VERBOSE_LOGGING', false), FILTER_VALIDATE_BOOLEAN)) {
+            log_message('debug', 'MyMICoin initialized ONCE');
+        }
 
         $this->auth = service('authentication');
         $this->session = Services::session();

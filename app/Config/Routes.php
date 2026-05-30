@@ -13,6 +13,9 @@ $routes = Services::routes();
 helper('ai');
 $routes->get('index.php', 'Home::index');
 $routes->get('index.php/', 'Home::index');
+$routes->head('/', 'Home::index');
+$routes->head('index.php', 'Home::index');
+$routes->head('index.php/', 'Home::index');
 // Preserve legacy index.php auth POST submits without downgrading to GET redirects.
 $routes->get('index.php/login', 'AuthController::login');
 $routes->post('index.php/login', 'AuthController::attemptLogin');
@@ -54,26 +57,86 @@ $routes->set404Override(function () {
             ->setBody('Gone');
     }
 
-    $noisePatterns = [
-        '.env', '.git', 'composer.json', 'composer.lock', 'phpinfo.php', 'server.js',
-        'docker-compose', '.yaml', '.yml', '.ini', '.sql', '/vendor/', '/storage/', '/backup',
+    $method = strtoupper((string) $request->getMethod());
+    $normalizedPath = '/' . trim($path, '/');
+    if ($normalizedPath === '/') {
+        $normalizedPath = '/';
+    }
+
+    $securityProbePatterns = [
+        '/.git',
+        '/wp-',
+        '/wp/',
+        '/wp-content/',
+        '/adminfuns.php',
+        '/sx_pms.php',
+        '/wp-info.php',
+        '/wp-test.php',
+        '/like.php',
+        '/we.php',
+        '/wp.php',
+        '/wp-indx.php',
+        '/zoo.php',
+        '.env',
+        'composer.json',
+        'composer.lock',
+        'phpinfo.php',
+        'server.js',
+        'docker-compose',
+        '.yaml',
+        '.yml',
+        '.ini',
+        '.sql',
+        '/vendor/',
+        '/storage/',
+        '/backup',
     ];
-    $isHostileProbe = false;
-    foreach ($noisePatterns as $needle) {
-        if (str_contains($lowerPath, $needle)) {
-            $isHostileProbe = true;
-            break;
+
+    $classification = 'app_route_missing';
+    if ($method === 'HEAD' && in_array($normalizedPath, ['/', '/index.php'], true)) {
+        $classification = 'health_probe';
+    } else {
+        foreach ($securityProbePatterns as $needle) {
+            if (str_contains($lowerPath, $needle)) {
+                $classification = 'security_probe';
+                break;
+            }
         }
     }
 
-    log_message($isHostileProbe ? 'notice' : 'error', '[404_ROUTE]', [
-        'uri' => current_url(),
-        'path' => $path,
-        'query' => $query,
-        'referrer' => $_SERVER['HTTP_REFERER'] ?? null,
-        'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
-        'probe' => $isHostileProbe,
-    ]);
+    if ($classification === 'app_route_missing') {
+        $legacyMissingPaths = [
+            '/docs/discord/where_to_share_what.md',
+        ];
+        if (in_array($lowerPath, $legacyMissingPaths, true)) {
+            $classification = 'legacy_redirect_missing';
+        }
+    }
+
+    $severity = match ($classification) {
+        'health_probe' => 'debug',
+        'security_probe' => 'notice',
+        'legacy_redirect_missing' => 'warning',
+        'app_route_missing' => 'error',
+        default => 'notice',
+    };
+
+    $ip = method_exists($request, 'getIPAddress') ? $request->getIPAddress() : ($_SERVER['REMOTE_ADDR'] ?? null);
+    $userAgent = method_exists($request, 'getUserAgent') ? (string) $request->getUserAgent() : ($_SERVER['HTTP_USER_AGENT'] ?? null);
+    $referer = $_SERVER['HTTP_REFERER'] ?? '';
+
+    log_message(
+        $severity,
+        '[404_ROUTE] method={method} path={path} ip={ip} ua={user_agent} classification={classification} referer={referer}',
+        [
+            'method' => $method,
+            'path' => $path . ($query !== '' ? '?' . $query : ''),
+            'ip' => $ip,
+            'user_agent' => $userAgent,
+            'classification' => $classification,
+            'referer' => $referer,
+        ]
+    );
 
     if (preg_match('/\.(js|mjs)$/i', $path) === 1) {
         return service('response')
@@ -1719,6 +1782,7 @@ $routes->group('Investments', ['namespace' => 'App\Modules\User\Controllers', 'f
     $routes->match(['GET', 'POST'], 'Add/(:segment)', 'InvestmentsController::add'); // Add New Investment Records to Database
     $routes->match(['GET', 'POST'], 'Autosave', 'InvestmentsController::autoSave');
     $routes->match(['GET', 'POST'], 'Overview', 'InvestmentsController::overview');
+    $routes->get('Trade-Tracker', 'InvestmentsController::tradeTracker');
     $routes->match(['GET', 'POST'], 'Retirement', 'InvestmentsController::retirement');
     $routes->match(['GET', 'POST'], 'Save', 'InvestmentsController::save'); // Save Investment Record Data to Database
     $routes->match(['GET', 'POST'], 'Services', 'InvestmentsController::services');
@@ -1972,12 +2036,15 @@ $routes->group('Features', ['namespace' => 'App\Modules\Advertise\Controllers'],
     // Define other routes for 'blog' module
 });
 
-$routes->addRedirect('Features/Advanced-Investment-Portfoio-Manager', 'Features/Advanced-Investment-Portfolio-Manager', 301);
+$routes->addRedirect('Features/Advanced-Investment-Portfoio-Manager', 'Features/Brokerage-Integrations', 301);
 $routes->addRedirect('Premium-Features/Due-Diligence-Database', 'Features/Brokerage-Integrations', 301);
 $routes->addRedirect('Premium-Features/Advanced-Charting', 'Features/Brokerage-Integrations', 301);
 $routes->addRedirect('Premium-Features/Advanced-Trade-Tracker', 'Investments/Trade-Tracker', 301);
 $routes->addRedirect('Premium-Features/Wallets', 'Wallets/Manager', 301);
 $routes->addRedirect('Premium_Features/Brokerage-Integrations', 'Features/Brokerage-Integrations', 301);
+$routes->addRedirect('User/Alerts', 'Alerts', 301);
+$routes->addRedirect('Exchange/NASDAQ', 'Exchange/Projects/NASDAQ', 301);
+$routes->addRedirect('Management/Alerts/share-template', 'Management/Alerts', 301);
 $routes->addRedirect('How-To-Guides', 'Knowledgebase/Tutorials', 301);
 $routes->addRedirect('Budget/Financial-Institute', 'Budget/Account-Manager', 301);
 $routes->addRedirect('Budget/Financial-Advisors', 'Advisor', 301);

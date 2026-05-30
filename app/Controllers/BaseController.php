@@ -194,8 +194,18 @@ abstract class BaseController extends Controller
         log_message($level, '[REQ_ID=' . ($this->requestId ?? 'N/A') . '] ' . $message);
     }
 
+    protected function isAiopsVerboseLoggingEnabled(): bool
+    {
+        return ENVIRONMENT !== 'production'
+            || filter_var(env('AIOPS_VERBOSE_LOGGING', false), FILTER_VALIDATE_BOOLEAN);
+    }
+
     protected function logRequestTrace(): void
     {
+        if (! $this->isAiopsVerboseLoggingEnabled()) {
+            return;
+        }
+
         log_message('debug', '[TRACE]', [
             'url' => current_url(),
             'method' => $this->request->getMethod(),
@@ -1192,11 +1202,27 @@ abstract class BaseController extends Controller
 
         if (is_string($default) && trim($default) !== '') {
             $resolvedDefault = trim($default, "/\\ \t\n\r\0\x0B");
-            $this->logRenderFailureToChannels('warning', 'Optional view path missing; using default path', [
+            $context = [
                 'controller' => static::class,
                 'variable' => $variableName,
                 'default' => $resolvedDefault,
-            ]);
+                'candidate_type' => gettype($candidate),
+            ];
+
+            if ($candidate === null || $candidate === '') {
+                if ($this->isAiopsVerboseLoggingEnabled()) {
+                    $this->logRenderFailureToChannels('debug', 'Optional view path missing; using default path', $context);
+                }
+            } else {
+                static $loggedUnexpectedFallbacks = [];
+                $fallbackKey = static::class . ':' . $variableName . ':' . $resolvedDefault;
+                if (! isset($loggedUnexpectedFallbacks[$fallbackKey])) {
+                    $loggedUnexpectedFallbacks[$fallbackKey] = true;
+                    $context['candidate_preview'] = is_scalar($candidate) ? (string) $candidate : null;
+                    $this->logRenderFailureToChannels('warning', 'Optional view path missing; using default path', $context);
+                }
+            }
+
             return $resolvedDefault;
         }
 
@@ -1218,6 +1244,10 @@ abstract class BaseController extends Controller
             if (! is_string($value) || trim($value) === '') {
                 $emptyPartials[] = $name;
             }
+        }
+
+        if (! $this->isAiopsVerboseLoggingEnabled()) {
+            return;
         }
 
         log_message('debug', '[VIEW_RESOLUTION] Render configuration', [
