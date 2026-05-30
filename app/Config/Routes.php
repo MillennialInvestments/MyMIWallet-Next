@@ -41,13 +41,20 @@ $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override(function () {
     $request = service('request');
+    $method = strtoupper((string) $request->getMethod());
     $path = '/' . ltrim((string) $request->getUri()->getPath(), '/');
     $query = (string) ($request->getUri()->getQuery() ?? '');
     $lowerPath = strtolower($path);
     $lowerQuery = strtolower($query);
+    $trimmedPath = trim($lowerPath, '/');
+
+    $isHealthProbe = $method === 'HEAD'
+        && in_array($lowerPath, ['/', '/index.php', '/index.php/'], true);
 
     $isWpProbe = str_contains($lowerPath, 'wp-json')
         || str_contains($lowerPath, '/wp/')
+        || str_starts_with($lowerPath, '/wp-')
+        || str_starts_with($lowerPath, '/wp-content/')
         || str_contains($lowerQuery, 'rest_route=/wp/v2/');
 
     if ($isWpProbe) {
@@ -137,6 +144,20 @@ $routes->set404Override(function () {
             'referer' => $referer,
         ]
     );
+
+    if ($isHealthProbe) {
+        return service('response')
+            ->setStatusCode(204)
+            ->setContentType('text/plain')
+            ->setBody('');
+    }
+
+    if ($isWpProbe) {
+        return service('response')
+            ->setStatusCode(410)
+            ->setContentType('text/plain')
+            ->setBody('Gone');
+    }
 
     if (preg_match('/\.(js|mjs)$/i', $path) === 1) {
         return service('response')

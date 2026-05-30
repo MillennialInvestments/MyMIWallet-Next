@@ -50,7 +50,7 @@ class MyMICoin
         // Assuming you have services like 'auth' properly configured in CI4
         
         $this->cuID = service('authentication')->id();
-        if (empty($this->cuID)) {
+        if (empty($this->cuID) && (ENVIRONMENT !== 'production' || filter_var(env('AIOPS_VERBOSE_LOGGING', false), FILTER_VALIDATE_BOOLEAN))) {
             log_message('debug', 'MyMICoin: guest context detected; skipping user-specific preload.');
         }
     }

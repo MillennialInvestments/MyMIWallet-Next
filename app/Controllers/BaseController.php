@@ -189,8 +189,18 @@ abstract class BaseController extends Controller
         return $this->resolveCurrentUserId();
     }
 
+    protected function aiopsVerboseLoggingEnabled(): bool
+    {
+        return ENVIRONMENT !== 'production'
+            || filter_var(env('AIOPS_VERBOSE_LOGGING', false), FILTER_VALIDATE_BOOLEAN);
+    }
+
     protected function trace($message, $level = 'debug'): void
     {
+        if (! $this->aiopsVerboseLoggingEnabled()) {
+            return;
+        }
+
         log_message($level, '[REQ_ID=' . ($this->requestId ?? 'N/A') . '] ' . $message);
     }
 
@@ -1239,6 +1249,10 @@ abstract class BaseController extends Controller
 
     protected function logRenderDiagnostics(string $requestedView, ?string $resolvedLayout, array $partials = []): void
     {
+        if (! $this->aiopsVerboseLoggingEnabled()) {
+            return;
+        }
+
         $emptyPartials = [];
         foreach ($partials as $name => $value) {
             if (! is_string($value) || trim($value) === '') {
