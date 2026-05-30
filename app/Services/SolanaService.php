@@ -33,19 +33,73 @@ class SolanaService
         // Initialize endpoints once; merge your existing ctor code here if needed
         $this->commitment = env('SOLANA_COMMITMENT') ?: 'confirmed';
 
-        $primary  = env('SOLANA_RPC_PRIMARY') ?: 'https://api.mainnet-beta.solana.com';
+        $network = $this->resolveNetwork();
+        $primary  = env('SOLANA_RPC_PRIMARY') ?: $this->defaultRpcForNetwork($network);
         $fallback = env('SOLANA_RPC_FALLBACKS') ?: '';
-        $defaultFallbacks = ['https://rpc.ankr.com/solana', 'https://solana-api.projectserum.com'];
+        $defaultFallbacks = $network === 'mainnet-beta'
+            ? ['https://rpc.ankr.com/solana', 'https://solana-api.projectserum.com']
+            : [$this->defaultRpcForNetwork($network)];
         $fallbackList = $fallback ? array_map('trim', explode(',', $fallback)) : $defaultFallbacks;
         $endpoints = array_merge([$primary], $fallbackList);
         $this->rpcEndpoints = array_values(array_filter(array_unique($endpoints)));
-        $this->wsEndpoint = env('SOLANA_WS_PRIMARY') ?: 'wss://api.mainnet-beta.solana.com';
+        $this->wsEndpoint = env('SOLANA_WS_PRIMARY') ?: str_replace('https://', 'wss://', $this->defaultRpcForNetwork($network));
 
         $this->client = new Client([
             'timeout' => $this->httpTimeout,
         ]);
 
         $this->config = config('Solana');
+    }
+
+
+    public function resolveNetwork(?string $requested = null): string
+    {
+        $value = strtolower(trim((string) ($requested ?: env('SOLANA_NETWORK', 'devnet'))));
+        $aliases = [
+            'mainnet' => 'mainnet-beta',
+            'mainnet_beta' => 'mainnet-beta',
+            'mainnet-beta' => 'mainnet-beta',
+            'test' => 'testnet',
+            'testnet' => 'testnet',
+            'dev' => 'devnet',
+            'devnet' => 'devnet',
+        ];
+
+        return $aliases[$value] ?? 'devnet';
+    }
+
+    public function defaultRpcForNetwork(?string $network = null): string
+    {
+        return match ($this->resolveNetwork($network)) {
+            'mainnet-beta' => 'https://api.mainnet-beta.solana.com',
+            'testnet' => 'https://api.testnet.solana.com',
+            default => 'https://api.devnet.solana.com',
+        };
+    }
+
+    public function isMainnetMintAllowed(bool $adminConfirmed = false): bool
+    {
+        $envAllowed = filter_var(env('SOLANA_ALLOW_MAINNET_MINTING', false), FILTER_VALIDATE_BOOL);
+        return $envAllowed && $adminConfirmed;
+    }
+
+    public function assertMintAllowed(?string $network = null, bool $adminConfirmed = false): array
+    {
+        $resolved = $this->resolveNetwork($network);
+        if ($resolved !== 'mainnet-beta') {
+            return ['allowed' => true, 'network' => $resolved, 'reason' => null, 'message' => 'Mint allowed for non-mainnet workflow.'];
+        }
+
+        if ($this->isMainnetMintAllowed($adminConfirmed)) {
+            return ['allowed' => true, 'network' => $resolved, 'reason' => null, 'message' => 'Mainnet mint explicitly allowed by environment and admin confirmation.'];
+        }
+
+        return [
+            'allowed' => false,
+            'network' => $resolved,
+            'reason' => 'mainnet_minting_blocked',
+            'message' => 'Mainnet minting is blocked. Set SOLANA_ALLOW_MAINNET_MINTING only after launch approval and require admin confirmation.',
+        ];
     }
 
     /** Core JSON-RPC caller with retries & endpoint failover */
@@ -102,12 +156,38 @@ class SolanaService
 
     public function createToken(array $spec): array
     {
-        return ['mint' => '', 'spec' => $spec];
+        $guard = $this->assertMintAllowed($spec['network'] ?? null, (bool) ($spec['admin_confirmed'] ?? false));
+        if (! $guard['allowed']) {
+            $this->notifyTeam('mint_failure', 'Blocked unsafe Solana token draft/mint request.', ['reason' => $guard['reason'], 'network' => $guard['network']]);
+            return [
+                'success' => false,
+                'message' => $guard['message'],
+                'data' => ['mint' => null, 'network' => $guard['network'], 'dry_run' => true],
+                'errors' => ['network' => $guard['reason']],
+            ];
+        }
+
+        return [
+            'success' => true,
+            'message' => 'Solana token payload prepared. No broadcast was performed by this service method.',
+            'data' => ['mint' => '', 'spec' => $this->redactSecrets($spec), 'network' => $guard['network']],
+        ];
     }
 
     public function mintTo(string $mint, string $dest, string $amount): array
     {
-        return ['mint' => $mint, 'dest' => $dest, 'amount' => $amount];
+        $guard = $this->assertMintAllowed(null, false);
+        if (! $guard['allowed']) {
+            $this->notifyTeam('mint_failure', 'Blocked unsafe Solana mint request.', ['reason' => $guard['reason'], 'network' => $guard['network']]);
+            return [
+                'success' => false,
+                'message' => $guard['message'],
+                'data' => ['mint' => $mint, 'dest' => $dest, 'amount' => $amount, 'network' => $guard['network']],
+                'errors' => ['network' => $guard['reason']],
+            ];
+        }
+
+        return ['success' => true, 'message' => 'Mint payload prepared only.', 'data' => ['mint' => $mint, 'dest' => $dest, 'amount' => $amount, 'network' => $guard['network']]];
     }
 
     public function getBalanceLamports(string $address): int
@@ -582,6 +662,80 @@ class SolanaService
         }
 
         return null;
+    }
+
+
+    public function validateWalletAddress(?string $address): bool
+    {
+        return is_string($address) && $this->normalizeAddress($address) !== null;
+    }
+
+    public function validateMintAddress(?string $mint): bool
+    {
+        return $this->validateWalletAddress($mint);
+    }
+
+    public function getTransactionStatus(string $signature): array
+    {
+        $signature = trim($signature);
+        if ($signature === '' || preg_match('/[^'.self::B58_ALPHABET.']/', $signature)) {
+            return ['success' => false, 'message' => 'Invalid Solana transaction signature.', 'data' => [], 'errors' => ['signature' => 'invalid_signature']];
+        }
+
+        $result = $this->rpcRequestNormalized('getSignatureStatuses', [[$signature], ['searchTransactionHistory' => true]]);
+        if (! ($result['ok'] ?? false)) {
+            return ['success' => false, 'message' => 'Unable to load transaction status.', 'data' => ['signature' => $signature], 'errors' => ['rpc' => $result['error'] ?? 'rpc_error']];
+        }
+
+        $status = $result['data']['result']['value'][0] ?? null;
+        return ['success' => true, 'message' => $status ? 'Transaction status loaded.' : 'Transaction not found yet.', 'data' => ['signature' => $signature, 'status' => $status], 'errors' => []];
+    }
+
+    public function notifyTeam(string $event, string $message, array $context = []): void
+    {
+        $safeContext = $this->redactSecrets($context);
+        log_message('warning', 'Solana support event {event}: {message} {context}', [
+            'event' => $event,
+            'message' => $message,
+            'context' => json_encode($safeContext, JSON_UNESCAPED_SLASHES),
+        ]);
+
+        $dir = WRITEPATH . 'aiops/reports/solana';
+        if (! is_dir($dir)) {
+            @mkdir($dir, 0775, true);
+        }
+        @file_put_contents($dir . '/support-events-' . date('Ymd') . '.jsonl', json_encode([
+            'timestamp' => date('c'),
+            'event' => $event,
+            'message' => $message,
+            'context' => $safeContext,
+        ], JSON_UNESCAPED_SLASHES) . PHP_EOL, FILE_APPEND);
+
+        $webhook = (string) env('SOLANA_SUPPORT_WEBHOOK_URL', '');
+        if ($webhook !== '') {
+            try {
+                \Config\Services::curlrequest()->post($webhook, [
+                    'timeout' => 3,
+                    'json' => ['text' => '[MyMI Solana] ' . $event . ': ' . $message, 'context' => $safeContext],
+                ]);
+            } catch (\Throwable $e) {
+                log_message('notice', 'Solana support webhook failed: {msg}', ['msg' => $e->getMessage()]);
+            }
+        }
+    }
+
+    private function redactSecrets(array $payload): array
+    {
+        $redacted = [];
+        foreach ($payload as $key => $value) {
+            $lower = strtolower((string) $key);
+            if (str_contains($lower, 'private') || str_contains($lower, 'secret') || str_contains($lower, 'token') || str_contains($lower, 'key')) {
+                $redacted[$key] = '[redacted]';
+                continue;
+            }
+            $redacted[$key] = is_array($value) ? $this->redactSecrets($value) : $value;
+        }
+        return $redacted;
     }
 
     private function guardAddress(string $address, string $context): ?string

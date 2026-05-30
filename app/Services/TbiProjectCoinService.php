@@ -14,6 +14,112 @@ class TbiProjectCoinService
     public function createDefaultCoinsForProject(int $projectId): array { return $this->model->createDefaultCoinsForProject($projectId); }
     public function getProjectCoins(int $projectId): array { return $this->model->getCoinsForProject($projectId); }
 
+    public function getPhase03DraftDefinitions(): array
+    {
+        $now = date('Y-m-d H:i:s');
+        return [
+            [
+                'project_id' => 1,
+                'coin_key' => 'tbi_solutions_project',
+                'project_name' => 'TBI Solutions Project',
+                'coin_name' => 'TBI Solutions Project',
+                'symbol' => 'TBISP',
+                'coin_type' => 'project',
+                'unit_value_usd' => '1.000000',
+                'network' => 'devnet',
+                'decimals' => 6,
+                'initial_supply' => '0.000000',
+                'status' => 'draft',
+                'solana_mint_address' => null,
+                'metadata_uri' => null,
+                'created_by' => 1,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'project_id' => 1,
+                'coin_key' => 'tbi_coin',
+                'project_name' => 'TBI Solutions Project',
+                'coin_name' => 'TBI Coin',
+                'symbol' => 'TBI',
+                'coin_type' => 'utility',
+                'unit_value_usd' => '1.000000',
+                'network' => 'devnet',
+                'decimals' => 6,
+                'initial_supply' => '0.000000',
+                'status' => 'draft',
+                'solana_mint_address' => null,
+                'metadata_uri' => null,
+                'created_by' => 1,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'project_id' => 1,
+                'coin_key' => 'tbi_invest_coin',
+                'project_name' => 'TBI Solutions Project',
+                'coin_name' => 'TBI Invest Coin',
+                'symbol' => 'TBIINV',
+                'coin_type' => 'investment',
+                'unit_value_usd' => '1.000000',
+                'network' => 'devnet',
+                'decimals' => 6,
+                'initial_supply' => '0.000000',
+                'status' => 'draft',
+                'solana_mint_address' => null,
+                'metadata_uri' => null,
+                'created_by' => 1,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+        ];
+    }
+
+    public function createPhase03Drafts(bool $dryRun = true): array
+    {
+        $results = [];
+        foreach ($this->getPhase03DraftDefinitions() as $definition) {
+            $metadata = [
+                'project_name' => $definition['project_name'],
+                'coin_name' => $definition['coin_name'],
+                'symbol' => $definition['symbol'],
+                'network' => $definition['network'],
+                'decimals' => $definition['decimals'],
+                'supply' => $definition['initial_supply'],
+                'status' => $definition['status'],
+                'mint_address' => $definition['solana_mint_address'],
+                'metadata_uri' => $definition['metadata_uri'],
+                'created_by' => $definition['created_by'],
+                'created_at' => $definition['created_at'],
+                'updated_at' => $definition['updated_at'],
+                'mainnet_minting' => 'blocked',
+            ];
+
+            $draft = $definition;
+            unset($draft['project_name']);
+            $draft['primary_issuance_enabled'] = 0;
+            $draft['secondary_trading_enabled'] = 0;
+            $draft['compliance_required'] = $definition['coin_type'] === 'investment' ? 1 : 0;
+            $draft['project_exchange_symbol'] = 'SOL-' . $definition['symbol'];
+            $draft['metadata'] = $metadata;
+
+            if ($dryRun) {
+                $existing = null;
+                try {
+                    $existing = $this->model->getCoinByKey($definition['coin_key']);
+                } catch (\Throwable $e) {
+                    // Dry-runs must be safe in CI or local environments without a reachable database.
+                }
+                $results[] = ['action' => $existing ? 'would_update' : 'would_create_or_update', 'coin_key' => $definition['coin_key'], 'draft' => $draft];
+                continue;
+            }
+
+            $results[] = $this->model->upsertProjectCoinDraft($draft) + ['coin_key' => $definition['coin_key']];
+        }
+
+        return $results;
+    }
+
     public function recordContribution(array $payload): int
     {
         $coin = $this->model->find((int) $payload['coin_id']);
@@ -36,12 +142,17 @@ class TbiProjectCoinService
     public function prepareSolanaMintPayload(int $coinId): array
     {
         $coin = $this->model->find($coinId);
-        return ['coin_id' => $coinId, 'symbol' => $coin['symbol'] ?? null, 'coin_type' => $coin['coin_type'] ?? null, 'mint_enabled' => false, 'note' => 'Payload prepared only. No live mint executed.'];
+        return ['coin_id' => $coinId, 'symbol' => $coin['symbol'] ?? null, 'coin_type' => $coin['coin_type'] ?? null, 'network' => $coin['network'] ?? 'devnet', 'mint_enabled' => false, 'note' => 'Payload prepared only. Mainnet minting remains blocked.'];
     }
 
     public function prepareExchangeAssetPayload(int $coinId): array
     {
         $coin = $this->model->find($coinId);
-        return ['coin_id' => $coinId, 'symbol' => $coin['symbol'] ?? null, 'coin_type' => $coin['coin_type'] ?? null, 'secondary_trading_enabled' => false, 'note' => 'Prepared for admin review; secondary/public trading remains disabled by default.'];
+        return ['coin_id' => $coinId, 'symbol' => $coin['symbol'] ?? null, 'coin_type' => $coin['coin_type'] ?? null, 'network' => $coin['network'] ?? 'devnet', 'secondary_trading_enabled' => false, 'note' => 'Prepared for admin review; secondary/public trading remains disabled by default.'];
+    }
+
+    public function auditTransactions(array $filters = []): array
+    {
+        return $this->model->findTransactionsForAudit($filters);
     }
 }

@@ -18,6 +18,8 @@ $subViewData = [
 ];
 ?>
 
+<?= view('App\Modules\Exchange\Views\Solana\_status') ?>
+
 <div class="nk-block-head nk-block-head-sm pt-xl-5">
     <div class="nk-block-between">
         <div class="nk-block-head-content">

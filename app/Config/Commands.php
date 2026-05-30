@@ -12,6 +12,10 @@ class Commands extends BaseConfig
      * @var array<string, class-string>
      */
     public $commands = [
+        'aiops:solana-healthcheck' => \App\Commands\SolanaHealthcheck::class,
+        'aiops:solana-digest' => \App\Commands\SolanaDigest::class,
+        'aiops:solana-transaction-audit' => \App\Commands\SolanaTransactionAudit::class,
+        'exchange:create-tbi-project-coin-drafts' => \App\Commands\CreateTbiProjectCoinDrafts::class,
         'marketing:audit:distribution' => \App\Commands\Marketing\AuditDistribution::class,
         'auth:baseline:capture' => \App\Commands\Auth\BaselineCapture::class,
         'auth:baseline:diff' => \App\Commands\Auth\BaselineDiff::class,

@@ -65,3 +65,6 @@ var Connection2 = (function(){
     return Connection2;
 
 })();
+
+// Bridge legacy Connection2 pages to the shared Solana Phase 03 UX state.
+window.MyMISolanaState = window.MyMISolanaState || { connected: false, locks: {} };

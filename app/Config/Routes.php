@@ -1220,6 +1220,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('health', 'SolanaAPIController::health');
         $routes->get('wallet/(:segment)/balance', 'SolanaAPIController::getBalance/$1');
         $routes->get('wallet/(:segment)/tokens', 'SolanaAPIController::getTokenAccounts/$1');
+        $routes->get('transaction/(:segment)/status', 'SolanaAPIController::transactionStatus/$1');
         $routes->post('transfer', 'SolanaAPIController::transfer');
         $routes->post('swap/quote', 'SolanaAPIController::quote');
         $routes->post('swap/execute', 'SolanaAPIController::swap');

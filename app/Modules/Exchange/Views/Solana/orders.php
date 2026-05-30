@@ -1,3 +1,4 @@
+<?= view('App\Modules\Exchange\Views\Solana\_status') ?>
 <?php 
 // $cuSolanaDefaultWallet = $userSolana['cuSolanaDefaultWallet']; 
 // $cuSolanaTransactions = $userSolana['cuSolanaTransactions']; 

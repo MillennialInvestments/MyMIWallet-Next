@@ -1,5 +1,16 @@
 <?php // app/Views/themes/dashboard/partials/custom-js/Exchange-js.php ?>
 <?php $nonce = $nonce ?? ['style' => '', 'script' => '']; ?>
+<?php // Solana Phase 03 realtime config ?>
+<script <?= $nonce['script'] ?? '' ?>>
+    window.MyMISolanaConfig = window.MyMISolanaConfig || {
+        frontendDataUrl: '<?= site_url('Exchange/Solana/fetchFrontendData') ?>',
+        walletConnectUrl: '<?= site_url('Exchange/Solana/Wallet/Connect') ?>',
+        walletDisconnectUrl: '<?= site_url('Exchange/Solana/Wallet/Disconnect') ?>',
+        walletRefreshUrl: '<?= site_url('Exchange/Solana/Wallet/Refresh') ?>',
+        pollMs: 20000
+    };
+</script>
+<script src="<?= base_url('assets/js/Exchange/Connection.js') ?>" <?= $nonce['script'] ?? '' ?>></script>
 <!-- ExchangeJS WebSocket Example -->
 <script <?= $nonce['script'] ?? '' ?>>
     document.addEventListener('DOMContentLoaded', function() {

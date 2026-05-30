@@ -1,3 +1,4 @@
+<?= view('App\Modules\Exchange\Views\Solana\_status') ?>
 <!-- Modal Structure -->
 <div class="modal fade" id="connectWalletModal" aria-hidden="true" aria-labelledby="connectWalletModalLabel" tabindex="-1">
     <div class="modal-dialog modal-xl" id="connectWalletModalDialog">
@@ -10,7 +11,7 @@
                 <!-- Modal body content here -->
                 <ul class="link-check link-list-opt no-bdr">
                     <li><span>Choose A Wallet</span></li>
-                    <li class="p-1"><a class="btn btn-success text-white" id="createSolanaWallet" href="#"><em class="icon ni ni-plus"></em> New Wallet</a></li>
+                    <li class="p-1"><a class="btn btn-success text-white" id="createSolanaWallet" data-solana-wallet-connect data-solana-lock="wallet" href="#"><em class="icon ni ni-plus"></em> New Wallet</a></li>
                     <li class="p-1"><a class="btn btn-dark text-white importSolanaWallet" href="#"><em class="icon ni ni-upload"></em> Import Wallet with Private Key</a></li>
                     <li class="divider"></li>
                     <li class="p-1"><a class="btn btn-outline-default" href="<?= base_url('/Exchange/Solana/Wallet/MetaMask') ?>">MetaMask</a></li>
