@@ -13,6 +13,9 @@ $routes = Services::routes();
 helper('ai');
 $routes->get('index.php', 'Home::index');
 $routes->get('index.php/', 'Home::index');
+$routes->head('/', 'Home::index');
+$routes->head('index.php', 'Home::index');
+$routes->head('index.php/', 'Home::index');
 // Preserve legacy index.php auth POST submits without downgrading to GET redirects.
 $routes->get('index.php/login', 'AuthController::login');
 $routes->post('index.php/login', 'AuthController::attemptLogin');
@@ -38,52 +41,143 @@ $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override(function () {
     $request = service('request');
-    $path = '/' . ltrim((string) $request->getUri()->getPath(), '/');
-    $query = (string) ($request->getUri()->getQuery() ?? '');
+    $response = service('response');
+    $uri = $request->getUri();
+    $method = strtoupper((string) $request->getMethod());
+    $rawPath = '/' . ltrim((string) $uri->getPath(), '/');
+    $path = rtrim($rawPath, '/') === '' ? '/' : rtrim($rawPath, '/');
+    $query = (string) ($uri->getQuery() ?? '');
     $lowerPath = strtolower($path);
     $lowerQuery = strtolower($query);
 
-    $isWpProbe = str_contains($lowerPath, 'wp-json')
-        || str_contains($lowerPath, '/wp/')
-        || str_contains($lowerQuery, 'rest_route=/wp/v2/');
+    $cleanLogValue = static function (?string $value): string {
+        $value = trim((string) $value);
+        $value = preg_replace('/[\r\n\t]+/', ' ', $value) ?? '';
 
-    if ($isWpProbe) {
-        return service('response')
-            ->setStatusCode(410)
-            ->setContentType('text/plain')
-            ->setBody('Gone');
-    }
+        return $value === '' ? '-' : $value;
+    };
+
+    $securityProbePaths = [
+        '/adminfuns.php',
+        '/like.php',
+        '/sx_pms.php',
+        '/we.php',
+        '/wp-indx.php',
+        '/wp-info.php',
+        '/wp-test.php',
+        '/wp.php',
+        '/zoo.php',
+    ];
+
+    $securityProbePrefixes = [
+        '/.git/',
+        '/wp-',
+        '/wp-content/',
+    ];
 
     $noisePatterns = [
         '.env', '.git', 'composer.json', 'composer.lock', 'phpinfo.php', 'server.js',
         'docker-compose', '.yaml', '.yml', '.ini', '.sql', '/vendor/', '/storage/', '/backup',
     ];
-    $isHostileProbe = false;
-    foreach ($noisePatterns as $needle) {
-        if (str_contains($lowerPath, $needle)) {
-            $isHostileProbe = true;
-            break;
+
+    $legacyRedirectPaths = [
+        '/features/advanced-investment-portfoio-manager',
+        '/management/alerts/share-template',
+        '/premium-features/advanced-trade-tracker',
+        '/premium_features/brokerage-integrations',
+        '/user/alerts',
+    ];
+
+    $classification = 'unknown_404';
+    if ($method === 'HEAD' && ($path === '/' || $lowerPath === '/index.php')) {
+        $classification = 'health_probe';
+    } elseif (
+        in_array($lowerPath, $securityProbePaths, true)
+        || str_contains($lowerPath, 'wp-json')
+        || str_contains($lowerPath, '/wp/')
+        || str_contains($lowerQuery, 'rest_route=/wp/v2/')
+    ) {
+        $classification = 'security_probe';
+    } else {
+        foreach ($securityProbePrefixes as $prefix) {
+            if (str_starts_with($lowerPath, $prefix)) {
+                $classification = 'security_probe';
+                break;
+            }
         }
     }
 
-    log_message($isHostileProbe ? 'notice' : 'error', '[404_ROUTE]', [
-        'uri' => current_url(),
-        'path' => $path,
-        'query' => $query,
-        'referrer' => $_SERVER['HTTP_REFERER'] ?? null,
-        'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
-        'probe' => $isHostileProbe,
-    ]);
+    if ($classification === 'unknown_404') {
+        foreach ($noisePatterns as $needle) {
+            if (str_contains($lowerPath, $needle)) {
+                $classification = 'security_probe';
+                break;
+            }
+        }
+    }
+
+    if ($classification === 'unknown_404' && in_array($lowerPath, $legacyRedirectPaths, true)) {
+        $classification = 'legacy_redirect_missing';
+    }
+
+    if ($classification === 'unknown_404' && preg_match('/^\/(account|alerts|api|dashboard|exchange|investments|management|trade-tracker|user|wallets)(\/|$)/i', $path) === 1) {
+        $classification = 'app_route_missing';
+    }
+
+    $severity = match ($classification) {
+        'health_probe' => 'debug',
+        'security_probe' => 'notice',
+        'legacy_redirect_missing' => 'warning',
+        'app_route_missing' => 'error',
+        default => 'notice',
+    };
+
+    $ip = $cleanLogValue($request->getIPAddress());
+    $ua = $cleanLogValue($request->getUserAgent()->getAgentString());
+    $referer = $cleanLogValue($request->getHeaderLine('Referer'));
+
+    log_message(
+        $severity,
+        sprintf(
+            '[404_ROUTE] method=%s path=%s ip=%s ua=%s classification=%s referer=%s',
+            $method,
+            $cleanLogValue($path),
+            $ip,
+            $ua,
+            $classification,
+            $referer
+        ),
+        [
+            'query' => $query,
+            'uri' => current_url(),
+            'classification' => $classification,
+        ]
+    );
+
+    if ($classification === 'health_probe') {
+        return $response->setStatusCode(404)->setBody('');
+    }
+
+    if ($classification === 'security_probe' && (
+        str_contains($lowerPath, 'wp-json')
+        || str_contains($lowerPath, '/wp/')
+        || str_contains($lowerQuery, 'rest_route=/wp/v2/')
+    )) {
+        return $response
+            ->setStatusCode(410)
+            ->setContentType('text/plain')
+            ->setBody('Gone');
+    }
 
     if (preg_match('/\.(js|mjs)$/i', $path) === 1) {
-        return service('response')
+        return $response
             ->setStatusCode(404)
             ->setContentType('application/javascript')
             ->setBody("/* 404 Not Found: {$path} */");
     }
 
     if (str_starts_with(strtolower(trim($path, '/')), 'api/')) {
-        return service('response')
+        return $response
             ->setStatusCode(404)
             ->setJSON([
                 'error' => 'not_found',
@@ -1558,10 +1652,12 @@ $routes->group('Advisors', ['filter' => 'login'], function($routes) {
 });
 
 // Alerts:
+$routes->addRedirect('User/Alerts', 'Alerts', 301);
 $routes->group('Alerts', ['namespace' => 'App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
     $routes->match(['GET', 'POST'], '/', 'AlertsController::index');
     $routes->match(['GET', 'POST'], '/Trades', 'AlertsController::trades');
 });
+
 
 // Auctions:
 $routes->group('Auctions', static function($routes) {
@@ -1713,6 +1809,7 @@ $routes->group('', ['namespace' => 'App\Modules\User\Controllers', 'filter' => '
 // Investments:
 $routes->group('Investments', ['namespace' => 'App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
     $routes->match(['GET', 'POST'], '/', 'InvestmentsController::index');
+    $routes->match(['GET', 'POST'], 'Trade-Tracker', 'InvestmentsController::tradeTracker');
     $routes->get('forecastModal/(:segment)', 'InvestmentsController::forecastModal/$1');
     $routes->post('Account-Manager', 'InvestmentsController::accountManager'); // Account Manager to handle adding, editing, deleting Investments Records to/from Database
     $routes->match(['GET', 'POST'], 'Add', 'InvestmentsController::add'); // Add New Investment Records to Database
@@ -1972,7 +2069,7 @@ $routes->group('Features', ['namespace' => 'App\Modules\Advertise\Controllers'],
     // Define other routes for 'blog' module
 });
 
-$routes->addRedirect('Features/Advanced-Investment-Portfoio-Manager', 'Features/Advanced-Investment-Portfolio-Manager', 301);
+$routes->addRedirect('Features/Advanced-Investment-Portfoio-Manager', 'Investments/Trade-Tracker', 301);
 $routes->addRedirect('Premium-Features/Due-Diligence-Database', 'Features/Brokerage-Integrations', 301);
 $routes->addRedirect('Premium-Features/Advanced-Charting', 'Features/Brokerage-Integrations', 301);
 $routes->addRedirect('Premium-Features/Advanced-Trade-Tracker', 'Investments/Trade-Tracker', 301);
