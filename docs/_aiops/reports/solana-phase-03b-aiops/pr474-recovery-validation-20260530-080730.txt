@@ -1,0 +1,69 @@
+===== PR #474 RECOVERY VALIDATION =====
+Sat May 30 03:07:30 PM UTC 2026
+
+===== BRANCH / STATUS =====
+repair/recover-solana-phase-03b-pr474
+?? docs/_aiops/error-input/summary-2026-05-30.log
+?? docs/_aiops/inputs/solana-phase-03b-command-security-repair.md
+?? docs/_aiops/reports/solana-phase-03/
+?? docs/_aiops/reports/solana-phase-03b-aiops/
+?? docs/_aiops/reports/solana-phase-03b/commands/
+?? docs/_aiops/reports/solana-phase-03b/final-post-merge-summary-20260530-070031.md
+?? docs/_aiops/reports/solana-phase-03b/merge-diagnosis-20260530-070511.txt
+?? docs/_aiops/reports/solana-phase-03b/post-merge-validation-20260530-065944.txt
+b15608058 Merge pull request #474 from MillennialInvestments/codex/implement-security-cleanup-for-solana-exchange
+002c0367a Merge pull request #472 from MillennialInvestments/fix/implement-log-noise-route-hygiene-2026-05-30
+c67a802d7 Implement log noise route hygiene and AIOps patch guard note
+4815499ce Merge pull request #470 from MillennialInvestments/fix/log-noise-route-hygiene-2026-05-30
+201d8809a Fix Codex log hygiene handoff formatting
+1df5c7e4b Document log noise and route hygiene repair plan
+be8c53d9e Add TBI dual coin project foundation (#466)
+756108b96 Merge pull request #464 from MillennialInvestments/codex/fix-transaction-modal-trigger-data-contracts
+
+===== COMMAND FILES =====
+PASS: app/Commands/SolanaHealthcheck.php
+No syntax errors detected in app/Commands/SolanaHealthcheck.php
+PASS: app/Commands/SolanaDigest.php
+No syntax errors detected in app/Commands/SolanaDigest.php
+PASS: app/Commands/SolanaTransactionAudit.php
+No syntax errors detected in app/Commands/SolanaTransactionAudit.php
+PASS: app/Commands/CreateTbiProjectCoinDrafts.php
+No syntax errors detected in app/Commands/CreateTbiProjectCoinDrafts.php
+
+===== CORE LINT =====
+No syntax errors detected in app/Modules/APIs/Controllers/SolanaAPIController.php
+No syntax errors detected in app/Modules/Exchange/Controllers/SolanaController.php
+No syntax errors detected in app/Libraries/MyMISolana.php
+No syntax errors detected in app/Services/SolanaService.php
+
+===== COMMAND REGISTRATION =====
+
+===== COMMAND EXECUTION =====
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-05-30 15:07:30 UTC+00:00
+
+Command "aiops:solana-healthcheck" not found.
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-05-30 15:07:31 UTC+00:00
+
+Command "aiops:solana-digest" not found.
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-05-30 15:07:31 UTC+00:00
+
+Command "aiops:solana-transaction-audit" not found.
+
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-05-30 15:07:31 UTC+00:00
+
+Command "exchange:create-tbi-project-coin-drafts" not found.
+
+
+===== PRIVATE KEY EXPOSURE SEARCH =====
+app/Libraries/MyMISolana.php:238:                'privateKey' => bin2hex($secretKey),
+
+===== MAINNET GUARDRAIL SEARCH =====
+app/Libraries/MyMISolana.php:98:        $envKey = strtolower($action) === 'mint' ? 'SOLANA_ALLOW_MAINNET_MINTING' : 'SOLANA_ALLOW_MAINNET_BROADCAST';
+app/Libraries/MyMISolana.php:103:        return ['allowed' => false, 'success' => false, 'status' => 'blocked', 'network' => 'mainnet-beta', 'action' => $action, 'message' => 'Mainnet ' . $action . ' is disabled by safety guardrails.'];
+app/Services/SolanaService.php:74:        $envKey = $action === 'mint' ? 'SOLANA_ALLOW_MAINNET_MINTING' : 'SOLANA_ALLOW_MAINNET_BROADCAST';

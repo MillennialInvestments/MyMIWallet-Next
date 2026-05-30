@@ -319,7 +319,7 @@ $addr = $svc->normalizeAddress($row);
 
                 $this->db->table('bf_users_wallet')->insert($data);
 
-                return $this->response->setJSON(['status' => 'success', 'publicKey' => $publicKey, 'privateKey' => $privateKey]);
+                return $this->response->setJSON($this->jsonEnvelope(true, 'Wallet created safely.', ['publicKey' => $publicKey, 'walletAddress' => $publicKey]));
             } catch (\Exception $e) {
                 return $this->response->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
             }
@@ -339,6 +339,11 @@ $addr = $svc->normalizeAddress($row);
 
         $logo = $logoFile && $logoFile->isValid() ? $logoFile->store() : $logoUrl;
 
+        $guard = service('solanaService')->guardMainnetAction('mint', (string) ($this->request->getPost('network') ?? 'devnet'));
+        if (! $guard['allowed']) {
+            return $this->response->setJSON($this->jsonEnvelope(false, $guard['message'], $guard));
+        }
+
         $metadata = [
             'name' => $name,
             'symbol' => $symbol,
@@ -356,6 +361,8 @@ $addr = $svc->normalizeAddress($row);
             'blockchain' => $blockchain,
             'admin_wallet' => $adminWallet,
             'metadata_uri' => $metadataUri,
+            'status' => 'draft',
+            'network' => 'devnet',
         ]);
 
         if ($result) {
@@ -730,7 +737,7 @@ $addr = $svc->normalizeAddress($row);
                         'status' => 'exists_inactive',
                         'message' => $result['message'],
                         'publicKey' => $wallet['publicKey'],
-                        'privateKey' => $wallet['privateKey']
+                        'walletAddress' => $wallet['publicKey']
                     ]);
                 } elseif ($result['status'] === 'exists_active') {
                     if ($this->debug === 1) {
@@ -740,7 +747,7 @@ $addr = $svc->normalizeAddress($row);
                         'status' => 'exists_active',
                         'message' => $result['message'],
                         'publicKey' => $wallet['publicKey'],
-                        'privateKey' => $wallet['privateKey']
+                        'walletAddress' => $wallet['publicKey']
                     ]);
                 } else {
                     if ($this->debug === 1) {
@@ -750,7 +757,7 @@ $addr = $svc->normalizeAddress($row);
                         'status' => 'success',
                         'message' => $result['message'],
                         'publicKey' => $wallet['publicKey'],
-                        'privateKey' => $wallet['privateKey']
+                        'walletAddress' => $wallet['publicKey']
                     ]);
                 }
             } catch (\Exception $e) {
@@ -789,11 +796,16 @@ $addr = $svc->normalizeAddress($row);
         $mintAddress = $this->request->getPost('mint_address');
         $amount = $this->request->getPost('amount');
     
+        $guard = service('solanaService')->guardMainnetAction('mint', (string) ($this->request->getPost('network') ?? 'devnet'));
+        if (! $guard['allowed']) {
+            return $this->response->setJSON($this->jsonEnvelope(false, $guard['message'], $guard));
+        }
+
         $result = $this->MyMISolana->mintTokens($privateKey, $mintAddress, $amount);
-        if ($result['status'] === 'success') {
-            return $this->response->setJSON(['status' => 'success', 'transactionId' => $result['transactionId']]);
+        if (($result['status'] ?? null) === 'success' || ($result['status'] ?? null) === 'draft') {
+            return $this->response->setJSON($this->jsonEnvelope(true, $result['message'] ?? 'Mint draft prepared.', $result));
         } else {
-            return $this->response->setJSON(['status' => 'error', 'message' => $result['message']]);
+            return $this->response->setJSON($this->jsonEnvelope(false, $result['message'] ?? 'Mint request failed.', [], $result));
         }
     }
 
@@ -1310,5 +1322,45 @@ $addr = $svc->normalizeAddress($row);
 
     //     return $this->response->setJSON($payload);
     // }
+
+
+    private function jsonEnvelope(bool $success, string $message, array $data = [], array $errors = []): array
+    {
+        $network = 'devnet';
+        try {
+            $service = service('solanaService');
+            if (is_object($service) && method_exists($service, 'currentNetwork')) {
+                $network = $service->currentNetwork();
+            }
+        } catch (\Throwable $e) {
+            $network = 'unknown';
+        }
+
+        return [
+            'success' => $success,
+            'message' => $message,
+            'data' => $this->sanitizeWalletPayload($data),
+            'errors' => $this->sanitizeWalletPayload($errors),
+            'meta' => [
+                'request_id' => bin2hex(random_bytes(8)),
+                'network' => $network,
+                'timestamp' => date('c'),
+            ],
+        ];
+    }
+
+    private function sanitizeWalletPayload(array $wallet): array
+    {
+        $blocked = ['privateKey', 'private_key', 'access_token', 'secret', 'secret_key', 'secret_key_b64', 'seed', 'seed_b64', 'mnemonic'];
+        foreach ($blocked as $key) {
+            unset($wallet[$key]);
+        }
+        foreach ($wallet as $key => $value) {
+            if (is_array($value)) {
+                $wallet[$key] = $this->sanitizeWalletPayload($value);
+            }
+        }
+        return $wallet;
+    }
 }
 ?>

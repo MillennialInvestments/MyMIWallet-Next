@@ -456,6 +456,10 @@ class Console extends BaseConfig
         \App\Commands\Test\RedisPing::class,
         \App\Commands\TrafficSpikeGuard::class,
         \App\Commands\Ux\JourneyAudit::class,
+        \App\Commands\SolanaHealthcheck::class,
+        \App\Commands\SolanaDigest::class,
+        \App\Commands\SolanaTransactionAudit::class,
+        \App\Commands\CreateTbiProjectCoinDrafts::class,
         \App\Commands\WalletsWarmSummaryCache::class,
     ];
 

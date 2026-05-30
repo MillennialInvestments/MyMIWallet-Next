@@ -1,0 +1,412 @@
+===== COMMAND REGISTRATION DIAGNOSIS =====
+Sat May 30 03:08:41 PM UTC 2026
+
+===== BRANCH / STATUS =====
+repair/recover-solana-phase-03b-pr474
+?? docs/_aiops/error-input/summary-2026-05-30.log
+?? docs/_aiops/inputs/solana-phase-03b-command-security-repair.md
+?? docs/_aiops/reports/solana-phase-03/
+?? docs/_aiops/reports/solana-phase-03b-aiops/aiops-run-20260530-080347.txt
+?? docs/_aiops/reports/solana-phase-03b-aiops/command-registration-diagnosis-20260530-080841.txt
+?? docs/_aiops/reports/solana-phase-03b-aiops/local-validation-20260530-080420.txt
+?? docs/_aiops/reports/solana-phase-03b-aiops/ollama-repair-plan-20260530-080401.md
+?? docs/_aiops/reports/solana-phase-03b-aiops/ollama-repair-plan-20260530-080413.md
+?? docs/_aiops/reports/solana-phase-03b-aiops/ollama-repair-prompt-20260530-080401.txt
+?? docs/_aiops/reports/solana-phase-03b-aiops/ollama-repair-prompt-20260530-080413.txt
+?? docs/_aiops/reports/solana-phase-03b-aiops/pr474-inspection-20260530-080709.txt
+?? docs/_aiops/reports/solana-phase-03b/commands/
+?? docs/_aiops/reports/solana-phase-03b/final-post-merge-summary-20260530-070031.md
+?? docs/_aiops/reports/solana-phase-03b/merge-diagnosis-20260530-070511.txt
+?? docs/_aiops/reports/solana-phase-03b/post-merge-validation-20260530-065944.txt
+aba52855c Recover Solana phase 03B command and security cleanup from PR 474
+b15608058 Merge pull request #474 from MillennialInvestments/codex/implement-security-cleanup-for-solana-exchange
+002c0367a Merge pull request #472 from MillennialInvestments/fix/implement-log-noise-route-hygiene-2026-05-30
+c67a802d7 Implement log noise route hygiene and AIOps patch guard note
+4815499ce Merge pull request #470 from MillennialInvestments/fix/log-noise-route-hygiene-2026-05-30
+201d8809a Fix Codex log hygiene handoff formatting
+1df5c7e4b Document log noise and route hygiene repair plan
+be8c53d9e Add TBI dual coin project foundation (#466)
+
+===== COMMAND FILE HEADERS =====
+
+--- app/Commands/SolanaHealthcheck.php ---
+<?php
+
+namespace App\Commands;
+
+use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\CLI;
+
+class SolanaHealthcheck extends BaseCommand
+{
+    protected $group = 'AIOps';
+    protected $name = 'aiops:solana-healthcheck';
+    protected $description = 'Run a safe Solana route and network health check.';
+    protected $usage = 'aiops:solana-healthcheck';
+
+    public function run(array $params)
+    {
+        $timestamp = date('Ymd-His');
+        $reportDir = ROOTPATH . 'docs/_aiops/reports/solana-phase-03b';
+        if (! is_dir($reportDir)) {
+            mkdir($reportDir, 0775, true);
+        }
+
+        $routeFile = ROOTPATH . 'app/Config/Routes.php';
+        $routes = is_file($routeFile) ? (string) file_get_contents($routeFile) : '';
+        $healthRouteRegistered = str_contains($routes, "'health'") && str_contains($routes, 'SolanaAPIController::health');
+
+        $networkStatus = ['status' => 'not_checked', 'healthy' => false];
+        try {
+            $service = service('solanaService');
+            if (is_object($service) && method_exists($service, 'getSafeNetworkStatus')) {
+                $networkStatus = (array) $service->getSafeNetworkStatus();
+            } elseif (is_object($service) && method_exists($service, 'getNetworkStatus')) {
+                $networkStatus = (array) $service->getNetworkStatus();
+            }
+        } catch (\Throwable $e) {
+            $networkStatus = ['status' => 'error', 'healthy' => false, 'message' => $e->getMessage()];
+        }
+
+        $report = [
+            '# Solana Phase 03B Healthcheck',
+            '',
+            '- Generated: ' . date('c'),
+            '- API/Solana/health route registered: ' . ($healthRouteRegistered ? 'yes' : 'no'),
+            '- Network status: `' . json_encode($networkStatus, JSON_UNESCAPED_SLASHES) . '`',
+            '- Secrets printed: no',
+            '',
+        ];
+        $reportPath = $reportDir . '/solana-healthcheck-' . $timestamp . '.md';
+        file_put_contents($reportPath, implode(PHP_EOL, $report));
+
+        CLI::write(sprintf('Solana healthcheck: route=%s report=%s', $healthRouteRegistered ? 'ok' : 'missing', str_replace(ROOTPATH, '', $reportPath)), $healthRouteRegistered ? 'green' : 'yellow');
+
+        return $healthRouteRegistered ? EXIT_SUCCESS : EXIT_ERROR;
+    }
+}
+
+--- app/Commands/SolanaDigest.php ---
+<?php
+
+namespace App\Commands;
+
+use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\CLI;
+
+class SolanaDigest extends BaseCommand
+{
+    protected $group = 'AIOps';
+    protected $name = 'aiops:solana-digest';
+    protected $description = 'Summarize current Solana Exchange routes, files, and status.';
+    protected $usage = 'aiops:solana-digest';
+
+    public function run(array $params)
+    {
+        $timestamp = date('Ymd-His');
+        $reportDir = ROOTPATH . 'docs/_aiops/reports/solana-phase-03b';
+        if (! is_dir($reportDir)) {
+            mkdir($reportDir, 0775, true);
+        }
+
+        $routeFile = ROOTPATH . 'app/Config/Routes.php';
+        $routes = is_file($routeFile) ? file($routeFile, FILE_IGNORE_NEW_LINES) : [];
+        $solanaRoutes = [];
+        foreach ($routes as $line) {
+            if (str_contains($line, 'SolanaController::') || str_contains($line, 'SolanaAPIController::') || str_contains($line, 'API/Solana') || str_contains($line, 'Exchange/Solana')) {
+                $solanaRoutes[] = trim($line);
+            }
+        }
+
+        $keyEndpoints = ['API/Solana/health', 'API/Solana/wallet/(:segment)/balance', 'API/Solana/wallet/(:segment)/tokens', 'Exchange/Solana'];
+        $files = [
+            'app/Modules/APIs/Controllers/SolanaAPIController.php',
+            'app/Modules/Exchange/Controllers/SolanaController.php',
+            'app/Libraries/MyMISolana.php',
+            'app/Services/SolanaService.php',
+            'app/Models/SolanaModel.php',
+            'app/Services/TbiProjectCoinService.php',
+            'app/Models/TbiProjectCoinModel.php',
+        ];
+
+        $report = [
+            '# Solana Phase 03B Digest',
+            '',
+            '- Generated: ' . date('c'),
+            '- Solana route/controller line count: ' . count($solanaRoutes),
+            '- Key endpoints: ' . implode(', ', $keyEndpoints),
+            '',
+            '## Files',
+        ];
+        foreach ($files as $file) {
+            $report[] = '- ' . $file . ': ' . (is_file(ROOTPATH . $file) ? 'present' : 'missing');
+        }
+        $report[] = '';
+        $report[] = '## Route Lines';
+        foreach ($solanaRoutes as $route) {
+            $report[] = '- `' . str_replace('`', '\`', $route) . '`';
+        }
+
+        $reportPath = $reportDir . '/solana-digest-' . $timestamp . '.md';
+        file_put_contents($reportPath, implode(PHP_EOL, $report) . PHP_EOL);
+
+        CLI::write(sprintf('Solana digest: routes=%d report=%s', count($solanaRoutes), str_replace(ROOTPATH, '', $reportPath)), 'green');
+        return EXIT_SUCCESS;
+    }
+}
+
+--- app/Commands/SolanaTransactionAudit.php ---
+<?php
+
+namespace App\Commands;
+
+use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\CLI;
+
+class SolanaTransactionAudit extends BaseCommand
+{
+    protected $group = 'AIOps';
+    protected $name = 'aiops:solana-transaction-audit';
+    protected $description = 'Safely summarize Solana transaction records when available.';
+    protected $usage = 'aiops:solana-transaction-audit [--days=7]';
+    protected $options = ['--days' => 'Number of recent days to audit. Defaults to 7.'];
+
+    public function run(array $params)
+    {
+        $days = 7;
+        foreach ($params as $param) {
+            if (is_string($param) && str_starts_with($param, '--days=')) {
+                $days = max(1, (int) substr($param, 7));
+            }
+        }
+        if (isset($params['days'])) {
+            $days = max(1, (int) $params['days']);
+        }
+
+        $timestamp = date('Ymd-His');
+        $reportDir = ROOTPATH . 'docs/_aiops/reports/solana-phase-03b';
+        if (! is_dir($reportDir)) {
+            mkdir($reportDir, 0775, true);
+        }
+
+        $summary = [];
+        $table = null;
+        try {
+            $db = \Config\Database::connect();
+            $candidates = ['bf_solana_transactions', 'solana_transactions', 'bf_exchanges_transactions', 'bf_transactions'];
+            foreach ($candidates as $candidate) {
+                if ($db->tableExists($candidate)) {
+                    $table = $candidate;
+                    break;
+                }
+            }
+
+            if ($table !== null) {
+                $fields = $db->getFieldNames($table);
+                $statusColumn = in_array('status', $fields, true) ? 'status' : null;
+                $dateColumn = in_array('created_at', $fields, true) ? 'created_at' : (in_array('created_on', $fields, true) ? 'created_on' : null);
+                $builder = $db->table($table);
+                if ($dateColumn !== null) {
+                    $builder->where($dateColumn . ' >=', date('Y-m-d H:i:s', strtotime('-' . $days . ' days')));
+                }
+                if ($statusColumn !== null) {
+                    $rows = $builder->select($statusColumn . ' AS status, COUNT(*) AS total')->groupBy($statusColumn)->get()->getResultArray();
+                    foreach ($rows as $row) {
+                        $summary[(string) ($row['status'] ?? 'unknown')] = (int) ($row['total'] ?? 0);
+                    }
+                } else {
+                    $summary['total'] = (int) $builder->countAllResults();
+                }
+            }
+        } catch (\Throwable $e) {
+            $summary = ['error' => $e->getMessage()];
+        }
+
+        $report = [
+            '# Solana Phase 03B Transaction Audit',
+            '',
+            '- Generated: ' . date('c'),
+            '- Days: ' . $days,
+            '- Table: ' . ($table ?? 'missing'),
+            '- Status counts: `' . json_encode($summary, JSON_UNESCAPED_SLASHES) . '`',
+            '- Secrets printed: no',
+            '',
+        ];
+        $reportPath = $reportDir . '/solana-transaction-audit-' . $timestamp . '.md';
+        file_put_contents($reportPath, implode(PHP_EOL, $report));
+
+        CLI::write(sprintf('Solana transaction audit: table=%s report=%s', $table ?? 'missing', str_replace(ROOTPATH, '', $reportPath)), $table ? 'green' : 'yellow');
+
+--- app/Commands/CreateTbiProjectCoinDrafts.php ---
+<?php
+
+namespace App\Commands;
+
+use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\CLI;
+
+class CreateTbiProjectCoinDrafts extends BaseCommand
+{
+    protected $group = 'Exchange';
+    protected $name = 'exchange:create-tbi-project-coin-drafts';
+    protected $description = 'Create or update draft/devnet TBI project coin records without minting or broadcasting.';
+    protected $usage = 'exchange:create-tbi-project-coin-drafts [--dry-run] [--apply]';
+    protected $options = ['--dry-run' => 'Preview only.', '--apply' => 'Apply idempotent draft rows.'];
+
+    public function run(array $params)
+    {
+        $apply = in_array('--apply', $params, true) || isset($params['apply']);
+        $dryRun = ! $apply || in_array('--dry-run', $params, true) || isset($params['dry-run']);
+        if ($apply && (in_array('--dry-run', $params, true) || isset($params['dry-run']))) {
+            $dryRun = true;
+            $apply = false;
+        }
+
+        $timestamp = date('Ymd-His');
+        $reportDir = ROOTPATH . 'docs/_aiops/reports/solana-phase-03b';
+        if (! is_dir($reportDir)) {
+            mkdir($reportDir, 0775, true);
+        }
+
+        $drafts = $this->draftDefinitions();
+        $actions = [];
+        $errors = [];
+        $warnings = [];
+
+        try {
+            $db = \Config\Database::connect();
+            if (! $db->tableExists('bf_tbi_project_coins')) {
+                throw new \RuntimeException('Table bf_tbi_project_coins is missing. Run migration 2026-05-27-000100 first.');
+            }
+
+            $projectId = $this->resolveTbiSolutionsProjectId($db, $dryRun);
+            foreach ($drafts as $draft) {
+                $payload = $draft;
+                $payload['project_id'] = $projectId;
+                $payload['metadata_json'] = json_encode([
+                    'network' => 'devnet',
+                    'minting_enabled' => false,
+                    'broadcast_enabled' => false,
+                    'created_by' => 1,
+                    'draft_created_by_command' => $this->name,
+                    'security_note' => 'Draft only. No mainnet minting or transaction broadcast performed.',
+                ]);
+
+                $existing = $db->table('bf_tbi_project_coins')->where('coin_key', $payload['coin_key'])->get()->getRowArray();
+                if ($existing) {
+                    $actions[] = ['coin_key' => $payload['coin_key'], 'action' => 'update', 'id' => $existing['id'] ?? null];
+                    if (! $dryRun) {
+                        $db->table('bf_tbi_project_coins')->where('id', $existing['id'])->update($payload);
+                    }
+                    continue;
+                }
+
+                $actions[] = ['coin_key' => $payload['coin_key'], 'action' => 'insert', 'id' => null];
+                if (! $dryRun) {
+                    $db->table('bf_tbi_project_coins')->insert($payload);
+                }
+            }
+        } catch (\Throwable $e) {
+            if ($dryRun) {
+                $warnings[] = 'Database unavailable for dry-run inspection: ' . $e->getMessage();
+                foreach ($drafts as $draft) {
+                    $actions[] = ['coin_key' => $draft['coin_key'], 'action' => 'would-upsert', 'id' => null];
+                }
+            } else {
+                $errors[] = $e->getMessage();
+            }
+        }
+
+        $report = [
+
+===== CONFIG COMMANDS =====
+<?php
+
+declare(strict_types=1);
+
+namespace Config;
+
+use CodeIgniter\Config\BaseConfig;
+
+class Commands extends BaseConfig
+{
+    /**
+     * @var array<string, class-string>
+     */
+    public $commands = [
+        'marketing:audit:distribution' => \App\Commands\Marketing\AuditDistribution::class,
+        'auth:baseline:capture' => \App\Commands\Auth\BaselineCapture::class,
+        'auth:baseline:diff' => \App\Commands\Auth\BaselineDiff::class,
+        'auth:baseline:restore' => \App\Commands\Auth\BaselineRestore::class,
+        'auth:surface:scan' => \App\Commands\Auth\SurfaceScan::class,
+        'auth:smoke' => \App\Commands\Auth\Smoke::class,
+        'docs:inventory-forms' => \App\Commands\Docs\Generate\FormInventory::class,
+        'db:table-list' => \App\Commands\Database\TableList::class,
+        'coinvault:audit' => \App\Commands\CoinVault\Audit::class,
+        'aiops:solana-healthcheck' => \App\Commands\SolanaHealthcheck::class,
+        'aiops:solana-digest' => \App\Commands\SolanaDigest::class,
+        'aiops:solana-transaction-audit' => \App\Commands\SolanaTransactionAudit::class,
+        'exchange:create-tbi-project-coin-drafts' => \App\Commands\CreateTbiProjectCoinDrafts::class,
+    ];
+}
+
+===== COMMAND NAME SEARCH =====
+app/Commands/SolanaHealthcheck.php:8:class SolanaHealthcheck extends BaseCommand
+app/Commands/SolanaHealthcheck.php:11:    protected $name = 'aiops:solana-healthcheck';
+app/Commands/SolanaHealthcheck.php:13:    protected $usage = 'aiops:solana-healthcheck';
+app/Commands/CreateTbiProjectCoinDrafts.php:8:class CreateTbiProjectCoinDrafts extends BaseCommand
+app/Commands/CreateTbiProjectCoinDrafts.php:11:    protected $name = 'exchange:create-tbi-project-coin-drafts';
+app/Commands/CreateTbiProjectCoinDrafts.php:13:    protected $usage = 'exchange:create-tbi-project-coin-drafts [--dry-run] [--apply]';
+app/Commands/SolanaTransactionAudit.php:8:class SolanaTransactionAudit extends BaseCommand
+app/Commands/SolanaTransactionAudit.php:11:    protected $name = 'aiops:solana-transaction-audit';
+app/Commands/SolanaTransactionAudit.php:13:    protected $usage = 'aiops:solana-transaction-audit [--days=7]';
+app/Commands/SolanaDigest.php:8:class SolanaDigest extends BaseCommand
+app/Commands/SolanaDigest.php:11:    protected $name = 'aiops:solana-digest';
+app/Commands/SolanaDigest.php:13:    protected $usage = 'aiops:solana-digest';
+app/Config/Console.php:459:        \App\Commands\SolanaHealthcheck::class,
+app/Config/Console.php:460:        \App\Commands\SolanaDigest::class,
+app/Config/Console.php:461:        \App\Commands\SolanaTransactionAudit::class,
+app/Config/Console.php:462:        \App\Commands\CreateTbiProjectCoinDrafts::class,
+app/Config/Commands.php:24:        'aiops:solana-healthcheck' => \App\Commands\SolanaHealthcheck::class,
+app/Config/Commands.php:25:        'aiops:solana-digest' => \App\Commands\SolanaDigest::class,
+app/Config/Commands.php:26:        'aiops:solana-transaction-audit' => \App\Commands\SolanaTransactionAudit::class,
+app/Config/Commands.php:27:        'exchange:create-tbi-project-coin-drafts' => \App\Commands\CreateTbiProjectCoinDrafts::class,
+app/Config/Commands.php:24:        'aiops:solana-healthcheck' => \App\Commands\SolanaHealthcheck::class,
+app/Config/Commands.php:25:        'aiops:solana-digest' => \App\Commands\SolanaDigest::class,
+app/Config/Commands.php:26:        'aiops:solana-transaction-audit' => \App\Commands\SolanaTransactionAudit::class,
+app/Config/Commands.php:27:        'exchange:create-tbi-project-coin-drafts' => \App\Commands\CreateTbiProjectCoinDrafts::class,
+
+===== PHP NAMESPACE / CLASS EXISTENCE CHECK =====
+App\Commands\SolanaHealthcheck: YES
+App\Commands\SolanaDigest: YES
+App\Commands\SolanaTransactionAudit: YES
+App\Commands\CreateTbiProjectCoinDrafts: YES
+
+===== SPARK LIST FILTER =====
+
+===== SPARK LIST FULL COMMAND COUNT =====
+1027
+
+===== CACHE CLEAR ATTEMPT =====
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-05-30 15:08:41 UTC+00:00
+
+Cache cleared.
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-05-30 15:08:42 UTC+00:00
+
+Command "optimize:clear" not found.
+
+
+===== COMPOSER AUTOLOAD REFRESH =====
+Generating optimized autoload files
+Generated optimized autoload files containing 4751 classes
+
+===== SPARK LIST AFTER CLEAR =====
+  aiops:solana-digest                         Summarize current Solana Exchange routes,
+  aiops:solana-healthcheck                    Run a safe Solana route and network health
+  aiops:solana-transaction-audit              Safely summarize Solana transaction records
+  exchange:create-tbi-project-coin-drafts     Create or update draft/devnet TBI project
+
+===== COMPLETE =====
+Sat May 30 03:08:45 PM UTC 2026
