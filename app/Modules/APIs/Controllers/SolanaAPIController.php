@@ -167,7 +167,7 @@ class SolanaAPIController extends BaseAPIController {
 
                 $this->db->table('bf_users_wallet')->insert($data);
 
-                return $this->response->setJSON(['status' => 'success', 'publicKey' => $publicKey, 'privateKey' => $privateKey]);
+                return $this->response->setJSON($this->jsonEnvelope(true, 'Wallet created safely.', ['publicKey' => $publicKey, 'walletAddress' => $publicKey]));
             } catch (\Exception $e) {
                 return $this->response->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
             }
@@ -184,11 +184,11 @@ class SolanaAPIController extends BaseAPIController {
             $tokenSupply = $this->request->getPost('token_supply');
     
             try {
-                $result = $this->MyMISolana->createToken($tokenName, $tokenSymbol, $tokenSupply);
-                if ($result['status'] == 'success') {
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'Token created successfully', 'token' => $result['token']]);
+                $result = $this->MyMISolana->createToken(['name' => $tokenName, 'symbol' => $tokenSymbol, 'supply' => $tokenSupply, 'network' => 'devnet', 'status' => 'draft']);
+                if (($result['success'] ?? false) || ($result['status'] ?? null) === 'success' || ($result['status'] ?? null) === 'draft') {
+                    return $this->response->setJSON($this->jsonEnvelope(true, 'Draft token prepared successfully.', ['token' => $result['token'] ?? $result]));
                 } else {
-                    return $this->response->setJSON(['status' => 'error', 'message' => $result['message']]);
+                    return $this->response->setJSON($this->jsonEnvelope(false, $result['message'] ?? 'Token creation failed.', [], ['token' => $result]));
                 }
             } catch (\Exception $e) {
                 return $this->response->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
@@ -410,7 +410,7 @@ class SolanaAPIController extends BaseAPIController {
                         'status' => 'exists_inactive',
                         'message' => $result['message'],
                         'publicKey' => $wallet['publicKey'],
-                        'privateKey' => $wallet['privateKey']
+                        'walletAddress' => $wallet['publicKey']
                     ]);
                 } elseif ($result['status'] === 'exists_active') {
                     if ($this->debug === 1) {
@@ -420,7 +420,7 @@ class SolanaAPIController extends BaseAPIController {
                         'status' => 'exists_active',
                         'message' => $result['message'],
                         'publicKey' => $wallet['publicKey'],
-                        'privateKey' => $wallet['privateKey']
+                        'walletAddress' => $wallet['publicKey']
                     ]);
                 } else {
                     if ($this->debug === 1) {
@@ -430,7 +430,7 @@ class SolanaAPIController extends BaseAPIController {
                         'status' => 'success',
                         'message' => $result['message'],
                         'publicKey' => $wallet['publicKey'],
-                        'privateKey' => $wallet['privateKey']
+                        'walletAddress' => $wallet['publicKey']
                     ]);
                 }
             } catch (\Exception $e) {
@@ -460,6 +460,104 @@ class SolanaAPIController extends BaseAPIController {
         }
     }
     
+
+    public function health()
+    {
+        try {
+            $status = service('solanaService')->getSafeNetworkStatus();
+            return $this->response->setJSON($this->jsonEnvelope(true, 'Solana health check completed.', ['status' => $status]));
+        } catch (\Throwable $e) {
+            return $this->response->setJSON($this->jsonEnvelope(false, 'Solana health check failed.', [], ['exception' => $e->getMessage()]));
+        }
+    }
+
+    public function getBalance($address)
+    {
+        try {
+            $lamports = service('solanaService')->getBalanceLamports((string) $address);
+            return $this->response->setJSON($this->jsonEnvelope(true, 'Balance loaded.', ['address' => $address, 'lamports' => $lamports]));
+        } catch (\Throwable $e) {
+            return $this->response->setJSON($this->jsonEnvelope(false, 'Unable to load balance.', [], ['exception' => $e->getMessage()]));
+        }
+    }
+
+    public function getTokenAccounts($address)
+    {
+        try {
+            $tokens = service('solanaService')->getTokenAccounts((string) $address);
+            return $this->response->setJSON($this->jsonEnvelope(true, 'Token accounts loaded.', ['address' => $address, 'tokens' => $tokens]));
+        } catch (\Throwable $e) {
+            return $this->response->setJSON($this->jsonEnvelope(false, 'Unable to load token accounts.', [], ['exception' => $e->getMessage()]));
+        }
+    }
+
+    public function transfer()
+    {
+        $service = service('solanaService');
+        $result = $service->transfer((string) $this->request->getPost('from'), (string) $this->request->getPost('to'), (string) $this->request->getPost('amount'), ['network' => (string) ($this->request->getPost('network') ?? $service->currentNetwork())]);
+        return $this->response->setJSON($this->jsonEnvelope((bool) ($result['success'] ?? false), (string) ($result['message'] ?? 'Transfer prepared.'), $result));
+    }
+
+    public function quote()
+    {
+        $payload = (array) ($this->request->getJSON(true) ?? $this->request->getPost());
+        $result = service('solanaService')->getQuote($payload);
+        return $this->response->setJSON($this->jsonEnvelope(true, 'Quote loaded.', ['quote' => $result]));
+    }
+
+    public function swap()
+    {
+        $payload = (array) ($this->request->getJSON(true) ?? $this->request->getPost());
+        $result = service('solanaService')->swap($payload);
+        return $this->response->setJSON($this->jsonEnvelope((bool) ($result['success'] ?? ! isset($result['allowed'])), (string) ($result['message'] ?? 'Swap request processed.'), $result));
+    }
+
+    public function mint()
+    {
+        $service = service('solanaService');
+        $result = $service->mintTo((string) $this->request->getPost('mint'), (string) $this->request->getPost('dest'), (string) $this->request->getPost('amount'), (string) ($this->request->getPost('network') ?? $service->currentNetwork()));
+        return $this->response->setJSON($this->jsonEnvelope((bool) ($result['success'] ?? false), (string) ($result['message'] ?? 'Mint request processed.'), $result));
+    }
+
+    private function jsonEnvelope(bool $success, string $message, array $data = [], array $errors = []): array
+    {
+        $network = 'devnet';
+        try {
+            $service = service('solanaService');
+            if (is_object($service) && method_exists($service, 'currentNetwork')) {
+                $network = $service->currentNetwork();
+            }
+        } catch (\Throwable $e) {
+            $network = 'unknown';
+        }
+
+        return [
+            'success' => $success,
+            'message' => $message,
+            'data' => $this->sanitizeWalletPayload($data),
+            'errors' => $this->sanitizeWalletPayload($errors),
+            'meta' => [
+                'request_id' => bin2hex(random_bytes(8)),
+                'network' => $network,
+                'timestamp' => date('c'),
+            ],
+        ];
+    }
+
+    private function sanitizeWalletPayload(array $wallet): array
+    {
+        $blocked = ['privateKey', 'private_key', 'access_token', 'secret', 'secret_key', 'secret_key_b64', 'seed', 'seed_b64', 'mnemonic'];
+        foreach ($blocked as $key) {
+            unset($wallet[$key]);
+        }
+        foreach ($wallet as $key => $value) {
+            if (is_array($value)) {
+                $wallet[$key] = $this->sanitizeWalletPayload($value);
+            }
+        }
+        return $wallet;
+    }
+
     private function calculateTransactionFees($amount) {
         $applicationFee = 0.01 * $amount;
         $gasFee = 0.001;
