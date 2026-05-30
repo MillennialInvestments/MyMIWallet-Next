@@ -33,19 +33,57 @@ class SolanaService
         // Initialize endpoints once; merge your existing ctor code here if needed
         $this->commitment = env('SOLANA_COMMITMENT') ?: 'confirmed';
 
-        $primary  = env('SOLANA_RPC_PRIMARY') ?: 'https://api.mainnet-beta.solana.com';
+        $primary  = env('SOLANA_RPC_PRIMARY') ?: 'https://api.devnet.solana.com';
         $fallback = env('SOLANA_RPC_FALLBACKS') ?: '';
-        $defaultFallbacks = ['https://rpc.ankr.com/solana', 'https://solana-api.projectserum.com'];
+        $defaultFallbacks = ['https://api.devnet.solana.com'];
         $fallbackList = $fallback ? array_map('trim', explode(',', $fallback)) : $defaultFallbacks;
         $endpoints = array_merge([$primary], $fallbackList);
         $this->rpcEndpoints = array_values(array_filter(array_unique($endpoints)));
-        $this->wsEndpoint = env('SOLANA_WS_PRIMARY') ?: 'wss://api.mainnet-beta.solana.com';
+        $this->wsEndpoint = env('SOLANA_WS_PRIMARY') ?: 'wss://api.devnet.solana.com';
 
         $this->client = new Client([
             'timeout' => $this->httpTimeout,
         ]);
 
         $this->config = config('Solana');
+    }
+
+
+    public function currentNetwork(): string
+    {
+        $primary = (string) ($this->rpcEndpoints[0] ?? 'https://api.devnet.solana.com');
+        if (str_contains($primary, 'mainnet-beta')) {
+            return 'mainnet-beta';
+        }
+        if (str_contains($primary, 'testnet')) {
+            return 'testnet';
+        }
+
+        return 'devnet';
+    }
+
+    public function guardMainnetAction(string $action, ?string $network = null): array
+    {
+        $network = $network ?: $this->currentNetwork();
+        $action = strtolower($action);
+        $isMainnet = in_array($network, ['mainnet', 'mainnet-beta'], true) || str_contains($network, 'mainnet-beta');
+        if (! $isMainnet) {
+            return ['allowed' => true, 'success' => true, 'network' => $network, 'action' => $action];
+        }
+
+        $envKey = $action === 'mint' ? 'SOLANA_ALLOW_MAINNET_MINTING' : 'SOLANA_ALLOW_MAINNET_BROADCAST';
+        if (env($envKey) === 'true') {
+            return ['allowed' => true, 'success' => true, 'network' => 'mainnet-beta', 'action' => $action];
+        }
+
+        return [
+            'allowed' => false,
+            'success' => false,
+            'status' => 'blocked',
+            'network' => 'mainnet-beta',
+            'action' => $action,
+            'message' => 'Mainnet ' . $action . ' is disabled by safety guardrails.',
+        ];
     }
 
     /** Core JSON-RPC caller with retries & endpoint failover */
@@ -75,7 +113,12 @@ class SolanaService
 
     public function transfer(string $from, string $to, string $amount, array $opts = []): array
     {
-        return ['from' => $from, 'to' => $to, 'amount' => $amount];
+        $guard = $this->guardMainnetAction('broadcast', (string) ($opts['network'] ?? $this->currentNetwork()));
+        if (! $guard['allowed']) {
+            return $guard;
+        }
+
+        return ['success' => true, 'from' => $from, 'to' => $to, 'amount' => $amount, 'network' => $guard['network'], 'broadcast' => false, 'message' => 'Prepared transfer only; no transaction broadcast was performed.'];
     }
 
     public function getQuote(array $params): array
@@ -87,6 +130,11 @@ class SolanaService
 
     public function swap(array $params): array
     {
+        $guard = $this->guardMainnetAction('broadcast', (string) ($params['network'] ?? $this->currentNetwork()));
+        if (! $guard['allowed']) {
+            return $guard;
+        }
+
         // return service('myMIRaydium')->swap($params);
         $jup = new \App\Services\JupiterService();
         return $jup->swap($params);
@@ -102,12 +150,26 @@ class SolanaService
 
     public function createToken(array $spec): array
     {
-        return ['mint' => '', 'spec' => $spec];
+        $network = (string) ($spec['network'] ?? $this->currentNetwork());
+        $guard = $this->guardMainnetAction('mint', $network);
+        if (! $guard['allowed']) {
+            return $guard;
+        }
+
+        $spec['network'] = $guard['network'];
+        $spec['status'] = $spec['status'] ?? 'draft';
+
+        return ['success' => true, 'mint' => '', 'spec' => $spec, 'message' => 'Draft token prepared only; no live mint was performed.'];
     }
 
-    public function mintTo(string $mint, string $dest, string $amount): array
+    public function mintTo(string $mint, string $dest, string $amount, ?string $network = null): array
     {
-        return ['mint' => $mint, 'dest' => $dest, 'amount' => $amount];
+        $guard = $this->guardMainnetAction('mint', $network ?? $this->currentNetwork());
+        if (! $guard['allowed']) {
+            return $guard;
+        }
+
+        return ['success' => true, 'mint' => $mint, 'dest' => $dest, 'amount' => $amount, 'network' => $guard['network'], 'broadcast' => false, 'message' => 'Draft mint prepared only; no transaction broadcast was performed.'];
     }
 
     public function getBalanceLamports(string $address): int
