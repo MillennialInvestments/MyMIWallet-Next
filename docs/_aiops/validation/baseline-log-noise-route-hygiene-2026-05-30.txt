@@ -1,0 +1,643 @@
+===== BASELINE LOG NOISE GREP =====
+Sat May 30 12:22:02 AM UTC 2026
+
+app/Config/Routes.php:69:    log_message($isHostileProbe ? 'notice' : 'error', '[404_ROUTE]', [
+app/Controllers/AuthController.php:2188:        log_message('debug', '[AUTH_RENDER] Final render config', [
+app/Controllers/BaseController.php:199:        log_message('debug', '[TRACE]', [
+app/Controllers/BaseController.php:1195:            $this->logRenderFailureToChannels('warning', 'Optional view path missing; using default path', [
+app/Controllers/BaseController.php:1223:        log_message('debug', '[VIEW_RESOLUTION] Render configuration', [
+app/Legacy/Auth/Controllers/AuthController.php:1796:        log_message('debug', '[AUTH_RENDER] Final render config', [
+app/Libraries/MyMICoin.php:39:        log_message('debug', 'MyMICoin initialized ONCE');
+app/Libraries/MyMIUser.php:55:            log_message('debug', 'MyMIUser L52 - initialized (first log).');
+docs/_aiops/_aiops_all.json:93:                "DEBUG --> [TRACE]",
+docs/_aiops/_aiops_all.json:321:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:407:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/_aiops_all.json:409:                "DEBUG --> MyMICoin initialized ONCE",
+docs/_aiops/_aiops_all.json:2068:                "ERROR --> [404_ROUTE]",
+docs/_aiops/_aiops_all.json:3993:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:4146:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:4304:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/_aiops_all.json:5502:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:5794:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/_aiops_all.json:6826:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:6904:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/_aiops_all.json:7948:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:8082:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/_aiops_all.json:8818:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:8906:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/_aiops_all.json:10122:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:10884:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:13717:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:13923:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/_aiops_all.json:15281:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:15951:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/_aiops_all.json:16405:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:16875:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/_aiops_all.json:21442:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:21600:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/_aiops_all.json:23198:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:23424:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/_aiops_all.json:24027:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:24501:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/_aiops_all.json:31050:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:31330:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/_aiops_all.json:31661:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/_aiops_all.json:34416:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:34418:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/_aiops_all.json:37224:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:38875:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/_aiops_all.json:39163:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/_aiops_all.json:39743:            "line": "ERROR --> [404_ROUTE]"
+docs/_aiops/_aiops_all.md:120:- **summary-2026-03-31.log** [pattern: 404] ERROR --> [404_ROUTE]
+docs/_aiops/_error_new_today.json:1880:            "normalized_message": "ERROR --> [404_ROUTE]",
+docs/_aiops/_error_new_today.json:1881:            "raw_message": "ERROR --> [404_ROUTE]",
+docs/_aiops/_error_new_today.md:113:- [ci4] ERROR --> [404_ROUTE] (n/a:n/a)
+docs/_aiops/_error_summary.json:1894:            "normalized_message": "ERROR --> [404_ROUTE]",
+docs/_aiops/_error_summary.json:1895:            "raw_message": "ERROR --> [404_ROUTE]",
+docs/_aiops/_error_summary.md:119:- [ci4] ERROR --> [404_ROUTE] (n/a:n/a)
+docs/_aiops/error-input/summary-2026-04-19.log:80:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-04-19.log:137:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-04-19.log:140:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-04-19.log:4211:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-04-19.log:4214:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-04-19.log:4217:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-04-19.log:46742:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-04-19.log:46759:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-04-19.log:46831:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-04-19.log:46894:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-04-19.log:46897:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-04-19.log:47104:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-04-19.log:47107:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-04-19.log:47110:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-04-19.log:50416:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-04-19.log:50424:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-04-20.log:53:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-04-20.log:59:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-04-20.log:62:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-04-20.log:65:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-04-20.log:1715:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-04-20.log:1718:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-04-20.log:9995:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-04-20.log:10003:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-04-20.log:10069:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-04-20.log:10531:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-04-20.log:10534:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-04-20.log:10876:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-04-20.log:10879:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-04-20.log:10882:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-04-20.log:12601:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-04-20.log:12609:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-04-21.log:68:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-04-21.log:74:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-04-21.log:77:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-04-21.log:110:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-04-21.log:113:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-04-21.log:116:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-04-21.log:10850:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-04-21.log:10858:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-04-22.log:68:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-04-22.log:74:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-04-22.log:77:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-04-22.log:1307:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-04-22.log:1310:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-04-22.log:1313:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-04-22.log:6545:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-04-22.log:6553:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-04-23.log:71:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-04-23.log:77:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-04-23.log:80:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-04-23.log:83:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-04-23.log:521:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-04-23.log:524:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-04-23.log:4080:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-04-23.log:4088:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-04-23.log:4149:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-04-23.log:4155:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-04-23.log:4161:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-04-23.log:5745:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-04-23.log:5748:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-04-23.log:7309:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-04-23.log:7320:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-04-24.log:47:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-04-24.log:53:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-04-24.log:62:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-04-24.log:1085:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-04-24.log:1088:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-04-24.log:1181:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-04-24.log:26036:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-04-24.log:26053:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-04-24.log:26098:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-04-24.log:26185:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-04-24.log:26188:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-04-24.log:26191:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-04-24.log:30205:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-04-25.log:65:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-04-25.log:68:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-04-25.log:77:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-04-25.log:470:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-04-25.log:473:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-04-25.log:13742:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-04-25.log:22497:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-04-25.log:22505:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-04-26.log:77:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-04-26.log:233:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-04-26.log:236:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-04-26.log:2039:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-04-26.log:2042:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-04-26.log:2045:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-04-26.log:3645:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-04-26.log:3653:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-04-27.log:95:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-04-27.log:101:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-04-27.log:104:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-04-27.log:152:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-04-27.log:155:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-04-27.log:158:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-04-27.log:3641:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-04-27.log:3652:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-04-28.log:65:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-04-28.log:71:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-04-28.log:74:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-04-28.log:77:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-04-28.log:419:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-04-28.log:422:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-04-28.log:20828:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-04-28.log:20836:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-04-28.log:20890:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-04-28.log:21070:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-04-28.log:21073:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-04-28.log:21076:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-04-28.log:22942:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-04-28.log:22945:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-04-28.log:34960:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-04-28.log:34968:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-04-29.log:56:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-04-29.log:62:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-04-29.log:65:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-04-29.log:68:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-04-29.log:971:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-04-29.log:974:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-04-29.log:5396:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-04-29.log:5419:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-04-29.log:5473:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-04-29.log:5512:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-04-29.log:5515:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-04-29.log:5518:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-04-29.log:5647:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-04-29.log:5650:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-04-29.log:7015:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-04-29.log:7023:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-04-30.log:104:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-04-30.log:167:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-04-30.log:170:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-04-30.log:173:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-04-30.log:281:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-04-30.log:284:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-04-30.log:1434:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-04-30.log:1442:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-05-01.log:83:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-05-01.log:173:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-05-01.log:176:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-05-01.log:350:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-05-01.log:353:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-05-01.log:356:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-05-01.log:1263:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-05-01.log:1271:ERROR --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-05-02.log:101:DEBUG --> [TRACE]
+docs/_aiops/error-input/summary-2026-05-02.log:107:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/error-input/summary-2026-05-02.log:110:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/error-input/summary-2026-05-02.log:2351:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/error-input/summary-2026-05-02.log:2354:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/error-input/summary-2026-05-02.log:2357:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/error-input/summary-2026-05-02.log:4962:NOTICE --> [404_ROUTE]
+docs/_aiops/error-input/summary-2026-05-02.log:4970:WARNING --> Optional view path missing; using default path
+docs/_aiops/error-input/summary-2026-05-02.log:4978:ERROR --> [404_ROUTE]
+docs/_aiops/instructions/fix-log-noise-route-hygiene-2026-05-30.md:4:Fix MyMI Wallet production log noise and misleading `[404_ROUTE]` errors found in the 2026-05-29 and 2026-05-30 logs.
+docs/_aiops/instructions/fix-log-noise-route-hygiene-2026-05-30.md:7:Current logs show repeated `HEAD /` requests being logged as `ERROR [404_ROUTE]`, noisy debug output, missing/legacy routes, security probes, optional view fallback warning spam, and one slow `/How-It-Works/alerts` request.
+docs/_aiops/instructions/fix-log-noise-route-hygiene-2026-05-30.md:21:1. Locate emitters for `[404_ROUTE]`, `[TRACE]`, `Optional view path missing`, `[VIEW_RESOLUTION]`, `[AUTH_RENDER]`, `MyMICoin initialized ONCE`, `BudgetService ::setUserId`, and `MyMIUser L52`.
+docs/_aiops/instructions/fix-log-noise-route-hygiene-2026-05-30.md:23:3. Replace duplicate generic `[404_ROUTE]` logs with one structured log per request.
+docs/_aiops/instructions/fix-log-noise-route-hygiene-2026-05-30.md:50:HEAD / no longer creates ERROR [404_ROUTE].
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:4:app/Config/Routes.php:69:    log_message($isHostileProbe ? 'notice' : 'error', '[404_ROUTE]', [
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:5:app/Controllers/AuthController.php:2188:        log_message('debug', '[AUTH_RENDER] Final render config', [
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:6:app/Controllers/BaseController.php:199:        log_message('debug', '[TRACE]', [
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:7:app/Controllers/BaseController.php:1195:            $this->logRenderFailureToChannels('warning', 'Optional view path missing; using default path', [
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:8:app/Controllers/BaseController.php:1223:        log_message('debug', '[VIEW_RESOLUTION] Render configuration', [
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:9:app/Legacy/Auth/Controllers/AuthController.php:1796:        log_message('debug', '[AUTH_RENDER] Final render config', [
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:10:app/Libraries/MyMICoin.php:39:        log_message('debug', 'MyMICoin initialized ONCE');
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:11:app/Libraries/MyMIUser.php:55:            log_message('debug', 'MyMIUser L52 - initialized (first log).');
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:12:docs/_aiops/_aiops_all.json:93:                "DEBUG --> [TRACE]",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:13:docs/_aiops/_aiops_all.json:321:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:14:docs/_aiops/_aiops_all.json:407:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:15:docs/_aiops/_aiops_all.json:409:                "DEBUG --> MyMICoin initialized ONCE",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:16:docs/_aiops/_aiops_all.json:2068:                "ERROR --> [404_ROUTE]",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:17:docs/_aiops/_aiops_all.json:3993:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:18:docs/_aiops/_aiops_all.json:4146:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:19:docs/_aiops/_aiops_all.json:4304:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:20:docs/_aiops/_aiops_all.json:5502:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:21:docs/_aiops/_aiops_all.json:5794:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:22:docs/_aiops/_aiops_all.json:6826:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:23:docs/_aiops/_aiops_all.json:6904:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:24:docs/_aiops/_aiops_all.json:7948:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:25:docs/_aiops/_aiops_all.json:8082:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:26:docs/_aiops/_aiops_all.json:8818:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:27:docs/_aiops/_aiops_all.json:8906:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:28:docs/_aiops/_aiops_all.json:10122:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:29:docs/_aiops/_aiops_all.json:10884:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:30:docs/_aiops/_aiops_all.json:13717:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:31:docs/_aiops/_aiops_all.json:13923:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:32:docs/_aiops/_aiops_all.json:15281:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:33:docs/_aiops/_aiops_all.json:15951:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:34:docs/_aiops/_aiops_all.json:16405:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:35:docs/_aiops/_aiops_all.json:16875:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:36:docs/_aiops/_aiops_all.json:21442:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:37:docs/_aiops/_aiops_all.json:21600:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:38:docs/_aiops/_aiops_all.json:23198:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:39:docs/_aiops/_aiops_all.json:23424:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:40:docs/_aiops/_aiops_all.json:24027:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:41:docs/_aiops/_aiops_all.json:24501:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:42:docs/_aiops/_aiops_all.json:31050:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:43:docs/_aiops/_aiops_all.json:31330:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:44:docs/_aiops/_aiops_all.json:31661:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:45:docs/_aiops/_aiops_all.json:34416:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:46:docs/_aiops/_aiops_all.json:34418:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:47:docs/_aiops/_aiops_all.json:37224:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:48:docs/_aiops/_aiops_all.json:38875:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:49:docs/_aiops/_aiops_all.json:39163:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:50:docs/_aiops/_aiops_all.json:39743:            "line": "ERROR --> [404_ROUTE]"
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:51:docs/_aiops/_aiops_all.md:120:- **summary-2026-03-31.log** [pattern: 404] ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:52:docs/_aiops/_error_new_today.json:1880:            "normalized_message": "ERROR --> [404_ROUTE]",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:53:docs/_aiops/_error_new_today.json:1881:            "raw_message": "ERROR --> [404_ROUTE]",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:54:docs/_aiops/_error_new_today.md:113:- [ci4] ERROR --> [404_ROUTE] (n/a:n/a)
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:55:docs/_aiops/_error_summary.json:1894:            "normalized_message": "ERROR --> [404_ROUTE]",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:56:docs/_aiops/_error_summary.json:1895:            "raw_message": "ERROR --> [404_ROUTE]",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:57:docs/_aiops/_error_summary.md:119:- [ci4] ERROR --> [404_ROUTE] (n/a:n/a)
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:58:docs/_aiops/error-input/summary-2026-04-19.log:80:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:59:docs/_aiops/error-input/summary-2026-04-19.log:137:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:60:docs/_aiops/error-input/summary-2026-04-19.log:140:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:61:docs/_aiops/error-input/summary-2026-04-19.log:4211:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:62:docs/_aiops/error-input/summary-2026-04-19.log:4214:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:63:docs/_aiops/error-input/summary-2026-04-19.log:4217:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:64:docs/_aiops/error-input/summary-2026-04-19.log:46742:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:65:docs/_aiops/error-input/summary-2026-04-19.log:46759:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:66:docs/_aiops/error-input/summary-2026-04-19.log:46831:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:67:docs/_aiops/error-input/summary-2026-04-19.log:46894:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:68:docs/_aiops/error-input/summary-2026-04-19.log:46897:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:69:docs/_aiops/error-input/summary-2026-04-19.log:47104:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:70:docs/_aiops/error-input/summary-2026-04-19.log:47107:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:71:docs/_aiops/error-input/summary-2026-04-19.log:47110:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:72:docs/_aiops/error-input/summary-2026-04-19.log:50416:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:73:docs/_aiops/error-input/summary-2026-04-19.log:50424:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:74:docs/_aiops/error-input/summary-2026-04-20.log:53:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:75:docs/_aiops/error-input/summary-2026-04-20.log:59:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:76:docs/_aiops/error-input/summary-2026-04-20.log:62:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:77:docs/_aiops/error-input/summary-2026-04-20.log:65:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:78:docs/_aiops/error-input/summary-2026-04-20.log:1715:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:79:docs/_aiops/error-input/summary-2026-04-20.log:1718:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:80:docs/_aiops/error-input/summary-2026-04-20.log:9995:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:81:docs/_aiops/error-input/summary-2026-04-20.log:10003:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:82:docs/_aiops/error-input/summary-2026-04-20.log:10069:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:83:docs/_aiops/error-input/summary-2026-04-20.log:10531:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:84:docs/_aiops/error-input/summary-2026-04-20.log:10534:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:85:docs/_aiops/error-input/summary-2026-04-20.log:10876:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:86:docs/_aiops/error-input/summary-2026-04-20.log:10879:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:87:docs/_aiops/error-input/summary-2026-04-20.log:10882:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:88:docs/_aiops/error-input/summary-2026-04-20.log:12601:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:89:docs/_aiops/error-input/summary-2026-04-20.log:12609:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:90:docs/_aiops/error-input/summary-2026-04-21.log:68:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:91:docs/_aiops/error-input/summary-2026-04-21.log:74:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:92:docs/_aiops/error-input/summary-2026-04-21.log:77:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:93:docs/_aiops/error-input/summary-2026-04-21.log:110:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:94:docs/_aiops/error-input/summary-2026-04-21.log:113:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:95:docs/_aiops/error-input/summary-2026-04-21.log:116:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:96:docs/_aiops/error-input/summary-2026-04-21.log:10850:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:97:docs/_aiops/error-input/summary-2026-04-21.log:10858:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:98:docs/_aiops/error-input/summary-2026-04-22.log:68:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:99:docs/_aiops/error-input/summary-2026-04-22.log:74:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:100:docs/_aiops/error-input/summary-2026-04-22.log:77:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:101:docs/_aiops/error-input/summary-2026-04-22.log:1307:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:102:docs/_aiops/error-input/summary-2026-04-22.log:1310:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:103:docs/_aiops/error-input/summary-2026-04-22.log:1313:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:104:docs/_aiops/error-input/summary-2026-04-22.log:6545:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:105:docs/_aiops/error-input/summary-2026-04-22.log:6553:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:106:docs/_aiops/error-input/summary-2026-04-23.log:71:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:107:docs/_aiops/error-input/summary-2026-04-23.log:77:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:108:docs/_aiops/error-input/summary-2026-04-23.log:80:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:109:docs/_aiops/error-input/summary-2026-04-23.log:83:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:110:docs/_aiops/error-input/summary-2026-04-23.log:521:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:111:docs/_aiops/error-input/summary-2026-04-23.log:524:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:112:docs/_aiops/error-input/summary-2026-04-23.log:4080:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:113:docs/_aiops/error-input/summary-2026-04-23.log:4088:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:114:docs/_aiops/error-input/summary-2026-04-23.log:4149:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:115:docs/_aiops/error-input/summary-2026-04-23.log:4155:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:116:docs/_aiops/error-input/summary-2026-04-23.log:4161:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:117:docs/_aiops/error-input/summary-2026-04-23.log:5745:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:118:docs/_aiops/error-input/summary-2026-04-23.log:5748:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:119:docs/_aiops/error-input/summary-2026-04-23.log:7309:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:120:docs/_aiops/error-input/summary-2026-04-23.log:7320:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:121:docs/_aiops/error-input/summary-2026-04-24.log:47:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:122:docs/_aiops/error-input/summary-2026-04-24.log:53:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:123:docs/_aiops/error-input/summary-2026-04-24.log:62:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:124:docs/_aiops/error-input/summary-2026-04-24.log:1085:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:125:docs/_aiops/error-input/summary-2026-04-24.log:1088:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:126:docs/_aiops/error-input/summary-2026-04-24.log:1181:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:127:docs/_aiops/error-input/summary-2026-04-24.log:26036:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:128:docs/_aiops/error-input/summary-2026-04-24.log:26053:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:129:docs/_aiops/error-input/summary-2026-04-24.log:26098:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:130:docs/_aiops/error-input/summary-2026-04-24.log:26185:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:131:docs/_aiops/error-input/summary-2026-04-24.log:26188:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:132:docs/_aiops/error-input/summary-2026-04-24.log:26191:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:133:docs/_aiops/error-input/summary-2026-04-24.log:30205:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:134:docs/_aiops/error-input/summary-2026-04-25.log:65:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:135:docs/_aiops/error-input/summary-2026-04-25.log:68:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:136:docs/_aiops/error-input/summary-2026-04-25.log:77:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:137:docs/_aiops/error-input/summary-2026-04-25.log:470:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:138:docs/_aiops/error-input/summary-2026-04-25.log:473:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:139:docs/_aiops/error-input/summary-2026-04-25.log:13742:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:140:docs/_aiops/error-input/summary-2026-04-25.log:22497:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:141:docs/_aiops/error-input/summary-2026-04-25.log:22505:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:142:docs/_aiops/error-input/summary-2026-04-26.log:77:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:143:docs/_aiops/error-input/summary-2026-04-26.log:233:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:144:docs/_aiops/error-input/summary-2026-04-26.log:236:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:145:docs/_aiops/error-input/summary-2026-04-26.log:2039:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:146:docs/_aiops/error-input/summary-2026-04-26.log:2042:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:147:docs/_aiops/error-input/summary-2026-04-26.log:2045:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:148:docs/_aiops/error-input/summary-2026-04-26.log:3645:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:149:docs/_aiops/error-input/summary-2026-04-26.log:3653:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:150:docs/_aiops/error-input/summary-2026-04-27.log:95:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:151:docs/_aiops/error-input/summary-2026-04-27.log:101:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:152:docs/_aiops/error-input/summary-2026-04-27.log:104:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:153:docs/_aiops/error-input/summary-2026-04-27.log:152:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:154:docs/_aiops/error-input/summary-2026-04-27.log:155:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:155:docs/_aiops/error-input/summary-2026-04-27.log:158:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:156:docs/_aiops/error-input/summary-2026-04-27.log:3641:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:157:docs/_aiops/error-input/summary-2026-04-27.log:3652:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:158:docs/_aiops/error-input/summary-2026-04-28.log:65:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:159:docs/_aiops/error-input/summary-2026-04-28.log:71:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:160:docs/_aiops/error-input/summary-2026-04-28.log:74:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:161:docs/_aiops/error-input/summary-2026-04-28.log:77:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:162:docs/_aiops/error-input/summary-2026-04-28.log:419:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:163:docs/_aiops/error-input/summary-2026-04-28.log:422:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:164:docs/_aiops/error-input/summary-2026-04-28.log:20828:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:165:docs/_aiops/error-input/summary-2026-04-28.log:20836:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:166:docs/_aiops/error-input/summary-2026-04-28.log:20890:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:167:docs/_aiops/error-input/summary-2026-04-28.log:21070:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:168:docs/_aiops/error-input/summary-2026-04-28.log:21073:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:169:docs/_aiops/error-input/summary-2026-04-28.log:21076:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:170:docs/_aiops/error-input/summary-2026-04-28.log:22942:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:171:docs/_aiops/error-input/summary-2026-04-28.log:22945:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:172:docs/_aiops/error-input/summary-2026-04-28.log:34960:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:173:docs/_aiops/error-input/summary-2026-04-28.log:34968:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:174:docs/_aiops/error-input/summary-2026-04-29.log:56:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:175:docs/_aiops/error-input/summary-2026-04-29.log:62:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:176:docs/_aiops/error-input/summary-2026-04-29.log:65:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:177:docs/_aiops/error-input/summary-2026-04-29.log:68:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:178:docs/_aiops/error-input/summary-2026-04-29.log:971:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:179:docs/_aiops/error-input/summary-2026-04-29.log:974:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:180:docs/_aiops/error-input/summary-2026-04-29.log:5396:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:181:docs/_aiops/error-input/summary-2026-04-29.log:5419:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:182:docs/_aiops/error-input/summary-2026-04-29.log:5473:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:183:docs/_aiops/error-input/summary-2026-04-29.log:5512:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:184:docs/_aiops/error-input/summary-2026-04-29.log:5515:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:185:docs/_aiops/error-input/summary-2026-04-29.log:5518:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:186:docs/_aiops/error-input/summary-2026-04-29.log:5647:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:187:docs/_aiops/error-input/summary-2026-04-29.log:5650:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:188:docs/_aiops/error-input/summary-2026-04-29.log:7015:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:189:docs/_aiops/error-input/summary-2026-04-29.log:7023:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:190:docs/_aiops/error-input/summary-2026-04-30.log:104:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:191:docs/_aiops/error-input/summary-2026-04-30.log:167:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:192:docs/_aiops/error-input/summary-2026-04-30.log:170:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:193:docs/_aiops/error-input/summary-2026-04-30.log:173:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:194:docs/_aiops/error-input/summary-2026-04-30.log:281:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:195:docs/_aiops/error-input/summary-2026-04-30.log:284:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:196:docs/_aiops/error-input/summary-2026-04-30.log:1434:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:197:docs/_aiops/error-input/summary-2026-04-30.log:1442:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:198:docs/_aiops/error-input/summary-2026-05-01.log:83:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:199:docs/_aiops/error-input/summary-2026-05-01.log:173:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:200:docs/_aiops/error-input/summary-2026-05-01.log:176:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:201:docs/_aiops/error-input/summary-2026-05-01.log:350:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:202:docs/_aiops/error-input/summary-2026-05-01.log:353:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:203:docs/_aiops/error-input/summary-2026-05-01.log:356:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:204:docs/_aiops/error-input/summary-2026-05-01.log:1263:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:205:docs/_aiops/error-input/summary-2026-05-01.log:1271:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:206:docs/_aiops/error-input/summary-2026-05-02.log:101:DEBUG --> [TRACE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:207:docs/_aiops/error-input/summary-2026-05-02.log:107:DEBUG --> [VIEW_RESOLUTION] Render configuration
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:208:docs/_aiops/error-input/summary-2026-05-02.log:110:DEBUG --> [AUTH_RENDER] Final render config
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:209:docs/_aiops/error-input/summary-2026-05-02.log:2351:DEBUG --> MyMIUser L52 - initialized (first log).
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:210:docs/_aiops/error-input/summary-2026-05-02.log:2354:DEBUG --> [SERVICE] App\Services\BudgetService ::setUserId
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:211:docs/_aiops/error-input/summary-2026-05-02.log:2357:DEBUG --> MyMICoin initialized ONCE
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:212:docs/_aiops/error-input/summary-2026-05-02.log:4962:NOTICE --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:213:docs/_aiops/error-input/summary-2026-05-02.log:4970:WARNING --> Optional view path missing; using default path
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:214:docs/_aiops/error-input/summary-2026-05-02.log:4978:ERROR --> [404_ROUTE]
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:215:docs/_aiops/instructions/fix-log-noise-route-hygiene-2026-05-30.md:4:Fix MyMI Wallet production log noise and misleading `[404_ROUTE]` errors found in the 2026-05-29 and 2026-05-30 logs.
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:216:docs/_aiops/instructions/fix-log-noise-route-hygiene-2026-05-30.md:7:Current logs show repeated `HEAD /` requests being logged as `ERROR [404_ROUTE]`, noisy debug output, missing/legacy routes, security probes, optional view fallback warning spam, and one slow `/How-It-Works/alerts` request.
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:217:docs/_aiops/instructions/fix-log-noise-route-hygiene-2026-05-30.md:21:1. Locate emitters for `[404_ROUTE]`, `[TRACE]`, `Optional view path missing`, `[VIEW_RESOLUTION]`, `[AUTH_RENDER]`, `MyMICoin initialized ONCE`, `BudgetService ::setUserId`, and `MyMIUser L52`.
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:218:docs/_aiops/instructions/fix-log-noise-route-hygiene-2026-05-30.md:23:3. Replace duplicate generic `[404_ROUTE]` logs with one structured log per request.
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:219:docs/_aiops/instructions/fix-log-noise-route-hygiene-2026-05-30.md:50:HEAD / no longer creates ERROR [404_ROUTE].
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:220:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:4:app/Config/Routes.php:69:    log_message($isHostileProbe ? 'notice' : 'error', '[404_ROUTE]', [
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:221:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:5:app/Controllers/AuthController.php:2188:        log_message('debug', '[AUTH_RENDER] Final render config', [
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:222:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:6:app/Controllers/BaseController.php:199:        log_message('debug', '[TRACE]', [
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:223:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:7:app/Controllers/BaseController.php:1195:            $this->logRenderFailureToChannels('warning', 'Optional view path missing; using default path', [
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:224:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:8:app/Controllers/BaseController.php:1223:        log_message('debug', '[VIEW_RESOLUTION] Render configuration', [
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:225:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:9:app/Legacy/Auth/Controllers/AuthController.php:1796:        log_message('debug', '[AUTH_RENDER] Final render config', [
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:226:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:10:app/Libraries/MyMICoin.php:39:        log_message('debug', 'MyMICoin initialized ONCE');
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:227:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:11:app/Libraries/MyMIUser.php:55:            log_message('debug', 'MyMIUser L52 - initialized (first log).');
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:228:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:12:docs/_aiops/_aiops_all.json:93:                "DEBUG --> [TRACE]",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:229:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:13:docs/_aiops/_aiops_all.json:321:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:230:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:14:docs/_aiops/_aiops_all.json:407:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:231:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:15:docs/_aiops/_aiops_all.json:409:                "DEBUG --> MyMICoin initialized ONCE",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:232:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:16:docs/_aiops/_aiops_all.json:2068:                "ERROR --> [404_ROUTE]",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:233:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:17:docs/_aiops/_aiops_all.json:3993:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:234:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:18:docs/_aiops/_aiops_all.json:4146:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:235:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:19:docs/_aiops/_aiops_all.json:4304:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:236:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:20:docs/_aiops/_aiops_all.json:5502:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:237:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:21:docs/_aiops/_aiops_all.json:5794:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:238:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:22:docs/_aiops/_aiops_all.json:6826:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:239:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:23:docs/_aiops/_aiops_all.json:6904:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:240:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:24:docs/_aiops/_aiops_all.json:7948:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:241:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:25:docs/_aiops/_aiops_all.json:8082:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:242:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:26:docs/_aiops/_aiops_all.json:8818:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:243:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:27:docs/_aiops/_aiops_all.json:8906:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:244:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:28:docs/_aiops/_aiops_all.json:10122:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:245:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:29:docs/_aiops/_aiops_all.json:10884:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:246:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:30:docs/_aiops/_aiops_all.json:13717:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:247:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:31:docs/_aiops/_aiops_all.json:13923:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:248:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:32:docs/_aiops/_aiops_all.json:15281:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:249:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:33:docs/_aiops/_aiops_all.json:15951:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:250:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:34:docs/_aiops/_aiops_all.json:16405:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:251:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:35:docs/_aiops/_aiops_all.json:16875:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:252:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:36:docs/_aiops/_aiops_all.json:21442:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:253:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:37:docs/_aiops/_aiops_all.json:21600:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:254:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:38:docs/_aiops/_aiops_all.json:23198:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:255:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:39:docs/_aiops/_aiops_all.json:23424:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:256:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:40:docs/_aiops/_aiops_all.json:24027:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:257:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:41:docs/_aiops/_aiops_all.json:24501:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:258:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:42:docs/_aiops/_aiops_all.json:31050:                "DEBUG --> MyMIUser L52 - initialized (first log).",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:259:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:43:docs/_aiops/_aiops_all.json:31330:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:260:docs/_aiops/validation/baseline-log-noise-route-hygiene-2026-05-30.txt:44:docs/_aiops/_aiops_all.json:31661:                "DEBUG --> [SERVICE] App\\Services\\BudgetService ::setUserId",
+docs/_baseline/auth/current/files/app_Config_Routes.php:57:    log_message('error', '[404_ROUTE]', [
+docs/_baseline/auth/current/files/app_Controllers_AuthController.php:2160:        log_message('debug', '[AUTH_RENDER] Final render config', [
+docs/reports/autofix_report.md:7:| ERROR - 2026-03-31 12:12:14 --> [404_ROUTE] | 2 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:10:| ERROR - 2026-03-31 00:01:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:12:| ERROR - 2026-03-31 00:06:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:14:| ERROR - 2026-03-31 00:11:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:17:| ERROR - 2026-03-31 00:16:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:19:| ERROR - 2026-03-31 00:21:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:21:| ERROR - 2026-03-31 00:26:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:23:| ERROR - 2026-03-31 00:31:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:25:| ERROR - 2026-03-31 00:36:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:27:| ERROR - 2026-03-31 00:41:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:29:| ERROR - 2026-03-31 00:46:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:31:| ERROR - 2026-03-31 00:51:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:33:| ERROR - 2026-03-31 00:56:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:37:| ERROR - 2026-03-31 01:01:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:39:| ERROR - 2026-03-31 01:06:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:42:| ERROR - 2026-03-31 01:11:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:46:| ERROR - 2026-03-31 01:16:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:49:| ERROR - 2026-03-31 01:21:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:52:| ERROR - 2026-03-31 01:26:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:55:| ERROR - 2026-03-31 01:31:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:57:| ERROR - 2026-03-31 01:36:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:61:| ERROR - 2026-03-31 01:41:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:63:| ERROR - 2026-03-31 01:46:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:65:| ERROR - 2026-03-31 01:51:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:67:| ERROR - 2026-03-31 01:56:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:70:| ERROR - 2026-03-31 02:01:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:72:| ERROR - 2026-03-31 02:06:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:74:| ERROR - 2026-03-31 02:11:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:77:| ERROR - 2026-03-31 02:16:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:80:| ERROR - 2026-03-31 02:21:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:82:| ERROR - 2026-03-31 02:26:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:84:| ERROR - 2026-03-31 02:31:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:86:| ERROR - 2026-03-31 02:36:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:88:| ERROR - 2026-03-31 02:41:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:90:| ERROR - 2026-03-31 02:46:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:92:| ERROR - 2026-03-31 02:51:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:94:| ERROR - 2026-03-31 02:56:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:97:| ERROR - 2026-03-31 03:01:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:99:| ERROR - 2026-03-31 03:06:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:101:| ERROR - 2026-03-31 03:11:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:105:| ERROR - 2026-03-31 03:16:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:107:| ERROR - 2026-03-31 03:21:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:109:| ERROR - 2026-03-31 03:26:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:112:| ERROR - 2026-03-31 03:31:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:114:| ERROR - 2026-03-31 03:36:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:116:| ERROR - 2026-03-31 03:41:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:119:| ERROR - 2026-03-31 03:46:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:122:| ERROR - 2026-03-31 03:51:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:124:| ERROR - 2026-03-31 03:56:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:127:| ERROR - 2026-03-31 04:01:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:129:| ERROR - 2026-03-31 04:06:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:131:| ERROR - 2026-03-31 04:11:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:134:| ERROR - 2026-03-31 04:16:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:136:| ERROR - 2026-03-31 04:21:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:138:| ERROR - 2026-03-31 04:26:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:140:| ERROR - 2026-03-31 04:31:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:142:| ERROR - 2026-03-31 04:36:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:144:| ERROR - 2026-03-31 04:41:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:146:| ERROR - 2026-03-31 04:46:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:148:| ERROR - 2026-03-31 04:51:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:150:| ERROR - 2026-03-31 04:56:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:153:| ERROR - 2026-03-31 05:01:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:155:| ERROR - 2026-03-31 05:06:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:157:| ERROR - 2026-03-31 05:11:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:160:| ERROR - 2026-03-31 05:16:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:162:| ERROR - 2026-03-31 05:21:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:164:| ERROR - 2026-03-31 05:26:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:166:| ERROR - 2026-03-31 05:31:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:168:| ERROR - 2026-03-31 05:36:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:170:| ERROR - 2026-03-31 05:41:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:172:| ERROR - 2026-03-31 05:46:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:174:| ERROR - 2026-03-31 05:51:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:176:| ERROR - 2026-03-31 05:56:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:179:| ERROR - 2026-03-31 06:01:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:181:| ERROR - 2026-03-31 06:06:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:183:| ERROR - 2026-03-31 06:09:30 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:185:| ERROR - 2026-03-31 06:11:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:188:| ERROR - 2026-03-31 06:16:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:190:| ERROR - 2026-03-31 06:21:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:192:| ERROR - 2026-03-31 06:26:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:195:| ERROR - 2026-03-31 06:31:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:197:| ERROR - 2026-03-31 06:36:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:199:| ERROR - 2026-03-31 06:41:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:201:| ERROR - 2026-03-31 06:46:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:203:| ERROR - 2026-03-31 06:51:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:205:| ERROR - 2026-03-31 06:56:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:209:| ERROR - 2026-03-31 07:01:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:211:| ERROR - 2026-03-31 07:06:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:213:| ERROR - 2026-03-31 07:11:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:216:| ERROR - 2026-03-31 07:16:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:218:| ERROR - 2026-03-31 07:21:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:220:| ERROR - 2026-03-31 07:26:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:222:| ERROR - 2026-03-31 07:31:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:225:| ERROR - 2026-03-31 07:36:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:227:| ERROR - 2026-03-31 07:41:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:229:| ERROR - 2026-03-31 07:46:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:231:| ERROR - 2026-03-31 07:51:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:233:| ERROR - 2026-03-31 07:56:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:236:| ERROR - 2026-03-31 08:01:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:238:| ERROR - 2026-03-31 08:06:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:241:| ERROR - 2026-03-31 08:11:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:244:| ERROR - 2026-03-31 08:16:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:246:| ERROR - 2026-03-31 08:21:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:248:| ERROR - 2026-03-31 08:26:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:252:| ERROR - 2026-03-31 08:31:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:255:| ERROR - 2026-03-31 08:36:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:257:| ERROR - 2026-03-31 08:41:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:260:| ERROR - 2026-03-31 08:46:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:262:| ERROR - 2026-03-31 08:51:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:265:| ERROR - 2026-03-31 08:56:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:268:| ERROR - 2026-03-31 09:01:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:271:| ERROR - 2026-03-31 09:06:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:273:| ERROR - 2026-03-31 09:11:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:276:| ERROR - 2026-03-31 09:16:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:278:| ERROR - 2026-03-31 09:21:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:281:| ERROR - 2026-03-31 09:26:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:283:| ERROR - 2026-03-31 09:31:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:285:| ERROR - 2026-03-31 09:36:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:287:| ERROR - 2026-03-31 09:41:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:289:| ERROR - 2026-03-31 09:46:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:291:| ERROR - 2026-03-31 09:51:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:293:| ERROR - 2026-03-31 09:56:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:296:| ERROR - 2026-03-31 10:01:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:298:| ERROR - 2026-03-31 10:06:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:300:| ERROR - 2026-03-31 10:11:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:303:| ERROR - 2026-03-31 10:16:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:305:| ERROR - 2026-03-31 10:21:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:307:| ERROR - 2026-03-31 10:26:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:309:| ERROR - 2026-03-31 10:31:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:311:| ERROR - 2026-03-31 10:36:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:313:| ERROR - 2026-03-31 10:41:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:316:| ERROR - 2026-03-31 10:46:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:318:| ERROR - 2026-03-31 10:51:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:320:| ERROR - 2026-03-31 10:56:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:323:| ERROR - 2026-03-31 10:59:51 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:326:| ERROR - 2026-03-31 11:01:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:329:| ERROR - 2026-03-31 11:06:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:331:| ERROR - 2026-03-31 11:11:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:334:| ERROR - 2026-03-31 11:16:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:336:| ERROR - 2026-03-31 11:21:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:338:| ERROR - 2026-03-31 11:26:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:340:| ERROR - 2026-03-31 11:31:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:342:| ERROR - 2026-03-31 11:36:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:346:| ERROR - 2026-03-31 11:41:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:348:| ERROR - 2026-03-31 11:46:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:350:| ERROR - 2026-03-31 11:51:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:352:| ERROR - 2026-03-31 11:56:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:355:| ERROR - 2026-03-31 12:01:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:357:| ERROR - 2026-03-31 12:06:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:359:| ERROR - 2026-03-31 12:11:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:362:| ERROR - 2026-03-31 12:16:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:365:| ERROR - 2026-03-31 12:18:11 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:367:| ERROR - 2026-03-31 12:21:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:369:| ERROR - 2026-03-31 12:26:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:371:| ERROR - 2026-03-31 12:31:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:373:| ERROR - 2026-03-31 12:36:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:375:| ERROR - 2026-03-31 12:41:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:379:| ERROR - 2026-03-31 12:46:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+docs/reports/autofix_report.md:380:| ERROR - 2026-03-31 12:51:22 --> [404_ROUTE] | 1 | missing_route |  | medium | Add explicit route alias or redirect for missed URI variants. |
+
+===== ROUTE BASELINE =====
+
+===== GIT STATUS =====
+?? docs/_aiops/instructions/fix-log-noise-route-hygiene-2026-05-30.md
+?? docs/_aiops/validation/

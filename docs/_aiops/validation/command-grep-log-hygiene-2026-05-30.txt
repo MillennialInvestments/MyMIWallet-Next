@@ -1,0 +1,2176 @@
+app/Commands/AIOps/API/README.md:17:- `logs:summarize`
+app/Commands/AIOps/API/README.md:45:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/API/README.md:70:- `php spark logs:summarize`
+app/Commands/AIOps/API/README.md:95:- `logs:summarize`
+app/Commands/AIOps/API/SchemaValidate.php:8:class SchemaValidate extends SafeBaseCommand
+app/Commands/AIOps/AiopsRepairs.php:12:class AiopsRepairs extends SafeBaseCommand
+app/Commands/AIOps/Alerts/Check.php:10:class Check extends SafeBaseCommand
+app/Commands/AIOps/Alerts/Clean.php:9:class Clean extends SafeBaseCommand
+app/Commands/AIOps/Alerts/Health.php:10:class Health extends SafeBaseCommand
+app/Commands/AIOps/Alerts/README.md:20:- `logs:summarize`
+app/Commands/AIOps/Alerts/README.md:80:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Alerts/README.md:112:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Alerts/README.md:144:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Alerts/README.md:184:- `php spark logs:summarize`
+app/Commands/AIOps/Alerts/README.md:210:- `logs:summarize`
+app/Commands/AIOps/Alerts/Worker.php:10:class Worker extends SafeBaseCommand
+app/Commands/AIOps/All.php:15:class All extends SafeBaseCommand
+app/Commands/AIOps/Audit.php:10:class Audit extends SafeBaseCommand
+app/Commands/AIOps/AutoFixAnalyze.php:10:class AutoFixAnalyze extends SafeBaseCommand
+app/Commands/AIOps/AutoRun.php:13:class AutoRun extends SafeBaseCommand
+app/Commands/AIOps/AutoRun.php:94:            $result['ollama_patch'] = $patchResult->toArray();
+app/Commands/AIOps/Backlog.php:13:class Backlog extends SafeBaseCommand
+app/Commands/AIOps/Backlog.php:94:                            $action = 'reran ollama patch runner';
+app/Commands/AIOps/BuildCommand.php:10:class BuildCommand extends SafeBaseCommand
+app/Commands/AIOps/ChatGovernanceIndex.php:10:class ChatGovernanceIndex extends SafeBaseCommand
+app/Commands/AIOps/CommandIndex.php:12:class CommandIndex extends SafeBaseCommand
+app/Commands/AIOps/ContinueAudit.php:11:class ContinueAudit extends SafeBaseCommand
+app/Commands/AIOps/CopilotValidate.php:12:class CopilotValidate extends SafeBaseCommand
+app/Commands/AIOps/CspAudit.php:10:class CspAudit extends SafeBaseCommand
+app/Commands/AIOps/DB/README.md:17:- `logs:summarize`
+app/Commands/AIOps/DB/README.md:45:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/DB/README.md:70:- `php spark logs:summarize`
+app/Commands/AIOps/DB/README.md:95:- `logs:summarize`
+app/Commands/AIOps/DB/SlowScan.php:8:class SlowScan extends SafeBaseCommand
+app/Commands/AIOps/DedupeReport.php:10:class DedupeReport extends SafeBaseCommand
+app/Commands/AIOps/DepsAdd.php:9:class DepsAdd extends SafeBaseCommand
+app/Commands/AIOps/DiffFormat.php:8:class DiffFormat extends SafeBaseCommand
+app/Commands/AIOps/Docs/AutoSync.php:10:class AutoSync extends SafeBaseCommand
+app/Commands/AIOps/Docs/README.md:17:- `logs:summarize`
+app/Commands/AIOps/Docs/README.md:72:- `php spark logs:summarize`
+app/Commands/AIOps/Docs/README.md:98:- `logs:summarize`
+app/Commands/AIOps/Doctor.php:10:class Doctor extends SafeBaseCommand
+app/Commands/AIOps/EmailScan.php:14:class EmailScan extends SafeBaseCommand
+app/Commands/AIOps/Errors.php:9:class Errors extends SafeBaseCommand
+app/Commands/AIOps/ExecuteDocs.php:11:class ExecuteDocs extends SafeBaseCommand
+app/Commands/AIOps/Forms/README.md:16:- `logs:summarize`
+app/Commands/AIOps/Forms/README.md:35:- `php spark logs:summarize`
+app/Commands/AIOps/Forms/README.md:60:- `logs:summarize`
+app/Commands/AIOps/Forms/TestScan.php:14:class TestScan extends SafeBaseCommand
+app/Commands/AIOps/Forms/TestScan.php:25:        '--no-ingest' => 'Do not call aiops:ingest after creating a patch job.',
+app/Commands/AIOps/GateCost.php:9:class GateCost extends SafeBaseCommand
+app/Commands/AIOps/GovernanceAnalyze.php:8:class GovernanceAnalyze extends SafeBaseCommand
+app/Commands/AIOps/HealthFull.php:8:class HealthFull extends SafeBaseCommand
+app/Commands/AIOps/Ingest.php:10:class Ingest extends SafeBaseCommand
+app/Commands/AIOps/Ingest.php:13:    protected $name        = 'aiops:ingest';
+app/Commands/AIOps/Ingest.php:16:    protected $usage = 'aiops:ingest [--text="..."] [--file=/path/file.txt] [--auto-pr] [--dry-run] [--severity=LOW|MEDIUM|HIGH]';
+app/Commands/AIOps/Ingest.php:45:            CLI::write('  php spark aiops:ingest --text="Hello world"');
+app/Commands/AIOps/Ingest.php:46:            CLI::write('  php spark aiops:ingest --file=/tmp/instructions.txt');
+app/Commands/AIOps/Ingest.php:47:            CLI::write('  cat /tmp/instructions.txt | php spark aiops:ingest');
+app/Commands/AIOps/Ingest.php:104:        CLI::write('Next: php spark aiops:worker --once');
+app/Commands/AIOps/Init.php:9:class Init extends SafeBaseCommand
+app/Commands/AIOps/IntegrityScan.php:10:class IntegrityScan extends SafeBaseCommand
+app/Commands/AIOps/LogsErrors.php:11:class LogsErrors extends SafeBaseCommand
+app/Commands/AIOps/LogsErrors.php:90:            ROOTPATH . 'docs/_aiops/ollama/logs/**/*.md',
+app/Commands/AIOps/ManualIndex.php:8:class ManualIndex extends SafeBaseCommand
+app/Commands/AIOps/ManualRun.php:12:class ManualRun extends SafeBaseCommand
+app/Commands/AIOps/MissingViewScan.php:10:class MissingViewScan extends SafeBaseCommand
+app/Commands/AIOps/N8n/Logs.php:3:class Logs extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AIOps - n8n'; protected $name='aiops:n8n:logs'; protected $description='Tail n8n logs'; protected $options=['--lines'=>'Lines','--json'=>'JSON']; public function run(array $params){$this->parseParams($params);$lines=$this->optInt('lines', 200);$r=$this->mgr()->tailLogs('aiops.n8n',$lines); if(!$this->optBool('json')){foreach($r['lines']??[] as $line){CLI::write($line);} } else {$this->emit($r,true);} return ($r['ok']??false)?EXIT_SUCCESS:EXIT_ERROR;}}
+app/Commands/AIOps/N8n/README.md:20:- `logs:summarize`
+app/Commands/AIOps/N8n/README.md:48:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/N8n/README.md:80:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/N8n/README.md:112:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/N8n/README.md:144:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/N8n/README.md:175:- `php spark logs:summarize`
+app/Commands/AIOps/N8n/README.md:200:- `logs:summarize`
+app/Commands/AIOps/N8n/Restart.php:3:class Restart extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AIOps - n8n'; protected $name='aiops:n8n:restart'; protected $description='Restart n8n'; protected $options=['--json'=>'JSON','--dry-run'=>'Dry']; public function run(array $params){$this->parseParams($params);$r=$this->mgr()->restart('aiops.n8n',$this->optBool('dry-run'));$this->emit($r,$this->optBool('json'));return ($r['ok']??false)?EXIT_SUCCESS:EXIT_ERROR;}}
+app/Commands/AIOps/N8n/Start.php:3:class Start extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AIOps - n8n'; protected $name='aiops:n8n:start'; protected $description='Start n8n'; protected $options=['--json'=>'JSON','--dry-run'=>'Dry']; public function run(array $params){$this->parseParams($params);$r=$this->mgr()->start('aiops.n8n',$this->optBool('dry-run'));$this->emit($r,$this->optBool('json'));return ($r['ok']??false)?EXIT_SUCCESS:EXIT_ERROR;}}
+app/Commands/AIOps/N8n/Stop.php:3:class Stop extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AIOps - n8n'; protected $name='aiops:n8n:stop'; protected $description='Stop n8n'; protected $options=['--json'=>'JSON','--dry-run'=>'Dry']; public function run(array $params){$this->parseParams($params);$r=$this->mgr()->stop('aiops.n8n',$this->optBool('dry-run'));$this->emit($r,$this->optBool('json'));return ($r['ok']??false)?EXIT_SUCCESS:EXIT_ERROR;}}
+app/Commands/AIOps/Observe.php:8:class Observe extends SafeBaseCommand
+app/Commands/AIOps/Observe/Cost.php:8:class Cost extends SafeBaseCommand
+app/Commands/AIOps/Observe/Hash.php:9:class Hash extends SafeBaseCommand
+app/Commands/AIOps/Observe/Map.php:8:class Map extends SafeBaseCommand
+app/Commands/AIOps/Observe/Patch.php:8:class Patch extends SafeBaseCommand
+app/Commands/AIOps/Observe/README.md:24:- `logs:summarize`
+app/Commands/AIOps/Observe/README.md:52:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Observe/README.md:84:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Observe/README.md:116:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Observe/README.md:148:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Observe/README.md:212:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Observe/README.md:276:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Observe/README.md:319:- `php spark logs:summarize`
+app/Commands/AIOps/Observe/README.md:345:- `logs:summarize`
+app/Commands/AIOps/Observe/Regression.php:8:class Regression extends SafeBaseCommand
+app/Commands/AIOps/Observe/Scan.php:8:class Scan extends SafeBaseCommand
+app/Commands/AIOps/Observe/Snapshot.php:8:class Snapshot extends SafeBaseCommand
+app/Commands/AIOps/Observe/Suggest.php:9:class Suggest extends SafeBaseCommand
+app/Commands/AIOps/PRAuto.php:8:class PRAuto extends SafeBaseCommand
+app/Commands/AIOps/PRCreate.php:9:class PRCreate extends SafeBaseCommand
+app/Commands/AIOps/Patch/Apply.php:9:class Apply extends SafeBaseCommand
+app/Commands/AIOps/Patch/DryRun.php:8:class DryRun extends SafeBaseCommand
+app/Commands/AIOps/Patch/Hallucination.php:9:class Hallucination extends SafeBaseCommand
+app/Commands/AIOps/Patch/README.md:21:- `logs:summarize`
+app/Commands/AIOps/Patch/README.md:49:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Patch/README.md:113:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Patch/README.md:145:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Patch/README.md:177:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Patch/README.md:212:- `php spark logs:summarize`
+app/Commands/AIOps/Patch/README.md:238:- `logs:summarize`
+app/Commands/AIOps/Patch/RiskScore.php:9:class RiskScore extends SafeBaseCommand
+app/Commands/AIOps/Patch/Validate.php:8:class Validate extends SafeBaseCommand
+app/Commands/AIOps/PriorityBuildCommand.php:13:class PriorityBuildCommand extends SafeBaseCommand
+app/Commands/AIOps/PublicPages/Audit.php:11:class Audit extends SafeBaseCommand
+app/Commands/AIOps/PublicPages/Import.php:11:class Import extends SafeBaseCommand
+app/Commands/AIOps/PublicPages/README.md:20:- `logs:summarize`
+app/Commands/AIOps/PublicPages/README.md:48:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/PublicPages/README.md:80:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/PublicPages/README.md:112:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/PublicPages/README.md:144:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/PublicPages/README.md:189:- `php spark logs:summarize`
+app/Commands/AIOps/PublicPages/README.md:214:- `logs:summarize`
+app/Commands/AIOps/PublicPages/Report.php:11:class Report extends SafeBaseCommand
+app/Commands/AIOps/PublicPages/Run.php:12:class Run extends SafeBaseCommand
+app/Commands/AIOps/PyOps.php:12:class PyOps extends SafeBaseCommand
+app/Commands/AIOps/README.md:32:- `aiops:ingest` (Operational)
+app/Commands/AIOps/README.md:53:- `aiops:worker` (Automation)
+app/Commands/AIOps/README.md:54:- `aiops:worker:logs` (Automation)
+app/Commands/AIOps/README.md:58:- `logs:summarize`
+app/Commands/AIOps/README.md:86:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:118:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:150:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:182:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:214:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:246:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:278:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:310:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:342:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:374:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:438:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:470:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:502:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:519:`--url`, `A URL or path to scan (e.g. "/Budget/Account-Manager").`, `--file`, `An absolute file path on server to scan.`, `--text`, `Raw HTML snippet containing a <form> to scan.`, `--no-ingest`, `Do not call aiops:ingest after creating a patch job.`
+app/Commands/AIOps/README.md:566:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:598:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:630:`aiops:worker`
+app/Commands/AIOps/README.md:662:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:670:### aiops:ingest
+app/Commands/AIOps/README.md:676:`php spark aiops:ingest`
+app/Commands/AIOps/README.md:694:`aiops:ingest`, `aiops:worker`, `aiops:routes:scan`, `aiops:repair:plan`, `aiops:priority:build`
+app/Commands/AIOps/README.md:700:`php spark aiops:ingest`
+app/Commands/AIOps/README.md:726:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:758:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:790:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:822:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:854:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:886:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:918:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:950:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:1046:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:1078:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:1174:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:1206:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:1238:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:1270:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:1334:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:1342:### aiops:worker
+app/Commands/AIOps/README.md:1348:`php spark aiops:worker`
+app/Commands/AIOps/README.md:1366:`aiops:worker`, `aiops:pr:send`, `logs:summarize`, `aiops:worker:logs`
+app/Commands/AIOps/README.md:1372:`php spark aiops:worker`
+app/Commands/AIOps/README.md:1374:### aiops:worker:logs
+app/Commands/AIOps/README.md:1380:`php spark aiops:worker:logs`
+app/Commands/AIOps/README.md:1398:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:1404:`php spark aiops:worker:logs`
+app/Commands/AIOps/README.md:1441:| `aiops:graph:run` | `aiops:worker` | Command → Command |
+app/Commands/AIOps/README.md:1442:| `aiops:ingest` | `App\Services\AIOps\InstructionService` | Command → Service |
+app/Commands/AIOps/README.md:1443:| `aiops:ingest` | `bf_frontend_incidents` | Command → Table |
+app/Commands/AIOps/README.md:1444:| `aiops:ingest` | `parse` | Command → Table |
+app/Commands/AIOps/README.md:1445:| `aiops:ingest` | `aiops:ingest` | Command → Command |
+app/Commands/AIOps/README.md:1446:| `aiops:ingest` | `aiops:worker` | Command → Command |
+app/Commands/AIOps/README.md:1447:| `aiops:ingest` | `aiops:routes:scan` | Command → Command |
+app/Commands/AIOps/README.md:1448:| `aiops:ingest` | `aiops:repair:plan` | Command → Command |
+app/Commands/AIOps/README.md:1449:| `aiops:ingest` | `aiops:priority:build` | Command → Command |
+app/Commands/AIOps/README.md:1485:| `aiops:worker` | `App\Services\AIOps\BranchLockService` | Command → Service |
+app/Commands/AIOps/README.md:1486:| `aiops:worker` | `App\Services\AIOps\DependencyResolver` | Command → Service |
+app/Commands/AIOps/README.md:1487:| `aiops:worker` | `App\Services\AIOps\DiffBuilder` | Command → Service |
+app/Commands/AIOps/README.md:1488:| `aiops:worker` | `App\Services\AIOps\GitHubPRService` | Command → Service |
+app/Commands/AIOps/README.md:1489:| `aiops:worker` | `App\Services\AIOps\GovernanceScorer` | Command → Service |
+app/Commands/AIOps/README.md:1490:| `aiops:worker` | `aiops:worker` | Command → Command |
+app/Commands/AIOps/README.md:1491:| `aiops:worker` | `aiops:pr:send` | Command → Command |
+app/Commands/AIOps/README.md:1492:| `aiops:worker` | `logs:summarize` | Command → Command |
+app/Commands/AIOps/README.md:1493:| `aiops:worker` | `aiops:worker:logs` | Command → Command |
+app/Commands/AIOps/README.md:1494:| `aiops:worker` | `Ollama` | Command → API |
+app/Commands/AIOps/README.md:1495:| `aiops:worker` | `GitHub` | Command → API |
+app/Commands/AIOps/README.md:1496:| `aiops:worker:logs` | `App\Services\AIOps\InstructionService` | Command → Service |
+app/Commands/AIOps/README.md:1497:| `aiops:worker:logs` | `App\Services\Spark\LogSummarizeService` | Command → Service |
+app/Commands/AIOps/README.md:1498:| `aiops:worker:logs` | `App\Models\AIOpsInstructionModel` | Command → Model |
+app/Commands/AIOps/README.md:1529:- `php spark logs:summarize`
+app/Commands/AIOps/README.md:1559:- `aiops:ingest`
+app/Commands/AIOps/Redis/README.md:17:- `logs:summarize`
+app/Commands/AIOps/Redis/README.md:45:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Redis/README.md:70:- `php spark logs:summarize`
+app/Commands/AIOps/Redis/README.md:95:- `logs:summarize`
+app/Commands/AIOps/Redis/Stats.php:8:class Stats extends SafeBaseCommand
+app/Commands/AIOps/Repair.php:4:class Repair extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AIOps - Repair'; protected $name='aiops:repair'; protected $description='Apply safe aiops repairs'; protected $options=['--json'=>'JSON','--dry-run'=>'Dry']; public function run(array $params){$this->parseParams($params);$json=$this->optBool('json');$dry=$this->optBool('dry-run');$actions=[];foreach(['aiops/runtime','chat/runtime'] as $d){if(!is_dir(ROOTPATH.$d)){if(!$dry){mkdir(ROOTPATH.$d,0775,true);} $actions[]="created {$d}";}} if(!is_file(ROOTPATH.'aiops/bridge-8500.js')){ if(!$dry){file_put_contents(ROOTPATH.'aiops/bridge-8500.js',"#!/usr/bin/env node\nconsole.log(JSON.stringify({ok:true,stub:true,ts:new Date().toISOString()}));\n");} $actions[]='created bridge-8500.js stub'; }
+app/Commands/AIOps/RepairRun.php:8:class RepairRun extends SafeBaseCommand
+app/Commands/AIOps/RepairRunSafe.php:8:class RepairRunSafe extends SafeBaseCommand
+app/Commands/AIOps/Rollback.php:8:class Rollback extends SafeBaseCommand
+app/Commands/AIOps/Routes/Compare.php:9:class Compare extends SafeBaseCommand
+app/Commands/AIOps/Routes/Gate.php:8:class Gate extends SafeBaseCommand
+app/Commands/AIOps/Routes/README.md:21:- `logs:summarize`
+app/Commands/AIOps/Routes/README.md:81:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Routes/README.md:113:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Routes/README.md:145:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Routes/README.md:177:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Routes/README.md:214:- `php spark logs:summarize`
+app/Commands/AIOps/Routes/README.md:240:- `logs:summarize`
+app/Commands/AIOps/Routes/Regress.php:8:class Regress extends SafeBaseCommand
+app/Commands/AIOps/Routes/Scan.php:9:class Scan extends SafeBaseCommand
+app/Commands/AIOps/Routes/ScanAuth.php:9:class ScanAuth extends SafeBaseCommand
+app/Commands/AIOps/Run.php:10:class Run extends SafeBaseCommand
+app/Commands/AIOps/RunGraph.php:9:class RunGraph extends SafeBaseCommand
+app/Commands/AIOps/RunGraph.php:38:            passthru('php spark aiops:worker --once');
+app/Commands/AIOps/ScanCells.php:12:class ScanCells extends SafeBaseCommand
+app/Commands/AIOps/Seed.php:9:class Seed extends SafeBaseCommand
+app/Commands/AIOps/SelfHeal.php:3:class SelfHeal extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AIOps - Repair'; protected $name='aiops:self-heal'; protected $description='Run one-pass self-heal'; protected $options=['--attempts'=>'max 3','--json'=>'JSON']; public function run(array $params){$this->parseParams($params);$json=$this->optBool('json');$attempts=max(1,min(3,$this->optInt('attempts', 1)));$lock = ROOTPATH . 'aiops/runtime/selfheal.lock'; if(is_file($lock) && (time()-filemtime($lock))<600){$out=['status'=>'locked','message'=>'self-heal already running'];$this->emit($out,$json);return EXIT_SUCCESS;} file_put_contents($lock,(string)getmypid()); try {$runs=[]; for($i=1;$i<=$attempts;$i++){ $audit=command('aiops:audit --json=1'); $repair=command('aiops:repair --json=1'); $status=command('aiops:status --json=1'); $runs[]=['cycle'=>$i,'audit'=>$audit,'repair'=>$repair,'status'=>$status]; } $md="# Self Heal ".date('c')."\n\nAttempts: {$attempts}\n"; $path=$this->writeDoc('nightly','self-heal-'.date('Y-m-d--Hi').'.md',$md); $out=['status'=>'ok','attempts'=>$attempts,'report'=>$path]; } finally {@unlink($lock);} $this->emit($out,$json); return EXIT_SUCCESS; }}
+app/Commands/AIOps/SqlCheck.php:11:class SqlCheck extends SafeBaseCommand
+app/Commands/AIOps/Status.php:11:class Status extends SafeBaseCommand
+app/Commands/AIOps/SuggestRoutes.php:10:class SuggestRoutes extends SafeBaseCommand
+app/Commands/AIOps/SyncPerfRoutes.php:8:class SyncPerfRoutes extends SafeBaseCommand
+app/Commands/AIOps/Unlock.php:11:class Unlock extends SafeBaseCommand
+app/Commands/AIOps/Watch.php:3:class Watch extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AIOps - Repair'; protected $name='aiops:watch'; protected $description='Continuous aiops audit watcher'; protected $options=['--interval'=>'Seconds','--max-cycles'=>'0 infinite','--heal'=>'Run self-heal']; public function run(array $params){$this->parseParams($params);$interval=max(30,$this->optInt('interval', 900));$max=$this->optInt('max-cycles', 0);$heal=$this->optBool('heal');$i=0; while($max===0 || $i<$max){$i++; CLI::write("[cycle {$i}] ".date('c')); command('aiops:audit --json=1'); if($heal){command('aiops:self-heal --attempts=1 --json=1');} sleep($interval);} return EXIT_SUCCESS; }}
+app/Commands/AIOps/Worker.php:15:class Worker extends SafeBaseCommand
+app/Commands/AIOps/Worker.php:18:    protected $name        = 'aiops:worker';
+app/Commands/AIOps/Worker.php:20:    protected $usage       = 'aiops:worker [--once] [--max=10] [--create-pr=0|1]';
+app/Commands/AIOps/Worker.php:137:                $ollamaPrompt = $outDir . "/ollama_prompt.md";
+app/Commands/AIOps/Worker.php:138:                file_put_contents($ollamaPrompt, $this->buildOllamaPrompt($id, $risk, $gov, $targets, $text));
+app/Commands/AIOps/Worker.php:139:                $generated[] = $ollamaPrompt;
+app/Commands/AIOps/Worker.php:286:            $steps[] = 'php spark aiops:worker --create-pr=1';
+app/Commands/AIOps/Worker.php:291:            $steps[] = 'php spark logs:summarize';
+app/Commands/AIOps/Worker.php:292:            $steps[] = 'php spark aiops:worker:logs';
+app/Commands/AIOps/Worker.php:332:        if (str_contains($t, 'aiops:worker:logs') || str_contains($t, 'logs:summarize --auto-aiops --auto-aiops')) {
+app/Commands/AIOps/Worker.php:336:        return substr_count($t, 'aiops:worker') > 2;
+app/Commands/AIOps/WorkerLogs.php:11:class WorkerLogs extends SafeBaseCommand
+app/Commands/AIOps/WorkerLogs.php:14:    protected $name = 'aiops:worker:logs';
+app/Commands/AIOps/WorkerLogs.php:59:        $args = ['aiops:worker', '--once'];
+app/Commands/API/ApiAudit.php:12:class ApiAudit extends SafeBaseCommand
+app/Commands/API/ApiDiff.php:13:class ApiDiff extends SafeBaseCommand
+app/Commands/API/ApiFiltersCheck.php:11:class ApiFiltersCheck extends SafeBaseCommand
+app/Commands/API/ApiInventory.php:12:class ApiInventory extends SafeBaseCommand
+app/Commands/API/ApiList.php:11:class ApiList extends SafeBaseCommand
+app/Commands/API/ApiPermissions.php:10:class ApiPermissions extends SafeBaseCommand
+app/Commands/API/ApiRateLimitCheck.php:11:class ApiRateLimitCheck extends SafeBaseCommand
+app/Commands/API/ApiResearch.php:11:class ApiResearch extends SafeBaseCommand
+app/Commands/API/ApiTestUrl.php:12:class ApiTestUrl extends SafeBaseCommand
+app/Commands/API/ApiVersioningCheck.php:11:class ApiVersioningCheck extends SafeBaseCommand
+app/Commands/API/DocsScrapeApi.php:13:class DocsScrapeApi extends SafeBaseCommand
+app/Commands/Alerts/Audit.php:11:class Audit extends SafeBaseCommand
+app/Commands/Alerts/FetchRawEmails.php:11:class FetchRawEmails extends SafeBaseCommand
+app/Commands/Alerts/Forecast.php:8:class Forecast extends SafeBaseCommand
+app/Commands/Alerts/Ingest.php:14:class Ingest extends SafeBaseCommand
+app/Commands/Alerts/ParseTest.php:9:class ParseTest extends SafeBaseCommand
+app/Commands/App/APIAuditPro.php:10:class APIAuditPro extends SafeBaseCommand
+app/Commands/App/APIList.php:8:class APIList extends SafeBaseCommand
+app/Commands/App/ControllerAudit.php:10:class ControllerAudit extends SafeBaseCommand
+app/Commands/App/CoverageGate.php:8:class CoverageGate extends SafeBaseCommand
+app/Commands/App/Healthcheck.php:9:class Healthcheck extends SafeBaseCommand
+app/Commands/App/Test.php:8:class Test extends SafeBaseCommand
+app/Commands/AppUpdate.php:7:class AppUpdate extends SafeBaseCommand
+app/Commands/Audit/All.php:8:class All extends SafeBaseCommand
+app/Commands/Audit/NodeAudit.php:8:class NodeAudit extends SafeBaseCommand
+app/Commands/Audit/Psr4.php:11:class Psr4 extends SafeBaseCommand
+app/Commands/Auth/Audit.php:9:class Audit extends SafeBaseCommand
+app/Commands/Auth/BaselineCapture.php:11:class BaselineCapture extends SafeBaseCommand
+app/Commands/Auth/BaselineDiff.php:11:class BaselineDiff extends SafeBaseCommand
+app/Commands/Auth/BaselineRestore.php:11:class BaselineRestore extends SafeBaseCommand
+app/Commands/Auth/FlowSmoke.php:13:class FlowSmoke extends SafeBaseCommand
+app/Commands/Auth/FunnelCheck.php:13:class FunnelCheck extends SafeBaseCommand
+app/Commands/Auth/Smoke.php:11:class Smoke extends SafeBaseCommand
+app/Commands/Auth/SmokeTest.php:11:class SmokeTest extends SafeBaseCommand
+app/Commands/Auth/SurfaceScan.php:11:class SurfaceScan extends SafeBaseCommand
+app/Commands/CacheAudit.php:10:class CacheAudit extends SafeBaseCommand
+app/Commands/Chat/Audit.php:3:class Audit extends SafeBaseCommand { use SubsCommandTrait; protected $group='Chat'; protected $name='chat:audit'; protected $description='Chat audit'; protected $options=['--json'=>'JSON']; public function run(array $params){$this->parseParams($params);$issues=[];foreach(['chat/server.js','chat/bin/chat-start-safe.sh','chat/bin/chat-stop-safe.sh'] as $f){if(!is_file(ROOTPATH.$f)){$issues[]="Missing {$f}";}} $report=['status'=>empty($issues)?'ok':'degraded','issues'=>$issues,'chat'=>$this->mgr()->status('chat.app')];$report['report']=$this->writeDoc('audits','chat-audit-'.date('Y-m-d').'.json',$report);$this->emit($report,$this->optBool('json'));return empty($issues)?EXIT_SUCCESS:EXIT_ERROR;}}
+app/Commands/Chat/Logs.php:11:class Logs extends SafeBaseCommand
+app/Commands/Chat/Repair.php:3:class Repair extends SafeBaseCommand { use SubsCommandTrait; protected $group='Chat'; protected $name='chat:repair'; protected $description='Chat repairs'; protected $options=['--json'=>'JSON','--dry-run'=>'Dry']; public function run(array $params){$this->parseParams($params);$dry=$this->optBool('dry-run');$actions=[]; if(!is_dir(ROOTPATH.'chat/runtime')){if(!$dry){mkdir(ROOTPATH.'chat/runtime',0775,true);} $actions[]='created chat/runtime';} $report=['status'=>'ok','actions'=>$actions,'dry_run'=>$dry];$report['report']=$this->writeDoc('repairs','chat-repair-'.date('Y-m-d').'.md',"# Chat Repair\n\n- ".implode("\n- ",$actions?:['No changes needed'])."\n");$this->emit($report,$this->optBool('json'));return EXIT_SUCCESS;}}
+app/Commands/Chat/Restart.php:3:class Restart extends SafeBaseCommand { use SubsCommandTrait; protected $group='Chat'; protected $name='chat:restart'; protected $description='Restart chat'; protected $options=['--json'=>'JSON','--dry-run'=>'Dry']; public function run(array $params){$this->parseParams($params);$r=$this->mgr()->restart('chat.app',$this->optBool('dry-run'));$this->emit($r,$this->optBool('json'));return ($r['ok']??false)?EXIT_SUCCESS:EXIT_ERROR;}}
+app/Commands/Chat/Start.php:3:class Start extends SafeBaseCommand { use SubsCommandTrait; protected $group='Chat'; protected $name='chat:start'; protected $description='Start chat'; protected $options=['--json'=>'JSON','--dry-run'=>'Dry']; public function run(array $params){$this->parseParams($params);$r=$this->mgr()->start('chat.app',$this->optBool('dry-run'));$this->emit($r,$this->optBool('json'));return ($r['ok']??false)?EXIT_SUCCESS:EXIT_ERROR;}}
+app/Commands/Chat/Status.php:10:class Status extends SafeBaseCommand
+app/Commands/Chat/Stop.php:3:class Stop extends SafeBaseCommand { use SubsCommandTrait; protected $group='Chat'; protected $name='chat:stop'; protected $description='Stop chat'; protected $options=['--json'=>'JSON','--dry-run'=>'Dry']; public function run(array $params){$this->parseParams($params);$r=$this->mgr()->stop('chat.app',$this->optBool('dry-run'));$this->emit($r,$this->optBool('json'));return ($r['ok']??false)?EXIT_SUCCESS:EXIT_ERROR;}}
+app/Commands/Chat/Unblock.php:10:class Unblock extends SafeBaseCommand
+app/Commands/Codex/Audit.php:8:class Audit extends SafeBaseCommand
+app/Commands/Codex/ContinueAudit.php:9:class ContinueAudit extends SafeBaseCommand
+app/Commands/Codex/Gate.php:9:class Gate extends SafeBaseCommand
+app/Commands/Codex/GateSeverity.php:9:class GateSeverity extends SafeBaseCommand
+app/Commands/Codex/Index.php:9:class Index extends SafeBaseCommand
+app/Commands/Codex/Instructions/Audit.php:8:class Audit extends SafeBaseCommand
+app/Commands/Codex/Instructions/DevOpsReview.php:8:class DevOpsReview extends SafeBaseCommand
+app/Commands/Codex/Instructions/Summarize.php:8:class Summarize extends SafeBaseCommand
+app/Commands/Codex/Review.php:8:class Review extends SafeBaseCommand
+app/Commands/Codex/ReviewCommit.php:8:class ReviewCommit extends SafeBaseCommand
+app/Commands/Codex/ReviewList.php:8:class ReviewList extends SafeBaseCommand
+app/Commands/Codex/ReviewPrOutbox.php:10:class ReviewPrOutbox extends SafeBaseCommand
+app/Commands/Codex/ReviewPublish.php:11:class ReviewPublish extends SafeBaseCommand
+app/Commands/Codex/Status.php:9:class Status extends SafeBaseCommand
+app/Commands/CoinVault/Audit.php:11:class Audit extends BaseCommand
+app/Commands/CompatAudit.php:9:class CompatAudit extends SafeBaseCommand
+app/Commands/Config/Clear.php:9:class Clear extends SafeBaseCommand
+app/Commands/Config/Drift.php:9:class Drift extends SafeBaseCommand
+app/Commands/Config/Lint.php:9:class Lint extends SafeBaseCommand
+app/Commands/Content/EngineSmoke.php:15:class EngineSmoke extends SafeBaseCommand
+app/Commands/Content/IngestSample.php:14:class IngestSample extends SafeBaseCommand
+app/Commands/ControllerProfile.php:8:class ControllerProfile extends SafeBaseCommand
+app/Commands/Database/ApplyDocs.php:9:class ApplyDocs extends SafeBaseCommand
+app/Commands/Database/Drift.php:11:class Drift extends SafeBaseCommand
+app/Commands/Database/Inventory.php:9:class Inventory extends SafeBaseCommand
+app/Commands/Database/MigrateDryRun.php:10:class MigrateDryRun extends SafeBaseCommand
+app/Commands/Database/TableList.php:9:class TableList extends BaseCommand
+app/Commands/Discord/CustomSend.php:8:class CustomSend extends SafeBaseCommand
+app/Commands/Discord/GetList.php:7:class GetList extends SafeBaseCommand
+app/Commands/Discord/ProcessQueue.php:7:class ProcessQueue extends SafeBaseCommand
+app/Commands/Discord/Test.php:7:class Test extends SafeBaseCommand
+app/Commands/Discord/TestLiquidity.php:7:class TestLiquidity extends SafeBaseCommand
+app/Commands/Discord/WireCheck.php:8:class WireCheck extends SafeBaseCommand
+app/Commands/DiscordCustomSend.php:11:class DiscordCustomSend extends SafeBaseCommand
+app/Commands/Docs/Architecture/Graph.php:8:class Graph extends SafeBaseCommand
+app/Commands/Docs/Architecture/Map.php:10:class Map extends SafeBaseCommand
+app/Commands/Docs/AuditDocs.php:10:class AuditDocs extends SafeBaseCommand
+app/Commands/Docs/BuildHowItWorksNavigation.php:9:class BuildHowItWorksNavigation extends SafeBaseCommand
+app/Commands/Docs/DatabaseMap.php:7:class DatabaseMap extends SafeBaseCommand
+app/Commands/Docs/DependenciesMap.php:7:class DependenciesMap extends SafeBaseCommand
+app/Commands/Docs/Exports/ExportViewTxt.php:7:class ExportViewTxt extends SafeBaseCommand
+app/Commands/Docs/FullDocsAudit.php:7:class FullDocsAudit extends SafeBaseCommand
+app/Commands/Docs/Generate/ArchitectureMap.php:10:class ArchitectureMap extends SafeBaseCommand
+app/Commands/Docs/Generate/DocsReadmeBuilder.php:8:class DocsReadmeBuilder extends SafeBaseCommand
+app/Commands/Docs/Generate/FormInventory.php:9:class FormInventory extends SafeBaseCommand
+app/Commands/Docs/Generate/KnowledgeGraph.php:12:class KnowledgeGraph extends SafeBaseCommand
+app/Commands/Docs/Generate/MissingDocs.php:10:class MissingDocs extends SafeBaseCommand
+app/Commands/Docs/InventoryDocs.php:10:class InventoryDocs extends SafeBaseCommand
+app/Commands/Docs/ModulesMap.php:7:class ModulesMap extends SafeBaseCommand
+app/Commands/Docs/RoutesInventory.php:7:class RoutesInventory extends SafeBaseCommand
+app/Commands/Docs/Scan/ControllersList.php:8:class ControllersList extends SafeBaseCommand
+app/Commands/Docs/Scan/OrphanRoutes.php:8:class OrphanRoutes extends SafeBaseCommand
+app/Commands/Docs/Scan/OrphanViews.php:10:class OrphanViews extends SafeBaseCommand
+app/Commands/Docs/Scan/Routes.php:7:class Routes extends SafeBaseCommand
+app/Commands/Docs/Scan/ServiceList.php:8:class ServiceList extends SafeBaseCommand
+app/Commands/Docs/Scan/UndocumentedControllers.php:10:class UndocumentedControllers extends SafeBaseCommand
+app/Commands/Docs/Scan/ViewDirectories.php:8:class ViewDirectories extends SafeBaseCommand
+app/Commands/Docs/Scan/ViewFiles.php:8:class ViewFiles extends SafeBaseCommand
+app/Commands/Docs/SparkCommandsInventory.php:7:class SparkCommandsInventory extends SafeBaseCommand
+app/Commands/Docs/Sync/AllDocs.php:10:class AllDocs extends SafeBaseCommand
+app/Commands/Docs/Sync/CodeFromDocs.php:9:class CodeFromDocs extends SafeBaseCommand
+app/Commands/Docs/Sync/DocsSystem.php:9:class DocsSystem extends SafeBaseCommand
+app/Commands/Docs/Test.php:10:class Test extends SafeBaseCommand
+app/Commands/DreamHost/DNSTest.php:10:class DNSTest extends SafeBaseCommand
+app/Commands/DreamHost/EnvDebug.php:10:class EnvDebug extends SafeBaseCommand
+app/Commands/DreamHost/ImapCapabilities.php:11:class ImapCapabilities extends SafeBaseCommand
+app/Commands/DreamHost/ImapFlagSweep.php:10:class ImapFlagSweep extends SafeBaseCommand
+app/Commands/DreamHost/ImapTest.php:10:class ImapTest extends SafeBaseCommand
+app/Commands/DreamHost/PortTest.php:10:class PortTest extends SafeBaseCommand
+app/Commands/DreamHost/SSLTest.php:10:class SSLTest extends SafeBaseCommand
+app/Commands/DreamHost/SmtpProbe.php:10:class SmtpProbe extends SafeBaseCommand
+app/Commands/Env/EnvDoctor.php:10:class EnvDoctor extends SafeBaseCommand
+app/Commands/Errors/ConsolidateErrors.php:9:class ConsolidateErrors extends SafeBaseCommand
+app/Commands/Errors/Diagnose502.php:8:class Diagnose502 extends SafeBaseCommand
+app/Commands/Errors/Diagnose503.php:8:class Diagnose503 extends SafeBaseCommand
+app/Commands/Errors/DispatchAlerts.php:9:class DispatchAlerts extends SafeBaseCommand
+app/Commands/Errors/LearnPatterns.php:9:class LearnPatterns extends SafeBaseCommand
+app/Commands/Fix503.php:13:class Fix503 extends SafeBaseCommand
+app/Commands/ForecastEvaluate.php:8:class ForecastEvaluate extends SafeBaseCommand
+app/Commands/GapTrackerSync.php:9:class GapTrackerSync extends SafeBaseCommand
+app/Commands/GitHub/Branch.php:11:class Branch extends SafeBaseCommand
+app/Commands/GitHub/Commit.php:11:class Commit extends SafeBaseCommand
+app/Commands/GitHub/CreatePR.php:11:class CreatePR extends SafeBaseCommand
+app/Commands/GitHub/Health.php:11:class Health extends SafeBaseCommand
+app/Commands/GitHub/Pull.php:11:class Pull extends SafeBaseCommand
+app/Commands/GitHub/PullSafe.php:10:final class PullSafe extends SafeBaseCommand
+app/Commands/GitHub/Push.php:11:class Push extends SafeBaseCommand
+app/Commands/GitHub/SearchRepo.php:10:class SearchRepo extends SafeBaseCommand
+app/Commands/GitHub/Status.php:11:class Status extends SafeBaseCommand
+app/Commands/GitHub/Sync.php:11:class Sync extends SafeBaseCommand
+app/Commands/GitHub/SyncSafe.php:8:class SyncSafe extends SafeBaseCommand
+app/Commands/GitHub/WorkspaceGuard.php:10:final class WorkspaceGuard extends SafeBaseCommand
+app/Commands/GitHub/WorkspaceRepair.php:8:class WorkspaceRepair extends SafeBaseCommand
+app/Commands/Growth/RetentionWatch.php:9:class RetentionWatch extends SafeBaseCommand
+app/Commands/Gtm/CronRouteSecurityValidation.php:10:class CronRouteSecurityValidation extends SafeBaseCommand
+app/Commands/Gtm/HealthSnapshot.php:11:class HealthSnapshot extends SafeBaseCommand
+app/Commands/Gtm/LaunchAudit.php:10:class LaunchAudit extends SafeBaseCommand
+app/Commands/Gtm/LaunchSmoke.php:10:class LaunchSmoke extends SafeBaseCommand
+app/Commands/Health/Cache.php:8:class Cache extends SafeBaseCommand
+app/Commands/Health/Disk.php:9:class Disk extends SafeBaseCommand
+app/Commands/Health/GitSafety.php:9:class GitSafety extends SafeBaseCommand
+app/Commands/Health/Services.php:10:class Services extends SafeBaseCommand
+app/Commands/Investments/EconomyUpdateAll.php:9:class EconomyUpdateAll extends SafeBaseCommand
+app/Commands/Logger/Audit.php:9:class Audit extends SafeBaseCommand
+app/Commands/Logs/CheckServerLogs.php:8:class CheckServerLogs extends SafeBaseCommand
+app/Commands/Logs/Doctor.php:9:class Doctor extends SafeBaseCommand
+app/Commands/Logs/EnableFullLogging.php:8:class EnableFullLogging extends SafeBaseCommand
+app/Commands/Logs/Errors.php:7:class Errors extends \App\Commands\AIOps\LogsErrors
+app/Commands/Logs/FullReport.php:9:class FullReport extends SafeBaseCommand
+app/Commands/Logs/Healthcheck.php:9:class Healthcheck extends SafeBaseCommand
+app/Commands/Logs/README.md:17:- `logs:summarize` (Operational)
+app/Commands/Logs/README.md:18:- `logs:summarize-all` (Operational)
+app/Commands/Logs/README.md:150:### logs:summarize
+app/Commands/Logs/README.md:156:`php spark logs:summarize`
+app/Commands/Logs/README.md:159:`--dry-run`, `Preview actions without writing data`, `--json`, `Output compact JSON payload for automation`, `--auto-aiops`, `After summarize, enqueue and run aiops:worker:logs pipeline`
+app/Commands/Logs/README.md:180:`php spark logs:summarize`
+app/Commands/Logs/README.md:182:### logs:summarize-all
+app/Commands/Logs/README.md:188:`php spark logs:summarize-all`
+app/Commands/Logs/README.md:212:`php spark logs:summarize-all`
+app/Commands/Logs/README.md:221:| `logs:summarize` | `App\Services\Spark\LogSummarizeService` | Command → Service |
+app/Commands/Logs/README.md:222:| `logs:summarize` | `state` | Command → Table |
+app/Commands/Logs/README.md:223:| `logs:summarize-all` | `writable` | Command → Table |
+app/Commands/Logs/README.md:235:Logs --> logs_summarize["logs:summarize"]
+app/Commands/Logs/README.md:236:Logs --> logs_summarize_all["logs:summarize-all"]
+app/Commands/Logs/README.md:245:- `php spark logs:summarize`
+app/Commands/Logs/README.md:246:- `php spark logs:summarize-all`
+app/Commands/Logs/Summarize.php:10:class Summarize extends SafeBaseCommand
+app/Commands/Logs/Summarize.php:13:    protected $name        = 'logs:summarize';
+app/Commands/Logs/Summarize.php:15:    protected $usage       = 'logs:summarize [date|yesterday] [--dry-run] [--json]';
+app/Commands/Logs/Summarize.php:24:        '--auto-aiops' => 'After summarize, enqueue and run aiops:worker:logs pipeline',
+app/Commands/Logs/Summarize.php:29:        CLI::write('Starting logs:summarize', 'yellow');
+app/Commands/Logs/Summarize.php:30:        log_message('info', '[AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Started', ['params' => $params]);
+app/Commands/Logs/Summarize.php:57:            log_message('error', '[AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Failed', [
+app/Commands/Logs/Summarize.php:90:        log_message('info', '[AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Completed', [
+app/Commands/Logs/Summarize.php:110:            CLI::write('Auto AIOps pipeline enabled; dispatching aiops:worker:logs', 'yellow');
+app/Commands/Logs/SummarizeAll.php:10:class SummarizeAll extends SafeBaseCommand
+app/Commands/Logs/SummarizeAll.php:13:    protected $name = 'logs:summarize-all';
+app/Commands/Logs/SummarizeAll.php:15:    protected $usage = 'logs:summarize-all [--json]';
+app/Commands/Logs/SummarizeAll.php:69:            CLI::write('logs:summarize-all completed for ' . $date, 'green');
+app/Commands/Logs/Test.php:9:class Test extends SafeBaseCommand
+app/Commands/Mail/Send.php:9:class Send extends SafeBaseCommand
+app/Commands/Mail/SendTest.php:11:class SendTest extends SafeBaseCommand
+app/Commands/Mail/Test.php:8:class Test extends SafeBaseCommand
+app/Commands/Mail/Verify.php:10:class Verify extends SafeBaseCommand
+app/Commands/Marketing/ApproveGenerated.php:9:class ApproveGenerated extends SafeBaseCommand
+app/Commands/Marketing/ApproveGeneratedContent.php:10:class ApproveGeneratedContent extends SafeBaseCommand
+app/Commands/Marketing/AuditDistribution.php:8:class AuditDistribution extends SafeBaseCommand
+app/Commands/Marketing/AutomationAudit.php:9:class AutomationAudit extends SafeBaseCommand
+app/Commands/Marketing/BlueskyHealthcheck.php:8:class BlueskyHealthcheck extends SafeBaseCommand
+app/Commands/Marketing/DailyAudit.php:9:class DailyAudit extends SafeBaseCommand
+app/Commands/Marketing/DiscordActivationAnnouncement.php:8:class DiscordActivationAnnouncement extends SafeBaseCommand
+app/Commands/Marketing/DiscordTestAllCategories.php:7:class DiscordTestAllCategories extends SafeBaseCommand
+app/Commands/Marketing/DiscordTestCategory.php:7:class DiscordTestCategory extends SafeBaseCommand
+app/Commands/Marketing/Distribute.php:8:class Distribute extends SafeBaseCommand
+app/Commands/Marketing/DistributionFailureInjectTest.php:12:class DistributionFailureInjectTest extends SafeBaseCommand
+app/Commands/Marketing/DistributionSqlAssert.php:8:class DistributionSqlAssert extends SafeBaseCommand
+app/Commands/Marketing/EmailClean.php:10:class EmailClean extends SafeBaseCommand
+app/Commands/Marketing/GeneratePackage.php:8:class GeneratePackage extends SafeBaseCommand
+app/Commands/Marketing/MastodonHealthcheck.php:8:class MastodonHealthcheck extends SafeBaseCommand
+app/Commands/Marketing/NewsDebug.php:9:class NewsDebug extends SafeBaseCommand
+app/Commands/Marketing/NewsGenerate.php:9:class NewsGenerate extends SafeBaseCommand
+app/Commands/Marketing/NewsImapTest.php:8:class NewsImapTest extends SafeBaseCommand
+app/Commands/Marketing/NewsScrape.php:9:class NewsScrape extends SafeBaseCommand
+app/Commands/Marketing/NewsSeedTest.php:9:class NewsSeedTest extends SafeBaseCommand
+app/Commands/Marketing/NotificationTest.php:10:class NotificationTest extends SafeBaseCommand
+app/Commands/Marketing/Pipeline.php:10:class Pipeline extends SafeBaseCommand
+app/Commands/Marketing/ProcessNotifications.php:11:class ProcessNotifications extends SafeBaseCommand
+app/Commands/Marketing/PromotionsAudit.php:10:class PromotionsAudit extends SafeBaseCommand
+app/Commands/Marketing/PromotionsGenerate.php:10:class PromotionsGenerate extends SafeBaseCommand
+app/Commands/Marketing/PromotionsTest.php:9:class PromotionsTest extends SafeBaseCommand
+app/Commands/Marketing/RegressionSmoke.php:9:class RegressionSmoke extends SafeBaseCommand
+app/Commands/Marketing/RetryDistribution.php:8:class RetryDistribution extends SafeBaseCommand
+app/Commands/Master/Health/Commands.php:12:class Commands extends SafeBaseCommand
+app/Commands/Master/Health/Controllers.php:12:class Controllers extends SafeBaseCommand
+app/Commands/Master/Health/Dependencies.php:12:class Dependencies extends SafeBaseCommand
+app/Commands/Master/Health/Docs.php:12:class Docs extends SafeBaseCommand
+app/Commands/Master/Health/Logs.php:10:class Logs extends SafeBaseCommand
+app/Commands/Master/Health/Models.php:12:class Models extends SafeBaseCommand
+app/Commands/Master/Health/Routes.php:10:class Routes extends SafeBaseCommand
+app/Commands/Master/Health/Services.php:10:class Services extends SafeBaseCommand
+app/Commands/Master/Health/Views.php:12:class Views extends SafeBaseCommand
+app/Commands/Master/KnowledgeGraphBuild.php:12:class KnowledgeGraphBuild extends SafeBaseCommand
+app/Commands/Master/RunAll.php:10:class RunAll extends SafeBaseCommand
+app/Commands/MditNavComputeDaily.php:8:class MditNavComputeDaily extends SafeBaseCommand
+app/Commands/NewsAudit.php:10:class NewsAudit extends SafeBaseCommand
+app/Commands/Ollama/BaseOllamaCommand.php:13:abstract class BaseOllamaCommand extends SafeBaseCommand
+app/Commands/Ollama/BaseOllamaCommand.php:145:            log_message('error', 'ollama run log persistence failed: {message}', ['message' => $e->getMessage(), 'run_uuid' => $runUuid]);
+app/Commands/Ollama/Bench.php:9:class Bench extends BaseOllamaCommand
+app/Commands/Ollama/Bench.php:11:    protected $name = 'ollama:bench';
+app/Commands/Ollama/Bench.php:21:            'message' => 'ollama:bench is scaffolded and ready for extension.',
+app/Commands/Ollama/Chat.php:10:class Chat extends BaseOllamaCommand
+app/Commands/Ollama/Chat.php:12:    protected $name = 'ollama:chat';
+app/Commands/Ollama/Chat.php:68:            log_message('error', 'ollama:chat failed {run_uuid}: {error}', ['run_uuid' => $runUuid, 'error' => $e->getMessage()]);
+app/Commands/Ollama/Circuit/README.md:13:- `ollama:circuit:reset` (Operational)
+app/Commands/Ollama/Circuit/README.md:14:- `ollama:circuit:status` (Operational)
+app/Commands/Ollama/Circuit/README.md:22:### ollama:circuit:reset
+app/Commands/Ollama/Circuit/README.md:28:`php spark ollama:circuit:reset`
+app/Commands/Ollama/Circuit/README.md:52:`php spark ollama:circuit:reset`
+app/Commands/Ollama/Circuit/README.md:54:### ollama:circuit:status
+app/Commands/Ollama/Circuit/README.md:60:`php spark ollama:circuit:status`
+app/Commands/Ollama/Circuit/README.md:84:`php spark ollama:circuit:status`
+app/Commands/Ollama/Circuit/README.md:90:| `ollama:circuit:reset` | `Ollama` | Command → API |
+app/Commands/Ollama/Circuit/README.md:91:| `ollama:circuit:status` | `Ollama` | Command → API |
+app/Commands/Ollama/Circuit/README.md:98:Circuit --> ollama_circuit_reset["ollama:circuit:reset"]
+app/Commands/Ollama/Circuit/README.md:99:Circuit --> ollama_circuit_status["ollama:circuit:status"]
+app/Commands/Ollama/Circuit/README.md:104:- `php spark ollama:circuit:reset`
+app/Commands/Ollama/Circuit/README.md:105:- `php spark ollama:circuit:status`
+app/Commands/Ollama/Circuit/Reset.php:9:class Reset extends BaseOllamaCommand
+app/Commands/Ollama/Circuit/Reset.php:11:    protected $name = 'ollama:circuit:reset';
+app/Commands/Ollama/Circuit/Reset.php:21:            'message' => 'ollama:circuit:reset is scaffolded and ready for extension.',
+app/Commands/Ollama/Circuit/Status.php:9:class Status extends BaseOllamaCommand
+app/Commands/Ollama/Circuit/Status.php:11:    protected $name = 'ollama:circuit:status';
+app/Commands/Ollama/Circuit/Status.php:21:            'message' => 'ollama:circuit:status is scaffolded and ready for extension.',
+app/Commands/Ollama/CircuitReset.php:9:class CircuitReset extends BaseOllamaCommand
+app/Commands/Ollama/CircuitReset.php:11:    protected $name = 'ollama:circuit:reset';
+app/Commands/Ollama/CircuitStatus.php:9:class CircuitStatus extends BaseOllamaCommand
+app/Commands/Ollama/CircuitStatus.php:11:    protected $name = 'ollama:circuit:status';
+app/Commands/Ollama/Diagnose.php:7:class Diagnose extends BaseOllamaCommand
+app/Commands/Ollama/Diagnose.php:9:    protected $name = 'ollama:diagnose';
+app/Commands/Ollama/Docs/Inventory.php:9:class Inventory extends BaseOllamaCommand
+app/Commands/Ollama/Docs/Inventory.php:11:    protected $name = 'ollama:docs:inventory';
+app/Commands/Ollama/Docs/Inventory.php:21:            'message' => 'ollama:docs:inventory is scaffolded and ready for extension.',
+app/Commands/Ollama/Docs/README.md:13:- `ollama:docs:inventory` (Maintenance)
+app/Commands/Ollama/Docs/README.md:14:- `ollama:docs:sync` (Maintenance)
+app/Commands/Ollama/Docs/README.md:22:### ollama:docs:inventory
+app/Commands/Ollama/Docs/README.md:28:`php spark ollama:docs:inventory`
+app/Commands/Ollama/Docs/README.md:52:`php spark ollama:docs:inventory`
+app/Commands/Ollama/Docs/README.md:54:### ollama:docs:sync
+app/Commands/Ollama/Docs/README.md:60:`php spark ollama:docs:sync`
+app/Commands/Ollama/Docs/README.md:84:`php spark ollama:docs:sync`
+app/Commands/Ollama/Docs/README.md:90:| `ollama:docs:inventory` | `Ollama` | Command → API |
+app/Commands/Ollama/Docs/README.md:91:| `ollama:docs:sync` | `Ollama` | Command → API |
+app/Commands/Ollama/Docs/README.md:98:Docs --> ollama_docs_inventory["ollama:docs:inventory"]
+app/Commands/Ollama/Docs/README.md:99:Docs --> ollama_docs_sync["ollama:docs:sync"]
+app/Commands/Ollama/Docs/README.md:104:- `php spark ollama:docs:inventory`
+app/Commands/Ollama/Docs/README.md:105:- `php spark ollama:docs:sync`
+app/Commands/Ollama/Docs/Sync.php:10:class Sync extends BaseOllamaCommand
+app/Commands/Ollama/Docs/Sync.php:12:    protected $name = 'ollama:docs:sync';
+app/Commands/Ollama/Docs/Sync.php:29:        file_put_contents(ROOTPATH . 'docs/_aiops/ollama/models.md', $modelsDoc);
+app/Commands/Ollama/Docs/Sync.php:32:        file_put_contents(ROOTPATH . 'docs/_aiops/ollama/policy.md', $policyDoc);
+app/Commands/Ollama/Doctor.php:9:class Doctor extends BaseOllamaCommand
+app/Commands/Ollama/Doctor.php:11:    protected $name = 'ollama:doctor';
+app/Commands/Ollama/Embed.php:9:class Embed extends BaseOllamaCommand
+app/Commands/Ollama/Embed.php:11:    protected $name = 'ollama:embed';
+app/Commands/Ollama/Embed.php:34:            log_message('error', 'ollama:embed failed {run_uuid}: {error}', ['run_uuid' => $runUuid, 'error' => $e->getMessage()]);
+app/Commands/Ollama/EmbedFile.php:9:class EmbedFile extends BaseOllamaCommand
+app/Commands/Ollama/EmbedFile.php:11:    protected $name = 'ollama:embed:file';
+app/Commands/Ollama/EmbedFile.php:21:            'message' => 'ollama:embed:file is scaffolded and ready for extension.',
+app/Commands/Ollama/Generate.php:9:    protected $aliases = ['ollama:generate'];
+app/Commands/Ollama/Health.php:7:class Health extends BaseOllamaCommand
+app/Commands/Ollama/Health.php:9:    protected $name = 'ollama:health';
+app/Commands/Ollama/Logs.php:7:class Logs extends BaseOllamaCommand
+app/Commands/Ollama/Logs.php:9:    protected $name = 'ollama:logs';
+app/Commands/Ollama/Logs.php:10:    protected $description = 'Backward-compatible alias of ollama:logs:tail.';
+app/Commands/Ollama/Logs.php:30:        $matches = array_values(array_filter($lines, static fn ($line) => stripos($line, 'ollama') !== false));
+app/Commands/Ollama/Logs/Export.php:10:class Export extends BaseOllamaCommand
+app/Commands/Ollama/Logs/Export.php:12:    protected $name = 'ollama:logs:export';
+app/Commands/Ollama/Logs/Export.php:13:    protected $description = 'Export Ollama run/error evidence to docs/_aiops/ollama/logs/*.md.';
+app/Commands/Ollama/Logs/Export.php:24:        $path = rtrim($this->optString($flags, 'path', ROOTPATH . 'docs/_aiops/ollama/logs'), '/');
+app/Commands/Ollama/Logs/Export.php:39:            $matches = array_values(array_filter($lines, static fn ($line) => stripos($line, 'ollama') !== false));
+app/Commands/Ollama/Logs/Export.php:43:        $file = $path . '/ollama-runs-' . date('Ymd-His') . '.md';
+app/Commands/Ollama/Logs/README.md:13:- `ollama:logs:export` (Operational)
+app/Commands/Ollama/Logs/README.md:14:- `ollama:logs:tail` (Operational)
+app/Commands/Ollama/Logs/README.md:22:### ollama:logs:export
+app/Commands/Ollama/Logs/README.md:25:Export Ollama run/error evidence to docs/_aiops/ollama/logs/*.md.
+app/Commands/Ollama/Logs/README.md:28:`php spark ollama:logs:export`
+app/Commands/Ollama/Logs/README.md:52:`php spark ollama:logs:export`
+app/Commands/Ollama/Logs/README.md:54:### ollama:logs:tail
+app/Commands/Ollama/Logs/README.md:60:`php spark ollama:logs:tail`
+app/Commands/Ollama/Logs/README.md:84:`php spark ollama:logs:tail`
+app/Commands/Ollama/Logs/README.md:90:| `ollama:logs:export` | `App\Models\OllamaRunModel` | Command → Model |
+app/Commands/Ollama/Logs/README.md:91:| `ollama:logs:export` | `Ollama` | Command → API |
+app/Commands/Ollama/Logs/README.md:92:| `ollama:logs:tail` | `file` | Command → Table |
+app/Commands/Ollama/Logs/README.md:93:| `ollama:logs:tail` | `Ollama` | Command → API |
+app/Commands/Ollama/Logs/README.md:100:Logs --> ollama_logs_export["ollama:logs:export"]
+app/Commands/Ollama/Logs/README.md:101:Logs --> ollama_logs_tail["ollama:logs:tail"]
+app/Commands/Ollama/Logs/README.md:106:- `php spark ollama:logs:export`
+app/Commands/Ollama/Logs/README.md:107:- `php spark ollama:logs:tail`
+app/Commands/Ollama/Logs/Tail.php:9:class Tail extends BaseOllamaCommand
+app/Commands/Ollama/Logs/Tail.php:11:    protected $name = 'ollama:logs:tail';
+app/Commands/Ollama/Logs/Tail.php:36:        $matches = array_values(array_filter($lines, static fn ($line) => stripos($line, 'ollama') !== false));
+app/Commands/Ollama/Modelfile/README.md:13:- `ollama:modelfile:validate` (Operational)
+app/Commands/Ollama/Modelfile/README.md:21:### ollama:modelfile:validate
+app/Commands/Ollama/Modelfile/README.md:27:`php spark ollama:modelfile:validate`
+app/Commands/Ollama/Modelfile/README.md:51:`php spark ollama:modelfile:validate`
+app/Commands/Ollama/Modelfile/README.md:57:| `ollama:modelfile:validate` | `Ollama` | Command → API |
+app/Commands/Ollama/Modelfile/README.md:64:Modelfile --> ollama_modelfile_validate["ollama:modelfile:validate"]
+app/Commands/Ollama/Modelfile/README.md:69:- `php spark ollama:modelfile:validate`
+app/Commands/Ollama/Modelfile/Validate.php:9:class Validate extends BaseOllamaCommand
+app/Commands/Ollama/Modelfile/Validate.php:11:    protected $name = 'ollama:modelfile:validate';
+app/Commands/Ollama/Modelfile/Validate.php:21:            'message' => 'ollama:modelfile:validate is scaffolded and ready for extension.',
+app/Commands/Ollama/Models/CreateModel.php:9:class CreateModel extends BaseOllamaCommand
+app/Commands/Ollama/Models/CreateModel.php:11:    protected $name = 'ollama:models:create';
+app/Commands/Ollama/Models/CreateModel.php:21:            'message' => 'ollama:models:create is scaffolded and ready for extension.',
+app/Commands/Ollama/Models/DiffModels.php:10:class DiffModels extends BaseOllamaCommand
+app/Commands/Ollama/Models/DiffModels.php:12:    protected $name = 'ollama:models:diff';
+app/Commands/Ollama/Models/DiffModels.php:51:            $remediation[] = 'php spark ollama:models:pull ' . $model . ' --json=1';
+app/Commands/Ollama/Models/DiffModels.php:54:            $remediation[] = 'php spark ollama:models:rm ' . $model . ' --force=1 --json=1';
+app/Commands/Ollama/Models/EnsureModels.php:10:class EnsureModels extends BaseOllamaCommand
+app/Commands/Ollama/Models/EnsureModels.php:12:    protected $name = 'ollama:models:ensure';
+app/Commands/Ollama/Models/ExportModels.php:9:class ExportModels extends BaseOllamaCommand
+app/Commands/Ollama/Models/ExportModels.php:11:    protected $name = 'ollama:models:export';
+app/Commands/Ollama/Models/ExportModels.php:21:            'message' => 'ollama:models:export is scaffolded and ready for extension.',
+app/Commands/Ollama/Models/ListModels.php:9:class ListModels extends BaseOllamaCommand
+app/Commands/Ollama/Models/ListModels.php:11:    protected $name = 'ollama:models:list';
+app/Commands/Ollama/Models/PruneModels.php:9:class PruneModels extends BaseOllamaCommand
+app/Commands/Ollama/Models/PruneModels.php:11:    protected $name = 'ollama:models:prune';
+app/Commands/Ollama/Models/PullModel.php:9:class PullModel extends BaseOllamaCommand
+app/Commands/Ollama/Models/PullModel.php:11:    protected $name = 'ollama:models:pull';
+app/Commands/Ollama/Models/PullModel.php:13:    protected $usage = 'ollama:models:pull <model>';
+app/Commands/Ollama/Models/PushModel.php:9:class PushModel extends BaseOllamaCommand
+app/Commands/Ollama/Models/PushModel.php:11:    protected $name = 'ollama:models:push';
+app/Commands/Ollama/Models/PushModel.php:21:            'message' => 'ollama:models:push is scaffolded and ready for extension.',
+app/Commands/Ollama/Models/README.md:13:- `ollama:models:create` (Operational)
+app/Commands/Ollama/Models/README.md:14:- `ollama:models:diff` (Operational)
+app/Commands/Ollama/Models/README.md:15:- `ollama:models:ensure` (Operational)
+app/Commands/Ollama/Models/README.md:16:- `ollama:models:export` (Operational)
+app/Commands/Ollama/Models/README.md:17:- `ollama:models:list` (Operational)
+app/Commands/Ollama/Models/README.md:18:- `ollama:models:prune` (Automation)
+app/Commands/Ollama/Models/README.md:19:- `ollama:models:pull` (Operational)
+app/Commands/Ollama/Models/README.md:20:- `ollama:models:push` (Operational)
+app/Commands/Ollama/Models/README.md:21:- `ollama:models:rm` (Operational)
+app/Commands/Ollama/Models/README.md:22:- `ollama:models:show` (Operational)
+app/Commands/Ollama/Models/README.md:30:### ollama:models:create
+app/Commands/Ollama/Models/README.md:36:`php spark ollama:models:create`
+app/Commands/Ollama/Models/README.md:60:`php spark ollama:models:create`
+app/Commands/Ollama/Models/README.md:62:### ollama:models:diff
+app/Commands/Ollama/Models/README.md:68:`php spark ollama:models:diff`
+app/Commands/Ollama/Models/README.md:86:`ollama:models:pull`, `ollama:models:rm`
+app/Commands/Ollama/Models/README.md:92:`php spark ollama:models:diff`
+app/Commands/Ollama/Models/README.md:94:### ollama:models:ensure
+app/Commands/Ollama/Models/README.md:100:`php spark ollama:models:ensure`
+app/Commands/Ollama/Models/README.md:124:`php spark ollama:models:ensure`
+app/Commands/Ollama/Models/README.md:126:### ollama:models:export
+app/Commands/Ollama/Models/README.md:132:`php spark ollama:models:export`
+app/Commands/Ollama/Models/README.md:156:`php spark ollama:models:export`
+app/Commands/Ollama/Models/README.md:158:### ollama:models:list
+app/Commands/Ollama/Models/README.md:164:`php spark ollama:models:list`
+app/Commands/Ollama/Models/README.md:188:`php spark ollama:models:list`
+app/Commands/Ollama/Models/README.md:190:### ollama:models:prune
+app/Commands/Ollama/Models/README.md:196:`php spark ollama:models:prune`
+app/Commands/Ollama/Models/README.md:220:`php spark ollama:models:prune`
+app/Commands/Ollama/Models/README.md:222:### ollama:models:pull
+app/Commands/Ollama/Models/README.md:228:`php spark ollama:models:pull`
+app/Commands/Ollama/Models/README.md:252:`php spark ollama:models:pull`
+app/Commands/Ollama/Models/README.md:254:### ollama:models:push
+app/Commands/Ollama/Models/README.md:260:`php spark ollama:models:push`
+app/Commands/Ollama/Models/README.md:284:`php spark ollama:models:push`
+app/Commands/Ollama/Models/README.md:286:### ollama:models:rm
+app/Commands/Ollama/Models/README.md:292:`php spark ollama:models:rm`
+app/Commands/Ollama/Models/README.md:316:`php spark ollama:models:rm`
+app/Commands/Ollama/Models/README.md:318:### ollama:models:show
+app/Commands/Ollama/Models/README.md:324:`php spark ollama:models:show`
+app/Commands/Ollama/Models/README.md:348:`php spark ollama:models:show`
+app/Commands/Ollama/Models/README.md:354:| `ollama:models:create` | `Modelfile` | Command → Table |
+app/Commands/Ollama/Models/README.md:355:| `ollama:models:create` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:356:| `ollama:models:diff` | `ollama:models:pull` | Command → Command |
+app/Commands/Ollama/Models/README.md:357:| `ollama:models:diff` | `ollama:models:rm` | Command → Command |
+app/Commands/Ollama/Models/README.md:358:| `ollama:models:diff` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:359:| `ollama:models:ensure` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:360:| `ollama:models:export` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:361:| `ollama:models:list` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:362:| `ollama:models:prune` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:363:| `ollama:models:pull` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:364:| `ollama:models:push` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:365:| `ollama:models:rm` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:366:| `ollama:models:show` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:373:Models --> ollama_models_create["ollama:models:create"]
+app/Commands/Ollama/Models/README.md:374:Models --> ollama_models_diff["ollama:models:diff"]
+app/Commands/Ollama/Models/README.md:375:ollama_models_diff --> ollama_models_pull["ollama:models:pull"]
+app/Commands/Ollama/Models/README.md:376:ollama_models_diff --> ollama_models_rm["ollama:models:rm"]
+app/Commands/Ollama/Models/README.md:377:Models --> ollama_models_ensure["ollama:models:ensure"]
+app/Commands/Ollama/Models/README.md:378:Models --> ollama_models_export["ollama:models:export"]
+app/Commands/Ollama/Models/README.md:379:Models --> ollama_models_list["ollama:models:list"]
+app/Commands/Ollama/Models/README.md:380:Models --> ollama_models_prune["ollama:models:prune"]
+app/Commands/Ollama/Models/README.md:381:Models --> ollama_models_pull["ollama:models:pull"]
+app/Commands/Ollama/Models/README.md:382:Models --> ollama_models_push["ollama:models:push"]
+app/Commands/Ollama/Models/README.md:383:Models --> ollama_models_rm["ollama:models:rm"]
+app/Commands/Ollama/Models/README.md:384:Models --> ollama_models_show["ollama:models:show"]
+app/Commands/Ollama/Models/README.md:389:- `php spark ollama:models:create`
+app/Commands/Ollama/Models/README.md:390:- `php spark ollama:models:diff`
+app/Commands/Ollama/Models/README.md:391:- `php spark ollama:models:ensure`
+app/Commands/Ollama/Models/README.md:392:- `php spark ollama:models:export`
+app/Commands/Ollama/Models/README.md:393:- `php spark ollama:models:list`
+app/Commands/Ollama/Models/README.md:394:- `php spark ollama:models:prune`
+app/Commands/Ollama/Models/README.md:423:- `ollama:models:pull`
+app/Commands/Ollama/Models/README.md:424:- `ollama:models:rm`
+app/Commands/Ollama/Models/RmModel.php:9:class RmModel extends BaseOllamaCommand
+app/Commands/Ollama/Models/RmModel.php:11:    protected $name = 'ollama:models:rm';
+app/Commands/Ollama/Models/RmModel.php:13:    protected $usage = 'ollama:models:rm <model>';
+app/Commands/Ollama/Models/ShowModel.php:9:class ShowModel extends BaseOllamaCommand
+app/Commands/Ollama/Models/ShowModel.php:11:    protected $name = 'ollama:models:show';
+app/Commands/Ollama/Models/ShowModel.php:13:    protected $usage = 'ollama:models:show <model>';
+app/Commands/Ollama/OllamaRun.php:13:class OllamaRun extends BaseOllamaCommand
+app/Commands/Ollama/OllamaRun.php:15:    protected $name = 'ollama:run';
+app/Commands/Ollama/OllamaRun.php:17:    protected $usage = 'ollama:run --file="./docs/_aiops/patch_jobs/{job-id}/ollama_prompt.md"';
+app/Commands/Ollama/OllamaRun.php:19:        '--file' => 'Prompt file path. If omitted, --job-dir/ollama_prompt.md is used.',
+app/Commands/Ollama/OllamaRun.php:22:        '--output' => 'Output file path. Defaults to prompt dir/ollama_response.md.',
+app/Commands/Ollama/OllamaRun.php:28:        '--job-dir' => 'Patch-job directory containing ollama_prompt.md.',
+app/Commands/Ollama/OllamaRun.php:88:                $file = rtrim($jobDir, '/\\') . DIRECTORY_SEPARATOR . 'ollama_prompt.md';
+app/Commands/Ollama/OllamaRun.php:113:                    $output = dirname($file) . '/ollama_response.md';
+app/Commands/Ollama/OllamaRun.php:115:                    $output = $promptDir . DIRECTORY_SEPARATOR . 'ollama_response.md';
+app/Commands/Ollama/OllamaRun.php:124:            $sidecarPath = $this->normalizePath($promptDir . DIRECTORY_SEPARATOR . 'ollama_run.json');
+app/Commands/Ollama/OllamaRun.php:158:            log_message('debug', '[ollama:run] model=' . $model);
+app/Commands/Ollama/OllamaRun.php:159:            log_message('debug', '[ollama:run] profile=' . $profile);
+app/Commands/Ollama/OllamaRun.php:160:            log_message('debug', '[ollama:run] timeout=' . $timeout);
+app/Commands/Ollama/OllamaRun.php:161:            log_message('debug', '[ollama:run] resolvedBaseUrl=' . $resolvedBaseUrl);
+app/Commands/Ollama/OllamaRun.php:162:            log_message('debug', '[ollama:run] preferInternal=' . ($preferInternal ? 'true' : 'false'));
+app/Commands/Ollama/OllamaRun.php:163:            log_message('debug', '[ollama:run] effectiveMaxTokens=' . $effectiveMaxTokens);
+app/Commands/Ollama/OllamaRun.php:164:            log_message('debug', '[ollama:run] promptLength=' . strlen($prompt));
+app/Commands/Ollama/OllamaRun.php:210:            CLI::error('ollama:run failed - ' . $e->getMessage());
+app/Commands/Ollama/Ping.php:7:class Ping extends BaseOllamaCommand
+app/Commands/Ollama/Ping.php:9:    protected $name = 'ollama:ping';
+app/Commands/Ollama/Policy/Check.php:10:class Check extends BaseOllamaCommand
+app/Commands/Ollama/Policy/Check.php:12:    protected $name = 'ollama:policy:check';
+app/Commands/Ollama/Policy/Export.php:9:class Export extends BaseOllamaCommand
+app/Commands/Ollama/Policy/Export.php:11:    protected $name = 'ollama:policy:export';
+app/Commands/Ollama/Policy/Export.php:21:            'message' => 'ollama:policy:export is scaffolded and ready for extension.',
+app/Commands/Ollama/Policy/README.md:13:- `ollama:policy:check` (Operational)
+app/Commands/Ollama/Policy/README.md:14:- `ollama:policy:export` (Operational)
+app/Commands/Ollama/Policy/README.md:22:### ollama:policy:check
+app/Commands/Ollama/Policy/README.md:28:`php spark ollama:policy:check`
+app/Commands/Ollama/Policy/README.md:52:`php spark ollama:policy:check`
+app/Commands/Ollama/Policy/README.md:54:### ollama:policy:export
+app/Commands/Ollama/Policy/README.md:60:`php spark ollama:policy:export`
+app/Commands/Ollama/Policy/README.md:84:`php spark ollama:policy:export`
+app/Commands/Ollama/Policy/README.md:90:| `ollama:policy:check` | `Ollama` | Command → API |
+app/Commands/Ollama/Policy/README.md:91:| `ollama:policy:export` | `Ollama` | Command → API |
+app/Commands/Ollama/Policy/README.md:98:Policy --> ollama_policy_check["ollama:policy:check"]
+app/Commands/Ollama/Policy/README.md:99:Policy --> ollama_policy_export["ollama:policy:export"]
+app/Commands/Ollama/Policy/README.md:104:- `php spark ollama:policy:check`
+app/Commands/Ollama/Policy/README.md:105:- `php spark ollama:policy:export`
+app/Commands/Ollama/Queue/Push.php:10:class Push extends BaseOllamaCommand
+app/Commands/Ollama/Queue/Push.php:12:    protected $name = 'ollama:queue:push';
+app/Commands/Ollama/Queue/README.md:13:- `ollama:queue:push` (Operational)
+app/Commands/Ollama/Queue/README.md:14:- `ollama:queue:retry` (Operational)
+app/Commands/Ollama/Queue/README.md:15:- `ollama:queue:stats` (Operational)
+app/Commands/Ollama/Queue/README.md:16:- `ollama:queue:work` (Operational)
+app/Commands/Ollama/Queue/README.md:24:### ollama:queue:push
+app/Commands/Ollama/Queue/README.md:30:`php spark ollama:queue:push`
+app/Commands/Ollama/Queue/README.md:54:`php spark ollama:queue:push`
+app/Commands/Ollama/Queue/README.md:56:### ollama:queue:retry
+app/Commands/Ollama/Queue/README.md:62:`php spark ollama:queue:retry`
+app/Commands/Ollama/Queue/README.md:86:`php spark ollama:queue:retry`
+app/Commands/Ollama/Queue/README.md:88:### ollama:queue:stats
+app/Commands/Ollama/Queue/README.md:94:`php spark ollama:queue:stats`
+app/Commands/Ollama/Queue/README.md:118:`php spark ollama:queue:stats`
+app/Commands/Ollama/Queue/README.md:120:### ollama:queue:work
+app/Commands/Ollama/Queue/README.md:126:`php spark ollama:queue:work`
+app/Commands/Ollama/Queue/README.md:150:`php spark ollama:queue:work`
+app/Commands/Ollama/Queue/README.md:156:| `ollama:queue:push` | `App\Models\OllamaQueueModel` | Command → Model |
+app/Commands/Ollama/Queue/README.md:157:| `ollama:queue:push` | `Ollama` | Command → API |
+app/Commands/Ollama/Queue/README.md:158:| `ollama:queue:retry` | `queue` | Command → Table |
+app/Commands/Ollama/Queue/README.md:159:| `ollama:queue:retry` | `Ollama` | Command → API |
+app/Commands/Ollama/Queue/README.md:160:| `ollama:queue:stats` | `App\Models\OllamaQueueModel` | Command → Model |
+app/Commands/Ollama/Queue/README.md:161:| `ollama:queue:stats` | `Ollama` | Command → API |
+app/Commands/Ollama/Queue/README.md:162:| `ollama:queue:work` | `App\Models\OllamaQueueModel` | Command → Model |
+app/Commands/Ollama/Queue/README.md:163:| `ollama:queue:work` | `Ollama` | Command → API |
+app/Commands/Ollama/Queue/README.md:170:Queue --> ollama_queue_push["ollama:queue:push"]
+app/Commands/Ollama/Queue/README.md:171:Queue --> ollama_queue_retry["ollama:queue:retry"]
+app/Commands/Ollama/Queue/README.md:172:Queue --> ollama_queue_stats["ollama:queue:stats"]
+app/Commands/Ollama/Queue/README.md:173:Queue --> ollama_queue_work["ollama:queue:work"]
+app/Commands/Ollama/Queue/README.md:178:- `php spark ollama:queue:push`
+app/Commands/Ollama/Queue/README.md:179:- `php spark ollama:queue:retry`
+app/Commands/Ollama/Queue/README.md:180:- `php spark ollama:queue:stats`
+app/Commands/Ollama/Queue/README.md:181:- `php spark ollama:queue:work`
+app/Commands/Ollama/Queue/Retry.php:9:class Retry extends BaseOllamaCommand
+app/Commands/Ollama/Queue/Retry.php:11:    protected $name = 'ollama:queue:retry';
+app/Commands/Ollama/Queue/Retry.php:21:            'message' => 'ollama:queue:retry is scaffolded and ready for extension.',
+app/Commands/Ollama/Queue/Stats.php:10:class Stats extends BaseOllamaCommand
+app/Commands/Ollama/Queue/Stats.php:12:    protected $name = 'ollama:queue:stats';
+app/Commands/Ollama/Queue/Work.php:10:class Work extends BaseOllamaCommand
+app/Commands/Ollama/Queue/Work.php:12:    protected $name = 'ollama:queue:work';
+app/Commands/Ollama/README.md:14:- `ollama:bench` (Operational)
+app/Commands/Ollama/README.md:15:- `ollama:chat` (Operational)
+app/Commands/Ollama/README.md:16:- `ollama:circuit:reset` (Operational)
+app/Commands/Ollama/README.md:17:- `ollama:circuit:status` (Operational)
+app/Commands/Ollama/README.md:18:- `ollama:diagnose` (Diagnostic)
+app/Commands/Ollama/README.md:19:- `ollama:doctor` (Diagnostic)
+app/Commands/Ollama/README.md:20:- `ollama:embed` (Operational)
+app/Commands/Ollama/README.md:21:- `ollama:embed:file` (Operational)
+app/Commands/Ollama/README.md:22:- `ollama:generate` (Maintenance)
+app/Commands/Ollama/README.md:23:- `ollama:health` (Diagnostic)
+app/Commands/Ollama/README.md:24:- `ollama:logs` (Operational)
+app/Commands/Ollama/README.md:25:- `ollama:ping` (Operational)
+app/Commands/Ollama/README.md:26:- `ollama:rag:query` (Operational)
+app/Commands/Ollama/README.md:27:- `ollama:stream` (Operational)
+app/Commands/Ollama/README.md:28:- `ollama:version` (Operational)
+app/Commands/Ollama/README.md:68:### ollama:bench
+app/Commands/Ollama/README.md:74:`php spark ollama:bench`
+app/Commands/Ollama/README.md:98:`php spark ollama:bench`
+app/Commands/Ollama/README.md:100:### ollama:chat
+app/Commands/Ollama/README.md:106:`php spark ollama:chat`
+app/Commands/Ollama/README.md:130:`php spark ollama:chat`
+app/Commands/Ollama/README.md:132:### ollama:circuit:reset
+app/Commands/Ollama/README.md:138:`php spark ollama:circuit:reset`
+app/Commands/Ollama/README.md:162:`php spark ollama:circuit:reset`
+app/Commands/Ollama/README.md:164:### ollama:circuit:status
+app/Commands/Ollama/README.md:170:`php spark ollama:circuit:status`
+app/Commands/Ollama/README.md:194:`php spark ollama:circuit:status`
+app/Commands/Ollama/README.md:196:### ollama:diagnose
+app/Commands/Ollama/README.md:202:`php spark ollama:diagnose`
+app/Commands/Ollama/README.md:226:`php spark ollama:diagnose`
+app/Commands/Ollama/README.md:228:### ollama:doctor
+app/Commands/Ollama/README.md:234:`php spark ollama:doctor`
+app/Commands/Ollama/README.md:258:`php spark ollama:doctor`
+app/Commands/Ollama/README.md:260:### ollama:embed
+app/Commands/Ollama/README.md:266:`php spark ollama:embed`
+app/Commands/Ollama/README.md:290:`php spark ollama:embed`
+app/Commands/Ollama/README.md:292:### ollama:embed:file
+app/Commands/Ollama/README.md:298:`php spark ollama:embed:file`
+app/Commands/Ollama/README.md:322:`php spark ollama:embed:file`
+app/Commands/Ollama/README.md:324:### ollama:generate
+app/Commands/Ollama/README.md:330:`php spark ollama:generate`
+app/Commands/Ollama/README.md:354:`php spark ollama:generate`
+app/Commands/Ollama/README.md:356:### ollama:health
+app/Commands/Ollama/README.md:362:`php spark ollama:health`
+app/Commands/Ollama/README.md:386:`php spark ollama:health`
+app/Commands/Ollama/README.md:388:### ollama:logs
+app/Commands/Ollama/README.md:391:Backward-compatible alias of ollama:logs:tail.
+app/Commands/Ollama/README.md:394:`php spark ollama:logs`
+app/Commands/Ollama/README.md:418:`php spark ollama:logs`
+app/Commands/Ollama/README.md:420:### ollama:ping
+app/Commands/Ollama/README.md:426:`php spark ollama:ping`
+app/Commands/Ollama/README.md:450:`php spark ollama:ping`
+app/Commands/Ollama/README.md:452:### ollama:rag:query
+app/Commands/Ollama/README.md:458:`php spark ollama:rag:query`
+app/Commands/Ollama/README.md:482:`php spark ollama:rag:query`
+app/Commands/Ollama/README.md:484:### ollama:stream
+app/Commands/Ollama/README.md:490:`php spark ollama:stream`
+app/Commands/Ollama/README.md:514:`php spark ollama:stream`
+app/Commands/Ollama/README.md:516:### ollama:version
+app/Commands/Ollama/README.md:522:`php spark ollama:version`
+app/Commands/Ollama/README.md:546:`php spark ollama:version`
+app/Commands/Ollama/README.md:552:| `ollama:bench` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:553:| `ollama:chat` | `App\Models\OllamaSessionModel` | Command → Model |
+app/Commands/Ollama/README.md:554:| `ollama:chat` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:555:| `ollama:circuit:reset` | `App\Services\LLM\OllamaCircuitBreaker` | Command → Service |
+app/Commands/Ollama/README.md:556:| `ollama:circuit:reset` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:557:| `ollama:circuit:status` | `App\Services\LLM\OllamaCircuitBreaker` | Command → Service |
+app/Commands/Ollama/README.md:558:| `ollama:circuit:status` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:559:| `ollama:diagnose` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:560:| `ollama:doctor` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:561:| `ollama:embed` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:562:| `ollama:embed:file` | `vector` | Command → Table |
+app/Commands/Ollama/README.md:563:| `ollama:embed:file` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:564:| `ollama:generate` | `App\Services\LLM\OllamaCircuitBreaker` | Command → Service |
+app/Commands/Ollama/README.md:565:| `ollama:generate` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:566:| `ollama:health` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:567:| `ollama:logs` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:568:| `ollama:ping` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:569:| `ollama:rag:query` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:570:| `ollama:stream` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:571:| `ollama:version` | `health` | Command → Table |
+app/Commands/Ollama/README.md:572:| `ollama:version` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:579:Ollama --> ollama_bench["ollama:bench"]
+app/Commands/Ollama/README.md:580:Ollama --> ollama_chat["ollama:chat"]
+app/Commands/Ollama/README.md:581:Ollama --> ollama_circuit_reset["ollama:circuit:reset"]
+app/Commands/Ollama/README.md:582:Ollama --> ollama_circuit_status["ollama:circuit:status"]
+app/Commands/Ollama/README.md:583:Ollama --> ollama_diagnose["ollama:diagnose"]
+app/Commands/Ollama/README.md:584:Ollama --> ollama_doctor["ollama:doctor"]
+app/Commands/Ollama/README.md:585:Ollama --> ollama_embed["ollama:embed"]
+app/Commands/Ollama/README.md:586:Ollama --> ollama_embed_file["ollama:embed:file"]
+app/Commands/Ollama/README.md:587:Ollama --> ollama_generate["ollama:generate"]
+app/Commands/Ollama/README.md:588:Ollama --> ollama_health["ollama:health"]
+app/Commands/Ollama/README.md:589:Ollama --> ollama_logs["ollama:logs"]
+app/Commands/Ollama/README.md:594:- `php spark ollama:bench`
+app/Commands/Ollama/README.md:595:- `php spark ollama:chat`
+app/Commands/Ollama/README.md:596:- `php spark ollama:circuit:reset`
+app/Commands/Ollama/README.md:597:- `php spark ollama:circuit:status`
+app/Commands/Ollama/README.md:598:- `php spark ollama:diagnose`
+app/Commands/Ollama/RagQuery.php:9:class RagQuery extends BaseOllamaCommand
+app/Commands/Ollama/RagQuery.php:11:    protected $name = 'ollama:rag:query';
+app/Commands/Ollama/RagQuery.php:21:            'message' => 'ollama:rag:query is scaffolded and ready for extension.',
+app/Commands/Ollama/Sessions/ListSessions.php:9:class ListSessions extends BaseOllamaCommand
+app/Commands/Ollama/Sessions/ListSessions.php:11:    protected $name = 'ollama:sessions:list';
+app/Commands/Ollama/Sessions/ListSessions.php:21:            'message' => 'ollama:sessions:list is scaffolded and ready for extension.',
+app/Commands/Ollama/Sessions/README.md:13:- `ollama:sessions:list` (Operational)
+app/Commands/Ollama/Sessions/README.md:14:- `ollama:sessions:rm` (Operational)
+app/Commands/Ollama/Sessions/README.md:15:- `ollama:sessions:show` (Operational)
+app/Commands/Ollama/Sessions/README.md:23:### ollama:sessions:list
+app/Commands/Ollama/Sessions/README.md:29:`php spark ollama:sessions:list`
+app/Commands/Ollama/Sessions/README.md:53:`php spark ollama:sessions:list`
+app/Commands/Ollama/Sessions/README.md:55:### ollama:sessions:rm
+app/Commands/Ollama/Sessions/README.md:61:`php spark ollama:sessions:rm`
+app/Commands/Ollama/Sessions/README.md:85:`php spark ollama:sessions:rm`
+app/Commands/Ollama/Sessions/README.md:87:### ollama:sessions:show
+app/Commands/Ollama/Sessions/README.md:93:`php spark ollama:sessions:show`
+app/Commands/Ollama/Sessions/README.md:117:`php spark ollama:sessions:show`
+app/Commands/Ollama/Sessions/README.md:123:| `ollama:sessions:list` | `Ollama` | Command → API |
+app/Commands/Ollama/Sessions/README.md:124:| `ollama:sessions:rm` | `Ollama` | Command → API |
+app/Commands/Ollama/Sessions/README.md:125:| `ollama:sessions:show` | `Ollama` | Command → API |
+app/Commands/Ollama/Sessions/README.md:132:Sessions --> ollama_sessions_list["ollama:sessions:list"]
+app/Commands/Ollama/Sessions/README.md:133:Sessions --> ollama_sessions_rm["ollama:sessions:rm"]
+app/Commands/Ollama/Sessions/README.md:134:Sessions --> ollama_sessions_show["ollama:sessions:show"]
+app/Commands/Ollama/Sessions/README.md:139:- `php spark ollama:sessions:list`
+app/Commands/Ollama/Sessions/README.md:140:- `php spark ollama:sessions:rm`
+app/Commands/Ollama/Sessions/README.md:141:- `php spark ollama:sessions:show`
+app/Commands/Ollama/Sessions/RmSession.php:9:class RmSession extends BaseOllamaCommand
+app/Commands/Ollama/Sessions/RmSession.php:11:    protected $name = 'ollama:sessions:rm';
+app/Commands/Ollama/Sessions/RmSession.php:21:            'message' => 'ollama:sessions:rm is scaffolded and ready for extension.',
+app/Commands/Ollama/Sessions/ShowSession.php:9:class ShowSession extends BaseOllamaCommand
+app/Commands/Ollama/Sessions/ShowSession.php:11:    protected $name = 'ollama:sessions:show';
+app/Commands/Ollama/Sessions/ShowSession.php:21:            'message' => 'ollama:sessions:show is scaffolded and ready for extension.',
+app/Commands/Ollama/Stream.php:9:class Stream extends BaseOllamaCommand
+app/Commands/Ollama/Stream.php:11:    protected $name = 'ollama:stream';
+app/Commands/Ollama/Stream.php:21:            'message' => 'ollama:stream is scaffolded and ready for extension.',
+app/Commands/Ollama/Version.php:7:class Version extends BaseOllamaCommand
+app/Commands/Ollama/Version.php:9:    protected $name = 'ollama:version';
+app/Commands/Ops/AnalyzeCommands.php:9:class AnalyzeCommands extends SafeBaseCommand
+app/Commands/Ops/AppUpdate.php:18:class AppUpdate extends SafeBaseCommand
+app/Commands/Ops/BaseOpsCommand.php:8:abstract class BaseOpsCommand extends SafeBaseCommand
+app/Commands/Ops/BuildConsoleRegistry.php:8:class BuildConsoleRegistry extends SafeBaseCommand
+app/Commands/Ops/CiPrepare.php:10:class CiPrepare extends SafeBaseCommand
+app/Commands/Ops/Commands/Audit.php:9:class Audit extends SafeBaseCommand
+app/Commands/Ops/Commands/Autofix.php:10:class Autofix extends SafeBaseCommand
+app/Commands/Ops/Commands/Inventory.php:9:class Inventory extends SafeBaseCommand
+app/Commands/Ops/Commands/Lint.php:9:class Lint extends SafeBaseCommand
+app/Commands/Ops/Commands/MissingFromConsole.php:8:class MissingFromConsole extends SafeBaseCommand
+app/Commands/Ops/ConfigLint.php:8:class ConfigLint extends SafeBaseCommand
+app/Commands/Ops/Diagnostics/FilesystemScan.php:8:class FilesystemScan extends BaseOpsCommand
+app/Commands/Ops/Diff.php:12:class Diff extends SafeBaseCommand
+app/Commands/Ops/DiffWallet.php:10:class DiffWallet extends SafeBaseCommand
+app/Commands/Ops/DoctorFull.php:10:class DoctorFull extends SafeBaseCommand
+app/Commands/Ops/DreamHost/DnsVerify.php:8:class DnsVerify extends BaseOpsCommand
+app/Commands/Ops/DreamHost/EmailAudit.php:8:class EmailAudit extends BaseOpsCommand
+app/Commands/Ops/DreamHost/EmailList.php:8:class EmailList extends BaseOpsCommand
+app/Commands/Ops/DreamHost/Limits.php:8:class Limits extends BaseOpsCommand
+app/Commands/Ops/DriftScan.php:10:class DriftScan extends SafeBaseCommand
+app/Commands/Ops/Email/Healthcheck.php:8:class Healthcheck extends BaseOpsCommand
+app/Commands/Ops/Email/QueueScan.php:8:class QueueScan extends BaseOpsCommand
+app/Commands/Ops/Email/Test.php:8:class Test extends BaseOpsCommand
+app/Commands/Ops/EnvSnapshot.php:10:class EnvSnapshot extends SafeBaseCommand
+app/Commands/Ops/FetchCommands.php:9:class FetchCommands extends SafeBaseCommand
+app/Commands/Ops/FilesystemFix.php:10:class FilesystemFix extends SafeBaseCommand
+app/Commands/Ops/FilesystemLint.php:11:class FilesystemLint extends SafeBaseCommand
+app/Commands/Ops/Grep.php:13:class Grep extends SafeBaseCommand
+app/Commands/Ops/GrepSearch.php:8:class GrepSearch extends SafeBaseCommand
+app/Commands/Ops/Health/Healthcheck.php:8:class Healthcheck extends BaseOpsCommand
+app/Commands/Ops/LoggerTest.php:8:class LoggerTest extends SafeBaseCommand
+app/Commands/Ops/Logs/Scan.php:8:class Scan extends BaseOpsCommand
+app/Commands/Ops/Logs/Watch.php:8:class Watch extends BaseOpsCommand
+app/Commands/Ops/ModelLimitAudit.php:8:class ModelLimitAudit extends SafeBaseCommand
+app/Commands/Ops/NetworkMatrix.php:10:class NetworkMatrix extends SafeBaseCommand
+app/Commands/Ops/NextSteps.php:18:class NextSteps extends SafeBaseCommand
+app/Commands/Ops/NextStepsSync.php:9:class NextStepsSync extends SafeBaseCommand
+app/Commands/Ops/NextStepsSyncManual.php:11:class NextStepsSyncManual extends SafeBaseCommand
+app/Commands/Ops/PHP/FpmHealth.php:8:class FpmHealth extends BaseOpsCommand
+app/Commands/Ops/PHPExtensionsAudit.php:10:class PHPExtensionsAudit extends SafeBaseCommand
+app/Commands/Ops/ProposePr.php:10:class ProposePr extends SafeBaseCommand
+app/Commands/Ops/Report.php:8:class Report extends BaseOpsCommand
+app/Commands/Ops/SelfHeal.php:8:class SelfHeal extends BaseOpsCommand
+app/Commands/Ops/Server/NginxStatus.php:8:class NginxStatus extends BaseOpsCommand
+app/Commands/Ops/Subs/Audit.php:3:class Audit extends SafeBaseCommand { use SubsCommandTrait; protected $group='Ops'; protected $name='ops:subs:audit'; protected $description='Run subsystem audits'; protected $options=['--json'=>'JSON','--strict'=>'Strict']; public function run(array $params){$this->parseParams($params);$strict=$this->optBool('strict');$a=command('aiops:audit --json=1');$c=command('chat:audit --json=1');$p=['status'=>'ok','strict'=>$strict,'aiops_audit'=>$a,'chat_audit'=>$c];$this->writeDoc('audits','subs-audit-'.date('Y-m-d').'.json',$p);$this->emit($p,$this->optBool('json'));return EXIT_SUCCESS;}}
+app/Commands/Ops/Subs/Doctor.php:3:class Doctor extends SafeBaseCommand { use SubsCommandTrait; protected $group='Ops'; protected $name='ops:subs:doctor'; protected $description='Friendly subsystem triage'; protected $options=['--json'=>'JSON']; public function run(array $params){$this->parseParams($params);$out=['status'=>'ok','next'=>['php spark ops:subs:audit --json=1','php spark aiops:self-heal --attempts=1 --json=1','php spark ops:subs:status --json=1']]; if($this->optBool('json')){CLI::write(json_encode($out,JSON_PRETTY_PRINT));} else {CLI::write('Subsystem doctor'); foreach($out['next'] as $cmd){CLI::write(' - '.$cmd);} } return EXIT_SUCCESS;}}
+app/Commands/Ops/Subs/Repair.php:3:class Repair extends SafeBaseCommand { use SubsCommandTrait; protected $group='Ops'; protected $name='ops:subs:repair'; protected $description='Run subsystem repairs'; protected $options=['--json'=>'JSON']; public function run(array $params){$this->parseParams($params);$p=['status'=>'ok','aiops_repair'=>command('aiops:repair --json=1'),'chat_repair'=>command('chat:repair --json=1')];$this->emit($p,$this->optBool('json'));return EXIT_SUCCESS;}}
+app/Commands/Ops/Subs/Status.php:6:class Status extends SafeBaseCommand { 
+app/Commands/Ops/Support/CommandRulesScanner.php:5:class CommandRulesScanner
+app/Commands/Ops/Sync.php:10:final class Sync extends SafeBaseCommand
+app/Commands/Ops/TailLogs.php:8:class TailLogs extends SafeBaseCommand
+app/Commands/Ops/VPSSnapshot.php:10:class VPSSnapshot extends SafeBaseCommand
+app/Commands/Ops/WalletIntegrity.php:11:class WalletIntegrity extends SafeBaseCommand
+app/Commands/Ops/Work.php:12:class Work extends SafeBaseCommand
+app/Commands/Performance/K6Run.php:8:class K6Run extends SafeBaseCommand
+app/Commands/Platform/ControlAnalyze.php:11:class ControlAnalyze extends SafeBaseCommand
+app/Commands/Platform/ControlCollect.php:13:class ControlCollect extends SafeBaseCommand
+app/Commands/Platform/ControlDispatch.php:13:class ControlDispatch extends SafeBaseCommand
+app/Commands/Platform/ControlRun.php:10:class ControlRun extends SafeBaseCommand
+app/Commands/Platform/CronDispatch.php:9:class CronDispatch extends SafeBaseCommand
+app/Commands/Platform/EdgeSnapshot.php:11:class EdgeSnapshot extends SafeBaseCommand
+app/Commands/Platform/EdgeSnapshot.php:21:            'logs:summarize',
+app/Commands/Platform/EdgeSnapshot.php:98:            'aiops_status' => $this->statusForCommand($results, 'logs:summarize'),
+app/Commands/Platform/RunPlatform.php:12:class RunPlatform extends SafeBaseCommand
+app/Commands/Platform/RunPlatform.php:184:                ['cmd' => 'logs:summarize-all'],
+app/Commands/Platform/RunPlatform.php:202:                ['cmd' => 'ollama:health', 'enabled' => $ai, 'skip_reason' => '--ai not enabled'],
+app/Commands/Platform/RunPlatform.php:203:                ['cmd' => 'ollama:queue:stats', 'enabled' => $ai, 'skip_reason' => '--ai not enabled'],
+app/Commands/Platform/RunReport.php:10:class RunReport extends SafeBaseCommand
+app/Commands/Platform/RunSubsystem.php:10:class RunSubsystem extends SafeBaseCommand
+app/Commands/PurgeFastCGI.php:7:class PurgeFastCGI extends SafeBaseCommand
+app/Commands/README.md:197:| `logs:summarize` | Summarize CI4 logs for a given date, including new entries since the last run. | `php spark logs:summarize [date\|yesterday] [--dry-run] [--json]` |
+app/Commands/README.md:198:| `logs:summarize-all` | Summarize logs for all known subsystems from writable/logs/** and emit docs/_aiops/logs markdown reports. | `php spark logs:summarize-all [--json]` |
+app/Commands/README.md:1632:#### `logs:summarize`
+app/Commands/README.md:1636:- **Usage:** `php spark logs:summarize [date\|yesterday] [--dry-run] [--json]`
+app/Commands/README.md:1643:#### `logs:summarize-all`
+app/Commands/README.md:1647:- **Usage:** `php spark logs:summarize-all [--json]`
+app/Commands/README.md:2378:php spark logs:summarize --hours=24
+app/Commands/Repo/ClassScan.php:12:final class ClassScan extends SafeBaseCommand
+app/Commands/Repo/ClassTrace.php:12:final class ClassTrace extends SafeBaseCommand
+app/Commands/Repo/DiffSplit.php:10:final class DiffSplit extends SafeBaseCommand
+app/Commands/Repo/Health.php:10:final class Health extends SafeBaseCommand
+app/Commands/Research/BaseResearchTaskCommand.php:10:abstract class BaseResearchTaskCommand extends SafeBaseCommand
+app/Commands/Research/DailyMarketReport.php:9:class DailyMarketReport extends SafeBaseCommand
+app/Commands/Research/EarningsCalendar.php:7:class EarningsCalendar extends BaseResearchTaskCommand
+app/Commands/Research/FinancialIntelligenceSignals.php:11:class FinancialIntelligenceSignals extends SafeBaseCommand
+app/Commands/Research/FinancialKnowledge.php:9:class FinancialKnowledge extends SafeBaseCommand
+app/Commands/Research/FinancialNewsCollect.php:9:class FinancialNewsCollect extends SafeBaseCommand
+app/Commands/Research/GoogleFinancialScan.php:8:class GoogleFinancialScan extends SafeBaseCommand
+app/Commands/Research/GoogleScan.php:8:class GoogleScan extends SafeBaseCommand
+app/Commands/Research/MarketDataCompile.php:8:class MarketDataCompile extends SafeBaseCommand
+app/Commands/Research/README.md:28:- `logs:summarize`
+app/Commands/Research/README.md:57:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:89:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:121:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:153:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:185:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:217:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:249:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:281:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:313:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:345:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:377:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:409:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:441:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:501:- `php spark logs:summarize`
+app/Commands/Research/README.md:528:- `logs:summarize`
+app/Commands/Research/ResearchPipeline.php:7:class ResearchPipeline extends SafeBaseCommand
+app/Commands/Research/ShortInterestScan.php:7:class ShortInterestScan extends BaseResearchTaskCommand
+app/Commands/Research/ThinkOrSwimImport.php:8:class ThinkOrSwimImport extends SafeBaseCommand
+app/Commands/Research/WatchlistCleanup.php:8:class WatchlistCleanup extends SafeBaseCommand
+app/Commands/Research/WeeklyMarketReport.php:9:class WeeklyMarketReport extends SafeBaseCommand
+app/Commands/RestartSafe.php:7:class RestartSafe extends SafeBaseCommand
+app/Commands/Revenue/CostForecast.php:9:class CostForecast extends SafeBaseCommand
+app/Commands/Revenue/StreamsScan.php:9:class StreamsScan extends SafeBaseCommand
+app/Commands/Routes/AuthAudit.php:12:class AuthAudit extends SafeBaseCommand
+app/Commands/Routes/Benchmark.php:9:class Benchmark extends SafeBaseCommand
+app/Commands/Routes/Debug.php:9:class Debug extends SafeBaseCommand
+app/Commands/Routes/Docs.php:10:final class Docs extends SafeBaseCommand
+app/Commands/Routes/Reconcile.php:11:final class Reconcile extends SafeBaseCommand
+app/Commands/Routes/Repair.php:11:final class Repair extends SafeBaseCommand
+app/Commands/RunAutomationQueue.php:9:class RunAutomationQueue extends SafeBaseCommand
+app/Commands/Runtime/CacheBoot.php:9:class CacheBoot extends SafeBaseCommand
+app/Commands/Runtime/Check.php:8:class Check extends SafeBaseCommand
+app/Commands/Runtime/Diagnose502.php:7:class Diagnose502 extends \App\Commands\SafeBaseCommand
+app/Commands/Runtime/SparkDoctor.php:8:class SparkDoctor extends SafeBaseCommand
+app/Commands/Runtime/SparkDoctorRuntime.php:9:class SparkDoctorRuntime extends SafeBaseCommand
+app/Commands/Runtime/SparkFix.php:8:class SparkFix extends SafeBaseCommand
+app/Commands/Runtime/SparkOptimize.php:10:class SparkOptimize extends SafeBaseCommand
+app/Commands/Runtime/Triage.php:9:class Triage extends SafeBaseCommand
+app/Commands/SafeBaseCommand.php:24:abstract class SafeBaseCommand extends BaseCommand implements
+app/Commands/Scanning/RunScanner.php:10:class RunScanner extends SafeBaseCommand
+app/Commands/Scrapers/EmailScraperAudit.php:12:class EmailScraperAudit extends SafeBaseCommand
+app/Commands/Security/GenerateCI4Key.php:8:class GenerateCI4Key extends SafeBaseCommand
+app/Commands/Security/GenerateKey.php:8:class GenerateKey extends SafeBaseCommand
+app/Commands/Security/SecretsAudit.php:9:class SecretsAudit extends SafeBaseCommand
+app/Commands/SecurityCspAudit.php:10:class SecurityCspAudit extends SafeBaseCommand
+app/Commands/Spark/CommandGraph.php:8:class CommandGraph extends SafeBaseCommand
+app/Commands/Spark/Doctor.php:13:class Doctor extends SafeBaseCommand
+app/Commands/Spark/Fix.php:12:class Fix extends SafeBaseCommand
+app/Commands/Spark/InfraServerAudit.php:8:class InfraServerAudit extends SafeBaseCommand
+app/Commands/Spark/RegistryAudit.php:12:class RegistryAudit extends SafeBaseCommand
+app/Commands/Spark/Reset.php:9:class Reset extends SafeBaseCommand
+app/Commands/Test/Email.php:8:class Email extends SafeBaseCommand
+app/Commands/Test/RedisPing.php:9:class RedisPing extends SafeBaseCommand
+app/Commands/TrafficSpikeGuard.php:7:class TrafficSpikeGuard extends SafeBaseCommand
+app/Commands/Ux/JourneyAudit.php:9:class JourneyAudit extends SafeBaseCommand
+app/Commands/WalletsWarmSummaryCache.php:10:class WalletsWarmSummaryCache extends SafeBaseCommand
+app/Commands/AIOps/API/README.md:17:- `logs:summarize`
+app/Commands/AIOps/API/README.md:45:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/API/README.md:70:- `php spark logs:summarize`
+app/Commands/AIOps/API/README.md:95:- `logs:summarize`
+app/Commands/AIOps/API/SchemaValidate.php:8:class SchemaValidate extends SafeBaseCommand
+app/Commands/AIOps/AiopsRepairs.php:12:class AiopsRepairs extends SafeBaseCommand
+app/Commands/AIOps/Alerts/Check.php:10:class Check extends SafeBaseCommand
+app/Commands/AIOps/Alerts/Clean.php:9:class Clean extends SafeBaseCommand
+app/Commands/AIOps/Alerts/Health.php:10:class Health extends SafeBaseCommand
+app/Commands/AIOps/Alerts/README.md:20:- `logs:summarize`
+app/Commands/AIOps/Alerts/README.md:80:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Alerts/README.md:112:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Alerts/README.md:144:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Alerts/README.md:184:- `php spark logs:summarize`
+app/Commands/AIOps/Alerts/README.md:210:- `logs:summarize`
+app/Commands/AIOps/Alerts/Worker.php:10:class Worker extends SafeBaseCommand
+app/Commands/AIOps/All.php:15:class All extends SafeBaseCommand
+app/Commands/AIOps/Audit.php:10:class Audit extends SafeBaseCommand
+app/Commands/AIOps/AutoFixAnalyze.php:10:class AutoFixAnalyze extends SafeBaseCommand
+app/Commands/AIOps/AutoRun.php:13:class AutoRun extends SafeBaseCommand
+app/Commands/AIOps/AutoRun.php:94:            $result['ollama_patch'] = $patchResult->toArray();
+app/Commands/AIOps/Backlog.php:13:class Backlog extends SafeBaseCommand
+app/Commands/AIOps/Backlog.php:94:                            $action = 'reran ollama patch runner';
+app/Commands/AIOps/BuildCommand.php:10:class BuildCommand extends SafeBaseCommand
+app/Commands/AIOps/ChatGovernanceIndex.php:10:class ChatGovernanceIndex extends SafeBaseCommand
+app/Commands/AIOps/CommandIndex.php:12:class CommandIndex extends SafeBaseCommand
+app/Commands/AIOps/ContinueAudit.php:11:class ContinueAudit extends SafeBaseCommand
+app/Commands/AIOps/CopilotValidate.php:12:class CopilotValidate extends SafeBaseCommand
+app/Commands/AIOps/CspAudit.php:10:class CspAudit extends SafeBaseCommand
+app/Commands/AIOps/DB/README.md:17:- `logs:summarize`
+app/Commands/AIOps/DB/README.md:45:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/DB/README.md:70:- `php spark logs:summarize`
+app/Commands/AIOps/DB/README.md:95:- `logs:summarize`
+app/Commands/AIOps/DB/SlowScan.php:8:class SlowScan extends SafeBaseCommand
+app/Commands/AIOps/DedupeReport.php:10:class DedupeReport extends SafeBaseCommand
+app/Commands/AIOps/DepsAdd.php:9:class DepsAdd extends SafeBaseCommand
+app/Commands/AIOps/DiffFormat.php:8:class DiffFormat extends SafeBaseCommand
+app/Commands/AIOps/Docs/AutoSync.php:10:class AutoSync extends SafeBaseCommand
+app/Commands/AIOps/Docs/README.md:17:- `logs:summarize`
+app/Commands/AIOps/Docs/README.md:72:- `php spark logs:summarize`
+app/Commands/AIOps/Docs/README.md:98:- `logs:summarize`
+app/Commands/AIOps/Doctor.php:10:class Doctor extends SafeBaseCommand
+app/Commands/AIOps/EmailScan.php:14:class EmailScan extends SafeBaseCommand
+app/Commands/AIOps/Errors.php:9:class Errors extends SafeBaseCommand
+app/Commands/AIOps/ExecuteDocs.php:11:class ExecuteDocs extends SafeBaseCommand
+app/Commands/AIOps/Forms/README.md:16:- `logs:summarize`
+app/Commands/AIOps/Forms/README.md:35:- `php spark logs:summarize`
+app/Commands/AIOps/Forms/README.md:60:- `logs:summarize`
+app/Commands/AIOps/Forms/TestScan.php:14:class TestScan extends SafeBaseCommand
+app/Commands/AIOps/Forms/TestScan.php:25:        '--no-ingest' => 'Do not call aiops:ingest after creating a patch job.',
+app/Commands/AIOps/GateCost.php:9:class GateCost extends SafeBaseCommand
+app/Commands/AIOps/GovernanceAnalyze.php:8:class GovernanceAnalyze extends SafeBaseCommand
+app/Commands/AIOps/HealthFull.php:8:class HealthFull extends SafeBaseCommand
+app/Commands/AIOps/Ingest.php:10:class Ingest extends SafeBaseCommand
+app/Commands/AIOps/Ingest.php:13:    protected $name        = 'aiops:ingest';
+app/Commands/AIOps/Ingest.php:16:    protected $usage = 'aiops:ingest [--text="..."] [--file=/path/file.txt] [--auto-pr] [--dry-run] [--severity=LOW|MEDIUM|HIGH]';
+app/Commands/AIOps/Ingest.php:45:            CLI::write('  php spark aiops:ingest --text="Hello world"');
+app/Commands/AIOps/Ingest.php:46:            CLI::write('  php spark aiops:ingest --file=/tmp/instructions.txt');
+app/Commands/AIOps/Ingest.php:47:            CLI::write('  cat /tmp/instructions.txt | php spark aiops:ingest');
+app/Commands/AIOps/Ingest.php:104:        CLI::write('Next: php spark aiops:worker --once');
+app/Commands/AIOps/Init.php:9:class Init extends SafeBaseCommand
+app/Commands/AIOps/IntegrityScan.php:10:class IntegrityScan extends SafeBaseCommand
+app/Commands/AIOps/LogsErrors.php:11:class LogsErrors extends SafeBaseCommand
+app/Commands/AIOps/LogsErrors.php:90:            ROOTPATH . 'docs/_aiops/ollama/logs/**/*.md',
+app/Commands/AIOps/ManualIndex.php:8:class ManualIndex extends SafeBaseCommand
+app/Commands/AIOps/ManualRun.php:12:class ManualRun extends SafeBaseCommand
+app/Commands/AIOps/MissingViewScan.php:10:class MissingViewScan extends SafeBaseCommand
+app/Commands/AIOps/N8n/Logs.php:3:class Logs extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AIOps - n8n'; protected $name='aiops:n8n:logs'; protected $description='Tail n8n logs'; protected $options=['--lines'=>'Lines','--json'=>'JSON']; public function run(array $params){$this->parseParams($params);$lines=$this->optInt('lines', 200);$r=$this->mgr()->tailLogs('aiops.n8n',$lines); if(!$this->optBool('json')){foreach($r['lines']??[] as $line){CLI::write($line);} } else {$this->emit($r,true);} return ($r['ok']??false)?EXIT_SUCCESS:EXIT_ERROR;}}
+app/Commands/AIOps/N8n/README.md:20:- `logs:summarize`
+app/Commands/AIOps/N8n/README.md:48:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/N8n/README.md:80:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/N8n/README.md:112:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/N8n/README.md:144:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/N8n/README.md:175:- `php spark logs:summarize`
+app/Commands/AIOps/N8n/README.md:200:- `logs:summarize`
+app/Commands/AIOps/N8n/Restart.php:3:class Restart extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AIOps - n8n'; protected $name='aiops:n8n:restart'; protected $description='Restart n8n'; protected $options=['--json'=>'JSON','--dry-run'=>'Dry']; public function run(array $params){$this->parseParams($params);$r=$this->mgr()->restart('aiops.n8n',$this->optBool('dry-run'));$this->emit($r,$this->optBool('json'));return ($r['ok']??false)?EXIT_SUCCESS:EXIT_ERROR;}}
+app/Commands/AIOps/N8n/Start.php:3:class Start extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AIOps - n8n'; protected $name='aiops:n8n:start'; protected $description='Start n8n'; protected $options=['--json'=>'JSON','--dry-run'=>'Dry']; public function run(array $params){$this->parseParams($params);$r=$this->mgr()->start('aiops.n8n',$this->optBool('dry-run'));$this->emit($r,$this->optBool('json'));return ($r['ok']??false)?EXIT_SUCCESS:EXIT_ERROR;}}
+app/Commands/AIOps/N8n/Stop.php:3:class Stop extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AIOps - n8n'; protected $name='aiops:n8n:stop'; protected $description='Stop n8n'; protected $options=['--json'=>'JSON','--dry-run'=>'Dry']; public function run(array $params){$this->parseParams($params);$r=$this->mgr()->stop('aiops.n8n',$this->optBool('dry-run'));$this->emit($r,$this->optBool('json'));return ($r['ok']??false)?EXIT_SUCCESS:EXIT_ERROR;}}
+app/Commands/AIOps/Observe.php:8:class Observe extends SafeBaseCommand
+app/Commands/AIOps/Observe/Cost.php:8:class Cost extends SafeBaseCommand
+app/Commands/AIOps/Observe/Hash.php:9:class Hash extends SafeBaseCommand
+app/Commands/AIOps/Observe/Map.php:8:class Map extends SafeBaseCommand
+app/Commands/AIOps/Observe/Patch.php:8:class Patch extends SafeBaseCommand
+app/Commands/AIOps/Observe/README.md:24:- `logs:summarize`
+app/Commands/AIOps/Observe/README.md:52:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Observe/README.md:84:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Observe/README.md:116:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Observe/README.md:148:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Observe/README.md:212:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Observe/README.md:276:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Observe/README.md:319:- `php spark logs:summarize`
+app/Commands/AIOps/Observe/README.md:345:- `logs:summarize`
+app/Commands/AIOps/Observe/Regression.php:8:class Regression extends SafeBaseCommand
+app/Commands/AIOps/Observe/Scan.php:8:class Scan extends SafeBaseCommand
+app/Commands/AIOps/Observe/Snapshot.php:8:class Snapshot extends SafeBaseCommand
+app/Commands/AIOps/Observe/Suggest.php:9:class Suggest extends SafeBaseCommand
+app/Commands/AIOps/PRAuto.php:8:class PRAuto extends SafeBaseCommand
+app/Commands/AIOps/PRCreate.php:9:class PRCreate extends SafeBaseCommand
+app/Commands/AIOps/Patch/Apply.php:9:class Apply extends SafeBaseCommand
+app/Commands/AIOps/Patch/DryRun.php:8:class DryRun extends SafeBaseCommand
+app/Commands/AIOps/Patch/Hallucination.php:9:class Hallucination extends SafeBaseCommand
+app/Commands/AIOps/Patch/README.md:21:- `logs:summarize`
+app/Commands/AIOps/Patch/README.md:49:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Patch/README.md:113:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Patch/README.md:145:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Patch/README.md:177:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Patch/README.md:212:- `php spark logs:summarize`
+app/Commands/AIOps/Patch/README.md:238:- `logs:summarize`
+app/Commands/AIOps/Patch/RiskScore.php:9:class RiskScore extends SafeBaseCommand
+app/Commands/AIOps/Patch/Validate.php:8:class Validate extends SafeBaseCommand
+app/Commands/AIOps/PriorityBuildCommand.php:13:class PriorityBuildCommand extends SafeBaseCommand
+app/Commands/AIOps/PublicPages/Audit.php:11:class Audit extends SafeBaseCommand
+app/Commands/AIOps/PublicPages/Import.php:11:class Import extends SafeBaseCommand
+app/Commands/AIOps/PublicPages/README.md:20:- `logs:summarize`
+app/Commands/AIOps/PublicPages/README.md:48:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/PublicPages/README.md:80:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/PublicPages/README.md:112:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/PublicPages/README.md:144:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/PublicPages/README.md:189:- `php spark logs:summarize`
+app/Commands/AIOps/PublicPages/README.md:214:- `logs:summarize`
+app/Commands/AIOps/PublicPages/Report.php:11:class Report extends SafeBaseCommand
+app/Commands/AIOps/PublicPages/Run.php:12:class Run extends SafeBaseCommand
+app/Commands/AIOps/PyOps.php:12:class PyOps extends SafeBaseCommand
+app/Commands/AIOps/README.md:32:- `aiops:ingest` (Operational)
+app/Commands/AIOps/README.md:53:- `aiops:worker` (Automation)
+app/Commands/AIOps/README.md:54:- `aiops:worker:logs` (Automation)
+app/Commands/AIOps/README.md:58:- `logs:summarize`
+app/Commands/AIOps/README.md:86:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:118:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:150:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:182:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:214:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:246:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:278:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:310:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:342:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:374:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:438:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:470:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:502:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:519:`--url`, `A URL or path to scan (e.g. "/Budget/Account-Manager").`, `--file`, `An absolute file path on server to scan.`, `--text`, `Raw HTML snippet containing a <form> to scan.`, `--no-ingest`, `Do not call aiops:ingest after creating a patch job.`
+app/Commands/AIOps/README.md:566:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:598:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:630:`aiops:worker`
+app/Commands/AIOps/README.md:662:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:670:### aiops:ingest
+app/Commands/AIOps/README.md:676:`php spark aiops:ingest`
+app/Commands/AIOps/README.md:694:`aiops:ingest`, `aiops:worker`, `aiops:routes:scan`, `aiops:repair:plan`, `aiops:priority:build`
+app/Commands/AIOps/README.md:700:`php spark aiops:ingest`
+app/Commands/AIOps/README.md:726:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:758:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:790:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:822:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:854:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:886:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:918:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:950:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:1046:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:1078:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:1174:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:1206:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:1238:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:1270:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:1334:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:1342:### aiops:worker
+app/Commands/AIOps/README.md:1348:`php spark aiops:worker`
+app/Commands/AIOps/README.md:1366:`aiops:worker`, `aiops:pr:send`, `logs:summarize`, `aiops:worker:logs`
+app/Commands/AIOps/README.md:1372:`php spark aiops:worker`
+app/Commands/AIOps/README.md:1374:### aiops:worker:logs
+app/Commands/AIOps/README.md:1380:`php spark aiops:worker:logs`
+app/Commands/AIOps/README.md:1398:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/README.md:1404:`php spark aiops:worker:logs`
+app/Commands/AIOps/README.md:1441:| `aiops:graph:run` | `aiops:worker` | Command → Command |
+app/Commands/AIOps/README.md:1442:| `aiops:ingest` | `App\Services\AIOps\InstructionService` | Command → Service |
+app/Commands/AIOps/README.md:1443:| `aiops:ingest` | `bf_frontend_incidents` | Command → Table |
+app/Commands/AIOps/README.md:1444:| `aiops:ingest` | `parse` | Command → Table |
+app/Commands/AIOps/README.md:1445:| `aiops:ingest` | `aiops:ingest` | Command → Command |
+app/Commands/AIOps/README.md:1446:| `aiops:ingest` | `aiops:worker` | Command → Command |
+app/Commands/AIOps/README.md:1447:| `aiops:ingest` | `aiops:routes:scan` | Command → Command |
+app/Commands/AIOps/README.md:1448:| `aiops:ingest` | `aiops:repair:plan` | Command → Command |
+app/Commands/AIOps/README.md:1449:| `aiops:ingest` | `aiops:priority:build` | Command → Command |
+app/Commands/AIOps/README.md:1485:| `aiops:worker` | `App\Services\AIOps\BranchLockService` | Command → Service |
+app/Commands/AIOps/README.md:1486:| `aiops:worker` | `App\Services\AIOps\DependencyResolver` | Command → Service |
+app/Commands/AIOps/README.md:1487:| `aiops:worker` | `App\Services\AIOps\DiffBuilder` | Command → Service |
+app/Commands/AIOps/README.md:1488:| `aiops:worker` | `App\Services\AIOps\GitHubPRService` | Command → Service |
+app/Commands/AIOps/README.md:1489:| `aiops:worker` | `App\Services\AIOps\GovernanceScorer` | Command → Service |
+app/Commands/AIOps/README.md:1490:| `aiops:worker` | `aiops:worker` | Command → Command |
+app/Commands/AIOps/README.md:1491:| `aiops:worker` | `aiops:pr:send` | Command → Command |
+app/Commands/AIOps/README.md:1492:| `aiops:worker` | `logs:summarize` | Command → Command |
+app/Commands/AIOps/README.md:1493:| `aiops:worker` | `aiops:worker:logs` | Command → Command |
+app/Commands/AIOps/README.md:1494:| `aiops:worker` | `Ollama` | Command → API |
+app/Commands/AIOps/README.md:1495:| `aiops:worker` | `GitHub` | Command → API |
+app/Commands/AIOps/README.md:1496:| `aiops:worker:logs` | `App\Services\AIOps\InstructionService` | Command → Service |
+app/Commands/AIOps/README.md:1497:| `aiops:worker:logs` | `App\Services\Spark\LogSummarizeService` | Command → Service |
+app/Commands/AIOps/README.md:1498:| `aiops:worker:logs` | `App\Models\AIOpsInstructionModel` | Command → Model |
+app/Commands/AIOps/README.md:1529:- `php spark logs:summarize`
+app/Commands/AIOps/README.md:1559:- `aiops:ingest`
+app/Commands/AIOps/Redis/README.md:17:- `logs:summarize`
+app/Commands/AIOps/Redis/README.md:45:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Redis/README.md:70:- `php spark logs:summarize`
+app/Commands/AIOps/Redis/README.md:95:- `logs:summarize`
+app/Commands/AIOps/Redis/Stats.php:8:class Stats extends SafeBaseCommand
+app/Commands/AIOps/Repair.php:4:class Repair extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AIOps - Repair'; protected $name='aiops:repair'; protected $description='Apply safe aiops repairs'; protected $options=['--json'=>'JSON','--dry-run'=>'Dry']; public function run(array $params){$this->parseParams($params);$json=$this->optBool('json');$dry=$this->optBool('dry-run');$actions=[];foreach(['aiops/runtime','chat/runtime'] as $d){if(!is_dir(ROOTPATH.$d)){if(!$dry){mkdir(ROOTPATH.$d,0775,true);} $actions[]="created {$d}";}} if(!is_file(ROOTPATH.'aiops/bridge-8500.js')){ if(!$dry){file_put_contents(ROOTPATH.'aiops/bridge-8500.js',"#!/usr/bin/env node\nconsole.log(JSON.stringify({ok:true,stub:true,ts:new Date().toISOString()}));\n");} $actions[]='created bridge-8500.js stub'; }
+app/Commands/AIOps/RepairRun.php:8:class RepairRun extends SafeBaseCommand
+app/Commands/AIOps/RepairRunSafe.php:8:class RepairRunSafe extends SafeBaseCommand
+app/Commands/AIOps/Rollback.php:8:class Rollback extends SafeBaseCommand
+app/Commands/AIOps/Routes/Compare.php:9:class Compare extends SafeBaseCommand
+app/Commands/AIOps/Routes/Gate.php:8:class Gate extends SafeBaseCommand
+app/Commands/AIOps/Routes/README.md:21:- `logs:summarize`
+app/Commands/AIOps/Routes/README.md:81:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Routes/README.md:113:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Routes/README.md:145:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Routes/README.md:177:`ops:doctor:full`, `logs:summarize`
+app/Commands/AIOps/Routes/README.md:214:- `php spark logs:summarize`
+app/Commands/AIOps/Routes/README.md:240:- `logs:summarize`
+app/Commands/AIOps/Routes/Regress.php:8:class Regress extends SafeBaseCommand
+app/Commands/AIOps/Routes/Scan.php:9:class Scan extends SafeBaseCommand
+app/Commands/AIOps/Routes/ScanAuth.php:9:class ScanAuth extends SafeBaseCommand
+app/Commands/AIOps/Run.php:10:class Run extends SafeBaseCommand
+app/Commands/AIOps/RunGraph.php:9:class RunGraph extends SafeBaseCommand
+app/Commands/AIOps/RunGraph.php:38:            passthru('php spark aiops:worker --once');
+app/Commands/AIOps/ScanCells.php:12:class ScanCells extends SafeBaseCommand
+app/Commands/AIOps/Seed.php:9:class Seed extends SafeBaseCommand
+app/Commands/AIOps/SelfHeal.php:3:class SelfHeal extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AIOps - Repair'; protected $name='aiops:self-heal'; protected $description='Run one-pass self-heal'; protected $options=['--attempts'=>'max 3','--json'=>'JSON']; public function run(array $params){$this->parseParams($params);$json=$this->optBool('json');$attempts=max(1,min(3,$this->optInt('attempts', 1)));$lock = ROOTPATH . 'aiops/runtime/selfheal.lock'; if(is_file($lock) && (time()-filemtime($lock))<600){$out=['status'=>'locked','message'=>'self-heal already running'];$this->emit($out,$json);return EXIT_SUCCESS;} file_put_contents($lock,(string)getmypid()); try {$runs=[]; for($i=1;$i<=$attempts;$i++){ $audit=command('aiops:audit --json=1'); $repair=command('aiops:repair --json=1'); $status=command('aiops:status --json=1'); $runs[]=['cycle'=>$i,'audit'=>$audit,'repair'=>$repair,'status'=>$status]; } $md="# Self Heal ".date('c')."\n\nAttempts: {$attempts}\n"; $path=$this->writeDoc('nightly','self-heal-'.date('Y-m-d--Hi').'.md',$md); $out=['status'=>'ok','attempts'=>$attempts,'report'=>$path]; } finally {@unlink($lock);} $this->emit($out,$json); return EXIT_SUCCESS; }}
+app/Commands/AIOps/SqlCheck.php:11:class SqlCheck extends SafeBaseCommand
+app/Commands/AIOps/Status.php:11:class Status extends SafeBaseCommand
+app/Commands/AIOps/SuggestRoutes.php:10:class SuggestRoutes extends SafeBaseCommand
+app/Commands/AIOps/SyncPerfRoutes.php:8:class SyncPerfRoutes extends SafeBaseCommand
+app/Commands/AIOps/Unlock.php:11:class Unlock extends SafeBaseCommand
+app/Commands/AIOps/Watch.php:3:class Watch extends SafeBaseCommand { use SubsCommandTrait; protected $group = 'AIOps - Repair'; protected $name='aiops:watch'; protected $description='Continuous aiops audit watcher'; protected $options=['--interval'=>'Seconds','--max-cycles'=>'0 infinite','--heal'=>'Run self-heal']; public function run(array $params){$this->parseParams($params);$interval=max(30,$this->optInt('interval', 900));$max=$this->optInt('max-cycles', 0);$heal=$this->optBool('heal');$i=0; while($max===0 || $i<$max){$i++; CLI::write("[cycle {$i}] ".date('c')); command('aiops:audit --json=1'); if($heal){command('aiops:self-heal --attempts=1 --json=1');} sleep($interval);} return EXIT_SUCCESS; }}
+app/Commands/AIOps/Worker.php:15:class Worker extends SafeBaseCommand
+app/Commands/AIOps/Worker.php:18:    protected $name        = 'aiops:worker';
+app/Commands/AIOps/Worker.php:20:    protected $usage       = 'aiops:worker [--once] [--max=10] [--create-pr=0|1]';
+app/Commands/AIOps/Worker.php:137:                $ollamaPrompt = $outDir . "/ollama_prompt.md";
+app/Commands/AIOps/Worker.php:138:                file_put_contents($ollamaPrompt, $this->buildOllamaPrompt($id, $risk, $gov, $targets, $text));
+app/Commands/AIOps/Worker.php:139:                $generated[] = $ollamaPrompt;
+app/Commands/AIOps/Worker.php:286:            $steps[] = 'php spark aiops:worker --create-pr=1';
+app/Commands/AIOps/Worker.php:291:            $steps[] = 'php spark logs:summarize';
+app/Commands/AIOps/Worker.php:292:            $steps[] = 'php spark aiops:worker:logs';
+app/Commands/AIOps/Worker.php:332:        if (str_contains($t, 'aiops:worker:logs') || str_contains($t, 'logs:summarize --auto-aiops --auto-aiops')) {
+app/Commands/AIOps/Worker.php:336:        return substr_count($t, 'aiops:worker') > 2;
+app/Commands/AIOps/WorkerLogs.php:11:class WorkerLogs extends SafeBaseCommand
+app/Commands/AIOps/WorkerLogs.php:14:    protected $name = 'aiops:worker:logs';
+app/Commands/AIOps/WorkerLogs.php:59:        $args = ['aiops:worker', '--once'];
+app/Commands/API/ApiAudit.php:12:class ApiAudit extends SafeBaseCommand
+app/Commands/API/ApiDiff.php:13:class ApiDiff extends SafeBaseCommand
+app/Commands/API/ApiFiltersCheck.php:11:class ApiFiltersCheck extends SafeBaseCommand
+app/Commands/API/ApiInventory.php:12:class ApiInventory extends SafeBaseCommand
+app/Commands/API/ApiList.php:11:class ApiList extends SafeBaseCommand
+app/Commands/API/ApiPermissions.php:10:class ApiPermissions extends SafeBaseCommand
+app/Commands/API/ApiRateLimitCheck.php:11:class ApiRateLimitCheck extends SafeBaseCommand
+app/Commands/API/ApiResearch.php:11:class ApiResearch extends SafeBaseCommand
+app/Commands/API/ApiTestUrl.php:12:class ApiTestUrl extends SafeBaseCommand
+app/Commands/API/ApiVersioningCheck.php:11:class ApiVersioningCheck extends SafeBaseCommand
+app/Commands/API/DocsScrapeApi.php:13:class DocsScrapeApi extends SafeBaseCommand
+app/Commands/Alerts/Audit.php:11:class Audit extends SafeBaseCommand
+app/Commands/Alerts/FetchRawEmails.php:11:class FetchRawEmails extends SafeBaseCommand
+app/Commands/Alerts/Forecast.php:8:class Forecast extends SafeBaseCommand
+app/Commands/Alerts/Ingest.php:14:class Ingest extends SafeBaseCommand
+app/Commands/Alerts/ParseTest.php:9:class ParseTest extends SafeBaseCommand
+app/Commands/App/APIAuditPro.php:10:class APIAuditPro extends SafeBaseCommand
+app/Commands/App/APIList.php:8:class APIList extends SafeBaseCommand
+app/Commands/App/ControllerAudit.php:10:class ControllerAudit extends SafeBaseCommand
+app/Commands/App/CoverageGate.php:8:class CoverageGate extends SafeBaseCommand
+app/Commands/App/Healthcheck.php:9:class Healthcheck extends SafeBaseCommand
+app/Commands/App/Test.php:8:class Test extends SafeBaseCommand
+app/Commands/AppUpdate.php:7:class AppUpdate extends SafeBaseCommand
+app/Commands/Audit/All.php:8:class All extends SafeBaseCommand
+app/Commands/Audit/NodeAudit.php:8:class NodeAudit extends SafeBaseCommand
+app/Commands/Audit/Psr4.php:11:class Psr4 extends SafeBaseCommand
+app/Commands/Auth/Audit.php:9:class Audit extends SafeBaseCommand
+app/Commands/Auth/BaselineCapture.php:11:class BaselineCapture extends SafeBaseCommand
+app/Commands/Auth/BaselineDiff.php:11:class BaselineDiff extends SafeBaseCommand
+app/Commands/Auth/BaselineRestore.php:11:class BaselineRestore extends SafeBaseCommand
+app/Commands/Auth/FlowSmoke.php:13:class FlowSmoke extends SafeBaseCommand
+app/Commands/Auth/FunnelCheck.php:13:class FunnelCheck extends SafeBaseCommand
+app/Commands/Auth/Smoke.php:11:class Smoke extends SafeBaseCommand
+app/Commands/Auth/SmokeTest.php:11:class SmokeTest extends SafeBaseCommand
+app/Commands/Auth/SurfaceScan.php:11:class SurfaceScan extends SafeBaseCommand
+app/Commands/CacheAudit.php:10:class CacheAudit extends SafeBaseCommand
+app/Commands/Chat/Audit.php:3:class Audit extends SafeBaseCommand { use SubsCommandTrait; protected $group='Chat'; protected $name='chat:audit'; protected $description='Chat audit'; protected $options=['--json'=>'JSON']; public function run(array $params){$this->parseParams($params);$issues=[];foreach(['chat/server.js','chat/bin/chat-start-safe.sh','chat/bin/chat-stop-safe.sh'] as $f){if(!is_file(ROOTPATH.$f)){$issues[]="Missing {$f}";}} $report=['status'=>empty($issues)?'ok':'degraded','issues'=>$issues,'chat'=>$this->mgr()->status('chat.app')];$report['report']=$this->writeDoc('audits','chat-audit-'.date('Y-m-d').'.json',$report);$this->emit($report,$this->optBool('json'));return empty($issues)?EXIT_SUCCESS:EXIT_ERROR;}}
+app/Commands/Chat/Logs.php:11:class Logs extends SafeBaseCommand
+app/Commands/Chat/Repair.php:3:class Repair extends SafeBaseCommand { use SubsCommandTrait; protected $group='Chat'; protected $name='chat:repair'; protected $description='Chat repairs'; protected $options=['--json'=>'JSON','--dry-run'=>'Dry']; public function run(array $params){$this->parseParams($params);$dry=$this->optBool('dry-run');$actions=[]; if(!is_dir(ROOTPATH.'chat/runtime')){if(!$dry){mkdir(ROOTPATH.'chat/runtime',0775,true);} $actions[]='created chat/runtime';} $report=['status'=>'ok','actions'=>$actions,'dry_run'=>$dry];$report['report']=$this->writeDoc('repairs','chat-repair-'.date('Y-m-d').'.md',"# Chat Repair\n\n- ".implode("\n- ",$actions?:['No changes needed'])."\n");$this->emit($report,$this->optBool('json'));return EXIT_SUCCESS;}}
+app/Commands/Chat/Restart.php:3:class Restart extends SafeBaseCommand { use SubsCommandTrait; protected $group='Chat'; protected $name='chat:restart'; protected $description='Restart chat'; protected $options=['--json'=>'JSON','--dry-run'=>'Dry']; public function run(array $params){$this->parseParams($params);$r=$this->mgr()->restart('chat.app',$this->optBool('dry-run'));$this->emit($r,$this->optBool('json'));return ($r['ok']??false)?EXIT_SUCCESS:EXIT_ERROR;}}
+app/Commands/Chat/Start.php:3:class Start extends SafeBaseCommand { use SubsCommandTrait; protected $group='Chat'; protected $name='chat:start'; protected $description='Start chat'; protected $options=['--json'=>'JSON','--dry-run'=>'Dry']; public function run(array $params){$this->parseParams($params);$r=$this->mgr()->start('chat.app',$this->optBool('dry-run'));$this->emit($r,$this->optBool('json'));return ($r['ok']??false)?EXIT_SUCCESS:EXIT_ERROR;}}
+app/Commands/Chat/Status.php:10:class Status extends SafeBaseCommand
+app/Commands/Chat/Stop.php:3:class Stop extends SafeBaseCommand { use SubsCommandTrait; protected $group='Chat'; protected $name='chat:stop'; protected $description='Stop chat'; protected $options=['--json'=>'JSON','--dry-run'=>'Dry']; public function run(array $params){$this->parseParams($params);$r=$this->mgr()->stop('chat.app',$this->optBool('dry-run'));$this->emit($r,$this->optBool('json'));return ($r['ok']??false)?EXIT_SUCCESS:EXIT_ERROR;}}
+app/Commands/Chat/Unblock.php:10:class Unblock extends SafeBaseCommand
+app/Commands/Codex/Audit.php:8:class Audit extends SafeBaseCommand
+app/Commands/Codex/ContinueAudit.php:9:class ContinueAudit extends SafeBaseCommand
+app/Commands/Codex/Gate.php:9:class Gate extends SafeBaseCommand
+app/Commands/Codex/GateSeverity.php:9:class GateSeverity extends SafeBaseCommand
+app/Commands/Codex/Index.php:9:class Index extends SafeBaseCommand
+app/Commands/Codex/Instructions/Audit.php:8:class Audit extends SafeBaseCommand
+app/Commands/Codex/Instructions/DevOpsReview.php:8:class DevOpsReview extends SafeBaseCommand
+app/Commands/Codex/Instructions/Summarize.php:8:class Summarize extends SafeBaseCommand
+app/Commands/Codex/Review.php:8:class Review extends SafeBaseCommand
+app/Commands/Codex/ReviewCommit.php:8:class ReviewCommit extends SafeBaseCommand
+app/Commands/Codex/ReviewList.php:8:class ReviewList extends SafeBaseCommand
+app/Commands/Codex/ReviewPrOutbox.php:10:class ReviewPrOutbox extends SafeBaseCommand
+app/Commands/Codex/ReviewPublish.php:11:class ReviewPublish extends SafeBaseCommand
+app/Commands/Codex/Status.php:9:class Status extends SafeBaseCommand
+app/Commands/CoinVault/Audit.php:11:class Audit extends BaseCommand
+app/Commands/CompatAudit.php:9:class CompatAudit extends SafeBaseCommand
+app/Commands/Config/Clear.php:9:class Clear extends SafeBaseCommand
+app/Commands/Config/Drift.php:9:class Drift extends SafeBaseCommand
+app/Commands/Config/Lint.php:9:class Lint extends SafeBaseCommand
+app/Commands/Content/EngineSmoke.php:15:class EngineSmoke extends SafeBaseCommand
+app/Commands/Content/IngestSample.php:14:class IngestSample extends SafeBaseCommand
+app/Commands/ControllerProfile.php:8:class ControllerProfile extends SafeBaseCommand
+app/Commands/Database/ApplyDocs.php:9:class ApplyDocs extends SafeBaseCommand
+app/Commands/Database/Drift.php:11:class Drift extends SafeBaseCommand
+app/Commands/Database/Inventory.php:9:class Inventory extends SafeBaseCommand
+app/Commands/Database/MigrateDryRun.php:10:class MigrateDryRun extends SafeBaseCommand
+app/Commands/Database/TableList.php:9:class TableList extends BaseCommand
+app/Commands/Discord/CustomSend.php:8:class CustomSend extends SafeBaseCommand
+app/Commands/Discord/GetList.php:7:class GetList extends SafeBaseCommand
+app/Commands/Discord/ProcessQueue.php:7:class ProcessQueue extends SafeBaseCommand
+app/Commands/Discord/Test.php:7:class Test extends SafeBaseCommand
+app/Commands/Discord/TestLiquidity.php:7:class TestLiquidity extends SafeBaseCommand
+app/Commands/Discord/WireCheck.php:8:class WireCheck extends SafeBaseCommand
+app/Commands/DiscordCustomSend.php:11:class DiscordCustomSend extends SafeBaseCommand
+app/Commands/Docs/Architecture/Graph.php:8:class Graph extends SafeBaseCommand
+app/Commands/Docs/Architecture/Map.php:10:class Map extends SafeBaseCommand
+app/Commands/Docs/AuditDocs.php:10:class AuditDocs extends SafeBaseCommand
+app/Commands/Docs/BuildHowItWorksNavigation.php:9:class BuildHowItWorksNavigation extends SafeBaseCommand
+app/Commands/Docs/DatabaseMap.php:7:class DatabaseMap extends SafeBaseCommand
+app/Commands/Docs/DependenciesMap.php:7:class DependenciesMap extends SafeBaseCommand
+app/Commands/Docs/Exports/ExportViewTxt.php:7:class ExportViewTxt extends SafeBaseCommand
+app/Commands/Docs/FullDocsAudit.php:7:class FullDocsAudit extends SafeBaseCommand
+app/Commands/Docs/Generate/ArchitectureMap.php:10:class ArchitectureMap extends SafeBaseCommand
+app/Commands/Docs/Generate/DocsReadmeBuilder.php:8:class DocsReadmeBuilder extends SafeBaseCommand
+app/Commands/Docs/Generate/FormInventory.php:9:class FormInventory extends SafeBaseCommand
+app/Commands/Docs/Generate/KnowledgeGraph.php:12:class KnowledgeGraph extends SafeBaseCommand
+app/Commands/Docs/Generate/MissingDocs.php:10:class MissingDocs extends SafeBaseCommand
+app/Commands/Docs/InventoryDocs.php:10:class InventoryDocs extends SafeBaseCommand
+app/Commands/Docs/ModulesMap.php:7:class ModulesMap extends SafeBaseCommand
+app/Commands/Docs/RoutesInventory.php:7:class RoutesInventory extends SafeBaseCommand
+app/Commands/Docs/Scan/ControllersList.php:8:class ControllersList extends SafeBaseCommand
+app/Commands/Docs/Scan/OrphanRoutes.php:8:class OrphanRoutes extends SafeBaseCommand
+app/Commands/Docs/Scan/OrphanViews.php:10:class OrphanViews extends SafeBaseCommand
+app/Commands/Docs/Scan/Routes.php:7:class Routes extends SafeBaseCommand
+app/Commands/Docs/Scan/ServiceList.php:8:class ServiceList extends SafeBaseCommand
+app/Commands/Docs/Scan/UndocumentedControllers.php:10:class UndocumentedControllers extends SafeBaseCommand
+app/Commands/Docs/Scan/ViewDirectories.php:8:class ViewDirectories extends SafeBaseCommand
+app/Commands/Docs/Scan/ViewFiles.php:8:class ViewFiles extends SafeBaseCommand
+app/Commands/Docs/SparkCommandsInventory.php:7:class SparkCommandsInventory extends SafeBaseCommand
+app/Commands/Docs/Sync/AllDocs.php:10:class AllDocs extends SafeBaseCommand
+app/Commands/Docs/Sync/CodeFromDocs.php:9:class CodeFromDocs extends SafeBaseCommand
+app/Commands/Docs/Sync/DocsSystem.php:9:class DocsSystem extends SafeBaseCommand
+app/Commands/Docs/Test.php:10:class Test extends SafeBaseCommand
+app/Commands/DreamHost/DNSTest.php:10:class DNSTest extends SafeBaseCommand
+app/Commands/DreamHost/EnvDebug.php:10:class EnvDebug extends SafeBaseCommand
+app/Commands/DreamHost/ImapCapabilities.php:11:class ImapCapabilities extends SafeBaseCommand
+app/Commands/DreamHost/ImapFlagSweep.php:10:class ImapFlagSweep extends SafeBaseCommand
+app/Commands/DreamHost/ImapTest.php:10:class ImapTest extends SafeBaseCommand
+app/Commands/DreamHost/PortTest.php:10:class PortTest extends SafeBaseCommand
+app/Commands/DreamHost/SSLTest.php:10:class SSLTest extends SafeBaseCommand
+app/Commands/DreamHost/SmtpProbe.php:10:class SmtpProbe extends SafeBaseCommand
+app/Commands/Env/EnvDoctor.php:10:class EnvDoctor extends SafeBaseCommand
+app/Commands/Errors/ConsolidateErrors.php:9:class ConsolidateErrors extends SafeBaseCommand
+app/Commands/Errors/Diagnose502.php:8:class Diagnose502 extends SafeBaseCommand
+app/Commands/Errors/Diagnose503.php:8:class Diagnose503 extends SafeBaseCommand
+app/Commands/Errors/DispatchAlerts.php:9:class DispatchAlerts extends SafeBaseCommand
+app/Commands/Errors/LearnPatterns.php:9:class LearnPatterns extends SafeBaseCommand
+app/Commands/Fix503.php:13:class Fix503 extends SafeBaseCommand
+app/Commands/ForecastEvaluate.php:8:class ForecastEvaluate extends SafeBaseCommand
+app/Commands/GapTrackerSync.php:9:class GapTrackerSync extends SafeBaseCommand
+app/Commands/GitHub/Branch.php:11:class Branch extends SafeBaseCommand
+app/Commands/GitHub/Commit.php:11:class Commit extends SafeBaseCommand
+app/Commands/GitHub/CreatePR.php:11:class CreatePR extends SafeBaseCommand
+app/Commands/GitHub/Health.php:11:class Health extends SafeBaseCommand
+app/Commands/GitHub/Pull.php:11:class Pull extends SafeBaseCommand
+app/Commands/GitHub/PullSafe.php:10:final class PullSafe extends SafeBaseCommand
+app/Commands/GitHub/Push.php:11:class Push extends SafeBaseCommand
+app/Commands/GitHub/SearchRepo.php:10:class SearchRepo extends SafeBaseCommand
+app/Commands/GitHub/Status.php:11:class Status extends SafeBaseCommand
+app/Commands/GitHub/Sync.php:11:class Sync extends SafeBaseCommand
+app/Commands/GitHub/SyncSafe.php:8:class SyncSafe extends SafeBaseCommand
+app/Commands/GitHub/WorkspaceGuard.php:10:final class WorkspaceGuard extends SafeBaseCommand
+app/Commands/GitHub/WorkspaceRepair.php:8:class WorkspaceRepair extends SafeBaseCommand
+app/Commands/Growth/RetentionWatch.php:9:class RetentionWatch extends SafeBaseCommand
+app/Commands/Gtm/CronRouteSecurityValidation.php:10:class CronRouteSecurityValidation extends SafeBaseCommand
+app/Commands/Gtm/HealthSnapshot.php:11:class HealthSnapshot extends SafeBaseCommand
+app/Commands/Gtm/LaunchAudit.php:10:class LaunchAudit extends SafeBaseCommand
+app/Commands/Gtm/LaunchSmoke.php:10:class LaunchSmoke extends SafeBaseCommand
+app/Commands/Health/Cache.php:8:class Cache extends SafeBaseCommand
+app/Commands/Health/Disk.php:9:class Disk extends SafeBaseCommand
+app/Commands/Health/GitSafety.php:9:class GitSafety extends SafeBaseCommand
+app/Commands/Health/Services.php:10:class Services extends SafeBaseCommand
+app/Commands/Investments/EconomyUpdateAll.php:9:class EconomyUpdateAll extends SafeBaseCommand
+app/Commands/Logger/Audit.php:9:class Audit extends SafeBaseCommand
+app/Commands/Logs/CheckServerLogs.php:8:class CheckServerLogs extends SafeBaseCommand
+app/Commands/Logs/Doctor.php:9:class Doctor extends SafeBaseCommand
+app/Commands/Logs/EnableFullLogging.php:8:class EnableFullLogging extends SafeBaseCommand
+app/Commands/Logs/Errors.php:7:class Errors extends \App\Commands\AIOps\LogsErrors
+app/Commands/Logs/FullReport.php:9:class FullReport extends SafeBaseCommand
+app/Commands/Logs/Healthcheck.php:9:class Healthcheck extends SafeBaseCommand
+app/Commands/Logs/README.md:17:- `logs:summarize` (Operational)
+app/Commands/Logs/README.md:18:- `logs:summarize-all` (Operational)
+app/Commands/Logs/README.md:150:### logs:summarize
+app/Commands/Logs/README.md:156:`php spark logs:summarize`
+app/Commands/Logs/README.md:159:`--dry-run`, `Preview actions without writing data`, `--json`, `Output compact JSON payload for automation`, `--auto-aiops`, `After summarize, enqueue and run aiops:worker:logs pipeline`
+app/Commands/Logs/README.md:180:`php spark logs:summarize`
+app/Commands/Logs/README.md:182:### logs:summarize-all
+app/Commands/Logs/README.md:188:`php spark logs:summarize-all`
+app/Commands/Logs/README.md:212:`php spark logs:summarize-all`
+app/Commands/Logs/README.md:221:| `logs:summarize` | `App\Services\Spark\LogSummarizeService` | Command → Service |
+app/Commands/Logs/README.md:222:| `logs:summarize` | `state` | Command → Table |
+app/Commands/Logs/README.md:223:| `logs:summarize-all` | `writable` | Command → Table |
+app/Commands/Logs/README.md:235:Logs --> logs_summarize["logs:summarize"]
+app/Commands/Logs/README.md:236:Logs --> logs_summarize_all["logs:summarize-all"]
+app/Commands/Logs/README.md:245:- `php spark logs:summarize`
+app/Commands/Logs/README.md:246:- `php spark logs:summarize-all`
+app/Commands/Logs/Summarize.php:10:class Summarize extends SafeBaseCommand
+app/Commands/Logs/Summarize.php:13:    protected $name        = 'logs:summarize';
+app/Commands/Logs/Summarize.php:15:    protected $usage       = 'logs:summarize [date|yesterday] [--dry-run] [--json]';
+app/Commands/Logs/Summarize.php:24:        '--auto-aiops' => 'After summarize, enqueue and run aiops:worker:logs pipeline',
+app/Commands/Logs/Summarize.php:29:        CLI::write('Starting logs:summarize', 'yellow');
+app/Commands/Logs/Summarize.php:30:        log_message('info', '[AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Started', ['params' => $params]);
+app/Commands/Logs/Summarize.php:57:            log_message('error', '[AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Failed', [
+app/Commands/Logs/Summarize.php:90:        log_message('info', '[AIOPS][SPARK][GOVERNANCE][spark:logs:summarize] Completed', [
+app/Commands/Logs/Summarize.php:110:            CLI::write('Auto AIOps pipeline enabled; dispatching aiops:worker:logs', 'yellow');
+app/Commands/Logs/SummarizeAll.php:10:class SummarizeAll extends SafeBaseCommand
+app/Commands/Logs/SummarizeAll.php:13:    protected $name = 'logs:summarize-all';
+app/Commands/Logs/SummarizeAll.php:15:    protected $usage = 'logs:summarize-all [--json]';
+app/Commands/Logs/SummarizeAll.php:69:            CLI::write('logs:summarize-all completed for ' . $date, 'green');
+app/Commands/Logs/Test.php:9:class Test extends SafeBaseCommand
+app/Commands/Mail/Send.php:9:class Send extends SafeBaseCommand
+app/Commands/Mail/SendTest.php:11:class SendTest extends SafeBaseCommand
+app/Commands/Mail/Test.php:8:class Test extends SafeBaseCommand
+app/Commands/Mail/Verify.php:10:class Verify extends SafeBaseCommand
+app/Commands/Marketing/ApproveGenerated.php:9:class ApproveGenerated extends SafeBaseCommand
+app/Commands/Marketing/ApproveGeneratedContent.php:10:class ApproveGeneratedContent extends SafeBaseCommand
+app/Commands/Marketing/AuditDistribution.php:8:class AuditDistribution extends SafeBaseCommand
+app/Commands/Marketing/AutomationAudit.php:9:class AutomationAudit extends SafeBaseCommand
+app/Commands/Marketing/BlueskyHealthcheck.php:8:class BlueskyHealthcheck extends SafeBaseCommand
+app/Commands/Marketing/DailyAudit.php:9:class DailyAudit extends SafeBaseCommand
+app/Commands/Marketing/DiscordActivationAnnouncement.php:8:class DiscordActivationAnnouncement extends SafeBaseCommand
+app/Commands/Marketing/DiscordTestAllCategories.php:7:class DiscordTestAllCategories extends SafeBaseCommand
+app/Commands/Marketing/DiscordTestCategory.php:7:class DiscordTestCategory extends SafeBaseCommand
+app/Commands/Marketing/Distribute.php:8:class Distribute extends SafeBaseCommand
+app/Commands/Marketing/DistributionFailureInjectTest.php:12:class DistributionFailureInjectTest extends SafeBaseCommand
+app/Commands/Marketing/DistributionSqlAssert.php:8:class DistributionSqlAssert extends SafeBaseCommand
+app/Commands/Marketing/EmailClean.php:10:class EmailClean extends SafeBaseCommand
+app/Commands/Marketing/GeneratePackage.php:8:class GeneratePackage extends SafeBaseCommand
+app/Commands/Marketing/MastodonHealthcheck.php:8:class MastodonHealthcheck extends SafeBaseCommand
+app/Commands/Marketing/NewsDebug.php:9:class NewsDebug extends SafeBaseCommand
+app/Commands/Marketing/NewsGenerate.php:9:class NewsGenerate extends SafeBaseCommand
+app/Commands/Marketing/NewsImapTest.php:8:class NewsImapTest extends SafeBaseCommand
+app/Commands/Marketing/NewsScrape.php:9:class NewsScrape extends SafeBaseCommand
+app/Commands/Marketing/NewsSeedTest.php:9:class NewsSeedTest extends SafeBaseCommand
+app/Commands/Marketing/NotificationTest.php:10:class NotificationTest extends SafeBaseCommand
+app/Commands/Marketing/Pipeline.php:10:class Pipeline extends SafeBaseCommand
+app/Commands/Marketing/ProcessNotifications.php:11:class ProcessNotifications extends SafeBaseCommand
+app/Commands/Marketing/PromotionsAudit.php:10:class PromotionsAudit extends SafeBaseCommand
+app/Commands/Marketing/PromotionsGenerate.php:10:class PromotionsGenerate extends SafeBaseCommand
+app/Commands/Marketing/PromotionsTest.php:9:class PromotionsTest extends SafeBaseCommand
+app/Commands/Marketing/RegressionSmoke.php:9:class RegressionSmoke extends SafeBaseCommand
+app/Commands/Marketing/RetryDistribution.php:8:class RetryDistribution extends SafeBaseCommand
+app/Commands/Master/Health/Commands.php:12:class Commands extends SafeBaseCommand
+app/Commands/Master/Health/Controllers.php:12:class Controllers extends SafeBaseCommand
+app/Commands/Master/Health/Dependencies.php:12:class Dependencies extends SafeBaseCommand
+app/Commands/Master/Health/Docs.php:12:class Docs extends SafeBaseCommand
+app/Commands/Master/Health/Logs.php:10:class Logs extends SafeBaseCommand
+app/Commands/Master/Health/Models.php:12:class Models extends SafeBaseCommand
+app/Commands/Master/Health/Routes.php:10:class Routes extends SafeBaseCommand
+app/Commands/Master/Health/Services.php:10:class Services extends SafeBaseCommand
+app/Commands/Master/Health/Views.php:12:class Views extends SafeBaseCommand
+app/Commands/Master/KnowledgeGraphBuild.php:12:class KnowledgeGraphBuild extends SafeBaseCommand
+app/Commands/Master/RunAll.php:10:class RunAll extends SafeBaseCommand
+app/Commands/MditNavComputeDaily.php:8:class MditNavComputeDaily extends SafeBaseCommand
+app/Commands/NewsAudit.php:10:class NewsAudit extends SafeBaseCommand
+app/Commands/Ollama/BaseOllamaCommand.php:13:abstract class BaseOllamaCommand extends SafeBaseCommand
+app/Commands/Ollama/BaseOllamaCommand.php:145:            log_message('error', 'ollama run log persistence failed: {message}', ['message' => $e->getMessage(), 'run_uuid' => $runUuid]);
+app/Commands/Ollama/Bench.php:9:class Bench extends BaseOllamaCommand
+app/Commands/Ollama/Bench.php:11:    protected $name = 'ollama:bench';
+app/Commands/Ollama/Bench.php:21:            'message' => 'ollama:bench is scaffolded and ready for extension.',
+app/Commands/Ollama/Chat.php:10:class Chat extends BaseOllamaCommand
+app/Commands/Ollama/Chat.php:12:    protected $name = 'ollama:chat';
+app/Commands/Ollama/Chat.php:68:            log_message('error', 'ollama:chat failed {run_uuid}: {error}', ['run_uuid' => $runUuid, 'error' => $e->getMessage()]);
+app/Commands/Ollama/Circuit/README.md:13:- `ollama:circuit:reset` (Operational)
+app/Commands/Ollama/Circuit/README.md:14:- `ollama:circuit:status` (Operational)
+app/Commands/Ollama/Circuit/README.md:22:### ollama:circuit:reset
+app/Commands/Ollama/Circuit/README.md:28:`php spark ollama:circuit:reset`
+app/Commands/Ollama/Circuit/README.md:52:`php spark ollama:circuit:reset`
+app/Commands/Ollama/Circuit/README.md:54:### ollama:circuit:status
+app/Commands/Ollama/Circuit/README.md:60:`php spark ollama:circuit:status`
+app/Commands/Ollama/Circuit/README.md:84:`php spark ollama:circuit:status`
+app/Commands/Ollama/Circuit/README.md:90:| `ollama:circuit:reset` | `Ollama` | Command → API |
+app/Commands/Ollama/Circuit/README.md:91:| `ollama:circuit:status` | `Ollama` | Command → API |
+app/Commands/Ollama/Circuit/README.md:98:Circuit --> ollama_circuit_reset["ollama:circuit:reset"]
+app/Commands/Ollama/Circuit/README.md:99:Circuit --> ollama_circuit_status["ollama:circuit:status"]
+app/Commands/Ollama/Circuit/README.md:104:- `php spark ollama:circuit:reset`
+app/Commands/Ollama/Circuit/README.md:105:- `php spark ollama:circuit:status`
+app/Commands/Ollama/Circuit/Reset.php:9:class Reset extends BaseOllamaCommand
+app/Commands/Ollama/Circuit/Reset.php:11:    protected $name = 'ollama:circuit:reset';
+app/Commands/Ollama/Circuit/Reset.php:21:            'message' => 'ollama:circuit:reset is scaffolded and ready for extension.',
+app/Commands/Ollama/Circuit/Status.php:9:class Status extends BaseOllamaCommand
+app/Commands/Ollama/Circuit/Status.php:11:    protected $name = 'ollama:circuit:status';
+app/Commands/Ollama/Circuit/Status.php:21:            'message' => 'ollama:circuit:status is scaffolded and ready for extension.',
+app/Commands/Ollama/CircuitReset.php:9:class CircuitReset extends BaseOllamaCommand
+app/Commands/Ollama/CircuitReset.php:11:    protected $name = 'ollama:circuit:reset';
+app/Commands/Ollama/CircuitStatus.php:9:class CircuitStatus extends BaseOllamaCommand
+app/Commands/Ollama/CircuitStatus.php:11:    protected $name = 'ollama:circuit:status';
+app/Commands/Ollama/Diagnose.php:7:class Diagnose extends BaseOllamaCommand
+app/Commands/Ollama/Diagnose.php:9:    protected $name = 'ollama:diagnose';
+app/Commands/Ollama/Docs/Inventory.php:9:class Inventory extends BaseOllamaCommand
+app/Commands/Ollama/Docs/Inventory.php:11:    protected $name = 'ollama:docs:inventory';
+app/Commands/Ollama/Docs/Inventory.php:21:            'message' => 'ollama:docs:inventory is scaffolded and ready for extension.',
+app/Commands/Ollama/Docs/README.md:13:- `ollama:docs:inventory` (Maintenance)
+app/Commands/Ollama/Docs/README.md:14:- `ollama:docs:sync` (Maintenance)
+app/Commands/Ollama/Docs/README.md:22:### ollama:docs:inventory
+app/Commands/Ollama/Docs/README.md:28:`php spark ollama:docs:inventory`
+app/Commands/Ollama/Docs/README.md:52:`php spark ollama:docs:inventory`
+app/Commands/Ollama/Docs/README.md:54:### ollama:docs:sync
+app/Commands/Ollama/Docs/README.md:60:`php spark ollama:docs:sync`
+app/Commands/Ollama/Docs/README.md:84:`php spark ollama:docs:sync`
+app/Commands/Ollama/Docs/README.md:90:| `ollama:docs:inventory` | `Ollama` | Command → API |
+app/Commands/Ollama/Docs/README.md:91:| `ollama:docs:sync` | `Ollama` | Command → API |
+app/Commands/Ollama/Docs/README.md:98:Docs --> ollama_docs_inventory["ollama:docs:inventory"]
+app/Commands/Ollama/Docs/README.md:99:Docs --> ollama_docs_sync["ollama:docs:sync"]
+app/Commands/Ollama/Docs/README.md:104:- `php spark ollama:docs:inventory`
+app/Commands/Ollama/Docs/README.md:105:- `php spark ollama:docs:sync`
+app/Commands/Ollama/Docs/Sync.php:10:class Sync extends BaseOllamaCommand
+app/Commands/Ollama/Docs/Sync.php:12:    protected $name = 'ollama:docs:sync';
+app/Commands/Ollama/Docs/Sync.php:29:        file_put_contents(ROOTPATH . 'docs/_aiops/ollama/models.md', $modelsDoc);
+app/Commands/Ollama/Docs/Sync.php:32:        file_put_contents(ROOTPATH . 'docs/_aiops/ollama/policy.md', $policyDoc);
+app/Commands/Ollama/Doctor.php:9:class Doctor extends BaseOllamaCommand
+app/Commands/Ollama/Doctor.php:11:    protected $name = 'ollama:doctor';
+app/Commands/Ollama/Embed.php:9:class Embed extends BaseOllamaCommand
+app/Commands/Ollama/Embed.php:11:    protected $name = 'ollama:embed';
+app/Commands/Ollama/Embed.php:34:            log_message('error', 'ollama:embed failed {run_uuid}: {error}', ['run_uuid' => $runUuid, 'error' => $e->getMessage()]);
+app/Commands/Ollama/EmbedFile.php:9:class EmbedFile extends BaseOllamaCommand
+app/Commands/Ollama/EmbedFile.php:11:    protected $name = 'ollama:embed:file';
+app/Commands/Ollama/EmbedFile.php:21:            'message' => 'ollama:embed:file is scaffolded and ready for extension.',
+app/Commands/Ollama/Generate.php:9:    protected $aliases = ['ollama:generate'];
+app/Commands/Ollama/Health.php:7:class Health extends BaseOllamaCommand
+app/Commands/Ollama/Health.php:9:    protected $name = 'ollama:health';
+app/Commands/Ollama/Logs.php:7:class Logs extends BaseOllamaCommand
+app/Commands/Ollama/Logs.php:9:    protected $name = 'ollama:logs';
+app/Commands/Ollama/Logs.php:10:    protected $description = 'Backward-compatible alias of ollama:logs:tail.';
+app/Commands/Ollama/Logs.php:30:        $matches = array_values(array_filter($lines, static fn ($line) => stripos($line, 'ollama') !== false));
+app/Commands/Ollama/Logs/Export.php:10:class Export extends BaseOllamaCommand
+app/Commands/Ollama/Logs/Export.php:12:    protected $name = 'ollama:logs:export';
+app/Commands/Ollama/Logs/Export.php:13:    protected $description = 'Export Ollama run/error evidence to docs/_aiops/ollama/logs/*.md.';
+app/Commands/Ollama/Logs/Export.php:24:        $path = rtrim($this->optString($flags, 'path', ROOTPATH . 'docs/_aiops/ollama/logs'), '/');
+app/Commands/Ollama/Logs/Export.php:39:            $matches = array_values(array_filter($lines, static fn ($line) => stripos($line, 'ollama') !== false));
+app/Commands/Ollama/Logs/Export.php:43:        $file = $path . '/ollama-runs-' . date('Ymd-His') . '.md';
+app/Commands/Ollama/Logs/README.md:13:- `ollama:logs:export` (Operational)
+app/Commands/Ollama/Logs/README.md:14:- `ollama:logs:tail` (Operational)
+app/Commands/Ollama/Logs/README.md:22:### ollama:logs:export
+app/Commands/Ollama/Logs/README.md:25:Export Ollama run/error evidence to docs/_aiops/ollama/logs/*.md.
+app/Commands/Ollama/Logs/README.md:28:`php spark ollama:logs:export`
+app/Commands/Ollama/Logs/README.md:52:`php spark ollama:logs:export`
+app/Commands/Ollama/Logs/README.md:54:### ollama:logs:tail
+app/Commands/Ollama/Logs/README.md:60:`php spark ollama:logs:tail`
+app/Commands/Ollama/Logs/README.md:84:`php spark ollama:logs:tail`
+app/Commands/Ollama/Logs/README.md:90:| `ollama:logs:export` | `App\Models\OllamaRunModel` | Command → Model |
+app/Commands/Ollama/Logs/README.md:91:| `ollama:logs:export` | `Ollama` | Command → API |
+app/Commands/Ollama/Logs/README.md:92:| `ollama:logs:tail` | `file` | Command → Table |
+app/Commands/Ollama/Logs/README.md:93:| `ollama:logs:tail` | `Ollama` | Command → API |
+app/Commands/Ollama/Logs/README.md:100:Logs --> ollama_logs_export["ollama:logs:export"]
+app/Commands/Ollama/Logs/README.md:101:Logs --> ollama_logs_tail["ollama:logs:tail"]
+app/Commands/Ollama/Logs/README.md:106:- `php spark ollama:logs:export`
+app/Commands/Ollama/Logs/README.md:107:- `php spark ollama:logs:tail`
+app/Commands/Ollama/Logs/Tail.php:9:class Tail extends BaseOllamaCommand
+app/Commands/Ollama/Logs/Tail.php:11:    protected $name = 'ollama:logs:tail';
+app/Commands/Ollama/Logs/Tail.php:36:        $matches = array_values(array_filter($lines, static fn ($line) => stripos($line, 'ollama') !== false));
+app/Commands/Ollama/Modelfile/README.md:13:- `ollama:modelfile:validate` (Operational)
+app/Commands/Ollama/Modelfile/README.md:21:### ollama:modelfile:validate
+app/Commands/Ollama/Modelfile/README.md:27:`php spark ollama:modelfile:validate`
+app/Commands/Ollama/Modelfile/README.md:51:`php spark ollama:modelfile:validate`
+app/Commands/Ollama/Modelfile/README.md:57:| `ollama:modelfile:validate` | `Ollama` | Command → API |
+app/Commands/Ollama/Modelfile/README.md:64:Modelfile --> ollama_modelfile_validate["ollama:modelfile:validate"]
+app/Commands/Ollama/Modelfile/README.md:69:- `php spark ollama:modelfile:validate`
+app/Commands/Ollama/Modelfile/Validate.php:9:class Validate extends BaseOllamaCommand
+app/Commands/Ollama/Modelfile/Validate.php:11:    protected $name = 'ollama:modelfile:validate';
+app/Commands/Ollama/Modelfile/Validate.php:21:            'message' => 'ollama:modelfile:validate is scaffolded and ready for extension.',
+app/Commands/Ollama/Models/CreateModel.php:9:class CreateModel extends BaseOllamaCommand
+app/Commands/Ollama/Models/CreateModel.php:11:    protected $name = 'ollama:models:create';
+app/Commands/Ollama/Models/CreateModel.php:21:            'message' => 'ollama:models:create is scaffolded and ready for extension.',
+app/Commands/Ollama/Models/DiffModels.php:10:class DiffModels extends BaseOllamaCommand
+app/Commands/Ollama/Models/DiffModels.php:12:    protected $name = 'ollama:models:diff';
+app/Commands/Ollama/Models/DiffModels.php:51:            $remediation[] = 'php spark ollama:models:pull ' . $model . ' --json=1';
+app/Commands/Ollama/Models/DiffModels.php:54:            $remediation[] = 'php spark ollama:models:rm ' . $model . ' --force=1 --json=1';
+app/Commands/Ollama/Models/EnsureModels.php:10:class EnsureModels extends BaseOllamaCommand
+app/Commands/Ollama/Models/EnsureModels.php:12:    protected $name = 'ollama:models:ensure';
+app/Commands/Ollama/Models/ExportModels.php:9:class ExportModels extends BaseOllamaCommand
+app/Commands/Ollama/Models/ExportModels.php:11:    protected $name = 'ollama:models:export';
+app/Commands/Ollama/Models/ExportModels.php:21:            'message' => 'ollama:models:export is scaffolded and ready for extension.',
+app/Commands/Ollama/Models/ListModels.php:9:class ListModels extends BaseOllamaCommand
+app/Commands/Ollama/Models/ListModels.php:11:    protected $name = 'ollama:models:list';
+app/Commands/Ollama/Models/PruneModels.php:9:class PruneModels extends BaseOllamaCommand
+app/Commands/Ollama/Models/PruneModels.php:11:    protected $name = 'ollama:models:prune';
+app/Commands/Ollama/Models/PullModel.php:9:class PullModel extends BaseOllamaCommand
+app/Commands/Ollama/Models/PullModel.php:11:    protected $name = 'ollama:models:pull';
+app/Commands/Ollama/Models/PullModel.php:13:    protected $usage = 'ollama:models:pull <model>';
+app/Commands/Ollama/Models/PushModel.php:9:class PushModel extends BaseOllamaCommand
+app/Commands/Ollama/Models/PushModel.php:11:    protected $name = 'ollama:models:push';
+app/Commands/Ollama/Models/PushModel.php:21:            'message' => 'ollama:models:push is scaffolded and ready for extension.',
+app/Commands/Ollama/Models/README.md:13:- `ollama:models:create` (Operational)
+app/Commands/Ollama/Models/README.md:14:- `ollama:models:diff` (Operational)
+app/Commands/Ollama/Models/README.md:15:- `ollama:models:ensure` (Operational)
+app/Commands/Ollama/Models/README.md:16:- `ollama:models:export` (Operational)
+app/Commands/Ollama/Models/README.md:17:- `ollama:models:list` (Operational)
+app/Commands/Ollama/Models/README.md:18:- `ollama:models:prune` (Automation)
+app/Commands/Ollama/Models/README.md:19:- `ollama:models:pull` (Operational)
+app/Commands/Ollama/Models/README.md:20:- `ollama:models:push` (Operational)
+app/Commands/Ollama/Models/README.md:21:- `ollama:models:rm` (Operational)
+app/Commands/Ollama/Models/README.md:22:- `ollama:models:show` (Operational)
+app/Commands/Ollama/Models/README.md:30:### ollama:models:create
+app/Commands/Ollama/Models/README.md:36:`php spark ollama:models:create`
+app/Commands/Ollama/Models/README.md:60:`php spark ollama:models:create`
+app/Commands/Ollama/Models/README.md:62:### ollama:models:diff
+app/Commands/Ollama/Models/README.md:68:`php spark ollama:models:diff`
+app/Commands/Ollama/Models/README.md:86:`ollama:models:pull`, `ollama:models:rm`
+app/Commands/Ollama/Models/README.md:92:`php spark ollama:models:diff`
+app/Commands/Ollama/Models/README.md:94:### ollama:models:ensure
+app/Commands/Ollama/Models/README.md:100:`php spark ollama:models:ensure`
+app/Commands/Ollama/Models/README.md:124:`php spark ollama:models:ensure`
+app/Commands/Ollama/Models/README.md:126:### ollama:models:export
+app/Commands/Ollama/Models/README.md:132:`php spark ollama:models:export`
+app/Commands/Ollama/Models/README.md:156:`php spark ollama:models:export`
+app/Commands/Ollama/Models/README.md:158:### ollama:models:list
+app/Commands/Ollama/Models/README.md:164:`php spark ollama:models:list`
+app/Commands/Ollama/Models/README.md:188:`php spark ollama:models:list`
+app/Commands/Ollama/Models/README.md:190:### ollama:models:prune
+app/Commands/Ollama/Models/README.md:196:`php spark ollama:models:prune`
+app/Commands/Ollama/Models/README.md:220:`php spark ollama:models:prune`
+app/Commands/Ollama/Models/README.md:222:### ollama:models:pull
+app/Commands/Ollama/Models/README.md:228:`php spark ollama:models:pull`
+app/Commands/Ollama/Models/README.md:252:`php spark ollama:models:pull`
+app/Commands/Ollama/Models/README.md:254:### ollama:models:push
+app/Commands/Ollama/Models/README.md:260:`php spark ollama:models:push`
+app/Commands/Ollama/Models/README.md:284:`php spark ollama:models:push`
+app/Commands/Ollama/Models/README.md:286:### ollama:models:rm
+app/Commands/Ollama/Models/README.md:292:`php spark ollama:models:rm`
+app/Commands/Ollama/Models/README.md:316:`php spark ollama:models:rm`
+app/Commands/Ollama/Models/README.md:318:### ollama:models:show
+app/Commands/Ollama/Models/README.md:324:`php spark ollama:models:show`
+app/Commands/Ollama/Models/README.md:348:`php spark ollama:models:show`
+app/Commands/Ollama/Models/README.md:354:| `ollama:models:create` | `Modelfile` | Command → Table |
+app/Commands/Ollama/Models/README.md:355:| `ollama:models:create` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:356:| `ollama:models:diff` | `ollama:models:pull` | Command → Command |
+app/Commands/Ollama/Models/README.md:357:| `ollama:models:diff` | `ollama:models:rm` | Command → Command |
+app/Commands/Ollama/Models/README.md:358:| `ollama:models:diff` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:359:| `ollama:models:ensure` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:360:| `ollama:models:export` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:361:| `ollama:models:list` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:362:| `ollama:models:prune` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:363:| `ollama:models:pull` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:364:| `ollama:models:push` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:365:| `ollama:models:rm` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:366:| `ollama:models:show` | `Ollama` | Command → API |
+app/Commands/Ollama/Models/README.md:373:Models --> ollama_models_create["ollama:models:create"]
+app/Commands/Ollama/Models/README.md:374:Models --> ollama_models_diff["ollama:models:diff"]
+app/Commands/Ollama/Models/README.md:375:ollama_models_diff --> ollama_models_pull["ollama:models:pull"]
+app/Commands/Ollama/Models/README.md:376:ollama_models_diff --> ollama_models_rm["ollama:models:rm"]
+app/Commands/Ollama/Models/README.md:377:Models --> ollama_models_ensure["ollama:models:ensure"]
+app/Commands/Ollama/Models/README.md:378:Models --> ollama_models_export["ollama:models:export"]
+app/Commands/Ollama/Models/README.md:379:Models --> ollama_models_list["ollama:models:list"]
+app/Commands/Ollama/Models/README.md:380:Models --> ollama_models_prune["ollama:models:prune"]
+app/Commands/Ollama/Models/README.md:381:Models --> ollama_models_pull["ollama:models:pull"]
+app/Commands/Ollama/Models/README.md:382:Models --> ollama_models_push["ollama:models:push"]
+app/Commands/Ollama/Models/README.md:383:Models --> ollama_models_rm["ollama:models:rm"]
+app/Commands/Ollama/Models/README.md:384:Models --> ollama_models_show["ollama:models:show"]
+app/Commands/Ollama/Models/README.md:389:- `php spark ollama:models:create`
+app/Commands/Ollama/Models/README.md:390:- `php spark ollama:models:diff`
+app/Commands/Ollama/Models/README.md:391:- `php spark ollama:models:ensure`
+app/Commands/Ollama/Models/README.md:392:- `php spark ollama:models:export`
+app/Commands/Ollama/Models/README.md:393:- `php spark ollama:models:list`
+app/Commands/Ollama/Models/README.md:394:- `php spark ollama:models:prune`
+app/Commands/Ollama/Models/README.md:423:- `ollama:models:pull`
+app/Commands/Ollama/Models/README.md:424:- `ollama:models:rm`
+app/Commands/Ollama/Models/RmModel.php:9:class RmModel extends BaseOllamaCommand
+app/Commands/Ollama/Models/RmModel.php:11:    protected $name = 'ollama:models:rm';
+app/Commands/Ollama/Models/RmModel.php:13:    protected $usage = 'ollama:models:rm <model>';
+app/Commands/Ollama/Models/ShowModel.php:9:class ShowModel extends BaseOllamaCommand
+app/Commands/Ollama/Models/ShowModel.php:11:    protected $name = 'ollama:models:show';
+app/Commands/Ollama/Models/ShowModel.php:13:    protected $usage = 'ollama:models:show <model>';
+app/Commands/Ollama/OllamaRun.php:13:class OllamaRun extends BaseOllamaCommand
+app/Commands/Ollama/OllamaRun.php:15:    protected $name = 'ollama:run';
+app/Commands/Ollama/OllamaRun.php:17:    protected $usage = 'ollama:run --file="./docs/_aiops/patch_jobs/{job-id}/ollama_prompt.md"';
+app/Commands/Ollama/OllamaRun.php:19:        '--file' => 'Prompt file path. If omitted, --job-dir/ollama_prompt.md is used.',
+app/Commands/Ollama/OllamaRun.php:22:        '--output' => 'Output file path. Defaults to prompt dir/ollama_response.md.',
+app/Commands/Ollama/OllamaRun.php:28:        '--job-dir' => 'Patch-job directory containing ollama_prompt.md.',
+app/Commands/Ollama/OllamaRun.php:88:                $file = rtrim($jobDir, '/\\') . DIRECTORY_SEPARATOR . 'ollama_prompt.md';
+app/Commands/Ollama/OllamaRun.php:113:                    $output = dirname($file) . '/ollama_response.md';
+app/Commands/Ollama/OllamaRun.php:115:                    $output = $promptDir . DIRECTORY_SEPARATOR . 'ollama_response.md';
+app/Commands/Ollama/OllamaRun.php:124:            $sidecarPath = $this->normalizePath($promptDir . DIRECTORY_SEPARATOR . 'ollama_run.json');
+app/Commands/Ollama/OllamaRun.php:158:            log_message('debug', '[ollama:run] model=' . $model);
+app/Commands/Ollama/OllamaRun.php:159:            log_message('debug', '[ollama:run] profile=' . $profile);
+app/Commands/Ollama/OllamaRun.php:160:            log_message('debug', '[ollama:run] timeout=' . $timeout);
+app/Commands/Ollama/OllamaRun.php:161:            log_message('debug', '[ollama:run] resolvedBaseUrl=' . $resolvedBaseUrl);
+app/Commands/Ollama/OllamaRun.php:162:            log_message('debug', '[ollama:run] preferInternal=' . ($preferInternal ? 'true' : 'false'));
+app/Commands/Ollama/OllamaRun.php:163:            log_message('debug', '[ollama:run] effectiveMaxTokens=' . $effectiveMaxTokens);
+app/Commands/Ollama/OllamaRun.php:164:            log_message('debug', '[ollama:run] promptLength=' . strlen($prompt));
+app/Commands/Ollama/OllamaRun.php:210:            CLI::error('ollama:run failed - ' . $e->getMessage());
+app/Commands/Ollama/Ping.php:7:class Ping extends BaseOllamaCommand
+app/Commands/Ollama/Ping.php:9:    protected $name = 'ollama:ping';
+app/Commands/Ollama/Policy/Check.php:10:class Check extends BaseOllamaCommand
+app/Commands/Ollama/Policy/Check.php:12:    protected $name = 'ollama:policy:check';
+app/Commands/Ollama/Policy/Export.php:9:class Export extends BaseOllamaCommand
+app/Commands/Ollama/Policy/Export.php:11:    protected $name = 'ollama:policy:export';
+app/Commands/Ollama/Policy/Export.php:21:            'message' => 'ollama:policy:export is scaffolded and ready for extension.',
+app/Commands/Ollama/Policy/README.md:13:- `ollama:policy:check` (Operational)
+app/Commands/Ollama/Policy/README.md:14:- `ollama:policy:export` (Operational)
+app/Commands/Ollama/Policy/README.md:22:### ollama:policy:check
+app/Commands/Ollama/Policy/README.md:28:`php spark ollama:policy:check`
+app/Commands/Ollama/Policy/README.md:52:`php spark ollama:policy:check`
+app/Commands/Ollama/Policy/README.md:54:### ollama:policy:export
+app/Commands/Ollama/Policy/README.md:60:`php spark ollama:policy:export`
+app/Commands/Ollama/Policy/README.md:84:`php spark ollama:policy:export`
+app/Commands/Ollama/Policy/README.md:90:| `ollama:policy:check` | `Ollama` | Command → API |
+app/Commands/Ollama/Policy/README.md:91:| `ollama:policy:export` | `Ollama` | Command → API |
+app/Commands/Ollama/Policy/README.md:98:Policy --> ollama_policy_check["ollama:policy:check"]
+app/Commands/Ollama/Policy/README.md:99:Policy --> ollama_policy_export["ollama:policy:export"]
+app/Commands/Ollama/Policy/README.md:104:- `php spark ollama:policy:check`
+app/Commands/Ollama/Policy/README.md:105:- `php spark ollama:policy:export`
+app/Commands/Ollama/Queue/Push.php:10:class Push extends BaseOllamaCommand
+app/Commands/Ollama/Queue/Push.php:12:    protected $name = 'ollama:queue:push';
+app/Commands/Ollama/Queue/README.md:13:- `ollama:queue:push` (Operational)
+app/Commands/Ollama/Queue/README.md:14:- `ollama:queue:retry` (Operational)
+app/Commands/Ollama/Queue/README.md:15:- `ollama:queue:stats` (Operational)
+app/Commands/Ollama/Queue/README.md:16:- `ollama:queue:work` (Operational)
+app/Commands/Ollama/Queue/README.md:24:### ollama:queue:push
+app/Commands/Ollama/Queue/README.md:30:`php spark ollama:queue:push`
+app/Commands/Ollama/Queue/README.md:54:`php spark ollama:queue:push`
+app/Commands/Ollama/Queue/README.md:56:### ollama:queue:retry
+app/Commands/Ollama/Queue/README.md:62:`php spark ollama:queue:retry`
+app/Commands/Ollama/Queue/README.md:86:`php spark ollama:queue:retry`
+app/Commands/Ollama/Queue/README.md:88:### ollama:queue:stats
+app/Commands/Ollama/Queue/README.md:94:`php spark ollama:queue:stats`
+app/Commands/Ollama/Queue/README.md:118:`php spark ollama:queue:stats`
+app/Commands/Ollama/Queue/README.md:120:### ollama:queue:work
+app/Commands/Ollama/Queue/README.md:126:`php spark ollama:queue:work`
+app/Commands/Ollama/Queue/README.md:150:`php spark ollama:queue:work`
+app/Commands/Ollama/Queue/README.md:156:| `ollama:queue:push` | `App\Models\OllamaQueueModel` | Command → Model |
+app/Commands/Ollama/Queue/README.md:157:| `ollama:queue:push` | `Ollama` | Command → API |
+app/Commands/Ollama/Queue/README.md:158:| `ollama:queue:retry` | `queue` | Command → Table |
+app/Commands/Ollama/Queue/README.md:159:| `ollama:queue:retry` | `Ollama` | Command → API |
+app/Commands/Ollama/Queue/README.md:160:| `ollama:queue:stats` | `App\Models\OllamaQueueModel` | Command → Model |
+app/Commands/Ollama/Queue/README.md:161:| `ollama:queue:stats` | `Ollama` | Command → API |
+app/Commands/Ollama/Queue/README.md:162:| `ollama:queue:work` | `App\Models\OllamaQueueModel` | Command → Model |
+app/Commands/Ollama/Queue/README.md:163:| `ollama:queue:work` | `Ollama` | Command → API |
+app/Commands/Ollama/Queue/README.md:170:Queue --> ollama_queue_push["ollama:queue:push"]
+app/Commands/Ollama/Queue/README.md:171:Queue --> ollama_queue_retry["ollama:queue:retry"]
+app/Commands/Ollama/Queue/README.md:172:Queue --> ollama_queue_stats["ollama:queue:stats"]
+app/Commands/Ollama/Queue/README.md:173:Queue --> ollama_queue_work["ollama:queue:work"]
+app/Commands/Ollama/Queue/README.md:178:- `php spark ollama:queue:push`
+app/Commands/Ollama/Queue/README.md:179:- `php spark ollama:queue:retry`
+app/Commands/Ollama/Queue/README.md:180:- `php spark ollama:queue:stats`
+app/Commands/Ollama/Queue/README.md:181:- `php spark ollama:queue:work`
+app/Commands/Ollama/Queue/Retry.php:9:class Retry extends BaseOllamaCommand
+app/Commands/Ollama/Queue/Retry.php:11:    protected $name = 'ollama:queue:retry';
+app/Commands/Ollama/Queue/Retry.php:21:            'message' => 'ollama:queue:retry is scaffolded and ready for extension.',
+app/Commands/Ollama/Queue/Stats.php:10:class Stats extends BaseOllamaCommand
+app/Commands/Ollama/Queue/Stats.php:12:    protected $name = 'ollama:queue:stats';
+app/Commands/Ollama/Queue/Work.php:10:class Work extends BaseOllamaCommand
+app/Commands/Ollama/Queue/Work.php:12:    protected $name = 'ollama:queue:work';
+app/Commands/Ollama/README.md:14:- `ollama:bench` (Operational)
+app/Commands/Ollama/README.md:15:- `ollama:chat` (Operational)
+app/Commands/Ollama/README.md:16:- `ollama:circuit:reset` (Operational)
+app/Commands/Ollama/README.md:17:- `ollama:circuit:status` (Operational)
+app/Commands/Ollama/README.md:18:- `ollama:diagnose` (Diagnostic)
+app/Commands/Ollama/README.md:19:- `ollama:doctor` (Diagnostic)
+app/Commands/Ollama/README.md:20:- `ollama:embed` (Operational)
+app/Commands/Ollama/README.md:21:- `ollama:embed:file` (Operational)
+app/Commands/Ollama/README.md:22:- `ollama:generate` (Maintenance)
+app/Commands/Ollama/README.md:23:- `ollama:health` (Diagnostic)
+app/Commands/Ollama/README.md:24:- `ollama:logs` (Operational)
+app/Commands/Ollama/README.md:25:- `ollama:ping` (Operational)
+app/Commands/Ollama/README.md:26:- `ollama:rag:query` (Operational)
+app/Commands/Ollama/README.md:27:- `ollama:stream` (Operational)
+app/Commands/Ollama/README.md:28:- `ollama:version` (Operational)
+app/Commands/Ollama/README.md:68:### ollama:bench
+app/Commands/Ollama/README.md:74:`php spark ollama:bench`
+app/Commands/Ollama/README.md:98:`php spark ollama:bench`
+app/Commands/Ollama/README.md:100:### ollama:chat
+app/Commands/Ollama/README.md:106:`php spark ollama:chat`
+app/Commands/Ollama/README.md:130:`php spark ollama:chat`
+app/Commands/Ollama/README.md:132:### ollama:circuit:reset
+app/Commands/Ollama/README.md:138:`php spark ollama:circuit:reset`
+app/Commands/Ollama/README.md:162:`php spark ollama:circuit:reset`
+app/Commands/Ollama/README.md:164:### ollama:circuit:status
+app/Commands/Ollama/README.md:170:`php spark ollama:circuit:status`
+app/Commands/Ollama/README.md:194:`php spark ollama:circuit:status`
+app/Commands/Ollama/README.md:196:### ollama:diagnose
+app/Commands/Ollama/README.md:202:`php spark ollama:diagnose`
+app/Commands/Ollama/README.md:226:`php spark ollama:diagnose`
+app/Commands/Ollama/README.md:228:### ollama:doctor
+app/Commands/Ollama/README.md:234:`php spark ollama:doctor`
+app/Commands/Ollama/README.md:258:`php spark ollama:doctor`
+app/Commands/Ollama/README.md:260:### ollama:embed
+app/Commands/Ollama/README.md:266:`php spark ollama:embed`
+app/Commands/Ollama/README.md:290:`php spark ollama:embed`
+app/Commands/Ollama/README.md:292:### ollama:embed:file
+app/Commands/Ollama/README.md:298:`php spark ollama:embed:file`
+app/Commands/Ollama/README.md:322:`php spark ollama:embed:file`
+app/Commands/Ollama/README.md:324:### ollama:generate
+app/Commands/Ollama/README.md:330:`php spark ollama:generate`
+app/Commands/Ollama/README.md:354:`php spark ollama:generate`
+app/Commands/Ollama/README.md:356:### ollama:health
+app/Commands/Ollama/README.md:362:`php spark ollama:health`
+app/Commands/Ollama/README.md:386:`php spark ollama:health`
+app/Commands/Ollama/README.md:388:### ollama:logs
+app/Commands/Ollama/README.md:391:Backward-compatible alias of ollama:logs:tail.
+app/Commands/Ollama/README.md:394:`php spark ollama:logs`
+app/Commands/Ollama/README.md:418:`php spark ollama:logs`
+app/Commands/Ollama/README.md:420:### ollama:ping
+app/Commands/Ollama/README.md:426:`php spark ollama:ping`
+app/Commands/Ollama/README.md:450:`php spark ollama:ping`
+app/Commands/Ollama/README.md:452:### ollama:rag:query
+app/Commands/Ollama/README.md:458:`php spark ollama:rag:query`
+app/Commands/Ollama/README.md:482:`php spark ollama:rag:query`
+app/Commands/Ollama/README.md:484:### ollama:stream
+app/Commands/Ollama/README.md:490:`php spark ollama:stream`
+app/Commands/Ollama/README.md:514:`php spark ollama:stream`
+app/Commands/Ollama/README.md:516:### ollama:version
+app/Commands/Ollama/README.md:522:`php spark ollama:version`
+app/Commands/Ollama/README.md:546:`php spark ollama:version`
+app/Commands/Ollama/README.md:552:| `ollama:bench` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:553:| `ollama:chat` | `App\Models\OllamaSessionModel` | Command → Model |
+app/Commands/Ollama/README.md:554:| `ollama:chat` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:555:| `ollama:circuit:reset` | `App\Services\LLM\OllamaCircuitBreaker` | Command → Service |
+app/Commands/Ollama/README.md:556:| `ollama:circuit:reset` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:557:| `ollama:circuit:status` | `App\Services\LLM\OllamaCircuitBreaker` | Command → Service |
+app/Commands/Ollama/README.md:558:| `ollama:circuit:status` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:559:| `ollama:diagnose` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:560:| `ollama:doctor` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:561:| `ollama:embed` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:562:| `ollama:embed:file` | `vector` | Command → Table |
+app/Commands/Ollama/README.md:563:| `ollama:embed:file` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:564:| `ollama:generate` | `App\Services\LLM\OllamaCircuitBreaker` | Command → Service |
+app/Commands/Ollama/README.md:565:| `ollama:generate` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:566:| `ollama:health` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:567:| `ollama:logs` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:568:| `ollama:ping` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:569:| `ollama:rag:query` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:570:| `ollama:stream` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:571:| `ollama:version` | `health` | Command → Table |
+app/Commands/Ollama/README.md:572:| `ollama:version` | `Ollama` | Command → API |
+app/Commands/Ollama/README.md:579:Ollama --> ollama_bench["ollama:bench"]
+app/Commands/Ollama/README.md:580:Ollama --> ollama_chat["ollama:chat"]
+app/Commands/Ollama/README.md:581:Ollama --> ollama_circuit_reset["ollama:circuit:reset"]
+app/Commands/Ollama/README.md:582:Ollama --> ollama_circuit_status["ollama:circuit:status"]
+app/Commands/Ollama/README.md:583:Ollama --> ollama_diagnose["ollama:diagnose"]
+app/Commands/Ollama/README.md:584:Ollama --> ollama_doctor["ollama:doctor"]
+app/Commands/Ollama/README.md:585:Ollama --> ollama_embed["ollama:embed"]
+app/Commands/Ollama/README.md:586:Ollama --> ollama_embed_file["ollama:embed:file"]
+app/Commands/Ollama/README.md:587:Ollama --> ollama_generate["ollama:generate"]
+app/Commands/Ollama/README.md:588:Ollama --> ollama_health["ollama:health"]
+app/Commands/Ollama/README.md:589:Ollama --> ollama_logs["ollama:logs"]
+app/Commands/Ollama/README.md:594:- `php spark ollama:bench`
+app/Commands/Ollama/README.md:595:- `php spark ollama:chat`
+app/Commands/Ollama/README.md:596:- `php spark ollama:circuit:reset`
+app/Commands/Ollama/README.md:597:- `php spark ollama:circuit:status`
+app/Commands/Ollama/README.md:598:- `php spark ollama:diagnose`
+app/Commands/Ollama/RagQuery.php:9:class RagQuery extends BaseOllamaCommand
+app/Commands/Ollama/RagQuery.php:11:    protected $name = 'ollama:rag:query';
+app/Commands/Ollama/RagQuery.php:21:            'message' => 'ollama:rag:query is scaffolded and ready for extension.',
+app/Commands/Ollama/Sessions/ListSessions.php:9:class ListSessions extends BaseOllamaCommand
+app/Commands/Ollama/Sessions/ListSessions.php:11:    protected $name = 'ollama:sessions:list';
+app/Commands/Ollama/Sessions/ListSessions.php:21:            'message' => 'ollama:sessions:list is scaffolded and ready for extension.',
+app/Commands/Ollama/Sessions/README.md:13:- `ollama:sessions:list` (Operational)
+app/Commands/Ollama/Sessions/README.md:14:- `ollama:sessions:rm` (Operational)
+app/Commands/Ollama/Sessions/README.md:15:- `ollama:sessions:show` (Operational)
+app/Commands/Ollama/Sessions/README.md:23:### ollama:sessions:list
+app/Commands/Ollama/Sessions/README.md:29:`php spark ollama:sessions:list`
+app/Commands/Ollama/Sessions/README.md:53:`php spark ollama:sessions:list`
+app/Commands/Ollama/Sessions/README.md:55:### ollama:sessions:rm
+app/Commands/Ollama/Sessions/README.md:61:`php spark ollama:sessions:rm`
+app/Commands/Ollama/Sessions/README.md:85:`php spark ollama:sessions:rm`
+app/Commands/Ollama/Sessions/README.md:87:### ollama:sessions:show
+app/Commands/Ollama/Sessions/README.md:93:`php spark ollama:sessions:show`
+app/Commands/Ollama/Sessions/README.md:117:`php spark ollama:sessions:show`
+app/Commands/Ollama/Sessions/README.md:123:| `ollama:sessions:list` | `Ollama` | Command → API |
+app/Commands/Ollama/Sessions/README.md:124:| `ollama:sessions:rm` | `Ollama` | Command → API |
+app/Commands/Ollama/Sessions/README.md:125:| `ollama:sessions:show` | `Ollama` | Command → API |
+app/Commands/Ollama/Sessions/README.md:132:Sessions --> ollama_sessions_list["ollama:sessions:list"]
+app/Commands/Ollama/Sessions/README.md:133:Sessions --> ollama_sessions_rm["ollama:sessions:rm"]
+app/Commands/Ollama/Sessions/README.md:134:Sessions --> ollama_sessions_show["ollama:sessions:show"]
+app/Commands/Ollama/Sessions/README.md:139:- `php spark ollama:sessions:list`
+app/Commands/Ollama/Sessions/README.md:140:- `php spark ollama:sessions:rm`
+app/Commands/Ollama/Sessions/README.md:141:- `php spark ollama:sessions:show`
+app/Commands/Ollama/Sessions/RmSession.php:9:class RmSession extends BaseOllamaCommand
+app/Commands/Ollama/Sessions/RmSession.php:11:    protected $name = 'ollama:sessions:rm';
+app/Commands/Ollama/Sessions/RmSession.php:21:            'message' => 'ollama:sessions:rm is scaffolded and ready for extension.',
+app/Commands/Ollama/Sessions/ShowSession.php:9:class ShowSession extends BaseOllamaCommand
+app/Commands/Ollama/Sessions/ShowSession.php:11:    protected $name = 'ollama:sessions:show';
+app/Commands/Ollama/Sessions/ShowSession.php:21:            'message' => 'ollama:sessions:show is scaffolded and ready for extension.',
+app/Commands/Ollama/Stream.php:9:class Stream extends BaseOllamaCommand
+app/Commands/Ollama/Stream.php:11:    protected $name = 'ollama:stream';
+app/Commands/Ollama/Stream.php:21:            'message' => 'ollama:stream is scaffolded and ready for extension.',
+app/Commands/Ollama/Version.php:7:class Version extends BaseOllamaCommand
+app/Commands/Ollama/Version.php:9:    protected $name = 'ollama:version';
+app/Commands/Ops/AnalyzeCommands.php:9:class AnalyzeCommands extends SafeBaseCommand
+app/Commands/Ops/AppUpdate.php:18:class AppUpdate extends SafeBaseCommand
+app/Commands/Ops/BaseOpsCommand.php:8:abstract class BaseOpsCommand extends SafeBaseCommand
+app/Commands/Ops/BuildConsoleRegistry.php:8:class BuildConsoleRegistry extends SafeBaseCommand
+app/Commands/Ops/CiPrepare.php:10:class CiPrepare extends SafeBaseCommand
+app/Commands/Ops/Commands/Audit.php:9:class Audit extends SafeBaseCommand
+app/Commands/Ops/Commands/Autofix.php:10:class Autofix extends SafeBaseCommand
+app/Commands/Ops/Commands/Inventory.php:9:class Inventory extends SafeBaseCommand
+app/Commands/Ops/Commands/Lint.php:9:class Lint extends SafeBaseCommand
+app/Commands/Ops/Commands/MissingFromConsole.php:8:class MissingFromConsole extends SafeBaseCommand
+app/Commands/Ops/ConfigLint.php:8:class ConfigLint extends SafeBaseCommand
+app/Commands/Ops/Diagnostics/FilesystemScan.php:8:class FilesystemScan extends BaseOpsCommand
+app/Commands/Ops/Diff.php:12:class Diff extends SafeBaseCommand
+app/Commands/Ops/DiffWallet.php:10:class DiffWallet extends SafeBaseCommand
+app/Commands/Ops/DoctorFull.php:10:class DoctorFull extends SafeBaseCommand
+app/Commands/Ops/DreamHost/DnsVerify.php:8:class DnsVerify extends BaseOpsCommand
+app/Commands/Ops/DreamHost/EmailAudit.php:8:class EmailAudit extends BaseOpsCommand
+app/Commands/Ops/DreamHost/EmailList.php:8:class EmailList extends BaseOpsCommand
+app/Commands/Ops/DreamHost/Limits.php:8:class Limits extends BaseOpsCommand
+app/Commands/Ops/DriftScan.php:10:class DriftScan extends SafeBaseCommand
+app/Commands/Ops/Email/Healthcheck.php:8:class Healthcheck extends BaseOpsCommand
+app/Commands/Ops/Email/QueueScan.php:8:class QueueScan extends BaseOpsCommand
+app/Commands/Ops/Email/Test.php:8:class Test extends BaseOpsCommand
+app/Commands/Ops/EnvSnapshot.php:10:class EnvSnapshot extends SafeBaseCommand
+app/Commands/Ops/FetchCommands.php:9:class FetchCommands extends SafeBaseCommand
+app/Commands/Ops/FilesystemFix.php:10:class FilesystemFix extends SafeBaseCommand
+app/Commands/Ops/FilesystemLint.php:11:class FilesystemLint extends SafeBaseCommand
+app/Commands/Ops/Grep.php:13:class Grep extends SafeBaseCommand
+app/Commands/Ops/GrepSearch.php:8:class GrepSearch extends SafeBaseCommand
+app/Commands/Ops/Health/Healthcheck.php:8:class Healthcheck extends BaseOpsCommand
+app/Commands/Ops/LoggerTest.php:8:class LoggerTest extends SafeBaseCommand
+app/Commands/Ops/Logs/Scan.php:8:class Scan extends BaseOpsCommand
+app/Commands/Ops/Logs/Watch.php:8:class Watch extends BaseOpsCommand
+app/Commands/Ops/ModelLimitAudit.php:8:class ModelLimitAudit extends SafeBaseCommand
+app/Commands/Ops/NetworkMatrix.php:10:class NetworkMatrix extends SafeBaseCommand
+app/Commands/Ops/NextSteps.php:18:class NextSteps extends SafeBaseCommand
+app/Commands/Ops/NextStepsSync.php:9:class NextStepsSync extends SafeBaseCommand
+app/Commands/Ops/NextStepsSyncManual.php:11:class NextStepsSyncManual extends SafeBaseCommand
+app/Commands/Ops/PHP/FpmHealth.php:8:class FpmHealth extends BaseOpsCommand
+app/Commands/Ops/PHPExtensionsAudit.php:10:class PHPExtensionsAudit extends SafeBaseCommand
+app/Commands/Ops/ProposePr.php:10:class ProposePr extends SafeBaseCommand
+app/Commands/Ops/Report.php:8:class Report extends BaseOpsCommand
+app/Commands/Ops/SelfHeal.php:8:class SelfHeal extends BaseOpsCommand
+app/Commands/Ops/Server/NginxStatus.php:8:class NginxStatus extends BaseOpsCommand
+app/Commands/Ops/Subs/Audit.php:3:class Audit extends SafeBaseCommand { use SubsCommandTrait; protected $group='Ops'; protected $name='ops:subs:audit'; protected $description='Run subsystem audits'; protected $options=['--json'=>'JSON','--strict'=>'Strict']; public function run(array $params){$this->parseParams($params);$strict=$this->optBool('strict');$a=command('aiops:audit --json=1');$c=command('chat:audit --json=1');$p=['status'=>'ok','strict'=>$strict,'aiops_audit'=>$a,'chat_audit'=>$c];$this->writeDoc('audits','subs-audit-'.date('Y-m-d').'.json',$p);$this->emit($p,$this->optBool('json'));return EXIT_SUCCESS;}}
+app/Commands/Ops/Subs/Doctor.php:3:class Doctor extends SafeBaseCommand { use SubsCommandTrait; protected $group='Ops'; protected $name='ops:subs:doctor'; protected $description='Friendly subsystem triage'; protected $options=['--json'=>'JSON']; public function run(array $params){$this->parseParams($params);$out=['status'=>'ok','next'=>['php spark ops:subs:audit --json=1','php spark aiops:self-heal --attempts=1 --json=1','php spark ops:subs:status --json=1']]; if($this->optBool('json')){CLI::write(json_encode($out,JSON_PRETTY_PRINT));} else {CLI::write('Subsystem doctor'); foreach($out['next'] as $cmd){CLI::write(' - '.$cmd);} } return EXIT_SUCCESS;}}
+app/Commands/Ops/Subs/Repair.php:3:class Repair extends SafeBaseCommand { use SubsCommandTrait; protected $group='Ops'; protected $name='ops:subs:repair'; protected $description='Run subsystem repairs'; protected $options=['--json'=>'JSON']; public function run(array $params){$this->parseParams($params);$p=['status'=>'ok','aiops_repair'=>command('aiops:repair --json=1'),'chat_repair'=>command('chat:repair --json=1')];$this->emit($p,$this->optBool('json'));return EXIT_SUCCESS;}}
+app/Commands/Ops/Subs/Status.php:6:class Status extends SafeBaseCommand { 
+app/Commands/Ops/Support/CommandRulesScanner.php:5:class CommandRulesScanner
+app/Commands/Ops/Sync.php:10:final class Sync extends SafeBaseCommand
+app/Commands/Ops/TailLogs.php:8:class TailLogs extends SafeBaseCommand
+app/Commands/Ops/VPSSnapshot.php:10:class VPSSnapshot extends SafeBaseCommand
+app/Commands/Ops/WalletIntegrity.php:11:class WalletIntegrity extends SafeBaseCommand
+app/Commands/Ops/Work.php:12:class Work extends SafeBaseCommand
+app/Commands/Performance/K6Run.php:8:class K6Run extends SafeBaseCommand
+app/Commands/Platform/ControlAnalyze.php:11:class ControlAnalyze extends SafeBaseCommand
+app/Commands/Platform/ControlCollect.php:13:class ControlCollect extends SafeBaseCommand
+app/Commands/Platform/ControlDispatch.php:13:class ControlDispatch extends SafeBaseCommand
+app/Commands/Platform/ControlRun.php:10:class ControlRun extends SafeBaseCommand
+app/Commands/Platform/CronDispatch.php:9:class CronDispatch extends SafeBaseCommand
+app/Commands/Platform/EdgeSnapshot.php:11:class EdgeSnapshot extends SafeBaseCommand
+app/Commands/Platform/EdgeSnapshot.php:21:            'logs:summarize',
+app/Commands/Platform/EdgeSnapshot.php:98:            'aiops_status' => $this->statusForCommand($results, 'logs:summarize'),
+app/Commands/Platform/RunPlatform.php:12:class RunPlatform extends SafeBaseCommand
+app/Commands/Platform/RunPlatform.php:184:                ['cmd' => 'logs:summarize-all'],
+app/Commands/Platform/RunPlatform.php:202:                ['cmd' => 'ollama:health', 'enabled' => $ai, 'skip_reason' => '--ai not enabled'],
+app/Commands/Platform/RunPlatform.php:203:                ['cmd' => 'ollama:queue:stats', 'enabled' => $ai, 'skip_reason' => '--ai not enabled'],
+app/Commands/Platform/RunReport.php:10:class RunReport extends SafeBaseCommand
+app/Commands/Platform/RunSubsystem.php:10:class RunSubsystem extends SafeBaseCommand
+app/Commands/PurgeFastCGI.php:7:class PurgeFastCGI extends SafeBaseCommand
+app/Commands/README.md:197:| `logs:summarize` | Summarize CI4 logs for a given date, including new entries since the last run. | `php spark logs:summarize [date\|yesterday] [--dry-run] [--json]` |
+app/Commands/README.md:198:| `logs:summarize-all` | Summarize logs for all known subsystems from writable/logs/** and emit docs/_aiops/logs markdown reports. | `php spark logs:summarize-all [--json]` |
+app/Commands/README.md:1632:#### `logs:summarize`
+app/Commands/README.md:1636:- **Usage:** `php spark logs:summarize [date\|yesterday] [--dry-run] [--json]`
+app/Commands/README.md:1643:#### `logs:summarize-all`
+app/Commands/README.md:1647:- **Usage:** `php spark logs:summarize-all [--json]`
+app/Commands/README.md:2378:php spark logs:summarize --hours=24
+app/Commands/Repo/ClassScan.php:12:final class ClassScan extends SafeBaseCommand
+app/Commands/Repo/ClassTrace.php:12:final class ClassTrace extends SafeBaseCommand
+app/Commands/Repo/DiffSplit.php:10:final class DiffSplit extends SafeBaseCommand
+app/Commands/Repo/Health.php:10:final class Health extends SafeBaseCommand
+app/Commands/Research/BaseResearchTaskCommand.php:10:abstract class BaseResearchTaskCommand extends SafeBaseCommand
+app/Commands/Research/DailyMarketReport.php:9:class DailyMarketReport extends SafeBaseCommand
+app/Commands/Research/EarningsCalendar.php:7:class EarningsCalendar extends BaseResearchTaskCommand
+app/Commands/Research/FinancialIntelligenceSignals.php:11:class FinancialIntelligenceSignals extends SafeBaseCommand
+app/Commands/Research/FinancialKnowledge.php:9:class FinancialKnowledge extends SafeBaseCommand
+app/Commands/Research/FinancialNewsCollect.php:9:class FinancialNewsCollect extends SafeBaseCommand
+app/Commands/Research/GoogleFinancialScan.php:8:class GoogleFinancialScan extends SafeBaseCommand
+app/Commands/Research/GoogleScan.php:8:class GoogleScan extends SafeBaseCommand
+app/Commands/Research/MarketDataCompile.php:8:class MarketDataCompile extends SafeBaseCommand
+app/Commands/Research/README.md:28:- `logs:summarize`
+app/Commands/Research/README.md:57:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:89:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:121:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:153:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:185:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:217:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:249:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:281:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:313:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:345:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:377:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:409:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:441:`logs:summarize`, `aiops:sql:check`
+app/Commands/Research/README.md:501:- `php spark logs:summarize`
+app/Commands/Research/README.md:528:- `logs:summarize`
+app/Commands/Research/ResearchPipeline.php:7:class ResearchPipeline extends SafeBaseCommand
+app/Commands/Research/ShortInterestScan.php:7:class ShortInterestScan extends BaseResearchTaskCommand
+app/Commands/Research/ThinkOrSwimImport.php:8:class ThinkOrSwimImport extends SafeBaseCommand
+app/Commands/Research/WatchlistCleanup.php:8:class WatchlistCleanup extends SafeBaseCommand
+app/Commands/Research/WeeklyMarketReport.php:9:class WeeklyMarketReport extends SafeBaseCommand
+app/Commands/RestartSafe.php:7:class RestartSafe extends SafeBaseCommand
+app/Commands/Revenue/CostForecast.php:9:class CostForecast extends SafeBaseCommand
+app/Commands/Revenue/StreamsScan.php:9:class StreamsScan extends SafeBaseCommand
+app/Commands/Routes/AuthAudit.php:12:class AuthAudit extends SafeBaseCommand
+app/Commands/Routes/Benchmark.php:9:class Benchmark extends SafeBaseCommand
+app/Commands/Routes/Debug.php:9:class Debug extends SafeBaseCommand
+app/Commands/Routes/Docs.php:10:final class Docs extends SafeBaseCommand
+app/Commands/Routes/Reconcile.php:11:final class Reconcile extends SafeBaseCommand
+app/Commands/Routes/Repair.php:11:final class Repair extends SafeBaseCommand
+app/Commands/RunAutomationQueue.php:9:class RunAutomationQueue extends SafeBaseCommand
+app/Commands/Runtime/CacheBoot.php:9:class CacheBoot extends SafeBaseCommand
+app/Commands/Runtime/Check.php:8:class Check extends SafeBaseCommand
+app/Commands/Runtime/Diagnose502.php:7:class Diagnose502 extends \App\Commands\SafeBaseCommand
+app/Commands/Runtime/SparkDoctor.php:8:class SparkDoctor extends SafeBaseCommand
+app/Commands/Runtime/SparkDoctorRuntime.php:9:class SparkDoctorRuntime extends SafeBaseCommand
+app/Commands/Runtime/SparkFix.php:8:class SparkFix extends SafeBaseCommand
+app/Commands/Runtime/SparkOptimize.php:10:class SparkOptimize extends SafeBaseCommand
+app/Commands/Runtime/Triage.php:9:class Triage extends SafeBaseCommand
+app/Commands/SafeBaseCommand.php:24:abstract class SafeBaseCommand extends BaseCommand implements
+app/Commands/Scanning/RunScanner.php:10:class RunScanner extends SafeBaseCommand
+app/Commands/Scrapers/EmailScraperAudit.php:12:class EmailScraperAudit extends SafeBaseCommand
+app/Commands/Security/GenerateCI4Key.php:8:class GenerateCI4Key extends SafeBaseCommand
+app/Commands/Security/GenerateKey.php:8:class GenerateKey extends SafeBaseCommand
+app/Commands/Security/SecretsAudit.php:9:class SecretsAudit extends SafeBaseCommand
+app/Commands/SecurityCspAudit.php:10:class SecurityCspAudit extends SafeBaseCommand
+app/Commands/Spark/CommandGraph.php:8:class CommandGraph extends SafeBaseCommand
+app/Commands/Spark/Doctor.php:13:class Doctor extends SafeBaseCommand
+app/Commands/Spark/Fix.php:12:class Fix extends SafeBaseCommand
+app/Commands/Spark/InfraServerAudit.php:8:class InfraServerAudit extends SafeBaseCommand
+app/Commands/Spark/RegistryAudit.php:12:class RegistryAudit extends SafeBaseCommand
+app/Commands/Spark/Reset.php:9:class Reset extends SafeBaseCommand
+app/Commands/Test/Email.php:8:class Email extends SafeBaseCommand
+app/Commands/Test/RedisPing.php:9:class RedisPing extends SafeBaseCommand
+app/Commands/TrafficSpikeGuard.php:7:class TrafficSpikeGuard extends SafeBaseCommand
+app/Commands/Ux/JourneyAudit.php:9:class JourneyAudit extends SafeBaseCommand
+app/Commands/WalletsWarmSummaryCache.php:10:class WalletsWarmSummaryCache extends SafeBaseCommand
+app/Config/ApiResearch.php:29:    public ?string $aiProvider = null; // ollama|openai|null
+app/Config/ApiResearch.php:30:    public ?string $ollamaEndpoint = null;
+app/Config/ApiResearch.php:31:    public ?string $ollamaModel = null;
+app/Config/Commands.php:9:class Commands extends BaseConfig
+app/Config/Discord.php:78:        'ollama_chat'      => '',
+app/Config/Discord.php:105:        'ollama_chat'      => '',
+app/Config/Discord.php:211:        $this->channelWebhooks['ollama_chat']      = (string) env('DISCORD_OLLAMA_CHAT_WEBHOOK', $this->channelWebhooks['ollama_chat']);
+app/Config/Discord.php:237:        $this->channelIds['ollama_chat']      = (string) env('DISCORD_CHANNEL_ID_OLLAMA_CHAT', (string) env('DISCORD_OLLAMA_CHAT_CHANNEL_ID', $this->channelIds['ollama_chat']));
+app/Config/DiscordOps.php:16:    public string $ollamaPrimaryBaseUrl = 'https://ollama.timothyburks.com';
+app/Config/DiscordOps.php:17:    public string $ollamaFallbackBaseUrl = '';
+app/Config/DiscordOps.php:18:    public string $ollamaSecondaryBaseUrl = '';
+app/Config/DiscordOps.php:19:    public string $ollamaInternalToken = '';
+app/Config/DiscordOps.php:24:        'ollama' => true,
+app/Config/DiscordOps.php:36:        'ollama_chat' => 'ollama_chat',
+app/Config/DiscordOps.php:53:        'ollama:health',
+app/Config/DiscordOps.php:54:        'logs:summarize',
+app/Config/DiscordOps.php:73:        $this->ollamaPrimaryBaseUrl = rtrim((string) env('OLLAMA_PRIMARY_BASE_URL', $this->ollamaPrimaryBaseUrl), '/');
+app/Config/DiscordOps.php:74:        $this->ollamaFallbackBaseUrl = rtrim((string) env('OLLAMA_FALLBACK_BASE_URL', $this->ollamaFallbackBaseUrl), '/');
+app/Config/DiscordOps.php:75:        $this->ollamaSecondaryBaseUrl = rtrim((string) env('OLLAMA_SECONDARY_BASE_URL', $this->ollamaSecondaryBaseUrl), '/');
+app/Config/DiscordOps.php:76:        $this->ollamaInternalToken = (string) env('OLLAMA_INTERNAL_TOKEN', $this->ollamaInternalToken);
+app/Config/MarketingDistribution.php:92:            'ollama_chat' => '',
+app/Config/MarketingDistribution.php:105:            'ollama_chat' => ['ollama_chat'],
+app/Config/Ollama.php:12:    public string $baseUrl = 'https://ollama.timothyburks.com';
+app/Config/Services.php:188:        $ollamaConfig = config(\Config\Ollama::class);
+app/Config/Services.php:191:            $ollamaConfig->getResolvedBaseUrl(false),
+app/Config/Services.php:192:            (string) env('OLLAMA_MODEL', $ollamaConfig->defaultChatModel),
+app/Config/Services.php:193:            $ollamaConfig->timeout,
+app/Config/Services.php:194:            $ollamaConfig->maxTokens,
+app/Config/Services.php:195:            $ollamaConfig->mode
+app/Database/Migrations/2026-02-22-000001_AddErrorPatternLearning.php:40:            'provider' => ['type' => 'VARCHAR', 'constraint' => 50, 'null' => true], // ollama/openai/off
+app/Database/Migrations/2026-07-01-000110_CreateOllamaControlTables.php:31:        $this->forge->createTable('bf_ollama_runs', true);
+app/Database/Migrations/2026-07-01-000110_CreateOllamaControlTables.php:43:        $this->forge->createTable('bf_ollama_sessions', true);
+app/Database/Migrations/2026-07-01-000110_CreateOllamaControlTables.php:60:        $this->forge->createTable('bf_ollama_queue', true);
+app/Database/Migrations/2026-07-01-000110_CreateOllamaControlTables.php:75:        $this->forge->createTable('bf_ollama_embeddings', true);
+app/Database/Migrations/2026-07-01-000110_CreateOllamaControlTables.php:80:        $this->forge->dropTable('bf_ollama_embeddings', true);
+app/Database/Migrations/2026-07-01-000110_CreateOllamaControlTables.php:81:        $this->forge->dropTable('bf_ollama_queue', true);
+app/Database/Migrations/2026-07-01-000110_CreateOllamaControlTables.php:82:        $this->forge->dropTable('bf_ollama_sessions', true);
+app/Database/Migrations/2026-07-01-000110_CreateOllamaControlTables.php:83:        $this->forge->dropTable('bf_ollama_runs', true);
+app/Libraries/ApiResearch/ApiAiSummarizer.php:31:        if ($this->config->aiProvider === 'ollama') {
+app/Libraries/ApiResearch/ApiAiSummarizer.php:40:        if (empty($this->config->ollamaEndpoint) || empty($this->config->ollamaModel)) {
+app/Libraries/ApiResearch/ApiAiSummarizer.php:54:            $response = $client->post($this->config->ollamaEndpoint, [
+app/Libraries/ApiResearch/ApiAiSummarizer.php:56:                    'model'  => $this->config->ollamaModel,
+app/Libraries/Ollama/OllamaClient.php:44:        log_message('debug', '[ollama.generate] url=' . $url);
+app/Libraries/Ollama/OllamaClient.php:45:        log_message('debug', '[ollama.generate] model=' . (string) ($payload['model'] ?? ''));
+app/Libraries/Ollama/OllamaClient.php:46:        log_message('debug', '[ollama.generate] prompt_length=' . strlen($prompt));
+app/Libraries/Ollama/OllamaClient.php:65:            log_message('error', '[ollama.generate] http_status=' . $status . ' body=' . substr($body, 0, 500));
+app/Libraries/Ops/Analyzers/CommandsAnalyzer.php:11:class CommandsAnalyzer
+app/Libraries/Platform/CommandRunner.php:7:class CommandRunner
+app/Models/OllamaQueueModel.php:11:    protected $table = 'bf_ollama_queue';
+app/Models/OllamaRunModel.php:11:    protected $table = 'bf_ollama_runs';
+app/Models/OllamaSessionModel.php:11:    protected $table = 'bf_ollama_sessions';
+app/Models/OpsCommandInboxModel.php:7:class OpsCommandInboxModel extends Model
+app/Modules/APIs/Controllers/DiscordAPIController.php:211:                ['type' => 3, 'name' => 'provider', 'description' => 'aiops|ollama', 'required' => true],
+app/Modules/APIs/Controllers/DiscordAPIController.php:288:            case 'ollama':
+app/Modules/APIs/Controllers/DiscordAPIController.php:714:            return $this->interactionMessage('Usage: /ollama <prompt>');
+app/Modules/APIs/Controllers/DiscordAPIController.php:718:        $this->auditRelay('ollama', 'ollama', $payload, $result);
+app/Modules/APIs/Controllers/DiscordAPIController.php:957:            return $this->interactionMessage('Usage: /ai provider:<aiops|ollama> prompt:<text>');
+app/Modules/APIs/Controllers/DiscordAPIController.php:971:            'ollama' => $this->relayService->relayOllamaPrompt($prompt, ['discord_payload' => $payload]),
+app/Modules/Logs/Controllers/LogsController.php:15:        $result = $runner->run('logs:summarize', [], ['json' => 1]);
+app/Modules/Management/Views/admin/chat.php:11:                <button type="submit" class="btn btn-primary">Submit to aiops:ingest</button>
+app/Modules/Ops/Controllers/OpsController.php:42:            'logs:summarize',
+app/Services/AIOps/AiopsErrorParser.php:88:            str_contains($f, '/docs/_aiops/ollama') => 'ollama',
+app/Services/AIOps/AutoRunCoordinator.php:415:            '- Errors no longer appear in logs:summarize',
+app/Services/AIOps/ChatIngestService.php:44:        $command = 'aiops:ingest --text="' . addslashes($cleanText) . '"';
+app/Services/AIOps/ChatIngestService.php:49:            $shellCommand = 'php ' . escapeshellarg($spark) . ' aiops:ingest --text=' . escapeshellarg($cleanText) . ' 2>&1';
+app/Services/AIOps/CommandHookService.php:11:class CommandHookService
+app/Services/AIOps/FormPatchPlanner.php:151:        // Use php spark aiops:ingest --job-file="..."
+app/Services/AIOps/FormPatchPlanner.php:155:            . ' aiops:ingest --job-file=' . escapeshellarg($jobFile);
+app/Services/AIOps/OllamaCodeGenService.php:12:        private string $ollamaUrl,
+app/Services/AIOps/OllamaCodeGenService.php:55:                'base_url' => $this->ollamaUrl,
+app/Services/AIOps/OllamaCodeGenService.php:61:            $res = $http->post($this->ollamaUrl . '/api/generate', [
+app/Services/AIOps/OllamaPatchRunner.php:16:            return $this->persist(new PatchResult('failed_ollama_config', basename($jobFile, '.md'), null, false, [
+app/Services/CommandBuilderService.php:5:class CommandBuilderService
+app/Services/CommandBuilderService.php:42:class {$class} extends SafeBaseCommand
+app/Services/Discord/DiscordOpsRelayService.php:38:                ['base' => $this->config->ollamaPrimaryBaseUrl, 'token' => $this->config->ollamaInternalToken],
+app/Services/Discord/DiscordOpsRelayService.php:39:                ['base' => $this->config->ollamaFallbackBaseUrl, 'token' => $this->config->ollamaInternalToken],
+app/Services/Discord/DiscordOpsRelayService.php:40:                ['base' => $this->config->ollamaSecondaryBaseUrl, 'token' => $this->config->ollamaInternalToken],
+app/Services/LLM/OllamaCircuitBreaker.php:13:    protected string $stateKey = 'ollama:circuit:state';
+app/Services/LLM/OllamaCircuitBreaker.php:14:    protected string $failKey = 'ollama:circuit:failures';
+app/Services/LLM/OllamaCircuitBreaker.php:15:    protected string $openedKey = 'ollama:circuit:opened_at';
+app/Services/Observability/ErrorPatternLearnerService.php:137:        if ($provider === 'ollama') {
+app/Services/Observability/ErrorPatternLearnerService.php:138:            return $this->ollamaGenerate($prompt);
+app/Services/Observability/ErrorPatternLearnerService.php:162:    private function ollamaGenerate(string $prompt): array
+app/Services/Observability/ErrorPatternLearnerService.php:164:        $url = rtrim((string) env('OBS_OLLAMA_URL', (string) env('OLLAMA_BASE_URL', 'https://ollama.timothyburks.com')), '/');
+app/Services/OpsCommandService.php:8:class OpsCommandService
+app/Services/Spark/CommandInventoryService.php:9:class CommandInventoryService
+app/Services/Spark/LogSummarizeService.php:166:        $summary[] = '   Auto-generated by logs:summarize command';
+app/Services/Triage/CommandRunner.php:5:class CommandRunner
