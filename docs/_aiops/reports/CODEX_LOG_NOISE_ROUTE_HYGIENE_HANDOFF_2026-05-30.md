@@ -43,7 +43,7 @@ The baseline scan identified these target files:
 Do not log `HEAD /` or `HEAD /index.php` as application errors.
 
 Preferred:
-- Add explicit lightweight `HEAD /` and `HEAD /index.php` handling if compatible with current route structure.
+- Add explicit lightweight `HEAD /` and `HEAD /index.php` handling if compatible with the current route structure.
 
 Acceptable:
 - In the 404 logger, classify `HEAD /` and `HEAD /index.php` as `health_probe` and log as `debug` or `notice`.
@@ -120,7 +120,9 @@ Avoid duplicate warnings.
 7. Improve /How-It-Works/alerts
 
 Investigate App\Modules\Blog\Controllers\HowItWorksController::show.
+
 The logs showed one request around duration_ms=5,709.74.
+
 Cache or avoid public guest page service loading where safe.
 
 Validation Commands
