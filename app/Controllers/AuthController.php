@@ -2185,7 +2185,7 @@ class AuthController extends BaseController
             'introView' => $resolvedIntroView,
         ]);
 
-        if ($this->aiopsVerboseLoggingEnabled()) {
+        if ($this->isAiopsVerboseLoggingEnabled()) {
             log_message('debug', '[AUTH_RENDER] Final render config', [
                 'route' => (string) $this->request->getUri(),
                 'view' => $normalizedView,
