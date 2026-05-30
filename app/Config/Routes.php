@@ -38,27 +38,40 @@ $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override(function () {
     $request = service('request');
+    $method = strtoupper((string) $request->getMethod());
     $path = '/' . ltrim((string) $request->getUri()->getPath(), '/');
     $query = (string) ($request->getUri()->getQuery() ?? '');
     $lowerPath = strtolower($path);
     $lowerQuery = strtolower($query);
+    $trimmedPath = trim($lowerPath, '/');
+
+    $isHealthProbe = $method === 'HEAD'
+        && in_array($lowerPath, ['/', '/index.php', '/index.php/'], true);
 
     $isWpProbe = str_contains($lowerPath, 'wp-json')
         || str_contains($lowerPath, '/wp/')
+        || str_starts_with($lowerPath, '/wp-')
+        || str_starts_with($lowerPath, '/wp-content/')
         || str_contains($lowerQuery, 'rest_route=/wp/v2/');
-
-    if ($isWpProbe) {
-        return service('response')
-            ->setStatusCode(410)
-            ->setContentType('text/plain')
-            ->setBody('Gone');
-    }
 
     $noisePatterns = [
         '.env', '.git', 'composer.json', 'composer.lock', 'phpinfo.php', 'server.js',
         'docker-compose', '.yaml', '.yml', '.ini', '.sql', '/vendor/', '/storage/', '/backup',
     ];
-    $isHostileProbe = false;
+
+    $suspiciousRootPhpFiles = [
+        '/adminfuns.php',
+        '/sx_pms.php',
+        '/wp-info.php',
+        '/wp-test.php',
+        '/like.php',
+        '/we.php',
+        '/wp.php',
+        '/wp-indx.php',
+        '/zoo.php',
+    ];
+
+    $isHostileProbe = $isWpProbe || in_array($lowerPath, $suspiciousRootPhpFiles, true);
     foreach ($noisePatterns as $needle) {
         if (str_contains($lowerPath, $needle)) {
             $isHostileProbe = true;
@@ -66,14 +79,67 @@ $routes->set404Override(function () {
         }
     }
 
-    log_message($isHostileProbe ? 'notice' : 'error', '[404_ROUTE]', [
+    $appRoutePrefixes = [
+        'api/',
+        'user/',
+        'users/',
+        'investments/',
+        'management/',
+        'exchange/',
+        'features/',
+        'premium-features/',
+        'premium_features/',
+        'dashboard/',
+        'wallets/',
+        'knowledgebase/',
+    ];
+
+    $isLikelyAppRoute = false;
+    foreach ($appRoutePrefixes as $prefix) {
+        if (str_starts_with($trimmedPath, $prefix)) {
+            $isLikelyAppRoute = true;
+            break;
+        }
+    }
+
+    $classification = match (true) {
+        $isHealthProbe => 'health_probe',
+        $isHostileProbe => 'security_probe',
+        $isLikelyAppRoute => 'app_route_missing',
+        default => 'unknown_404',
+    };
+
+    $logLevel = match ($classification) {
+        'health_probe' => 'debug',
+        'security_probe' => 'notice',
+        'app_route_missing' => 'error',
+        default => 'warning',
+    };
+
+    log_message($logLevel, '[404_ROUTE]', [
+        'method' => $method,
         'uri' => current_url(),
         'path' => $path,
         'query' => $query,
         'referrer' => $_SERVER['HTTP_REFERER'] ?? null,
         'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
-        'probe' => $isHostileProbe,
+        'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? null,
+        'classification' => $classification,
     ]);
+
+    if ($isHealthProbe) {
+        return service('response')
+            ->setStatusCode(204)
+            ->setContentType('text/plain')
+            ->setBody('');
+    }
+
+    if ($isWpProbe) {
+        return service('response')
+            ->setStatusCode(410)
+            ->setContentType('text/plain')
+            ->setBody('Gone');
+    }
 
     if (preg_match('/\.(js|mjs)$/i', $path) === 1) {
         return service('response')

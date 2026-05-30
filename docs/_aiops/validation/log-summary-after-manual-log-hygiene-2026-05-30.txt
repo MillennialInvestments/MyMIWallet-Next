@@ -1,0 +1,11 @@
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-05-30 11:46:46 UTC+00:00
+
+Starting logs:summarize
+Summary generated for 2026-05-30: /home/mymiteam/Apps/Worktrees/mymiwallet-log-hygiene-implementation/writable/logs/summary-2026-05-30.log
+Repo summary: docs/_aiops/error-input/summary-2026-05-30.log
+Repo sync changed=yes
+Last processed timestamp updated to: 2026-05-30 11:46:46
+total_entries=329
+new_entries=0
+⚠ Log summary: total=329, new=0

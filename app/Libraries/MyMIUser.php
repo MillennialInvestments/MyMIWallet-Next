@@ -52,7 +52,9 @@ class MyMIUser
         // To this (only logs once per session for now):
         if (!defined('MYMIUSER_LOGGED')) {
             define('MYMIUSER_LOGGED', true);
-            log_message('debug', 'MyMIUser L52 - initialized (first log).');
+            if (ENVIRONMENT !== 'production' || filter_var(env('AIOPS_VERBOSE_LOGGING', false), FILTER_VALIDATE_BOOLEAN)) {
+                log_message('debug', 'MyMIUser L52 - initialized (first log).');
+            }
         }
     }
 
