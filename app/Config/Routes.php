@@ -301,6 +301,9 @@ $routes->group('', ['namespace' => 'App\Controllers'], static function($routes) 
     $routes->get('_ops/opcache-reset', 'Ops::opcacheReset');
 });
 
+// Explicit Solana API smoke-test route for production case-sensitive URLs.
+$routes->get('API/Solana/health', '\App\Modules\APIs\Controllers\SolanaAPIController::health');
+
 // --- Auth Routes ---
 // $routes->group('', ['namespace' => 'Myth\Auth\Controllers'], static function ($routes) {
 $routes->group('', ['namespace' => 'App\Controllers', 'filter' => 'no-cache'], static function ($routes) {
@@ -1685,6 +1688,12 @@ $routes->group('Budget', ['namespace' => 'App\Modules\User\Controllers', 'filter
     // Add other necessary route definitions here
 });
 
+// Explicit Solana Exchange smoke-test routes for production case-sensitive URLs.
+$routes->get('Exchange/Solana', '\App\Modules\Exchange\Controllers\SolanaController::index', ['filter' => 'login']);
+$routes->get('Exchange/Solana/Swap', '\App\Modules\Exchange\Controllers\SolanaController::coinSwap', ['filter' => 'login']);
+$routes->get('Exchange/Solana/Assets', '\App\Modules\Exchange\Controllers\SolanaController::assets', ['filter' => 'login']);
+$routes->get('Exchange/Solana/Create', '\App\Modules\Exchange\Controllers\SolanaController::create', ['filter' => 'login']);
+
 // MyMI Exchanges 
 $routes->group('Exchange', ['namespace' => 'App\Modules\Exchange\Controllers', 'filter' => 'login'], function($routes) {
     $routes->get('', 'ExchangeController::index', ['as' => 'mymi-exchange']);
@@ -2526,3 +2535,14 @@ $routes->group('investments', ['namespace' => 'App\Modules\APIs\Controllers'], s
 if (is_file(APPPATH . 'Modules/PropFirms/Config/Routes.php')) {
     require APPPATH . 'Modules/PropFirms/Config/Routes.php';
 }
+
+// BEGIN MyMI Solana public web route exposure
+// Explicit public aliases for Solana Exchange smoke-tested URLs.
+// These aliases preserve existing controller methods and do not enable minting/broadcasting.
+$routes->get('Exchange/Solana', '\App\Modules\Exchange\Controllers\SolanaController::index');
+$routes->get('Exchange/Solana/Swap', '\App\Modules\Exchange\Controllers\SolanaController::coinSwap');
+$routes->get('Exchange/Solana/Assets', '\App\Modules\Exchange\Controllers\SolanaController::assets');
+$routes->get('Exchange/Solana/Create', '\App\Modules\Exchange\Controllers\SolanaController::create');
+$routes->get('API/Solana/health', '\App\Modules\APIs\Controllers\SolanaAPIController::health');
+// END MyMI Solana public web route exposure
+
