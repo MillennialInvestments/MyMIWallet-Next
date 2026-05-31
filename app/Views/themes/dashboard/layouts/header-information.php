@@ -24,7 +24,6 @@
 <meta name="csrf_token_value" content="<?= csrf_hash() ?>">
 
 <script <?= $nonce['script'] ?? '' ?>>
-    console.log("CSRF Token " + "<?= csrf_token() ?>" + " | $CSRF Hash " + "<?= csrf_hash() ?>");
     // Make CSRF token and name available globally for JavaScript
     window.CSRF_TOKEN = {
         name: '<?= csrf_token() ?>',
