@@ -880,7 +880,7 @@ class DashboardController extends BaseUserController
             ]);
         }
 
-        return view($viewPath, $this->data);
+        return $this->renderModalViewSafely($viewPath, (string) $formtype, (string) $endpoint);
     }
 
     private function resolveModalViewPath(string $formtype, string $endpoint, ?string $category = null): ?string
@@ -1181,6 +1181,88 @@ class DashboardController extends BaseUserController
 
         return null;
     }
+
+
+    private function renderModalViewSafely(string $viewPath, string $formtype, string $endpoint): string
+    {
+        if (strcasecmp($formtype, 'Solana') === 0) {
+            $this->prepareSolanaModalPayloadDefaults($endpoint);
+        }
+
+        try {
+            return view($viewPath, $this->data);
+        } catch (\Throwable $e) {
+            log_message('error', 'DashboardController::renderModalViewSafely failed formtype={formtype} endpoint={endpoint} view={view} error={error}', [
+                'formtype' => $formtype,
+                'endpoint' => $endpoint,
+                'view'     => $viewPath,
+                'error'    => $e->getMessage(),
+            ]);
+
+            if (strcasecmp($formtype, 'Solana') === 0) {
+                return $this->solanaModalFallbackHtml($endpoint);
+            }
+
+            throw $e;
+        }
+    }
+
+    private function prepareSolanaModalPayloadDefaults(string $endpoint): void
+    {
+        $userId = $this->cuID ?? session()->get('user_id') ?? session()->get('id') ?? 0;
+
+        $this->data['cuID'] = $this->data['cuID'] ?? $userId;
+
+        $defaults = [
+            'cuSolanaDW'            => [],
+            'cuSolanaWallet'        => [],
+            'cuSolanaWallets'       => [],
+            'solanaWallet'          => [],
+            'solanaWallets'         => [],
+            'solanaListing'         => [],
+            'solanaTokens'          => [],
+            'solanaAssets'          => [],
+            'solanaOrders'          => [],
+            'solanaToken'           => [],
+            'token'                 => [],
+            'wallet'                => [],
+            'wallets'               => [],
+            'orders'                => [],
+            'assets'                => [],
+            'endpoint'              => $endpoint,
+            'solana_modal_warning'  => null,
+            'solana_modal_disabled' => false,
+        ];
+
+        foreach ($defaults as $key => $value) {
+            if (! array_key_exists($key, $this->data)) {
+                $this->data[$key] = $value;
+            }
+        }
+
+        if (in_array($endpoint, ['coinSwap', 'tradeSolana', 'viewSolanaWallet', 'connectWalletModal'], true)) {
+            $this->data['solana_modal_warning'] = $this->data['solana_modal_warning']
+                ?? 'Solana wallet data is being prepared. Some actions may be unavailable until your wallet is connected.';
+        }
+    }
+
+    private function solanaModalFallbackHtml(string $endpoint): string
+    {
+        $safeEndpoint = esc($endpoint);
+
+        return '<div class="modal-header">'
+            . '<h5 class="modal-title">Solana Feature Temporarily Unavailable</h5>'
+            . '<button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>'
+            . '</div>'
+            . '<div class="modal-body">'
+            . '<div class="alert alert-warning mb-3">'
+            . 'This Solana action is currently being prepared for production. Your wallet and funds are safe. '
+            . 'Please refresh the page and try again. If the issue continues, contact support.'
+            . '</div>'
+            . '<div class="small text-muted">Endpoint: ' . $safeEndpoint . '</div>'
+            . '</div>';
+    }
+
 
     private function modalErrorHtml(string $message): string
     {
