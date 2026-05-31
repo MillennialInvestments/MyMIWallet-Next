@@ -463,13 +463,52 @@ class SolanaAPIController extends BaseAPIController {
 
     public function health()
     {
+        $requestId = bin2hex(random_bytes(8));
+        $network = env('SOLANA_NETWORK') ?: 'devnet';
+
+        $data = [
+            'route' => 'ok',
+            'service' => 'solana',
+            'network' => $network,
+            'rpc_status' => 'not_checked',
+        ];
+
+        $errors = [];
+
         try {
-            $status = service('solanaService')->getSafeNetworkStatus();
-            return $this->response->setJSON($this->jsonEnvelope(true, 'Solana health check completed.', ['status' => $status]));
+            $solanaService = $this->resolveSolanaServiceForHealth();
+
+            if ($solanaService !== null && method_exists($solanaService, 'getSafeNetworkStatus')) {
+                $data['rpc_status'] = 'checked';
+                $data['network_status'] = $solanaService->getSafeNetworkStatus();
+            } else {
+                $data['rpc_status'] = 'unavailable';
+                $errors['service'] = 'SolanaService is unavailable or getSafeNetworkStatus() is not implemented.';
+            }
         } catch (\Throwable $e) {
-            return $this->response->setJSON($this->jsonEnvelope(false, 'Solana health check failed.', [], ['exception' => $e->getMessage()]));
+            $data['rpc_status'] = 'error';
+            $errors['exception'] = $e->getMessage();
+
+            log_message('warning', 'Solana health check degraded: {message}', [
+                'message' => $e->getMessage(),
+            ]);
         }
+
+        return $this->response->setStatusCode(200)->setJSON([
+            'success' => true,
+            'message' => empty($errors)
+                ? 'Solana health route is available.'
+                : 'Solana health route is available with warnings.',
+            'data' => $data,
+            'errors' => $errors,
+            'meta' => [
+                'request_id' => $requestId,
+                'network' => $network,
+                'timestamp' => date('c'),
+            ],
+        ]);
     }
+
 
     public function getBalance($address)
     {
@@ -599,4 +638,33 @@ class SolanaAPIController extends BaseAPIController {
         $this->email->setMessage('Your transaction was successful. Transaction ID: ' . $transactionResult);
         $this->email->send();
     }
+
+    private function resolveSolanaServiceForHealth(): ?\App\Services\SolanaService
+    {
+        try {
+            if (
+                property_exists($this, 'solanaService')
+                && $this->solanaService instanceof \App\Services\SolanaService
+            ) {
+                return $this->solanaService;
+            }
+
+            if (class_exists(\App\Services\SolanaService::class)) {
+                $service = new \App\Services\SolanaService();
+
+                if (property_exists($this, 'solanaService')) {
+                    $this->solanaService = $service;
+                }
+
+                return $service;
+            }
+        } catch (\Throwable $e) {
+            log_message('warning', 'Unable to initialize SolanaService for health check: {message}', [
+                'message' => $e->getMessage(),
+            ]);
+        }
+
+        return null;
+    }
+
 }
