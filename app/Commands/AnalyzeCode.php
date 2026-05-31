@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Commands\AIOps;
+namespace App\Commands;
 
 use App\Services\AIOps\CodeAnalyzerService;
 use CodeIgniter\CLI\BaseCommand;
