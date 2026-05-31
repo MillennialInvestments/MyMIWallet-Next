@@ -103,7 +103,7 @@ $solanaListing = [];
                                 </tbody>
                             </table>
                             <script <?= $nonce['script'] ?? '' ?>>
-                            $(document).ready(function() {
+                            mymiWhenJqueryReady(function() {
                                 var table = initDataTableSafe($('#solanaTokenListing'),{
                                     "order": [[ 0, "asc" ]],     
                                     "lengthMenu": [[25, 50, 100, 500, -1], [25, 50, 100, 500, "All"]],

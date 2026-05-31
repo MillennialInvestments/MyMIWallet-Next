@@ -253,7 +253,7 @@ if ($debug === 1) {
                                     </table>
 
                                     <script <?= $nonce['script'] ?? '' ?>>
-                                        $(document).ready(function() {
+                                        mymiWhenJqueryReady(function() {
                                             initDataTableSafe($('#cuSolanaAssetsDatatable'),{
                                                 "order": [[ 2, "desc" ]],     
                                                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]

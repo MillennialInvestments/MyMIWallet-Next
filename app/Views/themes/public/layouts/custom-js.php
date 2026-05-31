@@ -77,7 +77,10 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1066980131308331');
+if (!window.__mymiMetaPixelInitialized) {
+    fbq('init', '1066980131308331');
+    window.__mymiMetaPixelInitialized = true;
+}
 fbq('track', 'PageView');
 </script> -->
 <!-- Meta pixel is loaded once in the public header. -->

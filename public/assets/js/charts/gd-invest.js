@@ -1,3 +1,76 @@
+/*
+ * MyMI Chart.js v2 scale compatibility shim.
+ * Allows legacy xAxes/yAxes chart configs to run under Chart.js v4.
+ */
+(function () {
+    if (!window.Chart || window.Chart.__mymiV2ScaleCompat) {
+        return;
+    }
+
+    function normalizeAxis(axis) {
+        if (Array.isArray(axis)) {
+            axis = axis[0] || {};
+        }
+
+        if (!axis || typeof axis !== 'object') {
+            return axis;
+        }
+
+        if (axis.gridLines && !axis.grid) {
+            axis.grid = axis.gridLines;
+            delete axis.gridLines;
+        }
+
+        if (axis.scaleLabel && !axis.title) {
+            axis.title = {
+                display: !!axis.scaleLabel.display,
+                text: axis.scaleLabel.labelString || axis.scaleLabel.text || ''
+            };
+            delete axis.scaleLabel;
+        }
+
+        return axis;
+    }
+
+    function normalizeChartConfig(config) {
+        if (!config || !config.options || !config.options.scales) {
+            return config;
+        }
+
+        var scales = config.options.scales;
+
+        if (scales.xAxes && !scales.x) {
+            scales.x = normalizeAxis(scales.xAxes);
+            delete scales.xAxes;
+        }
+
+        if (scales.yAxes && !scales.y) {
+            scales.y = normalizeAxis(scales.yAxes);
+            delete scales.yAxes;
+        }
+
+        return config;
+    }
+
+    var OriginalChart = window.Chart;
+
+    function ChartCompat(ctx, config) {
+        return new OriginalChart(ctx, normalizeChartConfig(config));
+    }
+
+    Object.keys(OriginalChart).forEach(function (key) {
+        try {
+            ChartCompat[key] = OriginalChart[key];
+        } catch (e) {}
+    });
+
+    ChartCompat.prototype = OriginalChart.prototype;
+    ChartCompat.__mymiV2ScaleCompat = true;
+
+    window.Chart = ChartCompat;
+})();
+
+
 "use strict";
 
 // Ensure NioApp global and hooks exist
