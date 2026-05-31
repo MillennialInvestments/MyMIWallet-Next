@@ -27,14 +27,18 @@ class AnalyzeCode extends BaseCommand
 
     public function run(array $params)
     {
-        $file     = CLI::getOption('file');
-        $path     = CLI::getOption('path');
-        $ext      = CLI::getOption('ext') ?: 'php,js,css';
-        $maxFiles = (int) (CLI::getOption('max-files') ?: 50);
-        $writeJson = CLI::getOption('json') !== null;
+        $cliOptions = $this->parseCommandOptions($params);
+
+        $file     = $cliOptions['file'] ?? CLI::getOption('file');
+        $path     = $cliOptions['path'] ?? CLI::getOption('path');
+        $ext      = $cliOptions['ext'] ?? CLI::getOption('ext') ?: 'php,js,css';
+        $maxFiles = (int) ($cliOptions['max-files'] ?? CLI::getOption('max-files') ?: 50);
+        $writeJson = array_key_exists('json', $cliOptions) || CLI::getOption('json') !== null;
+        $noAi = array_key_exists('no-ai', $cliOptions) || CLI::getOption('no-ai') !== null;
 
         if (! $file && ! $path) {
             CLI::error('Provide --file="..." or --path="...".');
+            CLI::write('Received params: ' . json_encode($params));
             return EXIT_ERROR;
         }
 
@@ -47,7 +51,7 @@ class AnalyzeCode extends BaseCommand
                 'ext'       => is_string($ext) ? $ext : 'php,js,css',
                 'max_files' => $maxFiles > 0 ? $maxFiles : 50,
                 'json'      => $writeJson,
-                'no_ai'     => CLI::getOption('no-ai') !== null,
+                'no_ai'     => $noAi,
             ]);
 
             $paths = $service->writeReports($result, $writeJson);
@@ -87,4 +91,58 @@ class AnalyzeCode extends BaseCommand
             return EXIT_ERROR;
         }
     }
+
+    /**
+     * CodeIgniter CLI option parsing can vary by command loader/context.
+     * This fallback supports:
+     * --file=path
+     * --file path
+     * --path=path
+     * --ext=php,js
+     * --max-files=30
+     * --json
+     * --no-ai
+     */
+    private function parseCommandOptions(array $params): array
+    {
+        $options = [];
+        $count = count($params);
+
+        for ($i = 0; $i < $count; $i++) {
+            $param = (string) $params[$i];
+
+            if (! str_starts_with($param, '--')) {
+                continue;
+            }
+
+            $param = substr($param, 2);
+
+            if (str_contains($param, '=')) {
+                [$key, $value] = explode('=', $param, 2);
+                $options[$key] = trim($value, "\"'");
+                continue;
+            }
+
+            $key = $param;
+
+            if (in_array($key, ['json', 'no-ai'], true)) {
+                $options[$key] = true;
+                continue;
+            }
+
+            $next = $params[$i + 1] ?? null;
+
+            if (is_string($next) && ! str_starts_with($next, '--')) {
+                $options[$key] = trim($next, "\"'");
+                $i++;
+                continue;
+            }
+
+            $options[$key] = true;
+        }
+
+        return $options;
+    }
+
+
 }
