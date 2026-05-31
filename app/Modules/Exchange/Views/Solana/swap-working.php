@@ -256,7 +256,7 @@ $subViewData = [
 </div>
 
 <script <?= $nonce['script'] ?? '' ?>>
-$(document).ready(function() {
+mymiWhenJqueryReady(function() {
     $('#to_token').selectpicker({
         liveSearch: true,
         title: "Enter or Search Symbol"

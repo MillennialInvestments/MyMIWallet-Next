@@ -64,7 +64,10 @@ $viewFileData               = [
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
+    if (!window.__mymiMetaPixelInitialized) {
     fbq('init', '1066980131308331');
+    window.__mymiMetaPixelInitialized = true;
+}
     fbq('track', 'PageView');
     </script>
     <noscript><img height="1" width="1" class=" d-none"

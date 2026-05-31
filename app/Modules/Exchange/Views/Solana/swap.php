@@ -174,7 +174,7 @@ log_message('debug', 'Solana\swap.php L7: ' . (print_r($cryptoTokens, true)));
 
 
 <script <?= $nonce['script'] ?? '' ?>>
-$(document).ready(function () {
+mymiWhenJqueryReady(function () {
     // Initialize SelectPickers
     $('#from_token, #to_token').selectpicker({
         liveSearch: true,
@@ -317,7 +317,7 @@ $(document).ready(function () {
     fetchFromCoinAmount('SOL');
 });
 
-// $(document).ready(function() {
+// mymiWhenJqueryReady(function() {
 //     $('#from_token, #to_token').selectpicker({
 //         liveSearch: true,
 //         title: "Enter or Search Symbol"
@@ -326,7 +326,7 @@ $(document).ready(function () {
 //     $('.selectpicker').selectpicker('refresh');
 
 // });
-// $(document).ready(function() {
+// mymiWhenJqueryReady(function() {
 //     document.getElementById('solanaCoinSwapForm').addEventListener('submit', function(event) {
 //         const subtotalCosts = parseFloat(document.getElementById('subtotalCosts').innerText.replace('$', '').replace(',', ''));
 //         const cuKYC = <?= json_encode($cuKYC) ?>;

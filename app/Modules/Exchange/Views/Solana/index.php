@@ -380,7 +380,7 @@ $(document).ajaxComplete(function (_evt, xhr) {
   } catch (_) { /* ignore */ }
 });
 
-$(document).ready(function () {
+mymiWhenJqueryReady(function () {
   // Build POST data with CSRF (works if tokenRandomize is on)
   const postData = {};
   if (window.CSRF_TOKEN_NAME && window.CSRF_TOKEN_HASH) {
