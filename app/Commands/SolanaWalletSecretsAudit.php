@@ -22,10 +22,15 @@ class SolanaWalletSecretsAudit extends BaseCommand
 
     public function run(array $params)
     {
-        $options = $this->parseOptions($params);
-        $apply = array_key_exists('apply', $options);
-        $includeAllCrypto = array_key_exists('include-all-crypto', $options);
-        $limit = max(1, (int) ($options['limit'] ?? 500));
+        $options = array_merge(
+            $this->parseOptions(array_slice($_SERVER['argv'] ?? [], 2)),
+            $this->parseOptions($params)
+        );
+
+        $apply = array_key_exists('apply', $options) || CLI::getOption('apply') !== null;
+        $includeAllCrypto = array_key_exists('include-all-crypto', $options) || CLI::getOption('include-all-crypto') !== null;
+        $limitOption = $options['limit'] ?? CLI::getOption('limit') ?? 500;
+        $limit = max(1, (int) $limitOption);
 
         $db = db_connect();
 
