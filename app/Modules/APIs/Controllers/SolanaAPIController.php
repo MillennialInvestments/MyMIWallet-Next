@@ -158,7 +158,7 @@ class SolanaAPIController extends BaseAPIController {
                     'user_email' => $this->userAccount['cuEmail'],
                     'username' => $this->userAccount['cuUsername'],
                     'public_token' => $publicKey,
-                    'access_token' => $privateKey,
+                    'access_token' => $this->encryptSolanaSecretForStorage($privateKey),
                     'wallet_type' => 'Crypto',
                     'nickname' => 'MyMI Solana',
                     'initial_value' => 0,
@@ -209,7 +209,7 @@ class SolanaAPIController extends BaseAPIController {
                 $amount = $this->request->getPost('amount');
                 $userId = $this->request->getPost('user_id');
                 $publicKey = $this->request->getPost('public_key');
-                $privateKey = $this->request->getPost('private_key');
+                return $this->privateKeySubmissionDisabledResponse();
                 $fromAddress = $this->request->getPost('from_address');
                 $toAddress = $this->request->getPost('to_address');
 
@@ -392,7 +392,7 @@ class SolanaAPIController extends BaseAPIController {
                     'user_email' => $this->userAccount['cuEmail'],
                     'username' => $this->userAccount['cuUsername'],
                     'public_token' => $wallet['publicKey'],
-                    'access_token' => $wallet['privateKey'],
+                    'access_token' => $this->encryptSolanaSecretForStorage($wallet['privateKey'] ?? null),
                     'wallet_type' => 'Crypto',
                     'nickname' => 'Imported Solana Wallet',
                     'initial_value' => 0,
@@ -666,5 +666,44 @@ class SolanaAPIController extends BaseAPIController {
 
         return null;
     }
+
+
+    private function encryptSolanaSecretForStorage(?string $secret): ?string
+    {
+        $secret = trim((string) $secret);
+
+        if ($secret === '') {
+            return null;
+        }
+
+        try {
+            $encrypted = service('encrypter')->encrypt($secret);
+
+            return base64_encode($encrypted);
+        } catch (\Throwable $e) {
+            log_message('critical', 'Unable to encrypt Solana wallet secret before storage: {message}', [
+                'message' => $e->getMessage(),
+            ]);
+
+            throw new \RuntimeException('Unable to securely store Solana wallet secret.');
+        }
+    }
+
+    private function privateKeySubmissionDisabledResponse()
+    {
+        log_message('warning', 'Blocked browser-submitted Solana private_key payload for endpoint={uri}', [
+            'uri' => (string) current_url(),
+        ]);
+
+        return $this->response->setStatusCode(403)->setJSON([
+            'success' => false,
+            'status'  => 'error',
+            'message' => 'Private key submission is disabled. Connect a supported wallet provider and use wallet-signed transactions.',
+            'errors'  => [
+                'reason' => 'wallet_signature_required',
+            ],
+        ]);
+    }
+
 
 }

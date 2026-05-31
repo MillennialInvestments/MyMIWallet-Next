@@ -310,7 +310,7 @@ $addr = $svc->normalizeAddress($row);
                     'user_email' => $this->userAccount['cuEmail'],
                     'username' => $this->userAccount['cuUsername'],
                     'public_token' => $publicKey,
-                    'access_token' => $privateKey,
+                    'access_token' => $this->encryptSolanaSecretForStorage($privateKey),
                     'wallet_type' => 'Crypto',
                     'nickname' => 'MyMI Solana',
                     'initial_value' => 0,
@@ -409,7 +409,7 @@ $addr = $svc->normalizeAddress($row);
                 $toToken = esc($this->request->getPost('to_token'));
                 $userId = esc($this->request->getPost('user_id'));
                 $publicKey = esc($this->request->getPost('public_key'));
-                $privateKey = esc($this->request->getPost('private_key'));
+                return $this->privateKeySubmissionDisabledResponse();
                 $fromAddress = esc($this->request->getPost('from_address'));
                 $toAddress = esc($this->request->getPost('to_address'));
     
@@ -719,7 +719,7 @@ $addr = $svc->normalizeAddress($row);
                     'user_email' => $this->userAccount['cuEmail'],
                     'username' => $this->userAccount['cuUsername'],
                     'public_token' => $wallet['publicKey'],
-                    'access_token' => $wallet['privateKey'],
+                    'access_token' => $this->encryptSolanaSecretForStorage($wallet['privateKey'] ?? null),
                     'wallet_type' => 'Crypto',
                     'nickname' => 'Imported Solana Wallet',
                     'initial_value' => 0,
@@ -792,7 +792,7 @@ $addr = $svc->normalizeAddress($row);
     }
     
     public function mintTokens() {
-        $privateKey = $this->request->getPost('private_key');
+        return $this->privateKeySubmissionDisabledResponse();
         $mintAddress = $this->request->getPost('mint_address');
         $amount = $this->request->getPost('amount');
     
@@ -1362,5 +1362,44 @@ $addr = $svc->normalizeAddress($row);
         }
         return $wallet;
     }
+
+    private function encryptSolanaSecretForStorage(?string $secret): ?string
+    {
+        $secret = trim((string) $secret);
+
+        if ($secret === '') {
+            return null;
+        }
+
+        try {
+            $encrypted = service('encrypter')->encrypt($secret);
+
+            return base64_encode($encrypted);
+        } catch (\Throwable $e) {
+            log_message('critical', 'Unable to encrypt Solana wallet secret before storage: {message}', [
+                'message' => $e->getMessage(),
+            ]);
+
+            throw new \RuntimeException('Unable to securely store Solana wallet secret.');
+        }
+    }
+
+    private function privateKeySubmissionDisabledResponse()
+    {
+        log_message('warning', 'Blocked browser-submitted Solana private_key payload for endpoint={uri}', [
+            'uri' => (string) current_url(),
+        ]);
+
+        return $this->response->setStatusCode(403)->setJSON([
+            'success' => false,
+            'status'  => 'error',
+            'message' => 'Private key submission is disabled. Connect a supported wallet provider and use wallet-signed transactions.',
+            'errors'  => [
+                'reason' => 'wallet_signature_required',
+            ],
+        ]);
+    }
+
+
 }
 ?>
