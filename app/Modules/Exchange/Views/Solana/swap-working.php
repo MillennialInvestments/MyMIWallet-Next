@@ -1,3 +1,42 @@
+<!-- MyMI Solana runtime guard: ensure jQuery exists before inline Solana scripts. -->
+<script>
+(function () {
+    if (window.mymiSolanaEnsureJqueryLoaded) {
+        return;
+    }
+
+    window.mymiSolanaEnsureJqueryLoaded = true;
+
+    if (!window.jQuery && !document.getElementById('mymi-jquery-fallback')) {
+        var jq = document.createElement('script');
+        jq.id = 'mymi-jquery-fallback';
+        jq.src = 'https://code.jquery.com/jquery-3.7.1.min.js';
+        jq.async = false;
+        document.head.appendChild(jq);
+    }
+
+    window.mymiWhenJqueryReady = window.mymiWhenJqueryReady || function (callback) {
+        var attempts = 0;
+
+        (function waitForJquery() {
+            if (window.jQuery) {
+                window.jQuery(callback);
+                return;
+            }
+
+            if (attempts++ > 80) {
+                if (window.console && console.warn) {
+                    console.warn('MyMI Solana: jQuery was not available for this page script.');
+                }
+                return;
+            }
+
+            window.setTimeout(waitForJquery, 50);
+        })();
+    };
+})();
+</script>
+
 <?php 
 if ($uri->getTotalSegments() >= 3) {
 $current_url = $uri->getSegment(1) . '/' . $uri->getSegment(2) . '/' . $uri->getSegment(3) . '/' . $uri->getSegment(4) . '/' . $uri->getSegment(5); 

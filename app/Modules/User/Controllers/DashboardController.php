@@ -825,6 +825,18 @@ class DashboardController extends BaseUserController
     {
         if ($this->debug == 1) {
             log_message('debug', "DashboardController::loadModalContent formtype={$formtype} endpoint={$endpoint} accountid={$accountid} category={$category} platform={$platform}");
+
+        // MYMI_SOLANA_VIEW_WALLET_HOTFIX_20260601
+        // viewSolanaWallet is currently failing in production during heavy modal payload rendering.
+        // Return a safe, user-friendly 200 modal instead of a raw 500 until the full wallet view is rebuilt.
+        if (strcasecmp((string) ($formtype ?? ''), 'Solana') === 0 && (string) ($endpoint ?? '') === 'viewSolanaWallet') {
+            log_message('warning', 'Solana viewSolanaWallet modal served fallback to avoid runtime 500.');
+
+            return $this->response
+                ->setStatusCode(200)
+                ->setBody($this->solanaModalFallbackHtml('viewSolanaWallet'));
+        }
+
         }
 
         $cuID = $this->resolveCuID($this->cuID);
