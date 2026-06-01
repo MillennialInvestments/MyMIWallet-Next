@@ -405,10 +405,19 @@ $subViewData = [
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 <script <?= $nonce['script'] ?? '' ?>>
 // --- Global jQuery AJAX setup: send XHR header + attach CSRF automatically ---
-$.ajaxSetup({
-  headers: { 'X-Requested-With': 'XMLHttpRequest' }
-});
+// MYMI_SOLANA_AJAX_CSRF_JQUERY_READY_20260601
+// This block must wait for jQuery because Solana pages may render inline scripts before theme JS.
+mymiWhenJqueryReady(function () {
+    var $ = window.jQuery;
 
+    if (!$) {
+        return;
+    }
+
+    $.ajaxSetup({
+      headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    });
+});
 // Refresh CSRF hash after any JSON response that includes { csrf: "..." }
 $(document).ajaxComplete(function (_evt, xhr) {
   try {
