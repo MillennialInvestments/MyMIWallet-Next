@@ -404,6 +404,17 @@ $subViewData = [
 </div>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 <script <?= $nonce['script'] ?? '' ?>>
+// MYMI_SOLANA_FETCH_FRONTEND_CSRF_20260601
+// PHP-backed CSRF bootstrap for Solana frontend AJAX.
+window.CSRF_TOKEN_NAME = window.CSRF_TOKEN_NAME || <?= json_encode(csrf_token()) ?>;
+window.CSRF_TOKEN_HASH = window.CSRF_TOKEN_HASH || <?= json_encode(csrf_hash()) ?>;
+window.CSRF_TOKEN = window.CSRF_TOKEN || {
+    name: window.CSRF_TOKEN_NAME,
+    hash: window.CSRF_TOKEN_HASH
+};
+</script>
+
+<script <?= $nonce['script'] ?? '' ?>>
 // --- Global jQuery AJAX setup: send XHR header + attach CSRF automatically ---
 // MYMI_SOLANA_AJAX_CSRF_JQUERY_READY_20260601
 // This block must wait for jQuery because Solana pages may render inline scripts before theme JS.
@@ -431,16 +442,25 @@ mymiWhenJqueryReady(function () {
 });
 
 mymiWhenJqueryReady(function () {
-  // Build POST data with CSRF (works if tokenRandomize is on)
+  // Build POST data with CSRF directly from PHP-rendered globals.
+  const csrfName = window.CSRF_TOKEN_NAME || (window.CSRF_TOKEN && window.CSRF_TOKEN.name);
+  const csrfHash = window.CSRF_TOKEN_HASH || (window.CSRF_TOKEN && window.CSRF_TOKEN.hash);
   const postData = {};
-  if (window.CSRF_TOKEN_NAME && window.CSRF_TOKEN_HASH) {
-    postData[window.CSRF_TOKEN_NAME] = window.CSRF_TOKEN_HASH;
+
+  if (csrfName && csrfHash) {
+    postData[csrfName] = csrfHash;
   }
 
   $.ajax({
     url: '/index.php/Exchange/Solana/fetchFrontendData',
     method: 'POST',
+    type: 'POST',
     data: postData,
+    dataType: 'json',
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-CSRF-TOKEN': csrfHash || ''
+    },
     xhrFields: { withCredentials: true }
   })
   .done(function (response) {
