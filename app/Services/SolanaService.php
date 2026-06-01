@@ -859,7 +859,7 @@ class SolanaService
                 }
 
                 try {
-                    if (defined('CI_DEBUG') && CI_DEBUG) {
+                    if (ENVIRONMENT !== 'production' && defined('CI_DEBUG') && CI_DEBUG) {
                         log_message('debug', 'HTTP POST '.$url.' | payload:'.json_encode($payload));
                     }
 

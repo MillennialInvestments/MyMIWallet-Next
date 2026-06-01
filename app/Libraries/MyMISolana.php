@@ -36,6 +36,7 @@ class MyMISolana implements CryptoCurrencyInterface
     protected $solanaService;
     protected $userAccount;
     protected $cache;
+    protected array $requestMemo = [];
 
     /** @var string[] */
     private array $rpcEndpoints = [];
@@ -152,6 +153,11 @@ class MyMISolana implements CryptoCurrencyInterface
             return $this->emptySummary();
         }
 
+        $memoKey = 'userSolana:' . $cuID;
+        if (array_key_exists($memoKey, $this->requestMemo)) {
+            return $this->requestMemo[$memoKey];
+        }
+
         try {
             $def            = $this->getUserDefaultSolana($cuID);
             $cuSolanaDW     = $def['cuSolanaDW']    ?? null;
@@ -172,7 +178,7 @@ class MyMISolana implements CryptoCurrencyInterface
             $transactions   = $this->getTransactions($cuID, $addressBase58);
             $plData         = $this->calculatePL($transactions);
 
-            return [
+            $summary = [
                 'cuSolanaDW'        => $cuSolanaDW,
                 'solanaNetworkStatus'=> $netStatus,
                 'cuSolanaTotal'     => $cuSolanaTotal,
@@ -186,6 +192,8 @@ class MyMISolana implements CryptoCurrencyInterface
                 'solanaDailyVolume' => $marketData['volume_array']['h24'] ?? 0,
                 'solanaHourlyVolume'=> $marketData['volume_array']['h1']  ?? 0,
             ];
+
+            return $this->requestMemo[$memoKey] = $summary;
         } catch (\Throwable $e) {
             log_message('error', 'MyMISolana::getUserSolana failed: {msg}', ['msg' => $e->getMessage()]);
             return $this->emptySummary();
@@ -478,6 +486,11 @@ class MyMISolana implements CryptoCurrencyInterface
             return null;
         }
 
+        $memoKey = 'userDefaultSolana:' . $cuID;
+        if (array_key_exists($memoKey, $this->requestMemo)) {
+            return $this->requestMemo[$memoKey];
+        }
+
         // Canonical source for the Base58 address
         $row = $this->solanaModel->getDefaultAddressFromExchangeTable((int)$cuID);
 
@@ -500,7 +513,7 @@ class MyMISolana implements CryptoCurrencyInterface
             }
         }
 
-        return [
+        return $this->requestMemo[$memoKey] = [
             'cuSolanaDW'    => $row,            // original structure used by views
             'address_b58'   => $addr,           // normalized Base58 address
             'cuSolanaTotal' => 0,               // caller computes totals as needed

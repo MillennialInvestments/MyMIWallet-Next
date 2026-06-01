@@ -24,6 +24,7 @@ class BudgetModel extends ObservedModel
     ];
 
     protected string $timezone = 'America/Chicago';
+    protected array $requestCache = [];
 
     public function getRecentMonthlyAverages(int $userId, int $months = 3): array
     {
@@ -300,7 +301,7 @@ class BudgetModel extends ObservedModel
                     ->set(['status' => 1])
                     ->update();
     }
-    
+
     public function approveRecurringSchedule($data) {
         log_message('debug', 'BudgetModel L38 - $approveRecurringSchedule - $data: ' . (print_r($data, true)));
         if (!$data) {
@@ -309,7 +310,7 @@ class BudgetModel extends ObservedModel
         }
 
         $result = $this->db->table('bf_users_budgeting')->insert($data);
-        
+
         if (!$result) {
             log_message('error', 'Failed to insert recurring schedule data.');
             return false;
@@ -321,18 +322,18 @@ class BudgetModel extends ObservedModel
     public function attachAccount($accountID, $walletID) {
         return $this->update($accountID, ['wallet_id' => $walletID]);
     }
-    
+
     public function bulkDelete($ids) {
         return $this->whereIn('id', $ids)->set(['status' => 0, 'deleted' => 1])->update();
-    }    
-    
+    }
+
     public function bulkUpdateStatus($ids, $status) {
         return $this->whereIn('id', $ids)->set(['status' => $status])->update();
     }
 
     public function cancelAccount($accountID) {
         $builder = $this->db->table('bf_users_budgeting');
-        $builder->where('id', $accountID); 
+        $builder->where('id', $accountID);
         return $builder->update(['deleted' => 1]);
     }
 
@@ -341,7 +342,7 @@ class BudgetModel extends ObservedModel
         $builder->where('id', $accountID);
         return $builder->update(['deleted' => 1]);
     }
-    
+
     public function getAccounts($cuID) {
         return $this->where(['created_by' => $cuID, 'status' => 1])->findAll();
     }
@@ -364,9 +365,9 @@ class BudgetModel extends ObservedModel
     }
 
     public function getAccountInformation($accountID) {
-        $builder = $this->db->table('bf_users_budgeting'); 
-        $builder->where('id', $accountID); 
-        $result = $builder->get()->getRowArray(); 
+        $builder = $this->db->table('bf_users_budgeting');
+        $builder->where('id', $accountID);
+        $result = $builder->get()->getRowArray();
         return $result;
     }
 
@@ -393,7 +394,7 @@ class BudgetModel extends ObservedModel
                     ->first();
         return $this->rowScalar($row, 'total_expense');
     }
-    
+
     public function getAnnualForecast(int $userId): array
     {
         return $this->db->table('bf_users_budgeting_forecast')
@@ -401,7 +402,7 @@ class BudgetModel extends ObservedModel
             ->orderBy('month')
             ->limit(20)->get()->getResultArray();
     }
-    
+
     public function getAnnualIncome($cuID): float {
         $row = $this->selectSum('net_amount')
                     ->where([
@@ -427,7 +428,7 @@ class BudgetModel extends ObservedModel
                     ->first();
         return $this->rowScalar($row, 'net_amount');
     }
-    
+
     public function getAvailableBalances($cuID)
     {
         return $this->db->table('bf_users_credit_accounts')
@@ -437,7 +438,7 @@ class BudgetModel extends ObservedModel
             ->get()
             ->getResultArray();
     }
-    
+
     public function getBudgetByUser($userID) {
         return $this->db->table('bf_users_budgeting')
                         ->where('created_by', $userID)
@@ -447,7 +448,7 @@ class BudgetModel extends ObservedModel
                         ->get()
                         ->getResultArray();
     }
-    
+
     public function getCheckingSummary($cuID): float {
         // Bank account rows already persist the most recent cleared balance.
         $row = $this->db->table('bf_users_bank_accounts')
@@ -496,7 +497,7 @@ class BudgetModel extends ObservedModel
 
         return round($total, 2);
     }
-    
+
     public function getCheckingSummary_old($cuID) {
         $builder = $this->db->table('bf_users_wallet');
         $result = $builder->selectSum('amount')
@@ -506,15 +507,15 @@ class BudgetModel extends ObservedModel
                 ->where('active', 'Yes')
                 ->get()
                 ->getRowArray();
-    
+
         // Ensure a valid result is always returned
         if (!isset($result['amount']) || is_null($result['amount'])) {
             return ['amount' => 0]; // Return a default value if the sum is NULL
         }
-    
+
         return $result;
     }
-    
+
     public function getCreditAccounts($cuID) {
         // Access the database connection and Query Builder for a specific table
         $builder = $this->db->table('bf_users_credit_accounts');
@@ -594,7 +595,7 @@ class BudgetModel extends ObservedModel
     //                              ->where('deleted', 0)
     //                              ->findAll();
     // }
-    
+
     public function getCurrentCreditBalances($cuID)
     {
         return $this->db->table('bf_users_credit_accounts')
@@ -603,8 +604,8 @@ class BudgetModel extends ObservedModel
             ->where('status', 1)
             ->get()
             ->getResultArray();
-    }    
-    
+    }
+
     public function getDebtAccounts($cuID) {
         // Access the database connection and Query Builder for a specific table
         $builder = $this->db->table('bf_users_debt_accounts');
@@ -624,7 +625,7 @@ class BudgetModel extends ObservedModel
             'account_type' => $sourceType,
         ])->get()->getRowArray();
     }
-    
+
     public function getDebtRecordsByUser($userId)
     {
         return $this->db->table('bf_users_budgeting')
@@ -632,8 +633,8 @@ class BudgetModel extends ObservedModel
             ->where('is_debt', 1)
             ->get()
             ->getResultArray();
-    }    
-    
+    }
+
     public function getDebtAccountsSummary($cuID): array {
         $row = $this->db->table('bf_users_debt_accounts')
             ->select('SUM(available_balance) as available_balance, SUM(credit_limit) as credit_limit, SUM(current_balance) as current_balance', false)
@@ -667,7 +668,7 @@ class BudgetModel extends ObservedModel
                     ->where("day <=", date('d'))
                     ->findAll();
     }
-    
+
     public function getExpenseYTDSummary($cuID): float {
         $row = $this->selectSum('net_amount', 'ytd_expense')
                     ->where('paid', 1)
@@ -707,7 +708,7 @@ class BudgetModel extends ObservedModel
                         ->get()
                         ->getResultArray();
     }
-    
+
     public function getIncomeAccounts($cuID) {
         return $this->where([
             'created_by' => $cuID,
@@ -731,7 +732,7 @@ class BudgetModel extends ObservedModel
                     ->findAll();
         // log_message('info', 'BudgetModel - L426: getIncomeAccountsSummary Array' . print_r($result, true));
         return $result;
-    }  
+    }
 
     public function getIncomeYTDSummary($cuID): float {
         $row = $this->selectSum('net_amount', 'ytd_income')
@@ -818,14 +819,14 @@ class BudgetModel extends ObservedModel
             ->first();
         return $this->rowScalar($row, 'net_amount');
     }
-    
+
     public function getLastRecurringAccountInfo($cuID)
     {
         return $this->where(['created_by' => $cuID, 'recurring_account_primary' => 'Yes', 'status' => 1, 'deleted' => 0])
                     ->orderBy('id', 'desc')
                     ->first();
     }
-    
+
     public function getLastYTDExpenseSummary($cuID): float {
         $lastYear = date("Y", strtotime("-1 year"));
         $startDate = $lastYear . '-01-01';
@@ -862,7 +863,7 @@ class BudgetModel extends ObservedModel
                     ->like('source_type', 'Loan')
                     ->findAll();
     }
-    
+
     public function getLoanAccountsSummary($cuID) {
         return $this->select('account_type')
                     ->selectSum('net_amount', 'total_loan_summary')
@@ -912,12 +913,12 @@ class BudgetModel extends ObservedModel
 
     public function getPaginatedData($limit, $offset) {
         return $this->orderBy('id', 'ASC')->findAll($limit, $offset);
-    }   
+    }
 
     public function getPaidStatus($accountID) {
         $builder = $this->db->table('bf_users_budgeting');
-        $builder->where('id', $accountID); 
-        $result = $builder->get()->getRowArray(); 
+        $builder->where('id', $accountID);
+        $result = $builder->get()->getRowArray();
         return $result['paid'] ?? null;
     }
 
@@ -925,7 +926,7 @@ class BudgetModel extends ObservedModel
     {
         return $this->where(['recurring_account_id' => $accountID])->findAll();
     }
-    
+
     public function getRecurringAccountDetails($userId, $accountId) {
         // Ensure to adjust the table and column names according to your database schema.
         return $this->db->table('bf_users_budgeting')
@@ -933,7 +934,7 @@ class BudgetModel extends ObservedModel
             ->where('id', $accountId)
             ->where('recurring_account', 'Yes')
             ->get()
-            ->getRowArray(); 
+            ->getRowArray();
     }
 
     public function getRepaymentSummary($cuID)
@@ -945,16 +946,16 @@ class BudgetModel extends ObservedModel
             ->get()
             ->getResultArray();
     }
-    
+
     public function getSourceRecords($cuID, $budgetType) {
         $builder = $this->db->table('bf_users_budgeting');
         $builder->select('source_type, name, net_amount, submitted_on')
                 ->where(['created_by' => $cuID, 'account_type' => $budgetType, 'paid' => 1])
                 ->orderBy('submitted_on', 'DESC')
-                ->limit(5); 
-        $result = $builder->limit(20)->get()->getResultArray();   
+                ->limit(5);
+        $result = $builder->limit(20)->get()->getResultArray();
         // log_message('info', 'BudgetModel - L53: getSourceRecords $results Array: ' . print_r($result));
-        return $result; 
+        return $result;
     }
 
     public function getSummaryByType($cuID, $type) {
@@ -969,7 +970,7 @@ class BudgetModel extends ObservedModel
             'total_amount' => $result['total_amount'] ?? 0,
         ];
     }
-    
+
     public function getThisMonthsExpense($cuID): float {
         $row = $this->selectSum('net_amount')
                     ->where([
@@ -1068,17 +1069,26 @@ class BudgetModel extends ObservedModel
                         ->orderBy('id', 'DESC');
         $result = $builder->get()->getResultArray();
         // log_message('info', 'BudgetModel - L23: ' . print_r($result, true));
-        return $result; 
-    } 
-    
+        return $result;
+    }
+
     public function getUserBudgetData($cuID)
     {
-        return $this->where(['created_by' => $cuID, 'deleted' => 0])
+        $cacheKey = 'userBudgetData:' . (int) $cuID;
+        if (array_key_exists($cacheKey, $this->requestCache)) {
+            return $this->requestCache[$cacheKey];
+        }
+
+        $this->requestCache[$cacheKey] = $this->db->table($this->table)
+                    ->where(['created_by' => $cuID, 'deleted' => 0])
                     ->orderBy('year', 'DESC')
                     ->orderBy('month', 'DESC')
                     ->orderBy('day', 'DESC')
                     ->orderBy('id', 'DESC')
-                    ->findAll();
+                    ->get()
+                    ->getResultArray();
+
+        return $this->requestCache[$cacheKey];
     }
 
     /**
@@ -1166,7 +1176,7 @@ class BudgetModel extends ObservedModel
             'total'  => $creditMinimum + $debtMinimum,
         ];
     }
-    
+
     public function getUserBudgetRecord($cuID, $accountID) {
         // Enforce ownership: only return the row when it belongs to $cuID
         // and is not soft-deleted. Previously this method queried only by
@@ -1184,22 +1194,28 @@ class BudgetModel extends ObservedModel
     }
 
     public function getUserBudgetRecords($cuID) {
-        // log_message('info', 'BudgetModel - L20: ' . $cuID);
-        $builder = $this->where(['status' => 1, 'created_by' => $cuID, 'deleted' => 0])
+        $cacheKey = 'userBudgetRecords:' . (int) $cuID;
+        if (array_key_exists($cacheKey, $this->requestCache)) {
+            return $this->requestCache[$cacheKey];
+        }
+
+        $this->requestCache[$cacheKey] = $this->db->table($this->table)
+                        ->where(['status' => 1, 'created_by' => $cuID, 'deleted' => 0])
                         ->orderBy('year', 'DESC')
                         ->orderBy('month', 'DESC')
                         ->orderBy('day', 'DESC')
-                        ->orderBy('id', 'DESC');
-        $result = $builder->get()->getResultArray();
-        // log_message('info', 'BudgetModel - L23: ' . print_r($result, true));
-        return $result; 
-    }         
-    
+                        ->orderBy('id', 'DESC')
+                        ->get()
+                        ->getResultArray();
+
+        return $this->requestCache[$cacheKey];
+    }
+
     public function getUserRelatedBudgetRecords($cuID, $accountName) {
         return $this->where([
-                    'status' => 1, 
-                    'deleted' => 0, 
-                    'created_by' => $cuID, 
+                    'status' => 1,
+                    'deleted' => 0,
+                    'created_by' => $cuID,
                     'name' => $accountName
                 ])
                 ->findAll(20);
@@ -1243,7 +1259,7 @@ class BudgetModel extends ObservedModel
 
     //     return (float) ($row['net_amount'] ?? 0);
     // }
-    
+
     public function getUtilityAccountsSummary($cuID)
     {
         return $this->select('source_type')
@@ -1253,7 +1269,7 @@ class BudgetModel extends ObservedModel
             ->like('source_type', 'Utility')
             ->findAll();
     }
-    
+
     public function getWalletInfo($walletID) {
         $walletModel = new \App\Models\WalletModel(); // Assuming WalletModel exists and is correct
         return $walletModel->find($walletID);
@@ -1294,7 +1310,7 @@ class BudgetModel extends ObservedModel
             'totalSurplus'  => array_sum($surpluses),
         ];
     }
-    
+
     public function getYTDTotals($cuID) {
         $startDate = date('Y-01-01'); // January 1st of the current year, in Y-m-d format
         $endDate = date('Y-m-d'); // Today's date, in Y-m-d format
@@ -1308,29 +1324,29 @@ class BudgetModel extends ObservedModel
                         ->groupBy('name')->limit(20)->get()->getResultArray();
         // log_message('info', 'BudgetModel L717 - getYTDTotals $results: ' . print_r($results, true));
         return $results;
-    }   
+    }
 
     public function insertAccount($data) {
         // log_message('debug', 'BudgetModel L363 - Attempting to insert account data: ' . print_r($data, true));
-    
+
         if ($this->insert($data)) {
             $insertID = $this->insertID();
             // log_message('info', 'Insert successful: ID ' . $insertID);
-    
+
             // Debugging: Output the last query
             // log_message('info', 'Last Query: ' . $this->db->getLastQuery());
-    
+
             return $insertID;
         } else {
             // log_message('error', 'Insert failed');
-    
+
             // Debugging: Output the last query
             // log_message('info', 'Last Query on Failure: ' . $this->db->getLastQuery());
-    
+
             return false;
         }
-    }  
-    
+    }
+
     public function insertDebtAccount($data) {
         $db = \Config\Database::connect();
         $builder = $db->table('bf_users_debt_accounts');
@@ -1344,7 +1360,7 @@ class BudgetModel extends ObservedModel
             return false;
         }
     }
-    
+
     public function paidAccount($accountID) {
         return $this->update($accountID, [
             'paid' => '1',
@@ -1365,7 +1381,7 @@ class BudgetModel extends ObservedModel
             'recurring_schedule' => $recurringSchedule,
             'created_at' => date('Y-m-d H:i:s')
         ]);
-    }    
+    }
 
     public function forecastEntryExists(int $userId, int $accountId, string $forecastDate): bool
     {
@@ -1377,7 +1393,7 @@ class BudgetModel extends ObservedModel
     }
 
     public function updateAccount($accountID, $data) {
-        
+
         // log_message('debug', 'Attempting to update account. ID: ' . $accountID . ' Data: ' . print_r($data, true));
         if ($this->update($accountID, $data)) {
             // log_message('debug', 'Update successful for account ID: ' . $accountID);
@@ -1386,12 +1402,12 @@ class BudgetModel extends ObservedModel
             log_message('error', 'Update failed for account ID: ' . $accountID);
             return false;
         }
-    }  
+    }
 
     public function updateDebtAccount($accountId, $data){
         return $this->db->table('bf_users_debt_accounts')->where('id', $accountId)->update($data);
-    }    
-    
+    }
+
     public function updateForecastEntry($userId, $forecastDate, array $data): bool
     {
         return $this->db->table('bf_users_budgeting_forecast')
@@ -1410,7 +1426,7 @@ class BudgetModel extends ObservedModel
         }
         return false;
     }
-    
+
     public function unpaidAccount($accountID) {
         return $this->update($accountID, ['paid' => 0]);
     }
@@ -1422,16 +1438,16 @@ class BudgetModel extends ObservedModel
     //                       ->get();
     //     log_message('info', 'BudgetModel - L26: getUserBudgetRecords($cuID): ' . print_r($result->getResult(), true));
     //     return $result;
-    // }    
-        
+    // }
+
     // public function approveRecurringSchedule($accountID)
     // {
     //     // Ensure we're updating only schedules related to the specific account
     //     return $this->where('recurring_account_id', $accountID)
     //                 ->set(['status' => 1])
     //                 ->update();
-    // }   
-    
+    // }
+
     // public function getIncomeAccountsSummary($cuID) {
     //     return $this->select('source_type')
     //                 ->selectSum('net_amount', 'total_expense')
@@ -1449,7 +1465,7 @@ class BudgetModel extends ObservedModel
     //                              ->where(['user_id' => $cuID])
     //                              ->findAll();
     // }
-    
+
     // public function getThisMonthIncomeAccountSummary($cuID) {
     //     return $this->selectSum('net_amount', 'this_month_income')
     //                 ->where([
@@ -1458,7 +1474,7 @@ class BudgetModel extends ObservedModel
     //                     'month' => date("m"),
     //                 ])->first();
     // }
-    
+
     // public function getLastMonthIncomeAccountSummary($cuID) {
     //     $lastMonth = date("m", strtotime("-1 month"));
     //     return $this->selectSum('net_amount', 'last_month_income')
@@ -1468,7 +1484,7 @@ class BudgetModel extends ObservedModel
     //                     'month' => $lastMonth,
     //                 ])->first();
     // }
-    
+
     // public function getExpenseAccountSummary($cuID) {
     //     return $this->selectSum('net_amount', 'total_expense')
     //                 ->where([
@@ -1476,7 +1492,7 @@ class BudgetModel extends ObservedModel
     //                     'account_type' => 'Expense',
     //                 ])->first();
     // }
-    
+
     // public function getThisMonthExpenseAccountSummary($cuID) {
     //     return $this->selectSum('net_amount', 'this_month_expense')
     //                 ->where([
@@ -1485,7 +1501,7 @@ class BudgetModel extends ObservedModel
     //                     'month' => date("m"),
     //                 ])->first();
     // }
-    
+
     // public function getLastMonthExpenseAccountSummary($cuID) {
     //     $lastMonth = date("m", strtotime("-1 month"));
     //     return $this->selectSum('net_amount', 'last_month_expense')
@@ -1495,6 +1511,6 @@ class BudgetModel extends ObservedModel
     //                     'month' => $lastMonth,
     //                 ])->first();
     // }
-     
+
 }
 ?>

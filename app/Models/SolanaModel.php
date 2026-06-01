@@ -35,6 +35,7 @@ class SolanaModel extends Model
     protected $deleteField = 'deleted_on';
     protected $validationRules = [];
     protected $skipValidation = false;
+    protected array $requestCache = [];
 
     public function storeWallet($data)
     {
@@ -103,10 +104,17 @@ class SolanaModel extends Model
 
     public function getDefaultAddressFromExchangeTable(int $userId): ?array
     {
-        return $this->db->table('bf_exchanges_coin_addresses')
+        $cacheKey = 'defaultAddress:' . $userId;
+        if (array_key_exists($cacheKey, $this->requestCache)) {
+            return $this->requestCache[$cacheKey];
+        }
+
+        $this->requestCache[$cacheKey] = $this->db->table('bf_exchanges_coin_addresses')
             ->where(['user_id'=>$userId,'chain'=>'solana'])
             ->orderBy('is_default','DESC')->orderBy('id','ASC')
             ->get()->getRowArray() ?: null;
+
+        return $this->requestCache[$cacheKey];
     }
 
     public function listAddresses(int $userId): array
@@ -207,7 +215,7 @@ class SolanaModel extends Model
         $this->db->table('coin_address')->insert($data);
         return (int) $this->db->insertID();
     }
-    
+
     public function deployContract($contractCode, $constructorParameters)
     {
         return $this->sendRequest('deployContract', ['contractCode' => $contractCode, 'constructorParameters' => $constructorParameters]);
@@ -252,7 +260,7 @@ class SolanaModel extends Model
             "https://api.raydium.io/v2/mainnet/price?ids=$tokenAddress",
             "https://api.dexscreener.com/latest/dex/tokens/$tokenAddress"
         ];
-    
+
         foreach ($urls as $url) {
             try {
                 $response = $client->get($url, [
@@ -261,7 +269,7 @@ class SolanaModel extends Model
                 $body = $response->getBody();
                 $result = json_decode($body, true);
                 log_message('debug', 'SolanaModel fetchPrice - $result Array: ' . (print_r($result, true)));
-    
+
                 // Handle different API responses
                 if (isset($result[$tokenAddress]['usd'])) {
                     return $result[$tokenAddress]['usd'];
@@ -276,9 +284,9 @@ class SolanaModel extends Model
                 log_message('error', 'Error fetching token price from ' . $url . ': ' . $e->getMessage());
             }
         }
-        
+
         throw new \Exception('Unable to fetch token price from all sources');
-    }     
+    }
 
     private function fetchPrice($apiUrl, $tokenAddress) {
         $client = \Config\Services::curlrequest();
@@ -328,16 +336,16 @@ class SolanaModel extends Model
                            ->orderBy('market_cap', 'DESC')
                            ->limit(50)
                            ->get()
-                           ->getResultArray(); 
-        return $result; 
+                           ->getResultArray();
+        return $result;
     }
 
     public function getSOLMarketData() {
         $result = $this->db->table('bf_exchanges_assets')
                            ->where('symbol', 'SOL')
                            ->get()
-                           ->getRowArray(); 
-        return $result; 
+                           ->getRowArray();
+        return $result;
     }
 
     public function getTransactionBySignature($signature)
@@ -402,25 +410,29 @@ class SolanaModel extends Model
     }
 
     public function getTokenInfo($accountID) {
-        $builder = $this->db->table('bf_exchanges_assets')->where('id', $accountID)->get()->getRowArray(); 
-        return $builder; 
+        $builder = $this->db->table('bf_exchanges_assets')->where('id', $accountID)->get()->getRowArray();
+        return $builder;
     }
 
     public function getTokenInfoBySymbol($symbol) {
         // log_message('debug', 'SolanaModel L53 - $symbol: ' . $symbol);
-        $builder = $this->db->table('bf_exchanges_assets')->where('symbol', $symbol)->get()->getRowArray(); 
+        $builder = $this->db->table('bf_exchanges_assets')->where('symbol', $symbol)->get()->getRowArray();
         // log_message('debug', 'SolanaModel L53 - $builder Array: ' . (print_r($builder, true)));
-        return $builder; 
+        return $builder;
     }
 
     public function getTokenInfoByID($tokenID) {
         // log_message('debug', 'SolanaModel L53 - $symbol: ' . $symbol);
-        $builder = $this->db->table('bf_exchanges_assets')->where('id', $tokenID)->limit(20)->get()->getResultArray(); 
+        $builder = $this->db->table('bf_exchanges_assets')->where('id', $tokenID)->limit(20)->get()->getResultArray();
         // log_message('debug', 'SolanaModel L53 - $builder Array: ' . (print_r($builder, true)));
-        return $builder; 
+        return $builder;
     }
 
     public function getTopListedTokens() {
+        if (array_key_exists('topListedTokens', $this->requestCache)) {
+            return $this->requestCache['topListedTokens'];
+        }
+
         $result = $this->db->table('bf_exchanges_assets')
                            ->select('id, coin_logo, coin_name, coin_value, discord, facebook, telegram, twitter, website, market_cap, symbol, volume, fdv')
                            ->where('status', 'Approved')
@@ -430,16 +442,26 @@ class SolanaModel extends Model
                            ->orderBy('market_cap', 'DESC')
                            ->limit(50)
                            ->get()
-                           ->getResultArray(); 
-        return $result; 
+                           ->getResultArray();
+        $this->requestCache['topListedTokens'] = $result;
+
+        return $this->requestCache['topListedTokens'];
     }
 
     public function getUserDefaultSolana($cuID)
     {
-        log_message('debug', 'SolanaModel L41 - $cuID ' . $cuID);
+        if (ENVIRONMENT !== 'production') {
+            log_message('debug', 'SolanaModel L41 - $cuID ' . $cuID);
+        }
+        $cacheKey = 'userDefaultSolana:' . (int) $cuID;
+        if (array_key_exists($cacheKey, $this->requestCache)) {
+            return $this->requestCache[$cacheKey];
+        }
+
         $builder = $this->db->table('bf_users_wallet');
-        $result = $builder->where('user_id', $cuID)->where('market', 'SOL')->where('default_wallet', 'Yes')->where('active', 1)->get()->getRowArray();
-        return $result;
+        $this->requestCache[$cacheKey] = $builder->where('user_id', $cuID)->where('market', 'SOL')->where('default_wallet', 'Yes')->where('active', 1)->get()->getRowArray();
+
+        return $this->requestCache[$cacheKey];
     }
 
     public function getUserEmail($userID)
@@ -462,6 +484,11 @@ class SolanaModel extends Model
     }
 
     public function getUserTokens($cuID) {
+        $cacheKey = 'userTokens:' . (int) $cuID;
+        if (array_key_exists($cacheKey, $this->requestCache)) {
+            return $this->requestCache[$cacheKey];
+        }
+
         $result = $this->db->table('bf_exchanges_assets')
                            ->select('id, coin_address, coin_logo, coin_name, coin_value, discord, facebook, telegram, twitter, website, market_cap, symbol, volume')
                            ->where('user_id', $cuID)
@@ -469,10 +496,12 @@ class SolanaModel extends Model
                            ->orderBy('market_cap', 'DESC')
                         //    ->limit(10)
                            ->get()
-                           ->getResultArray(); 
-        return $result; 
+                           ->getResultArray();
+        $this->requestCache[$cacheKey] = $result;
+
+        return $this->requestCache[$cacheKey];
     }
-    
+
     public function getUserTokenAmount($userId, $tokenAddress) {
         // Implement the logic to get the user's token amount from the database
         // Example query:
@@ -481,11 +510,11 @@ class SolanaModel extends Model
             ->where('user_id', $userId)
             ->where('token_address', $tokenAddress)
             ->limit(20)->get();
-    
+
         $result = $query->getRow();
-    
+
         return $result ? $result->amount : 0;
-    }   
+    }
 
     public function getWalletInfo($walletID)
     {
