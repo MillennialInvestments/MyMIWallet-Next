@@ -1,0 +1,318 @@
+===== POST HOTFIX BROWSER ERROR CHECK =====
+Mon Jun  1 02:38:20 PM UTC 2026
+
+===== BRANCH / COMMIT =====
+main
+855266f57 Merge pull request #488 from MillennialInvestments/fix/solana-runtime-modal-hotfix
+b5bff46a4 Fix Solana hotfix syntax and jQuery fallback
+4d286c3f6 Fix Solana runtime jQuery and wallet modal fallback
+a5c9f8fe8 Merge pull request #487 from MillennialInvestments/fix/solana-exchange-performance-hygiene
+0fd106740 Merge pull request #486 from MillennialInvestments/codex/implement-solana-exchange-performance-hygiene
+9c5ab5312 Improve Solana exchange performance hygiene
+fca154cdb Add Solana Exchange performance hygiene instruction
+1395f0dac Fix/solana wallet secret backfill audit (#485)
+
+===== RECENT SOLANA / MODAL / 500 LOGS =====
+writable/logs/summary-2026-04-12.log:18443:ERROR --> FORECAST: trigger failed for BANF: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18446:ERROR --> FORECAST: trigger failed for BIRK: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18449:ERROR --> FORECAST: trigger failed for BNL: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18452:ERROR --> FORECAST: trigger failed for BRY: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18455:ERROR --> FORECAST: trigger failed for BYD: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18458:ERROR --> FORECAST: trigger failed for BYRN: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18461:ERROR --> FORECAST: trigger failed for CALX: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18464:ERROR --> FORECAST: trigger failed for CARG: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18467:ERROR --> FORECAST: trigger failed for CBRL: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18470:ERROR --> FORECAST: trigger failed for CBSH: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18473:ERROR --> FORECAST: trigger failed for CCOI: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18476:ERROR --> FORECAST: trigger failed for CDP: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18479:ERROR --> FORECAST: trigger failed for CI: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18482:ERROR --> FORECAST: trigger failed for CLBK: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18485:ERROR --> FORECAST: trigger failed for CNM: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18488:ERROR --> FORECAST: trigger failed for COP: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18491:ERROR --> FORECAST: trigger failed for CRL: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18494:ERROR --> FORECAST: trigger failed for CRMT: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18497:ERROR --> FORECAST: trigger failed for CRNC: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18500:ERROR --> FORECAST: trigger failed for CUBE: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18503:ERROR --> FORECAST: trigger failed for DOX: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18506:ERROR --> FORECAST: trigger failed for DXC: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18509:ERROR --> FORECAST: trigger failed for EFSC: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18512:ERROR --> FORECAST: trigger failed for EL: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18515:ERROR --> FORECAST: trigger failed for ERII: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18518:ERROR --> FORECAST: trigger failed for EVRI: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18521:ERROR --> FORECAST: trigger failed for FCX: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18524:ERROR --> FORECAST: trigger failed for FFIC: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18527:ERROR --> FORECAST: trigger failed for FNKO: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18530:ERROR --> FORECAST: trigger failed for FSBC: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18533:ERROR --> FORECAST: trigger failed for FSS: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18536:ERROR --> FORECAST: trigger failed for GCMG: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18539:ERROR --> FORECAST: trigger failed for GCT: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18542:ERROR --> FORECAST: trigger failed for GHM: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18545:ERROR --> FORECAST: trigger failed for GIC: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18548:ERROR --> FORECAST: trigger failed for GNW: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18551:ERROR --> FORECAST: trigger failed for GRNT: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18554:ERROR --> FORECAST: trigger failed for HNI: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18557:ERROR --> FORECAST: trigger failed for HPE: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18560:ERROR --> FORECAST: trigger failed for IBCP: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18563:ERROR --> FORECAST: trigger failed for IDXX: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18566:ERROR --> FORECAST: trigger failed for IEX: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18569:ERROR --> FORECAST: trigger failed for IPGP: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18572:ERROR --> FORECAST: trigger failed for IRMD: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18575:ERROR --> FORECAST: trigger failed for ITP: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18578:ERROR --> FORECAST: trigger failed for IVT: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18581:ERROR --> FORECAST: trigger failed for LII: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18584:ERROR --> FORECAST: trigger failed for MDGL: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18587:ERROR --> FORECAST: trigger failed for MELI: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18590:ERROR --> FORECAST: trigger failed for PCVX: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18593:ERROR --> FORECAST: trigger failed for PHM: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18596:ERROR --> FORECAST: trigger failed for PNR: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18599:ERROR --> FORECAST: trigger failed for SKX: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18602:ERROR --> FORECAST: trigger failed for SRE: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18605:ERROR --> FORECAST: trigger failed for TCOM: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18608:ERROR --> FORECAST: trigger failed for TYL: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18611:ERROR --> FORECAST: trigger failed for VMC: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18614:ERROR --> FORECAST: trigger failed for WIX: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18617:ERROR --> FORECAST: trigger failed for WSBC: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18620:ERROR --> FORECAST: trigger failed for YUMC: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18623:ERROR --> FORECAST: trigger failed for ZTS: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18626:ERROR --> FORECAST: trigger failed for ADI: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18629:ERROR --> FORECAST: trigger failed for ALNY: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18632:ERROR --> FORECAST: trigger failed for CHRW: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18635:ERROR --> FORECAST: trigger failed for DOCU: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18638:ERROR --> FORECAST: trigger failed for FDX: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18641:ERROR --> FORECAST: trigger failed for G: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18644:ERROR --> FORECAST: trigger failed for GGG: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18647:ERROR --> FORECAST: trigger failed for LPLA: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18650:ERROR --> FORECAST: trigger failed for NSC: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18653:ERROR --> FORECAST: trigger failed for NWSA: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18656:ERROR --> FORECAST: trigger failed for PAYX: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18659:ERROR --> FORECAST: trigger failed for PLNT: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18662:ERROR --> FORECAST: trigger failed for PODD: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18665:ERROR --> FORECAST: trigger failed for PPL: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18668:ERROR --> FORECAST: trigger failed for RJF: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18671:ERROR --> FORECAST: trigger failed for RNR: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18674:ERROR --> FORECAST: trigger failed for SCHW: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18677:ERROR --> FORECAST: trigger failed for SMTC: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18680:ERROR --> FORECAST: trigger failed for SNA: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18683:ERROR --> FORECAST: trigger failed for SSNC: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18686:ERROR --> FORECAST: trigger failed for STT: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18689:ERROR --> FORECAST: trigger failed for TDY: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18692:ERROR --> FORECAST: trigger failed for TPL: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18695:ERROR --> FORECAST: trigger failed for TXT: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18698:ERROR --> FORECAST: trigger failed for USFD: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18701:ERROR --> FORECAST: trigger failed for WAY: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18704:ERROR --> FORECAST: trigger failed for BFLY: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18707:ERROR --> FORECAST: trigger failed for BFST: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18710:ERROR --> FORECAST: trigger failed for CLOV: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18713:ERROR --> FORECAST: trigger failed for CLRO: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18716:ERROR --> FORECAST: trigger failed for FLGT: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18719:ERROR --> FORECAST: trigger failed for HQY: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18722:ERROR --> FORECAST: trigger failed for HUMA: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18725:ERROR --> FORECAST: trigger failed for LGVN: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18728:ERROR --> FORECAST: trigger failed for LNN: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18731:ERROR --> FORECAST: trigger failed for OMF: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18734:ERROR --> FORECAST: trigger failed for PDD: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18737:ERROR --> FORECAST: trigger failed for SFL: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18740:ERROR --> FORECAST: trigger failed for ZIM: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18743:ERROR --> FORECAST: trigger failed for BXSL: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18746:ERROR --> FORECAST: trigger failed for CNK: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18749:ERROR --> FORECAST: trigger failed for LOMA: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18752:ERROR --> FORECAST: trigger failed for VSTE: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18755:ERROR --> FORECAST: trigger failed for CCL: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18758:ERROR --> FORECAST: trigger failed for INCY: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18761:ERROR --> FORECAST: trigger failed for DLR: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18764:ERROR --> FORECAST: trigger failed for WSO: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18767:ERROR --> FORECAST: trigger failed for GDRX: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18770:ERROR --> FORECAST: trigger failed for GLBE: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18773:ERROR --> FORECAST: trigger failed for TXG: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18776:ERROR --> FORECAST: trigger failed for NXT: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18779:ERROR --> FORECAST: trigger failed for CWK: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18782:ERROR --> FORECAST: trigger failed for SAND: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18785:ERROR --> FORECAST: trigger failed for PRKS: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18788:ERROR --> FORECAST: trigger failed for RYTM: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18791:ERROR --> FORECAST: trigger failed for STEP: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18794:ERROR --> FORECAST: trigger failed for PFC: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18797:ERROR --> FORECAST: trigger failed for PRAA: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18800:ERROR --> FORECAST: trigger failed for PRGS: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18803:ERROR --> FORECAST: trigger failed for PUMP: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18806:ERROR --> FORECAST: trigger failed for SPNS: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18809:ERROR --> FORECAST: trigger failed for SYBT: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18812:ERROR --> FORECAST: trigger failed for TGS: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18815:ERROR --> FORECAST: trigger failed for UNIT: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18818:ERROR --> FORECAST: trigger failed for SNDK: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18821:ERROR --> FORECAST: trigger failed for JBSS: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18824:ERROR --> FORECAST: trigger failed for LKFN: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18827:ERROR --> FORECAST: trigger failed for MCRI: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18830:ERROR --> FORECAST: trigger failed for MCY: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18833:ERROR --> FORECAST: trigger failed for MNRO: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18836:ERROR --> FORECAST: trigger failed for MWA: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18839:ERROR --> FORECAST: trigger failed for MXL: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18842:ERROR --> FORECAST: trigger failed for NEOG: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18845:ERROR --> FORECAST: trigger failed for NGVT: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18848:ERROR --> FORECAST: trigger failed for NPKI: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18851:ERROR --> FORECAST: trigger failed for NTCT: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18854:ERROR --> FORECAST: trigger failed for NVST: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18857:ERROR --> FORECAST: trigger failed for NWN: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18860:ERROR --> FORECAST: trigger failed for KAI: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18863:ERROR --> FORECAST: trigger failed for MRCY: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18866:ERROR --> FORECAST: trigger failed for NBBK: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18869:ERROR --> FORECAST: trigger failed for NUVL: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18872:ERROR --> FORECAST: trigger failed for NVRO: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18875:ERROR --> FORECAST: trigger failed for NWBI: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18878:ERROR --> FORECAST: trigger failed for LBRT: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18881:ERROR --> FORECAST: trigger failed for LXU: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18884:ERROR --> FORECAST: trigger failed for MRC: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18887:ERROR --> FORECAST: trigger failed for MTDR: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18890:ERROR --> FORECAST: trigger failed for MTX: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18893:ERROR --> FORECAST: trigger failed for NVM: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18896:ERROR --> FORECAST: trigger failed for PGRE: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18899:ERROR --> FORECAST: trigger failed for WAFD: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18902:ERROR --> FORECAST: trigger failed for PNW: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18905:ERROR --> FORECAST: trigger failed for RGP: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18908:ERROR --> FORECAST: trigger failed for SITM: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18911:ERROR --> FORECAST: trigger failed for WMG: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18914:ERROR --> FORECAST: trigger failed for PB: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18917:ERROR --> FORECAST: trigger failed for SAFT: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18920:ERROR --> FORECAST: trigger failed for SANM: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18923:ERROR --> FORECAST: trigger failed for TMP: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18926:ERROR --> FORECAST: trigger failed for VECO: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-12.log:18929:ERROR --> FORECAST: trigger failed for WSR: Unknown column 'forecast_id' in 'field list'
+writable/logs/summary-2026-04-13.log:1412:LEVEL: ERROR
+writable/logs/summary-2026-04-13.log:1416:ERROR --> [404_ROUTE]
+writable/logs/summary-2026-04-14.log:2212:LEVEL: ERROR
+writable/logs/summary-2026-04-14.log:2216:ERROR --> [404_ROUTE]
+writable/logs/summary-2026-04-14.log:2219:ERROR --> HowItWorksController failure: Invalid file: "Modules/Blog/Views/HowItWorks/partials/navigation.php" | file=APPPATH/Modules/Blog/Controllers/HowItWorksController.php line=239
+writable/logs/summary-2026-04-15.log:482:DEBUG --> [REQ_ID=b2c79b2de546] [REQUEST][START] GET /Exchange/Solana/Swap
+writable/logs/summary-2026-04-15.log:1916:DEBUG --> [REQ_ID=d4f853747087] [REQUEST][START] GET /Exchange/Solana/Create/Wallet
+writable/logs/summary-2026-04-15.log:1919:DEBUG --> [REQ_ID=d4f853747087] [FILTER_BEFORE] /Exchange/Solana/Create/Wallet
+writable/logs/summary-2026-04-15.log:1925:DEBUG --> [REQ_ID=d4f853747087] [LIFECYCLE][START] GET https://mymiwallet.com/index.php/Exchange/Solana/Create/Wallet
+writable/logs/summary-2026-04-15.log:2060:DEBUG --> [REQ_ID=b5e67709120e] [REQUEST][START] GET /Exchange/Solana/Import/Wallet
+writable/logs/summary-2026-04-15.log:2063:DEBUG --> [REQ_ID=b5e67709120e] [FILTER_BEFORE] /Exchange/Solana/Import/Wallet
+writable/logs/summary-2026-04-15.log:2069:DEBUG --> [REQ_ID=b5e67709120e] [LIFECYCLE][START] GET https://mymiwallet.com/index.php/Exchange/Solana/Import/Wallet
+writable/logs/summary-2026-04-15.log:6713:DEBUG --> [REQ_ID=47985e37450d] [REQUEST][START] GET /Exchange/Solana/Wallet/ViewAssets
+writable/logs/summary-2026-04-15.log:6716:DEBUG --> [REQ_ID=47985e37450d] [FILTER_BEFORE] /Exchange/Solana/Wallet/ViewAssets
+writable/logs/summary-2026-04-15.log:6722:DEBUG --> [REQ_ID=47985e37450d] [LIFECYCLE][START] GET https://mymiwallet.com/index.php/Exchange/Solana/Wallet/ViewAssets
+writable/logs/summary-2026-04-15.log:9683:DEBUG --> [REQ_ID=46a6045f5c8e] [REQUEST][START] GET /Exchange/Solana/Wallet/Verify-Ownership
+writable/logs/summary-2026-04-15.log:9686:DEBUG --> [REQ_ID=46a6045f5c8e] [FILTER_BEFORE] /Exchange/Solana/Wallet/Verify-Ownership
+writable/logs/summary-2026-04-15.log:9692:DEBUG --> [REQ_ID=46a6045f5c8e] [LIFECYCLE][START] GET https://mymiwallet.com/index.php/Exchange/Solana/Wallet/Verify-Ownership
+writable/logs/summary-2026-04-15.log:14247:LEVEL: ERROR
+writable/logs/summary-2026-04-15.log:14251:ERROR --> [404_ROUTE]
+writable/logs/summary-2026-04-15.log:14254:ERROR --> [AUTH AUDIT] Password verify failed
+writable/logs/summary-2026-04-15.log:14257:ERROR --> [spark:routes:auth-audit] Failed
+writable/logs/summary-2026-04-15.log:14265:CRITICAL --> RuntimeException: Spark command failed: ops:php:extensions (exit -1)
+writable/logs/summary-2026-04-15.log:18544:DEBUG --> [REQ_ID=47985e37450d] [REQUEST][START] GET /Exchange/Solana/Wallet/ViewAssets
+writable/logs/summary-2026-04-15.log:18547:DEBUG --> [REQ_ID=47985e37450d] [FILTER_BEFORE] /Exchange/Solana/Wallet/ViewAssets
+writable/logs/summary-2026-04-15.log:18553:DEBUG --> [REQ_ID=47985e37450d] [LIFECYCLE][START] GET https://mymiwallet.com/index.php/Exchange/Solana/Wallet/ViewAssets
+writable/logs/summary-2026-04-15.log:21514:DEBUG --> [REQ_ID=46a6045f5c8e] [REQUEST][START] GET /Exchange/Solana/Wallet/Verify-Ownership
+writable/logs/summary-2026-04-15.log:21517:DEBUG --> [REQ_ID=46a6045f5c8e] [FILTER_BEFORE] /Exchange/Solana/Wallet/Verify-Ownership
+writable/logs/summary-2026-04-15.log:21523:DEBUG --> [REQ_ID=46a6045f5c8e] [LIFECYCLE][START] GET https://mymiwallet.com/index.php/Exchange/Solana/Wallet/Verify-Ownership
+writable/logs/summary-2026-04-15.log:24794:LEVEL: ERROR (NEW)
+writable/logs/summary-2026-04-15.log:24798:ERROR --> [404_ROUTE]
+writable/logs/summary-2026-04-15.log:24801:ERROR --> [AUTH AUDIT] Password verify failed
+writable/logs/summary-2026-04-15.log:24804:ERROR --> [spark:routes:auth-audit] Failed
+writable/logs/summary-2026-04-15.log:24812:CRITICAL --> RuntimeException: Spark command failed: ops:php:extensions (exit -1)
+writable/logs/summary-2026-04-16.log:6132:LEVEL: ERROR
+writable/logs/summary-2026-04-16.log:6136:ERROR --> [404_ROUTE]
+writable/logs/summary-2026-04-16.log:11043:LEVEL: ERROR (NEW)
+writable/logs/summary-2026-04-16.log:11047:ERROR --> [404_ROUTE]
+writable/logs/summary-2026-04-17.log:6954:LEVEL: ERROR
+writable/logs/summary-2026-04-17.log:6958:ERROR --> [404_ROUTE]
+writable/logs/summary-2026-04-17.log:6961:ERROR --> [AUTH AUDIT] Password verify failed
+writable/logs/summary-2026-04-17.log:9951:LEVEL: ERROR (NEW)
+writable/logs/summary-2026-04-17.log:9955:ERROR --> [404_ROUTE]
+writable/logs/summary-2026-04-17.log:9958:ERROR --> [AUTH AUDIT] Password verify failed
+writable/logs/summary-2026-04-18.log:2723:DEBUG --> [REQ_ID=6bb997eedfa9] [REQUEST][START] GET /Exchange/Solana/Wallet/Solflare
+writable/logs/summary-2026-04-18.log:11754:LEVEL: ERROR
+writable/logs/summary-2026-04-18.log:11758:ERROR --> [404_ROUTE]
+writable/logs/summary-2026-04-18.log:11761:ERROR --> Table 'mymiwallet.blog_posts' doesn't exist
+writable/logs/summary-2026-04-19.log:9884:DEBUG --> [REQ_ID=0f259efcd896] [REQUEST][START] GET /index.php/Exchange/Solana
+writable/logs/summary-2026-04-19.log:9956:DEBUG --> [REQ_ID=55393e6afadf] [REQUEST][START] GET /Exchange/Solana/Wallet/MetaMask
+writable/logs/summary-2026-04-19.log:14384:DEBUG --> [REQ_ID=3914b36ddc6b] [REQUEST][START] GET /Exchange/Solana/Wallet/Solflare
+writable/logs/summary-2026-04-19.log:46755:LEVEL: ERROR
+writable/logs/summary-2026-04-19.log:46759:ERROR --> [404_ROUTE]
+writable/logs/summary-2026-04-19.log:46762:ERROR --> [AUTH AUDIT] Password verify failed
+writable/logs/summary-2026-04-19.log:46765:ERROR --> HowItWorksController failure: Invalid file: "Modules/Blog/Views/HowItWorks/partials/navigation.php" | file=APPPATH/Modules/Blog/Controllers/HowItWorksController.php line=249
+writable/logs/summary-2026-04-19.log:46768:ERROR --> Table 'mymiwallet.blog_posts' doesn't exist
+writable/logs/summary-2026-04-19.log:46771:ERROR --> Unknown column 'confidence_score' in 'where clause'
+writable/logs/summary-2026-04-19.log:46774:ERROR --> Unknown column 'symbol' in 'field list'
+writable/logs/summary-2026-04-19.log:46788:CRITICAL --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'symbol' in 'field list'
+writable/logs/summary-2026-04-19.log:46791:CRITICAL --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'symbol' in 'field list'
+writable/logs/summary-2026-04-19.log:46797:CRITICAL --> [EXCEPTION] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'symbol' in 'field list' in APPPATH/Config/Exceptions.php:38
+writable/logs/summary-2026-04-19.log:50420:LEVEL: ERROR (NEW)
+writable/logs/summary-2026-04-19.log:50424:ERROR --> [404_ROUTE]
+writable/logs/summary-2026-04-19.log:50427:ERROR --> Unknown column 'symbol' in 'field list'
+writable/logs/summary-2026-04-19.log:50435:CRITICAL --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'symbol' in 'field list'
+writable/logs/summary-2026-04-19.log:50438:CRITICAL --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'symbol' in 'field list'
+writable/logs/summary-2026-04-19.log:50444:CRITICAL --> [EXCEPTION] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'symbol' in 'field list' in APPPATH/Config/Exceptions.php:38
+writable/logs/summary-2026-04-20.log:5780:DEBUG --> [REQ_ID=c5ff2630a69c] [REQUEST][START] GET /Exchange/Solana/Wallet/Solflare
+writable/logs/summary-2026-04-20.log:5831:DEBUG --> [REQ_ID=52268f69259d] [REQUEST][START] GET /Exchange/Solana/Wallet/TrustWallet
+writable/logs/summary-2026-04-20.log:9999:LEVEL: ERROR
+writable/logs/summary-2026-04-20.log:10003:ERROR --> [404_ROUTE]
+writable/logs/summary-2026-04-20.log:10006:ERROR --> Unknown column 'confidence_score' in 'where clause'
+writable/logs/summary-2026-04-20.log:10558:DEBUG --> [REQ_ID=c5ff2630a69c] [REQUEST][START] GET /Exchange/Solana/Wallet/Solflare
+writable/logs/summary-2026-04-20.log:10609:DEBUG --> [REQ_ID=52268f69259d] [REQUEST][START] GET /Exchange/Solana/Wallet/TrustWallet
+writable/logs/summary-2026-04-20.log:12605:LEVEL: ERROR (NEW)
+writable/logs/summary-2026-04-20.log:12609:ERROR --> [404_ROUTE]
+writable/logs/summary-2026-04-21.log:347:DEBUG --> [REQ_ID=8e2e91860975] [REQUEST][START] GET /Exchange/Solana/Wallet/MetaMask
+writable/logs/summary-2026-04-21.log:620:DEBUG --> [REQ_ID=1fec50f757a4] [REQUEST][START] GET /Exchange/Solana/Wallet/Phantom
+writable/logs/summary-2026-04-21.log:1049:DEBUG --> [REQ_ID=6e05373464f3] [REQUEST][START] GET /Exchange/Solana/Create/Wallet
+writable/logs/summary-2026-04-21.log:1052:DEBUG --> [REQ_ID=6e05373464f3] [FILTER_BEFORE] /Exchange/Solana/Create/Wallet
+writable/logs/summary-2026-04-21.log:1058:DEBUG --> [REQ_ID=6e05373464f3] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Exchange/Solana/Create/Wallet
+writable/logs/summary-2026-04-21.log:1211:DEBUG --> [REQ_ID=2bc96099db27] [REQUEST][START] GET /Exchange/Solana/Swap
+writable/logs/summary-2026-04-21.log:1214:DEBUG --> [REQ_ID=2bc96099db27] [FILTER_BEFORE] /Exchange/Solana/Swap
+writable/logs/summary-2026-04-21.log:1217:DEBUG --> [REQ_ID=2bc96099db27] [ROUTE] Controller=\App\Modules\Exchange\Controllers\SolanaController Method=coinSwap
+writable/logs/summary-2026-04-21.log:1220:DEBUG --> [REQ_ID=2bc96099db27] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Exchange/Solana/Swap
+writable/logs/summary-2026-04-21.log:1391:DEBUG --> [REQ_ID=80279bcd4659] [REQUEST][START] GET /Exchange/Solana/Wallet/Verify-Ownership
+writable/logs/summary-2026-04-21.log:1394:DEBUG --> [REQ_ID=80279bcd4659] [FILTER_BEFORE] /Exchange/Solana/Wallet/Verify-Ownership
+writable/logs/summary-2026-04-21.log:1400:DEBUG --> [REQ_ID=80279bcd4659] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Exchange/Solana/Wallet/Verify-Ownership
+writable/logs/summary-2026-04-21.log:2171:DEBUG --> [REQ_ID=4a0a229d5418] [REQUEST][START] GET /Exchange/Solana/Import/Wallet
+writable/logs/summary-2026-04-21.log:2174:DEBUG --> [REQ_ID=4a0a229d5418] [FILTER_BEFORE] /Exchange/Solana/Import/Wallet
+writable/logs/summary-2026-04-21.log:2180:DEBUG --> [REQ_ID=4a0a229d5418] [LIFECYCLE][START] GET https://www.mymiwallet.com/index.php/Exchange/Solana/Import/Wallet
+writable/logs/summary-2026-04-21.log:10854:LEVEL: ERROR
+writable/logs/summary-2026-04-21.log:10858:ERROR --> [404_ROUTE]
+writable/logs/summary-2026-04-22.log:3530:DEBUG --> [REQ_ID=14fd3a762472] [REQUEST][START] GET /Exchange/Solana/Wallet/Phantom
+writable/logs/summary-2026-04-22.log:6549:LEVEL: ERROR
+writable/logs/summary-2026-04-22.log:6553:ERROR --> [404_ROUTE]
+writable/logs/summary-2026-04-22.log:6556:ERROR --> HowItWorksController failure: Invalid file: "Modules/Blog/Views/HowItWorks/partials/navigation.php" | file=APPPATH/Modules/Blog/Controllers/HowItWorksController.php line=249
+
+===== HOTFIX MARKERS =====
+app/Modules/Exchange/Views/Solana/assets.php:4:    if (window.mymiSolanaEnsureJqueryLoaded) {
+app/Modules/Exchange/Views/Solana/assets.php:8:    window.mymiSolanaEnsureJqueryLoaded = true;
+app/Modules/Exchange/Views/Solana/coinSwap.php:4:    if (window.mymiSolanaEnsureJqueryLoaded) {
+app/Modules/Exchange/Views/Solana/coinSwap.php:8:    window.mymiSolanaEnsureJqueryLoaded = true;
+app/Modules/Exchange/Views/Solana/connectWallet.php:4:    if (window.mymiSolanaEnsureJqueryLoaded) {
+app/Modules/Exchange/Views/Solana/connectWallet.php:8:    window.mymiSolanaEnsureJqueryLoaded = true;
+app/Modules/Exchange/Views/Solana/create.php:4:    if (window.mymiSolanaEnsureJqueryLoaded) {
+app/Modules/Exchange/Views/Solana/create.php:8:    window.mymiSolanaEnsureJqueryLoaded = true;
+app/Modules/Exchange/Views/Solana/createToken.php:4:    if (window.mymiSolanaEnsureJqueryLoaded) {
+app/Modules/Exchange/Views/Solana/createToken.php:8:    window.mymiSolanaEnsureJqueryLoaded = true;
+app/Modules/Exchange/Views/Solana/createWallet.php:4:    if (window.mymiSolanaEnsureJqueryLoaded) {
+app/Modules/Exchange/Views/Solana/createWallet.php:8:    window.mymiSolanaEnsureJqueryLoaded = true;
+app/Modules/Exchange/Views/Solana/executeSwap.php:4:    if (window.mymiSolanaEnsureJqueryLoaded) {
+app/Modules/Exchange/Views/Solana/executeSwap.php:8:    window.mymiSolanaEnsureJqueryLoaded = true;
+app/Modules/Exchange/Views/Solana/importWallet.php:4:    if (window.mymiSolanaEnsureJqueryLoaded) {
+app/Modules/Exchange/Views/Solana/importWallet.php:8:    window.mymiSolanaEnsureJqueryLoaded = true;
+app/Modules/Exchange/Views/Solana/index.php:4:    if (window.mymiSolanaEnsureJqueryLoaded) {
+app/Modules/Exchange/Views/Solana/index.php:8:    window.mymiSolanaEnsureJqueryLoaded = true;
+app/Modules/Exchange/Views/Solana/orders.php:4:    if (window.mymiSolanaEnsureJqueryLoaded) {
+app/Modules/Exchange/Views/Solana/orders.php:8:    window.mymiSolanaEnsureJqueryLoaded = true;
+app/Modules/Exchange/Views/Solana/swap-working.php:4:    if (window.mymiSolanaEnsureJqueryLoaded) {
+app/Modules/Exchange/Views/Solana/swap-working.php:8:    window.mymiSolanaEnsureJqueryLoaded = true;
+app/Modules/Exchange/Views/Solana/swap.php:4:    if (window.mymiSolanaEnsureJqueryLoaded) {
+app/Modules/Exchange/Views/Solana/swap.php:8:    window.mymiSolanaEnsureJqueryLoaded = true;
+app/Modules/Exchange/Views/Solana/testPage.php:4:    if (window.mymiSolanaEnsureJqueryLoaded) {
+app/Modules/Exchange/Views/Solana/testPage.php:8:    window.mymiSolanaEnsureJqueryLoaded = true;
+app/Modules/Exchange/Views/Solana/token.php:4:    if (window.mymiSolanaEnsureJqueryLoaded) {
+app/Modules/Exchange/Views/Solana/token.php:8:    window.mymiSolanaEnsureJqueryLoaded = true;
+app/Modules/Exchange/Views/Solana/trade.php:4:    if (window.mymiSolanaEnsureJqueryLoaded) {
+app/Modules/Exchange/Views/Solana/trade.php:8:    window.mymiSolanaEnsureJqueryLoaded = true;
+app/Modules/Exchange/Views/Solana/verifyWalletOwnership.php:4:    if (window.mymiSolanaEnsureJqueryLoaded) {
+app/Modules/Exchange/Views/Solana/verifyWalletOwnership.php:8:    window.mymiSolanaEnsureJqueryLoaded = true;
+app/Modules/Exchange/Views/Solana/viewWallet.php:4:    if (window.mymiSolanaEnsureJqueryLoaded) {
+app/Modules/Exchange/Views/Solana/viewWallet.php:8:    window.mymiSolanaEnsureJqueryLoaded = true;
+app/Modules/User/Controllers/DashboardController.php:829:        // MYMI_SOLANA_VIEW_WALLET_HOTFIX_20260601
+app/Modules/User/Controllers/DashboardController.php:833:            log_message('warning', 'Solana viewSolanaWallet modal served fallback to avoid runtime 500.');
+
+===== STATUS =====
+ M writable/logs/emergency.log
+?? docs/_aiops/reports/solana-hotfix/post-hotfix-browser-error-check-20260601-073820.txt
+?? docs/_aiops/reports/solana-security-hardening/wallet-secret-backfill-audit-20260601-143652.md
