@@ -823,6 +823,41 @@ class DashboardController extends BaseUserController
 
     public function loadModalContent($formtype, $endpoint, $accountid = null, $category = null, $platform = null)
     {
+
+        // MYMI_SOLANA_VIEW_WALLET_HARD_200_20260601
+        // Hard-stop this one modal before broad Dashboard/Solana payload loading.
+        // This prevents raw 500s while the full wallet modal is rebuilt safely.
+        if (strcasecmp((string) $formtype, 'Solana') === 0 && (string) $endpoint === 'viewSolanaWallet') {
+            log_message('warning', 'Solana viewSolanaWallet hard fallback served before heavy modal loading.');
+
+            $html = <<<'HTML'
+<div class="modal-header">
+    <h5 class="modal-title">Solana Wallet</h5>
+    <button type="button" class="close btn-close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="alert alert-info mb-3">
+        <strong>Wallet view is being upgraded.</strong><br>
+        Your Solana wallet connection and security settings are protected. We are rebuilding this wallet detail modal to load faster and avoid transaction interruptions.
+    </div>
+    <p class="mb-0 text-muted">
+        You can continue using the Solana Exchange dashboard while this wallet detail view is being optimized.
+    </p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" data-dismiss="modal" data-bs-dismiss="modal">Close</button>
+</div>
+HTML;
+
+            return $this->response
+                ->setStatusCode(200)
+                ->setContentType('text/html')
+                ->setBody($html);
+        }
+
+
         if ($this->debug == 1) {
             log_message('debug', "DashboardController::loadModalContent formtype={$formtype} endpoint={$endpoint} accountid={$accountid} category={$category} platform={$platform}");
 
