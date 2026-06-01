@@ -574,51 +574,18 @@ $addr = $svc->normalizeAddress($row);
     public function fetchFrontendData()
     {
         if ($this->debug === 1) {
-            log_message('debug', 'SolanaController L400 - fetchFrontendData() Fetch Started!');
-        }
-        if (!$this->request->isAJAX()) {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'Invalid Request']);
-        }
+            // MYMI_SOLANA_FETCH_FRONTEND_LOG_HYGIENE_20260601
+        if (ENVIRONMENT !== 'production') {
+            $tokenCount = is_array($tokens['all'] ?? null) ? count($tokens['all']) : (is_array($tokens ?? null) ? count($tokens) : 0);
 
-        $cuID = $this->currentUserId();
-        if ($cuID <= 0) {
-            log_message('error', 'fetchFrontendData: missing user context; aborting.');
-            return $this->response->setStatusCode(401)->setJSON([
-                'status'  => 'error',
-                'message' => 'Authentication required.'
+            log_message('debug', 'fetchFrontendData summary: user_id={user_id} solana_total={solana_total} solana_price={solana_price} market_price={market_price} token_count={token_count}', [
+                'user_id'       => $this->cuID ?? null,
+                'solana_total'  => $mySolanaData['cuSolanaTotal'] ?? 0,
+                'solana_price'  => $mySolanaData['solanaPrice'] ?? null,
+                'market_price'  => $marketData['currentPrice'] ?? null,
+                'token_count'   => $tokenCount,
             ]);
         }
-
-        // Ensure service is present
-        $this->solanaService = $this->solanaService ?? new \App\Services\SolanaService();
-
-        // Resolve address (Base58 only)
-        $model   = model(\App\Models\SolanaModel::class);
-        $address = $this->request->getVar('address')
-            ?? session('solana_public_key')
-            ?? ($model->getDefaultAddressFromExchangeTable($cuID)['address'] ?? null);
-
-        if ($address) {
-            $address = $this->solanaService->normalizeAddress($address);
-            if ($address && $this->solanaService->isValidPublicKey($address)) {
-                session()->set('solana_public_key', $address);
-            } else {
-                $address = null; // reject hex or invalid
-            }
-        }
-
-        // Data
-        $lib          = $this->MyMISolana;
-        $mySolanaData = $lib->getUserSolana($cuID) ?? [];
-        $marketData   = $lib->getSolanaMarketData() ?? [];
-        $allSolanaTok = $lib->getSolanaTokens();
-
-        // Log
-        log_message(
-            'debug',
-            'fetchFrontendData - $mySolanaData: {a} | $marketData: {b} | $tokens: {c}',
-            ['a' => print_r($mySolanaData, true), 'b' => print_r($marketData, true), 'c' => print_r($allSolanaTok, true)]
-        );
 
         // Build response structure required
         $data = [
