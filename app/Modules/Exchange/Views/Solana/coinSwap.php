@@ -7,8 +7,12 @@
 
     window.mymiSolanaEnsureJqueryLoaded = true;
 
-    if (!window.jQuery) {
-        document.write('<script src="https://code.jquery.com/jquery-3.7.1.min.js"><\/script>');
+    if (!window.jQuery && !document.getElementById('mymi-jquery-fallback')) {
+        var jq = document.createElement('script');
+        jq.id = 'mymi-jquery-fallback';
+        jq.src = 'https://code.jquery.com/jquery-3.7.1.min.js';
+        jq.async = false;
+        document.head.appendChild(jq);
     }
 
     window.mymiWhenJqueryReady = window.mymiWhenJqueryReady || function (callback) {
