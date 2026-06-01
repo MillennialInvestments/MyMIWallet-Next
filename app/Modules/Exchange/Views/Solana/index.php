@@ -414,18 +414,20 @@ mymiWhenJqueryReady(function () {
         return;
     }
 
+    // --- Global jQuery AJAX setup: send XHR header + attach CSRF automatically ---
     $.ajaxSetup({
-      headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
     });
-});
-// Refresh CSRF hash after any JSON response that includes { csrf: "..." }
-$(document).ajaxComplete(function (_evt, xhr) {
-  try {
-    const res = xhr.responseJSON;
-    if (res && typeof res.csrf === 'string' && res.csrf.length > 0) {
-      window.CSRF_TOKEN_HASH = res.csrf;
-    }
-  } catch (_) { /* ignore */ }
+
+    // Refresh CSRF hash after any JSON response that includes { csrf: "..." }
+    $(document).ajaxComplete(function (_evt, xhr) {
+        try {
+            const res = xhr.responseJSON;
+            if (res && typeof res.csrf === 'string' && res.csrf.length > 0) {
+                window.CSRF_TOKEN_HASH = res.csrf;
+            }
+        } catch (_) { /* ignore */ }
+    });
 });
 
 mymiWhenJqueryReady(function () {
