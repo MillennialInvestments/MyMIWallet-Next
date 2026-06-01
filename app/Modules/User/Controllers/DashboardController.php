@@ -38,6 +38,7 @@ class DashboardController extends BaseUserController
     protected $solanaService;
     protected $userService;
     protected ?MyMIInvestments $MyMIInvestments = null;
+    protected array $requestCache = [];
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
@@ -1111,32 +1112,8 @@ class DashboardController extends BaseUserController
         }
 
         if ($formtype === 'Solana') {
-            $row = model(\App\Models\SolanaModel::class)->getDefaultAddressFromExchangeTable($cuID);
-            $address = $row['address'] ?? null;
-            session()->set('solana_public_key', $address);
-            $this->data['address'] = $address;
-
-            $userSolana = $this->getMyMISolana()->getUserDefaultSolana($cuID);
-            $this->data['userSolana'] = $userSolana;
-
-            $this->data['solanaPrice'] = $this->getSolanaService()->getSolanaPrice();
-            $solPrice = $this->getMyMISolana()->getSolanaPrice();
-            $this->data['solanaPrice'] = is_numeric($solPrice) ? (float) $solPrice : null;
-            $this->data['cryptoTransactions'] = service('myMISolana')->getTransactions($cuID, $address);
-
-            if (!isset($this->data['cryptoAccount']['coin_address']) || empty($this->data['cryptoAccount']['coin_address'])) {
-                $this->data['cryptoAccount']['coin_address'] = $this->getMyMIDashboard()->getCryptoAccount($cuID, 'Solana')['accountInfo'] ?? ['User Address Not Defined'];
-            }
-
-            if ($endpoint === 'coinSwap') {
-                $cryptoTokens = $this->getMyMIDashboard()->getAllTokensByBlock($formtype);
-                $this->data['cryptoTokens'] = $cryptoTokens ?? [];
-                $this->data['cryptoPT'] = $userSolana['cuSolanaDW']['public_token'] ?? null;
-            }
-
-            if ($endpoint === 'viewSwap') {
-                $this->data['cuSolanaDW'] = $userSolana['cuSolanaDW'] ?? [];
-            }
+            $payload = $this->buildSolanaModalPayload($cuID, $endpoint);
+            $this->data = array_merge($this->data, $payload);
 
             return null;
         }
@@ -1180,6 +1157,98 @@ class DashboardController extends BaseUserController
         }
 
         return null;
+    }
+
+
+    /**
+     * Build only the Solana data needed by the requested modal. This avoids
+     * broad dashboard token/account helpers and defers transaction history until
+     * a wallet details modal actually needs it.
+     */
+    private function buildSolanaModalPayload(int $cuID, string $endpoint): array
+    {
+        $row = $this->cachedSolanaDefaultAddress($cuID);
+        $address = $row['address'] ?? null;
+
+        if (is_string($address) && $address !== '') {
+            session()->set('solana_public_key', $address);
+        }
+
+        $userSolana = $this->cachedSolanaDefaultWallet($cuID);
+        $cuSolanaDW = $userSolana['cuSolanaDW'] ?? $row ?? [];
+        $price = $this->cachedSolanaPrice();
+
+        $payload = [
+            'address'            => $address,
+            'userSolana'         => $userSolana,
+            'cuSolanaDW'         => $cuSolanaDW,
+            'solanaPrice'        => $price,
+            'cryptoPT'           => $cuSolanaDW['public_token'] ?? $address,
+            'cryptoTransactions' => [],
+            'cryptoAccount'      => array_merge($this->data['cryptoAccount'] ?? [], [
+                'coin_address' => $address ?: ['User Address Not Defined'],
+                'address'      => $address,
+            ]),
+        ];
+
+        if ($endpoint === 'coinSwap' || $endpoint === 'swapSolana') {
+            $payload['cryptoTokens'] = $this->cachedSolanaTopListedTokens();
+        }
+
+        if (in_array($endpoint, ['viewSolanaWallet', 'viewSwap'], true)) {
+            $payload['cryptoTransactions'] = $this->cachedSolanaTransactions($cuID, $address);
+        }
+
+        return $payload;
+    }
+
+    private function cachedSolanaDefaultAddress(int $cuID): ?array
+    {
+        $key = 'solanaDefaultAddress:' . $cuID;
+        if (! array_key_exists($key, $this->requestCache)) {
+            $this->requestCache[$key] = model(\App\Models\SolanaModel::class)->getDefaultAddressFromExchangeTable($cuID);
+        }
+
+        return is_array($this->requestCache[$key]) ? $this->requestCache[$key] : null;
+    }
+
+    private function cachedSolanaDefaultWallet(int $cuID): array
+    {
+        $key = 'solanaDefaultWallet:' . $cuID;
+        if (! array_key_exists($key, $this->requestCache)) {
+            $this->requestCache[$key] = $this->getMyMISolana()->getUserDefaultSolana($cuID) ?? [];
+        }
+
+        return is_array($this->requestCache[$key]) ? $this->requestCache[$key] : [];
+    }
+
+    private function cachedSolanaPrice(): ?float
+    {
+        if (! array_key_exists('solanaPrice', $this->requestCache)) {
+            $price = $this->getSolanaService()->getSolanaPrice();
+            $this->requestCache['solanaPrice'] = is_numeric($price) ? (float) $price : null;
+        }
+
+        return $this->requestCache['solanaPrice'];
+    }
+
+    private function cachedSolanaTopListedTokens(): array
+    {
+        if (! array_key_exists('solanaTopListedTokens', $this->requestCache)) {
+            $this->requestCache['solanaTopListedTokens'] = model(\App\Models\SolanaModel::class)->getTopListedTokens();
+        }
+
+        return is_array($this->requestCache['solanaTopListedTokens']) ? $this->requestCache['solanaTopListedTokens'] : [];
+    }
+
+    private function cachedSolanaTransactions(int $cuID, ?string $address): array
+    {
+        $key = 'solanaTransactions:' . $cuID . ':' . (string) $address;
+        if (! array_key_exists($key, $this->requestCache)) {
+            $this->requestCache[$key] = $address ? service('myMISolana')->getTransactions($cuID, $address) : [];
+        }
+
+        return is_array($this->requestCache[$key]) ? $this->requestCache[$key] : [];
     }
 
 
