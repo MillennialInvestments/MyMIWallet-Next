@@ -32,9 +32,14 @@ class BudgetService
     protected $userModel;
     protected $userService;
     protected string $timezone = 'America/Chicago';
+    protected array $requestCache = [];
 
     private function serviceTrace(string $message, string $level = 'debug'): void
     {
+        if ($level === 'debug' && ENVIRONMENT === 'production') {
+            return;
+        }
+
         log_message($level, '[SERVICE] ' . static::class . ' ' . $message);
     }
 
@@ -58,14 +63,15 @@ class BudgetService
 
     public function setUserId(?int $userId): void
     {
-        $this->serviceTrace('::' . __FUNCTION__);
         $userId = $userId !== null ? (int) $userId : null;
 
         if ($this->cuID === $userId) {
             return;
         }
 
+        $this->serviceTrace('::' . __FUNCTION__);
         $this->cuID = $userId;
+        $this->requestCache = [];
 
         if ($userId === null) {
             $this->userService = null;
@@ -2402,6 +2408,11 @@ class BudgetService
 
     public function getUserBudget($userId) {
         $this->serviceTrace('::' . __FUNCTION__);
+        $cacheKey = 'userBudget:' . (int) $userId;
+        if (array_key_exists($cacheKey, $this->requestCache)) {
+            return $this->requestCache[$cacheKey];
+        }
+
         $records = $this->budgetModel->getUserBudgetData($userId) ?? [];
         $records = array_map(static fn($row) => (array) $row, $records);
         $activeRecords = array_values(array_filter($records, static function ($row) {
@@ -2412,12 +2423,14 @@ class BudgetService
             return (int) ($row['paid'] ?? 0) === 0;
         }));
 
-        log_message('debug', '[BudgetService::getUserBudget] user_id={userId} records={records} active={active} open={open}', [
-            'userId'  => (int) $userId,
-            'records' => count($records),
-            'active'  => count($activeRecords),
-            'open'    => count($openRecords),
-        ]);
+        if (ENVIRONMENT !== 'production') {
+            log_message('debug', '[BudgetService::getUserBudget] user_id={userId} records={records} active={active} open={open}', [
+                'userId'  => (int) $userId,
+                'records' => count($records),
+                'active'  => count($activeRecords),
+                'open'    => count($openRecords),
+            ]);
+        }
 
         $sorter = function (array $a, array $b): int {
             $da = $this->parseRecordDate($a);
@@ -2546,7 +2559,9 @@ class BudgetService
         $userBudget = $this->formatBudgetData($userBudget);
 
         // log_message('info', 'BudgetService L939 - $userBudget: ' . (print_r($userBudget, true)));
-        return $userBudget;
+        $this->requestCache[$cacheKey] = $userBudget;
+
+        return $this->requestCache[$cacheKey];
     }
 
     public function getUserBudgetRecord($cuID, $accountID) {

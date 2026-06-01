@@ -51,6 +51,8 @@ class SolanaController extends UserController {
     protected $userWallets;
     protected $webSocketClient;
     protected $userAccount;
+    protected array $requestCache = [];
+
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
@@ -96,71 +98,175 @@ class SolanaController extends UserController {
     }
 
     public function commonData(): array {
-        $this->data = parent::commonData();
-        // Assign cuID early
-        $this->cuID = $this->auth->id() ?? $this->session->get('user_id');
-        $this->userAccount = $this->getMyMIUser()->getUserInformation($this->cuID);
-        $userBudget = $this->getMyMIBudget()->getUserBudget($this->cuID); 
-        log_message('info', 'DashboardController L72 - $checkingSummary: ' . $userBudget['checkingSummary']);
-        $this->data['checkingSummary'] = $userBudget['checkingSummary'];
-        $userWallets                                = $this->userWallets;
-        $this->data['request']                      = $this->request;
-        $this->data['siteSettings']                 = $this->siteSettings;
-        $this->data['beta']                         = (string) $this->siteSettings->beta;
-        $this->data['uri']                          = $this->request->getUri();
-        $this->data['userAgent']                    = $this->request->getUserAgent();
-        $this->data['cuID']                         = $this->cuID;
-        $this->data['cuRole']                       = $this->getMyMIUser()->getUserInformation($this->cuID)['cuRole'];
-        $this->data['cuUserType']                   = $this->getMyMIUser()->getUserInformation($this->cuID)['cuUserType'] ?? '';
-        $this->data['cuEmail']                      = $this->getMyMIUser()->getUserInformation($this->cuID)['cuEmail'];
-        $this->data['cuUsername']                   = $this->getMyMIUser()->getUserInformation($this->cuID)['cuUsername'];
-        $this->data['cuDisplayName']                = $this->getMyMIUser()->getUserInformation($this->cuID)['cuDisplayName'] ?? '';
-        $this->data['cuNameInitials']               = $this->getMyMIUser()->getUserInformation($this->cuID)['cuNameInitials'] ?? '';
-        $this->data['cuWalletID']                   = $this->getMyMIUser()->getUserInformation($this->cuID)['cuWalletID'] ?? '';
-        $this->data['cuKYC']                        = $this->getMyMIUser()->getUserInformation($this->cuID)['cuKYC'] ?? 'N/A';
-        $this->data['cuSolanaDW']                   = $this->MyMISolana->getUserSolana($this->cuID)['cuSolanaDW'] ?? 'N/A';
-        $this->data['cryptoPT']                     = $this->MyMISolana->getUserSolana($this->cuID)['cuSolanaDW']['public_token'] ?? 'N/A';
-        // $this->data['cuSolanaTotal']                = $this->MyMISolana->getUserSolana($this->cuID)['cuSolanaTotal'];
-        // $this->data['cuSolanaValue']                = $this->MyMISolana->getUserSolana($this->cuID)['cuSolanaValue'];
-        // $this->data['cuSolanaPercentage']           = $this->MyMISolana->getUserSolana($this->cuID)['cuSolanaPercentage'];
-        $this->data['solanaTokens']                 = $this->solanaModel->getTopListedTokens();
-        // $this->data['solanaPrice']                  = $this->MyMISolana->getUserSolana($this->cuID)['solanaPrice'];
-        // $this->data['solanaMTDPL']                  = $this->MyMISolana->getUserSolana($this->cuID)['solanaMTDPL'];
-        // $this->data['solanaDailyPL']                = $this->MyMISolana->getUserSolana($this->cuID)['solanaDailyPL'];
-        // $this->data['solanaHourlyPL']               = $this->MyMISolana->getUserSolana($this->cuID)['solanaHourlyPL'];
-        // $this->data['solanaMarketCap']              = $this->MyMISolana->getUserSolana($this->cuID)['solanaMarketCap'];
-        // $this->data['solanaDailyVolume']            = $this->MyMISolana->getUserSolana($this->cuID)['solanaDailyVolume'];
-        // $this->data['solanaHourlyVolume']           = $this->MyMISolana->getUserSolana($this->cuID)['solanaHourlyVolume'];
-        // $this->data['solanaNetworkStatus']          = $this->MyMISolana->getNetworkStatus();
-        $this->data['completedGoals']               = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['progressGoalData']['completions'];
-        $this->data['pendingGoals']                 = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['progressGoalData']['goals'];
-        $this->data['cuPFBT']                       = 'N/A';
-        $this->data['MyMICoinSum']                  = $this->getMyMICoin()->getUserCoinTotal($this->cuID);
-        $this->data['totalAccountBalance']          = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['totalAccountBalance'];
-        $this->data['totalAccountBalanceFMT']       = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID)['totalAccountBalanceFMT'];
-        $this->data['promotionalBanners']           = $this->getMyMIDashboard()->dashboardInfo($this->cuID)['promotionalBanners'];
-        if ($this->debug === 1) {
-            // log_message('debug', 'SolanaController L150 - $this->userSolana ' . print_r($this->userSolana, true));
-        }
-        if (($this->uri->getTotalSegments() >= 4)) {
-            $exchange                               = $this->exchange; 
-            $tokenSymbol                            = $this->uri->getSegment(4);
-            $this->data['cryptoTokens']             = $this->getMyMIDashboard()->getTokenDetails($exchange, $tokenSymbol);
-        } else { 
-            // $exchange                               = $this->exchange; 
-            // $this->data['cryptoTokens']             = $this->getMyMIDashboard()->getAllTokensByBlock($exchange);
-        }
+        $this->data = array_merge($this->solanaBasePayload(), $this->data ?? []);
+        $this->data = array_merge($this->data, $this->solanaPagePayload());
+
         return $this->data;
-}
+    }
+
+    /**
+     * Minimal Exchange/Solana page shell. Avoids the broad dashboard and budget
+     * payloads used by the main dashboard while keeping the dashboard theme safe.
+     */
+    private function solanaBasePayload(): array
+    {
+        $this->cuID = $this->currentUserId();
+        $this->userAccount = $this->cachedUserAccount($this->cuID);
+
+        return [
+            'request'                => $this->request,
+            'siteSettings'           => $this->siteSettings,
+            'debug'                  => $this->debug,
+            'beta'                   => (string) ($this->siteSettings->beta ?? ''),
+            'uri'                    => $this->request->getUri(),
+            'userAgent'              => $this->request->getUserAgent(),
+            'cuID'                   => $this->cuID,
+            'currentUser'            => $this->userAccount,
+            'cuRole'                 => $this->userAccount['cuRole'] ?? '',
+            'cuUserType'             => $this->userAccount['cuUserType'] ?? '',
+            'cuEmail'                => $this->userAccount['cuEmail'] ?? '',
+            'cuUsername'             => $this->userAccount['cuUsername'] ?? '',
+            'cuDisplayName'          => $this->userAccount['cuDisplayName'] ?? '',
+            'cuNameInitials'         => $this->userAccount['cuNameInitials'] ?? '',
+            'cuWalletID'             => $this->userAccount['cuWalletID'] ?? '',
+            'cuKYC'                  => $this->userAccount['cuKYC'] ?? 'N/A',
+            'csp'                    => $this->csp ?? [],
+            'nonce'                  => $this->nonceAttributes ?? ['script' => '', 'style' => ''],
+            'totalSegments'          => count($this->request->getUri()->getSegments()),
+            'checkingSummary'        => 0.0,
+            'totalAccountBalance'    => 0.0,
+            'totalAccountBalanceFMT' => '$0.00',
+            'completedGoals'         => [],
+            'pendingGoals'           => [],
+            'promotionalBanners'     => [],
+            'MyMICoinSum'            => 0,
+            'cuPFBT'                 => 'N/A',
+            'balance'                => [
+                'amount' => 0.0,
+                'currency' => 'USD',
+                'components' => [],
+                'asOf' => null,
+                'mode' => 'solana-only',
+            ],
+        ];
+    }
+
+    /**
+     * Lightweight Solana-only payload for Exchange pages. Heavy modal data such
+     * as transaction history is intentionally omitted until the modal endpoint is
+     * requested by DashboardController::prepareModalPayload().
+     */
+    private function solanaPagePayload(): array
+    {
+        $userSolana = $this->cachedUserSolanaSummary($this->cuID);
+        $defaultWallet = $userSolana['cuSolanaDW'] ?? [];
+        $address = $defaultWallet['address'] ?? $defaultWallet['public_token'] ?? null;
+
+        if (is_string($address) && $address !== '') {
+            $this->session->set('solana_public_key', $address);
+        }
+
+        return [
+            'userSolana'          => $userSolana,
+            'cuSolanaDW'          => $defaultWallet ?: [],
+            'cryptoPT'            => $defaultWallet['public_token'] ?? $address ?? 'N/A',
+            'cuSolanaTotal'       => $userSolana['cuSolanaTotal'] ?? 0,
+            'cuSolanaValue'       => $userSolana['cuSolanaValue'] ?? 0,
+            'solanaPrice'         => $userSolana['solanaPrice'] ?? 0,
+            'solanaTokens'        => $this->cachedTopListedTokens(),
+            'solanaNetworkStatus' => $userSolana['solanaNetworkStatus'] ?? $this->cachedSolanaNetworkStatus(),
+            'cryptoTransactions'  => [],
+        ];
+    }
+
+    private function cachedUserAccount(int $userId): array
+    {
+        $key = 'userAccount:' . $userId;
+        if (! array_key_exists($key, $this->requestCache)) {
+            $this->requestCache[$key] = $userId > 0 ? ($this->getMyMIUser()->getUserInformation($userId) ?? []) : [];
+        }
+
+        return is_array($this->requestCache[$key]) ? $this->requestCache[$key] : [];
+    }
+
+    private function cachedUserSolanaSummary(int $userId): array
+    {
+        $key = 'solanaSummary:' . $userId;
+        if (! array_key_exists($key, $this->requestCache)) {
+            $default = $userId > 0 ? ($this->getMyMISolana()->getUserDefaultSolana($userId) ?? []) : [];
+            $wallet = $default['cuSolanaDW'] ?? [];
+            $price = $this->cachedSolanaPrice();
+
+            $this->requestCache[$key] = [
+                'cuSolanaDW'             => $wallet,
+                'cuSolanaDefaultWallet'  => $wallet,
+                'cuSolanaWallet'         => $wallet,
+                'cuSolanaWallets'        => $wallet ? [$wallet] : [],
+                'cuSolanaTransactions'   => [],
+                'cuSolanaAssets'         => [],
+                'cuSolanaTopPerformers'  => $this->cachedTopListedTokens(),
+                'cuSolanaTotal'          => (float) ($default['cuSolanaTotal'] ?? 0),
+                'cuSolanaValue'          => ((float) ($default['cuSolanaTotal'] ?? 0)) * $price,
+                'cuSolanaPercentage'     => 0,
+                'solanaPrice'            => $price,
+                'solanaMTDPL'            => 'N/A',
+                'solanaDailyPL'          => 'N/A',
+                'solanaHourlyPL'         => 'N/A',
+                'solanaMarketCap'        => 0,
+                'solanaDailyVolume'      => 0,
+                'solanaHourlyVolume'     => 0,
+                'solanaNetworkStatus'    => $this->cachedSolanaNetworkStatus(),
+            ];
+        }
+
+        return is_array($this->requestCache[$key]) ? $this->requestCache[$key] : [];
+    }
+
+    private function cachedTopListedTokens(): array
+    {
+        if (! array_key_exists('solanaTopListedTokens', $this->requestCache)) {
+            $this->requestCache['solanaTopListedTokens'] = $this->solanaModel->getTopListedTokens();
+        }
+
+        return is_array($this->requestCache['solanaTopListedTokens']) ? $this->requestCache['solanaTopListedTokens'] : [];
+    }
+
+    private function cachedSolanaPrice(): float
+    {
+        if (! array_key_exists('solanaPrice', $this->requestCache)) {
+            try {
+                $price = $this->solanaService->getSolanaPrice();
+                $this->requestCache['solanaPrice'] = is_numeric($price) ? (float) $price : 0.0;
+            } catch (\Throwable $e) {
+                log_message('warning', 'SolanaController price lookup unavailable: {msg}', ['msg' => $e->getMessage()]);
+                $this->requestCache['solanaPrice'] = 0.0;
+            }
+        }
+
+        return (float) $this->requestCache['solanaPrice'];
+    }
+
+    private function cachedSolanaNetworkStatus(): array
+    {
+        if (! array_key_exists('solanaNetworkStatus', $this->requestCache)) {
+            try {
+                $this->requestCache['solanaNetworkStatus'] = $this->solanaService->getSafeNetworkStatus();
+            } catch (\Throwable $e) {
+                log_message('warning', 'SolanaController network status unavailable: {msg}', ['msg' => $e->getMessage()]);
+                $this->requestCache['solanaNetworkStatus'] = ['healthy' => false, 'status' => 'offline', 'degraded' => true];
+            }
+        }
+
+        return is_array($this->requestCache['solanaNetworkStatus']) ? $this->requestCache['solanaNetworkStatus'] : [];
+    }
 
     private function currentUserId(): int
     {
-        return (int) ($this->cuID ?? $this->session->get('cuID') ?? $this->session->get('user_id') ?? 0);
+        return (int) ($this->cuID ?? $this->auth->id() ?? $this->session->get('cuID') ?? $this->session->get('user_id') ?? 0);
     }
 
     public function index() {
         $this->data['pageTitle'] = 'Solana Exchange | MyMI Wallet | The Future of Finance';
-        $this->commonData();
 
         // // Check URI segment to determine if real-time data is needed
         // $segment1 = $this->uri->getSegment(1);
@@ -232,7 +338,6 @@ $addr = $svc->normalizeAddress($row);
 
     public function assets() {
         $this->data['pageTitle'] = 'My Solana Assets | MyMI Wallet | The Future of Finance';
-        $this->commonData();
         return $this->renderTheme('App\Modules\Exchange\Views\Solana\assets', $this->data);
     }
     
@@ -254,7 +359,6 @@ $addr = $svc->normalizeAddress($row);
 
     public function coinSwap() {
         $this->data['pageTitle'] = 'Solana Coin Swap | MyMI Wallet | The Future of Finance';
-        $this->commonData();
         return $this->renderTheme('App\Modules\Exchange\Views\Solana\swap', $this->data);
     }
 
@@ -282,7 +386,6 @@ $addr = $svc->normalizeAddress($row);
 
     public function create() {
         $this->data['pageTitle'] = 'Create With Solana | MyMI Wallet | The Future of Finance';
-        $this->commonData();
         return $this->renderTheme('App\Modules\Exchange\Views\Solana\create', $this->data);
     }
 

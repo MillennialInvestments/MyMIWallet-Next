@@ -17,7 +17,9 @@ class CsrfDebugFilter extends CSRF
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        log_message('debug', '[CSRF] token name=' . csrf_token() . ' hash=' . csrf_hash());
+        if (ENVIRONMENT !== 'production') {
+            log_message('debug', '[CSRF] token name=' . csrf_token() . ' hash=' . csrf_hash());
+        }
         $this->primeBudgetAccountTokenFallback($request);
 
         try {
@@ -113,7 +115,9 @@ class CsrfDebugFilter extends CSRF
 
         if ($headerToken !== '') {
             $_POST[$tokenFieldName] = $headerToken;
-            log_message('debug', '[CSRF] Primed POST token from header for budget/account route.');
+            if (ENVIRONMENT !== 'production') {
+                log_message('debug', '[CSRF] Primed POST token from header for budget/account route.');
+            }
         }
     }
 }
