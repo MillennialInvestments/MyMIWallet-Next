@@ -441,6 +441,122 @@ mymiWhenJqueryReady(function () {
     });
 });
 
+// MYMI_SOLANA_TOKEN_LOGO_FALLBACKS_20260601
+// Sanitize Solana token logo URLs before rendering token cards/tables.
+// This prevents bad external TLS/image URLs from being appended into the DOM.
+window.MYMI_SOLANA_TOKEN_LOGO_FALLBACK = window.MYMI_SOLANA_TOKEN_LOGO_FALLBACK || <?= json_encode(base_url('assets/images/mymi-token-placeholder.svg')) ?>;
+
+(function () {
+    const fallbackLogo = window.MYMI_SOLANA_TOKEN_LOGO_FALLBACK;
+    const blockedHosts = ['secureservercdn.net', 'myftpupload.com'];
+    const unsafeSchemes = ['javascript:', 'data:', 'blob:'];
+
+    function isLogoKey(key) {
+        return /(^|_)(coin_)?logo($|_)|logouri|logo_uri|logo_url|tokenimage|token_image|image|icon/i.test(String(key || ''));
+    }
+
+    window.mymiSanitizeSolanaTokenLogoUrl = window.mymiSanitizeSolanaTokenLogoUrl || function (value) {
+        if (typeof value !== 'string') {
+            return fallbackLogo;
+        }
+
+        const raw = value.trim();
+        const lowered = raw.toLowerCase();
+
+        if (!raw || lowered === 'null' || lowered === 'undefined') {
+            return fallbackLogo;
+        }
+
+        if (lowered.startsWith('http://')) {
+            return fallbackLogo;
+        }
+
+        for (const scheme of unsafeSchemes) {
+            if (lowered.startsWith(scheme)) {
+                return fallbackLogo;
+            }
+        }
+
+        try {
+            const parsed = new URL(raw, window.location.origin);
+            const host = parsed.hostname.toLowerCase();
+
+            if (parsed.protocol !== 'https:' && parsed.origin !== window.location.origin) {
+                return fallbackLogo;
+            }
+
+            for (const blockedHost of blockedHosts) {
+                if (host === blockedHost || host.endsWith('.' + blockedHost)) {
+                    return fallbackLogo;
+                }
+            }
+
+            return parsed.href;
+        } catch (_err) {
+            return fallbackLogo;
+        }
+    };
+
+    window.mymiNormalizeSolanaTokenLogoPayload = window.mymiNormalizeSolanaTokenLogoPayload || function (payload) {
+        const seen = new WeakSet();
+
+        function walk(node) {
+            if (!node || typeof node !== 'object') {
+                return node;
+            }
+
+            if (seen.has(node)) {
+                return node;
+            }
+
+            seen.add(node);
+
+            if (Array.isArray(node)) {
+                node.forEach(walk);
+                return node;
+            }
+
+            Object.keys(node).forEach(function (key) {
+                const value = node[key];
+
+                if (typeof value === 'string' && isLogoKey(key)) {
+                    node[key] = window.mymiSanitizeSolanaTokenLogoUrl(value);
+                    return;
+                }
+
+                if (value && typeof value === 'object') {
+                    walk(value);
+                }
+            });
+
+            return node;
+        }
+
+        return walk(payload);
+    };
+
+    document.addEventListener('error', function (event) {
+        const target = event.target;
+
+        if (!target || target.tagName !== 'IMG') {
+            return;
+        }
+
+        if (target.dataset && target.dataset.mymiLogoFallbackApplied === '1') {
+            return;
+        }
+
+        const currentSrc = String(target.getAttribute('src') || '');
+        const safeSrc = window.mymiSanitizeSolanaTokenLogoUrl(currentSrc);
+
+        if (safeSrc && safeSrc !== currentSrc) {
+            target.dataset.mymiLogoFallbackApplied = '1';
+            target.src = safeSrc;
+        }
+    }, true);
+})();
+
+
 mymiWhenJqueryReady(function () {
   // Build POST data with CSRF directly from PHP-rendered globals.
   const csrfName = window.CSRF_TOKEN_NAME || (window.CSRF_TOKEN && window.CSRF_TOKEN.name);
@@ -464,6 +580,11 @@ mymiWhenJqueryReady(function () {
     xhrFields: { withCredentials: true }
   })
   .done(function (response) {
+    // MYMI_SOLANA_TOKEN_LOGO_NORMALIZE_RESPONSE_20260601
+    response = window.mymiNormalizeSolanaTokenLogoPayload
+        ? window.mymiNormalizeSolanaTokenLogoPayload(response)
+        : response;
+
     if (!response || response.status !== 'success') {
       console.error('Failed to fetch data:', response?.message || 'Unknown error');
       return;
@@ -743,7 +864,7 @@ mymiWhenJqueryReady(function () {
                 <tr>
                     <td>
                         <a class="d-inline-flex align-items-center" href="#">
-                            <img src="${token.coin_logo}" class="user-avatar bg-light" alt="${token.coin_name}" onerror="this.src='/assets/images/placeholder.png';"/>
+                            <img src="${mymiSanitizeSolanaTokenLogoUrl(token.coin_logo)}" class="user-avatar bg-light" alt="${token.coin_name}" onerror="this.src='/assets/images/placeholder.png';"/>
                             <span>${token.coin_name} (${token.symbol})</span>
                         </a>
                     </td>
