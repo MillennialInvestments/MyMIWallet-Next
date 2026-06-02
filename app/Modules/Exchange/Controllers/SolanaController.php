@@ -390,6 +390,11 @@ $addr = $svc->normalizeAddress($row);
     }
 
     public function createSolanaWallet() {
+        $guard = $this->solanaTransactionGuard('createSolanaWallet');
+        if ($guard !== null) {
+            return $guard;
+        }
+
         $getUserDefaultSolana = $this->solanaModel->getUserDefaultSolana($this->cuID);
         $defaultWallet = empty($getUserDefaultSolana) ? 'Yes' : 'No';
 
@@ -430,6 +435,11 @@ $addr = $svc->normalizeAddress($row);
     }
 
     public function createToken() {
+        $guard = $this->solanaTransactionGuard('createToken');
+        if ($guard !== null) {
+            return $guard;
+        }
+
         $name = $this->request->getPost('token_name');
         $symbol = $this->request->getPost('token_symbol');
         $supply = $this->request->getPost('token_supply');
@@ -500,6 +510,11 @@ $addr = $svc->normalizeAddress($row);
     }    
 
     public function executeSwap() {
+        $guard = $this->solanaTransactionGuard('executeSwap');
+        if ($guard !== null) {
+            return $guard;
+        }
+
         if ($premiumGuard = premium_guard('exchange.swap')) {
             return $premiumGuard;
         }
@@ -786,6 +801,11 @@ $addr = $svc->normalizeAddress($row);
 
     public function importWallet()
     {
+        $guard = $this->solanaTransactionGuard('importWallet');
+        if ($guard !== null) {
+            return $guard;
+        }
+
         log_message('debug', 'SolanaController L186 - Import Started!');
         if ($this->request->getMethod() == 'POST') {
             log_message('debug', 'SolanaController L188 - Received POST request to import wallet.');
@@ -895,6 +915,11 @@ $addr = $svc->normalizeAddress($row);
     }
     
     public function mintTokens() {
+        $guard = $this->solanaTransactionGuard('mintTokens');
+        if ($guard !== null) {
+            return $guard;
+        }
+
         return $this->privateKeySubmissionDisabledResponse();
         $mintAddress = $this->request->getPost('mint_address');
         $amount = $this->request->getPost('amount');
@@ -982,6 +1007,11 @@ $addr = $svc->normalizeAddress($row);
     }
     
     public function purchaseSolana() {
+        $guard = $this->solanaTransactionGuard('purchaseSolana');
+        if ($guard !== null) {
+            return $guard;
+        }
+
         $method = $this->request->getPost('method'); // Determines purchase method (crypto, fiat, gold)
         $amount = $this->request->getPost('amount');
         $price = $this->request->getPost('price');
@@ -1064,6 +1094,11 @@ $addr = $svc->normalizeAddress($row);
     }
 
     public function sellSolana() {
+        $guard = $this->solanaTransactionGuard('sellSolana');
+        if ($guard !== null) {
+            return $guard;
+        }
+
         $method = $this->request->getPost('method'); // Determines sell method (fiat, mymi_gold, crypto)
         $amount = $this->request->getPost('amount');
         $price = $this->request->getPost('price');
@@ -1116,6 +1151,11 @@ $addr = $svc->normalizeAddress($row);
     }
 
     public function swapSolana() {
+        $guard = $this->solanaTransactionGuard('swapSolana');
+        if ($guard !== null) {
+            return $guard;
+        }
+
         $fromToken = $this->request->getPost('from_token'); // Token to swap from (e.g., SOL)
         $toToken = $this->request->getPost('to_token');     // Token to swap to
         $amount = $this->request->getPost('amount');        // Amount to swap
@@ -1255,6 +1295,11 @@ $addr = $svc->normalizeAddress($row);
 
     public function doSwap()
     {
+        $guard = $this->solanaTransactionGuard('doSwap');
+        if ($guard !== null) {
+            return $guard;
+        }
+
         if (!$this->request->isAJAX()) {
             return $this->response->setStatusCode(405)->setJSON([
                 'ok' => false,
@@ -1426,6 +1471,144 @@ $addr = $svc->normalizeAddress($row);
     //     return $this->response->setJSON($payload);
     // }
 
+
+    private function solanaTransactionGuard(string $action)
+    {
+        $config = config(\Config\Solana::class);
+
+        $requestMethod = strtoupper((string) $this->request->getMethod());
+        $actionKey = strtolower($action);
+
+        $transactionActions = [
+            'createsolanawallet',
+            'createtoken',
+            'executeswap',
+            'importwallet',
+            'mint',
+            'minttokens',
+            'purchasesolana',
+            'sellsolana',
+            'swap',
+            'swapsolana',
+            'doswap',
+            'transfer',
+        ];
+
+        if (!in_array($actionKey, $transactionActions, true)) {
+            return null;
+        }
+
+        if ($requestMethod === 'GET' && !in_array($actionKey, ['executeswap', 'transfer', 'swap', 'mint', 'minttokens', 'doswap'], true)) {
+            return null;
+        }
+
+        $network = strtolower((string) (
+            $this->request->getPost('network')
+            ?? $this->request->getGet('network')
+            ?? env('SOLANA_NETWORK', 'mainnet')
+        ));
+
+        $dryRunRaw = $this->request->getPost('dry_run')
+            ?? $this->request->getPost('dryRun')
+            ?? $this->request->getGet('dry_run')
+            ?? $this->request->getGet('dryRun')
+            ?? ($config->defaultDryRun ?? true);
+
+        $dryRun = filter_var($dryRunRaw, FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE);
+        $dryRun = $dryRun === null ? true : $dryRun;
+
+        $signature = trim((string) (
+            $this->request->getPost('wallet_signature')
+            ?? $this->request->getPost('signature')
+            ?? $this->request->getHeaderLine('X-Wallet-Signature')
+        ));
+
+        $isMainnet = str_contains($network, 'mainnet');
+        $isMint = in_array($actionKey, ['mint', 'minttokens', 'createtoken'], true);
+        $requiresPrivateKeyProtection = in_array($actionKey, ['createsolanawallet', 'importwallet'], true);
+
+        if ($requestMethod === 'GET' && in_array($actionKey, ['executeswap', 'transfer', 'swap', 'mint', 'minttokens', 'doswap'], true)) {
+            return $this->response
+                ->setStatusCode(405)
+                ->setJSON($this->jsonEnvelope(false, 'Solana transaction actions must not execute over GET.', [
+                    'action' => $action,
+                    'dry_run' => true,
+                    'broadcast' => false,
+                ]));
+        }
+
+        if ($requiresPrivateKeyProtection && !($config->allowPrivateKeySubmission ?? false)) {
+            return $this->response
+                ->setStatusCode(403)
+                ->setJSON($this->jsonEnvelope(false, 'Private-key based Solana wallet submission is disabled.', [
+                    'action' => $action,
+                    'dry_run' => true,
+                    'broadcast' => false,
+                    'requires_config' => 'SOLANA_ALLOW_PRIVATE_KEY_SUBMISSION=true',
+                ]));
+        }
+
+        if (!($config->allowTransactionExecution ?? false)) {
+            return $this->response
+                ->setStatusCode(403)
+                ->setJSON($this->jsonEnvelope(false, 'Solana transaction execution is disabled by configuration.', [
+                    'action' => $action,
+                    'network' => $network,
+                    'dry_run' => true,
+                    'broadcast' => false,
+                    'requires_config' => 'SOLANA_ALLOW_TRANSACTION_EXECUTION=true',
+                ]));
+        }
+
+        if ($isMainnet && !($config->allowMainnetBroadcast ?? false)) {
+            return $this->response
+                ->setStatusCode(403)
+                ->setJSON($this->jsonEnvelope(false, 'Mainnet Solana broadcast is disabled by configuration.', [
+                    'action' => $action,
+                    'network' => $network,
+                    'dry_run' => true,
+                    'broadcast' => false,
+                    'requires_config' => 'SOLANA_ALLOW_MAINNET_BROADCAST=true',
+                ]));
+        }
+
+        if ($isMainnet && $isMint && !($config->allowMainnetMint ?? false)) {
+            return $this->response
+                ->setStatusCode(403)
+                ->setJSON($this->jsonEnvelope(false, 'Mainnet Solana minting is disabled by configuration.', [
+                    'action' => $action,
+                    'network' => $network,
+                    'dry_run' => true,
+                    'broadcast' => false,
+                    'requires_config' => 'SOLANA_ALLOW_MAINNET_MINT=true',
+                ]));
+        }
+
+        if (($config->requireWalletSignature ?? true) && $signature === '' && !$dryRun) {
+            return $this->response
+                ->setStatusCode(403)
+                ->setJSON($this->jsonEnvelope(false, 'Wallet signature is required before Solana transaction execution.', [
+                    'action' => $action,
+                    'network' => $network,
+                    'dry_run' => true,
+                    'broadcast' => false,
+                    'requires_field' => 'wallet_signature',
+                ]));
+        }
+
+        if ($dryRun) {
+            return $this->response
+                ->setStatusCode(202)
+                ->setJSON($this->jsonEnvelope(true, 'Solana transaction dry-run/preflight accepted. No transaction was broadcast.', [
+                    'action' => $action,
+                    'network' => $network,
+                    'dry_run' => true,
+                    'broadcast' => false,
+                ]));
+        }
+
+        return null;
+    }
 
     private function jsonEnvelope(bool $success, string $message, array $data = [], array $errors = []): array
     {
