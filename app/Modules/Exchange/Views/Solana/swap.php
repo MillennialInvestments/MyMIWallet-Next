@@ -1,4 +1,167 @@
 <!-- MyMI Solana runtime guard: ensure jQuery exists before inline Solana scripts. -->
+
+<script>
+// MYMI_SOLANA_SWAP_FETCH_SAFETY_20260602
+window.mymiSolanaSwapRuntime = window.mymiSolanaSwapRuntime || (function () {
+    const state = {
+        lastError: null,
+        lastResponse: null
+    };
+
+    function ensureAlertBox() {
+        let box = document.getElementById('mymi-solana-swap-runtime-alert');
+
+        if (!box) {
+            const form =
+                document.querySelector('#solanaSwapForm') ||
+                document.querySelector('form') ||
+                document.querySelector('.card-inner') ||
+                document.body;
+
+            box = document.createElement('div');
+            box.id = 'mymi-solana-swap-runtime-alert';
+            box.className = 'alert alert-warning d-none';
+            box.setAttribute('role', 'alert');
+
+            if (form && form.parentNode) {
+                form.parentNode.insertBefore(box, form);
+            } else {
+                document.body.prepend(box);
+            }
+        }
+
+        return box;
+    }
+
+    function showMessage(message, type = 'warning') {
+        const box = ensureAlertBox();
+        box.className = 'alert alert-' + type;
+        box.textContent = message || 'Unable to load Solana swap data right now.';
+    }
+
+    function clearMessage() {
+        const box = ensureAlertBox();
+        box.className = 'alert alert-warning d-none';
+        box.textContent = '';
+    }
+
+    function normalizeJsonEnvelope(payload, fallbackMessage) {
+        if (!payload || typeof payload !== 'object') {
+            return {
+                ok: false,
+                value: null,
+                payload,
+                message: fallbackMessage || 'Invalid Solana API response.'
+            };
+        }
+
+        if (payload.status === 'error' || payload.success === false || payload.ok === false) {
+            return {
+                ok: false,
+                value: null,
+                payload,
+                message: payload.message || payload.error || fallbackMessage || 'Solana request failed.'
+            };
+        }
+
+        const value =
+            payload.price ??
+            payload.amount ??
+            payload.value ??
+            payload.data?.price ??
+            payload.data?.amount ??
+            payload.data?.value ??
+            null;
+
+        return {
+            ok: true,
+            value,
+            payload,
+            message: payload.message || 'Solana request completed.'
+        };
+    }
+
+    async function fetchJson(url, options = {}, fallbackMessage = 'Unable to load Solana data.') {
+        try {
+            const response = await fetch(url, {
+                method: options.method || 'GET',
+                credentials: options.credentials || 'same-origin',
+                headers: Object.assign({
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }, options.headers || {}),
+                body: options.body || undefined
+            });
+
+            const contentType = response.headers.get('content-type') || '';
+            const raw = await response.text();
+
+            let payload = null;
+
+            if (contentType.includes('application/json') || raw.trim().startsWith('{') || raw.trim().startsWith('[')) {
+                try {
+                    payload = JSON.parse(raw);
+                } catch (error) {
+                    state.lastError = error;
+                    state.lastResponse = raw;
+                    showMessage('Solana returned malformed JSON. Please try again.', 'warning');
+                    return {
+                        ok: false,
+                        status: response.status,
+                        payload: null,
+                        raw,
+                        message: 'Malformed JSON response.'
+                    };
+                }
+            } else {
+                state.lastResponse = raw;
+                showMessage(fallbackMessage, response.ok ? 'warning' : 'danger');
+                return {
+                    ok: false,
+                    status: response.status,
+                    payload: null,
+                    raw,
+                    message: fallbackMessage
+                };
+            }
+
+            const normalized = normalizeJsonEnvelope(payload, fallbackMessage);
+
+            if (!response.ok || !normalized.ok) {
+                showMessage(normalized.message || fallbackMessage, response.status >= 500 ? 'danger' : 'warning');
+            } else {
+                clearMessage();
+            }
+
+            return Object.assign(normalized, {
+                status: response.status,
+                response,
+                raw
+            });
+        } catch (error) {
+            state.lastError = error;
+            showMessage(fallbackMessage + ' Network error: ' + error.message, 'danger');
+
+            return {
+                ok: false,
+                status: 0,
+                payload: null,
+                raw: '',
+                message: error.message
+            };
+        }
+    }
+
+    return {
+        state,
+        fetchJson,
+        showMessage,
+        clearMessage,
+        normalizeJsonEnvelope
+    };
+})();
+</script>
+
 <script>
 (function () {
     if (window.mymiSolanaEnsureJqueryLoaded) {
