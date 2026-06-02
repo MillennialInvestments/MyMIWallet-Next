@@ -45,8 +45,11 @@ class MyMIRaydium
 
     public function swap(array $params): array
     {
-        $data = $this->request('/v2/swap', $params, 'POST');
-        return ['txid' => $data['txid'] ?? null];
+        $network = (string) ($params['network'] ?? env('SOLANA_NETWORK', 'mainnet'));
+        return $this->solanaLibraryGuard('swap', $network, [
+            'params' => array_diff_key($params, array_flip(['privateKey', 'secretKey', 'seedPhrase', 'mnemonic'])),
+            'provider' => 'raydium',
+        ]);
     }
 
     public function getPools(): array
@@ -125,4 +128,75 @@ class MyMIRaydium
             return [];
         }
     }
+
+    private function solanaLibraryGuard(string $action, ?string $network = null, array $extra = []): array
+    {
+        $config = config(\Config\Solana::class);
+        $network = strtolower((string) ($network ?: env('SOLANA_NETWORK', 'mainnet')));
+        $isMainnet = str_contains($network, 'mainnet');
+        $actionKey = strtolower($action);
+        $isMint = in_array($actionKey, ['mint', 'minttokens', 'createtoken', 'createspltoken'], true);
+
+        if (!($config->allowTransactionExecution ?? false)) {
+            return array_merge([
+                'success' => false,
+                'allowed' => false,
+                'action' => $action,
+                'network' => $network,
+                'dry_run' => true,
+                'broadcast' => false,
+                'message' => 'Solana library transaction execution is disabled by configuration.',
+                'requires_config' => 'SOLANA_ALLOW_TRANSACTION_EXECUTION=true',
+            ], $extra);
+        }
+
+        if ($isMainnet && !($config->allowMainnetBroadcast ?? false)) {
+            return array_merge([
+                'success' => false,
+                'allowed' => false,
+                'action' => $action,
+                'network' => $network,
+                'dry_run' => true,
+                'broadcast' => false,
+                'message' => 'Mainnet Solana library broadcast is disabled by configuration.',
+                'requires_config' => 'SOLANA_ALLOW_MAINNET_BROADCAST=true',
+            ], $extra);
+        }
+
+        if ($isMainnet && $isMint && !($config->allowMainnetMint ?? false)) {
+            return array_merge([
+                'success' => false,
+                'allowed' => false,
+                'action' => $action,
+                'network' => $network,
+                'dry_run' => true,
+                'broadcast' => false,
+                'message' => 'Mainnet Solana library minting is disabled by configuration.',
+                'requires_config' => 'SOLANA_ALLOW_MAINNET_MINT=true',
+            ], $extra);
+        }
+
+        if ($config->defaultDryRun ?? true) {
+            return array_merge([
+                'success' => true,
+                'allowed' => true,
+                'action' => $action,
+                'network' => $network,
+                'dry_run' => true,
+                'broadcast' => false,
+                'message' => 'Solana library dry-run/preflight response prepared. No transaction was broadcast.',
+            ], $extra);
+        }
+
+        return [
+            'success' => true,
+            'allowed' => true,
+            'action' => $action,
+            'network' => $network,
+            'dry_run' => false,
+            'broadcast' => false,
+            'message' => 'Solana library guard passed, but this adapter does not broadcast transactions directly.',
+        ];
+    }
+
 }
