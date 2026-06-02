@@ -1,4 +1,304 @@
+<?php
+// MYMI_SOLANA_SWAP_SAFE_URI_SEGMENT_20260602
+if (! function_exists('mymi_solana_safe_uri_segment')) {
+    function mymi_solana_safe_uri_segment(int $segment, $default = null)
+    {
+        try {
+            $uri = service('uri');
+
+            if (! $uri || $segment < 1) {
+                return $default;
+            }
+
+            $segments = $uri->getSegments();
+
+            return $segments[$segment - 1] ?? $default;
+        } catch (\Throwable $e) {
+            log_message('warning', 'Solana swap safe URI segment fallback used: segment={segment}, error={error}', [
+                'segment' => $segment,
+                'error'   => $e->getMessage(),
+            ]);
+
+            return $default;
+        }
+    }
+}
+?>
+
 <!-- MyMI Solana runtime guard: ensure jQuery exists before inline Solana scripts. -->
+
+<script>
+// MYMI_SOLANA_SWAP_FETCH_SAFETY_20260602
+window.mymiSolanaSwapRuntime = window.mymiSolanaSwapRuntime || (function () {
+    const state = {
+        lastError: null,
+        lastResponse: null
+    };
+
+    function ensureAlertBox() {
+        let box = document.getElementById('mymi-solana-swap-runtime-alert');
+
+        if (!box) {
+            const form =
+                document.querySelector('#solanaSwapForm') ||
+                document.querySelector('form') ||
+                document.querySelector('.card-inner') ||
+                document.body;
+
+            box = document.createElement('div');
+            box.id = 'mymi-solana-swap-runtime-alert';
+            box.className = 'alert alert-warning d-none';
+            box.setAttribute('role', 'alert');
+
+            if (form && form.parentNode) {
+                form.parentNode.insertBefore(box, form);
+            } else {
+                document.body.prepend(box);
+            }
+        }
+
+        return box;
+    }
+
+    function showMessage(message, type = 'warning') {
+        const box = ensureAlertBox();
+        box.className = 'alert alert-' + type;
+        box.textContent = message || 'Unable to load Solana swap data right now.';
+    }
+
+    function clearMessage() {
+        const box = ensureAlertBox();
+        box.className = 'alert alert-warning d-none';
+        box.textContent = '';
+    }
+
+    function normalizeJsonEnvelope(payload, fallbackMessage) {
+        if (!payload || typeof payload !== 'object') {
+            return {
+                ok: false,
+                value: null,
+                payload,
+                message: fallbackMessage || 'Invalid Solana API response.'
+            };
+        }
+
+        if (payload.status === 'error' || payload.success === false || payload.ok === false) {
+            return {
+                ok: false,
+                value: null,
+                payload,
+                message: payload.message || payload.error || fallbackMessage || 'Solana request failed.'
+            };
+        }
+
+        const value =
+            payload.price ??
+            payload.amount ??
+            payload.value ??
+            payload.data?.price ??
+            payload.data?.amount ??
+            payload.data?.value ??
+            null;
+
+        return {
+            ok: true,
+            value,
+            payload,
+            message: payload.message || 'Solana request completed.'
+        };
+    }
+
+    async function fetchJson(url, options = {}, fallbackMessage = 'Unable to load Solana data.') {
+        try {
+            const response = await fetch(url, {
+                method: options.method || 'GET',
+                credentials: options.credentials || 'same-origin',
+                headers: Object.assign({
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }, options.headers || {}),
+                body: options.body || undefined
+            });
+
+            const contentType = response.headers.get('content-type') || '';
+            const raw = await response.text();
+
+            let payload = null;
+
+            if (contentType.includes('application/json') || raw.trim().startsWith('{') || raw.trim().startsWith('[')) {
+                try {
+                    payload = JSON.parse(raw);
+                } catch (error) {
+                    state.lastError = error;
+                    state.lastResponse = raw;
+                    showMessage('Solana returned malformed JSON. Please try again.', 'warning');
+                    return {
+                        ok: false,
+                        status: response.status,
+                        payload: null,
+                        raw,
+                        message: 'Malformed JSON response.'
+                    };
+                }
+            } else {
+                state.lastResponse = raw;
+                showMessage(fallbackMessage, response.ok ? 'warning' : 'danger');
+                return {
+                    ok: false,
+                    status: response.status,
+                    payload: null,
+                    raw,
+                    message: fallbackMessage
+                };
+            }
+
+            const normalized = normalizeJsonEnvelope(payload, fallbackMessage);
+
+            if (!response.ok || !normalized.ok) {
+                showMessage(normalized.message || fallbackMessage, response.status >= 500 ? 'danger' : 'warning');
+            } else {
+                clearMessage();
+            }
+
+            return Object.assign(normalized, {
+                status: response.status,
+                response,
+                raw
+            });
+        } catch (error) {
+            state.lastError = error;
+            showMessage(fallbackMessage + ' Network error: ' + error.message, 'danger');
+
+            return {
+                ok: false,
+                status: 0,
+                payload: null,
+                raw: '',
+                message: error.message
+            };
+        }
+    }
+
+    return {
+        state,
+        fetchJson,
+        showMessage,
+        clearMessage,
+        normalizeJsonEnvelope
+    };
+})();
+</script>
+
+<script>
+// MYMI_SOLANA_SWAP_FETCHPRICES_COMPAT_20260602
+window.fetchPrices = window.fetchPrices || async function fetchPrices() {
+    const runtime = window.mymiSolanaSwapRuntime || null;
+
+    const readValue = function (selectors) {
+        for (const selector of selectors) {
+            const el = document.querySelector(selector);
+            if (el && typeof el.value !== 'undefined' && String(el.value).trim() !== '') {
+                return String(el.value).trim();
+            }
+        }
+
+        return '';
+    };
+
+    const writeValue = function (selectors, value) {
+        for (const selector of selectors) {
+            const el = document.querySelector(selector);
+            if (el && typeof el.value !== 'undefined') {
+                el.value = value ?? '';
+            }
+        }
+    };
+
+    const fromToken = readValue([
+        '#from_token',
+        '#fromToken',
+        '[name="from_token"]',
+        '[name="fromToken"]',
+        '[name="from_coin"]'
+    ]);
+
+    const toToken = readValue([
+        '#to_token',
+        '#toToken',
+        '[name="to_token"]',
+        '[name="toToken"]',
+        '[name="to_coin"]'
+    ]);
+
+    if (!runtime || typeof runtime.fetchJson !== 'function') {
+        console.warn('Solana swap runtime helper is not available yet.');
+        return {
+            ok: false,
+            message: 'Solana swap runtime helper is not available yet.'
+        };
+    }
+
+    if (!fromToken && !toToken) {
+        runtime.clearMessage?.();
+        return {
+            ok: true,
+            skipped: true,
+            message: 'No swap tokens selected yet.'
+        };
+    }
+
+    const results = {
+        ok: true,
+        fromToken,
+        toToken,
+        fromPrice: null,
+        toPrice: null
+    };
+
+    if (fromToken) {
+        const fromPriceResult = await runtime.fetchJson(
+            '/index.php/API/Solana/getExchangePrice/' + encodeURIComponent(fromToken),
+            {},
+            'Unable to load the selected source token price.'
+        );
+
+        results.fromPrice = fromPriceResult?.value ?? null;
+        results.ok = results.ok && Boolean(fromPriceResult?.ok);
+
+        if (results.fromPrice !== null) {
+            writeValue(['#from_price', '#fromPrice', '[name="from_price"]', '[name="fromPrice"]'], results.fromPrice);
+        }
+    }
+
+    if (toToken) {
+        const toPriceResult = await runtime.fetchJson(
+            '/index.php/API/Solana/getTokenPrice/' + encodeURIComponent(toToken),
+            {},
+            'Unable to load the selected destination token price.'
+        );
+
+        results.toPrice = toPriceResult?.value ?? null;
+        results.ok = results.ok && Boolean(toPriceResult?.ok);
+
+        if (results.toPrice !== null) {
+            writeValue(['#to_price', '#toPrice', '[name="to_price"]', '[name="toPrice"]'], results.toPrice);
+        }
+    }
+
+    if (typeof window.calculateSwap === 'function') {
+        try {
+            window.calculateSwap();
+        } catch (error) {
+            console.warn('calculateSwap failed after fetchPrices:', error);
+        }
+    }
+
+    return results;
+};
+</script>
+
+
+
 <script>
 (function () {
     if (window.mymiSolanaEnsureJqueryLoaded) {
@@ -39,7 +339,7 @@
 
 <!-- app/Modules/Exchange/Views/Solana/swap.php -->
 <?php if($uri->getTotalSegments() >= 3){
-    $current_url = $uri->getSegment(1).'/'.$uri->getSegment(2).'/'.$uri->getSegment(3).'/'.$uri->getSegment(4).'/'.$uri->getSegment(5);
+    $current_url = $uri->getSegment(1).'/'.$uri->getSegment(2).'/'.$uri->getSegment(3).'/'.$uri->getSegment(4).'/'.mymi_solana_safe_uri_segment(5);
 } else {
     $current_url = NULL;
 }

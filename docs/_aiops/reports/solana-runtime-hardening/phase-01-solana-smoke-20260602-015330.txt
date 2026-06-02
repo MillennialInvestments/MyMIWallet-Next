@@ -1,0 +1,14 @@
+Solana Runtime Hardening Phase 01 Smoke Checks
+Generated UTC: Tue Jun  2 01:53:30 AM UTC 2026
+
+--- /Exchange/Solana ---
+HTTP 200 | bytes 18758 | final https://www.mymiwallet.com/index.php/login
+
+--- /Dashboard/Transaction-Modal/Solana/viewSolanaWallet ---
+HTTP 200 | bytes 18758 | final https://www.mymiwallet.com/index.php/login
+
+--- Check bad external logo absence ---
+PASS: secureservercdn.net not found in fetched page HTML
+
+--- Check raw 500 markers in modal response ---
+PASS: no raw 500 markers found in modal response

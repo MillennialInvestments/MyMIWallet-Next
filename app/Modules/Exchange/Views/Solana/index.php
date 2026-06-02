@@ -580,9 +580,170 @@ mymiWhenJqueryReady(function () {
     xhrFields: { withCredentials: true }
   })
   .done(function (response) {
-    // MYMI_SOLANA_TOKEN_LOGO_NORMALIZE_RESPONSE_20260601
+    
+// MYMI_SOLANA_TOKEN_COLLECTION_NORMALIZER_20260602
+window.mymiNormalizeSolanaTokenCollection = window.mymiNormalizeSolanaTokenCollection || function (payload) {
+    const result = {
+        all: [],
+        top: [],
+        listed: [],
+        flat: [],
+        count: 0,
+        isEmpty: true
+    };
+
+    const seen = new Set();
+
+    const isObject = function (value) {
+        return value !== null && typeof value === 'object' && !Array.isArray(value);
+    };
+
+    const tokenKey = function (token) {
+        if (!isObject(token)) {
+            return '';
+        }
+
+        return String(
+            token.id ||
+            token.symbol ||
+            token.coin_symbol ||
+            token.coin_name ||
+            token.coin_address ||
+            token.address ||
+            token.mint ||
+            JSON.stringify(token)
+        );
+    };
+
+    const pushUnique = function (group, token) {
+        if (!isObject(token)) {
+            return;
+        }
+
+        const key = tokenKey(token);
+
+        if (!key || seen.has(group + ':' + key)) {
+            return;
+        }
+
+        seen.add(group + ':' + key);
+
+        if (!Array.isArray(result[group])) {
+            result[group] = [];
+        }
+
+        result[group].push(token);
+    };
+
+    const pushFlat = function (token) {
+        if (!isObject(token)) {
+            return;
+        }
+
+        const key = tokenKey(token);
+
+        if (!key || seen.has('flat:' + key)) {
+            return;
+        }
+
+        seen.add('flat:' + key);
+        result.flat.push(token);
+    };
+
+    const absorbArray = function (group, value) {
+        if (!Array.isArray(value)) {
+            return;
+        }
+
+        value.forEach(function (token) {
+            pushUnique(group, token);
+            pushFlat(token);
+        });
+    };
+
+    const absorbPayload = function (value, preferredGroup) {
+        if (Array.isArray(value)) {
+            absorbArray(preferredGroup || 'all', value);
+            return;
+        }
+
+        if (!isObject(value)) {
+            return;
+        }
+
+        if (Array.isArray(value.all)) {
+            absorbArray('all', value.all);
+        }
+
+        if (Array.isArray(value.top)) {
+            absorbArray('top', value.top);
+        }
+
+        if (Array.isArray(value.listed)) {
+            absorbArray('listed', value.listed);
+        }
+
+        if (Array.isArray(value.tokens)) {
+            absorbArray(preferredGroup || 'all', value.tokens);
+        }
+
+        if (Array.isArray(value.data)) {
+            absorbArray(preferredGroup || 'all', value.data);
+        }
+
+        if (isObject(value.allSolanaToken)) {
+            absorbPayload(value.allSolanaToken, preferredGroup || 'all');
+        }
+
+        if (
+            !Array.isArray(value.all) &&
+            !Array.isArray(value.top) &&
+            !Array.isArray(value.listed) &&
+            !Array.isArray(value.tokens) &&
+            !Array.isArray(value.data) &&
+            !isObject(value.allSolanaToken) &&
+            (value.coin_name || value.symbol || value.coin_logo || value.coin_value || value.address || value.mint)
+        ) {
+            pushUnique(preferredGroup || 'all', value);
+            pushFlat(value);
+        }
+    };
+
+    absorbPayload(payload, 'all');
+
+    result.count = result.flat.length;
+    result.isEmpty = result.count === 0;
+
+    return result;
+};
+
+window.mymiApplySolanaTokenContract = window.mymiApplySolanaTokenContract || function (response) {
+    if (!response || typeof response !== 'object' || !response.data || typeof response.data !== 'object') {
+        return response;
+    }
+
+    const collection = window.mymiNormalizeSolanaTokenCollection(response.data.allSolanaToken);
+
+    response.data.solanaTokenCollection = collection;
+    response.data.allSolanaTokenFlat = collection.flat;
+    response.data.allSolanaTokenCount = collection.count;
+
+    if (!response.data.allSolanaToken || Array.isArray(response.data.allSolanaToken)) {
+        response.data.allSolanaToken = {
+            all: collection.all
+        };
+    }
+
+    return response;
+};
+
+// MYMI_SOLANA_TOKEN_LOGO_NORMALIZE_RESPONSE_20260601
     response = window.mymiNormalizeSolanaTokenLogoPayload
         ? window.mymiNormalizeSolanaTokenLogoPayload(response)
+        : response;
+
+    response = window.mymiApplySolanaTokenContract
+        ? window.mymiApplySolanaTokenContract(response)
         : response;
 
     if (!response || response.status !== 'success') {
