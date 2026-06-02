@@ -190,6 +190,116 @@ window.mymiSolanaSwapRuntime = window.mymiSolanaSwapRuntime || (function () {
 </script>
 
 <script>
+// MYMI_SOLANA_SWAP_FETCHPRICES_COMPAT_20260602
+window.fetchPrices = window.fetchPrices || async function fetchPrices() {
+    const runtime = window.mymiSolanaSwapRuntime || null;
+
+    const readValue = function (selectors) {
+        for (const selector of selectors) {
+            const el = document.querySelector(selector);
+            if (el && typeof el.value !== 'undefined' && String(el.value).trim() !== '') {
+                return String(el.value).trim();
+            }
+        }
+
+        return '';
+    };
+
+    const writeValue = function (selectors, value) {
+        for (const selector of selectors) {
+            const el = document.querySelector(selector);
+            if (el && typeof el.value !== 'undefined') {
+                el.value = value ?? '';
+            }
+        }
+    };
+
+    const fromToken = readValue([
+        '#from_token',
+        '#fromToken',
+        '[name="from_token"]',
+        '[name="fromToken"]',
+        '[name="from_coin"]'
+    ]);
+
+    const toToken = readValue([
+        '#to_token',
+        '#toToken',
+        '[name="to_token"]',
+        '[name="toToken"]',
+        '[name="to_coin"]'
+    ]);
+
+    if (!runtime || typeof runtime.fetchJson !== 'function') {
+        console.warn('Solana swap runtime helper is not available yet.');
+        return {
+            ok: false,
+            message: 'Solana swap runtime helper is not available yet.'
+        };
+    }
+
+    if (!fromToken && !toToken) {
+        runtime.clearMessage?.();
+        return {
+            ok: true,
+            skipped: true,
+            message: 'No swap tokens selected yet.'
+        };
+    }
+
+    const results = {
+        ok: true,
+        fromToken,
+        toToken,
+        fromPrice: null,
+        toPrice: null
+    };
+
+    if (fromToken) {
+        const fromPriceResult = await runtime.fetchJson(
+            '/index.php/API/Solana/getExchangePrice/' + encodeURIComponent(fromToken),
+            {},
+            'Unable to load the selected source token price.'
+        );
+
+        results.fromPrice = fromPriceResult?.value ?? null;
+        results.ok = results.ok && Boolean(fromPriceResult?.ok);
+
+        if (results.fromPrice !== null) {
+            writeValue(['#from_price', '#fromPrice', '[name="from_price"]', '[name="fromPrice"]'], results.fromPrice);
+        }
+    }
+
+    if (toToken) {
+        const toPriceResult = await runtime.fetchJson(
+            '/index.php/API/Solana/getTokenPrice/' + encodeURIComponent(toToken),
+            {},
+            'Unable to load the selected destination token price.'
+        );
+
+        results.toPrice = toPriceResult?.value ?? null;
+        results.ok = results.ok && Boolean(toPriceResult?.ok);
+
+        if (results.toPrice !== null) {
+            writeValue(['#to_price', '#toPrice', '[name="to_price"]', '[name="toPrice"]'], results.toPrice);
+        }
+    }
+
+    if (typeof window.calculateSwap === 'function') {
+        try {
+            window.calculateSwap();
+        } catch (error) {
+            console.warn('calculateSwap failed after fetchPrices:', error);
+        }
+    }
+
+    return results;
+};
+</script>
+
+
+
+<script>
 (function () {
     if (window.mymiSolanaEnsureJqueryLoaded) {
         return;
