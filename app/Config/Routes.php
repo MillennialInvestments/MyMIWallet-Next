@@ -1223,11 +1223,11 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('health', 'SolanaAPIController::health');
         $routes->get('wallet/(:segment)/balance', 'SolanaAPIController::getBalance/$1');
         $routes->get('wallet/(:segment)/tokens', 'SolanaAPIController::getTokenAccounts/$1');
-        $routes->post('transfer', 'SolanaAPIController::transfer');
-        $routes->post('swap/quote', 'SolanaAPIController::quote');
-        $routes->post('swap/execute', 'SolanaAPIController::swap');
-        $routes->post('token/create', 'SolanaAPIController::createToken');
-        $routes->post('token/mint', 'SolanaAPIController::mint');
+        $routes->post('transfer', 'SolanaAPIController::transfer', ['filter' => 'csrf']);
+        $routes->post('swap/quote', 'SolanaAPIController::quote', ['filter' => 'csrf']);
+        $routes->post('swap/execute', 'SolanaAPIController::swap', ['filter' => 'csrf']);
+        $routes->post('token/create', 'SolanaAPIController::createToken', ['filter' => 'csrf']);
+        $routes->post('token/mint', 'SolanaAPIController::mint', ['filter' => 'csrf']);
     });    
 
     $routes->group('Support', function($routes) {
@@ -1735,41 +1735,41 @@ $routes->group('Exchange', ['namespace' => 'App\Modules\Exchange\Controllers', '
         $routes->get('Import', 'SolanaController::import', ['as' => 'mymi-solana-import']);
         $routes->get('Swap', 'SolanaController::coinSwap', ['as' => 'mymi-solana-coin-swap']);
         $routes->get('Create/Wallet', 'SolanaController::create', ['as' => 'mymi-solana-create-wallet']);
-        $routes->post('Create/Wallet', 'SolanaController::create');
-        $routes->post('createSolanaWallet', 'SolanaController::createSolanaWallet');
+        $routes->post('Create/Wallet', 'SolanaController::create', ['filter' => 'csrf']);
+        $routes->post('createSolanaWallet', 'SolanaController::createSolanaWallet', ['filter' => 'csrf']);
         $routes->post('fetchFrontendData', 'SolanaController::fetchFrontendData', ['filter' => 'csrf']);
         $routes->post('provisionDefaultWallet', 'SolanaController::provisionDefaultWallet', ['filter' => 'csrf']);
         $routes->get('Import/Wallet', 'SolanaController::importWallet', ['as' => 'mymi-solana-import-wallet']);
-        $routes->post('Import/Wallet', 'SolanaController::importWallet');
-        $routes->post('updatePrices', 'SolanaController::updateSolanaPrices');
-        $routes->post('updateTokens', 'SolanaController::updateSolanaTokens');
+        $routes->post('Import/Wallet', 'SolanaController::importWallet', ['filter' => 'csrf']);
+        $routes->post('updatePrices', 'SolanaController::updateSolanaPrices', ['filter' => 'csrf']);
+        $routes->post('updateTokens', 'SolanaController::updateSolanaTokens', ['filter' => 'csrf']);
         $routes->get('Wallet/Verify-Ownership', 'SolanaController::verifyWalletOwnership', ['as' => 'mymi-solana-verify-wallet']);
-        $routes->post('Wallet/Verify-Ownership', 'SolanaController::verifyWalletOwnership');
+        $routes->post('Wallet/Verify-Ownership', 'SolanaController::verifyWalletOwnership', ['filter' => 'csrf']);
         $routes->get('Wallet/Execute-Swap', 'SolanaController::executeSwap', ['as' => 'mymi-solana-execute-swap']);
-        $routes->post('Wallet/Execute-Swap', 'SolanaController::executeSwap');
+        $routes->post('Wallet/Execute-Swap', 'SolanaController::executeSwap', ['filter' => 'csrf']);
         $routes->get('Wallet/ViewAssets', 'SolanaController::viewAssets', ['as' => 'mymi-solana-view-assets']);
-        $routes->post('Wallet/ViewAssets', 'SolanaController::viewAssets');
-        $routes->post('Wallet/Connect', 'SolanaController::connectWallet', ['as' => 'mymi-solana-connect-wallet']);
-        $routes->post('Wallet/Disconnect', 'SolanaController::disconnectWallet', ['as' => 'mymi-solana-disconnect-wallet']);
-        $routes->post('Wallet/Refresh', 'SolanaController::refreshWallet', ['as' => 'mymi-solana-refresh-wallet']);
+        $routes->post('Wallet/ViewAssets', 'SolanaController::viewAssets', ['filter' => 'csrf']);
+        $routes->post('Wallet/Connect', 'SolanaController::connectWallet', ['as' => 'mymi-solana-connect-wallet', 'filter' => 'csrf']);
+        $routes->post('Wallet/Disconnect', 'SolanaController::disconnectWallet', ['as' => 'mymi-solana-disconnect-wallet', 'filter' => 'csrf']);
+        $routes->post('Wallet/Refresh', 'SolanaController::refreshWallet', ['as' => 'mymi-solana-refresh-wallet', 'filter' => 'csrf']);
     });
     $routes->group('Wallet', function($routes) {
         // Wallet Integration Links Here:
-        $routes->post('Connect/MetaMask', 'SolanaController::connectWallet', ['as' => 'connect-wallet-metamask']);
-        $routes->post('Disconnect/MetaMask', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-metamask']);
-        $routes->post('Refresh/MetaMask', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-metamask']);
+        $routes->post('Connect/MetaMask', 'SolanaController::connectWallet', ['as' => 'connect-wallet-metamask', 'filter' => 'csrf']);
+        $routes->post('Disconnect/MetaMask', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-metamask', 'filter' => 'csrf']);
+        $routes->post('Refresh/MetaMask', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-metamask', 'filter' => 'csrf']);
 
-        $routes->post('Connect/Solflare', 'SolanaController::connectWallet', ['as' => 'connect-wallet-solflare']);
-        $routes->post('Disconnect/Solflare', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-solflare']);
-        $routes->post('Refresh/Solflare', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-solflare']);
+        $routes->post('Connect/Solflare', 'SolanaController::connectWallet', ['as' => 'connect-wallet-solflare', 'filter' => 'csrf']);
+        $routes->post('Disconnect/Solflare', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-solflare', 'filter' => 'csrf']);
+        $routes->post('Refresh/Solflare', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-solflare', 'filter' => 'csrf']);
 
-        $routes->post('Connect/Phantom', 'SolanaController::connectWallet', ['as' => 'connect-wallet-phantom']);
-        $routes->post('Disconnect/Phantom', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-phantom']);
-        $routes->post('Refresh/Phantom', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-phantom']);
+        $routes->post('Connect/Phantom', 'SolanaController::connectWallet', ['as' => 'connect-wallet-phantom', 'filter' => 'csrf']);
+        $routes->post('Disconnect/Phantom', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-phantom', 'filter' => 'csrf']);
+        $routes->post('Refresh/Phantom', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-phantom', 'filter' => 'csrf']);
 
-        $routes->post('Connect/TrustWallet', 'SolanaController::connectWallet', ['as' => 'connect-wallet-trustwallet']);
-        $routes->post('Disconnect/TrustWallet', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-trustwallet']);
-        $routes->post('Refresh/TrustWallet', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-trustwallet']);
+        $routes->post('Connect/TrustWallet', 'SolanaController::connectWallet', ['as' => 'connect-wallet-trustwallet', 'filter' => 'csrf']);
+        $routes->post('Disconnect/TrustWallet', 'SolanaController::disconnectWallet', ['as' => 'disconnect-wallet-trustwallet', 'filter' => 'csrf']);
+        $routes->post('Refresh/TrustWallet', 'SolanaController::refreshWallet', ['as' => 'refresh-wallet-trustwallet', 'filter' => 'csrf']);
     });
 
 });
