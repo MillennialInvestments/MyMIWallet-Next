@@ -13,11 +13,12 @@ class SolanaWalletSecretsAudit extends BaseCommand
     protected $group       = 'Solana';
     protected $name        = 'solana:wallet-secrets:audit';
     protected $description = 'Audit and optionally encrypt existing plaintext Solana wallet access_token values.';
-    protected $usage       = 'solana:wallet-secrets:audit [--apply] [--limit=500] [--include-all-crypto]';
+    protected $usage       = 'solana:wallet-secrets:audit [--apply] [--limit=500] [--include-all-crypto] [--guardrails-smoke]';
     protected $options     = [
         '--apply'              => 'Encrypt plaintext candidate rows. Default is dry-run.',
         '--limit'              => 'Maximum rows to scan. Default: 500.',
         '--include-all-crypto' => 'Scan all wallet_type=Crypto rows, not only Solana-labeled rows.',
+        '--guardrails-smoke'  => 'Run Solana transaction guardrail smoke validation without private keys, broadcasts, or mainnet minting.',
     ];
 
     public function run(array $params)
@@ -26,6 +27,10 @@ class SolanaWalletSecretsAudit extends BaseCommand
             $this->parseOptions(array_slice($_SERVER['argv'] ?? [], 2)),
             $this->parseOptions($params)
         );
+
+        if (array_key_exists('guardrails-smoke', $options) || CLI::getOption('guardrails-smoke') !== null) {
+            return $this->runGuardrailsSmoke();
+        }
 
         $apply = array_key_exists('apply', $options) || CLI::getOption('apply') !== null;
         $includeAllCrypto = array_key_exists('include-all-crypto', $options) || CLI::getOption('include-all-crypto') !== null;
@@ -329,4 +334,157 @@ class SolanaWalletSecretsAudit extends BaseCommand
 
         return $options;
     }
+
+    private function runGuardrailsSmoke(): int
+    {
+        $pass = 0;
+        $fail = 0;
+
+        CLI::write('============================================================');
+        CLI::write('SOLANA GUARDRAILS SMOKE');
+        CLI::write('============================================================');
+        CLI::write('Safety: no private keys, no broadcasts, no mainnet minting.');
+        CLI::newLine();
+
+        CLI::write('## Config Defaults');
+
+        $config = config(\Config\Solana::class);
+
+        $this->guardrailAssertFalse('SOLANA_ALLOW_TRANSACTION_EXECUTION default false', (bool) ($config->allowTransactionExecution ?? true), $pass, $fail);
+        $this->guardrailAssertFalse('SOLANA_ALLOW_MAINNET_BROADCAST default false', (bool) ($config->allowMainnetBroadcast ?? true), $pass, $fail);
+        $this->guardrailAssertFalse('SOLANA_ALLOW_MAINNET_MINT default false', (bool) ($config->allowMainnetMint ?? true), $pass, $fail);
+        $this->guardrailAssertFalse('SOLANA_ALLOW_PRIVATE_KEY_SUBMISSION default false', (bool) ($config->allowPrivateKeySubmission ?? true), $pass, $fail);
+        $this->guardrailAssertTrue('SOLANA_REQUIRE_WALLET_SIGNATURE default true', (bool) ($config->requireWalletSignature ?? false), $pass, $fail);
+        $this->guardrailAssertTrue('SOLANA_DEFAULT_DRY_RUN default true', (bool) ($config->defaultDryRun ?? false), $pass, $fail);
+
+        CLI::newLine();
+        CLI::write('## Provider Library Guard Responses');
+
+        $this->guardrailCheckProviderResult('MyMIRaydium::swap', function () {
+            return (new \App\Libraries\MyMIRaydium())->swap([
+                'from'       => 'SOL',
+                'to'         => 'USDC',
+                'amount'     => '0.001',
+                'network'    => 'mainnet',
+                'privateKey' => 'REDACTED_TEST_ONLY',
+            ]);
+        }, $pass, $fail);
+
+        $phantom = new \App\Libraries\MyMIPhantom();
+
+        $this->guardrailCheckProviderResult('MyMIPhantom::transfer', function () use ($phantom) {
+            return $phantom->transfer('from-address', 'to-address', '0.001', ['network' => 'mainnet']);
+        }, $pass, $fail);
+
+        $this->guardrailCheckProviderResult('MyMIPhantom::swap', function () use ($phantom) {
+            return $phantom->swap([
+                'from'       => 'SOL',
+                'to'         => 'USDC',
+                'amount'     => '0.001',
+                'network'    => 'mainnet',
+                'privateKey' => 'REDACTED_TEST_ONLY',
+            ]);
+        }, $pass, $fail);
+
+        $this->guardrailCheckProviderResult('MyMIPhantom::createToken', function () use ($phantom) {
+            return $phantom->createToken([
+                'symbol'     => 'TEST',
+                'name'       => 'Test Token',
+                'network'    => 'mainnet',
+                'privateKey' => 'REDACTED_TEST_ONLY',
+            ]);
+        }, $pass, $fail);
+
+        $solflare = new \App\Libraries\MyMISolflare();
+
+        $this->guardrailCheckProviderResult('MyMISolflare::transfer', function () use ($solflare) {
+            return $solflare->transfer('from-address', 'to-address', '0.001', ['network' => 'mainnet']);
+        }, $pass, $fail);
+
+        $this->guardrailCheckProviderResult('MyMISolflare::swap', function () use ($solflare) {
+            return $solflare->swap([
+                'from'       => 'SOL',
+                'to'         => 'USDC',
+                'amount'     => '0.001',
+                'network'    => 'mainnet',
+                'privateKey' => 'REDACTED_TEST_ONLY',
+            ]);
+        }, $pass, $fail);
+
+        $this->guardrailCheckProviderResult('MyMISolflare::createToken', function () use ($solflare) {
+            return $solflare->createToken([
+                'symbol'     => 'TEST',
+                'name'       => 'Test Token',
+                'network'    => 'mainnet',
+                'privateKey' => 'REDACTED_TEST_ONLY',
+            ]);
+        }, $pass, $fail);
+
+        CLI::newLine();
+        CLI::write('============================================================');
+        CLI::write('RESULT');
+        CLI::write('============================================================');
+        CLI::write('PASS count: ' . $pass);
+        CLI::write('FAIL count: ' . $fail);
+
+        return $fail === 0 ? EXIT_SUCCESS : EXIT_ERROR;
+    }
+
+    private function guardrailCheckProviderResult(string $label, callable $callback, int &$pass, int &$fail): void
+    {
+        try {
+            $result = $callback();
+
+            $this->guardrailAssertTrue($label . ' returns array', is_array($result), $pass, $fail);
+            $this->guardrailAssertFalse($label . ' broadcast=false', (bool) ($result['broadcast'] ?? true), $pass, $fail);
+            $this->guardrailAssertTrue($label . ' dry_run=true', (bool) ($result['dry_run'] ?? false), $pass, $fail);
+            $this->guardrailAssertFalse($label . ' sanitized payload', $this->guardrailHasSensitiveKey($result), $pass, $fail);
+
+            $message = strtolower((string) ($result['message'] ?? ''));
+            $safeMessage = str_contains($message, 'disabled by configuration')
+                || str_contains($message, 'dry-run')
+                || str_contains($message, 'preflight')
+                || str_contains($message, 'no transaction');
+
+            $this->guardrailAssertTrue($label . ' safe guard message', $safeMessage, $pass, $fail);
+        } catch (Throwable $e) {
+            $this->guardrailFail($label . ' threw exception: ' . $e->getMessage(), $fail);
+        }
+    }
+
+    private function guardrailHasSensitiveKey(array $result): bool
+    {
+        $encoded = json_encode($result);
+        $encoded = is_string($encoded) ? $encoded : '';
+
+        return str_contains($encoded, 'REDACTED_TEST_ONLY')
+            || str_contains($encoded, 'privateKey')
+            || str_contains($encoded, 'secretKey')
+            || str_contains($encoded, 'seedPhrase')
+            || str_contains($encoded, 'mnemonic');
+    }
+
+    private function guardrailAssertTrue(string $label, bool $value, int &$pass, int &$fail): void
+    {
+        $value ? $this->guardrailPass($label, $pass) : $this->guardrailFail($label, $fail);
+    }
+
+    private function guardrailAssertFalse(string $label, bool $value, int &$pass, int &$fail): void
+    {
+        ! $value ? $this->guardrailPass($label, $pass) : $this->guardrailFail($label, $fail);
+    }
+
+    private function guardrailPass(string $label, int &$pass): void
+    {
+        $pass++;
+        CLI::write('PASS: ' . $label);
+    }
+
+    private function guardrailFail(string $label, int &$fail): void
+    {
+        $fail++;
+        CLI::write('FAIL: ' . $label);
+    }
+
+
 }
