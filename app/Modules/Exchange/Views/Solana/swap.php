@@ -1,3 +1,30 @@
+<?php
+// MYMI_SOLANA_SWAP_SAFE_URI_SEGMENT_20260602
+if (! function_exists('mymi_solana_safe_uri_segment')) {
+    function mymi_solana_safe_uri_segment(int $segment, $default = null)
+    {
+        try {
+            $uri = service('uri');
+
+            if (! $uri || $segment < 1) {
+                return $default;
+            }
+
+            $segments = $uri->getSegments();
+
+            return $segments[$segment - 1] ?? $default;
+        } catch (\Throwable $e) {
+            log_message('warning', 'Solana swap safe URI segment fallback used: segment={segment}, error={error}', [
+                'segment' => $segment,
+                'error'   => $e->getMessage(),
+            ]);
+
+            return $default;
+        }
+    }
+}
+?>
+
 <!-- MyMI Solana runtime guard: ensure jQuery exists before inline Solana scripts. -->
 
 <script>
@@ -202,7 +229,7 @@ window.mymiSolanaSwapRuntime = window.mymiSolanaSwapRuntime || (function () {
 
 <!-- app/Modules/Exchange/Views/Solana/swap.php -->
 <?php if($uri->getTotalSegments() >= 3){
-    $current_url = $uri->getSegment(1).'/'.$uri->getSegment(2).'/'.$uri->getSegment(3).'/'.$uri->getSegment(4).'/'.$uri->getSegment(5);
+    $current_url = $uri->getSegment(1).'/'.$uri->getSegment(2).'/'.$uri->getSegment(3).'/'.$uri->getSegment(4).'/'.mymi_solana_safe_uri_segment(5);
 } else {
     $current_url = NULL;
 }
