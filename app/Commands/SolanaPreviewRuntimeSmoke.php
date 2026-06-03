@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commands\Solana;
+namespace App\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
@@ -23,26 +23,33 @@ class SolanaPreviewRuntimeSmoke extends BaseCommand
         CLI::write('Safety: preview-only, no private keys, no broadcasts, no minting.');
         CLI::write('');
 
-        $this->checkFileExists('Preview UX JS exists', ROOTPATH . 'public/assets/js/Solana/preview-ux-modal.js');
-        $this->checkFileContains('Preview UX JS has Phase 14 marker', ROOTPATH . 'public/assets/js/Solana/preview-ux-modal.js', 'MYMI_SOLANA_PREVIEW_UX_MODAL_PHASE14');
-        $this->checkFileContains('Preview UX JS forces dry_run=true', ROOTPATH . 'public/assets/js/Solana/preview-ux-modal.js', 'payload.dry_run = true');
-        $this->checkFileContains('Preview UX JS forces broadcast=false', ROOTPATH . 'public/assets/js/Solana/preview-ux-modal.js', 'payload.broadcast = false');
-        $this->checkFileContains('Preview UX JS requires wallet signature', ROOTPATH . 'public/assets/js/Solana/preview-ux-modal.js', 'payload.wallet_signature_required = true');
-        $this->checkFileContains('Preview UX JS blocks private key submission', ROOTPATH . 'public/assets/js/Solana/preview-ux-modal.js', 'payload.private_key_submission_allowed = false');
-        $this->checkFileContains('Preview UX JS strips private_key', ROOTPATH . 'public/assets/js/Solana/preview-ux-modal.js', "'private_key'");
-        $this->checkFileContains('Preview UX JS neutralizes private key fields', ROOTPATH . 'public/assets/js/Solana/preview-ux-modal.js', 'neutralizePrivateKeyFields');
-        $this->checkFileContains('Preview UX JS stops normal form submission', ROOTPATH . 'public/assets/js/Solana/preview-ux-modal.js', 'stopImmediatePropagation');
-        $this->checkFileNotContains('Preview UX JS does not call swap execute endpoint directly', ROOTPATH . 'public/assets/js/Solana/preview-ux-modal.js', '/swap/execute');
-        $this->checkFileNotContains('Preview UX JS does not call token mint endpoint directly', ROOTPATH . 'public/assets/js/Solana/preview-ux-modal.js', '/token/mint');
+        $previewJs = ROOTPATH . 'public/assets/js/Solana/preview-ux-modal.js';
+
+        $this->checkFileExists('Preview UX JS exists', $previewJs);
+        $this->checkFileContains('Preview UX JS has Phase 14 marker', $previewJs, 'MYMI_SOLANA_PREVIEW_UX_MODAL_PHASE14');
+        $this->checkFileContains('Preview UX JS forces dry_run=true', $previewJs, 'payload.dry_run = true');
+        $this->checkFileContains('Preview UX JS forces broadcast=false', $previewJs, 'payload.broadcast = false');
+        $this->checkFileContains('Preview UX JS requires signature', $previewJs, 'payload.signature_required = true');
+        $this->checkFileContains('Preview UX JS requires wallet signature', $previewJs, 'payload.wallet_signature_required = true');
+        $this->checkFileContains('Preview UX JS blocks private key submission', $previewJs, 'payload.private_key_submission_allowed = false');
+        $this->checkFileContains('Preview UX JS strips private_key field', $previewJs, "'private_key'");
+        $this->checkFileContains('Preview UX JS strips privateKey field', $previewJs, "'privateKey'");
+        $this->checkFileContains('Preview UX JS strips seed phrase fields', $previewJs, "'seed_phrase'");
+        $this->checkFileContains('Preview UX JS strips mnemonic field', $previewJs, "'mnemonic'");
+        $this->checkFileContains('Preview UX JS neutralizes private key fields', $previewJs, 'neutralizePrivateKeyFields');
+        $this->checkFileContains('Preview UX JS stops normal form submission', $previewJs, 'stopImmediatePropagation');
+        $this->checkFileContains('Preview UX JS calls swap preview endpoint', $previewJs, '/index.php/API/Solana/swap/preview');
+        $this->checkFileNotContains('Preview UX JS does not call swap execute endpoint directly', $previewJs, '/API/Solana/swap/execute');
+        $this->checkFileNotContains('Preview UX JS does not call token mint endpoint directly', $previewJs, '/API/Solana/token/mint');
 
         $views = [
-            'coinSwap view injects preview UX' => ROOTPATH . 'app/Modules/Exchange/Views/Solana/coinSwap.php',
-            'swap view injects preview UX'     => ROOTPATH . 'app/Modules/Exchange/Views/Solana/swap.php',
-            'trade view injects preview UX'    => ROOTPATH . 'app/Modules/Exchange/Views/Solana/trade.php',
+            'coinSwap view' => ROOTPATH . 'app/Modules/Exchange/Views/Solana/coinSwap.php',
+            'swap view'     => ROOTPATH . 'app/Modules/Exchange/Views/Solana/swap.php',
+            'trade view'    => ROOTPATH . 'app/Modules/Exchange/Views/Solana/trade.php',
         ];
 
         foreach ($views as $label => $file) {
-            $this->checkFileContains($label, $file, 'preview-ux-modal.js');
+            $this->checkFileContains($label . ' injects preview UX JS', $file, 'preview-ux-modal.js');
             $this->checkFileContains($label . ' configures swap preview URL', $file, "API/Solana/swap/preview");
             $this->checkFileContains($label . ' configures transaction preview URL', $file, "API/Solana/transaction/preview");
         }
@@ -54,8 +61,8 @@ class SolanaPreviewRuntimeSmoke extends BaseCommand
         $this->checkStringContains('Preview transaction route uses CSRF', $this->routeLine($routes, 'API/Solana/transaction/preview'), 'csrf');
         $this->checkStringContains('Preview swap route uses CSRF', $this->routeLine($routes, 'API/Solana/swap/preview'), 'csrf');
 
-        $this->checkStringContains('Execute route remains visible for guard tracking', $routes, 'API/Solana/swap/execute');
-        $this->checkStringContains('Mint route remains visible for guard tracking', $routes, 'API/Solana/token/mint');
+        $this->checkStringContains('Swap execute route remains trackable for safety monitoring', $routes, 'API/Solana/swap/execute');
+        $this->checkStringContains('Token mint route remains trackable for safety monitoring', $routes, 'API/Solana/token/mint');
 
         CLI::write('');
         CLI::write('============================================================', 'yellow');
