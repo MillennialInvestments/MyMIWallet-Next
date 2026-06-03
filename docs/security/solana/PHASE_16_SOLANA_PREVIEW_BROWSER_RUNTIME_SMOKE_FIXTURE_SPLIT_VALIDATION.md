@@ -1,7 +1,7 @@
 # Phase 16 Solana Preview Browser Runtime Smoke Fixture Split Validation
 
 Generated UTC: 2026-06-03T17:00:10Z
-Branch: main
+Branch: fix/phase-16-browser-runtime-smoke-fixture-split
 Commit Before Hotfix Commit: b1aaddc09 Merge pull request #510 from MillennialInvestments/feature/solana-preview-browser-runtime-smoke-phase-16
 
 ## Reason
