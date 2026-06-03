@@ -20,6 +20,10 @@ class CommandRulesScanner
             $path = $file->getPathname();
             $contents = file_get_contents($path);
 
+            if (! is_string($contents) || $this->shouldSkipCommandAudit($path, $contents)) {
+                continue;
+            }
+
             if (strpos($contents, 'extends') === false) {
                 continue;
             }

@@ -27,11 +27,18 @@ class Lint extends SafeBaseCommand
         $results = [];
 
         foreach ($entries as $entry) {
-            if ($entry['class'] === 'App\\Commands\\SafeBaseCommand') {
+            $entryClass = (string) ($entry['class'] ?? '');
+            $entryFile = (string) ($entry['file'] ?? '');
+
+            if (
+                $entryClass === 'SafeBaseCommand'
+                || $entryClass === 'App\\Commands\\SafeBaseCommand'
+                || str_ends_with(str_replace('\\', '/', $entryFile), '/SafeBaseCommand.php')
+            ) {
                 continue;
             }
 
-            $code = $this->readFile($entry['file']);
+            $code = $this->readFile($entryFile);
             if ($code === '') {
                 continue;
             }
