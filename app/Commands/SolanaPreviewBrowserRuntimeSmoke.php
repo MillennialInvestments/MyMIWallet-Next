@@ -78,7 +78,7 @@ class SolanaPreviewBrowserRuntimeSmoke extends BaseCommand
             return;
         }
 
-        $scriptPath = WRITEPATH . 'cache/solana-preview-browser-runtime-smoke.js';
+        $scriptPath = WRITEPATH . 'cache/solana-preview-browser-runtime-smoke.cjs';
 
         $script = <<<'JS'
 const fs = require('fs');

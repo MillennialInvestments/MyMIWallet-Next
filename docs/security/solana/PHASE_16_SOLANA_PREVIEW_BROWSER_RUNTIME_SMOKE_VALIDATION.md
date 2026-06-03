@@ -1,8 +1,8 @@
 # Phase 16 Solana Preview Browser Runtime Smoke Validation
 
-Generated UTC: 2026-06-03T16:42:48Z
+Generated UTC: 2026-06-03T16:45:34Z
 Branch: feature/solana-preview-browser-runtime-smoke-phase-16
-Commit Before Phase 16 Commit: c8af85f56 Merge pull request #509 from MillennialInvestments/fix/phase-15b-solana-preview-runtime-smoke-command-discovery
+Commit Before Corrective Commit: ab54f1a82 test: add Solana preview browser runtime smoke
 
 ## Scope
 - Browser/runtime simulation only.
@@ -13,13 +13,14 @@ Commit Before Phase 16 Commit: c8af85f56 Merge pull request #509 from Millennial
 - No swap execute endpoint call.
 - No token mint endpoint call.
 
+## Corrective Note
+- Initial Phase 16 run failed because Node treated the generated smoke script as ESM.
+- The generated script path was changed from .js to .cjs so CommonJS require() works under package.json type=module.
+
 ## Changed Files
 ```text
- M app/Config/Commands.php
- M app/Config/Console.php
-?? app/Commands/SolanaPreviewBrowserRuntimeSmoke.php
-?? docs/security/solana/PHASE_16_SOLANA_PREVIEW_BROWSER_RUNTIME_SMOKE_BASELINE.md
-?? docs/security/solana/PHASE_16_SOLANA_PREVIEW_BROWSER_RUNTIME_SMOKE_VALIDATION.md
+ M app/Commands/SolanaPreviewBrowserRuntimeSmoke.php
+ M docs/security/solana/PHASE_16_SOLANA_PREVIEW_BROWSER_RUNTIME_SMOKE_VALIDATION.md
 ```
 
 ## PHP Syntax
@@ -47,7 +48,7 @@ Solana
 ## Phase 16 Browser Runtime Smoke
 ```text
 
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 16:42:48 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 16:45:35 UTC+00:00
 
 
 ============================================================
@@ -78,31 +79,42 @@ PASS: Token mint route remains trackable
 PASS: Node runtime is available for browser simulation
 
 --- Node Browser Simulation Output ---
-file:///home/mymiteam/mymiwallet/site/current/writable/cache/solana-preview-browser-runtime-smoke.js:1
-const fs = require('fs');
-           ^
-
-ReferenceError: require is not defined in ES module scope, you can use import instead
-This file is being treated as an ES module because it has a '.js' file extension and '/home/mymiteam/mymiwallet/site/current/package.json' contains "type": "module". To treat it as a CommonJS script, rename it to use the '.cjs' file extension.
-    at file:///home/mymiteam/mymiwallet/site/current/writable/cache/solana-preview-browser-runtime-smoke.js:1:12
-    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
-    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)
-    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
-
-Node.js v22.21.1
-FAIL: Node browser simulation completed successfully
+PASS: Submit default prevented
+PASS: Submit propagation stopped
+PASS: Submit immediate propagation stopped
+PASS: Preview API called exactly once
+PASS: Preview API endpoint used
+PASS: Preview API uses POST
+PASS: CSRF token included in preview request
+PASS: dry_run=true submitted
+PASS: broadcast=false submitted
+PASS: signature_required=true submitted
+PASS: wallet_signature_required=true submitted
+PASS: private_key_submission_allowed=false submitted
+PASS: private_key value not submitted
+PASS: privateKey value not submitted
+PASS: seed value not submitted
+PASS: seed_phrase value not submitted
+PASS: mnemonic value not submitted
+PASS: private key field disabled in DOM
+PASS: seed phrase field disabled in DOM
+PASS: preview modal opened
+PASS: no swap execute fetch call occurred
+PASS: no token mint fetch call occurred
+FETCH_CALLS=[{"url":"/index.php/API/Solana/swap/preview","method":"POST","body":"csrf_test_name=csrf-test-hash&from_token=SOL&to_token=MYMI&amount=0.25&slippage=0.50&action=swap_preview&network=solana&estimated_output=Preview+pending+API+estimate&estimated_fee=Preview+pending+fee+estimate&private_key_submission_allowed=false&broadcast=false&dry_run=true&signature_required=true&wallet_signature_required=true","headers":{"Content-Type":"application/x-www-form-urlencoded; charset=UTF-8","X-Requested-With":"XMLHttpRequest","X-CSRF-TOKEN":"csrf-test-hash"}}]
+PASS: Node browser simulation completed successfully
 
 ============================================================
 RESULT
 ============================================================
-PASS count: 21
-FAIL count: 1
+PASS count: 22
+FAIL count: 0
 ```
 
 ## Phase 15 Runtime Smoke
 ```text
 
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 16:42:50 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 16:45:36 UTC+00:00
 
 
 ============================================================
@@ -152,7 +164,7 @@ FAIL count: 0
 ## Permanent Guardrail Smoke
 ```text
 
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 16:42:51 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 16:45:38 UTC+00:00
 
 ============================================================
 SOLANA GUARDRAILS SMOKE
