@@ -12,6 +12,7 @@ class Commands extends BaseConfig
      * @var array<string, class-string>
      */
     public $commands = [
+        'solana:preview-browser-runtime:smoke' => \App\Commands\SolanaPreviewBrowserRuntimeSmoke::class,
         'solana:preview-runtime:smoke' => \App\Commands\SolanaPreviewRuntimeSmoke::class,
         'marketing:audit:distribution' => \App\Commands\Marketing\AuditDistribution::class,
         'auth:baseline:capture' => \App\Commands\Auth\BaselineCapture::class,
