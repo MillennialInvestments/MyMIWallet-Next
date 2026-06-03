@@ -1,22 +1,18 @@
 # Phase 15B Solana Preview Runtime Smoke Discovery Fix
 
-Generated UTC: 2026-06-03T13:44:45Z
+Generated UTC: 2026-06-03T15:44:05Z
 Branch: fix/phase-15b-solana-preview-runtime-smoke-command-discovery
-Commit Before Fix Commit: 7d6635158 Merge pull request #508 from MillennialInvestments/fix/phase-15-solana-preview-runtime-smoke-discovery
+Commit Before Fix Commit: 3f2b874fd fix: make Solana preview runtime smoke discoverable
 
 ## Reason
 - PR #507 added the Phase 15 command under App\Commands\Solana.
-- PR #508 registered the nested command, but the nested class was not autoloadable.
-- Existing Solana commands use top-level App\Commands classes.
-- This fix moves the runtime smoke command to App\Commands\SolanaPreviewRuntimeSmoke and updates both registries.
+- PR #508 registered the nested command, but the first autoload test used an over-escaped class name.
+- Composer autoload was rebuilt and Spark command cache files were cleared.
+- The command is now top-level App\Commands\SolanaPreviewRuntimeSmoke, matching existing Solana command conventions.
 
 ## Changed Files
 ```text
- D app/Commands/Solana/SolanaPreviewRuntimeSmoke.php
- M app/Config/Commands.php
- M app/Config/Console.php
-?? app/Commands/SolanaPreviewRuntimeSmoke.php
-?? docs/security/solana/PHASE_15B_SOLANA_PREVIEW_RUNTIME_SMOKE_DISCOVERY_FIX.md
+ M docs/security/solana/PHASE_15B_SOLANA_PREVIEW_RUNTIME_SMOKE_DISCOVERY_FIX.md
 ```
 
 ## PHP Syntax
@@ -26,8 +22,10 @@ No syntax errors detected in app/Config/Commands.php
 No syntax errors detected in app/Config/Console.php
 ```
 
-## Autoload
+## Composer Autoload
 ```text
+Generating optimized autoload files
+Generated optimized autoload files containing 4755 classes
 App\\Commands\\SolanaPreviewRuntimeSmoke => NOT LOADABLE
 ```
 
@@ -38,6 +36,7 @@ App\\Commands\\SolanaPreviewRuntimeSmoke => NOT LOADABLE
   aiops:solana-transaction-audit              Safely summarize Solana transaction records
                                               database mappings, and Solana integration
 Solana
+  solana:preview-runtime:smoke                Phase 15 smoke test for Solana preview UX
   solana:wallet-secrets:audit                 Audit and optionally encrypt existing
                                               plaintext Solana wallet access_token
 ```
@@ -45,15 +44,57 @@ Solana
 ## Phase 15 Runtime Smoke
 ```text
 
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 13:44:46 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 15:44:08 UTC+00:00
 
 
+============================================================
+SOLANA PREVIEW RUNTIME SMOKE - PHASE 15
+============================================================
+Safety: preview-only, no private keys, no broadcasts, no minting.
+
+PASS: Preview UX JS exists
+PASS: Preview UX JS has Phase 14 marker
+PASS: Preview UX JS forces dry_run=true
+PASS: Preview UX JS forces broadcast=false
+PASS: Preview UX JS requires signature
+PASS: Preview UX JS requires wallet signature
+PASS: Preview UX JS blocks private key submission
+PASS: Preview UX JS strips private_key field
+PASS: Preview UX JS strips privateKey field
+PASS: Preview UX JS strips seed phrase fields
+PASS: Preview UX JS strips mnemonic field
+PASS: Preview UX JS neutralizes private key fields
+PASS: Preview UX JS stops normal form submission
+PASS: Preview UX JS uses swap preview fallback endpoint
+PASS: Preview UX JS does not call swap execute endpoint directly
+PASS: Preview UX JS does not call token mint endpoint directly
+PASS: coinSwap view injects preview UX JS
+PASS: coinSwap view configures swap preview URL
+PASS: coinSwap view configures transaction preview URL
+PASS: swap view injects preview UX JS
+PASS: swap view configures swap preview URL
+PASS: swap view configures transaction preview URL
+PASS: trade view injects preview UX JS
+PASS: trade view configures swap preview URL
+PASS: trade view configures transaction preview URL
+PASS: Preview transaction route exists
+PASS: Preview swap route exists
+PASS: Preview transaction route uses CSRF
+PASS: Preview swap route uses CSRF
+PASS: Swap execute route remains trackable for safety monitoring
+PASS: Token mint route remains trackable for safety monitoring
+
+============================================================
+RESULT
+============================================================
+PASS count: 31
+FAIL count: 0
 ```
 
 ## Permanent Guardrail Smoke
 ```text
 
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 13:44:46 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 15:44:09 UTC+00:00
 
 ============================================================
 SOLANA GUARDRAILS SMOKE
