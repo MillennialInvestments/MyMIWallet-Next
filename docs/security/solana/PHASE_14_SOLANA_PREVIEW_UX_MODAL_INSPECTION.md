@@ -762,3 +762,44 @@ public/assets/images/MyMI-Wallet.png
 - Preserve CSRF handling.
 - Keep execution/broadcast paths disabled or untouched unless already safely guarded.
 - Do not collect private keys.
+
+---
+
+# Phase 14 Implementation Patch
+
+## Files Changed
+
+- `public/assets/js/Solana/preview-ux-modal.js`
+- `app/Modules/Exchange/Views/Solana/coinSwap.php`
+- `app/Modules/Exchange/Views/Solana/swap.php`
+- `app/Modules/Exchange/Views/Solana/trade.php`
+
+## UX Behavior Added
+
+- Intercepts Solana swap/transaction-like form submission before execution.
+- Calls `POST /API/Solana/swap/preview`.
+- Displays safe preview modal/card with:
+  - action
+  - network
+  - token pair
+  - amount
+  - estimated output placeholder
+  - slippage
+  - estimated fee placeholder
+  - dry_run
+  - broadcast
+  - signature_required
+  - wallet_signature_required
+  - private_key_submission_allowed
+  - wallet signature next-step message
+  - warning that no transaction has been signed or broadcast
+
+## Explicit Safety Controls
+
+- Blocks normal form submission during Phase 14.
+- Does not broadcast transactions.
+- Does not mint.
+- Does not submit private keys.
+- Disables private-key fields in frontend forms.
+- Preserves CSRF by submitting CI4 CSRF token/hash to preview API.
+- Does not bypass authentication.

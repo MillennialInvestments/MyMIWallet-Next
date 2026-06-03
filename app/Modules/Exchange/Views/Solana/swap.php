@@ -882,3 +882,16 @@ mymiWhenJqueryReady(function () {
 //     fetchFromCoinAmount('SOL');
 // });
 </script>
+
+<?php if (! defined('MYMI_SOLANA_PREVIEW_UX_MODAL_PHASE14_20260603')): ?>
+<?php define('MYMI_SOLANA_PREVIEW_UX_MODAL_PHASE14_20260603', true); ?>
+<script>
+window.mymiSolanaPreviewConfig = Object.assign({}, window.mymiSolanaPreviewConfig || {}, {
+    swapPreviewUrl: "<?= site_url('API/Solana/swap/preview') ?>",
+    transactionPreviewUrl: "<?= site_url('API/Solana/transaction/preview') ?>",
+    csrfTokenName: "<?= csrf_token() ?>",
+    csrfHash: "<?= csrf_hash() ?>"
+});
+</script>
+<script src="<?= base_url('public/assets/js/Solana/preview-ux-modal.js') ?>?v=phase14-20260603"></script>
+<?php endif; ?>
