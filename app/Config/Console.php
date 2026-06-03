@@ -8,6 +8,7 @@ class Console extends BaseConfig
 {
 
     public array $commands = [
+        \App\Commands\Solana\SolanaPreviewRuntimeSmoke::class,
         \App\Commands\AIOps\API\SchemaValidate::class,
         \App\Commands\AIOps\AiopsRepairs::class,
         \App\Commands\AIOps\Alerts\Check::class,

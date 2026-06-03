@@ -1,24 +1,26 @@
 # Phase 15 Solana Preview Runtime Smoke Command Registration Hotfix
 
-Generated UTC: 2026-06-03T13:30:15Z
+Generated UTC: 2026-06-03T13:34:56Z
 Branch: fix/phase-15-solana-preview-runtime-smoke-discovery
-Commit Before Hotfix Commit: 7137384e0 Merge pull request #507 from MillennialInvestments/feature/solana-preview-runtime-smoke-phase-15
+Commit Before Hotfix Commit: b720052e0 fix: register Solana preview runtime smoke command
 
 ## Reason
 - PR #507 was merged while solana:preview-runtime:smoke was not discoverable.
-- The app uses explicit command registration in app/Config/Commands.php.
-- This hotfix registers App\Commands\Solana\SolanaPreviewRuntimeSmoke.
+- The app uses an explicit Spark command registry.
+- This hotfix registers App\Commands\Solana\SolanaPreviewRuntimeSmoke in the active registry.
 
 ## Changed Files
 ```text
- M app/Config/Commands.php
-?? docs/security/solana/PHASE_15_SOLANA_PREVIEW_RUNTIME_SMOKE_COMMAND_REGISTRATION_HOTFIX.md
+ M app/Config/Console.php
+ M docs/security/solana/PHASE_15_SOLANA_PREVIEW_RUNTIME_SMOKE_COMMAND_REGISTRATION_HOTFIX.md
+?? docs/_support/ops-commands-inventory/
 ```
 
 ## PHP Syntax
 ```text
 No syntax errors detected in app/Commands/Solana/SolanaPreviewRuntimeSmoke.php
 No syntax errors detected in app/Config/Commands.php
+No syntax errors detected in app/Config/Console.php
 ```
 
 ## Spark Discovery
@@ -35,7 +37,7 @@ Solana
 ## Phase 15 Runtime Smoke
 ```text
 
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 13:30:15 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 13:34:57 UTC+00:00
 
 
 ```
@@ -43,7 +45,7 @@ CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 13:30:15 UTC+00:0
 ## Permanent Solana Guardrail Smoke
 ```text
 
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 13:30:15 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 13:34:57 UTC+00:00
 
 ============================================================
 SOLANA GUARDRAILS SMOKE
@@ -103,7 +105,7 @@ FAIL count: 0
 ```
 
 ## Result
-- Phase 15 command is registered.
+- Phase 15 command is registered in the active Spark command registry.
 - Phase 15 command is discoverable.
 - Phase 15 command executes.
 - Runtime preview UX safety markers validated.
