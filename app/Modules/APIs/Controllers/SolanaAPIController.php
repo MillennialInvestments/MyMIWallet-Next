@@ -598,6 +598,119 @@ class SolanaAPIController extends BaseAPIController {
         return $this->response->setJSON($this->jsonEnvelope((bool) ($result['success'] ?? false), (string) ($result['message'] ?? 'Mint request processed.'), $result));
     }
 
+
+    public function preview()
+    {
+        try {
+            $payload = $this->request->getJSON(true);
+
+            if (! is_array($payload)) {
+                $payload = $this->request->getPost();
+            }
+
+            if (! is_array($payload)) {
+                $payload = [];
+            }
+
+            $sensitiveKeys = ['private_key', 'privateKey', 'secret_key', 'secretKey', 'seed_phrase', 'seedPhrase', 'mnemonic'];
+            $sanitizedPayload = array_diff_key($payload, array_flip($sensitiveKeys));
+
+            $action = strtolower((string) ($sanitizedPayload['action'] ?? 'swap'));
+            $allowedActions = ['swap', 'transfer', 'mint', 'create_token', 'createToken'];
+
+            if (! in_array($action, $allowedActions, true)) {
+                return $this->response->setStatusCode(422)->setJSON($this->jsonEnvelope(
+                    false,
+                    'Unsupported Solana preview action.',
+                    [
+                        'allowed_actions' => $allowedActions,
+                        'dry_run' => true,
+                        'broadcast' => false,
+                    ],
+                    ['action' => 'Unsupported action requested.']
+                ));
+            }
+
+            $network = strtolower((string) ($sanitizedPayload['network'] ?? env('SOLANA_NETWORK', 'mainnet')));
+            $amount = (string) ($sanitizedPayload['amount'] ?? '0');
+            $fromToken = (string) ($sanitizedPayload['from_token'] ?? $sanitizedPayload['from'] ?? 'SOL');
+            $toToken = (string) ($sanitizedPayload['to_token'] ?? $sanitizedPayload['to'] ?? 'USDC');
+            $slippageBps = (int) ($sanitizedPayload['slippage_bps'] ?? $sanitizedPayload['slippageBps'] ?? 50);
+
+            $previewInput = [
+                'action' => $action,
+                'network' => $network,
+                'from_token' => $fromToken,
+                'to_token' => $toToken,
+                'amount' => $amount,
+                'slippage_bps' => $slippageBps,
+                'payload' => $sanitizedPayload,
+            ];
+
+            $previewId = substr(hash('sha256', json_encode($previewInput) . '|' . date('YmdHi')), 0, 24);
+
+            $preview = [
+                'preview_id' => $previewId,
+                'action' => $action,
+                'network' => $network,
+                'dry_run' => true,
+                'broadcast' => false,
+                'signature_required' => true,
+                'wallet_signature_required' => true,
+                'private_key_submission_allowed' => false,
+                'mainnet_broadcast_allowed' => false,
+                'mainnet_mint_allowed' => false,
+                'status' => 'preview_only',
+                'quote' => [
+                    'from_token' => $fromToken,
+                    'to_token' => $toToken,
+                    'input_amount' => $amount,
+                    'estimated_output' => null,
+                    'slippage_bps' => $slippageBps,
+                    'quote_source' => 'preview_envelope',
+                ],
+                'estimated_fees' => [
+                    'network_fee_sol' => '0.000005',
+                    'platform_fee' => '0',
+                    'currency' => 'SOL',
+                    'note' => 'Estimated fee placeholder for preview only; no transaction was simulated or broadcast.',
+                ],
+                'warnings' => [
+                    'This is a dry-run preview envelope only.',
+                    'No transaction was signed.',
+                    'No transaction was broadcast.',
+                    'Mainnet minting remains disabled by default.',
+                    'Private keys are not accepted or returned by this endpoint.',
+                ],
+                'next_required_steps' => [
+                    'Render preview to user.',
+                    'Require wallet ownership/signature confirmation.',
+                    'Run preflight simulation before any future non-dry-run execution.',
+                    'Keep broadcast disabled unless explicitly approved by configuration.',
+                ],
+            ];
+
+            return $this->response->setJSON($this->jsonEnvelope(
+                true,
+                'Solana transaction preview generated. No transaction was broadcast.',
+                ['preview' => $preview]
+            ));
+        } catch (\Throwable $e) {
+            log_message('error', 'Solana preview envelope failed: ' . $e->getMessage());
+
+            return $this->response->setStatusCode(500)->setJSON($this->jsonEnvelope(
+                false,
+                'Unable to generate Solana transaction preview.',
+                [
+                    'dry_run' => true,
+                    'broadcast' => false,
+                    'signature_required' => true,
+                ],
+                ['exception' => 'Preview generation failed safely.']
+            ));
+        }
+    }
+
     private function solanaTransactionGuard(string $action)
     {
         $config = config(\Config\Solana::class);

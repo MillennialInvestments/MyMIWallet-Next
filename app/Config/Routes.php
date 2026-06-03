@@ -1225,6 +1225,8 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->get('wallet/(:segment)/tokens', 'SolanaAPIController::getTokenAccounts/$1');
         $routes->post('transfer', 'SolanaAPIController::transfer', ['filter' => 'csrf']);
         $routes->post('swap/quote', 'SolanaAPIController::quote', ['filter' => 'csrf']);
+        $routes->post('transaction/preview', 'SolanaAPIController::preview', ['filter' => 'csrf']);
+        $routes->post('swap/preview', 'SolanaAPIController::preview', ['filter' => 'csrf']);
         $routes->post('swap/execute', 'SolanaAPIController::swap', ['filter' => 'csrf']);
         $routes->post('token/create', 'SolanaAPIController::createToken', ['filter' => 'csrf']);
         $routes->post('token/mint', 'SolanaAPIController::mint', ['filter' => 'csrf']);
