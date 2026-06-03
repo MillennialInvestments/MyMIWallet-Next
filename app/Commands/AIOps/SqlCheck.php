@@ -24,9 +24,9 @@ class SqlCheck extends SafeBaseCommand
     {
         $this->parseParams($params);
 
-        $model = (string) $this->option('model', '');
-        $table = (string) $this->option('table', '');
-        $query = (string) $this->option('query', '');
+        $model = (string) ($this->opt('model') ?? '');
+        $table = (string) ($this->opt('table') ?? '');
+        $query = (string) ($this->opt('query') ?? '');
 
         if ($query !== '') {
             return $this->validateQuery($query);
