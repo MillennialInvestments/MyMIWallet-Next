@@ -1,31 +1,35 @@
 # Phase 16 CI Spark Command Audit Real Fix
 
-Generated UTC: 2026-06-03T20:17:43Z
+Generated UTC: 2026-06-03T21:20:38Z
 Branch: fix/ci-spark-command-audit-real
-Commit Before Update Commit: 6189bdc05 fix: repair Spark command audit failures
+Commit Before Update Commit: 4770083a1 chore: trigger CI for Spark audit fix
 
 ## Reason
 - Prior PRs #512 and #513 were docs-only and did not patch command files.
-- PR #514 initially patched WalletIntegrity only.
-- This update patches remaining deprecated option usage in SqlCheck and preserves Solana guardrails.
+- PR #514 initially patched WalletIntegrity and SqlCheck option access.
+- This update patches the audit/lint scanners to skip abstract support classes like SafeBaseCommand.
 
 ## Changed Files
 ```text
- M app/Commands/AIOps/SqlCheck.php
- M docs/next/bf_aiops_task_runs/commands_lint.json
+ M app/Commands/Ops/Commands/Lint.php
+ M app/Commands/Ops/Support/CommandRulesScanner.php
  M docs/security/solana/PHASE_16_CI_SPARK_COMMAND_AUDIT_REAL_FIX.md
+ M writable/logs/emergency.log
 ```
 
 ## Diff Stat
 ```text
- app/Commands/AIOps/SqlCheck.php                    |   6 +-
- docs/next/bf_aiops_task_runs/commands_lint.json    |  40 +---
- .../PHASE_16_CI_SPARK_COMMAND_AUDIT_REAL_FIX.md    | 235 +--------------------
- 3 files changed, 16 insertions(+), 265 deletions(-)
+ app/Commands/Ops/Commands/Lint.php                 |  35 +++
+ app/Commands/Ops/Support/CommandRulesScanner.php   |  35 +++
+ .../PHASE_16_CI_SPARK_COMMAND_AUDIT_REAL_FIX.md    | 234 +--------------------
+ writable/logs/emergency.log                        |   1 +
+ 4 files changed, 78 insertions(+), 227 deletions(-)
 ```
 
 ## PHP Syntax
 ```text
+No syntax errors detected in app/Commands/Ops/Support/CommandRulesScanner.php
+No syntax errors detected in app/Commands/Ops/Commands/Lint.php
 No syntax errors detected in app/Commands/Ops/WalletIntegrity.php
 No syntax errors detected in app/Commands/AIOps/SqlCheck.php
 No syntax errors detected in app/Commands/SafeBaseCommand.php
@@ -38,25 +42,27 @@ App\Commands\AIOps\Observe\Map => LOADABLE
 App\Commands\AIOps\PriorityBuildCommand => LOADABLE
 App\Commands\Ops\WalletIntegrity => LOADABLE
 App\Commands\AIOps\SqlCheck => LOADABLE
+App\Commands\Ops\Support\CommandRulesScanner => LOADABLE
+App\Commands\Ops\Commands\Lint => LOADABLE
 App\Commands\SolanaPreviewBrowserRuntimeSmoke => LOADABLE
 ```
 
 ## Ops Diagnostics
 ```text
 
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 20:17:43 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 21:20:39 UTC+00:00
 
  Command  File                              Violations              
 --------------------------------------------------------------------
  load     app/Commands/SafeBaseCommand.php  PSR-4 filename mismatch 
 
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 20:17:43 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 21:20:39 UTC+00:00
 
 FAIL load
   - Missing $name, $group, or $description metadata.
   - Missing documentation entry in docs/management/Command_Runtime_Audit.md.
 
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 20:17:44 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 21:20:39 UTC+00:00
 
 Missing: \App\Commands\Marketing\AuditDistribution
 Missing: \App\Commands\AnalyzeCode
@@ -67,7 +73,7 @@ Audit complete.
 ## Solana Safety Gates
 ```text
 
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 20:17:44 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 21:20:39 UTC+00:00
 
 
 ============================================================
@@ -129,7 +135,7 @@ RESULT
 PASS count: 22
 FAIL count: 0
 
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 20:17:45 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 21:20:41 UTC+00:00
 
 
 ============================================================
@@ -175,7 +181,7 @@ RESULT
 PASS count: 31
 FAIL count: 0
 
-CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 20:17:47 UTC+00:00
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-03 21:20:42 UTC+00:00
 
 ============================================================
 SOLANA GUARDRAILS SMOKE
@@ -237,5 +243,6 @@ FAIL count: 0
 ## Result
 - WalletIntegrity deprecated option usage is patched.
 - SqlCheck deprecated option usage is patched.
+- Abstract support classes are skipped by command audit/lint.
 - Solana Phase 16/15 safety gates remain passing.
 - Permanent Solana guardrails remain passing.

@@ -67,4 +67,39 @@ class CommandRulesScanner
 
         return null;
     }
+    private function shouldSkipCommandAudit(string $file, string $source): bool
+    {
+        $normalized = str_replace('\\', '/', $file);
+
+        if (preg_match('/abstract\s+class\s+/i', $source)) {
+            return true;
+        }
+
+        if (preg_match('/interface\s+\w+/i', $source)) {
+            return true;
+        }
+
+        if (preg_match('/trait\s+\w+/i', $source)) {
+            return true;
+        }
+
+        if (str_ends_with($normalized, '/SafeBaseCommand.php')) {
+            return true;
+        }
+
+        if (str_contains($normalized, '/Contracts/')) {
+            return true;
+        }
+
+        if (str_contains($normalized, '/Traits/')) {
+            return true;
+        }
+
+        if (str_contains($normalized, '/Support/')) {
+            return true;
+        }
+
+        return false;
+    }
+
 }
