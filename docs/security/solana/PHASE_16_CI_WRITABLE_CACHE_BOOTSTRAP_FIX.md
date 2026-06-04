@@ -27,7 +27,6 @@ GitHub Actions runs Spark commands from a fresh checkout where `writable/cache` 
 
 ```bash
 bash -n scripts/ci/prepare-writable.sh
-rm -rf writable/cache
 bash scripts/ci/prepare-writable.sh
 test -d writable/cache
 php spark list
