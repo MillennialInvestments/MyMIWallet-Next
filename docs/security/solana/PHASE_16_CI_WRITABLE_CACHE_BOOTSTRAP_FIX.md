@@ -7,7 +7,7 @@ GitHub Actions runs Spark commands from a fresh checkout where `writable/cache` 
 ## Fix
 
 - Added `scripts/ci/prepare-writable.sh`.
-- Updated workflows that invoke `php spark` to call the writable preparation script after dependency installation or checkout.
+- Updated workflows that invoke `php spark` to call the writable preparation script before Spark boot.
 - The script creates the CodeIgniter runtime directories required by CI:
   - `writable/cache`
   - `writable/debugbar`
