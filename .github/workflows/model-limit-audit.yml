@@ -20,5 +20,7 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
 
+      - name: Prepare CodeIgniter writable directories
+        run: bash scripts/ci/prepare-writable.sh
       - name: Run model limit audit
         run: php spark ops:model-limit:audit
