@@ -18,6 +18,8 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
 
+      - name: Prepare CodeIgniter writable directories
+        run: bash scripts/ci/prepare-writable.sh
       - name: Index repo
         run: php spark codex:index
 
