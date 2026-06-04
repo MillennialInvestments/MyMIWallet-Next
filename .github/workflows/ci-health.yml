@@ -27,6 +27,8 @@ jobs:
       - name: Install Dependencies
         run: composer install --no-interaction --no-progress --prefer-dist
 
+      - name: Prepare CodeIgniter writable directories
+        run: bash scripts/ci/prepare-writable.sh
       - name: Bootstrap CI .env
         run: cp env/.env.ci.example .env
 

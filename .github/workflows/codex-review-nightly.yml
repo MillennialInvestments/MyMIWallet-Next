@@ -23,6 +23,8 @@ jobs:
       - name: Install
         run: composer install --no-interaction --no-progress
 
+      - name: Prepare CodeIgniter writable directories
+        run: bash scripts/ci/prepare-writable.sh
       - name: Spark Writable Bootstrap
         run: |
           mkdir -p writable/cache/FactoriesCache writable/logs
