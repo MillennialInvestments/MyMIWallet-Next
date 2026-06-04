@@ -50,17 +50,48 @@ class ReviewPublish extends SafeBaseCommand
             return EXIT_SUCCESS;
         }
 
-        $dir = ROOTPATH . 'docs/_codex/reviews';
-        @mkdir($dir, 0775, true);
-        $artifactPath = $dir . '/review-publish.json';
-        file_put_contents($artifactPath, json_encode($payload, JSON_PRETTY_PRINT) . PHP_EOL);
+        $json = json_encode(
+            $payload,
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+        );
 
+        if (! is_string($json)) {
+            CLI::error('Unable to encode review publish payload: ' . json_last_error_msg());
+            return EXIT_ERROR;
+        }
+
+        $dashboard = $this->renderDashboard($filesystem, $commands, $timestamp);
+
+        $dir = ROOTPATH . 'docs/_codex/reviews';
+        $this->ensureDir($dir);
+
+        $artifactPath = $dir . '/review-publish.json';
         $dashboardPath = $dir . '/CODEX_REVIEW.md';
-        file_put_contents($dashboardPath, $this->renderDashboard($filesystem, $commands, $timestamp));
+
+        $ciDir = WRITEPATH . 'aiops/artifacts/review-publish';
+        $this->ensureDir($ciDir);
+
+        $latestPath = $ciDir . '/latest.json';
+        $ciDashboardPath = $ciDir . '/CODEX_REVIEW.md';
+
+        $writes = [
+            $artifactPath => $json . PHP_EOL,
+            $dashboardPath => $dashboard,
+            $latestPath => $json . PHP_EOL,
+            $ciDashboardPath => $dashboard,
+        ];
+
+        foreach ($writes as $path => $content) {
+            if (file_put_contents($path, $content) === false) {
+                CLI::error('Unable to write review publish artifact: ' . $path);
+                return EXIT_ERROR;
+            }
+        }
 
         CLI::write('Review publish artifacts written.', 'green');
         CLI::write('JSON: ' . $artifactPath);
         CLI::write('Dashboard: ' . $dashboardPath);
+        CLI::write('CI latest JSON: ' . $latestPath);
 
         return EXIT_SUCCESS;
     }
@@ -68,6 +99,8 @@ class ReviewPublish extends SafeBaseCommand
     private function loadFilesystemLint(): array
     {
         $paths = [
+            ROOTPATH . 'docs/_ops/filesystem-lint.json',
+            WRITEPATH . 'aiops/artifacts/review-publish/filesystem.json',
             ROOTPATH . 'docs/_codex/reviews/filesystem.json',
             ROOTPATH . 'filesystem.json',
         ];

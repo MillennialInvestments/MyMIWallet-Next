@@ -340,4 +340,49 @@ abstract class SafeBaseCommand extends BaseCommand implements
     {
         return $this->sparkRun($command);
     }
+
+    /**
+     * Emit a deterministic report-only CI summary.
+     *
+     * @param array<string, mixed> $payload
+     */
+    protected function ciSummary(array $payload): void
+    {
+        $payload = array_merge([
+            'generated_at' => gmdate('c'),
+            'command' => $this->name ?? static::class,
+        ], $payload);
+
+        $json = json_encode(
+            $payload,
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+        );
+
+        if (! is_string($json)) {
+            \CodeIgniter\CLI\CLI::error(
+                'Unable to encode CI summary: ' . json_last_error_msg()
+            );
+            return;
+        }
+
+        \CodeIgniter\CLI\CLI::write($json);
+
+        $dir = WRITEPATH . 'ci';
+        if (! is_dir($dir) && ! @mkdir($dir, 0775, true) && ! is_dir($dir)) {
+            \CodeIgniter\CLI\CLI::error('Unable to create CI summary directory: ' . $dir);
+            return;
+        }
+
+        $command = (string) ($payload['command'] ?? static::class);
+        $slug = preg_replace('/[^A-Za-z0-9._-]+/', '-', $command) ?: 'command';
+        $path = $dir . '/' . trim($slug, '-') . '-summary.json';
+
+        if (@file_put_contents($path, $json . PHP_EOL) === false) {
+            \CodeIgniter\CLI\CLI::error('Unable to write CI summary: ' . $path);
+            return;
+        }
+
+        \CodeIgniter\CLI\CLI::write('CI summary: ' . $path, 'green');
+    }
+
 }
