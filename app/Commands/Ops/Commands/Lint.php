@@ -27,11 +27,18 @@ class Lint extends SafeBaseCommand
         $results = [];
 
         foreach ($entries as $entry) {
-            if ($entry['class'] === 'App\\Commands\\SafeBaseCommand') {
+            $entryClass = (string) ($entry['class'] ?? '');
+            $entryFile = (string) ($entry['file'] ?? '');
+
+            if (
+                $entryClass === 'SafeBaseCommand'
+                || $entryClass === 'App\\Commands\\SafeBaseCommand'
+                || str_ends_with(str_replace('\\', '/', $entryFile), '/SafeBaseCommand.php')
+            ) {
                 continue;
             }
 
-            $code = $this->readFile($entry['file']);
+            $code = $this->readFile($entryFile);
             if ($code === '') {
                 continue;
             }
@@ -189,4 +196,39 @@ class Lint extends SafeBaseCommand
 
         return $path;
     }
+    private function shouldSkipCommandLint(string $file, string $source): bool
+    {
+        $normalized = str_replace('\\', '/', $file);
+
+        if (preg_match('/abstract\s+class\s+/i', $source)) {
+            return true;
+        }
+
+        if (preg_match('/interface\s+\w+/i', $source)) {
+            return true;
+        }
+
+        if (preg_match('/trait\s+\w+/i', $source)) {
+            return true;
+        }
+
+        if (str_ends_with($normalized, '/SafeBaseCommand.php')) {
+            return true;
+        }
+
+        if (str_contains($normalized, '/Contracts/')) {
+            return true;
+        }
+
+        if (str_contains($normalized, '/Traits/')) {
+            return true;
+        }
+
+        if (str_contains($normalized, '/Support/')) {
+            return true;
+        }
+
+        return false;
+    }
+
 }
