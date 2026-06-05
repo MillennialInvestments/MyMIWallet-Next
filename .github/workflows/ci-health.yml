@@ -42,7 +42,7 @@ jobs:
           php spark logs:full-report today
 
       - name: Filesystem Safety Lint (PR Gate)
-        run: php spark ops:filesystem:lint
+        run: bash scripts/ci/check_filesystem_regression.sh
 
       - name: CI-Safe Optimize
         run: php spark optimize:safe

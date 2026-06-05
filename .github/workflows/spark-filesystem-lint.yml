@@ -59,4 +59,4 @@ jobs:
 
       - name: Gate on blocking errors
         run: |
-          php -r '$data=json_decode(file_get_contents("writable/aiops/artifacts/review-publish/latest.json"),true); if (!is_array($data)) { fwrite(STDERR,"Missing review publish output\n"); exit(1);} if (!empty($data["blocking_errors"])) { fwrite(STDERR,"Blocking errors detected\n"); exit(1);}'
+          bash scripts/ci/check_filesystem_regression.sh

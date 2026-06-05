@@ -63,7 +63,7 @@ jobs:
 
       - name: Spark Filesystem Lint
         run: |
-          php spark ops:filesystem:lint
+          bash scripts/ci/check_filesystem_regression.sh
 
       - name: Codex Review Dry Run
         run: |

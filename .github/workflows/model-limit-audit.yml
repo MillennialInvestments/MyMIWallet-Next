@@ -23,4 +23,4 @@ jobs:
       - name: Prepare CodeIgniter writable directories
         run: bash scripts/ci/prepare-writable.sh
       - name: Run model limit audit
-        run: php spark ops:model-limit:audit
+        run: bash scripts/ci/check_model_limit_regression.sh
