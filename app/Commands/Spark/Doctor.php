@@ -309,4 +309,31 @@ class Doctor extends SafeBaseCommand
 
         return $path;
     }
+
+    /**
+     * @param mixed $entry
+     */
+    private function commandNameFromRegistryEntry($entry): string
+    {
+        if (is_string($entry)) {
+            return $entry;
+        }
+
+        if (is_array($entry)) {
+            foreach (['name', 'command', 0] as $key) {
+                if (isset($entry[$key]) && is_string($entry[$key])) {
+                    return $entry[$key];
+                }
+            }
+
+            foreach ($entry as $value) {
+                if (is_string($value)) {
+                    return $value;
+                }
+            }
+        }
+
+        return '';
+    }
+
 }
