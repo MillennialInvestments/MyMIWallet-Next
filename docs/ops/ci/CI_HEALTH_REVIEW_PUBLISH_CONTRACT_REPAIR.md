@@ -23,6 +23,13 @@ codex:review:publish
 
 Spark Filesystem Guard
   -> reads writable/aiops/artifacts/review-publish/latest.json
+Current Filesystem Debt
+Issue count: 260
+Error count: 30
+Warning count: 230
+
+Existing blocking errors are intentionally preserved for a later reviewed-baseline and cleanup phase.
+
 Safety
 No Solana transaction execution enabled.
 No Solana broadcast enabled.
