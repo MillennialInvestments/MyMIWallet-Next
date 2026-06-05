@@ -52,6 +52,7 @@ class CoinVaultService
     public function hasRequiredTables(array $keys = ['projects', 'wallets', 'ledger', 'contributions']): bool
     {
         $status = $this->tableStatus();
+
         foreach ($keys as $key) {
             if (empty($status[$key]['exists'])) {
                 return false;
@@ -64,12 +65,17 @@ class CoinVaultService
     public function getDashboardData(): array
     {
         if (! $this->hasRequiredTables()) {
-            return ['table_status' => $this->tableStatus(), 'projects' => [], 'pending_contributions' => [], 'pending_payouts' => []];
+            return [
+                'table_status' => $this->tableStatus(),
+                'projects' => [],
+                'pending_contributions' => [],
+                'pending_payouts' => [],
+            ];
         }
 
         return [
             'table_status' => $this->tableStatus(),
-            'projects' => (new CoinProjectModel())->orderBy('project_name', 'ASC')->findAll(50),
+            'projects' => (new CoinProjectModel())->orderBy('coin_name', 'ASC')->findAll(50),
             'pending_contributions' => (new CoinContributionModel())->where('status', 'pending')->orderBy('created_at', 'DESC')->findAll(25),
             'pending_payouts' => (new CoinPayoutRequestModel())->where('status', 'pending')->orderBy('created_at', 'DESC')->findAll(25),
         ];
@@ -81,9 +87,15 @@ class CoinVaultService
             return null;
         }
 
+        $projectKey = trim($projectKey);
+        $coinSymbol = strtoupper(trim($coinSymbol));
+
         return (new CoinProjectModel())
-            ->where('project_key', $projectKey)
-            ->where('coin_symbol', strtoupper($coinSymbol))
+            ->groupStart()
+                ->where('coin_key', $projectKey)
+                ->orWhere('symbol', $coinSymbol)
+                ->orWhere('project_exchange_symbol', $coinSymbol)
+            ->groupEnd()
             ->where('status !=', 'deleted')
             ->first() ?: null;
     }
@@ -91,6 +103,7 @@ class CoinVaultService
     public function findUserByEmail(string $email): ?array
     {
         $user = (new UserModel())->where('email', strtolower(trim($email)))->first();
+
         if (! $user) {
             return null;
         }
@@ -102,22 +115,43 @@ class CoinVaultService
         return (array) $user;
     }
 
-    public function getOrCreateWallet(int $projectId, int $userId): array
+    public function getCategoryId(string $contributionType = 'cash_contribution'): int
+    {
+        $table = config('CoinVault')->tables['categories'] ?? 'bf_tbi_coin_contribution_categories';
+
+        if (! $this->db->tableExists($table)) {
+            return 0;
+        }
+
+        $category = $this->db->table($table)
+            ->where('category_key', $contributionType)
+            ->orWhere('category_key', 'cash_contribution')
+            ->orderBy("FIELD(category_key, " . $this->db->escape($contributionType) . ", 'cash_contribution')", '', false)
+            ->get(1)
+            ->getRowArray();
+
+        return (int) ($category['id'] ?? 0);
+    }
+
+    public function getOrCreateWallet(int $projectId, int $coinId, int $userId): array
     {
         $model = new CoinWalletModel();
-        $wallet = $model->where('project_id', $projectId)->where('user_id', $userId)->first();
+        $wallet = $model->where('coin_id', $coinId)->where('user_id', $userId)->first();
+
         if ($wallet) {
             return $wallet;
         }
 
         $id = $model->insert([
             'project_id' => $projectId,
+            'coin_id' => $coinId,
             'user_id' => $userId,
             'available_balance' => 0,
             'locked_balance' => 0,
             'voting_balance' => 0,
             'lifetime_earned' => 0,
             'lifetime_withdrawn' => 0,
+            'lifetime_redeemed' => 0,
             'status' => 'active',
         ], true);
 
@@ -127,6 +161,7 @@ class CoinVaultService
     public function ownershipPercent(array $wallet, array $project): float
     {
         $released = (float) ($project['released_supply'] ?? 0);
+
         if ($released <= 0) {
             return 0.0;
         }
@@ -142,16 +177,26 @@ class CoinVaultService
 
         $contributions = new CoinContributionModel();
         $contribution = $contributions->find($contributionId);
+
         if (! $contribution || ($contribution['status'] ?? '') !== 'pending') {
             return ['ok' => false, 'error' => 'contribution_not_pending'];
         }
 
-        $project = (new CoinProjectModel())->find((int) $contribution['project_id']);
+        $project = (new CoinProjectModel())->find((int) ($contribution['coin_id'] ?? 0));
+
+        if (! $project) {
+            $project = (new CoinProjectModel())->find((int) ($contribution['project_id'] ?? 0));
+        }
+
         if (! $project) {
             return ['ok' => false, 'error' => 'project_not_found'];
         }
 
-        $amount = (float) ($contribution['calculated_coin_amount'] ?: $this->rewardRules->calculate($contribution, $project));
+        $amount = (float) ($contribution['coin_quantity'] ?? $contribution['amount'] ?? 0);
+        if ($amount <= 0) {
+            $amount = $this->rewardRules->calculate($contribution, $project);
+        }
+
         if ($amount <= 0) {
             return ['ok' => false, 'error' => 'coin_amount_must_be_positive'];
         }
@@ -160,26 +205,14 @@ class CoinVaultService
             return ['ok' => false, 'error' => 'insufficient_vault_balance'];
         }
 
+        $projectId = (int) ($project['project_id'] ?? 0);
+        $coinId = (int) $project['id'];
+
         $this->db->transStart();
-        $wallet = $this->getOrCreateWallet((int) $project['id'], (int) $contribution['user_id']);
+
+        $wallet = $this->getOrCreateWallet($projectId, $coinId, (int) $contribution['user_id']);
         $newAvailable = (float) $wallet['available_balance'] + $amount;
         $newVoting = (float) $wallet['voting_balance'] + $amount;
-
-        $ledgerId = (new CoinLedgerModel())->insert([
-            'project_id' => $project['id'],
-            'wallet_id' => $wallet['id'],
-            'user_id' => $contribution['user_id'],
-            'transaction_type' => $this->rewardRules->ledgerTypeForContribution((string) $contribution['contribution_type']),
-            'direction' => 'credit',
-            'amount' => $amount,
-            'balance_after' => $newAvailable,
-            'reference_table' => 'bf_coin_vault_contributions',
-            'reference_id' => $contributionId,
-            'source' => $contribution['source'],
-            'source_id' => $contribution['source_id'],
-            'memo' => $contribution['memo'],
-            'created_by' => $adminUserId,
-        ], true);
 
         (new CoinWalletModel())->update((int) $wallet['id'], [
             'available_balance' => $newAvailable,
@@ -188,31 +221,39 @@ class CoinVaultService
             'updated_by' => $adminUserId,
         ]);
 
-        (new CoinProjectModel())->update((int) $project['id'], [
-            'released_supply' => (float) $project['released_supply'] + $amount,
-            'vault_balance' => (float) $project['vault_balance'] - $amount,
-            'updated_by' => $adminUserId,
+        (new CoinProjectModel())->update($coinId, [
+            'released_supply' => (float) ($project['released_supply'] ?? 0) + $amount,
+            'vault_balance' => (float) ($project['vault_balance'] ?? 0) - $amount,
         ]);
 
         $contributions->update($contributionId, [
+            'wallet_id' => (int) $wallet['id'],
+            'transaction_type' => $this->rewardRules->ledgerTypeForContribution((string) ($contribution['contribution_type'] ?? 'cash_contribution')),
+            'direction' => 'credit',
+            'amount' => $amount,
+            'balance_after' => $newAvailable,
             'status' => 'approved',
-            'calculated_coin_amount' => $amount,
-            'approved_by' => $adminUserId,
-            'approved_at' => date('Y-m-d H:i:s'),
+            'reviewed_by' => $adminUserId,
+            'reviewed_at' => date('Y-m-d H:i:s'),
             'updated_by' => $adminUserId,
         ]);
+
         $this->db->transComplete();
 
-        return ['ok' => $this->db->transStatus(), 'ledger_id' => $ledgerId, 'coin_amount' => $amount];
+        return [
+            'ok' => $this->db->transStatus(),
+            'ledger_id' => $contributionId,
+            'coin_amount' => $amount,
+        ];
     }
 
     public function rejectContribution(int $contributionId, int $adminUserId = 0, string $reason = ''): bool
     {
         return (bool) (new CoinContributionModel())->update($contributionId, [
             'status' => 'rejected',
-            'rejected_by' => $adminUserId,
-            'rejected_at' => date('Y-m-d H:i:s'),
-            'rejection_reason' => $reason,
+            'reviewed_by' => $adminUserId,
+            'reviewed_at' => date('Y-m-d H:i:s'),
+            'memo' => trim(((string) $reason)),
             'updated_by' => $adminUserId,
         ]);
     }
@@ -228,39 +269,59 @@ class CoinVaultService
         }
 
         $project = (new CoinProjectModel())->find($projectId);
-        $wallet = (new CoinWalletModel())->where('project_id', $projectId)->where('user_id', $userId)->first();
+        $coinId = (int) ($project['id'] ?? 0);
+        $wallet = (new CoinWalletModel())->where('coin_id', $coinId)->where('user_id', $userId)->first();
+
         if (! $project || ! $wallet || (float) $wallet['available_balance'] < $coinAmount) {
             return ['ok' => false, 'error' => 'insufficient_available_balance'];
         }
 
         $this->db->transStart();
+
         $newAvailable = (float) $wallet['available_balance'] - $coinAmount;
         $newLocked = (float) $wallet['locked_balance'] + $coinAmount;
+
         (new CoinWalletModel())->update((int) $wallet['id'], [
             'available_balance' => $newAvailable,
             'locked_balance' => $newLocked,
         ]);
+
+        $usdAmount = $coinAmount * (float) ($project['unit_value_usd'] ?? 0);
+
         $payoutId = (new CoinPayoutRequestModel())->insert([
-            'project_id' => $projectId,
+            'project_id' => (int) ($project['project_id'] ?? 0),
+            'coin_id' => $coinId,
             'wallet_id' => $wallet['id'],
             'user_id' => $userId,
             'coin_amount' => $coinAmount,
-            'usd_reference_amount' => $coinAmount * (float) ($project['usd_reference_value'] ?? 0),
+            'requested_coin_amount' => $coinAmount,
+            'usd_reference_amount' => $usdAmount,
+            'requested_usd_amount' => $usdAmount,
             'status' => 'pending',
             'memo' => $memo,
         ], true);
+
         (new CoinLedgerModel())->insert([
-            'project_id' => $projectId,
+            'project_id' => (int) ($project['project_id'] ?? 0),
+            'coin_id' => $coinId,
             'wallet_id' => $wallet['id'],
             'user_id' => $userId,
+            'category_id' => $this->getCategoryId('cash_contribution'),
+            'contribution_type' => 'payout_request',
             'transaction_type' => 'payout_request',
             'direction' => 'lock',
+            'usd_value' => $usdAmount,
+            'coin_quantity' => $coinAmount,
             'amount' => $coinAmount,
             'balance_after' => $newAvailable,
-            'reference_table' => 'bf_coin_vault_payout_requests',
+            'unit_value_usd' => (float) ($project['unit_value_usd'] ?? 1),
+            'status' => 'approved',
+            'idempotency_key' => 'payout_request_' . $payoutId,
+            'reference_table' => 'bf_tbi_coin_payout_requests',
             'reference_id' => $payoutId,
             'memo' => $memo,
         ]);
+
         $this->db->transComplete();
 
         return ['ok' => $this->db->transStatus(), 'payout_id' => $payoutId];
@@ -270,49 +331,98 @@ class CoinVaultService
     {
         $payouts = new CoinPayoutRequestModel();
         $payout = $payouts->find($payoutId);
+
         if (! $payout || ($payout['status'] ?? '') !== 'pending') {
             return ['ok' => false, 'error' => 'payout_not_pending'];
         }
+
         $wallet = (new CoinWalletModel())->find((int) $payout['wallet_id']);
-        $locked = max(0, (float) $wallet['locked_balance'] - (float) $payout['coin_amount']);
-        $voting = max(0, (float) $wallet['voting_balance'] - (float) $payout['coin_amount']);
+
+        if (! $wallet) {
+            return ['ok' => false, 'error' => 'wallet_not_found'];
+        }
+
+        $amount = (float) ($payout['coin_amount'] ?? $payout['requested_coin_amount'] ?? 0);
+        $locked = max(0, (float) $wallet['locked_balance'] - $amount);
+        $voting = max(0, (float) $wallet['voting_balance'] - $amount);
+
+        $this->db->transStart();
+
         (new CoinWalletModel())->update((int) $wallet['id'], [
             'locked_balance' => $locked,
             'voting_balance' => $voting,
-            'lifetime_withdrawn' => (float) $wallet['lifetime_withdrawn'] + (float) $payout['coin_amount'],
+            'lifetime_withdrawn' => (float) ($wallet['lifetime_withdrawn'] ?? 0) + $amount,
+            'lifetime_redeemed' => (float) ($wallet['lifetime_redeemed'] ?? 0) + $amount,
             'updated_by' => $adminUserId,
         ]);
+
         (new CoinLedgerModel())->insert([
             'project_id' => $payout['project_id'],
+            'coin_id' => $payout['coin_id'],
             'wallet_id' => $payout['wallet_id'],
             'user_id' => $payout['user_id'],
+            'category_id' => $this->getCategoryId('cash_contribution'),
+            'contribution_type' => 'payout_approved',
             'transaction_type' => 'payout_approved',
             'direction' => 'debit',
-            'amount' => $payout['coin_amount'],
-            'balance_after' => $wallet['available_balance'],
-            'reference_table' => 'bf_coin_vault_payout_requests',
+            'usd_value' => (float) ($payout['usd_reference_amount'] ?? $payout['requested_usd_amount'] ?? 0),
+            'coin_quantity' => $amount,
+            'amount' => $amount,
+            'balance_after' => (float) $wallet['available_balance'],
+            'unit_value_usd' => $amount > 0 ? ((float) ($payout['usd_reference_amount'] ?? $payout['requested_usd_amount'] ?? 0) / $amount) : 1,
+            'status' => 'approved',
+            'idempotency_key' => 'payout_approved_' . $payoutId,
+            'reference_table' => 'bf_tbi_coin_payout_requests',
             'reference_id' => $payoutId,
             'created_by' => $adminUserId,
         ]);
-        $payouts->update($payoutId, ['status' => 'approved', 'approved_by' => $adminUserId, 'approved_at' => date('Y-m-d H:i:s')]);
-        return ['ok' => true];
+
+        $payouts->update($payoutId, [
+            'status' => 'approved',
+            'approved_by' => $adminUserId,
+            'approved_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        $this->db->transComplete();
+
+        return ['ok' => $this->db->transStatus()];
     }
 
     public function rejectPayout(int $payoutId, int $adminUserId = 0, string $reason = ''): array
     {
         $payouts = new CoinPayoutRequestModel();
         $payout = $payouts->find($payoutId);
+
         if (! $payout || ($payout['status'] ?? '') !== 'pending') {
             return ['ok' => false, 'error' => 'payout_not_pending'];
         }
+
         $wallet = (new CoinWalletModel())->find((int) $payout['wallet_id']);
+
+        if (! $wallet) {
+            return ['ok' => false, 'error' => 'wallet_not_found'];
+        }
+
+        $amount = (float) ($payout['coin_amount'] ?? $payout['requested_coin_amount'] ?? 0);
+
+        $this->db->transStart();
+
         (new CoinWalletModel())->update((int) $wallet['id'], [
-            'available_balance' => (float) $wallet['available_balance'] + (float) $payout['coin_amount'],
-            'locked_balance' => max(0, (float) $wallet['locked_balance'] - (float) $payout['coin_amount']),
+            'available_balance' => (float) $wallet['available_balance'] + $amount,
+            'locked_balance' => max(0, (float) $wallet['locked_balance'] - $amount),
             'updated_by' => $adminUserId,
         ]);
-        $payouts->update($payoutId, ['status' => 'rejected', 'rejected_by' => $adminUserId, 'rejected_at' => date('Y-m-d H:i:s'), 'rejection_reason' => $reason]);
-        return ['ok' => true];
+
+        $payouts->update($payoutId, [
+            'status' => 'rejected',
+            'rejected_by' => $adminUserId,
+            'rejected_at' => date('Y-m-d H:i:s'),
+            'rejection_reason' => $reason,
+        ]);
+
+        $this->db->transComplete();
+
+        return ['ok' => $this->db->transStatus()];
     }
 
     public function solanaIntegrationMap(): array
