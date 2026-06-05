@@ -15,3 +15,9 @@ This baseline preserves known CI debt while preventing new regressions.
 CI fails only when a PR introduces new signatures beyond the reviewed baseline.
 
 Existing debt remains visible and must be cleaned in later dedicated phases.
+
+## Copilot Command Baseline
+
+- Copilot command governance currently has 26 existing command violations.
+- `scripts/ci/check_copilot_regression.sh` fails only if a PR introduces additional command violations.
+- Existing command governance debt should be cleaned in a dedicated command-hardening phase.

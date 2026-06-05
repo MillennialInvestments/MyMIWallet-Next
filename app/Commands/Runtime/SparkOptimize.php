@@ -24,10 +24,10 @@ class SparkOptimize extends SafeBaseCommand
         CLI::write('Running CI-safe optimization...', 'yellow');
 
         // Clear caches first
-        $this->runCommand('php spark cache:clear');
+        $this->runCommand(PHP_BINARY . ' ' . escapeshellarg(ROOTPATH . 'spark') . ' cache:clear');
 
         // Run optimize ONCE
-        $exitCode = $this->runCommand('php spark optimize');
+        $exitCode = $this->runCommand(PHP_BINARY . ' ' . escapeshellarg(ROOTPATH . 'spark') . ' optimize');
 
         if ($exitCode !== 0) {
             CLI::error('Optimization failed.');

@@ -165,7 +165,7 @@ jobs:
 
       - name: Copilot Validation
         run: |
-          php spark aiops:copilot:validate --json > copilot-validation.json
+          bash scripts/ci/check_copilot_regression.sh
 
       - name: Spark Doctor
         run: |
