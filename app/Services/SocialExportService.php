@@ -180,4 +180,44 @@ class SocialExportService
         return ['status' => 'success', 'export_job_id' => $jobId];
     }
 
+
+    public function getExportJob(int $jobId): ?array
+    {
+        $row = $this->db->table('bf_social_export_jobs')
+            ->where('id', $jobId)
+            ->get()
+            ->getRowArray();
+
+        return $row ?: null;
+    }
+
+    public function updateExportJobStatus(int $jobId, string $status, ?string $error = null): bool
+    {
+        $payload = [
+            'status' => $status,
+            'updated_at' => date('Y-m-d H:i:s'),
+        ];
+
+        if ($error !== null) {
+            $payload['last_error'] = $error;
+        }
+
+        if ($status === 'sent') {
+            $payload['sent_at'] = date('Y-m-d H:i:s');
+        }
+
+        return (bool) $this->db->table('bf_social_export_jobs')
+            ->where('id', $jobId)
+            ->update($payload);
+    }
+
+    public function incrementExportJobAttempts(int $jobId): bool
+    {
+        return (bool) $this->db->table('bf_social_export_jobs')
+            ->where('id', $jobId)
+            ->set('attempts', 'attempts + 1', false)
+            ->set('updated_at', date('Y-m-d H:i:s'))
+            ->update();
+    }
+
 }
