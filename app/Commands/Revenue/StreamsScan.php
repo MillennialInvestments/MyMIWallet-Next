@@ -5,6 +5,7 @@ namespace App\Commands\Revenue;
 use App\Commands\SafeBaseCommand;
 use App\Commands\Support\ArtifactHelper;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\I18n\Time;
 
 class StreamsScan extends SafeBaseCommand
 {

@@ -1,9 +1,9 @@
 <?php
 use Config\Services;
 $auth = null;
- = false;
- = null;
- = null;
+$isLoggedIn = false;
+$cuID = null;
+$nonce = $nonce ?? [];
 $session = service('session');
 $request = service('request');
 $currentUserID = $session->get('user_id') ?? '';
