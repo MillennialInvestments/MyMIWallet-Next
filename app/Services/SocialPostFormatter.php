@@ -62,6 +62,25 @@ class SocialPostFormatter
         ];
     }
 
+
+    protected function injectTemplate(string $template, array $replacements): string
+    {
+        $body = strtr($template, $replacements);
+
+        // Clean up unreplaced known placeholders safely.
+        $body = str_replace(
+            ['{HOOK}', '{VALUE}', '{CTA}', '{LINKS}', '{HASHTAGS}', '{TICKERS}'],
+            '',
+            $body
+        );
+
+        // Normalize excessive whitespace while preserving paragraph breaks.
+        $body = preg_replace("/[ \t]+/", " ", $body);
+        $body = preg_replace("/\n{3,}/", "\n\n", $body);
+
+        return trim((string) $body);
+    }
+
     protected function resolveTemplate(string $platformKey, ?string $templateKey): array
     {
         $platform = $this->platformModel->findByKey($platformKey);
