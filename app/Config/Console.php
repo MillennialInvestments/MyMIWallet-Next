@@ -23,6 +23,7 @@ class Console extends BaseConfig
         \App\Commands\Marketing\SocialZapierDispatch::class,
         \App\Commands\Marketing\SocialTbiExport::class,
         \App\Commands\Marketing\SocialTbiSyncSmokeTest::class,
+        \App\Commands\Marketing\SocialTbiHttpHandoffTest::class,
         \App\Commands\SolanaPreviewRuntimeSmoke::class,
         \App\Commands\SolanaPreviewBrowserRuntimeSmoke::class,
         \App\Commands\AIOps\API\SchemaValidate::class,
