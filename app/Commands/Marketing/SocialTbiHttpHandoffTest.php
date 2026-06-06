@@ -64,26 +64,38 @@ class SocialTbiHttpHandoffTest extends SafeBaseCommand
 
             $platformId = (int) ($platform['id'] ?? 0);
 
-            $insert = [
-                'source_type' => 'phase4d_http_handoff',
-                'source_id' => 0,
-                'platform_id' => $platformId,
-                'community_id' => null,
-                'template_id' => null,
-                'post_title' => 'Phase 4D Authenticated MyMI to TBI Marketing Handoff',
-                'post_body' => 'This is a controlled Phase 4D authenticated HTTP handoff test from MyMI Wallet to TBI Marketing. Draft only. No Zapier dispatch. No external social posting.',
-                'hashtags' => '#MyMIWallet #TBIMarketing #AIOps',
-                'tickers' => '$BTC $SOL',
-                'cta_link' => 'https://www.mymiwallet.com/Register',
-                'status' => 'approved',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ];
+            $now = date('Y-m-d H:i:s');
 
-            $db->table('bf_social_generated_posts')->insert($insert);
+            $db->query(
+                "INSERT INTO bf_social_generated_posts
+                (source_type, source_id, platform_id, community_id, template_id, post_title, post_body, hashtags, tickers, cta_link, status, created_at, updated_at)
+                VALUES
+                (?, ?, ?, NULL, NULL, ?, ?, ?, ?, ?, ?, ?, ?)",
+                [
+                    'phase4d_http_handoff',
+                    0,
+                    $platformId,
+                    'Phase 4D Authenticated MyMI to TBI Marketing Handoff',
+                    'This is a controlled Phase 4D authenticated HTTP handoff test from MyMI Wallet to TBI Marketing. Draft only. No Zapier dispatch. No external social posting.',
+                    '#MyMIWallet #TBIMarketing #AIOps',
+                    '$BTC $SOL',
+                    'https://www.mymiwallet.com/Register',
+                    'approved',
+                    $now,
+                    $now,
+                ]
+            );
+
+            $insertId = (int) $db->insertID();
+
+            if ($insertId <= 0) {
+                $error = $db->error();
+                CLI::error('Generated post fallback insert failed: ' . json_encode($error));
+                return EXIT_ERROR;
+            }
 
             $post = $db->table('bf_social_generated_posts')
-                ->where('id', $db->insertID())
+                ->where('id', $insertId)
                 ->get()
                 ->getRowArray();
         }
