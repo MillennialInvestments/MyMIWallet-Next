@@ -2578,3 +2578,15 @@ $routes->match(['get', 'post'], 'API/Management/scheduleSocialCampaignPost', '\A
 $routes->get('API/Management/getSocialCampaignSchedule', '\App\Modules\Management\Controllers\MarketingAdminController::getSocialCampaignSchedule');
 $routes->get('Management/Marketing/Social-Campaigns', '\App\Modules\Management\Controllers\MarketingAdminController::socialCampaigns');
 
+
+// Social Funnel Attribution Phase 3C
+
+$routes->match(['get', 'post'], 'API/Management/createTrackingLink', '\App\Modules\Management\Controllers\MarketingAdminController::createTrackingLink');
+$routes->get('API/Management/getTrackingLinks', '\App\Modules\Management\Controllers\MarketingAdminController::getTrackingLinks');
+$routes->match(['get', 'post'], 'API/Management/recordSocialClick', '\App\Modules\Management\Controllers\MarketingAdminController::recordSocialClick');
+$routes->match(['get', 'post'], 'API/Management/recordSocialConversion', '\App\Modules\Management\Controllers\MarketingAdminController::recordSocialConversion');
+$routes->get('API/Management/getCommunityMetrics', '\App\Modules\Management\Controllers\MarketingAdminController::getCommunityMetrics');
+$routes->get('API/Management/getCampaignMetrics', '\App\Modules\Management\Controllers\MarketingAdminController::getCampaignMetrics');
+$routes->get('API/Management/getPlatformMetrics', '\App\Modules\Management\Controllers\MarketingAdminController::getPlatformMetrics');
+$routes->get('Management/Marketing/Funnel-Analytics', '\App\Modules\Management\Controllers\MarketingAdminController::funnelAnalytics');
+

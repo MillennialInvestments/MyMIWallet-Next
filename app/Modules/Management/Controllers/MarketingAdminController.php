@@ -3081,4 +3081,55 @@ class MarketingAdminController extends BaseAdminController
         return view('App\Modules\Management\Views\Marketing\social_campaigns');
     }
 
+
+    public function createTrackingLink()
+    {
+        $payload = $this->request->getJSON(true) ?: $this->request->getPost() ?: $this->request->getGet();
+        $service = new \App\Services\SocialTrackingService();
+        return $this->response->setJSON($service->createTrackingLink($payload ?: []));
+    }
+
+    public function getTrackingLinks()
+    {
+        $service = new \App\Services\SocialTrackingService();
+        return $this->response->setJSON(['status' => 'success', 'data' => $service->getTrackingLinks(100)]);
+    }
+
+    public function recordSocialClick()
+    {
+        $payload = $this->request->getJSON(true) ?: $this->request->getPost() ?: $this->request->getGet();
+        $service = new \App\Services\SocialTrackingService();
+        return $this->response->setJSON($service->recordClick($payload ?: []));
+    }
+
+    public function recordSocialConversion()
+    {
+        $payload = $this->request->getJSON(true) ?: $this->request->getPost() ?: $this->request->getGet();
+        $service = new \App\Services\SocialTrackingService();
+        return $this->response->setJSON($service->recordConversion($payload ?: []));
+    }
+
+    public function getCommunityMetrics()
+    {
+        $service = new \App\Services\SocialTrackingService();
+        return $this->response->setJSON(['status' => 'success', 'data' => $service->getCommunityMetrics(100)]);
+    }
+
+    public function getCampaignMetrics()
+    {
+        $service = new \App\Services\SocialTrackingService();
+        return $this->response->setJSON(['status' => 'success', 'data' => $service->getCampaignMetrics(100)]);
+    }
+
+    public function getPlatformMetrics()
+    {
+        $service = new \App\Services\SocialTrackingService();
+        return $this->response->setJSON(['status' => 'success', 'data' => $service->getPlatformMetrics(100)]);
+    }
+
+    public function funnelAnalytics()
+    {
+        return view('App\Modules\Management\Views\Marketing\funnel_analytics');
+    }
+
 }
