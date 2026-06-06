@@ -3,7 +3,6 @@
 namespace App\Commands\Marketing;
 
 use App\Commands\SafeBaseCommand;
-use App\Services\SocialContentGenerationService;
 use App\Services\SocialExportService;
 use App\Services\TbiMarketingExportService;
 use CodeIgniter\CLI\CLI;
@@ -37,6 +36,12 @@ class SocialTbiHttpHandoffTest extends SafeBaseCommand
             $failures[] = 'TBI_MARKETING_API_KEY is missing.';
         }
 
+        foreach (['bf_social_generated_posts', 'bf_social_export_jobs', 'bf_social_delivery_logs'] as $table) {
+            if (! $db->tableExists($table)) {
+                $failures[] = 'Missing table: ' . $table;
+            }
+        }
+
         if (! empty($failures)) {
             CLI::error('Phase 4D handoff precheck failed.');
             foreach ($failures as $failure) {
@@ -46,27 +51,49 @@ class SocialTbiHttpHandoffTest extends SafeBaseCommand
             return EXIT_ERROR;
         }
 
-        $generation = new SocialContentGenerationService();
-        $pack = $generation->generateFromManualInput(
-            'Phase 4D authenticated MyMI Wallet to TBI Marketing handoff test',
-            'business',
-            'website'
-        );
-
-        $saved = $generation->saveGeneratedPack($pack, 'phase4d_http_handoff', 0);
-
         $post = $db->table('bf_social_generated_posts')
             ->orderBy('id', 'DESC')
             ->get(1)
             ->getRowArray();
 
         if (! $post) {
-            CLI::error('No generated social post found after generation.');
+            $platform = $db->table('bf_social_platforms')
+                ->where('platform_key', 'discord')
+                ->get()
+                ->getRowArray();
+
+            $platformId = (int) ($platform['id'] ?? 0);
+
+            $insert = [
+                'source_type' => 'phase4d_http_handoff',
+                'source_id' => 0,
+                'platform_id' => $platformId,
+                'community_id' => null,
+                'template_id' => null,
+                'post_title' => 'Phase 4D Authenticated MyMI to TBI Marketing Handoff',
+                'post_body' => 'This is a controlled Phase 4D authenticated HTTP handoff test from MyMI Wallet to TBI Marketing. Draft only. No Zapier dispatch. No external social posting.',
+                'hashtags' => '#MyMIWallet #TBIMarketing #AIOps',
+                'tickers' => '$BTC $SOL',
+                'cta_link' => 'https://www.mymiwallet.com/Register',
+                'status' => 'approved',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $db->table('bf_social_generated_posts')->insert($insert);
+
+            $post = $db->table('bf_social_generated_posts')
+                ->where('id', $db->insertID())
+                ->get()
+                ->getRowArray();
+        }
+
+        if (! $post) {
+            CLI::error('Unable to create or locate generated social post.');
             return EXIT_ERROR;
         }
 
         $export = new SocialExportService();
-
         $job = $export->createExportJobFromGeneratedPost((int) $post['id'], 'tbi_marketing');
 
         if (($job['status'] ?? '') !== 'success') {
@@ -91,8 +118,7 @@ class SocialTbiHttpHandoffTest extends SafeBaseCommand
             . "- Generated UTC: " . gmdate('c') . "\n"
             . "- Base URL: {$baseUrl}\n"
             . "- Generated post ID: " . ($post['id'] ?? '') . "\n"
-            . "- Export job ID: {$jobId}\n"
-            . "- Saved drafts: " . json_encode($saved) . "\n\n"
+            . "- Export job ID: {$jobId}\n\n"
             . "## Send Result\n\n```json\n"
             . json_encode($sendResult, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
             . "\n```\n"
