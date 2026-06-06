@@ -3033,4 +3033,52 @@ class MarketingAdminController extends BaseAdminController
         return view('App\Modules\Management\Views\Marketing\social_generator');
     }
 
+
+    public function createSocialCampaign()
+    {
+        $payload = $this->request->getJSON(true) ?: $this->request->getPost();
+        $service = new \App\Services\SocialCampaignService();
+        return $this->response->setJSON($service->createCampaign($payload ?: [
+            'title' => $this->request->getGetPost('title') ?: 'Social Campaign',
+            'audience' => $this->request->getGetPost('audience') ?: 'beginner',
+            'cta_type' => $this->request->getGetPost('cta_type') ?: 'join_discord',
+        ]));
+    }
+
+    public function getSocialCampaigns()
+    {
+        $service = new \App\Services\SocialCampaignService();
+        return $this->response->setJSON(['status' => 'success', 'data' => $service->getCampaigns(100)]);
+    }
+
+    public function addPostToSocialCampaign()
+    {
+        $service = new \App\Services\SocialCampaignService();
+        return $this->response->setJSON($service->addPostToCampaign(
+            (int) $this->request->getGetPost('campaign_id'),
+            (int) $this->request->getGetPost('generated_post_id')
+        ));
+    }
+
+    public function scheduleSocialCampaignPost()
+    {
+        $service = new \App\Services\SocialCampaignService();
+        return $this->response->setJSON($service->schedulePost(
+            (int) $this->request->getGetPost('campaign_id'),
+            (int) $this->request->getGetPost('generated_post_id'),
+            (string) ($this->request->getGetPost('scheduled_for') ?: date('Y-m-d H:i:s'))
+        ));
+    }
+
+    public function getSocialCampaignSchedule()
+    {
+        $service = new \App\Services\SocialCampaignService();
+        return $this->response->setJSON(['status' => 'success', 'data' => $service->getSchedule(100)]);
+    }
+
+    public function socialCampaigns()
+    {
+        return view('App\Modules\Management\Views\Marketing\social_campaigns');
+    }
+
 }

@@ -2568,3 +2568,13 @@ $routes->match(['get', 'post'], 'API/Management/generateSocialSamplePack', '\App
 $routes->get('API/Management/getGeneratedSocialPosts', '\App\Modules\Management\Controllers\MarketingAdminController::getGeneratedSocialPosts');
 $routes->get('Management/Marketing/Social-Generator', '\App\Modules\Management\Controllers\MarketingAdminController::socialGenerator');
 
+
+// Social Campaign Calendar Phase 3B
+
+$routes->match(['get', 'post'], 'API/Management/createSocialCampaign', '\App\Modules\Management\Controllers\MarketingAdminController::createSocialCampaign');
+$routes->get('API/Management/getSocialCampaigns', '\App\Modules\Management\Controllers\MarketingAdminController::getSocialCampaigns');
+$routes->match(['get', 'post'], 'API/Management/addPostToSocialCampaign', '\App\Modules\Management\Controllers\MarketingAdminController::addPostToSocialCampaign');
+$routes->match(['get', 'post'], 'API/Management/scheduleSocialCampaignPost', '\App\Modules\Management\Controllers\MarketingAdminController::scheduleSocialCampaignPost');
+$routes->get('API/Management/getSocialCampaignSchedule', '\App\Modules\Management\Controllers\MarketingAdminController::getSocialCampaignSchedule');
+$routes->get('Management/Marketing/Social-Campaigns', '\App\Modules\Management\Controllers\MarketingAdminController::socialCampaigns');
+
