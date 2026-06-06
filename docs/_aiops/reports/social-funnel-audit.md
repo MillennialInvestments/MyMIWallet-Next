@@ -1,6 +1,6 @@
 # Social Funnel Audit
 
-- Generated UTC: 2026-06-06T14:01:07+00:00
+- Generated UTC: 2026-06-06T14:03:03+00:00
 - Status: success
 
 ## Top Platform
@@ -8,11 +8,11 @@
 ```json
 {
     "platform_key": "discord",
-    "clicks": "0",
-    "registrations": "0",
+    "clicks": "1",
+    "registrations": "1",
     "discord_joins": "0",
     "membership_upgrades": "0",
-    "revenue": "0.000000"
+    "revenue": "49.990000"
 }
 ```
 
@@ -21,11 +21,11 @@
 ```json
 {
     "campaign_id": null,
-    "clicks": "0",
-    "registrations": "0",
+    "clicks": "1",
+    "registrations": "1",
     "discord_joins": "0",
     "membership_upgrades": "0",
-    "revenue": "0.000000"
+    "revenue": "49.990000"
 }
 ```
 
@@ -34,10 +34,10 @@
 ```json
 {
     "community_id": null,
-    "clicks": "0",
-    "registrations": "0",
+    "clicks": "1",
+    "registrations": "1",
     "discord_joins": "0",
     "membership_upgrades": "0",
-    "revenue": "0.000000"
+    "revenue": "49.990000"
 }
 ```

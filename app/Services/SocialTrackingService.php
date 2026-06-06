@@ -103,8 +103,17 @@ class SocialTrackingService
             return ['status' => 'failed', 'error' => 'Missing tracking link'];
         }
 
-        $ip = $data['ip'] ?? service('request')->getIPAddress();
-        $ua = $data['user_agent'] ?? (string) service('request')->getUserAgent();
+        $request = service('request');
+
+        $ip = $data['ip'] ?? (method_exists($request, 'getIPAddress') ? $request->getIPAddress() : 'cli');
+
+        if (isset($data['user_agent'])) {
+            $ua = (string) $data['user_agent'];
+        } elseif (method_exists($request, 'getUserAgent')) {
+            $ua = (string) $request->getUserAgent();
+        } else {
+            $ua = 'cli';
+        }
 
         $this->db->table('bf_social_click_events')->insert([
             'tracking_link_id' => $trackingLinkId,
