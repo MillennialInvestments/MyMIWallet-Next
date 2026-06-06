@@ -2940,5 +2940,60 @@ class MarketingAdminController extends BaseAdminController
     }
 
 
+
+    public function createSocialExportJob($generatedPostId = null)
+    {
+        $service = new \App\Services\SocialExportService();
+        $destination = $this->request->getGetPost('destination_type') ?: 'manual_json';
+        return $this->response->setJSON($service->createExportJobFromGeneratedPost((int) $generatedPostId, $destination));
+    }
+
+    public function queueApprovedSocialExports()
+    {
+        $service = new \App\Services\SocialExportService();
+        $destination = $this->request->getGetPost('destination_type') ?: 'zapier';
+        $limit = (int) ($this->request->getGetPost('limit') ?: 25);
+        return $this->response->setJSON($service->queueApprovedDrafts($limit, $destination));
+    }
+
+    public function sendZapierExport($exportJobId = null)
+    {
+        $service = new \App\Services\ZapierWebhookService();
+        return $this->response->setJSON($service->send((int) $exportJobId));
+    }
+
+    public function sendTbiMarketingExport($exportJobId = null)
+    {
+        $enabled = filter_var(env('MYMI_MARKETING_EXPORT_ENABLED', false), FILTER_VALIDATE_BOOLEAN);
+        if (! $enabled) {
+            return $this->response->setJSON(['status' => 'skipped', 'error' => 'TBI Marketing export disabled']);
+        }
+
+        return $this->response->setJSON(['status' => 'skipped', 'error' => 'TBI Marketing HTTP client not configured yet']);
+    }
+
+    public function getSocialExportJobs()
+    {
+        $service = new \App\Services\SocialExportService();
+        return $this->response->setJSON(['status' => 'success', 'data' => $service->getExportJobs(100)]);
+    }
+
+    public function getSocialDeliveryLogs()
+    {
+        $service = new \App\Services\SocialExportService();
+        return $this->response->setJSON(['status' => 'success', 'data' => $service->getDeliveryLogs(100)]);
+    }
+
+    public function recordSocialPerformanceEvent()
+    {
+        $service = new \App\Services\SocialExportService();
+        $payload = $this->request->getJSON(true) ?: $this->request->getPost();
+        return $this->response->setJSON($service->recordPerformanceEvent($payload ?: []));
+    }
+
+    public function socialExports()
+    {
+        return view('App\Modules\Management\Views\Marketing\social_exports');
+    }
+
 }
-?>

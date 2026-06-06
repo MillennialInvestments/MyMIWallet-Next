@@ -2548,3 +2548,15 @@ $routes->get('Exchange/Solana/Create', '\App\Modules\Exchange\Controllers\Solana
 $routes->get('API/Solana/health', '\App\Modules\APIs\Controllers\SolanaAPIController::health');
 // END MyMI Solana public web route exposure
 
+
+// Social Export Orchestration Phase 2B
+
+$routes->match(['get', 'post'], 'API/Management/createSocialExportJob/(:num)', '\App\Modules\Management\Controllers\MarketingAdminController::createSocialExportJob/$1');
+$routes->match(['get', 'post'], 'API/Management/queueApprovedSocialExports', '\App\Modules\Management\Controllers\MarketingAdminController::queueApprovedSocialExports');
+$routes->match(['get', 'post'], 'API/Management/sendZapierExport/(:num)', '\App\Modules\Management\Controllers\MarketingAdminController::sendZapierExport/$1');
+$routes->match(['get', 'post'], 'API/Management/sendTbiMarketingExport/(:num)', '\App\Modules\Management\Controllers\MarketingAdminController::sendTbiMarketingExport/$1');
+$routes->get('API/Management/getSocialExportJobs', '\App\Modules\Management\Controllers\MarketingAdminController::getSocialExportJobs');
+$routes->get('API/Management/getSocialDeliveryLogs', '\App\Modules\Management\Controllers\MarketingAdminController::getSocialDeliveryLogs');
+$routes->match(['get', 'post'], 'API/Management/recordSocialPerformanceEvent', '\App\Modules\Management\Controllers\MarketingAdminController::recordSocialPerformanceEvent');
+$routes->get('Management/Marketing/Social-Exports', '\App\Modules\Management\Controllers\MarketingAdminController::socialExports');
+

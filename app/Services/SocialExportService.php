@@ -124,4 +124,60 @@ class SocialExportService
             'created_at' => date('Y-m-d H:i:s'),
         ]);
     }
+
+    public function getExportJobs(int $limit = 100): array
+    {
+        return $this->db->table('bf_social_export_jobs')
+            ->orderBy('id', 'DESC')
+            ->limit($limit)
+            ->get()
+            ->getResultArray();
+    }
+
+    public function getDeliveryLogs(int $limit = 100): array
+    {
+        return $this->db->table('bf_social_delivery_logs')
+            ->orderBy('id', 'DESC')
+            ->limit($limit)
+            ->get()
+            ->getResultArray();
+    }
+
+    public function recordPerformanceEvent(array $data): array
+    {
+        $allowed = ['impression', 'click', 'join', 'registration', 'upgrade', 'revenue'];
+
+        $eventType = (string) ($data['event_type'] ?? '');
+        if (! in_array($eventType, $allowed, true)) {
+            return ['status' => 'failed', 'error' => 'Invalid event_type'];
+        }
+
+        $this->db->table('bf_social_performance_events')->insert([
+            'generated_post_id' => $data['generated_post_id'] ?? null,
+            'platform_key' => $data['platform_key'] ?? null,
+            'event_type' => $eventType,
+            'event_value' => $data['event_value'] ?? null,
+            'metadata_json' => isset($data['metadata']) ? json_encode($data['metadata']) : ($data['metadata_json'] ?? null),
+            'occurred_at' => $data['occurred_at'] ?? date('Y-m-d H:i:s'),
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        return ['status' => 'success', 'id' => $this->db->insertID()];
+    }
+
+    public function approveExportJob(int $jobId): array
+    {
+        $job = $this->db->table('bf_social_export_jobs')->where('id', $jobId)->get()->getRowArray();
+        if (! $job) {
+            return ['status' => 'failed', 'error' => 'Export job not found'];
+        }
+
+        $this->db->table('bf_social_export_jobs')->where('id', $jobId)->update([
+            'status' => 'approved',
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        return ['status' => 'success', 'export_job_id' => $jobId];
+    }
+
 }
