@@ -9,18 +9,14 @@ class SocialTbiExport extends SafeBaseCommand
 {
     protected $group = 'Marketing';
     protected $name = 'marketing:social:tbi-export';
-    protected $description = 'Stub-safe TBI Marketing social export command.';
+    protected $description = 'Export queued social jobs to TBI Marketing when explicitly enabled.';
 
     public function run(array $params)
     {
-        $enabled = filter_var(env('MYMI_MARKETING_EXPORT_ENABLED', false), FILTER_VALIDATE_BOOLEAN);
+        $service = new \App\Services\TbiMarketingExportService();
+        $result = $service->batchSend(10);
 
-        if (! $enabled) {
-            CLI::write(json_encode(['status' => 'skipped', 'reason' => 'MYMI_MARKETING_EXPORT_ENABLED is false'], JSON_PRETTY_PRINT), 'yellow');
-            return EXIT_SUCCESS;
-        }
-
-        CLI::write(json_encode(['status' => 'skipped', 'reason' => 'TBI Marketing client not configured yet'], JSON_PRETTY_PRINT), 'yellow');
+        CLI::write(json_encode($result, JSON_PRETTY_PRINT));
         return EXIT_SUCCESS;
     }
 }

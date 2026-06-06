@@ -2964,12 +2964,8 @@ class MarketingAdminController extends BaseAdminController
 
     public function sendTbiMarketingExport($exportJobId = null)
     {
-        $enabled = filter_var(env('MYMI_MARKETING_EXPORT_ENABLED', false), FILTER_VALIDATE_BOOLEAN);
-        if (! $enabled) {
-            return $this->response->setJSON(['status' => 'skipped', 'error' => 'TBI Marketing export disabled']);
-        }
-
-        return $this->response->setJSON(['status' => 'skipped', 'error' => 'TBI Marketing HTTP client not configured yet']);
+        $service = new \App\Services\TbiMarketingExportService();
+        return $this->response->setJSON($service->send((int) $exportJobId));
     }
 
     public function getSocialExportJobs()
