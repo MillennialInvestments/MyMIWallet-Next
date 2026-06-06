@@ -2560,3 +2560,11 @@ $routes->get('API/Management/getSocialDeliveryLogs', '\App\Modules\Management\Co
 $routes->match(['get', 'post'], 'API/Management/recordSocialPerformanceEvent', '\App\Modules\Management\Controllers\MarketingAdminController::recordSocialPerformanceEvent');
 $routes->get('Management/Marketing/Social-Exports', '\App\Modules\Management\Controllers\MarketingAdminController::socialExports');
 
+
+// Social Content Generation Phase 3A
+
+$routes->match(['get', 'post'], 'API/Management/generateSocialContentPack', '\App\Modules\Management\Controllers\MarketingAdminController::generateSocialContentPack');
+$routes->match(['get', 'post'], 'API/Management/generateSocialSamplePack', '\App\Modules\Management\Controllers\MarketingAdminController::generateSocialSamplePack');
+$routes->get('API/Management/getGeneratedSocialPosts', '\App\Modules\Management\Controllers\MarketingAdminController::getGeneratedSocialPosts');
+$routes->get('Management/Marketing/Social-Generator', '\App\Modules\Management\Controllers\MarketingAdminController::socialGenerator');
+

@@ -2996,4 +2996,41 @@ class MarketingAdminController extends BaseAdminController
         return view('App\Modules\Management\Views\Marketing\social_exports');
     }
 
+
+    public function generateSocialContentPack()
+    {
+        $topic = (string) ($this->request->getGetPost('topic') ?: 'MyMI Wallet financial wellness tools');
+        $audience = (string) ($this->request->getGetPost('audience') ?: 'beginner');
+        $ctaType = (string) ($this->request->getGetPost('cta_type') ?: 'join_discord');
+        $save = (string) ($this->request->getGetPost('save') ?: '0');
+
+        $service = new \App\Services\SocialContentGenerationService();
+        $pack = $service->generateFromManualInput($topic, $audience, $ctaType);
+
+        if ($save === '1') {
+            $pack['saved'] = $service->saveGeneratedPack($pack, 'manual_api', 0);
+        }
+
+        return $this->response->setJSON($pack);
+    }
+
+    public function generateSocialSamplePack()
+    {
+        $service = new \App\Services\SocialContentGenerationService();
+        $pack = $service->generateFromManualInput('Build better financial habits with MyMI Wallet free tools', 'beginner', 'free_tools');
+        $pack['saved'] = $service->saveGeneratedPack($pack, 'sample_api', 0);
+        return $this->response->setJSON($pack);
+    }
+
+    public function getGeneratedSocialPosts()
+    {
+        $service = new \App\Services\SocialContentGenerationService();
+        return $this->response->setJSON(['status' => 'success', 'data' => $service->getGeneratedPosts(100)]);
+    }
+
+    public function socialGenerator()
+    {
+        return view('App\Modules\Management\Views\Marketing\social_generator');
+    }
+
 }

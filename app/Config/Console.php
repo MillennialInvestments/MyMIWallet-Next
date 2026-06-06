@@ -10,6 +10,9 @@ class Console extends BaseConfig
     public array $commands = [
         \App\Commands\Marketing\CommunitiesSmokeTest::class,
         \App\Commands\Marketing\SocialOrchestrationSmokeTest::class,
+        \App\Commands\Marketing\SocialGeneratePack::class,
+        \App\Commands\Marketing\SocialGenerateSamplePack::class,
+        \App\Commands\Marketing\SocialGenerationSmokeTest::class,
         \App\Commands\Marketing\SocialExportApproved::class,
         \App\Commands\Marketing\SocialZapierDispatch::class,
         \App\Commands\Marketing\SocialTbiExport::class,
