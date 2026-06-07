@@ -8,17 +8,22 @@ use CodeIgniter\Config\BaseConfig;
 
 class CoinVault extends BaseConfig
 {
-    /**
-     * External contribution clients. Set real secrets in environment-specific config only.
-     * HMAC signs the raw request body with sha256 and sends it as X-CoinVault-Signature.
-     */
     public array $externalClients = [
+        'timothyburks_partner_subscription' => [
+            'label' => 'TimothyBurks.com Partner Subscription',
+            'apiKeyEnv' => 'COINVAULT_TIMOTHYBURKS_API_KEY',
+            'hmacSecretEnv' => 'COINVAULT_TIMOTHYBURKS_HMAC_SECRET',
+            'autoApprove' => false,
+            'enabled' => true,
+            'clientId' => 'tbi',
+        ],
         'timothyburks_contribution_tracker' => [
             'label' => 'TimothyBurks.com Contribution Tracker',
             'apiKeyEnv' => 'COINVAULT_TIMOTHYBURKS_API_KEY',
             'hmacSecretEnv' => 'COINVAULT_TIMOTHYBURKS_HMAC_SECRET',
             'autoApprove' => false,
             'enabled' => true,
+            'clientId' => 'tbi',
         ],
     ];
 
@@ -29,11 +34,12 @@ class CoinVault extends BaseConfig
     ];
 
     public array $tables = [
-        'projects' => 'bf_coin_vault_projects',
-        'wallets' => 'bf_coin_vault_wallets',
-        'ledger' => 'bf_coin_vault_ledger',
-        'contributions' => 'bf_coin_vault_contributions',
-        'payouts' => 'bf_coin_vault_payout_requests',
-        'externalLogs' => 'bf_coin_vault_external_event_logs',
+        'projects' => 'bf_tbi_project_coins',
+        'wallets' => 'bf_tbi_coin_wallets',
+        'ledger' => 'bf_tbi_coin_contribution_ledger',
+        'contributions' => 'bf_tbi_coin_contribution_ledger',
+        'payouts' => 'bf_tbi_coin_payout_requests',
+        'externalLogs' => 'bf_tbi_coin_external_event_logs',
+        'categories' => 'bf_tbi_coin_contribution_categories',
     ];
 }
