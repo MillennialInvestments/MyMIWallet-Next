@@ -12,7 +12,6 @@ class Commands extends BaseConfig
      * @var array<string, class-string>
      */
     public $commands = [
-        \App\Commands\CoinVault\TbiExternalContributionSmoke::class,
         'solana:preview-browser-runtime:smoke' => \App\Commands\SolanaPreviewBrowserRuntimeSmoke::class,
         'solana:preview-runtime:smoke' => \App\Commands\SolanaPreviewRuntimeSmoke::class,
         'marketing:audit:distribution' => \App\Commands\Marketing\AuditDistribution::class,
@@ -24,6 +23,7 @@ class Commands extends BaseConfig
         'docs:inventory-forms' => \App\Commands\Docs\Generate\FormInventory::class,
         'db:table-list' => \App\Commands\Database\TableList::class,
         'coinvault:audit' => \App\Commands\CoinVault\Audit::class,
+        'coinvault:tbi-external-contribution-smoke' => \App\Commands\TbiExternalContributionSmoke::class,
         'aiops:solana-healthcheck' => \App\Commands\SolanaHealthcheck::class,
         'aiops:solana-digest' => \App\Commands\SolanaDigest::class,
         'aiops:solana-transaction-audit' => \App\Commands\SolanaTransactionAudit::class,
