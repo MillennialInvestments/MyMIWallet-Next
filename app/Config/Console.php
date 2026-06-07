@@ -171,6 +171,7 @@ class Console extends BaseConfig
         \App\Commands\Codex\ReviewPublish::class,
         \App\Commands\Codex\Status::class,
         \App\Commands\CoinVault\Audit::class,
+        \App\Commands\TbiExternalContributionSmoke::class,
         \App\Commands\CompatAudit::class,
         \App\Commands\Config\Clear::class,
         \App\Commands\Config\Drift::class,
