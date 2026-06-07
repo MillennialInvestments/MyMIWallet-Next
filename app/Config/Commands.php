@@ -12,6 +12,7 @@ class Commands extends BaseConfig
      * @var array<string, class-string>
      */
     public $commands = [
+        \App\Commands\CoinVault\TbiExternalContributionSmoke::class,
         'solana:preview-browser-runtime:smoke' => \App\Commands\SolanaPreviewBrowserRuntimeSmoke::class,
         'solana:preview-runtime:smoke' => \App\Commands\SolanaPreviewRuntimeSmoke::class,
         'marketing:audit:distribution' => \App\Commands\Marketing\AuditDistribution::class,
