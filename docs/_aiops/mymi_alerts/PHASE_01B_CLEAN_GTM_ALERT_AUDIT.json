@@ -1,0 +1,27 @@
+{
+  "phase": "01B",
+  "name": "Clean MyMI Alert System GTM Audit Repair",
+  "generated_utc": "2026-06-08T15:58:10.175002+00:00",
+  "branch": "main",
+  "commit": "a271c0ae0 Register TBI CoinVault smoke command (#518)",
+  "git_status_short": "M writable/logs/emergency.log\n?? docs/01_Systematic_Standup/\n?? docs/_aiops/mymi_alerts/",
+  "report_md_exists": true,
+  "report_md_bytes": 382251,
+  "ollama_review_exists": true,
+  "ollama_review_bytes": 22,
+  "required_tables": [
+    "bf_investment_scraper",
+    "bf_investment_trade_alerts",
+    "bf_investment_tickers",
+    "bf_investment_alert_history"
+  ],
+  "gtm_priority": [
+    "alert_pipeline_stability",
+    "alert_dashboard_visibility",
+    "discord_email_distribution",
+    "tbi_marketing_promotional_cta",
+    "news_enrichment",
+    "daily_digest"
+  ],
+  "code_changes_made": false
+}

@@ -1,0 +1,26 @@
+{
+  "phase": "02B",
+  "name": "Authoritative MyMI Alert DB Table Inventory",
+  "generated_utc": "2026-06-09T08:21:07.165351+00:00",
+  "branch": "main",
+  "commit": "a271c0ae0 Register TBI CoinVault smoke command (#518)",
+  "git_status_short": "?? docs/01_Systematic_Standup/\n?? docs/_aiops/mymi_alerts/",
+  "db_connected": false,
+  "database": null,
+  "hostname": null,
+  "username": null,
+  "dbprefix": null,
+  "all_table_count": 0,
+  "matching_table_count": 0,
+  "existing_required": [],
+  "missing_required_logical": [
+    "investment_scraper",
+    "investment_trade_alerts",
+    "investment_tickers",
+    "investment_alert_history"
+  ],
+  "decision": "likely_schema_gap_or_wrong_database_connection",
+  "report_md": "docs/_aiops/mymi_alerts/PHASE_02B_AUTHORITATIVE_DB_TABLE_INVENTORY.md",
+  "code_changes_made": false,
+  "next_recommended_phase": "Phase 03A - create schema migration only if decision confirms schema gap; otherwise Phase 03B - create formal GTM smoke command"
+}

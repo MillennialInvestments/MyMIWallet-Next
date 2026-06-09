@@ -1,0 +1,32 @@
+{
+  "phase": "02E-B",
+  "name": "Clean Repaired SQLCheck Schema Verification",
+  "generated_utc": "2026-06-09T08:36:53.753918+00:00",
+  "branch": "fix/mymi-alert-aiops-sqlcheck-ci47",
+  "commit": "a271c0ae0 Register TBI CoinVault smoke command (#518)",
+  "git_status_short": "M app/Commands/AIOps/SqlCheck.php\n?? docs/01_Systematic_Standup/\n?? docs/_aiops/mymi_alerts/",
+  "php_lint_sqlcheck": "No syntax errors detected in app/Commands/AIOps/SqlCheck.php",
+  "sqlcheck_option_parsing_works": true,
+  "alerts_health_passed": true,
+  "has_alert_fetch_command": true,
+  "has_aiops_alerts_worker": true,
+  "has_marketing_news_commands": true,
+  "has_marketing_promotions_commands": true,
+  "migrate_status_mentions_alert_system": true,
+  "present_or_inspected_tables": [
+    "bf_investment_scraper",
+    "bf_investment_trade_alerts",
+    "bf_investment_tickers",
+    "bf_investment_alert_history",
+    "bf_trade_alert_scanner_meta",
+    "bf_aiops_alert_jobs",
+    "bf_marketing_temp_scraper",
+    "bf_marketing_generated_content",
+    "bf_marketing_distribution_targets",
+    "bf_marketing_publish_queue"
+  ],
+  "missing_or_failed_tables": [],
+  "report_md": "docs/_aiops/mymi_alerts/PHASE_02E_B_CLEAN_REPAIRED_SQLCHECK_SCHEMA_VERIFICATION.md",
+  "code_changes_made": true,
+  "next_recommended_phase": "If required alert tables inspect cleanly, create formal GTM smoke command. If required tables fail, create targeted schema migration or table-name compatibility patch."
+}
