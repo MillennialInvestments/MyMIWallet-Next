@@ -136,4 +136,46 @@ class SqlCheck extends SafeBaseCommand
             'error_message' => $error,
         ]);
     }
+    /**
+     * CI4.7 compatibility helper.
+     *
+     * Older AIOps commands used $this->opt(). CI4 BaseCommand does not
+     * provide that helper, so this command keeps the behavior local and
+     * delegates to the supported CLI option reader.
+     *
+     * @param string $name
+     * @param mixed $default
+     * @return mixed
+     */
+    private function opt(string $name, $default = null)
+    {
+        $value = \CodeIgniter\CLI\CLI::getOption($name);
+
+        if ($value !== null) {
+            return $value;
+        }
+
+        $value = \CodeIgniter\CLI\CLI::getOption('--' . $name);
+
+        if ($value !== null) {
+            return $value;
+        }
+
+        $argv = $_SERVER['argv'] ?? [];
+        $flag = '--' . $name;
+
+        foreach ($argv as $i => $arg) {
+            if ($arg === $flag && array_key_exists($i + 1, $argv)) {
+                return $argv[$i + 1];
+            }
+
+            if (strpos($arg, $flag . '=') === 0) {
+                return substr($arg, strlen($flag) + 1);
+            }
+        }
+
+        return $default;
+    }
+
+
 }
