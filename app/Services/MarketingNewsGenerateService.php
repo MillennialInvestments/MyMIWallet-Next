@@ -21,6 +21,7 @@ class MarketingNewsGenerateService
         $db = Database::connect();
         $columns = array_flip($db->getFieldNames('bf_marketing_temp_scraper'));
         $builder = $db->table('bf_marketing_temp_scraper');
+        $this->applyCompactTempSelect($builder, $columns);
 
         $limit = max(1, $limit);
 
@@ -181,7 +182,16 @@ class MarketingNewsGenerateService
             return ['status' => 'skipped', 'reason' => 'empty_content', 'id' => $record['id'] ?? null];
         }
 
-        $summary = $this->marketingLibrary->summarizeText($content);
+        $summaryInput = mb_substr($content, 0, 4000);
+        try {
+            $summary = trim((string) $this->marketingLibrary->summarizeText($summaryInput));
+        } catch (\Throwable $e) {
+            log_message('error', 'Marketing news summarize fallback for temp row ' . (string) ($record['id'] ?? 'unknown') . ': ' . $e->getMessage());
+            $summary = trim(mb_substr(strip_tags($summaryInput), 0, 800));
+        }
+        if ($summary === '' ) {
+            $summary = trim(mb_substr(strip_tags($summaryInput), 0, 800));
+        }
         if (is_array($summary)) {
             $summary = (string) ($summary['summary'] ?? implode(' ', $summary));
         }
@@ -219,9 +229,9 @@ class MarketingNewsGenerateService
     {
         $db = Database::connect();
         $candidates = $db->table('bf_marketing_scraper')
-            ->select('id, title, summary, ticker, company_name, source, story_hash, timeline_json, type')
+            ->select('id, title, ticker, company_name, story_hash, LEFT(summary, 1000) AS summary, LEFT(keywords, 1000) AS keywords, LEFT(meta_json, 1000) AS meta_json', false)
             ->orderBy('created_on', 'DESC')
-            ->limit(75)
+            ->limit(15)
             ->get()
             ->getResultArray();
 
@@ -492,6 +502,35 @@ class MarketingNewsGenerateService
             || str_contains($metadata, '"category":"marketing_news"');
     }
 
+    private function applyCompactTempSelect($builder, array $columns): void
+    {
+        $select = [];
+        foreach ([
+            'id', 'title', 'ticker', 'company_name', 'source_provider', 'source_message_id',
+            'alert_type', 'type', 'source_type', 'status', 'processed', 'created_on', 'date_created',
+            'email_identifier', 'category', 'url', 'source_url', 'source_id', 'hash'
+        ] as $column) {
+            if (isset($columns[$column])) {
+                $select[] = $column;
+            }
+        }
+
+        if (isset($columns['content'])) {
+            $select[] = 'LEFT(content, 4000) AS content';
+        }
+
+        if (isset($columns['summary'])) {
+            $select[] = 'LEFT(summary, 1000) AS summary';
+        }
+
+        if (isset($columns['meta_json'])) {
+            $select[] = 'LEFT(meta_json, 1000) AS meta_json';
+        }
+
+        if ($select !== []) {
+            $builder->select(implode(', ', $select), false);
+        }
+    }
     private function sanitizeForGeneration(string $content): string
     {
         $decoded = quoted_printable_decode($content);
