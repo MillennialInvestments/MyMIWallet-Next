@@ -73,7 +73,8 @@ class RegressionSmoke extends SafeBaseCommand
     private function runShellSparkCommand(string $command): array
     {
         $full = 'php spark ' . $command . ' 2>&1';
-        exec($full, $lines, $exitCode);
+        $rooted = 'cd ' . escapeshellarg(ROOTPATH) . ' && ' . $full;
+        exec($rooted, $lines, $exitCode);
         $output = implode("\n", $lines);
 
         return [
