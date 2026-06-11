@@ -34,6 +34,12 @@ class RegressionSmoke extends SafeBaseCommand
         $after = $this->snapshot($db);
         $failures = [];
 
+        foreach ($commands as $commandResult) {
+            if ((int) ($commandResult['exit_code'] ?? 0) !== 0) {
+                $failures[] = 'internal command failed: ' . (string) ($commandResult['command'] ?? 'unknown') . ' exit_code=' . (string) ($commandResult['exit_code'] ?? 'unknown');
+            }
+        }
+
         if ($after['temp_total'] < $baseline['temp_total']) {
             $failures[] = 'temp_scraper total decreased unexpectedly';
         }
@@ -73,7 +79,8 @@ class RegressionSmoke extends SafeBaseCommand
     private function runShellSparkCommand(string $command): array
     {
         $full = 'php spark ' . $command . ' 2>&1';
-        exec($full, $lines, $exitCode);
+        $rooted = 'cd ' . escapeshellarg(ROOTPATH) . ' && ' . $full;
+        exec($rooted, $lines, $exitCode);
         $output = implode("\n", $lines);
 
         return [

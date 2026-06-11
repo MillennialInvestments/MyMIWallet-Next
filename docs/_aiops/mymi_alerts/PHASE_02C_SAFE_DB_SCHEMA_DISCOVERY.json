@@ -1,0 +1,18 @@
+{
+  "phase": "02C-SAFE",
+  "name": "MyMI Alert Safe DB Schema Discovery",
+  "generated_utc": "2026-06-09T08:24:28.083254+00:00",
+  "branch": "main",
+  "commit": "a271c0ae0 Register TBI CoinVault smoke command (#518)",
+  "git_status_short": "?? docs/01_Systematic_Standup/\n?? docs/_aiops/mymi_alerts/",
+  "spark_available": true,
+  "has_aiops_sql_check": true,
+  "has_aiops_alerts_health": true,
+  "has_alerts_fetch_raw_emails": true,
+  "migrate_status_mentions_required_tables": true,
+  "sql_check_preview": "CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-09 08:24:27 UTC+00:00\n\n[Error]\nCall to undefined method App\\Commands\\AIOps\\SqlCheck::opt()\nat APPPATH/Commands/AIOps/SqlCheck.php:27\n\nBacktrace:\n  1    SYSTEMPATH/CLI/Commands.php:74\n       App\\Commands\\AIOps\\SqlCheck()->run([])\n\n  2    SYSTEMPATH/CLI/Console.php:47\n       CodeIgniter\\CLI\\Commands()->run('aiops:sql:check', [])\n\n  3    SYSTEMPATH/Boot.php:442\n       CodeIgniter\\CLI\\Console()->run()\n\n  4    SYSTEMPATH/Boot.php:166\n       CodeIgniter\\Boot::runCommand(Object(CodeIgniter\\CLI\\Console))\n\n  5    ROOTPATH/spark:107\n       CodeIgniter\\Boot::bootSpark(Object(Config\\Paths))",
+  "alerts_health_preview": "CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-06-09 08:24:27 UTC+00:00\n\nFailed queue count: 0\nHealth check passed.",
+  "report_md": "docs/_aiops/mymi_alerts/PHASE_02C_SAFE_DB_SCHEMA_DISCOVERY.md",
+  "code_changes_made": false,
+  "next_recommended_phase": "Use report findings to decide: DB connection fix, migration patch, or formal GTM smoke command."
+}

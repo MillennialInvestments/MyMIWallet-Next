@@ -1,0 +1,29 @@
+{
+  "phase": "02",
+  "name": "MyMI Alert GTM Smoke and Schema Verification",
+  "generated_utc": "2026-06-08T16:33:36.745859+00:00",
+  "branch": "main",
+  "commit": "a271c0ae0 Register TBI CoinVault smoke command (#518)",
+  "git_status_short": "M docs/audit/news_audit_last_run.md\n M writable/logs/emergency.log\n?? docs/01_Systematic_Standup/\n?? docs/_aiops/mymi_alerts/",
+  "php_version": "PHP 8.2.30 (cli) (built: May  4 2026 10:40:52) (NTS)",
+  "required_tables": [
+    "bf_investment_scraper",
+    "bf_investment_trade_alerts",
+    "bf_investment_tickers",
+    "bf_investment_alert_history"
+  ],
+  "missing_required_tables": [
+    "bf_investment_scraper",
+    "bf_investment_trade_alerts",
+    "bf_investment_tickers",
+    "bf_investment_alert_history"
+  ],
+  "missing_required_columns": {},
+  "notification_columns": {},
+  "duplicate_risks_count": {},
+  "schema_counts": {},
+  "scraper_status_counts": [],
+  "report_md": "docs/_aiops/mymi_alerts/PHASE_02_GTM_SMOKE_SCHEMA_REPORT.md",
+  "code_changes_made": false,
+  "next_recommended_phase": "Phase 03 - patch only the failures found by Phase 02, or create formal mymi:alerts:gtm-smoke command if Phase 02 passes manually"
+}

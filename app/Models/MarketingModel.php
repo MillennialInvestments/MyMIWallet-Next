@@ -380,7 +380,7 @@ class MarketingModel extends Model
     {
         return $this->db->table('bf_marketing_generated_content')
             ->whereIn('approval_status', ['approved', 'auto_approved'])
-            ->whereIn('distribution_status', ['pending', 'scheduled'])
+            ->whereIn('distribution_status', ['pending', 'scheduled', 'partial_failed'])
             ->orderBy('id', 'ASC')
             ->limit($limit)
             ->get()

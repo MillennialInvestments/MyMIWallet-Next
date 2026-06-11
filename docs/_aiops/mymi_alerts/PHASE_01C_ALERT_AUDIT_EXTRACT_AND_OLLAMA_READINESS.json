@@ -1,0 +1,24 @@
+{
+  "phase": "01C",
+  "name": "MyMI Alert Audit Extract and Ollama Readiness",
+  "generated_utc": "2026-06-08T16:00:03.762393+00:00",
+  "branch": "main",
+  "commit": "a271c0ae0 Register TBI CoinVault smoke command (#518)",
+  "git_status_short": "M writable/logs/emergency.log\n?? docs/01_Systematic_Standup/\n?? docs/_aiops/mymi_alerts/",
+  "php_version": "PHP 8.2.30 (cli) (built: May  4 2026 10:40:52) (NTS)",
+  "ci_spark_available": true,
+  "report_md_exists": true,
+  "report_md_bytes": 227792,
+  "ollama_review_exists": true,
+  "ollama_review_bytes": 47895,
+  "ollama_success": false,
+  "ollama_model_used": "",
+  "required_tables": [
+    "bf_investment_scraper",
+    "bf_investment_trade_alerts",
+    "bf_investment_tickers",
+    "bf_investment_alert_history"
+  ],
+  "next_recommended_phase": "Phase 02 - MyMI Alert GTM smoke test and schema verification",
+  "code_changes_made": false
+}
