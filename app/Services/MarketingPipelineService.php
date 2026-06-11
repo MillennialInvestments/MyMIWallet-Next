@@ -148,7 +148,7 @@ class MarketingPipelineService
             ->countAllResults();
         $distributableCount = $db->table('bf_marketing_generated_content')
             ->whereIn('approval_status', ['approved', 'auto_approved'])
-            ->whereIn('distribution_status', ['pending', 'scheduled'])
+            ->whereIn('distribution_status', ['pending', 'scheduled', 'partial_failed'])
             ->countAllResults();
 
         $reason = null;

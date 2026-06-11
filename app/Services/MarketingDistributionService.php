@@ -406,6 +406,48 @@ class MarketingDistributionService
         ];
     }
 
+    private function hasOnlyOptionalDiscordCommunityFailuresWithSentTargets(int $generatedContentId, array $statuses): bool
+    {
+        if (! in_array('sent', $statuses, true)) {
+            return false;
+        }
+
+        if (
+            ! in_array('failed_permanent', $statuses, true)
+            && ! in_array('failed_retryable', $statuses, true)
+            && ! in_array('dead_letter', $statuses, true)
+        ) {
+            return false;
+        }
+
+        $rows = $this->targetModel
+            ->where('generated_content_id', $generatedContentId)
+            ->findAll();
+
+        if ($rows === []) {
+            return false;
+        }
+
+        foreach ($rows as $row) {
+            $status = (string) ($row['status'] ?? 'pending');
+            $channel = (string) ($row['channel'] ?? '');
+            $destination = (string) ($row['destination'] ?? '');
+
+            if (in_array($status, ['sent', 'skipped'], true)) {
+                continue;
+            }
+
+            $isFailure = in_array($status, ['failed_permanent', 'failed_retryable', 'dead_letter'], true);
+            $isOptionalDiscordCommunity = $channel === 'discord' && $destination === 'community_news';
+
+            if (! ($isOptionalDiscordCommunity && $isFailure)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private function updateGeneratedContentStatus(int $generatedContentId): array
     {
         $rows = $this->targetModel->where('generated_content_id', $generatedContentId)->findAll();
@@ -420,7 +462,10 @@ class MarketingDistributionService
 
         if (count(array_diff($statuses, ['sent', 'skipped'])) === 0) {
             $distributionStatus = 'distributed';
-            $contentStatus = 'distributed';
+            $contentStatus = 'posted';
+        } elseif ($this->hasOnlyOptionalDiscordCommunityFailuresWithSentTargets($generatedContentId, $statuses)) {
+            $distributionStatus = 'distributed';
+            $contentStatus = 'posted';
         } elseif (in_array('failed_permanent', $statuses, true) || in_array('failed_retryable', $statuses, true) || in_array('dead_letter', $statuses, true)) {
             $distributionStatus = 'partial_failed';
             $contentStatus = 'distribution_failed';
