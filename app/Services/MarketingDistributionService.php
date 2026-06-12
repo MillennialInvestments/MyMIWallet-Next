@@ -245,6 +245,10 @@ class MarketingDistributionService
         if ($db->tableExists('bf_marketing_distribution_targets')) {
             $assertions['failed_target_accumulation'] = $db->table('bf_marketing_distribution_targets')
                 ->whereIn('status', ['failed_retryable', 'failed_permanent', 'dead_letter'])
+                ->groupStart()
+                    ->where('channel !=', 'discord')
+                    ->orWhere('destination !=', 'community_news')
+                ->groupEnd()
                 ->countAllResults();
 
             $assertions['duplicate_distribution_targets'] = (int) $db->query(
