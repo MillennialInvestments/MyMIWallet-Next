@@ -63,8 +63,8 @@ class DailyAudit extends SafeBaseCommand
             $reason = 'Distribution skipped because generation has not yet produced distributable records';
         } elseif ($generated === 0 && $scrapedToday === 0) {
             $reason = $approvedReady > 0
-            ? 'Approved generated marketing content is ready for controlled distribution'
-            : 'No generated marketing content is currently available for distribution';
+                ? 'Approved generated marketing content is ready for controlled distribution'
+                : 'No generated marketing content is currently available for distribution';
         } elseif ($approvedReady === 0 && $distributed === 0) {
             $reason = 'No approved/generated items matched the distribution criteria';
         }

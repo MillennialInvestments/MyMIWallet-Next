@@ -309,8 +309,6 @@ class MarketingDistributionService
     }
 
     /** @return array<string,mixed> */
-
-    /** @return array<string,mixed> */
     public function repairApprovedPendingGenerationWithTargets(bool $approve = false, int $limit = 500): array
     {
         $db = Database::connect();
