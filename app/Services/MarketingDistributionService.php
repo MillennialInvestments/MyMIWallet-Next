@@ -365,7 +365,6 @@ class MarketingDistributionService
         ];
     }
 
-
     /** @return array<string,mixed> */
     public function skipGenericPlaceholderMarketingPending(bool $approve = false, int $limit = 500): array
     {
