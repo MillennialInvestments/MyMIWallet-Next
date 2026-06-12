@@ -698,6 +698,20 @@ class MarketingNewsScrapeService
             }
 
             $route = $this->resolveSubjectRoute($subject);
+
+            if ($this->isGenericAllSymbolsNewsPlaceholder($subject, $route['category'] ?? null)) {
+                $result['invalid_skipped']++;
+                $result['rejected_count']++;
+                $result['rejections'][] = [
+                    'folder' => $folder,
+                    'subject' => $subject,
+                    'from' => $emailAddress,
+                    'reason' => 'generic_all_symbols_news_placeholder',
+                    'route' => $route,
+                ];
+                continue;
+            }
+
             $routeKey = (string) ($route['category'] ?? 'unroutable');
             $result['route_counts'][$routeKey] = (int) (($result['route_counts'][$routeKey] ?? 0) + 1);
 
@@ -1031,6 +1045,21 @@ class MarketingNewsScrapeService
         }
 
         return in_array(mb_strtolower($email), $allowed, true);
+    }
+
+    private function isGenericAllSymbolsNewsPlaceholder(string $subject, ?string $routeCategory = null): bool
+    {
+        if ($routeCategory !== 'marketing_news') {
+            return false;
+        }
+
+        $normalized = trim(mb_strtolower($subject));
+        $normalized = preg_replace('/\s+/', ' ', $normalized) ?? $normalized;
+
+        return in_array($normalized, [
+            'news alert for all symbols',
+            'press release alert for all symbols',
+        ], true);
     }
 
     private function subjectAccepted(string $subject, ?string $routeCategory = null, string $subjectFilter = ''): bool
