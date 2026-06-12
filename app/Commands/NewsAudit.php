@@ -79,10 +79,17 @@ class NewsAudit extends SafeBaseCommand
         }
 
         $issues = [];
+        $expectedPlaceholderRejections = 0;
         $issueRecordIndex = [];
         $skippedCount = 0;
 
         foreach ($tempRecords as $record) {
+            // EXPECTED_GENERIC_ALL_SYMBOLS_PLACEHOLDER_REJECTION_GUARD
+            if ($this->isExpectedGenericAllSymbolsNewsPlaceholder($record)) {
+                $expectedPlaceholderRejections++;
+                continue;
+            }
+
             $title = trim((string) ($record['title'] ?? ''));
             $content = trim((string) ($record['content'] ?? ''));
             $source = strtolower(trim((string) ($record['source'] ?? '')));
@@ -332,6 +339,7 @@ class NewsAudit extends SafeBaseCommand
         CLI::write('Final records scanned: ' . $finalCount);
         CLI::write('Posts scanned: ' . $postsCount . ($postsTable ? " ({$postsTable})" : ''));
         CLI::write('Valid pipeline %: ' . $validPercent . '%');
+        CLI::write('Expected placeholder rejections: ' . number_format($expectedPlaceholderRejections));
         CLI::write('Skipped records %: ' . $skippedPercent . '%');
         CLI::write('Broken records %: ' . $brokenPercent . '%');
 
@@ -821,4 +829,52 @@ class NewsAudit extends SafeBaseCommand
     {
         return false;
     }
+
+    /**
+     * Generic Thinkorswim all-symbol placeholders are intentionally rejected by the scraper.
+     * news:audit should count them as expected rejections, not broken news-pipeline records.
+     */
+    private function isExpectedGenericAllSymbolsNewsPlaceholder(array $row): bool
+    {
+        $title = strtolower(trim((string) (
+            $row['title']
+            ?? $row['email_subject']
+            ?? $row['subject']
+            ?? ''
+        )));
+
+        $source = strtolower(trim((string) (
+            $row['source']
+            ?? $row['source_email']
+            ?? $row['source_mailbox']
+            ?? $row['sender_email']
+            ?? $row['email_sender']
+            ?? $row['from']
+            ?? ''
+        )));
+
+        $metadata = strtolower((string) (
+            $row['metadata']
+            ?? $row['custom_data']
+            ?? $row['structured_data']
+            ?? $row['route_category']
+            ?? ''
+        ));
+
+        $isGenericPlaceholderSubject = in_array($title, [
+            'news alert for all symbols',
+            'press release alert for all symbols',
+        ], true);
+
+        if (! $isGenericPlaceholderSubject) {
+            return false;
+        }
+
+        return str_contains($source, 'thinkorswim')
+            || str_contains($source, 'tradealerts@mymiwallet.com')
+            || str_contains($metadata, 'thinkorswim')
+            || str_contains($metadata, 'generic_all_symbols_news_placeholder');
+    }
+
+
 }
