@@ -165,7 +165,7 @@ jobs:
 
       - name: Spark Doctor
         run: |
-          php spark spark:doctor --json > doctor.json
+          bash scripts/ci/check_spark_doctor_runtime.sh
 
       - name: Upload AIOps Artifacts
         if: always()
