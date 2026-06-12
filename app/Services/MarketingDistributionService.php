@@ -308,6 +308,65 @@ class MarketingDistributionService
         ];
     }
 
+    /** @return array<string,mixed> */
+
+    /** @return array<string,mixed> */
+    public function repairApprovedPendingGenerationWithTargets(bool $approve = false, int $limit = 500): array
+    {
+        $db = Database::connect();
+        $rows = $db->table("bf_marketing_generated_content gc")
+            ->select("gc.id, gc.status, COUNT(dt.id) AS pending_target_count")
+            ->join("bf_marketing_distribution_targets dt", "dt.generated_content_id = gc.id", "inner")
+            ->whereIn("gc.approval_status", ["approved", "auto_approved"])
+            ->where("gc.distribution_status", "pending_generation")
+            ->where("dt.channel", "marketing")
+            ->whereIn("dt.destination", ["blog", "in_app", "email"])
+            ->where("dt.status", "pending")
+            ->groupBy("gc.id, gc.status")
+            ->orderBy("gc.id", "ASC")
+            ->limit(max(1, $limit))
+            ->get()
+            ->getResultArray();
+
+        $ids = array_map(static fn(array $row): int => (int) ($row["id"] ?? 0), $rows);
+        $ids = array_values(array_filter($ids, static fn(int $id): bool => $id > 0));
+
+        if (! $approve || $ids === []) {
+            return [
+                "approved" => $approve,
+                "matched" => count($rows),
+                "updated" => 0,
+                "ids" => $ids,
+            ];
+        }
+
+        $updated = 0;
+        $now = date("Y-m-d H:i:s");
+        foreach ($rows as $row) {
+            $id = (int) ($row["id"] ?? 0);
+            if ($id < 1) {
+                continue;
+            }
+
+            $status = trim((string) ($row["status"] ?? ""));
+            $db->table("bf_marketing_generated_content")
+                ->where("id", $id)
+                ->update([
+                    "distribution_status" => "pending",
+                    "status" => $status !== "" ? $status : "generated",
+                    "updated_at" => $now,
+                ]);
+            $updated++;
+        }
+
+        return [
+            "approved" => true,
+            "matched" => count($rows),
+            "updated" => $updated,
+            "ids" => $ids,
+        ];
+    }
+
     private function ensureTargetsForRecord(array $record, array $destinations = []): array
     {
         $generatedContentId = (int) ($record['id'] ?? 0);
