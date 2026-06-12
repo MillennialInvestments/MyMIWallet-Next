@@ -365,6 +365,93 @@ class MarketingDistributionService
         ];
     }
 
+    /** @return array<string,mixed> */
+    public function skipGenericPlaceholderMarketingPending(bool $approve = false, int $limit = 500): array
+    {
+        $db = Database::connect();
+        $placeholderTitles = [
+            'News alert for all symbols',
+            'Press release alert for all symbols',
+        ];
+
+        $rows = $db->table('bf_marketing_generated_content gc')
+            ->select('gc.id, gc.title, gc.distribution_status, COUNT(dt.id) AS pending_target_count')
+            ->join('bf_marketing_distribution_targets dt', 'dt.generated_content_id = gc.id', 'inner')
+            ->whereIn('gc.approval_status', ['approved', 'auto_approved'])
+            ->whereIn('gc.distribution_status', ['pending', 'scheduled', 'partial_failed'])
+            ->where('gc.source_type', 'temp_scraper')
+            ->whereIn('gc.title', $placeholderTitles)
+            ->where('dt.channel', 'marketing')
+            ->whereIn('dt.destination', ['blog', 'in_app', 'email'])
+            ->where('dt.status', 'pending')
+            ->groupBy('gc.id, gc.title, gc.distribution_status')
+            ->orderBy('gc.id', 'ASC')
+            ->limit(max(1, $limit))
+            ->get()
+            ->getResultArray();
+
+        $ids = array_map(static fn(array $row): int => (int) ($row['id'] ?? 0), $rows);
+        $ids = array_values(array_filter($ids, static fn(int $id): bool => $id > 0));
+
+        $targetRows = [];
+        if ($ids !== []) {
+            $targetRows = $db->table('bf_marketing_distribution_targets')
+                ->select('id')
+                ->whereIn('generated_content_id', $ids)
+                ->where('channel', 'marketing')
+                ->whereIn('destination', ['blog', 'in_app', 'email'])
+                ->where('status', 'pending')
+                ->get()
+                ->getResultArray();
+        }
+
+        $targetIds = array_map(static fn(array $row): int => (int) ($row['id'] ?? 0), $targetRows);
+        $targetIds = array_values(array_filter($targetIds, static fn(int $id): bool => $id > 0));
+
+        if (! $approve || $ids === []) {
+            return [
+                'approved' => $approve,
+                'matched' => count($rows),
+                'target_matched' => count($targetIds),
+                'updated' => 0,
+                'target_updated' => 0,
+                'ids' => $ids,
+            ];
+        }
+
+        $now = date('Y-m-d H:i:s');
+
+        if ($targetIds !== []) {
+            $db->table('bf_marketing_distribution_targets')
+                ->whereIn('id', $targetIds)
+                ->update([
+                    'status' => 'skipped',
+                    'error_message' => 'Skipped generic all-symbol placeholder marketing content.',
+                    'failure_class' => null,
+                    'failed_at' => null,
+                    'next_retry_at' => null,
+                    'modified_on' => $now,
+                ]);
+        }
+
+        $db->table('bf_marketing_generated_content')
+            ->whereIn('id', $ids)
+            ->update([
+                'distribution_status' => 'skipped',
+                'status' => 'skipped',
+                'updated_at' => $now,
+            ]);
+
+        return [
+            'approved' => true,
+            'matched' => count($rows),
+            'target_matched' => count($targetIds),
+            'updated' => count($ids),
+            'target_updated' => count($targetIds),
+            'ids' => $ids,
+        ];
+    }
+
     private function ensureTargetsForRecord(array $record, array $destinations = []): array
     {
         $generatedContentId = (int) ($record['id'] ?? 0);
