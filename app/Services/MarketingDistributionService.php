@@ -264,6 +264,50 @@ class MarketingDistributionService
         return $assertions;
     }
 
+    /** @return array<string,mixed> */
+    public function skipOptionalDiscordCommunityPending(bool $approve = false, int $limit = 500): array
+    {
+        $now = date("Y-m-d H:i:s");
+        $builder = $this->targetModel
+            ->where("channel", "discord")
+            ->where("destination", "community_news")
+            ->where("status", "pending")
+            ->orderBy("id", "ASC")
+            ->limit(max(1, $limit));
+
+        $rows = $builder->findAll();
+        $ids = array_map(static fn(array $row): int => (int) ($row["id"] ?? 0), $rows);
+        $ids = array_values(array_filter($ids, static fn(int $id): bool => $id > 0));
+
+        if (! $approve || $ids === []) {
+            return [
+                "approved" => $approve,
+                "matched" => count($rows),
+                "updated" => 0,
+                "ids" => $ids,
+            ];
+        }
+
+        $this->targetModel
+            ->whereIn("id", $ids)
+            ->set([
+                "status" => "skipped",
+                "error_message" => "Skipped optional Discord community target because no marketing Discord channel is configured.",
+                "failure_class" => null,
+                "failed_at" => null,
+                "next_retry_at" => null,
+                "modified_on" => $now,
+            ])
+            ->update();
+
+        return [
+            "approved" => true,
+            "matched" => count($rows),
+            "updated" => count($ids),
+            "ids" => $ids,
+        ];
+    }
+
     private function ensureTargetsForRecord(array $record, array $destinations = []): array
     {
         $generatedContentId = (int) ($record['id'] ?? 0);
