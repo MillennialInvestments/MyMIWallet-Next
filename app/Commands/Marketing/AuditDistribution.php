@@ -50,6 +50,12 @@ class AuditDistribution extends SafeBaseCommand
 
         $latest403 = $db->table('bf_marketing_distribution_targets')->where('http_status', 403)->orderBy('id', 'DESC')->limit(3)->get()->getResultArray();
         $latest429 = $db->table('bf_marketing_distribution_targets')->where('http_status', 429)->orderBy('id', 'DESC')->limit(3)->get()->getResultArray();
+        $optionalDiscordCommunityPending = $db->table('bf_marketing_distribution_targets')
+            ->where('channel', 'discord')
+            ->where('destination', 'community_news')
+            ->where('status', 'pending')
+            ->countAllResults();
+
         $optionalDiscordCommunityDebt = $db->table('bf_marketing_distribution_targets')
             ->select('status, COUNT(*) AS total')
             ->where('channel', 'discord')
@@ -71,6 +77,7 @@ class AuditDistribution extends SafeBaseCommand
         CLI::write('Retry backlog: ' . $retryBacklog);
         CLI::write('Dead-letter backlog: ' . $deadLetterBacklog);
         CLI::write('Optional Discord community debt: ' . json_encode($optionalDiscordCommunityDebt, JSON_PRETTY_PRINT));
+        CLI::write('Optional Discord community pending: ' . $optionalDiscordCommunityPending);
         CLI::write('Latest 403 examples: ' . json_encode($latest403, JSON_PRETTY_PRINT));
         CLI::write('Latest 429 examples: ' . json_encode($latest429, JSON_PRETTY_PRINT));
         CLI::write('Approval/distributable mismatch count: ' . (int) ($approvalMismatch['total'] ?? 0));

@@ -523,7 +523,22 @@ class MarketingDistributionService
             $channels = [(string) ($this->distributionConfig->discord['fallback_channel'] ?? 'community_news')];
         }
 
-        return array_values(array_unique(array_map(static fn($item): string => (string) $item, $channels)));
+        $channels = array_values(array_unique(array_map(static fn($item): string => trim((string) $item), $channels)));
+
+        return array_values(array_filter($channels, fn(string $channelKey): bool => $this->isMarketingDiscordChannelConfigured($channelKey)));
+    }
+
+
+    private function isMarketingDiscordChannelConfigured(string $channelKey): bool
+    {
+        $channelKey = trim($channelKey);
+        if ($channelKey === "") {
+            return false;
+        }
+
+        $channels = (array) ($this->distributionConfig->discord["channels"] ?? []);
+
+        return trim((string) ($channels[$channelKey] ?? "")) !== "";
     }
 
     private function isDestinationEnabled(string $destination): bool
