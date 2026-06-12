@@ -17,6 +17,8 @@ class Commands extends BaseConfig
         'marketing:audit:distribution' => \App\Commands\Marketing\AuditDistribution::class,
         'marketing:distribution:skip-optional-discord-pending' => \App\Commands\Marketing\SkipOptionalDiscordPending::class,
         'marketing:distribution:repair-pending-generation' => \App\Commands\Marketing\RepairPendingGenerationDistribution::class,
+        'marketing:distribution:preview-controlled' => \App\Commands\Marketing\PreviewControlledDistribution::class,
+        'marketing:distribution:skip-generic-placeholders' => \App\Commands\Marketing\SkipGenericPlaceholderDistribution::class,
         'auth:baseline:capture' => \App\Commands\Auth\BaselineCapture::class,
         'auth:baseline:diff' => \App\Commands\Auth\BaselineDiff::class,
         'auth:baseline:restore' => \App\Commands\Auth\BaselineRestore::class,
