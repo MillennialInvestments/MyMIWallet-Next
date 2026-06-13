@@ -49,7 +49,7 @@ jobs:
           fi
 
       - name: Prepare CI writable/artifacts
-        run: php spark ops:ci:prepare
+        run: bash scripts/ci/prepare-writable.sh
 
       - name: Spark Command Contract Check
         run: |
@@ -157,7 +157,7 @@ jobs:
           fi
 
       - name: Prepare CI writable/artifacts
-        run: php spark ops:ci:prepare
+        run: bash scripts/ci/prepare-writable.sh
 
       - name: Copilot Validation
         run: |

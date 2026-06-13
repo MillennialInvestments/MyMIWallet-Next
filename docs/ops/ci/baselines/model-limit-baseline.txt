@@ -21,6 +21,8 @@ app/Services/MarketingDistributionService.php:189 findAll() without limit
 app/Services/MarketingDistributionService.php:278 findAll() without limit
 app/Services/MarketingDistributionService.php:530 findAll() without limit
 app/Services/MarketingDistributionService.php:558 findAll() without limit
+app/Services/MarketingDistributionService.php:617 findAll() without limit
+app/Services/MarketingDistributionService.php:645 findAll() without limit
 app/Services/MarketingDistributionService.php:97 findAll() without limit
 app/Services/MarketingNewsScrapeService.php:1295 get()->getResultArray() without limit
 app/Services/Observability/ErrorAlertService.php:18 findAll() without limit
