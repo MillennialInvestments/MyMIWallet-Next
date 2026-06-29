@@ -368,7 +368,8 @@ $allViewData['userActiveBudgetRecords'] = $renderUserActiveBudgetRecords;
         </div>
         <div class="btn-group" role="group" aria-label="Next month quick links">
             <?php
-                //$nextMonthUrl = site_url('Budget/Next-Month/' . $nextMonthKey);
+                $nextMonthKey = $nextMonthKey ?? date('Y-m', strtotime('first day of next month'));
+                $nextMonthUrl = $nextMonthUrl ?? site_url('Budget/Next-Month/' . $nextMonthKey);
             ?>
             <a class="btn btn-outline-primary" href="<?= $nextMonthUrl; ?>">Next Month (All)</a>
             <a class="btn btn-outline-success" href="<?= $nextMonthUrl . '/Income'; ?>">Income</a>

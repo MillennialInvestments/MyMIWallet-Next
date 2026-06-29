@@ -213,6 +213,19 @@ $nextMonthMonthly    = $nextMonthsExpense;
         </div>
     </div>
 </div>
+<?php
+// legacy_budget_chart_payload_fix: expose server-rendered budget records to the chart bootstrap.
+$budgetChartPayload = [
+    'budgetData' => is_array($userBudgetRecords ?? null) ? array_values($userBudgetRecords) : [],
+    'creditData' => is_array($currentBalances ?? null) ? array_values($currentBalances) : [],
+    'availableData' => is_array($availableBalances ?? null) ? array_values($availableBalances) : [],
+    'repaymentSummary' => is_array($repaymentSummary ?? null) ? array_values($repaymentSummary) : [],
+];
+?>
+<script <?= $nonce['script'] ?? '' ?>>
+window.budgetDashboardData = <?= json_encode($budgetChartPayload, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
+</script>
+
 <script <?= $nonce['script'] ?? '' ?>>
 document.addEventListener('DOMContentLoaded', function () {
   // Ensure Chart.js is available (layout should include it; this is a fallback)
@@ -513,7 +526,8 @@ document.addEventListener('DOMContentLoaded', function () {
         return activeElement ? parseInt(activeElement.dataset.value, 10) : null;
     };
 
-    const ctx = document.getElementById('report-chart').getContext('2d');
+    /* legacy_duplicate_chart_block_disabled
+const ctx = document.getElementById('report-chart').getContext('2d');
     const chart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -604,4 +618,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initial chart rendering with default settings
     updateChartData();
 });
+
+*/
 </script> -->

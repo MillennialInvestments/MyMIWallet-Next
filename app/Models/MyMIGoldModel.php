@@ -61,13 +61,27 @@ class MyMIGoldModel extends Model
     }
     
     public function getUserCoinTotal($cuID) {
-        $builder = $this->db->table('bf_exchanges_orders');
-        $builder->select('initial_coin_value');
-        $builder->selectSum('total');
-        $builder->where('user_id', $cuID);
-        $builder->where('market', 'MYMIG');
-        $builder->where('status', 'Closed');
-        return $builder->get()->getRowArray();
+        // legacy_dashboard_gold_groupby_fix: aggregate safely under ONLY_FULL_GROUP_BY.
+        if ((int) $cuID <= 0) {
+            return ['initial_coin_value' => '0.00', 'total' => '0.00'];
+        }
+
+        try {
+            $builder = $this->db->table('bf_exchanges_orders');
+            $builder->select("COALESCE(MAX(CAST(NULLIF(REPLACE(REPLACE(initial_coin_value, '$', ''), ',', ''), '') AS DECIMAL(30,8))), 0) AS initial_coin_value", false);
+            $builder->select("COALESCE(SUM(CAST(NULLIF(REPLACE(REPLACE(total, '$', ''), ',', ''), '') AS DECIMAL(30,8))), 0) AS total", false);
+            $builder->where('user_id', (string) $cuID);
+            $builder->where('market', 'MYMIG');
+            $builder->where('status', 'Closed');
+
+            return $builder->get()->getRowArray() ?: ['initial_coin_value' => '0.00', 'total' => '0.00'];
+        } catch (\Throwable $e) {
+            log_message('error', 'MyMIGoldModel::getUserCoinTotal failed: {message}', [
+                'message' => $e->getMessage(),
+            ]);
+
+            return ['initial_coin_value' => '0.00', 'total' => '0.00'];
+        }
     }
 
     public function completePurchase($transId) {

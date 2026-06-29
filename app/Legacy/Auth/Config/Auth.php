@@ -7,6 +7,12 @@ use Myth\Auth\Authentication\LocalAuthenticator;
 class Auth extends \Myth\Auth\Config\Auth
 {
     /**
+     * legacy_register_app_overrides_folder_fix: legacy register view expects this Myth/Auth override path.
+     */
+    public string $appOverridesFolder = 'Auth';
+
+
+    /**
      * --------------------------------------------------------------------
      * Default User Group
      * --------------------------------------------------------------------

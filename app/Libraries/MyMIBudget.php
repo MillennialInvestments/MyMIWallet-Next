@@ -664,11 +664,13 @@ class MyMIBudget
 
         // Ensuring default array to avoid null
         $getIncomeAccountSummary = $this->budgetModel->getIncomeAccountsSummary($cuID) ?? [];
+        // legacy_dashboard_income_account_var_fix: prevent undefined variable when no income account summary is available.
+        $incomeAccount = is_array($incomeAccount ?? null) ? $incomeAccount : [];
         foreach ($getIncomeAccountSummary as $incomeAccount) {
             $income = max($income, $incomeAccount['net_amount'] ?? 0.00);
         }
 
-        $sourceType = $incomeAccount['source_type'];
+        $sourceType = $incomeAccount['source_type'] ?? ''; // legacy_dashboard_source_type_guard
         // Ensuring a default value for calculation and avoiding null
         $thisMonthIncome = (float) $this->budgetModel->getThisMonthIncomeAccountSummary($cuID);
 

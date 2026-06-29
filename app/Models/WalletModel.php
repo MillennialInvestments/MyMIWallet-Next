@@ -1339,6 +1339,11 @@ class WalletModel extends Model
 
     public function getNonDefaultWalletCount($cuID)
     {
+        // legacy_dashboard_missing_wallet_table_guard: DreamHost import does not include bf_users_wallet.
+        if (! $this->db->tableExists('bf_users_wallet')) {
+            return 0;
+        }
+
         return $this->db->table('bf_users_wallet')
             ->where('user_id', $cuID)
             ->where('default_wallet', 'No')
@@ -1347,6 +1352,11 @@ class WalletModel extends Model
 
     public function getNonDefaultWalletTotals($cuID)
     {
+        // legacy_dashboard_missing_wallet_table_guard: DreamHost import does not include bf_users_wallet.
+        if (! $this->db->tableExists('bf_users_wallet')) {
+            return ['amount' => 0];
+        }
+
         return $this->db->table('bf_users_wallet')
             ->selectSum('amount')
             ->where('user_id', $cuID)
@@ -1421,6 +1431,11 @@ class WalletModel extends Model
 
     public function getWalletTotals($cuID)
     {
+        // legacy_dashboard_get_wallet_totals_guard: DreamHost import does not include bf_users_wallet.
+        if (! $this->db->tableExists('bf_users_wallet')) {
+            return ['amount' => 0];
+        }
+
         return $this->db->table('bf_users_wallet')->selectSum('amount')->where('user_id', $cuID)->where('active', 1)->get()->getRowArray();
     }
 
@@ -3192,6 +3207,11 @@ class WalletModel extends Model
 
     private function getTableColumnMap(string $table): array
     {
+        // legacy_dashboard_table_column_map_guard: avoid noisy getFieldNames errors for absent legacy tables.
+        if (! $this->db->tableExists($table)) {
+            return [];
+        }
+
         try {
             return array_fill_keys($this->db->getFieldNames($table), true);
         } catch (\Throwable $e) {

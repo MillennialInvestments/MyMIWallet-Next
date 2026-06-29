@@ -666,6 +666,7 @@ class BudgetModel extends ObservedModel
                     ->where('year', date("Y"))
                     ->where("month <=", date('m'))
                     ->where("day <=", date('d'))
+                    ->groupBy('source_type') /* legacy_expense_summary_groupby_fix */
                     ->findAll();
     }
 
@@ -729,7 +730,8 @@ class BudgetModel extends ObservedModel
                     ->where('year', date("Y"))
                     ->where("month <=", date('m'))
                     ->where("day <=", date('d'))
-                    ->findAll();
+                    ->groupBy('source_type') /* legacy_income_summary_groupby_fix */
+            ->findAll();
         // log_message('info', 'BudgetModel - L426: getIncomeAccountsSummary Array' . print_r($result, true));
         return $result;
     }

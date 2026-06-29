@@ -283,6 +283,16 @@ class AuthController extends BaseController
 
         try {
             $attempt = $this->auth->attempt($credentials, $remember);
+
+            if (! $attempt && $userFound && ! $passwordVerifyFailed && $userRecord !== null && method_exists($this->auth, 'login')) {
+                $this->authLog('AUTH_LOGIN', 'legacy_password_hash_fallback', 'Myth/Auth attempt failed after native password verification; applying migrated hash compatibility login.', [
+                    'user_id' => $userRecord->id ?? null,
+                    'identifier_type' => $type,
+                    'request_id' => $requestId,
+                ], 'warning', __LINE__);
+
+                $attempt = (bool) $this->auth->login($userRecord, $remember);
+            }
         } catch (Throwable $e) {
             $this->authLog('AUTH_FAIL', 'exception', 'Authentication attempt threw exception', [
                 'identifier' => $identifier,
