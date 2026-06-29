@@ -426,18 +426,23 @@ class UserModel extends Model
                             ->where('status', 1)
                             ->where('active', 'Yes')
                             ->get()
-                            ->getResultArray(); 
-        return $builder; 
+                            ->getResultArray();
+        return $builder;
     }
 
-    public function getUserNonCreditWallets($cuID) { 
-        $builder = $this->db->table('bf_users_wallet') 
+    public function getUserNonCreditWallets($cuID) {
+        // legacy_dashboard_user_non_credit_wallet_guard: DreamHost import does not include bf_users_wallet.
+        if (! $this->db->tableExists('bf_users_wallet')) {
+            return [];
+        }
+
+        $builder = $this->db->table('bf_users_wallet')
                             ->where('user_id', $cuID)
                             ->where('status', 1)
                             ->where('active', 'Yes')
                             ->where('wallet_type !=', 'Credit')
                             ->get()
-                            ->getResultArray(); 
+                            ->getResultArray();
         return $builder; 
     }
 

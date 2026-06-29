@@ -187,7 +187,7 @@ class HowItWorksController extends UserController
             $normalizedSlug = $canonicalSlug;
 
             $viewMap = [
-                'overview'                        => 'App\Modules\Blog\Views\HowItWorks\fallback',
+                'overview'                        => 'themes/public/how_it_works/index', // legacy_howitworks_public_theme_overview_restore
                 'registering-an-account'          => 'App\Modules\Blog\Views\HowItWorks\Registering_An_Account',
                 'personal-budgeting'              => 'App\Modules\Blog\Views\HowItWorks\Personal_Budgeting',
                 'investment-dashboard'            => 'App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management',
@@ -207,6 +207,10 @@ class HowItWorksController extends UserController
 
             if (isset($viewMap[$normalizedSlug])) {
                 $data = $this->commonData();
+                if (str_starts_with($viewMap[$normalizedSlug], 'themes/public/how_it_works/')) {
+                    return $this->renderPublic($viewMap[$normalizedSlug], is_array($data) ? $data : []);
+                }
+
                 if (method_exists($this, 'respondWithRendered')) {
                     return $this->respondWithRendered($viewMap[$normalizedSlug], $data);
                 }

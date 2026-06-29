@@ -17,12 +17,11 @@ class FRED
     protected $curlrequest;
 
     public function __construct()
-    {
-        // Assuming APIs is a configuration class that you have under app/Config
-        $config = config(APIs::class);
+    {        $config = config('APISettings');
+        $researchConfig = config('Research');
         $this->curlrequest = service('curlrequest');
         $this->apiBase = 'https://api.stlouisfed.org/fred/';
-        $this->apiKey = $config->fredApiKey; // Make sure you have fredApiKey in your APIs config class
+        $this->apiKey = (string) (env('FRED_API_KEY') ?: ($config->fredApiKey ?? '') ?: ($researchConfig->fredApiKey ?? ''));
 
         // CI4 logging is used as follows
         // log('debug', 'FRED API Key: ' . $this->apiKey);

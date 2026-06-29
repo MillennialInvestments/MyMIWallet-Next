@@ -416,6 +416,16 @@ class AnalyticalModel extends Model {
     }
     
     public function getTotalWalletTransactions() {
+        // legacy_howitworks_wallet_transactions_guard: DreamHost import does not include bf_users_wallet_transactions.
+        if (! $this->db->tableExists('bf_users_wallet_transactions')) {
+            return [
+                'getTotalWalletTransactions' => [],
+                'totalWalletTransactions' => 0,
+                'walletTransactions' => [],
+                'total_wallet_transactions' => 0,
+            ];
+        }
+
         $totalWalletTransactionsQuery = $this->db->table('bf_users_wallet_transactions')
                         ->where('status', 1)
                         ->where('active', 'Yes')
@@ -495,6 +505,14 @@ class AnalyticalModel extends Model {
     }
     
     public function getTotalTradesTracked() {
+        // legacy_howitworks_trades_shape_guard: DreamHost import does not include bf_users_trades.
+        if (! $this->db->tableExists('bf_users_trades')) {
+            return [
+                'getTotalTradesTracked' => [],
+                'totalTradesTracked' => 0,
+            ];
+        }
+
         $totalTradesTrackedQuery = $this->db->table('bf_users_trades')
                         ->where('order_status', 'OPENING')
                         ->get()
@@ -510,6 +528,11 @@ class AnalyticalModel extends Model {
     }
     
     public function getTradesByUser($userID) {
+        // legacy_howitworks_trades_shape_guard: DreamHost import does not include bf_users_trades.
+        if (! $this->db->tableExists('bf_users_trades')) {
+            return [];
+        }
+
         return $this->db->table('bf_users_trades')
                         ->where('user_id', $userID)
                         ->get()
@@ -517,6 +540,16 @@ class AnalyticalModel extends Model {
     }
     
     public function getTotalActiveWallets() {
+        // legacy_howitworks_active_wallets_guard: DreamHost import does not include bf_users_wallet.
+        if (! $this->db->tableExists('bf_users_wallet')) {
+            return [
+                'getTotalActiveWallets' => [],
+                'totalActiveWallets' => 0,
+                'activeWallets' => [],
+                'total_active_wallets' => 0,
+            ];
+        }
+
         $totalActiveWalletsQuery = $this->db->table('bf_users_wallet')
                         ->where('status', 1)
                         ->where('active', 1)
@@ -533,6 +566,16 @@ class AnalyticalModel extends Model {
     }
     
     public function getTotalActiveDefaultWallets() {
+        // legacy_howitworks_default_wallets_guard: DreamHost import does not include bf_users_wallet.
+        if (! $this->db->tableExists('bf_users_wallet')) {
+            return [
+                'getTotalDefaultWallets' => [],
+                'totalDefaultWallets' => 0,
+                'defaultWallets' => [],
+                'total_default_wallets' => 0,
+            ];
+        }
+
         $totalDefaultWalletsQuery = $this->db->table('bf_users_wallet')
                         ->where('active', 1)
                         ->where('default_wallet', 'Yes')
@@ -549,6 +592,11 @@ class AnalyticalModel extends Model {
     }
     
     public function getTotalActiveWalletsByUser($userID) {
+        // legacy_howitworks_wallets_by_user_guard: DreamHost import does not include bf_users_wallet.
+        if (! $this->db->tableExists('bf_users_wallet')) {
+            return [];
+        }
+
         return $this->db->table('bf_users_wallet')
                         ->where('active', 1)
                         ->where('user_id', $userID)
