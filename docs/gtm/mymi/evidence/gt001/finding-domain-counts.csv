@@ -1,0 +1,7 @@
+domain,p0_api_missing_guard,p0_protected_missing_guard,p0_state_missing_guard,p1_malformed_handler,p1_blank_filters
+broker_plaid,93,93,4,0,0
+investments,26,44,20,0,24
+alerts,89,2,41,0,0
+ai_chat_discord,24,0,13,2,0
+ops_management,45,4,25,23,0
+account_wallet,47,54,20,2,8

@@ -1,0 +1,6 @@
+priority,finding,count
+P0,Non-public API route has no recognized auth/token/role/permission guard,605
+P0,Protected product route has no recognized auth/token/role/permission guard,240
+P0,State-changing route has no recognized CSRF/auth/token/role/permission guard,223
+P1,Handler namespace appears malformed/doubled,35
+P1,Non-public route has blank before/after filters,72

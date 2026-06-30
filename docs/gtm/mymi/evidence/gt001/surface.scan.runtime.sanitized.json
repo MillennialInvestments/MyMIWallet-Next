@@ -1,0 +1,453 @@
+{
+  "active_auth_controller_namespace": "App\\Controllers\\AuthController",
+  "active_login_register_routes": [
+    {
+      "handler": "\u00bb",
+      "method": "GET",
+      "uri": "index.php/login"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "GET",
+      "uri": "index.php/register"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "GET",
+      "uri": "debug/register-success-probe"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "GET",
+      "uri": "login"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "GET",
+      "uri": "register"
+    },
+    {
+      "handler": "register-success",
+      "method": "GET",
+      "uri": "register/success"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "GET",
+      "uri": "login-shield"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "GET",
+      "uri": "register-shield"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "GET",
+      "uri": "Login"
+    },
+    {
+      "handler": "register-segment",
+      "method": "GET",
+      "uri": "register/([^/]+)"
+    },
+    {
+      "handler": "discord-register",
+      "method": "GET",
+      "uri": "Discord/register"
+    },
+    {
+      "handler": "discord-register-referral",
+      "method": "GET",
+      "uri": "Discord/register/([^/]+)"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "POST",
+      "uri": "index.php/login"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "POST",
+      "uri": "index.php/register"
+    },
+    {
+      "handler": "login-submit",
+      "method": "POST",
+      "uri": "login"
+    },
+    {
+      "handler": "register-submit",
+      "method": "POST",
+      "uri": "register"
+    },
+    {
+      "handler": "register-resend-activation",
+      "method": "POST",
+      "uri": "register/resend-activation"
+    },
+    {
+      "handler": "login-shield-submit",
+      "method": "POST",
+      "uri": "login-shield"
+    },
+    {
+      "handler": "register-shield-submit",
+      "method": "POST",
+      "uri": "register-shield"
+    },
+    {
+      "handler": "discord-register-attempt",
+      "method": "POST",
+      "uri": "Discord/register"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "POST",
+      "uri": "Discord/register/([^/]+)"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "POST",
+      "uri": "API/mobile/auth/login"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "POST",
+      "uri": "API/mobile/auth/register"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "POST",
+      "uri": "API/Discord/register-guild-commands"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "POST",
+      "uri": "Management/Projects/RegisterFundExchangeAsset/([0-9]+)"
+    }
+  ],
+  "dashboard_redirect_routes": [
+    {
+      "handler": "\u00bb",
+      "method": "GET",
+      "uri": "API/mobile/dashboard"
+    },
+    {
+      "handler": "dashboard",
+      "method": "GET",
+      "uri": "Dashboard"
+    },
+    {
+      "handler": "load-modal-1-segment",
+      "method": "GET",
+      "uri": "Dashboard/Transaction-Modal/([^/]+)"
+    },
+    {
+      "handler": "load-modal-2-segment",
+      "method": "GET",
+      "uri": "Dashboard/Transaction-Modal/([^/]+)/([^/]+)"
+    },
+    {
+      "handler": "load-modal-3-segment",
+      "method": "GET",
+      "uri": "Dashboard/Transaction-Modal/([^/]+)/([^/]+)/([^/]+)"
+    },
+    {
+      "handler": "load-modal-4-segment",
+      "method": "GET",
+      "uri": "Dashboard/Transaction-Modal/([^/]+)/([^/]+)/([^/]+)/([^/]+)"
+    },
+    {
+      "handler": "load-modal-5-segment",
+      "method": "GET",
+      "uri": "Dashboard/Transaction-Modal/([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)"
+    },
+    {
+      "handler": "load-modal-6-segment",
+      "method": "GET",
+      "uri": "Dashboard/Transaction-Modal/([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)"
+    },
+    {
+      "handler": "loading-screen",
+      "method": "GET",
+      "uri": "Dashboard/LoadingScreen"
+    },
+    {
+      "handler": "onboarding",
+      "method": "GET",
+      "uri": "Dashboard/onboarding"
+    },
+    {
+      "handler": "check-onboarding-status",
+      "method": "GET",
+      "uri": "Dashboard/checkOnboardingStatus"
+    },
+    {
+      "handler": "continue-setup-modal",
+      "method": "GET",
+      "uri": "Dashboard/continue-setup-modal"
+    },
+    {
+      "handler": "onboarding-progress",
+      "method": "GET",
+      "uri": "Dashboard/onboarding/progress"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "GET",
+      "uri": "Dashboard/Economy/Widget"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "GET",
+      "uri": "Dashboard/PropFirms"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "GET",
+      "uri": "Dashboard/propfirms"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "GET",
+      "uri": "Dashboard/PropFirm"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "HEAD",
+      "uri": "Dashboard/PropFirm"
+    },
+    {
+      "handler": "complete-onboarding-step",
+      "method": "POST",
+      "uri": "Dashboard/completeOnboardingStep/([^/]+)"
+    },
+    {
+      "handler": "setup-dismiss",
+      "method": "POST",
+      "uri": "Dashboard/setup/dismiss"
+    },
+    {
+      "handler": "onboarding-save-profile",
+      "method": "POST",
+      "uri": "Dashboard/onboarding/profile"
+    },
+    {
+      "handler": "onboarding-save-income",
+      "method": "POST",
+      "uri": "Dashboard/onboarding/budget-income"
+    },
+    {
+      "handler": "onboarding-save-credit-debt",
+      "method": "POST",
+      "uri": "Dashboard/onboarding/credit-debt"
+    },
+    {
+      "handler": "onboarding-save-recurring",
+      "method": "POST",
+      "uri": "Dashboard/onboarding/recurring-expense"
+    },
+    {
+      "handler": "onboarding-save-watchlist",
+      "method": "POST",
+      "uri": "Dashboard/onboarding/watchlist"
+    },
+    {
+      "handler": "onboarding-complete-source-welcome",
+      "method": "POST",
+      "uri": "Dashboard/onboarding/source-welcome/complete"
+    },
+    {
+      "handler": "account-completion-dismiss",
+      "method": "POST",
+      "uri": "Dashboard/account-completion/dismiss"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "POST",
+      "uri": "Dashboard/PropFirm"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "PATCH",
+      "uri": "Dashboard/PropFirm"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "PUT",
+      "uri": "Dashboard/PropFirm"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "DELETE",
+      "uri": "Dashboard/PropFirm"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "OPTIONS",
+      "uri": "Dashboard/PropFirm"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "TRACE",
+      "uri": "Dashboard/PropFirm"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "CONNECT",
+      "uri": "Dashboard/PropFirm"
+    },
+    {
+      "handler": "\u00bb",
+      "method": "CLI",
+      "uri": "Dashboard/PropFirm"
+    }
+  ],
+  "filters_touching_auth_and_dashboard": [
+    {
+      "content": "// PATCH: register RBAC permission filter",
+      "line": 39
+    },
+    {
+      "content": "'permission'     => \\App\\Filters\\PermissionFilter::class,",
+      "line": 40
+    },
+    {
+      "content": "'role' => \\App\\Filters\\RoleFilter::class,",
+      "line": 41
+    },
+    {
+      "content": "// PATCH: API token authentication filter",
+      "line": 42
+    },
+    {
+      "content": "'apiToken'       => \\App\\Filters\\ApiTokenAuthFilter::class,",
+      "line": 43
+    },
+    {
+      "content": "'login'         => \\App\\Filters\\LoginFilter::class,",
+      "line": 57
+    },
+    {
+      "content": "'authcheck'     => \\App\\Filters\\AuthCheckFilter::class,",
+      "line": 58
+    },
+    {
+      "content": "'auth'          => \\App\\Filters\\AuthFilter::class,",
+      "line": 60
+    },
+    {
+      "content": "//         'Auth/activate-account',",
+      "line": 142
+    },
+    {
+      "content": "//         'Auth/activate-account/*',",
+      "line": 143
+    },
+    {
+      "content": "'authcheck' => [",
+      "line": 150
+    },
+    {
+      "content": "'login',",
+      "line": 152
+    },
+    {
+      "content": "'Auth/forgot-password',",
+      "line": 174
+    },
+    {
+      "content": "'Auth/reset-password',",
+      "line": 175
+    },
+    {
+      "content": "'Auth/activate-account',",
+      "line": 180
+    },
+    {
+      "content": "'Auth/activate-account/*',",
+      "line": 181
+    },
+    {
+      "content": "'auth/provider/*',",
+      "line": 182
+    },
+    {
+      "content": "'auth/provider/*/callback',",
+      "line": 183
+    },
+    {
+      "content": "'Auth/provider/*',",
+      "line": 184
+    },
+    {
+      "content": "'Auth/provider/*/callback',",
+      "line": 185
+    },
+    {
+      "content": "'login' => [",
+      "line": 319
+    },
+    {
+      "content": "'Dashboard',",
+      "line": 321
+    },
+    {
+      "content": "'Dashboard/*',",
+      "line": 322
+    },
+    {
+      "content": "'login',",
+      "line": 336
+    },
+    {
+      "content": "'auth/*',",
+      "line": 338
+    },
+    {
+      "content": "'Auth/*',",
+      "line": 339
+    },
+    {
+      "content": "'login',",
+      "line": 364
+    },
+    {
+      "content": "'Auth/*',",
+      "line": 378
+    }
+  ],
+  "js_bound_to_auth_forms": {
+    "exists": true,
+    "file": "public/assets/js/login-init.js",
+    "mentions_form": true,
+    "mentions_login": true,
+    "mentions_register": false
+  },
+  "service_auth_runtime": "CodeIgniter\\Shield\\Auth",
+  "service_authentication_runtime": "Myth\\Auth\\Authentication\\LocalAuthenticator",
+  "views_bound_to_auth_forms": [
+    {
+      "exists": true,
+      "has_csrf_hint": true,
+      "has_form": true,
+      "mentions_login_or_register": true,
+      "view": "app/Views/Auth/login.php"
+    },
+    {
+      "exists": true,
+      "has_csrf_hint": false,
+      "has_form": false,
+      "mentions_login_or_register": true,
+      "view": "app/Views/Auth/register.php"
+    },
+    {
+      "exists": true,
+      "has_csrf_hint": false,
+      "has_form": false,
+      "mentions_login_or_register": true,
+      "view": "app/Views/Auth/layout.php"
+    }
+  ]
+}

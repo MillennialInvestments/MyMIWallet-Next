@@ -1,0 +1,79 @@
+# Non-Public Routes with Blank Filters
+
+- Total rows in this slice: 72
+- Rows shown: 72
+
+| Priority | Finding | Method | Route | Handler | Before Filters | After Filters |
+|---|---|---|---|---|---|---|
+| P1 | Non-public route has blank before/after filters | GET | `index.php/(.*)` | `$1` | `` | `` |
+| P1 | Non-public route has blank before/after filters | GET | `index.php/images/(.*)` | `images/$1` | `` | `` |
+| P1 | Non-public route has blank before/after filters | GET | `News` | `Blog/News-And-Updates` | `` | `` |
+| P1 | Non-public route has blank before/after filters | GET | `Dashboard/PropFirm` | `PropFirms` | `` | `` |
+| P1 | Non-public route has blank before/after filters | GET | `Features/Advanced-Investment-Portfoio-Manager` | `Features/Advanced-Investment-Portfolio-Manager` | `` | `` |
+| P1 | Non-public route has blank before/after filters | GET | `Premium-Features/Advanced-Trade-Tracker` | `Investments/Trade-Tracker` | `` | `` |
+| P1 | Non-public route has blank before/after filters | GET | `Premium-Features/Wallets` | `Wallets/Manager` | `` | `` |
+| P1 | Non-public route has blank before/after filters | GET | `How-To-Guides` | `Knowledgebase/Tutorials` | `` | `` |
+| P1 | Non-public route has blank before/after filters | GET | `Investments/Reports` | `Investments/Trade-Tracker` | `` | `` |
+| P1 | Non-public route has blank before/after filters | POST | `index.php/(.*)` | `$1` | `` | `` |
+| P1 | Non-public route has blank before/after filters | POST | `index.php/images/(.*)` | `images/$1` | `` | `` |
+| P1 | Non-public route has blank before/after filters | POST | `News` | `Blog/News-And-Updates` | `` | `` |
+| P1 | Non-public route has blank before/after filters | POST | `Dashboard/PropFirm` | `PropFirms` | `` | `` |
+| P1 | Non-public route has blank before/after filters | POST | `Features/Advanced-Investment-Portfoio-Manager` | `Features/Advanced-Investment-Portfolio-Manager` | `` | `` |
+| P1 | Non-public route has blank before/after filters | POST | `Premium-Features/Advanced-Trade-Tracker` | `Investments/Trade-Tracker` | `` | `` |
+| P1 | Non-public route has blank before/after filters | POST | `Premium-Features/Wallets` | `Wallets/Manager` | `` | `` |
+| P1 | Non-public route has blank before/after filters | POST | `How-To-Guides` | `Knowledgebase/Tutorials` | `` | `` |
+| P1 | Non-public route has blank before/after filters | POST | `Investments/Reports` | `Investments/Trade-Tracker` | `` | `` |
+| P1 | Non-public route has blank before/after filters | PATCH | `index.php/(.*)` | `$1` | `` | `` |
+| P1 | Non-public route has blank before/after filters | PATCH | `index.php/images/(.*)` | `images/$1` | `` | `` |
+| P1 | Non-public route has blank before/after filters | PATCH | `News` | `Blog/News-And-Updates` | `` | `` |
+| P1 | Non-public route has blank before/after filters | PATCH | `Dashboard/PropFirm` | `PropFirms` | `` | `` |
+| P1 | Non-public route has blank before/after filters | PATCH | `Features/Advanced-Investment-Portfoio-Manager` | `Features/Advanced-Investment-Portfolio-Manager` | `` | `` |
+| P1 | Non-public route has blank before/after filters | PATCH | `Premium-Features/Advanced-Trade-Tracker` | `Investments/Trade-Tracker` | `` | `` |
+| P1 | Non-public route has blank before/after filters | PATCH | `Premium-Features/Wallets` | `Wallets/Manager` | `` | `` |
+| P1 | Non-public route has blank before/after filters | PATCH | `How-To-Guides` | `Knowledgebase/Tutorials` | `` | `` |
+| P1 | Non-public route has blank before/after filters | PATCH | `Investments/Reports` | `Investments/Trade-Tracker` | `` | `` |
+| P1 | Non-public route has blank before/after filters | PUT | `index.php/(.*)` | `$1` | `` | `` |
+| P1 | Non-public route has blank before/after filters | PUT | `index.php/images/(.*)` | `images/$1` | `` | `` |
+| P1 | Non-public route has blank before/after filters | PUT | `News` | `Blog/News-And-Updates` | `` | `` |
+| P1 | Non-public route has blank before/after filters | PUT | `Dashboard/PropFirm` | `PropFirms` | `` | `` |
+| P1 | Non-public route has blank before/after filters | PUT | `Features/Advanced-Investment-Portfoio-Manager` | `Features/Advanced-Investment-Portfolio-Manager` | `` | `` |
+| P1 | Non-public route has blank before/after filters | PUT | `Premium-Features/Advanced-Trade-Tracker` | `Investments/Trade-Tracker` | `` | `` |
+| P1 | Non-public route has blank before/after filters | PUT | `Premium-Features/Wallets` | `Wallets/Manager` | `` | `` |
+| P1 | Non-public route has blank before/after filters | PUT | `How-To-Guides` | `Knowledgebase/Tutorials` | `` | `` |
+| P1 | Non-public route has blank before/after filters | PUT | `Investments/Reports` | `Investments/Trade-Tracker` | `` | `` |
+| P1 | Non-public route has blank before/after filters | DELETE | `index.php/(.*)` | `$1` | `` | `` |
+| P1 | Non-public route has blank before/after filters | DELETE | `index.php/images/(.*)` | `images/$1` | `` | `` |
+| P1 | Non-public route has blank before/after filters | DELETE | `News` | `Blog/News-And-Updates` | `` | `` |
+| P1 | Non-public route has blank before/after filters | DELETE | `Dashboard/PropFirm` | `PropFirms` | `` | `` |
+| P1 | Non-public route has blank before/after filters | DELETE | `Features/Advanced-Investment-Portfoio-Manager` | `Features/Advanced-Investment-Portfolio-Manager` | `` | `` |
+| P1 | Non-public route has blank before/after filters | DELETE | `Premium-Features/Advanced-Trade-Tracker` | `Investments/Trade-Tracker` | `` | `` |
+| P1 | Non-public route has blank before/after filters | DELETE | `Premium-Features/Wallets` | `Wallets/Manager` | `` | `` |
+| P1 | Non-public route has blank before/after filters | DELETE | `How-To-Guides` | `Knowledgebase/Tutorials` | `` | `` |
+| P1 | Non-public route has blank before/after filters | DELETE | `Investments/Reports` | `Investments/Trade-Tracker` | `` | `` |
+| P1 | Non-public route has blank before/after filters | OPTIONS | `index.php/(.*)` | `$1` | `` | `` |
+| P1 | Non-public route has blank before/after filters | OPTIONS | `index.php/images/(.*)` | `images/$1` | `` | `` |
+| P1 | Non-public route has blank before/after filters | OPTIONS | `News` | `Blog/News-And-Updates` | `` | `` |
+| P1 | Non-public route has blank before/after filters | OPTIONS | `Dashboard/PropFirm` | `PropFirms` | `` | `` |
+| P1 | Non-public route has blank before/after filters | OPTIONS | `Features/Advanced-Investment-Portfoio-Manager` | `Features/Advanced-Investment-Portfolio-Manager` | `` | `` |
+| P1 | Non-public route has blank before/after filters | OPTIONS | `Premium-Features/Advanced-Trade-Tracker` | `Investments/Trade-Tracker` | `` | `` |
+| P1 | Non-public route has blank before/after filters | OPTIONS | `Premium-Features/Wallets` | `Wallets/Manager` | `` | `` |
+| P1 | Non-public route has blank before/after filters | OPTIONS | `How-To-Guides` | `Knowledgebase/Tutorials` | `` | `` |
+| P1 | Non-public route has blank before/after filters | OPTIONS | `Investments/Reports` | `Investments/Trade-Tracker` | `` | `` |
+| P1 | Non-public route has blank before/after filters | TRACE | `index.php/(.*)` | `$1` | `` | `` |
+| P1 | Non-public route has blank before/after filters | TRACE | `index.php/images/(.*)` | `images/$1` | `` | `` |
+| P1 | Non-public route has blank before/after filters | TRACE | `News` | `Blog/News-And-Updates` | `` | `` |
+| P1 | Non-public route has blank before/after filters | TRACE | `Dashboard/PropFirm` | `PropFirms` | `` | `` |
+| P1 | Non-public route has blank before/after filters | TRACE | `Features/Advanced-Investment-Portfoio-Manager` | `Features/Advanced-Investment-Portfolio-Manager` | `` | `` |
+| P1 | Non-public route has blank before/after filters | TRACE | `Premium-Features/Advanced-Trade-Tracker` | `Investments/Trade-Tracker` | `` | `` |
+| P1 | Non-public route has blank before/after filters | TRACE | `Premium-Features/Wallets` | `Wallets/Manager` | `` | `` |
+| P1 | Non-public route has blank before/after filters | TRACE | `How-To-Guides` | `Knowledgebase/Tutorials` | `` | `` |
+| P1 | Non-public route has blank before/after filters | TRACE | `Investments/Reports` | `Investments/Trade-Tracker` | `` | `` |
+| P1 | Non-public route has blank before/after filters | CONNECT | `index.php/(.*)` | `$1` | `` | `` |
+| P1 | Non-public route has blank before/after filters | CONNECT | `index.php/images/(.*)` | `images/$1` | `` | `` |
+| P1 | Non-public route has blank before/after filters | CONNECT | `News` | `Blog/News-And-Updates` | `` | `` |
+| P1 | Non-public route has blank before/after filters | CONNECT | `Dashboard/PropFirm` | `PropFirms` | `` | `` |
+| P1 | Non-public route has blank before/after filters | CONNECT | `Features/Advanced-Investment-Portfoio-Manager` | `Features/Advanced-Investment-Portfolio-Manager` | `` | `` |
+| P1 | Non-public route has blank before/after filters | CONNECT | `Premium-Features/Advanced-Trade-Tracker` | `Investments/Trade-Tracker` | `` | `` |
+| P1 | Non-public route has blank before/after filters | CONNECT | `Premium-Features/Wallets` | `Wallets/Manager` | `` | `` |
+| P1 | Non-public route has blank before/after filters | CONNECT | `How-To-Guides` | `Knowledgebase/Tutorials` | `` | `` |
+| P1 | Non-public route has blank before/after filters | CONNECT | `Investments/Reports` | `Investments/Trade-Tracker` | `` | `` |
