@@ -21,4 +21,4 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --no-progress --prefer-dist
       - name: PSR-4 audit
-        run: scripts/ci/check_psr4.sh
+        run: bash scripts/ci/check_psr4_regression.sh

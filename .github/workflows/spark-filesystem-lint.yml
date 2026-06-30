@@ -34,13 +34,13 @@ jobs:
         run: cp env/.env.ci.example .env
 
       - name: Prepare CI writable/artifacts
-        run: php spark ops:ci:prepare
+        run: bash scripts/ci/prepare-writable.sh
 
       - name: Run filesystem lint (JSON)
         continue-on-error: true
         run: |
           mkdir -p writable/aiops/artifacts/review-publish
-          php spark ops:filesystem:lint --json > writable/aiops/artifacts/review-publish/filesystem.json
+          bash scripts/ci/check_filesystem_regression.sh
 
       - name: Publish review summary
         run: php spark codex:review:publish

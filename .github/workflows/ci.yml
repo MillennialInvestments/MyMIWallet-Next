@@ -49,7 +49,7 @@ jobs:
           fi
 
       - name: Prepare CI writable/artifacts
-        run: php spark ops:ci:prepare
+        run: bash scripts/ci/prepare-writable.sh
 
       - name: Spark Command Contract Check
         run: |
@@ -61,7 +61,7 @@ jobs:
 
       - name: Spark Filesystem Lint
         run: |
-          php spark ops:filesystem:lint
+          bash scripts/ci/check_filesystem_regression.sh
 
       - name: Codex Review Dry Run
         run: |
@@ -69,7 +69,7 @@ jobs:
 
       - name: Spark Doctor
         run: |
-          php spark spark:doctor
+          bash scripts/ci/check_spark_doctor_runtime.sh
 
       - name: Subsystem Audit (non-strict)
         run: |
@@ -157,15 +157,15 @@ jobs:
           fi
 
       - name: Prepare CI writable/artifacts
-        run: php spark ops:ci:prepare
+        run: bash scripts/ci/prepare-writable.sh
 
       - name: Copilot Validation
         run: |
-          php spark aiops:copilot:validate --json > copilot-validation.json
+          bash scripts/ci/check_copilot_regression.sh
 
       - name: Spark Doctor
         run: |
-          php spark spark:doctor --json > doctor.json
+          bash scripts/ci/check_spark_doctor_runtime.sh
 
       - name: Upload AIOps Artifacts
         if: always()

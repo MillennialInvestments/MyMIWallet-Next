@@ -8,7 +8,6 @@ use App\Commands\SafeBaseCommand;
 use App\Services\AIOps\CommandHookService;
 use App\Services\Spark\CommandInventoryService;
 use CodeIgniter\CLI\CLI;
-use CodeIgniter\CLI\Commands;
 
 class Doctor extends SafeBaseCommand
 {
@@ -32,9 +31,16 @@ class Doctor extends SafeBaseCommand
         $scanner = new CommandInventoryService();
         $commands = $scanner->scan(ROOTPATH . 'app/Commands');
 
-        $registry = Commands::getCommands();
+        $registry = service('commands')->getCommands();
         $registeredNames = array_keys($registry);
-        $registeredClasses = array_flip(array_values($registry));
+        $registeredClasses = [];
+        foreach ($registry as $registeredEntry) {
+            $registeredClass = $this->commandClassFromRegistryEntry($registeredEntry);
+
+            if ($registeredClass !== '') {
+                $registeredClasses[$registeredClass] = true;
+            }
+        }
 
         $commandIssues = [];
         foreach ($commands as $command) {
@@ -76,17 +82,19 @@ class Doctor extends SafeBaseCommand
 
         $registryIssues = [];
         foreach ($registry as $name => $class) {
-            if (! str_starts_with($class, 'App\\')) {
+            $className = $this->commandClassFromRegistryEntry($class);
+
+            if ($className === '' || ! str_starts_with($className, 'App\\')) {
                 continue;
             }
 
-            if (! isset($registeredClasses[$class])) {
+            if (! isset($registeredClasses[$className])) {
                 continue;
             }
 
-            if (! class_exists($class)) {
+            if (! class_exists($className)) {
                 $registryIssues[] = [
-                    'command' => $name,
+                    'command' => (string) $name,
                     'issue' => 'Registered class not found at runtime.',
                 ];
             }
@@ -135,6 +143,33 @@ class Doctor extends SafeBaseCommand
     protected function isDestructive(): bool
     {
         return false;
+    }
+
+
+    /**
+     * @param mixed $entry
+     */
+    private function commandClassFromRegistryEntry($entry): string
+    {
+        if (is_string($entry)) {
+            return $entry;
+        }
+
+        if (is_array($entry)) {
+            foreach (['class', 'handler', 'command', 0] as $key) {
+                if (isset($entry[$key]) && is_string($entry[$key])) {
+                    return $entry[$key];
+                }
+            }
+
+            foreach ($entry as $value) {
+                if (is_string($value) && str_starts_with($value, 'App\\')) {
+                    return $value;
+                }
+            }
+        }
+
+        return '';
     }
 
     private function checkFilesystem(): array

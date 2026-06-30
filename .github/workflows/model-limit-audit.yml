@@ -21,4 +21,4 @@ jobs:
         run: composer install --no-interaction --prefer-dist
 
       - name: Run model limit audit
-        run: php spark ops:model-limit:audit
+        run: bash scripts/ci/check_model_limit_regression.sh
