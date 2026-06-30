@@ -1,0 +1,17 @@
+type,name,count
+route_class,ADMIN_AUTH,59
+route_class,API_TOKEN,555
+route_class,DEPRECATED_OR_DISABLED,44
+route_class,INTERNAL,202
+route_class,PUBLIC,103
+route_class,STATEFUL_PUBLIC,16
+route_class,USER_AUTH,756
+classification_status,MISSING_GUARD,663
+classification_status,OK,984
+classification_status,REVIEW_REQUIRED,88
+recommended_action,add_or_confirm_api_token_guard,547
+recommended_action,add_or_confirm_csrf_for_public_lifecycle_route,6
+recommended_action,add_or_confirm_internal_token_or_cron_guard,64
+recommended_action,add_or_confirm_login_authcheck_guard,46
+recommended_action,none,984
+recommended_action,owner_review_before_launch,88
