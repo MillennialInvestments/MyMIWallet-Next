@@ -37,14 +37,45 @@ jobs:
         run: php spark ops:ci:prepare
 
       - name: Run filesystem lint (JSON)
-        continue-on-error: true
         run: |
           mkdir -p writable/aiops/artifacts/review-publish
-          php spark ops:filesystem:lint --json > writable/aiops/artifacts/review-publish/filesystem.json
+          git fetch origin "${{ github.base_ref }}" --depth=1
+          git diff --name-only "origin/${{ github.base_ref }}...HEAD" > writable/aiops/artifacts/review-publish/changed-files.txt
+          php spark ops:filesystem:lint --json > writable/aiops/artifacts/review-publish/filesystem.json || true
+          php -r '
+          $base = "writable/aiops/artifacts/review-publish";
+          $changedPath = $base . "/changed-files.txt";
+          $jsonPath = $base . "/filesystem.json";
+          $latestPath = $base . "/latest.json";
+          $changed = is_file($changedPath) ? array_filter(array_map("trim", file($changedPath))) : [];
+          $changedSet = array_fill_keys($changed, true);
+          $raw = is_file($jsonPath) ? file_get_contents($jsonPath) : "{}";
+          $data = json_decode($raw, true);
+          if (! is_array($data)) { $data = ["parse_error" => true, "raw" => $raw]; }
 
-      - name: Publish review summary
-        run: php spark codex:review:publish
+          $hits = [];
+          $walk = function ($node) use (&$walk, &$hits, $changedSet) {
+              if (! is_array($node)) { return; }
+              $file = $node["file"] ?? $node["path"] ?? null;
+              $level = strtolower((string) ($node["level"] ?? $node["severity"] ?? $node["type"] ?? ""));
+              $isError = str_contains($level, "error") || (($node["error"] ?? false) === true);
+              if (is_string($file) && isset($changedSet[$file]) && $isError) {
+                  $hits[] = $node;
+              }
+              foreach ($node as $v) { $walk($v); }
+          };
+          $walk($data);
 
+          $latest = [
+              "generated_at" => date("c"),
+              "mode" => "changed-files-only",
+              "changed_files" => array_values($changed),
+              "blocking_errors" => count($hits) > 0,
+              "blocking_changed_file_errors" => $hits,
+              "source" => "ops:filesystem:lint",
+          ];
+          file_put_contents($latestPath, json_encode($latest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL);
+          '
       - name: Upload filesystem lint artifacts
         if: always()
         uses: actions/upload-artifact@v4
