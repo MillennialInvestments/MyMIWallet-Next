@@ -22,8 +22,8 @@ jobs:
 
       - name: Run model limit audit
         run: |
-          git fetch origin "${{ github.base_ref }}" --depth=1
-          git diff --name-only "origin/${{ github.base_ref }}...HEAD" > changed-files.txt
+          git fetch --no-tags --prune --depth=1 origin "${{ github.event.pull_request.base.sha }}"
+          git diff --name-only FETCH_HEAD HEAD > changed-files.txt
           php spark ops:model-limit:audit > model-limit-output.txt 2>&1 || true
           cat model-limit-output.txt
           php -r '

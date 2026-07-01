@@ -39,8 +39,8 @@ jobs:
       - name: Run filesystem lint (JSON)
         run: |
           mkdir -p writable/aiops/artifacts/review-publish
-          git fetch origin "${{ github.base_ref }}" --depth=1
-          git diff --name-only "origin/${{ github.base_ref }}...HEAD" > writable/aiops/artifacts/review-publish/changed-files.txt
+          git fetch --no-tags --prune --depth=1 origin "${{ github.event.pull_request.base.sha }}"
+          git diff --name-only FETCH_HEAD HEAD > writable/aiops/artifacts/review-publish/changed-files.txt
           php spark ops:filesystem:lint --json > writable/aiops/artifacts/review-publish/filesystem.json || true
           php -r '
           $base = "writable/aiops/artifacts/review-publish";

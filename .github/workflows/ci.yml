@@ -162,8 +162,8 @@ jobs:
 
       - name: Copilot Validation
         run: |
-          git fetch origin "${{ github.base_ref }}" --depth=1
-          git diff --name-only "origin/${{ github.base_ref }}...HEAD" > changed-files.txt
+          git fetch --no-tags --prune --depth=1 origin "${{ github.event.pull_request.base.sha }}"
+          git diff --name-only FETCH_HEAD HEAD > changed-files.txt
           php spark aiops:copilot:validate --json > copilot-validation.json || true
           php -r '
           $changed = array_fill_keys(array_filter(array_map("trim", file("changed-files.txt"))), true);

@@ -32,7 +32,7 @@ class Doctor extends SafeBaseCommand
         $scanner = new CommandInventoryService();
         $commands = $scanner->scan(ROOTPATH . 'app/Commands');
 
-        $registry = Commands::getCommands();
+        $registry = service('commands')->getCommands();
         $registeredNames = array_keys($registry);
         $registeredClasses = array_flip(array_values($registry));
 
