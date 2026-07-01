@@ -110,28 +110,4 @@ class PurgeFastCGI extends SafeBaseCommand
     {
         return false;
     }
-
-    /**
-     * Write a CI-safe diagnostic summary without mutating production runtime state.
-     */
-    protected function ciSummary(...$payload): void
-    {
-        if (! getenv('CI')) {
-            return;
-        }
-
-        $dir = defined('WRITEPATH') ? WRITEPATH . 'ci' . DIRECTORY_SEPARATOR : getcwd() . DIRECTORY_SEPARATOR . 'writable' . DIRECTORY_SEPARATOR . 'ci';
-        if (! is_dir($dir)) {
-            mkdir($dir, 0775, true);
-        }
-
-        $summary = [
-            'timestamp' => date('c'),
-            'command' => static::class,
-            'payload' => $payload,
-        ];
-
-        file_put_contents($dir . DIRECTORY_SEPARATOR . 'purge-fastcgi-summary.json', json_encode($summary, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL);
-    }
-
 }
