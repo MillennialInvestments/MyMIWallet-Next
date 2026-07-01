@@ -309,4 +309,51 @@ class Doctor extends SafeBaseCommand
 
         return $path;
     }
+
+    /**
+     * Normalize CodeIgniter command registry output into a command-name lookup map.
+     *
+     * CodeIgniter 4.7 can return nested command metadata arrays, so array_flip()
+     * is not safe here.
+     *
+     * @param array<mixed> $registry
+     *
+     * @return array<string, bool>
+     */
+    private function normaliseCommandRegistry(array $registry): array
+    {
+        $names = [];
+
+        foreach ($registry as $key => $definition) {
+            if (is_string($key) && $key !== '') {
+                $names[] = $key;
+            }
+
+            if (is_string($definition) && $definition !== '') {
+                $names[] = $definition;
+                continue;
+            }
+
+            if (! is_array($definition)) {
+                continue;
+            }
+
+            foreach (['name', 'command', 'commandName'] as $field) {
+                if (isset($definition[$field]) && is_string($definition[$field]) && $definition[$field] !== '') {
+                    $names[] = $definition[$field];
+                }
+            }
+
+            foreach ($definition as $value) {
+                if (is_string($value) && $value !== '' && str_contains($value, ':')) {
+                    $names[] = $value;
+                }
+            }
+        }
+
+        $names = array_values(array_unique(array_filter($names, static fn ($name): bool => is_string($name) && $name !== '')));
+
+        return array_fill_keys($names, true);
+    }
+
 }
