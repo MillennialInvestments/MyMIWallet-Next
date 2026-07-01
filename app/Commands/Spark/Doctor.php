@@ -34,7 +34,7 @@ class Doctor extends SafeBaseCommand
 
         $registry = service('commands')->getCommands();
         $registeredNames = array_keys($registry);
-        $registeredClasses = array_flip(array_values($registry));
+        $registeredClasses = $this->normaliseCommandRegistry($registry);
 
         $commandIssues = [];
         foreach ($commands as $command) {
@@ -338,7 +338,7 @@ class Doctor extends SafeBaseCommand
                 continue;
             }
 
-            foreach (['name', 'command', 'commandName'] as $field) {
+            foreach (['name', 'command', 'commandName', 'class', 'handler'] as $field) {
                 if (isset($definition[$field]) && is_string($definition[$field]) && $definition[$field] !== '') {
                     $names[] = $definition[$field];
                 }

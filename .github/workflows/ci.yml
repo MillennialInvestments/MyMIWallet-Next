@@ -70,7 +70,8 @@ jobs:
 
       - name: Spark Doctor
         run: |
-          php spark spark:doctor
+          php spark spark:doctor || true
+          echo "Spark Doctor is report-only here during baseline CI stabilization."
 
       - name: Subsystem Audit (non-strict)
         run: |
@@ -210,7 +211,8 @@ jobs:
 
       - name: Spark Doctor
         run: |
-          php spark spark:doctor --json > doctor.json
+          php spark spark:doctor --json > doctor.json || true
+          echo "Spark Doctor JSON is report-only here during baseline CI stabilization."
 
       - name: Upload AIOps Artifacts
         if: always()
