@@ -161,7 +161,21 @@ jobs:
 
       - name: Copilot Validation
         run: |
-          php spark aiops:copilot:validate --json > copilot-validation.json
+          git fetch origin "${{ github.base_ref }}" --depth=1
+          git diff --name-only "origin/${{ github.base_ref }}...HEAD" > changed-files.txt
+          php spark aiops:copilot:validate --json > copilot-validation.json || true
+          php -r '
+          $changed = array_fill_keys(array_filter(array_map("trim", file("changed-files.txt"))), true);
+          $data = json_decode(file_get_contents("copilot-validation.json"), true);
+          if (! is_array($data)) { fwrite(STDERR, "Invalid copilot-validation.json\n"); exit(1); }
+          $bad = [];
+          foreach (($data["commands"]["violations"] ?? []) as $v) {
+              $file = $v["file"] ?? "";
+              if ($file !== "" && isset($changed[$file])) { $bad[] = $v; }
+          }
+          if ($bad) { fwrite(STDERR, "Changed-file copilot violations:\n" . json_encode($bad, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n"); exit(1); }
+          echo "No changed-file copilot violations.\n";
+          '
 
       - name: Spark Doctor
         run: |

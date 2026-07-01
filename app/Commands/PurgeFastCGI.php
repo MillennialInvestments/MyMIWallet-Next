@@ -114,7 +114,7 @@ class PurgeFastCGI extends SafeBaseCommand
     /**
      * Write a CI-safe diagnostic summary without mutating production runtime state.
      */
-    private function ciSummary(...$payload): void
+    protected function ciSummary(...$payload): void
     {
         if (! getenv('CI')) {
             return;

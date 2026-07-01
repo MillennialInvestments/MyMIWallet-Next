@@ -397,4 +397,36 @@ class FullReport extends SafeBaseCommand
         if (mb_strlen($s) <= $n) return $s;
         return mb_substr($s, 0, $n - 1) . '…';
     }
+
+    /**
+     * Write a CI-safe diagnostic summary for report-only log commands.
+     *
+     * @param mixed ...$payload
+     */
+    protected function ciSummary(...$payload): void
+    {
+        if (! getenv('CI')) {
+            return;
+        }
+
+        $dir = defined('WRITEPATH')
+            ? WRITEPATH . 'ci' . DIRECTORY_SEPARATOR
+            : ROOTPATH . 'writable' . DIRECTORY_SEPARATOR . 'ci' . DIRECTORY_SEPARATOR;
+
+        if (! is_dir($dir)) {
+            @mkdir($dir, 0775, true);
+        }
+
+        $summary = [
+            'timestamp' => date('c'),
+            'command' => static::class,
+            'payload' => $payload,
+        ];
+
+        @file_put_contents(
+            $dir . str_replace('\\', '_', static::class) . '-summary.json',
+            json_encode($summary, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL
+        );
+    }
+
 }

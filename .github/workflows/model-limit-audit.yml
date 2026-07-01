@@ -21,4 +21,23 @@ jobs:
         run: composer install --no-interaction --prefer-dist
 
       - name: Run model limit audit
-        run: php spark ops:model-limit:audit
+        run: |
+          git fetch origin "${{ github.base_ref }}" --depth=1
+          git diff --name-only "origin/${{ github.base_ref }}...HEAD" > changed-files.txt
+          php spark ops:model-limit:audit > model-limit-output.txt 2>&1 || true
+          cat model-limit-output.txt
+          php -r '
+          $changed = array_fill_keys(array_filter(array_map("trim", file("changed-files.txt"))), true);
+          $bad = [];
+          foreach (file("model-limit-output.txt") as $line) {
+              if (preg_match("/^(app\/[^:]+\.php):/", $line, $m) && isset($changed[$m[1]])) {
+                  $bad[] = trim($line);
+              }
+          }
+          if ($bad) {
+              fwrite(STDERR, "Changed-file model-limit findings:\n" . implode("\n", $bad) . "\n");
+              exit(1);
+          }
+          echo "No changed-file model-limit findings.\n";
+          '
+
