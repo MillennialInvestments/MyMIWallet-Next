@@ -75,3 +75,17 @@ GT-001B classified `API/DripCampaign/TestCron` as `INTERNAL` with `MISSING_GUARD
 ### Safety
 
 This slice changes one route-level filter only. No controller logic, API token policy, broad internal route policy, CSRF policy, or production state was changed.
+
+## GT-001C-E Marketing Cron Guard
+
+### Scope
+
+Added explicit `cronKey` route filters to six `GET API/Marketing/cron*` routes.
+
+### Reason
+
+GT-001B classified the Marketing cron routes as `INTERNAL` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes six route-level filters only. No controller logic, broad Marketing API policy, API token policy, CSRF policy, or production state was changed.
