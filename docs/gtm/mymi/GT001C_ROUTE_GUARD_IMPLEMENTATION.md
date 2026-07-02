@@ -89,3 +89,17 @@ GT-001B classified the Marketing cron routes as `INTERNAL` with `MISSING_GUARD`.
 ### Safety
 
 This slice changes six route-level filters only. No controller logic, broad Marketing API policy, API token policy, CSRF policy, or production state was changed.
+
+## GT-001C-F Predictions Cron Guard
+
+### Scope
+
+Added explicit `cronKey` route filters to `GET API/Predictions/Cron/*` routes.
+
+### Reason
+
+GT-001B classified the Predictions cron routes as `INTERNAL` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes Predictions cron route-level filters only. No controller logic, broad Predictions API policy, API token policy, CSRF policy, or production state was changed.
