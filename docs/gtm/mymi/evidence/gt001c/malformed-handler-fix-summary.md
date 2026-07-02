@@ -12,6 +12,7 @@ GT-001/GT-001B evidence showed malformed handlers such as:
 \App\Controllers\App\Modules\...
 \App\Controllers\App\Controllers\...
 \App\Modules\APIs\Controllers\App\Modules\...
+
 GT-001C-A normalizes explicit application class strings to fully qualified \App\... references.
 
 Safety Boundary
@@ -22,7 +23,7 @@ No auth policy changed.
 No API token, internal token, login, CSRF, role, or permission behavior changed in this slice.
 Local Runtime Smoke Status
 
-php spark routes could not be used as local runtime evidence in this worktree because vendor/codeigniter4/framework/system/Boot.php was missing. Therefore, GT-001C-A local validation relies on source-level route diff review plus CI checks.
+php spark routes could not be used as local runtime evidence in this worktree because vendor/codeigniter4/framework/system/Boot.php was missing. Therefore, GT-001C-A local validation relies on source-level route diff review plus PR CI checks.
 
 Required CI / PR Validation
 PSR-4 audit
