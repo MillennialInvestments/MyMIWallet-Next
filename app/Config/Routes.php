@@ -452,10 +452,10 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
     $routes->get('Health/spark', 'HealthAPIController::spark');        // /API/Health/spark
     $routes->get('Ops/status', 'OpsAPIController::status');
     $routes->post('Ops/dispatch', 'OpsAPIController::dispatch');
-    $routes->post('Ops/ingestReport', 'OpsAPIController::ingestReport');
+    $routes->post('Ops/ingestReport', 'OpsAPIController::ingestReport', ['filter' => 'internalToken']);
     $routes->get('Ops/reports/latest', 'OpsAPIController::latestReport');
-    $routes->get('Ops/ingest-metrics', 'OpsAPIController::ingestMetrics');
-    $routes->get('Ops/OPcacheReset', 'OpsAPIController::opcacheReset'); // /API/Ops/OPcacheReset
+    $routes->get('Ops/ingest-metrics', 'OpsAPIController::ingestMetrics', ['filter' => 'internalToken']);
+    $routes->get('Ops/OPcacheReset', 'OpsAPIController::opcacheReset', ['filter' => 'internalToken']); // /API/Ops/OPcacheReset
     $routes->group('AiOps', static function($routes) {
         $routes->get('status', 'AiOpsAPIController::status');
         $routes->post('toggle', 'AiOpsAPIController::toggle');
