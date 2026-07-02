@@ -47,3 +47,17 @@ This prevents CodeIgniter namespace prefixing from producing doubled handlers su
 ## Rollback Notes
 
 No production rollback applies. To revert GT-001C-A before merge, restore `app/Config/Routes.php` from the branch or revert the GT-001C-A commit.
+
+## GT-001C-C Bitcoin API Token Guard
+
+### Scope
+
+Added an explicit `apiToken` route filter to the `API/Bitcoin` group.
+
+### Reason
+
+GT-001B classified `API/Bitcoin/buildUnsignedPsbt` and `API/Bitcoin/broadcastSignedTx` as `API_TOKEN` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes one route group filter only. No controller logic, handler mapping, internal token policy, CSRF policy, or production state was changed.
