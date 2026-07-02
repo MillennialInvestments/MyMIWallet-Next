@@ -881,7 +881,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('Enroll/(:num)', 'DripCampaignAPIController::enrollUser/$1');
         $routes->get('open/(:segment)', 'DripCampaignAPIController::open/$1');
         $routes->get('processBatch', 'DripCampaignAPIController::processBatch');
-        $routes->get('TestCron', 'DripCampaignAPIController::testDripCron');
+        $routes->get('TestCron', 'DripCampaignAPIController::testDripCron', ['filter' => 'cronKey']);
     });
 
     // ------------------------
