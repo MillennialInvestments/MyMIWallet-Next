@@ -26,6 +26,7 @@ class Psr4AuditService
         $this->namespaceRoots = [
             'App\\' => rtrim(APPPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
             'Config\\' => rtrim(APPPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'Config' . DIRECTORY_SEPARATOR,
+            'Myth\\Auth\\Config\\' => rtrim(APPPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'Config' . DIRECTORY_SEPARATOR . 'Myth' . DIRECTORY_SEPARATOR . 'Auth' . DIRECTORY_SEPARATOR,
         ];
 
         $this->excludedPaths = [

@@ -32,9 +32,9 @@ class Doctor extends SafeBaseCommand
         $scanner = new CommandInventoryService();
         $commands = $scanner->scan(ROOTPATH . 'app/Commands');
 
-        $registry = Commands::getCommands();
+        $registry = service('commands')->getCommands();
         $registeredNames = array_keys($registry);
-        $registeredClasses = array_flip(array_values($registry));
+        $registeredClasses = $this->normaliseCommandRegistry($registry);
 
         $commandIssues = [];
         foreach ($commands as $command) {
@@ -75,7 +75,7 @@ class Doctor extends SafeBaseCommand
         }
 
         $registryIssues = [];
-        foreach ($registry as $name => $class) {
+        foreach ($this->normaliseRegistryClassEntries($registry) as $name => $class) {
             if (! str_starts_with($class, 'App\\')) {
                 continue;
             }
@@ -309,4 +309,109 @@ class Doctor extends SafeBaseCommand
 
         return $path;
     }
+
+    /**
+     * Normalize CodeIgniter command registry output into a command-name lookup map.
+     *
+     * CodeIgniter 4.7 can return nested command metadata arrays, so array_flip()
+     * is not safe here.
+     *
+     * @param array<mixed> $registry
+     *
+     * @return array<string, bool>
+     */
+    private function normaliseCommandRegistry(array $registry): array
+    {
+        $names = [];
+
+        foreach ($registry as $key => $definition) {
+            if (is_string($key) && $key !== '') {
+                $names[] = $key;
+            }
+
+            if (is_string($definition) && $definition !== '') {
+                $names[] = $definition;
+                continue;
+            }
+
+            if (! is_array($definition)) {
+                continue;
+            }
+
+            foreach (['name', 'command', 'commandName', 'class', 'handler'] as $field) {
+                if (isset($definition[$field]) && is_string($definition[$field]) && $definition[$field] !== '') {
+                    $names[] = $definition[$field];
+                }
+            }
+
+            foreach ($definition as $value) {
+                if (is_string($value) && $value !== '' && str_contains($value, ':')) {
+                    $names[] = $value;
+                }
+            }
+        }
+
+        $names = array_values(array_unique(array_filter($names, static fn ($name): bool => is_string($name) && $name !== '')));
+
+        return array_fill_keys($names, true);
+    }
+
+
+    /**
+     * Normalize CodeIgniter command registry output into command-name => class entries.
+     *
+     * CodeIgniter 4.7 can return nested command metadata arrays instead of plain
+     * command-name => class strings.
+     *
+     * @param array<mixed> $registry
+     *
+     * @return array<string, string>
+     */
+    private function normaliseRegistryClassEntries(array $registry): array
+    {
+        $entries = [];
+
+        foreach ($registry as $key => $definition) {
+            $name = is_string($key) && $key !== '' ? $key : null;
+            $class = null;
+
+            if (is_string($definition)) {
+                $class = $definition;
+            } elseif (is_array($definition)) {
+                foreach (['class', 'handler'] as $field) {
+                    if (isset($definition[$field]) && is_string($definition[$field]) && str_starts_with($definition[$field], 'App\\')) {
+                        $class = $definition[$field];
+                        break;
+                    }
+                }
+
+                if ($name === null) {
+                    foreach (['name', 'command', 'commandName'] as $field) {
+                        if (isset($definition[$field]) && is_string($definition[$field]) && $definition[$field] !== '') {
+                            $name = $definition[$field];
+                            break;
+                        }
+                    }
+                }
+
+                if ($class === null) {
+                    foreach ($definition as $value) {
+                        if (is_string($value) && str_starts_with($value, 'App\\')) {
+                            $class = $value;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if ($class === null || ! str_starts_with($class, 'App\\')) {
+                continue;
+            }
+
+            $entries[$name ?? $class] = $class;
+        }
+
+        return $entries;
+    }
+
 }
