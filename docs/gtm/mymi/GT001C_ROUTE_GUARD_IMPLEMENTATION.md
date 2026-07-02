@@ -131,17 +131,3 @@ GT-001B classified the Scanner routes as `INTERNAL` with `MISSING_GUARD`.
 ### Safety
 
 This slice changes Scanner route-level filters only. No controller logic, broad API policy, cron policy, CSRF policy, or production state was changed.
-
-## GT-001C-G Scanner Internal Guard
-
-### Scope
-
-Added explicit `internalToken` route filters to five `API/Scanner/*` internal routes.
-
-### Reason
-
-GT-001B classified the Scanner routes as `INTERNAL` with `MISSING_GUARD`.
-
-### Safety
-
-This slice changes Scanner route-level filters only. No controller logic, broad API policy, cron policy, CSRF policy, or production state was changed.
