@@ -476,11 +476,11 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
     $routes->post('Management/backfillMarketingEmails', 'ManagementAPIController::backfillMarketingEmails');
     $routes->get('Management/debugLogs', 'ManagementAPIController::debugLogs', ['filter' => 'permission:admin.access']);
     $routes->group('Scanner', static function($routes) {
-        $routes->get('status', 'ScannerController::status');
-        $routes->post('run', 'ScannerController::run');
-        $routes->get('results', 'ScannerController::results');
-        $routes->get('results/(:segment)', 'ScannerController::symbol/$1');
-        $routes->post('universe/sync', 'ScannerController::syncUniverse');
+        $routes->get('status', 'ScannerController::status'), ['filter' => 'internalToken'];
+        $routes->post('run', 'ScannerController::run'), ['filter' => 'internalToken'];
+        $routes->get('results', 'ScannerController::results'), ['filter' => 'internalToken'];
+        $routes->get('results/(:segment)', 'ScannerController::symbol/$1'), ['filter' => 'internalToken'];
+        $routes->post('universe/sync', 'ScannerController::syncUniverse'), ['filter' => 'internalToken'];
     });
     $routes->get('Management/getAutoloadHealth', 'ManagementAPIController::getAutoloadHealth', ['filter' => 'permission:admin.access']);
     $routes->get('Management/subsystems/status', 'ManagementAPIController::subsystemsStatus', ['filter' => 'permission:admin.access']);
