@@ -31,8 +31,26 @@ class ApproveGenerated extends SafeBaseCommand
         $distribution = service('marketingDistributionService');
 
         $approved = [];
+        $skipped = [];
         foreach ($rows as $row) {
             $generatedContentId = (int) ($row['id'] ?? 0);
+
+            if ($distribution->isGenericPlaceholderMarketingContent($row)) {
+                $db->table('bf_marketing_generated_content')->where('id', $generatedContentId)->update([
+                    'approval_status' => 'skipped',
+                    'distribution_status' => 'skipped',
+                    'status' => 'skipped',
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
+
+                $skipped[] = [
+                    'id' => $generatedContentId,
+                    'reason' => 'generic_placeholder',
+                ];
+
+                continue;
+            }
+
             $db->table('bf_marketing_generated_content')->where('id', $generatedContentId)->update([
                 'approval_status' => 'approved',
                 'status' => 'approved',
@@ -53,7 +71,9 @@ class ApproveGenerated extends SafeBaseCommand
         CLI::write(json_encode([
             'status' => 'success',
             'approved_count' => count($approved),
+            'skipped_count' => count($skipped),
             'approved' => $approved,
+            'skipped' => $skipped,
         ], JSON_PRETTY_PRINT));
     }
 }

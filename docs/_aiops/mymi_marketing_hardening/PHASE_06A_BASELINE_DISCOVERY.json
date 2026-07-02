@@ -1,0 +1,60 @@
+{
+    "generated_at_utc": "2026-06-12T11:26:36+00:00",
+    "phase": "06A",
+    "files": {
+        "scrape": {
+            "path": "/tmp/phase06a_marketing_news_scrape.json",
+            "exists": true,
+            "sha256": "88f90e6a0406f58b95e0f2843b83d2d4dee9a4c5f7018c87f4fd665e5287c36e",
+            "bytes": 555611
+        },
+        "regression": {
+            "path": "/tmp/phase06a_marketing_regression_smoke.json",
+            "exists": true,
+            "sha256": "111b108eb8e51f959ede28187f9c8207987a13011e0931964bfd3c610867f1a3",
+            "bytes": 607053
+        },
+        "news_audit": {
+            "path": "/tmp/phase06a_news_audit.txt",
+            "exists": true,
+            "sha256": "5079fcd385a1e6a42f1e47e62bd77740ba3e2ad63fe8efd3c9cac8dba04a3f35",
+            "bytes": 4622
+        },
+        "daily_audit": {
+            "path": "/tmp/phase06a_marketing_daily_audit.json",
+            "exists": true,
+            "sha256": "c8b58bcb5b37bd1887cf23f5307b60c9ad80134389aad5201a7ccd258052f758",
+            "bytes": 591
+        },
+        "distribution_audit": {
+            "path": "/tmp/phase06a_marketing_distribution_audit.json",
+            "exists": true,
+            "sha256": "9ffefff082a8652c1d473c6b1a08bd15d6b0300951d2b7b585e4a66b3310b8b2",
+            "bytes": 751
+        },
+        "distribution_assert_sql": {
+            "path": "/tmp/phase06a_distribution_assert_sql.json",
+            "exists": true,
+            "sha256": "ec048d76623bd16672e8dc454cd09fcec7cf4399dc0f96d539aa6a6f7cc70c36",
+            "bytes": 345
+        },
+        "aiops_alerts_health": {
+            "path": "/tmp/phase06a_aiops_alerts_health.txt",
+            "exists": true,
+            "sha256": "ed656a76df506717d08d3d0cfb50034fa58501b334b9a01748d04371f67e2161",
+            "bytes": 127
+        },
+        "alerts_audit": {
+            "path": "/tmp/phase06a_alerts_audit.txt",
+            "exists": true,
+            "sha256": "ca2722f6a2193f7c42f507cdf78ceae0950d8b34f80c19cbe30f35dd95e8f901",
+            "bytes": 516
+        },
+        "sql_snapshot": {
+            "path": "/tmp/phase06a_sql_snapshot.json",
+            "exists": true,
+            "sha256": "6f462944f814e40d6fb76388d2509d23e787fa3066b6b4f6fc8835d8653b6707",
+            "bytes": 2994
+        }
+    }
+}

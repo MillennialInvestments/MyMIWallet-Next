@@ -30,6 +30,11 @@ class MarketingDistributionService
         'financial_news',
         'stock_news',
     ];
+
+    private const GENERIC_PLACEHOLDER_TITLES = [
+        'News alert for all symbols',
+        'Press release alert for all symbols',
+    ];
     private DestinationDispatcher $dispatcher;
 
     public function __construct(
@@ -61,6 +66,19 @@ class MarketingDistributionService
         ]);
     }
 
+
+    public function isGenericPlaceholderMarketingContent(array $record): bool
+    {
+        $title = trim((string) ($record['title'] ?? ''));
+        $sourceType = trim((string) ($record['source_type'] ?? ''));
+
+        if (! in_array($title, self::GENERIC_PLACEHOLDER_TITLES, true)) {
+            return false;
+        }
+
+        return $sourceType === '' || $sourceType === 'temp_scraper';
+    }
+
     public function queueDistribution(int $generatedContentId, array $destinations = []): array
     {
         $record = $this->fetchGeneratedContent($generatedContentId);
@@ -70,6 +88,10 @@ class MarketingDistributionService
 
         if (! in_array((string) ($record['approval_status'] ?? ''), ['approved', 'auto_approved'], true)) {
             return ['status' => 'skipped', 'message' => 'Content not approved'];
+        }
+
+        if ($this->isGenericPlaceholderMarketingContent($record)) {
+            return ['status' => 'skipped', 'message' => 'Generic all-symbol placeholder content is not eligible for distribution targets'];
         }
 
         $expanded = $this->ensureTargetsForRecord($record, $destinations);
@@ -87,6 +109,15 @@ class MarketingDistributionService
         $generatedContentId = (int) ($record['id'] ?? 0);
         if ($generatedContentId < 1) {
             return ['status' => 'failed', 'message' => 'Invalid generated content record'];
+        }
+
+        if ($this->isGenericPlaceholderMarketingContent($record)) {
+            return [
+                'generated_content_id' => $generatedContentId,
+                'targets_processed' => 0,
+                'target_results' => [],
+                'generated_content_status' => ['distribution_status' => 'skipped', 'status' => 'skipped', 'reason' => 'generic_placeholder'],
+            ];
         }
 
         $this->ensureTargetsForRecord($record);
@@ -116,6 +147,10 @@ class MarketingDistributionService
         $record = $this->fetchGeneratedContent($generatedContentId);
         if ($record === null) {
             return ['created' => 0, 'existing' => 0, 'skipped' => 0];
+        }
+
+        if ($this->isGenericPlaceholderMarketingContent($record)) {
+            return ['created' => 0, 'existing' => 0, 'skipped' => 1, 'reason' => 'generic_placeholder'];
         }
 
         return $this->ensureTargetsForRecord($record);
@@ -369,10 +404,7 @@ class MarketingDistributionService
     public function skipGenericPlaceholderMarketingPending(bool $approve = false, int $limit = 500): array
     {
         $db = Database::connect();
-        $placeholderTitles = [
-            'News alert for all symbols',
-            'Press release alert for all symbols',
-        ];
+        $placeholderTitles = self::GENERIC_PLACEHOLDER_TITLES;
 
         $rows = $db->table('bf_marketing_generated_content gc')
             ->select('gc.id, gc.title, gc.distribution_status, COUNT(dt.id) AS pending_target_count')

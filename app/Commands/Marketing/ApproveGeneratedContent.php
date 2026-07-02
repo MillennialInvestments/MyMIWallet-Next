@@ -52,27 +52,57 @@ class ApproveGeneratedContent extends SafeBaseCommand
                 return EXIT_SUCCESS;
             }
 
-            $ids = array_map(static fn ($row) => (int) $row['id'], $rows);
+            $distributionService = service('marketingDistributionService');
 
-            $db->table('bf_marketing_generated_content')
-                ->whereIn('id', $ids)
-                ->update([
-                    'approval_status' => 'approved',
-                    'distribution_status' => 'pending',
-                    'status' => 'approved',
-                    'updated_at' => $now,
-                ]);
+            $ids = [];
+            $skippedIds = [];
+            foreach ($rows as $row) {
+                $id = (int) ($row['id'] ?? 0);
+                if ($id < 1) {
+                    continue;
+                }
+
+                if ($distributionService->isGenericPlaceholderMarketingContent($row)) {
+                    $skippedIds[] = $id;
+                    continue;
+                }
+
+                $ids[] = $id;
+            }
+
+            if ($ids !== []) {
+                $db->table('bf_marketing_generated_content')
+                    ->whereIn('id', $ids)
+                    ->update([
+                        'approval_status' => 'approved',
+                        'distribution_status' => 'pending',
+                        'status' => 'approved',
+                        'updated_at' => $now,
+                    ]);
+            }
+
+            if ($skippedIds !== []) {
+                $db->table('bf_marketing_generated_content')
+                    ->whereIn('id', $skippedIds)
+                    ->update([
+                        'approval_status' => 'skipped',
+                        'distribution_status' => 'skipped',
+                        'status' => 'skipped',
+                        'updated_at' => $now,
+                    ]);
+            }
 
             CLI::write(json_encode([
                 'status' => 'success',
                 'command' => 'marketing:approve-generated',
                 'approved_count' => count($ids),
+                'skipped_count' => count($skippedIds),
                 'ids' => $ids,
+                'skipped_ids' => $skippedIds,
             ], JSON_PRETTY_PRINT), 'green');
 
             $distributionConfig = config('MarketingDistribution');
             if ($distributionConfig->autoCreateTargetsOnApprove) {
-                $distributionService = service('marketingDistributionService');
                 foreach ($ids as $id) {
                     $distributionService->ensureTargetsForContentId((int) $id);
                 }
