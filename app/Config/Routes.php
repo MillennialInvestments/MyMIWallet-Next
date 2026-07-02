@@ -1927,7 +1927,7 @@ $routes->group('Support', ['namespace' => '\App\Modules\Support\Controllers'], f
     $routes->get('(:any)', 'SupportController::view/$1');
 });
 
-$routes->get('help/account', '\\App\\Modules\\Support\\Controllers\\AccountSupportController::index');
+$routes->get('help/account', '\\App\\Modules\\Support\\Controllers\\AccountSupportController::index', ['filter' => 'login']);
 
 // User - Referrals
 // $routes->match(['GET', 'POST'], 'My-Referrals', '\App\Modules\User\Controllers\ReferralController::index', ['filter' => 'login']);
