@@ -193,7 +193,7 @@ $routes->group('admin/ops', ['filter' => 'permission:admin.access'], static func
 
 
 // CoinVault project coin vault routes. Keep explicit because auto-routing is disabled.
-$routes->group('Admin/CoinVault', ['namespace' => 'App\Modules\CoinVault\Controllers', 'filter' => 'permission:admin.access'], static function ($routes) {
+$routes->group('Admin/CoinVault', ['namespace' => '\App\Modules\CoinVault\Controllers', 'filter' => 'permission:admin.access'], static function ($routes) {
     $routes->get('/', 'CoinVaultController::index');
     $routes->get('Projects', 'CoinVaultController::projects');
     $routes->get('Project/(:num)', 'CoinVaultController::project/$1');
@@ -201,7 +201,7 @@ $routes->group('Admin/CoinVault', ['namespace' => 'App\Modules\CoinVault\Control
     $routes->get('Payouts', 'CoinVaultController::payouts');
     $routes->get('Wallet/(:num)', 'CoinVaultController::wallet/$1');
 });
-$routes->group('API/CoinVault', ['namespace' => 'App\Modules\CoinVault\Controllers\Api'], static function ($routes) {
+$routes->group('API/CoinVault', ['namespace' => '\App\Modules\CoinVault\Controllers\Api'], static function ($routes) {
     $routes->post('contributionEvent', 'CoinVaultApiController::contributionEvent');
     $routes->post('approveContribution/(:num)', 'CoinVaultApiController::approveContribution/$1', ['filter' => 'permission:admin.access']);
     $routes->post('rejectContribution/(:num)', 'CoinVaultApiController::rejectContribution/$1', ['filter' => 'permission:admin.access']);
@@ -211,7 +211,7 @@ $routes->group('API/CoinVault', ['namespace' => 'App\Modules\CoinVault\Controlle
 });
 
 // Docs index for AI orchestration
-$routes->group('API/Docs', ['namespace' => 'App\Modules\APIs\Controllers'], static function($routes) {
+$routes->group('API/Docs', ['namespace' => '\App\Modules\APIs\Controllers'], static function($routes) {
     $routes->get('index', 'DocsController::index');
     $routes->get('view', 'DocsController::view');
 });
@@ -228,7 +228,7 @@ $routes->get('Stock/(:segment)/(:segment)', 'StockController::show/$1/$2');
 $routes->get('blog', 'Blog::index');
 $routes->get('blog/category/(:segment)', 'Blog::category/$1');
 $routes->get('blog/(:segment)', 'Blog::post/$1');
-// $routes->get('Dashboard', 'App\\Modules\\User\\Controllers\\BudgetController::index', ['filter' => 'login']);
+// $routes->get('Dashboard', '\\App\\Modules\\User\\Controllers\\BudgetController::index', ['filter' => 'login']);
 
 // app/Config/Routes.php
 $routes->get('/sw.js', 'ServiceWorker::index');
@@ -245,9 +245,9 @@ $routes->get('/Getting-Started', 'Home::gettingStarted');
 $routes->get('/Memberships', 'Home::memberships');
 $routes->get('/Memberships/(:segment)', 'Home::memberships');
 
-$routes->get('Learn/(:segment)', 'App\Modules\Public\Controllers\PublicPagesController::show/$1');
+$routes->get('Learn/(:segment)', '\App\Modules\Public\Controllers\PublicPagesController::show/$1');
 // Public preview routes
-$routes->group('', ['namespace' => 'App\Modules\User\Controllers'], static function ($routes) {
+$routes->group('', ['namespace' => '\App\Modules\User\Controllers'], static function ($routes) {
     // Symbol preview (canonical)
     $routes->get('Alerts/Preview/(:segment)', 'AlertsController::preview/$1');
     // Legacy alias
@@ -256,9 +256,9 @@ $routes->group('', ['namespace' => 'App\Modules\User\Controllers'], static funct
 $routes->get('/Privacy-Policy', 'Home::privacyPolicy');
 $routes->get('/Legal/Privacy-Policy', 'Home::privacyPolicy');
 $routes->get('/Legal/Terms-And-Conditions', 'Home::terms');
-$routes->get('/Customer-Support', 'App\Modules\Support\Controllers\SupportController::index');
+$routes->get('/Customer-Support', '\App\Modules\Support\Controllers\SupportController::index');
 $routes->get('/Investments/News', static fn() => redirect()->to(site_url('News'), 301));
-$routes->get('/Profile', 'App\Modules\User\Controllers\DashboardController::profile', ['filter' => 'login']);
+$routes->get('/Profile', '\App\Modules\User\Controllers\DashboardController::profile', ['filter' => 'login']);
 $routes->get('/Purchase/MyMIGold', static fn() => redirect()->to(site_url('Wallets/Purchase/MyMI-Gold'), 301));
 $routes->post('auth/resend-activation', 'AuthController::resendActivationCode', ['as' => 'auth/resend-activation-legacy']);
 $routes->get('/How-It-Works/Purchase/MyMIGold', static fn() => redirect()->to(site_url('How-It-Works/Purchase-MyMI-Gold'), 301));
@@ -276,11 +276,11 @@ $routes->get('/resend-activation', 'AuthController::resendActivation', ['as' => 
 $routes->post('/resend-activation', 'AuthController::resendActivationCode', ['as' => 'resend-activation-code']);
 
 // Dev tools
-$routes->get('Dev/BitcoinTest', 'App\Controllers\Dev\BitcoinTest::index');
+$routes->get('Dev/BitcoinTest', '\App\Controllers\Dev\BitcoinTest::index');
 $routes->get('Debug/whoami', 'Debug::whoami');
 $routes->get('Debug/auth-audit-cache', 'Debug::authAuditCacheSelfTest');
 
-$routes->group('debug', ['namespace' => 'App\Controllers\Debug'], static function ($routes) {
+$routes->group('debug', ['namespace' => '\App\Controllers\Debug'], static function ($routes) {
     $routes->get('common-data/smoke', 'CommonDataController::smoke');
 });
 $routes->get('debug/register-success-probe', 'AuthController::registerSuccessProbe');
@@ -379,7 +379,7 @@ $routes->group('', ['namespace' => 'App\Controllers', 'filter' => 'no-cache'], s
 });
 
 // All Remaining Custom Routes
-$routes->group('', ['namespace' => 'App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
+$routes->group('', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
     $routes->get('/Account', 'DashboardController::account', ['as' => 'account']);
     $routes->get('/Account/Activity', 'DashboardController::activity', ['as' => 'activity']);
     $routes->get('/Account/Billing', 'DashboardController::billing', ['as' => 'billing']);
@@ -419,7 +419,7 @@ $routes->group('Advisor', static function($routes) {
     $routes->post('tradeAnalysis/(:num)', 'AdvisorController::generateTradeAnalysis');
 });
 
-$routes->group('API/v1', ['namespace' => 'App\Modules\APIs\Controllers', 'filter' => ['apiToken', 'ratelimit']],  function($routes) {
+$routes->group('API/v1', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => ['apiToken', 'ratelimit']],  function($routes) {
     $routes->match(['GET', 'POST'], 'Status', 'APIController::status');
     $routes->get('Health', 'HealthAPIController::index');
     $routes->get('Health/spark', 'HealthAPIController::spark');
@@ -430,7 +430,7 @@ $routes->group('API/v1', ['namespace' => 'App\Modules\APIs\Controllers', 'filter
 $routes->addRedirect('API/Status', 'API/v1/Status', 302);
 $routes->addRedirect('API/Health', 'API/v1/Health', 302);
 
-$routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function($routes) {
+$routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  function($routes) {
     $routes->get('/', 'APIController::index');
     $routes->match(['GET', 'POST'], '/', 'APIController::index');
     $routes->group('mobile', static function($routes) {
@@ -544,7 +544,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
     $routes->get('Chat/me', 'ChatController::me');
     $routes->post('Chat/tool', 'ChatController::tool');
 
-    $routes->group('Management', ['namespace' => 'App\Modules\APIs\Controllers', 'filter' => 'cronKey'], function($routes) {
+    $routes->group('Management', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => 'cronKey'], function($routes) {
         $routes->match(['GET', 'POST'], 'Run-CRON-Tasks', 'ManagementAPIController::Run_CRON_Tasks');
         $routes->cli('Run-CRON-Tasks', 'ManagementAPIController::runCRONTasks');
         $routes->match(['GET', 'POST'], 'ajaxGetActiveUsers', 'ManagementAPIController::ajaxGetActiveUsers');
@@ -653,13 +653,13 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
         $routes->post('run', 'SqueezeController::run');
     });
 
-    $routes->group('Management/Chat', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'permission:admin.access'], static function($routes) {
+    $routes->group('Management/Chat', ['namespace' => '\\App\\Modules\\Management\\Controllers', 'filter' => 'permission:admin.access'], static function($routes) {
         $routes->get('Usage', 'ChatUsageController::index');
         $routes->post('Settings', 'ChatUsageController::saveSettings');
         $routes->post('ResetUser', 'ChatUsageController::resetUser');
     });
 
-    $routes->group('Management/Ops', ['namespace' => 'App\\Modules\\Management\\Controllers', 'filter' => 'permission:admin.access'], static function($routes) {
+    $routes->group('Management/Ops', ['namespace' => '\\App\\Modules\\Management\\Controllers', 'filter' => 'permission:admin.access'], static function($routes) {
         $routes->get('/', 'OpsController::index');
         $routes->get('ajaxStatus', 'OpsController::ajaxStatus');
         $routes->post('ajaxDispatch', 'OpsController::ajaxDispatch');
@@ -1293,7 +1293,7 @@ $routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers'],  function
 //     $routes->get('fetchMarketAuxNews/(:segment)', 'AlertsAPIController::fetchMarketAuxNews/$1');
 // });
 
-$routes->group('Blog', ['namespace' => 'App\Modules\Blog\Controllers'],  function($routes) {
+$routes->group('Blog', ['namespace' => '\App\Modules\Blog\Controllers'],  function($routes) {
     $routes->get('/', 'BlogController::index'); // Landing Page
     $routes->get('Post/(:segment)', 'BlogController::viewBlog/$1'); // Dynamic Blog Post View
 
@@ -1331,7 +1331,7 @@ $routes->get('index.php/Blog/(:segment)', static fn($slug) => redirect()->to(sit
 $routes->get('index.php/Blog/(:segment)/(:segment)', static fn($a, $b) => redirect()->to(site_url('Blog/' . $a . '/' . $b), 301));
 
 // Dashboard
-$routes->group('Dashboard', ['namespace' => 'App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
+$routes->group('Dashboard', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
     $routes->get('/', 'DashboardController::index', ['as' => 'dashboard']);
     // Backward-compatible alias for legacy singular path
     $routes->addRedirect('PropFirm', 'PropFirms', 302);
@@ -1360,7 +1360,7 @@ $routes->group('Dashboard', ['namespace' => 'App\Modules\User\Controllers', 'fil
     $routes->post('account-completion/dismiss', 'OnboardingWalkthroughController::dismissAccountCompletion', ['as' => 'account-completion-dismiss']);
 });
 
-$routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers'],  function($routes) {
+$routes->group('Management', ['namespace' => '\App\Modules\Management\Controllers'],  function($routes) {
     $routes->get('/', 'ManagementAdminController::index');
     $routes->get('banUnverifiedUsers', 'ManagementAdminController::banUnverifiedUsers');
     $routes->get('processQueuedEmails', 'ManagementAdminController::processQueuedEmails');
@@ -1601,7 +1601,7 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
     });
 });
 
-$routes->group('Ops', ['namespace' => 'App\Modules\Ops\Controllers'], function($routes) {
+$routes->group('Ops', ['namespace' => '\App\Modules\Ops\Controllers'], function($routes) {
     $routes->get('', 'OpsDashboardController::index');
     $routes->get('projects', 'OpsDashboardController::projects');
     $routes->post('projects/save', 'OpsDashboardController::saveProject');
@@ -1614,7 +1614,7 @@ $routes->group('Ops', ['namespace' => 'App\Modules\Ops\Controllers'], function($
     $routes->get('export/workbook.xlsx', 'OpsDashboardController::exportWorkbookXlsx');
 
 });
-$routes->group('Search', ['namespace' => 'App\Modules\APIs\Controllers'], function($routes) {
+$routes->group('Search', ['namespace' => '\App\Modules\APIs\Controllers'], function($routes) {
     $routes->get('/', 'SearchController::index');
 });
 
@@ -1629,7 +1629,7 @@ $routes->group('Advisors', ['filter' => 'login'], function($routes) {
 });
 
 // Alerts:
-$routes->group('Alerts', ['namespace' => 'App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
+$routes->group('Alerts', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
     $routes->match(['GET', 'POST'], '/', 'AlertsController::index');
     $routes->match(['GET', 'POST'], '/Trades', 'AlertsController::trades');
 });
@@ -1644,8 +1644,8 @@ $routes->group('Auctions', static function($routes) {
 });
 
 // Budget:
-// $routes->get('Budget', 'BudgetController::index', ['namespace' => 'App\Modules\User\Controllers', 'filter' => 'login']);
-$routes->group('Budget', ['namespace' => 'App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
+// $routes->get('Budget', 'BudgetController::index', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 'login']);
+$routes->group('Budget', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
     $routes->get('/', 'BudgetController::index');
     $routes->get('Search/(:any)', 'BudgetController::index');
     // --- Budget: "This Month" views ---
@@ -1697,7 +1697,7 @@ $routes->get('Exchange/Solana/Assets', '\App\Modules\Exchange\Controllers\Solana
 $routes->get('Exchange/Solana/Create', '\App\Modules\Exchange\Controllers\SolanaController::create', ['filter' => 'login']);
 
 // MyMI Exchanges 
-$routes->group('Exchange', ['namespace' => 'App\Modules\Exchange\Controllers', 'filter' => 'login'], function($routes) {
+$routes->group('Exchange', ['namespace' => '\App\Modules\Exchange\Controllers', 'filter' => 'login'], function($routes) {
     $routes->get('', 'ExchangeController::index', ['as' => 'mymi-exchange']);
     $routes->get('Projects/(:any)', 'ExchangeController::project/$1');
     $routes->group('DigiByte', function($routes) { 
@@ -1777,18 +1777,18 @@ $routes->group('Exchange', ['namespace' => 'App\Modules\Exchange\Controllers', '
 });
 
 // Institutes
-$routes->group('Institutes', ['namespace' => 'App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
+$routes->group('Institutes', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
     $routes->match(['GET', 'POST'], '/', 'InstitutesController::index');
 });
 
 // Alternative links to Investment Dashboard
-$routes->group('', ['namespace' => 'App\Modules\User\Controllers', 'filter' => 'login'], static function($routes) {
+$routes->group('', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 'login'], static function($routes) {
     $routes->match(['GET', 'POST'], 'My-Investments', 'InvestmentsController::index');
     $routes->match(['GET', 'POST'], 'My-Trades', 'InvestmentsController::index');
 });
 
 // Investments:
-$routes->group('Investments', ['namespace' => 'App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
+$routes->group('Investments', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
     $routes->match(['GET', 'POST'], '/', 'InvestmentsController::index');
     $routes->get('forecastModal/(:segment)', 'InvestmentsController::forecastModal/$1');
     $routes->post('Account-Manager', 'InvestmentsController::accountManager'); // Account Manager to handle adding, editing, deleting Investments Records to/from Database
@@ -1826,7 +1826,7 @@ $routes->group('Investments', ['namespace' => 'App\Modules\User\Controllers', 'f
 });
 
 // Predictions (User)
-$routes->group('Predictions', ['namespace' => 'App\Modules\User\Controllers'], static function($routes) {
+$routes->group('Predictions', ['namespace' => '\App\Modules\User\Controllers'], static function($routes) {
     $routes->get('/', 'PredictionsController::index');
     $routes->get('Markets', 'PredictionsController::markets');
     $routes->get('Market/(:num)', 'PredictionsController::view/$1');
@@ -1837,7 +1837,7 @@ $routes->group('Predictions', ['namespace' => 'App\Modules\User\Controllers'], s
 });
 
 // ===== Projects (User) =====
-$routes->group('Projects', ['namespace' => 'App\Modules\User\Controllers'], static function($routes) {
+$routes->group('Projects', ['namespace' => '\App\Modules\User\Controllers'], static function($routes) {
     $routes->get('/', 'ProjectsController::index');
     $routes->get('View/(:num)', 'ProjectsController::view/$1');
     $routes->post('Commit/(:num)', 'ProjectsController::commit/$1');
@@ -1851,26 +1851,26 @@ $routes->group('Projects', ['namespace' => 'App\Modules\User\Controllers'], stat
 }); 
 
 // Blog:
-$routes->group('Announcements', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {
+$routes->group('Announcements', ['namespace' => '\App\Modules\Blog\Controllers'], function($routes) {
     $routes->get('/', 'AnnouncementsController::index');
     // Define other routes for 'blog' module
 });
 
 
 // Legacy route compatibility aliases for logged errors
-$routes->group('', ['namespace' => 'App\Modules\Management\Controllers'], static function($routes) {
+$routes->group('', ['namespace' => '\App\Modules\Management\Controllers'], static function($routes) {
     $routes->get('Assets', 'AssetsController::index', ['filter' => 'login']);
 });
-$routes->group('', ['namespace' => 'App\Modules\ScriptStudio\Controllers'], static function($routes) {
+$routes->group('', ['namespace' => '\App\Modules\ScriptStudio\Controllers'], static function($routes) {
     $routes->get('Marketplace', 'ScriptStudioController::marketplace');
 });
-$routes->group('API/Investments', ['namespace' => 'App\Modules\User\Controllers'], static function($routes) {
+$routes->group('API/Investments', ['namespace' => '\App\Modules\User\Controllers'], static function($routes) {
     $routes->get('GetUserWatchlist/(:segment)', 'InvestmentsController::getUserWatchlist/$1');
     $routes->get('Economy/latest', 'EconomyController::latest');
 });
 
 // Script Studio Module
-$routes->group('ScriptStudio', ['namespace' => 'App\\Modules\\ScriptStudio\\Controllers'], function($routes) {
+$routes->group('ScriptStudio', ['namespace' => '\\App\\Modules\\ScriptStudio\\Controllers'], function($routes) {
     $routes->get('/', 'ScriptStudioController::index');
     $routes->get('Marketplace', 'ScriptStudioController::marketplace');
     $routes->get('Create', 'ScriptStudioController::create');
@@ -1882,7 +1882,7 @@ $routes->group('ScriptStudio', ['namespace' => 'App\\Modules\\ScriptStudio\\Cont
 });
 
 // Public: How It Works (new public views)
-$routes->group('How-It-Works', ['namespace' => 'App\\Modules\\Blog\\Controllers'], static function ($routes) {
+$routes->group('How-It-Works', ['namespace' => '\\App\\Modules\\Blog\\Controllers'], static function ($routes) {
     $routes->get('', 'HowItWorksController::index');
 
     $routes->get('Daily-Financial-News', 'HowItWorksController::DailyFinancialNews');
@@ -1904,14 +1904,14 @@ $routes->group('How-It-Works', ['namespace' => 'App\\Modules\\Blog\\Controllers'
 });
 
 // Legacy API aliases for external callers that still hit exact historical paths.
-$routes->group('API', ['namespace' => 'App\\Modules\\APIs\\Controllers'], static function ($routes) {
+$routes->group('API', ['namespace' => '\\App\\Modules\\APIs\\Controllers'], static function ($routes) {
     $routes->match(['GET', 'POST'], 'Alerts/fetchEmailAlerts', 'AlertsAPIController::fetchEmailAlerts');
     $routes->match(['GET', 'POST'], 'Management/Run-CRON-Tasks', 'ManagementAPIController::Run_CRON_Tasks', ['filter' => 'cronKey']);
     $routes->match(['GET', 'POST'], 'management/run-cron-tasks', 'ManagementAPIController::Run_CRON_Tasks', ['filter' => 'cronKey']);
 });
 
 // Customer Support:
-$routes->group('Support', ['namespace' => 'App\Modules\Support\Controllers'], function($routes) {
+$routes->group('Support', ['namespace' => '\App\Modules\Support\Controllers'], function($routes) {
     $routes->get('ticket/(:num)', 'SupportTicketController::show/$1');
     $routes->get('/', 'SupportController::index');
     $routes->get('Account', 'AccountSupportController::index');
@@ -1927,22 +1927,22 @@ $routes->group('Support', ['namespace' => 'App\Modules\Support\Controllers'], fu
     $routes->get('(:any)', 'SupportController::view/$1');
 });
 
-$routes->get('help/account', 'App\\Modules\\Support\\Controllers\\AccountSupportController::index');
+$routes->get('help/account', '\\App\\Modules\\Support\\Controllers\\AccountSupportController::index');
 
 // User - Referrals
-// $routes->match(['GET', 'POST'], 'My-Referrals', 'App\Modules\User\Controllers\ReferralController::index', ['filter' => 'login']);
+// $routes->match(['GET', 'POST'], 'My-Referrals', '\App\Modules\User\Controllers\ReferralController::index', ['filter' => 'login']);
 
-$routes->group('My-Referrals', ['namespace' => 'App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
+$routes->group('My-Referrals', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
     $routes->match(['GET', 'POST'], '/', 'ReferralController::index');
 });
-$routes->group('Referrals', ['namespace' => 'App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
+$routes->group('Referrals', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
     $routes->match(['GET', 'POST'], '/', 'ReferralController::index');
     $routes->match(['GET', 'POST'], 'Create', 'ReferralController::create');
     $routes->match(['GET', 'POST'], 'sendReferralEmail', 'ReferralController::sendReferralEmail'); 
 });
 
 // User - Wallets
-$routes->group('Wallets', ['namespace' => 'App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
+$routes->group('Wallets', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
     $routes->get('/', 'WalletsController::index', ['as' => 'wallets.index']);
     $routes->match(['GET', 'POST'], 'All', 'WalletsController::all', ['as' => 'wallets.all']);
     $routes->match(['GET', 'POST'], 'Account-Manager', 'WalletsController::accountManager', ['as' => 'wallets.account-manager']);
@@ -2028,20 +2028,20 @@ $routes->group('Wallets', ['namespace' => 'App\Modules\User\Controllers', 'filte
 });
 
 // // Management - Admin:
-// $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'ManagementController::index');
 //     // $routes->get('How-Tos', 'ManagementController::howTos'); 
 //     // Define other routes for 'blog' module
 // });
 
 // // Management - Marketing:
-// $routes->group('Marketing', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Marketing', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'MarketingController::index');
 //     // Define other routes for 'blog' module
 // });
 
 // Features:
-$routes->group('Features', ['namespace' => 'App\Modules\Advertise\Controllers'], function($routes) {
+$routes->group('Features', ['namespace' => '\App\Modules\Advertise\Controllers'], function($routes) {
     $routes->get('/', 'FeaturesController::index');
     $routes->get('Brokerage-Integrations', 'FeaturesController::BrokerageIntegrations');
     $routes->get('Brokerage-Integration', 'FeaturesController::BrokerageIntegrations');
@@ -2060,7 +2060,7 @@ $routes->addRedirect('Budget/Financial-Institute', 'Budget/Account-Manager', 301
 $routes->addRedirect('Budget/Financial-Advisors', 'Advisor', 301);
 $routes->addRedirect('Investments/Reports', 'Investments/Trade-Tracker', 301);
 
-$routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers', 'filter' => 'role:admin,team'], function ($routes) {
+$routes->group('Management', ['namespace' => '\App\Modules\Management\Controllers', 'filter' => 'role:admin,team'], function ($routes) {
     $routes->get('API', 'APIAdminController::index');
     $routes->get('API/(:segment)', 'APIAdminController::index');
     $routes->get('Docs', 'DocsAdminController::index');
@@ -2068,7 +2068,7 @@ $routes->group('Management', ['namespace' => 'App\Modules\Management\Controllers
 });
 
 // KnowlegeBase:
-$routes->group('Knowledgebase', ['namespace' => 'App\Modules\User\Controllers'], function($routes) {
+$routes->group('Knowledgebase', ['namespace' => '\App\Modules\User\Controllers'], function($routes) {
     $routes->get('/', 'KnowledgebaseController::index');
     $routes->get('Account-And-Billing', 'KnowledgebaseController::accountBilling');
     $routes->get('Assets', 'KnowledgebaseController::assets');
@@ -2087,7 +2087,7 @@ $routes->group('Knowledgebase', ['namespace' => 'App\Modules\User\Controllers'],
 });
 
 // News And Updates:
-// $routes->group('Blog/News-And-Updates', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {
+// $routes->group('Blog/News-And-Updates', ['namespace' => '\App\Modules\Blog\Controllers'], function($routes) {
 //     $routes->get('/', 'NewsAndUpdates::index');
 //     $routes->get('Integrating-With-Plaid', 'NewsAndUpdates::IntegratingWithPlaid');
 //     $routes->get('The-Roadmap-To-The-Future-Of-Finance', 'NewsAndUpdates::TheRoadmapToTheFutureOfFinance');
@@ -2095,7 +2095,7 @@ $routes->group('Knowledgebase', ['namespace' => 'App\Modules\User\Controllers'],
 // });
 
 // User - Subscribe
-$routes->group('Subscribe', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {
+$routes->group('Subscribe', ['namespace' => '\App\Modules\Blog\Controllers'], function($routes) {
     $routes->get('/', 'SubscribeController::index');
     $routes->get('/Daily-Financial-News', 'SubscribeController::index');
     $routes->get('Submit', 'SubscribeController::submit');
@@ -2103,7 +2103,7 @@ $routes->group('Subscribe', ['namespace' => 'App\Modules\Blog\Controllers'], fun
 });
 
 // // User - Getting Started
-// $routes->group('Getting-Started', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {
+// $routes->group('Getting-Started', ['namespace' => '\App\Modules\Blog\Controllers'], function($routes) {
 //     $routes->get('/', 'SubscribeController::index');
 //     // Define other routes for 'blog' module
 // });
@@ -2135,7 +2135,7 @@ if (ENVIRONMENT !== 'production') {
     });
 }
 // // Alerts API Group - Handles Trade Alerts, Social Media, and Voiceovers
-// $routes->group('API/Alerts', ['namespace' => 'App\Modules\APIs\Controllers'], function ($routes) {
+// $routes->group('API/Alerts', ['namespace' => '\App\Modules\APIs\Controllers'], function ($routes) {
 //     $routes->match(['GET', 'POST'], 'addTradeAlert', 'AlertsController::addTradeAlert');
 //     $routes->match(['GET', 'POST'], 'getFilteredAlerts', 'AlertsController::getFilteredAlerts');
 //     $routes->match(['GET', 'POST'], 'fetchEmailAlerts', 'AlertsController::fetchEmailAlerts');
@@ -2168,7 +2168,7 @@ if (ENVIRONMENT !== 'production') {
 // });
 
 // Alerts API Group - Handles Trade Alerts, Social Media, and Voiceovers
-// $routes->group('API/Management', ['namespace' => 'App\Modules\APIs\Controllers'], function ($routes) {
+// $routes->group('API/Management', ['namespace' => '\App\Modules\APIs\Controllers'], function ($routes) {
 //     $routes->match(['GET', 'POST'], 'ajaxGetActiveUsers', 'ManagementController::ajaxGetActiveUsers');
 //     $routes->match(['GET', 'POST'], 'ajaxGetInactiveUsers', 'ManagementController::ajaxGetInactiveUsers');
 //     $routes->match(['GET', 'POST'], 'checkForSpamUsers', 'ManagementController::checkForSpamUsers');
@@ -2208,49 +2208,49 @@ if (ENVIRONMENT !== 'production') {
 // });
 
 // Alerts API Group - Handles Trade Alerts, Social Media, and Voiceovers
-// $routes->group('API/Users', ['namespace' => 'App\Modules\APIs\Controllers'], function ($routes) {
+// $routes->group('API/Users', ['namespace' => '\App\Modules\APIs\Controllers'], function ($routes) {
 //     $routes->match(['GET', 'POST'], 'Comments/Add', 'UserController::addComment');
 // });
 
 
 // // Management - Admins:
-// $routes->group('Management/Admin', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/Admin', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'AdminController::index');
 //     // Define other routes for 'blog' module
 // });
 
 // // Management - API:
-// $routes->group('Management/API', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/API', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'APIController::index');
 //     // Define other routes for 'blog' module
 // });
 
 // // Management - Assets:
-// $routes->group('Management/Assets', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/Assets', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'AssetsController::index');
 //     // Define other routes for 'blog' module
 // });
 
 // // Management - Budgets:
-// $routes->group('Management/Budgets', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/Budgets', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'BudgetsController::index');
 //     // Define other routes for 'blog' module
 // });
 
 // // Management - Budgeting:
-// $routes->group('Management/Budgeting', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/Budgeting', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'BudgetingController::index');
 //     // Define other routes for 'blog' module
 // });
 
 // // Management - Exchange:
-// $routes->group('Management/Exchange', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/Exchange', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'ExchangeController::index');
 //     // Define other routes for 'blog' module
 // });
 
 // // Management - Exchange:
-// $routes->group('Management/How-Tos', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/How-Tos', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'HowTosController::index');
 //     $routes->get('Employees/Account-Setup', 'HowTosController::employeeAccountSetup');
 //     $routes->get('Employees/Email-Setup', 'HowTosController::employeeEmailSetup');
@@ -2258,7 +2258,7 @@ if (ENVIRONMENT !== 'production') {
 // });
 
 // // Management - Alert Management:
-// $routes->group('Management/Alerts', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/Alerts', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'AlertsController::index');
 //     $routes->get('Add/(:segment)', 'AlertsController::add');
 //     $routes->get('addTradeAlert', 'AlertsController::addTradeAlert');
@@ -2273,7 +2273,7 @@ if (ENVIRONMENT !== 'production') {
 // });
 
 // // Management - Marketing:
-// $routes->group('Management/Marketing', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/Marketing', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'MarketingController::index');
 //     $routes->match(['GET', 'POST'], 'Add/(:segment)', 'MarketingController::add/$1');
 //     // $routes->get('Add/(:segment)', 'MarketingController::addSchedule');
@@ -2332,7 +2332,7 @@ if (ENVIRONMENT !== 'production') {
 // });
 
 // // Management - Marketing:
-// $routes->group('Management/Marketing/Exchanges', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/Marketing/Exchanges', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'MarketingController::index');
 //     $routes->match(['GET', 'POST'], 'Edit/(:segment)', 'MarketingController::edit/$1');
 //     $routes->get('Top-Communities', 'MarketingController::topCommunities');
@@ -2342,13 +2342,13 @@ if (ENVIRONMENT !== 'production') {
 // });
 
 // // Management - Partners:
-// $routes->group('Management/Partners', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/Partners', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'PartnersController::index');
 //     // Define other routes for 'blog' module
 // });
 
 // // Management - Projects:
-// $routes->group('Management/Projects', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/Projects', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'ProjectsController::index');
 //     $routes->post('Approve/(:segment)', 'ProjectsController::approveProject/$1'); 
 //     $routes->post('Edit/(:segment)', 'ProjectsController::approveProject/$1'); 
@@ -2357,31 +2357,31 @@ if (ENVIRONMENT !== 'production') {
 // });
 
 // // Management - Referrals:
-// $routes->group('Management/Referrals', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/Referrals', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'ReferralsController::index');
 //     // Define other routes for 'blog' module
 // });
 
 // // Management - Services:
-// $routes->group('Management/Services', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/Services', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'ServicesController::index');
 //     // Define other routes for 'blog' module
 // });
 
 // // Management - Security:
-// $routes->group('Management/Security', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/Security', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'SecurityController::index');
 //     // Define other routes for 'blog' module
 // });
 
 // // Management - Support:
-// $routes->group('Management/Support', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/Support', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'SupportController::index');
 //     // Define other routes for 'blog' module
 // });
 
 // // Management - Users:
-// $routes->group('Management/Users', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/Users', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'UsersController::index');
 //     $routes->get('Profile/(:segment)', 'UsersController::profile');
 //     $routes->match(['GET', 'POST'], 'ajaxBlockUser/(:segment)', 'UsersController::ajaxBlockUser');
@@ -2390,27 +2390,27 @@ if (ENVIRONMENT !== 'production') {
 // });
 
 // // Management - Wallets:
-// $routes->group('Management/Wallets', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/Wallets', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'WalletsController::index');
 //     // Define other routes for 'blog' module
 // });
 
 // // Management - Web Design:
-// $routes->group('Management/Web-Design', ['namespace' => 'App\Modules\Management\Controllers'], function($routes) {
+// $routes->group('Management/Web-Design', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 //     $routes->get('/', 'WebDesignController::index');
 //     // Define other routes for 'blog' module
 // });
 
 
 // // Blog:
-// $routes->group('Blog', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {
+// $routes->group('Blog', ['namespace' => '\App\Modules\Blog\Controllers'], function($routes) {
 //     $routes->get('/', 'BlogController::index'); // Landing Page
 //     $routes->get('Post/(:segment)', 'BlogController::viewBlog/$1'); // Dynamic Blog Post View
 //     // Define other routes for 'blog' module
 // });
 
 // // Blog - Investing:
-// $routes->group('Blog/Earnings', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {
+// $routes->group('Blog/Earnings', ['namespace' => '\App\Modules\Blog\Controllers'], function($routes) {
 //     $routes->get('/', 'EarningsController::index');
 //     $routes->get('Test', 'EarningsController::test');
 //     $routes->get('(:segment)', 'EarningsController::viewByDate'); // Catch any dynamic date
@@ -2419,7 +2419,7 @@ if (ENVIRONMENT !== 'production') {
 
 
 // // Blog - Investing:
-// $routes->group('Blog/Investing', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {
+// $routes->group('Blog/Investing', ['namespace' => '\App\Modules\Blog\Controllers'], function($routes) {
 //     $routes->get('/', 'InvestingController::index');
 //     $routes->get('The-Beginners-Guide-To-Option-Trading', 'InvestingController::TheBeginnersGuideToOptionTrading');
 //     $routes->get('The-Fundamentals-Of-Investing', 'InvestingController::TheFundamentalsOfInvesting');
@@ -2428,14 +2428,14 @@ if (ENVIRONMENT !== 'production') {
 // });
 
 // // Blog - IRS News And Updates:
-// $routes->group('Blog/IRS', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {
+// $routes->group('Blog/IRS', ['namespace' => '\App\Modules\Blog\Controllers'], function($routes) {
 //     $routes->get('/', 'InvestingController::index');
 //     $routes->get('IRS-Expanded-Home-Energy-Tax-Credits', 'IRSController::IRSExpandedHomeEnergyTaxCredits');
 //     // Define other routes for 'blog' module
 // });
 
 // // Blog -  News And Updates:
-// $routes->group('Blog/News-And-Updates', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {
+// $routes->group('Blog/News-And-Updates', ['namespace' => '\App\Modules\Blog\Controllers'], function($routes) {
 //     $routes->get('/', 'UpdatesController::index');
 //     $routes->get('Integrating-With-Plaid', 'UpdatesController::IntegratingWithPlaid');
 //     $routes->get('The-Roadmap-To-The-Future-Of-Finance', 'UpdatesController::TheRoadmapToTheFutureOfFinance');
@@ -2443,18 +2443,18 @@ if (ENVIRONMENT !== 'production') {
 // });
 
 // // Blog - Personal Budgeting:
-// $routes->group('Blog/Personal-Budgeting', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {
+// $routes->group('Blog/Personal-Budgeting', ['namespace' => '\App\Modules\Blog\Controllers'], function($routes) {
 //     $routes->get('/', 'PersonalBudgetingController::index');
 //     $routes->get('The-Importance-of-Personal-Financial-Budgeting', 'PersonalBudgetingController::TheImportanceOfPersonalFinancialBudgeting');
 //     // Define other routes for 'blog' module
 // });
 // APIs - Bitcoin (PSBT + broadcast)
-$routes->group('API/Bitcoin', ['namespace' => 'App\Modules\APIs\Controllers'], static function($routes) {
-    $routes->post('buildUnsignedPsbt', 'App\Modules\APIs\Controllers\BitcoinController::buildUnsignedPsbt');
-    $routes->post('broadcastSignedTx', 'App\Modules\APIs\Controllers\BitcoinController::broadcastSignedTx');
+$routes->group('API/Bitcoin', ['namespace' => '\App\Modules\APIs\Controllers'], static function($routes) {
+    $routes->post('buildUnsignedPsbt', '\App\Modules\APIs\Controllers\BitcoinController::buildUnsignedPsbt');
+    $routes->post('broadcastSignedTx', '\App\Modules\APIs\Controllers\BitcoinController::broadcastSignedTx');
 });
 
-$routes->group('API/Alerts', ['namespace' => 'App\\Modules\\APIs\\Controllers'], static function($routes) {
+$routes->group('API/Alerts', ['namespace' => '\\App\\Modules\\APIs\\Controllers'], static function($routes) {
     $routes->match(['GET', 'POST'], 'processBrokerEmails', 'AlertsController::processBrokerEmails');
     $routes->match(['GET', 'POST'], 'processAllEmails', 'AlertsController::processAllEmails');
     $routes->get('previewScraper/(:num)', 'AlertsController::previewScraper/$1');
@@ -2475,7 +2475,7 @@ $routes->get('Blog/Investing/(:any)', static function () {
 
 
 // Tax user module (nested under User module)
-$routes->group('Tax', ['namespace' => 'App\\Modules\\User\\Tax\\Controllers', 'filter' => 'login'], static function ($routes) {
+$routes->group('Tax', ['namespace' => '\\App\\Modules\\User\\Tax\\Controllers', 'filter' => 'login'], static function ($routes) {
     $routes->get('/', 'Tax::index');
     $routes->match(['GET', 'POST'], 'create', 'Tax::create');
     $routes->get('edit/(:num)', 'Tax::edit/$1');
@@ -2489,7 +2489,7 @@ $routes->group('Tax', ['namespace' => 'App\\Modules\\User\\Tax\\Controllers', 'f
 });
 
 // Tax admin module nested under Management
-$routes->group('Admin/Tax', ['namespace' => 'App\\Modules\\Management\\TaxAdmin\\Controllers', 'filter' => 'login'], static function ($routes) {
+$routes->group('Admin/Tax', ['namespace' => '\\App\\Modules\\Management\\TaxAdmin\\Controllers', 'filter' => 'login'], static function ($routes) {
     $routes->get('/', 'TaxConfig::index');
     $routes->get('Templates', 'TaxConfig::templates');
     $routes->match(['GET', 'POST'], 'Templates/edit/(:num)', 'TaxConfig::editTemplate/$1');
@@ -2499,38 +2499,38 @@ $routes->group('Admin/Tax', ['namespace' => 'App\\Modules\\Management\\TaxAdmin\
     $routes->match(['GET', 'POST'], 'Rates/edit/(:num)', 'TaxConfig::editRate/$1');
 });
 
-$routes->group('API/Ops', ['namespace' => 'App\Modules\APIs\Controllers', 'filter' => 'internalToken'], static function ($routes) {
-    $routes->get('healthcheck', 'App\Modules\Ops\Controllers\OpsController::healthcheck');
-    $routes->post('app/update', 'App\Modules\Ops\Controllers\OpsController::appUpdate');
-    $routes->get('commands', 'App\Modules\Ops\Controllers\OpsController::commands');
+$routes->group('API/Ops', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => 'internalToken'], static function ($routes) {
+    $routes->get('healthcheck', '\App\Modules\Ops\Controllers\OpsController::healthcheck');
+    $routes->post('app/update', '\App\Modules\Ops\Controllers\OpsController::appUpdate');
+    $routes->get('commands', '\App\Modules\Ops\Controllers\OpsController::commands');
 
-    $routes->post('public-pages/import', 'App\Modules\APIs\Controllers\OpsPublicPagesController::import');
-    $routes->post('public-pages/run', 'App\Modules\APIs\Controllers\OpsPublicPagesController::run');
-    $routes->get('public-pages/report', 'App\Modules\APIs\Controllers\OpsPublicPagesController::report');
+    $routes->post('public-pages/import', '\App\Modules\APIs\Controllers\OpsPublicPagesController::import');
+    $routes->post('public-pages/run', '\App\Modules\APIs\Controllers\OpsPublicPagesController::run');
+    $routes->get('public-pages/report', '\App\Modules\APIs\Controllers\OpsPublicPagesController::report');
 });
 
-$routes->group('API/AiOps', ['namespace' => 'App\Modules\APIs\Controllers', 'filter' => 'internalToken'], static function ($routes) {
-    $routes->get('snapshot', 'App\Modules\AIOps\Controllers\AIOpsController::snapshot');
-    $routes->get('gaps/docs', 'App\Modules\AIOps\Controllers\AIOpsController::docsGaps');
-    $routes->post('watch', 'App\Modules\AIOps\Controllers\AIOpsController::watch');
+$routes->group('API/AiOps', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => 'internalToken'], static function ($routes) {
+    $routes->get('snapshot', '\App\Modules\AIOps\Controllers\AIOpsController::snapshot');
+    $routes->get('gaps/docs', '\App\Modules\AIOps\Controllers\AIOpsController::docsGaps');
+    $routes->post('watch', '\App\Modules\AIOps\Controllers\AIOpsController::watch');
 });
 
-$routes->group('API', ['namespace' => 'App\Modules\APIs\Controllers', 'filter' => 'internalToken'], static function ($routes) {
-    $routes->get('Logs/summary', 'App\Modules\Logs\Controllers\LogsController::summary');
-    $routes->post('ContentEngine/run', 'App\Modules\ContentEngine\Controllers\ContentEngineController::run');
-    $routes->get('ContentEngine/drafts/(:segment)', 'App\Modules\ContentEngine\Controllers\ContentEngineController::draft/$1');
-    $routes->get('Chat/health', 'App\Modules\Chat\Controllers\ChatController::health');
-    $routes->get('Chat/usage', 'App\Modules\Chat\Controllers\ChatController::usage');
+$routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => 'internalToken'], static function ($routes) {
+    $routes->get('Logs/summary', '\App\Modules\Logs\Controllers\LogsController::summary');
+    $routes->post('ContentEngine/run', '\App\Modules\ContentEngine\Controllers\ContentEngineController::run');
+    $routes->get('ContentEngine/drafts/(:segment)', '\App\Modules\ContentEngine\Controllers\ContentEngineController::draft/$1');
+    $routes->get('Chat/health', '\App\Modules\Chat\Controllers\ChatController::health');
+    $routes->get('Chat/usage', '\App\Modules\Chat\Controllers\ChatController::usage');
 });
 
 // Economic dashboard widget + cron endpoints
-$routes->group('Dashboard/Economy', ['namespace' => 'App\Modules\User\Controllers'], static function($routes) {
+$routes->group('Dashboard/Economy', ['namespace' => '\App\Modules\User\Controllers'], static function($routes) {
     $routes->get('Widget', 'EconomyController::dashboardWidget', ['filter' => 'login']);
 });
-$routes->group('investments/economy', ['namespace' => 'App\Modules\User\Controllers'], static function($routes) {
+$routes->group('investments/economy', ['namespace' => '\App\Modules\User\Controllers'], static function($routes) {
     $routes->match(['GET', 'POST'], 'update_all', 'EconomyController::updateAll');
 });
-$routes->group('investments', ['namespace' => 'App\Modules\APIs\Controllers'], static function($routes) {
+$routes->group('investments', ['namespace' => '\App\Modules\APIs\Controllers'], static function($routes) {
     $routes->get('fundamentals/(:segment)', 'InvestmentsAPIController::fundamentals/$1');
 });
 
