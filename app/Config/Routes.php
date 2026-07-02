@@ -2449,7 +2449,7 @@ if (ENVIRONMENT !== 'production') {
 //     // Define other routes for 'blog' module
 // });
 // APIs - Bitcoin (PSBT + broadcast)
-$routes->group('API/Bitcoin', ['namespace' => '\App\Modules\APIs\Controllers'], static function($routes) {
+$routes->group('API/Bitcoin', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => 'apiToken'], static function($routes) {
     $routes->post('buildUnsignedPsbt', '\App\Modules\APIs\Controllers\BitcoinController::buildUnsignedPsbt');
     $routes->post('broadcastSignedTx', '\App\Modules\APIs\Controllers\BitcoinController::broadcastSignedTx');
 });
