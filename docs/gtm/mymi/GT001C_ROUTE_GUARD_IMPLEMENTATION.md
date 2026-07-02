@@ -61,3 +61,17 @@ GT-001B classified `API/Bitcoin/buildUnsignedPsbt` and `API/Bitcoin/broadcastSig
 ### Safety
 
 This slice changes one route group filter only. No controller logic, handler mapping, internal token policy, CSRF policy, or production state was changed.
+
+## GT-001C-D DripCampaign TestCron Guard
+
+### Scope
+
+Added an explicit `cronKey` route filter to `GET API/DripCampaign/TestCron`.
+
+### Reason
+
+GT-001B classified `API/DripCampaign/TestCron` as `INTERNAL` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes one route-level filter only. No controller logic, API token policy, broad internal route policy, CSRF policy, or production state was changed.
