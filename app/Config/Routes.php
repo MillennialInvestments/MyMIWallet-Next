@@ -971,12 +971,12 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->post('approvePost/(:num)', 'MarketingAPIController::approvePost/$1');
         $routes->post('approveBufferItem/(:num)', 'MarketingAPIController::approveBufferItem/$1');
         $routes->post('autoScheduleNextApproved', 'MarketingAPIController::autoScheduleNextApproved');
-        $routes->get('cronAnalyzeContent', 'MarketingAPIController::cronAnalyzeContent');
-        $routes->get('cronAutoPublishGroupedDigest', 'MarketingAPIController::cronAutoPublishGroupedDigest');
-        $routes->get('cronFetchAndGenerateNews', 'MarketingAPIController::cronFetchAndGenerateNews');
-        $routes->get('cronFetchInbox', 'MarketingAPIController::cronFetchInbox');
-        $routes->get('cronFetchMarketingEmails', 'MarketingAPIController::cronFetchMarketingEmails');
-        $routes->get('cronProcessSMSMarketingIdeas', 'MarketingAPIController::cronProcessSMSMarketingIdeas');
+        $routes->get('cronAnalyzeContent', 'MarketingAPIController::cronAnalyzeContent', ['filter' => 'cronKey']);
+        $routes->get('cronAutoPublishGroupedDigest', 'MarketingAPIController::cronAutoPublishGroupedDigest', ['filter' => 'cronKey']);
+        $routes->get('cronFetchAndGenerateNews', 'MarketingAPIController::cronFetchAndGenerateNews', ['filter' => 'cronKey']);
+        $routes->get('cronFetchInbox', 'MarketingAPIController::cronFetchInbox', ['filter' => 'cronKey']);
+        $routes->get('cronFetchMarketingEmails', 'MarketingAPIController::cronFetchMarketingEmails', ['filter' => 'cronKey']);
+        $routes->get('cronProcessSMSMarketingIdeas', 'MarketingAPIController::cronProcessSMSMarketingIdeas', ['filter' => 'cronKey']);
         $routes->delete('deleteScrape/(:num)', 'MarketingAPIController::deleteScrape/$1');
         $routes->get('downloadVoiceover/(:any)', 'MarketingAPIController::downloadVoiceover/$1');
         $routes->get('distributeHighScoreContent', 'MarketingAPIController::distributeHighScoreContent');
