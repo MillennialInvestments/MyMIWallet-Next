@@ -22,7 +22,7 @@ Safety Boundary
 No production mutation.
 No controller logic changed.
 No broad route guard changes.
-No API token/internal token/CSRF policy changes.
+No API token, internal token, or CSRF policy changes.
 One route-level login guard added.
 Validation
 composer validate --no-check-publish
