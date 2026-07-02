@@ -144,4 +144,17 @@ GT-001B classified selected Alerts maintenance routes as `INTERNAL` with `MISSIN
 ### Safety
 
 This slice changes Alerts internal maintenance route-level filters only. No controller logic, broad Alerts API policy, API token policy, CSRF policy, or production state was changed.
+## GT-001C-I Ops Internal Guard
+
+### Scope
+
+Added explicit `internalToken` route filters to three active `API/Ops/*` internal routes.
+
+### Reason
+
+GT-001B classified the targeted Ops routes as `INTERNAL` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes Ops internal route-level filters only. No controller logic, broad Ops/AiOps policy, public health route policy, API token policy, CSRF policy, or production state was changed.
 
