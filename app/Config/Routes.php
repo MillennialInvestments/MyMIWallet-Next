@@ -472,8 +472,8 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->post('toggle', 'AiOpsAPIController::toggle', ['filter' => 'permission:admin.access']);
     });
     $routes->post('Alerts/backfillEmailAlerts', 'AlertsAPIController::backfillEmailAlerts', ['filter' => 'internalToken']);
-    $routes->get('cronFetchAndGenerateNews', 'ManagementAPIController::cronFetchAndGenerateNews');
-    $routes->post('Management/backfillMarketingEmails', 'ManagementAPIController::backfillMarketingEmails');
+    $routes->get('cronFetchAndGenerateNews', 'ManagementAPIController::cronFetchAndGenerateNews', ['filter' => 'cronKey']);
+    $routes->post('Management/backfillMarketingEmails', 'ManagementAPIController::backfillMarketingEmails', ['filter' => 'internalToken']);
     $routes->get('Management/debugLogs', 'ManagementAPIController::debugLogs', ['filter' => 'permission:admin.access']);
     $routes->group('Scanner', static function($routes) {
         $routes->get('status', 'ScannerController::status', ['filter' => 'internalToken']);
@@ -1043,7 +1043,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('reprocessIncompleteEmails', 'MarketingAPIController::reprocessIncompleteEmails');
         $routes->post('rejectBufferItem/(:num)', 'MarketingAPIController::rejectBufferItem/$1');
         $routes->get('runContentGenerationBatch', 'MarketingAPIController::runContentGenerationBatch');
-        $routes->get('runKeywordBackfillBatch', 'MarketingAPIController::runKeywordBackfillBatch');
+        $routes->get('runKeywordBackfillBatch', 'MarketingAPIController::runKeywordBackfillBatch', ['filter' => 'internalToken']);
         $routes->get('runKeywordEnrichment', 'MarketingAPIController::runKeywordEnrichment');
         $routes->get('runScheduledTasks', 'MarketingAPIController::runScheduledTasks');
         $routes->get('Search/(:segment)/(:any)', 'ManagementController::index/$1/$2');
@@ -1061,7 +1061,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('testGenerateSummarizerHarness', 'MarketingAPIController::testGenerateSummarizerHarness');
         $routes->get('Timeline/(:segment)', 'MarketingAPIController::timeline/$1');
         $routes->get('Timeline', 'MarketingAPIController::viewTimelineGrouped');
-        $routes->get('triggerBackfill', 'MarketingAPIController::reprocessIncompleteEmails');
+        $routes->get('triggerBackfill', 'MarketingAPIController::reprocessIncompleteEmails', ['filter' => 'internalToken']);
         $routes->get('triggerPostAutogenOnEmpty', 'MarketingAPIController::triggerPostAutogenOnEmpty');
         $routes->post('updateCampaignLinks', 'MarketingAPIController::updateCampaignLinks');
         $routes->post('updateInsight', 'MarketingAPIController::updateInsight');

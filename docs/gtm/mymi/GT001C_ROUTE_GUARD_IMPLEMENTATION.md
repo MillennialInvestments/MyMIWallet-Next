@@ -209,4 +209,17 @@ GT-001B is a static classification source and still lists routes that have since
 ### Safety
 
 This slice changes documentation and evidence files only. No route definitions, controller logic, guard policy, CSRF policy, API token policy, or production state was changed.
+## GT-001C-N Residual Internal Guards
+
+### Scope
+
+Added explicit route filters to the four residual `INTERNAL,MISSING_GUARD` routes identified by GT-001C-M.
+
+### Reason
+
+GT-001C-M reconciled the GT-001B source backlog after GT-001C-D through GT-001C-L and found four remaining internal operational routes.
+
+### Safety
+
+This slice changes residual internal route-level filters only. No controller logic, broad Marketing/API policy, API token policy, CSRF policy, or production state was changed.
 
