@@ -22,8 +22,19 @@ Generate a report-only reconciliation of the GT-001B route guard backlog after G
 - Original GT-001B missing-guard rows considered: `663`
 - Rows completed by GT-001C-D through GT-001C-L: `60`
 - Residual missing-guard rows after completed slices: `603`
+- Residual rows accounted for by classification: `603`
 - Residual `INTERNAL` missing-guard rows: `4`
 - Residual `API_TOKEN` missing-guard rows: `547`
+- Residual other missing-guard rows: `52`
+
+## Residual Missing-Guard Rows by Classification
+
+| Classification | Count |
+|---|---:|
+| `API_TOKEN` | 547 |
+| `USER_AUTH` | 46 |
+| `STATEFUL_PUBLIC` | 6 |
+| `INTERNAL` | 4 |
 
 ## Residual Internal Backlog by Domain
 
@@ -67,17 +78,36 @@ Generate a report-only reconciliation of the GT-001B route guard backlog after G
 | `CoinVault` | 1 |
 | `Mdit` | 1 |
 
+## Residual Other Missing-Guard Backlog
+
+| Classification | Domain | Count |
+|---|---|---:|
+| `USER_AUTH` | `Premium-Features` | 16 |
+| `USER_AUTH` | `Dashboard` | 8 |
+| `USER_AUTH` | `Features` | 8 |
+| `USER_AUTH` | `Investments` | 8 |
+| `STATEFUL_PUBLIC` | `index.php` | 4 |
+| `USER_AUTH` | `Support` | 3 |
+| `USER_AUTH` | `Preview` | 1 |
+| `USER_AUTH` | `help` | 1 |
+| `USER_AUTH` | `activate-account` | 1 |
+| `STATEFUL_PUBLIC` | `v1` | 1 |
+| `STATEFUL_PUBLIC` | `Status` | 1 |
+
 ## Output Files
 
 - Completed internal slice rows: `docs/gtm/mymi/evidence/gt001c/completed-internal-guard-slices-cd-through-cl.csv`
+- Residual classification counts: `docs/gtm/mymi/evidence/gt001c/residual-missing-by-classification.csv`
 - Residual internal backlog: `docs/gtm/mymi/evidence/gt001c/residual-internal-missing-after-cdl.csv`
 - Residual API token backlog: `docs/gtm/mymi/evidence/gt001c/residual-api-token-missing-backlog.csv`
+- Residual other missing-guard backlog: `docs/gtm/mymi/evidence/gt001c/residual-other-missing-backlog.csv`
 
 ## Recommended Next Atomic Tracks
 
-1. Continue residual `INTERNAL` routes by domain, starting with the smallest high-confidence operational route groups.
-2. Start a separate GT-001D/API-token track for `API_TOKEN,MISSING_GUARD` routes.
-3. Keep owner-review/public/stateful-public routes separate from token/internal guard implementation.
+1. Finish the 4 residual `INTERNAL` rows as a final GT-001C-N operational guard slice.
+2. Start a separate GT-001D/API-token track for the 547 `API_TOKEN,MISSING_GUARD` rows.
+3. Create a separate owner-review/auth-policy track for the 52 residual non-internal/non-api-token missing-guard rows.
+4. Keep owner-review/public/stateful-public routes separate from token/internal guard implementation.
 
 ## Rollback Notes
 
