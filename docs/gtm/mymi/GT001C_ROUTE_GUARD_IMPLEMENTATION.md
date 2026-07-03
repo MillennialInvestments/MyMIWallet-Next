@@ -196,4 +196,17 @@ GT-001B classified `API/eSports/cronProcessJobs` as `INTERNAL` with `MISSING_GUA
 ### Safety
 
 This slice changes the eSports cron route-level filter only. No controller logic, broad eSports API policy, API token policy, event/user action policy, CSRF policy, or production state was changed.
+## GT-001C-M Residual Guard Backlog
+
+### Scope
+
+Generated a report-only reconciliation of the GT-001B missing-guard source backlog after GT-001C-D through GT-001C-L.
+
+### Reason
+
+GT-001B is a static classification source and still lists routes that have since been patched by the atomic GT-001C guard slices. This report separates completed source rows from the remaining internal/API-token backlog.
+
+### Safety
+
+This slice changes documentation and evidence files only. No route definitions, controller logic, guard policy, CSRF policy, API token policy, or production state was changed.
 
