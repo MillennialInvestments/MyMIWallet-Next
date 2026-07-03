@@ -20,7 +20,7 @@ class Ops extends BaseConfig
     /**
      * Where your site root lives.
      */
-    public string $siteRoot = '/home/mymiteam/mymiwallet/site/current';
+    public string $siteRoot = '/apps/TBI/www/mymiwallet/releases/20260628-132012';
 
     /**
      * Local ports you proxy to (your nginx 9001/9002 pattern).
