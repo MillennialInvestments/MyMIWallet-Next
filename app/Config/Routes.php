@@ -863,8 +863,8 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
     });
 
     $routes->group('ContentEngine', function($routes) {
-        $routes->post('ingestScanner', 'ContentEngineAPIController::ingestScanner');
-        $routes->post('processIngest/(:num)', 'ContentEngineAPIController::processIngest/$1');
+        $routes->post('ingestScanner', 'ContentEngineAPIController::ingestScanner', ['filter' => 'internalToken']);
+        $routes->post('processIngest/(:num)', 'ContentEngineAPIController::processIngest/$1', ['filter' => 'internalToken']);
         $routes->get('topIdeas', 'ContentEngineAPIController::topIdeas');
         $routes->get('posts', 'ContentEngineAPIController::posts');
         $routes->get('posts/(:num)', 'ContentEngineAPIController::posts/$1');

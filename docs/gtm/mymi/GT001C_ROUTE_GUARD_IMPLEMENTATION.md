@@ -170,4 +170,17 @@ GT-001B classified `API/Discord/process-queue` and `API/Discord/coalesce-now` as
 ### Safety
 
 This slice changes Discord internal route-level filters only. No controller logic, broad Discord API policy, public registration policy, webhook policy, API token policy, CSRF policy, or production state was changed.
+## GT-001C-K ContentEngine Internal Guard
+
+### Scope
+
+Added explicit `internalToken` route filters to two `API/ContentEngine/*` internal ingest/process routes.
+
+### Reason
+
+GT-001B classified `API/ContentEngine/ingestScanner` and `API/ContentEngine/processIngest/([0-9]+)` as `INTERNAL` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes ContentEngine internal route-level filters only. No controller logic, broad ContentEngine API policy, API token policy, public content policy, CSRF policy, or production state was changed.
 
