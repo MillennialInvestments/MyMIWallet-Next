@@ -12,7 +12,7 @@ use Myth\Auth\Entities\User;
  */
 class UserModuleModel extends ObservedModel
 {
-    protected $table          = 'users';
+    protected $table          = 'bf_users';
     protected $primaryKey     = 'id';
     protected $returnType     = 'App\Entities\User';
     protected $useSoftDeletes = true;
