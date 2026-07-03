@@ -915,7 +915,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->post('cancelEvent', 'EsportsAPIController::cancelEvent');
         $routes->post('receiveResultWebhook', 'EsportsAPIController::receiveResultWebhook');
         $routes->post('settlePayouts', 'EsportsAPIController::settlePayouts');
-        $routes->post('cronProcessJobs', 'EsportsAPIController::cronProcessJobs');
+        $routes->post('cronProcessJobs', 'EsportsAPIController::cronProcessJobs', ['filter' => 'cronKey']);
         $routes->get('event/(:num)', 'EsportsAPIController::getEvent/$1');
         $routes->get('events', 'EsportsAPIController::listEvents');
     });

@@ -183,4 +183,17 @@ GT-001B classified `API/ContentEngine/ingestScanner` and `API/ContentEngine/proc
 ### Safety
 
 This slice changes ContentEngine internal route-level filters only. No controller logic, broad ContentEngine API policy, API token policy, public content policy, CSRF policy, or production state was changed.
+## GT-001C-L eSports Cron Guard
+
+### Scope
+
+Added an explicit `cronKey` route filter to `API/eSports/cronProcessJobs`.
+
+### Reason
+
+GT-001B classified `API/eSports/cronProcessJobs` as `INTERNAL` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes the eSports cron route-level filter only. No controller logic, broad eSports API policy, API token policy, event/user action policy, CSRF policy, or production state was changed.
 
