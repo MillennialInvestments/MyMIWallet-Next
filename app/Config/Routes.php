@@ -517,8 +517,8 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('lookup/quote', 'DiscordAPIController::quoteLookup');
         $routes->post('webhook', 'DiscordAPIController::webhookProxy');
         $routes->post('createLinkToken', 'DiscordAPIController::createLinkToken');
-        $routes->get('process-queue', 'DiscordAPIController::processQueue');
-        $routes->get('coalesce-now', 'DiscordAPIController::coalesceNow');
+        $routes->get('process-queue', 'DiscordAPIController::processQueue', ['filter' => 'internalToken']);
+        $routes->get('coalesce-now', 'DiscordAPIController::coalesceNow', ['filter' => 'internalToken']);
         $routes->delete('purge-dead', 'DiscordAPIController::purgeDead');
         $routes->post('test', 'DiscordAPIController::test');
     });

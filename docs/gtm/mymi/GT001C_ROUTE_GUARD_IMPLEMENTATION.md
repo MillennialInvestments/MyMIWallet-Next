@@ -157,4 +157,17 @@ GT-001B classified the targeted Ops routes as `INTERNAL` with `MISSING_GUARD`.
 ### Safety
 
 This slice changes Ops internal route-level filters only. No controller logic, broad Ops/AiOps policy, public health route policy, API token policy, CSRF policy, or production state was changed.
+## GT-001C-J Discord Internal Guard
+
+### Scope
+
+Added explicit `internalToken` route filters to two `API/Discord/*` internal operational routes.
+
+### Reason
+
+GT-001B classified `API/Discord/process-queue` and `API/Discord/coalesce-now` as `INTERNAL` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes Discord internal route-level filters only. No controller logic, broad Discord API policy, public registration policy, webhook policy, API token policy, CSRF policy, or production state was changed.
 
