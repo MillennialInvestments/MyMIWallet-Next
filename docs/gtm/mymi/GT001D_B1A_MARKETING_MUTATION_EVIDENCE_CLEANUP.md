@@ -12,18 +12,23 @@ Documentation/evidence only.
 
 GT-001D-B1 successfully applied `apiToken` guards to 25 Marketing mutation-candidate API routes.
 
-The original final verifier used substring matching, which caused false positives for route names that are prefixes of other route names, including:
+The original final verifier used substring matching, which caused false positives for route names or handlers that are prefixes of other route names or handlers, including:
 
 - `fetchGeneratedSummaries`
 - `generateFromSimilar`
 - `generatePostsFromSummary`
 
-GT-001D-B1A verifies each B1 route by both route fragment and handler inside the API/Marketing route group only.
+GT-001D-B1A verifies each B1 route by exact expected route line inside the API/Marketing route group only.
 
 ## Evidence
 
 - `docs/gtm/mymi/evidence/gt001d/marketing/b1a/marketing-b1-exact-route-verification.csv`
 - `docs/gtm/mymi/evidence/gt001d/marketing/b1/marketing-mutation-candidate-batch-discovery.csv`
+
+## Result
+
+- VERIFIED: 25
+- REVIEW_REQUIRED: 0
 
 ## Safety
 
