@@ -994,13 +994,13 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->post('archiveVideoContent/(:num)', 'MarketingAPIController::archiveVideoContent/$1', ['filter' => 'apiToken']);
         $routes->post('duplicateVideoContent/(:num)', 'MarketingAPIController::duplicateVideoContent/$1');
         $routes->get('getVideoContent/(:num)', 'MarketingAPIController::getVideoContent/$1');
-        $routes->get('getVideoQueue', 'MarketingAPIController::getVideoQueue');
+        $routes->get('getVideoQueue', 'MarketingAPIController::getVideoQueue', ['filter' => 'apiToken']);
         $routes->match(['GET', 'POST'], 'generateFromTicker', 'MarketingAPIController::generateFromTicker');
         $routes->match(['GET', 'POST'], 'generateFromTopic', 'MarketingAPIController::generateFromTopic');
         $routes->match(['GET', 'POST'], 'generateFromScrapedSource/(:num)', 'MarketingAPIController::generateFromScrapedSource/$1');
         $routes->get('exportVideoPackage/(:num)', 'MarketingAPIController::exportVideoPackage/$1');
-        $routes->get('getTemplates', 'MarketingAPIController::getTemplates');
-        $routes->match(['GET', 'POST'], 'saveTemplate', 'MarketingAPIController::saveTemplate');
+        $routes->get('getTemplates', 'MarketingAPIController::getTemplates', ['filter' => 'apiToken']);
+        $routes->match(['GET', 'POST'], 'saveTemplate', 'MarketingAPIController::saveTemplate', ['filter' => 'apiToken']);
         $routes->delete('deleteTemplate/(:num)', 'MarketingAPIController::deleteTemplate/$1', ['filter' => 'apiToken']);
         $routes->get('forceGenerateFromTemp', 'MarketingAPIController::forceGenerateFromTemp');
         $routes->get('ForceGenerateFromTemp/(:num)', 'MarketingAPIController::ForceGenerateFromTemp/$1');
@@ -1091,7 +1091,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('Approve-Content/(:num)', 'MarketingAPIController::approveContent/$1');
         $routes->get('Blog-Creator', 'MarketingAPIController::blogCreator');
         $routes->get('Blogs', 'MarketingAPIController::blogs');
-        $routes->get('Campaigns', 'MarketingAPIController::campaigns');
+        $routes->get('Campaigns', 'MarketingAPIController::campaigns', ['filter' => 'apiToken']);
         $routes->get('Content-Review', 'MarketingAPIController::contentReview');
         $routes->get('Content/Generator', 'MarketingAPIController::contentGenerator');
         $routes->get('Content/Listing', 'MarketingAPIController::contentListing');
@@ -1120,7 +1120,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->post('Save-Content-Edit/(:num)', 'MarketingAPIController::saveContentEdit/$1');
         $routes->get('Schedule', 'MarketingAPIController::schedule');
         $routes->get('Schedule/(:segment)', 'MarketingAPIController::schedule/$1');
-        $routes->get('scheduleNewsletters', 'MarketingAPIController::scheduleNewsletterCampaign');
+        $routes->get('scheduleNewsletters', 'MarketingAPIController::scheduleNewsletterCampaign', ['filter' => 'apiToken']);
         $routes->get('submitDailyLog', 'MarketingAPIController::submitDailyLog');
         $routes->post('Scrape-Link', 'MarketingAPIController::scrapeLink');
         $routes->get('sendNotification', 'MarketingAPIController::sendNotification');
@@ -1132,19 +1132,19 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('View-Email/(:segment)/(:segment)', 'MarketingAPIController::viewEmail/$1/$2');
         $routes->get('View-Grouped-Summaries', 'MarketingAPIController::View-Grouped-Summaries');
         $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsAPIController::addUserGoldTasks');
-        $routes->get('Email-Templates/create', 'EmailTemplateController::create');
+        $routes->get('Email-Templates/create', 'EmailTemplateController::create', ['filter' => 'apiToken']);
         $routes->post('/Email-Templates/store', 'EmailTemplateController::store');
-        $routes->get('Email-Queue', 'EmailQueueController::index');
-        $routes->get('Email-Queue/create', 'EmailQueueController::create');
+        $routes->get('Email-Queue', 'EmailQueueController::index', ['filter' => 'apiToken']);
+        $routes->get('Email-Queue/create', 'EmailQueueController::create', ['filter' => 'apiToken']);
         $routes->post('Email-Queue/store', 'EmailQueueController::store');
         $routes->post('Email-Queue/processQueue', 'EmailQueueController::processQueue');
         
         // Marketing Platforms & Posting Plan
-        $routes->get('getPlatforms','ManagementAPIController::getPlatforms');
+        $routes->get('getPlatforms','ManagementAPIController::getPlatforms', ['filter' => 'apiToken']);
         $routes->post('savePlatform','ManagementAPIController::savePlatform');
         $routes->delete('deletePlatform/(:num)','ManagementAPIController::deletePlatform/$1', ['filter' => 'apiToken']);
 
-        $routes->get('getPlatformRules/(:segment)','ManagementAPIController::getPlatformRules/$1');
+        $routes->get('getPlatformRules/(:segment)','ManagementAPIController::getPlatformRules/$1', ['filter' => 'apiToken']);
         $routes->post('upsertPlatformRule','ManagementAPIController::upsertPlatformRule');
         $routes->delete('deletePlatformRule/(:num)','ManagementAPIController::deletePlatformRule/$1', ['filter' => 'apiToken']);
 
@@ -1152,7 +1152,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->post('saveTaxonomy','ManagementAPIController::saveTaxonomy');
         $routes->delete('deleteTaxonomy/(:num)','ManagementAPIController::deleteTaxonomy/$1', ['filter' => 'apiToken']);
 
-        $routes->get('listSuggestions/(:segment)/(:segment)','ManagementAPIController::listSuggestions/$1/$2');
+        $routes->get('listSuggestions/(:segment)/(:segment)','ManagementAPIController::listSuggestions/$1/$2', ['filter' => 'apiToken']);
         $routes->post('saveSuggestion','ManagementAPIController::saveSuggestion');
         $routes->delete('deleteSuggestion/(:num)','ManagementAPIController::deleteSuggestion/$1', ['filter' => 'apiToken']);
 
