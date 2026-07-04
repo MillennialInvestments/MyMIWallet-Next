@@ -1,0 +1,6 @@
+metric,count
+initial_marketing_api_token_backlog,192
+gt001d_a2_high_risk_mutation_routes_guarded,9
+gt001d_a3_owner_approved_routes_guarded,11
+total_marketing_routes_guarded_in_gt001d_a,20
+estimated_marketing_api_token_residual_after_a3,172
