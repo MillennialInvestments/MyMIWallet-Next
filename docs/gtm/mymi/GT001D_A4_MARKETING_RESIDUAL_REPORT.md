@@ -29,25 +29,30 @@ Estimated Marketing API_TOKEN residual after GT-001D-A3:
 
 Residual calculation:
 
-```text
-192 initial Marketing API_TOKEN backlog
-- 9 GT-001D-A2 high-risk mutation routes guarded
-- 11 GT-001D-A3 owner-approved routes guarded
-= 172 estimated remaining Marketing API_TOKEN routes
-Evidence
-docs/gtm/mymi/evidence/gt001d/marketing/a4/marketing-api-token-progress.csv
-docs/gtm/mymi/evidence/gt001d/marketing/a4/marketing-guarded-routes-verification.csv
-Recommended Next Slices
-GT-001D-B1: Marketing mutation candidate batching.
-GT-001D-B2: Marketing read candidate batching.
-GT-001D-B3: Marketing residual verification and score update.
-GT-001D-C: Broker API_TOKEN guard classification.
-GT-001D-D: Alerts API_TOKEN guard classification.
-Safety
-Documentation only.
-No route edits.
-No controller edits.
-No filter edits.
-No database changes.
-No production mutation.
-No rollback required for this documentation-only slice.
+- 192 initial Marketing API_TOKEN backlog
+- minus 9 GT-001D-A2 high-risk mutation routes guarded
+- minus 11 GT-001D-A3 owner-approved routes guarded
+- equals 172 estimated remaining Marketing API_TOKEN routes
+
+## Evidence
+
+- `docs/gtm/mymi/evidence/gt001d/marketing/a4/marketing-api-token-progress.csv`
+- `docs/gtm/mymi/evidence/gt001d/marketing/a4/marketing-guarded-routes-verification.csv`
+
+## Recommended Next Slices
+
+- GT-001D-B1: Marketing mutation candidate batching.
+- GT-001D-B2: Marketing read candidate batching.
+- GT-001D-B3: Marketing residual verification and score update.
+- GT-001D-C: Broker API_TOKEN guard classification.
+- GT-001D-D: Alerts API_TOKEN guard classification.
+
+## Safety
+
+- Documentation only.
+- No route edits.
+- No controller edits.
+- No filter edits.
+- No database changes.
+- No production mutation.
+- No rollback required for this documentation-only slice.
