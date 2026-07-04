@@ -968,9 +968,9 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
     // ------------------------
     $routes->group('Marketing', function($routes) {
         $routes->post('/', 'MarketingAPIController::index');
-        $routes->post('approvePost/(:num)', 'MarketingAPIController::approvePost/$1');
-        $routes->post('approveBufferItem/(:num)', 'MarketingAPIController::approveBufferItem/$1');
-        $routes->post('autoScheduleNextApproved', 'MarketingAPIController::autoScheduleNextApproved');
+        $routes->post('approvePost/(:num)', 'MarketingAPIController::approvePost/$1', ['filter' => 'apiToken']);
+        $routes->post('approveBufferItem/(:num)', 'MarketingAPIController::approveBufferItem/$1', ['filter' => 'apiToken']);
+        $routes->post('autoScheduleNextApproved', 'MarketingAPIController::autoScheduleNextApproved', ['filter' => 'apiToken']);
         $routes->get('cronAnalyzeContent', 'MarketingAPIController::cronAnalyzeContent', ['filter' => 'cronKey']);
         $routes->get('cronAutoPublishGroupedDigest', 'MarketingAPIController::cronAutoPublishGroupedDigest', ['filter' => 'cronKey']);
         $routes->get('cronFetchAndGenerateNews', 'MarketingAPIController::cronFetchAndGenerateNews', ['filter' => 'cronKey']);
@@ -986,13 +986,13 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('fetchGeneratedSummaries', 'MarketingAPIController::fetchGeneratedSummaries', ['filter' => 'apiToken']);
         $routes->get('fetchGeneratedSummariesBlock', 'MarketingAPIController::fetchGeneratedSummariesBlock', ['filter' => 'apiToken']);
         $routes->get('fetchGeneratedSummariesJson', 'MarketingAPIController::fetchGeneratedSummariesJson', ['filter' => 'apiToken']);
-        $routes->post('generateVideoContent', 'MarketingAPIController::generateVideoContent');
-        $routes->post('generateTikTokContent', 'MarketingAPIController::generateTikTokContent');
-        $routes->post('saveVideoDraft', 'MarketingAPIController::saveVideoDraft');
-        $routes->post('updateVideoContent/(:num)', 'MarketingAPIController::updateVideoContent/$1');
-        $routes->post('approveVideoContent/(:num)', 'MarketingAPIController::approveVideoContent/$1');
+        $routes->post('generateVideoContent', 'MarketingAPIController::generateVideoContent', ['filter' => 'apiToken']);
+        $routes->post('generateTikTokContent', 'MarketingAPIController::generateTikTokContent', ['filter' => 'apiToken']);
+        $routes->post('saveVideoDraft', 'MarketingAPIController::saveVideoDraft', ['filter' => 'apiToken']);
+        $routes->post('updateVideoContent/(:num)', 'MarketingAPIController::updateVideoContent/$1', ['filter' => 'apiToken']);
+        $routes->post('approveVideoContent/(:num)', 'MarketingAPIController::approveVideoContent/$1', ['filter' => 'apiToken']);
         $routes->post('archiveVideoContent/(:num)', 'MarketingAPIController::archiveVideoContent/$1', ['filter' => 'apiToken']);
-        $routes->post('duplicateVideoContent/(:num)', 'MarketingAPIController::duplicateVideoContent/$1');
+        $routes->post('duplicateVideoContent/(:num)', 'MarketingAPIController::duplicateVideoContent/$1', ['filter' => 'apiToken']);
         $routes->get('getVideoContent/(:num)', 'MarketingAPIController::getVideoContent/$1');
         $routes->get('getVideoQueue', 'MarketingAPIController::getVideoQueue', ['filter' => 'apiToken']);
         $routes->match(['GET', 'POST'], 'generateFromTicker', 'MarketingAPIController::generateFromTicker', ['filter' => 'apiToken']);
@@ -1082,7 +1082,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('distributionChannelTotals', 'MarketingAPIController::distributionChannelTotals');
         $routes->match(['GET', 'POST'], 'retryDistributionTargets', 'MarketingAPIController::retryDistributionTargets', ['filter' => 'apiToken']);
         $routes->match(['GET', 'POST'], 'retryDistributionTargets/(:num)', 'MarketingAPIController::retryDistributionTargets/$1', ['filter' => 'apiToken']);
-        $routes->match(['GET', 'POST'], 'runMarketingPipeline', 'MarketingAPIController::runMarketingPipeline');
+        $routes->match(['GET', 'POST'], 'runMarketingPipeline', 'MarketingAPIController::runMarketingPipeline', ['filter' => 'apiToken']);
 
         // UI/ops endpoints (deduped from former parallel group)
         $routes->get('/', 'MarketingAPIController::index');
@@ -1102,26 +1102,26 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->post('fetchMissingLogos', 'MarketingAPIController::fetchMissingLogos');
         $routes->get('Financial-News', 'MarketingAPIController::financialNews');
         $routes->post('generateAutomatedContent', 'MarketingAPIController::generateAutomatedContent');
-        $routes->get('generateContent', 'MarketingAPIController::generateContent');
+        $routes->get('generateContent', 'MarketingAPIController::generateContent', ['filter' => 'apiToken']);
         $routes->post('generateMarketingPackage', 'MarketingAPIController::generateMarketingPackage');
-        $routes->get('generateNewsletter', 'MarketingAPIController::generateNewsletterContent');
-        $routes->get('getRecentScrapes', 'MarketingAPIController::getRecentScrapes');
-        $routes->get('Grouped-Content-Drafts', 'MarketingAPIController::generateGroupedContentDrafts');
+        $routes->get('generateNewsletter', 'MarketingAPIController::generateNewsletterContent', ['filter' => 'apiToken']);
+        $routes->get('getRecentScrapes', 'MarketingAPIController::getRecentScrapes', ['filter' => 'apiToken']);
+        $routes->get('Grouped-Content-Drafts', 'MarketingAPIController::generateGroupedContentDrafts', ['filter' => 'apiToken']);
         $routes->get('Ideas', 'MarketingAPIController::ideas');
         $routes->get('Post-Creator', 'MarketingAPIController::postCreator');
-        $routes->get('previewGeneratedPost/(:num)', 'MarketingAPIController::previewGeneratedPost/$1');
+        $routes->get('previewGeneratedPost/(:num)', 'MarketingAPIController::previewGeneratedPost/$1', ['filter' => 'apiToken']);
         $routes->get('Promote', 'MarketingAPIController::promote');
         $routes->get('Promote/(:segment)', 'MarketingAPIController::promote');
         $routes->post('PublishBlog/(:num)', 'Management\MarketingAPIController::publishBlog/$1');
         $routes->get('Research', 'AlertsAPIController::research');
-        $routes->get('RunContentGeneration', 'Management\MarketingAPIController::runContentGeneration');
-        $routes->get('Quick-Scraper', 'MarketingAPIController::standaloneScrape');
+        $routes->get('RunContentGeneration', 'Management\MarketingAPIController::runContentGeneration', ['filter' => 'apiToken']);
+        $routes->get('Quick-Scraper', 'MarketingAPIController::standaloneScrape', ['filter' => 'apiToken']);
         $routes->get('Reject-Content/(:num)', 'MarketingAPIController::rejectContent/$1', ['filter' => 'apiToken']);
         $routes->post('Save-Content-Edit/(:num)', 'MarketingAPIController::saveContentEdit/$1');
         $routes->get('Schedule', 'MarketingAPIController::schedule');
         $routes->get('Schedule/(:segment)', 'MarketingAPIController::schedule/$1');
         $routes->get('scheduleNewsletters', 'MarketingAPIController::scheduleNewsletterCampaign', ['filter' => 'apiToken']);
-        $routes->get('submitDailyLog', 'MarketingAPIController::submitDailyLog');
+        $routes->get('submitDailyLog', 'MarketingAPIController::submitDailyLog', ['filter' => 'apiToken']);
         $routes->post('Scrape-Link', 'MarketingAPIController::scrapeLink');
         $routes->get('sendNotification', 'MarketingAPIController::sendNotification');
         $routes->get('sendNewsletter', 'MarketingAPIController::sendScheduleNewsletter');
