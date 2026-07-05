@@ -745,20 +745,20 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
     // ✅ BrokerController
     // ------------------------
     $routes->group('Broker', function($routes) {
-        $routes->get('summary', 'BrokerAPIController::summary');
-        $routes->get('credit', 'BrokerAPIController::credit');
-        $routes->get('available', 'BrokerAPIController::available');
-        $routes->get('repayment', 'BrokerAPIController::repayment');
-        $routes->get('categories', 'BrokerAPIController::categories');
-        $routes->get('transactions', 'BrokerAPIController::transactions');
-        $routes->get('goals', 'BrokerAPIController::goals');
-        $routes->get('insights', 'BrokerAPIController::insights');
+        $routes->get('summary', 'BrokerAPIController::summary', ['filter' => 'apiToken']);
+        $routes->get('credit', 'BrokerAPIController::credit', ['filter' => 'apiToken']);
+        $routes->get('available', 'BrokerAPIController::available', ['filter' => 'apiToken']);
+        $routes->get('repayment', 'BrokerAPIController::repayment', ['filter' => 'apiToken']);
+        $routes->get('categories', 'BrokerAPIController::categories', ['filter' => 'apiToken']);
+        $routes->get('transactions', 'BrokerAPIController::transactions', ['filter' => 'apiToken']);
+        $routes->get('goals', 'BrokerAPIController::goals', ['filter' => 'apiToken']);
+        $routes->get('insights', 'BrokerAPIController::insights', ['filter' => 'apiToken']);
         $routes->get('trends', 'BudgetController::trends');
         $routes->get('net-worth', 'BudgetController::netWorth');
         $routes->get('cash-flow', 'BudgetController::cashFlow');
         $routes->get('budgets', 'BudgetController::budgets');
-        $routes->get('savings-goals', 'BrokerAPIController::savingsGoals');
-        $routes->get('investment-accounts', 'BrokerAPIController::investmentAccounts');
+        $routes->get('savings-goals', 'BrokerAPIController::savingsGoals', ['filter' => 'apiToken']);
+        $routes->get('investment-accounts', 'BrokerAPIController::investmentAccounts', ['filter' => 'apiToken']);
         $routes->get('linked-accounts', 'BrokerAPIController::linkedAccounts');
         $routes->get('add-linked-account', 'BrokerAPIController::addLinkedAccount');
         $routes->get('remove-linked-account/(:segment)', 'BrokerAPIController::removeLinkedAccount/$1');
