@@ -4,7 +4,7 @@ GT-001D-B5,102,POST,API/Marketing/PublishBlog/([0-9]+),PublishBlog/(:num),Manage
 GT-001D-B5,103,POST,API/Marketing/Save-Content-Edit/([0-9]+),Save-Content-Edit/(:num),MarketingAPIController::saveContentEdit/$1,yes,"$routes->post('Save-Content-Edit/(:num)', 'MarketingAPIController::saveContentEdit/$1', ['filter' => 'apiToken']);"
 GT-001D-B5,104,POST,API/Marketing/Scrape-Link,Scrape-Link,MarketingAPIController::scrapeLink,yes,"$routes->post('Scrape-Link', 'MarketingAPIController::scrapeLink', ['filter' => 'apiToken']);"
 GT-001D-B5,105,POST,API/Marketing/MyMI-Gold/Tasks/Add,MyMI-Gold/Tasks/Add,WalletsAPIController::addUserGoldTasks,yes,"$routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsAPIController::addUserGoldTasks', ['filter' => 'apiToken']);"
-GT-001D-B5,106,POST,API/Marketing//Email-Templates/store,Email-Templates/store,EmailTemplateController::store,review_required_no_direct_route_line,
+GT-001D-B5,106,POST,API/Marketing//Email-Templates/store,Email-Templates/store,EmailTemplateController::store,yes,"$routes->post('/Email-Templates/store', 'EmailTemplateController::store', ['filter' => 'apiToken']);"
 GT-001D-B5,107,POST,API/Marketing/Email-Queue/store,Email-Queue/store,EmailQueueController::store,yes,"$routes->post('Email-Queue/store', 'EmailQueueController::store', ['filter' => 'apiToken']);"
 GT-001D-B5,108,POST,API/Marketing/Email-Queue/processQueue,Email-Queue/processQueue,EmailQueueController::processQueue,yes,"$routes->post('Email-Queue/processQueue', 'EmailQueueController::processQueue', ['filter' => 'apiToken']);"
 GT-001D-B5,109,POST,API/Marketing/savePlatform,savePlatform,ManagementAPIController::savePlatform,yes,"$routes->post('savePlatform','ManagementAPIController::savePlatform', ['filter' => 'apiToken']);"

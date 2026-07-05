@@ -53,3 +53,19 @@ Rules:
 ## Rollback
 
 Rollback is revert of the B5 PR. No database rollback is required.
+
+
+## Implementation Result
+
+- CHANGED_LINES: 15 total B5 guarded route confirmations after row 106 repair.
+- VERIFIED: 15
+- REVIEW_REQUIRED: 0
+- Estimated residual after B5: 57
+
+## Verification Evidence
+
+- `docs/gtm/mymi/evidence/gt001d/marketing/b5/marketing-b5-exact-route-verification.csv`
+
+## Reconciliation Notes
+
+GT-001D-B5 closes the remaining Marketing mutation-candidate source rows 101-115. Source row 106 used a double slash in the inventory path, `API/Marketing//Email-Templates/store`, while the actual route declaration is `/Email-Templates/store`; the route was guarded and verification was regenerated with slash-aware exact matching.

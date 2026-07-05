@@ -1133,7 +1133,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('View-Grouped-Summaries', 'MarketingAPIController::View-Grouped-Summaries');
         $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsAPIController::addUserGoldTasks', ['filter' => 'apiToken']);
         $routes->get('Email-Templates/create', 'EmailTemplateController::create', ['filter' => 'apiToken']);
-        $routes->post('/Email-Templates/store', 'EmailTemplateController::store');
+        $routes->post('/Email-Templates/store', 'EmailTemplateController::store', ['filter' => 'apiToken']);
         $routes->get('Email-Queue', 'EmailQueueController::index', ['filter' => 'apiToken']);
         $routes->get('Email-Queue/create', 'EmailQueueController::create', ['filter' => 'apiToken']);
         $routes->post('Email-Queue/store', 'EmailQueueController::store', ['filter' => 'apiToken']);
