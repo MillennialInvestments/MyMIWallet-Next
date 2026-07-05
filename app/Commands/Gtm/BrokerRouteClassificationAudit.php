@@ -2,10 +2,10 @@
 
 namespace App\Commands\Gtm;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class BrokerRouteClassificationAudit extends BaseCommand
+class BrokerRouteClassificationAudit extends SafeBaseCommand
 {
     protected $group = 'GTM';
     protected $name = 'gtm:broker:route-classification';
