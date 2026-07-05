@@ -1101,7 +1101,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('fetchEmails', 'MarketingAPIController::fetchEmails');
         $routes->post('fetchMissingLogos', 'MarketingAPIController::fetchMissingLogos', ['filter' => 'apiToken']);
         $routes->get('Financial-News', 'MarketingAPIController::financialNews');
-        $routes->post('generateAutomatedContent', 'MarketingAPIController::generateAutomatedContent');
+        $routes->post('generateAutomatedContent', 'MarketingAPIController::generateAutomatedContent', ['filter' => 'apiToken']);
         $routes->get('generateContent', 'MarketingAPIController::generateContent', ['filter' => 'apiToken']);
         $routes->post('generateMarketingPackage', 'MarketingAPIController::generateMarketingPackage', ['filter' => 'apiToken']);
         $routes->get('generateNewsletter', 'MarketingAPIController::generateNewsletterContent', ['filter' => 'apiToken']);
@@ -1112,17 +1112,17 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('previewGeneratedPost/(:num)', 'MarketingAPIController::previewGeneratedPost/$1', ['filter' => 'apiToken']);
         $routes->get('Promote', 'MarketingAPIController::promote');
         $routes->get('Promote/(:segment)', 'MarketingAPIController::promote');
-        $routes->post('PublishBlog/(:num)', 'Management\MarketingAPIController::publishBlog/$1');
+        $routes->post('PublishBlog/(:num)', 'Management\MarketingAPIController::publishBlog/$1', ['filter' => 'apiToken']);
         $routes->get('Research', 'AlertsAPIController::research');
         $routes->get('RunContentGeneration', 'Management\MarketingAPIController::runContentGeneration', ['filter' => 'apiToken']);
         $routes->get('Quick-Scraper', 'MarketingAPIController::standaloneScrape', ['filter' => 'apiToken']);
         $routes->get('Reject-Content/(:num)', 'MarketingAPIController::rejectContent/$1', ['filter' => 'apiToken']);
-        $routes->post('Save-Content-Edit/(:num)', 'MarketingAPIController::saveContentEdit/$1');
+        $routes->post('Save-Content-Edit/(:num)', 'MarketingAPIController::saveContentEdit/$1', ['filter' => 'apiToken']);
         $routes->get('Schedule', 'MarketingAPIController::schedule');
         $routes->get('Schedule/(:segment)', 'MarketingAPIController::schedule/$1');
         $routes->get('scheduleNewsletters', 'MarketingAPIController::scheduleNewsletterCampaign', ['filter' => 'apiToken']);
         $routes->get('submitDailyLog', 'MarketingAPIController::submitDailyLog', ['filter' => 'apiToken']);
-        $routes->post('Scrape-Link', 'MarketingAPIController::scrapeLink');
+        $routes->post('Scrape-Link', 'MarketingAPIController::scrapeLink', ['filter' => 'apiToken']);
         $routes->get('sendNotification', 'MarketingAPIController::sendNotification');
         $routes->get('sendNewsletter', 'MarketingAPIController::sendScheduleNewsletter');
         $routes->get('Communities', 'MarketingAPIController::communities');
@@ -1131,33 +1131,33 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('Video-Creator', 'MarketingAPIController::videoCreator');
         $routes->get('View-Email/(:segment)/(:segment)', 'MarketingAPIController::viewEmail/$1/$2');
         $routes->get('View-Grouped-Summaries', 'MarketingAPIController::View-Grouped-Summaries');
-        $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsAPIController::addUserGoldTasks');
+        $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsAPIController::addUserGoldTasks', ['filter' => 'apiToken']);
         $routes->get('Email-Templates/create', 'EmailTemplateController::create', ['filter' => 'apiToken']);
         $routes->post('/Email-Templates/store', 'EmailTemplateController::store');
         $routes->get('Email-Queue', 'EmailQueueController::index', ['filter' => 'apiToken']);
         $routes->get('Email-Queue/create', 'EmailQueueController::create', ['filter' => 'apiToken']);
-        $routes->post('Email-Queue/store', 'EmailQueueController::store');
-        $routes->post('Email-Queue/processQueue', 'EmailQueueController::processQueue');
+        $routes->post('Email-Queue/store', 'EmailQueueController::store', ['filter' => 'apiToken']);
+        $routes->post('Email-Queue/processQueue', 'EmailQueueController::processQueue', ['filter' => 'apiToken']);
         
         // Marketing Platforms & Posting Plan
         $routes->get('getPlatforms','ManagementAPIController::getPlatforms', ['filter' => 'apiToken']);
-        $routes->post('savePlatform','ManagementAPIController::savePlatform');
+        $routes->post('savePlatform','ManagementAPIController::savePlatform', ['filter' => 'apiToken']);
         $routes->delete('deletePlatform/(:num)','ManagementAPIController::deletePlatform/$1', ['filter' => 'apiToken']);
 
         $routes->get('getPlatformRules/(:segment)','ManagementAPIController::getPlatformRules/$1', ['filter' => 'apiToken']);
-        $routes->post('upsertPlatformRule','ManagementAPIController::upsertPlatformRule');
+        $routes->post('upsertPlatformRule','ManagementAPIController::upsertPlatformRule', ['filter' => 'apiToken']);
         $routes->delete('deletePlatformRule/(:num)','ManagementAPIController::deletePlatformRule/$1', ['filter' => 'apiToken']);
 
-        $routes->post('searchTaxonomy','ManagementAPIController::searchTaxonomy');
-        $routes->post('saveTaxonomy','ManagementAPIController::saveTaxonomy');
+        $routes->post('searchTaxonomy','ManagementAPIController::searchTaxonomy', ['filter' => 'apiToken']);
+        $routes->post('saveTaxonomy','ManagementAPIController::saveTaxonomy', ['filter' => 'apiToken']);
         $routes->delete('deleteTaxonomy/(:num)','ManagementAPIController::deleteTaxonomy/$1', ['filter' => 'apiToken']);
 
         $routes->get('listSuggestions/(:segment)/(:segment)','ManagementAPIController::listSuggestions/$1/$2', ['filter' => 'apiToken']);
-        $routes->post('saveSuggestion','ManagementAPIController::saveSuggestion');
+        $routes->post('saveSuggestion','ManagementAPIController::saveSuggestion', ['filter' => 'apiToken']);
         $routes->delete('deleteSuggestion/(:num)','ManagementAPIController::deleteSuggestion/$1', ['filter' => 'apiToken']);
 
-        $routes->post('getPostingPlan','ManagementAPIController::getPostingPlan');
-        $routes->post('composePost','ManagementAPIController::composePost');
+        $routes->post('getPostingPlan','ManagementAPIController::getPostingPlan', ['filter' => 'apiToken']);
+        $routes->post('composePost','ManagementAPIController::composePost', ['filter' => 'apiToken']);
     });
 
     // Predictions (API + CRON)

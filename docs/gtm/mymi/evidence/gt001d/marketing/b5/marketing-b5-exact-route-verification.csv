@@ -1,0 +1,16 @@
+slice,source_mutation_candidate_order,method,route,route_literal,handler,api_token_guard_present,matched_route_line
+GT-001D-B5,101,POST,API/Marketing/generateAutomatedContent,generateAutomatedContent,MarketingAPIController::generateAutomatedContent,yes,"$routes->post('generateAutomatedContent', 'MarketingAPIController::generateAutomatedContent', ['filter' => 'apiToken']);"
+GT-001D-B5,102,POST,API/Marketing/PublishBlog/([0-9]+),PublishBlog/(:num),Management\MarketingAPIController::publishBlog/$1,yes,"$routes->post('PublishBlog/(:num)', 'Management\MarketingAPIController::publishBlog/$1', ['filter' => 'apiToken']);"
+GT-001D-B5,103,POST,API/Marketing/Save-Content-Edit/([0-9]+),Save-Content-Edit/(:num),MarketingAPIController::saveContentEdit/$1,yes,"$routes->post('Save-Content-Edit/(:num)', 'MarketingAPIController::saveContentEdit/$1', ['filter' => 'apiToken']);"
+GT-001D-B5,104,POST,API/Marketing/Scrape-Link,Scrape-Link,MarketingAPIController::scrapeLink,yes,"$routes->post('Scrape-Link', 'MarketingAPIController::scrapeLink', ['filter' => 'apiToken']);"
+GT-001D-B5,105,POST,API/Marketing/MyMI-Gold/Tasks/Add,MyMI-Gold/Tasks/Add,WalletsAPIController::addUserGoldTasks,yes,"$routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsAPIController::addUserGoldTasks', ['filter' => 'apiToken']);"
+GT-001D-B5,106,POST,API/Marketing//Email-Templates/store,Email-Templates/store,EmailTemplateController::store,review_required_no_direct_route_line,
+GT-001D-B5,107,POST,API/Marketing/Email-Queue/store,Email-Queue/store,EmailQueueController::store,yes,"$routes->post('Email-Queue/store', 'EmailQueueController::store', ['filter' => 'apiToken']);"
+GT-001D-B5,108,POST,API/Marketing/Email-Queue/processQueue,Email-Queue/processQueue,EmailQueueController::processQueue,yes,"$routes->post('Email-Queue/processQueue', 'EmailQueueController::processQueue', ['filter' => 'apiToken']);"
+GT-001D-B5,109,POST,API/Marketing/savePlatform,savePlatform,ManagementAPIController::savePlatform,yes,"$routes->post('savePlatform','ManagementAPIController::savePlatform', ['filter' => 'apiToken']);"
+GT-001D-B5,110,POST,API/Marketing/upsertPlatformRule,upsertPlatformRule,ManagementAPIController::upsertPlatformRule,yes,"$routes->post('upsertPlatformRule','ManagementAPIController::upsertPlatformRule', ['filter' => 'apiToken']);"
+GT-001D-B5,111,POST,API/Marketing/searchTaxonomy,searchTaxonomy,ManagementAPIController::searchTaxonomy,yes,"$routes->post('searchTaxonomy','ManagementAPIController::searchTaxonomy', ['filter' => 'apiToken']);"
+GT-001D-B5,112,POST,API/Marketing/saveTaxonomy,saveTaxonomy,ManagementAPIController::saveTaxonomy,yes,"$routes->post('saveTaxonomy','ManagementAPIController::saveTaxonomy', ['filter' => 'apiToken']);"
+GT-001D-B5,113,POST,API/Marketing/saveSuggestion,saveSuggestion,ManagementAPIController::saveSuggestion,yes,"$routes->post('saveSuggestion','ManagementAPIController::saveSuggestion', ['filter' => 'apiToken']);"
+GT-001D-B5,114,POST,API/Marketing/getPostingPlan,getPostingPlan,ManagementAPIController::getPostingPlan,yes,"$routes->post('getPostingPlan','ManagementAPIController::getPostingPlan', ['filter' => 'apiToken']);"
+GT-001D-B5,115,POST,API/Marketing/composePost,composePost,ManagementAPIController::composePost,yes,"$routes->post('composePost','ManagementAPIController::composePost', ['filter' => 'apiToken']);"
