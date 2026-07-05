@@ -1,0 +1,35 @@
+188:    public function plaidConfigDebug(): \CodeIgniter\HTTP\ResponseInterface
+197:                'plaidEnvironment' => $cfg->plaidEnvironment ?? null,
+198:                'plaidClientID'    => $cfg->plaidClientID ?? null,
+199:                'plaidSecret'      => (bool)($cfg->plaidSecret ?? null),        // true/false only
+200:                'plaidSandboxSecret'=> (bool)($cfg->plaidSandboxSecret ?? null),
+205:    public function plaidEnv(): ResponseInterface
+207:        $plaid = new \App\Libraries\MyMIPlaid();
+208:        return $this->respond(['status'=>'ok','env'=>$plaid->envInfo()]);
+211:    public function plaidOAuthReturn()
+229:            log_message('debug', 'WalletsController::plaidOAuthReturn nonce fetch failed: {error}', [
+242:    public function plaidWebhook()
+280:    public function plaidLinkToken(): ResponseInterface
+286:            $plaid     = new \App\Libraries\MyMIPlaid();
+287:            $linkToken = $plaid->createLinkToken($uid);
+306:            log_message('error','plaidLinkToken error: {m}', ['m'=>$e->getMessage()]);
+329:    public function plaidExchange(): \CodeIgniter\HTTP\ResponseInterface
+354:            $plaid = new \App\Libraries\MyMIPlaid();
+355:            $exchange = $plaid->exchangePublicToken($publicToken);
+375:            $accountsResponse = $plaid->getAccountsWithBalances($accessToken);
+400:            $encryptedAccessToken = $plaid->encryptToken($accessToken);
+409:                log_message('warning', 'plaidExchange auth user lookup skipped: {m}', [
+459:                'provider'       => 'plaid',
+485:                'provider'          => 'plaid',
+561:            log_message('error', 'plaidExchange error: {m}', [
+572:    public function refreshPlaidWallet($walletId): \CodeIgniter\HTTP\ResponseInterface
+594:    public function syncPlaidTransactions($walletId): \CodeIgniter\HTTP\ResponseInterface
+717:    public function linkRobinhood(): ResponseInterface
+748:            $walletId = $m->upsertProviderWallet($uid, 'robinhood', $label, [
+764:    public function linkSnapTrade(): ResponseInterface
+772:            $snapUserId = trim((string) $this->request->getPost('snaptrade_user_id'));
+787:                return $this->failValidationErrors('Missing or failed to create snaptrade_user_id');
+791:            $walletId = $m->upsertProviderWallet($uid, 'snaptrade', $label, [
+792:                'snaptrade_user_id' => $snapUserId,
+806:    public function getSnapTradeConnectUrl(): ResponseInterface
+819:            $snapUserId = trim((string) $this->request->getPost('snaptrade_user_id'));
