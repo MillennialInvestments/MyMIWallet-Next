@@ -2,7 +2,7 @@
 
 ## Status
 
-Implementation candidate. Adds API_TOKEN route filters only to the 10 owner-approved legacy-read Broker routes.
+Implementation candidate. Adds internal-token route filters only to the 10 owner-approved legacy-read Broker routes.
 
 ## Approved Scope
 
