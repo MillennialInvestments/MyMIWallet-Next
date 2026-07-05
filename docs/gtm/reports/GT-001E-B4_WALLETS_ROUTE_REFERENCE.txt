@@ -3,73 +3,7 @@
 339:    $routes->post('Auth/link-robinhood', 'AuthController::linkRobinhood');
 340:    $routes->post('Auth/link-snaptrade', 'AuthController::linkSnapTrade');
 396:    $routes->get('/MyMI-Wallet', 'WalletsController::MyMIWallet', ['as' => 'mymi-wallet']);
-729:        $routes->match(['GET', 'POST'], 'gen-keys', 'AlertsAPIController::genKeys'); // Robinhood API Library :: generate keys
-730:        $routes->match(['GET', 'POST'], 'sign', 'AlertsAPIController::sign'); // Robinhood API Library :: sign
-767:        $routes->get('fetchPlaidLinkToken/(:segment)', 'BrokerAPIController::fetchPlaidLinkToken/$1');
-768:        $routes->get('fetchPlaidLinkToken', 'BrokerAPIController::fetchPlaidLinkToken');
-769:        $routes->post('linkPlaidAccount', 'BrokerAPIController::linkPlaidAccount');
-770:        $routes->get('unlinkPlaidAccount/(:segment)', 'BrokerAPIController::unlinkPlaidAccount/$1');
-771:        $routes->get('refreshPlaidAccount/(:segment)', 'BrokerAPIController::refreshPlaidAccount/$1');
-772:        $routes->get('fetchPlaidAccounts/(:segment)', 'BrokerAPIController::fetchPlaidAccounts/$1');
-773:        $routes->get('fetchPlaidAccounts', 'BrokerAPIController::fetchPlaidAccounts');
-774:        $routes->get('fetchPlaidTransactions/(:segment)', 'BrokerAPIController::fetchPlaidTransactions/$1');
-775:        $routes->get('fetchPlaidTransactions', 'BrokerAPIController::fetchPlaidTransactions');
-776:        $routes->get('fetchPlaidBalances/(:segment)', 'BrokerAPIController::fetchPlaidBalances/$1');
-777:        $routes->get('fetchPlaidBalances', 'BrokerAPIController::fetchPlaidBalances');
-778:        $routes->get('fetchPlaidIncome/(:segment)', 'BrokerAPIController::fetchPlaidIncome/$1');
-779:        $routes->get('fetchPlaidIncome', 'BrokerAPIController::fetchPlaidIncome');
-780:        $routes->get('fetchPlaidLiabilities/(:segment)', 'BrokerAPIController::fetchPlaidLiabilities/$1');
-781:        $routes->get('fetchPlaidLiabilities', 'BrokerAPIController::fetchPlaidLiabilities');
-782:        $routes->get('fetchPlaidIdentity/(:segment)', 'BrokerAPIController::fetchPlaidIdentity/$1');
-783:        $routes->get('fetchPlaidIdentity', 'BrokerAPIController::fetchPlaidIdentity');
-784:        $routes->get('fetchPlaidInvestments/(:segment)', 'BrokerAPIController::fetchPlaidInvestments/$1');
-785:        $routes->get('fetchPlaidInvestments', 'BrokerAPIController::fetchPlaidInvestments');
-786:        $routes->get('fetchPlaidHoldings/(:segment)', 'BrokerAPIController::fetchPlaidHoldings/$1');
-787:        $routes->get('fetchPlaidHoldings', 'BrokerAPIController::fetchPlaidHoldings');
-788:        $routes->get('fetchRobinhoodAccounts', 'BrokerAPIController::fetchRobinhoodAccounts');
-789:        $routes->get('fetchRobinhoodAccountDetails/(:segment)', 'BrokerAPIController::fetchRobinhoodAccountDetails/$1');
-790:        $routes->get('fetchRobinhoodPositions/(:segment)', 'BrokerAPIController::fetchRobinhoodPositions/$1');
-791:        $routes->get('fetchRobinhoodPositions', 'BrokerAPIController::fetchRobinhoodPositions');
-792:        $routes->get('fetchRobinhoodPortfolio/(:segment)', 'BrokerAPIController::fetchRobinhoodPortfolio/$1');
-793:        $routes->get('fetchRobinhoodPortfolio', 'BrokerAPIController::fetchRobinhoodPortfolio');
-794:        $routes->get('fetchRobinhoodWatchlists/(:segment)', 'BrokerAPIController::fetchRobinhoodWatchlists/$1');
-795:        $routes->get('fetchRobinhoodWatchlists', 'BrokerAPIController::fetchRobinhoodWatchlists');
-796:        $routes->get('fetchRobinhoodOrders/(:segment)', 'BrokerAPIController::fetchRobinhoodOrders/$1');
-797:        $routes->get('fetchRobinhoodOrders', 'BrokerAPIController::fetchRobinhoodOrders');
-798:        $routes->get('fetchRobinhoodOrderDetails/(:segment)', 'BrokerAPIController::fetchRobinhoodOrderDetails/$1');
-799:        $routes->get('fetchRobinhoodOrderDetails', 'BrokerAPIController::fetchRobinhoodOrderDetails');
-800:        $routes->get('fetchRobinhoodInstruments/(:segment)', 'BrokerAPIController::fetchRobinhoodInstruments/$1');
-801:        $routes->get('fetchRobinhoodInstruments', 'BrokerAPIController::fetchRobinhoodInstruments');
-802:        $routes->get('fetchRobinhoodQuotes/(:segment)', 'BrokerAPIController::fetchRobinhoodQuotes/$1');
-803:        $routes->get('fetchRobinhoodQuotes', 'BrokerAPIController::fetchRobinhoodQuotes');
-804:        $routes->get('fetchRobinhoodDividends/(:segment)', 'BrokerAPIController::fetchRobinhoodDividends/$1');
-805:        $routes->get('fetchRobinhoodDividends', 'BrokerAPIController::fetchRobinhoodDividends');
-806:        $routes->get('fetchRobinhoodTransfers/(:segment)', 'BrokerAPIController::fetchRobinhoodTransfers/$1');
-807:        $routes->get('fetchRobinhoodTransfers', 'BrokerAPIController::fetchRobinhoodTransfers');
-808:        $routes->get('fetchRobinhoodWatchlistItems/(:segment)', 'BrokerAPIController::fetchRobinhoodWatchlistItems/$1');
-809:        $routes->get('fetchRobinhoodWatchlistItems', 'BrokerAPIController::fetchRobinhoodWatchlistItems');
-810:        $routes->get('fetchRobinhoodTransactionHistory/(:segment)', 'BrokerAPIController::fetchRobinhoodTransactionHistory/$1');
-811:        $routes->get('fetchRobinhoodTransactionHistory', 'BrokerAPIController::fetchRobinhoodTransactionHistory');
-812:        $routes->get('fetchRobinhoodNotifications/(:segment)', 'BrokerAPIController::fetchRobinhoodNotifications/$1');
-813:        $routes->get('fetchRobinhoodNotifications', 'BrokerAPIController::fetchRobinhoodNotifications');
-814:        $routes->get('fetchRobinhoodACHRelationships/(:segment)', 'BrokerAPIController::fetchRobinhoodACHRelationships/$1');
-815:        $routes->get('fetchRobinhoodACHRelationships', 'BrokerAPIController::fetchRobinhoodACHRelationships');
-816:        $routes->get('fetchRobinhoodCryptoAccounts/(:segment)', 'BrokerAPIController::fetchRobinhoodCryptoAccounts/$1');
-817:        $routes->get('fetchRobinhoodCryptoAccounts', 'BrokerAPIController::fetchRobinhoodCryptoAccounts');
-818:        $routes->get('fetchRobinhoodCryptoPositions/(:segment)', 'BrokerAPIController::fetchRobinhoodCryptoPositions/$1');
-819:        $routes->get('fetchRobinhoodCryptoPositions', 'BrokerAPIController::fetchRobinhoodCryptoPositions');
-820:        $routes->get('fetchRobinhoodCryptoPortfolio/(:segment)', 'BrokerAPIController::fetchRobinhoodCryptoPortfolio/$1');
-821:        $routes->get('fetchRobinhoodCryptoPortfolio', 'BrokerAPIController::fetchRobinhoodCryptoPortfolio');
-822:        $routes->get('fetchRobinhoodCryptoOrders/(:segment)', 'BrokerAPIController::fetchRobinhoodCryptoOrders/$1');
-823:        $routes->get('fetchRobinhoodCryptoOrders', 'BrokerAPIController::fetchRobinhoodCryptoOrders');
-824:        $routes->get('fetchRobinhoodCryptoOrderDetails/(:segment)', 'BrokerAPIController::fetchRobinhoodCryptoOrderDetails/$1');
-825:        $routes->get('fetchRobinhoodCryptoOrderDetails', 'BrokerAPIController::fetchRobinhoodCryptoOrderDetails');
-826:        $routes->get('fetchRobinhoodCryptoTransactions/(:segment)', 'BrokerAPIController::fetchRobinhoodCryptoTransactions/$1');
-827:        $routes->get('fetchRobinhoodCryptoTransactions', 'BrokerAPIController::fetchRobinhoodCryptoTransactions');
-828:        $routes->get('fetchRobinhoodCryptoQuotes/(:segment)', 'BrokerAPIController::fetchRobinhoodCryptoQuotes/$1');
-829:        $routes->get('fetchRobinhoodCryptoQuotes', 'BrokerAPIController::fetchRobinhoodCryptoQuotes');
 1134:        $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsAPIController::addUserGoldTasks', ['filter' => 'apiToken']);
-1241:    $routes->group('Wallets', function($routes) {
 1243:        // ✅ Add this so /API/Wallets resolves to WalletsAPIController::index
 1244:        $routes->get('/', 'WalletsAPIController::index');
 1245:        $routes->get('summary', 'WalletsAPIController::summary');
@@ -85,7 +19,6 @@
 1263:        $routes->post('Debt/Update/(:num)',      'WalletsAPIController::updateDebt/$1');
 1264:        $routes->post('Investments/Update/(:num)','WalletsAPIController::updateInvestment/$1');
 1265:        $routes->post('Crypto/Update/(:num)',    'WalletsAPIController::updateCrypto/$1');
-1267:        // Plaid Integration Links
 1268:        $routes->get('Plaid/Config-Debug', 'WalletsAPIController::plaidConfigDebug');
 1269:        $routes->get('Plaid/Env', 'WalletsAPIController::plaidEnv');
 1270:        $routes->get('Plaid/OAuth-Return', 'WalletsAPIController::plaidOAuthReturn');
@@ -95,14 +28,9 @@
 1274:        $routes->post('Plaid/Refresh/(:num)', 'WalletsAPIController::refreshPlaidWallet/$1');
 1275:        $routes->post('Plaid/Sync-Transactions/(:num)', 'WalletsAPIController::syncPlaidTransactions/$1');
 1277:        $routes->get('/(:segment)/(:segment)', 'WalletsAPIController::index/$1/$2');
-1318:        $routes->get('Integrating-With-Plaid', 'NewsAndUpdates::IntegratingWithPlaid');
-1529:        $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsAdminController::addUserGoldTasks');
-1593:    $routes->group('Wallets', function($routes) {
 1594:        $routes->get('/', 'WalletsController::index');
 1595:        $routes->get('Reconcile', 'WalletsController::reconcile');
 1596:        $routes->post('EmailUserAboutIssue/(:num)/(:num)', 'WalletsController::emailUserAboutIssue/$1/$2');
-1944:// User - Wallets
-1945:$routes->group('Wallets', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
 1946:    $routes->get('/', 'WalletsController::index', ['as' => 'wallets.index']);
 1947:    $routes->match(['GET', 'POST'], 'All', 'WalletsController::all', ['as' => 'wallets.all']);
 1948:    $routes->match(['GET', 'POST'], 'Account-Manager', 'WalletsController::accountManager', ['as' => 'wallets.account-manager']);
@@ -183,11 +111,6 @@
 2025:    $routes->match(['GET', 'POST'], 'Withdraw/(:segment)', 'WalletsController::withdraw/$1', ['as' => 'wallets.withdraw.segment']); // Previously /Wallets/Withdraw-Funds
 2026:    $routes->match(['GET', 'POST'], 'Withdraw/Fetch', 'WalletsController::addWithdrawFetch', ['as' => 'wallets.withdraw.fetch']);
 2056:$routes->addRedirect('Premium-Features/Wallets', 'Wallets/Manager', 301);
-2076:    $routes->get('Integrating-Wallets', 'KnowledgebaseController::integratingWallets');
-2092://     $routes->get('Integrating-With-Plaid', 'NewsAndUpdates::IntegratingWithPlaid');
 2321://     $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsController::addUserGoldTasks');
 2340://     // $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsController::addUserGoldTasks');
-2392:// // Management - Wallets:
-2393:// $routes->group('Management/Wallets', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
 2394://     $routes->get('/', 'WalletsController::index');
-2440://     $routes->get('Integrating-With-Plaid', 'UpdatesController::IntegratingWithPlaid');

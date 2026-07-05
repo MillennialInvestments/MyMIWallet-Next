@@ -6,7 +6,7 @@ Validation/report-only. No route redirect, no route deletion, no guard mutation,
 
 ## Purpose
 
-Compare legacy Plaid and Robinhood Broker routes against existing Wallets API route and controller coverage.
+Compare legacy Plaid and Robinhood Broker routes against existing Wallets-related route and controller coverage.
 
 ## Source Inputs
 
@@ -24,8 +24,15 @@ Compare legacy Plaid and Robinhood Broker routes against existing Wallets API ro
 
 - Broker Plaid routes: 21
 - Broker Robinhood routes: 42
-- Wallets route reference rows: 193
+- Wallets route reference rows: 116
 - Wallets controller reference rows: 35
+
+## Coverage Interpretation
+
+- Broker Plaid and Robinhood routes remain legacy references.
+- Wallets route reference excludes BrokerAPIController rows.
+- Wallets controller reference identifies existing Plaid, Robinhood, and SnapTrade implementation coverage.
+- B4 does not approve redirect, deprecation, route deletion, or controller restoration.
 
 ## Next Gate
 
