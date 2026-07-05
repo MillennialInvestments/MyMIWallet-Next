@@ -12,11 +12,8 @@ Prepare the third Marketing mutation-candidate route guard batch after GT-001D-B
 - Guarded in GT-001D-B2: 25
 - Total guarded before B3: 70
 - Estimated residual before B3: 122
-- B3 discovery batch size: 25
-- Already guarded from prior match routes: 6
-- Newly guarded in B3 patch: 18
-- Root API/Marketing POST route: owner review required
-- Estimated residual after B3 safe patch: 104
+- Planned B3 batch size: 25
+- Estimated residual after B3: 97
 
 ## B3 Batch
 
@@ -30,7 +27,7 @@ Discovery evidence:
 
 ## Implementation Plan
 
-Apply `apiToken` to the 18 selected B3 routes that have exact unguarded API/Marketing route lines. Six B3 rows are already guarded by prior `match(['GET', 'POST'])` route guards. One root `API/Marketing` POST row requires owner review because no direct route line was resolved in the API/Marketing block.
+Apply `apiToken` to the selected B3 routes inside the API/Marketing route group only.
 
 Rules:
 
@@ -55,3 +52,24 @@ Rules:
 ## Rollback
 
 Rollback is revert of the B3 PR. No database rollback is required.
+
+
+## Implementation Result
+
+- CHANGED: 1 additional root POST route guard reconciliation after existing B3 patch.
+- VERIFIED: 25
+- REVIEW_REQUIRED: 0
+- Estimated residual after B3: 97
+
+## Verification Evidence
+
+- `docs/gtm/mymi/evidence/gt001d/marketing/b3/marketing-b3-exact-route-verification.csv`
+- `docs/gtm/mymi/evidence/gt001d/marketing/b3/marketing-b3-reconciliation.csv`
+
+## Root Route Decision
+
+The source row `POST API/Marketing` maps to the API/Marketing root POST route:
+
+`$routes->post('/', 'MarketingAPIController::index', ['filter' => 'apiToken']);`
+
+Only the POST root route was guarded for this B3 candidate. The GET root route was not changed by this reconciliation because the selected source row is POST.

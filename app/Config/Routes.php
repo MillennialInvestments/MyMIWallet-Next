@@ -967,7 +967,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
     // ✅ MarketingAPIController
     // ------------------------
     $routes->group('Marketing', function($routes) {
-        $routes->post('/', 'MarketingAPIController::index');
+        $routes->post('/', 'MarketingAPIController::index', ['filter' => 'apiToken']);
         $routes->post('approvePost/(:num)', 'MarketingAPIController::approvePost/$1', ['filter' => 'apiToken']);
         $routes->post('approveBufferItem/(:num)', 'MarketingAPIController::approveBufferItem/$1', ['filter' => 'apiToken']);
         $routes->post('autoScheduleNextApproved', 'MarketingAPIController::autoScheduleNextApproved', ['filter' => 'apiToken']);
