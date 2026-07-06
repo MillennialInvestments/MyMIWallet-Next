@@ -12,6 +12,8 @@ class Commands extends BaseConfig
      * @var array<string, class-string>
      */
     public $commands = [
+        'aiops:operator-next' => \App\Commands\AIOps\OperatorNext::class,
+        'aiops:operator:run-next' => \App\Commands\AIOps\OperatorRunNext::class,
         'solana:preview-browser-runtime:smoke' => \App\Commands\SolanaPreviewBrowserRuntimeSmoke::class,
         'solana:preview-runtime:smoke' => \App\Commands\SolanaPreviewRuntimeSmoke::class,
         'marketing:audit:distribution' => \App\Commands\Marketing\AuditDistribution::class,
