@@ -165,6 +165,7 @@ $routes->set404Override(function () {
 });
 
 $routes->get('/', 'Home::index');
+$routes->head('/', 'Home::index');
 // Explicit home route. If you don't have Home::index, temporarily redirect to /login.
 // $routes->get('/', function () {
 //     return redirect()->to('/login');  // change to 'Home::index' once that exists
