@@ -1,0 +1,300 @@
+ERROR - 2026-07-06 11:00:01 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(300): mysqli->query()
+ 2 SYSTEMPATH/Database/BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute()
+ 3 SYSTEMPATH/Database/BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query()
+ 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+ 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+ 7 SYSTEMPATH/Events/Events.php(152): CodeIgniter\Events\Events::Config\{closure}()
+ 8 SYSTEMPATH/CodeIgniter.php(357): CodeIgniter\Events\Events::trigger()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(123): CodeIgniter\Boot::bootWeb()
+ERROR - 2026-07-06 11:00:01 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(300): mysqli->query()
+ 2 SYSTEMPATH/Database/BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute()
+ 3 SYSTEMPATH/Database/BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query()
+ 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+ 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+ 7 SYSTEMPATH/Events/Events.php(152): CodeIgniter\Events\Events::Config\{closure}()
+ 8 SYSTEMPATH/CodeIgniter.php(357): CodeIgniter\Events\Events::trigger()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(123): CodeIgniter\Boot::bootWeb()
+DEBUG - 2026-07-06 11:02:04 --> [REQ_ID=6fff270335b9] [REQUEST][START] GET //wp-includes/ID3/license.txt
+NOTICE - 2026-07-06 11:02:04 --> [404_ROUTE]
+DEBUG - 2026-07-06 11:02:04 --> [REQ_ID=125a5c533168] [REQUEST][START] GET //feed/
+DEBUG - 2026-07-06 11:02:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2026-07-06 11:02:04 --> [404_ROUTE]
+WARNING - 2026-07-06 11:02:04 --> [404_ROUTE]
+DEBUG - 2026-07-06 11:02:04 --> [REQ_ID=125a5c533168] [REQUEST][END]
+INFO - 2026-07-06 11:02:04 --> [REQ_ID=125a5c533168] [PERF] Execution time=0.048914
+ERROR - 2026-07-06 11:02:04 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(300): mysqli->query()
+ 2 SYSTEMPATH/Database/BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute()
+ 3 SYSTEMPATH/Database/BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query()
+ 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+ 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+ 7 SYSTEMPATH/Events/Events.php(152): CodeIgniter\Events\Events::Config\{closure}()
+ 8 SYSTEMPATH/CodeIgniter.php(357): CodeIgniter\Events\Events::trigger()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(123): CodeIgniter\Boot::bootWeb()
+ERROR - 2026-07-06 11:02:04 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(300): mysqli->query()
+ 2 SYSTEMPATH/Database/BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute()
+ 3 SYSTEMPATH/Database/BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query()
+ 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+ 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+ 7 SYSTEMPATH/Events/Events.php(152): CodeIgniter\Events\Events::Config\{closure}()
+ 8 SYSTEMPATH/CodeIgniter.php(357): CodeIgniter\Events\Events::trigger()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(123): CodeIgniter\Boot::bootWeb()
+DEBUG - 2026-07-06 11:32:17 --> [REQ_ID=f40ff88698c9] [REQUEST][START] GET /
+DEBUG - 2026-07-06 11:32:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-07-06 11:32:17 --> [REQ_ID=f40ff88698c9] [FILTER_BEFORE] /
+DEBUG - 2026-07-06 11:32:17 --> [REQ_ID=f40ff88698c9] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-07-06 11:32:17 --> [REQ_ID=f40ff88698c9] [LIFECYCLE][START] GET https://www.mymiwallet.com/
+DEBUG - 2026-07-06 11:32:17 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+INFO - 2026-07-06 11:32:17 --> [PERF][HOME] buildCommonData complete in 271.17ms
+INFO - 2026-07-06 11:32:17 --> [PERF][HOME] index commonData done in 271.56ms
+INFO - 2026-07-06 11:32:17 --> themesMemory usage: 6291456
+DEBUG - 2026-07-06 11:32:17 --> [MetaService] slug= pageName=Home cacheHit= path=DB
+INFO - 2026-07-06 11:32:17 --> [PERF][HOME] index renderTheme done in 14.12ms
+DEBUG - 2026-07-06 11:32:17 --> [REQ_ID=f40ff88698c9] [FILTER_AFTER]
+DEBUG - 2026-07-06 11:32:17 --> [REQ_ID=f40ff88698c9] [LIFECYCLE][END] status=200 duration_ms=303.43 memory_delta=2097152
+DEBUG - 2026-07-06 11:32:17 --> [REQ_ID=f40ff88698c9] [REQUEST][END]
+INFO - 2026-07-06 11:32:17 --> [REQ_ID=f40ff88698c9] [PERF] Execution time=0.339567
+DEBUG - 2026-07-06 11:40:55 --> [REQ_ID=5f68990c9c48] [REQUEST][START] GET /Wallets/Wallet-Transactions
+DEBUG - 2026-07-06 11:40:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-07-06 11:40:55 --> [REQ_ID=5f68990c9c48] [REQUEST][END]
+INFO - 2026-07-06 11:40:55 --> [REQ_ID=5f68990c9c48] [PERF] Execution time=0.036398
+ERROR - 2026-07-06 11:40:55 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(300): mysqli->query()
+ 2 SYSTEMPATH/Database/BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute()
+ 3 SYSTEMPATH/Database/BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query()
+ 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+ 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+ 7 SYSTEMPATH/Events/Events.php(152): CodeIgniter\Events\Events::Config\{closure}()
+ 8 SYSTEMPATH/CodeIgniter.php(357): CodeIgniter\Events\Events::trigger()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(123): CodeIgniter\Boot::bootWeb()
+ERROR - 2026-07-06 11:40:55 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(300): mysqli->query()
+ 2 SYSTEMPATH/Database/BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute()
+ 3 SYSTEMPATH/Database/BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query()
+ 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+ 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+ 7 SYSTEMPATH/Events/Events.php(152): CodeIgniter\Events\Events::Config\{closure}()
+ 8 SYSTEMPATH/CodeIgniter.php(357): CodeIgniter\Events\Events::trigger()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(123): CodeIgniter\Boot::bootWeb()
+DEBUG - 2026-07-06 12:00:02 --> [REQ_ID=2371839e568c] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-07-06 12:00:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-07-06 12:00:02 --> [REQ_ID=2371839e568c] [FILTER_BEFORE] /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-07-06 12:00:02 --> [REQ_ID=2371839e568c] [ROUTE] Controller=\App\Modules\APIs\Controllers\ManagementAPIController Method=Run_CRON_Tasks
+DEBUG - 2026-07-06 12:00:02 --> [REQ_ID=2371839e568c] [LIFECYCLE][START] GET https://www.mymiwallet.com/API/Management/Run-CRON-Tasks
+DEBUG - 2026-07-06 12:00:02 --> [REQ_ID=2371839e568c] [REQUEST][END]
+INFO - 2026-07-06 12:00:02 --> [REQ_ID=2371839e568c] [PERF] Execution time=0.037276
+ERROR - 2026-07-06 12:00:02 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(300): mysqli->query()
+ 2 SYSTEMPATH/Database/BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute()
+ 3 SYSTEMPATH/Database/BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query()
+ 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+ 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+ 7 SYSTEMPATH/Events/Events.php(152): CodeIgniter\Events\Events::Config\{closure}()
+ 8 SYSTEMPATH/CodeIgniter.php(357): CodeIgniter\Events\Events::trigger()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(123): CodeIgniter\Boot::bootWeb()
+ERROR - 2026-07-06 12:00:02 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(300): mysqli->query()
+ 2 SYSTEMPATH/Database/BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute()
+ 3 SYSTEMPATH/Database/BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query()
+ 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+ 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+ 7 SYSTEMPATH/Events/Events.php(152): CodeIgniter\Events\Events::Config\{closure}()
+ 8 SYSTEMPATH/CodeIgniter.php(357): CodeIgniter\Events\Events::trigger()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(123): CodeIgniter\Boot::bootWeb()
+DEBUG - 2026-07-06 12:00:03 --> [REQ_ID=52625eb02216] [REQUEST][START] HEAD /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-07-06 12:00:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-07-06 12:00:03 --> [404_ROUTE]
+ERROR - 2026-07-06 12:00:03 --> [404_ROUTE]
+DEBUG - 2026-07-06 12:23:53 --> [REQ_ID=aa2d95a2e5d4] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Gold
+DEBUG - 2026-07-06 12:23:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-07-06 12:23:53 --> [REQ_ID=aa2d95a2e5d4] [REQUEST][END]
+INFO - 2026-07-06 12:23:53 --> [REQ_ID=aa2d95a2e5d4] [PERF] Execution time=0.034294
+ERROR - 2026-07-06 12:23:53 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(300): mysqli->query()
+ 2 SYSTEMPATH/Database/BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute()
+ 3 SYSTEMPATH/Database/BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query()
+ 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+ 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+ 7 SYSTEMPATH/Events/Events.php(152): CodeIgniter\Events\Events::Config\{closure}()
+ 8 SYSTEMPATH/CodeIgniter.php(357): CodeIgniter\Events\Events::trigger()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(123): CodeIgniter\Boot::bootWeb()
+ERROR - 2026-07-06 12:23:53 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(300): mysqli->query()
+ 2 SYSTEMPATH/Database/BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute()
+ 3 SYSTEMPATH/Database/BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query()
+ 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+ 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+ 7 SYSTEMPATH/Events/Events.php(152): CodeIgniter\Events\Events::Config\{closure}()
+ 8 SYSTEMPATH/CodeIgniter.php(357): CodeIgniter\Events\Events::trigger()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(123): CodeIgniter\Boot::bootWeb()
+DEBUG - 2026-07-06 12:35:24 --> [REQ_ID=c340653cec55] [REQUEST][START] GET /
+DEBUG - 2026-07-06 12:35:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-07-06 12:35:24 --> [REQ_ID=c340653cec55] [FILTER_BEFORE] /
+DEBUG - 2026-07-06 12:35:24 --> [REQ_ID=c340653cec55] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-07-06 12:35:24 --> [REQ_ID=c340653cec55] [LIFECYCLE][START] GET https://www.mymiwallet.com/
+DEBUG - 2026-07-06 12:35:24 --> [MetaService] slug= pageName= cacheHit= path=FALLBACK
+INFO - 2026-07-06 12:35:24 --> [PERF][HOME] buildCommonData complete in 274.16ms
+INFO - 2026-07-06 12:35:24 --> [PERF][HOME] index commonData done in 274.58ms
+INFO - 2026-07-06 12:35:24 --> themesMemory usage: 10485760
+DEBUG - 2026-07-06 12:35:24 --> [MetaService] slug= pageName=Home cacheHit= path=DB
+INFO - 2026-07-06 12:35:24 --> [PERF][HOME] index renderTheme done in 12.91ms
+DEBUG - 2026-07-06 12:35:24 --> [REQ_ID=c340653cec55] [FILTER_AFTER]
+DEBUG - 2026-07-06 12:35:24 --> [REQ_ID=c340653cec55] [LIFECYCLE][END] status=200 duration_ms=302.30 memory_delta=0
+DEBUG - 2026-07-06 12:35:24 --> [REQ_ID=c340653cec55] [REQUEST][END]
+INFO - 2026-07-06 12:35:24 --> [REQ_ID=c340653cec55] [PERF] Execution time=0.318818
+DEBUG - 2026-07-06 12:44:57 --> [REQ_ID=0c69a88aa67b] [REQUEST][START] GET /
+DEBUG - 2026-07-06 12:44:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-07-06 12:44:57 --> [REQ_ID=0c69a88aa67b] [FILTER_BEFORE] /
+DEBUG - 2026-07-06 12:44:57 --> [REQ_ID=0c69a88aa67b] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-07-06 12:44:57 --> [REQ_ID=0c69a88aa67b] [LIFECYCLE][START] GET https://www.mymiwallet.com/
+DEBUG - 2026-07-06 12:44:57 --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+INFO - 2026-07-06 12:44:57 --> [PERF][HOME] buildCommonData complete in 254.77ms
+INFO - 2026-07-06 12:44:57 --> [PERF][HOME] index commonData done in 255.18ms
+INFO - 2026-07-06 12:44:57 --> themesMemory usage: 6291456
+DEBUG - 2026-07-06 12:44:57 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+INFO - 2026-07-06 12:44:57 --> [PERF][HOME] index renderTheme done in 7.92ms
+DEBUG - 2026-07-06 12:44:57 --> [REQ_ID=0c69a88aa67b] [FILTER_AFTER]
+DEBUG - 2026-07-06 12:44:57 --> [REQ_ID=0c69a88aa67b] [LIFECYCLE][END] status=200 duration_ms=277.80 memory_delta=2097152
+DEBUG - 2026-07-06 12:44:57 --> [REQ_ID=0c69a88aa67b] [REQUEST][END]
+INFO - 2026-07-06 12:44:57 --> [REQ_ID=0c69a88aa67b] [PERF] Execution time=0.314524
+DEBUG - 2026-07-06 12:46:47 --> [REQ_ID=76d2f8d3dd56] [REQUEST][START] GET /
+DEBUG - 2026-07-06 12:46:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-07-06 12:46:47 --> [REQ_ID=76d2f8d3dd56] [FILTER_BEFORE] /
+DEBUG - 2026-07-06 12:46:47 --> [REQ_ID=76d2f8d3dd56] [ROUTE] Controller=\App\Controllers\Home Method=index
+DEBUG - 2026-07-06 12:46:47 --> [REQ_ID=76d2f8d3dd56] [LIFECYCLE][START] GET https://www.mymiwallet.com/
+DEBUG - 2026-07-06 12:46:47 --> [MetaService] slug= pageName= cacheHit=1 path=CACHE
+INFO - 2026-07-06 12:46:47 --> [PERF][HOME] buildCommonData complete in 268.88ms
+INFO - 2026-07-06 12:46:47 --> [PERF][HOME] index commonData done in 269.3ms
+INFO - 2026-07-06 12:46:47 --> themesMemory usage: 6291456
+DEBUG - 2026-07-06 12:46:47 --> [MetaService] slug= pageName=Home cacheHit=1 path=CACHE
+INFO - 2026-07-06 12:46:47 --> [PERF][HOME] index renderTheme done in 7.82ms
+DEBUG - 2026-07-06 12:46:47 --> [REQ_ID=76d2f8d3dd56] [FILTER_AFTER]
+DEBUG - 2026-07-06 12:46:47 --> [REQ_ID=76d2f8d3dd56] [LIFECYCLE][END] status=200 duration_ms=294.06 memory_delta=2097152
+DEBUG - 2026-07-06 12:46:47 --> [REQ_ID=76d2f8d3dd56] [REQUEST][END]
+INFO - 2026-07-06 12:46:47 --> [REQ_ID=76d2f8d3dd56] [PERF] Execution time=0.330838
+DEBUG - 2026-07-06 12:57:34 --> [REQ_ID=2492bbcaa0cc] [REQUEST][START] HEAD /
+DEBUG - 2026-07-06 12:57:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-07-06 12:57:34 --> [404_ROUTE]
+DEBUG - 2026-07-06 12:57:34 --> [REQ_ID=ad80cc1163e2] [REQUEST][START] HEAD /
+DEBUG - 2026-07-06 12:57:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-07-06 12:57:34 --> [404_ROUTE]
+DEBUG - 2026-07-06 13:00:02 --> [REQ_ID=0d4b1d6e0ce5] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-07-06 13:00:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-07-06 13:00:02 --> [REQ_ID=0d4b1d6e0ce5] [FILTER_BEFORE] /index.php/API/Management/Run-CRON-Tasks
+DEBUG - 2026-07-06 13:00:02 --> [REQ_ID=0d4b1d6e0ce5] [ROUTE] Controller=\App\Modules\APIs\Controllers\ManagementAPIController Method=Run_CRON_Tasks
+DEBUG - 2026-07-06 13:00:02 --> [REQ_ID=0d4b1d6e0ce5] [LIFECYCLE][START] GET https://www.mymiwallet.com/API/Management/Run-CRON-Tasks
+DEBUG - 2026-07-06 13:00:02 --> [REQ_ID=0d4b1d6e0ce5] [REQUEST][END]
+INFO - 2026-07-06 13:00:02 --> [REQ_ID=0d4b1d6e0ce5] [PERF] Execution time=0.036719
+ERROR - 2026-07-06 13:00:02 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(300): mysqli->query()
+ 2 SYSTEMPATH/Database/BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute()
+ 3 SYSTEMPATH/Database/BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query()
+ 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+ 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+ 7 SYSTEMPATH/Events/Events.php(152): CodeIgniter\Events\Events::Config\{closure}()
+ 8 SYSTEMPATH/CodeIgniter.php(357): CodeIgniter\Events\Events::trigger()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(123): CodeIgniter\Boot::bootWeb()
+ERROR - 2026-07-06 13:00:02 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(300): mysqli->query()
+ 2 SYSTEMPATH/Database/BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute()
+ 3 SYSTEMPATH/Database/BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query()
+ 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+ 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+ 7 SYSTEMPATH/Events/Events.php(152): CodeIgniter\Events\Events::Config\{closure}()
+ 8 SYSTEMPATH/CodeIgniter.php(357): CodeIgniter\Events\Events::trigger()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(123): CodeIgniter\Boot::bootWeb()
+DEBUG - 2026-07-06 13:00:20 --> [REQ_ID=a187443381b4] [REQUEST][START] HEAD /
+DEBUG - 2026-07-06 13:00:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-07-06 13:00:20 --> [404_ROUTE]
+DEBUG - 2026-07-06 13:00:20 --> [REQ_ID=c8cb8aec89db] [REQUEST][START] HEAD /
+DEBUG - 2026-07-06 13:00:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-07-06 13:00:20 --> [404_ROUTE]
+DEBUG - 2026-07-06 13:13:07 --> [REQ_ID=96859a2cd680] [REQUEST][START] POST /
+DEBUG - 2026-07-06 13:13:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2026-07-06 13:13:08 --> [404_ROUTE]
+WARNING - 2026-07-06 13:13:08 --> [404_ROUTE]
+DEBUG - 2026-07-06 13:13:08 --> [REQ_ID=96859a2cd680] [REQUEST][END]
+INFO - 2026-07-06 13:13:08 --> [REQ_ID=96859a2cd680] [PERF] Execution time=0.048483
+ERROR - 2026-07-06 13:13:08 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(300): mysqli->query()
+ 2 SYSTEMPATH/Database/BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute()
+ 3 SYSTEMPATH/Database/BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query()
+ 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+ 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+ 7 SYSTEMPATH/Events/Events.php(152): CodeIgniter\Events\Events::Config\{closure}()
+ 8 SYSTEMPATH/CodeIgniter.php(357): CodeIgniter\Events\Events::trigger()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(123): CodeIgniter\Boot::bootWeb()
+ERROR - 2026-07-06 13:13:08 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+in SYSTEMPATH/Database/MySQLi/Connection.php on line 300.
+ 1 SYSTEMPATH/Database/MySQLi/Connection.php(300): mysqli->query()
+ 2 SYSTEMPATH/Database/BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute()
+ 3 SYSTEMPATH/Database/BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery()
+ 4 SYSTEMPATH/Database/BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query()
+ 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+ 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+ 7 SYSTEMPATH/Events/Events.php(152): CodeIgniter\Events\Events::Config\{closure}()
+ 8 SYSTEMPATH/CodeIgniter.php(357): CodeIgniter\Events\Events::trigger()
+ 9 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+11 FCPATH/index.php(123): CodeIgniter\Boot::bootWeb()
+DEBUG - 2026-07-06 13:17:47 --> [REQ_ID=7bfc1d8513c7] [REQUEST][START] HEAD /
+DEBUG - 2026-07-06 13:17:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-07-06 13:17:47 --> [404_ROUTE]
+DEBUG - 2026-07-06 13:17:47 --> [REQ_ID=517f8706c630] [REQUEST][START] HEAD /
+DEBUG - 2026-07-06 13:17:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-07-06 13:17:47 --> [404_ROUTE]

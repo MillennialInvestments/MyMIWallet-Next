@@ -1,0 +1,129 @@
+# GT-002-01 Recent Production Error Context
+2026-07-06T13:21:21+00:00
+
+## Log file
+/apps/TBI/www/mymiwallet/current/writable/logs/log-2026-07-06.php
+
+## system_errors failures
+959:ERROR - 2026-07-06 09:00:02 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+972:ERROR - 2026-07-06 09:00:02 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+993:ERROR - 2026-07-06 09:01:02 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1006:ERROR - 2026-07-06 09:01:02 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1025:ERROR - 2026-07-06 09:04:04 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1038:ERROR - 2026-07-06 09:04:04 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1055:ERROR - 2026-07-06 09:05:39 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1068:ERROR - 2026-07-06 09:05:39 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1085:ERROR - 2026-07-06 09:07:12 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1098:ERROR - 2026-07-06 09:07:12 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1170:ERROR - 2026-07-06 09:10:04 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1183:ERROR - 2026-07-06 09:10:04 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1200:ERROR - 2026-07-06 09:15:37 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1213:ERROR - 2026-07-06 09:15:37 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1230:ERROR - 2026-07-06 09:23:37 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1243:ERROR - 2026-07-06 09:23:37 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1275:ERROR - 2026-07-06 09:36:37 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1288:ERROR - 2026-07-06 09:36:37 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1308:ERROR - 2026-07-06 10:00:01 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1321:ERROR - 2026-07-06 10:00:01 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1338:ERROR - 2026-07-06 10:08:59 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1351:ERROR - 2026-07-06 10:08:59 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1368:ERROR - 2026-07-06 10:16:58 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1381:ERROR - 2026-07-06 10:16:58 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1415:ERROR - 2026-07-06 10:29:55 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1428:ERROR - 2026-07-06 10:29:55 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1473:ERROR - 2026-07-06 11:00:01 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1486:ERROR - 2026-07-06 11:00:01 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1507:ERROR - 2026-07-06 11:02:04 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1520:ERROR - 2026-07-06 11:02:04 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1552:ERROR - 2026-07-06 11:40:55 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1565:ERROR - 2026-07-06 11:40:55 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1585:ERROR - 2026-07-06 12:00:02 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1598:ERROR - 2026-07-06 12:00:02 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1619:ERROR - 2026-07-06 12:23:53 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1632:ERROR - 2026-07-06 12:23:53 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1703:ERROR - 2026-07-06 13:00:02 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1716:ERROR - 2026-07-06 13:00:02 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1741:ERROR - 2026-07-06 13:13:08 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+1754:ERROR - 2026-07-06 13:13:08 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+
+## GET / lifecycle entries
+662:DEBUG - 2026-07-06 05:30:38 --> [REQ_ID=25813fc2c979] [LIFECYCLE][END] status=200 duration_ms=295.26 memory_delta=2097152
+665:DEBUG - 2026-07-06 05:43:04 --> [REQ_ID=d9e551c31dcb] [REQUEST][START] GET /Free/register/
+697:DEBUG - 2026-07-06 05:43:05 --> [REQ_ID=951cb6638110] [REQUEST][START] GET /
+700:DEBUG - 2026-07-06 05:43:05 --> [REQ_ID=951cb6638110] [ROUTE] Controller=\App\Controllers\Home Method=index
+709:DEBUG - 2026-07-06 05:43:06 --> [REQ_ID=951cb6638110] [LIFECYCLE][END] status=200 duration_ms=300.51 memory_delta=2097152
+712:DEBUG - 2026-07-06 05:43:08 --> [REQ_ID=bc65ece75423] [REQUEST][START] GET /How-It-Works/Investment-Dashboard
+719:DEBUG - 2026-07-06 05:43:08 --> [REQ_ID=bc65ece75423] [LIFECYCLE][END] status=200 duration_ms=378.60 memory_delta=2097152
+722:DEBUG - 2026-07-06 06:00:02 --> [REQ_ID=6a4f27ebaf6e] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+759:DEBUG - 2026-07-06 06:00:35 --> [REQ_ID=99fbfbbfbb87] [REQUEST][START] GET /Exchange/Solana/Wallet/Execute-Swap
+789:DEBUG - 2026-07-06 06:22:54 --> [REQ_ID=164fda362c59] [REQUEST][START] GET /
+792:DEBUG - 2026-07-06 06:22:54 --> [REQ_ID=164fda362c59] [ROUTE] Controller=\App\Controllers\Home Method=index
+801:DEBUG - 2026-07-06 06:22:55 --> [REQ_ID=164fda362c59] [LIFECYCLE][END] status=200 duration_ms=295.19 memory_delta=2097152
+804:DEBUG - 2026-07-06 06:45:22 --> [REQ_ID=432541663c1e] [REQUEST][START] GET /index.php/Knowledgebase/Getting-Started
+812:DEBUG - 2026-07-06 06:45:22 --> [REQ_ID=f3f8af7bbb13] [REQUEST][START] GET /login
+821:DEBUG - 2026-07-06 06:45:22 --> [REQ_ID=f3f8af7bbb13] [LIFECYCLE][END] status=200 duration_ms=26.78 memory_delta=0
+824:DEBUG - 2026-07-06 07:00:01 --> [REQ_ID=5c8d4c0c7dd3] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+857:DEBUG - 2026-07-06 07:04:52 --> [REQ_ID=19bd206f750e] [REQUEST][START] GET /index.php
+860:DEBUG - 2026-07-06 07:04:52 --> [REQ_ID=19bd206f750e] [ROUTE] Controller=\App\Controllers\Home Method=index
+869:DEBUG - 2026-07-06 07:04:52 --> [REQ_ID=19bd206f750e] [LIFECYCLE][END] status=200 duration_ms=258.29 memory_delta=2097152
+872:DEBUG - 2026-07-06 08:00:01 --> [REQ_ID=4a848c8f54b9] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+905:DEBUG - 2026-07-06 08:21:08 --> [REQ_ID=68912ca1e9b8] [REQUEST][START] GET /sitemap.txt
+937:DEBUG - 2026-07-06 08:50:31 --> [REQ_ID=827a3aefffda] [REQUEST][START] GET /
+940:DEBUG - 2026-07-06 08:50:31 --> [REQ_ID=827a3aefffda] [ROUTE] Controller=\App\Controllers\Home Method=index
+949:DEBUG - 2026-07-06 08:50:31 --> [REQ_ID=827a3aefffda] [LIFECYCLE][END] status=200 duration_ms=313.64 memory_delta=2097152
+952:DEBUG - 2026-07-06 09:00:02 --> [REQ_ID=d99a809bd1d9] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+989:DEBUG - 2026-07-06 09:01:02 --> [REQ_ID=9cf8a120b0c7] [REQUEST][START] GET /
+1019:DEBUG - 2026-07-06 09:04:04 --> [REQ_ID=cb2a3c1d73ae] [REQUEST][START] GET /corporate-earnings
+1051:DEBUG - 2026-07-06 09:05:39 --> [REQ_ID=06f20255f44c] [REQUEST][START] GET /How-It-Works/MyMI-Gold
+1081:DEBUG - 2026-07-06 09:07:12 --> [REQ_ID=7c75dffebc49] [REQUEST][START] GET /ScriptStudio/Marketplace
+1111:DEBUG - 2026-07-06 09:09:56 --> [REQ_ID=2071eb696090] [REQUEST][START] GET /
+1114:DEBUG - 2026-07-06 09:09:56 --> [REQ_ID=2071eb696090] [ROUTE] Controller=\App\Controllers\Home Method=index
+1123:DEBUG - 2026-07-06 09:09:57 --> [REQ_ID=2071eb696090] [LIFECYCLE][END] status=200 duration_ms=299.44 memory_delta=2097152
+1126:DEBUG - 2026-07-06 09:09:58 --> [REQ_ID=f0647f7a29b3] [REQUEST][START] GET /How-It-Works/Investment-Portfolio-Management
+1133:DEBUG - 2026-07-06 09:09:58 --> [REQ_ID=f0647f7a29b3] [LIFECYCLE][END] status=200 duration_ms=287.73 memory_delta=2097152
+1136:DEBUG - 2026-07-06 09:09:58 --> [REQ_ID=d7955aa3e888] [REQUEST][START] GET /How-It-Works/Automated-Financial-Insights
+1146:DEBUG - 2026-07-06 09:09:59 --> [REQ_ID=ce9984d3f726] [REQUEST][START] GET /How-It-Works/financial-forecasting
+1153:DEBUG - 2026-07-06 09:09:59 --> [REQ_ID=ce9984d3f726] [LIFECYCLE][END] status=200 duration_ms=28.24 memory_delta=0
+1156:DEBUG - 2026-07-06 09:09:59 --> [REQ_ID=60eceb974914] [REQUEST][START] GET /How-It-Works/Setting-Financial-Goals
+1163:DEBUG - 2026-07-06 09:10:00 --> [REQ_ID=60eceb974914] [LIFECYCLE][END] status=200 duration_ms=287.74 memory_delta=2097152
+1166:DEBUG - 2026-07-06 09:10:04 --> [REQ_ID=ff36334573f5] [REQUEST][START] GET /_ops/opcache-reset
+1196:DEBUG - 2026-07-06 09:15:37 --> [REQ_ID=770fe388abb7] [REQUEST][START] GET /How-It-Works
+1226:DEBUG - 2026-07-06 09:23:37 --> [REQ_ID=32f142e8bca8] [REQUEST][START] GET /Knowledgebase/Investor-Profile
+1256:DEBUG - 2026-07-06 09:33:44 --> [REQ_ID=2f7e9142e8fe] [REQUEST][START] GET /
+1259:DEBUG - 2026-07-06 09:33:44 --> [REQ_ID=2f7e9142e8fe] [ROUTE] Controller=\App\Controllers\Home Method=index
+1268:DEBUG - 2026-07-06 09:33:44 --> [REQ_ID=2f7e9142e8fe] [LIFECYCLE][END] status=200 duration_ms=295.73 memory_delta=2097152
+1271:DEBUG - 2026-07-06 09:36:37 --> [REQ_ID=ef7bccf49c1b] [REQUEST][START] GET /Debug/whoami
+1301:DEBUG - 2026-07-06 10:00:01 --> [REQ_ID=f9dda44dbf9b] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+1334:DEBUG - 2026-07-06 10:08:59 --> [REQ_ID=3b93fd2c43fe] [REQUEST][START] GET /Wallets/Purchase/Memberships/Customize
+1364:DEBUG - 2026-07-06 10:16:58 --> [REQ_ID=508b63a458f7] [REQUEST][START] GET /Investments/Retirement
+1394:DEBUG - 2026-07-06 10:17:54 --> [REQ_ID=d7d50374e0d5] [REQUEST][START] GET /
+1397:DEBUG - 2026-07-06 10:17:54 --> [REQ_ID=d7d50374e0d5] [ROUTE] Controller=\App\Controllers\Home Method=index
+1406:DEBUG - 2026-07-06 10:17:54 --> [REQ_ID=d7d50374e0d5] [LIFECYCLE][END] status=200 duration_ms=303.19 memory_delta=2097152
+1409:DEBUG - 2026-07-06 10:29:55 --> [REQ_ID=c926a8148ea8] [REQUEST][START] GET /Free/
+1441:DEBUG - 2026-07-06 10:29:56 --> [REQ_ID=2ba598f2c1b0] [REQUEST][START] GET /
+1444:DEBUG - 2026-07-06 10:29:56 --> [REQ_ID=2ba598f2c1b0] [ROUTE] Controller=\App\Controllers\Home Method=index
+1453:DEBUG - 2026-07-06 10:29:56 --> [REQ_ID=2ba598f2c1b0] [LIFECYCLE][END] status=200 duration_ms=292.31 memory_delta=2097152
+1456:DEBUG - 2026-07-06 10:29:57 --> [REQ_ID=578819147390] [REQUEST][START] GET /How-It-Works/Investment-Dashboard
+1463:DEBUG - 2026-07-06 10:29:57 --> [REQ_ID=578819147390] [LIFECYCLE][END] status=200 duration_ms=285.02 memory_delta=2097152
+1466:DEBUG - 2026-07-06 11:00:01 --> [REQ_ID=d3336c3c94c8] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+1499:DEBUG - 2026-07-06 11:02:04 --> [REQ_ID=6fff270335b9] [REQUEST][START] GET //wp-includes/ID3/license.txt
+1501:DEBUG - 2026-07-06 11:02:04 --> [REQ_ID=125a5c533168] [REQUEST][START] GET //feed/
+1533:DEBUG - 2026-07-06 11:32:17 --> [REQ_ID=f40ff88698c9] [REQUEST][START] GET /
+1536:DEBUG - 2026-07-06 11:32:17 --> [REQ_ID=f40ff88698c9] [ROUTE] Controller=\App\Controllers\Home Method=index
+1545:DEBUG - 2026-07-06 11:32:17 --> [REQ_ID=f40ff88698c9] [LIFECYCLE][END] status=200 duration_ms=303.43 memory_delta=2097152
+1548:DEBUG - 2026-07-06 11:40:55 --> [REQ_ID=5f68990c9c48] [REQUEST][START] GET /Wallets/Wallet-Transactions
+1578:DEBUG - 2026-07-06 12:00:02 --> [REQ_ID=2371839e568c] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+1615:DEBUG - 2026-07-06 12:23:53 --> [REQ_ID=aa2d95a2e5d4] [REQUEST][START] GET /index.php/How-It-Works/MyMI-Gold
+1645:DEBUG - 2026-07-06 12:35:24 --> [REQ_ID=c340653cec55] [REQUEST][START] GET /
+1648:DEBUG - 2026-07-06 12:35:24 --> [REQ_ID=c340653cec55] [ROUTE] Controller=\App\Controllers\Home Method=index
+1657:DEBUG - 2026-07-06 12:35:24 --> [REQ_ID=c340653cec55] [LIFECYCLE][END] status=200 duration_ms=302.30 memory_delta=0
+1660:DEBUG - 2026-07-06 12:44:57 --> [REQ_ID=0c69a88aa67b] [REQUEST][START] GET /
+1663:DEBUG - 2026-07-06 12:44:57 --> [REQ_ID=0c69a88aa67b] [ROUTE] Controller=\App\Controllers\Home Method=index
+1672:DEBUG - 2026-07-06 12:44:57 --> [REQ_ID=0c69a88aa67b] [LIFECYCLE][END] status=200 duration_ms=277.80 memory_delta=2097152
+1675:DEBUG - 2026-07-06 12:46:47 --> [REQ_ID=76d2f8d3dd56] [REQUEST][START] GET /
+1678:DEBUG - 2026-07-06 12:46:47 --> [REQ_ID=76d2f8d3dd56] [ROUTE] Controller=\App\Controllers\Home Method=index
+1687:DEBUG - 2026-07-06 12:46:47 --> [REQ_ID=76d2f8d3dd56] [LIFECYCLE][END] status=200 duration_ms=294.06 memory_delta=2097152
+1696:DEBUG - 2026-07-06 13:00:02 --> [REQ_ID=0d4b1d6e0ce5] [REQUEST][START] GET /index.php/API/Management/Run-CRON-Tasks
+1773:DEBUG - 2026-07-06 13:18:22 --> [REQ_ID=9e2f2f47dad5] [REQUEST][START] GET /
+1776:DEBUG - 2026-07-06 13:18:22 --> [REQ_ID=9e2f2f47dad5] [ROUTE] Controller=\App\Controllers\Home Method=index
+1785:DEBUG - 2026-07-06 13:18:23 --> [REQ_ID=9e2f2f47dad5] [LIFECYCLE][END] status=200 duration_ms=288.80 memory_delta=2097152
