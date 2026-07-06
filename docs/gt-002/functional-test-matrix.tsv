@@ -1,5 +1,5 @@
 GT	Area	User-facing flow	Certification status	Evidence source	Next read-only test	Golden Task rule
-GT-002-01	Public homepage and public pages	PUBLIC_PAGE_NAVIGATION	PENDING_BASELINE_REVIEW	routes/controllers/views/manual HTTP smoke	Confirm homepage, nav, footer, primary CTA, public static pages	Create Golden Task only for confirmed broken page or broken CTA
+GT-002-01	Public homepage and public pages	PUBLIC_PAGE_NAVIGATION	CONFIRMED_DEFECT	routes/controllers/views/manual HTTP smoke	Confirm homepage, nav, footer, primary CTA, public static pages	Golden Task created: docs/gt-002/golden-tasks/GT-002-01-public-homepage-500.md
 GT-002-02	Registration / login / logout / password reset	AUTH_ACCOUNT_ACCESS	PENDING_BASELINE_REVIEW	routes/controllers/views/auth handlers	Confirm register, login, logout, password reset, validation errors	Create Golden Task only for confirmed broken auth flow
 GT-002-03	User dashboard	DASHBOARD_LOAD_AND_NAVIGATION	PENDING_BASELINE_REVIEW	routes/controllers/views/dashboard handlers	Confirm authenticated dashboard loads and links work	Create Golden Task only for confirmed dashboard defect
 GT-002-04	Wallets user flows	WALLET_CREATE_VIEW_UPDATE_FLOW	PENDING_BASELINE_REVIEW	routes/controllers/views/wallet handlers	Confirm wallet list, detail, create/edit where available	Create Golden Task only for confirmed wallet defect

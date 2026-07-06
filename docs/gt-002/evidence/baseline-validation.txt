@@ -134,35 +134,35 @@ AIOps - PR
 
 ## Diff check
 docs/gt-002/evidence/spark-commands.txt:411: trailing whitespace.
-+  docs:database:map                                     
++  docs:database:map
 docs/gt-002/evidence/spark-commands.txt:412: trailing whitespace.
-+  docs:dependencies:map                                 
++  docs:dependencies:map
 docs/gt-002/evidence/spark-commands.txt:413: trailing whitespace.
-+  docs:full-audit                                       
++  docs:full-audit
 docs/gt-002/evidence/spark-commands.txt:425: trailing whitespace.
-+  docs:modules:map                                      
++  docs:modules:map
 docs/gt-002/evidence/spark-commands.txt:426: trailing whitespace.
-+  docs:routes:inventory                                 
++  docs:routes:inventory
 docs/gt-002/evidence/spark-commands.txt:434: trailing whitespace.
-+  docs:spark:inventory                                  
++  docs:spark:inventory
 docs/gt-002/evidence/spark-commands.txt:438: trailing whitespace.
-+  docs:sync-system                                      
++  docs:sync-system
 docs/gt-002/evidence/spark-commands.txt:442: trailing whitespace.
-+  docs:views:export                                     
++  docs:views:export
 docs/gt-002/evidence/spark-commands.txt:445: trailing whitespace.
-+  docs:readme:build                                     
++  docs:readme:build
 docs/gt-002/evidence/spark-commands.txt:450: trailing whitespace.
-+  docs:views:dirs                                       
++  docs:views:dirs
 docs/gt-002/evidence/spark-commands.txt:451: trailing whitespace.
-+  docs:views:list                                       
++  docs:views:list
 docs/gt-002/evidence/spark-commands.txt:1011: trailing whitespace.
-+  research:alerts:watchlist-import                      
++  research:alerts:watchlist-import
 docs/gt-002/evidence/spark-commands.txt:1012: trailing whitespace.
-+  research:data:compile                                 
++  research:data:compile
 docs/gt-002/evidence/spark-commands.txt:1019: trailing whitespace.
-+  research:news:collect                                 
++  research:news:collect
 docs/gt-002/evidence/spark-commands.txt:1020: trailing whitespace.
-+  research:pipeline:run                                 
++  research:pipeline:run
 
 ## Status
  M docs/gt-002/evidence/spark-commands.txt

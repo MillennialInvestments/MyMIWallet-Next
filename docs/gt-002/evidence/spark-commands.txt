@@ -408,9 +408,9 @@ Docs
   docs:build-how-it-works-nav                           Build How-It-Works navigation partial from
                                                         view files and docs/how-it-works markdown
                                                         files.
-  docs:database:map                                     
-  docs:dependencies:map                                 
-  docs:full-audit                                       
+  docs:database:map
+  docs:dependencies:map
+  docs:full-audit
   docs:generate-architecture-map                        Generate docs/_architecture_map.json from
                                                         read-only repository scans.
   docs:generate-knowledge-graph                         Generate docs/_knowledge_graph.json linking
@@ -422,8 +422,8 @@ Docs
                                                         docs/_inventory.md
   docs:inventory-forms                                  Inventory repository forms, submit
                                                         dependencies, and risk flags.
-  docs:modules:map                                      
-  docs:routes:inventory                                 
+  docs:modules:map
+  docs:routes:inventory
   docs:scan-orphan-routes                               Detect routes that do not map to existing
                                                         controller methods.
   docs:scan-orphan-views                                Detect views that are not referenced by
@@ -431,24 +431,24 @@ Docs
   docs:scan-routes                                      Scan all routes and validate controllers
   docs:scan-undocumented-controllers                    Detect controllers with no docs markdown
                                                         references.
-  docs:spark:inventory                                  
+  docs:spark:inventory
   docs:sync-all                                         Run full documentation pipeline
   docs:sync-code                                        Analyze /docs and execute DocsSyncEngine
                                                         safely.
-  docs:sync-system                                      
+  docs:sync-system
   docs:test                                             Test DocsService loading and navigation
 
 Docs Export
-  docs:views:export                                     
+  docs:views:export
 
 Docs Generate
-  docs:readme:build                                     
+  docs:readme:build
 
 Docs Scan
   docs:controllers:list                                 List all module controllers
   docs:services:list                                    List all Services classes
-  docs:views:dirs                                       
-  docs:views:list                                       
+  docs:views:dirs
+  docs:views:list
 
 DreamHost Diagnostics
   dreamhost:dns-test                                    Resolve DNS for a given host.
@@ -1008,16 +1008,16 @@ platform
 research
   research:alerts:cleanup                               Clean up stale research alert/watchlist
                                                         rows.
-  research:alerts:watchlist-import                      
-  research:data:compile                                 
+  research:alerts:watchlist-import
+  research:data:compile
   research:earnings:calendar                            Collect earnings calendar research items
   research:google:scan                                  Scan Google for financial research links
   research:intelligence:signals                         Generate trade-signal intelligence from
                                                         research rankings and the financial
                                                         knowledge graph
   research:knowledge:build                              Build financial knowledge graph
-  research:news:collect                                 
-  research:pipeline:run                                 
+  research:news:collect
+  research:pipeline:run
   research:reports:daily                                Generate daily market research report
   research:reports:weekly                               Generate weekly market research report
   research:short-interest:scan                          Scan short-interest candidates
