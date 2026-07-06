@@ -1,0 +1,37 @@
+# GT-002-01B Public Homepage HEAD Compatibility Diagnosis
+2026-07-06T15:35:16+00:00
+
+## Production commit
+bd28b849e479902050e4d9b6a7df4d7e0f90b0eb
+
+## GET status
+www GET 200
+root GET 200
+
+## HEAD status
+HTTP/1.1 500 Internal Server Error
+Server: nginx/1.18.0 (Ubuntu)
+Date: Mon, 06 Jul 2026 15:35:17 GMT
+Content-Type: text/html; charset=UTF-8
+Connection: keep-alive
+X-MyMI-FrontController: 1
+Set-Cookie: ci_session=29b52aa251266205016c160c276ba6dd; expires=Mon, 06 Jul 2026 17:35:17 GMT; Max-Age=7200; path=/; domain=.mymiwallet.com; secure; HttpOnly; SameSite=Lax
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+
+
+HTTP/1.1 500 Internal Server Error
+Server: nginx/1.18.0 (Ubuntu)
+Date: Mon, 06 Jul 2026 15:35:17 GMT
+Content-Type: text/html; charset=UTF-8
+Connection: keep-alive
+X-MyMI-FrontController: 1
+Set-Cookie: ci_session=c8d437bf09539f4558dfbe5e99bf7995; expires=Mon, 06 Jul 2026 17:35:17 GMT; Max-Age=7200; path=/; domain=.mymiwallet.com; secure; HttpOnly; SameSite=Lax
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+
+
+## Homepage route definitions
+167:$routes->get('/', 'Home::index');
