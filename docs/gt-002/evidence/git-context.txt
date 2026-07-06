@@ -1,0 +1,22 @@
+# GT-002 Git Context
+2026-07-06T12:48:41+00:00
+
+/apps/TBI/worktrees/mymi-gt-002-functional-inventory
+
+origin	https://github.com/MillennialInvestments/MyMIWallet-Next.git (fetch)
+origin	https://github.com/MillennialInvestments/MyMIWallet-Next.git (push)
+
+feature/gt-002-functional-inventory-baseline
+849aef479cdebc4f1a2f8f475aa022448a100905
+849aef479 (HEAD -> feature/gt-002-functional-inventory-baseline, main) Merge pull request #576 from MillennialInvestments/feature/mymi-gt001g-wallets-route-classification
+b9baecb2c (origin/feature/mymi-gt001g-wallets-route-classification, feature/mymi-gt001g-wallets-route-classification) Add GT-001G Wallets route classification audit
+4287c2955 Add GT-001F-B5 Alerts deferred route review (#575)
+6368126a0 Add GT-001F-B4 Alerts smoke and GTM score update
+c37f9429a Add GT-001F-B3 Alerts safest-first API token guards
+766ad315f Add GT-001F-B2 Alerts owner decision pass
+721b0f252 Add GT-001F-B1 Alerts route remediation matrix
+04b3bba94 Add GT-001F Alerts API token classification
+f350b10a5 Add GT-001E-B5 Broker smoke and GTM score update
+88a898402 Add GT-001E-B4 Wallets API replacement coverage
+
+?? docs/gt-002/

@@ -1,0 +1,486 @@
+===== ./app/Commands/Docs/Scan/Routes.php =====
+<?php
+
+namespace App\Commands\Docs\Scan;
+
+use App\Commands\SafeBaseCommand;
+
+class Routes extends SafeBaseCommand
+{
+    protected $group = 'Docs';
+    protected $name = 'docs:scan-routes';
+    protected $description = 'Scan all routes and validate controllers';
+
+    public function run(array $params)
+    {
+        $routes = service('routes')->getRoutes();
+
+        $report = [];
+
+        foreach ($routes as $route => $handler) {
+            if (! is_string($handler) || ! str_contains($handler, '::')) {
+                continue;
+            }
+
+            [$controller, $method] = explode('::', $handler);
+
+            if (! class_exists($controller)) {
+                $report[] = "[MISSING CONTROLLER] $controller";
+                log_message('error', "[MISSING CONTROLLER] $controller");
+                continue;
+            }
+
+            if (! method_exists($controller, $method)) {
+                $report[] = "[MISSING METHOD] $controller::$method";
+                log_message('error', "[MISSING METHOD] $controller::$method");
+            }
+        }
+
+        file_put_contents(
+            WRITEPATH . 'logs/route_scan.json',
+            json_encode($report, JSON_PRETTY_PRINT)
+        );
+
+        echo "Route scan complete.\n";
+    }
+}
+
+===== ./app/Commands/Master/Health/Routes.php =====
+<?php
+
+declare(strict_types=1);
+
+namespace App\Commands\Master\Health;
+
+use App\Commands\SafeBaseCommand;
+use CodeIgniter\CLI\CLI;
+
+class Routes extends SafeBaseCommand
+{
+    protected $group = 'master';
+    protected $name = 'master:health:routes';
+    protected $description = 'Inspect route configuration files and emit a health report.';
+
+    public function run(array $params)
+    {
+        $files = [APPPATH . 'Config/Routes.php'];
+        $moduleRoutes = glob(APPPATH . 'Modules/*/Config/Routes.php') ?: [];
+        $files = array_merge($files, $moduleRoutes);
+
+        $report = [
+            'generated_at' => date('Y-m-d H:i:s'),
+            'files'        => [],
+            'issues'       => [],
+        ];
+
+        foreach ($files as $file) {
+            if (!is_file($file)) {
+                continue;
+            }
+
+            $content = file_get_contents($file);
+
+            preg_match_all('/\$routes->(get|post|add|match|group|resource)\(/', $content, $matches);
+
+            $report['files'][] = [
+                'path'         => str_replace(ROOTPATH, '', $file),
+                'route_count'  => count($matches[0] ?? []),
+                'has_closure'  => strpos($content, 'function(') !== false || strpos($content, 'function (') !== false,
+            ];
+        }
+
+        $output = ROOTPATH . 'docs/_health_routes.json';
+        file_put_contents($output, json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
+        CLI::write('Route health report written: docs/_health_routes.json', 'green');
+    }
+}
+===== ./app/Config/Routes.php =====
+<?php
+declare(strict_types=1);
+
+// app/Config/Routes.php
+use App\Modules\Advisor\Controllers\AdvisorController;
+use CodeIgniter\Router\RouteCollection;
+use Config\Services; // ← add this line
+
+/**
+ * @var RouteCollection $routes
+ */
+$routes = Services::routes();
+helper('ai');
+$routes->get('index.php', 'Home::index');
+$routes->get('index.php/', 'Home::index');
+// Preserve legacy index.php auth POST submits without downgrading to GET redirects.
+$routes->get('index.php/login', 'AuthController::login');
+$routes->post('index.php/login', 'AuthController::attemptLogin');
+$routes->get('index.php/register', 'AuthController::register');
+$routes->post('index.php/register', 'AuthController::attemptRegister');
+// app/Config/Routes.php
+// $routes->get('assets/(.*)', 'Assets::file/$1');
+// $routes->get('favicon.ico', 'Assets::favicon');
+// Optional, but helpful:
+$routes->addRedirect('index.php/(:any)', '$1', 301);
+$routes->addRedirect('index.php', '/', 301);
+$routes->addRedirect('index.php/', '/', 301);
+$routes->addRedirect('index.php/images/(:any)', 'images/$1', 301);
+$routes->get('assets/(:any)', static function () {
+    throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+});
+
+
+// --- BEGIN: Default + explicit routes ---
+$routes->setDefaultNamespace('App\Controllers');
+$routes->setDefaultController('Home');   // change if you have a different landing controller
+$routes->setDefaultMethod('index');
+$routes->setTranslateURIDashes(false);
+$routes->set404Override(function () {
+    $request = service('request');
+    $method = strtoupper((string) $request->getMethod());
+    $path = '/' . ltrim((string) $request->getUri()->getPath(), '/');
+    $query = (string) ($request->getUri()->getQuery() ?? '');
+    $lowerPath = strtolower($path);
+    $lowerQuery = strtolower($query);
+    $trimmedPath = trim($lowerPath, '/');
+
+    $isHealthProbe = $method === 'HEAD'
+        && in_array($lowerPath, ['/', '/index.php', '/index.php/'], true);
+
+    $isWpProbe = str_contains($lowerPath, 'wp-json')
+        || str_contains($lowerPath, '/wp/')
+        || str_starts_with($lowerPath, '/wp-')
+        || str_starts_with($lowerPath, '/wp-content/')
+        || str_contains($lowerQuery, 'rest_route=/wp/v2/');
+
+    $noisePatterns = [
+        '.env', '.git', 'composer.json', 'composer.lock', 'phpinfo.php', 'server.js',
+        'docker-compose', '.yaml', '.yml', '.ini', '.sql', '/vendor/', '/storage/', '/backup',
+    ];
+
+    $suspiciousRootPhpFiles = [
+        '/adminfuns.php',
+        '/sx_pms.php',
+        '/wp-info.php',
+        '/wp-test.php',
+        '/like.php',
+        '/we.php',
+        '/wp.php',
+        '/wp-indx.php',
+        '/zoo.php',
+    ];
+
+    $isHostileProbe = $isWpProbe || in_array($lowerPath, $suspiciousRootPhpFiles, true);
+    foreach ($noisePatterns as $needle) {
+        if (str_contains($lowerPath, $needle)) {
+            $isHostileProbe = true;
+            break;
+        }
+    }
+
+    $appRoutePrefixes = [
+        'api/',
+        'user/',
+        'users/',
+        'investments/',
+        'management/',
+        'exchange/',
+        'features/',
+        'premium-features/',
+        'premium_features/',
+        'dashboard/',
+        'wallets/',
+        'knowledgebase/',
+    ];
+
+    $isLikelyAppRoute = false;
+    foreach ($appRoutePrefixes as $prefix) {
+        if (str_starts_with($trimmedPath, $prefix)) {
+            $isLikelyAppRoute = true;
+            break;
+        }
+    }
+
+    $classification = match (true) {
+        $isHealthProbe => 'health_probe',
+        $isHostileProbe => 'security_probe',
+        $isLikelyAppRoute => 'app_route_missing',
+        default => 'unknown_404',
+    };
+
+    $logLevel = match ($classification) {
+        'health_probe' => 'debug',
+        'security_probe' => 'notice',
+        'app_route_missing' => 'error',
+        default => 'warning',
+    };
+
+    log_message($logLevel, '[404_ROUTE]', [
+        'method' => $method,
+        'uri' => current_url(),
+        'path' => $path,
+        'query' => $query,
+        'referrer' => $_SERVER['HTTP_REFERER'] ?? null,
+        'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
+        'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? null,
+        'classification' => $classification,
+    ]);
+
+    if ($isHealthProbe) {
+        return service('response')
+            ->setStatusCode(204)
+            ->setContentType('text/plain')
+            ->setBody('');
+    }
+
+    if ($isWpProbe) {
+        return service('response')
+            ->setStatusCode(410)
+            ->setContentType('text/plain')
+            ->setBody('Gone');
+    }
+
+    if (preg_match('/\.(js|mjs)$/i', $path) === 1) {
+        return service('response')
+            ->setStatusCode(404)
+            ->setContentType('application/javascript')
+            ->setBody("/* 404 Not Found: {$path} */");
+    }
+
+    if (str_starts_with(strtolower(trim($path, '/')), 'api/')) {
+        return service('response')
+            ->setStatusCode(404)
+            ->setJSON([
+                'error' => 'not_found',
+                'message' => 'Route not found.',
+                'path' => $path,
+            ]);
+    }
+
+    return view('errors/auto_route_fallback', [
+        'url' => current_url(),
+        'path' => $path,
+    ]);
+});
+
+$routes->get('/', 'Home::index');
+// Explicit home route. If you don't have Home::index, temporarily redirect to /login.
+// $routes->get('/', function () {
+//     return redirect()->to('/login');  // change to 'Home::index' once that exists
+// });
+
+// Simple health check that should return 200 without auth
+$routes->get('healthz', 'System\HealthController::healthz', ['as' => 'healthz']);
+if (ENVIRONMENT !== 'production') {
+    $routes->get('test/crash', 'Test::crash');
+}
+if (ENVIRONMENT !== 'production') {
+    $routes->get('debug/manual-exception', static function () {
+        throw new \Exception('Manual test exception');
+    });
+}
+$routes->get('ops/health', '\\App\\Controllers\\OpsHealthController::index');
+$routes->get('Maintenance', 'MaintenanceController::index');
+
+$routes->get('API/Ops/health-score', '\\App\\Controllers\\OpsHealthController::score');
+$routes->get('API/Ops/filesystem-status', '\\App\\Controllers\\Api\\OpsFilesystemStatusController::index', ['filter' => 'permission:admin.access']);
+$routes->get('API/docs', '\\App\\Controllers\\Api\\SwaggerDocsController::index', ['filter' => 'permission:admin.access']);
+$routes->group('admin/ops', ['filter' => 'permission:admin.access'], static function ($routes) {
+    $routes->get('health', '\\App\\Controllers\\OpsHealthController::index');
+    $routes->post('health/run', '\\App\\Controllers\\OpsHealthController::run');
+});
+
+
+// CoinVault project coin vault routes. Keep explicit because auto-routing is disabled.
+$routes->group('Admin/CoinVault', ['namespace' => '\App\Modules\CoinVault\Controllers', 'filter' => 'permission:admin.access'], static function ($routes) {
+    $routes->get('/', 'CoinVaultController::index');
+    $routes->get('Projects', 'CoinVaultController::projects');
+    $routes->get('Project/(:num)', 'CoinVaultController::project/$1');
+    $routes->get('Contributions', 'CoinVaultController::contributions');
+    $routes->get('Payouts', 'CoinVaultController::payouts');
+    $routes->get('Wallet/(:num)', 'CoinVaultController::wallet/$1');
+});
+$routes->group('API/CoinVault', ['namespace' => '\App\Modules\CoinVault\Controllers\Api'], static function ($routes) {
+    $routes->post('contributionEvent', 'CoinVaultApiController::contributionEvent');
+    $routes->post('approveContribution/(:num)', 'CoinVaultApiController::approveContribution/$1', ['filter' => 'permission:admin.access']);
+    $routes->post('rejectContribution/(:num)', 'CoinVaultApiController::rejectContribution/$1', ['filter' => 'permission:admin.access']);
+    $routes->post('requestPayout', 'CoinVaultApiController::requestPayout', ['filter' => 'login']);
+    $routes->post('approvePayout/(:num)', 'CoinVaultApiController::approvePayout/$1', ['filter' => 'permission:admin.access']);
+    $routes->post('rejectPayout/(:num)', 'CoinVaultApiController::rejectPayout/$1', ['filter' => 'permission:admin.access']);
+});
+
+// Docs index for AI orchestration
+$routes->group('API/Docs', ['namespace' => '\App\Modules\APIs\Controllers'], static function($routes) {
+    $routes->get('index', 'DocsController::index');
+    $routes->get('view', 'DocsController::view');
+});
+
+// (Optional) temporarily enable auto-routing to confirm controller wiring
+$routes->setAutoRoute(false);
+// --- END: Default + explicit routes ---
+
+
+$routes->addRedirect('Home', '/', 301);
+$routes->addRedirect('News', 'Blog/News-And-Updates', 301);
+$routes->get('Stock/(:segment)/(:segment)', 'StockController::show/$1/$2');
+// SEO Blog Routes
+$routes->get('blog', 'Blog::index');
+$routes->get('blog/category/(:segment)', 'Blog::category/$1');
+$routes->get('blog/(:segment)', 'Blog::post/$1');
+// $routes->get('Dashboard', '\\App\\Modules\\User\\Controllers\\BudgetController::index', ['filter' => 'login']);
+
+// app/Config/Routes.php
+$routes->get('/sw.js', 'ServiceWorker::index');
+$routes->get('/Apex/Referral', 'Home::apexReferral');
+$routes->get('/Apex/Referral/(:segment)', 'Home::apexReferral/$1');
+$routes->get('/Corporate-Earnings', 'Home::corporateEarnings');
+$routes->get('/Corporate-Earnings/(:segment)', 'Home::corporateEarnings/$1');
+$routes->get('/Economic-Calendar', 'Home::economicCalendar');
+$routes->get('/Economic-Calendar/(:segment)', 'Home::economicCalendarContent/$1');
+// $routes->get('Exchange/(:segment)', 'Home::exchange/$1');
+$routes->get('/Getting-Started/(:segment)/(:segment)', 'Home::gettingStarted');
+$routes->get('/Getting-Started/(:segment)', 'Home::gettingStarted');
+$routes->get('/Getting-Started', 'Home::gettingStarted');
+$routes->get('/Memberships', 'Home::memberships');
+$routes->get('/Memberships/(:segment)', 'Home::memberships');
+
+$routes->get('Learn/(:segment)', '\App\Modules\Public\Controllers\PublicPagesController::show/$1');
+// Public preview routes
+$routes->group('', ['namespace' => '\App\Modules\User\Controllers'], static function ($routes) {
+    // Symbol preview (canonical)
+    $routes->get('Alerts/Preview/(:segment)', 'AlertsController::preview/$1');
+    // Legacy alias
+    $routes->get('Preview/Alert/(:segment)', 'AlertsController::preview/$1');
+});
+$routes->get('/Privacy-Policy', 'Home::privacyPolicy');
+$routes->get('/Legal/Privacy-Policy', 'Home::privacyPolicy');
+$routes->get('/Legal/Terms-And-Conditions', 'Home::terms');
+$routes->get('/Customer-Support', '\App\Modules\Support\Controllers\SupportController::index');
+$routes->get('/Investments/News', static fn() => redirect()->to(site_url('News'), 301));
+
+===== ./app/Modules/Blog/Config/Routes.php =====
+<?php
+// Ensure this file is being included by a parent file
+if (!isset($routes)) {
+    throw new \Exception('You cannot access this file directly.');
+}
+
+// Define routes specific to the Blog module
+$routes->group('blog', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {
+    $routes->get('/', 'Blog::index');
+    // Add other routes for the Blog module here...
+});
+
+===== ./app/Modules/Management/Config/Routes.php =====
+<?php declare(strict_types=1);
+
+$routes->group('Management/Marketing', ['filter' => 'auth'], static function ($r) {
+    $r->get('Blogger', 'App\\Modules\\Management\\Controllers\\Marketing\\BloggerController::index');
+    $r->post('Blogger/generate', 'App\\Modules\\Management\\Controllers\\Marketing\\BloggerController::generate');
+    $r->post('Blogger/repurpose', 'App\\Modules\\Management\\Controllers\\Marketing\\BloggerController::repurpose');
+    $r->post('Blogger/schedule', 'App\\Modules\\Management\\Controllers\\Marketing\\BloggerController::schedule');
+    $r->get('Blogger/preview/(:any)', 'App\\Modules\\Management\\Controllers\\Marketing\\BloggerController::preview/$1');
+    $r->post('Blogger/save', 'App\\Modules\\Management\\Controllers\\Marketing\\BloggerController::save');
+    $r->post('Blogs/Backfill-Excerpts', 'App\\Modules\\Management\\Controllers\\MarketingController::backfillBlogExcerpts');
+});
+
+$routes->group('Management/ContentEngine', ['filter' => 'auth'], static function ($r) {
+    $r->get('previewPost/(:num)', 'App\\Modules\\Management\\Controllers\\ContentEngineController::previewPost/$1');
+});
+
+$routes->group('Management/OpsInbox', ['filter' => 'role:admin'], static function ($r) {
+    $r->get('/', 'App\\Modules\\Management\\Controllers\\OpsInboxController::index');
+    $r->get('view/(:num)', 'App\\Modules\\Management\\Controllers\\OpsInboxController::view/$1');
+    $r->post('create-task-file/(:num)', 'App\\Modules\\Management\\Controllers\\OpsInboxController::createTaskFile/$1');
+    $r->post('create-task-registry/(:num)', 'App\\Modules\\Management\\Controllers\\OpsInboxController::createTaskRegistry/$1');
+    $r->post('approve/(:num)', 'App\\Modules\\Management\\Controllers\\OpsInboxController::markApproved/$1');
+    $r->post('reject/(:num)', 'App\\Modules\\Management\\Controllers\\OpsInboxController::reject/$1');
+});
+
+===== ./app/Modules/Management/Routes.php =====
+<?php
+
+$routes->group('blog', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {
+    $routes->get('/', 'BlogController::index');
+    $routes->get('post/(:any)', 'BlogController::post/$1');
+});
+
+===== ./app/Modules/PropFirms/Config/Routes.php =====
+<?php
+
+use CodeIgniter\Router\RouteCollection;
+
+/** @var RouteCollection $routes */
+$routes->group('Dashboard', ['namespace' => 'App\Modules\PropFirms\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) {
+    $routes->addRedirect('PropFirm', 'PropFirms', 302);
+    $routes->get('PropFirms', 'PropFirmsController::index');
+    $routes->get('propfirms', 'PropFirmsController::index');
+});
+
+$routes->group('PropFirms', ['namespace' => 'App\Modules\PropFirms\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) {
+    $routes->get('/', 'PropFirmsController::index');
+    $routes->get('RuleSets', 'PropFirmsController::ruleSets');
+    $routes->get('Accounts', 'AccountsController::index');
+
+    $routes->get('Accounts/create', 'AccountsController::create');
+    $routes->post('Accounts', 'AccountsController::store');
+    $routes->get('Accounts/(:num)', 'AccountsController::detail/$1');
+    $routes->get('Accounts/(:num)/edit', 'AccountsController::edit/$1');
+    $routes->put('Accounts/(:num)', 'AccountsController::update/$1');
+    $routes->delete('Accounts/(:num)', 'AccountsController::delete/$1');
+    $routes->post('Accounts/(:num)/refresh-state', 'AccountsController::refreshState/$1');
+    $routes->post('Accounts/(:num)/connect-broker', 'AccountsController::connectBroker/$1');
+    $routes->post('Accounts/(:num)/tradovate/connect', 'TradovateController::connect/$1');
+    $routes->post('Accounts/(:num)/tradovate/disconnect', 'TradovateController::disconnect/$1');
+    $routes->post('Accounts/(:num)/tradovate/sync', 'TradovateController::sync/$1');
+    $routes->post('Accounts/(:num)/tradovate/sync-orders', 'TradovateController::syncOrders/$1');
+    $routes->post('Accounts/(:num)/tradovate/sync-fills', 'TradovateController::syncFills/$1');
+    $routes->post('Accounts/(:num)/tradovate/sync-positions', 'TradovateController::syncPositions/$1');
+    $routes->get('Replay/(:num)/(:segment)', 'ReplayController::index/$1/$2');
+    $routes->post('Replay/(:num)/save-review', 'ReplayController::saveReview/$1');
+
+    $routes->post('Signals/scan/(:num)', 'SignalsController::scan/$1');
+
+    $routes->get('Notifications', 'NotificationsController::index');
+    $routes->post('Notifications/(:num)/read', 'NotificationsController::markRead/$1');
+
+    $routes->post('Rules/SeedDefaults', 'PropFirmsController::seedDefaults');
+});
+
+$routes->group('API', ['namespace' => 'App\Modules\PropFirms\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) {
+    $routes->get('account-state/(:num)', 'AccountsController::accountState/$1');
+    $routes->get('PropFirms/replay/(:num)/(:segment)', 'ReplayController::apiReplay/$1/$2');
+    $routes->get('PropFirms/replay/(:num)/diagnostics', 'ReplayController::diagnosticsSummary/$1');
+});
+
+===== ./app/Modules/ScriptStudio/Config/Routes.php =====
+<?php
+if (! isset($routes)) {
+    throw new \Exception('Cannot access directly.');
+}
+
+$routes->group('ScriptStudio', ['namespace' => 'App\\Modules\\ScriptStudio\\Controllers'], function ($routes) {
+    $routes->get('/', 'ScriptStudioController::index');
+    $routes->get('Marketplace', 'ScriptStudioController::marketplace');
+    $routes->get('Create', 'ScriptStudioController::create');
+    $routes->post('Store', 'ScriptStudioController::store');
+    $routes->get('Edit/(:num)', 'ScriptStudioController::edit/$1');
+    $routes->post('Update/(:num)', 'ScriptStudioController::update/$1');
+    $routes->get('Preview/(:num)', 'ScriptStudioController::preview/$1');
+    $routes->get('Export/(:num)/(:any)', 'ScriptStudioController::export/$1/$2');
+});
+===== ./app/Modules/Template/Routes.php =====
+<?php
+
+$routes->group('blog', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {
+    $routes->get('/', 'BlogController::index');
+    $routes->get('post/(:any)', 'BlogController::post/$1');
+});
+
+===== ./app/Modules/User/Routes.php =====
+<?php
+
+$routes->group('blog', ['namespace' => 'App\Modules\Blog\Controllers'], function($routes) {
+    $routes->get('/', 'BlogController::index');
+    $routes->get('post/(:any)', 'BlogController::post/$1');
+});
+
