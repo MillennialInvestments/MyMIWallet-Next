@@ -1,0 +1,72 @@
+62:    public function initController(
+115:    private function resolveWalletFeatureGuard(): ?ResponseInterface
+140:    private function guardWalletFeature(): ?ResponseInterface
+147:    private function currentWalletUserId(): int
+190:    private function resolveWalletService(): WalletService
+211:    private function safeCacheService(): ?object
+224:    private function resolveSolanaService(): SolanaService
+240:    protected function getSolanaService(): SolanaService
+251:    protected function getMyMISolana(): MyMISolana
+256:    private function mapFormToWalletData(string $type, array $post): array
+347:    private function guardAuthenticated(): ?RedirectResponse
+369:    private function loadUserCommonData(): array
+398:    private function loadBudgetSnapshot(): array
+486:    private function loadSolanaSnapshot(): array
+546:    private function loadWalletSummary(): array
+575:    private function loadAccountCollections(int $cuID): array
+611:    private function getSummaryCalculator(): WalletSummaryCalculator
+616:    private function buildFinancialSummary(array $budgetSnapshot): array
+654:    private function formatCurrency(float $value): string
+659:    public function commonData(): array
+807:    private function renderWalletLandingPage(): ResponseInterface|string
+899:    public function index(): ResponseInterface|string
+904:    public function checking(): ResponseInterface|string
+909:    public function bank(): ResponseInterface|string
+914:    public function banking(): ResponseInterface|string
+919:    public function all(): ResponseInterface|string
+924:    public function crypto(): ResponseInterface|string
+929:    public function credit(): ResponseInterface|string
+934:    public function debt(): ResponseInterface|string
+939:    public function investments(): ResponseInterface|string
+944:    public function add(): ResponseInterface|string
+1056:    public function prepareAccountData(array $payload, string $type): array
+1060:        $clean = static function ($value) {
+1144:    public function edit($accountType = null, $accountID = null): ResponseInterface|string
+1271:    public function editBankAccount($accountId = null): ResponseInterface|string
+1276:    public function editCreditAccount($accountId = null): ResponseInterface|string
+1281:    public function editCryptoAccount($accountId = null): ResponseInterface|string
+1286:    public function editDebtAccount($accountId = null): ResponseInterface|string
+1295:    public function editInvestAccount($accountId = null): ResponseInterface|string
+1300:    private function renderEditAccountByEndpoint(string $endpoint, $accountId = null): ResponseInterface|string
+1392:    public function submitEdit(): ResponseInterface|string
+1467:    private function mapType(string $accountType): ?string
+1485:    public function delete($accountType = null, $walletID = null)
+1496:        $respond = function (bool $success, string $message, int $statusCode = 200, array $extra = []) {
+1618:    public function copy($accountID): ResponseInterface|string|null
+1687:    public function deposit(): ResponseInterface|string
+1711:    public function withdraw(): ResponseInterface|string
+1735:    public function exchangeCurrency(): ResponseInterface|string
+1760:    public function details($accountID = null): ResponseInterface|string
+1951:    public function transferFunds(): ResponseInterface|string
+1964:    public function executeSwap(): ResponseInterface
+1987:    public function walletSelection(): ResponseInterface|string
+2000:    public function purchase(): ResponseInterface|string
+2104:    public function purchaseGold(): ResponseInterface|string
+2117:    public function purchaseMyMIGold(): ResponseInterface|string
+2122:    public function handleMyMIGPayPalCallback(): ResponseInterface|string
+2169:    public function purchaseMembershipSuccess(): ResponseInterface|string
+2182:    public function completePurchase(): ResponseInterface|string
+2195:    public function purchaseComplete($coin = null, $trans_id = null): ResponseInterface|string
+2273:    public function securityViolation(): ResponseInterface|string|null
+2291:    public function confirmDeposit(): ResponseInterface|string
+2304:    public function depositComplete($transID): ResponseInterface|string
+2321:    public function viewTransactionHistory($walletId): ResponseInterface|string
+2335:    public function auditWallet($walletId): ResponseInterface|string
+2349:    public function detectFraud($walletId): ResponseInterface|string
+2364:    public function convertCurrency($walletId): ResponseInterface
+2383:    public function generateStatement($walletId): ResponseInterface|string
+2397:    public function freezeWallet($walletId): ResponseInterface|string
+2414:    public function unfreezeWallet($walletId): ResponseInterface|string
+2431:    public function getAvailableServices(): ResponseInterface
+2444:    public function activatePremiumService(): ResponseInterface
+2496:    private function invalidateWalletCache(int $userId = 0): void
