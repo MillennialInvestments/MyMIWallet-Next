@@ -2,10 +2,10 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class OperatorRunNext extends BaseCommand
+class OperatorRunNext extends SafeBaseCommand
 {
     protected $group = 'AIOps';
     protected $name = 'aiops:operator:run-next';
@@ -18,8 +18,8 @@ class OperatorRunNext extends BaseCommand
         CLI::write('ROOT: ' . (getcwd() ?: ROOTPATH));
         CLI::write('MUTATION_ALLOWED: false');
         CLI::newLine();
-        CLI::write('This older MyMI repo does not include the newer operator state machine.');
-        CLI::write('Use repo-native validation, GitHub PR checks, and manual PR merge for this lane.');
+        CLI::write('This MyMI repo does not include the newer TBI operator state machine.');
+        CLI::write('Use repo-native validation and GitHub PR checks for this lane.');
         CLI::newLine();
         CLI::write('NEXT COMMANDS:', 'yellow');
         CLI::write('git status --short');
