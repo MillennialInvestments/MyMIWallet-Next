@@ -12,7 +12,9 @@ GT-001G-B2 is not continued unless a functional defect requires it.
 
 ## Scope
 
-This baseline is read-only functional discovery. It does not mutate production application code, does not delete files, does not rollback production, and does not classify routes as the primary deliverable.
+This baseline is read-only functional discovery.
+
+This PR does not mutate production application code, does not delete files, does not rollback production, and does not continue abstract route/security classification as the primary deliverable.
 
 ## Discovery areas
 
@@ -63,3 +65,7 @@ Every confirmed defect becomes an atomic Golden Task with:
 GreenQube is infrastructure/private cloud hosting.
 
 The service brands are TBI AIOps and TBI Ollama.
+
+## Next phase
+
+After this baseline PR is validated and merged, GT-002 should move into read-only functional smoke discovery. Fix branches should only be created for confirmed broken user-facing flows.
