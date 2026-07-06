@@ -171,6 +171,10 @@ class Home extends BaseController
     // If you want the old “home” as well (mapped to /home-old for now)
     public function index()
     {
+        if (strtoupper((string) ->request->getMethod()) === "HEAD") {
+            return ->response->setStatusCode(200);
+        }
+
         $requestStart = microtime(true);
         $data = $this->buildCommonData([
             'layout'    => 'public',
