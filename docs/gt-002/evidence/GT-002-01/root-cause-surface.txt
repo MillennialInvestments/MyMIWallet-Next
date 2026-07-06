@@ -1,0 +1,239 @@
+# GT-002-01 Root Cause Surface
+2026-07-06T13:21:17+00:00
+
+## system_errors references
+app/Services/AIOps/ErrorIngestService.php:        $inserted = $db->table('system_errors')->insert([
+app/Database/Migrations/2026-03-30-000300_CreateSystemErrorsFoundationTables.php:        $this->forge->createTable('system_errors', true);
+app/Database/Migrations/2026-03-30-000300_CreateSystemErrorsFoundationTables.php:        $this->forge->dropTable('system_errors', true);
+docs/_support/db-drift/20260402-095240/report.json:            "Tables_in_mymiwallet": "system_errors"
+docs/_support/db-drift/20260402-095240/summary.md:- system_errors
+docs/_knowledge_graph.json:                "system_errors",
+docs/_aiops/mymi_alerts/PHASE_02B_AUTHORITATIVE_DB_TABLE_INVENTORY.md:app/Database/Migrations/2026-03-30-000300_CreateSystemErrorsFoundationTables.php:58:        $this->forge->createTable('system_errors', true);
+docs/_aiops/_aiops_all.json:                "table": "system_errors",
+docs/_aiops/_aiops_all.md:### system_errors
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt:ERROR - 2026-07-06 11:00:01 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt:ERROR - 2026-07-06 11:00:01 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt:ERROR - 2026-07-06 11:02:04 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt:ERROR - 2026-07-06 11:02:04 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt:ERROR - 2026-07-06 11:40:55 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt:ERROR - 2026-07-06 11:40:55 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt:ERROR - 2026-07-06 12:00:02 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt:ERROR - 2026-07-06 12:00:02 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt:ERROR - 2026-07-06 12:23:53 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt:ERROR - 2026-07-06 12:23:53 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt:ERROR - 2026-07-06 13:00:02 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt:ERROR - 2026-07-06 13:00:02 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt:ERROR - 2026-07-06 13:13:08 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt:ERROR - 2026-07-06 13:13:08 --> Table 'mymiwallet_prod_20260628135446.system_errors' doesn't exist
+
+## ErrorIngestService references
+app/Services/AIOps/ErrorIngestService.php:class ErrorIngestService
+app/Config/Events.php:        (new \App\Services\AIOps\ErrorIngestService())->capture([
+docs/_knowledge_graph.json:            "name": "ErrorIngestService",
+docs/_knowledge_graph.json:            "path": "app/Services/AIOps/ErrorIngestService.php",
+docs/_aiops/_aiops_all.json:            "app/Services/AIOps/ErrorIngestService.php",
+docs/_aiops/_aiops_all.md:- app/Services/AIOps/ErrorIngestService.php
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 5 APPPATH/Services/AIOps/ErrorIngestService.php(15): CodeIgniter\Database\BaseBuilder->insert()
+docs/gt-002/evidence/GT-002-01/production-ci4-log-tail.txt: 6 APPPATH/Config/Events.php(68): App\Services\AIOps\ErrorIngestService->capture()
+docs/_ci4_knowledge_graph.json:            "name": "ErrorIngestService",
+docs/_ci4_knowledge_graph.json:            "path": "app/Services/AIOps/ErrorIngestService.php",
+docs/_ci4_knowledge_graph.json:            "class": "ErrorIngestService"
+
+## Events error hook references
+app/Config/Events.php:24:Events::on('pre_system', static function (): void {
+app/Config/Events.php:37:Events::on('post_system', static function (): void {
+app/Config/Events.php:68:        (new \App\Services\AIOps\ErrorIngestService())->capture([
+app/Config/Events.php:74:        log_message('debug', 'Route heatmap post_system hook skipped: ' . $e->getMessage());
+app/Config/Events.php:79:    Events::on('pre_system', static function (): void {
+app/Services/AIOps/ErrorIngestService.php:7:class ErrorIngestService
+
+## Migrations mentioning system_errors
+app/Commands/AIOps/Errors.php
+app/Commands/AIOps/LogsErrors.php
+app/Commands/Docs/Sync/DocsSystem.php
+app/Commands/Errors/ConsolidateErrors.php
+app/Commands/Errors/Diagnose502.php
+app/Commands/Errors/Diagnose503.php
+app/Commands/Errors/DispatchAlerts.php
+app/Commands/Errors/LearnPatterns.php
+app/Commands/Errors/README.md
+app/Commands/Logs/Errors.php
+app/Commands/Ops/Diagnostics/FilesystemScan.php
+app/Commands/Ops/FilesystemFix.php
+app/Commands/Ops/FilesystemLint.php
+app/Commands/Platform/RunSubsystem.php
+app/Config/FilesystemGovernance.php
+app/Config/Migrations.php
+app/Controllers/Api/OpsFilesystemStatusController.php
+app/Controllers/SystemDebugController.php
+app/Controllers/System/HealthController.php
+app/Database/Migrations/2006-04-18-000001_CreateFinancialNewsTable.php
+app/Database/Migrations/2025-01-01-000100_CreateTaxModuleTables.php
+app/Database/Migrations/2025-09-09-000010_CreatePredictionsMarkets.php
+app/Database/Migrations/2025-09-09-000020_CreatePredictionsOptions.php
+app/Database/Migrations/2025-09-09-000030_CreatePredictionsOrders.php
+app/Database/Migrations/2025-09-09-000040_CreatePredictionsTrades.php
+app/Database/Migrations/2025-09-09-000050_CreatePredictionsPositions.php
+app/Database/Migrations/2025-09-09-000060_CreatePredictionsLiquidity.php
+app/Database/Migrations/2025-09-09-000070_CreatePredictionsSettlementsPayouts.php
+app/Database/Migrations/2025-09-10-000020_AddReferralFieldsToUsers.php
+app/Database/Migrations/2025-12-23-000001_CreateCommunityAndTemplateTables.php
+app/Database/Migrations/2026-01-01-000001_CreateAiOpsTables.php
+app/Database/Migrations/2026-01-15-000100_AddChatAndAiOpsUsageTables.php
+app/Database/Migrations/2026-01-15-000110_CreateChatToolRuns.php
+app/Database/Migrations/2026-01-15-000120_CreateOpsFoundation.php
+app/Database/Migrations/2026-01-17-000001_CreateInvestmentSignalsTables.php
+app/Database/Migrations/2026-01-21-000110_AddOutputTextToOpsRuns.php
+app/Database/Migrations/2026-02-01-000100_CreateUserOnboardingTables.php
+app/Database/Migrations/2026-02-09-000001_CreateSupportTickets.php
+app/Database/Migrations/2026-02-09-000002_CreateUserIpHistory.php
+app/Database/Migrations/2026-02-09-000200_AddSchemaJsonToPublicPagesPublished.php
+app/Database/Migrations/2026-02-13-120000_CreateEconomicDataTables.php
+app/Database/Migrations/2026-02-15-000200_AddBrokerExecutionFields.php
+app/Database/Migrations/2026-02-15-000210_CreateUserSetupPreferences.php
+app/Database/Migrations/2026-02-20-000001_AddStatusMetaExcerptColumns.php
+app/Database/Migrations/2026-02-21-000300_CreateFrontendIncidents.php
+app/Database/Migrations/2026-02-22-000001_AddErrorPatternLearning.php
+app/Database/Migrations/2026-02-25-000001_CreateAuthHealthRuns.php
+app/Database/Migrations/2026-03-01-000100_CreateUserEvents.php
+app/Database/Migrations/2026-03-05-000100_CreateEmailOutbox.php
+app/Database/Migrations/2026-03-07-170000_CreateResearchInsights.php
+app/Database/Migrations/2026-03-07-210000_CreateResearchTables.php
+app/Database/Migrations/2026-03-10-000100_CreateInvestmentForecastingTables.php
+app/Database/Migrations/2026-03-10-000200_CreateInvestmentForecastAccuracyTable.php
+app/Database/Migrations/2026-03-12-000100_CreateInvestmentForecastAccuracy.php
+app/Database/Migrations/2026-03-15-000100_CreateAiOpsTaskPipelineTables.php
+app/Database/Migrations/2026-03-18-130000_HardenPremiumSchema.php
+app/Database/Migrations/2026-03-19-000100_CreateMarketingVideoStudioTables.php
+app/Database/Migrations/2026-03-20-000100_CreateAiOpsEmailScanTables.php
+app/Database/Migrations/2026-03-20-000105_CreateAiOpsIngestRuns.php
+app/Database/Migrations/2026-03-20-000110_CreateScannerTaxonomy.php
+app/Database/Migrations/2026-03-20-000120_CreateTradeAlertScannerMeta.php
+app/Database/Migrations/2026-03-20-000130_CreateAiOpsManualTodos.php
+app/Database/Migrations/2026-03-21-000100_EnsureInvestmentScraperEmailDedupe.php
+app/Database/Migrations/2026-03-26-000100_AddFundMetadataToProjects.php
+app/Database/Migrations/2026-03-26-000110_CreateProjectFundLedgerTables.php
+app/Database/Migrations/2026-03-26-000120_AddFundComplianceAndOpsTables.php
+app/Database/Migrations/2026-03-26-000130_AddFundTransactionIdempotencyAndNavLock.php
+app/Database/Migrations/2026-03-26-000140_AddProjectExchangeBridgeFlags.php
+app/Database/Migrations/2026-03-30-000100_CreateRouteErrorHeatmapTable.php
+app/Database/Migrations/2026-03-30-000300_CreateSystemErrorsFoundationTables.php
+app/Database/Migrations/2026-03-30-000400_AddTickerToProjects.php
+app/Database/Migrations/2026-03-31-120000_AddRegistrationAttributionColumnsToUsers.php
+app/Database/Migrations/2026-04-01-000001_CreateScannerTables.php
+app/Database/Migrations/2026-04-01-000100_CreateCalendarAutomationTables.php
+app/Database/Migrations/2026-04-01-000105_CreateMditPhase1Tables.php
+app/Database/Migrations/2026-04-01-000110_CreateMditAuthRoles.php
+app/Database/Migrations/2026-04-01-000200_EnsureInvestmentScraperRawEmailColumns.php
+app/Database/Migrations/2026-04-03-000100_AddExchangeSymbolToProjects.php
+app/Database/Migrations/2026-04-05-000100_CreateMarketingNotificationPipelineTables.php
+app/Database/Migrations/2026-04-09-120000_EnhanceMarketingGenerationPipeline.php
+app/Database/Migrations/2026-04-09-130000_HardenMarketingNewsPipelineSchema.php
+app/Database/Migrations/2026-04-11-120000_AddEmailQueueTrackingColumns.php
+app/Database/Migrations/2026-04-11-220000_CreatePropFirmsTables.php
+app/Database/Migrations/2026-04-12-010000_EnhancePropNotifications.php
+app/Database/Migrations/2026-04-12-020000_EnhancePropAccountAndJournalTables.php
+app/Database/Migrations/2026-04-12-120000_CreateApiResearchRuns.php
+app/Database/Migrations/2026-04-12-120050_CreateMarketingDistributionTargets.php
+app/Database/Migrations/2026-04-12-120100_CreateApiResearchPages.php
+app/Database/Migrations/2026-04-12-120300_CreateApiResearchEndpoints.php
+app/Database/Migrations/2026-04-12-120400_CreateApiResearchDiffs.php
+app/Database/Migrations/2026-04-12-221500_AddExternalFieldsToMarketingDistributionTargets.php
+app/Database/Migrations/2026-04-13-090000_AddDiscordCategoryFieldsToMarketingGeneratedContent.php
+app/Database/Migrations/2026-04-13-120000_CreateDiscordOpsTables.php
+app/Database/Migrations/2026-04-14-120000_RenameDiscordManualMessageRecipientFields.php
+app/Database/Migrations/2026-04-15-000100_CreateChatGovernanceTables.php
+app/Database/Migrations/2026-04-19-000001_CreateMarketingPageSeoTable.php
+app/Database/Migrations/2026-04-19-000100_CreateMobileAuthTokens.php
+app/Database/Migrations/2026-04-20-000100_CreateAiOpsCellDiscoveryTables.php
+app/Database/Migrations/2026-04-23-090000_HardenMarketingDistributionTargetsForReliability.php
+app/Database/Migrations/2026-05-01-000100_CreateAiOpsPublicPagesTables.php
+app/Database/Migrations/2026-05-10-000100_CreateUserAccountCompletionModalState.php
+app/Database/Migrations/2026-05-27-000100_CreateTbiProjectCoinTables.php
+app/Database/Migrations/2026-06-01-000100_CreateStockFundamentalsTable.php
+app/Database/Migrations/2026-06-15-000100_AddScannerSourceToTradeAlerts.php
+app/Database/Migrations/2026-06-15-000110_CreateAiopsChatAdminTable.php
+app/Database/Migrations/2026-06-20-000100_CreateAiOpsFormTests.php
+app/Database/Migrations/2026-06-21-000100_CreateApiGovernanceTables.php
+app/Database/Migrations/2026-07-01-000100_CreateAiOpsLifecycleTables.php
+app/Database/Migrations/2026-07-01-000110_CreateOllamaControlTables.php
+app/Database/Migrations/2026-07-15-000100_CreateOpsManagementTables.php
+app/Database/Migrations/2026-07-16-000000_IntegrateCoinVaultWithTbiProjectCoinTables.php
+app/Database/Migrations/.gitkeep
+app/Libraries/DbInventory/MigrationRunner.php
+app/Libraries/ErrorFingerprint.php
+app/Libraries/SystemEventBootstrap.php
+app/Models/ErrorAlertEventModel.php
+app/Models/ErrorAlertRuleModel.php
+app/Models/ErrorLearningRunModel.php
+app/Models/ErrorPatternModel.php
+app/Models/RouteErrorHeatmapModel.php
+app/Modules/Management/Controllers/ErrorOpsController.php
+app/Modules/Management/Views/admin/errors_dashboard.php
+app/Modules/Management/Views/resources/SubSystemHealth.php
+app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Breakout_Stock_Alerts.php
+app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/.DS_Store
+app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Instant_Buy_Alerts.php
+app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Market_Movers.php
+app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Overview.php
+app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Targeting/Breakout_Stocks.php
+app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Targeting/Instant_Buy_Alerts.php
+app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Targeting/Market_Movers.php
+app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Targeting/Weekly_Options.php
+app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Targeting/Weekly_Watchlist.php
+app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Weekly_Options.php
+app/Modules/Management/Views/Web_Design/Infrastructure_Overview/Alerting_System/Weekly_Watchlist.php
+app/Services/AIOps/AiopsErrorParser.php
+app/Services/AIOps/ErrorClassifier.php
+app/Services/AIOps/ErrorIngestService.php
+app/Services/AIOps/RouteErrorHeatmapService.php
+app/Services/Observability/ErrorAggregationService.php
+app/Services/Observability/ErrorAlertService.php
+app/Services/Observability/ErrorPatternLearnerService.php
+app/Services/Ops/FilesystemHealthService.php
+app/Services/SubSystemManager.php
+app/Views/emails/support/auth_login_error_support.php
+app/Views/emails/support/auth_login_error_user.php
+app/Views/errors/auto_route_fallback.php
+app/Views/errors/cli/error_404.php
+app/Views/errors/cli/error_exception.php
+app/Views/errors/cli/production.php
+app/Views/errors/feature_disabled.php
+app/Views/errors/html/debug.css
+app/Views/errors/html/debug.js
+app/Views/errors/html/error_400.php
+app/Views/errors/html/error_403.php
+app/Views/errors/html/error_404.php
+app/Views/errors/html/error_500.php
+app/Views/errors/html/error_504.php
+app/Views/errors/html/error_exception.php
+app/Views/errors/html/_error_lifecycle_bootstrap.php
+app/Views/errors/html/_launch_error_template.php
+app/Views/errors/html/production.php
+app/Views/management/system_debug.php
