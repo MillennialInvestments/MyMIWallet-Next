@@ -69,3 +69,19 @@ The service brands are TBI AIOps and TBI Ollama.
 ## Next phase
 
 After this baseline PR is validated and merged, GT-002 should move into read-only functional smoke discovery. Fix branches should only be created for confirmed broken user-facing flows.
+
+## Confirmed read-only findings
+
+### GT-002-01 Public Homepage HTTP 500
+
+Read-only public smoke testing confirmed that both public homepage domains returned `HTTP/1.1 500 Internal Server Error`.
+
+Evidence:
+
+- `docs/gt-002/evidence/public-homepage-smoke.txt`
+
+Golden Task:
+
+- `docs/gt-002/golden-tasks/GT-002-01-public-homepage-500.md`
+
+No fix has been implemented in this baseline PR.
