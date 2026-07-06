@@ -1,0 +1,1051 @@
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-07-06 12:57:26 UTC+00:00
+
+AIOps
+  aiops:alerts-clean                                    Delete completed aiops alert queue rows
+                                                        older than 30 days
+  aiops:analyze:code                                    Analyze files or folders for security, UX,
+                                                        performance, maintainability, and backend
+                                                        efficiency risks.
+  aiops:autofix:analyze                                 Analyze latest log file and produce
+                                                        categorized recurring issue suggestions.
+  aiops:csp:audit                                       Scans the repository for CSP violations and
+                                                        writes a dated audit report.
+  aiops:errors                                          Run the AIOps error scan wrapper and
+                                                        delegate to logs:errors when available.
+  aiops:routes:suggest                                  Scan recent 404 logs and suggest likely
+                                                        intended route matches.
+  aiops:scan:cells                                      Stateful scanner for repeated UI blocks and
+                                                        Cell candidates.
+  aiops:scan:integrity                                  Scan CI4 app integrity for command
+                                                        inheritance, support files, view paths, and
+                                                        unsafe trim usage.
+  aiops:solana-digest                                   Summarize current Solana Exchange routes,
+                                                        files, and status.
+  aiops:solana-healthcheck                              Run a safe Solana route and network health
+                                                        check.
+  aiops:solana-transaction-audit                        Safely summarize Solana transaction records
+                                                        when available.
+  aiops:unlock                                          Manually unlock an AIOPS patch job and reset
+                                                        retries.
+  aiops:views:missing                                   Scan controllers for view()/renderTheme()
+                                                        references and report missing views.
+  logs:errors                                           Scan runtime logs, normalize errors, and
+                                                        generate structured AIOps error reports.
+
+AIOps - API
+  aiops:api:schema                                      Validate API endpoints return JSON
+                                                        (optionally check required keys)
+
+AIOps - Alerts
+  aiops:alerts-check                                    Fetch emails and queue them for processing
+  aiops:alerts-health                                   Run health checks on aiops alert queue and
+                                                        notify if failures are high
+  aiops:alerts-worker                                   Process queued alert emails
+
+AIOps - All Control
+  aiops:all                                             Run a full AIOps scan and generate unified
+                                                        Markdown and JSON reports in docs/_aiops.
+  aiops:execute-docs                                    Process docs/_aiops markdown files and
+                                                        execute actionable patches in a stateful
+                                                        loop.
+  aiops:repairs                                         Run the error->action->repair queue->patch
+                                                        plan pipeline.
+
+AIOps - Audit
+  aiops:audit                                           Audit aiops runtime, orchestration routes,
+                                                        and n8n/docs readiness
+  aiops:continue                                        Operational audit (server + runtime focus)
+  aiops:copilot:validate                                Validate copilot instructions and Spark
+                                                        command safety rules.
+  aiops:diff:format                                     Generate a real unified diff from current
+                                                        working tree
+  aiops:doctor                                          Validate AIOps service wiring, namespace
+                                                        casing, and Spark helper migration state.
+  aiops:health:full                                     Run full system health checks and generate a
+                                                        consolidated report
+  aiops:priority:build                                  Scan /docs, detect gaps, verify repo, stage
+                                                        codegen artifacts for PR batching, and write
+                                                        /docs/priority outputs.
+
+AIOps - Commands
+  aiops:build-command                                   Generate a Spark command from text logic
+                                                        using AIOps
+  aiops:chat-gov-index                                  Index ChatGPT governance steps from archived
+                                                        chats and sync CSV/DB outputs.
+  aiops:command-index                                   Scan and classify Spark commands for AIOps
+                                                        governance.
+  aiops:governance:analyze                              Analyze token usage + model anomalies
+
+AIOps - DB
+  aiops:db:slow_scan                                    Scan logs for slow query markers
+                                                        (best-effort)
+  aiops:sql:check                                       Validate model/table/query SQL compatibility
+                                                        against live schema.
+
+AIOps - Docs
+  aiops:docs-sync                                       Run documentation sync pipeline using
+                                                        DocsSyncEngine
+
+AIOps - Management
+  aiops:gate:cost                                       Enforce daily AI cost cap; auto-disable
+                                                        AiOps LLM when threshold exceeded
+
+AIOps - Marketing
+  aiops:email-scan                                      Scan alerts mailbox for new emails and
+                                                        record AIOps counts.
+
+AIOps - Observe
+  aiops:observe:cost                                    Correlate observability signals with AI cost
+                                                        logs
+  aiops:observe:hash                                    Fingerprint recurring errors into stable
+                                                        hashes
+  aiops:observe:map                                     Map errors to routes and controllers
+  aiops:observe:patch                                   Create patch file from suggestions
+  aiops:observe:regression                              Detect fingerprint regressions vs previous
+                                                        snapshot
+  aiops:observe:scan                                    Scan logs and persist recurring errors
+  aiops:observe:snapshot                                Snapshot fingerprint map for regression
+                                                        detection
+  aiops:observe:suggest                                 Generate fix suggestions for recurring
+                                                        errors
+
+AIOps - PR
+  aiops:pr:auto                                         Full safe pipeline: observe → validate →
+                                                        regression → PR
+  aiops:pr:create                                       Create a branch, push, and open a PR
+                                                        (requires token + enabled flags)
+  aiops:rollback                                        Rollback working tree to clean state (hard
+                                                        reset)
+  aiops:seed                                            Seed default AI Ops caps and pricing
+                                                        configuration.
+
+AIOps - Patch
+  aiops:patch:apply                                     Safely apply AI-generated patch under
+                                                        guardrails
+  aiops:patch:dry_run                                   Apply patch in temporary branch
+  aiops:patch:hallucination                             Detect hallucinated symbols in
+                                                        aiops_generated_patch.diff before apply
+  aiops:patch:risk_score                                Calculate patch risk score
+  aiops:patch:validate                                  Validate PHP syntax after patch apply
+
+AIOps - Performance
+  aiops:sync-perf                                       Scan Routes.php and sync perf_urls.txt
+                                                        automatically
+
+AIOps - Public Pages
+  aiops:public-pages:audit                              Audit public pages schema coverage,
+                                                        freshness, and governance conditions.
+  aiops:public-pages:import                             Import docs/_aiops/inputs/public_pages.csv
+                                                        into bf_public_pages_catalog.
+  aiops:public-pages:report                             Generate report artifacts for a public pages
+                                                        run.
+  aiops:public-pages:run                                Run public pages source collection and draft
+                                                        generation.
+
+AIOps - QA
+  aiops:form:test                                       Scan a form (url/file/text), map
+                                                        route->controller, generate payload, submit,
+                                                        capture logs, and queue a patch job if
+                                                        errors found.
+
+AIOps - Redis
+  aiops:redis:stats                                     Fetch Redis INFO stats (best-effort)
+
+AIOps - Repair
+  aiops:repair                                          Apply safe aiops repairs
+  aiops:repair:run                                      Full autonomous repair pipeline
+  aiops:repair:run_safe                                 Run repair pipeline with rollback safety +
+                                                        gating before PR
+  aiops:self-heal                                       Run one-pass self-heal
+  aiops:status                                          AIOps runtime status
+  aiops:watch                                           Continuous aiops audit watcher
+
+AIOps - Routes
+  aiops:routes:compare                                  Compare staging vs production routes scan
+  aiops:routes:gate                                     Gate based on routes_scan.json thresholds
+  aiops:routes:regress                                  Detect route scan regressions vs previous
+                                                        snapshot
+  aiops:routes:scan                                     Scan Routes.php (GET routes), parallel curl,
+                                                        write JSON+CSV+snapshot
+  aiops:routes:scan_auth                                Authenticated scan using AIOPS_AUTH_COOKIE
+
+AIOps - Run
+  aiops:auto:run                                        Run AIOPS using manual priorities first,
+                                                        falling back to log-driven auto priorities.
+  aiops:backlog                                         Reconcile outstanding AIOPS patch workflow
+                                                        jobs.
+  aiops:dedupe:report                                   Generate duplicate and near-duplicate
+                                                        instruction report.
+  aiops:deps:add                                        Add dependency link: instruction depends on
+                                                        another instruction
+  aiops:graph:run                                       Execute queued instructions respecting
+                                                        dependency graph (runs worker iteratively).
+  aiops:ingest                                          Ingest AI instruction text and enqueue for
+                                                        AIOps worker (analysis + patch + PR prep)
+  aiops:init                                            Initialize and validate the AIOps PR factory
+                                                        (one-time or rare use).
+  aiops:manual:index                                    Index AI manual documentation under
+                                                        docs/_aiops/manual
+  aiops:manual:run                                      Run manual-priority AIOPS correlation, state
+                                                        refresh, and PR creation.
+  aiops:observe                                         Parse logs and detect recurring error
+                                                        signatures
+  aiops:py                                              Run Python automation actions and return
+                                                        structured JSON.
+  aiops:run                                             Manually run the AI-Ops worker and generate
+                                                        docs/_aiops reports
+  aiops:worker                                          Process queued AIOps instructions
+                                                        (governance + targeting + diff + optional
+                                                        PR).
+  aiops:worker:logs                                     Summarize logs, ingest actionable issues,
+                                                        and run aiops worker once.
+
+AIOps - n8n
+  aiops:n8n:logs                                        Tail n8n logs
+  aiops:n8n:restart                                     Restart n8n
+  aiops:n8n:start                                       Start n8n
+  aiops:n8n:stop                                        Stop n8n
+
+API
+  api:audit                                             Institutional API governance audit: routes,
+                                                        permissions, filters, rate limits, and
+                                                        versioning.
+  api:diff                                              Compare the two most recent research runs
+                                                        for a provider.
+  api:filters-check                                     Fail on CRITICAL uncovered endpoints by
+                                                        filter governance.
+  api:inventory                                         Build docs/APIs/_inventory.md from latest
+                                                        API research runs.
+  api:list                                              List endpoints with filters, auth indicator,
+                                                        and version.
+  api:permissions                                       Generate endpoint permission matrix in
+                                                        markdown and JSON.
+  api:rate-limit-check                                  Fail when external/API-like endpoints have
+                                                        no rate-limit enforcement metadata.
+  api:research                                          Research API documentation, parse specs,
+                                                        extract endpoints, and write reports.
+  api:test-url                                          Test an API URL or endpoint and write a
+                                                        markdown report.
+  api:versioning-check                                  Detect API endpoints missing /API/vN
+                                                        namespace and emit remediation.
+
+Alerts
+  alerts:audit                                          Audit recent scraped alert emails against
+                                                        generated trade alerts.
+  alerts:fetch-raw-emails                               Fetch raw trade alert emails into
+                                                        bf_investment_scraper and move inserted
+                                                        messages to Processed.
+  alerts:forecast                                       Refresh forecasts for open alerts.
+  alerts:ingest                                         Ingest ThinkorSwim alert emails and upsert
+                                                        trade alerts.
+  alerts:parse-test                                     Parse a broker email sample and output
+                                                        normalized execution data.
+
+App
+  app:api:audit                                         Advanced API audit: groups, filters,
+                                                        duplicates, OpenAPI, Postman, probe mode.
+  app:api:list                                          List complete APIs from latest audit report.
+  app:compat-audit                                      Audit MyMI Wallet for CI4 + PHP
+                                                        compatibility issues.
+  app:controller:audit                                  Audit controllers for unsafe initController
+                                                        patterns, score severity, suggest patches,
+                                                        optional safe auto-fix, and regression diff.
+  app:gate:coverage                                     Gate on PHPUnit coverage if available
+                                                        (coverage-text).
+  app:test                                              Run PHPUnit test suite
+
+App - Logging
+  app:errors:dispatch                                   Evaluate alert rules and send notifications.
+  app:errors:learn                                      AI-assisted learning of consolidated error
+                                                        patterns into bf_error_patterns.
+  app:logs:check-server                                 Check external Apache/Nginx error.log
+  app:logs:consolidate                                  Consolidate bf_error_logs into categorized
+                                                        grouped records.
+  app:logs:enable-full                                  Force CI4 to log all levels with DB + PHP
+                                                        fallback enabled.
+
+Audit
+  audit:all                                             Full system visibility audit
+
+Auth
+  auth:activate_user                                    Activate Existing User.
+  auth:create_group                                     Adds a new group to the database.
+  auth:create_user                                      Adds a new user to the database.
+  auth:hash_password                                    Hashes given password.
+  auth:list_groups                                      Lists groups from the database.
+  auth:list_users                                       Lists users from the database.
+  auth:publish                                          Publish selected Auth functionality into the
+                                                        current application.
+  auth:set_password                                     Set password to user.
+
+Automation
+  automation:run                                        Run queued automation jobs
+
+Cache
+  cache:clear                                           Clears the current system caches.
+  cache:info                                            Shows file cache information in the current
+                                                        system.
+
+Chat
+  chat:audit                                            Chat audit
+  chat:logs                                             Tail persisted chat logs from
+                                                        writable/logs/chat.
+  chat:repair                                           Chat repairs
+  chat:restart                                          Restart chat
+  chat:start                                            Start chat
+  chat:status                                           Chat status with PID and listening-port
+                                                        verification.
+  chat:stop                                             Stop chat
+
+CodeIgniter
+  config:check                                          Check your Config values.
+  env                                                   Retrieves the current environment, or set a
+                                                        new one.
+  filter:check                                          Check filters for a route.
+  help                                                  Displays basic usage information.
+  list                                                  Lists the available commands.
+  namespaces                                            Verifies your namespaces are setup
+                                                        correctly.
+  optimize                                              Optimize for production.
+  phpini:check                                          Check your php.ini values in production
+                                                        environment.
+  publish                                               Discovers and executes all predefined
+                                                        Publisher classes.
+  routes                                                Displays all routes.
+  serve                                                 Launches the CodeIgniter PHP-Development
+                                                        Server.
+
+Codex
+  codex:audit                                           Full repository audit via OpenAI
+  codex:continue                                        Continue audit in batches (default 5 files)
+                                                        with OpenAI + severity tracking
+  codex:gate                                            Fail build if high severity issues exist
+  codex:gate:severity                                   Fail if severity counters exceed thresholds
+  codex:index                                           Index repository and initialize audit state
+  codex:instruct:audit                                  Batch review repository files via OpenAI API
+  codex:instruct:devops_review                          Generate instruction payload to audit AI
+                                                        DevOps layer against docs/*
+  codex:instruct:summarize                              Generate structured AI documentation summary
+                                                        template
+  codex:review                                          Generate Codex review artifacts (summary +
+                                                        prompt payload)
+  codex:review:commit                                   Commit Codex review artifacts intentionally
+                                                        (latest or by date).
+  codex:review:list                                     List available Codex review artifacts stored
+                                                        under docs.
+  codex:review:publish                                  Aggregate governance lint results and
+                                                        publish review artifacts.
+  codex:status                                          Show audit status
+
+CoinVault
+  coinvault:audit                                       Audit Coin Vault module routes, files,
+                                                        database mappings, and Solana integration
+                                                        map.
+  coinvault:tbi-external-contribution-smoke             Validate MyMI CoinVault can receive and
+                                                        persist a TBI external contribution payload.
+
+Config
+  config:clear                                          Clear configuration-related caches safely
+                                                        (guarded).
+
+Database
+  db:create                                             Create a new database schema.
+  db:seed                                               Runs the specified seeder to populate known
+                                                        data into the database.
+  db:table                                              Retrieves information on the selected table.
+  db:table-list                                         List database tables, columns, indexes, and
+                                                        approximate row counts.
+  migrate                                               Locates and runs all new migrations against
+                                                        the database.
+  migrate:refresh                                       Does a rollback followed by a latest to
+                                                        refresh the current state of the database.
+  migrate:rollback                                      Runs the "down" method for all migrations in
+                                                        the last batch.
+  migrate:status                                        Displays a list of all migrations and
+                                                        whether they've been run or not.
+
+DevOps
+  git:pull:safe                                         Safely pull origin/main by stashing local
+                                                        changes and optionally resetting generated
+                                                        artifacts.
+  git:workspace:guard                                   Detects workspace conditions that commonly
+                                                        block pulls/PRs.
+  git:workspace:repair                                  Repairs git workspace when generated files
+                                                        block pull operations.
+  repo:health                                           Runs lightweight repository health checks
+                                                        for GTM readiness.
+
+Diagnostics
+  controller:profile                                    Profile controller boot performance.
+  logger:audit                                          Audit logger handlers for overlap and
+                                                        recursion risks.
+  route:benchmark                                       Benchmark route loading performance.
+  routes:debug                                          Resolve a route and verify controller,
+                                                        method, and HTTP method coverage.
+
+Discord
+  discord:custom:send                                   Send or queue a custom message to a chosen
+                                                        Discord channel key and audit it.
+  discord:list                                          List configured Discord
+                                                        channels/webhooks/IDs from config and
+                                                        database.
+  discord:process-queue                                 Process queued Discord messages respecting
+                                                        quiet hours and pacing.
+  discord:test                                          Send a test payload through the Discord
+                                                        queue pipeline.
+  discord:test-liquidity                                Send a test Liquidity Scan alert to
+                                                        alerts.liquidity channel
+  discord:wire-check                                    Validate Discord env vars, tables, and queue
+                                                        health for MyMIDiscord.
+
+Docs
+  api:scrape                                            Scrape API docs and generate a MyMI Wallet
+                                                        integration summary report.
+  docs:architecture-map                                 Generate architecture map of CI4 application
+  docs:architecture:graph                               Generate CI4 architecture graph
+  docs:audit                                            Audit CI4 codebase vs /docs documentation
+  docs:build-how-it-works-nav                           Build How-It-Works navigation partial from
+                                                        view files and docs/how-it-works markdown
+                                                        files.
+  docs:database:map
+  docs:dependencies:map
+  docs:full-audit
+  docs:generate-architecture-map                        Generate docs/_architecture_map.json from
+                                                        read-only repository scans.
+  docs:generate-knowledge-graph                         Generate docs/_knowledge_graph.json linking
+                                                        docs, views, routes, controllers, services,
+                                                        and health scans.
+  docs:generate-missing                                 Generate documentation for undocumented
+                                                        controllers
+  docs:inventory                                        Scan /docs directory and generate
+                                                        docs/_inventory.md
+  docs:inventory-forms                                  Inventory repository forms, submit
+                                                        dependencies, and risk flags.
+  docs:modules:map
+  docs:routes:inventory
+  docs:scan-orphan-routes                               Detect routes that do not map to existing
+                                                        controller methods.
+  docs:scan-orphan-views                                Detect views that are not referenced by
+                                                        controllers.
+  docs:scan-routes                                      Scan all routes and validate controllers
+  docs:scan-undocumented-controllers                    Detect controllers with no docs markdown
+                                                        references.
+  docs:spark:inventory
+  docs:sync-all                                         Run full documentation pipeline
+  docs:sync-code                                        Analyze /docs and execute DocsSyncEngine
+                                                        safely.
+  docs:sync-system
+  docs:test                                             Test DocsService loading and navigation
+
+Docs Export
+  docs:views:export
+
+Docs Generate
+  docs:readme:build
+
+Docs Scan
+  docs:controllers:list                                 List all module controllers
+  docs:services:list                                    List all Services classes
+  docs:views:dirs
+  docs:views:list
+
+DreamHost Diagnostics
+  dreamhost:dns-test                                    Resolve DNS for a given host.
+  dreamhost:env                                         Display relevant DreamHost environment
+                                                        variables.
+  dreamhost:imap-capabilities                           Probe IMAP greeting/capabilities/mailboxes
+                                                        and print detailed errors.
+  dreamhost:imap-flag-sweep                             Try multiple IMAP connection flag variants
+                                                        and report which one connects.
+  dreamhost:imap-test                                   Test IMAP SSL connectivity to DreamHost
+                                                        mailbox.
+  dreamhost:port-test                                   Test raw TCP connection to host:port.
+  dreamhost:smtp-probe                                  Probe SMTP endpoints (465 SSL, 587 STARTTLS)
+                                                        and print handshake banner.
+  dreamhost:ssl-test                                    Test raw SSL connection to a host/port.
+
+Encryption
+  key:generate                                          Generates a new encryption key and writes it
+                                                        in an `.env` file.
+
+Exchange
+  exchange:create-tbi-project-coin-drafts               Create or update draft/devnet TBI project
+                                                        coin records without minting or
+                                                        broadcasting.
+
+Forecasts
+  forecasts:evaluate                                    Evaluate forecasts for accuracy windows.
+
+GTM
+  gtm:broker:route-classification                       GT-001E read-only Broker API route
+                                                        classification audit.
+  gtm:cron:validate-security                            Validate INTERNAL_CRON and /API/Management
+                                                        routes reject missing/invalid tokens.
+  gtm:health:snapshot                                   Generate deterministic GTM daily health
+                                                        snapshot markdown report.
+  gtm:launch:audit                                      Generate go-live launch readiness audit for
+                                                        Phase A user surfaces.
+  gtm:launch:smoke                                      Run non-destructive HTTP smoke checks for
+                                                        Phase A user navigation surfaces.
+
+GapTracker
+  gap:sync                                              Enrich gap tracker CSV and produce a report.
+
+Generators
+  make:cell                                             Generates a new Controlled Cell file and its
+                                                        view.
+  make:command                                          Generates a new spark command.
+  make:config                                           Generates a new config file.
+  make:controller                                       Generates a new controller file.
+  make:entity                                           Generates a new entity file.
+  make:filter                                           Generates a new filter file.
+  make:migration                                        Generates a new migration file.
+  make:model                                            Generates a new model file.
+  make:scaffold                                         Generates a complete set of scaffold files.
+  make:seeder                                           Generates a new seeder file.
+  make:test                                             Generates a new test file.
+  make:transformer                                      Generates a new transformer file.
+  make:validation                                       Generates a new validation file.
+
+Git
+  git:sync-safe                                         Safely sync repository with origin/main with
+                                                        automatic stash handling
+
+GitHub
+  github:branch                                         Create and switch to a new feature branch.
+  github:commit                                         Stage tracked changes and create a git
+                                                        commit.
+  github:health                                         Show a lightweight repository and remote
+                                                        health summary.
+  github:pr:create                                      Create a GitHub pull request for the current
+                                                        branch.
+  github:pull                                           Pull the current branch from origin with
+                                                        rebase.
+  github:push                                           Push the current branch to origin.
+  github:search                                         Search the local git repository for a given
+                                                        string or pattern.
+  github:status                                         Show repository branch and working tree
+                                                        status.
+  github:sync                                           Commit pending changes when needed, then
+                                                        pull and push the current branch.
+
+Housekeeping
+  debugbar:clear                                        Clears all debugbar JSON files.
+  logs:clear                                            Clears all log files.
+
+Infrastructure
+  infra:server-audit                                    Audit server and classify reusable
+                                                        infrastructure components
+
+Mail
+  mail:send                                             Process and send queued mail jobs.
+
+Marketing
+  marketing:approve-generated                           Approve generated marketing content and
+                                                        optionally pre-create destination targets.
+  marketing:audit:distribution                          Audit marketing distribution destination
+                                                        health and retry posture.
+  marketing:audit:placeholder-prevention                Audits generic all-symbol placeholder
+                                                        marketing content prevention state.
+  marketing:bluesky:healthcheck                         Run Bluesky connectivity/auth healthcheck
+                                                        for marketing distribution.
+  marketing:daily-audit                                 Daily marketing pipeline QA audit report.
+  marketing:discord-activation                          Send one-time Discord activation
+                                                        announcement for marketing stream channels.
+  marketing:discord:test-all-categories                 Loop all configured marketing Discord
+                                                        categories and test post delivery.
+  marketing:discord:test-category                       Send a category-formatted test message to
+                                                        the mapped Discord channel.
+  marketing:distribute                                  Distribute approved generated marketing
+                                                        content.
+  marketing:distribution:assert-sql                     Runs SQL-level anomaly assertions for
+                                                        marketing distribution/regression
+                                                        monitoring.
+  marketing:distribution:failure-inject-test            Dev-safe failure injection checks for
+                                                        blog/in_app/email/discord target retries and
+                                                        idempotency.
+  marketing:distribution:preview-controlled             Read-only preview of approved pending
+                                                        marketing generated content and pending
+                                                        targets before controlled distribution.
+  marketing:distribution:repair-pending-generation      Dry-run/apply repair for approved
+                                                        pending_generation content that already has
+                                                        pending marketing distribution targets.
+  marketing:distribution:skip-generic-placeholders      Dry-run/apply skip for generic all-symbol
+                                                        placeholder marketing distribution targets.
+  marketing:distribution:skip-optional-discord-pending  Dry-run/apply skip for optional
+                                                        discord/community_news pending marketing
+                                                        targets when Discord marketing channels are
+                                                        unconfigured.
+  marketing:email:clean                                 Moves already-ingested emails from IMAP
+                                                        source folder into a processed folder.
+  marketing:generate:package                            Generate a marketing package from
+                                                        notification_id or headline.
+  marketing:mastodon:healthcheck                        Run Mastodon connectivity/auth healthcheck
+                                                        for marketing distribution.
+  marketing:news:debug                                  Diagnose marketing IMAP connectivity, folder
+                                                        counts, subject samples, and filter matches.
+  marketing:news:generate                               Generates clustered story records from
+                                                        pending bf_marketing_temp_scraper rows.
+  marketing:news:imap-test                              Smoke test for marketing/news IMAP
+                                                        connectivity.
+  marketing:news:scrape                                 Ingests alert/news emails (or OCR/raw text)
+                                                        into bf_marketing_temp_scraper with
+                                                        folder-level diagnostics.
+  marketing:news:seed-test                              Insert synthetic rows into
+                                                        bf_marketing_temp_scraper for non-IMAP
+                                                        pipeline testing.
+  marketing:notification:test                           Test marketing notification readiness,
+                                                        pending counts, and recent campaign
+                                                        activity.
+  marketing:pipeline                                    Runs marketing generation pipeline sections.
+  marketing:process-notifications                       Process pending marketing notifications and
+                                                        generate marketing packages.
+  marketing:promotions:audit                            Audit promotion source data and campaign
+                                                        readiness from scraper and campaign tables.
+  marketing:promotions:generate                         Generate promotion campaign rows from
+                                                        finalized marketing summaries.
+  marketing:promotions:test                             Run a chained smoke test for promotions
+                                                        audit and dry-run generation.
+  marketing:regression:smoke                            Runs full marketing pipeline smoke checks
+                                                        and validates count movement across stages.
+  marketing:retry-distribution                          Retry failed marketing distribution targets.
+  marketing:scraper:audit-emails                        Audit recent trade and news emails against
+                                                        the expected scraper schema.
+
+Ollama - Control
+  ollama:bench                                          Benchmarks latency and throughput for prompt
+                                                        set.
+  ollama:chat                                           Chat completion with optional session
+                                                        persistence.
+  ollama:circuit:reset                                  Resets circuit breaker state.
+  ollama:circuit:status                                 Shows circuit breaker state.
+  ollama:diagnose                                       Operator diagnostic report for Ollama
+                                                        connectivity and env.
+  ollama:docs:inventory                                 Builds docs embedding/metadata manifest.
+  ollama:docs:sync                                      Regenerates Ollama inventory and policy
+                                                        docs.
+  ollama:doctor                                         Deep diagnostics for Ollama connectivity and
+                                                        runtime hints.
+  ollama:embed                                          Generates embedding vector for input text.
+  ollama:embed:file                                     Embeds file chunks into vector storage.
+  ollama:health                                         Checks endpoint reachability and readiness.
+  ollama:logs                                           Backward-compatible alias of
+                                                        ollama:logs:tail.
+  ollama:logs:export                                    Export Ollama run/error evidence to
+                                                        docs/_aiops/ollama/logs/*.md.
+  ollama:logs:tail                                      Tail app-captured Ollama logs from file.
+  ollama:modelfile:validate                             Validates Ollama Modelfile.
+  ollama:models:create                                  Creates a model from Modelfile.
+  ollama:models:diff                                    Compare installed model inventory versus
+                                                        required profile and emit remediation.
+  ollama:models:ensure                                  Ensures required models exist for a profile.
+  ollama:models:export                                  Exports model inventory for docs or DB.
+  ollama:models:list                                    Lists installed Ollama models.
+  ollama:models:prune                                   Prunes models based on simple keep allowlist
+                                                        policy.
+  ollama:models:pull                                    Pulls a model with optional progress stream
+                                                        flag.
+  ollama:models:push                                    Pushes a model to registry.
+  ollama:models:rm                                      Removes a local model.
+  ollama:models:show                                    Shows metadata for one model.
+  ollama:ping                                           Low-level ping with retries.
+  ollama:policy:check                                   Validates current governance profile and
+                                                        limits.
+  ollama:policy:export                                  Exports active policy to docs.
+  ollama:queue:push                                     Queues an Ollama job in DB.
+  ollama:queue:retry                                    Retries failed jobs from queue.
+  ollama:queue:stats                                    Queue depth and status counts.
+  ollama:queue:work                                     Consumes queued Ollama jobs.
+  ollama:rag:query                                      Retrieves top-k chunks and optional answer.
+  ollama:run                                            Run an Ollama prompt from a file and write
+                                                        response artifacts.
+  ollama:sessions:list                                  Lists recent Ollama sessions.
+  ollama:sessions:rm                                    Deletes a session record.
+  ollama:sessions:show                                  Shows one session transcript.
+  ollama:stream                                         Streams tokens to console and transcript
+                                                        output.
+  ollama:version                                        Reports Ollama version info from health
+                                                        endpoint.
+
+Ops
+  ops:diff                                              Compare two files and persist AIOps diff
+                                                        artifact.
+  ops:diff:wallet                                       Run wallet-specific diff governance check.
+  ops:doctor:full                                       Run high-signal diagnostics: env, php
+                                                        extensions, network matrix, IMAP
+                                                        capabilities (best-effort).
+  ops:drift:scan                                        Scan critical services for production drift.
+  ops:env:snapshot                                      Print key env vars with secret redaction
+                                                        (safe for logs/screenshots).
+  ops:grep                                              Search a path for a plain-text string or
+                                                        regex pattern.
+  ops:integrity:wallet                                  Validate wallet balances against completed
+                                                        ledger transactions.
+  ops:logger:test                                       Writes test entries to configured logger
+                                                        handlers.
+  ops:network:matrix                                    Test outbound connectivity matrix (TCP/SSL)
+                                                        with latency and banner.
+  ops:php:extensions                                    Audit required PHP extensions and key INI
+                                                        values (IMAP/SSL-friendly).
+  ops:subs:audit                                        Run subsystem audits
+  ops:subs:doctor                                       Friendly subsystem triage
+  ops:subs:repair                                       Run subsystem repairs
+  ops:subs:status                                       Combined subsystem status
+  ops:sync                                              Runs an ops sync pipeline: git guard/pull +
+                                                        routes docs + launch audit + repo health.
+  ops:vps:snapshot                                      Collect system/runtime snapshot (no-sudo,
+                                                        best-effort) and write docs/_aiops snapshot.
+
+Ops-Terminal
+  ops:tail                                              Tail CI logs or any file
+
+Performance
+  perf:k6                                               Run k6 load test
+
+Repo
+  repo:class-scan                                       Scan repository for duplicate classes and
+                                                        namespace conflicts.
+  repo:class-trace                                      Trace where a class is declared and
+                                                        referenced in the repository.
+  repo:diff-split                                       Split large git diffs into smaller review
+                                                        batches.
+
+Routes
+  routes:docs                                           Export active routes to Markdown + JSON
+                                                        under docs/routes/.
+  routes:reconcile                                      Reconcile route handlers against actual
+                                                        controllers and methods.
+  routes:repair                                         Repair invalid route handlers, resolve
+                                                        namespaces, and remove exact duplicate route
+                                                        definitions.
+
+Runtime
+  spark:fix                                             Auto-heal Spark command standards and
+                                                        generate a fix report
+
+Settings
+  settings:clear                                        Clears all settings from persistent storage.
+  settings:publish                                      Publish Settings config file into the
+                                                        current application.
+
+Shield
+  shield:hmac                                           Encrypt/Decrypt secretKey for HMAC tokens.
+  shield:model                                          Generate a new UserModel file.
+  shield:setup                                          Initial setup for CodeIgniter Shield.
+  shield:user                                           Manage Shield users.
+
+Solana
+  solana:preview-browser-runtime:smoke                  Phase 16 browser-runtime simulation for
+                                                        Solana preview modal and wallet-signature
+                                                        safety flow.
+  solana:preview-runtime:smoke                          Phase 15 smoke test for Solana preview UX
+                                                        runtime safety markers and preview-only API
+                                                        routes.
+  solana:wallet-secrets:audit                           Audit and optionally encrypt existing
+                                                        plaintext Solana wallet access_token values.
+
+Spark
+  registry:audit                                        Audit Spark command registry against
+                                                        filesystem declarations and runtime list
+                                                        output.
+  spark-reset                                           Reset Spark caches, purge command metadata,
+                                                        and rebuild autoload (guarded).
+  spark:commands:graph                                  Generate Spark command graph
+  spark:doctor                                          System health inspector for Spark commands.
+
+Test
+  test:redis                                            Test Redis connection
+
+Translation
+  lang:find                                             Find and save available phrases to
+                                                        translate.
+  lang:sync                                             Synchronize translation files from one
+                                                        language to another.
+
+Worker Mode
+  worker:install                                        Install FrankenPHP worker mode by creating
+                                                        necessary configuration files
+  worker:uninstall                                      Remove FrankenPHP worker mode configuration
+                                                        files
+
+app
+  app:healthcheck                                       Compatibility healthcheck command aligned to
+                                                        AI-Ops spark checks.
+  app:update                                            Deprecated. Use ops:app:update instead.
+  runtime:check                                         Validate runtime invariants (nginx, php,
+                                                        permissions, etc.).
+
+audit
+  audit:node                                            Detect tracked node_modules and native build
+                                                        artifacts (read-only).
+  config:drift                                          Compare deployed config and environment to
+                                                        repo baselines.
+  growth:retention-watch                                Detect retention anomalies from engagement
+                                                        signals.
+  revenue:cost-forecast                                 Forecast infra and API costs and detect
+                                                        overruns.
+  ux:journey-audit                                      Validate critical user journeys (signup to
+                                                        dashboard flow checks).
+
+auth
+  auth:audit                                            Audit Myth:Auth authentication and account
+                                                        lifecycle flows end-to-end, including
+                                                        registration, login, and reset flows.
+  auth:baseline:capture                                 Capture auth/authz golden baseline
+                                                        artifacts.
+  auth:baseline:diff                                    Diff current auth/authz runtime against
+                                                        current golden baseline.
+  auth:baseline:restore                                 Restore auth-critical files from auth
+                                                        baseline artifacts.
+  auth:flow-smoke                                       Smoke test for auth redirect safety and
+                                                        login route no-cache headers.
+  auth:funnel-check                                     Check auth funnel sanity using recent user
+                                                        events and emit alerts on drop-offs.
+  auth:smoke                                            Probe auth-critical routes and runtime
+                                                        expectations for
+                                                        login/register/reset/redirect safety.
+  auth:smoke-test                                       Deterministic Myth/Auth smoke test for
+                                                        login/session/reset flow.
+  auth:surface:scan                                     Scan and report auth/authz runtime surface
+                                                        area.
+
+cache
+  cache:audit                                           Scan the repo for unsafe cache key usage.
+
+chat
+  chat:unlock                                           Safely clear stale chat runtime lock and pid
+                                                        files.
+
+codex
+  codex:review:pr-outbox                                Review the latest PR outbox bundle and
+                                                        publish CODEX_REVIEW.md.
+
+config
+  config:lint                                           Lint Config/Services.php overrides against
+                                                        CI4 service signatures.
+
+content
+  content:ingest-sample                                 Load sample Daily Top Gainers JSON, ingest,
+                                                        score, and print the top 5 ideas.
+  contentengine:smoke                                   End-to-end smoke test for the Content Engine
+                                                        ingest → scoring → drafts pipeline.
+
+database
+  db:apply-docs                                         Compile SQL from docs/mysql and apply
+                                                        statements with audit logging.
+  db:inventory                                          Scan code and migrations to inventory MyMI
+                                                        Wallet tables and generate integrity
+                                                        docs/SQL adjustments.
+  migrate:dry-run                                       List pending migrations without executing
+                                                        them.
+
+db
+  db:drift                                              Compare live schema to expected inventory.
+
+env
+  env:doctor                                            Environment diagnostics and snapshot.
+
+health
+  health:cache                                          Check CI4 writable cache directories for
+                                                        access.
+  health:disk                                           Check disk and inode usage for the host.
+  health:git-safety                                     Check git ignore rules for env/writable and
+                                                        tracked secrets.
+  health:services                                       Detect web server + PHP handler status
+                                                        without systemctl.
+
+investments
+  investments:economy:updateall                         Fetch and store economic indicators from
+                                                        FRED into local tables.
+
+logs
+  logs:doctor                                           Validate CI4 logging and debug visibility
+                                                        plumbing.
+  logs:healthcheck                                      Emit test logs and verify file + DB log
+                                                        sinks are functioning.
+  logs:summarize                                        Summarize CI4 logs for a given date,
+                                                        including new entries since the last run.
+  logs:summarize-all                                    Summarize logs for all known subsystems from
+                                                        writable/logs/** and emit docs/_aiops/logs
+                                                        markdown reports.
+  logs:test                                             Canonical logging test command (writes
+                                                        debug/info/error and validates file + DB
+                                                        sinks).
+
+maintenance
+  audit:psr4                                            Audit PSR-4 compliance for the app
+                                                        namespace.
+  logs:full-report                                      Summarize CI4 + Apache + PHP logs for a
+                                                        given date.
+  mail:send-test                                        Send a test email using branded templates.
+  mail:test                                             Send a DreamHost SMTP test email and output
+                                                        transport diagnostics.
+  mail:verify                                           Verify SMTP settings by sending a diagnostic
+                                                        email.
+  news:audit                                            Audit recent marketing news ingestion,
+                                                        summarization, and post generation.
+  routes:auth-audit                                     Audit public routes for unauthenticated
+                                                        access regressions.
+  spark:diagnose-502                                    Diagnose common 502 causes (php-fpm, nginx,
+                                                        socket).
+  spark:diagnose-503                                    Diagnose common 503 causes (cache,
+                                                        maintenance, upstream).
+  spark:purge-fastcgi                                   Detect and neutralize legacy FastCGI/php-pm
+                                                        socket references safely.
+  spark:restart-safe                                    Flush caches/sessions safely and guide a
+                                                        no-sudo restart flow on DreamHost.
+  spark:traffic-spike-guard                             Detect traffic/error spikes that commonly
+                                                        lead to 503 and alert Discord.
+
+marketing
+  marketing:automation:audit                            Verify marketing automations, cron hooks,
+                                                        and API usage expectations.
+  revenue:scan                                          Scan the repository for monetizable features
+                                                        and generate revenue stream docs.
+
+master
+  master:health:commands                                Inspect Spark command inventory and
+                                                        metadata.
+  master:health:controllers                             Inspect controllers for basic CI4 health
+                                                        issues.
+  master:health:dependencies                            Inspect service(), model, and view
+                                                        dependency references across controllers.
+  master:health:docs                                    Inspect docs directory health and summary
+                                                        coverage.
+  master:health:logs                                    Inspect writable/logs for current log file
+                                                        health.
+  master:health:models                                  Inspect models for table mapping and basic
+                                                        CI4 model metadata.
+  master:health:routes                                  Inspect route configuration files and emit a
+                                                        health report.
+  master:health:services                                Inspect service classes and
+                                                        app/Config/Services.php references.
+  master:health:views                                   Inspect views inventory and view directory
+                                                        health.
+  master:knowledge-graph:build                          Build a CI4 knowledge graph from
+                                                        controllers, routes, models, services,
+                                                        views, and commands.
+  master:run-all                                        Run the master docs, graph, and health
+                                                        pipeline.
+
+mdit
+  mdit:nav:compute_daily                                Compute and snapshot the daily MDIT NAV.
+
+ops
+  dreamhost:dns-verify                                  Ops helper command: dreamhost:dns-verify
+  dreamhost:email-audit                                 Ops helper command: dreamhost:email-audit
+  dreamhost:email-list                                  Ops helper command: dreamhost:email-list
+  dreamhost:limits                                      Ops helper command: dreamhost:limits
+  email:healthcheck                                     Ops helper command: email:healthcheck
+  email:queue-scan                                      Ops helper command: email:queue-scan
+  email:test                                            Ops helper command: email:test
+  fix:503                                               Diagnose and attempt safe auto-fixes for 503
+                                                        errors.
+  logs:scan                                             Ops helper command: logs:scan
+  logs:watch                                            Ops helper command: logs:watch
+  ops:analyze-commands                                  Analyze parsed ops inbox items and generate
+                                                        AI plans
+  ops:app:update                                        Safely update and validate the CI4
+                                                        application.
+  ops:ci:prepare                                        Prepare deterministic writable/artifact
+                                                        directories for CI runs.
+  ops:commands:audit                                    Audit Spark commands for illegal
+                                                        constructors.
+  ops:commands:autofix                                  Auto-fix Spark commands that define illegal
+                                                        constructors.
+  ops:commands:inventory                                Generate Spark command inventory from
+                                                        Console.php and command files.
+  ops:commands:lint                                     Lint Spark commands for runtime safety
+                                                        contracts and documentation coverage.
+  ops:commands:missing                                  Check commands missing from Console registry
+  ops:config:lint                                       Lint Config files for illegal patterns
+                                                        (env(), dynamic expressions, protocols).
+  ops:console:build                                     Rebuild Console.php command registry
+  ops:fetch-commands                                    Fetch unread ops commands from IMAP and
+                                                        store them in bf_ops_command_inbox
+  ops:filesystem-scan                                   Ops helper command: ops:filesystem-scan
+  ops:filesystem:fix                                    Auto-fix filesystem governance violations
+  ops:filesystem:lint                                   Lint and optionally auto-fix filesystem
+                                                        governance violations.
+  ops:healthcheck                                       Ops helper command: ops:healthcheck
+  ops:model-limit:audit                                 Audit models/services/libraries for
+                                                        unbounded query patterns.
+  ops:next-steps                                        Generate next-steps issues from audit
+                                                        commands and write docs/snapshots.
+  ops:next-steps:sync                                   Diff latest snapshots and queue net-new
+                                                        issues.
+  ops:next-steps:sync-manual                            Sync manual TODOs from
+                                                        docs/_aiops/next-steps.md into the database.
+  ops:nginx-status                                      Ops helper command: ops:nginx-status
+  ops:php-fpm-health                                    Ops helper command: ops:php-fpm-health
+  ops:propose-pr                                        Generate and validate a PR artifact bundle,
+                                                        then export to tracked outbox for GitHub
+                                                        automation.
+  ops:report                                            Ops helper command: ops:report
+  ops:self-heal                                         Ops helper command: ops:self-heal
+  ops:work                                              Process AiOps task queue items safely.
+
+platform
+  platform:control:analyze                              Analyze collected control-plane artifacts
+                                                        and output ranked action queue.
+  platform:control:collect                              Collect edge snapshots from registered
+                                                        platform manifests.
+  platform:control:dispatch                             Dispatch or dry-run actions generated by
+                                                        control-plane analysis.
+  platform:control:run                                  Run control-plane collect -> analyze ->
+                                                        dispatch pipeline.
+  platform:cron:dispatch                                Cron-friendly wrapper for control-plane
+                                                        dispatch dry-run workflow.
+  platform:edge-snapshot                                Generate lightweight edge status and metrics
+                                                        artifacts for control-plane collection.
+  platform:run                                          Run deterministic platform lifecycle
+                                                        orchestration with safe failure isolation.
+  platform:run:report                                   Print latest platform run report summary.
+  platform:run:subsystem                                Run platform pipeline scoped to one or more
+                                                        subsystems.
+
+research
+  research:alerts:cleanup                               Clean up stale research alert/watchlist
+                                                        rows.
+  research:alerts:watchlist-import
+  research:data:compile
+  research:earnings:calendar                            Collect earnings calendar research items
+  research:google:scan                                  Scan Google for financial research links
+  research:intelligence:signals                         Generate trade-signal intelligence from
+                                                        research rankings and the financial
+                                                        knowledge graph
+  research:knowledge:build                              Build financial knowledge graph
+  research:news:collect
+  research:pipeline:run
+  research:reports:daily                                Generate daily market research report
+  research:reports:weekly                               Generate weekly market research report
+  research:short-interest:scan                          Scan short-interest candidates
+
+runtime
+  optimize:safe                                         Run CI4 optimize safely (CI-only)
+  runtime:cache-boot                                    Validate cache boot health and warm critical
+                                                        cache keys.
+  runtime:diagnose-502                                  Diagnose and optionally remediate 502/503
+                                                        gateway errors
+  runtime:spark-doctor                                  Validate Spark command discovery and CI4
+                                                        compatibility
+  runtime:triage                                        Consolidate runtime diagnostics into a
+                                                        single report.
+
+scanning
+  scanning:run                                          Run MyMI liquidity + momentum scanner
+
+security
+  keys:generate                                         Generate a cryptographically secure
+                                                        encryption key.
+  keys:generate-ci4                                     Generate and rotate CodeIgniter 4
+                                                        encryption.key
+  security:csp:audit                                    Scan view templates for CSP-unsafe inline
+                                                        scripts, styles, and handlers.
+  security:secrets-audit                                Detect sensitive secrets in configs, logs,
+                                                        or docs.
+
+wallets
+  wallets:warm-summary-cache                            Pre-warm the /API/Wallets/summary cache for
+                                                        active users.

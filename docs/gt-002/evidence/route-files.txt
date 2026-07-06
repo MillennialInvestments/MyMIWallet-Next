@@ -1,0 +1,10 @@
+./app/Commands/Docs/Scan/Routes.php
+./app/Commands/Master/Health/Routes.php
+./app/Config/Routes.php
+./app/Modules/Blog/Config/Routes.php
+./app/Modules/Management/Config/Routes.php
+./app/Modules/Management/Routes.php
+./app/Modules/PropFirms/Config/Routes.php
+./app/Modules/ScriptStudio/Config/Routes.php
+./app/Modules/Template/Routes.php
+./app/Modules/User/Routes.php
