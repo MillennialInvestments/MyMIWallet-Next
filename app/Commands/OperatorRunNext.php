@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Commands;
+
+use CodeIgniter\CLI\BaseCommand;
+use CodeIgniter\CLI\CLI;
+
+class OperatorRunNext extends BaseCommand
+{
+    protected $group = 'AIOps';
+    protected $name = 'aiops:operator:run-next';
+    protected $description = 'Compatibility command for older MyMI AIOps worktrees.';
+
+    public function run(array $params)
+    {
+        CLI::write('===== AIOPS OPERATOR RUN NEXT COMPAT =====', 'green');
+        CLI::write('STATUS: COMPAT_READY');
+        CLI::write('ROOT: ' . (getcwd() ?: ROOTPATH));
+        CLI::write('MUTATION_ALLOWED: false');
+        CLI::newLine();
+        CLI::write('This older MyMI repo does not include the newer operator state machine.');
+        CLI::write('Use repo-native validation, GitHub PR checks, and manual PR merge for this lane.');
+        CLI::newLine();
+        CLI::write('NEXT COMMANDS:', 'yellow');
+        CLI::write('git status --short');
+        CLI::write('git diff --check');
+        CLI::write('gh pr view 530 --json number,title,state,isDraft,mergeStateStatus,url');
+        CLI::write('gh pr checks 530');
+    }
+}
