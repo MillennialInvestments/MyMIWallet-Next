@@ -1,0 +1,8 @@
+474:    $routes->post('Alerts/backfillEmailAlerts', 'AlertsAPIController::backfillEmailAlerts', ['filter' => 'internalToken']);
+672:        $routes->get('ingestCsvSignals', 'AlertsAPIController::ingestCsvSignals', ['filter' => 'internalToken']);
+676:        $routes->get('recalcSignalScores', 'AlertsAPIController::recalcSignalScores', ['filter' => 'internalToken']);
+678:        $routes->match(['GET', 'POST'], 'backfillCategories', 'AlertsAPIController::backfillCategories', ['filter' => 'internalToken']);
+682:        $routes->get('scanner', 'AlertsAPIController::scanner', ['filter' => 'internalToken']);
+687:        $routes->match(['GET', 'POST'], 'forceFetchEmails', 'AlertsAPIController::forceFetchEmails', ['filter' => 'internalToken']);
+688:        $routes->match(['GET', 'POST'], 'forceFetchTickers', 'AlertsAPIController::forceFetchTickers', ['filter' => 'internalToken']);
+2461:    $routes->get('scanner', 'AlertsAPIController::scanner', ['filter' => 'internalToken']);

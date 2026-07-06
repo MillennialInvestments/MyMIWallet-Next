@@ -1,0 +1,2 @@
+1134:        $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsAPIController::addUserGoldTasks', ['filter' => 'apiToken']);
+1945:$routes->group('Wallets', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {

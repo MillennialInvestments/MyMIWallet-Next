@@ -1,0 +1,33 @@
+# GT-002-01 Public Homepage 500 Diagnosis
+2026-07-06T13:17:47+00:00
+
+## Branch
+feature/gt-002-01-public-homepage-500
+
+## HEAD
+255008e6b3f2d46d2c9ecdda8d7e3afcf8dbb0bf
+
+## Public smoke
+HTTP/1.1 500 Internal Server Error
+Server: nginx/1.18.0 (Ubuntu)
+Date: Mon, 06 Jul 2026 13:17:47 GMT
+Content-Type: text/html; charset=UTF-8
+Connection: keep-alive
+X-MyMI-FrontController: 1
+Set-Cookie: ci_session=e50e3e0c3a492ddb5e4198deafab7e15; expires=Mon, 06 Jul 2026 15:17:47 GMT; Max-Age=7200; path=/; domain=.mymiwallet.com; secure; HttpOnly; SameSite=Lax
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+
+
+HTTP/1.1 500 Internal Server Error
+Server: nginx/1.18.0 (Ubuntu)
+Date: Mon, 06 Jul 2026 13:17:47 GMT
+Content-Type: text/html; charset=UTF-8
+Connection: keep-alive
+X-MyMI-FrontController: 1
+Set-Cookie: ci_session=dda89e4785d3fdc50a0420dec2014523; expires=Mon, 06 Jul 2026 15:17:47 GMT; Max-Age=7200; path=/; domain=.mymiwallet.com; secure; HttpOnly; SameSite=Lax
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+

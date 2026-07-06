@@ -17,6 +17,7 @@ class Commands extends BaseConfig
         'solana:preview-browser-runtime:smoke' => \App\Commands\SolanaPreviewBrowserRuntimeSmoke::class,
         'solana:preview-runtime:smoke' => \App\Commands\SolanaPreviewRuntimeSmoke::class,
         'marketing:audit:distribution' => \App\Commands\Marketing\AuditDistribution::class,
+        'marketing:audit:placeholder-prevention' => \App\Commands\Marketing\AuditPlaceholderPrevention::class,
         'marketing:distribution:skip-optional-discord-pending' => \App\Commands\Marketing\SkipOptionalDiscordPending::class,
         'marketing:distribution:repair-pending-generation' => \App\Commands\Marketing\RepairPendingGenerationDistribution::class,
         'marketing:distribution:preview-controlled' => \App\Commands\Marketing\PreviewControlledDistribution::class,

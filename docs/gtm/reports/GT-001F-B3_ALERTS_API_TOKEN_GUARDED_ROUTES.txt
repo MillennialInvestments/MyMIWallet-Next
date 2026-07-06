@@ -1,0 +1,8 @@
+673:        $routes->get('signals', 'AlertsAPIController::getSignals', ['filter' => 'apiToken']);
+674:        $routes->get('signalFiles', 'AlertsAPIController::getSignalFiles', ['filter' => 'apiToken']);
+675:        $routes->get('previewSignalFile/(:num)', 'AlertsAPIController::previewSignalFile/$1', ['filter' => 'apiToken']);
+681:        $routes->match(['GET', 'POST'], 'getFilteredAlerts', 'AlertsAPIController::getFilteredAlerts', ['filter' => 'apiToken']);
+694:        $routes->match(['GET', 'POST'], 'getEmaComparison/(:segment)', 'AlertsAPIController::getEmaComparison/$1', ['filter' => 'apiToken']);
+696:        $routes->match(['GET', 'POST'], 'getFullMetrics', 'AlertsAPIController::getFullMetrics', ['filter' => 'apiToken']);
+698:        $routes->match(['GET', 'POST'], 'getTechnicalIndicators', 'AlertsAPIController::getTechnicalIndicators', ['filter' => 'apiToken']);
+718:        $routes->match(['GET', 'POST'], 'getTradeAlertDetails', 'AlertsAPIController::getTradeAlertDetails', ['filter' => 'apiToken']);

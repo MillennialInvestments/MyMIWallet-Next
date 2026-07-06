@@ -1,0 +1,30 @@
+31:    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+46:    protected function invalidateCaches(array $tags): void
+69:    protected function currentUserId(): ?int
+86:    protected function getWalletSummaryService(): WalletSummaryService
+98:    public function index(): ResponseInterface
+136:    public function summary(): ResponseInterface
+159:    public function create(): ResponseInterface
+188:    public function plaidConfigDebug(): \CodeIgniter\HTTP\ResponseInterface
+205:    public function plaidEnv(): ResponseInterface
+211:    public function plaidOAuthReturn()
+242:    public function plaidWebhook()
+250:    public function update($id = null): ResponseInterface
+280:    public function plaidLinkToken(): ResponseInterface
+311:    protected function getWalletModel(): WalletModel
+320:    protected function getWalletService(): WalletService
+329:    public function plaidExchange(): \CodeIgniter\HTTP\ResponseInterface
+572:    public function refreshPlaidWallet($walletId): \CodeIgniter\HTTP\ResponseInterface
+594:    public function syncPlaidTransactions($walletId): \CodeIgniter\HTTP\ResponseInterface
+617:    public function providers(): ResponseInterface
+635:    public function unlink($id = null): ResponseInterface
+660:    public function updateBank($id = null): ResponseInterface {
+663:    public function updateCredit($id = null): ResponseInterface {
+666:    public function updateDebt($id = null): ResponseInterface {
+669:    public function updateInvestment($id = null): ResponseInterface {
+672:    public function updateCrypto($id = null): ResponseInterface {
+676:    private function updateByType($id, string $type): ResponseInterface {
+717:    public function linkRobinhood(): ResponseInterface
+764:    public function linkSnapTrade(): ResponseInterface
+806:    public function getSnapTradeConnectUrl(): ResponseInterface
+832:    private function parseCredentials($value): array

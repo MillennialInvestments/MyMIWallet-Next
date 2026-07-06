@@ -1,0 +1,237 @@
+# GT-001C Route Guard Implementation
+
+## Status
+
+Implementation started with the smallest deterministic safety slice.
+
+## GT-001C-A Scope
+
+Fix malformed or doubled route handler namespaces from GT-001/GT-001B evidence.
+
+## Business Objective
+
+Remove route handler namespace ambiguity before changing route guard behavior. This keeps the route table structurally correct so later API token, internal token, CSRF, login, and admin guard changes can be applied safely.
+
+## Safety Boundary
+
+- No production mutation.
+- No production rollback applies.
+- No route filters changed in GT-001C-A.
+- No controller logic changed in GT-001C-A.
+- No auth policy changed in GT-001C-A.
+- Only route handler class strings were normalized.
+
+## Implementation Summary
+
+GT-001C-A normalized explicit route handler class strings in `app/Config/Routes.php` so handlers intended as full class names start with `\App\...`.
+
+This prevents CodeIgniter namespace prefixing from producing doubled handlers such as:
+
+- `App\Controllers\App\Modules\...`
+- `App\Controllers\App\Controllers\...`
+- `App\Modules\APIs\Controllers\App\Modules\...`
+
+## Source Evidence
+
+- `docs/gtm/mymi/evidence/gt001/malformed-handler-routes.md`
+- `docs/gtm/mymi/evidence/gt001b/route-guard-classification.csv`
+
+## Validation
+
+- `composer validate --no-check-publish`
+- `composer dump-autoload --no-interaction`
+- `bash scripts/ci/check_psr4.sh`
+- `php spark routes`
+- `git diff --check`
+
+## Rollback Notes
+
+No production rollback applies. To revert GT-001C-A before merge, restore `app/Config/Routes.php` from the branch or revert the GT-001C-A commit.
+
+## GT-001C-C Bitcoin API Token Guard
+
+### Scope
+
+Added an explicit `apiToken` route filter to the `API/Bitcoin` group.
+
+### Reason
+
+GT-001B classified `API/Bitcoin/buildUnsignedPsbt` and `API/Bitcoin/broadcastSignedTx` as `API_TOKEN` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes one route group filter only. No controller logic, handler mapping, internal token policy, CSRF policy, or production state was changed.
+
+## GT-001C-D DripCampaign TestCron Guard
+
+### Scope
+
+Added an explicit `cronKey` route filter to `GET API/DripCampaign/TestCron`.
+
+### Reason
+
+GT-001B classified `API/DripCampaign/TestCron` as `INTERNAL` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes one route-level filter only. No controller logic, API token policy, broad internal route policy, CSRF policy, or production state was changed.
+
+## GT-001C-E Marketing Cron Guard
+
+### Scope
+
+Added explicit `cronKey` route filters to six `GET API/Marketing/cron*` routes.
+
+### Reason
+
+GT-001B classified the Marketing cron routes as `INTERNAL` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes six route-level filters only. No controller logic, broad Marketing API policy, API token policy, CSRF policy, or production state was changed.
+
+## GT-001C-F Predictions Cron Guard
+
+### Scope
+
+Added explicit `cronKey` route filters to `GET API/Predictions/Cron/*` routes.
+
+### Reason
+
+GT-001B classified the Predictions cron routes as `INTERNAL` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes Predictions cron route-level filters only. No controller logic, broad Predictions API policy, API token policy, CSRF policy, or production state was changed.
+
+## GT-001C-G Scanner Internal Guard
+
+### Scope
+
+Added explicit `internalToken` route filters to five `API/Scanner/*` internal routes.
+
+### Reason
+
+GT-001B classified the Scanner routes as `INTERNAL` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes Scanner route-level filters only. No controller logic, broad API policy, cron policy, CSRF policy, or production state was changed.
+
+## GT-001C-G Scanner Internal Guard
+
+### Scope
+
+Added explicit `internalToken` route filters to five `API/Scanner/*` internal routes.
+
+### Reason
+
+GT-001B classified the Scanner routes as `INTERNAL` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes Scanner route-level filters only. No controller logic, broad API policy, cron policy, CSRF policy, or production state was changed.
+## GT-001C-H Alerts Internal Guard
+
+### Scope
+
+Added explicit `internalToken` route filters to Alerts internal maintenance routes.
+
+### Reason
+
+GT-001B classified selected Alerts maintenance routes as `INTERNAL` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes Alerts internal maintenance route-level filters only. No controller logic, broad Alerts API policy, API token policy, CSRF policy, or production state was changed.
+## GT-001C-I Ops Internal Guard
+
+### Scope
+
+Added explicit `internalToken` route filters to three active `API/Ops/*` internal routes.
+
+### Reason
+
+GT-001B classified the targeted Ops routes as `INTERNAL` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes Ops internal route-level filters only. No controller logic, broad Ops/AiOps policy, public health route policy, API token policy, CSRF policy, or production state was changed.
+## GT-001C-J Discord Internal Guard
+
+### Scope
+
+Added explicit `internalToken` route filters to two `API/Discord/*` internal operational routes.
+
+### Reason
+
+GT-001B classified `API/Discord/process-queue` and `API/Discord/coalesce-now` as `INTERNAL` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes Discord internal route-level filters only. No controller logic, broad Discord API policy, public registration policy, webhook policy, API token policy, CSRF policy, or production state was changed.
+## GT-001C-K ContentEngine Internal Guard
+
+### Scope
+
+Added explicit `internalToken` route filters to two `API/ContentEngine/*` internal ingest/process routes.
+
+### Reason
+
+GT-001B classified `API/ContentEngine/ingestScanner` and `API/ContentEngine/processIngest/([0-9]+)` as `INTERNAL` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes ContentEngine internal route-level filters only. No controller logic, broad ContentEngine API policy, API token policy, public content policy, CSRF policy, or production state was changed.
+## GT-001C-L eSports Cron Guard
+
+### Scope
+
+Added an explicit `cronKey` route filter to `API/eSports/cronProcessJobs`.
+
+### Reason
+
+GT-001B classified `API/eSports/cronProcessJobs` as `INTERNAL` with `MISSING_GUARD`.
+
+### Safety
+
+This slice changes the eSports cron route-level filter only. No controller logic, broad eSports API policy, API token policy, event/user action policy, CSRF policy, or production state was changed.
+## GT-001C-M Residual Guard Backlog
+
+### Scope
+
+Generated a report-only reconciliation of the GT-001B missing-guard source backlog after GT-001C-D through GT-001C-L.
+
+### Reason
+
+GT-001B is a static classification source and still lists routes that have since been patched by the atomic GT-001C guard slices. This report separates completed source rows from the remaining internal/API-token backlog.
+
+### Safety
+
+This slice changes documentation and evidence files only. No route definitions, controller logic, guard policy, CSRF policy, API token policy, or production state was changed.
+## GT-001C-N Residual Internal Guards
+
+### Scope
+
+Added explicit route filters to the four residual `INTERNAL,MISSING_GUARD` routes identified by GT-001C-M.
+
+### Reason
+
+GT-001C-M reconciled the GT-001B source backlog after GT-001C-D through GT-001C-L and found four remaining internal operational routes.
+
+### Safety
+
+This slice changes residual internal route-level filters only. No controller logic, broad Marketing/API policy, API token policy, CSRF policy, or production state was changed.
+## GT-001C-O Internal Guard Closeout
+
+### Scope
+
+Generated a report-only closeout proving the residual `INTERNAL,MISSING_GUARD` backlog is zero after GT-001C-N.
+
+### Reason
+
+GT-001C-D through GT-001C-N completed the internal route guard hardening stack. Remaining backlog belongs to separate API-token/auth-policy tracks.
+
+### Safety
+
+This slice changes documentation and evidence files only. No route definitions, controller logic, guard policy, CSRF policy, API token policy, or production state was changed.

@@ -1,0 +1,170 @@
+# GT-002 Baseline Validation
+2026-07-06T12:57:26+00:00
+
+## Branch
+feature/gt-002-functional-inventory-baseline
+
+## HEAD
+2a7e3b278a9d6878fd20eb3e28a36e63ddaae938
+
+## Spark bootstrap
+vendor/codeigniter4/framework/system/Boot.php present
+
+## PHP Spark list
+
+CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-07-06 12:57:26 UTC+00:00
+
+AIOps
+  aiops:alerts-clean                                    Delete completed aiops alert queue rows
+                                                        older than 30 days
+  aiops:analyze:code                                    Analyze files or folders for security, UX,
+                                                        performance, maintainability, and backend
+                                                        efficiency risks.
+  aiops:autofix:analyze                                 Analyze latest log file and produce
+                                                        categorized recurring issue suggestions.
+  aiops:csp:audit                                       Scans the repository for CSP violations and
+                                                        writes a dated audit report.
+  aiops:errors                                          Run the AIOps error scan wrapper and
+                                                        delegate to logs:errors when available.
+  aiops:routes:suggest                                  Scan recent 404 logs and suggest likely
+                                                        intended route matches.
+  aiops:scan:cells                                      Stateful scanner for repeated UI blocks and
+                                                        Cell candidates.
+  aiops:scan:integrity                                  Scan CI4 app integrity for command
+                                                        inheritance, support files, view paths, and
+                                                        unsafe trim usage.
+  aiops:solana-digest                                   Summarize current Solana Exchange routes,
+                                                        files, and status.
+  aiops:solana-healthcheck                              Run a safe Solana route and network health
+                                                        check.
+  aiops:solana-transaction-audit                        Safely summarize Solana transaction records
+                                                        when available.
+  aiops:unlock                                          Manually unlock an AIOPS patch job and reset
+                                                        retries.
+  aiops:views:missing                                   Scan controllers for view()/renderTheme()
+                                                        references and report missing views.
+  logs:errors                                           Scan runtime logs, normalize errors, and
+                                                        generate structured AIOps error reports.
+
+AIOps - API
+  aiops:api:schema                                      Validate API endpoints return JSON
+                                                        (optionally check required keys)
+
+AIOps - Alerts
+  aiops:alerts-check                                    Fetch emails and queue them for processing
+  aiops:alerts-health                                   Run health checks on aiops alert queue and
+                                                        notify if failures are high
+  aiops:alerts-worker                                   Process queued alert emails
+
+AIOps - All Control
+  aiops:all                                             Run a full AIOps scan and generate unified
+                                                        Markdown and JSON reports in docs/_aiops.
+  aiops:execute-docs                                    Process docs/_aiops markdown files and
+                                                        execute actionable patches in a stateful
+                                                        loop.
+  aiops:repairs                                         Run the error->action->repair queue->patch
+                                                        plan pipeline.
+
+AIOps - Audit
+  aiops:audit                                           Audit aiops runtime, orchestration routes,
+                                                        and n8n/docs readiness
+  aiops:continue                                        Operational audit (server + runtime focus)
+  aiops:copilot:validate                                Validate copilot instructions and Spark
+                                                        command safety rules.
+  aiops:diff:format                                     Generate a real unified diff from current
+                                                        working tree
+  aiops:doctor                                          Validate AIOps service wiring, namespace
+                                                        casing, and Spark helper migration state.
+  aiops:health:full                                     Run full system health checks and generate a
+                                                        consolidated report
+  aiops:priority:build                                  Scan /docs, detect gaps, verify repo, stage
+                                                        codegen artifacts for PR batching, and write
+                                                        /docs/priority outputs.
+
+AIOps - Commands
+  aiops:build-command                                   Generate a Spark command from text logic
+                                                        using AIOps
+  aiops:chat-gov-index                                  Index ChatGPT governance steps from archived
+                                                        chats and sync CSV/DB outputs.
+  aiops:command-index                                   Scan and classify Spark commands for AIOps
+                                                        governance.
+  aiops:governance:analyze                              Analyze token usage + model anomalies
+
+AIOps - DB
+  aiops:db:slow_scan                                    Scan logs for slow query markers
+                                                        (best-effort)
+  aiops:sql:check                                       Validate model/table/query SQL compatibility
+                                                        against live schema.
+
+AIOps - Docs
+  aiops:docs-sync                                       Run documentation sync pipeline using
+                                                        DocsSyncEngine
+
+AIOps - Management
+  aiops:gate:cost                                       Enforce daily AI cost cap; auto-disable
+                                                        AiOps LLM when threshold exceeded
+
+AIOps - Marketing
+  aiops:email-scan                                      Scan alerts mailbox for new emails and
+                                                        record AIOps counts.
+
+AIOps - Observe
+  aiops:observe:cost                                    Correlate observability signals with AI cost
+                                                        logs
+  aiops:observe:hash                                    Fingerprint recurring errors into stable
+                                                        hashes
+  aiops:observe:map                                     Map errors to routes and controllers
+  aiops:observe:patch                                   Create patch file from suggestions
+  aiops:observe:regression                              Detect fingerprint regressions vs previous
+                                                        snapshot
+  aiops:observe:scan                                    Scan logs and persist recurring errors
+  aiops:observe:snapshot                                Snapshot fingerprint map for regression
+                                                        detection
+  aiops:observe:suggest                                 Generate fix suggestions for recurring
+                                                        errors
+
+AIOps - PR
+  aiops:pr:auto                                         Full safe pipeline: observe → validate →
+                                                        regression → PR
+  aiops:pr:create                                       Create a branch, push, and open a PR
+                                                        (requires token + enabled flags)
+  aiops:rollback                                        Rollback working tree to clean state (hard
+                                                        reset)
+  aiops:seed                                            Seed default AI Ops caps and pricing
+
+## Diff check
+docs/gt-002/evidence/spark-commands.txt:411: trailing whitespace.
++  docs:database:map
+docs/gt-002/evidence/spark-commands.txt:412: trailing whitespace.
++  docs:dependencies:map
+docs/gt-002/evidence/spark-commands.txt:413: trailing whitespace.
++  docs:full-audit
+docs/gt-002/evidence/spark-commands.txt:425: trailing whitespace.
++  docs:modules:map
+docs/gt-002/evidence/spark-commands.txt:426: trailing whitespace.
++  docs:routes:inventory
+docs/gt-002/evidence/spark-commands.txt:434: trailing whitespace.
++  docs:spark:inventory
+docs/gt-002/evidence/spark-commands.txt:438: trailing whitespace.
++  docs:sync-system
+docs/gt-002/evidence/spark-commands.txt:442: trailing whitespace.
++  docs:views:export
+docs/gt-002/evidence/spark-commands.txt:445: trailing whitespace.
++  docs:readme:build
+docs/gt-002/evidence/spark-commands.txt:450: trailing whitespace.
++  docs:views:dirs
+docs/gt-002/evidence/spark-commands.txt:451: trailing whitespace.
++  docs:views:list
+docs/gt-002/evidence/spark-commands.txt:1011: trailing whitespace.
++  research:alerts:watchlist-import
+docs/gt-002/evidence/spark-commands.txt:1012: trailing whitespace.
++  research:data:compile
+docs/gt-002/evidence/spark-commands.txt:1019: trailing whitespace.
++  research:news:collect
+docs/gt-002/evidence/spark-commands.txt:1020: trailing whitespace.
++  research:pipeline:run
+
+## Status
+ M docs/gt-002/evidence/spark-commands.txt
+ M docs/gt-002/functional-inventory-baseline.md
+?? docs/gt-002/evidence/baseline-validation.txt

@@ -1,0 +1,122 @@
+262:$routes->get('/Purchase/MyMIGold', static fn() => redirect()->to(site_url('Wallets/Purchase/MyMI-Gold'), 301));
+269:$routes->get('/Wallets/Purchase/Memberships/Pro', static fn() => redirect()->to(site_url('Memberships/Pro'), 301));
+396:    $routes->get('/MyMI-Wallet', 'WalletsController::MyMIWallet', ['as' => 'mymi-wallet']);
+1134:        $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsAPIController::addUserGoldTasks', ['filter' => 'apiToken']);
+1241:    $routes->group('Wallets', function($routes) {
+1243:        // ✅ Add this so /API/Wallets resolves to WalletsAPIController::index
+1244:        $routes->get('/', 'WalletsAPIController::index');
+1245:        $routes->get('summary', 'WalletsAPIController::summary');
+1248:        $routes->get('providers', 'WalletsAPIController::providers');
+1251:        $routes->post('Create', 'WalletsAPIController::create');
+1252:        $routes->put('Update/(:num)', 'WalletsAPIController::update/$1');
+1253:        $routes->delete('Unlink/(:num)', 'WalletsAPIController::unlink/$1');
+1256:        $routes->post('Link-Robinhood', 'WalletsAPIController::linkRobinhood');
+1257:        $routes->post('Link-Snaptrade', 'WalletsAPIController::linkSnapTrade');
+1258:        $routes->post('Snaptrade/Connect-URL', 'WalletsAPIController::getSnapTradeConnectUrl');
+1261:        $routes->post('Banking/Update/(:num)',   'WalletsAPIController::updateBank/$1');
+1262:        $routes->post('Credit/Update/(:num)',    'WalletsAPIController::updateCredit/$1');
+1263:        $routes->post('Debt/Update/(:num)',      'WalletsAPIController::updateDebt/$1');
+1264:        $routes->post('Investments/Update/(:num)','WalletsAPIController::updateInvestment/$1');
+1265:        $routes->post('Crypto/Update/(:num)',    'WalletsAPIController::updateCrypto/$1');
+1268:        $routes->get('Plaid/Config-Debug', 'WalletsAPIController::plaidConfigDebug');
+1269:        $routes->get('Plaid/Env', 'WalletsAPIController::plaidEnv');
+1270:        $routes->get('Plaid/OAuth-Return', 'WalletsAPIController::plaidOAuthReturn');
+1271:        $routes->get('Plaid/Webhook', 'WalletsAPIController::plaidWebhook');
+1272:        $routes->get('Plaid/Link-Token', 'WalletsAPIController::plaidLinkToken');
+1273:        $routes->post('Plaid/Exchange', 'WalletsAPIController::plaidExchange');
+1274:        $routes->post('Plaid/Refresh/(:num)', 'WalletsAPIController::refreshPlaidWallet/$1');
+1275:        $routes->post('Plaid/Sync-Transactions/(:num)', 'WalletsAPIController::syncPlaidTransactions/$1');
+1277:        $routes->get('/(:segment)/(:segment)', 'WalletsAPIController::index/$1/$2');
+1529:        $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsAdminController::addUserGoldTasks');
+1593:    $routes->group('Wallets', function($routes) {
+1594:        $routes->get('/', 'WalletsController::index');
+1595:        $routes->get('Reconcile', 'WalletsController::reconcile');
+1596:        $routes->post('EmailUserAboutIssue/(:num)/(:num)', 'WalletsController::emailUserAboutIssue/$1/$2');
+1944:// User - Wallets
+1945:$routes->group('Wallets', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
+1946:    $routes->get('/', 'WalletsController::index', ['as' => 'wallets.index']);
+1947:    $routes->match(['GET', 'POST'], 'All', 'WalletsController::all', ['as' => 'wallets.all']);
+1948:    $routes->match(['GET', 'POST'], 'Account-Manager', 'WalletsController::accountManager', ['as' => 'wallets.account-manager']);
+1949:    $routes->match(['GET', 'POST'], 'Add', 'WalletsController::add', ['as' => 'wallets.add']);
+1950:    $routes->match(['GET', 'POST'], 'Add/(:segment)', 'WalletsController::add/$1', ['as' => 'wallets.add.segment']);
+1951:    $routes->match(['GET', 'POST'], 'Add/(:segment)/(:segment)', 'WalletsController::addFetch/$1/$2', ['as' => 'wallets.add.segment.segment']);
+1952:    $routes->match(['GET', 'POST'], 'Add/Bank-Account', 'WalletsController::createBankeAccount', ['as' => 'wallets.add.bank-account']);
+1953:    $routes->match(['GET', 'POST'], 'Attach-Account', 'WalletsController::attachAccount', ['as' => 'wallets.attach-account']);
+1954:    $routes->match(['GET', 'POST'], 'Attach-Account/(:segment)/(:segment)/(:segment)', 'WalletsController::attachAccount/$1/$2/$3', ['as' => 'wallets.attach-account.segment.segment.segment']);
+1955:    $routes->match(['GET', 'POST'], 'Bank', 'WalletsController::bank', ['as' => 'wallets.bank']);
+1956:    $routes->match(['GET', 'POST'], 'Banking', 'WalletsController::banking', ['as' => 'wallets.banking']);
+1957:    $routes->match(['GET', 'POST'], 'Banking/Add/Account/(:segment)', 'WalletsController::add', ['as' => 'wallets.banking.add.account.segment']);
+1958:    $routes->match(['GET', 'POST'], 'Banking/(:segment)', 'WalletsController::addAccount', ['as' => 'wallets.banking.segment']);
+1959:    $routes->match(['GET', 'POST'], 'Banking/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.banking.details.segment']);
+1960:    $routes->match(['GET', 'POST'], 'Credit/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.credit.details.segment']);
+1961:    $routes->match(['GET', 'POST'], 'Debt/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.debt.details.segment']);
+1962:    $routes->match(['GET', 'POST'], 'Investment/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.investment.details.segment']);
+1963:    $routes->match(['GET', 'POST'], 'Crypto/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.crypto.details.segment']);
+1964:    $routes->match(['GET', 'POST'], 'Delete/(:segment)/(:segment)', 'WalletsController::delete/$1/$2', [
+1967:    $routes->match(['GET', 'POST'], 'Banking/Edit/Account/(:segment)', 'WalletsController::editBankAccount/$1', ['as' => 'wallets.banking.edit.account.segment']);
+1968:    $routes->match(['GET', 'POST'], 'Checking', 'WalletsController::checking', ['as' => 'wallets.checking']);
+1969:    $routes->match(['GET', 'POST'], 'Credit/Edit/Account/(:segment)', 'WalletsController::editCreditAccount/$1');
+1970:    $routes->match(['GET', 'POST'], 'Crypto', 'WalletsController::crypto', ['as' => 'wallets.crypto']);
+1971:    $routes->match(['GET', 'POST'], 'Create', 'WalletsController::generateWallet', ['as' => 'wallets.create']); // Previously /Wallets/Address-Generator
+1972:    $routes->match(['GET', 'POST'], 'Credit', 'WalletsController::index', ['as' => 'wallets.credit']);
+1973:    $routes->match(['GET', 'POST'], 'Credit/Details/(:segment)', 'WalletsController::details/$1');
+1974:    $routes->match(['GET', 'POST'], 'Coin-Swap', 'WalletsController::coinSwap', ['as' => 'wallets.coin-swap']);
+1975:    $routes->match(['GET', 'POST'], 'Coin-Swap/(:segment)', 'WalletsController::coinSwap/$1', ['as' => 'wallets.coin-swap.segment']);
+1976:    $routes->match(['GET', 'POST'], 'Complete/Purchase', 'WalletsController::completePurchase', ['as' => 'wallets.complete.purchase']);
+1977:    $routes->match(['GET', 'POST'], 'Confirm-Deposit', 'WalletsController::confirmDeposit', ['as' => 'wallets.confirm.deposit']);
+1978:    $routes->match(['GET', 'POST'], 'Debt', 'WalletsController::debt', ['as' => 'wallets.debt']);
+1979:    $routes->match(['GET', 'POST'], 'Debt/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.debt.details.segment']);
+1980:    $routes->match(['GET', 'POST'], 'Debt/Edit/Account/(:segment)', 'WalletsController::editDebtAccount/$1', ['as' => 'wallets.debt.edit.account.segment']);
+1981:    $routes->match(['GET', 'POST'], 'Deposit', 'WalletsController::deposit', ['as' => 'wallets.deposit']);
+1982:    $routes->match(['GET', 'POST'], 'Deposit/Fetch', 'WalletsController::addDepositFetch', ['as' => 'wallets.deposit.fetch']);
+1983:    $routes->match(['GET', 'POST'], 'Deposit/Complete', 'WalletsController::depositComplete', ['as' => 'wallets.deposit.complete']);
+1984:    $routes->match(['GET', 'POST'], 'Deposit/Complete/(:segment)', 'WalletsController::depositComplete/$1', ['as' => 'wallets.deposit.complete.segment']);
+1985:    $routes->match(['GET', 'POST'], 'Deposit/(:segment)', 'WalletsController::deposit/$1', ['as' => 'wallets.deposit.segment']);
+1986:    $routes->match(['GET', 'POST'], 'Deposit/Funds', 'WalletsController::deposit', ['as' => 'wallets.deposit.funds']);
+1987:    $routes->match(['GET', 'POST'], 'Details', 'WalletsController::details', ['as' => 'wallets.details']);
+1988:    $routes->match(['GET', 'POST'], 'Edit', 'WalletsController::edit', ['as' => 'wallets.edit']);
+1989:    $routes->match(['GET', 'POST'], 'Edit/(:segment)', 'WalletsController::edit/$1', ['as' => 'wallets.edit.segment']); // Previously /Wallets/Address-Generator
+1990:    $routes->match(['GET', 'POST'], 'Edit/(:segment)/(:segment)', 'WalletsController::edit/$1/$2', ['as' => 'wallets.edit.segment.segment']); // Previously /Wallets/Address-Generator
+1991:    $routes->match(['GET', 'POST'], 'Feature-Manager', 'WalletsController::featureManager', ['as' => 'wallets.feature-manager']);
+1992:    $routes->match(['GET', 'POST'], 'Generate-Wallet', 'WalletsController::generateWallet', ['as' => 'wallets.generate-wallet']);
+1993:    $routes->match(['GET', 'POST'], 'Investments', 'WalletsController::investments', ['as' => 'wallets.investments']);
+1994:    $routes->match(['GET', 'POST'], 'Investment/Details/(:segment)', 'WalletsController::details/$1', ['as' => 'wallets.investment.details']);
+1995:    $routes->match(['GET', 'POST'], 'Investment/Edit/Account/(:segment)', 'WalletsController::editInvestAccount/$1', ['as' => 'wallets.investment.edit']);
+1996:    $routes->match(['GET', 'POST'], 'Link-Account', 'WalletsController::linkAccount', ['as' => 'wallets.link-account']);
+1997:    $routes->match(['GET', 'POST'], 'Link-Account/(:segment)', 'WalletsController::linkAccount/$1', ['as' => 'wallets.link-account.segment']);
+1998:    $routes->match(['GET', 'POST'], 'Link-Account/(:segment)/(:segment)', 'WalletsController::linkAccount/$1', ['as' => 'wallets.link-account.segment.segment']);
+1999:    $routes->match(['GET', 'POST'], 'Link-Account/Success', 'WalletsController::linkAccountSuccess', ['as' => 'wallets.link-account.success']);
+2000:    $routes->match(['GET', 'POST'], 'Link-Account/Success/(:segment)', 'WalletsController::linkAccountSuccess/$1', ['as' => 'wallets.link-account.success.segment']);
+2001:    $routes->match(['GET', 'POST'], 'Manager', 'WalletsController::walletManager', ['as' => 'wallets.manager']);
+2002:    $routes->match(['GET', 'POST'], 'Wallets/MyMIGPayPalCallback', 'WalletsController::handleMyMIGPayPalCallback');
+2003:    $routes->match(['GET', 'POST'], 'Purchase', 'WalletsController::purchase');
+2004:    $routes->match(['GET', 'POST'], 'Purchase-Manager', 'WalletsController::purchaseManager');
+2005:    $routes->match(['GET', 'POST'], 'Purchase/(:segment)', 'WalletsController::purchase');
+2006:    $routes->match(['GET', 'POST'], 'Purchase/Memberships/Customize', 'WalletsController::customizeMembership');
+2007:    $routes->match(['GET', 'POST'], 'Purchase/Memberships/Success', 'WalletsController::purchaseMembershipSuccess');
+2008:    $routes->match(['GET', 'POST'], 'Purchase/Memberships/(:segment)', 'WalletsController::purchase');
+2009:    $routes->match(['GET', 'POST'], 'Purchase/Memberships/(:segment)/(:segment)', 'WalletsController::purchase');
+2010:    // $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold', 'WalletsController::purchaseGold');
+2011:    $routes->match(['GET', 'POST'], 'Purchase/(:segment)/Complete', 'WalletsController::purchaseComplete');
+2012:    $routes->match(['GET', 'POST'], 'Purchase/Complete/(:segment)', 'WalletsController::purchaseComplete/$1');
+2013:    $routes->match(['GET', 'POST'], 'Purchase/Complete/(:segment)/(:segment)', 'WalletsController::purchaseComplete/$1/$2');
+2014:    $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold', 'WalletsController::purchaseMyMIGold');
+2015:    // $routes->match(['GET', 'POST'], 'Purchase/Complete/MyMI-Gold', 'WalletsController::purchaseMyMIGold');
+2016:    // $routes->match(['GET', 'POST'], 'Purchase/Complete/MyMI-Gold/(:segment)', 'WalletsController::purchaseMyMIGold');
+2017:    // $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold/Complete/(:segment)', 'WalletsController::purchaseComplete/$1');
+2018:    $routes->match(['GET', 'POST'], 'Purchase/MyMIGold/Security/(:segment)', 'WalletsController::securityViolation');
+2019:    $routes->match(['GET', 'POST'], 'Transfer-Funds', 'WalletsController::transferFunds', ['as' => 'wallets.transfer-funds']);
+2020:    $routes->match(['GET', 'POST'], 'Wallet-Generator', 'WalletsController::walletGenerator', ['as' => 'wallets.generator']);
+2021:    $routes->match(['GET', 'POST'], 'Wallet-Selection', 'WalletsController::walletSelections', ['as' => 'wallets.selection']);
+2022:    $routes->match(['GET', 'POST'], 'Wallet-Transactions', 'WalletsController::walletTransaction', ['as' => 'wallets.transactions']);
+2023:    $routes->match(['GET', 'POST'], 'Wallet-Transaction/(:segment)', 'WalletsController::walletTransaction/$1', ['as' => 'wallets.transactions.segment']);
+2024:    $routes->match(['GET', 'POST'], 'Withdraw', 'WalletsController::withdraw', ['as' => 'wallets.withdraw']); // Previously /Wallets/Withdraw-Funds
+2025:    $routes->match(['GET', 'POST'], 'Withdraw/(:segment)', 'WalletsController::withdraw/$1', ['as' => 'wallets.withdraw.segment']); // Previously /Wallets/Withdraw-Funds
+2026:    $routes->match(['GET', 'POST'], 'Withdraw/Fetch', 'WalletsController::addWithdrawFetch', ['as' => 'wallets.withdraw.fetch']);
+2056:$routes->addRedirect('Premium-Features/Wallets', 'Wallets/Manager', 301);
+2076:    $routes->get('Integrating-Wallets', 'KnowledgebaseController::integratingWallets');
+2321://     $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsController::addUserGoldTasks');
+2340://     // $routes->match(['GET', 'POST'], 'MyMI-Gold/Tasks/Add', 'WalletsController::addUserGoldTasks');
+2392:// // Management - Wallets:
+2393:// $routes->group('Management/Wallets', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
+2394://     $routes->get('/', 'WalletsController::index');

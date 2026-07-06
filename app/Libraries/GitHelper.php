@@ -7,11 +7,11 @@ class GitHelper
 {
     protected $repos = [
         'media' => [
-            'path'   => '/home/mymiteam/mymiwallet/site/current/public/MyMI-Media',
+            'path'   => '/apps/TBI/www/mymiwallet/releases/20260628-132012/public/MyMI-Media',
             'branch' => 'production',
         ],
         'main' => [
-            'path'   => '/home/mymiteam/mymiwallet/site/current',
+            'path'   => '/apps/TBI/www/mymiwallet/releases/20260628-132012',
             'branch' => 'main',
         ],
     ];
