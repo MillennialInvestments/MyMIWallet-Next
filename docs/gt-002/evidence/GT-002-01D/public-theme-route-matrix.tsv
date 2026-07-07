@@ -1,0 +1,157 @@
+Route	Handler	Theme evidence	Status	Notes
+index.php	\App\Controllers\Home::index	Home controller uses renderTheme for public pages; verify action-specific method if needed	LIKELY_PUBLIC_THEME	
+index.php/register	\App\Controllers\AuthController::register	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+assets/(.*)	(Closure)	Closure route requires manual route-source inspection	NEEDS_REVIEW	
+/	\App\Controllers\Home::index	Home controller uses renderTheme for public pages; verify action-specific method if needed	LIKELY_PUBLIC_THEME	
+healthz	\App\Controllers\System\HealthController::healthz	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+ops/health	\App\Controllers\OpsHealthController::index	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Maintenance	\App\Controllers\MaintenanceController::index	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+admin/ops/health	\App\Controllers\OpsHealthController::index	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Stock/([^/]+)/([^/]+)	\App\Controllers\StockController::show/$1/$2	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+blog	\App\Controllers\Blog::index	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+blog/category/([^/]+)	\App\Controllers\Blog::category/$1	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+blog/([^/]+)	\App\Controllers\Blog::post/$1	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+sw.js	\App\Controllers\ServiceWorker::index	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Apex/Referral	\App\Controllers\Home::apexReferral	Home controller uses renderTheme for public pages; verify action-specific method if needed	LIKELY_PUBLIC_THEME	
+Apex/Referral/([^/]+)	\App\Controllers\Home::apexReferral/$1	Home controller uses renderTheme for public pages; verify action-specific method if needed	LIKELY_PUBLIC_THEME	
+Corporate-Earnings	\App\Controllers\Home::corporateEarnings	Home controller uses renderTheme for public pages; verify action-specific method if needed	LIKELY_PUBLIC_THEME	
+Corporate-Earnings/([^/]+)	\App\Controllers\Home::corporateEarnings/$1	Home controller uses renderTheme for public pages; verify action-specific method if needed	LIKELY_PUBLIC_THEME	
+Economic-Calendar	\App\Controllers\Home::economicCalendar	Home controller uses renderTheme for public pages; verify action-specific method if needed	LIKELY_PUBLIC_THEME	
+Economic-Calendar/([^/]+)	\App\Controllers\Home::economicCalendarContent/$1	Home controller uses renderTheme for public pages; verify action-specific method if needed	LIKELY_PUBLIC_THEME	
+Getting-Started/([^/]+)/([^/]+)	\App\Controllers\Home::gettingStarted	Home controller uses renderTheme for public pages; verify action-specific method if needed	LIKELY_PUBLIC_THEME	
+Getting-Started/([^/]+)	\App\Controllers\Home::gettingStarted	Home controller uses renderTheme for public pages; verify action-specific method if needed	LIKELY_PUBLIC_THEME	
+Getting-Started	\App\Controllers\Home::gettingStarted	Home controller uses renderTheme for public pages; verify action-specific method if needed	LIKELY_PUBLIC_THEME	
+Memberships	\App\Controllers\Home::memberships	Home controller uses renderTheme for public pages; verify action-specific method if needed	LIKELY_PUBLIC_THEME	
+Memberships/([^/]+)	\App\Controllers\Home::memberships	Home controller uses renderTheme for public pages; verify action-specific method if needed	LIKELY_PUBLIC_THEME	
+Learn/([^/]+)	\App\Modules\Public\Controllers\PublicPagesController::show/$1	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Alerts/Preview/([^/]+)	\App\Modules\User\Controllers\AlertsController::preview/$1	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Preview/Alert/([^/]+)	\App\Modules\User\Controllers\AlertsController::preview/$1	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Privacy-Policy	\App\Controllers\Home::privacyPolicy	Home controller uses renderTheme for public pages; verify action-specific method if needed	LIKELY_PUBLIC_THEME	
+Legal/Privacy-Policy	\App\Controllers\Home::privacyPolicy	Home controller uses renderTheme for public pages; verify action-specific method if needed	LIKELY_PUBLIC_THEME	
+Legal/Terms-And-Conditions	\App\Controllers\Home::terms	Home controller uses renderTheme for public pages; verify action-specific method if needed	LIKELY_PUBLIC_THEME	
+Customer-Support	\App\Modules\Support\Controllers\SupportController::index	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Purchase/MyMIGold	(Closure)	Closure route requires manual route-source inspection	NEEDS_REVIEW	
+How-It-Works/Purchase/MyMIGold	(Closure)	Closure route requires manual route-source inspection	NEEDS_REVIEW	
+How-It-Works	\App\Modules\Blog\Controllers\HowItWorksController::index	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+How-It-Works/([^/]+)	\App\Modules\Blog\Controllers\HowItWorksController::show/$1	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Support/Article	(Closure)	Closure route requires manual route-source inspection	NEEDS_REVIEW	
+index.php/How-It-Works	(Closure)	Closure route requires manual route-source inspection	NEEDS_REVIEW	
+index.php/How-It-Works/([^/]+)	(Closure)	Closure route requires manual route-source inspection	NEEDS_REVIEW	
+Sector/([^/]+)	\App\Controllers\Home::sector/$1	Home controller uses renderTheme for public pages; verify action-specific method if needed	LIKELY_PUBLIC_THEME	
+Terms-Of-Service	\App\Controllers\Home::termsOfService	Home controller uses renderTheme for public pages; verify action-specific method if needed	LIKELY_PUBLIC_THEME	
+resend-activation	\App\Controllers\AuthController::resendActivation	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Dev/BitcoinTest	\App\Controllers\Dev\BitcoinTest::index	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Debug/whoami	\App\Controllers\Debug::whoami	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Debug/auth-audit-cache	\App\Controllers\Debug::authAuditCacheSelfTest	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+debug/common-data/smoke	\App\Controllers\Debug\CommonDataController::smoke	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+debug/register-success-probe	\App\Controllers\AuthController::registerSuccessProbe	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+health	\App\Controllers\Health::index	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+status	\App\Controllers\Health::status	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+api/health	\App\Controllers\Api\HealthController::index	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+_ops/opcache-reset	\App\Controllers\Ops::opcacheReset	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+logout	\App\Controllers\AuthController::logout	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+register	\App\Controllers\AuthController::register	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+register/success	\App\Controllers\AuthController::registerSuccess	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+register-shield	\App\Controllers\ShieldAuth\Register::index	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Login	(Closure)	Closure route requires manual route-source inspection	NEEDS_REVIEW	
+test-create-user	\App\Controllers\AuthController::createTempUser	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+register/([^/]+)	\App\Controllers\AuthController::register/$1	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Discord/register	\App\Controllers\AuthController::register	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Discord/register/([^/]+)	\App\Controllers\AuthController::register/$1	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+activate	\App\Controllers\AuthController::activateAccount	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+activate-account	\App\Controllers\AuthController::activateAccount	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+resend-activate-account	\App\Controllers\AuthController::resendActivateAccount	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+reset-password	\App\Controllers\AuthController::resetPassword	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+auth/provider/([^/]+)	\App\Controllers\AuthController::redirectToProvider/$1	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+auth/provider/([^/]+)/callback	\App\Controllers\AuthController::handleProviderCallback/$1	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+auth/link/([^/]+)	\App\Controllers\AuthController::linkProvider/$1	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+auth/unlink/([^/]+)	\App\Controllers\AuthController::unlinkProvider/$1	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Advisor	\App\Controllers\AdvisorController::index	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+API	\App\Modules\APIs\Controllers\APIController::index	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Blog	\App\Modules\Blog\Controllers\BlogController::index	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Blog/Post/([^/]+)	\App\Modules\Blog\Controllers\BlogController::viewBlog/$1	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Blog/Earnings	\App\Modules\Blog\Controllers\EarningsController::index	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Blog/Earnings/Test	\App\Modules\Blog\Controllers\EarningsController::test	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Blog/Earnings/([^/]+)	\App\Modules\Blog\Controllers\EarningsController::viewByDate	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Blog/Investing	\App\Modules\Blog\Controllers\InvestingController::index	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Blog/Investing/The-Beginners-Guide-To-Option-Trading	\App\Modules\Blog\Controllers\InvestingController::TheBeginnersGuideToOptionTrading	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Blog/Investing/The-Fundamentals-Of-Investing	\App\Modules\Blog\Controllers\InvestingController::TheFundamentalsOfInvesting	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Blog/IRS	\App\Modules\Blog\Controllers\InvestingController::index	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Blog/News-And-Updates	\App\Modules\Blog\Controllers\UpdatesController::index	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Blog/News-And-Updates/Integrating-With-Plaid	\App\Modules\Blog\Controllers\NewsAndUpdates::IntegratingWithPlaid	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Blog/News-And-Updates/The-Roadmap-To-The-Future-Of-Finance	\App\Modules\Blog\Controllers\NewsAndUpdates::TheRoadmapToTheFutureOfFinance	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Blog/([^/]+)/([^/]+)	\App\Modules\Blog\Controllers\BlogController::view/$1/$2	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Blog/([^/]+)	\App\Modules\Blog\Controllers\BlogController::view/$1	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+index.php/Blog	(Closure)	Closure route requires manual route-source inspection	NEEDS_REVIEW	
+index.php/Blog/([^/]+)	(Closure)	Closure route requires manual route-source inspection	NEEDS_REVIEW	
+index.php/Blog/([^/]+)/([^/]+)	(Closure)	Closure route requires manual route-source inspection	NEEDS_REVIEW	
+Auctions	\App\Controllers\AuctionsController::index	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Auctions/Item/([0-9]+)	\App\Controllers\AuctionsController::item/$1	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Auctions/Poll/([0-9]+)	\App\Controllers\AuctionsController::poll/$1	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Predictions	\App\Modules\User\Controllers\PredictionsController::index	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Predictions/Markets	\App\Modules\User\Controllers\PredictionsController::markets	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Predictions/Market/([0-9]+)	\App\Modules\User\Controllers\PredictionsController::view/$1	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Predictions/Portfolio	\App\Modules\User\Controllers\PredictionsController::portfolio	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Predictions/Settlements	\App\Modules\User\Controllers\PredictionsController::settlements	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Projects	\App\Modules\User\Controllers\ProjectsController::index	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Projects/View/([0-9]+)	\App\Modules\User\Controllers\ProjectsController::view/$1	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Projects/My/Commitments	\App\Modules\User\Controllers\ProjectsController::myCommitments	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Projects/Fund	\App\Modules\User\Controllers\ProjectsController::fund	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Projects/Fund/([0-9]+)	\App\Modules\User\Controllers\ProjectsController::fund/$1	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Announcements	\App\Modules\Blog\Controllers\AnnouncementsController::index	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Marketplace	\App\Modules\ScriptStudio\Controllers\ScriptStudioController::marketplace	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+ScriptStudio	\App\Modules\ScriptStudio\Controllers\ScriptStudioController::index	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+ScriptStudio/Marketplace	\App\Modules\ScriptStudio\Controllers\ScriptStudioController::marketplace	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+ScriptStudio/Create	\App\Modules\ScriptStudio\Controllers\ScriptStudioController::create	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+ScriptStudio/Edit/([0-9]+)	\App\Modules\ScriptStudio\Controllers\ScriptStudioController::edit/$1	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+ScriptStudio/Preview/([0-9]+)	\App\Modules\ScriptStudio\Controllers\ScriptStudioController::preview/$1	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+ScriptStudio/Export/([0-9]+)/([^/]+)	\App\Modules\ScriptStudio\Controllers\ScriptStudioController::export/$1/$2	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+How-It-Works/Daily-Financial-News	\App\Modules\Blog\Controllers\HowItWorksController::DailyFinancialNews	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+How-It-Works/MyMI-Gold	\App\Modules\Blog\Controllers\HowItWorksController::MyMIGold	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+How-It-Works/What-Is-MyMI-Gold	\App\Modules\Blog\Controllers\HowItWorksController::MyMIGold	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+How-It-Works/Purchase-MyMI-Gold	\App\Modules\Blog\Controllers\HowItWorksController::PurchaseMyMIGold	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+How-It-Works/Setting-Financial-Goals	\App\Modules\Blog\Controllers\HowItWorksController::SettingFinancialGoals	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+How-It-Works/crypto	\App\Modules\Blog\Controllers\HowItWorksController::show/crypto	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+How-It-Works/alerts	\App\Modules\Blog\Controllers\HowItWorksController::show/alerts	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+How-It-Works/projects	\App\Modules\Blog\Controllers\HowItWorksController::show/projects	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+How-It-Works/security	\App\Modules\Blog\Controllers\HowItWorksController::show/security	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+How-It-Works/pricing	\App\Modules\Blog\Controllers\HowItWorksController::show/pricing	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Support/ticket/([0-9]+)	\App\Modules\Support\Controllers\SupportTicketController::show/$1	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Support	\App\Modules\Support\Controllers\SupportController::index	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Support/Account	\App\Modules\Support\Controllers\AccountSupportController::index	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Support/Article/([^/]+)	\App\Modules\Support\Controllers\SupportController::article/$1	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Support/Discord	\App\Modules\Support\Controllers\SupportController::discordOnboarding	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Support/FAQ	\App\Modules\Support\Controllers\SupportController::view/FAQ	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Support/Feedback	\App\Modules\Support\Controllers\SupportController::view/Feedback	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Support/Test	\App\Modules\Support\Controllers\SupportController::view/Test	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Support/Test-Email	\App\Modules\Support\Controllers\SupportController::view/Test-Email	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Support/(.*)	\App\Modules\Support\Controllers\SupportController::view/$1	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Features	\App\Modules\Advertise\Controllers\FeaturesController::index	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Features/Brokerage-Integrations	\App\Modules\Advertise\Controllers\FeaturesController::BrokerageIntegrations	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Features/Brokerage-Integration	\App\Modules\Advertise\Controllers\FeaturesController::BrokerageIntegrations	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Features/MyMI-Gold	\App\Modules\Advertise\Controllers\HowItWorks::MyMIGold	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Knowledgebase	\App\Modules\User\Controllers\KnowledgebaseController::index	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Knowledgebase/Account-And-Billing	\App\Modules\User\Controllers\KnowledgebaseController::accountBilling	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Knowledgebase/Assets	\App\Modules\User\Controllers\KnowledgebaseController::assets	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Knowledgebase/Investor-Profile	\App\Modules\User\Controllers\KnowledgebaseController::investorProfile	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Knowledgebase/KYC-Verification	\App\Modules\User\Controllers\KnowledgebaseController::KYCVerification	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Knowledgebase/MyMI-Partnerships	\App\Modules\User\Controllers\KnowledgebaseController::partnerships	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Knowledgebase/Promoted-Articles	\App\Modules\User\Controllers\KnowledgebaseController::promotedArticles	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Knowledgebase/Technical-Support	\App\Modules\User\Controllers\KnowledgebaseController::technicalSupport	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Knowledgebase/Trade-Tracker	\App\Modules\User\Controllers\KnowledgebaseController::tradeTracker	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Knowledgebase/Tutorials	\App\Modules\User\Controllers\KnowledgebaseController::tutorials	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Knowledgebase/Types-Of-Accounts	\App\Modules\User\Controllers\KnowledgebaseController::typesOfAccounts	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Knowledgebase/(.*)	\App\Modules\User\Controllers\KnowledgebaseController::show/$1	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Subscribe	\App\Modules\Blog\Controllers\SubscribeController::index	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Subscribe//Daily-Financial-News	\App\Modules\Blog\Controllers\SubscribeController::index	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Subscribe/Submit	\App\Modules\Blog\Controllers\SubscribeController::submit	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+system/healthz	\App\Controllers\System\HealthController::healthz	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+system/diag	\App\Controllers\System\HealthController::diag	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+Subscribe/Daily-Financial-News	(Closure)	Closure route requires manual route-source inspection	NEEDS_REVIEW	
+Blog/Investing/(.*)	(Closure)	Closure route requires manual route-source inspection	NEEDS_REVIEW	
+ScriptStudio/Export/([0-9]+)/(.*)	\App\Modules\ScriptStudio\Controllers\ScriptStudioController::export/$1/$2	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+index.php/(.*)	$1	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+index.php/images/(.*)	images/$1	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+News	Blog/News-And-Updates	Public/blog/support controller family; verify render call evidence	LIKELY_PUBLIC_THEME	
+Features/Advanced-Investment-Portfoio-Manager	Features/Advanced-Investment-Portfolio-Manager	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
+How-To-Guides	Knowledgebase/Tutorials	renderTheme evidence exists in controller scan	NEEDS_REVIEW	
