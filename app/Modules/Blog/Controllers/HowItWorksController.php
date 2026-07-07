@@ -202,7 +202,7 @@ class HowItWorksController extends UserController
                 'discord'                         => 'App\Modules\Blog\Views\HowItWorks\Discord',
                 'streaming'                       => 'App\Modules\Blog\Views\HowItWorks\Streaming',
                 'purchase-mymi-gold'              => 'App\Modules\Blog\Views\HowItWorks\Purchase_MyMI_Gold',
-                'alerts'                          => 'App\Modules\Blog\Views\HowItWorks\fallback',
+                'alerts'                          => 'themes/public/how_it_works/alerts',
             ];
 
             if (isset($viewMap[$normalizedSlug])) {
