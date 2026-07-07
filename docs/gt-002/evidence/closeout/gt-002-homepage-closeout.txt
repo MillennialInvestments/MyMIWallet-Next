@@ -1,0 +1,46 @@
+# GT-002 Closeout Reconciliation
+2026-07-07T12:47:44+00:00
+
+## Commit
+dced84809bd092fa16ecde335d113f81f9920f42
+
+## Homepage GET smoke
+www GET 200
+root GET 200
+
+## Homepage HEAD smoke
+HTTP/1.1 200 OK
+Server: nginx/1.18.0 (Ubuntu)
+Content-Type: text/html; charset=UTF-8
+Connection: keep-alive
+X-MyMI-FrontController: 1
+Set-Cookie: ci_session=2d4a8acbebbf75da11393ee02dd25bb6; expires=Tue, 07 Jul 2026 14:47:45 GMT; Max-Age=7200; path=/; domain=.mymiwallet.com; secure; HttpOnly; SameSite=Lax
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+X-Request-Id: c984dbb1b8ed16a4137a3b845e247193
+Date: Tue, 07 Jul 2026 12:47:45 GMT
+
+
+HTTP/1.1 200 OK
+Server: nginx/1.18.0 (Ubuntu)
+Content-Type: text/html; charset=UTF-8
+Connection: keep-alive
+X-MyMI-FrontController: 1
+Set-Cookie: ci_session=ae95bd920318392e2e10668ed9c12579; expires=Tue, 07 Jul 2026 14:47:45 GMT; Max-Age=7200; path=/; domain=.mymiwallet.com; secure; HttpOnly; SameSite=Lax
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+X-Request-Id: 2efe1f851ac8b39800ca29c0c28635a5
+Date: Tue, 07 Jul 2026 12:47:45 GMT
+
+
+## Production fix commits
+dced84809 (HEAD -> feature/gt-002-closeout-reconciliation, origin/main, origin/HEAD) Add GT-001 identity and access readiness audit (#530)
+68a0f1256 (main) Repair GT-002-01C Home HEAD parse regression (#583)
+a30941b6a Fix GT-002-01C homepage HEAD runtime compatibility (#582)
+7575e0bcf Fix GT-002-01B homepage HEAD compatibility (#581)
+bd28b849e Fix GT-002-01 defensive error ingestion (#580)
+362e9f480 Reconcile GT-002 baseline confirmed finding (#579)
+255008e6b GT-002 functional certification baseline (#578)
+aec4731e3 Merge pull request #577 from MillennialInvestments/feature/mymi-gt001g-b1-wallets-route-remediation-matrix
