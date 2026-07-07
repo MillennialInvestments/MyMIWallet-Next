@@ -1,0 +1,2 @@
+app/Modules/Blog/Views/HowItWorks/how-it-works-frontend/index.html:1:<!DOCTYPE html>
+app/Modules/Blog/Views/HowItWorks/how-it-works-frontend/index.html:2:<html lang="en">

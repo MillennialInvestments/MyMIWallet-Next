@@ -1,0 +1,17 @@
+149:    protected function renderPublic(string $view, array $data = []): ResponseInterface
+211:                    return $this->renderPublic($viewMap[$normalizedSlug], is_array($data) ? $data : []);
+214:                if (method_exists($this, 'respondWithRendered')) {
+215:                    return $this->respondWithRendered($viewMap[$normalizedSlug], $data);
+218:                return $this->renderPublic($viewMap[$normalizedSlug], is_array($data) ? $data : []);
+233:                    if (method_exists($this, 'respondWithRendered')) {
+234:                        return $this->respondWithRendered('App\Modules\Blog\Views\HowItWorks\index', $data);
+237:                    return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\index', $data);
+265:        return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\fallback', [
+301:        return $this->renderPublic(
+312:        return $this->renderPublic(
+394:        return $this->renderPublic(
+407:        return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\Investment_Portfolio_Management', $data);
+437:        return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\MyMI_Gold', $this->data);
+449:        return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\Personal_Budgeting', $data);
+464:        return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\Purchase_MyMI_Gold', $data);
+476:        return $this->renderPublic('App\Modules\Blog\Views\HowItWorks\Setting_Financial_Goals', $data);
