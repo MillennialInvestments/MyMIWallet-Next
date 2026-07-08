@@ -1,0 +1,568 @@
+app/Controllers/AuthController.php:20:class AuthController extends BaseController
+app/Controllers/AuthController.php:69:     * Displays the login form, or redirects
+app/Controllers/AuthController.php:73:    public function login()
+app/Controllers/AuthController.php:89:                'writer' => 'AuthController::login[next]',
+app/Controllers/AuthController.php:102:            && ! str_contains($previous, '/login')
+app/Controllers/AuthController.php:108:        $this->authLog('AUTH_VIEW', 'login_view', 'Rendering login view', [
+app/Controllers/AuthController.php:114:        service('eventTracker')->track('auth.login_view');
+app/Controllers/AuthController.php:117:        return $this->_render($this->config->views['login'], ['config' => $this->config]);
+app/Controllers/AuthController.php:124:    public function attemptLogin()
+app/Controllers/AuthController.php:129:        $this->logAuthSubmitDiagnostics('attemptLogin', $requestId);
+app/Controllers/AuthController.php:131:        $this->authLog('AUTH_LOGIN', 'entry', 'attemptLogin reached', [
+app/Controllers/AuthController.php:138:            $this->authLog('AUTH_FAIL', 'invalid_method', 'Non-POST login attempt blocked', [
+app/Controllers/AuthController.php:141:                'redirect_target' => site_url('login'),
+app/Controllers/AuthController.php:143:            return redirect()->to(site_url('login'))
+app/Controllers/AuthController.php:151:            $this->authLog('AUTH_SPAM', 'login_honeypot', 'Login blocked by honeypot trigger', [
+app/Controllers/AuthController.php:152:                'redirect_target' => site_url('login'),
+app/Controllers/AuthController.php:154:            return redirect()->to(site_url('login'))
+app/Controllers/AuthController.php:159:        service('eventTracker')->track('auth.login_attempt', [
+app/Controllers/AuthController.php:160:            'login_type' => $this->config->validFields === ['email'] ? 'email' : 'username',
+app/Controllers/AuthController.php:164:            'login'    => 'required',
+app/Controllers/AuthController.php:170:            $rules['login'] .= '|valid_email';
+app/Controllers/AuthController.php:176:                'identifier' => (string) ($this->request->getPost('login') ?? ''),
+app/Controllers/AuthController.php:179:                'redirect_target' => site_url('login'),
+app/Controllers/AuthController.php:193:            return redirect()->to(site_url('login'))
+app/Controllers/AuthController.php:199:        $login    = $this->request->getPost('login');
+app/Controllers/AuthController.php:203:        $throttleKey = md5('auth-login:' . strtolower((string) $login) . ':' . $this->request->getIPAddress());
+app/Controllers/AuthController.php:205:            $this->authLog('AUTH_SPAM', 'login_throttled', 'Login attempt rate-limited', [
+app/Controllers/AuthController.php:206:                'identifier' => (string) $login,
+app/Controllers/AuthController.php:207:                'redirect_target' => site_url('login'),
+app/Controllers/AuthController.php:209:            return redirect()->to(site_url('login'))
+app/Controllers/AuthController.php:211:                ->with('error', 'Too many login attempts. Please wait one minute and try again.');
+app/Controllers/AuthController.php:215:        $type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+app/Controllers/AuthController.php:216:        $identifier = (string) $login;
+app/Controllers/AuthController.php:242:        $this->authLogger->logLoginAttempt((string) $login, $ip, $ua);
+app/Controllers/AuthController.php:243:        $this->ipHistoryModel->record(null, filter_var($login, FILTER_VALIDATE_EMAIL) ? (string) $login : null, $ip, $ua);
+app/Controllers/AuthController.php:248:                'Auth attemptLogin() called with login identifier: %s, remember: %s',
+app/Controllers/AuthController.php:249:                $login ?? 'N/A',
+app/Controllers/AuthController.php:275:            $type      => $login,
+app/Controllers/AuthController.php:287:            if (! $attempt && $userFound && ! $passwordVerifyFailed && $userRecord !== null && method_exists($this->auth, 'login')) {
+app/Controllers/AuthController.php:288:                $this->authLog('AUTH_LOGIN', 'legacy_password_hash_fallback', 'Myth/Auth attempt failed after native password verification; applying migrated hash compatibility login.', [
+app/Controllers/AuthController.php:294:                $attempt = (bool) $this->auth->login($userRecord, $remember);
+app/Controllers/AuthController.php:300:                'redirect_target' => site_url('login'),
+app/Controllers/AuthController.php:303:                'email_entered' => filter_var($login, FILTER_VALIDATE_EMAIL) ? (string) $login : null,
+app/Controllers/AuthController.php:319:            $this->authLogger->logAuthException($e, ['login' => (string) $login, 'ip' => $ip]);
+app/Controllers/AuthController.php:328:                ['ticket_id' => $ticketId, 'login' => (string) $login, 'request_id' => $requestId]
+app/Controllers/AuthController.php:331:            return redirect()->to(site_url('login'))
+app/Controllers/AuthController.php:333:                ->with('errors', ['login' => 'A login system error occurred.'])
+app/Controllers/AuthController.php:334:                ->with('error', 'A login system error occurred. Please try again or contact support.');
+app/Controllers/AuthController.php:366:                'redirect_target' => site_url('login'),
+app/Controllers/AuthController.php:368:            log_message('notice', '[AUTH_FAILURE] login attempt denied', [
+app/Controllers/AuthController.php:369:                'login' => (string) $login,
+app/Controllers/AuthController.php:377:                    $login ?? 'N/A',
+app/Controllers/AuthController.php:383:                service('eventTracker')->track('auth.login_inactive', [
+app/Controllers/AuthController.php:389:                    'Your account is not activated yet. Please activate it using the email link, or resend the activation email below.',
+app/Controllers/AuthController.php:392:                    ['login' => (string) $login, 'request_id' => $requestId]
+app/Controllers/AuthController.php:394:                $this->session->setFlashdata('auth_show_resend', true);
+app/Controllers/AuthController.php:396:                    'login' => $login,
+app/Controllers/AuthController.php:400:                service('eventTracker')->track('auth.login_fail', [
+app/Controllers/AuthController.php:409:                    ['login' => (string) $login, 'request_id' => $requestId]
+app/Controllers/AuthController.php:411:                $this->authLogger->logLoginFailure('invalid_credentials', ['login' => (string) $login, 'ip' => $ip, 'user_agent' => $ua]);
+app/Controllers/AuthController.php:413:                    'login' => $login,
+app/Controllers/AuthController.php:419:            return redirect()->to(site_url('login'))
+app/Controllers/AuthController.php:421:                ->with('errors', ['login' => $errorMsg ?: $message])
+app/Controllers/AuthController.php:450:                $login ?? 'N/A',
+app/Controllers/AuthController.php:471:            log_message('debug', 'Auth attemptLogin() - session user_id set to: ' . $userId);
+app/Controllers/AuthController.php:473:            log_message('error', 'Auth attemptLogin() - login succeeded but userId could not be resolved.');
+app/Controllers/AuthController.php:480:            service('eventTracker')->track('auth.login_success', [], (int) $userId);
+app/Controllers/AuthController.php:481:            $this->authLog('AUTH_SUCCESS', 'login_success', 'Login successful', [
+app/Controllers/AuthController.php:501:                    'source' => 'first_login',
+app/Controllers/AuthController.php:508:                log_message('info', 'Auth attemptLogin() onboarding walkthrough queued for user_id={id}', [
+app/Controllers/AuthController.php:532:                lang('Auth.loginSuccess')
+app/Controllers/AuthController.php:581:        $response = redirect()->route('login');
+app/Controllers/AuthController.php:608:    public function register()
+app/Controllers/AuthController.php:617:            $this->setAuthMessage('danger', lang('Auth.registerDisabled'));
+app/Controllers/AuthController.php:619:            return redirect()->to(site_url('register'))
+app/Controllers/AuthController.php:621:                ->with('errors', ['register' => lang('Auth.registerDisabled')]);
+app/Controllers/AuthController.php:658:        service('eventTracker')->track('auth.register_view', [
+app/Controllers/AuthController.php:674:        $this->authLog('AUTH_VIEW', 'register_view', 'Rendering register view', [
+app/Controllers/AuthController.php:681:        log_message('debug', '[AUTH_REGISTER] register() render payload prepared', [
+app/Controllers/AuthController.php:682:            'view'         => $this->config->views['register'] ?? 'Auth/register',
+app/Controllers/AuthController.php:690:        return $this->_render($this->config->views['register'], $renderData);
+app/Controllers/AuthController.php:694:     * Attempt to register a new user.
+app/Controllers/AuthController.php:700:    //         return redirect()->back()->withInput()->with('error', lang('Auth.registerDisabled'));
+app/Controllers/AuthController.php:749:    //         return redirect()->route('login')->with('message', lang('Auth.activationSuccess'));
+app/Controllers/AuthController.php:753:    //     return redirect()->route('login')->with('message', lang('Auth.registerSuccess'));
+app/Controllers/AuthController.php:760:            $this->authLog('AUTH_FAIL', 'register_invalid_method', 'Non-POST register attempt blocked', [
+app/Controllers/AuthController.php:763:                'redirect_target' => site_url('register'),
+app/Controllers/AuthController.php:765:            return redirect()->to(site_url('register'))
+app/Controllers/AuthController.php:771:            $this->authLog('AUTH_SPAM', 'register_honeypot', 'Registration blocked by honeypot trigger', [
+app/Controllers/AuthController.php:772:                'redirect_target' => site_url('register'),
+app/Controllers/AuthController.php:774:            return redirect()->to(site_url('register'))
+app/Controllers/AuthController.php:783:        $registerRedirectRaw = is_scalar($this->request->getPost('redirect_url')) ? (string) $this->request->getPost('redirect_url') : null;
+app/Controllers/AuthController.php:784:        $registerNextRaw = is_scalar($this->request->getPost('next')) ? (string) $this->request->getPost('next') : null;
+app/Controllers/AuthController.php:788:            'posted_redirect_url_raw' => $registerRedirectRaw,
+app/Controllers/AuthController.php:789:            'posted_next_raw' => $registerNextRaw,
+app/Controllers/AuthController.php:792:        $this->rememberRedirectUrl($registerRedirectRaw);
+app/Controllers/AuthController.php:793:        $this->rememberRedirectUrl($registerNextRaw);
+app/Controllers/AuthController.php:813:        $throttleKey = md5('auth-register:' . strtolower($email ?: $username) . ':' . $request->getIPAddress());
+app/Controllers/AuthController.php:815:            $this->authLog('AUTH_SPAM', 'register_throttled', 'Registration attempt rate-limited', [
+app/Controllers/AuthController.php:818:                'redirect_target' => site_url('register'),
+app/Controllers/AuthController.php:820:            return redirect()->to(site_url('register'))
+app/Controllers/AuthController.php:826:            $this->authLog('AUTH_SPAM', 'register_suspicious', 'Registration flagged as suspicious', [
+app/Controllers/AuthController.php:830:            return redirect()->to(site_url('register'))
+app/Controllers/AuthController.php:832:                ->with('errors', ['register' => 'We could not complete this registration automatically. Please contact support if this is a mistake.'])
+app/Controllers/AuthController.php:866:        service('eventTracker')->track('auth.register_submit', [
+app/Controllers/AuthController.php:878:            $this->authLog('AUTH_FAIL', 'register_disabled', 'Registration blocked because registration is disabled', [
+app/Controllers/AuthController.php:880:                'redirect_target' => site_url('register'),
+app/Controllers/AuthController.php:883:                'error' => lang('Auth.registerDisabled'),
+app/Controllers/AuthController.php:885:            service('eventTracker')->track('auth.register_fail', [
+app/Controllers/AuthController.php:894:            $this->forceSupportAlert('danger', 'Registration unavailable', lang('Auth.registerDisabled'), 'AUTH-REG-001', null, ['request_id' => $requestId]);
+app/Controllers/AuthController.php:895:            return redirect()->to(site_url('register'))->withInput()->with('errors', ['register' => lang('Auth.registerDisabled')])->with('error', lang('Auth.registerDisabled'));
+app/Controllers/AuthController.php:908:                $this->authLog('AUTH_FAIL', 'register_validation_basic', 'Registration validation failed for basic fields', [
+app/Controllers/AuthController.php:911:                    'redirect_target' => site_url('register'),
+app/Controllers/AuthController.php:916:                service('eventTracker')->track('auth.register_fail', [
+app/Controllers/AuthController.php:932:                return redirect()->to(site_url('register'))->withInput()->with('errors', $errors)->with('error', $this->formatValidationErrors($errors));
+app/Controllers/AuthController.php:946:                $this->authLog('AUTH_FAIL', 'register_validation_password', 'Registration password validation failed', [
+app/Controllers/AuthController.php:949:                    'redirect_target' => site_url('register'),
+app/Controllers/AuthController.php:954:                service('eventTracker')->track('auth.register_fail', [
+app/Controllers/AuthController.php:966:                return redirect()->to(site_url('register'))->withInput()->with('errors', $errors)->with('error', $this->formatValidationErrors($errors));
+app/Controllers/AuthController.php:991:                $this->authLog('AUTH_FAIL', 'register_save_failed', 'User save failed during registration', [
+app/Controllers/AuthController.php:994:                    'redirect_target' => site_url('register'),
+app/Controllers/AuthController.php:999:                service('eventTracker')->track('auth.register_fail', [
+app/Controllers/AuthController.php:1011:                return redirect()->to(site_url('register'))->withInput()->with('errors', $errors)->with('error', 'We could not create your account with that information. Please review the errors and try again.');
+app/Controllers/AuthController.php:1019:                $this->authLog('AUTH_FAIL', 'register_password_hash_invalid', 'Stored password hash failed post-registration verification', [
+app/Controllers/AuthController.php:1036:                return redirect()->to(site_url('register'))->withInput()->with('errors', ['password' => 'We could not securely store your password. Please try again.'])->with('error', 'We could not securely store your password. Please try again.');
+app/Controllers/AuthController.php:1039:            service('eventTracker')->track('auth.register_success', [], $newUserId);
+app/Controllers/AuthController.php:1040:            $loginIdentifier = $this->config->validFields === ['email'] ? 'email' : 'username';
+app/Controllers/AuthController.php:1043:                'Registration created user_id={id}, email={email}, username={username}, active={active}, requiresActivation={requiresActivation}, loginIdentifier={loginIdentifier}',
+app/Controllers/AuthController.php:1050:                    'loginIdentifier'    => $loginIdentifier,
+app/Controllers/AuthController.php:1077:                    'source' => 'register',
+app/Controllers/AuthController.php:1092:                        'redirect_target' => site_url('register'),
+app/Controllers/AuthController.php:1097:                    service('eventTracker')->track('auth.register_fail', [
+app/Controllers/AuthController.php:1115:                    return redirect()->to(site_url('register'))->withInput()->with('errors', ['activation' => $activator->error() ?? lang('Auth.unknownError')]);
+app/Controllers/AuthController.php:1117:                $this->authLog('AUTH_SUCCESS', 'register_success_activation_required', 'Registration successful with activation required', [
+app/Controllers/AuthController.php:1120:                    'redirect_target' => site_url('register/success'),
+app/Controllers/AuthController.php:1145:                return redirect()->to(site_url('register/success'))->with('auth_message', [
+app/Controllers/AuthController.php:1152:            $this->authLog('AUTH_SUCCESS', 'register_success', 'Registration successful', [
+app/Controllers/AuthController.php:1155:                'redirect_target' => site_url('register/success'),
+app/Controllers/AuthController.php:1168:            $message = lang('Auth.registerSuccess');
+app/Controllers/AuthController.php:1172:            return redirect()->to(site_url('register/success'))->with('auth_message', [
+app/Controllers/AuthController.php:1177:            $this->authLog('AUTH_FAIL', 'register_exception', 'Exception during registration', [
+app/Controllers/AuthController.php:1180:                'redirect_target' => site_url('register'),
+app/Controllers/AuthController.php:1183:            service('eventTracker')->track('auth.register_fail', [
+app/Controllers/AuthController.php:1200:            return redirect()->to(site_url('register'))->withInput()->with('error', 'A system error occurred while processing your registration. Please try again or contact support.');
+app/Controllers/AuthController.php:1254:    public function registerSuccess()
+app/Controllers/AuthController.php:1272:            return $this->_render('Auth/register_success', $data);
+app/Controllers/AuthController.php:1285:    public function registerSuccessProbe()
+app/Controllers/AuthController.php:1289:        return view('Auth/register_success_plain');
+app/Controllers/AuthController.php:1292:    public function resendRegistrationActivation()
+app/Controllers/AuthController.php:1294:        service('eventTracker')->track('auth.resend_activation_requested', [
+app/Controllers/AuthController.php:1295:            'source' => 'register_success',
+app/Controllers/AuthController.php:1299:            log_message('info', 'Registration resend activation skipped: activation disabled.');
+app/Controllers/AuthController.php:1300:            return redirect()->to(site_url('register/success'))->with('auth_message', [
+app/Controllers/AuthController.php:1308:        $throttleKey = md5('register-resend:' . ($email ?: 'unknown') . ':' . $this->request->getIPAddress());
+app/Controllers/AuthController.php:1311:            log_message('warning', 'Registration resend activation throttled for {email} from {ip}', [
+app/Controllers/AuthController.php:1316:            return redirect()->to(site_url('register/success'))
+app/Controllers/AuthController.php:1324:            log_message('notice', 'Registration resend activation requested without email.');
+app/Controllers/AuthController.php:1325:            return redirect()->to(site_url('register/success'))
+app/Controllers/AuthController.php:1339:                log_message('error', 'Registration resend activation failed for {email}: {error}', [
+app/Controllers/AuthController.php:1343:                return redirect()->to(site_url('register/success'))
+app/Controllers/AuthController.php:1349:                service('eventTracker')->track('auth.resend_activation_sent', [], (int) ($user->id ?? 0));
+app/Controllers/AuthController.php:1350:                log_message('info', 'Registration resend activation succeeded for {email}', ['email' => $email]);
+app/Controllers/AuthController.php:1353:            log_message('notice', 'Registration resend activation request had no matching inactive user for {email}', [
+app/Controllers/AuthController.php:1358:        return redirect()->to(site_url('register/success'))
+app/Controllers/AuthController.php:1376:            return redirect()->route('login');
+app/Controllers/AuthController.php:1390:            return redirect()->route('login');
+app/Controllers/AuthController.php:1478:    public function resetPassword()
+app/Controllers/AuthController.php:1482:            return redirect()->route('login');
+app/Controllers/AuthController.php:1503:            return redirect()->route('login');
+app/Controllers/AuthController.php:1575:        return redirect()->route('login');
+app/Controllers/AuthController.php:1583:    public function activateAccount()
+app/Controllers/AuthController.php:1651:            return redirect()->route('login');
+app/Controllers/AuthController.php:1670:            'destination' => route_to('login'),
+app/Controllers/AuthController.php:1674:        return redirect()->route('login')->with('auth_message', [
+app/Controllers/AuthController.php:1685:    public function resendActivateAccount()
+app/Controllers/AuthController.php:1689:            return redirect()->route('login');
+app/Controllers/AuthController.php:1698:        $login = urldecode($this->request->getGet('login'));
+app/Controllers/AuthController.php:1699:        $type  = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+app/Controllers/AuthController.php:1703:        $user = $users->where($type, $login)
+app/Controllers/AuthController.php:1709:            $this->session->setFlashdata('auth_show_resend', true);
+app/Controllers/AuthController.php:1710:            return redirect()->route('login');
+app/Controllers/AuthController.php:1722:        return redirect()->route('login')->with('auth_message', [
+app/Controllers/AuthController.php:1728:    public function resendActivation()
+app/Controllers/AuthController.php:1732:            return redirect()->route('login');
+app/Controllers/AuthController.php:1735:        return $this->_render($this->config->views['resendActivation'] ?? 'Auth/resend_activation', [
+app/Controllers/AuthController.php:1741:    public function resendActivationCode()
+app/Controllers/AuthController.php:1746:        service('eventTracker')->track('auth.resend_activation_requested', [
+app/Controllers/AuthController.php:1747:            'source' => 'login',
+app/Controllers/AuthController.php:1756:        $throttleKey = md5('resend-activation:' . ($email ?: 'unknown') . ':' . $ip);
+app/Controllers/AuthController.php:1763:            return redirect()->route('login')->with('auth_message', [
+app/Controllers/AuthController.php:1773:            return redirect()->route('login')->with('auth_message', [
+app/Controllers/AuthController.php:1787:                service('eventTracker')->track('auth.resend_activation_sent', [], (int) ($user->id ?? 0));
+app/Controllers/AuthController.php:1797:                return redirect()->route('login')->with('auth_message', [
+app/Controllers/AuthController.php:1813:        return redirect()->route('login')->with('auth_message', [
+app/Controllers/AuthController.php:1992:        $target = site_url('login');
+app/Controllers/AuthController.php:1997:        log_message('debug', 'AuthController login cleaned tracking query params', [
+app/Controllers/AuthController.php:2079:        $loginPath = $this->normalisePath(site_url('login'));
+app/Controllers/AuthController.php:2081:        if ($path === $loginPath || str_ends_with(strtolower($path), '/login') || strtolower($path) === 'login') {
+app/Controllers/AuthController.php:2085:        return stripos($url, '/login') !== false;
+app/Controllers/AuthController.php:2103:        return stripos($url, '/register/success') !== false;
+app/Controllers/AuthController.php:2258:            'has_login' => array_key_exists('login', $post),
+app/Controllers/AuthController.php:2331:            'identifier' => (string) ($this->request->getPost('login') ?? $this->request->getPost('email') ?? ''),
+app/Controllers/AuthController.php:2363:        $route = strtolower($context) === 'register' ? 'register' : 'login';
+app/Controllers/BaseController.php:435:            // log_message('debug', 'BaseController::commonData() redirecting guest to login from: ' . $currentUrl);
+app/Controllers/BaseController.php:437:            // // For web controllers, redirect to login
+app/Controllers/BaseController.php:1194:            $this->logRenderFailureToChannels('critical', 'Auth register render failed: missing required view path', $context);
+app/Controllers/BaseAdminController.php:30:        return redirect()->to('/login')->with('error', 'Admin access required.');
+app/Controllers/BaseUserController.php:34:        return redirect()->to('/login');
+app/Controllers/ShieldAuth/Register.php:15:        return view($config->shieldViews['register'] ?? 'Auth/register', ['config' => $config]);
+app/Controllers/ShieldAuth/Register.php:30:        return redirect()->to('/login-shield')->with('message', 'Registration created with Shield.');
+app/Controllers/ShieldAuth/Login.php:15:        return view($config->shieldViews['login'] ?? 'Auth/login', ['config' => $config]);
+app/Controllers/ShieldAuth/Login.php:21:            'email' => (string) $this->request->getPost('login'),
+app/Controllers/ShieldAuth/Login.php:35:        return redirect()->back()->withInput()->with('error', 'Shield login failed.');
+app/Modules/APIs/Controllers/DiscordAPIController.php:183:    public function registerGuildCommands(): ResponseInterface
+app/Modules/APIs/Controllers/MobileAuthController.php:19:    public function register()
+app/Modules/APIs/Controllers/MobileAuthController.php:32:            return $this->error('Email is already registered.', 409);
+app/Modules/APIs/Controllers/MobileAuthController.php:56:    public function login()
+app/Modules/APIs/Controllers/MobileAuthController.php:59:        $identifier = strtolower(trim((string) ($payload['email'] ?? $payload['login'] ?? '')));
+app/Modules/APIs/Controllers/MobileAuthController.php:63:            return $this->error('Email/login and password are required.', 422);
+app/Modules/APIs/Controllers/WalletsAPIController.php:486:                'fl_loginId'        => $itemId,
+app/Modules/APIs/Controllers/DoorDashAPIController.php:37:            return redirect()->to('/login');
+app/Modules/APIs/Controllers/ManagementAPIController.php:900:            ->where('activate_email_resend IS NOT NULL', null, false)
+app/Modules/APIs/Controllers/ManagementAPIController.php:902:            ->where('activate_email_resend <=', $cutoffDate)
+app/Modules/APIs/Controllers/ManagementAPIController.php:1849:    public function resendActivationEmailsBatch()
+app/Modules/APIs/Controllers/ManagementAPIController.php:1857:            ->where('activate_email_resend IS NULL', null, false)
+app/Modules/APIs/Controllers/ManagementAPIController.php:1862:            log_message('info', '✅ [CRON] No users left to resend activation email to.');
+app/Modules/APIs/Controllers/ManagementAPIController.php:1863:            return Http::jsonSuccess(['status' => 'complete', 'message' => 'No users pending activation email resend.']);
+app/Modules/APIs/Controllers/ManagementAPIController.php:1896:                        'activate_email_resend' => date('Y-m-d H:i:s')
+app/Modules/APIs/Controllers/ManagementAPIController.php:1919:    public function resendActivationEmailsBatchQueued()
+app/Modules/APIs/Controllers/ManagementAPIController.php:1929:            ->where('activate_email_resend IS NULL', null, false)
+app/Modules/APIs/Controllers/ManagementAPIController.php:1934:            log_message('info', '📪 No users left for activation email resend.');
+app/Modules/APIs/Controllers/ManagementAPIController.php:1954:                    'type'        => 'activation_resend',
+app/Modules/APIs/Controllers/ManagementAPIController.php:1962:                    $userModel->update($user->id, ['activate_email_resend' => date('Y-m-d H:i:s')]);
+app/Modules/Blog/Controllers/HowItWorksController.php:191:                'registering-an-account'          => 'App\Modules\Blog\Views\HowItWorks\Registering_An_Account',
+app/Modules/Blog/Views/index.php:10:$registerType = $pageURIA ?? 'Free';
+app/Modules/Blog/Views/index.php:11:if ($registerType === 'Investor') {
+app/Modules/Blog/Views/index.php:18:        $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/index.php:20:        $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/index.php:34:    'registerType'      => $registerType,
+app/Modules/Blog/Views/index.php:412:                                $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/index.php:414:                                $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/index.php:429:                                            By registering an account, you'll gain access to a suite of powerful tools designed to help you take control of your finances and grow your wealth.
+app/Modules/Blog/Views/IRS/IRS_Expanded_Home_Energy_Tax_Credits.php:2:$registerType           = $uri->getSegment(1);
+app/Modules/Blog/Views/IRS/IRS_Expanded_Home_Energy_Tax_Credits.php:3:if ($registerType === 'Investor') {
+app/Modules/Blog/Views/IRS/IRS_Expanded_Home_Energy_Tax_Credits.php:10:        $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/IRS/IRS_Expanded_Home_Energy_Tax_Credits.php:12:        $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/IRS/IRS_Expanded_Home_Energy_Tax_Credits.php:33:    'registerType'      => $registerType,
+app/Modules/Blog/Views/IRS/IRS_Expanded_Home_Energy_Tax_Credits.php:232:                                        And don't forget to register to our website, MyMIWallet, for more personalized budgeting and investment portfolio management news and financial solutions!
+app/Modules/Blog/Views/IRS/IRS_Expanded_Home_Energy_Tax_Credits.php:246:                                $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/IRS/IRS_Expanded_Home_Energy_Tax_Credits.php:248:                                $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/IRS/IRS_Expanded_Home_Energy_Tax_Credits.php:263:                                            By registering an account, you'll gain access to a suite of powerful tools designed to help you take control of your finances and grow your wealth.
+app/Modules/Blog/Views/PersonalBudgeting/Importance_Of_Personal_Financial_Budgeting.php:2:$registerType           = $uri->getSegment(1);
+app/Modules/Blog/Views/PersonalBudgeting/Importance_Of_Personal_Financial_Budgeting.php:3:if ($registerType === 'Investor') {
+app/Modules/Blog/Views/PersonalBudgeting/Importance_Of_Personal_Financial_Budgeting.php:10:        $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/PersonalBudgeting/Importance_Of_Personal_Financial_Budgeting.php:12:        $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/PersonalBudgeting/Importance_Of_Personal_Financial_Budgeting.php:26:    'registerType'      => $registerType,
+app/Modules/Blog/Views/PersonalBudgeting/Importance_Of_Personal_Financial_Budgeting.php:527:                                $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/PersonalBudgeting/Importance_Of_Personal_Financial_Budgeting.php:529:                                $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/PersonalBudgeting/Importance_Of_Personal_Financial_Budgeting.php:544:                                            By registering an account, you'll gain access to a suite of powerful tools designed to help you take control of your finances and grow your wealth.
+app/Modules/Blog/Views/NewsAndUpdates/Integrating_With_Plaid.php:12:$registerType           = $pageURIA ?? '';
+app/Modules/Blog/Views/NewsAndUpdates/Integrating_With_Plaid.php:13:if ($registerType === 'Investor') {
+app/Modules/Blog/Views/NewsAndUpdates/Integrating_With_Plaid.php:20:        $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/NewsAndUpdates/Integrating_With_Plaid.php:22:        $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/NewsAndUpdates/Integrating_With_Plaid.php:36:    'registerType'      => $registerType,
+app/Modules/Blog/Views/NewsAndUpdates/Integrating_With_Plaid.php:257:                                        And don't forget to register to our website, MyMIWallet, for more personalized budgeting and investment portfolio management news and financial solutions!
+app/Modules/Blog/Views/NewsAndUpdates/Integrating_With_Plaid.php:362:                                        To access the Power of MyMI Wallet and Plaid, register by clicking below for more personalized budgeting and investment portfolio management solutions and financial news!
+app/Modules/Blog/Views/NewsAndUpdates/Integrating_With_Plaid.php:380:                                $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/NewsAndUpdates/Integrating_With_Plaid.php:382:                                $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/NewsAndUpdates/Integrating_With_Plaid.php:396:                                            To access the Power of MyMI Wallet and Plaid, register by clicking below to deep dive into our personalized budgeting, investment portfolio management solutions and financial news!
+app/Modules/Blog/Views/NewsAndUpdates/The_Roadmap_To_The_Future_Of_Finance.php:10:$registerType           = $pageURIA ?? '';
+app/Modules/Blog/Views/NewsAndUpdates/The_Roadmap_To_The_Future_Of_Finance.php:11:if ($registerType === 'Investor') {
+app/Modules/Blog/Views/NewsAndUpdates/The_Roadmap_To_The_Future_Of_Finance.php:18:        $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/NewsAndUpdates/The_Roadmap_To_The_Future_Of_Finance.php:20:        $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/NewsAndUpdates/The_Roadmap_To_The_Future_Of_Finance.php:34:    'registerType'      => $registerType,
+app/Modules/Blog/Views/NewsAndUpdates/The_Roadmap_To_The_Future_Of_Finance.php:309:                                        Stay tuned for updates on our progress, and don't forget to register on our website, MyMIWallet, for the latest news and developments in personal finance and investment management.
+app/Modules/Blog/Views/NewsAndUpdates/The_Roadmap_To_The_Future_Of_Finance.php:450:                                    Stay tuned for more exciting features and services we plan to introduce. Don't forget to register your account to stay updated on the latest developments and features related to personal budgeting and financial management.
+app/Modules/Blog/Views/NewsAndUpdates/The_Roadmap_To_The_Future_Of_Finance.php:453:                                        To access the Power of MyMI Wallet and Plaid, register by clicking below for more personalized budgeting and investment portfolio management solutions and financial news!
+app/Modules/Blog/Views/NewsAndUpdates/The_Roadmap_To_The_Future_Of_Finance.php:572:                                        Don't forget to register your account to stay updated on the latest developments and features related to personal budgeting and financial management.
+app/Modules/Blog/Views/NewsAndUpdates/The_Roadmap_To_The_Future_Of_Finance.php:575:                                        To access the Power of MyMI Wallet and Plaid, register by clicking below for more personalized budgeting and investment portfolio management solutions and financial news!
+app/Modules/Blog/Views/NewsAndUpdates/The_Roadmap_To_The_Future_Of_Finance.php:670:                                        To access the Power of MyMI Wallet and Plaid, register by clicking below for more personalized budgeting and investment portfolio management solutions and financial news!
+app/Modules/Blog/Views/NewsAndUpdates/The_Roadmap_To_The_Future_Of_Finance.php:688:                                $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/NewsAndUpdates/The_Roadmap_To_The_Future_Of_Finance.php:690:                                $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/NewsAndUpdates/The_Roadmap_To_The_Future_Of_Finance.php:704:                                            To access the Power of MyMI Wallet and Plaid, register by clicking below to deep dive into our personalized budgeting, investment portfolio management solutions and financial news!
+app/Modules/Blog/Views/Investing/The_Beginners_Guide_To_Option_Trading.php:2:$registerType           = $uri->getSegment(1);
+app/Modules/Blog/Views/Investing/The_Beginners_Guide_To_Option_Trading.php:3:if ($registerType === 'Investor') {
+app/Modules/Blog/Views/Investing/The_Beginners_Guide_To_Option_Trading.php:10:        $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/Investing/The_Beginners_Guide_To_Option_Trading.php:12:        $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/Investing/The_Beginners_Guide_To_Option_Trading.php:26:    'registerType'      => $registerType,
+app/Modules/Blog/Views/Investing/The_Beginners_Guide_To_Option_Trading.php:556:                                $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/Investing/The_Beginners_Guide_To_Option_Trading.php:558:                                $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/Investing/The_Beginners_Guide_To_Option_Trading.php:573:                                            By registering an account, you'll gain access to a suite of powerful tools designed to help you take control of your finances and grow your wealth.
+app/Modules/Blog/Views/Investing/Tips_For_Effective_Investment_Portfolio_Management.php:2:$registerType           = $uri->getSegment(1);
+app/Modules/Blog/Views/Investing/Tips_For_Effective_Investment_Portfolio_Management.php:3:if ($registerType === 'Investor') {
+app/Modules/Blog/Views/Investing/Tips_For_Effective_Investment_Portfolio_Management.php:10:        $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/Investing/Tips_For_Effective_Investment_Portfolio_Management.php:12:        $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/Investing/Tips_For_Effective_Investment_Portfolio_Management.php:26:    'registerType'      => $registerType,
+app/Modules/Blog/Views/Investing/Tips_For_Effective_Investment_Portfolio_Management.php:1179:                                $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/Investing/Tips_For_Effective_Investment_Portfolio_Management.php:1181:                                $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/Investing/Tips_For_Effective_Investment_Portfolio_Management.php:1196:                                            By registering an account, you'll gain access to a suite of powerful tools designed to help you take control of your finances and grow your wealth.
+app/Modules/Blog/Views/Investing/The_Fundamentals_Of_Investing.php:2:$registerType           = $uri->getSegment(1);
+app/Modules/Blog/Views/Investing/The_Fundamentals_Of_Investing.php:3:if ($registerType === 'Investor') {
+app/Modules/Blog/Views/Investing/The_Fundamentals_Of_Investing.php:10:        $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/Investing/The_Fundamentals_Of_Investing.php:12:        $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/Investing/The_Fundamentals_Of_Investing.php:26:    'registerType'      => $registerType,
+app/Modules/Blog/Views/Investing/The_Fundamentals_Of_Investing.php:1229:                                $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/Investing/The_Fundamentals_Of_Investing.php:1231:                                $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/Investing/The_Fundamentals_Of_Investing.php:1246:                                            By registering an account, you'll gain access to a suite of powerful tools designed to help you take control of your finances and grow your wealth.
+app/Modules/Blog/Views/HowItWorks/partials/navigation.php:112:    'slug' => 'registering-an-account',
+app/Modules/Blog/Views/HowItWorks/partials/navigation.php:113:    'href' => '/How-It-Works/registering-an-account',
+app/Modules/Blog/Views/HowItWorks/Personal_Budgeting.php:2:$ctaUrl = empty($cuID ?? null) ? site_url('register') : site_url('Budget');
+app/Modules/Blog/Views/HowItWorks/Registering_An_Account.php:2:$registerType           = $uri->getSegment(1);
+app/Modules/Blog/Views/HowItWorks/Registering_An_Account.php:3:if ($registerType === 'Investor') {
+app/Modules/Blog/Views/HowItWorks/Registering_An_Account.php:10:        $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/HowItWorks/Registering_An_Account.php:12:        $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/HowItWorks/Registering_An_Account.php:26:    'registerType'      => $registerType,
+app/Modules/Blog/Views/HowItWorks/Registering_An_Account.php:92:                            Learn how to easily register an account on MyMI Wallet, including email verification, and access the personal finance management dashboard. 
+app/Modules/Blog/Views/HowItWorks/Investment_Portfolio_Management.php:2:$registerType = $uri->getSegment(1);
+app/Modules/Blog/Views/HowItWorks/Investment_Portfolio_Management.php:3:$title = $registerType === 'Investor' ? 'Register An Investor Account' : 'Register An Investor Account Free!';
+app/Modules/Blog/Views/HowItWorks/Investment_Portfolio_Management.php:4:$btnURL = empty($cuID) ? ($beta === 0 ? site_url('/Free/register') : site_url('/Beta/register')) : site_url('/Dashboard');
+app/Modules/Blog/Views/HowItWorks/Investment_Portfolio_Management.php:56:                  <?= view('Auth/register_form'); ?>
+app/Modules/Blog/Views/HowItWorks/Determining_Your_Financial_Goals.php:6:$registerType = $uri->getSegment(1);
+app/Modules/Blog/Views/HowItWorks/Determining_Your_Financial_Goals.php:7:$title = $registerType === 'Investor' ? 'Register An Investor Account' : 'Register An Investor Account Free!';
+app/Modules/Blog/Views/HowItWorks/Determining_Your_Financial_Goals.php:8:$btnURL = empty($cuID) ? ($beta === 0 ? site_url('/Free/register') : site_url('/Beta/register')) : site_url('/Dashboard');
+app/Modules/Blog/Views/HowItWorks/Determining_Your_Financial_Goals.php:70:                                        echo view('Auth/register_form');
+app/Modules/Blog/Views/HowItWorks/Daily_Financial_News.php:2:$registerType = $uri->getSegment(1);
+app/Modules/Blog/Views/HowItWorks/Daily_Financial_News.php:3:$title = $registerType === 'Investor' ? 'Register An Investor Account' : 'Register An Investor Account Free!';
+app/Modules/Blog/Views/HowItWorks/Daily_Financial_News.php:4:$btnURL = empty($cuID) ? ($beta === 0 ? site_url('/Free/register') : site_url('/Beta/register')) : site_url('/Dashboard');
+app/Modules/Blog/Views/HowItWorks/Daily_Financial_News.php:67:                  <?= view('Auth/register_form'); ?>
+app/Modules/Blog/Views/HowItWorks/Setting_Financial_Goals.php:3:$registerType = $uri->getSegment(1);
+app/Modules/Blog/Views/HowItWorks/Setting_Financial_Goals.php:5:if ($registerType === 'Investor') {
+app/Modules/Blog/Views/HowItWorks/Setting_Financial_Goals.php:13:        $btnURL = site_url('/Free/register');
+app/Modules/Blog/Views/HowItWorks/Setting_Financial_Goals.php:15:        $btnURL = site_url('/Beta/register');
+app/Modules/Blog/Views/HowItWorks/Setting_Financial_Goals.php:17:        $btnURL = site_url('/Free/register');
+app/Modules/Blog/Views/Earnings/TSLA/10192023.php:6:$registerType           = $this->uri->segment(1);
+app/Modules/Blog/Views/Earnings/TSLA/10192023.php:7:if ($registerType === 'Investor') {
+app/Modules/Blog/Views/Earnings/TSLA/10192023.php:16:        $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/Earnings/TSLA/10192023.php:18:        $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/Earnings/TSLA/10192023.php:32:    'registerType'      => $registerType,
+app/Modules/Blog/Views/Earnings/TSLA/10192023.php:431:                                $btnURL         = site_url('/Free/register'); 
+app/Modules/Blog/Views/Earnings/TSLA/10192023.php:433:                                $btnURL         = site_url('/Beta/register'); 
+app/Modules/Blog/Views/Earnings/TSLA/10192023.php:448:                                            By registering an account, you'll gain access to a suite of powerful tools designed to help you take control of your finances and grow your wealth.
+app/Modules/Support/Services/SupportTicketService.php:44:        $emailService->setMessage(render_email_view('emails/support/auth_login_error_user', $data + ['ticket_id' => $ticketId]));
+app/Modules/Support/Services/SupportTicketService.php:62:        $emailService->setMessage(render_email_view('emails/support/auth_login_error_support', $data + ['ticket_id' => $ticketId]));
+app/Modules/Support/Controllers/AccountSupportController.php:25:    public function resendActivation(): ResponseInterface|RedirectResponse
+app/Modules/Support/Views/Support/account_help.php:49:            <form method="post" action="<?= site_url('Support/resendActivation') ?>">
+app/Modules/Support/Views/Support/account_help.php:69:                        <p class="text-soft">Use the same email you registered with. We will resend your activation email.</p>
+app/Modules/Support/Views/Support/account_help.php:101:                    <p class="text-soft mb-0">If you registered with a typo, you can register again or contact support for help.</p>
+app/Modules/Support/Views/Support/account_help.php:104:                        <a class="btn btn-outline-secondary" href="<?= site_url('register') ?>">Re-register</a>
+app/Modules/Support/Views/Support/account_help.php:112:                    <p class="text-soft mb-0">If an account exists for that email, we sent instructions. If your account is inactive, use the activation resend options above.</p>
+app/Modules/chatgpt.txt:120:        const statusEl = document.getElementById("resend-status");
+app/Modules/User/Controllers/WalletsController.php:354:        log_message('warning', 'WalletsController guard failed; redirecting to login.');
+app/Modules/User/Controllers/WalletsController.php:365:        $redirect = redirect()->to('/login');
+app/Modules/User/Controllers/AlertsController.php:352:            log_message('debug', 'AlertsController::index() redirecting guest to login from: ' . $currentUrl);
+app/Modules/User/Controllers/AlertsController.php:354:            return redirect()->to(site_url('login'));
+app/Modules/User/Controllers/AlertsController.php:411:            return redirect()->to(site_url('login'));
+app/Modules/User/Controllers/BudgetController.php:1314:            return redirect()->to(site_url('login'));
+app/Modules/User/Controllers/BudgetController.php:1356:            return redirect()->to(site_url('login'));
+app/Modules/User/Controllers/KnowledgebaseController.php:170: *                  -   If New Customer                                                                 -> Partner/register
+app/Modules/User/Controllers/InstitutesController.php:77:    public function register()
+app/Modules/User/Controllers/InstitutesController.php:91:            $this->MyMIInstitutes->registerInstitute($instituteData);
+app/Modules/User/Controllers/InstitutesController.php:98:        return $this->renderTheme('App\Modules\User\Views\Institutes\register', $this->data);
+app/Modules/User/Controllers/DashboardController.php:638:            // Guest → send them to login or home
+app/Modules/User/Controllers/DashboardController.php:639:            log_message('debug', 'DashboardController::index guest access; redirecting to login.');
+app/Modules/User/Controllers/DashboardController.php:640:            return redirect()->to(site_url('login'));
+app/Modules/User/Controllers/DashboardController.php:744:        $loginActivity = $this->userModel->getUserLoginActivity($this->cuID);
+app/Modules/User/Controllers/DashboardController.php:745:        $this->data['loginActivity'] = $loginActivity; 
+app/Modules/User/Controllers/DashboardController.php:775:            return redirect()->to('/login');
+app/Modules/User/Views/Budget/Edit.php:246:                                        <input class="btn btn-primary btn-dim btn-outline-primary text-white mr-2" type="submit" name="register" id="addAccountSubmit" value="Submit" />
+app/Modules/User/Views/Budget/Add-New.php:112:                                        <input class="btn btn-primary btn-sm" type="submit" name="register" id="addAccountSubmit" value="Submit" />
+app/Modules/User/Views/Budget/Add.php:113:                    <input class="btn btn-primary btn-sm" type="submit" name="register" id="addAccountSubmit" value="Submit" />
+app/Modules/User/Views/Budget/Add.php:232:                                        <input class="btn btn-primary btn-sm" type="submit" name="register" id="addAccountSubmit" value="Submit" />
+app/Modules/User/Views/Budget/Copy-12242023.php:149:                                        <input class="btn btn-primary btn-sm" type="submit" name="register" id="addAccountSubmit" value="Submit" />
+app/Modules/User/Views/Budget/Assessment/assessment_content.php:142:                                $registerClass = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Budget/Copy.php:150:                                        <input class="btn btn-primary btn-sm" type="submit" name="register" id="addAccountSubmit" value="Submit" />
+app/Modules/User/Views/Budget/Details/bank_accounts.php:247:						<input class="btn btn-primary" type="submit" name="register" id="submit" value="Submit" />
+app/Modules/User/Views/Budget/Details/bank_accounts.php:277:						<input class="btn btn-primary" type="submit" name="register" id="submit" value="Submit" />
+app/Modules/User/Views/Subscribe/header_subscribe.php:43:        <input class="btn btn-primary" type="submit" name="register" id="subscribeSubmit" value="Subscribe!" />
+app/Modules/User/Views/Investments/Add/user_fields-new.php:9:$registerClass                  = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Investments/Add/user_fields-09162023.php:9:$registerClass                  = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Investments/Assessment/assessment_content.php:162:                                $registerClass = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Support/Request/user_fields.php:27:// $registerClass              = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Support/Request/user_fields.php:134:                            <input class="btn btn-lg btn-outline-primary" type="submit" name="register" id="submit" value="Get Support Now" />
+app/Modules/User/Views/Support/Response/user_fields.php:19:$registerClass  = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Support/FAQs.php:138:                    <p>Contact us via email <a href="mailto:info@softnio.com">info(at)softnio.com</a> or Post your comment (are visible to everyone) on our item page after login into your account.</p>
+app/Modules/User/Views/Support/FAQs.php:150:                    <p>Contact us via email <a href="mailto:info@softnio.com">info(at)softnio.com</a> or Post your comment (are visible to everyone) on our item page after login into your account.</p>
+app/Modules/User/Views/Support/FAQs.php:162:                    <p>Contact us via email <a href="mailto:info@softnio.com">info(at)softnio.com</a> or Post your comment (are visible to everyone) on our item page after login into your account.</p>
+app/Modules/User/Views/Support/Feedback/user_fields.php:9:$registerClass                  = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Support/Feedback.php:31:                <input class="btn btn-primary" type="submit" name="register" id="addFeedbackSubmit" value="Submit" />
+app/Modules/User/Views/Dashboard/index/transaction-modal-03092026.php:101:                if (xhr.getResponseHeader("X-Session-Expired") === "1" || response.includes("login")) {
+app/Modules/User/Views/Dashboard/index/transaction-modal-03092026.php:102:                    console.warn("⚠️ Session expired! Redirecting to login...");
+app/Modules/User/Views/Dashboard/index/transaction-modal-03092026.php:104:                    window.location.href = "<?= site_url('/login'); ?>";
+app/Modules/User/Views/Dashboard/index/transaction-modal-03092026.php:114:                if (jqXHR.status === 401 || jqXHR.responseText.includes("login")) {
+app/Modules/User/Views/Dashboard/index/transaction-modal-03092026.php:115:                    console.warn("⚠️ Session expired! Redirecting to login...");
+app/Modules/User/Views/Dashboard/index/transaction-modal-03092026.php:117:                    window.location.href = "<?= site_url('/login'); ?>";
+app/Modules/User/Views/Dashboard/Account/Activity.php:11:                                <p>Here is your last 20 login activities log. <span class="text-soft"><em class="icon ni ni-info"></em></span></p>
+app/Modules/User/Views/Dashboard/Account/Activity.php:29:                            <?php //log_message('debug', 'Dashboard\Account\Activity L30 - $loginActivity: ' . (print_r($loginActivity, true))); ?>
+app/Modules/User/Views/Dashboard/Account/Activity.php:30:                            <?php foreach($loginActivity as $activity) {
+app/Modules/User/Views/Referral_Program/Apply/user_fields.php:12:$registerClass  	    = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Referral_Program/New_Affiliate_Information/user_fields.php:12:$registerClass  	= $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Referral_Program/New_Affiliate_Information.php:31:				<input class="btn btn-primary" type="submit" name="register" id="submit" value="Submit" />
+app/Modules/User/Views/Referral_Program/My_Referrals/Referrals.php:102:                                                <button type="button" class="btn btn-outline-light" data-referral-id="<?= esc($referralId, 'attr'); ?>" data-referral-action="resend">Resend Invite</button>
+app/Modules/User/Views/Referral_Program/Emails/Affiliate_Approved.php:46:								<td><a href="https://www.mymillennialinvestments.com/Basic/register/' . $referrer_code . '">https://www.mymillennialinvestments.com/Basic/register/' . $referrer_code . '</a></td>
+app/Modules/User/Views/Referral_Program/Apply.php:48:                                        <input class="btn btn-primary" type="submit" name="register" id="submit" value="Submit" />
+app/Modules/User/Views/Knowledgebase/Investor_Profile.php:97:                                                    <li class="list-group-item"><a href="#<?php //echo site_url('Free/register'); ?>">List of Financial Brokerages</a></li>
+app/Modules/User/Views/Knowledgebase/Getting_Started.php:4:    $free_registration      = 'Free/register';
+app/Modules/User/Views/Knowledgebase/Getting_Started.php:6:    $free_registration      = 'Beta/register';    
+app/Modules/User/Views/Knowledgebase/Getting_Started.php:123:                                                If you wish to utilize any of MyMI Wallet's Services, you must first register an account.<br>
+app/Modules/User/Views/Knowledgebase/Getting_Started.php:124:                                                View the following article for instructions on how to register a MyMI Wallet Account.
+app/Modules/User/Views/Knowledgebase/Getting_Started.php:154:                                                To gain access to your account and Investor Dashboard, visit <a href="<?php echo site_url('login'); ?>">https://www.mymiwallet.com/login</a>.<br> 
+app/Modules/User/Views/Knowledgebase/Getting_Started.php:156:                                                    <li class="list-group-item"><a href="<?php echo site_url('login'); ?>">Login Now!</a></li>
+app/Modules/User/Views/Knowledgebase/Getting_Started.php:183:                                                After you register your account, you will receive an email with a verification code to confirm you are the user of the email assigned to the account.
+app/Modules/User/Views/Knowledgebase/Getting_Started.php:286:                                                    <li class="list-group-item"><a href="#<?php //echo site_url('login'); ?>">"What's With This Trade Tracker?"</a></li>
+app/Modules/User/Views/Knowledgebase/Getting_Started.php:328:                                                    <li class="list-group-item"><a href="#<?php //echo site_url('login'); ?>">How to customize the Trade Tracker</a></li>
+app/Modules/User/Views/Knowledgebase/Getting_Started.php:329:                                                    <li class="list-group-item"><a href="#<?php //echo site_url('login'); ?>">MyMI Trade Tracker - In-Depth Overview</a></li>
+app/Modules/User/Views/Knowledgebase/Getting_Started.php:360:                                                    <li class="list-group-item"><a href="#<?php //echo site_url('login'); ?>">Ways to Backtest Your Investments</a></li>
+app/Modules/User/Views/Knowledgebase/Getting_Started.php:361:                                                    <li class="list-group-item"><a href="#<?php //echo site_url('login'); ?>">Trend Analysis &amp; Forecasting Your Investments</a></li>
+app/Modules/User/Views/Knowledgebase/Getting_Started.php:362:                                                    <li class="list-group-item"><a href="#<?php //echo site_url('login'); ?>">Import/Exporting Real-Time & Historical Data</a></li>
+app/Modules/User/Views/Knowledgebase/Getting_Started.php:363:                                                    <li class="list-group-item"><a href="#<?php //echo site_url('login'); ?>">Share Trade Analysis</a></li>
+app/Modules/User/Views/Knowledgebase/Getting_Started.php:364:                                                    <li class="list-group-item"><a href="#<?php //echo site_url('login'); ?>">Get The CommunityInvolved</a></li>
+app/Modules/User/Views/Knowledgebase/Getting_Started.php:365:                                                    <li class="list-group-item"><a href="#<?php //echo site_url('login'); ?>">MyMI Trade Tracker - In-Depth Overview</a></li>
+app/Modules/User/Views/Knowledgebase/Types_Of_Accounts.php:162:                                                    <li class="list-group-item"><a href="<?php echo site_url('Partner/register'); ?>">Register A Partner Account</a></li>
+app/Modules/User/Views/Knowledgebase/Types_Of_Accounts.php:276:                                                    <li class="list-group-item"><a href="#<?php //echo site_url('login'); ?>">How Investor Referrals Work</a></li>
+app/Modules/User/Views/Knowledgebase/Types_Of_Accounts.php:305:                                                    <li class="list-group-item"><a href="#<?php //echo site_url('login'); ?>">How Distributions Are Determined</a></li>
+app/Modules/User/Views/Knowledgebase/Types_Of_Accounts.php:306:                                                    <li class="list-group-item"><a href="#<?php //echo site_url('login'); ?>">Schedule of Monthly Distributions</a></li>
+app/Modules/User/Views/Knowledgebase/Response.php:99:												<input class="btn btn-primary" type="submit" name="register" id="submit" value="Submit" />
+app/Modules/User/Views/Knowledgebase/includes/Partnerships/full_content.php:33:<div class="row" id="registering-upgrading-to-a-partner"></div>
+app/Modules/User/Views/Knowledgebase/includes/Partnerships/full_content.php:43:                                To get started, if you're new to MyMI Wallet, you simply complete a MyMI Partnership Application (by clicking <a href="<?php echo site_url('Partner/register'); ?>">here!</a>). 
+app/Modules/User/Views/Knowledgebase/includes/Partnerships/full_content.php:50:                                    <li class="list-group-item"><a href="<?php echo site_url('Partner/register'); ?>">Partnership Registration</a></li>
+app/Modules/User/Views/Knowledgebase/includes/Partnerships/more_details.php:1:<div class="row" id="registering-upgrading-to-a-partner"></div>
+app/Modules/User/Views/Knowledgebase/includes/Referral_Program/getting_started.php:13:                                    <li class="list-group-item"><a href="#<?php //echo site_url('login'); ?>">Referral Program Application</a></li>
+app/Modules/User/Views/Knowledgebase/includes/Referral_Program/getting_started.php:20:                                    <li class="list-group-item"><a href="#<?php //echo site_url('login'); ?>">MyMI Existing Membership</a></li>
+app/Modules/User/Views/Knowledgebase/includes/Referral_Program/getting_started.php:21:                                    <li class="list-group-item"><a href="#<?php //echo site_url('login'); ?>">KYC Verification</a></li>
+app/Modules/User/Views/Knowledgebase/includes/Referral_Program/getting_started.php:22:                                    <li class="list-group-item"><a href="#<?php //echo site_url('login'); ?>">Terms &amp; Agreements</a></li>
+app/Modules/User/Views/Knowledgebase/includes/KYC_Verification/getting_started.php:11:                                After you register your account, you will receive an email with a verification code to confirm you are the user of the email assigned to the account.
+app/Modules/User/Views/Wallets/Add/form.php:20:                <input class="btn btn-primary" type="submit" name="register" id="addWalletSubmit" value="Submit" />
+app/Modules/User/Views/Wallets/types/wallets_block.php:534:            <div>Your session expired. Please <a class="ms-1" href="<?=esc(site_url('login'))?>">sign in</a> to view wallets.</div>
+app/Modules/User/Views/Wallets/MyMI_Wallet.php:382:						<input class="btn btn-primary" type="submit" name="register" id="submit" value="Submit" />
+app/Modules/User/Views/Wallets/MyMI_Wallet.php:412:						<input class="btn btn-primary" type="submit" name="register" id="submit" value="Submit" />
+app/Modules/User/Views/Wallets/Delete/user_fields.php:10:$registerClass                  = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Wallets/Delete/user_fields.php:49:	    <input class="btn btn-primary" type="submit" name="register" id="deleteWalletSubmit" value="Yes" />
+app/Modules/User/Views/Wallets/Add_Account/accounting_fields.php:11:$registerClass                  = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Wallets/Add_Account/accounting_fields.php:2155:				<input class="btn btn-primary btn-block" type="submit" name="register" id="addNewWalletSubmit" value="Submit" />
+app/Modules/User/Views/Wallets/Add_Account/default_fields.php:10:$registerClass                  = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Wallets/Add_Account/default_fields.php:119:				<input class="btn btn-primary btn-block" type="submit" name="register" id="addNewWalletSubmit" value="Submit" />
+app/Modules/User/Views/Wallets/Add_Account/debt_fields.php:81:                <input class="btn btn-primary btn-block" type="submit" name="register" id="addNewWalletSubmit" value="Submit" />
+app/Modules/User/Views/Wallets/Add_Account/ecommerce_fields.php:10:$registerClass                  = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Wallets/Add_Account/ecommerce_fields.php:2182:				<input class="btn btn-primary btn-block" type="submit" name="register" id="addNewWalletSubmit" value="Submit" />
+app/Modules/User/Views/Wallets/Create_Bank_Account/user_fields.php:10:$registerClass  = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Wallets/Create_Bank_Account/user_fields.php:96:				<input class="btn btn-primary btn-block" type="submit" name="register" id="submit" value="Submit" />
+app/Modules/User/Views/Wallets/Edit_Bank_Account/user_fields.php:10:$registerClass          = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Wallets/Link_Account/Import_Trades/user_fields.php:10:$registerClass                  = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Wallets/Link_Account/Import-Trades.php:33:                <input class="btn btn-primary" type="submit" name="register" id="addWalletSubmit" value="Submit" />
+app/Modules/User/Views/Wallets/Add_Deposit/user_fields.php:11:$registerClass          = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Wallets/Add_Deposit/user_fields.php:104:				<input class="btn btn-primary btn-block" type="submit" name="register" id="trackDepositSubmit" value="Submit" />
+app/Modules/User/Views/Wallets/Purchase_Gold/user_fields.php:21:$registerClass  							= $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Wallets/Purchase_Gold/user_fields.php:132:		<input class="btn btn-primary" type="submit" name="register" id="purchaseGoldSubmit" value="Buy Now!" />
+app/Modules/User/Views/Wallets/Withdraw_Funds/user_fields.php:10:$registerClass  = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Wallets/Withdraw_Funds/user_fields.php:84:				<input class="btn btn-primary btn-block" type="submit" name="register" id="submit" value="Submit" />
+app/Modules/User/Views/Wallets/Edit/user_fields.php:10:$registerClass                  = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Wallets/Add_Fiat_Wallet.php:41:					<input class="btn btn-primary" type="submit" name="register" id="addFiatWalletSubmit" value="Submit" />
+app/Modules/User/Views/Wallets/Details.php:931:    const registerWalletTransactionFilter = function () {
+app/Modules/User/Views/Wallets/Details.php:979:        registerWalletTransactionFilter();
+app/Modules/User/Views/Wallets/Deposit_Funds/user_fields.php:10:$registerClass  = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Wallets/Deposit_Funds/user_fields.php:54:				<input class="btn btn-primary btn-block" type="submit" name="register" id="submit" value="Submit" />
+app/Modules/User/Views/Wallets/Link_Account (Original)/Import_Trades/user_fields.php:10:$registerClass                  = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Wallets/Link_Account (Original)/Import-Trades.php:33:                <input class="btn btn-primary" type="submit" name="register" id="addWalletSubmit" value="Submit" />
+app/Modules/User/Views/Wallets/Edit_Account.php:171:                                    <input class="btn btn-primary" type="submit" name="register" id="addNewWalletSubmit" value="Submit" />
+app/Modules/User/Views/Wallets/Generate_Wallet/user_fields.php:18:$registerClass  							= $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Wallets/Generate_Wallet/user_fields.php:54:		<input class="btn btn-primary" type="submit" name="register" id="generateWalletAddressSubmit" value="Save" />
+app/Modules/User/Views/Wallets/Edit_Account/accounting_fields.php:11:$registerClass                  = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Wallets/Edit_Account/accounting_fields.php:2155:				<input class="btn btn-primary btn-block" type="submit" name="register" id="addNewWalletSubmit" value="Submit" />
+app/Modules/User/Views/Wallets/Edit_Account/ecommerce_fields.php:10:$registerClass                  = $currentMethod == 'register' ? ' required' : '';
+app/Modules/User/Views/Wallets/Edit_Account/ecommerce_fields.php:2182:				<input class="btn btn-primary btn-block" type="submit" name="register" id="addNewWalletSubmit" value="Submit" />
+app/Modules/Management/Controllers/BudgetingAdminController.php:66:            return redirect()->to('/login');
+app/Modules/Management/Controllers/HowTosAdminController.php:56:            $redirect = redirect()->to('/login');
+app/Modules/Management/Controllers/HowTosAdminController.php:736:            $redirect = redirect()->to('/login');
+app/Modules/Management/Controllers/ManagementController.php:69:            // return redirect()->to('/login')->with('redirect_url', current_url())->send();
+app/Modules/Management/Controllers/ManagementController.php:91:        //     return redirect()->to('/login')->with('redirect_url', current_url())->send();
+app/Modules/Management/Controllers/ManagementController.php:854:            // redirect()->to('/login')->with('redirect_url', current_url())->send();
+app/Modules/Management/Controllers/UsersAdminController.php:280:    public function resendActivationCode($userID)
+app/Modules/Management/Controllers/UsersAdminController.php:324:            $logMsg = "Failed to resend activation code to user with ID {$userID}.";
+app/Modules/Management/Controllers/AssetsAdminController.php:66:            return redirect()->to('/login');
+app/Modules/Management/Controllers/MarketingAdminController.php:151:        //     return redirect()->to('/login')->with('redirect_url', current_url())->send();
+app/Modules/Management/Controllers/AlertsAdminController.php:104:            $redirect = redirect()->to('/login');
+app/Modules/Management/Controllers/AccountRescueAdminController.php:68:    public function resendActivation(): RedirectResponse
+app/Modules/Management/Controllers/AccountRescueAdminController.php:70:        return $this->handleActivationAction('resend_activation');
+app/Modules/Management/Controllers/AccountRescueAdminController.php:97:        $db->table('login_attempts')->where('identifier', $email)->delete();
+app/Modules/Management/Controllers/AccountRescueAdminController.php:146:        if ($action === 'resend_activation') {
+app/Modules/Management/Controllers/AccountRescueAdminController.php:153:                    log_message('error', '[SUPPORT] Admin resend activation failed', [
+app/Modules/Management/Controllers/AccountRescueAdminController.php:227:            'last_login' => $user->last_login ?? null,
+app/Modules/Management/Controllers/AuthFunnelAdminController.php:30:            'auth.register_success',
+app/Modules/Management/Controllers/AuthFunnelAdminController.php:33:            'auth.login_success',
+app/Modules/Management/Controllers/AuthFunnelAdminController.php:182:        $register = (int) ($totals['auth.register_success'] ?? 0);
+app/Modules/Management/Controllers/AuthFunnelAdminController.php:185:        $loginSuccess = (int) ($totals['auth.login_success'] ?? 0);
+app/Modules/Management/Controllers/AuthFunnelAdminController.php:189:            'register_to_activation_email' => $register > 0 ? round(($activationSent / $register) * 100, 1) : 0.0,
+app/Modules/Management/Controllers/AuthFunnelAdminController.php:191:            'activation_to_login' => $activationSuccess > 0 ? round(($loginSuccess / $activationSuccess) * 100, 1) : 0.0,
+app/Modules/Management/Controllers/AuthFunnelAdminController.php:192:            'login_to_setup' => $loginSuccess > 0 ? round(($setupComplete / $loginSuccess) * 100, 1) : 0.0,
+app/Modules/Management/Controllers/AuthFunnelAdminController.php:205:            "COUNT(DISTINCT CASE WHEN event_key = 'auth.register_success' THEN user_id END) AS registrations",
+app/Modules/Management/Controllers/AuthFunnelAdminController.php:207:            "COUNT(DISTINCT CASE WHEN event_key = 'auth.login_success' THEN user_id END) AS first_logins",
+app/Modules/Management/Controllers/TradovateAdminController.php:29:    public function login(): RedirectResponse
+app/Modules/Management/Controllers/BudgetsAdminController.php:69:            return redirect()->to('/login');
+app/Modules/Management/Controllers/AdminController.php:27:            return redirect()->to('/login');
+app/Modules/Management/Controllers/DiscordAdminController.php:63:            $redirect = redirect()->to('/login');
+app/Modules/Management/Controllers/DiscordAdminController.php:96:            $redirect = redirect()->to('/login');
+app/Modules/Management/Controllers/ProjectsAdminController.php:549:            $asset = $this->getMyMIProjects()->registerProjectAsExchangeAsset((int) $id);
+app/Modules/Management/Controllers/ProjectsAdminController.php:633:    public function registerFundExchangeAsset($projectId)
+app/Modules/Management/Controllers/ProjectsAdminController.php:641:            $asset = $this->getMyMIProjects()->registerProjectAsExchangeAsset($projectId);
+app/Modules/Management/Controllers/APIAdminController.php:66:            return redirect()->to('/login');
+app/Modules/Management/Controllers/SecurityAdminController.php:66:            return redirect()->to('/login');
+app/Modules/Management/Controllers/SecurityAdminController.php:435:        $attempts = db_connect()->table('login_attempts')->where('identifier', $identifier)->countAllResults();
+app/Modules/Management/Controllers/ServicesAdminController.php:66:            return redirect()->to('/login');
+app/Modules/Management/Views/AccountRescue/index.php:53:                            <li><strong>Last login:</strong> <?= esc((string) ($lookupUser['last_login'] ?? '')) ?></li>
+app/Modules/Management/Views/AccountRescue/index.php:59:                    <form method="post" action="<?= site_url('Management/AccountRescue/resend-activation') ?>">
+app/Modules/Management/Views/Referrals/index.php:12:            <p class="text-soft">Track referral conversion across registration, activation, login, and setup.</p>
+app/Modules/Management/Views/Referrals/index.php:57:                            <td><?= esc((string) ($row['first_logins'] ?? 0)) ?></td>
+app/Modules/Management/Views/AuthFunnel/index.php:6:$labels = $series['auth.register_success']['labels'] ?? [];
+app/Modules/Management/Views/AuthFunnel/index.php:13:            'data' => $series['auth.register_success']['data'] ?? [],
+app/Modules/Management/Views/AuthFunnel/index.php:34:            'data' => $series['auth.login_success']['data'] ?? [],
+app/Modules/Management/Views/AuthFunnel/index.php:70:                            <span><?= esc((string) ($conversion['register_to_activation_email'] ?? 0)) ?>%</span>
+app/Modules/Management/Views/AuthFunnel/index.php:78:                            <span><?= esc((string) ($conversion['activation_to_login'] ?? 0)) ?>%</span>
+app/Modules/Management/Views/AuthFunnel/index.php:82:                            <span><?= esc((string) ($conversion['login_to_setup'] ?? 0)) ?>%</span>
+app/Modules/Management/Views/AuthFunnel/index.php:87:                        <div class="d-flex justify-content-between"><span>Register success</span><span><?= esc((string) ($totals['auth.register_success'] ?? 0)) ?></span></div>
+app/Modules/Management/Views/AuthFunnel/index.php:90:                        <div class="d-flex justify-content-between"><span>Login success</span><span><?= esc((string) ($totals['auth.login_success'] ?? 0)) ?></span></div>
+app/Modules/Management/Views/Marketing/Add/user_fields.php:9:$registerClass                  = $currentMethod == 'register' ? ' required' : '';
+app/Modules/Management/Views/Marketing/Add/blog_fields.php:9:$registerClass                  = $currentMethod == 'register' ? ' required' : '';
+app/Modules/Management/Views/Marketing/index/action_center_new.php:129:                <p>This will resend activation emails to all inactive users who haven’t confirmed their account.</p>
+app/Modules/Management/Views/Marketing/index/action_center_new.php:136:        <div id="resend-status" class="mt-2 text-success"></div>
+app/Modules/Management/Views/Marketing/dashboard.txt:1257:        //     return redirect()->to('/login')->with('redirect_url', current_url())->send();
+app/Modules/Management/Views/Marketing/dashboard.txt:6362:        const statusElement = document.getElementById('resend-status');
+app/Modules/Management/Views/Marketing/dashboard.txt:6544:                <p>This will resend activation emails to all inactive users who haven’t confirmed their account.</p>
+app/Modules/Management/Views/Marketing/dashboard.txt:6551:        <div id="resend-status" class="mt-2 text-success"></div>
+app/Modules/Management/Views/Marketing/resources/controlPanelBlock.php:100:        const statusEl = document.getElementById("resend-status");
+app/Modules/Management/Views/Alerts/add.php:56:                                        <input class="btn btn-primary btn-sm" type="submit" name="register" id="addAccountSubmit" value="Submit" />
+app/Modules/Management/Views/Alerts/tradeAnalysis.php:13:$ctaLink = site_url('/X/register');
+app/Modules/Management/Views/Web_Design/Icons.php:35:                        <div class="preview"> <i class="icon-login"></i> icon-login </div>
+app/Modules/Management/Views/Web_Design/Content_Creator/FLinks/Flinks_API.php:19:    // // Pull "loginID" && "institution" from URL Query Parameters
+app/Modules/Management/Views/Web_Design/Content_Creator/FLinks/Flinks_API.php:20:    // $loginId                                        = $this->input->get('loginId');
+app/Modules/Management/Views/Web_Design/Content_Creator/FLinks/Flinks_API.php:24:    $loginId                                        = 'af9c2f59-461f-40cd-d383-08d731541b7b';
+app/Modules/Management/Views/Web_Design/Content_Creator/Management/Update_Users.php:8:$this->db->where('last_login !=', '0000-00-00 00:00:00');
+app/Modules/Management/Views/Web_Design/Content_Creator/Management/Users/Update_Users.php:8:$this->db->where('last_login !=', '0000-00-00 00:00:00');
+app/Modules/Management/Views/Web_Design/UI_Elements.php:760:										<div class="text-center mt-4 font-weight-light"> Don't have an account? <a href="register.html" class="text-primary">Create</a>
+app/Modules/Management/Views/Web_Design/UI_Elements.php:803:										<div class="text-center mt-4 font-weight-light"> Already have an account? <a href="login.html" class="text-primary">Login</a>
+app/Modules/Management/Views/Web_Design/Test_Page_Email.php:60:								<input class="btn btn-primary" type="submit" name="register" id="submit" value="Send Test Email" />
+app/Modules/Management/Views/Web_Design/Pages.php:16:							<td><a href="<?php echo site_url('/register'); ?>">User Registration</a></td>
+app/Modules/PropFirms/Config/Routes.php:6:$routes->group('Dashboard', ['namespace' => 'App\Modules\PropFirms\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) {
+app/Modules/PropFirms/Config/Routes.php:12:$routes->group('PropFirms', ['namespace' => 'App\Modules\PropFirms\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) {
+app/Modules/PropFirms/Config/Routes.php:42:$routes->group('API', ['namespace' => 'App\Modules\PropFirms\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) {
+app/Modules/PropFirms/Libraries/PropFirmRuleRegistry.php:27:            throw new RuntimeException('No rule engine registered for firm slug: ' . $firmSlug);
+app/Modules/Exchange/Views/Buy/user_fields.php:9:$registerClass  							= $currentMethod == 'register' ? ' required' : '';
+app/Modules/Exchange/Views/Buy/user_fields.php:107:		<input class="btn btn-primary" type="submit" name="register" id="buySubmit" value="Buy" />
+app/Modules/Exchange/Views/Coin_Listing_Request/contact_fields.php:11:$registerClass          		= $currentMethod == 'register' ? ' required' : '';
+app/Modules/Exchange/Views/Coin_Listing_Request/contact_fields.php:121:				<input class="btn btn-primary btn-md" type="submit" name="register" id="appNextOne" value="Submit!" />
+app/Modules/Exchange/Views/Coin_Listing_Asset_Information/new_fields.php:11:$registerClass          		= $currentMethod == 'register' ? ' required' : '';
+app/Modules/Exchange/Views/Coin_Listing_Asset_Information/new_fields.php:149:				<input class="btn btn-primary btn-block" type="submit" name="register" id="appNextOne" value="Submit!" />
+app/Modules/Exchange/Views/Coin_Listing_Asset_Information/create_fields.php:10:$registerClass          		    = $currentMethod == 'register' ? ' required' : '';
+app/Modules/Exchange/Views/Coin_Listing_Asset_Information/create_fields.php:175:				<input class="btn btn-primary btn-block" type="submit" name="register" id="appNextOne" value="Submit!" />
+app/Modules/Exchange/Views/Coin_Listing_Asset_Information/list_fields.php:11:$registerClass          = $currentMethod == 'register' ? ' required' : '';
+app/Modules/Exchange/Views/Coin_Listing_Asset_Information/list_fields.php:138:				<input class="btn btn-primary btn-block" type="submit" name="register" id="appNextOne" value="Submit!" />
+app/Modules/Exchange/Views/Solana/index.php:800:      console.warn('Not authenticated; prompt login or connect wallet.');
+app/Modules/Exchange/Views/Solana/index.php:801:      // show login/connect modal here if desired
+app/Modules/Exchange/Views/Account_Information.php:9:$registerType 		= $this->uri->segment(1);
+app/Modules/Exchange/Views/Account_Information.php:13:if ($registerType 	=== 'Investor') {
+app/Modules/Exchange/Views/Account_Information.php:20:#register p.already-registered {
+app/Modules/Exchange/Views/Account_Information.php:54:												<input class="btn btn-primary btn-block display-4" type="submit" name="register" id="submit" value="<?php echo lang('us_register'); ?>" />
+app/Modules/Exchange/Views/Account_Information.php:57:												<p class='already-registered pl-3'>
+app/Modules/Exchange/Views/Account_Information.php:58:													<?php echo lang('us_already_registered'); ?>
+app/Modules/Exchange/Views/Account_Information.php:59:													<?php echo anchor(LOGIN_URL, lang('bf_action_login')); ?>
+app/Modules/Exchange/Views/Sell/user_fields.php:9:$registerClass  							= $currentMethod == 'register' ? ' required' : '';
