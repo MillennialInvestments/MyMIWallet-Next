@@ -1,0 +1,115 @@
+app/Config/Routes.php:264:$routes->post('auth/resend-activation', 'AuthController::resendActivationCode', ['as' => 'auth/resend-activation-legacy']);
+app/Config/Routes.php:276:$routes->get('/resend-activation', 'AuthController::resendActivation', ['as' => 'resend-activation']);
+app/Config/Routes.php:277:$routes->post('/resend-activation', 'AuthController::resendActivationCode', ['as' => 'resend-activation-code']);
+app/Config/Routes.php:302:    $routes->get('_ops/opcache-reset', 'Ops::opcacheReset');
+app/Config/Routes.php:313:    $routes->post('auth/resend-activation', 'AuthController::resendActivationCode', ['as' => 'auth/resend-activation']);
+app/Config/Routes.php:330:    $routes->post('register/resend-activation', 'AuthController::resendRegistrationActivation', ['as' => 'register-resend-activation']);
+app/Config/Routes.php:377:    $routes->get('reset-password=REDACTED
+app/Config/Routes.php:379:    $routes->post('reset-password=REDACTED
+app/Config/Routes.php:670:        $routes->post('ResetUser', 'ChatUsageController::resetUser');
+app/Config/Routes.php:1390:        $routes->post('resend-activation', 'AccountRescueAdminController::resendActivation');
+app/Config/Routes.php:1392:        $routes->post('force-password-reset', 'AccountRescueAdminController::forcePasswordReset');
+app/Config/Email.php:7:    public string $fromEmail  = 'support@mymiwallet.com';
+app/Config/Email.php:8:    public string $fromName   = 'MyMI Wallet Support';
+app/Config/Email.php:13:    public string $protocol   = 'smtp';
+app/Config/Email.php:14:    public string $SMTPHost   = 'smtp.dreamhost.com';
+app/Config/Email.php:17:    public int    $SMTPPort   = 587;
+app/Config/Email.php:20:    public string $mailType   = 'html';
+app/Config/Email.php:30:        $this->fromEmail = env('mail.from.email', env('email.fromEmail', $this->fromEmail));
+app/Config/Email.php:31:        $this->fromName  = env('mail.from.name', env('email.fromName', $this->fromName));
+app/Config/Email.php:34:        $this->protocol  = env('mail.protocol', env('email.protocol', $this->protocol));
+app/Config/Email.php:36:        $this->SMTPHost   = env('mail.smtp.host', env('email.SMTPHost', env('email.smtpHost', $this->SMTPHost)));
+app/Config/Email.php:39:        $this->SMTPPort   = (int) env('mail.smtp.port', env('email.SMTPPort', env('email.smtpPort', $this->SMTPPort)));
+app/Config/Filters.php:159:                    'reset',
+app/Config/Filters.php:161:                    'reset-password',
+app/Config/Filters.php:175:                    'Auth/reset-password',
+app/Config/Filters.php:178:                    'resend-activation',
+app/Config/Filters.php:342:                'reset-password',
+app/Config/Filters.php:346:                'resend-activation',
+app/Config/Filters.php:372:                'reset-password',
+app/Config/Filters.php:376:                'resend-activation',
+app/Config/CURLRequest.php:16:     * If true, all the options won't be reset between requests.
+app/Config/Database.php:13: * - NO protocols (https://) in DB hostname
+app/Config/Auth.php:46:        'force_reset'       => '/',
+app/Config/SiteSettings.php:241:            $this->resetOperations(); 
+app/Config/SiteSettings.php:413:        public function resetOperations() {
+app/Config/SiteSettings.php:428:            // Add any other operations that need to be reset
+app/Controllers/AuthController.php:237:            'has_activation_hash' => $hasActivateHash,
+app/Controllers/AuthController.php:388:                    'Account activation required',
+app/Controllers/AuthController.php:389:                    'Your account is not activated yet. Please activate it using the email link, or resend the activation email below.',
+app/Controllers/AuthController.php:514:        // Force password reset branch
+app/Controllers/AuthController.php:516:        if ($authUser && $authUser->force_pass=REDACTED
+app/Controllers/AuthController.php:518:                ->to(route_to('reset-password=REDACTED
+app/Controllers/AuthController.php:749:    //         return redirect()->route('login')->with('message', lang('Auth.activationSuccess'));
+app/Controllers/AuthController.php:1088:                    $this->authLog('AUTH_FAIL', 'activation_send_failed', 'Activation email send failed', [
+app/Controllers/AuthController.php:1098:                        'reason' => 'activation_send_failed',
+app/Controllers/AuthController.php:1115:                    return redirect()->to(site_url('register'))->withInput()->with('errors', ['activation' => $activator->error() ?? lang('Auth.unknownError')]);
+app/Controllers/AuthController.php:1117:                $this->authLog('AUTH_SUCCESS', 'register_success_activation_required', 'Registration successful with activation required', [
+app/Controllers/AuthController.php:1124:                service('eventTracker')->track('auth.activation_email_sent', [], $newUserId);
+app/Controllers/AuthController.php:1141:                $message = lang('Auth.activationSuccess');
+app/Controllers/AuthController.php:1267:                'activationRequired' => $this->config->requireActivation !== null,
+app/Controllers/AuthController.php:1294:        service('eventTracker')->track('auth.resend_activation_requested', [
+app/Controllers/AuthController.php:1299:            log_message('info', 'Registration resend activation skipped: activation disabled.');
+app/Controllers/AuthController.php:1302:                'text' => lang('Auth.activationSuccess'),
+app/Controllers/AuthController.php:1311:            log_message('warning', 'Registration resend activation throttled for {email} from {ip}', [
+app/Controllers/AuthController.php:1319:                    'text' => 'If an account exists for that email, we sent an activation email.',
+app/Controllers/AuthController.php:1324:            log_message('notice', 'Registration resend activation requested without email.');
+app/Controllers/AuthController.php:1328:                    'text' => 'If an account exists for that email, we sent an activation email.',
+app/Controllers/AuthController.php:1339:                log_message('error', 'Registration resend activation failed for {email}: {error}', [
+app/Controllers/AuthController.php:1349:                service('eventTracker')->track('auth.resend_activation_sent', [], (int) ($user->id ?? 0));
+app/Controllers/AuthController.php:1350:                log_message('info', 'Registration resend activation succeeded for {email}', ['email' => $email]);
+app/Controllers/AuthController.php:1353:            log_message('notice', 'Registration resend activation request had no matching inactive user for {email}', [
+app/Controllers/AuthController.php:1361:                'text' => 'If an account exists for that email, we sent an activation email.',
+app/Controllers/AuthController.php:1384:     * and send password reset instructions to them.
+app/Controllers/AuthController.php:1410:        log_message('info', '[AUTH] Password reset requested', [
+app/Controllers/AuthController.php:1419:            log_message('warning', '[AUTH] Password reset request: user not found', [
+app/Controllers/AuthController.php:1426:        // Save the reset hash /
+app/Controllers/AuthController.php:1430:        $resetter = service('resetter');
+app/Controllers/AuthController.php:1431:        $sent     = $resetter->send($user);
+app/Controllers/AuthController.php:1434:            $this->setAuthMessage('danger', $resetter->error() ?? lang('Auth.unknownError'));
+app/Controllers/AuthController.php:1435:            log_message('error', '[AUTH] Password reset email failed', [
+app/Controllers/AuthController.php:1437:                'error' => $resetter->error() ?? lang('Auth.unknownError'),
+app/Controllers/AuthController.php:1443:        log_message('info', '[AUTH] Password reset email sent', [
+app/Controllers/AuthController.php:1446:        return redirect()->route('reset-password');
+app/Controllers/AuthController.php:1478:    public function resetPassword()
+app/Controllers/AuthController.php:1487:        return $this->_render($this->config->views['reset'], [
+app/Controllers/AuthController.php:1508:        // First things first - log the reset attempt.
+app/Controllers/AuthController.php:1549:            ->where('reset_hash', $payload['token'])
+app/Controllers/AuthController.php:1558:        if (! empty($user->reset_expires) && time() > $user->reset_expires->getTimestamp()) {
+app/Controllers/AuthController.php:1559:            $this->setAuthMessage('danger', lang('Auth.resetTokenExpired'));
+app/Controllers/AuthController.php:1563:        // Success! Save the new password, and cleanup the reset hash.
+app/Controllers/AuthController.php:1565:        $user->reset_hash       = null;
+app/Controllers/AuthController.php:1566:        $user->reset_at         = date('Y-m-d H:i:s');
+app/Controllers/AuthController.php:1567:        $user->reset_expires    = null;
+app/Controllers/AuthController.php:1568:        $user->force_pass=REDACTED
+app/Controllers/AuthController.php:1571:        $this->setAuthMessage('success', lang('Auth.resetSuccess'));
+app/Controllers/AuthController.php:1572:        log_message('info', '[AUTH] Password reset completed', [
+app/Controllers/AuthController.php:1586:        $token=REDACTED
+app/Controllers/AuthController.php:1600:        // First things first - log the activation attempt.
+app/Controllers/AuthController.php:1618:            $this->setAuthMessage('warning', 'That activation link is invalid or expired. Enter your email to send a new one.');
+app/Controllers/AuthController.php:1638:            $this->setAuthMessage('warning', 'That activation link is invalid or expired. Enter your email to send a new one.');
+app/Controllers/AuthController.php:1681:     * Resend activation account.
+app/Controllers/AuthController.php:1708:            $this->setAuthMessage('danger', lang('Auth.activationNoUser'));
+app/Controllers/AuthController.php:1724:            'text' => lang('Auth.activationSuccess'),
+app/Controllers/AuthController.php:1735:        return $this->_render($this->config->views['resendActivation'] ?? 'Auth/resend_activation', [
+app/Controllers/AuthController.php:1746:        service('eventTracker')->track('auth.resend_activation_requested', [
+app/Controllers/AuthController.php:1750:        log_message('info', '[AUTH] Resend activation requested', [
+app/Controllers/AuthController.php:1756:        $throttleKey=REDACTED
+app/Controllers/AuthController.php:1759:            log_message('warning', '[AUTH] Resend activation throttled', [
+app/Controllers/AuthController.php:1765:                'text' => 'If an account exists for that email, we sent an activation email.',
+app/Controllers/AuthController.php:1770:            log_message('notice', '[AUTH] Resend activation missing email', [
+app/Controllers/AuthController.php:1775:                'text' => 'If an account exists for that email, we sent an activation email.',
+app/Controllers/AuthController.php:1787:                service('eventTracker')->track('auth.resend_activation_sent', [], (int) ($user->id ?? 0));
+app/Controllers/AuthController.php:1788:                log_message('info', '[AUTH] Resend activation sent', [
+app/Controllers/AuthController.php:1793:                log_message('error', '[AUTH] Resend activation send failed', [
+app/Controllers/AuthController.php:1803:            log_message('info', '[AUTH] Resend activation ignored (already active)', [
+app/Controllers/AuthController.php:1808:            log_message('notice', '[AUTH] Resend activation email not found', [
+app/Controllers/AuthController.php:1815:            'text' => 'If an account exists for that email, we sent an activation email.',
+app/Controllers/Home.php:305:            $slugExchange = count($parts) > 1 ? strtoupper(reset($parts)) : '';
+app/Views/emails/auth/activation.php:4:$resolvedActivationUrl = (string) ($activationUrl ?? $actionUrl ?? '');
+app/Views/emails/auth/activation.php:16:<p style="margin:0;">For your security, activation links may expire if left unused for too long.</p>
+app/Views/emails/auth/reset.php:4:$resolvedResetUrl = (string) ($resetUrl ?? $actionUrl ?? '');
+app/Views/emails/auth/reset.php:20:<p style="margin:0 0 12px;">We received a request to reset the password for your <strong>MyMI Wallet</strong> account.</p>
+app/Views/emails/auth/reset.php:33:<p style="margin:0 0 8px;">If you did not request this reset, you can safely ignore this email or contact us at
+app/Views/emails/reset.php:9:<p style="margin:0 0 24px; font-size:15px; color:#374151;">We received a request to reset your password. Use the button below to choose a new password.</p>
+app/Views/emails/reset_text.php:10:We received a request to reset your password. Use this link to choose a new password:

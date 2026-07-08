@@ -1,0 +1,8 @@
+app/Controllers/AuthController.php:124:    public function attemptLogin()
+app/Controllers/AuthController.php:696:    // public function attemptRegister()
+app/Controllers/AuthController.php:755:    public function attemptRegister()
+app/Controllers/AuthController.php:1292:    public function resendRegistrationActivation()
+app/Controllers/AuthController.php:1499:    public function attemptReset()
+app/Controllers/AuthController.php:1583:    public function activateAccount()
+app/Controllers/AuthController.php:1741:    public function resendActivationCode()
+app/Modules/Management/Controllers/UsersAdminController.php:280:    public function resendActivationCode($userID)
