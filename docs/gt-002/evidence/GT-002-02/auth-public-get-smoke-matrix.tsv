@@ -1,0 +1,10 @@
+path	http_code	login_signal	register_signal	csrf_signal	classification
+/login	200	yes	yes	yes	PASS_HTTP
+/register	200	yes	yes	yes	PASS_HTTP
+/Free/register	404	no	yes	no	REVIEW
+/Beta/register	404	no	yes	no	REVIEW
+/register/success	200	yes	yes	yes	PASS_HTTP
+/resend-activation	200	yes	yes	yes	PASS_HTTP
+/activate	429	no	no	no	REVIEW
+/activate-account	429	no	no	no	REVIEW
+/reset-password	200	yes	yes	yes	PASS_HTTP
