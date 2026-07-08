@@ -1,0 +1,9 @@
+path	http_code	redirect_url	login_signal	classification
+/Dashboard	302	https://www.mymiwallet.com/login	no	AUTH_REDIRECT_EXPECTED
+/dashboard	404		no	ROUTE_404_REVIEW
+/MyMI-Wallet	302	https://www.mymiwallet.com/login	no	AUTH_REDIRECT_EXPECTED
+/Wallets	302	https://www.mymiwallet.com/login	no	AUTH_REDIRECT_EXPECTED
+/Wallets/All	302	https://www.mymiwallet.com/login	no	AUTH_REDIRECT_EXPECTED
+/Dashboard/setup	404		no	ROUTE_404_REVIEW
+/Dashboard/onboarding/profile	404		no	ROUTE_404_REVIEW
+/Dashboard/account-completion	404		no	ROUTE_404_REVIEW

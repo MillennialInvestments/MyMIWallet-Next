@@ -1,0 +1,208 @@
+app/Controllers/OpsHealthController.php:16:    public function index(): ResponseInterface
+app/Controllers/MaintenanceController.php:7:    public function index(): string
+app/Controllers/Api/SwaggerDocsController.php:11:    public function index()
+app/Controllers/Api/OpsFilesystemStatusController.php:15:    public function index(): ResponseInterface
+app/Controllers/Api/AdminChatUsageController.php:14:    public function index(): ResponseInterface
+app/Controllers/SystemDebugController.php:22:    public function index()
+app/Controllers/Blog.php:22:    public function index(): string
+app/Controllers/Health.php:9:    public function index(): ResponseInterface
+app/Controllers/ShieldAuth/Register.php:11:    public function index()
+app/Controllers/ShieldAuth/Login.php:11:    public function index()
+app/Controllers/Home.php:172:    public function index()
+app/Modules/User/Controllers/WalletsController.php:880:                $setupService = service('setupStatusService');
+app/Modules/User/Controllers/WalletsController.php:882:                $this->data['setupStatus']  = $setupService->getSetupStatus($cuID);
+app/Modules/User/Controllers/WalletsController.php:883:                $this->data['setupPrefs']   = $setupService->getDismissPreferences($cuID);
+app/Modules/User/Controllers/WalletsController.php:884:                $this->data['setupContext'] = 'wallets';
+app/Modules/User/Controllers/WalletsController.php:886:                log_message('debug', 'WalletsController setupStatusService unavailable: {message}', [
+app/Modules/User/Controllers/WalletsController.php:890:                $this->data['setupStatus']  = [];
+app/Modules/User/Controllers/WalletsController.php:891:                $this->data['setupPrefs']   = [];
+app/Modules/User/Controllers/WalletsController.php:892:                $this->data['setupContext'] = 'wallets';
+app/Modules/User/Controllers/WalletsController.php:899:    public function index(): ResponseInterface|string
+app/Modules/User/Controllers/TradeTracker.php:24:    public function index()
+app/Modules/User/Controllers/TradeTracker.php:293:        // setup page and user context
+app/Modules/User/Controllers/ProjectsController.php:28:    public function index()
+app/Modules/User/Controllers/AlertsController.php:324:    public function index()
+app/Modules/User/Controllers/BudgetController.php:241:    public function index()
+app/Modules/User/Controllers/BudgetController.php:289:            /** @var \App\Services\SetupStatusService $setupService */
+app/Modules/User/Controllers/BudgetController.php:290:            $setupService = service('setupStatusService');
+app/Modules/User/Controllers/BudgetController.php:291:            $this->data['setupStatus'] = $setupService->getSetupStatus((int) $activeUserId);
+app/Modules/User/Controllers/BudgetController.php:292:            $this->data['setupPrefs'] = $setupService->getDismissPreferences((int) $activeUserId);
+app/Modules/User/Controllers/BudgetController.php:293:            $this->data['setupContext'] = 'budget';
+app/Modules/User/Controllers/SearchController.php:11:    public function index()
+app/Modules/User/Controllers/OnboardingWalkthroughController.php:99:        service('eventTracker')->track('setup.step_completed', [
+app/Modules/User/Controllers/OnboardingWalkthroughController.php:103:            service('eventTracker')->track('setup.step_completed', [
+app/Modules/User/Controllers/OnboardingWalkthroughController.php:168:        service('eventTracker')->track('setup.step_completed', [
+app/Modules/User/Controllers/OnboardingWalkthroughController.php:247:        service('eventTracker')->track('setup.step_completed', [
+app/Modules/User/Controllers/OnboardingWalkthroughController.php:310:        service('eventTracker')->track('setup.step_completed', [
+app/Modules/User/Controllers/OnboardingWalkthroughController.php:351:        service('eventTracker')->track('setup.step_completed', [
+app/Modules/User/Controllers/KnowledgebaseController.php:383:    public function index(): ResponseInterface
+app/Modules/User/Controllers/PredictionsController.php:14:    public function index()
+app/Modules/User/Controllers/InvestmentsController.php:504:    public function index()
+app/Modules/User/Controllers/ReferralController.php:80:     * Common data setup for all pages.
+app/Modules/User/Controllers/ReferralController.php:283:    public function index()
+app/Modules/User/Controllers/InstitutesController.php:69:    public function index()
+app/Modules/User/Controllers/AccountController.php:86:    public function index() {
+app/Modules/User/Controllers/SubscribeController.php:22:    public function index()
+app/Modules/User/Controllers/AuctionsController.php:21:    public function index(): ResponseInterface
+app/Modules/User/Controllers/DashboardController.php:17:class DashboardController extends BaseUserController
+app/Modules/User/Controllers/DashboardController.php:157:            service('eventTracker')->track('setup.guided_open', [], (int) $cuID, 'onboarding');
+app/Modules/User/Controllers/DashboardController.php:631:    public function index()
+app/Modules/User/Controllers/DashboardController.php:713:        /** @var \App\Services\SetupStatusService $setupService */
+app/Modules/User/Controllers/DashboardController.php:714:        $setupService = service('setupStatusService');
+app/Modules/User/Controllers/DashboardController.php:715:        $this->data['setupStatus'] = $setupService->getSetupStatus($activeUserId);
+app/Modules/User/Controllers/DashboardController.php:716:        $this->data['setupPrefs'] = $setupService->getDismissPreferences($activeUserId);
+app/Modules/User/Controllers/DashboardController.php:717:        $this->data['setupContext'] = 'dashboard';
+app/Modules/User/Controllers/DashboardController.php:772:    public function completeOnboardingStep($step)
+app/Modules/User/Controllers/DashboardController.php:1406:    public function onboarding()
+app/Modules/User/Controllers/DashboardController.php:1427:        /** @var \App\Services\SetupStatusService $setupService */
+app/Modules/User/Controllers/DashboardController.php:1428:        $setupService = service('setupStatusService');
+app/Modules/User/Controllers/DashboardController.php:1429:        $this->data['setupStatus'] = $setupService->getSetupStatus($userId);
+app/Modules/User/Controllers/DashboardController.php:1430:        $this->data['setupPrefs'] = $setupService->getDismissPreferences($userId);
+app/Modules/User/Controllers/DashboardController.php:1431:        $this->data['setupContext'] = $context;
+app/Modules/User/Controllers/DashboardController.php:1433:        service('eventTracker')->track('setup.modal_open', [
+app/Modules/User/Controllers/DashboardController.php:1437:        return view('UserModule\Views\Setup\continue_setup_modal', $this->data);
+app/Modules/User/Controllers/DashboardController.php:1450:        /** @var \App\Services\SetupStatusService $setupService */
+app/Modules/User/Controllers/DashboardController.php:1451:        $setupService = service('setupStatusService');
+app/Modules/User/Controllers/DashboardController.php:1452:        $result = $setupService->updateDismissPreference($userId, $scope, $dismiss);
+app/Modules/User/Controllers/DashboardController.php:1456:                service('eventTracker')->track('setup.dismiss_all', [], $userId, 'onboarding');
+app/Modules/User/Controllers/DashboardController.php:1458:                service('eventTracker')->track('setup.dismiss_context', [
+app/Modules/User/Controllers/DashboardController.php:1483:    // public function profile($username = null)
+app/Modules/User/Controllers/DashboardController.php:1490:    public function profile($cuUsername = null)
+app/Modules/User/Libraries/DashboardLibrary.php:8:class DashboardLibrary {
+app/Modules/User/Tax/Controllers/Tax.php:35:    public function index()
+app/Modules/User/Views/Budget/index.php:150:$setupStatus = $setupStatus ?? [];
+app/Modules/User/Views/Budget/index.php:151:$setupPrefs = $setupPrefs ?? [];
+app/Modules/User/Views/Budget/index.php:152:$showSetupBanner = ! empty($setupStatus)
+app/Modules/User/Views/Budget/index.php:153:    && ! ($setupStatus['overall_complete'] ?? false)
+app/Modules/User/Views/Budget/index.php:154:    && ! ($setupPrefs['dismiss_all'] ?? false)
+app/Modules/User/Views/Budget/index.php:155:    && ! ($setupPrefs['dismiss_budget'] ?? false)
+app/Modules/User/Views/Budget/index.php:156:    && ($setupStatus['missing']['budget'] ?? false);
+app/Modules/User/Views/Budget/index.php:190:<div class="alert alert-info d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4" data-setup-banner="budget">
+app/Modules/User/Views/Budget/index.php:192:        <strong>Continue setup</strong>
+app/Modules/User/Views/Budget/index.php:195:    <button class="btn btn-primary dynamicModalLoader" data-formtype="Setup" data-endpoint="continueSetup" data-accountid="budget">Continue setup</button>
+app/Modules/User/Views/Setup/continue_setup_modal.php:2:$setupStatus = $setupStatus ?? [];
+app/Modules/User/Views/Setup/continue_setup_modal.php:3:$setupPrefs = $setupPrefs ?? [];
+app/Modules/User/Views/Setup/continue_setup_modal.php:4:$setupContext = strtolower((string) ($setupContext ?? 'dashboard'));
+app/Modules/User/Views/Setup/continue_setup_modal.php:6:$missing = $setupStatus['missing'] ?? [];
+app/Modules/User/Views/Setup/continue_setup_modal.php:7:$progressPct = (int) ($setupStatus['progress_pct'] ?? 0);
+app/Modules/User/Views/Setup/continue_setup_modal.php:8:$nextSteps = $setupStatus['next_steps'] ?? [];
+app/Modules/User/Views/Setup/continue_setup_modal.php:18:    'budget'    => 'Finish your budget setup',
+app/Modules/User/Views/Setup/continue_setup_modal.php:19:    'wallets'   => 'Finish your wallets setup',
+app/Modules/User/Views/Setup/continue_setup_modal.php:20:    'dashboard' => 'Continue your MyMI Wallet setup',
+app/Modules/User/Views/Setup/continue_setup_modal.php:23:$contextTitle = $contextTitles[$setupContext] ?? $contextTitles['dashboard'];
+app/Modules/User/Views/Setup/continue_setup_modal.php:25:$contextNextSteps = array_values(array_filter($nextSteps, static fn ($step) => ($step['context'] ?? '') === $setupContext));
+app/Modules/User/Views/Setup/continue_setup_modal.php:29:$contextMissing = $setupContext === 'dashboard'
+app/Modules/User/Views/Setup/continue_setup_modal.php:31:    : array_intersect_key($missing, [$setupContext => true]);
+app/Modules/User/Views/Setup/continue_setup_modal.php:87:    <button type="button" class="btn btn-outline-secondary" data-setup-dismiss="page" data-setup-context="<?= esc($setupContext) ?>">Don't show on this page</button>
+app/Modules/User/Views/Setup/continue_setup_modal.php:88:    <button type="button" class="btn btn-warning" data-setup-dismiss="all">I'm done setting up</button>
+app/Modules/User/Views/Setup/continue_setup_modal.php:92:$(document).on('click', '[data-setup-dismiss]', function () {
+app/Modules/User/Views/Setup/continue_setup_modal.php:93:    const scope = $(this).data('setup-dismiss');
+app/Modules/User/Views/Setup/continue_setup_modal.php:94:    const context = $(this).data('setup-context');
+app/Modules/User/Views/Setup/continue_setup_modal.php:101:        url: "<?= site_url('Dashboard/setup/dismiss') ?>",
+app/Modules/User/Views/Setup/continue_setup_modal.php:121:                document.querySelectorAll('[data-setup-banner]').forEach((el) => el.remove());
+app/Modules/User/Views/Setup/continue_setup_modal.php:123:                const banner = document.querySelector(`[data-setup-banner="${payloadScope}"]`);
+app/Modules/User/Views/Investments/Squeezes/partials/fade_setups.php:5:        <div id="squeeze-fade-setups" class="squeeze-fade-setups">
+app/Modules/User/Views/Investments/Squeezes/partials/fade_setups.php:6:            <p class="text-muted">Select a symbol to view fade setups.</p>
+app/Modules/User/Views/Investments/Squeezes/index.php:23:            <?php $this->load->view('investments/squeeze/partials/fade_setups'); ?>
+app/Modules/User/Views/Dashboard/index.php:96:$setupStatus       = $setupStatus ?? [];
+app/Modules/User/Views/Dashboard/index.php:97:$setupPrefs        = $setupPrefs ?? [];
+app/Modules/User/Views/Dashboard/index.php:98:$setupContext      = $setupContext ?? 'dashboard';
+app/Modules/User/Views/Dashboard/index.php:124:$showSetupBanner   = ! empty($setupStatus)
+app/Modules/User/Views/Dashboard/index.php:125:    && ! ($setupStatus['overall_complete'] ?? false)
+app/Modules/User/Views/Dashboard/index.php:126:    && ! ($setupPrefs['dismiss_all'] ?? false)
+app/Modules/User/Views/Dashboard/index.php:127:    && ! ($setupPrefs['dismiss_dashboard'] ?? false);
+app/Modules/User/Views/Dashboard/index.php:233:<div class="alert alert-info d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 p-5 mb-4" data-setup-banner="dashboard">
+app/Modules/User/Views/Dashboard/index.php:235:        <strong>Continue setup</strong>
+app/Modules/User/Views/Dashboard/index.php:238:    <button class="btn btn-primary dynamicModalLoader" data-formtype="Setup" data-endpoint="continueSetup" data-accountid="dashboard">Continue setup</button>
+app/Modules/User/Views/Dashboard/forms/onboarding.php:29:            url: "<?= site_url('/dashboard/completeOnboardingStep/') ?>" + step,
+app/Modules/User/Views/Dashboard/modals/account_completion.php:18:                <p class="text-muted mb-3"><?= esc((string) ($nextAction['body'] ?? 'Finish the next account setup step.')) ?></p>
+app/Modules/User/Views/Dashboard/modals/account_completion.php:37:                    <?= esc((string) ($nextAction['button_label'] ?? 'Continue setup')) ?>
+app/Modules/User/Views/Dashboard/modals/account_completion.php:78:            // Persistence failures should not block the user from continuing setup.
+app/Modules/User/Views/Dashboard/modals/onboarding.php:18:                <h5 class="modal-title" id="onboardingWalkthroughLabel">Finish your MyMI Wallet setup</h5>
+app/Modules/User/Views/Dashboard/modals/onboarding.php:54:                            <h6>Profile setup</h6>
+app/Modules/User/Views/Knowledgebase/Getting_Started.php:60:                                                    <li><a href="#basic-setup">Creating a MyMI Account</a></li>
+app/Modules/User/Views/Knowledgebase/Getting_Started.php:94:                <div class="row" id="basic-setup"></div>
+app/Modules/User/Views/Knowledgebase/Types_Of_Accounts.php:52:                                                    <li><a href="#basic-setup">Investor Membership</a></li>
+app/Modules/User/Views/Wallets/index.php:46:$setupStatus = $setupStatus ?? [];
+app/Modules/User/Views/Wallets/index.php:47:$setupPrefs = $setupPrefs ?? [];
+app/Modules/User/Views/Wallets/index.php:48:$showSetupBanner = ! empty($setupStatus)
+app/Modules/User/Views/Wallets/index.php:49:  && ! ($setupStatus['overall_complete'] ?? false)
+app/Modules/User/Views/Wallets/index.php:50:  && ! ($setupPrefs['dismiss_all'] ?? false)
+app/Modules/User/Views/Wallets/index.php:51:  && ! ($setupPrefs['dismiss_wallets'] ?? false)
+app/Modules/User/Views/Wallets/index.php:52:  && ($setupStatus['missing']['wallets'] ?? false);
+app/Modules/User/Views/Wallets/index.php:71:  <div class="alert alert-info d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4" data-setup-banner="wallets">
+app/Modules/User/Views/Wallets/index.php:73:      <strong>Continue setup</strong>
+app/Modules/User/Views/Wallets/index.php:76:    <button class="btn btn-primary dynamicModalLoader" data-formtype="Setup" data-endpoint="continueSetup" data-accountid="wallets">Continue setup</button>
+app/Modules/Management/TaxAdmin/Controllers/TaxConfig.php:41:    public function index()
+app/Modules/Management/Controllers/PublicPagesAdminController.php:14:    public function index()
+app/Modules/Management/Controllers/BudgetingAdminController.php:124:    public function index()
+app/Modules/Management/Controllers/InvestmentsAdminController.php:16:    public function index()
+app/Modules/Management/Controllers/AiOpsManagementAdminController.php:10:    public function index()
+app/Modules/Management/Controllers/HowTosAdminController.php:143:    public function index()
+app/Modules/Management/Controllers/HowTosAdminController.php:161:        return $this->renderTheme('ManagementModule\Views\HowTos\Employees\setupEmails', $this->data);
+app/Modules/Management/Controllers/ManagementController.php:163:    public function index()
+app/Modules/Management/Controllers/ManagementController.php:176:    // public function index()
+app/Modules/Management/Controllers/UsersAdminController.php:135:    public function index()
+app/Modules/Management/Controllers/UsersAdminController.php:273:    public function profile($userID = null)
+app/Modules/Management/Controllers/DripCampaignAdminController.php:55:    public function index()
+app/Modules/Management/Controllers/AssetsAdminController.php:124:    public function index()
+app/Modules/Management/Controllers/PartnersAdminController.php:106:    public function index()
+app/Modules/Management/Controllers/MarketingAdminController.php:239:    public function index()
+app/Modules/Management/Controllers/MarketingAdminController.php:343:    // public function index()
+app/Modules/Management/Controllers/MarketingAdminController.php:363:    // public function index() {
+app/Modules/Management/Controllers/ExchangeAdminController.php:162:    public function index()
+app/Modules/Management/Controllers/EmailAdminController.php:24:    public function index()
+app/Modules/Management/Controllers/HRAdminController.php:16:    public function index(): string
+app/Modules/Management/Controllers/Marketing/BloggerAdminController.php:9:    public function index()
+app/Modules/Management/Controllers/Marketing/EmailQueueAdminController.php:47:    public function index()
+app/Modules/Management/Controllers/Marketing/EmailTemplateAdminController.php:12:    public function index()
+app/Modules/Management/Controllers/ChatAdminController.php:28:    public function index()
+app/Modules/Management/Controllers/AlertsAdminController.php:183:    public function index()
+app/Modules/Management/Controllers/AlertsAdminController.php:346:    // public function index()
+app/Modules/Management/Controllers/AlertsAdminController.php:401:    // public function index()
+app/Modules/Management/Controllers/SupportAdminController.php:145:    public function index()
+app/Modules/Management/Controllers/AccountRescueAdminController.php:16:    public function index(): string
+app/Modules/Management/Controllers/WebDesignAdminController.php:147:    public function index()
+app/Modules/Management/Controllers/OpsInboxAdminController.php:23:    public function index(): string
+app/Modules/Management/Controllers/SitemapAdminController.php:42:    public function index()
+app/Modules/Management/Controllers/AuthFunnelAdminController.php:34:            'setup.complete',
+app/Modules/Management/Controllers/AuthFunnelAdminController.php:186:        $setupComplete = (int) ($totals['setup.complete'] ?? 0);
+app/Modules/Management/Controllers/AuthFunnelAdminController.php:192:            'login_to_setup' => $loginSuccess > 0 ? round(($setupComplete / $loginSuccess) * 100, 1) : 0.0,
+app/Modules/Management/Controllers/AuthFunnelAdminController.php:208:            "COUNT(DISTINCT CASE WHEN event_key = 'setup.complete' THEN user_id END) AS setup_completes",
+app/Modules/Management/Controllers/AuthFunnelAdminController.php:227:                ? round(((int) ($row['setup_completes'] ?? 0) / $registrations) * 100, 1)
+app/Modules/Management/Controllers/TradovateAdminController.php:96:    public function index()
+app/Modules/Management/Controllers/WalletsAdminController.php:142:    public function index()
+app/Modules/Management/Controllers/AuthHealthAdminController.php:22:    public function index(): ResponseInterface|string
+app/Modules/Management/Controllers/DocsAdminController.php:19:    public function index()
+app/Modules/Management/Controllers/BudgetsAdminController.php:127:    public function index()
+app/Modules/Management/Controllers/NotificationAdminController.php:132:    public function index()
+app/Modules/Management/Controllers/EmailOutboxAdminController.php:24:    public function index(): ResponseInterface|string
+app/Modules/Management/Controllers/AdminController.php:74:    public function index()
+app/Modules/Management/Controllers/ErrorOpsController.php:12:    public function index()
+app/Modules/Management/Controllers/DevelopmentAdminController.php:16:    public function index(): string
+app/Modules/Management/Controllers/ChatUsageAdminController.php:26:    public function index(): string
+app/Modules/Management/Controllers/SignalsAdminController.php:10:    public function index()
+app/Modules/Management/Controllers/DiscordAdminController.php:150:    public function index()
+app/Modules/Management/Controllers/ManagementAdminController.php:179:    public function index()
+app/Modules/Management/Controllers/ProjectsAdminController.php:180:    public function index()
+app/Modules/Management/Controllers/APIAdminController.php:124:    public function index()
+app/Modules/Management/Controllers/SecurityAdminController.php:124:    public function index()
+app/Modules/Management/Controllers/SecurityAdminController.php:599:    private function setupSecurityMonitoring($monitoringDetails)
+app/Modules/Management/Controllers/SecurityAdminController.php:601:        model('SecurityMonitoringModel')->setup_monitoring($monitoringDetails);
+app/Modules/Management/Controllers/ServicesAdminController.php:124:    public function index()
+app/Modules/Management/Controllers/OpsAdminController.php:31:    public function index(): ResponseInterface|string
+app/Modules/Management/Controllers/FinanceAdminController.php:16:    public function index(): string
+app/Modules/Management/Controllers/OperationsAdminController.php:17:    public function index(): string
+app/Modules/Management/Views/Referrals/index.php:12:            <p class="text-soft">Track referral conversion across registration, activation, login, and setup.</p>
+app/Modules/Management/Views/Referrals/index.php:58:                            <td><?= esc((string) ($row['setup_completes'] ?? 0)) ?></td>
+app/Modules/Management/Views/HowTos/Employees/setupEmails.php:65:                                            <p>Complete the setup and test by sending and receiving a test email to ensure everything is connected properly.</p>
+app/Modules/Management/Views/AuthFunnel/index.php:41:            'data' => $series['setup.complete']['data'] ?? [],
+app/Modules/Management/Views/AuthFunnel/index.php:82:                            <span><?= esc((string) ($conversion['login_to_setup'] ?? 0)) ?>%</span>
+app/Modules/Management/Views/AuthFunnel/index.php:91:                        <div class="d-flex justify-content-between"><span>Setup complete</span><span><?= esc((string) ($totals['setup.complete'] ?? 0)) ?></span></div>
+app/Modules/Management/Views/Marketing/dashboard.txt:1316:    public function index() {
+app/Modules/Management/Views/Marketing/dashboard.txt:3137:            "⏳ Don't miss this setup!",
+app/Modules/Management/Views/Marketing/dashboard.txt:3145:            "📢 Tap in for more premium setups!"
+app/Modules/Management/Views/Web_Design/Content_Creator/Budgeting/Paid_Status_Update.php:54:This controller is the place that you want to setup anything that should happen for every page of your site, like:
+app/Modules/Management/Views/Web_Design/Content_Creator/Budgeting/Paid_Status_Update.php:57:* Get the cache setup correctly.  This is currently setup to only use a file-based cache, but you can easily tell it to use APC if available, and fallback to the file system if not.
+app/Modules/Management/Views/Web_Design/Content_Creator/Budgeting/Paid_Status_Update.php:87:* Gets form_validation setup and working correctly with HMVC.
+app/Modules/Management/Views/Web_Design/Content_Creator/Budgeting/Paid_Status_Update.php:93:The final controller sets things up even more for use within the Admin area of your site.  That is, the area that Bonfire has setup for you as a base of operations.  It currently...
