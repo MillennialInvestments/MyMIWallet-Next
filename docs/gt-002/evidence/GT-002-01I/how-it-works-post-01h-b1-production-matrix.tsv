@@ -1,0 +1,14 @@
+path	http_code	content_signal	theme_signal	classification
+/How-It-Works	200	yes	yes	PASS
+/How-It-Works/Personal-Budgeting	200	yes	yes	PASS
+/How-It-Works/Investment-Portfolio-Management	200	yes	yes	PASS
+/How-It-Works/Daily-Financial-News	200	yes	yes	PASS
+/How-It-Works/MyMI-Gold	200	yes	yes	PASS
+/How-It-Works/What-Is-MyMI-Gold	200	yes	yes	PASS
+/How-It-Works/Purchase-MyMI-Gold	200	yes	yes	PASS
+/How-It-Works/Setting-Financial-Goals	200	yes	yes	PASS
+/How-It-Works/crypto	200	yes	yes	PASS
+/How-It-Works/alerts	200	yes	yes	PASS
+/How-It-Works/projects	200	yes	yes	PASS
+/How-It-Works/security	200	yes	yes	PASS
+/How-It-Works/pricing	200	yes	yes	PASS
