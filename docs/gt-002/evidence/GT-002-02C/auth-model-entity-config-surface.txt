@@ -1,0 +1,32 @@
+app/Models/UserModel.php:14:class UserModel extends Model
+app/Models/UserModel.php:22:        'email', 'username', 'password_hash', '2fa_secret', 'reset_hash', 'reset_at', 'reset_expires', 'activate_hash',
+app/Models/UserModel.php:30:        'password_hash' => 'required',
+app/Models/UserModel.php:231:            ->where('activate_hash IS NOT NULL', null, false)
+app/Models/UserModel.php:307:        $this->activate_hash = bin2hex(random_bytes(16));
+app/Models/SecurityModel.php:158:            'password_hash' => $newPasswordHash,
+app/Models/SecurityModel.php:168:                           ->where('password_hash', $newPasswordHash)
+app/Models/UserIpHistoryModel.php:7:class UserIpHistoryModel extends Model
+app/Models/RoleUserModel.php:6:class RoleUserModel extends Model
+app/Models/UserPermissionOverrideModel.php:6:class UserPermissionOverrideModel extends Model
+app/Models/UserSessionModel.php:6:class UserSessionModel extends Model
+app/Models/UserModel.bak:13:class UserModel extends Model
+app/Models/UserModel.bak:20:        'email', 'username', 'password_hash', 'reset_hash', 'reset_at', 'reset_expires', 'activate_hash',
+app/Models/UserModel.bak:27:        'password_hash' => 'required',
+app/Models/UserTwoFactorModel.php:7:class UserTwoFactorModel extends Model
+app/Entities/User.php:9:class User extends \Myth\Auth\Entities\User
+app/Entities/User.php:58:    public function setPassword(string $password): self
+app/Entities/User.php:62:        $this->attributes['password_hash'] = password_hash($password, PASSWORD_DEFAULT);
+app/Entities/User.php:74:        $this->attributes['reset_hash']    = null;
+app/Entities/User.php:135:        $this->attributes['reset_hash']    = bin2hex(random_bytes(16));
+app/Entities/User.php:150:        $this->attributes['activate_hash'] = bin2hex(random_bytes(16));
+app/Entities/User.php:163:        $this->attributes['activate_hash'] = null;
+app/Config/UserAgents.php:17:class UserAgents extends BaseConfig
+app/Config/Routes.php:377:    $routes->get('reset-password', 'AuthController::resetPassword', ['as' => 'reset-password']);
+app/Database/Seeds/AuthAuditUserSeeder.php:9:class AuthAuditUserSeeder extends Seeder
+app/Database/Migrations/2025-09-10-000020_AddReferralFieldsToUsers.php:7:class AddReferralFieldsToUsers extends Migration
+app/Database/Migrations/2026-02-15-000210_CreateUserSetupPreferences.php:7:class CreateUserSetupPreferences extends Migration
+app/Database/Migrations/2026-03-31-120000_AddRegistrationAttributionColumnsToUsers.php:9:class AddRegistrationAttributionColumnsToUsers extends Migration
+app/Database/Migrations/2026-03-01-000100_CreateUserEvents.php:7:class CreateUserEvents extends Migration
+app/Database/Migrations/2026-02-09-000002_CreateUserIpHistory.php:7:class CreateUserIpHistory extends Migration
+app/Database/Migrations/2026-02-01-000100_CreateUserOnboardingTables.php:7:class CreateUserOnboardingTables extends Migration
+app/Database/Migrations/2026-05-10-000100_CreateUserAccountCompletionModalState.php:7:class CreateUserAccountCompletionModalState extends Migration
