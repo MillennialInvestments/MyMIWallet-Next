@@ -314,7 +314,17 @@ $routes->group('', ['namespace' => 'App\Controllers', 'filter' => 'no-cache'], s
     $routes->get('logout', 'AuthController::logout');
     $routes->post('logout', 'AuthController::logout', ['as' => 'auth/logout']);
 
-    $routes->get('register', 'AuthController::register', ['as' => 'register']);
+    
+// GT-002-02A registration legacy aliases.
+// Preserve public CTA compatibility without reviving segmented legacy registration flows.
+$routes->get('Free/register', static function () {
+    return redirect()->to(site_url('register'));
+});
+$routes->get('Beta/register', static function () {
+    return redirect()->to(site_url('register'));
+});
+
+$routes->get('register', 'AuthController::register', ['as' => 'register']);
     $routes->post('register', 'AuthController::attemptRegister', ['as' => 'register-submit']);
     $routes->get('register/success', 'AuthController::registerSuccess', ['as' => 'register-success']);
     $routes->post('register/resend-activation', 'AuthController::resendRegistrationActivation', ['as' => 'register-resend-activation']);
