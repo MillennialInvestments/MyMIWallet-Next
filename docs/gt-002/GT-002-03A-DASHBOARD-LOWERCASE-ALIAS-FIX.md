@@ -10,7 +10,7 @@ IMPLEMENTED_IN_FEATURE_WORKTREE_PENDING_PR
 
 ## Change
 
-Added a canonical lowercase GET compatibility alias:
+Added a root-level lowercase GET compatibility alias:
 
 - `/dashboard` routes to `DashboardController::index`
 
@@ -18,9 +18,9 @@ The canonical dashboard controller remains responsible for protected dashboard b
 
 ## Important route note
 
-A pre-existing lowercase `dashboard` route was found for `MobileController::dashboard`. That route did not fix public GET `/dashboard`, because production GET `/dashboard` still returned 404 during pre-deploy smoke.
+A pre-existing lowercase `dashboard` route was found under the mobile API route group for `MobileController::dashboard`. That route did not fix public GET `/dashboard`, because production GET `/dashboard` still returned 404 during pre-deploy smoke.
 
-This GT-002-03A fix therefore adds a canonical protected dashboard route alias tied to `DashboardController::index`.
+A prior GT-002-03A patch attempt inserted `dashboard` inside the `Dashboard` route group, which would resolve as `/Dashboard/dashboard`. This corrected patch places the lowercase alias before the `Dashboard` group so it resolves as root `/dashboard`.
 
 ## Evidence
 
@@ -31,6 +31,7 @@ This GT-002-03A fix therefore adds a canonical protected dashboard route alias t
 - `docs/gt-002/evidence/GT-002-03A/dashboard-lowercase-route-after-patch.txt`
 - `docs/gt-002/evidence/GT-002-03A/dashboard-lowercase-get-smoke-before-deploy.tsv`
 - `docs/gt-002/evidence/GT-002-03A/dashboard-lowercase-route-after-real-patch.txt`
+- `docs/gt-002/evidence/GT-002-03A/dashboard-lowercase-route-after-root-patch.txt`
 
 ## Pre-deploy GET smoke
 
