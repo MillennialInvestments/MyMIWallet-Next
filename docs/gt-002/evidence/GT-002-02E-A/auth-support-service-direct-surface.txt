@@ -1,0 +1,10 @@
+app/Modules/Support/Services/SupportTicketService.php:9:class SupportTicketService
+app/Modules/Support/Services/SupportTicketService.php:18:    public function createAuthLoginErrorTicket(array $context): int
+app/Modules/Support/Services/SupportTicketService.php:38:    public function notifyUser(int $ticketId, string $email, array $data): void
+app/Modules/Support/Services/SupportTicketService.php:54:    public function notifySupport(int $ticketId, array $data): void
+app/Modules/Support/Services/SupportTicketService.php:72:    public function notifyDiscord(int $ticketId, array $data): void
+app/Modules/Support/Services/SupportTicketService.php:9:class SupportTicketService
+app/Modules/Support/Services/SupportTicketService.php:18:    public function createAuthLoginErrorTicket(array $context): int
+app/Modules/Support/Services/SupportTicketService.php:38:    public function notifyUser(int $ticketId, string $email, array $data): void
+app/Modules/Support/Services/SupportTicketService.php:54:    public function notifySupport(int $ticketId, array $data): void
+app/Modules/Support/Services/SupportTicketService.php:72:    public function notifyDiscord(int $ticketId, array $data): void

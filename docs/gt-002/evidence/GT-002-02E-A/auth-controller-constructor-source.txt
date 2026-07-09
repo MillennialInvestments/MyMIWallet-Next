@@ -1,0 +1,90 @@
+<?php
+
+namespace App\Controllers;
+
+use App\Services\AuthAuditService;
+use App\Services\Auth\AuthLogger;
+use App\Services\OnboardingProgressService;
+use App\Services\RegistrationAttributionService;
+use App\Services\RegistrationSourceContentService;
+use App\Models\UserIpHistoryModel;
+use App\Modules\Support\Services\SupportTicketService;
+use App\Controllers\BaseController;
+use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\Session\Session;
+use Myth\Auth\Config\Auth as AuthConfig;
+use Myth\Auth\Entities\User;
+use Myth\Auth\Models\UserModel;
+use Throwable;
+
+class AuthController extends BaseController
+{
+    protected $auth;
+    protected AuthLogger $authLogger;
+    protected UserIpHistoryModel $ipHistoryModel;
+    protected SupportTicketService $supportTicketService;
+    protected ?string $requestId = null;
+    protected int $authLogSequence = 0;
+    protected ?bool $authDiagnosticsTableAvailable = null;
+
+    /**
+     * @var AuthConfig
+     */
+    protected $config;
+
+    /**
+     * @var Session
+     */
+    protected $session;
+
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+    {
+        parent::initController($request, $response, $logger);
+        // Most services in this controller require
+        // the session to be started - so fire it up!
+        $this->session = service('session');
+        helper('redirect_url');
+
+        $this->config = config(\App\Legacy\Auth\Config\Auth::class);
+        try {
+            $this->auth = service('authentication');
+        } catch (\Throwable $e) {
+            log_message('error', 'AuthController initController auth bootstrap failed: {message}', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+
+            $this->auth = null;
+        }
+        $this->authLogger = new AuthLogger();
+        $this->ipHistoryModel = model(UserIpHistoryModel::class);
+        $this->supportTicketService = new SupportTicketService();
+    }
+
+    //--------------------------------------------------------------------
+    // Login/out
+    //--------------------------------------------------------------------
+
+    /**
+     * Displays the login form, or redirects
+     * the user to their destination/home if
+     * they are already logged in.
+     */
+    public function login()
+    {
+        if ($redirect = $this->cleanLoginQueryRedirect()) {
+            return $redirect;
+        }
+
+        $isLoggedIn = $this->safeAuthCheck();
+
+        if ($isLoggedIn) {
+            return $this->redirectAfterLogin();
+        }
+
+        $request = $this->request;
+        $nextRaw = is_scalar($request->getGet('next')) ? (string) $request->getGet('next') : null;
+        if ($nextRaw !== null && trim($nextRaw) !== '') {
+            redirect_url_store($nextRaw, [
+                'writer' => 'AuthController::login[next]',
+                'route' => trim((string) $request->getUri()->getPath(), '/'),

@@ -1,0 +1,90 @@
+<?php
+
+namespace App\Models;
+
+use CodeIgniter\Model;
+use Faker\Generator;
+use Myth\Auth\Authorization\GroupModel;
+use Myth\Auth\Entities\User;
+
+/**
+ * @method User|null first()
+ */
+#[\AllowDynamicProperties]
+class UserModel extends Model
+{
+    protected $table          = 'users';
+    // protected $table          = 'users';
+    protected $primaryKey     = 'id';
+    protected $returnType     = 'App\Entities\User';
+    protected $useSoftDeletes = true;
+    protected $allowedFields  = [
+        'email', 'username', 'password_hash', '2fa_secret', 'reset_hash', 'reset_at', 'reset_expires', 'activate_hash',
+        'status', 'status_message', 'active', 'force_pass_reset', 'permissions', 'deleted_at', 'anonymous_id', 'ip_address', 'created_at', 'user_id', 'comment', 'ticker',
+        'referral_code', 'referred_by_user_id', 'source_channel', 'campaign_code', 'source_slug', 'utm_source', 'utm_medium', 'utm_campaign', 'landing_path',
+    ];
+    protected $useTimestamps   = true;
+    protected $validationRules = [
+        'email'         => 'required|valid_email|is_unique[users.email,id,{id}]',
+        'username'      => 'required|alpha_numeric_punct|min_length[3]|max_length[30]|is_unique[users.username,id,{id}]',
+        'password_hash' => 'required',
+    ];
+    protected $validationMessages = [];
+    protected $skipValidation     = false;
+    protected $beforeInsert = ['sanitizeEmail'];
+    protected $beforeUpdate = ['sanitizeEmail'];
+    protected $afterInsert  = ['addToGroup', '_provisionDefaultSolana'];
+
+    protected $auth;
+    protected $session;
+    public $cuID;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->auth = service('authentication');
+        $this->session = session();        
+
+        $this->cuID = (int) ($this->auth->id() ?? $this->session->get('user_id') ?? 0);
+    }
+    /**
+     * The id of a group to assign.
+     * Set internally by withGroup.
+     *
+     * @var int|null
+     */
+    protected $assignGroup;
+    protected function _provisionDefaultSolana(array $data)
+    {
+        try {
+            $id = (int)($data['id'] ?? 0);
+            if ($id > 0) {
+                // Only if user has no default wallet
+                $m = model(\App\Models\SolanaModel::class);
+                $row = $m->getDefaultAddressFromExchangeTable($id);
+                if (!$row) {
+                    (new \App\Libraries\MyMISolana())->provisionDefaultPublicAddress($id);
+                }
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'UserModel::_provisionDefaultSolana: '.$e->getMessage());
+        }
+        return $data;
+    }
+
+    public function addComment($data) {
+        return $this->db->table('bf_users_comments')->insert($data);
+    }
+
+    /**
+     * If a default role is assigned in Config\Auth, will
+     * add this user to that group. Will do nothing
+     * if the group cannot be found.
+     *
+     * @param mixed $data
+     *
+     * @return mixed
+     */
+    protected function addToGroup($data)
+    {
+        if (is_numeric($this->assignGroup)) {
