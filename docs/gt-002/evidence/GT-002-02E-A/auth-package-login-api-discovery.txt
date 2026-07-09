@@ -1,0 +1,8 @@
+app/Controllers/AuthController.php:73:    public function login()
+app/Controllers/AuthController.php:124:    public function attemptLogin()
+app/Controllers/AuthController.php:696:    // public function attemptRegister()
+app/Controllers/AuthController.php:755:    public function attemptRegister()
+app/Controllers/AuthController.php:1386:    public function attemptForgot()
+app/Controllers/AuthController.php:1499:    public function attemptReset()
+app/Controllers/ShieldAuth/Register.php:18:    public function attempt()
+app/Controllers/ShieldAuth/Login.php:18:    public function attempt()

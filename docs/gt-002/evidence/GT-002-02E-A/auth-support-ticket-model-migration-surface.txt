@@ -1,0 +1,8 @@
+app/Modules/Support/Models/SupportTicketEventModel.php:7:class SupportTicketEventModel extends ObservedModel
+app/Modules/Support/Models/SupportTicketEventModel.php:9:    protected $table = 'bf_support_ticket_events';
+app/Modules/Support/Models/SupportTicketModel.php:7:class SupportTicketModel extends ObservedModel
+app/Modules/Support/Models/SupportTicketModel.php:9:    protected $table = 'bf_support_tickets';
+app/Database/Migrations/2026-02-09-000001_CreateSupportTickets.php:28:        $this->forge->createTable('bf_support_tickets', true);
+app/Database/Migrations/2026-02-09-000001_CreateSupportTickets.php:39:        $this->forge->createTable('bf_support_ticket_events', true);
+app/Database/Migrations/2026-02-09-000001_CreateSupportTickets.php:44:        $this->forge->dropTable('bf_support_ticket_events', true);
+app/Database/Migrations/2026-02-09-000001_CreateSupportTickets.php:45:        $this->forge->dropTable('bf_support_tickets', true);

@@ -1,0 +1,56 @@
+            'debug',
+            sprintf('Auth credentials normalised for attempt using key "%s"', $type)
+        );
+
+        try {
+            $attempt = $this->auth->attempt($credentials, $remember);
+
+            if (! $attempt && $userFound && ! $passwordVerifyFailed && $userRecord !== null && method_exists($this->auth, 'login')) {
+                $this->authLog('AUTH_LOGIN', 'legacy_password_hash_fallback', 'Myth/Auth attempt failed after native password verification; applying migrated hash compatibility login.', [
+                    'user_id' => $userRecord->id ?? null,
+                    'identifier_type' => $type,
+                    'request_id' => $requestId,
+                ], 'warning', __LINE__);
+
+                $attempt = (bool) $this->auth->login($userRecord, $remember);
+            }
+        } catch (Throwable $e) {
+            $this->authLog('AUTH_FAIL', 'exception', 'Authentication attempt threw exception', [
+                'identifier' => $identifier,
+                'exception' => $e->getMessage(),
+                'redirect_target' => site_url('login'),
+            ], 'error', __LINE__);
+            $context = [
+                'email_entered' => filter_var($login, FILTER_VALIDATE_EMAIL) ? (string) $login : null,
+                'user_id' => null,
+                'ip_address' => $ip,
+                'user_agent' => $ua,
+                'error_message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace_id' => bin2hex(random_bytes(6)),
+            ];
+
+            $ticketId = $this->supportTicketService->createAuthLoginErrorTicket($context);
+            if (! empty($context['email_entered'])) {
+                $this->supportTicketService->notifyUser($ticketId, $context['email_entered'], $context);
+            }
+            $this->supportTicketService->notifySupport($ticketId, $context);
+            $this->supportTicketService->notifyDiscord($ticketId, $context);
+            $this->authLogger->logAuthException($e, ['login' => (string) $login, 'ip' => $ip]);
+
+            $this->session->setFlashdata('auth_ticket_id', $ticketId);
+            $this->forceSupportAlert(
+                'danger',
+                'Login system error',
+                'We hit a system error while signing you in. Please use the support link below.',
+                'AUTH-LOGIN-001',
+                $e,
+                ['ticket_id' => $ticketId, 'login' => (string) $login, 'request_id' => $requestId]
+            );
+
+            return redirect()->to(site_url('login'))
+                ->withInput()
+                ->with('errors', ['login' => 'A login system error occurred.'])
+                ->with('error', 'A login system error occurred. Please try again or contact support.');
+        }
