@@ -1342,6 +1342,9 @@ $routes->get('index.php/Blog/(:segment)', static fn($slug) => redirect()->to(sit
 $routes->get('index.php/Blog/(:segment)/(:segment)', static fn($a, $b) => redirect()->to(site_url('Blog/' . $a . '/' . $b), 301));
 
 // Dashboard
+// GT-002-03A root lowercase dashboard compatibility alias.
+$routes->get('dashboard', '\App\Modules\User\Controllers\DashboardController::index', ['filter' => ['login', 'noStore']]);
+
 $routes->group('Dashboard', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
     $routes->get('/', 'DashboardController::index', ['as' => 'dashboard']);
     // Backward-compatible alias for legacy singular path

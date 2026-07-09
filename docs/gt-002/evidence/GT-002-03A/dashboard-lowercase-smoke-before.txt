@@ -1,0 +1,24 @@
+===== /Dashboard =====
+HTTP/1.1 404 Not Found
+Server: nginx/1.18.0 (Ubuntu)
+Content-Type: text/html; charset=UTF-8
+Connection: keep-alive
+X-MyMI-FrontController: 1
+Set-Cookie: ci_session=3940bc94179c393d6b336c8eea9521fb; expires=Thu, 09 Jul 2026 13:31:25 GMT; Max-Age=7200; path=/; domain=.mymiwallet.com; secure; HttpOnly; SameSite=Lax
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Date: Thu, 09 Jul 2026 11:31:25 GMT
+
+===== /dashboard =====
+HTTP/1.1 404 Not Found
+Server: nginx/1.18.0 (Ubuntu)
+Content-Type: text/html; charset=UTF-8
+Connection: keep-alive
+X-MyMI-FrontController: 1
+Set-Cookie: ci_session=ef06f3c3e8ff104b79633ee40941bea7; expires=Thu, 09 Jul 2026 13:31:25 GMT; Max-Age=7200; path=/; domain=.mymiwallet.com; secure; HttpOnly; SameSite=Lax
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Date: Thu, 09 Jul 2026 11:31:25 GMT
+
