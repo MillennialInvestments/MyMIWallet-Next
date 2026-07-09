@@ -2,7 +2,7 @@
 
 ## Objective
 
-Fix the confirmed dashboard compatibility finding where lowercase `/dashboard` did not resolve as a protected dashboard entrypoint.
+Fix the confirmed dashboard compatibility finding where GET `/dashboard` returned 404 while GET `/Dashboard` redirected guests to `/login`.
 
 ## Status
 
@@ -10,11 +10,17 @@ IMPLEMENTED_IN_FEATURE_WORKTREE_PENDING_PR
 
 ## Change
 
-Added a lowercase GET compatibility alias:
+Added a canonical lowercase GET compatibility alias:
 
-- `/dashboard` redirects to canonical `/Dashboard`
+- `/dashboard` routes to `DashboardController::index`
 
-The canonical `/Dashboard` route remains responsible for protected dashboard behavior and guest auth redirection.
+The canonical dashboard controller remains responsible for protected dashboard behavior and guest auth redirection.
+
+## Important route note
+
+A pre-existing lowercase `dashboard` route was found for `MobileController::dashboard`. That route did not fix public GET `/dashboard`, because production GET `/dashboard` still returned 404 during pre-deploy smoke.
+
+This GT-002-03A fix therefore adds a canonical protected dashboard route alias tied to `DashboardController::index`.
 
 ## Evidence
 
@@ -24,20 +30,22 @@ The canonical `/Dashboard` route remains responsible for protected dashboard beh
 - `docs/gt-002/evidence/GT-002-03A/dashboard-routes-after.txt`
 - `docs/gt-002/evidence/GT-002-03A/dashboard-lowercase-route-after-patch.txt`
 - `docs/gt-002/evidence/GT-002-03A/dashboard-lowercase-get-smoke-before-deploy.tsv`
+- `docs/gt-002/evidence/GT-002-03A/dashboard-lowercase-route-after-real-patch.txt`
 
-## Notes
+## Pre-deploy GET smoke
 
-The original HEAD smoke used `curl -I` and showed both `/Dashboard` and `/dashboard` returning 404. That is a separate HEAD behavior and should not be used as the GET-route acceptance test for this lane.
+Before deployment:
 
-The acceptance target for GT-002-03A is GET `/dashboard`.
+- GET `/Dashboard` returned 302 to `/login`.
+- GET `/dashboard` returned 404.
 
 ## Post-deploy acceptance
 
 After PR merge and production fast-forward:
 
-- GET `/dashboard` should no longer return 404.
-- GET `/dashboard` should redirect to `/Dashboard` or ultimately to `/login` for guests.
-- GET `/Dashboard` should continue to preserve protected dashboard auth behavior.
+- GET `/dashboard` must no longer return 404.
+- GET `/dashboard` must redirect to `/login` for guests, or route canonically through `/Dashboard`.
+- GET `/Dashboard` must continue to preserve protected dashboard auth behavior.
 
 ## Safety
 
