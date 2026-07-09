@@ -1,0 +1,23 @@
+  1338	    $routes->get('(:segment)', 'BlogController::view/$1');
+  1339	});
+  1340	$routes->get('index.php/Blog', static fn() => redirect()->to(site_url('Blog'), 301));
+  1341	$routes->get('index.php/Blog/(:segment)', static fn($slug) => redirect()->to(site_url('Blog/' . $slug), 301));
+  1342	$routes->get('index.php/Blog/(:segment)/(:segment)', static fn($a, $b) => redirect()->to(site_url('Blog/' . $a . '/' . $b), 301));
+  1343	
+  1344	// Dashboard
+  1345	
+  1346	// GT-002-03A-B1 explicit Dashboard compatibility aliases.
+  1347	$routes->get('Dashboard', '\App\Modules\User\Controllers\DashboardController::index', ['filter' => ['login', 'noStore']]);
+  1348	$routes->get('dashboard', '\App\Modules\User\Controllers\DashboardController::index', ['filter' => ['login', 'noStore']]);
+  1349	
+  1350	$routes->group('Dashboard', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
+  1351	    $routes->get('/', 'DashboardController::index', ['as' => 'dashboard']);
+  1352	    // Backward-compatible alias for legacy singular path
+  1353	    $routes->addRedirect('PropFirm', 'PropFirms', 302);
+  1354	    $routes->get('Transaction-Modal/(:segment)', 'DashboardController::loadModalContent/$1', ['as' => 'load-modal-1-segment']);
+  1355	    $routes->get('Transaction-Modal/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2', ['as' => 'load-modal-2-segment']);
+  1356	    $routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3', ['as' => 'load-modal-3-segment']);
+  1357	    $routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3/$4', ['as' => 'load-modal-4-segment']);
+  1358	    $routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3/$4/$5', ['as' => 'load-modal-5-segment']);
+  1359	    $routes->get('Transaction-Modal/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)/(:segment)', 'DashboardController::loadModalContent/$1/$2/$3/$4/$5/$6', ['as' => 'load-modal-6-segment']);
+  1360	    $routes->get('LoadingScreen', 'DashboardController::LoadingScreen', ['as' => 'loading-screen']);
