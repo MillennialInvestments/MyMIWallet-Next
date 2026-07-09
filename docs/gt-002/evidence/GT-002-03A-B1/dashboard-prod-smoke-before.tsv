@@ -1,0 +1,3 @@
+path	code	redirect
+/Dashboard	404	
+/dashboard	302	https://www.mymiwallet.com/login
