@@ -104,6 +104,17 @@ class Marketing extends BaseConfig
     ];
 
     /** @var array<string,mixed> */
+    public array $zapierIngress = [
+        'enabled' => false,
+        'webhook_key' => '',
+        'contract_test_enabled' => false,
+        'rate_limit' => 60,
+        'max_bytes' => 65536,
+        'allowed_sources' => ['rss-by-zapier', 'zapier'],
+        'idempotency_ttl_days' => 7,
+    ];
+
+    /** @var array<string,mixed> */
     public array $ocr = [
         'engine_mode' => 3,
         'page_segmentation_mode' => 6,
@@ -170,6 +181,45 @@ class Marketing extends BaseConfig
         }
 
         $this->logging['debug_mode'] = (bool) env('MARKETING_DEBUG_MODE', false);
+
+        $this->zapierIngress['enabled'] = filter_var(
+            (string) env('MARKETING_ZAPIER_INGRESS_ENABLED', '0'),
+            FILTER_VALIDATE_BOOL
+        );
+
+        $this->zapierIngress['webhook_key'] = trim(
+            (string) env('MARKETING_ZAPIER_WEBHOOK_KEY', '')
+        );
+
+        $this->zapierIngress['contract_test_enabled'] = filter_var(
+            (string) env('MARKETING_ZAPIER_CONTRACT_TEST_ENABLED', '0'),
+            FILTER_VALIDATE_BOOL
+        );
+
+        $this->zapierIngress['rate_limit'] = max(
+            1,
+            (int) env('MARKETING_ZAPIER_INGRESS_RATE_LIMIT', 60)
+        );
+
+        $this->zapierIngress['max_bytes'] = max(
+            1024,
+            (int) env('MARKETING_ZAPIER_INGRESS_MAX_BYTES', 65536)
+        );
+
+        $this->zapierIngress['idempotency_ttl_days'] = max(
+            1,
+            (int) env('MARKETING_ZAPIER_IDEMPOTENCY_TTL_DAYS', 7)
+        );
+
+        $sources = array_values(array_filter(array_map(
+            static fn (string $source): string => strtolower(trim($source)),
+            explode(',', (string) env(
+                'MARKETING_ZAPIER_ALLOWED_SOURCES',
+                'rss-by-zapier,zapier'
+            ))
+        )));
+
+        $this->zapierIngress['allowed_sources'] = $sources;
     }
 
     /**

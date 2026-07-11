@@ -261,6 +261,7 @@ class Console extends BaseConfig
         \App\Commands\Marketing\ApproveGenerated::class,
         \App\Commands\Marketing\ApproveGeneratedContent::class,
         \App\Commands\Marketing\AuditDistribution::class,
+        \App\Commands\Marketing\IngressContractSmoke::class,
         \App\Commands\Marketing\AutomationAudit::class,
         \App\Commands\Marketing\BlueskyHealthcheck::class,
         \App\Commands\Marketing\DailyAudit::class,
