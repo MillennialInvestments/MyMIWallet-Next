@@ -978,6 +978,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
     // ✅ MarketingAPIController
     // ------------------------
     $routes->group('Marketing', function($routes) {
+        $routes->post('Ingress', 'MarketingIngressAPIController::receive', ['filter' => 'marketingZapierIngress']);
         $routes->post('/', 'MarketingAPIController::index', ['filter' => 'apiToken']);
         $routes->post('approvePost/(:num)', 'MarketingAPIController::approvePost/$1', ['filter' => 'apiToken']);
         $routes->post('approveBufferItem/(:num)', 'MarketingAPIController::approveBufferItem/$1', ['filter' => 'apiToken']);

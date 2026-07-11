@@ -50,6 +50,7 @@ class Filters extends BaseConfig
         'captcha'       => \App\Filters\CaptchaFilter::class,
         'emailVerified' => \App\Filters\EmailVerifiedFilter::class,
         'idempotency'  => \App\Filters\IdempotencyFilter::class,
+        'marketingZapierIngress' => \App\Filters\MarketingZapierIngressFilter::class,
         // PATCH: observability filters
         'observability' => \App\Filters\ObservabilityFilter::class,
         'jsonException' => \App\Filters\JsonExceptionFilter::class,
