@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Federal Reserve Fixture Feed</title>
+    <link>https://www.federalreserve.gov/</link>
+    <description>Deterministic local market-feed fixture.</description>
+    <language>en-us</language>
+    <item>
+      <guid isPermaLink="false">federal-reserve-fixture-001</guid>
+      <title>Federal Reserve fixture item one</title>
+      <description>Deterministic fixture summary one.</description>
+      <link>https://www.federalreserve.gov/fixture/item-one.htm</link>
+      <pubDate>2026-07-01T12:00:00+00:00</pubDate>
+    </item>
+    <item>
+      <guid isPermaLink="false">federal-reserve-fixture-002</guid>
+      <title>Federal Reserve fixture item two</title>
+      <description>Deterministic fixture summary two.</description>
+      <link>https://www.federalreserve.gov/fixture/item-two.htm</link>
+      <pubDate>2026-07-02T12:00:00+00:00</pubDate>
+    </item>
+  </channel>
+</rss>
