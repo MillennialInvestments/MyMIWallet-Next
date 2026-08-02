@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use RuntimeException;
 use SimpleXMLElement;
 
-final class FederalReserveRssFixtureAdapter
+final class FederalReserveRssFixtureAdapter implements MarketFeedAdapterInterface
 {
     public function parse(
         string|SimpleXMLElement $xmlPathOrString

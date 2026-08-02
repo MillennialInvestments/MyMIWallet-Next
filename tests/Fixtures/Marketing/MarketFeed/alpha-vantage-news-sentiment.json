@@ -1,0 +1,69 @@
+{
+  "items": "2",
+  "sentiment_score_definition": "Fixture",
+  "relevance_score_definition": "Fixture",
+  "feed": [
+    {
+      "title": "Markets assess monetary policy outlook",
+      "url": "https://example.test/markets/monetary-policy-outlook",
+      "time_published": "20260731T140000",
+      "authors": [
+        "MyMI Fixture Desk"
+      ],
+      "summary": "Investors reviewed policy expectations and market conditions.",
+      "banner_image": "",
+      "source": "Example Financial News",
+      "category_within_source": "Markets",
+      "source_domain": "example.test",
+      "topics": [
+        {
+          "topic": "Financial Markets",
+          "relevance_score": "0.95"
+        },
+        {
+          "topic": "Economy - Monetary",
+          "relevance_score": "0.82"
+        }
+      ],
+      "overall_sentiment_score": "0.18",
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "SPY",
+          "relevance_score": "0.71",
+          "ticker_sentiment_score": "0.15",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Technology shares remain in focus",
+      "url": "https://example.test/technology/shares-in-focus",
+      "time_published": "20260731T150500",
+      "authors": [
+        "MyMI Fixture Desk"
+      ],
+      "summary": "Technology shares remained active during the trading session.",
+      "banner_image": "",
+      "source": "Example Financial News",
+      "category_within_source": "Technology",
+      "source_domain": "example.test",
+      "topics": [
+        {
+          "topic": "Technology",
+          "relevance_score": "0.91"
+        }
+      ],
+      "overall_sentiment_score": "-0.04",
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "QQQ",
+          "relevance_score": "0.77",
+          "ticker_sentiment_score": "-0.03",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    }
+  ]
+}
