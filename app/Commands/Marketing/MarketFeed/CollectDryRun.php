@@ -172,16 +172,7 @@ final class CollectDryRun extends SafeBaseCommand
             }
         }
 
-        $value = trim(
-            (string) $this->option(
-                'source',
-                'federal_reserve_rss'
-            )
-        );
-
-        return $value !== ''
-            ? $value
-            : 'federal_reserve_rss';
+        return 'federal_reserve_rss';
     }
 
 }
