@@ -58,6 +58,8 @@ final class MarketFeedSourceRegistryService
                 'configuration' => [
                     'mode' => 'fixture_only',
                     'function' => 'NEWS_SENTIMENT',
+                    'bounded_transport_available' => true,
+                    'live_provider_enabled_by_default' => false,
                 ],
             ],
         ];
