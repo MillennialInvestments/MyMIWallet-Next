@@ -36,6 +36,7 @@ final class Audit extends SafeBaseCommand
                 'live_network_enabled',
                 'persist_enabled',
                 'alpha_vantage_enabled',
+                'alpha_vantage_live_dry_run_enabled',
             ] as $property
         ) {
             if ((bool) $config->{$property}) {

@@ -13,6 +13,7 @@ final class MarketingMarketFeed extends BaseConfig
     public bool $persist_enabled = false;
 
     public bool $alpha_vantage_enabled = false;
+    public bool $alpha_vantage_live_dry_run_enabled = false;
     public string $alpha_vantage_api_key = '';
     public int $alpha_vantage_connect_timeout_ms = 3000;
     public int $alpha_vantage_timeout_ms = 10000;
@@ -44,6 +45,12 @@ final class MarketingMarketFeed extends BaseConfig
             'MARKETING_MARKET_FEED_ALPHA_VANTAGE_ENABLED',
             false
         );
+
+        $this->alpha_vantage_live_dry_run_enabled =
+            $this->readBoolean(
+                'MARKETING_MARKET_FEED_ALPHA_VANTAGE_LIVE_DRY_RUN_ENABLED',
+                false
+            );
 
         $this->alpha_vantage_api_key = trim((string) env(
             'MARKETING_MARKET_FEED_ALPHA_VANTAGE_API_KEY',
