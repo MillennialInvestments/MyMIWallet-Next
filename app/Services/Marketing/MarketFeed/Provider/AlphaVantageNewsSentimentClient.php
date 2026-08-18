@@ -144,6 +144,39 @@ final class AlphaVantageNewsSentimentClient
         }
 
         try {
+            $decoded = json_decode(
+                $body,
+                true,
+                512,
+                JSON_THROW_ON_ERROR
+            );
+        } catch (Throwable $exception) {
+            throw new AlphaVantageProviderException(
+                AlphaVantageProviderException::
+                    MALFORMED_PROVIDER_RESPONSE,
+                $exception
+            );
+        }
+
+        if (! is_array($decoded)) {
+            throw new AlphaVantageProviderException(
+                AlphaVantageProviderException::
+                    MALFORMED_PROVIDER_RESPONSE
+            );
+        }
+
+        $providerReason =
+            $this->providerEnvelopeReason(
+                $decoded
+            );
+
+        if ($providerReason !== null) {
+            throw new AlphaVantageProviderException(
+                $providerReason
+            );
+        }
+
+        try {
             return $this->adapter->parse(
                 $body
             );
@@ -154,5 +187,69 @@ final class AlphaVantageNewsSentimentClient
                 $exception
             );
         }
+    }
+
+    /**
+     * @param array<string, mixed> $payload
+     */
+    private function providerEnvelopeReason(
+        array $payload
+    ): ?string {
+        if (
+            array_key_exists(
+                'Error Message',
+                $payload
+            )
+        ) {
+            return AlphaVantageProviderException::
+                PROVIDER_ERROR;
+        }
+
+        foreach (
+            ['Note', 'Information']
+            as $field
+        ) {
+            if (! array_key_exists($field, $payload)) {
+                continue;
+            }
+
+            $value = $payload[$field];
+
+            $message = is_scalar($value)
+                ? strtolower(
+                    trim((string) $value)
+                )
+                : '';
+
+            if (
+                $message !== ''
+                && (
+                    str_contains(
+                        $message,
+                        'rate limit'
+                    )
+                    || str_contains(
+                        $message,
+                        'call frequency'
+                    )
+                    || str_contains(
+                        $message,
+                        'calls per'
+                    )
+                    || str_contains(
+                        $message,
+                        'requests per'
+                    )
+                )
+            ) {
+                return AlphaVantageProviderException::
+                    RATE_LIMITED;
+            }
+
+            return AlphaVantageProviderException::
+                PROVIDER_ERROR;
+        }
+
+        return null;
     }
 }

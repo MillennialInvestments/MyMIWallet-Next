@@ -20,6 +20,8 @@ final class AlphaVantageProviderException extends RuntimeException
         'invalid_provider_endpoint';
     public const RATE_LIMITED =
         'rate_limited';
+    public const PROVIDER_ERROR =
+        'provider_error';
     public const UPSTREAM_UNAVAILABLE =
         'upstream_unavailable';
     public const UNEXPECTED_HTTP_STATUS =
@@ -46,6 +48,8 @@ final class AlphaVantageProviderException extends RuntimeException
                 'Provider endpoint is invalid.',
             self::RATE_LIMITED =>
                 'Provider rate limit reached.',
+            self::PROVIDER_ERROR =>
+                'Provider reported an error.',
             self::UPSTREAM_UNAVAILABLE =>
                 'Provider is unavailable.',
             self::UNEXPECTED_HTTP_STATUS =>

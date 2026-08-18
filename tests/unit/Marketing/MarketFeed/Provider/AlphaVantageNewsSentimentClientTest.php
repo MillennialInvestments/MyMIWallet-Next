@@ -242,6 +242,68 @@ final class AlphaVantageNewsSentimentClientTest extends TestCase
         }
     }
 
+    /**
+     * @dataProvider providerEnvelopeProvider
+     */
+    public function testProviderEnvelopeClassification(
+        string $body,
+        string $reason
+    ): void {
+        try {
+            $this->client(
+                new FakeTransport(
+                    new BoundedHttpResponse(
+                        200,
+                        [],
+                        $body
+                    )
+                )
+            )->collect();
+
+            self::fail(
+                'Expected provider envelope rejection.'
+            );
+        } catch (
+            AlphaVantageProviderException $exception
+        ) {
+            self::assertSame(
+                $reason,
+                $exception->reasonCode()
+            );
+
+            self::assertStringNotContainsString(
+                'C2_PROVIDER_SENTINEL',
+                $exception->getMessage()
+            );
+        }
+    }
+
+    public static function providerEnvelopeProvider(): array
+    {
+        return [
+            [
+                '{"Error Message":"C2_PROVIDER_SENTINEL"}',
+                AlphaVantageProviderException::
+                    PROVIDER_ERROR,
+            ],
+            [
+                '{"Note":"C2_PROVIDER_SENTINEL rate limit"}',
+                AlphaVantageProviderException::
+                    RATE_LIMITED,
+            ],
+            [
+                '{"Information":"C2_PROVIDER_SENTINEL call frequency"}',
+                AlphaVantageProviderException::
+                    RATE_LIMITED,
+            ],
+            [
+                '{"Information":"C2_PROVIDER_SENTINEL maintenance"}',
+                AlphaVantageProviderException::
+                    PROVIDER_ERROR,
+            ],
+        ];
+    }
+
     private function client(
         FakeTransport $transport
     ): AlphaVantageNewsSentimentClient {
