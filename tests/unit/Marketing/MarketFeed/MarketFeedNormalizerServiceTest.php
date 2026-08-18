@@ -104,6 +104,115 @@ final class MarketFeedNormalizerServiceTest extends CIUnitTestCase
         $this->assertSame($first, $second);
     }
 
+    public function testNormalizesFirstClassSentimentFields(): void
+    {
+        $result = (new MarketFeedNormalizerService())->normalize(
+            'alpha_vantage',
+            [
+                'external_item_id' => 'sentiment-001',
+                'relevance_score' => '0.85000000',
+                'sentiment_score' => '-0.10000000',
+                'sentiment_label' => ' negative ',
+            ]
+        );
+
+        $this->assertSame(0.85, $result['relevance_score']);
+        $this->assertSame(-0.1, $result['sentiment_score']);
+        $this->assertSame('negative', $result['sentiment_label']);
+    }
+
+    public function testMissingSentimentFieldsRemainNull(): void
+    {
+        $result = (new MarketFeedNormalizerService())->normalize(
+            'alpha_vantage',
+            ['external_item_id' => 'sentiment-002']
+        );
+
+        $this->assertNull($result['relevance_score']);
+        $this->assertNull($result['sentiment_score']);
+        $this->assertNull($result['sentiment_label']);
+    }
+
+    public function testInvalidSentimentFieldsRemainNull(): void
+    {
+        $result = (new MarketFeedNormalizerService())->normalize(
+            'alpha_vantage',
+            [
+                'external_item_id' => 'sentiment-003',
+                'relevance_score' => '',
+                'sentiment_score' => 'not-numeric',
+                'sentiment_label' => '   ',
+            ]
+        );
+
+        $this->assertNull($result['relevance_score']);
+        $this->assertNull($result['sentiment_score']);
+        $this->assertNull($result['sentiment_label']);
+    }
+
+    public function testSentimentMetadataHashingRemainsDeterministic(): void
+    {
+        $service = new MarketFeedNormalizerService();
+
+        $first = $service->normalize('alpha_vantage', [
+            'external_item_id' => 'sentiment-004',
+            'relevance_score' => 0.75,
+            'sentiment_score' => 0.25,
+            'sentiment_label' => 'Neutral',
+            'metadata' => ['b' => 2, 'a' => 1],
+        ]);
+
+        $second = $service->normalize('alpha_vantage', [
+            'metadata' => ['a' => 1, 'b' => 2],
+            'sentiment_label' => 'Neutral',
+            'sentiment_score' => 0.25,
+            'relevance_score' => 0.75,
+            'external_item_id' => 'sentiment-004',
+        ]);
+
+        $this->assertSame(
+            $first['identity_sha256'],
+            $second['identity_sha256']
+        );
+        $this->assertSame(
+            $first['payload_sha256'],
+            $second['payload_sha256']
+        );
+        $this->assertSame(
+            $first['normalized_metadata_json'],
+            $second['normalized_metadata_json']
+        );
+    }
+
+    public function testSensitiveMetadataIsNotPersistedIntoNormalizedJson(): void
+    {
+        $result = (new MarketFeedNormalizerService())->normalize(
+            'alpha_vantage',
+            [
+                'external_item_id' => 'sentiment-005',
+                'metadata' => [
+                    'safe' => 'preserved',
+                    'api_key' => 'must-not-survive',
+                ],
+                'authorization' => 'Bearer must-not-survive',
+            ]
+        );
+
+        $metadata = json_decode(
+            $result['normalized_metadata_json'],
+            true,
+            512,
+            JSON_THROW_ON_ERROR
+        );
+
+        $this->assertArrayNotHasKey('authorization', $metadata);
+        $this->assertSame('preserved', $metadata['metadata']['safe']);
+        $this->assertArrayNotHasKey(
+            'api_key',
+            $metadata['metadata']
+        );
+    }
+
     public function testRejectsMissingIdentityInputs(): void
     {
         $this->expectException(InvalidArgumentException::class);

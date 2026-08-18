@@ -35,7 +35,8 @@ final class MarketFeedNormalizerService
         }
 
         $identityValue = $externalItemId !== '' ? $externalItemId : $canonicalUrl;
-        $sortedItem = $this->sortRecursively($item);
+        $metadataItem = $this->sanitizeMetadata($item);
+        $sortedItem = $this->sortRecursively($metadataItem);
         $metadataJson = $this->encode($sortedItem);
         $publishedAt = $this->normalizeDate(
             $item['published_at']
@@ -60,7 +61,70 @@ final class MarketFeedNormalizerService
             'collected_at' => $collectedAt,
             'payload_sha256' => hash('sha256', $metadataJson),
             'normalized_metadata_json' => $metadataJson,
+            'relevance_score' => $this->nullableFloat(
+                $item['relevance_score'] ?? null
+            ),
+            'sentiment_score' => $this->nullableFloat(
+                $item['sentiment_score'] ?? null
+            ),
+            'sentiment_label' => $this->nullableString(
+                $item['sentiment_label'] ?? null
+            ),
         ];
+    }
+
+    private function nullableFloat(mixed $value): ?float
+    {
+        if (
+            $value === null
+            || $value === ''
+            || ! is_numeric($value)
+        ) {
+            return null;
+        }
+
+        return (float) $value;
+    }
+
+    private function nullableString(mixed $value): ?string
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        $text = trim((string) $value);
+
+        return $text === '' ? null : $text;
+    }
+
+    private function sanitizeMetadata(mixed $value): mixed
+    {
+        if (! is_array($value)) {
+            return $value;
+        }
+
+        $sanitized = [];
+
+        foreach ($value as $key => $child) {
+            if (
+                is_string($key)
+                && $this->isSensitiveMetadataKey($key)
+            ) {
+                continue;
+            }
+
+            $sanitized[$key] = $this->sanitizeMetadata($child);
+        }
+
+        return $sanitized;
+    }
+
+    private function isSensitiveMetadataKey(string $key): bool
+    {
+        return preg_match(
+            '/(?:api[_-]?key|authorization|password|secret|credential|access[_-]?token|refresh[_-]?token|request[_-]?headers?|response[_-]?headers?|headers?)/i',
+            $key
+        ) === 1;
     }
 
     private function normalizeDate(mixed $value): ?string
