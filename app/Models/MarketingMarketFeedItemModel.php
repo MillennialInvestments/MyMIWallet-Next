@@ -23,6 +23,9 @@ class MarketingMarketFeedItemModel extends Model
         'canonical_url',
         'published_at',
         'collected_at',
+        'relevance_score',
+        'sentiment_score',
+        'sentiment_label',
         'payload_sha256',
         'normalized_metadata_json',
         'created_at',
@@ -51,6 +54,43 @@ class MarketingMarketFeedItemModel extends Model
     public function getItemByIdentitySha256(string $identitySha256): ?array
     {
         $row = $this->where('identity_sha256', strtolower(trim($identitySha256)))->first();
+
+        return is_array($row) ? $row : null;
+    }
+
+    public function getItemByIdentitySha256ForUpdate(
+        string $identitySha256
+    ): ?array {
+        $identitySha256 = strtolower(
+            trim($identitySha256)
+        );
+
+        $builder = $this->builder();
+
+        $builder->where(
+            'identity_sha256',
+            $identitySha256
+        );
+
+        $sql = $builder->getCompiledSelect();
+
+        if (
+            in_array(
+                $this->db->getPlatform(),
+                ['MySQLi', 'Postgre'],
+                true
+            )
+        ) {
+            $sql .= ' FOR UPDATE';
+        }
+
+        $query = $this->db->query($sql);
+
+        if ($query === false) {
+            return null;
+        }
+
+        $row = $query->getRowArray();
 
         return is_array($row) ? $row : null;
     }
