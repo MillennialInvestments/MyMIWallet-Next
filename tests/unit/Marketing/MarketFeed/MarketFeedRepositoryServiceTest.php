@@ -114,9 +114,10 @@ final class MarketFeedRepositoryServiceTest extends CIUnitTestCase
         $this->assertSame('Bearish', $stored['sentiment_label']);
     }
 
-    public function testConcurrentDuplicateBecomesUnchanged(): void
+    public function testConcurrentDuplicateUsesSavepointAndLockingRead(): void
     {
-        [$service, , $item] = $this->service();
+        [$service, , $item, , $connection] =
+            $this->service();
 
         $item->simulateDuplicateRace = true;
 
@@ -128,6 +129,16 @@ final class MarketFeedRepositoryServiceTest extends CIUnitTestCase
         $this->assertSame(0, $result['inserted']);
         $this->assertSame(1, $result['unchanged']);
         $this->assertSame(0, $result['errors']);
+        $this->assertSame(1, $item->lockingReadCalls);
+
+        $this->assertSame(
+            [
+                'SAVEPOINT mymi_market_feed_item_insert',
+                'ROLLBACK TO SAVEPOINT mymi_market_feed_item_insert',
+                'RELEASE SAVEPOINT mymi_market_feed_item_insert',
+            ],
+            $connection->queries
+        );
     }
 
     public function testPersistenceFailureRollsBackWholeBatch(): void
@@ -261,12 +272,21 @@ final class InMemoryMarketFeedItemModel
     public array $rows = [];
     public int $addCalls = 0;
     public int $updateCalls = 0;
+    public int $lockingReadCalls = 0;
     public bool $simulateDuplicateRace = false;
     public ?int $throwOnAddCall = null;
 
     public function getItemByIdentitySha256(
         string $identity
     ): ?array {
+        return $this->rows[$identity] ?? null;
+    }
+
+    public function getItemByIdentitySha256ForUpdate(
+        string $identity
+    ): ?array {
+        $this->lockingReadCalls++;
+
         return $this->rows[$identity] ?? null;
     }
 
@@ -340,6 +360,14 @@ final class InMemoryTransactionConnection
     public int $beginCalls = 0;
     public int $commitCalls = 0;
     public int $rollbackCalls = 0;
+    public array $queries = [];
+
+    public function query(string $sql): bool
+    {
+        $this->queries[] = $sql;
+
+        return true;
+    }
 
     public function transBegin(): bool
     {

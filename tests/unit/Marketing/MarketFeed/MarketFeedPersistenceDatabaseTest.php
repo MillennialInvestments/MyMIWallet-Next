@@ -60,7 +60,24 @@ final class MarketFeedPersistenceDatabaseTest extends CIUnitTestCase
         $forge = Database::forge($db);
 
         (new CreateMarketingMarketFeedLedger($forge))->up();
-        (new HardenMarketingMarketFeedPersistence($forge))->up();
+
+        $forge->addColumn(
+            'bf_marketing_market_feed_items',
+            [
+                'relevance_score' => [
+                    'type' => 'DECIMAL',
+                    'constraint' => '12,8',
+                    'null' => true,
+                ],
+            ]
+        );
+
+        $fieldMigration =
+            new HardenMarketingMarketFeedPersistence($forge);
+
+        $fieldMigration->up();
+        $fieldMigration->up();
+
         (new CreateMarketingMarketFeedIngestRuns($forge))->up();
 
         $this->assertTrue(
@@ -258,6 +275,13 @@ final class FailingSecondDatabaseItemModel
     ): ?array {
         return $this->delegate
             ->getItemByIdentitySha256($identity);
+    }
+
+    public function getItemByIdentitySha256ForUpdate(
+        string $identity
+    ): ?array {
+        return $this->delegate
+            ->getItemByIdentitySha256ForUpdate($identity);
     }
 
     public function addItem(array $data): int|string|false

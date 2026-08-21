@@ -58,6 +58,43 @@ class MarketingMarketFeedItemModel extends Model
         return is_array($row) ? $row : null;
     }
 
+    public function getItemByIdentitySha256ForUpdate(
+        string $identitySha256
+    ): ?array {
+        $identitySha256 = strtolower(
+            trim($identitySha256)
+        );
+
+        $builder = $this->builder();
+
+        $builder->where(
+            'identity_sha256',
+            $identitySha256
+        );
+
+        $sql = $builder->getCompiledSelect();
+
+        if (
+            in_array(
+                $this->db->getPlatform(),
+                ['MySQLi', 'Postgre'],
+                true
+            )
+        ) {
+            $sql .= ' FOR UPDATE';
+        }
+
+        $query = $this->db->query($sql);
+
+        if ($query === false) {
+            return null;
+        }
+
+        $row = $query->getRowArray();
+
+        return is_array($row) ? $row : null;
+    }
+
     public function addItem(array $data): int|string|false
     {
         return $this->insert($data, true);

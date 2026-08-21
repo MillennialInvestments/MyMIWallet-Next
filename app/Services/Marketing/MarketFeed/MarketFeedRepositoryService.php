@@ -13,6 +13,9 @@ use Throwable;
 
 final class MarketFeedRepositoryService
 {
+    private const ITEM_INSERT_SAVEPOINT =
+        'mymi_market_feed_item_insert';
+
     private MarketingMarketFeed $config;
     private $sourceModelFactory;
     private $itemModelFactory;
@@ -146,6 +149,7 @@ final class MarketFeedRepositoryService
 
                 $this->persistItem(
                     $itemModel,
+                    $connection,
                     $payload,
                     $summary
                 );
@@ -243,6 +247,7 @@ final class MarketFeedRepositoryService
 
     private function persistItem(
         object $itemModel,
+        object $connection,
         array $payload,
         array &$summary
     ): void {
@@ -261,9 +266,13 @@ final class MarketFeedRepositoryService
             return;
         }
 
+        $this->createItemInsertSavepoint($connection);
+
         try {
             $created = $itemModel->addItem($payload);
         } catch (Throwable $exception) {
+            $this->rollbackItemInsertSavepoint($connection);
+
             $this->reconcileConcurrentInsert(
                 $itemModel,
                 $payload,
@@ -271,18 +280,26 @@ final class MarketFeedRepositoryService
                 $exception
             );
 
+            $this->releaseItemInsertSavepoint($connection);
+
             return;
         }
 
         if ($created === false) {
+            $this->rollbackItemInsertSavepoint($connection);
+
             $this->reconcileConcurrentInsert(
                 $itemModel,
                 $payload,
                 $summary
             );
 
+            $this->releaseItemInsertSavepoint($connection);
+
             return;
         }
+
+        $this->releaseItemInsertSavepoint($connection);
 
         $summary['inserted']++;
     }
@@ -293,9 +310,10 @@ final class MarketFeedRepositoryService
         array &$summary,
         ?Throwable $insertException = null
     ): void {
-        $winner = $itemModel->getItemByIdentitySha256(
-            $payload['identity_sha256']
-        );
+        $winner =
+            $itemModel->getItemByIdentitySha256ForUpdate(
+                $payload['identity_sha256']
+            );
 
         if ($winner === null) {
             if ($insertException !== null) {
@@ -313,6 +331,50 @@ final class MarketFeedRepositoryService
             $payload,
             $summary
         );
+    }
+
+    private function createItemInsertSavepoint(
+        object $connection
+    ): void {
+        if (
+            $connection->query(
+                'SAVEPOINT ' . self::ITEM_INSERT_SAVEPOINT
+            ) === false
+        ) {
+            throw new RuntimeException(
+                'Feed item savepoint creation failed.'
+            );
+        }
+    }
+
+    private function rollbackItemInsertSavepoint(
+        object $connection
+    ): void {
+        if (
+            $connection->query(
+                'ROLLBACK TO SAVEPOINT '
+                . self::ITEM_INSERT_SAVEPOINT
+            ) === false
+        ) {
+            throw new RuntimeException(
+                'Feed item savepoint rollback failed.'
+            );
+        }
+    }
+
+    private function releaseItemInsertSavepoint(
+        object $connection
+    ): void {
+        if (
+            $connection->query(
+                'RELEASE SAVEPOINT '
+                . self::ITEM_INSERT_SAVEPOINT
+            ) === false
+        ) {
+            throw new RuntimeException(
+                'Feed item savepoint release failed.'
+            );
+        }
     }
 
     private function reconcileExistingItem(
@@ -620,6 +682,7 @@ final class MarketFeedRepositoryService
         foreach (
             [
                 'getItemByIdentitySha256',
+                'getItemByIdentitySha256ForUpdate',
                 'addItem',
                 'updateItem',
             ] as $method
@@ -646,8 +709,12 @@ final class MarketFeedRepositoryService
     private function assertConnection(object $connection): void
     {
         foreach (
-            ['transBegin', 'transCommit', 'transRollback']
-            as $method
+            [
+                'transBegin',
+                'transCommit',
+                'transRollback',
+                'query',
+            ] as $method
         ) {
             if (! method_exists($connection, $method)) {
                 throw new RuntimeException(
