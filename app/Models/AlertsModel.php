@@ -31,7 +31,8 @@ class AlertsModel extends Model
         'active','status','occurrences','alert_count','distributed_count','created_on','created_by','updated_at','alert_created','send_alert','alert_sent',
         'ticker','exchange','company','price','open','high','low','volume','market_cap','trailing_stop_percent','locked_profit_stop','stop_loss','max_entry',
         'current_price','entry_price','potential_price','target_price','market_sentiment','trade_type','category','alert_priority','trade_description',
-        'financial_news','analysis_summary','tv_chart_type','tv_chart','display','notification_sent','submitted_date','last_updated','last_updated_time',
+        'financial_news','analysis_summary','analysis_report_json','analysis_report_text','analysis_reported_at','analysis_source',
+        'tv_chart_type','tv_chart','display','notification_sent','submitted_date','last_updated','last_updated_time',
         'ema_9','ema_21','ema_34','ema_48','ema_100','ema_200',
         // Legacy scraper metadata retained for compatibility
         'symbol','name','currency','mic_code','country','type','url','title','summary','content','email_identifier','email_date','email_sender',
@@ -3295,6 +3296,49 @@ class AlertsModel extends Model
         return $result;
     }
     
+
+
+    public function updateTradeAlertResearchByTicker(string $ticker, array $report): bool
+    {
+        $ticker = strtoupper(trim($ticker));
+
+        $updateData = [
+            'price'                => $report['market']['price'] ?? null,
+            'open'                 => $report['market']['open'] ?? null,
+            'high'                 => $report['market']['high'] ?? null,
+            'low'                  => $report['market']['low'] ?? null,
+            'volume'               => $report['market']['volume'] ?? null,
+            'analysis_report_json' => json_encode($report, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+            'analysis_report_text' => $report['summary_text'] ?? null,
+            'analysis_reported_at' => date('Y-m-d H:i:s'),
+            'analysis_source'      => $report['source'] ?? 'AlphaVantage',
+            'last_updated'         => date('Y-m-d H:i:s'),
+            'last_updated_time'    => date('H:i:s'),
+        ];
+
+        if (! empty($report['technical']['sma20']['values']['SMA'])) {
+            $updateData['ema5'] = $report['technical']['sma20']['values']['SMA'];
+        }
+
+        if (! empty($report['technical']['sma50']['values']['SMA'])) {
+            $updateData['ema13'] = $report['technical']['sma50']['values']['SMA'];
+        }
+
+        return (bool) $this->db->table('bf_investment_trade_alerts')
+            ->where('ticker', $ticker)
+            ->update($updateData);
+    }
+
+    public function getTradeAlertByTicker(string $ticker): ?array
+    {
+        $row = $this->db->table('bf_investment_trade_alerts')
+            ->where('ticker', strtoupper(trim($ticker)))
+            ->limit(1)
+            ->get()
+            ->getRowArray();
+
+        return $row ?: null;
+    }
 
     // Update Trade Alert and log changes
     public function updateTradeAlert($tradeId, $alertData)
