@@ -1,0 +1,1 @@
+{"_fixture":true,"userId":900002,"isLoggedIn":true,"hasMembership":false,"membershipActive":false,"membershipTier":"free","membershipStatus":"free","trialActive":false,"featureKey":"alerts.trade_alerts","featureAllowed":false,"featureReason":"Membership required.","expected_http":"403 JSON for api/ajax, redirect/upsell for HTML"}

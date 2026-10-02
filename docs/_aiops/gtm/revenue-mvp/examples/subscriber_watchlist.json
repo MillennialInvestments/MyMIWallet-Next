@@ -1,0 +1,1 @@
+{"_fixture":true,"_note":"Watchlist surface exists (InvestmentsController::addWatchlist/getUserWatchlist) but its table schema was NOT inspected; shape is PROPOSED.","user_id":900001,"symbols":[{"ticker":"AAPL","exchange":"NASDAQ"},{"ticker":"NVDA","exchange":"NASDAQ"},{"ticker":"SPY","exchange":"NYSEARCA"},{"ticker":"MSFT","exchange":"NASDAQ"}]}

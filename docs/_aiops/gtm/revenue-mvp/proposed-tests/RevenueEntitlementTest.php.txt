@@ -1,0 +1,47 @@
+<?php
+// PROPOSED (REV-S003). Rename to tests/feature/RevenueEntitlementTest.php. Not executed here.
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
+use App\Services\PremiumEntitlementService;
+
+final class RevenueEntitlementTest extends CIUnitTestCase
+{
+    use DatabaseTestTrait;
+    protected $migrate = true;
+    protected $refresh = true;
+
+    private function service(): PremiumEntitlementService { return new PremiumEntitlementService(); }
+
+    public function testFreeUserDeniedTradeAlerts(): void
+    {
+        $r = $this->service()->resolve(900002, ['feature_key' => 'alerts.trade_alerts']);
+        $this->assertFalse($r['featureAllowed']);
+    }
+
+    public function testActiveTier1Allowed(): void
+    {
+        // seed per examples/subscriber_subscription_state.json (verify table columns first)
+        $this->db->table('bf_users_subscriptions')->insert([
+            'user_id' => 900001, 'membership_tier' => 'tier1', 'membership_status' => 'active',
+            'expires_at' => date('Y-m-d H:i:s', strtotime('+30 days')),
+        ]);
+        $r = $this->service()->resolve(900001, ['feature_key' => 'alerts.trade_alerts']);
+        $this->assertTrue($r['featureAllowed']);
+    }
+
+    public function testExpiredDenied(): void
+    {
+        $this->db->table('bf_users_subscriptions')->insert([
+            'user_id' => 900003, 'membership_tier' => 'tier1', 'membership_status' => 'active',
+            'expires_at' => date('Y-m-d H:i:s', strtotime('-1 day')),
+        ]);
+        $r = $this->service()->resolve(900003, ['feature_key' => 'alerts.trade_alerts']);
+        $this->assertFalse($r['featureAllowed']);
+    }
+
+    public function testClientPostedFeeIsIgnored(): void
+    {
+        // REV-S004: after fix, purchase must price from server config, not POST membership_fee.
+        $this->markTestIncomplete('Enable once Billing service exists.');
+    }
+}

@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Read-only preflight. Exit: 0 PASS, 2 BLOCKED, 3 STOP.
+SELF="$(cd "$(dirname "$0")" && pwd)"
+. "$SELF/lib.sh"
+verify_worktree; rc=$?
+if [ "$rc" -ne 0 ]; then exit "$rc"; fi
+run_cap fetch git fetch origin main
+git rev-parse HEAD >"$EVDIR/head.sha" 2>&1
+git rev-parse origin/main >"$EVDIR/origin-main.sha" 2>&1
+snapshot_git preflight
+if command -v ai >/dev/null 2>&1; then
+  run_cap ai-check ai check
+  run_cap ai-next ai next
+else
+  say "BLOCKED ai CLI not on PATH (run on gq-ai01 inside TBI AIOps)"; exit 2
+fi
+# Contract inspection: record the first 60 lines so the runner/ChatGPT can adapt.
+head -n 60 "$EVDIR/ai-next.out" >"$EVDIR/ai-next.contract-sample.txt" 2>&1
+if ! grep -q "$REV_OBJECTIVE" "$EVDIR/ai-check.out" "$EVDIR/ai-next.out" 2>/dev/null; then
+  say "STOP OBJECTIVE_NOT_IN_AIOPS_STATE $REV_OBJECTIVE"; exit 3
+fi
+say "PASS preflight evidence=$EVDIR"
+exit 0
