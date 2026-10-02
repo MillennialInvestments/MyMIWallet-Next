@@ -3,6 +3,7 @@
 # Required env: WORKTREE EXPECTED_BRANCH REV_OBJECTIVE. Optional: SMOKE_BASE_URL, MAX_ITER.
 HERE="$(cd "$(dirname "$0")" && pwd)"
 export RUN_ID="${RUN_ID:-$(date -u +%Y%m%dT%H%M%SZ)}"
+EVROOT="${EVROOT:-/tmp/mymi-revenue-mvp/evidence}"
 step() { "$HERE/bin/$1"; local rc=$?; echo "[$1] rc=$rc"; return "$rc"; }
 cmd="${1:-all}"
 case "$cmd" in

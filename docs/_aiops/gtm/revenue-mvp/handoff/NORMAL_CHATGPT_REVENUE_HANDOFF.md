@@ -34,3 +34,11 @@ NOT_READY (now) -> IMPLEMENTATION_READY -> SANDBOX_REVENUE_READY (smoke passes, 
 /tmp/mymi-revenue-mvp/run-revenue-mvp.sh {preflight|discover|run|test|smoke|closeout|validate|all}
 Env: WORKTREE, EXPECTED_BRANCH, REV_OBJECTIVE, optional SMOKE_BASE_URL (non-production), MAX_ITER. Evidence: /tmp/mymi-revenue-mvp/evidence/<run>/. Exit codes: 0 PASS, 1 FAIL, 2 BLOCKED, 3 STOP(guard), 4 HUMAN_GATE, 5 CONTRACT_UNKNOWN, 6 REPEATED_FAILURE, 7 MAX_ITER, 8 BLOCKED_EXTERNAL_SANDBOX.
 Scripts are unproven against the live `ai` contract: preflight records `ai next` output so you can confirm.
+
+## FIRST ACTION (observed on gq-ai01, 2026-10-02)
+Preflight ran: fetch, `ai check` and `ai next` passed, then `STOP OBJECTIVE_NOT_IN_AIOPS_STATE REV-MVP-TRADE-ALERTS` (rc=3). The objective is simply not registered in AIOps yet. Your first job:
+1. Read the evidence dir printed by the runner (default /tmp/mymi-revenue-mvp/evidence/<RUN_ID>/, files ai-check.out, ai-next.out, ai-next.contract-sample.txt) to learn the real `ai` output contract and what objective/task ids AIOps currently uses.
+2. Find how AIOps creates or imports an objective/task (check `ai --help`, docs/_aiops/gtm/NORMAL_CHATGPT_OPERATOR_INSTRUCTIONS.md, TBI_AIOPS_INSTALL_HANDOFF.md, tasks.csv format). Register the revenue MVP slices REV-S001..S009 from REPAIR_SLICES.md through the governed path only. Prefer mapping onto existing MYMI-GTM-039/041/042/043 where AIOps already tracks them instead of duplicating.
+3. If registration needs an APPROVE token or a human decision, STOP HUMAN_GATE and print it for Teddy.
+4. Then update REV_OBJECTIVE to the real objective id and re-run `run-revenue-mvp.sh preflight`, then `run`.
+Do not hand-edit AIOps state. Do not mutate production.
