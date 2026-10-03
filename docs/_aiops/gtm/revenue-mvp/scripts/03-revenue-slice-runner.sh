@@ -10,6 +10,8 @@ if [ "$rc" -ne 0 ]; then exit "$rc"; fi
 prev_sig=""; same=0; i=0
 while [ "$i" -lt "$MAX_ITER" ]; do
   i=$((i+1))
+  check_drift; drc=$?
+  if [ "$drc" -ne 0 ]; then exit "$drc"; fi
   run_cap "iter$i-ai-check" ai check
   run_cap "iter$i-ai-next" ai next
   nxt="$EVDIR/iter$i-ai-next.out"

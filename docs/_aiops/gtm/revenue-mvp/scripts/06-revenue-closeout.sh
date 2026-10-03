@@ -4,6 +4,8 @@ SELF="$(cd "$(dirname "$0")" && pwd)"
 . "$SELF/lib.sh"
 verify_worktree; rc=$?
 if [ "$rc" -ne 0 ]; then exit "$rc"; fi
+check_drift; drc=$?
+if [ "$drc" -ne 0 ]; then exit "$drc"; fi
 snapshot_git closeout
 if [ "$(cat "$EVDIR/git-diff-check.closeout.rc")" != "0" ]; then say "FAIL git diff --check"; exit 1; fi
 "$SELF/04-revenue-test.sh"; trc=$?

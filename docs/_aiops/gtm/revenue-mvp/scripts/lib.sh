@@ -31,6 +31,18 @@ verify_worktree() {
   if [ "$br" != "$EXPECTED_BRANCH" ]; then say "STOP BRANCH_MISMATCH have=$br want=$EXPECTED_BRANCH"; return 3; fi
   return 0
 }
+BASELINE="$EVROOT/baseline-origin-main.sha"
+record_baseline() { git rev-parse origin/main >"$BASELINE" 2>/dev/null; }
+# Control-plane drift: origin/main moved since preflight recorded the baseline.
+check_drift() {
+  git fetch origin main >/dev/null 2>&1
+  local now base
+  now="$(git rev-parse origin/main 2>/dev/null)"
+  if [ ! -f "$BASELINE" ]; then say "BLOCKED no baseline; run preflight first"; return 2; fi
+  base="$(cat "$BASELINE")"
+  if [ "$now" != "$base" ]; then say "STOP CONTROL_PLANE_DRIFT origin/main $base -> $now; rerun preflight and reconcile with ai check/next"; return 3; fi
+  return 0
+}
 snapshot_git() {
   git status --short >"$EVDIR/git-status.$1.txt" 2>&1
   git diff --stat >"$EVDIR/git-diff-stat.$1.txt" 2>&1
