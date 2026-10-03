@@ -18,7 +18,7 @@ final class PublicRoutesAccessibleTest extends CIUnitTestCase
     {
         $routes = Services::routes();
         $routes->loadRoutes();
-        $get = $routes->getRoutes('get');
+        $get = $routes->getRoutes('GET');
 
         foreach ([
             '/',

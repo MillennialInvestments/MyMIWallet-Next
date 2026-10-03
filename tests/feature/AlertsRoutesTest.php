@@ -13,7 +13,7 @@ final class AlertsRoutesTest extends CIUnitTestCase
     {
         $routes = Services::routes();
         $routes->loadRoutes();
-        $get = $routes->getRoutes('get');
+        $get = $routes->getRoutes('GET');
         $canonical = 'Alerts/Preview/([^/]+)';
         $legacy = 'Preview/Alert/([^/]+)';
 
