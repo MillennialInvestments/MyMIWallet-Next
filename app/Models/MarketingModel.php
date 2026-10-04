@@ -106,15 +106,22 @@ class MarketingModel extends Model
         return $this->db->insertID();
     }
 
-    // Add a subscriber to the database
-    public function addSubscriber($subscriberData) {
-        if ($this->db->table('bf_users_subscribers')->insert($subscriberData)) {
+    // Add a subscriber through the canonical subscriber data owner.
+    public function addSubscriber($subscriberData)
+    {
+        $result = (new SubscribeModel())->subscribe((array) $subscriberData);
+
+        if ($result['success']) {
             log_message('info', 'Subscriber added successfully.');
             return true;
-        } else {
-            log_message('error', 'DB Insert Error: ' . json_encode($this->errors()));
-            return false;
         }
+
+        log_message(
+            'warning',
+            'Subscriber add skipped/failed: ' . ($result['reason'] ?? 'unknown')
+        );
+
+        return false;
     }
 
     public function autoResummarizeIfMissing($id, $MyMIMarketing)
@@ -2046,24 +2053,20 @@ class MarketingModel extends Model
     public function markEmailAsBounced(string $email, string $errorMsg = ''): bool
     {
         $timestamp = date('Y-m-d H:i:s');
-    
-        // Track in users_subscribers
-        $this->db->table('bf_users_subscribers')
-            ->where('email', $email)
-            ->update([
-                'status' => 'bounced',
-                'delivery_error' => substr($errorMsg, 0, 255),
-                'updated_at' => $timestamp
-            ]);
-    
-        // Track in email_list_members
+
+        (new SubscribeModel())->updateDeliveryStatus(
+            $email,
+            'bounced',
+            $errorMsg
+        );
+
         $this->db->table('bf_email_list_members')
             ->where('email', $email)
             ->update([
                 'status' => 'bounced',
-                'unsubscribed_at' => $timestamp
+                'unsubscribed_at' => $timestamp,
             ]);
-    
+
         return true;
     }
     
@@ -2085,13 +2088,12 @@ class MarketingModel extends Model
 
     public function markEmailAsUndeliverable($email, $errorMessage = '')
     {
-        return $this->db->table('bf_users_subscribers') // <-- Corrected table name
-            ->set('status', 'undeliverable')
-            ->set('delivery_error', substr($errorMessage, 0, 500))
-            ->set('updated_at', date('Y-m-d H:i:s'))
-            ->where('email', $email)
-            ->update();
-    }    
+        return (new SubscribeModel())->updateDeliveryStatus(
+            (string) $email,
+            'undeliverable',
+            (string) $errorMessage
+        );
+    }
     
     public function markEmailsAsProcessed($ids = [])
     {
@@ -2436,16 +2438,16 @@ class MarketingModel extends Model
     public function syncUnsubscribeToken(string $email): bool
     {
         $token = $this->generateUnsubscribeToken($email);
-    
-        // Update both tables
+
         $this->db->table('bf_email_list_members')
             ->where('email', $email)
             ->update(['unsubscribe_token' => $token]);
-    
-        $this->db->table('bf_users_subscribers')
-            ->where('email', $email)
-            ->update(['unsubscribe_token' => $token]);
-    
+
+        (new SubscribeModel())->setUnsubscribeToken(
+            $email,
+            $token
+        );
+
         return true;
     }
     

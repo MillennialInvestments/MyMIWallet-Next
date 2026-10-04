@@ -302,21 +302,21 @@ class EmailModel extends Model
         $updated1 = $this->db->table('bf_email_list_members')
             ->where('email', $email)
             ->update(['unsubscribe_token' => $token]);
-    
-        $updated2 = $this->db->table('bf_users_subscribers')
-            ->where('email', $email)
-            ->update(['unsubscribe_token' => $token]);
-    
+
+        $updated2 = (new SubscribeModel())->setUnsubscribeToken(
+            (string) $email,
+            (string) $token
+        );
+
         return $updated1 || $updated2;
-    }    
+    }
     
     public function unsubscribeMember($token): bool
     {
-        // Try in email_list_members
         $member = $this->db->table('bf_email_list_members')
             ->where('unsubscribe_token', $token)
             ->get()->getRowArray();
-    
+
         if ($member) {
             $this->db->table('bf_email_list_members')
                 ->where('unsubscribe_token', $token)
@@ -325,22 +325,11 @@ class EmailModel extends Model
                     'unsubscribed_at' => date('Y-m-d H:i:s'),
                 ]);
         }
-    
-        // Try in users_subscribers
-        $userSub = $this->db->table('bf_users_subscribers')
-            ->where('unsubscribe_token', $token)
-            ->get()->getRowArray();
-    
-        if ($userSub) {
-            $this->db->table('bf_users_subscribers')
-                ->where('unsubscribe_token', $token)
-                ->update([
-                    'status' => 'unsubscribed',
-                    'unsubscribed_at' => date('Y-m-d H:i:s'),
-                ]);
-        }
-    
-        return ($member || $userSub);
-    }    
+
+        $subscriberUpdated = (new SubscribeModel())
+            ->unsubscribeByToken((string) $token);
+
+        return (bool) ($member || $subscriberUpdated);
+    }
 }
 ?>
