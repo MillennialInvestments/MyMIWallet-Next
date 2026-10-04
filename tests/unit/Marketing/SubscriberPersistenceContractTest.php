@@ -51,8 +51,8 @@ final class SubscriberPersistenceContractTest extends CIUnitTestCase
             );
         }
 
-        $db->table('bf_users_subscribers')->delete();
-        $db->table('bf_users_subscriptions')->delete();
+        $db->query('DELETE FROM bf_users_subscribers');
+        $db->query('DELETE FROM bf_users_subscriptions');
     }
 
     public function testNewSubscriberNormalizesEmailAndPersistsOptionalUserId(): void
