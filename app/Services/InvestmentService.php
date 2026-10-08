@@ -293,9 +293,24 @@ class InvestmentService
                     return $timeCompare;
                 }
 
+                $leftSourceIndex =
+                    $left['source_index'];
+
+                $rightSourceIndex =
+                    $right['source_index'];
+
+                if (
+                    is_int($leftSourceIndex)
+                    && is_int($rightSourceIndex)
+                ) {
+                    return
+                        $leftSourceIndex
+                        <=> $rightSourceIndex;
+                }
+
                 return strcmp(
-                    (string) $left['source_index'],
-                    (string) $right['source_index']
+                    (string) $leftSourceIndex,
+                    (string) $rightSourceIndex
                 );
             }
         );
@@ -551,9 +566,29 @@ class InvestmentService
         }
 
         try {
-            return (
-                new \DateTimeImmutable($value)
-            )->getTimestamp();
+            $parsed =
+                new \DateTimeImmutable($value);
+
+            $parseErrors =
+                \DateTimeImmutable::getLastErrors();
+
+            if (
+                is_array($parseErrors)
+                && (
+                    (int) (
+                        $parseErrors['warning_count']
+                        ?? 0
+                    ) > 0
+                    || (int) (
+                        $parseErrors['error_count']
+                        ?? 0
+                    ) > 0
+                )
+            ) {
+                return null;
+            }
+
+            return $parsed->getTimestamp();
         } catch (\Throwable $exception) {
             return null;
         }
