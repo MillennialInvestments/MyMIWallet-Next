@@ -156,4 +156,428 @@ class InvestmentService
     {
         return $this->investmentModel->getInvestmentReturns($userId, $investmentId);
     }
+
+    /**
+     * Replay the approved MyMI strategy against deterministic historical events.
+     *
+     * Canonical stages:
+     * ema_liquidity_1h
+     * ema_stack_bullish_30m
+     * volume_breakout_15m
+     * execution_5m
+     */
+    public function replayStrategyValidation(array $events, array $options = []): array
+    {
+        $oneHourMaxAgeSeconds =
+            (int) ($options['one_hour_max_age_seconds'] ?? 172800);
+
+        $thirtyMinuteMaxAgeSeconds =
+            (int) ($options['thirty_minute_max_age_seconds'] ?? 43200);
+
+        if (
+            $oneHourMaxAgeSeconds < 1
+            || $thirtyMinuteMaxAgeSeconds < 1
+        ) {
+            throw new \InvalidArgumentException(
+                'Strategy validation age limits must be positive integers.'
+            );
+        }
+
+        $allowedStages = [
+            'ema_liquidity_1h',
+            'ema_stack_bullish_30m',
+            'volume_breakout_15m',
+            'execution_5m',
+        ];
+
+        $normalized = [];
+        $rejected = [];
+
+        foreach ($events as $sourceIndex => $event) {
+            if (! is_array($event)) {
+                $rejected[] = [
+                    'source_index' => $sourceIndex,
+                    'reason' => 'event_not_array',
+                ];
+                continue;
+            }
+
+            $symbol = strtoupper(
+                trim(
+                    (string) (
+                        $event['symbol']
+                        ?? $event['ticker']
+                        ?? ''
+                    )
+                )
+            );
+
+            $stage = strtolower(
+                trim((string) ($event['stage'] ?? ''))
+            );
+
+            $timestamp =
+                $this->normalizeStrategyValidationTimestamp(
+                    $event['timestamp']
+                    ?? $event['occurred_at']
+                    ?? $event['event_at']
+                    ?? null
+                );
+
+            if ($symbol === '') {
+                $rejected[] = [
+                    'source_index' => $sourceIndex,
+                    'reason' => 'symbol_missing',
+                ];
+                continue;
+            }
+
+            if (! in_array($stage, $allowedStages, true)) {
+                $rejected[] = [
+                    'source_index' => $sourceIndex,
+                    'symbol' => $symbol,
+                    'stage' => $stage,
+                    'reason' => 'stage_invalid',
+                ];
+                continue;
+            }
+
+            if ($timestamp === null) {
+                $rejected[] = [
+                    'source_index' => $sourceIndex,
+                    'symbol' => $symbol,
+                    'stage' => $stage,
+                    'reason' =>
+                        'timestamp_invalid_or_timezone_missing',
+                ];
+                continue;
+            }
+
+            $price =
+                $event['price']
+                ?? $event['close']
+                ?? null;
+
+            $normalized[] = [
+                'source_index' => $sourceIndex,
+                'symbol' => $symbol,
+                'stage' => $stage,
+                'timestamp' => $timestamp,
+                'price' =>
+                    is_numeric($price)
+                        ? (float) $price
+                        : null,
+            ];
+        }
+
+        usort(
+            $normalized,
+            static function (
+                array $left,
+                array $right
+            ): int {
+                $symbolCompare = strcmp(
+                    $left['symbol'],
+                    $right['symbol']
+                );
+
+                if ($symbolCompare !== 0) {
+                    return $symbolCompare;
+                }
+
+                $timeCompare =
+                    $left['timestamp']
+                    <=> $right['timestamp'];
+
+                if ($timeCompare !== 0) {
+                    return $timeCompare;
+                }
+
+                return strcmp(
+                    (string) $left['source_index'],
+                    (string) $right['source_index']
+                );
+            }
+        );
+
+        $stateBySymbol = [];
+        $matches = [];
+        $alignmentRejections = [];
+
+        foreach ($normalized as $event) {
+            $symbol = $event['symbol'];
+            $stage = $event['stage'];
+            $timestamp = $event['timestamp'];
+
+            if (! isset($stateBySymbol[$symbol])) {
+                $stateBySymbol[$symbol] = [
+                    'one_hour' => null,
+                    'thirty_minute' => null,
+                    'fifteen_minute' => null,
+                ];
+            }
+
+            $state = &$stateBySymbol[$symbol];
+
+            if ($stage === 'ema_liquidity_1h') {
+                $state['one_hour'] = $event;
+                $state['thirty_minute'] = null;
+                $state['fifteen_minute'] = null;
+                unset($state);
+                continue;
+            }
+
+            if ($stage === 'ema_stack_bullish_30m') {
+                $oneHour = $state['one_hour'];
+
+                if (
+                    ! is_array($oneHour)
+                    || $timestamp < $oneHour['timestamp']
+                    || (
+                        $timestamp
+                        - $oneHour['timestamp']
+                    ) > $oneHourMaxAgeSeconds
+                ) {
+                    $alignmentRejections[] =
+                        $this->strategyValidationRejection(
+                            $event,
+                            'one_hour_confirmation_missing_or_expired'
+                        );
+
+                    $state['thirty_minute'] = null;
+                    $state['fifteen_minute'] = null;
+                    unset($state);
+                    continue;
+                }
+
+                $state['thirty_minute'] = $event;
+                $state['fifteen_minute'] = null;
+                unset($state);
+                continue;
+            }
+
+            if ($stage === 'volume_breakout_15m') {
+                $oneHour = $state['one_hour'];
+                $thirtyMinute =
+                    $state['thirty_minute'];
+
+                if (
+                    ! is_array($oneHour)
+                    || ! is_array($thirtyMinute)
+                    || $timestamp
+                        < $thirtyMinute['timestamp']
+                    || (
+                        $timestamp
+                        - $oneHour['timestamp']
+                    ) > $oneHourMaxAgeSeconds
+                    || (
+                        $timestamp
+                        - $thirtyMinute['timestamp']
+                    ) > $thirtyMinuteMaxAgeSeconds
+                ) {
+                    $alignmentRejections[] =
+                        $this->strategyValidationRejection(
+                            $event,
+                            'confirmation_chain_missing_or_expired'
+                        );
+
+                    $state['fifteen_minute'] = null;
+                    unset($state);
+                    continue;
+                }
+
+                $state['fifteen_minute'] = $event;
+                unset($state);
+                continue;
+            }
+
+            $oneHour = $state['one_hour'];
+            $thirtyMinute =
+                $state['thirty_minute'];
+            $fifteenMinute =
+                $state['fifteen_minute'];
+
+            if (
+                ! is_array($oneHour)
+                || ! is_array($thirtyMinute)
+                || ! is_array($fifteenMinute)
+                || $timestamp
+                    < $fifteenMinute['timestamp']
+                || (
+                    $timestamp
+                    - $oneHour['timestamp']
+                ) > $oneHourMaxAgeSeconds
+                || (
+                    $timestamp
+                    - $thirtyMinute['timestamp']
+                ) > $thirtyMinuteMaxAgeSeconds
+            ) {
+                $alignmentRejections[] =
+                    $this->strategyValidationRejection(
+                        $event,
+                        'execution_chain_missing_or_expired'
+                    );
+
+                unset($state);
+                continue;
+            }
+
+            $matches[] = [
+                'symbol' => $symbol,
+                'strategy' =>
+                    'ema_liquidity_1h__'
+                    . 'ema_stack_bullish_30m__'
+                    . 'volume_breakout_15m__'
+                    . 'execution_5m',
+
+                'ema_liquidity_1h_timestamp' =>
+                    $oneHour['timestamp'],
+
+                'ema_stack_bullish_30m_timestamp' =>
+                    $thirtyMinute['timestamp'],
+
+                'volume_breakout_15m_timestamp' =>
+                    $fifteenMinute['timestamp'],
+
+                'execution_5m_timestamp' =>
+                    $timestamp,
+
+                'one_hour_age_seconds' =>
+                    $timestamp
+                    - $oneHour['timestamp'],
+
+                'thirty_minute_age_seconds' =>
+                    $timestamp
+                    - $thirtyMinute['timestamp'],
+
+                'entry_price' => $event['price'],
+
+                'source_indexes' => [
+                    'ema_liquidity_1h' =>
+                        $oneHour['source_index'],
+
+                    'ema_stack_bullish_30m' =>
+                        $thirtyMinute['source_index'],
+
+                    'volume_breakout_15m' =>
+                        $fifteenMinute['source_index'],
+
+                    'execution_5m' =>
+                        $event['source_index'],
+                ],
+            ];
+
+            unset($state);
+        }
+
+        return [
+            'strategy' =>
+                'ema_liquidity_1h__'
+                . 'ema_stack_bullish_30m__'
+                . 'volume_breakout_15m__'
+                . 'execution_5m',
+
+            'constraints' => [
+                'one_hour_max_age_seconds' =>
+                    $oneHourMaxAgeSeconds,
+
+                'thirty_minute_max_age_seconds' =>
+                    $thirtyMinuteMaxAgeSeconds,
+            ],
+
+            'input_event_count' =>
+                count($events),
+
+            'normalized_event_count' =>
+                count($normalized),
+
+            'rejected_event_count' =>
+                count($rejected),
+
+            'alignment_rejection_count' =>
+                count($alignmentRejections),
+
+            'match_count' =>
+                count($matches),
+
+            'matches' =>
+                $matches,
+
+            'rejected_events' =>
+                $rejected,
+
+            'alignment_rejections' =>
+                $alignmentRejections,
+        ];
+    }
+
+    private function normalizeStrategyValidationTimestamp($value): ?int
+    {
+        if (is_int($value)) {
+            return $value > 0
+                ? $value
+                : null;
+        }
+
+        if (! is_string($value)) {
+            return null;
+        }
+
+        $value = trim($value);
+
+        if ($value === '') {
+            return null;
+        }
+
+        if (ctype_digit($value)) {
+            $timestamp = (int) $value;
+
+            return $timestamp > 0
+                ? $timestamp
+                : null;
+        }
+
+        /*
+         * Require an explicit timezone for string timestamps so
+         * historical replay cannot vary with server timezone.
+         */
+        if (
+            preg_match(
+                '/(?:Z|[+-]\d{2}:\d{2})$/i',
+                $value
+            ) !== 1
+        ) {
+            return null;
+        }
+
+        try {
+            return (
+                new \DateTimeImmutable($value)
+            )->getTimestamp();
+        } catch (\Throwable $exception) {
+            return null;
+        }
+    }
+
+    private function strategyValidationRejection(
+        array $event,
+        string $reason
+    ): array {
+        return [
+            'source_index' =>
+                $event['source_index'],
+
+            'symbol' =>
+                $event['symbol'],
+
+            'stage' =>
+                $event['stage'],
+
+            'timestamp' =>
+                $event['timestamp'],
+
+            'reason' =>
+                $reason,
+        ];
+    }
 }
