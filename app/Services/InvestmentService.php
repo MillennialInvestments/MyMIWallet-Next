@@ -553,12 +553,13 @@ class InvestmentService
         }
 
         /*
-         * Require an explicit timezone for string timestamps so
-         * historical replay cannot vary with server timezone.
+         * Require a fixed absolute RFC 3339-style timestamp so
+         * historical replay cannot depend on wall-clock-relative
+         * DateTime parsing.
          */
         if (
             preg_match(
-                '/(?:Z|[+-]\d{2}:\d{2})$/i',
+                '/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?(?:Z|[+-]\d{2}:\d{2})$/i',
                 $value
             ) !== 1
         ) {
