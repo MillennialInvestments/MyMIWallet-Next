@@ -183,6 +183,12 @@ class InvestmentService
             );
         }
 
+        $oneHourMaxAgeMicroseconds =
+            $oneHourMaxAgeSeconds * 1000000;
+
+        $thirtyMinuteMaxAgeMicroseconds =
+            $thirtyMinuteMaxAgeSeconds * 1000000;
+
         $allowedStages = [
             'ema_liquidity_1h',
             'ema_stack_bullish_30m',
@@ -219,8 +225,21 @@ class InvestmentService
                 trim((string) $symbolValue)
             );
 
+            $stageValue =
+                $event['stage']
+                ?? '';
+
+            if (! is_scalar($stageValue)) {
+                $rejected[] = [
+                    'source_index' => $sourceIndex,
+                    'symbol' => $symbol,
+                    'reason' => 'stage_invalid',
+                ];
+                continue;
+            }
+
             $stage = strtolower(
-                trim((string) ($event['stage'] ?? ''))
+                trim((string) $stageValue)
             );
 
             $timestampParts =
@@ -338,6 +357,8 @@ class InvestmentService
             $symbol = $event['symbol'];
             $stage = $event['stage'];
             $timestamp = $event['timestamp'];
+            $timestampMicroseconds =
+                $event['timestamp_microseconds'];
 
             if (! isset($stateBySymbol[$symbol])) {
                 $stateBySymbol[$symbol] = [
@@ -362,11 +383,8 @@ class InvestmentService
 
                 if (
                     ! is_array($oneHour)
-                    || $timestamp < $oneHour['timestamp']
-                    || (
-                        $timestamp
-                        - $oneHour['timestamp']
-                    ) > $oneHourMaxAgeSeconds
+                    || $timestampMicroseconds < $oneHour['timestamp_microseconds']
+                    || ($timestampMicroseconds - $oneHour['timestamp_microseconds']) > $oneHourMaxAgeMicroseconds
                 ) {
                     $alignmentRejections[] =
                         $this->strategyValidationRejection(
@@ -394,16 +412,9 @@ class InvestmentService
                 if (
                     ! is_array($oneHour)
                     || ! is_array($thirtyMinute)
-                    || $timestamp
-                        < $thirtyMinute['timestamp']
-                    || (
-                        $timestamp
-                        - $oneHour['timestamp']
-                    ) > $oneHourMaxAgeSeconds
-                    || (
-                        $timestamp
-                        - $thirtyMinute['timestamp']
-                    ) > $thirtyMinuteMaxAgeSeconds
+                    || $timestampMicroseconds < $thirtyMinute['timestamp_microseconds']
+                    || ($timestampMicroseconds - $oneHour['timestamp_microseconds']) > $oneHourMaxAgeMicroseconds
+                    || ($timestampMicroseconds - $thirtyMinute['timestamp_microseconds']) > $thirtyMinuteMaxAgeMicroseconds
                 ) {
                     $alignmentRejections[] =
                         $this->strategyValidationRejection(
@@ -431,16 +442,9 @@ class InvestmentService
                 ! is_array($oneHour)
                 || ! is_array($thirtyMinute)
                 || ! is_array($fifteenMinute)
-                || $timestamp
-                    < $fifteenMinute['timestamp']
-                || (
-                    $timestamp
-                    - $oneHour['timestamp']
-                ) > $oneHourMaxAgeSeconds
-                || (
-                    $timestamp
-                    - $thirtyMinute['timestamp']
-                ) > $thirtyMinuteMaxAgeSeconds
+                || $timestampMicroseconds < $fifteenMinute['timestamp_microseconds']
+                || ($timestampMicroseconds - $oneHour['timestamp_microseconds']) > $oneHourMaxAgeMicroseconds
+                || ($timestampMicroseconds - $thirtyMinute['timestamp_microseconds']) > $thirtyMinuteMaxAgeMicroseconds
             ) {
                 $alignmentRejections[] =
                     $this->strategyValidationRejection(
