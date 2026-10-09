@@ -550,8 +550,14 @@ class InvestmentService
      */
     private function normalizeStrategyValidationTimestamp($value): ?array
     {
+        $maxTimestampSeconds =
+            intdiv(PHP_INT_MAX, 1000000);
+
         if (is_int($value)) {
-            if ($value < 1) {
+            if (
+                $value < 1
+                || $value > $maxTimestampSeconds
+            ) {
                 return null;
             }
 
@@ -573,11 +579,31 @@ class InvestmentService
         }
 
         if (ctype_digit($value)) {
-            $timestamp = (int) $value;
+            $digits = ltrim($value, '0');
 
-            if ($timestamp < 1) {
+            if ($digits === '') {
                 return null;
             }
+
+            $maximumTimestamp =
+                (string) $maxTimestampSeconds;
+
+            if (
+                strlen($digits)
+                    > strlen($maximumTimestamp)
+                || (
+                    strlen($digits)
+                        === strlen($maximumTimestamp)
+                    && strcmp(
+                        $digits,
+                        $maximumTimestamp
+                    ) > 0
+                )
+            ) {
+                return null;
+            }
+
+            $timestamp = (int) $digits;
 
             return [
                 'seconds' => $timestamp,
