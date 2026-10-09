@@ -202,21 +202,28 @@ class InvestmentService
                 continue;
             }
 
+            $symbolValue =
+                $event['symbol']
+                ?? $event['ticker']
+                ?? '';
+
+            if (! is_scalar($symbolValue)) {
+                $rejected[] = [
+                    'source_index' => $sourceIndex,
+                    'reason' => 'symbol_invalid',
+                ];
+                continue;
+            }
+
             $symbol = strtoupper(
-                trim(
-                    (string) (
-                        $event['symbol']
-                        ?? $event['ticker']
-                        ?? ''
-                    )
-                )
+                trim((string) $symbolValue)
             );
 
             $stage = strtolower(
                 trim((string) ($event['stage'] ?? ''))
             );
 
-            $timestamp =
+            $timestampParts =
                 $this->normalizeStrategyValidationTimestamp(
                     $event['timestamp']
                     ?? $event['occurred_at']
@@ -242,7 +249,7 @@ class InvestmentService
                 continue;
             }
 
-            if ($timestamp === null) {
+            if ($timestampParts === null) {
                 $rejected[] = [
                     'source_index' => $sourceIndex,
                     'symbol' => $symbol,
@@ -252,6 +259,12 @@ class InvestmentService
                 ];
                 continue;
             }
+
+            $timestamp =
+                $timestampParts['seconds'];
+
+            $timestampMicroseconds =
+                $timestampParts['microseconds'];
 
             $price =
                 $event['price']
@@ -263,6 +276,8 @@ class InvestmentService
                 'symbol' => $symbol,
                 'stage' => $stage,
                 'timestamp' => $timestamp,
+                'timestamp_microseconds' =>
+                    $timestampMicroseconds,
                 'price' =>
                     is_numeric($price)
                         ? (float) $price
@@ -286,8 +301,8 @@ class InvestmentService
                 }
 
                 $timeCompare =
-                    $left['timestamp']
-                    <=> $right['timestamp'];
+                    $left['timestamp_microseconds']
+                    <=> $right['timestamp_microseconds'];
 
                 if ($timeCompare !== 0) {
                     return $timeCompare;
@@ -526,12 +541,21 @@ class InvestmentService
         ];
     }
 
-    private function normalizeStrategyValidationTimestamp($value): ?int
+    /**
+     * @return array{seconds:int,microseconds:int}|null
+     */
+    private function normalizeStrategyValidationTimestamp($value): ?array
     {
         if (is_int($value)) {
-            return $value > 0
-                ? $value
-                : null;
+            if ($value < 1) {
+                return null;
+            }
+
+            return [
+                'seconds' => $value,
+                'microseconds' =>
+                    $value * 1000000,
+            ];
         }
 
         if (! is_string($value)) {
@@ -547,9 +571,15 @@ class InvestmentService
         if (ctype_digit($value)) {
             $timestamp = (int) $value;
 
-            return $timestamp > 0
-                ? $timestamp
-                : null;
+            if ($timestamp < 1) {
+                return null;
+            }
+
+            return [
+                'seconds' => $timestamp,
+                'microseconds' =>
+                    $timestamp * 1000000,
+            ];
         }
 
         /*
@@ -589,7 +619,18 @@ class InvestmentService
                 return null;
             }
 
-            return $parsed->getTimestamp();
+            $seconds =
+                $parsed->getTimestamp();
+
+            $fractionalMicroseconds =
+                (int) $parsed->format('u');
+
+            return [
+                'seconds' => $seconds,
+                'microseconds' =>
+                    ($seconds * 1000000)
+                    + $fractionalMicroseconds,
+            ];
         } catch (\Throwable $exception) {
             return null;
         }
