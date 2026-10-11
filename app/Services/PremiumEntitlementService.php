@@ -66,12 +66,17 @@ class PremiumEntitlementService
         $subscription = $this->fetchSubscriptionRow($userId);
         $userRow = $this->fetchUserRow($userId);
 
-        $normalizedTier = $this->normalizeTier($subscription['tier'] ?? null, $subscription['subscription_name'] ?? null, $userRow);
+        $normalizedTier = $this->normalizeTier(
+            $subscription['membership_tier'] ?? $subscription['tier'] ?? null,
+            $subscription['subscription_name'] ?? null,
+            $userRow
+        );
         $status = $this->normalizeStatus($subscription, $normalizedTier);
+        $accessExpiresAt = $this->resolveAccessExpiry($subscription, $status);
+        $status = $this->enforceAccessBoundary($subscription, $status);
         $trialActive = $status === 'trial';
         $hasMembership = $normalizedTier !== 'free';
         $membershipActive = in_array($status, ['active', 'trial'], true);
-        $accessExpiresAt = $this->extractFirstValue($subscription, ['expires_at', 'access_expires_at', 'ends_at', 'trial_ends_at', 'updated_on']);
 
         $result['hasMembership'] = $hasMembership;
         $result['membershipActive'] = $membershipActive;
@@ -210,7 +215,15 @@ class PremiumEntitlementService
             return false;
         }
 
-        if (($entitlements['membershipStatus'] ?? '') === 'inactive') {
+        $status = (string) ($entitlements['membershipStatus'] ?? 'free');
+        if (in_array($status, ['expired', 'canceled', 'cancelled', 'unpaid', 'inactive'], true)) {
+            return false;
+        }
+
+        if (
+            (($definition['min_tier'] ?? 'free') !== 'free')
+            && empty($entitlements['membershipActive'])
+        ) {
             return false;
         }
 
@@ -248,6 +261,14 @@ class PremiumEntitlementService
             return 'Authentication required.';
         }
 
+        $status = (string) ($entitlements['membershipStatus'] ?? 'free');
+        if (in_array($status, ['expired', 'canceled', 'cancelled', 'unpaid', 'inactive'], true)) {
+            return sprintf(
+                'Membership status "%s" does not permit premium access.',
+                $status
+            );
+        }
+
         return sprintf(
             'Feature requires %s or higher. Current tier: %s (%s).',
             $definition['min_tier'] ?? 'premium',
@@ -267,6 +288,40 @@ class PremiumEntitlementService
         }
 
         return ($weights[$currentTier] ?? 0) >= ($weights[$minimumTier] ?? 0);
+    }
+
+    private function resolveAccessExpiry(array $subscription, string $status): ?string
+    {
+        $keys = $status === 'trial'
+            ? ['trial_ends_at', 'expires_at', 'access_expires_at', 'ends_at']
+            : ['expires_at', 'access_expires_at', 'ends_at'];
+
+        return $this->extractFirstValue($subscription, $keys);
+    }
+
+    private function enforceAccessBoundary(array $subscription, string $status): string
+    {
+        if (! in_array($status, ['active', 'trial'], true)) {
+            return $status;
+        }
+
+        $keys = $status === 'trial'
+            ? ['trial_ends_at', 'expires_at', 'access_expires_at', 'ends_at']
+            : ['expires_at', 'access_expires_at', 'ends_at'];
+
+        foreach ($keys as $key) {
+            $value = $subscription[$key] ?? null;
+            if ($value === null || trim((string) $value) === '') {
+                continue;
+            }
+
+            $timestamp = strtotime((string) $value);
+            if ($timestamp === false || $timestamp <= time()) {
+                return 'expired';
+            }
+        }
+
+        return $status;
     }
 
     private function extractFirstValue(array $row, array $keys): ?string
