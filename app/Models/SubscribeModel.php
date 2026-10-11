@@ -56,9 +56,13 @@ class SubscribeModel extends Model
 
         $entitlements = premium_entitlements((int) $userID, ['feature_key' => 'alerts.trade_alerts']);
 
+        $featureAllowed = ! empty($entitlements['featureAllowed']);
+
         return (object) [
             'user_id' => (int) $userID,
-            'active' => ! empty($entitlements['membershipActive']) ? 1 : 0,
+            'active' => $featureAllowed ? 1 : 0,
+            'membership_active' => ! empty($entitlements['membershipActive']) ? 1 : 0,
+            'feature_allowed' => $featureAllowed,
             'subscription_name' => $entitlements['subscriptionName'] ?? null,
             'tier' => $entitlements['membershipTier'] ?? 'free',
             'membership_status' => $entitlements['membershipStatus'] ?? 'free',

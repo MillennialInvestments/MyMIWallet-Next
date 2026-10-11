@@ -144,19 +144,19 @@ class MyMIUser
     }
 
     /**
-     * Determine whether a user should be treated as a premium subscriber.
-     *
-     * Mirrors the logic used on the public site (session flag, role name, or
-     * account type) so views stay consistent.
+     * Resolve the canonical Trade Alerts entitlement used by public preview.
      */
     public function isPremiumUser(?int $userId = null): bool
     {
         helper('premium');
 
         $resolvedUserId = $userId ?? $this->auth->id() ?? $this->session?->get('user_id');
-        $entitlements = premium_entitlements($resolvedUserId ? (int) $resolvedUserId : null);
+        $entitlements = premium_entitlements(
+            $resolvedUserId ? (int) $resolvedUserId : null,
+            ['feature_key' => 'alerts.trade_alerts']
+        );
 
-        return (bool) ($entitlements['membershipActive'] ?? false);
+        return (bool) ($entitlements['featureAllowed'] ?? false);
     }
 
     public function findPotentialSpamUsers()
