@@ -66,11 +66,7 @@ class PremiumEntitlementService
         $subscription = $this->fetchSubscriptionRow($userId);
         $userRow = $this->fetchUserRow($userId);
 
-        $normalizedTier = $this->normalizeTier(
-            $subscription['membership_tier'] ?? $subscription['tier'] ?? null,
-            $subscription['subscription_name'] ?? null,
-            $userRow
-        );
+        $normalizedTier = $this->normalizeSubscriptionTier($subscription, $userRow);
         $status = $this->normalizeStatus($subscription, $normalizedTier);
         $accessExpiresAt = $this->resolveAccessExpiry($subscription, $status);
         $status = $this->enforceAccessBoundary($subscription, $status);
@@ -131,6 +127,26 @@ class PremiumEntitlementService
         return $this->db->table('users')->where('id', $userId)->get()->getRowArray() ?? [];
     }
 
+    /**
+     * A canonical free tier is authoritative even if a stale legacy paid
+     * tier remains. The schema-default free versus intentional downgrade
+     * ambiguity requires separately audited row provenance, never an
+     * implicit access grant at request time.
+     */
+    private function normalizeSubscriptionTier(array $subscription, array $userRow): string
+    {
+        if (strtolower(trim((string) ($subscription['membership_tier'] ?? ''))) === 'free') {
+            return 'free';
+        }
+
+        // Legacy fallback only when the canonical tier is absent/blank.
+        return $this->normalizeTier(
+            $subscription['membership_tier'] ?? $subscription['tier'] ?? null,
+            $subscription['subscription_name'] ?? null,
+            $userRow
+        );
+    }
+
     private function normalizeTier(mixed $tier, mixed $subscriptionName, array $userRow): string
     {
         $normalized = strtolower(trim((string) ($tier ?? '')));
@@ -187,6 +203,12 @@ class PremiumEntitlementService
             return $rawStatus === 'cancelled' ? 'canceled' : $rawStatus;
         }
 
+        // Nonempty provider/unknown statuses are never eligible for legacy
+        // active-flag promotion (e.g. past_due must remain denied).
+        if ($rawStatus !== '') {
+            return 'inactive';
+        }
+
         $activeValue = $subscription['active'] ?? 0;
         if (! $this->truthy($activeValue)) {
             return 'inactive';
@@ -211,19 +233,36 @@ class PremiumEntitlementService
             return false;
         }
 
-        if (! $this->featureMatchesMinimumTier($entitlements['membershipTier'], $definition)) {
-            return false;
-        }
-
         $status = (string) ($entitlements['membershipStatus'] ?? 'free');
+        $minimumTier = (string) ($definition['min_tier'] ?? 'free');
         if (in_array($status, ['expired', 'canceled', 'cancelled', 'unpaid', 'inactive'], true)) {
             return false;
         }
 
-        if (
-            (($definition['min_tier'] ?? 'free') !== 'free')
-            && empty($entitlements['membershipActive'])
+        // Public/free catalog features do not grant premium access.
+        if ($minimumTier === 'free') {
+            return $this->featureMatchesMinimumTier($entitlements['membershipTier'], $definition);
+        }
+
+        // A premium entitlement MUST have a recognized live status, even
+        // when a user flag is present. Do not infer active from legacy bits.
+        if (! in_array($status, ['active', 'trial'], true)
+            || empty($entitlements['membershipActive'])
+            || ($status === 'trial' && ! ($definition['trial'] ?? false))
         ) {
+            return false;
+        }
+
+        // Trade Alerts-specific product grant is an explicit tier override,
+        // NOT an override of status or expiry. Do not change other features.
+        if ($featureKey === 'alerts.trade_alerts'
+            && in_array('trade_alerts', (array) ($definition['user_flags'] ?? []), true)
+            && $this->truthy($userRow['trade_alerts'] ?? null)
+        ) {
+            return true;
+        }
+
+        if (! $this->featureMatchesMinimumTier($entitlements['membershipTier'], $definition)) {
             return false;
         }
 
@@ -233,7 +272,7 @@ class PremiumEntitlementService
             }
         }
 
-        return $entitlements['membershipTier'] !== 'free' || (($definition['min_tier'] ?? 'free') === 'free');
+        return $entitlements['membershipTier'] !== 'free';
     }
 
     private function buildFeatureReason(string $featureKey, array $entitlements, array $userRow, array $subscription): string
@@ -248,6 +287,13 @@ class PremiumEntitlementService
         }
 
         if ($entitlements['featureAllowed']) {
+            if ($featureKey === 'alerts.trade_alerts') {
+                if ($this->truthy($userRow['trade_alerts'] ?? null)) {
+                    return 'Access granted by user flag "trade_alerts".';
+                }
+                return sprintf('Access granted for %s membership.', $entitlements['membershipTier']);
+            }
+
             foreach ((array) ($definition['user_flags'] ?? []) as $flag) {
                 if (array_key_exists($flag, $userRow) && $this->truthy($userRow[$flag])) {
                     return sprintf('Access granted by user flag "%s".', $flag);
@@ -262,7 +308,9 @@ class PremiumEntitlementService
         }
 
         $status = (string) ($entitlements['membershipStatus'] ?? 'free');
-        if (in_array($status, ['expired', 'canceled', 'cancelled', 'unpaid', 'inactive'], true)) {
+        if (($definition['min_tier'] ?? 'free') !== 'free'
+            && ! in_array($status, ['active', 'trial'], true)
+        ) {
             return sprintf(
                 'Membership status "%s" does not permit premium access.',
                 $status
