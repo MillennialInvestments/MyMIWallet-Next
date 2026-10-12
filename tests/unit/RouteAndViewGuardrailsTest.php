@@ -175,21 +175,84 @@ final class RouteAndViewGuardrailsTest extends CIUnitTestCase
             'active' => 1,
             'tier' => 'Tier 2',
         ];
-        $this->assertSame('free', $method->invoke($service, $row, []),
+        $this->assertSame('free', $method->invoke($service, $row),
             'An intentional downgrade is indistinguishable from a schema default');
         foreach (['free', 'inactive', 'past_due', 'canceled'] as $status) {
             $row['membership_status'] = $status;
-            $this->assertSame('free', $method->invoke($service, $row, []), $status);
+            $this->assertSame('free', $method->invoke($service, $row), $status);
         }
         $row['membership_status'] = 'active';
         $row['membership_tier'] = 'tier1';
         $row['tier'] = 'Tier 3';
-        $this->assertSame('tier1', $method->invoke($service, $row, []));
+        $this->assertSame('tier1', $method->invoke($service, $row));
         unset($row['membership_tier']);
-        $this->assertSame('tier3', $method->invoke($service, $row, []),
+        $this->assertSame('tier3', $method->invoke($service, $row),
             'Missing canonical column may use a recognized legacy tier');
         $row['membership_tier'] = ' FREE ';
-        $this->assertSame('free', $method->invoke($service, $row, []));
+        $this->assertSame('free', $method->invoke($service, $row));
+    }
+
+    public function testOnboardingCannotInferPaidTierFromMissingOrUnknownSubscriptionValues(): void
+    {
+        $service = (new \ReflectionClass(PremiumEntitlementService::class))
+            ->newInstanceWithoutConstructor();
+        $normalize = new \ReflectionMethod($service, 'normalizeSubscriptionTier');
+        $normalizeStatus = new \ReflectionMethod($service, 'normalizeStatus');
+        $allowed = new \ReflectionMethod($service, 'isFeatureAllowed');
+
+        $user = ['features_activated' => 1, 'trade_alerts' => 0];
+        $cases = [
+            [],
+            ['membership_tier' => ''],
+            ['membership_tier' => 'unknown-tier', 'tier' => 'other'],
+            ['membership_tier' => '', 'tier' => 'not-a-tier'],
+            ['tier' => 'not-a-tier', 'subscription_name' => 'unrecognized record'],
+        ];
+
+        foreach ($cases as $case) {
+            $subscription = $case + ['membership_status' => 'active', 'active' => 1];
+            $tier = $normalize->invoke($service, $subscription);
+            $status = $normalizeStatus->invoke($service, $subscription, $tier);
+            $entitlements = [
+                'membershipTier' => $tier,
+                'membershipStatus' => $status,
+                'membershipActive' => $status === 'active',
+            ];
+            $this->assertSame('free', $tier, json_encode($case));
+            $this->assertFalse($allowed->invoke(
+                $service, 'alerts.trade_alerts', $entitlements, $user, $subscription
+            ), json_encode($case));
+        }
+
+        // Recognized subscription evidence still grants a paid membership.
+        foreach ([
+            ['membership_tier' => 'tier2', 'membership_status' => 'active'],
+            ['tier' => 'Tier 2', 'membership_status' => 'active'],
+            ['subscription_name' => 'Tier 2 Membership', 'membership_status' => 'active'],
+        ] as $paid) {
+            $this->assertSame('tier2', $normalize->invoke($service, $paid));
+        }
+        $this->assertSame('free', $normalize->invoke($service, [
+            'membership_tier' => 'free', 'tier' => 'Tier 3',
+            'membership_status' => 'active',
+        ]));
+
+        // Product-specific grants still require valid status, not onboarding.
+        $freeActive = [
+            'membershipTier' => 'free', 'membershipStatus' => 'active',
+            'membershipActive' => true,
+        ];
+        $this->assertTrue($allowed->invoke(
+            $service, 'alerts.trade_alerts', $freeActive, ['trade_alerts' => 1], []
+        ));
+        foreach (['expired', 'canceled', 'unpaid', 'inactive', 'past_due'] as $status) {
+            $inactive = $freeActive;
+            $inactive['membershipStatus'] = $status;
+            $this->assertFalse($allowed->invoke(
+                $service, 'alerts.trade_alerts',
+                $inactive, ['trade_alerts' => 1], ['membership_status' => $status]
+            ), $status);
+        }
     }
 
     public function testTradeAlertsUnknownStatusNeverFallsBackToActive(): void
@@ -251,7 +314,7 @@ final class RouteAndViewGuardrailsTest extends CIUnitTestCase
         $alerts = file_get_contents(APPPATH . 'Modules/User/Controllers/AlertsController.php') ?: '';
 
         $this->assertStringContainsString(
-            "\$this->normalizeSubscriptionTier(\$subscription, \$userRow)",
+            "\$this->normalizeSubscriptionTier(\$subscription)",
             $service
         );
         $this->assertStringContainsString(
