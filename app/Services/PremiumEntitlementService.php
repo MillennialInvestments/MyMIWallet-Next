@@ -128,40 +128,23 @@ class PremiumEntitlementService
     }
 
     /**
-     * Compat with HardenPremiumSchema's NOT NULL DEFAULT 'free' legacy-row
-     * backfill defect. Do not use subscription-name or user flags as paid proof.
-     * Only a known legacy paid tier, an explicitly active normalized status,
-     * and the old active bit may recover that tier. An explicit free/inactive
-     * or unknown status keeps the canonical free tier.
-     *
-     * NOTE: Ambiguous active rows intentionally downgraded to free require a
-     * separately governed migration reconciliation; never update the DB here.
+     * A canonical free tier is authoritative even if a stale legacy paid
+     * tier remains. The schema-default free versus intentional downgrade
+     * ambiguity requires separately audited row provenance, never an
+     * implicit access grant at request time.
      */
     private function normalizeSubscriptionTier(array $subscription, array $userRow): string
     {
-        $tier = $this->normalizeTier(
+        if (strtolower(trim((string) ($subscription['membership_tier'] ?? ''))) === 'free') {
+            return 'free';
+        }
+
+        // Legacy fallback only when the canonical tier is absent/blank.
+        return $this->normalizeTier(
             $subscription['membership_tier'] ?? $subscription['tier'] ?? null,
             $subscription['subscription_name'] ?? null,
             $userRow
         );
-
-        if ($tier !== 'free'
-            || strtolower(trim((string) ($subscription['membership_tier'] ?? ''))) !== 'free'
-            || strtolower(trim((string) ($subscription['membership_status'] ?? ''))) !== 'active'
-            || ! $this->truthy($subscription['active'] ?? null)
-        ) {
-            return $tier;
-        }
-
-        $legacy = strtolower(trim((string) ($subscription['tier'] ?? '')));
-        if ($legacy === '') {
-            return $tier;
-        }
-
-        $legacyTier = $this->normalizeTier($legacy, null, []);
-        return in_array($legacyTier, ['tier1', 'tier2', 'tier3'], true)
-            ? $legacyTier
-            : $tier;
     }
 
     private function normalizeTier(mixed $tier, mixed $subscriptionName, array $userRow): string
@@ -272,12 +255,11 @@ class PremiumEntitlementService
 
         // Trade Alerts-specific product grant is an explicit tier override,
         // NOT an override of status or expiry. Do not change other features.
-        if ($featureKey === 'alerts.trade_alerts') {
-            foreach ((array) ($definition['user_flags'] ?? []) as $flag) {
-                if (array_key_exists($flag, $userRow) && $this->truthy($userRow[$flag])) {
-                    return true;
-                }
-            }
+        if ($featureKey === 'alerts.trade_alerts'
+            && in_array('trade_alerts', (array) ($definition['user_flags'] ?? []), true)
+            && $this->truthy($userRow['trade_alerts'] ?? null)
+        ) {
+            return true;
         }
 
         if (! $this->featureMatchesMinimumTier($entitlements['membershipTier'], $definition)) {
@@ -305,6 +287,13 @@ class PremiumEntitlementService
         }
 
         if ($entitlements['featureAllowed']) {
+            if ($featureKey === 'alerts.trade_alerts') {
+                if ($this->truthy($userRow['trade_alerts'] ?? null)) {
+                    return 'Access granted by user flag "trade_alerts".';
+                }
+                return sprintf('Access granted for %s membership.', $entitlements['membershipTier']);
+            }
+
             foreach ((array) ($definition['user_flags'] ?? []) as $flag) {
                 if (array_key_exists($flag, $userRow) && $this->truthy($userRow[$flag])) {
                     return sprintf('Access granted by user flag "%s".', $flag);

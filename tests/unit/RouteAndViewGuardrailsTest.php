@@ -164,7 +164,7 @@ final class RouteAndViewGuardrailsTest extends CIUnitTestCase
         );
     }
 
-    public function testTradeAlertsDefaultFreeLegacyPaidCompatibilityIsBounded(): void
+    public function testTradeAlertsCanonicalFreeNeverPromotesStaleLegacyPaidTier(): void
     {
         $service = (new \ReflectionClass(PremiumEntitlementService::class))
             ->newInstanceWithoutConstructor();
@@ -175,22 +175,21 @@ final class RouteAndViewGuardrailsTest extends CIUnitTestCase
             'active' => 1,
             'tier' => 'Tier 2',
         ];
-        $this->assertSame('tier2', $method->invoke($service, $row, []));
+        $this->assertSame('free', $method->invoke($service, $row, []),
+            'An intentional downgrade is indistinguishable from a schema default');
         foreach (['free', 'inactive', 'past_due', 'canceled'] as $status) {
             $row['membership_status'] = $status;
             $this->assertSame('free', $method->invoke($service, $row, []), $status);
         }
         $row['membership_status'] = 'active';
-        $row['active'] = 0;
-        $this->assertSame('free', $method->invoke($service, $row, []));
-        $row['active'] = 1;
-        $row['tier'] = 'free';
-        $this->assertSame('free', $method->invoke($service, $row, []));
-        $row['tier'] = 'unrecognized';
-        $this->assertSame('free', $method->invoke($service, $row, []));
         $row['membership_tier'] = 'tier1';
         $row['tier'] = 'Tier 3';
         $this->assertSame('tier1', $method->invoke($service, $row, []));
+        unset($row['membership_tier']);
+        $this->assertSame('tier3', $method->invoke($service, $row, []),
+            'Missing canonical column may use a recognized legacy tier');
+        $row['membership_tier'] = ' FREE ';
+        $this->assertSame('free', $method->invoke($service, $row, []));
     }
 
     public function testTradeAlertsUnknownStatusNeverFallsBackToActive(): void
@@ -211,7 +210,7 @@ final class RouteAndViewGuardrailsTest extends CIUnitTestCase
         ], ['trade_alerts' => 1], []));
     }
 
-    public function testTradeAlertsExplicitFlagOverridesTierButNotStatusOrExpiry(): void
+    public function testTradeAlertsOnlyProductSpecificFlagOverridesTier(): void
     {
         $service = (new \ReflectionClass(PremiumEntitlementService::class))
             ->newInstanceWithoutConstructor();
@@ -223,15 +222,16 @@ final class RouteAndViewGuardrailsTest extends CIUnitTestCase
         ];
         $this->assertFalse($allowed->invoke($service, 'alerts.trade_alerts',
             $freeActive, [], []));
-        foreach (['trade_alerts', 'features_activated'] as $flag) {
-            $this->assertTrue($allowed->invoke($service, 'alerts.trade_alerts',
-                $freeActive, [$flag => 1], []), $flag);
-            foreach (['past_due', 'expired', 'canceled', 'unpaid', 'inactive', 'free'] as $status) {
-                $invalid = $freeActive;
-                $invalid['membershipStatus'] = $status;
-                $this->assertFalse($allowed->invoke($service, 'alerts.trade_alerts',
-                    $invalid, [$flag => 1], []), $status);
-            }
+        $this->assertFalse($allowed->invoke($service, 'alerts.trade_alerts',
+            $freeActive, ['features_activated' => 1], []),
+            'Completing onboarding must not grant premium Trade Alerts');
+        $this->assertTrue($allowed->invoke($service, 'alerts.trade_alerts',
+            $freeActive, ['trade_alerts' => 1], []));
+        foreach (['past_due', 'expired', 'canceled', 'unpaid', 'inactive', 'free'] as $status) {
+            $invalid = $freeActive;
+            $invalid['membershipStatus'] = $status;
+            $this->assertFalse($allowed->invoke($service, 'alerts.trade_alerts',
+                $invalid, ['trade_alerts' => 1, 'features_activated' => 1], []), $status);
         }
         $expiredStatus = $boundary->invoke($service,
             ['expires_at' => date('Y-m-d H:i:s', time() - 3600)], 'active');
