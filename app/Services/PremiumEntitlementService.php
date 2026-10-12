@@ -66,7 +66,7 @@ class PremiumEntitlementService
         $subscription = $this->fetchSubscriptionRow($userId);
         $userRow = $this->fetchUserRow($userId);
 
-        $normalizedTier = $this->normalizeSubscriptionTier($subscription, $userRow);
+        $normalizedTier = $this->normalizeSubscriptionTier($subscription);
         $status = $this->normalizeStatus($subscription, $normalizedTier);
         $accessExpiresAt = $this->resolveAccessExpiry($subscription, $status);
         $status = $this->enforceAccessBoundary($subscription, $status);
@@ -133,7 +133,7 @@ class PremiumEntitlementService
      * ambiguity requires separately audited row provenance, never an
      * implicit access grant at request time.
      */
-    private function normalizeSubscriptionTier(array $subscription, array $userRow): string
+    private function normalizeSubscriptionTier(array $subscription): string
     {
         if (strtolower(trim((string) ($subscription['membership_tier'] ?? ''))) === 'free') {
             return 'free';
@@ -142,12 +142,11 @@ class PremiumEntitlementService
         // Legacy fallback only when the canonical tier is absent/blank.
         return $this->normalizeTier(
             $subscription['membership_tier'] ?? $subscription['tier'] ?? null,
-            $subscription['subscription_name'] ?? null,
-            $userRow
+            $subscription['subscription_name'] ?? null
         );
     }
 
-    private function normalizeTier(mixed $tier, mixed $subscriptionName, array $userRow): string
+    private function normalizeTier(mixed $tier, mixed $subscriptionName): string
     {
         $normalized = strtolower(trim((string) ($tier ?? '')));
         $map = [
@@ -184,11 +183,7 @@ class PremiumEntitlementService
             return 'trial';
         }
 
-        $activated = $this->truthy($userRow['features_activated'] ?? null);
-        if ($activated) {
-            return 'tier1';
-        }
-
+        // Onboarding is not proof of paid subscription entitlement.
         return 'free';
     }
 
