@@ -32,4 +32,4 @@ jobs:
           AIOPS_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           AIOPS_DISCORD_WEBHOOK: ${{ secrets.AIOPS_DISCORD_WEBHOOK }}
-        run: php spark aiops:auto-run --limit-tasks=1 --limit-errors=3 --create-pr=1 --notify=1
+        run: php spark aiops:auto:run --limit-tasks=1 --limit-errors=3 --create-pr=1 --notify=1
