@@ -285,6 +285,21 @@ class Home extends BaseController
         if ($data instanceof ResponseInterface) {
             return $data;
         }
+        // Membership pricing requires an explicit, read-only feature list.
+        // Do not infer entitlements from this marketing comparison catalog.
+        try {
+            $features = $this->getMyMIDashboard()->getFeatures();
+            $data['getFeatures'] = is_array($features) ? $features : [];
+        } catch (\Throwable $e) {
+            log_message('warning', 'Home::memberships feature-list read failed: {message}', [
+                'message' => $e->getMessage(),
+            ]);
+            $data['getFeatures'] = [];
+        }
+
+        // The outer public template forwards this payload into plan partials.
+        $data['fieldData'] = $data;
+
         return $this->renderTheme('themes/public/memberships', $data);
     }
 

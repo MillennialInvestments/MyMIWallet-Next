@@ -9,6 +9,38 @@ if (! defined('TESTPATH')) {
 
 final class RouteAndViewGuardrailsTest extends CIUnitTestCase
 {
+    public function testMembershipsPricingPageHasExplicitFeatureContractAndEmptyFallback(): void
+    {
+        $home = file_get_contents(APPPATH . 'Controllers/Home.php') ?: '';
+        $outer = file_get_contents(APPPATH . 'Views/themes/public/memberships.php') ?: '';
+        $partial = file_get_contents(APPPATH
+            . 'Modules/User/Views/Wallets/Purchase/Memberships.php') ?: '';
+
+        $this->assertStringContainsString("getMyMIDashboard()->getFeatures()", $home);
+        $this->assertStringContainsString("\$data['getFeatures'] = []", $home);
+        $this->assertStringContainsString("\$data['fieldData'] = \$data", $home);
+        $this->assertStringContainsString("Membership feature comparisons are currently unavailable.", $partial);
+        $this->assertStringContainsString("Membership feature details are currently unavailable.", $partial);
+        $this->assertSame(2, substr_count($partial, 'foreach ($getFeatures as $features)'));
+        $this->assertStringContainsString('Memberships', $outer);
+
+        $settings = (object) [
+            'customizableMemberships' => 0,
+        ];
+        $view = view('UserModule\\Views\\Wallets\\Purchase\\Memberships', [
+            'siteSettings' => $settings,
+            'membershipStarterFee' => 0,
+            'membershipBasicFee' => 10,
+            'membershipProFee' => 20,
+            'membershipPremiumFee' => 30,
+            'getFeatures' => [],
+            'nonce' => ['style' => ''],
+        ]);
+        $this->assertStringContainsString('Membership feature comparisons are currently unavailable.', $view);
+        $this->assertStringContainsString('Membership feature details are currently unavailable.', $view);
+        $this->assertStringContainsString('MyMI Membership Bundles', $view);
+    }
+
     public function testRoutesFileIncludesCriticalAliases(): void
     {
         $routes = file_get_contents(APPPATH . 'Config/Routes.php') ?: '';

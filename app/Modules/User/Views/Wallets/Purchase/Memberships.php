@@ -1,4 +1,8 @@
 <!-- app/Modules/User/Views/Wallets/Purchase/Memberships.php -->
+<?php
+// Safe presentation default; never fabricate paid-plan capabilities.
+$getFeatures = isset($getFeatures) && is_array($getFeatures) ? $getFeatures : [];
+?>
 <style <?= $nonce['style'] ?? '' ?>>
     #customizeMembershipBanner {
         background-image: url('<?php echo base_url('assets/images/MyMI-Walllet-Background.jpeg'); ?>');
@@ -186,6 +190,9 @@
                                 </tr>
                             </thead>
                             <tbody style="font-size:1rem">
+                                <?php if ($getFeatures === []) : ?>
+                                <tr><td colspan="5">Membership feature comparisons are currently unavailable.</td></tr>
+                                <?php endif; ?>
                                 <?php foreach ($getFeatures as $features) : ?>
                                 <tr>
                                     <td class="text-left" data-bs-toggle="tooltip" title="<?= $features['feature_description'] ?>">
@@ -242,6 +249,9 @@
                                 </div>
                                 <div class="card-inner pt-3">
                                     <div class="row g-gs">
+                                        <?php if ($getFeatures === []) : ?>
+                                        <p>Membership feature details are currently unavailable.</p>
+                                        <?php endif; ?>
                                         <?php foreach ($getFeatures as $features) : ?>
                                         <?php 
                                             $featurePrice = $features['feature_cost']; 
