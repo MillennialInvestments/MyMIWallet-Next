@@ -48,7 +48,7 @@ class SparkOptimize extends SafeBaseCommand
     protected function runCommand(string $command): int
     {
         CLI::write("→ {$command}", 'dark_gray');
-        passthru($command, $code);
+        passthru('cd ' . escapeshellarg(ROOTPATH) . ' && ' . $command, $code);
         return (int) $code;
     }
 }
