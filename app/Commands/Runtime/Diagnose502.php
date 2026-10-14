@@ -9,15 +9,24 @@ class Diagnose502 extends \App\Commands\SafeBaseCommand
     protected $group = 'runtime';
     protected $name = 'runtime:diagnose-502';
     protected $description = 'Diagnose and optionally remediate 502/503 gateway errors';
-    protected $usage = 'runtime:diagnose-502 [--approve]';
+    protected $usage = 'runtime:diagnose-502 [--approve] [--self-test]';
     protected $options = [
         '--approve' => 'Apply safe fixes (clear cache, remove stale sockets) after diagnostics',
+        '--self-test' => 'Run deterministic read-only diagnostic contract checks without probing host sockets',
     ];
 
     public function run(array $params)
     {
         [$args, $flags] = $this->parseParams($params);
         $fixMode = isset($flags['approve']);
+
+        if (isset($flags['self-test'])) {
+            if ($fixMode) {
+                CLI::error('--self-test cannot be combined with --approve.');
+                return EXIT_ERROR;
+            }
+            return $this->runSelfTest();
+        }
 
         CLI::write('Runtime 502/503 Diagnostics', 'yellow');
         if ($fixMode) {
@@ -58,6 +67,45 @@ class Diagnose502 extends \App\Commands\SafeBaseCommand
             || ! $writableStatus['ok'];
 
         return $blockingIssues ? EXIT_ERROR : EXIT_SUCCESS;
+    }
+
+    /**
+     * Test diagnostic parsing and mismatch behavior without requiring a web
+     * server or sockets on the CI worker. Ordinary diagnostics remain strict.
+     */
+    private function runSelfTest(): int
+    {
+        $checks = [
+            'parse unix FastCGI target' =>
+                $this->extractFastCgiTargets(
+                    'location / { fastcgi_pass unix:/tmp/mymi-test.sock; }'
+                ) === ['unix:/tmp/mymi-test.sock'],
+            'parse multiple FastCGI targets' =>
+                $this->extractFastCgiTargets(
+                    "fastcgi_pass unix:/tmp/mymi-a.sock;
+fastcgi_pass 127.0.0.1:9000;"
+                ) === ['unix:/tmp/mymi-a.sock', '127.0.0.1:9000'],
+            'ignore configuration without FastCGI' =>
+                $this->extractFastCgiTargets(
+                    'location /health { return 200; }'
+                ) === [],
+            'detect missing Unix upstream socket' =>
+                $this->isFastCgiMismatch(
+                    'unix:/dev/null/mymi-502-missing.sock'
+                ) === true,
+            'allow named upstream target' =>
+                $this->isFastCgiMismatch('upstream_backend') === false,
+        ];
+
+        $failed = 0;
+        foreach ($checks as $label => $passed) {
+            CLI::write(($passed ? 'PASS' : 'FAIL') . ': ' . $label);
+            if (! $passed) {
+                $failed++;
+            }
+        }
+
+        return $failed === 0 ? EXIT_SUCCESS : EXIT_ERROR;
     }
 
     private function checkPhpHandler(): array
