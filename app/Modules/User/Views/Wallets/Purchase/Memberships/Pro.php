@@ -126,7 +126,7 @@ $client_id = $cuUserType === 'Beta' ? 'AffPMSjviq6Zkkpvn79YQnawbzP6bnG7J71vfbMu5
                 // },
                 // Set up the subscription plan details
                 createSubscription: function (data, actions) {
-                    <?php if ($uri->getSegment(4) === 'Pro') : ?>
+                    <?php if ($membership_type === 'Pro') : ?>
                         <?php 
                         // Check the condition for NEWYEARS discount
                         $planId = 'P-2DS96023VD631600WMZFK3YQ'; // Default plan ID

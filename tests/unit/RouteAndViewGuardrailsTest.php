@@ -41,6 +41,52 @@ final class RouteAndViewGuardrailsTest extends CIUnitTestCase
         $this->assertStringContainsString('MyMI Membership Bundles', $view);
     }
 
+
+    public function testPublicMembershipPlansUseSafeUriSelection(): void
+    {
+        $plans = [
+            'Starter' => 'P-2VR82118M3603741WMZFA76Y',
+            'Basic' => 'P-2Y0165568W711230FMZFKWZA',
+            'Pro' => 'P-2DS96023VD631600WMZFK3YQ',
+            'Premium' => 'P-8FX85935H8514161YMZFK4CI',
+        ];
+
+        foreach ($plans as $plan => $paypalPlanId) {
+            $partial = file_get_contents(
+                APPPATH . 'Modules/User/Views/Wallets/Purchase/Memberships/'
+                . $plan . '.php'
+            ) ?: '';
+
+            $this->assertStringContainsString(
+                '<?php if ($membership_type === \'' . $plan . '\') : ?>',
+                $partial
+            );
+            $this->assertStringNotContainsString(
+                '<?php if ($uri->getSegment(4) === \'' . $plan . '\') : ?>',
+                $partial
+            );
+            $this->assertStringContainsString($paypalPlanId, $partial);
+
+            foreach ([
+                ['Memberships/' . $plan, 2],
+                ['Wallets/Purchase/Memberships/' . $plan, 4],
+            ] as [$path, $segments]) {
+                $uri = new \CodeIgniter\HTTP\URI(
+                    'https://www.mymiwallet.com/' . $path
+                );
+
+                $selected = $uri->getSegment(1) === 'Memberships'
+                    ? ($uri->getTotalSegments() >= 2
+                        ? $uri->getSegment(2) : null)
+                    : ($uri->getTotalSegments() >= 4
+                        ? $uri->getSegment(4) : null);
+
+                $this->assertSame($segments, $uri->getTotalSegments());
+                $this->assertSame($plan, $selected);
+            }
+        }
+    }
+
     public function testRoutesFileIncludesCriticalAliases(): void
     {
         $routes = file_get_contents(APPPATH . 'Config/Routes.php') ?: '';
