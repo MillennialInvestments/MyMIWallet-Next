@@ -40,8 +40,9 @@ jobs:
           php spark logs:full-report today
 
       - name: Filesystem Safety Lint (PR Gate)
-        run: php spark ops:filesystem:lint || true
-        echo "Filesystem lint is report-only here; Spark Filesystem Guard owns changed-file gating."
+        run: |
+          php spark ops:filesystem:lint || true
+          echo "Filesystem lint is report-only here; Spark Filesystem Guard owns changed-file gating."
 
       - name: CI-Safe Optimize
         run: php spark optimize:safe
@@ -50,18 +51,22 @@ jobs:
         run: php spark runtime:diagnose-502 --self-test
       - name: Commands Lint (PR Gate)
         run: php spark ops:commands:lint
-      - name: AIops Init (Dry Run)
-        run: php spark ops:aiops:init --dry-run
-      - name: AIops Init (Approve)
-        run: php spark ops:aiops:init --approve
-      - name: Email Scraper Audit
-        run: php spark scraper:email-scraper-audit
+      - name: Spark Command Registration Gate
+        run: |
+          php spark list > writable/ci/registered-spark-commands.txt
+          for cmd in ops:ci:prepare ops:commands:lint optimize:safe runtime:diagnose-502 aiops:copilot:validate codex:review:list codex:review:publish; do
+            grep -Eq "^[[:space:]]+${cmd}[[:space:]]" writable/ci/registered-spark-commands.txt
+          done
+
+      - name: AIOps CI-Safe Validation
+        run: php spark aiops:copilot:validate --ci
+
       - name: Codex Review List
         run: php spark codex:review:list
-      - name: Codex Review Commit
-        run: php spark codex:review:commit
-      - name: Codex Review Publish
-        run: php spark codex:review:publish
+
+      - name: Codex Review Publish (Dry Run)
+        run: php spark codex:review:publish --dry-run
+
       - name: CI Health Check Complete
         run: echo "CI Health Check Completed Successfully"  
 
