@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <div class="accordian-footer py-2 pl-4">
-                            <small>By registering an account, you agree to our <a href="<?= site_url('/Legal/Terms-And-Conditions'); ?>">Terms &amp; Conditions</a> and <a href="<?= site_url('/Legal/Privacy-Policy'); ?>">Privacy Policy</a>.</small>
+                            <small>By registering an account, you agree to our <a href="<?= site_url("Terms-Of-Service") ?>">Terms &amp; Conditions</a> and <a href="<?= site_url("Privacy-Policy") ?>">Privacy Policy</a>.</small>
                         </div>
                     </div>
                 </div>
