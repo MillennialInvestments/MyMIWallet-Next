@@ -48,8 +48,21 @@ final class OperatorNext extends SafeBaseCommand
 
     public static function recipeIdOption(string $name): string
     {
-        $value = CLI::getOption($name);
-        return is_string($value) ? trim($value) : '';
+        return self::parseRecipeIdOption(CLI::getOptions(), $name);
+    }
+
+    /** @param array<string, string|null> $options */
+    public static function parseRecipeIdOption(array $options, string $name): string
+    {
+        $matches = [];
+        foreach ($options as $key => $value) {
+            if ($key === $name && is_string($value)) {
+                $matches[] = trim($value);
+            } elseif (str_starts_with($key, $name . "=") && $value === null) {
+                $matches[] = trim(substr($key, strlen($name) + 1));
+            }
+        }
+        return count($matches) === 1 ? $matches[0] : "";
     }
 
     /** @return array{worktree:string,branch:string,config_id:string,mission_id:string,runtime_root:string} */

@@ -84,6 +84,19 @@ final class OperatorCommandRoutingTest extends CIUnitTestCase
         OperatorNext::approvedPreviewCommand($ctx, 'unapproved-recipe');
     }
 
+    public function testBothRecipeIdOptionFormats(): void
+    {
+        self::assertSame("recipe-001", OperatorNext::parseRecipeIdOption(["recipe-id" => "recipe-001"], "recipe-id"));
+        self::assertSame("recipe-001", OperatorNext::parseRecipeIdOption(["recipe-id=recipe-001" => null], "recipe-id"));
+    }
+
+    public function testRecipeIdOptionRejectsConflictsAndMalformedValues(): void
+    {
+        self::assertSame("", OperatorNext::parseRecipeIdOption([], "recipe-id"));
+        self::assertSame("", OperatorNext::parseRecipeIdOption(["recipe-id" => "one", "recipe-id=two" => null], "recipe-id"));
+        self::assertSame("", OperatorNext::parseRecipeIdOption(["recipe-id=one" => "stray"], "recipe-id"));
+    }
+
     public function testUnsafeRecipeIdentifierFailsClosed(): void
     {
         [$ctx] = $this->fixture();
