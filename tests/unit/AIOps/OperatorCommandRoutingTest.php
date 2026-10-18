@@ -37,6 +37,12 @@ final class OperatorCommandRoutingTest extends CIUnitTestCase
         return [$ctx, $mission, $objective];
     }
 
+    public function testBothCommandsExtendSafeBaseCommand(): void
+    {
+        self::assertTrue(is_subclass_of(OperatorNext::class, \App\Commands\SafeBaseCommand::class));
+        self::assertTrue(is_subclass_of(\App\Commands\AIOps\OperatorRunNext::class, \App\Commands\SafeBaseCommand::class));
+    }
+
     public function testExactActiveMissionAndObjectiveAreAccepted(): void
     {
         [$ctx, $mission, $objective] = $this->fixture();

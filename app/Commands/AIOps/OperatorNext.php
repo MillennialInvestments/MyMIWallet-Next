@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Commands\AIOps;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use RuntimeException;
 
-final class OperatorNext extends BaseCommand
+final class OperatorNext extends SafeBaseCommand
 {
     protected $group = 'AIOps';
     protected $name = 'aiops:operator-next';
@@ -22,7 +22,7 @@ final class OperatorNext extends BaseCommand
         CLI::write('===== MYMI AIOPS OPERATOR NEXT =====', 'yellow');
         try {
             $context = self::currentContext();
-            $recipeId = self::option('recipe-id');
+            $recipeId = self::recipeIdOption('recipe-id');
             if ($recipeId === '') {
                 CLI::write('STATUS: WAITING');
                 CLI::write('REASON: exact_approved_recipe_id_required');
@@ -46,7 +46,7 @@ final class OperatorNext extends BaseCommand
         }
     }
 
-    public static function option(string $name): string
+    public static function recipeIdOption(string $name): string
     {
         $value = CLI::getOption($name);
         return is_string($value) ? trim($value) : '';

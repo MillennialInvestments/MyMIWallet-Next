@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Commands\AIOps;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use RuntimeException;
 
-final class OperatorRunNext extends BaseCommand
+final class OperatorRunNext extends SafeBaseCommand
 {
     protected $group = 'AIOps';
     protected $name = 'aiops:operator:run-next';
@@ -27,7 +27,7 @@ final class OperatorRunNext extends BaseCommand
         }
         try {
             $context = OperatorNext::currentContext();
-            $recipeId = OperatorNext::option('recipe-id');
+            $recipeId = OperatorNext::recipeIdOption('recipe-id');
             if ($recipeId === '') {
                 throw new RuntimeException('exact_approved_recipe_id_required');
             }
