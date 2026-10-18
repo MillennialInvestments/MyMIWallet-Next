@@ -1,275 +1,170 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Commands\AIOps;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
+use RuntimeException;
 
-final class OperatorNext extends BaseCommand
+final class OperatorNext extends SafeBaseCommand
 {
     protected $group = 'AIOps';
     protected $name = 'aiops:operator-next';
-    protected $description = 'Resolve the current AIOps state into one operator-level NEXT COMMANDS block.';
+    protected $description = 'Show one identity-bound TBI AIOps controller action for this MyMI worktree.';
+
+    private const CONTROLLER_ROOT = '/apps/TBI/repos/timothyburks';
+    private const PROJECT = 'mymiwallet-next';
 
     public function run(array $params): int
     {
-        $root       = rtrim(ROOTPATH, '/');
-        $branch     = $this->runCommand('git branch --show-current');
-        $status     = $this->runCommand('git status --short');
-        $originMain = $this->runCommand('git rev-parse --verify origin/main');
-        $head       = $this->runCommand('git rev-parse --verify HEAD');
-        $aheadCount = $this->runCommand('git rev-list --count origin/main..HEAD');
-
-        CLI::write('===== TBI AIOPS OPERATOR NEXT =====');
-        CLI::write('ROOT: ' . $root);
-        CLI::write('BRANCH: ' . ($branch !== '' ? $branch : 'unknown'));
-        CLI::write('STATUS_COUNT: ' . ($status === '' ? '0' : (string) count(explode("\n", $status))));
-        CLI::write('HEAD: ' . ($head !== '' ? substr($head, 0, 8) : 'unknown'));
-        CLI::write('ORIGIN_MAIN: ' . ($originMain !== '' ? substr($originMain, 0, 8) : 'unknown'));
-        CLI::write('COMMITS_AHEAD_ORIGIN_MAIN: ' . ($aheadCount !== '' ? $aheadCount : 'unknown'));
-        CLI::newLine();
-
-        if ($branch === 'main') {
-            $this->printMainGuidance($status);
-
-            return 0;
-        }
-
-        if ($status === '' && $aheadCount === '0') {
-            passthru('cd ' . escapeshellarg(ROOTPATH) . ' && php spark aiops:operator:state-next --phase=discovery');
-
-            return 0;
-        }
-
-        if ($status !== '') {
-            $this->printChangedFeatureGuidance();
-
-            return 0;
-        }
-
-        if ((int) $aheadCount > 0) {
-            $this->printCommittedFeatureGuidance();
-
-            return 0;
-        }
-
-        $this->printFallbackGuidance();
-
-        return 0;
-    }
-
-    private function printMainGuidance(string $status): void
-    {
-        CLI::write('STATE: main_branch_guard');
-        CLI::write('SUMMARY: Main is for production sync, validation, and worktree routing. Do not implement from main.');
-        CLI::newLine();
-
-        CLI::write('DISPATCHER ROUTING:', 'yellow');
-        CLI::write('Main is dispatcher-only. Select an active lane from inventory before implementing.');
-        CLI::newLine();
-
-        CLI::write('NEXT COMMANDS:', 'green');
-        CLI::write('ai check');
-        CLI::write('ai inventory --limit=20');
-        CLI::write('php spark aiops:inventory --select=<number-from-inventory>');
-        CLI::write('cd /apps/TBI/worktrees/<selected-worktree-path>');
-        CLI::write('ai check');
-        CLI::write('git status --short');
-
-        if ($status !== '') {
-            CLI::newLine();
-            CLI::write('ROLLBACK / CLEANUP:', 'yellow');
-            CLI::write('Review uncommitted main changes before continuing. Do not discard changes unless intentionally reverting.');
-        }
-    }
-
-    private function printNoopFeatureGuidance(): void
-    {
-        CLI::write('STATE: feature_worktree_noop');
-        CLI::write('SUMMARY: This feature worktree is clean with no commits ahead of origin/main.');
-        CLI::newLine();
-
-        CLI::write('PRIMARY NEXT ACTION:', 'green');
-        CLI::write('Choose whether this clean worktree needs implementation or should return to inventory.');
-        CLI::newLine();
-
-        CLI::write('WHY: Blank git status means clean. Clean/no-ahead worktrees cannot be committed or PR-created until an implementation step changes files.');
-        CLI::newLine();
-
-        CLI::write('NEXT COMMANDS:', 'green');
-        CLI::write('ai check');
-        CLI::write('ai do "Build the smallest safe implementation step from the active roadmap. Do not commit or merge."');
-        CLI::write('ai next');
-        CLI::newLine();
-
-        CLI::write('SUPPORTING CHECKS:', 'green');
-        CLI::write('php spark aiops:worktree:doctor');
-        CLI::write('git status --short');
-        CLI::newLine();
-
-        CLI::write('DO NOT RUN:', 'red');
-        CLI::write('git commit');
-        CLI::write('gh pr create');
-        CLI::write('ai finish');
-        CLI::newLine();
-
-        CLI::write('VALIDATION:', 'green');
-        CLI::write('php spark aiops:execution-engine:validate --run');
-        CLI::write('git status --short');
-        CLI::newLine();
-
-        CLI::write('ROLLBACK:', 'yellow');
-        CLI::write('No rollback needed because no tracked file changes exist.');
-    }
-
-    private function printChangedFeatureGuidance(): void
-    {
-        $files = $this->changedFiles();
-        $quotedFiles = $this->quoteFiles($files);
-
-        CLI::write('STATE: feature_worktree_has_uncommitted_changes');
-        CLI::write('SUMMARY: Validate the changes before commit or PR.');
-        CLI::newLine();
-
-        CLI::write('NEXT COMMANDS:', 'green');
-        CLI::write('php spark aiops:worktree:doctor');
-        CLI::write('php spark aiops:execution-engine:mutation-gate-smoke');
-        CLI::write('php spark aiops:execution-engine:wrapper-smoke');
-        CLI::write('php spark aiops:execution-engine:validate --run');
-        CLI::write('git diff --check');
-        CLI::write('git status --short');
-        CLI::write('git diff --stat');
-        CLI::newLine();
-
-        CLI::write('COMMIT / PR AFTER VALIDATION:', 'green');
-        CLI::write('git add ' . $quotedFiles);
-        CLI::write('git commit -m "Improve AIOps operator next guidance"');
-        CLI::write('git push -u origin "$(git branch --show-current)"');
-        CLI::write('gh pr create --base main --head "$(git branch --show-current)" --title "Improve AIOps operator next guidance" --body "## Summary');
-        CLI::write('- Adds operator-level NEXT COMMANDS guidance for active AIOps worktrees.');
-        CLI::write('- Detects no-op, changed, committed, and main-guard states.');
-        CLI::write('- Keeps mutation disabled by default and preserves validation-first workflow.');
-        CLI::write('');
-        CLI::write('## Validation');
-        CLI::write('- php spark aiops:operator-next');
-        CLI::write('- php spark aiops:worktree:doctor');
-        CLI::write('- php spark aiops:execution-engine:mutation-gate-smoke');
-        CLI::write('- php spark aiops:execution-engine:wrapper-smoke');
-        CLI::write('- php spark aiops:execution-engine:validate --run');
-        CLI::write('- git diff --check');
-        CLI::write('');
-        CLI::write('## Rollback');
-        CLI::write('- Revert this PR or restore the changed AIOps operator files before merge."');
-        CLI::newLine();
-
-        CLI::write('ROLLBACK:', 'yellow');
-        CLI::write('git diff > /tmp/aiops-operator-next-before-rollback.patch');
-        CLI::write('git restore --worktree --staged ' . $quotedFiles);
-    }
-
-    private function printCommittedFeatureGuidance(): void
-    {
-        CLI::write('STATE: feature_worktree_commits_ready_for_pr');
-        CLI::write('SUMMARY: This branch has commits ahead of origin/main. Validate and create or update the PR.');
-        CLI::newLine();
-
-        CLI::write('NEXT COMMANDS:', 'green');
-        CLI::write('php spark aiops:execution-engine:validate --run');
-        CLI::write('git diff --check');
-        CLI::write('git status --short');
-        CLI::write('gh pr view --json number,title,state,mergeable,headRefName,baseRefName,url');
-        CLI::write('gh pr create --base main --head "$(git branch --show-current)" --title "Improve AIOps operator next guidance" --body "Operator-level AIOps NEXT COMMANDS improvement."');
-        CLI::newLine();
-        CLI::write('ALTERNATIVE IF PR ALREADY EXISTS:', 'yellow');
-        CLI::write('ai finish');
-        CLI::write('gh pr view --json number,title,state,isDraft,mergeStateStatus,url');
-        CLI::write('gh pr checks "$(gh pr view --json number --jq .number)"');
-        CLI::newLine();
-        CLI::write('ALTERNATIVE IF MERGE PROMPT WAS MISSED OR MISTYPED:', 'yellow');
-        CLI::write('ai finish');
-        CLI::newLine();
-        CLI::write('MULTI-LANE NOTE:', 'yellow');
-        CLI::write('When multiple chats or terminals are active, do not rely on global latest from main. Use the exact /apps/TBI/worktrees/... path from the lane or inventory output.');
-        CLI::newLine();
-        CLI::write('DO NOT USE:', 'red');
-        CLI::write('ai approve merge');
-        CLI::newLine();
-        CLI::write('WHY:');
-        CLI::write('ai finish owns commit, PR, clean-state check, and merge approval prompts.');
-        CLI::newLine();
-
-        CLI::write('ROLLBACK:', 'yellow');
-        CLI::write('Revert this PR after merge, or create a fixup commit before merge.');
-    }
-
-    private function printFallbackGuidance(): void
-    {
-        CLI::write('STATE: unknown');
-        CLI::write('SUMMARY: Unable to determine a precise operator state.');
-        CLI::newLine();
-
-        CLI::write('NEXT COMMANDS:', 'green');
-        CLI::write('ai check');
-        CLI::write('php spark aiops:worktree:doctor');
-        CLI::write('git status --short');
-    }
-
-    private function runCommand(string $command): string
-    {
-        return trim($this->runRawCommand($command));
-    }
-
-    private function runRawCommand(string $command): string
-    {
-        $root = escapeshellarg(rtrim(ROOTPATH, '/'));
-
-        return (string) shell_exec('cd ' . $root . ' && ' . $command . ' 2>/dev/null');
-    }
-
-    /**
-     * @return list<string>
-     */
-    private function changedFiles(): array
-    {
-        $status = $this->runRawCommand('git status --porcelain=v1 --untracked-files=all');
-
-        if (trim($status) === '') {
-            return [];
-        }
-
-        $files = [];
-
-        foreach (explode("\n", rtrim($status, "\n")) as $line) {
-            if (strlen($line) < 4) {
-                continue;
+        CLI::write('===== MYMI AIOPS OPERATOR NEXT =====', 'yellow');
+        try {
+            $context = self::currentContext();
+            $recipeId = self::recipeIdOption('recipe-id');
+            if ($recipeId === '') {
+                CLI::write('STATUS: WAITING');
+                CLI::write('REASON: exact_approved_recipe_id_required');
+                CLI::write('MUTATION_ALLOWED: false');
+                return EXIT_ERROR;
             }
-
-            $path = trim(substr($line, 3));
-
-            if ($path === '') {
-                continue;
-            }
-
-            if (str_contains($path, ' -> ')) {
-                $parts = explode(' -> ', $path);
-                $path = trim((string) end($parts));
-            }
-
-            $files[] = $path;
+            $command = self::approvedPreviewCommand($context, $recipeId);
+            CLI::write('STATUS: READY', 'green');
+            CLI::write('CONFIG_ID: ' . $context['config_id']);
+            CLI::write('WORKTREE: ' . $context['worktree']);
+            CLI::write('RECIPE_ID: ' . $recipeId);
+            CLI::write('MUTATION_ALLOWED: false');
+            CLI::write('NEXT COMMANDS:', 'green');
+            CLI::write($command);
+            return EXIT_SUCCESS;
+        } catch (RuntimeException $e) {
+            CLI::write('STATUS: BLOCKED', 'red');
+            CLI::write('REASON: ' . $e->getMessage());
+            CLI::write('MUTATION_ALLOWED: false');
+            return EXIT_ERROR;
         }
-
-        return array_values(array_unique($files));
     }
 
-    /**
-     * @param list<string> $files
-     */
-    private function quoteFiles(array $files): string
+    public static function recipeIdOption(string $name): string
     {
-        if ($files === []) {
-            return '.';
-        }
+        return self::parseRecipeIdOption(CLI::getOptions(), $name);
+    }
 
-        return implode(' ', array_map(static fn (string $file): string => escapeshellarg($file), $files));
+    /** @param array<string, string|null> $options */
+    public static function parseRecipeIdOption(array $options, string $name): string
+    {
+        $matches = [];
+        foreach ($options as $key => $value) {
+            if ($key === $name && is_string($value)) {
+                $matches[] = trim($value);
+            } elseif (str_starts_with($key, $name . "=") && $value === null) {
+                $matches[] = trim(substr($key, strlen($name) + 1));
+            }
+        }
+        return count($matches) === 1 ? $matches[0] : "";
+    }
+
+    /** @return array{worktree:string,branch:string,config_id:string,mission_id:string,runtime_root:string} */
+    public static function currentContext(): array
+    {
+        $root = realpath(ROOTPATH);
+        if ($root === false || ! str_starts_with($root, '/apps/TBI/worktrees/')) {
+            throw new RuntimeException('not_an_approved_feature_worktree');
+        }
+        if (! is_file(self::CONTROLLER_ROOT . '/spark')) {
+            throw new RuntimeException('canonical_tbi_controller_unavailable');
+        }
+        $git = static function (string $argument) use ($root): string {
+            $output = [];
+            $code = 1;
+            exec('git -C ' . escapeshellarg($root) . ' ' . $argument . ' 2>/dev/null', $output, $code);
+            if ($code !== 0) {
+                throw new RuntimeException('git_identity_unavailable');
+            }
+            return trim(implode("\n", $output));
+        };
+        if ($git('rev-parse --show-toplevel') !== $root) {
+            throw new RuntimeException('git_worktree_identity_mismatch');
+        }
+        if (preg_match('~github[.]com[:/]MillennialInvestments/MyMIWallet-Next(?:[.]git)?$~i', $git('remote get-url origin')) !== 1) {
+            throw new RuntimeException('repository_identity_mismatch');
+        }
+        $branch = $git('branch --show-current');
+        $mission = self::readJson($root . '/writable/aiops/current-thought-worktree.json');
+        $objective = self::readJson($root . '/writable/aiops/objectives/latest.json');
+        $context = [
+            'worktree' => $root,
+            'branch' => $branch,
+            'config_id' => (string) ($mission['config_id'] ?? ''),
+            'mission_id' => (string) ($mission['mission_id'] ?? ''),
+            'runtime_root' => $root . '/writable/aiops',
+        ];
+        self::assertContext($context, $mission, $objective);
+        return $context;
+    }
+
+    /** @param array<string,mixed> $context @param array<string,mixed> $mission @param array<string,mixed> $objective */
+    public static function assertContext(array $context, array $mission, array $objective): void
+    {
+        if (($mission['worktree'] ?? null) !== ($context['worktree'] ?? null)
+            || ($mission['branch'] ?? null) !== ($context['branch'] ?? null)
+            || ($mission['config_id'] ?? null) !== ($context['config_id'] ?? null)
+            || ($mission['lifecycle_state'] ?? null) !== 'active_mutation_approved'
+            || (int) ($mission['mutation_class'] ?? 0) !== 1
+            || ($context['config_id'] ?? '') === ''
+            || ($context['branch'] ?? '') === ''
+            || ($context['mission_id'] ?? '') === '') {
+            throw new RuntimeException('mission_identity_or_approval_gate_mismatch');
+        }
+        if (($objective['authoritative'] ?? false) !== true
+            || ($objective['config_id'] ?? null) !== ($context['config_id'] ?? null)
+            || ($objective['worktree'] ?? null) !== ($context['worktree'] ?? null)
+            || ($objective['branch'] ?? null) !== ($context['branch'] ?? null)
+            || ($objective['mission_id'] ?? null) !== ($context['mission_id'] ?? null)) {
+            throw new RuntimeException('authoritative_objective_identity_mismatch');
+        }
+    }
+
+    /** @param array<string,mixed> $context */
+    public static function approvedPreviewCommand(array $context, string $recipeId): string
+    {
+        if (preg_match('/^[a-zA-Z0-9_.-]+$/D', $recipeId) !== 1) {
+            throw new RuntimeException('recipe_id_invalid');
+        }
+        $recipe = self::readJson($context['runtime_root'] . '/recipes/approved/' . $recipeId . '.json');
+        if (($recipe['status'] ?? null) !== 'approved'
+            || ($recipe['recipe_id'] ?? null) !== $recipeId
+            || ($recipe['expected_worktree'] ?? null) !== $context['worktree']
+            || ($recipe['expected_branch'] ?? null) !== $context['branch']
+            || ($recipe['config_id'] ?? null) !== $context['config_id']
+            || ($recipe['mission_id'] ?? null) !== $context['mission_id']
+            || ($recipe['project_key'] ?? null) !== self::PROJECT
+            || ($recipe['cross_repository_execution_allowed'] ?? false) !== true
+            || ($recipe['mutation_allowed'] ?? false) !== true) {
+            throw new RuntimeException('approved_recipe_identity_or_authority_mismatch');
+        }
+        return self::formatPreviewCommand($context, $recipeId);
+    }
+
+    /** @param array<string,mixed> $context */
+    public static function formatPreviewCommand(array $context, string $recipeId): string
+    {
+        return 'TBI_AIOPS_RUNTIME_ROOT=' . escapeshellarg($context['runtime_root'])
+            . ' php ' . escapeshellarg(self::CONTROLLER_ROOT . '/spark')
+            . ' aiops:execution-engine:recipe-run --recipe-id=' . escapeshellarg($recipeId);
+    }
+
+    /** @return array<string,mixed> */
+    private static function readJson(string $path): array
+    {
+        if (! is_file($path) || is_link($path)) {
+            throw new RuntimeException('required_evidence_missing');
+        }
+        $value = json_decode((string) file_get_contents($path), true);
+        if (! is_array($value)) {
+            throw new RuntimeException('required_evidence_invalid');
+        }
+        return $value;
     }
 }
