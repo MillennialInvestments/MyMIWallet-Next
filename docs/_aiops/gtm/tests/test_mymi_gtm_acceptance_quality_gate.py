@@ -16,28 +16,34 @@ FIELDS = ['TaskID', 'Title', 'Acceptance', 'Dependencies', 'Owner']
 
 def entry(task):
     if task == 'MYMI-GTM-001':
-        base = ('Verify exposed credentials are revoked and rotated with redacted owner evidence '
-                'before any login, token, or service integration succeeds, and assert invalid reuse is blocked.')
         return {
             'task_id': task,
-            'positive': base,
-            'negative': base.replace('Verify', 'Reject'),
-            'authorization': base.replace('Verify', 'Assert'),
-            'integration': base.replace('Verify', 'Check'),
-            'failure': base.replace('Verify', 'Confirm'),
+            'positive': ('Verify exposed credentials are newly rotated; the OpenAI API credential authenticates an authorized '
+                         'health service request and observe successful audited access without exposing secrets.'),
+            'negative': ('Reject reuse of exposed database credentials after revocation in an unauthorized login '
+                         'attempt and assert denial without any recovered plaintext secrets.'),
+            'authorization': ('Assert that security owner approval is required before basic auth '
+                              'redacted rotation evidence is admitted and deny a requester without the authorized owner role.'),
+            'integration': ('Check that replacement tokens for exposed credentials support provider integration with '
+                            'an authenticated workflow response after credential rotation and revocation.'),
+            'failure': ('Confirm failed or missing credential rotation evidence blocks acceptance '
+                        'and records a redacted failure state before any service retry proceeds.'),
             'external_gate': ('Security owner approval pending; externally verified redacted evidence '
                               'for OpenAI API, database, basic auth, webhook, health service credentials; '
                               'revoke or rotate all tokens before certifying.'),
         }
-    base = ('Verify configuration files chat/.env and .gitignore block tracked secrets '
-            'and fail closed when required runtime configuration is missing; assert security approval.')
     return {
         'task_id': task,
-        'positive': base,
-        'negative': base.replace('Verify', 'Reject'),
-        'authorization': base.replace('Verify', 'Assert'),
-        'integration': base.replace('Verify', 'Check'),
-        'failure': base.replace('Verify', 'Confirm'),
+        'positive': ('Verify chat/.env is ignored by .gitignore and the application loads safe '
+                     'runtime configuration from an external source without secrets entering tracked files.'),
+        'negative': ('Reject tracked credential fixtures in chat/.env before commit and assert '
+                     '.gitignore rules prevent an accidental publication of configuration secrets.'),
+        'authorization': ('Assert only the security owner role may approve configuration migration '
+                          'and deny a request with missing owner authorization evidence.'),
+        'integration': ('Check CI pipeline integration loads redacted configuration from the '
+                        'runtime service without reading secrets from a tracked chat/.env file.'),
+        'failure': ('Confirm missing required runtime configuration causes a blocked startup '
+                    'with an explicit error and no fallback to tracked secrets in .gitignore.'),
         'external_gate': ('Security owner approval pending, with verified evidence of MYMI-GTM-001 '
                           'completion and configuration redaction before further acceptance.'),
     }
@@ -73,6 +79,49 @@ class QualityGateTest(unittest.TestCase):
     def run_gate(self, *extra):
         return gate.main(['--catalog', str(self.catalog), '--candidate', str(self.candidate),
                           '--task-id', 'MYMI-GTM-001', '--task-id', 'MYMI-GTM-002', *extra])
+
+    def test_cosmetic_reused_scenarios_rejected(self):
+        base = ('Verify rotated credentials with redacted owner evidence before any '
+                'security provider integration succeeds and assert invalid reuse is blocked '
+                'by the runtime service with documented failure recovery expected.')
+        for field, verb in zip(gate.TEST_FIELDS,
+                               ('Verify', 'Reject', 'Assert', 'Check', 'Confirm')):
+            self.entries[0][field] = base.replace('Verify', verb, 1)
+        self.save()
+        self.assertEqual(self.run_gate(), 2)
+
+    def test_near_duplicate_cases_with_different_labels_rejected(self):
+        base = ('Verify rotated credentials with redacted owner evidence before any '
+                'security provider integration succeeds and assert invalid reuse is blocked '
+                'by the runtime service with documented failure recovery expected.')
+        for field in gate.TEST_FIELDS:
+            self.entries[0][field] = field + ': ' + base
+        self.save()
+        self.assertEqual(self.run_gate(), 2)
+
+    def test_malformed_or_naive_timestamp_rejected(self):
+        for stamp in ('2026-99-99Tnot-a-time',
+                      '2026-02-30T15:00:00+00:00',
+                      '2026-10-19T25:00:00+00:00',
+                      '2026-10-19T15:00:00',
+                      '2026-10-19T15:00:00+14:30'):
+            with self.subTest(stamp=stamp):
+                evidence = self.valid_owner_evidence()
+                evidence['tasks']['MYMI-GTM-001']['owner_approval']['verified_at'] = stamp
+                path = self.root / 'owner-evidence.json'
+                path.write_text(json.dumps(evidence))
+                self.assertEqual(self.run_gate('--mode', 'evidence-review',
+                                              '--evidence', str(path),
+                                              '--evidence-root', str(self.evidence_dir)), 2)
+
+    def test_valid_utc_z_timestamp_is_accepted(self):
+        evidence = self.valid_owner_evidence()
+        evidence['tasks']['MYMI-GTM-001']['owner_approval']['verified_at'] = '2026-10-19T15:00:00Z'
+        path = self.root / 'owner-evidence.json'
+        path.write_text(json.dumps(evidence))
+        self.assertEqual(self.run_gate('--mode', 'evidence-review',
+                                      '--evidence', str(path),
+                                      '--evidence-root', str(self.evidence_dir)), 0)
 
     def test_valid_design_is_not_completion(self):
         self.assertEqual(self.run_gate(), 0)

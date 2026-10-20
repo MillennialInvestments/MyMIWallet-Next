@@ -12,6 +12,8 @@ import hashlib
 import json
 import re
 import sys
+from datetime import datetime, timedelta
+from difflib import SequenceMatcher
 from pathlib import Path
 
 FIELDS = ('task_id', 'positive', 'negative', 'authorization', 'integration',
@@ -87,6 +89,41 @@ def meaningful_test(text: str, row: dict[str, str], field: str) -> None:
                           text, re.I), 'TEST_PLACEHOLDER:' + field)
 
 
+def independent_cases(item: dict, task: str) -> None:
+    """Reject copies of one scenario with renamed verbs or minor word changes."""
+    cases = []
+    for field in TEST_FIELDS:
+        tokens = re.findall(r'[a-z0-9]+', item[field].casefold())
+        while tokens and tokens[0] in {
+            'assert', 'verify', 'expect', 'reject', 'deny', 'check',
+            'confirm', 'observe', 'compare', 'test',
+        }:
+            tokens.pop(0)
+        cases.append(tokens)
+    for index, current in enumerate(cases):
+        for prior in cases[:index]:
+            left, right = set(current), set(prior)
+            overlap = len(left & right) / max(1, len(left | right))
+            ordered = SequenceMatcher(None, current, prior, autojunk=False).ratio()
+            require(overlap < 0.80 and ordered < 0.85,
+                    'REUSED_TEST_CASES:' + task)
+
+
+def valid_verified_at(value: object) -> bool:
+    """Accept real ISO-8601 datetimes with explicit UTC/offset, not date-shaped text."""
+    if not isinstance(value, str) or not re.fullmatch(
+        r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?(?:Z|[+-]\d{2}:\d{2})',
+        value,
+    ):
+        return False
+    try:
+        moment = datetime.fromisoformat(value.replace('Z', '+00:00'))
+    except ValueError:
+        return False
+    offset = moment.utcoffset()
+    return offset is not None and abs(offset) <= timedelta(hours=14)
+
+
 def validate_design(rows: dict[str, dict[str, str]], tests: dict,
                     expected: set[str]) -> None:
     items = tests.get('task_tests')
@@ -102,8 +139,7 @@ def validate_design(rows: dict[str, dict[str, str]], tests: dict,
         require(set(FIELDS) <= set(item), 'TEST_FIELDS_MISSING:' + task)
         require(all(isinstance(item[k], str) and item[k].strip()
                     for k in FIELDS), 'TEST_FIELD_EMPTY:' + task)
-        require(len({item[k].lower().strip() for k in TEST_FIELDS}) == 5,
-                'REUSED_TEST_CASES:' + task)
+        independent_cases(item, task)
         for field in TEST_FIELDS:
             meaningful_test(item[field], rows[task], field)
         patterns = {
@@ -144,8 +180,7 @@ def verify_attested_file(evidence_root: Path, record: dict, name: str) -> None:
     require(record.get('status') == 'verified' and record.get('redacted') is True,
             'OWNER_EVIDENCE_UNVERIFIED:' + name)
     require(bool(str(record.get('owner', '')).strip()) and
-            bool(re.fullmatch(r'\d{4}-\d{2}-\d{2}T[^\s]+',
-                              str(record.get('verified_at', '')))),
+            valid_verified_at(record.get('verified_at')),
             'OWNER_ATTESTATION_MISSING:' + name)
     relative = record.get('path')
     require(isinstance(relative, str) and relative and
