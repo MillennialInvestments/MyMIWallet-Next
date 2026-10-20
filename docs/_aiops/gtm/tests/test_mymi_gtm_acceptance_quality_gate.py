@@ -216,6 +216,28 @@ class QualityGateTest(unittest.TestCase):
             },
         }}
 
+    def test_missing_or_nonstring_owner_approval_rejected(self):
+        for invalid in (None, '', '   ', 7, False, [], {}):
+            with self.subTest(owner=repr(invalid)):
+                evidence = self.valid_owner_evidence()
+                evidence['tasks']['MYMI-GTM-001']['owner_approval']['owner'] = invalid
+                path = self.root / 'owner-evidence.json'
+                path.write_text(json.dumps(evidence))
+                self.assertEqual(self.run_gate('--mode', 'evidence-review',
+                                              '--evidence', str(path),
+                                              '--evidence-root', str(self.evidence_dir)), 2)
+
+    def test_nonstring_credential_rotation_owner_rejected(self):
+        for invalid in (None, 3, True, [], {}):
+            with self.subTest(owner=repr(invalid)):
+                evidence = self.valid_owner_evidence()
+                evidence['tasks']['MYMI-GTM-001']['credential_rotations']['webhook']['owner'] = invalid
+                path = self.root / 'owner-evidence.json'
+                path.write_text(json.dumps(evidence))
+                self.assertEqual(self.run_gate('--mode', 'evidence-review',
+                                              '--evidence', str(path),
+                                              '--evidence-root', str(self.evidence_dir)), 2)
+
     def test_synthetic_attestation_packet_is_admissible_not_completed(self):
         path = self.root / 'owner-evidence.json'
         path.write_text(json.dumps(self.valid_owner_evidence()))

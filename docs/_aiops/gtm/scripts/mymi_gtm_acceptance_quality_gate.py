@@ -179,7 +179,8 @@ def verify_attested_file(evidence_root: Path, record: dict, name: str) -> None:
     require(isinstance(record, dict), 'OWNER_EVIDENCE_MISSING:' + name)
     require(record.get('status') == 'verified' and record.get('redacted') is True,
             'OWNER_EVIDENCE_UNVERIFIED:' + name)
-    require(bool(str(record.get('owner', '')).strip()) and
+    require(isinstance(record.get('owner'), str) and
+            bool(record['owner'].strip()) and
             valid_verified_at(record.get('verified_at')),
             'OWNER_ATTESTATION_MISSING:' + name)
     relative = record.get('path')
