@@ -30,7 +30,7 @@ def api(endpoint):
 
 
 def all_open_prs():
-    fields = 'number,title,state,isDraft,headRefName,headRefOid,baseRefName,url'
+    fields = 'number,title,state,isDraft,headRefName,headRefOid,headRepository,headRepositoryOwner,baseRefName,url'
     result = json.loads(cmd(['gh','pr','list','--repo',REPO,'--state','open',
                              '--limit','500','--json',fields],timeout=150))
     if len(result)>=500:
@@ -41,11 +41,28 @@ def all_open_prs():
     return sorted(result,key=lambda r:int(r['number']))
 
 
+def same_repository_head(pr):
+    """Never mistake a same-named head branch in a fork for a stack parent."""
+    head = pr.get('headRepository')
+    if not isinstance(head, dict):
+        return False
+    full_name = head.get('nameWithOwner')
+    if not isinstance(full_name, str) or not full_name:
+        owner = pr.get('headRepositoryOwner')
+        if not isinstance(owner, dict):
+            owner = head.get('owner')
+        if not isinstance(owner, dict):
+            return False
+        full_name = str(owner.get('login', '')) + '/' + str(head.get('name', ''))
+    return full_name.casefold() == REPO.casefold()
+
+
 def stacked_parent(pr, open_records):
     base=pr.get('baseRefName','')
     if base in ('main','master'):
         return 'MAIN_BASE'
-    matching=[q for q in open_records if q.get('headRefName')==base]
+    matching=[q for q in open_records if q.get('headRefName')==base
+              and same_repository_head(q)]
     if len(matching)==1:
         return 'OPEN_PR_PARENT_#'+str(matching[0]['number'])
     if len(matching)>1:
@@ -81,8 +98,6 @@ def disposition(number, state, additions_present, merged_634):
         return 'CLOSED_NOT_MERGED_REVIEW'
     if number in DUPLICATE_CANDIDATES and merged_634 and additions_present:
         return 'SUPERSEDED_CANDIDATE_OWNER_REVIEW_REQUIRED'
-    if number == 623:
-        return 'PARTIAL_SCOPE_OVERLAP_OWNER_REVIEW_REQUIRED'
     return 'OPEN_REVIEW_REQUIRED'
 
 
@@ -163,7 +178,7 @@ def make_report(repo_root):
         '',
         '- PRs #630, #632, #634, #637 are assessed from live GitHub state, not inferred from worktree names.',
         '- For #629, #631, #633, matching added lines in current main is **only a supersession candidate**; it is not proof of complete patch equivalence.',
-        '- PR #623 overlaps workflow work with #637 but carries wider source scope; review its remaining changes before any disposition.',
+        '- PR #623 remains OPEN_REVIEW_REQUIRED until the current diff is compared with #637; filename overlap alone is not patch equivalence.',
         '- Nonmain PR bases are flagged, including stacked parents that are not themselves open PRs; confirm ancestry manually before rebases.',
         '- Do not merge or close open PRs without named owner review. Do not equate merged changes with whole-task acceptance.',
         '',

@@ -1,6 +1,6 @@
 # MYMI-GTM-009 — Pull-request and stacked-branch lineage
 
-Generated UTC: 2026-10-22T20:53:01.770935+00:00
+Generated UTC: 2026-10-22T22:02:31.669126+00:00
 Repository: MillennialInvestments/MyMIWallet-Next
 Task acceptance: Complete and certify “Reconcile open pull-request and stacked-branch lineage” with targeted positive, negative, authorization, and failure evidence as applicable; record risks, rollback, and atomic successors.
 
@@ -9,7 +9,7 @@ This report cannot certify the GTM task, close a PR, or authorize a merge.
 
 | PR | State | Head | Scope | Disposition |
 |---|---|---|---|---|
-| [#623](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/623) | OPEN | `85ffa7bdd883` | `.github/workflows/aiops-auto-run.yml, .github/workflows/aiops-manual-run.yml (+15)` | PARTIAL_SCOPE_OVERLAP_OWNER_REVIEW_REQUIRED |
+| [#623](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/623) | OPEN | `85ffa7bdd883` | `.github/workflows/aiops-auto-run.yml, .github/workflows/aiops-manual-run.yml (+15)` | OPEN_REVIEW_REQUIRED |
 | [#629](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/629) | OPEN | `d795a00afd04` | `.github/workflows/ci-health.yml` | SUPERSEDED_CANDIDATE_OWNER_REVIEW_REQUIRED |
 | [#630](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/630) | MERGED | `63a55b8b39d0` | `app/Commands/Runtime/SparkOptimize.php` | MERGED_HISTORY_NOT_TASK_CERTIFICATION |
 | [#631](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/631) | OPEN | `948d50ff96df` | `.github/workflows/ci-health.yml` | SUPERSEDED_CANDIDATE_OWNER_REVIEW_REQUIRED |
@@ -20,7 +20,7 @@ This report cannot certify the GTM task, close a PR, or authorize a merge.
 
 ## Complete current open-PR inventory and stacked parents
 
-Open PR count from live GitHub: 102
+Open PR count from live GitHub: 103
 
 | PR | Base branch | Head branch | Stack assessment |
 |---|---|---|---|
@@ -126,12 +126,13 @@ Open PR count from live GitHub: 102
 | [#631](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/631) | `main` | `feature/mymi-gtm-005-ci-health-post630-successor-r1` | MAIN_BASE |
 | [#633](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/633) | `main` | `feature/mymi-gtm-005-health-post632-r2` | MAIN_BASE |
 | [#638](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/638) | `main` | `feature/aiops-safe-unzip-20261016-001` | MAIN_BASE |
+| [#647](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/647) | `main` | `feature/mymi-gtm-009-reconcile-open-pull-request-and-stacked-branch-lineage` | MAIN_BASE |
 
 ## Evidence interpretation
 
 - PRs #630, #632, #634, #637 are assessed from live GitHub state, not inferred from worktree names.
 - For #629, #631, #633, matching added lines in current main is **only a supersession candidate**; it is not proof of complete patch equivalence.
-- PR #623 overlaps workflow work with #637 but carries wider source scope; review its remaining changes before any disposition.
+- PR #623 remains OPEN_REVIEW_REQUIRED until the current diff is compared with #637; filename overlap alone is not patch equivalence.
 - Nonmain PR bases are flagged, including stacked parents that are not themselves open PRs; confirm ancestry manually before rebases.
 - Do not merge or close open PRs without named owner review. Do not equate merged changes with whole-task acceptance.
 

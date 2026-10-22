@@ -29,7 +29,8 @@ class GTM009Tests(unittest.TestCase):
         self.assertFalse(lineage.present_in_main(['unique added value'],'other'))
 
     def test_authorization_open_never_auto_merged(self):
-        self.assertIn('OWNER_REVIEW_REQUIRED',lineage.disposition(623,'OPEN',False,True))
+        self.assertEqual(lineage.disposition(623,'OPEN',False,True),
+                         'OPEN_REVIEW_REQUIRED')
         self.assertEqual(lineage.disposition(623,'CLOSED',False,True),
                          'CLOSED_NOT_MERGED_REVIEW')
 
@@ -38,13 +39,42 @@ class GTM009Tests(unittest.TestCase):
             lineage.cmd(['__definitely_missing_gh__'])
 
     def test_stacked_parent_recognized(self):
-        parent={'number':7,'headRefName':'feature/base'}
+        parent={'number':7,'headRefName':'feature/base',
+                'headRepository':{'name':'MyMIWallet-Next'},
+                'headRepositoryOwner':{'login':'MillennialInvestments'}}
         child={'number':8,'baseRefName':'feature/base'}
         self.assertEqual(lineage.stacked_parent(child,[parent,child]),'OPEN_PR_PARENT_#7')
 
     def test_nonmain_parent_needs_review(self):
         self.assertEqual(lineage.stacked_parent({'baseRefName':'other'},[]),
                          'NONMAIN_BASE_PARENT_NOT_OPEN_REVIEW')
+
+    def test_fork_same_name_does_not_claim_parent(self):
+        fork={'number':7,'headRefName':'feature/base',
+              'headRepository':{'name':'MyMIWallet-Next'},
+              'headRepositoryOwner':{'login':'UnrelatedForkOwner'}}
+        child={'number':8,'baseRefName':'feature/base'}
+        self.assertEqual(lineage.stacked_parent(child,[fork,child]),
+                         'NONMAIN_BASE_PARENT_NOT_OPEN_REVIEW')
+
+    def test_missing_head_repository_fails_closed(self):
+        parent={'number':7,'headRefName':'feature/base'}
+        child={'number':8,'baseRefName':'feature/base'}
+        self.assertEqual(lineage.stacked_parent(child,[parent,child]),
+                         'NONMAIN_BASE_PARENT_NOT_OPEN_REVIEW')
+
+    def test_verified_parent_not_confused_by_fork_same_name(self):
+        correct={'number':7,'headRefName':'feature/base',
+                 'headRepository':{'nameWithOwner':'MillennialInvestments/MyMIWallet-Next'}}
+        fork={'number':6,'headRefName':'feature/base',
+              'headRepository':{'nameWithOwner':'Other/Repo'}}
+        child={'number':8,'baseRefName':'feature/base'}
+        self.assertEqual(lineage.stacked_parent(child,[correct,fork,child]),
+                         'OPEN_PR_PARENT_#7')
+
+    def test_623_never_claims_unproven_overlap(self):
+        self.assertEqual(lineage.disposition(623,'OPEN',False,True),
+                         'OPEN_REVIEW_REQUIRED')
 
     def test_patch_excludes_header(self):
         self.assertEqual(lineage.added_lines('+++ b/file\n+one\n-old\n+two'),['one','two'])
