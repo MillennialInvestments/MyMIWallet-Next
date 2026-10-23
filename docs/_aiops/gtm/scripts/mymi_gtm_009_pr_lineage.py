@@ -75,6 +75,15 @@ def pr_info(number):
     return json.loads(cmd(['gh','pr','view',str(number),'--repo',REPO,'--json',fields]))
 
 
+
+def verify_pr_identity_unchanged(number, recorded):
+    """Fail closed if a PR is force-pushed or retargeted during patch collection."""
+    current=pr_info(number)
+    fields=('number','headRefOid','state','baseRefName')
+    if not recorded.get('headRefOid') or any(
+            current.get(field)!=recorded.get(field) for field in fields):
+        raise RuntimeError('PR_IDENTITY_CHANGED_DURING_PATCH_FETCH:'+str(number))
+
 def present_in_main(added, main):
     """Conservative: confirm every nonblank added line appears in main.
 
@@ -143,7 +152,9 @@ def make_report(repo_root):
         record=records[n]
         patches=[]
         if n in DUPLICATE_CANDIDATES:
+            verify_pr_identity_unchanged(n, record)
             files=api('repos/'+REPO+'/pulls/'+str(n)+'/files?per_page=100')
+            verify_pr_identity_unchanged(n, record)
             if not isinstance(files,list) or len(files)!=1 or files[0].get('filename')!='.github/workflows/ci-health.yml':
                 raise RuntimeError('REQUIRED_PATCH_SCOPE_CHANGED:'+str(n))
             patch=files[0].get('patch')

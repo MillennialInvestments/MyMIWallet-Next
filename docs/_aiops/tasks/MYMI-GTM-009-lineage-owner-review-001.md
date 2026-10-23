@@ -1,6 +1,6 @@
 ---
 task_id: MYMI-GTM-009-LINEAGE-REVIEW-001
-repo_key: mymiwallet-next
+repo_key: mymiwallet
 repo_name: MillennialInvestments/MyMIWallet-Next
 source_agent: TBI AIOps GTM-009
 target_agent: TBI AIOps
@@ -47,7 +47,7 @@ Production /apps/TBI/www/mymiwallet/current; secrets, .env, credentials, vendor/
 - gh pr checks 647 --repo MillennialInvestments/MyMIWallet-Next
 - gh pr view 647 --repo MillennialInvestments/MyMIWallet-Next --json number,url,state,headRefOid,mergeStateStatus
 - python3 -m unittest discover -s docs/_aiops/gtm/tests -p test_mymi_gtm_009_pr_lineage.py -v
-- python3 docs/_aiops/gtm/scripts/mymi_gtm_009_pr_lineage.py --repo-root .
+- python3 docs/_aiops/gtm/scripts/mymi_gtm_009_pr_lineage.py --repo-root . --out docs/_aiops/gtm/evidence/MYMI-GTM-009_PR_LINEAGE_RECONCILIATION.md
 - git diff --check
 
 ## Acceptance Criteria

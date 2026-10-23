@@ -3,6 +3,7 @@
 import importlib.util
 import sys
 import unittest
+from unittest import mock
 from pathlib import Path
 
 MODULE=Path(__file__).resolve().parents[1]/'scripts/mymi_gtm_009_pr_lineage.py'
@@ -75,6 +76,31 @@ class GTM009Tests(unittest.TestCase):
     def test_623_never_claims_unproven_overlap(self):
         self.assertEqual(lineage.disposition(623,'OPEN',False,True),
                          'OPEN_REVIEW_REQUIRED')
+
+    def test_pr_head_changed_during_patch_fetch_fails_closed(self):
+        recorded={'number':629,'headRefOid':'a'*40,
+                  'state':'OPEN','baseRefName':'main'}
+        changed=dict(recorded,headRefOid='b'*40)
+        with mock.patch.object(lineage,'pr_info',return_value=changed):
+            with self.assertRaisesRegex(RuntimeError,
+                                        'PR_IDENTITY_CHANGED_DURING_PATCH_FETCH:629'):
+                lineage.verify_pr_identity_unchanged(629,recorded)
+
+    def test_pr_base_branch_changed_during_patch_fetch_fails_closed(self):
+        recorded={'number':631,'headRefOid':'a'*40,
+                  'state':'OPEN','baseRefName':'main'}
+        changed=dict(recorded,baseRefName='feature/other')
+        with mock.patch.object(lineage,'pr_info',return_value=changed):
+            with self.assertRaisesRegex(RuntimeError,
+                                        'PR_IDENTITY_CHANGED_DURING_PATCH_FETCH:631'):
+                lineage.verify_pr_identity_unchanged(631,recorded)
+
+    def test_pr_identity_stable_passes(self):
+        recorded={'number':633,'headRefOid':'a'*40,
+                  'state':'OPEN','baseRefName':'main'}
+        with mock.patch.object(lineage,'pr_info',return_value=dict(recorded)) as query:
+            lineage.verify_pr_identity_unchanged(633,recorded)
+            query.assert_called_once_with(633)
 
     def test_patch_excludes_header(self):
         self.assertEqual(lineage.added_lines('+++ b/file\n+one\n-old\n+two'),['one','two'])
