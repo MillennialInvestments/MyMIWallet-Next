@@ -57,6 +57,11 @@ class EconomicDataService
 
     public function fetchFredSeries(string $seriesId): array
     {
+        if (! array_key_exists($seriesId, $this->catalog)) {
+            log_message('warning', 'EconomicDataService: unsupported FRED series identifier.');
+            return [];
+        }
+
         $cache = cache();
         $cacheKey = $this->fredCacheKey($seriesId);
         $ttl = $this->cacheTtlBySeries[$seriesId] ?? 3600;
@@ -230,6 +235,17 @@ class EconomicDataService
     {
         foreach ($observations as $obs) {
             if (! isset($obs['date'], $obs['value']) || $obs['value'] === '.' || ! is_numeric($obs['value'])) {
+                continue;
+            }
+
+            if (! is_string($obs['date'])) {
+                continue;
+            }
+
+            $date = \DateTimeImmutable::createFromFormat('!Y-m-d', $obs['date']);
+            if ($date === false
+                || $date->format('Y-m-d') !== $obs['date']
+                || ! is_finite((float) $obs['value'])) {
                 continue;
             }
 
