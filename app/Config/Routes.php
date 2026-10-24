@@ -2547,7 +2547,7 @@ $routes->group('Dashboard/Economy', ['namespace' => '\App\Modules\User\Controlle
     $routes->get('Widget', 'EconomyController::dashboardWidget', ['filter' => 'login']);
 });
 $routes->group('investments/economy', ['namespace' => '\App\Modules\User\Controllers'], static function($routes) {
-    $routes->match(['GET', 'POST'], 'update_all', 'EconomyController::updateAll');
+    $routes->post('update_all', 'EconomyController::updateAll', ['filter' => ['permission:admin.access', 'csrf']]);
 });
 $routes->group('investments', ['namespace' => '\App\Modules\APIs\Controllers'], static function($routes) {
     $routes->get('fundamentals/(:segment)', 'InvestmentsAPIController::fundamentals/$1');
