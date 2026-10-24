@@ -2540,6 +2540,8 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' 
     $routes->get('Chat/usage', '\App\Modules\Chat\Controllers\ChatController::usage');
 });
 
+// MyMI Economic Intelligence public read-only page
+$routes->get('Economic-Intelligence', '\\App\\Controllers\\EconomicIntelligenceController::index');
 // Economic dashboard widget + cron endpoints
 $routes->group('Dashboard/Economy', ['namespace' => '\App\Modules\User\Controllers'], static function($routes) {
     $routes->get('Widget', 'EconomyController::dashboardWidget', ['filter' => 'login']);
