@@ -16,6 +16,19 @@ class EconomyController extends BaseUserController
         $this->service = new EconomicDataService();
     }
 
+    public function index()
+    {
+        if (($redirect = $this->requireAuthenticatedUser()) !== null) {
+            return $redirect;
+        }
+
+        return $this->renderTheme('Investments/economy_widget', [
+            'pageTitle' => 'Economic Intelligence | MyMI Wallet',
+            'snapshot' => $this->service->latestSnapshot(),
+            'unemploymentSeries' => array_reverse($this->service->unemploymentSeries(48)),
+        ]);
+    }
+
     public function dashboardWidget()
     {
         $snapshot = $this->service->latestSnapshot();

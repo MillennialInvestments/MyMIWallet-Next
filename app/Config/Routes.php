@@ -2544,6 +2544,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' 
 $routes->get('Economic-Intelligence', '\\App\\Controllers\\EconomicIntelligenceController::index');
 // Economic dashboard widget + cron endpoints
 $routes->group('Dashboard/Economy', ['namespace' => '\App\Modules\User\Controllers'], static function($routes) {
+    $routes->get('', 'EconomyController::index', ['filter' => 'login']);
     $routes->get('Widget', 'EconomyController::dashboardWidget', ['filter' => 'login']);
 });
 $routes->group('investments/economy', ['namespace' => '\App\Modules\User\Controllers'], static function($routes) {
