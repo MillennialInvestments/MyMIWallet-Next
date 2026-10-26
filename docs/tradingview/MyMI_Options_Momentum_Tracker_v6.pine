@@ -1,5 +1,5 @@
 //@version=6
-indicator("MyMI Options Opportunity & Trade Momentum Tracker v6", overlay=true, precision=2)
+indicator("MyMI Options Opportunity & Trade Momentum Tracker v6", overlay=true, precision=2, max_labels_count=500)
 
 // =========================================================================
 // 1. INPUT CONFIGURATION (VARIABLE STRATEGY & BALANCE SETTINGS)
@@ -232,77 +232,91 @@ plot(effectiveEntryPrice, "Entry Anchor Price", color=color.new(color.silver, 30
 barcolor(colorBarsMomentum ? (targetReached ? color.lime : (warnPeakDrawdown ? color.red : (close > baseEma and fastEma > slowEma and rvol >= 1.0 ? color.new(color.teal, 20) : (close < baseEma and fastEma < slowEma and rvol >= 1.0 ? color.new(color.maroon, 20) : na)))) : na)
 
 // -------------------------------------------------------------------------
-// Pronounced Momentum Shift Labels (Clear & Unmistakable)
+// Pronounced Momentum Shift Labels (Clear & Unmistakable using label.new)
 // -------------------------------------------------------------------------
 // 1. Call Momentum Ignition Shift (Bullish Acceleration)
-plotshape(showIgnitionLabels and bullishShift and not bullishShift[1] and not targetReached,
-     "Call Momentum Ignition ▲",
-     shape.labelup,
-     location.belowbar,
-     color=color.green,
-     text="CALL IGNITION ▲\nBullish Shift Toward $" + str.tostring(calcCallStrike, "#.##") + "\nRVOL: " + str.tostring(rvol, "#.#") + "x",
-     textcolor=color.white,
-     size=size.normal)
+if showIgnitionLabels and bullishShift and not bullishShift[1] and not targetReached
+    label.new(
+         bar_index,
+         low,
+         text="CALL IGNITION ▲\nBullish Shift Toward $" + str.tostring(calcCallStrike, "#.##") + "\nRVOL: " + str.tostring(rvol, "#.#") + "x",
+         yloc=yloc.belowbar,
+         color=color.green,
+         textcolor=color.white,
+         style=label.style_label_up,
+         size=size.normal)
 
 // 2. Put Momentum Ignition Shift (Bearish Acceleration)
-plotshape(showIgnitionLabels and bearishShift and not bearishShift[1] and not targetReached,
-     "Put Momentum Ignition ▼",
-     shape.labeldown,
-     location.abovebar,
-     color=color.red,
-     text="PUT IGNITION ▼\nBearish Shift Toward $" + str.tostring(calcPutStrike, "#.##") + "\nRVOL: " + str.tostring(rvol, "#.#") + "x",
-     textcolor=color.white,
-     size=size.normal)
+if showIgnitionLabels and bearishShift and not bearishShift[1] and not targetReached
+    label.new(
+         bar_index,
+         high,
+         text="PUT IGNITION ▼\nBearish Shift Toward $" + str.tostring(calcPutStrike, "#.##") + "\nRVOL: " + str.tostring(rvol, "#.#") + "x",
+         yloc=yloc.abovebar,
+         color=color.red,
+         textcolor=color.white,
+         style=label.style_label_down,
+         size=size.normal)
 
 // 3. Call Strike Breached (In-The-Money)
-plotshape(showStrikeBreaches and callStrikeBreached,
-     "Call Strike In-The-Money 🎯",
-     shape.labelup,
-     location.belowbar,
-     color=color.teal,
-     text="🎯 CALL STRIKE IN-THE-MONEY!\nCrossed $" + str.tostring(calcCallStrike, "#.##") + " Strike\nDelta > 0.50 Expanding Rapidly",
-     textcolor=color.white,
-     size=size.large)
+if showStrikeBreaches and callStrikeBreached
+    label.new(
+         bar_index,
+         low,
+         text="🎯 CALL STRIKE IN-THE-MONEY!\nCrossed $" + str.tostring(calcCallStrike, "#.##") + " Strike\nDelta > 0.50 Expanding Rapidly",
+         yloc=yloc.belowbar,
+         color=color.teal,
+         textcolor=color.white,
+         style=label.style_label_up,
+         size=size.large)
 
 // 4. Put Strike Breached (In-The-Money)
-plotshape(showStrikeBreaches and putStrikeBreached,
-     "Put Strike In-The-Money 🎯",
-     shape.labeldown,
-     location.abovebar,
-     color=color.maroon,
-     text="🎯 PUT STRIKE IN-THE-MONEY!\nCrossed $" + str.tostring(calcPutStrike, "#.##") + " Strike\nDelta > 0.50 Expanding Rapidly",
-     textcolor=color.white,
-     size=size.large)
+if showStrikeBreaches and putStrikeBreached
+    label.new(
+         bar_index,
+         high,
+         text="🎯 PUT STRIKE IN-THE-MONEY!\nCrossed $" + str.tostring(calcPutStrike, "#.##") + " Strike\nDelta > 0.50 Expanding Rapidly",
+         yloc=yloc.abovebar,
+         color=color.maroon,
+         textcolor=color.white,
+         style=label.style_label_down,
+         size=size.large)
 
 // 5. Profit Target Reached ($200 Net)
-plotshape(showExitAlertLabels and targetReached and not targetReached[1],
-     "Target Reached ($200 Net Profit) 💰",
-     shape.labelup,
-     location.belowbar,
-     color=color.lime,
-     text="💰 PROFIT TARGET REACHED!\n+$200 NET PROFIT (+105%)\nCombined Exit: $" + str.tostring(estCombinedBid, "#.##") + "\nACTION: CLOSE BOTH LEGS NOW",
-     textcolor=color.black,
-     size=size.large)
+if showExitAlertLabels and targetReached and not targetReached[1]
+    label.new(
+         bar_index,
+         low,
+         text="💰 PROFIT TARGET REACHED!\n+$200 NET PROFIT (+105%)\nCombined Exit: $" + str.tostring(estCombinedBid, "#.##") + "\nACTION: CLOSE BOTH LEGS NOW",
+         yloc=yloc.belowbar,
+         color=color.lime,
+         textcolor=color.black,
+         style=label.style_label_up,
+         size=size.large)
 
 // 6. Momentum Weakening Warning
-plotshape(showExitAlertLabels and warnMomentumFade and not warnMomentumFade[1],
-     "Momentum Exhaustion Warning ⚠️",
-     shape.labeldown,
-     location.abovebar,
-     color=color.yellow,
-     text="⚠️ MOMENTUM EXHAUSTION\nVelocity Slowing / EMA Cross\nUnrealized: +$" + str.tostring(unrealizedPnl, "#.##") + "\nACTION: Consider Trimming / Lock Gains",
-     textcolor=color.black,
-     size=size.normal)
+if showExitAlertLabels and warnMomentumFade and not warnMomentumFade[1]
+    label.new(
+         bar_index,
+         high,
+         text="⚠️ MOMENTUM EXHAUSTION\nVelocity Slowing / EMA Cross\nUnrealized: +$" + str.tostring(unrealizedPnl, "#.##") + "\nACTION: Consider Trimming / Lock Gains",
+         yloc=yloc.abovebar,
+         color=color.yellow,
+         textcolor=color.black,
+         style=label.style_label_down,
+         size=size.normal)
 
 // 7. Peak Profit Trailing Retrace Warning
-plotshape(showExitAlertLabels and warnPeakDrawdown and not warnPeakDrawdown[1],
-     "Peak Profit Retrace Warning 🚨",
-     shape.flag,
-     location.abovebar,
-     color=color.red,
-     text="🚨 PEAK PROFIT RETRACE\nDropped > " + str.tostring(trailRetracePct, "#") + "% From Peak (+$" + str.tostring(peakPnl, "#.##") + ")\nCurrent: +$" + str.tostring(unrealizedPnl, "#.##") + "\nACTION: Trailing Stop Triggered",
-     textcolor=color.white,
-     size=size.normal)
+if showExitAlertLabels and warnPeakDrawdown and not warnPeakDrawdown[1]
+    label.new(
+         bar_index,
+         high,
+         text="🚨 PEAK PROFIT RETRACE\nDropped > " + str.tostring(trailRetracePct, "#") + "% From Peak (+$" + str.tostring(peakPnl, "#.##") + ")\nCurrent: +$" + str.tostring(unrealizedPnl, "#.##") + "\nACTION: Trailing Stop Triggered",
+         yloc=yloc.abovebar,
+         color=color.red,
+         textcolor=color.white,
+         style=label.style_label_down,
+         size=size.normal)
 
 // =========================================================================
 // 6. ENHANCED DASHBOARD HUD TABLE (HIGH VISIBILITY & CLARITY)
