@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace App\Commands\Marketing;
 
 use App\Commands\SafeBaseCommand;
-use App\Commands\Traits\ParamOptions;
 use App\Services\Marketing\ContentDistroEngine;
 use App\Services\Marketing\MultiMailboxIntakeService;
 use CodeIgniter\CLI\CLI;
 
 class DistroPipeline extends SafeBaseCommand
 {
-    use ParamOptions;
-
     protected $group       = 'Marketing';
     protected $name        = 'marketing:distro-pipeline';
     protected $description = 'Executes end-to-end Intake -> Content Generation -> Voiceover -> Multi-Platform Distro (Discord, Email, n8n).';
@@ -31,28 +28,21 @@ class DistroPipeline extends SafeBaseCommand
 
     public function run(array $params)
     {
+        [$args, $flags] = $this->parseParams($params);
+
         $intakeService = new MultiMailboxIntakeService();
         $distroEngine = new ContentDistroEngine();
 
-        $fetch = $this->optBool($params, 'fetch');
-        $generate = $this->optBool($params, 'generate');
-        $distribute = $this->optBool($params, 'distribute');
-        $dryRun = $this->optBool($params, 'dry-run');
-        $limit = $this->optInt($params, 'limit', 10);
+        $fetch = isset($flags['fetch']);
+        $generate = isset($flags['generate']);
+        $distribute = isset($flags['distribute']);
+        $dryRun = isset($flags['dry-run']);
+        $limit = isset($flags['limit']) ? (int) $flags['limit'] : 10;
 
-        // Detect symbol from positional argument or --symbol
-        $symbol = strtoupper($this->opt($params, 'symbol', ''));
-        if ($symbol === '') {
-            foreach ($params as $p) {
-                if (is_string($p) && ! str_starts_with($p, '-') && ! str_contains($p, '=')) {
-                    $symbol = strtoupper(trim($p));
-                    break;
-                }
-            }
-        }
-        if ($symbol === '') {
-            $symbol = 'BA';
-        }
+        // Detect symbol from --symbol or first positional argument
+        $symbol = strtoupper(
+            (string) ($flags['symbol'] ?? ($args[0] ?? 'BA'))
+        );
 
         // Default run all stages if none specified
         if (! $fetch && ! $generate && ! $distribute) {
