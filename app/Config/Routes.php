@@ -999,6 +999,13 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('fetchGeneratedSummaries', 'MarketingAPIController::fetchGeneratedSummaries', ['filter' => 'apiToken']);
         $routes->get('fetchGeneratedSummariesBlock', 'MarketingAPIController::fetchGeneratedSummariesBlock', ['filter' => 'apiToken']);
         $routes->get('fetchGeneratedSummariesJson', 'MarketingAPIController::fetchGeneratedSummariesJson', ['filter' => 'apiToken']);
+        // Distro Dashboard APIs
+        $routes->post('Distro/fetch', '\\App\\Modules\\Management\\Controllers\\Marketing\\DistroDashboardController::fetchEmails');
+        $routes->post('Distro/generate', '\\App\\Modules\\Management\\Controllers\\Marketing\\DistroDashboardController::generateContent');
+        $routes->post('Distro/voiceover', '\\App\\Modules\\Management\\Controllers\\Marketing\\DistroDashboardController::generateVoiceover');
+        $routes->post('Distro/distribute', '\\App\\Modules\\Management\\Controllers\\Marketing\\DistroDashboardController::distribute');
+        $routes->post('Distro/injectSample', '\\App\\Modules\\Management\\Controllers\\Marketing\\DistroDashboardController::injectSample');
+        $routes->get('Distro/feed', '\\App\\Modules\\Management\\Controllers\\Marketing\\DistroDashboardController::feed');
         $routes->post('generateVideoContent', 'MarketingAPIController::generateVideoContent', ['filter' => 'apiToken']);
         $routes->post('generateTikTokContent', 'MarketingAPIController::generateTikTokContent', ['filter' => 'apiToken']);
         $routes->post('saveVideoDraft', 'MarketingAPIController::saveVideoDraft', ['filter' => 'apiToken']);
@@ -1498,6 +1505,9 @@ $routes->group('Management', ['namespace' => '\App\Modules\Management\Controller
     });
     $routes->group('Marketing', function($routes) {
         $routes->get('/', 'MarketingAdminController::index');
+        $routes->get('Distro', '\\App\\Modules\\Management\\Controllers\\Marketing\\DistroDashboardController::index');
+        $routes->get('DistroDashboard', '\\App\\Modules\\Management\\Controllers\\Marketing\\DistroDashboardController::index');
+        $routes->get('Distribution', '\\App\\Modules\\Management\\Controllers\\Marketing\\DistroDashboardController::index');
         $routes->match(['GET', 'POST'], 'Add/(:segment)', 'MarketingAdminController::add/$1');
         // $routes->get('Add/(:segment)', 'MarketingAdminController::addSchedule');
         $routes->match(['POST'], 'Add-Subscriber', 'MarketingAdminController::addSubscriber');
