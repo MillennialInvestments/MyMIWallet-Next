@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services\Options;
 
-use App\Libraries\MyMIDiscord;
 use App\Models\Options\OptionsExitAlertModel;
 use App\Models\Options\OptionsPositionHistoryModel;
 use App\Models\Options\OptionsPositionLegModel;
 use App\Models\Options\OptionsPositionModel;
+use App\Services\Notifications\DiscordNotifier;
 
 class OptionsMomentumManager
 {
@@ -17,79 +17,80 @@ class OptionsMomentumManager
         private readonly OptionsPositionLegModel $legModel,
         private readonly OptionsPositionHistoryModel $historyModel,
         private readonly OptionsExitAlertModel $exitAlertModel,
-        private readonly ?MyMIDiscord $discord = null,
+        private readonly ?DiscordNotifier $discord = null,
     ) {
     }
 
     /**
-     * Evaluate all active positions and generate warnings/alerts.
-     *
-     * @return array Evaluation summary.
+     * Evaluate all active positions and generate necessary exit warnings.
      */
-    public function evaluateActivePositions(): array
+    public function evaluateAllActive(string $timestamp = ''): array
     {
+        $timestamp = $timestamp !== '' ? $timestamp : date('Y-m-d H:i:s');
         $activePositions = $this->positionModel->getActivePositions();
         $evaluated = [];
-        $alertsGenerated = 0;
-        $now = date('Y-m-d H:i:s');
+        $alertsGenerated = [];
 
         foreach ($activePositions as $position) {
-            $eval = $this->evaluatePosition($position, $now);
-            $evaluated[] = $eval;
-            if (! empty($eval['alerts'])) {
-                $alertsGenerated += count($eval['alerts']);
+            $res = $this->evaluatePosition($position, $timestamp);
+            $evaluated[] = $res;
+            if (! empty($res['alerts'])) {
+                $alertsGenerated = array_merge($alertsGenerated, $res['alerts']);
             }
         }
 
         return [
-            'evaluated_at' => $now,
+            'evaluated_at' => $timestamp,
             'active_count' => count($activePositions),
-            'alerts_generated' => $alertsGenerated,
+            'evaluated_count' => count($evaluated),
+            'alerts_generated' => count($alertsGenerated),
             'positions' => $evaluated,
+            'alerts' => $alertsGenerated,
         ];
     }
 
     /**
-     * Evaluate a single position.
+     * Evaluate a single options position against momentum exit criteria.
      */
-    public function evaluatePosition(array $position, ?string $timestamp = null): array
+    public function evaluatePosition(array $position, string $timestamp = ''): array
     {
-        $timestamp ??= date('Y-m-d H:i:s');
+        $timestamp = $timestamp !== '' ? $timestamp : date('Y-m-d H:i:s');
         $positionId = (int) $position['id'];
         $legs = $this->legModel->getLegsForPosition($positionId);
 
-        $callLeg = null;
-        $putLeg = null;
+        $callBid = 0.0;
+        $putBid = 0.0;
+        $callQuantity = 1;
+        $putQuantity = 1;
+
         foreach ($legs as $leg) {
             if ($leg['leg_type'] === 'call') {
-                $callLeg = $leg;
+                $callBid = (float) ($leg['current_bid'] ?? $leg['fill_price'] ?? 0.95);
+                $callQuantity = (int) ($leg['quantity'] ?? 1);
             } elseif ($leg['leg_type'] === 'put') {
-                $putLeg = $leg;
+                $putBid = (float) ($leg['current_bid'] ?? $leg['fill_price'] ?? 0.95);
+                $putQuantity = (int) ($leg['quantity'] ?? 1);
             }
         }
 
-        $callBid = (float) ($callLeg['current_bid'] ?? $callLeg['fill_price'] ?? 0.95);
-        $putBid = (float) ($putLeg['current_bid'] ?? $putLeg['fill_price'] ?? 0.95);
         $combinedBid = $callBid + $putBid;
+        $contracts = (int) ($position['contracts_count'] ?? max($callQuantity, $putQuantity));
+        $totalDebit = (float) ($position['total_entry_debit'] ?? ($combinedBid * 100.0 * $contracts));
+        $currentValue = ($callBid * 100.0 * $callQuantity) + ($putBid * 100.0 * $putQuantity);
+        $unrealizedPnl = round($currentValue - $totalDebit, 2);
 
-        $contracts = max(1, (int) ($position['contracts_count'] ?? 1));
-        $totalEntryDebit = (float) ($position['total_entry_debit'] ?? 190.0);
-        $currentValue = $combinedBid * 100.0 * $contracts;
-        $unrealizedPnl = $currentValue - $totalEntryDebit;
-
-        $peakPnl = max((float) ($position['peak_unrealized_pnl'] ?? 0.0), $unrealizedPnl);
         $targetProfit = (float) ($position['target_net_profit'] ?? 200.0);
         $targetExitPerPair = (float) ($position['target_combined_exit'] ?? 3.90);
+        $peakPnl = max((float) ($position['peak_unrealized_pnl'] ?? 0.0), $unrealizedPnl);
 
-        // Determine Warnings and Alerts
         $alerts = [];
-        $newStatus = (string) $position['status'];
+        $newStatus = (string) ($position['status'] ?? 'open');
         $riskFlag = 'normal';
 
-        // 1. Profit Target Reached Alert
+        // 1. Profit Target Reached
         if ($combinedBid >= $targetExitPerPair || $unrealizedPnl >= $targetProfit) {
             $newStatus = 'target_reached';
-            $riskFlag = 'target_hit';
+            $riskFlag = 'take_profit';
             $alerts[] = $this->createExitAlert($positionId, $position['ticker'], [
                 'alert_type' => 'profit_target_reached',
                 'severity' => 'action_required',
@@ -97,13 +98,11 @@ class OptionsMomentumManager
                 'current_profit' => $unrealizedPnl,
                 'target_profit' => $targetProfit,
                 'summary' => sprintf(
-                    'PROFIT TARGET REACHED: %s combined bid $%.2f hit target $%.2f (P&L: +$%.2f on %d contract%s). Close both legs or lock in profit.',
+                    'PROFIT TARGET REACHED: %s combined bid reached $%.2f (unrealized P&L: +$%.2f vs target +$%.2f). Lock in full gains.',
                     $position['ticker'],
                     $combinedBid,
-                    $targetExitPerPair,
                     $unrealizedPnl,
-                    $contracts,
-                    $contracts > 1 ? 's' : ''
+                    $targetProfit
                 ),
                 'now' => $timestamp,
             ]);
@@ -119,7 +118,7 @@ class OptionsMomentumManager
                 'current_profit' => $unrealizedPnl,
                 'target_profit' => $targetProfit,
                 'summary' => sprintf(
-                    'PEAK PROFIT DRAWDOWN WARNING: %s unrealized profit slipped from peak +$%.2f to +$%.2f (>30%% retrace). Tighten stops or harvest dominant leg.',
+                    'TRAILING PROFIT WARNING: %s retraced from peak profit +$%.2f down to +$%.2f (>30%% drop from peak). Tighten stop or trim dominant leg.',
                     $position['ticker'],
                     $peakPnl,
                     $unrealizedPnl
@@ -249,7 +248,7 @@ class OptionsMomentumManager
     }
 
     /**
-     * Open a simulated/paper two-sided position ($0.95 call + $0.95 put).
+     * Open a simulated/paper two-sided position ($100 Call / $100 Put target balance entry).
      */
     public function openSimulatedPosition(
         string $ticker,
@@ -257,16 +256,33 @@ class OptionsMomentumManager
         float $putDebit = 0.95,
         int $contracts = 1,
         float $stockPrice = 142.50,
-        int $dte = 5
+        int $dte = 5,
+        ?float $callStrike = null,
+        ?float $putStrike = null,
+        ?float $callTargetBalance = null,
+        ?float $putTargetBalance = null
     ): array {
         $ticker = strtoupper($ticker);
         $now = date('Y-m-d H:i:s');
         $expiry = date('Y-m-d', strtotime("+{$dte} days"));
         $strike = round($stockPrice, 0);
 
+        $callStrike = $callStrike !== null && $callStrike > 0 ? $callStrike : $strike;
+        $putStrike  = $putStrike !== null && $putStrike > 0 ? $putStrike : $strike;
+
+        // Position sizing based on target balance entry ($100 Call / $100 Put)
+        $contractsCall = $contracts;
+        $contractsPut  = $contracts;
+
+        if ($callTargetBalance !== null && $putTargetBalance !== null) {
+            $contractsCall = max(1, (int) round($callTargetBalance / ($callDebit * 100.0)));
+            $contractsPut  = max(1, (int) round($putTargetBalance / ($putDebit * 100.0)));
+            $contracts     = max($contractsCall, $contractsPut);
+        }
+
         $combinedDebit = $callDebit + $putDebit; // $1.90
-        $totalDebit = $combinedDebit * 100.0 * $contracts; // $190.00
-        $targetProfit = 200.00 * $contracts; // $200.00
+        $totalDebit = ($contractsCall * $callDebit * 100.0) + ($contractsPut * $putDebit * 100.0);
+        $targetProfit = 200.00 * $contracts;
         $targetExitPerPair = $combinedDebit + ($targetProfit / (100.0 * $contracts)); // $3.90
         $uuid = sprintf('opt-%s-%s-%s', strtolower($ticker), date('Ymd-His'), bin2hex(random_bytes(4)));
 
@@ -276,8 +292,8 @@ class OptionsMomentumManager
             'strategy' => 'long_straddle',
             'expiry' => $expiry,
             'contracts_count' => $contracts,
-            'call_strike' => $strike,
-            'put_strike' => $strike,
+            'call_strike' => $callStrike,
+            'put_strike' => $putStrike,
             'entry_stock_price' => $stockPrice,
             'entry_debit_per_pair' => $combinedDebit,
             'total_entry_debit' => $totalDebit,
@@ -297,10 +313,10 @@ class OptionsMomentumManager
         $this->legModel->insert([
             'position_id' => $positionId,
             'leg_type' => 'call',
-            'contract_symbol' => sprintf('%s-%s-C%.0f', $ticker, date('ymd', strtotime($expiry)), $strike),
-            'strike' => $strike,
+            'contract_symbol' => sprintf('%s-%s-C%.0f', $ticker, date('ymd', strtotime($expiry)), $callStrike),
+            'strike' => $callStrike,
             'expiry' => $expiry,
-            'quantity' => $contracts,
+            'quantity' => $contractsCall,
             'fill_price' => $callDebit,
             'current_bid' => $callDebit,
             'current_ask' => $callDebit * 1.03,
@@ -318,10 +334,10 @@ class OptionsMomentumManager
         $this->legModel->insert([
             'position_id' => $positionId,
             'leg_type' => 'put',
-            'contract_symbol' => sprintf('%s-%s-P%.0f', $ticker, date('ymd', strtotime($expiry)), $strike),
-            'strike' => $strike,
+            'contract_symbol' => sprintf('%s-%s-P%.0f', $ticker, date('ymd', strtotime($expiry)), $putStrike),
+            'strike' => $putStrike,
             'expiry' => $expiry,
-            'quantity' => $contracts,
+            'quantity' => $contractsPut,
             'fill_price' => $putDebit,
             'current_bid' => $putDebit,
             'current_ask' => $putDebit * 1.03,
@@ -353,9 +369,13 @@ class OptionsMomentumManager
             'position_id' => $positionId,
             'trade_uuid' => $uuid,
             'ticker' => $ticker,
+            'call_strike' => $callStrike,
+            'put_strike' => $putStrike,
             'strike' => $strike,
             'expiry' => $expiry,
             'contracts' => $contracts,
+            'contracts_call' => $contractsCall,
+            'contracts_put' => $contractsPut,
             'combined_debit' => $combinedDebit,
             'total_debit' => $totalDebit,
             'target_profit' => $targetProfit,
@@ -381,7 +401,6 @@ class OptionsMomentumManager
             'created_at' => $data['now'] ?? date('Y-m-d H:i:s'),
         ]);
 
-        // Dispatch Discord notification if available
         if ($this->discord !== null) {
             try {
                 $this->discord->dispatch('options.exit_warning', [

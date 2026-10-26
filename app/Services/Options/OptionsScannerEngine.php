@@ -6,6 +6,7 @@ namespace App\Services\Options;
 
 use App\Models\Options\OptionsScanCandidateModel;
 use App\Services\Scanning\Providers\ProviderRouter;
+use Config\OptionsStrategy;
 
 class OptionsScannerEngine
 {
@@ -29,33 +30,62 @@ class OptionsScannerEngine
     }
 
     /**
+     * Resolve configuration instance (with fallback defaults).
+     */
+    private function resolveConfig(): OptionsStrategy
+    {
+        if (function_exists('config')) {
+            try {
+                $cfg = config('OptionsStrategy');
+                if ($cfg instanceof OptionsStrategy) {
+                    return $cfg;
+                }
+            } catch (\Throwable) {
+                // fall through
+            }
+        }
+
+        return new OptionsStrategy();
+    }
+
+    /**
      * Run the Weekly Options Opportunity Scanner.
      *
      * @param array $options [
      *   'universe' => list<string>,
-     *   'target_profit' => float (default 200.0),
-     *   'call_debit' => float (default 0.95),
-     *   'put_debit' => float (default 0.95),
-     *   'dte' => int (default 5),
-     *   'min_rvol' => float (default 1.2),
-     *   'max_iv_rv' => float (default 1.8),
+     *   'target_profit' => float (default from config: 200.0),
+     *   'call_debit' => float (default from config: 0.95),
+     *   'put_debit' => float (default from config: 0.95),
+     *   'call_target_balance' => float (default from config: 100.0),
+     *   'put_target_balance' => float (default from config: 100.0),
+     *   'call_strike' => float|null,
+     *   'put_strike' => float|null,
+     *   'dte' => int (default from config: 5),
+     *   'min_rvol' => float (default from config: 1.2),
+     *   'max_iv_rv' => float (default from config: 1.8),
      *   'dry_run' => bool (default false),
      * ]
      * @return array Summary of scanned and qualified candidates.
      */
     public function scan(array $options = []): array
     {
-        $universe = ! empty($options['universe']) ? (array) $options['universe'] : self::DEFAULT_UNIVERSE;
+        $cfg = $this->resolveConfig();
+
+        $universe = ! empty($options['universe']) ? (array) $options['universe'] : $cfg->universe;
         $universe = array_values(array_unique(array_map('strtoupper', $universe)));
 
-        $targetProfit = (float) ($options['target_profit'] ?? 200.0);
-        $callDebit = (float) ($options['call_debit'] ?? 0.95);
-        $putDebit = (float) ($options['put_debit'] ?? 0.95);
+        $targetProfit = (float) ($options['target_profit'] ?? $cfg->targetNetProfit);
+        $callDebit = (float) ($options['call_debit'] ?? $cfg->defaultCallDebit);
+        $putDebit = (float) ($options['put_debit'] ?? $cfg->defaultPutDebit);
+        $callTargetBalance = (float) ($options['call_target_balance'] ?? $options['call_balance'] ?? $cfg->callTargetBalance);
+        $putTargetBalance = (float) ($options['put_target_balance'] ?? $options['put_balance'] ?? $cfg->putTargetBalance);
+        $totalTargetBalance = $callTargetBalance + $putTargetBalance; // e.g. $200.00
+
         $combinedDebit = $callDebit + $putDebit; // $1.90
         $requiredExitValue = $combinedDebit + ($targetProfit / 100.0); // $3.90
-        $dte = (int) ($options['dte'] ?? 5);
-        $minRvol = (float) ($options['min_rvol'] ?? 1.2);
-        $maxIvRv = (float) ($options['max_iv_rv'] ?? 1.8);
+        $dte = (int) ($options['dte'] ?? $cfg->defaultDte);
+        $minRvol = (float) ($options['min_rvol'] ?? $cfg->minRvol);
+        $maxIvRv = (float) ($options['max_iv_rv'] ?? $cfg->maxIvRv);
         $dryRun = (bool) ($options['dry_run'] ?? false);
 
         $now = date('Y-m-d H:i:s');
@@ -67,6 +97,11 @@ class OptionsScannerEngine
                 'target_profit' => $targetProfit,
                 'call_debit' => $callDebit,
                 'put_debit' => $putDebit,
+                'call_target_balance' => $callTargetBalance,
+                'put_target_balance' => $putTargetBalance,
+                'total_target_balance' => $totalTargetBalance,
+                'call_strike' => $options['call_strike'] ?? null,
+                'put_strike' => $options['put_strike'] ?? null,
                 'combined_debit' => $combinedDebit,
                 'required_exit_value' => $requiredExitValue,
                 'dte' => $dte,
@@ -96,6 +131,9 @@ class OptionsScannerEngine
             'universe_count' => count($universe),
             'scanned_count' => count($results),
             'qualified_count' => count($qualified),
+            'target_balance_call' => $callTargetBalance,
+            'target_balance_put' => $putTargetBalance,
+            'total_target_balance' => $totalTargetBalance,
             'top_ranked' => array_slice($results, 0, 5),
             'all_results' => $results,
         ];
@@ -109,11 +147,32 @@ class OptionsScannerEngine
         $candles = $this->fetchCandles($ticker);
         $price = $this->extractCurrentPrice($ticker, $candles);
 
-        // Derive ATM Strike
-        $strike = round($price, 0);
+        // Derive ATM Strike or use explicit strikes
+        $atmStrike = round($price, 0);
         if ($price > 250) {
-            $strike = round($price / 5.0) * 5.0; // Round to nearest 5 for large tickers
+            $atmStrike = round($price / 5.0) * 5.0; // Round to nearest 5 for large tickers
         }
+
+        $callStrike = isset($params['call_strike']) && (float) $params['call_strike'] > 0
+            ? (float) $params['call_strike']
+            : (float) $atmStrike;
+
+        $putStrike = isset($params['put_strike']) && (float) $params['put_strike'] > 0
+            ? (float) $params['put_strike']
+            : (float) $atmStrike;
+
+        // Position sizing based on target balance entry ($100 Call / $100 Put)
+        $callDebit = (float) $params['call_debit'];
+        $putDebit = (float) $params['put_debit'];
+        $callTargetBalance = (float) ($params['call_target_balance'] ?? 100.00);
+        $putTargetBalance = (float) ($params['put_target_balance'] ?? 100.00);
+        $totalTargetBalance = $callTargetBalance + $putTargetBalance;
+
+        $contractsCall = max(1, (int) round($callTargetBalance / ($callDebit * 100.0)));
+        $contractsPut = max(1, (int) round($putTargetBalance / ($putDebit * 100.0)));
+        $actualOutlayCall = $contractsCall * $callDebit * 100.0;
+        $actualOutlayPut = $contractsPut * $putDebit * 100.0;
+        $totalEntryDebit = $actualOutlayCall + $actualOutlayPut;
 
         $atr14 = $this->calculateATR($candles, 14, $price);
         $historical5dRange = $this->calculate5DayRange($candles, $atr14);
@@ -139,18 +198,17 @@ class OptionsScannerEngine
         $avgIv = ($ivCall + $ivPut) / 2.0;
         $ivRvRatio = $realizedVol20d > 0 ? round($avgIv / $realizedVol20d, 4) : 1.0;
 
-        // Spread quality
-        $spreadPct = 0.025; // 2.5% typical for top liquid weekly options
+        $spreadPct = 0.025; // 2.5% typical spread on liquid weekly strikes
 
         // Required price moves
         $combinedDebit = (float) $params['combined_debit'];
         $requiredExitValue = (float) $params['required_exit_value'];
-        $breakevenMove = $combinedDebit; // At expiration, stock must move $1.90
+        $breakevenMove = $combinedDebit;
         $breakevenMovePct = $price > 0 ? round(($breakevenMove / $price) * 100, 4) : 0.0;
-        $targetMove = $requiredExitValue; // To reach $3.90 exit, stock must move $3.90
+        $targetMove = $requiredExitValue;
         $targetMovePct = $price > 0 ? round(($targetMove / $price) * 100, 4) : 0.0;
 
-        // 3. Profit-Reachability Engine
+        // Profit-Reachability Engine
         $reachabilityScore = $this->calculateReachabilityScore([
             'stock_price' => $price,
             'target_move' => $targetMove,
@@ -193,8 +251,14 @@ class OptionsScannerEngine
             'expiry' => $params['expiry'],
             'dte' => (int) $params['dte'],
             'stock_price' => round($price, 4),
-            'call_strike' => round($strike, 4),
-            'put_strike' => round($strike, 4),
+            'call_strike' => round($callStrike, 4),
+            'put_strike' => round($putStrike, 4),
+            'call_target_balance' => round($callTargetBalance, 2),
+            'put_target_balance' => round($putTargetBalance, 2),
+            'total_target_balance' => round($totalTargetBalance, 2),
+            'contracts_call' => $contractsCall,
+            'contracts_put' => $contractsPut,
+            'total_entry_debit' => round($totalEntryDebit, 2),
             'call_bid' => round((float) $params['call_debit'] * 0.98, 4),
             'call_ask' => round((float) $params['call_debit'] * 1.02, 4),
             'put_bid' => round((float) $params['put_debit'] * 0.98, 4),
@@ -229,56 +293,28 @@ class OptionsScannerEngine
         ];
     }
 
-    /**
-     * Compute Reachability Score: Can this stock reach the $200 net profit target?
-     */
     private function calculateReachabilityScore(array $data): float
     {
-        $targetMove = (float) $data['target_move']; // e.g. $3.90
-        $historical5dRange = (float) $data['historical_5d_range'];
-        $atr14 = (float) $data['atr_14'];
+        $targetMove = (float) $data['target_move'];
+        $histRange = max(0.01, (float) $data['historical_5d_range']);
+        $atr = max(0.01, (float) $data['atr_14']);
         $rvol = (float) $data['rvol'];
         $volAccel = (float) $data['vol_accel'];
-        $ivRvRatio = (float) $data['iv_rv_ratio'];
+        $ivRv = max(0.1, (float) $data['iv_rv_ratio']);
 
-        if ($historical5dRange <= 0.0) {
-            return 30.0;
-        }
+        $rangeRatio = $targetMove / $histRange;
+        $rangeCapacity = max(0.0, 1.0 - ($rangeRatio * 0.45));
 
-        // Ratio of historical 5d movement capacity vs target move
-        $capacityRatio = $historical5dRange / max(0.5, $targetMove);
+        $atrRatio = $targetMove / ($atr * 3.0);
+        $atrCapacity = max(0.0, 1.0 - ($atrRatio * 0.35));
 
-        // Daily ATR capacity (how many daily ranges is the required move?)
-        $atrCoverage = $atr14 > 0 ? ($historical5dRange / $atr14) : 2.5;
+        $momentumBoost = min(1.35, max(0.8, ($rvol * 0.4) + ($volAccel * 0.6)));
+        $volDiscount = min(1.15, max(0.7, 1.0 / $ivRv));
 
-        // Base score from movement capacity (0 to 60)
-        // If 5d range is 2.5x target move, base score is capped at 60
-        $baseScore = min(60.0, ($capacityRatio / 2.0) * 60.0);
-
-        // Volume momentum bonus (0 to 25)
-        $volBonus = 0.0;
-        if ($rvol > 1.2) {
-            $volBonus += min(15.0, ($rvol - 1.0) * 12.0);
-        }
-        if ($volAccel > 1.1) {
-            $volBonus += min(10.0, ($volAccel - 1.0) * 15.0);
-        }
-
-        // Volatility efficiency penalty/bonus (-15 to +15)
-        $volatilityAdj = 0.0;
-        if ($ivRvRatio < 1.2) {
-            $volatilityAdj = 10.0; // Cheap options relative to actual movement
-        } elseif ($ivRvRatio > 1.5) {
-            $volatilityAdj = -15.0; // Expensive options, harder to overcome theta
-        }
-
-        $score = $baseScore + $volBonus + $volatilityAdj;
-        return max(5.0, min(99.0, $score));
+        $raw = (($rangeCapacity * 0.60) + ($atrCapacity * 0.40)) * $momentumBoost * $volDiscount * 100.0;
+        return max(5.0, min(95.0, round($raw, 2)));
     }
 
-    /**
-     * Compute Composite Ranking Score (0 - 100).
-     */
     private function calculateRankingScore(array $data): float
     {
         $reachability = (float) $data['reachability_score'];
@@ -287,12 +323,6 @@ class OptionsScannerEngine
         $rangeExpansion = (float) $data['range_expansion'];
         $displacement = (float) $data['displacement_efficiency'];
 
-        // Weighted components:
-        // 40% Reachability
-        // 20% RVOL (scaled 0-20 for RVOL between 1.0 and 3.0)
-        // 20% Volume Acceleration (scaled 0-20 for Accel between 1.0 and 2.5)
-        // 10% Range Expansion
-        // 10% Price Displacement
         $reachComponent = $reachability * 0.40;
         $rvolComponent = min(20.0, max(0.0, ($rvol - 0.8) * 10.0));
         $accelComponent = min(20.0, max(0.0, ($volAccel - 0.8) * 12.0));
@@ -328,7 +358,6 @@ class OptionsScannerEngine
             }
         }
 
-        // Ticker baseline defaults
         return match ($ticker) {
             'NVDA' => 142.50,
             'TSLA' => 220.00,
@@ -344,7 +373,7 @@ class OptionsScannerEngine
     private function calculateATR(array $candles, int $period, float $fallbackPrice): float
     {
         if (count($candles) < $period) {
-            return round($fallbackPrice * 0.028, 4); // 2.8% daily volatility baseline
+            return round($fallbackPrice * 0.028, 4);
         }
 
         $trs = [];
@@ -386,7 +415,7 @@ class OptionsScannerEngine
                 return round($recent / $avg, 4);
             }
         }
-        return 1.65; // Baseline active momentum session RVOL
+        return 1.65;
     }
 
     private function calculateDisplacementEfficiency(array $candles, float $price): float
@@ -417,7 +446,6 @@ class OptionsScannerEngine
 
     private function calculateVolumeAcceleration(array $candles, int $minutes): float
     {
-        // Estimated acceleration factor based on intraday momentum
         return match ($minutes) {
             1 => 1.45,
             5 => 1.55,
@@ -455,15 +483,14 @@ class OptionsScannerEngine
                 $mean = array_sum($returns) / count($returns);
                 $sqDiffs = array_map(fn($r) => pow($r - $mean, 2), $returns);
                 $std = sqrt(array_sum($sqDiffs) / (count($returns) - 1));
-                return round($std * sqrt(252), 4); // Annualized
+                return round($std * sqrt(252), 4);
             }
         }
-        return 0.3850; // 38.5% annualized baseline
+        return 0.3850;
     }
 
     private function estimateImpliedVol(string $ticker, float $realizedVol, string $type): float
     {
-        // High liquidity options trade with mild volatility premium
         $multiplier = match ($ticker) {
             'NVDA', 'TSLA', 'COIN', 'AMD' => 1.12,
             'SPY', 'QQQ', 'IWM' => 1.05,

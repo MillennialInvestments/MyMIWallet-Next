@@ -9,7 +9,7 @@
         <div class="nk-block-head-content">
             <h3 class="nk-block-title page-title">Options Opportunity Scanner & Momentum Manager</h3>
             <div class="nk-block-des text-soft">
-                <p>Two-Sided Weekly Momentum Strategy · $0.95 Call + $0.95 Put ($1.90 Debit) $\to$ +$200.00 Net Profit ($3.90 Exit Target)</p>
+                <p>Two-Sided Weekly Momentum Strategy · $100 Call / $100 Put Target Balance Entry ($200 Budget) · $0.95 Debit Target &rarr; +$200.00 Net Profit ($3.90 Exit Target)</p>
             </div>
         </div>
         <div class="nk-block-head-content">
@@ -33,10 +33,10 @@
             <div class="card card-bordered">
                 <div class="card-inner">
                     <div class="nk-wg5">
-                        <div class="nk-wg5-title text-soft">Standard Straddle Cost</div>
+                        <div class="nk-wg5-title text-soft">Target Entry Balance</div>
                         <div class="nk-wg5-amount">
-                            <div class="amount">$190.00 <span class="currency currency-usd">USD</span></div>
-                            <div class="change text-soft"><span class="fs-12px">1 Call ($0.95) + 1 Put ($0.95)</span></div>
+                            <div class="amount">$200.00 <span class="currency currency-usd">USD</span></div>
+                            <div class="change text-soft"><span class="fs-12px">$100 Call Leg + $100 Put Leg</span></div>
                         </div>
                     </div>
                 </div>
@@ -99,46 +99,83 @@
             </li>
         </ul>
         <div class="tab-content">
-            <!-- TAB 1: ACTIVE POSITIONS -->
+            <!-- TAB 1: POSITIONS -->
             <div class="tab-pane active" id="tab-positions">
                 <div class="card-inner">
                     <div class="card-title-group mb-3">
                         <div class="card-title">
-                            <h6 class="title">Active Options Momentum Trades</h6>
-                            <p class="text-soft">Real-time combined valuation, peak trailing stop, and theta warning engine.</p>
+                            <h6 class="title">Active Two-Sided Positions</h6>
+                            <p class="text-soft">Real-time dual-leg tracking with peak profit trailing stops and theta decay monitors.</p>
+                        </div>
+                        <div class="card-tools">
+                            <a href="#" class="btn btn-primary btn-sm"><em class="icon ni ni-plus"></em><span>Simulate Straddle</span></a>
                         </div>
                     </div>
-                    
                     <div class="table-responsive">
                         <table class="table table-tranx">
                             <thead>
                                 <tr class="tb-tnx-head">
-                                    <th class="tb-tnx-id"><span class="">Trade ID</span></th>
-                                    <th class="tb-tnx-info"><span>Underlier & Strike</span></th>
-                                    <th class="tb-tnx-type"><span>Legs (Call / Put)</span></th>
-                                    <th class="tb-tnx-amount"><span>Combined Bid</span></th>
-                                    <th class="tb-tnx-amount"><span>Unrealized P&L</span></th>
-                                    <th class="tb-tnx-status"><span>Warning Status</span></th>
-                                    <th class="tb-tnx-action"><span>Action</span></th>
+                                    <th class="tb-tnx-id"><span class="">Position ID</span></th>
+                                    <th class="tb-tnx-info">
+                                        <span class="tb-tnx-desc d-none d-sm-inline-block">
+                                            <span>Underlier</span>
+                                        </span>
+                                        <span class="tb-tnx-date d-md-inline-block d-none">
+                                            <span class="d-md-none">Date</span>
+                                            <span class="d-none d-md-block"><span>Strikes (Call / Put)</span></span>
+                                        </span>
+                                    </th>
+                                    <th class="tb-tnx-amt tb-tnx-req">
+                                        <span class="tb-tnx-total">Target Balance</span>
+                                        <span class="tb-tnx-status d-none d-md-inline-block">Outlay</span>
+                                    </th>
+                                    <th class="tb-tnx-amt tb-tnx-req">
+                                        <span class="tb-tnx-total">Combined Bid</span>
+                                        <span class="tb-tnx-status d-none d-md-inline-block">Target Exit</span>
+                                    </th>
+                                    <th class="tb-tnx-amt is-alt">
+                                        <span class="tb-tnx-total">Unrealized P&L</span>
+                                        <span class="tb-tnx-status d-none d-md-inline-block">High-Water Mark</span>
+                                    </th>
+                                    <th class="tb-tnx-status">
+                                        <h2>Status</h2>
+                                    </th>
+                                    <th class="tb-tnx-action">
+                                        <span>&nbsp;</span>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="tb-tnx-id"><strong>opt-nvda-demo</strong></td>
+                                <tr class="tb-tnx-item">
+                                    <td class="tb-tnx-id"><a href="#"><span>#2</span></a></td>
                                     <td class="tb-tnx-info">
-                                        <div class="tb-tnx-desc"><span class="title">NVDA ($143.00 Straddle)</span></div>
-                                        <div class="tb-tnx-date"><span class="date">Weekly Expiry · 5 DTE</span></div>
+                                        <div class="tb-tnx-desc">
+                                            <span class="title">NVDA (Straddle)</span>
+                                        </div>
+                                        <div class="tb-tnx-date">
+                                            <span class="date">Call: $145.00 / Put: $140.00</span>
+                                        </div>
                                     </td>
-                                    <td>
-                                        <span class="badge badge-dim bg-outline-primary">Call: $0.95</span>
-                                        <span class="badge badge-dim bg-outline-info">Put: $0.95</span>
+                                    <td class="tb-tnx-amount is-alt">
+                                        <div class="tb-tnx-total">
+                                            <span class="amount">$100 C / $100 P</span>
+                                        </div>
+                                        <div class="tb-tnx-status">
+                                            <span class="amount text-soft">$190.00</span>
+                                        </div>
                                     </td>
-                                    <td class="tb-tnx-amount">
-                                        <div class="amount">$2.45 / pair</div>
-                                        <div class="sub-text text-soft">Cost: $1.90 | Target: $3.90</div>
+                                    <td class="tb-tnx-amount is-alt">
+                                        <div class="tb-tnx-total">
+                                            <span class="amount">$2.45</span>
+                                        </div>
+                                        <div class="tb-tnx-status">
+                                            <span class="amount text-primary">$3.90</span>
+                                        </div>
                                     </td>
-                                    <td class="tb-tnx-amount">
-                                        <span class="amount text-success">+$55.00 (+28.9%)</span>
+                                    <td class="tb-tnx-amount is-alt">
+                                        <div class="tb-tnx-total">
+                                            <span class="amount text-success">+$55.00</span>
+                                        </div>
                                         <div class="sub-text text-soft">Peak: +$75.00</div>
                                     </td>
                                     <td class="tb-tnx-status">
@@ -184,11 +221,12 @@
                                 <tr>
                                     <th>Ticker</th>
                                     <th>Stock Price</th>
-                                    <th>ATM Strike</th>
+                                    <th>Call Strike</th>
+                                    <th>Put Strike</th>
+                                    <th>Target Balance</th>
                                     <th>14D ATR</th>
                                     <th>5D Range</th>
                                     <th>RVOL</th>
-                                    <th>IV / RV</th>
                                     <th>Reachability</th>
                                     <th>Rank Score</th>
                                     <th>Recommendation</th>
@@ -199,11 +237,12 @@
                                     <td><strong>SPY</strong></td>
                                     <td>$580.05</td>
                                     <td>$580</td>
+                                    <td>$580</td>
+                                    <td>$100C / $100P</td>
                                     <td>$24.80</td>
                                     <td>$78.48</td>
                                     <td>1.65x</td>
-                                    <td>1.05</td>
-                                    <td><span class="badge bg-success">78.2%</span></td>
+                                    <td><span class="badge bg-success">95.0%</span></td>
                                     <td><strong>74.2</strong></td>
                                     <td><span class="badge badge-dim bg-success">Top Candidate</span></td>
                                 </tr>
@@ -211,11 +250,12 @@
                                     <td><strong>NVDA</strong></td>
                                     <td>$142.50</td>
                                     <td>$143</td>
+                                    <td>$143</td>
+                                    <td>$100C / $100P</td>
                                     <td>$6.09</td>
                                     <td>$19.28</td>
                                     <td>1.58x</td>
-                                    <td>1.12</td>
-                                    <td><span class="badge bg-success">78.2%</span></td>
+                                    <td><span class="badge bg-success">95.0%</span></td>
                                     <td><strong>72.5</strong></td>
                                     <td><span class="badge badge-dim bg-success">Top Candidate</span></td>
                                 </tr>
@@ -223,11 +263,12 @@
                                     <td><strong>COIN</strong></td>
                                     <td>$215.00</td>
                                     <td>$215</td>
+                                    <td>$215</td>
+                                    <td>$100C / $100P</td>
                                     <td>$9.19</td>
                                     <td>$29.09</td>
                                     <td>1.52x</td>
-                                    <td>1.12</td>
-                                    <td><span class="badge bg-success">78.2%</span></td>
+                                    <td><span class="badge bg-success">95.0%</span></td>
                                     <td><strong>71.8</strong></td>
                                     <td><span class="badge badge-dim bg-success">Top Candidate</span></td>
                                 </tr>
@@ -253,6 +294,7 @@
                                 <li class="list-group-item"><strong>Webhook Endpoint:</strong> <code>https://www.mymiwallet.com/API/Options/webhook</code></li>
                                 <li class="list-group-item"><strong>HTTP Method:</strong> <code>POST</code> (application/json)</li>
                                 <li class="list-group-item"><strong>Secret Header / Field:</strong> <code>mymi-options-secure-key</code></li>
+                                <li class="list-group-item"><strong>Target Balance Defaults:</strong> <code>$100.00 Call / $100.00 Put</code> (configurable in <code>app/Config/OptionsStrategy.php</code> or <code>.env</code>)</li>
                                 <li class="list-group-item"><strong>Idempotency:</strong> Handled automatically via SHA-256 event hash</li>
                             </ul>
                         </div>
@@ -264,6 +306,10 @@
   "signal": "momentum_weakening",
   "timeframe": "{{interval}}",
   "price": {{close}},
+  "call_strike": 145.0,
+  "put_strike": 140.0,
+  "target_balance_call": 100.0,
+  "target_balance_put": 100.0,
   "timestamp": "{{time}}"
 }</code></pre>
                         </div>

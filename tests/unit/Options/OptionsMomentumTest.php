@@ -8,7 +8,6 @@ use App\Models\Options\OptionsExitAlertModel;
 use App\Models\Options\OptionsPositionHistoryModel;
 use App\Models\Options\OptionsPositionLegModel;
 use App\Models\Options\OptionsPositionModel;
-use App\Models\Options\OptionsScanCandidateModel;
 use App\Models\Options\OptionsSignalEventModel;
 use App\Services\Options\OptionsMomentumManager;
 use App\Services\Options\OptionsScannerEngine;
@@ -42,12 +41,48 @@ final class OptionsMomentumTest extends CIUnitTestCase
             $this->assertEqualsWithDelta(1.90, (float) $candidate['combined_debit'], 0.001);
             $this->assertEqualsWithDelta(200.0, (float) $candidate['target_profit'], 0.001);
             $this->assertEqualsWithDelta(3.90, (float) $candidate['required_exit_value'], 0.001);
+            $this->assertGreaterThan(0.0, (float) $candidate['call_strike']);
+            $this->assertGreaterThan(0.0, (float) $candidate['put_strike']);
+            $this->assertEqualsWithDelta(100.0, (float) $candidate['call_target_balance'], 0.001);
+            $this->assertEqualsWithDelta(100.0, (float) $candidate['put_target_balance'], 0.001);
+            $this->assertEqualsWithDelta(200.0, (float) $candidate['total_target_balance'], 0.001);
             $this->assertGreaterThan(0.0, (float) $candidate['atr_14']);
             $this->assertGreaterThan(0.0, (float) $candidate['historical_5d_range']);
             $this->assertGreaterThan(0.0, (float) $candidate['reachability_score']);
             $this->assertGreaterThan(0.0, (float) $candidate['ranking_score']);
             $this->assertGreaterThan(0.0, (float) $candidate['price_displacement_efficiency']);
         }
+    }
+
+    /**
+     * Test scanner with explicit Call/Put strikes and custom target balance settings.
+     */
+    public function testOptionsScannerWithExplicitStrikesAndTargetBalances(): void
+    {
+        $scanner = new OptionsScannerEngine(null);
+
+        $result = $scanner->scan([
+            'universe' => ['NVDA'],
+            'call_strike' => 145.0,
+            'put_strike' => 140.0,
+            'call_target_balance' => 100.0,
+            'put_target_balance' => 100.0,
+            'call_debit' => 0.95,
+            'put_debit' => 0.95,
+            'target_profit' => 200.0,
+            'dry_run' => true,
+        ]);
+
+        $this->assertSame(1, $result['scanned_count']);
+        $candidate = $result['all_results'][0];
+
+        $this->assertEqualsWithDelta(145.0, (float) $candidate['call_strike'], 0.001);
+        $this->assertEqualsWithDelta(140.0, (float) $candidate['put_strike'], 0.001);
+        $this->assertEqualsWithDelta(100.0, (float) $candidate['call_target_balance'], 0.001);
+        $this->assertEqualsWithDelta(100.0, (float) $candidate['put_target_balance'], 0.001);
+        $this->assertEqualsWithDelta(200.0, (float) $candidate['total_target_balance'], 0.001);
+        $this->assertSame(1, $candidate['contracts_call']);
+        $this->assertSame(1, $candidate['contracts_put']);
     }
 
     /**
@@ -70,6 +105,55 @@ final class OptionsMomentumTest extends CIUnitTestCase
         $this->assertEqualsWithDelta(3.90, $requiredExitValue, 0.0001);
         $this->assertEqualsWithDelta(390.00, $totalExitValue, 0.0001);
         $this->assertEqualsWithDelta(200.00, $totalExitValue - $totalCost, 0.0001);
+    }
+
+    /**
+     * Test simulated position creation with $100 target balance per leg and explicit strikes.
+     */
+    public function testOpenSimulatedPositionWithTargetBalanceAndStrikes(): void
+    {
+        $positionModel = $this->createMock(OptionsPositionModel::class);
+        $legModel = $this->createMock(OptionsPositionLegModel::class);
+        $historyModel = $this->createMock(OptionsPositionHistoryModel::class);
+        $exitAlertModel = $this->createMock(OptionsExitAlertModel::class);
+
+        $positionModel->expects($this->once())
+            ->method('insert')
+            ->with($this->callback(function (array $data) {
+                return $data['ticker'] === 'NVDA'
+                    && (float) $data['call_strike'] === 145.0
+                    && (float) $data['put_strike'] === 140.0
+                    && (float) $data['total_entry_debit'] === 190.0;
+            }))
+            ->willReturn(1);
+
+        $legModel->expects($this->exactly(2))
+            ->method('insert')
+            ->willReturn(1);
+
+        $historyModel->expects($this->once())
+            ->method('insert')
+            ->willReturn(1);
+
+        $manager = new OptionsMomentumManager($positionModel, $legModel, $historyModel, $exitAlertModel);
+
+        $res = $manager->openSimulatedPosition(
+            ticker: 'NVDA',
+            callDebit: 0.95,
+            putDebit: 0.95,
+            stockPrice: 142.50,
+            callStrike: 145.0,
+            putStrike: 140.0,
+            callTargetBalance: 100.0,
+            putTargetBalance: 100.0
+        );
+
+        $this->assertSame(1, $res['position_id']);
+        $this->assertSame(145.0, $res['call_strike']);
+        $this->assertSame(140.0, $res['put_strike']);
+        $this->assertSame(1, $res['contracts_call']);
+        $this->assertSame(1, $res['contracts_put']);
+        $this->assertEqualsWithDelta(190.0, $res['total_debit'], 0.001);
     }
 
     /**
@@ -180,7 +264,6 @@ final class OptionsMomentumTest extends CIUnitTestCase
         $positionModel = $this->createMock(OptionsPositionModel::class);
         $momentumManager = $this->createMock(OptionsMomentumManager::class);
 
-        // Simulate duplicate detection
         $signalModel->expects($this->once())
             ->method('isDuplicate')
             ->willReturn(true);
