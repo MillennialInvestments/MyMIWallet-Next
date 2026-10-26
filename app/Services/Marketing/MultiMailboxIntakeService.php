@@ -51,7 +51,7 @@ class MultiMailboxIntakeService
         ];
 
         if ($target === 'all' || $target === 'alerts' || $target === 'trade_alerts') {
-            $alertUser = (string) env('alerts.imap.user', env('MYMI_ALERT_EMAIL', 'alerts@mymiwallet.com'));
+            $alertUser = (string) env('alerts.imap.user', env('MYMI_ALERTS_IMAP_USER', env('IMAP_USER', env('MYMI_ALERT_EMAIL', 'tradealerts@mymiwallet.com'))));
             $resAlerts = $this->fetchFromMailbox($alertUser, 'trade_alert', $limit, $dryRun);
             $results['alerts_mailbox'] = $resAlerts;
             $results['total_scanned'] += (int) ($resAlerts['scanned'] ?? 0);
@@ -92,26 +92,36 @@ class MultiMailboxIntakeService
             'items' => [],
         ];
 
-        if (! function_exists('imap_open')) {
-            $report['errors'][] = 'PHP IMAP extension is not installed.';
-            return $report;
-        }
-
         $host = (string) env('alerts.imap.host', env('IMAP_HOST', 'imap.dreamhost.com'));
         $port = (int) env('alerts.imap.port', env('IMAP_PORT', 993));
         $flags = '/imap/ssl/novalidate-cert';
-        $password = (string) env('alerts.imap.pass', env('IMAP_pass', env('IMAP_PASSWORD', '')));
+        $password = (string) (
+            str_contains($username, 'news')
+                ? env('MARKETING_NEWS_IMAP_PASS', env('IMAP_PASS', env('IMAP_pass', env('alerts.imap.pass', ''))))
+                : env('MYMI_ALERTS_IMAP_PASS', env('IMAP_PASS', env('IMAP_pass', env('alerts.imap.pass', ''))))
+        );
 
         if ($password === '') {
             $report['errors'][] = "No IMAP password configured for {$username}";
             return $report;
         }
 
+        // Zero-dependency fallback: If PHP IMAP is not installed, use Python IMAP helper
+        if (! function_exists('imap_open')) {
+            return $this->fetchViaPythonScript($host, $port, $username, $password, $limit, $defaultType, $dryRun, $report);
+        }
+
         $connectionString = sprintf('{%s:%d%s}INBOX', $host, $port, $flags);
         $imap = @imap_open($connectionString, $username, $password, 0, 1, ['DISABLE_AUTHENTICATOR' => 'GSSAPI']);
 
         if (! $imap) {
-            $report['errors'][] = 'IMAP connection failed: ' . (imap_last_error() ?: 'Unknown error');
+            // If native PHP IMAP fails, attempt Python fallback before giving up
+            $phpError = (string) (imap_last_error() ?: 'Unknown PHP IMAP error');
+            $pythonReport = $this->fetchViaPythonScript($host, $port, $username, $password, $limit, $defaultType, $dryRun, $report);
+            if ($pythonReport['connection_ok']) {
+                return $pythonReport;
+            }
+            $report['errors'][] = 'IMAP connection failed: ' . $phpError;
             return $report;
         }
 
@@ -135,68 +145,151 @@ class MultiMailboxIntakeService
                 $dateStr = $header->date ?? date('Y-m-d H:i:s');
                 $msgId = trim($header->message_id ?? "uid-{$uid}-{$username}");
 
-                // Identifier deduplication
-                $identifier = md5($msgId . '|' . $username);
-                if ($this->isAlreadyStored($identifier, $subject)) {
-                    $report['duplicates']++;
-                    continue;
-                }
-
                 // Extract body
                 $body = $this->fetchBody($imap, $uid);
                 $cleanBody = trim(strip_tags($body));
 
-                // Parse alert parameters
-                $parsed = $this->parseEmailContent($subject, $cleanBody, $defaultType);
-
-                $record = [
-                    'title' => $subject,
-                    'content' => $cleanBody,
-                    'status' => 'pending',
-                    'processed' => 0,
-                    'type' => $parsed['type'],
-                    'source_type' => 'email_alert',
-                    'ticker' => $parsed['ticker'],
-                    'company_name' => $parsed['company_name'],
-                    'date_scraped' => date('Y-m-d H:i:s', strtotime($dateStr)),
-                    'metadata' => json_encode([
-                        'identifier' => $identifier,
-                        'message_id' => $msgId,
-                        'mailbox' => $username,
-                        'from' => $from,
-                        'parsed_trade' => $parsed,
-                        'received_at' => date('Y-m-d H:i:s', strtotime($dateStr)),
-                    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
-                ];
-
-                if (! $dryRun) {
-                    $insertId = $this->storeTempScraperRecord($record);
-                    if ($insertId > 0) {
-                        $report['stored']++;
-                        $report['items'][] = [
-                            'id' => $insertId,
-                            'ticker' => $parsed['ticker'],
-                            'type' => $parsed['type'],
-                            'subject' => $subject,
-                        ];
-                    } else {
-                        $report['errors'][] = "Failed inserting record for UID {$uid}";
-                    }
-                } else {
-                    $report['stored']++;
-                    $report['items'][] = [
-                        'id' => 0,
-                        'ticker' => $parsed['ticker'],
-                        'type' => $parsed['type'],
-                        'subject' => $subject,
-                    ];
-                }
+                $this->processInboundMessage($msgId, $subject, $from, $dateStr, $cleanBody, $username, $defaultType, $dryRun, $report);
             }
+        } catch (\Throwable $e) {
+            $report['errors'][] = $e->getMessage();
         } finally {
             @imap_close($imap);
         }
 
         return $report;
+    }
+
+    /**
+     * Python IMAP client fallback for environments without php-imap extension.
+     */
+    protected function fetchViaPythonScript(
+        string $host,
+        int $port,
+        string $username,
+        string $password,
+        int $limit,
+        string $defaultType,
+        bool $dryRun,
+        array &$report
+    ): array {
+        $scriptPath = ROOTPATH . 'scripts/fetch_imap_emails.py';
+        if (! file_exists($scriptPath)) {
+            $report['errors'][] = "IMAP Python script not found at {$scriptPath}";
+            return $report;
+        }
+
+        $cmd = sprintf(
+            'python3 %s --host=%s --port=%d --user=%s --password=%s --limit=%d',
+            escapeshellarg($scriptPath),
+            escapeshellarg($host),
+            $port,
+            escapeshellarg($username),
+            escapeshellarg($password),
+            $limit
+        );
+
+        $output = [];
+        $exitCode = 0;
+        exec($cmd . ' 2>&1', $output, $exitCode);
+
+        $rawJson = implode("\n", $output);
+        $data = json_decode($rawJson, true);
+
+        if (! is_array($data) || ($data['status'] ?? '') !== 'success') {
+            $report['errors'][] = 'Python IMAP intake error: ' . ($data['error'] ?? substr($rawJson, 0, 300));
+            return $report;
+        }
+
+        $report['connection_ok'] = true;
+        $report['scanned'] = count($data['messages'] ?? []);
+
+        foreach ($data['messages'] as $item) {
+            $uid = (string) ($item['uid'] ?? uniqid());
+            $subject = (string) ($item['subject'] ?? 'No Subject');
+            $from = (string) ($item['from'] ?? 'unknown');
+            $dateStr = (string) ($item['date'] ?? date('Y-m-d H:i:s'));
+            $msgId = (string) ($item['message_id'] ?? "uid-{$uid}-{$username}");
+            $cleanBody = (string) ($item['body'] ?? '');
+
+            $this->processInboundMessage($msgId, $subject, $from, $dateStr, $cleanBody, $username, $defaultType, $dryRun, $report);
+        }
+
+        return $report;
+    }
+
+    /**
+     * Ingestion, deduplication, and storage processor for a single email item.
+     */
+    public function processInboundMessage(
+        string $msgId,
+        string $subject,
+        string $from,
+        string $dateStr,
+        string $cleanBody,
+        string $username,
+        string $defaultType,
+        bool $dryRun,
+        array &$report
+    ): void {
+        // Identifier deduplication
+        $identifier = md5($msgId . '|' . $username);
+        if ($this->isAlreadyStored($identifier, $subject)) {
+            $report['duplicates']++;
+            return;
+        }
+
+        // Parse alert parameters
+        $parsed = $this->parseEmailContent($subject, $cleanBody, $defaultType);
+
+        // If the subject was updated from a headline extractor, reflect in title
+        $recordTitle = ! empty($parsed['headline']) && $parsed['headline'] !== 'News alert for all symbols'
+            ? $parsed['headline']
+            : $subject;
+
+        $record = [
+            'title' => $recordTitle,
+            'content' => $cleanBody,
+            'status' => 'pending',
+            'processed' => 0,
+            'type' => $parsed['type'],
+            'source_type' => 'email_alert',
+            'ticker' => $parsed['ticker'],
+            'company_name' => $parsed['company_name'],
+            'date_scraped' => date('Y-m-d H:i:s', strtotime($dateStr) ?: time()),
+            'metadata' => json_encode([
+                'identifier' => $identifier,
+                'message_id' => $msgId,
+                'mailbox' => $username,
+                'from' => $from,
+                'parsed_trade' => $parsed,
+                'received_at' => date('Y-m-d H:i:s', strtotime($dateStr) ?: time()),
+            ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+        ];
+
+        if (! $dryRun) {
+            $insertId = $this->storeTempScraperRecord($record);
+            if ($insertId > 0) {
+                $report['stored']++;
+                $report['items'][] = [
+                    'id' => $insertId,
+                    'ticker' => $parsed['ticker'],
+                    'type' => $parsed['type'],
+                    'subject' => $recordTitle,
+                ];
+            } else {
+                $report['errors'][] = "Failed inserting record for msgId {$msgId}";
+            }
+        } else {
+            $report['stored']++;
+            $report['items'][] = [
+                'id' => 0,
+                'ticker' => $parsed['ticker'],
+                'type' => $parsed['type'],
+                'subject' => $recordTitle,
+                'dry_run' => true,
+            ];
+        }
     }
 
     /**
@@ -207,7 +300,7 @@ class MultiMailboxIntakeService
      */
     public function injectTradeAlert(array $data): array
     {
-        $ticker = strtoupper(trim((string) ($data['ticker'] ?? 'NVDA')));
+        $ticker = strtoupper(trim((string) ($data['ticker'] ?? 'SPY')));
         $strategy = strtoupper(trim((string) ($data['strategy'] ?? 'STRANGLE')));
         $underlierPrice = (float) ($data['underlier_price'] ?? 0.0);
         $callStrike = (float) ($data['call_strike'] ?? 0.0);
@@ -321,13 +414,22 @@ class MultiMailboxIntakeService
         $putStrike = null;
         $underlierPrice = null;
         $targetProfit = null;
+        $headline = $subject;
 
         $text = $subject . ' ' . $body;
+
+        // Thinkorswim news alert headline extraction
+        if (stripos($subject, 'News alert for all symbols') !== false || stripos($subject, 'News alert') !== false) {
+            if (preg_match('/(?:News alert for all symbols\s+)?([A-Za-z0-9\s,\.\'\-]+:\s+[^\r\n]{10,120}?)(?:\s+Privacy|\s+Log in|\s+Contact Us|\s*$)/i', $body, $hm)) {
+                $headline = trim($hm[1]);
+                $text = $headline . ' ' . $body;
+            }
+        }
 
         // Detect Ticker ($NVDA or NVDA:)
         if (preg_match('/\$([A-Z]{1,5})\b/', $text, $m)) {
             $ticker = $m[1];
-        } elseif (preg_match('/\b([A-Z]{2,5})\s*[:\-\/]/', $subject, $m)) {
+        } elseif (preg_match('/\b([A-Z]{2,5})\s*[:\-\/]/', $text, $m)) {
             $ticker = $m[1];
         }
 
@@ -369,7 +471,7 @@ class MultiMailboxIntakeService
             'put_strike' => $putStrike,
             'underlier_price' => $underlierPrice,
             'target_profit' => $targetProfit ?: 200.0,
-            'headline' => $subject,
+            'headline' => $headline,
             'company_name' => $ticker ?: 'Market',
         ];
     }
@@ -378,8 +480,7 @@ class MultiMailboxIntakeService
     {
         if ($this->db->tableExists('bf_marketing_temp_scraper')) {
             $exists = $this->db->table('bf_marketing_temp_scraper')
-                ->where('title', $subject)
-                ->orLike('metadata', $identifier)
+                ->like('metadata', $identifier)
                 ->countAllResults();
             if ($exists > 0) {
                 return true;
