@@ -5,30 +5,54 @@ declare(strict_types=1);
 namespace App\Commands\Marketing;
 
 use App\Commands\SafeBaseCommand;
+use App\Commands\Traits\ParamOptions;
 use App\Services\Marketing\ContentDistroEngine;
 use App\Services\Marketing\MultiMailboxIntakeService;
 use CodeIgniter\CLI\CLI;
 
 class DistroPipeline extends SafeBaseCommand
 {
-    protected $group = 'Marketing';
-    protected $name = 'marketing:distro-pipeline';
+    use ParamOptions;
+
+    protected $group       = 'Marketing';
+    protected $name        = 'marketing:distro-pipeline';
     protected $description = 'Executes end-to-end Intake -> Content Generation -> Voiceover -> Multi-Platform Distro (Discord, Email, n8n).';
+    protected $usage       = 'marketing:distro-pipeline [symbol] [--fetch] [--generate] [--distribute] [--dry-run]';
+    protected $arguments   = [
+        'symbol' => 'Stock ticker symbol (e.g. BA, NVDA, TSLA)',
+    ];
+    protected $options     = [
+        '--fetch'      => 'Fetch latest emails from alerts@ and news@ mailboxes',
+        '--generate'   => 'Generate multi-platform content assets',
+        '--distribute' => 'Distribute generated package to Discord, Email, and n8n',
+        '--dry-run'    => 'Preview pipeline output without persisting changes',
+        '--limit'      => 'Max emails to fetch during intake',
+    ];
 
     public function run(array $params)
     {
-        CLI::write("=========================================================================", 'green');
-        CLI::write("   MyMI Marketing Distribution & Alert Engine · End-to-End Pipeline     ", 'yellow');
-        CLI::write("=========================================================================", 'green');
-
         $intakeService = new MultiMailboxIntakeService();
         $distroEngine = new ContentDistroEngine();
 
-        $fetch = CLI::getOption('fetch') !== null;
-        $generate = CLI::getOption('generate') !== null;
-        $distribute = CLI::getOption('distribute') !== null;
-        $symbol = strtoupper((string) (CLI::getOption('symbol') ?: 'BA'));
-        $dryRun = CLI::getOption('dry-run') !== null;
+        $fetch = $this->optBool($params, 'fetch');
+        $generate = $this->optBool($params, 'generate');
+        $distribute = $this->optBool($params, 'distribute');
+        $dryRun = $this->optBool($params, 'dry-run');
+        $limit = $this->optInt($params, 'limit', 10);
+
+        // Detect symbol from positional argument or --symbol
+        $symbol = strtoupper($this->opt($params, 'symbol', ''));
+        if ($symbol === '') {
+            foreach ($params as $p) {
+                if (is_string($p) && ! str_starts_with($p, '-') && ! str_contains($p, '=')) {
+                    $symbol = strtoupper(trim($p));
+                    break;
+                }
+            }
+        }
+        if ($symbol === '') {
+            $symbol = 'BA';
+        }
 
         // Default run all stages if none specified
         if (! $fetch && ! $generate && ! $distribute) {
@@ -36,14 +60,17 @@ class DistroPipeline extends SafeBaseCommand
             $generate = true;
             $distribute = true;
         } elseif ($distribute && ! $generate) {
-            // Auto-enable generation if distribute is specifically requested
             $generate = true;
         }
+
+        CLI::write("\n=========================================================================", 'yellow');
+        CLI::write("   MyMI Marketing Distribution & Alert Engine · End-to-End Pipeline     ", 'white');
+        CLI::write("=========================================================================", 'yellow');
 
         // 1. INTAKE STAGE
         if ($fetch) {
             CLI::write("\n[1/3] Polling Mailboxes (alerts@mymiwallet.com & news@mymiwallet.com)...", 'cyan');
-            $intakeRes = $intakeService->fetchAll(['limit' => 10, 'dry_run' => $dryRun]);
+            $intakeRes = $intakeService->fetchAll(['limit' => $limit, 'dry_run' => $dryRun]);
             CLI::write(sprintf(
                 " - Scanned: %d | New Stored: %d | Duplicates Skipped: %d",
                 $intakeRes['total_scanned'],
@@ -61,13 +88,17 @@ class DistroPipeline extends SafeBaseCommand
         $package = null;
         if ($generate) {
             CLI::write("\n[2/3] Generating Multi-Platform Content for {$symbol}...", 'cyan');
+            $underlierPrice = $symbol === 'BA' ? 187.53 : ($symbol === 'NVDA' ? 200.00 : 250.00);
+            $callStrike = round($underlierPrice * 1.04, 2);
+            $putStrike = round($underlierPrice * 0.96, 2);
+
             $package = $distroEngine->generatePackage([
                 'ticker' => $symbol,
                 'type' => 'trade_alert',
                 'strategy' => 'STRANGLE',
-                'underlier_price' => $symbol === 'BA' ? 187.53 : 200.00,
-                'call_strike' => $symbol === 'BA' ? 192.50 : 210.00,
-                'put_strike' => $symbol === 'BA' ? 182.50 : 150.00,
+                'underlier_price' => $underlierPrice,
+                'call_strike' => $callStrike,
+                'put_strike' => $putStrike,
                 'target_profit' => 200.00,
                 'headline' => "{$symbol} Weekly Options Momentum Breakout Setup",
                 'note' => "High volume momentum signal. Asymmetric profit curve flagged by options tracker.",
@@ -91,22 +122,20 @@ class DistroPipeline extends SafeBaseCommand
                 $statusPill = ($res['success'] ?? false) ? '[SUCCESS]' : '[FAILED]';
                 $color = ($res['success'] ?? false) ? 'green' : 'red';
                 CLI::write(" - Destination [{$dest}]: {$statusPill}", $color);
-                if (! empty($res['endpoint'])) {
+
+                if ($dest === 'n8n' && isset($res['endpoint'])) {
                     CLI::write("   Target: " . $res['endpoint']);
                 }
-                if (! empty($res['queued_count'])) {
+                if ($dest === 'email' && isset($res['queued_count'])) {
                     CLI::write("   Queued: " . $res['queued_count'] . " emails");
-                }
-                if (! empty($res['error'])) {
-                    CLI::write("   Error: " . $res['error'], 'yellow');
                 }
             }
         } elseif ($dryRun) {
             CLI::write("\n[3/3] Distribution skipped (--dry-run enabled).", 'yellow');
         }
 
-        CLI::write("\n=========================================================================", 'green');
-        CLI::write("Pipeline complete. Access dashboard at: /Management/Marketing/Distro", 'yellow');
-        CLI::write("=========================================================================\n", 'green');
+        CLI::write("\n=========================================================================", 'yellow');
+        CLI::write("Pipeline complete. Access dashboard at: /Management/Marketing/Distro", 'green');
+        CLI::write("=========================================================================\n", 'yellow');
     }
 }
