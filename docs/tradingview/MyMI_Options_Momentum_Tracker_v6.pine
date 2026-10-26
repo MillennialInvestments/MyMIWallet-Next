@@ -1,0 +1,148 @@
+//@version=6
+indicator("MyMI Options Opportunity & Trade Momentum Tracker v6", overlay=true, precision=2)
+
+// =========================================================================
+// 1. INPUT CONFIGURATION
+// =========================================================================
+var string GRP_OPT = "Weekly Options Strategy & Position"
+entryDebitCall     = input.float(0.95, "Call Leg Entry Debit ($)", group=GRP_OPT, step=0.05)
+entryDebitPut      = input.float(0.95, "Put Leg Entry Debit ($)", group=GRP_OPT, step=0.05)
+targetNetProfit    = input.float(200.0, "Target Net Profit ($)", group=GRP_OPT, step=25.0)
+contractPairs      = input.int(1, "Contract Pairs Count", group=GRP_OPT, minval=1)
+entryPriceStock    = input.float(0.0, "Entry Stock Price (0 = Current ATM)", group=GRP_OPT)
+enableWebhookAlerts= input.bool(true, "Enable Structured Webhook Alerts", group=GRP_OPT)
+webhookSecret      = input.string("mymi-options-secure-key", "Webhook Secret / Bearer Token", group=GRP_OPT)
+
+var string GRP_MOM = "Momentum & Volume Acceleration"
+rvolThreshold      = input.float(1.5, "RVOL Warning Trigger Level", group=GRP_MOM, step=0.1)
+trailRetracePct    = input.float(25.0, "Peak Profit Trailing Retrace Warning (%)", group=GRP_MOM, step=5.0)
+fastEmaLen         = input.int(9, "Fast EMA Length", group=GRP_MOM)
+slowEmaLen         = input.int(21, "Slow EMA Length", group=GRP_MOM)
+baselineEmaLen     = input.int(55, "Baseline EMA Length", group=GRP_MOM)
+
+// =========================================================================
+// 2. CORE MOMENTUM & VOLUME ACCELERATION CALCULATIONS
+// =========================================================================
+// Technical Overlays
+fastEma = ta.ema(close, fastEmaLen)
+slowEma = ta.ema(close, slowEmaLen)
+baseEma = ta.ema(close, baselineEmaLen)
+vwapVal = ta.vwap(close)
+atr14   = ta.atr(14)
+
+// Volume & RVOL
+volSma20 = ta.sma(volume, 20)
+rvol     = volSma20 > 0 ? (volume / volSma20) : 1.0
+
+// Volume Acceleration: current volume vs 5-bar and 15-bar volume rates
+volRate5  = ta.sma(volume, 5)
+volAccel5 = volRate5 > 0 ? (volume / volRate5) : 1.0
+
+// Price Displacement Efficiency: |Delta Price| per million shares
+deltaPrice = math.abs(close - close[1])
+sharesInMillions = math.max(0.01, volume / 1000000.0)
+dispEfficiency = deltaPrice / sharesInMillions
+
+// Velocity (price rate of change smoothed)
+velocity = ta.ema(ta.roc(close, 3), 3)
+
+// =========================================================================
+// 3. TWO-SIDED OPTIONS POSITION MODELING
+// =========================================================================
+var float combinedEntryDebit = entryDebitCall + entryDebitPut // $1.90 per pair
+var float totalInvested = combinedEntryDebit * 100.0 * contractPairs // $190.00
+var float requiredExitPerPair = combinedEntryDebit + (targetNetProfit / (100.0 * contractPairs)) // $3.90
+var float effectiveEntryPrice = entryPriceStock > 0 ? entryPriceStock : close[0]
+
+// Simulated option leg intrinsic & delta expansion
+priceDisplacement = close - effectiveEntryPrice
+callIntrinsic = math.max(0.0, priceDisplacement)
+putIntrinsic  = math.max(0.0, -priceDisplacement)
+
+// Model combined option valuation
+// In the money leg captures ~0.60-0.90 delta, out of money decays
+estDeltaCall = 0.50 + math.min(0.40, math.max(-0.40, (priceDisplacement / (atr14 * 2.0)) * 0.40))
+estDeltaPut  = 0.50 - math.min(0.40, math.max(-0.40, (priceDisplacement / (atr14 * 2.0)) * 0.40))
+
+estCallVal = math.max(0.05, entryDebitCall + (priceDisplacement * estDeltaCall))
+estPutVal  = math.max(0.05, entryDebitPut - (priceDisplacement * estDeltaPut))
+estCombinedBid = estCallVal + estPutVal
+estTotalValue = estCombinedBid * 100.0 * contractPairs
+unrealizedPnl = estTotalValue - totalInvested
+
+// High water mark / Peak unrealized P&L
+var float peakPnl = 0.0
+peakPnl := math.max(peakPnl, unrealizedPnl)
+
+// =========================================================================
+// 4. ACTIONABLE EXIT, REVERSAL & WARNING TRIGGERS
+// =========================================================================
+// 1. Profit Target Reached
+targetReached = estCombinedBid >= requiredExitPerPair or unrealizedPnl >= targetNetProfit
+
+// 2. Momentum Weakening Warning
+// Price crosses against prevailing side of straddle or velocity stalls with fading volume
+prevailingLong  = close > effectiveEntryPrice
+prevailingShort = close < effectiveEntryPrice
+momentumFading  = (prevailingLong and ta.crossunder(close, fastEma)) or (prevailingShort and ta.crossover(close, fastEma)) or (rvol < 0.9 and math.abs(velocity) < 0.2)
+warnMomentumFade = momentumFading and unrealizedPnl > 50.0 and not targetReached
+
+// 3. Peak-Profit Trailing Warning
+// If profit was >= $100 and retraces by trailRetracePct%
+warnPeakDrawdown = peakPnl >= 100.0 and (unrealizedPnl < (peakPnl * (1.0 - (trailRetracePct / 100.0)))) and unrealizedPnl > 0.0
+
+// =========================================================================
+// 5. VISUALIZATION OVERLAYS
+// =========================================================================
+plot(fastEma, "Fast EMA (9)", color=color.new(color.teal, 0), linewidth=1)
+plot(slowEma, "Slow EMA (21)", color=color.new(color.orange, 0), linewidth=1)
+plot(baseEma, "Baseline EMA (55)", color=color.new(color.blue, 20), linewidth=2)
+plot(vwapVal, "Session VWAP", color=color.new(color.purple, 10), linewidth=2)
+
+// Signal Shapes
+plotshape(targetReached and not targetReached[1], "Target Reached ($200 Net)", shape.labelup, location.belowbar, color=color.green, text="TARGET\n+$200", textcolor=color.white, size=size.normal)
+plotshape(warnMomentumFade and not warnMomentumFade[1], "Momentum Weakening Warning", shape.triangledown, location.abovebar, color=color.yellow, text="MOM FADE", textcolor=color.black, size=size.small)
+plotshape(warnPeakDrawdown and not warnPeakDrawdown[1], "Peak Trailing Warning", shape.flag, location.abovebar, color=color.red, text="PEAK DROP", textcolor=color.white, size=size.small)
+
+// Dashboard Table
+var table dash = table.new(position.top_right, 2, 7, bgcolor=color.new(color.black, 20), border_width=1, border_color=color.gray)
+if barstate.islast
+    table.cell(dash, 0, 0, "MyMI Straddle", bgcolor=color.blue, text_color=color.white)
+    table.cell(dash, 1, 0, syminfo.ticker, bgcolor=color.blue, text_color=color.white)
+    
+    table.cell(dash, 0, 1, "Entry Debit", text_color=color.silver)
+    table.cell(dash, 1, 1, "$" + str.tostring(combinedEntryDebit, "#.##") + " ($" + str.tostring(totalInvested, "#") + ")", text_color=color.white)
+    
+    table.cell(dash, 0, 2, "Current Bid", text_color=color.silver)
+    table.cell(dash, 1, 2, "$" + str.tostring(estCombinedBid, "#.##"), text_color=color.white)
+    
+    color pnlCol = unrealizedPnl >= targetNetProfit ? color.green : (unrealizedPnl > 0 ? color.teal : color.red)
+    table.cell(dash, 0, 3, "Unrealized P&L", text_color=color.silver)
+    table.cell(dash, 1, 3, (unrealizedPnl >= 0 ? "+$" : "-$") + str.tostring(math.abs(unrealizedPnl), "#.##"), bgcolor=pnlCol, text_color=color.white)
+    
+    table.cell(dash, 0, 4, "Target Profit", text_color=color.silver)
+    table.cell(dash, 1, 4, "+$" + str.tostring(targetNetProfit, "#.##") + " ($" + str.tostring(requiredExitPerPair, "#.##") + ")", text_color=color.green)
+    
+    table.cell(dash, 0, 5, "RVOL / Accel", text_color=color.silver)
+    table.cell(dash, 1, 5, str.tostring(rvol, "#.##") + "x / " + str.tostring(volAccel5, "#.##") + "x", text_color=color.white)
+    
+    string statusText = targetReached ? "TARGET REACHED" : (warnPeakDrawdown ? "PEAK DRAWDOWN" : (warnMomentumFade ? "MOM WEAKENING" : "ACTIVE / HOLD"))
+    color statusBg = targetReached ? color.green : (warnPeakDrawdown ? color.red : (warnMomentumFade ? color.yellow : color.teal))
+    table.cell(dash, 0, 6, "Strategy Status", text_color=color.silver)
+    table.cell(dash, 1, 6, statusText, bgcolor=statusBg, text_color=color.black)
+
+// =========================================================================
+// 6. STRUCTURED WEBHOOK ALERTS (DISPATCH TO MyMI WALLET)
+// =========================================================================
+if enableWebhookAlerts
+    if targetReached and not targetReached[1]
+        string jsonTarget = '{"secret":"' + webhookSecret + '","ticker":"' + syminfo.ticker + '","signal":"target_reached","timeframe":"' + timeframe.period + '","price":' + str.tostring(close) + ',"combined_bid":' + str.tostring(estCombinedBid) + ',"unrealized_pnl":' + str.tostring(unrealizedPnl) + ',"rvol":' + str.tostring(rvol) + ',"timestamp":"' + str.tostring(timenow) + '"}'
+        alert(jsonTarget, alert.freq_once_per_bar_close)
+        
+    if warnMomentumFade and not warnMomentumFade[1]
+        string jsonFade = '{"secret":"' + webhookSecret + '","ticker":"' + syminfo.ticker + '","signal":"momentum_weakening","timeframe":"' + timeframe.period + '","price":' + str.tostring(close) + ',"combined_bid":' + str.tostring(estCombinedBid) + ',"unrealized_pnl":' + str.tostring(unrealizedPnl) + ',"rvol":' + str.tostring(rvol) + ',"timestamp":"' + str.tostring(timenow) + '"}'
+        alert(jsonFade, alert.freq_once_per_bar_close)
+
+    if warnPeakDrawdown and not warnPeakDrawdown[1]
+        string jsonDrawdown = '{"secret":"' + webhookSecret + '","ticker":"' + syminfo.ticker + '","signal":"peak_drawdown","timeframe":"' + timeframe.period + '","price":' + str.tostring(close) + ',"combined_bid":' + str.tostring(estCombinedBid) + ',"peak_pnl":' + str.tostring(peakPnl) + ',"unrealized_pnl":' + str.tostring(unrealizedPnl) + ',"timestamp":"' + str.tostring(timenow) + '"}'
+        alert(jsonDrawdown, alert.freq_once_per_bar_close)

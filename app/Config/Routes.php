@@ -412,6 +412,7 @@ $routes->group('', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 
     // $routes->get('/Support', 'DashboardController::support', ['as' => 'support']);
     // $routes->match(['GET', 'POST'], '/', 'InvestmentsController::tradeTracker');
     $routes->get('/Trade-Tracker', 'InvestmentsController::tradeTracker', ['as' => 'mymi-trade-tracker']);
+    $routes->get('/Investments/Options', '\App\Modules\User\Controllers\OptionsController::index', ['as' => 'mymi-options-momentum']);
     $routes->get('/Trade-Tracker/getTradeData', 'InvestmentsController::getTradeData', ['as' => 'get-trade-tracker-data']);
     $routes->post('/Trade-Tracker/saveTradeData', 'InvestmentsController::saveTradeData', ['as' => 'save-trade-tracker-data']);
     $routes->get('/MyMI-Gold/Goals/(:segment)', 'DashboardController::goals', ['as' => 'mymi-gold-daily-goals']);
@@ -2476,6 +2477,12 @@ $routes->group('API/Alerts', ['namespace' => '\\App\\Modules\\APIs\\Controllers'
     $routes->match(['GET', 'POST'], 'processAllEmails', 'AlertsController::processAllEmails');
     $routes->get('previewScraper/(:num)', 'AlertsController::previewScraper/$1');
     $routes->get('scanner', 'AlertsAPIController::scanner', ['filter' => 'internalToken']);
+});
+
+$routes->group('API/Options', ['namespace' => '\App\Modules\APIs\Controllers'], static function($routes) {
+    $routes->post('webhook', 'OptionsWebhookController::receiveWebhook');
+    $routes->get('candidates', 'OptionsWebhookController::candidates');
+    $routes->get('positions', 'OptionsWebhookController::positions');
 });
 
 $routes->group('system', static function($routes) {
