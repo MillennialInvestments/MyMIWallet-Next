@@ -98,6 +98,12 @@ abstract class SafeBaseCommand extends BaseCommand implements
             if (is_string($index)) {
                 $key = ltrim($index, '-');
 
+                if (strpos($key, '=') !== false) {
+                    [$k, $v] = explode('=', $key, 2);
+                    $flags[$k] = $v;
+                    continue;
+                }
+
                 if ($param === null || $param === true || $param === '') {
                     $flags[$key] = true;
                     continue;

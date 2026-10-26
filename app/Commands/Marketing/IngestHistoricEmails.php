@@ -25,10 +25,10 @@ class IngestHistoricEmails extends SafeBaseCommand
     {
         [$args, $flags] = $this->parseParams($params);
 
-        $limit = isset($flags['limit']) ? max(5, (int) $flags['limit']) : 250;
-        $batches = isset($flags['batches']) ? max(1, (int) $flags['batches']) : 1;
-        $target = strtolower((string) ($flags['mailbox'] ?? 'all'));
-        $resetCursor = isset($flags['reset-cursor']);
+        $limit = max(5, (int) ($flags['limit'] ?? (CLI::getOption('limit') ?? 250)));
+        $batches = max(1, (int) ($flags['batches'] ?? (CLI::getOption('batches') ?? 1)));
+        $target = strtolower((string) ($flags['mailbox'] ?? (CLI::getOption('mailbox') ?? 'all')));
+        $resetCursor = isset($flags['reset-cursor']) || CLI::getOption('reset-cursor') !== null;
 
         CLI::write("\n=========================================================================", 'yellow');
         CLI::write("   MyMI Historic Email Archive Ingestion · Segmented Processing Engine   ", 'white');
