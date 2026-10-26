@@ -34,12 +34,15 @@ class AlphaVantageCatalystService
             $cfg = new OptionsStrategy();
         }
 
-        $resolvedKey = $apiKey
-            ?: ($cfg->alphaVantageApiKey ?? '')
-            ?: (string) env('ALPHA_VANTAGE_API_KEY')
-            ?: (string) env('ALPHAVANTAGE_API_KEY')
-            ?: (string) env('ALPHA_VANTAGE_KEY')
-            ?: '';
+        if ($apiKey !== null) {
+            $resolvedKey = $apiKey;
+        } else {
+            $resolvedKey = ($cfg->alphaVantageApiKey ?? '')
+                ?: (string) env('ALPHA_VANTAGE_API_KEY')
+                ?: (string) env('ALPHAVANTAGE_API_KEY')
+                ?: (string) env('ALPHA_VANTAGE_KEY')
+                ?: '';
+        }
 
         $this->apiKey = trim($resolvedKey);
         $this->enabled = (bool) ($cfg->enableAlphaVantageCatalyst ?? true);
@@ -50,6 +53,11 @@ class AlphaVantageCatalystService
     /**
      * Check if an API key is configured.
      */
+    public static function clearCache(): void
+    {
+        self::$memoryCache = [];
+    }
+
     public function isConfigured(): bool
     {
         return $this->apiKey !== '';

@@ -387,8 +387,9 @@ final class OptionsMomentumTest extends CIUnitTestCase
      */
     public function testAlphaVantageCatalystServiceGracefulFallbackWhenNoKey(): void
     {
+        \App\Services\Options\AlphaVantageCatalystService::clearCache();
         $service = new \App\Services\Options\AlphaVantageCatalystService('');
-        $catalyst = $service->getTickerCatalyst('TSLA');
+        $catalyst = $service->getTickerCatalyst('TSLA', false);
 
         $this->assertFalse($catalyst['available']);
         $this->assertSame('Neutral', $catalyst['sentiment_label']);
