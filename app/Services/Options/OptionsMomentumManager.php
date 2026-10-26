@@ -260,16 +260,29 @@ class OptionsMomentumManager
         ?float $callStrike = null,
         ?float $putStrike = null,
         ?float $callTargetBalance = null,
-        ?float $putTargetBalance = null
+        ?float $putTargetBalance = null,
+        ?string $strategy = null
     ): array {
         $ticker = strtoupper($ticker);
         $now = date('Y-m-d H:i:s');
         $expiry = date('Y-m-d', strtotime("+{$dte} days"));
-        $strike = round($stockPrice, 0);
 
-        $callStrike = $callStrike !== null && $callStrike > 0 ? $callStrike : $strike;
-        $putStrike  = $putStrike !== null && $putStrike > 0 ? $putStrike : $strike;
+        $stepSize = $stockPrice > 250.0 ? 5.0 : ($stockPrice > 50.0 ? 1.0 : 0.5);
+        $atmStrike = round($stockPrice / $stepSize) * $stepSize;
 
+        if ($strategy === 'straddle') {
+            $callStrike = ($callStrike !== null && $callStrike > 0) ? $callStrike : $atmStrike;
+            $putStrike  = ($putStrike !== null && $putStrike > 0) ? $putStrike : $atmStrike;
+            $strategyName = 'long_straddle';
+        } else {
+            // Default: OTM Strangle (Call above stock, Put below stock)
+            $defaultCall = round(($stockPrice * 1.04) / $stepSize) * $stepSize;
+            $defaultPut  = round(($stockPrice * 0.96) / $stepSize) * $stepSize;
+            $callStrike = ($callStrike !== null && $callStrike > 0) ? $callStrike : $defaultCall;
+            $putStrike  = ($putStrike !== null && $putStrike > 0) ? $putStrike : $defaultPut;
+            $strategyName = ($callStrike != $putStrike) ? 'long_strangle' : 'long_straddle';
+        }
+        $strike = $atmStrike;
         // Position sizing based on target balance entry ($100 Call / $100 Put)
         $contractsCall = $contracts;
         $contractsPut  = $contracts;
@@ -289,7 +302,7 @@ class OptionsMomentumManager
         $positionId = (int) $this->positionModel->insert([
             'trade_uuid' => $uuid,
             'ticker' => $ticker,
-            'strategy' => 'long_straddle',
+            'strategy' => $strategyName,
             'expiry' => $expiry,
             'contracts_count' => $contracts,
             'call_strike' => $callStrike,
@@ -369,6 +382,7 @@ class OptionsMomentumManager
             'position_id' => $positionId,
             'trade_uuid' => $uuid,
             'ticker' => $ticker,
+            'strategy' => $strategyName,
             'call_strike' => $callStrike,
             'put_strike' => $putStrike,
             'strike' => $strike,

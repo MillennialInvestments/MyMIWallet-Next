@@ -37,12 +37,14 @@ final class OptionsMomentumTest extends CIUnitTestCase
         $this->assertNotEmpty($result['all_results']);
 
         foreach ($result['all_results'] as $candidate) {
-            $this->assertSame('long_straddle', $candidate['strategy']);
+            $this->assertSame('long_strangle', $candidate['strategy']);
             $this->assertEqualsWithDelta(1.90, (float) $candidate['combined_debit'], 0.001);
             $this->assertEqualsWithDelta(200.0, (float) $candidate['target_profit'], 0.001);
             $this->assertEqualsWithDelta(3.90, (float) $candidate['required_exit_value'], 0.001);
             $this->assertGreaterThan(0.0, (float) $candidate['call_strike']);
             $this->assertGreaterThan(0.0, (float) $candidate['put_strike']);
+            $this->assertGreaterThanOrEqual((float) $candidate['stock_price'], (float) $candidate['call_strike']);
+            $this->assertLessThanOrEqual((float) $candidate['stock_price'], (float) $candidate['put_strike']);
             $this->assertEqualsWithDelta(100.0, (float) $candidate['call_target_balance'], 0.001);
             $this->assertEqualsWithDelta(100.0, (float) $candidate['put_target_balance'], 0.001);
             $this->assertEqualsWithDelta(200.0, (float) $candidate['total_target_balance'], 0.001);
@@ -281,5 +283,58 @@ final class OptionsMomentumTest extends CIUnitTestCase
         $resp = $service->ingest($payload);
         $this->assertSame('deduplicated', $resp['status']);
         $this->assertArrayHasKey('hash', $resp);
+    }
+
+    /**
+     * Test scanner when ATM straddle strategy is explicitly requested.
+     */
+    public function testOptionsScannerWithStraddleStrategy(): void
+    {
+        $scanner = new OptionsScannerEngine(null);
+
+        $result = $scanner->scan([
+            'universe' => ['NVDA'],
+            'strategy' => 'straddle',
+            'dry_run' => true,
+        ]);
+
+        $this->assertSame(1, $result['scanned_count']);
+        $candidate = $result['all_results'][0];
+
+        $this->assertSame('long_straddle', $candidate['strategy']);
+        $this->assertEqualsWithDelta($candidate['call_strike'], $candidate['put_strike'], 0.001);
+    }
+
+    /**
+     * Test the user's specific scenario: Stock at $200, Put strike $150, Call strike $210 at $100 target balance each.
+     */
+    public function testUserScenarioStrangleWithSpecificStrikesAndTargetBalance(): void
+    {
+        $scanner = new OptionsScannerEngine(null);
+
+        $result = $scanner->scan([
+            'universe' => ['NVDA'],
+            'strategy' => 'strangle',
+            'call_strike' => 210.0,
+            'put_strike' => 150.0,
+            'call_target_balance' => 100.0,
+            'put_target_balance' => 100.0,
+            'call_debit' => 0.95,
+            'put_debit' => 0.95,
+            'target_profit' => 200.0,
+            'dry_run' => true,
+        ]);
+
+        $this->assertSame(1, $result['scanned_count']);
+        $candidate = $result['all_results'][0];
+
+        $this->assertSame('long_strangle', $candidate['strategy']);
+        $this->assertSame(210.0, (float) $candidate['call_strike']);
+        $this->assertSame(150.0, (float) $candidate['put_strike']);
+        $this->assertSame(100.0, (float) $candidate['call_target_balance']);
+        $this->assertSame(100.0, (float) $candidate['put_target_balance']);
+        $this->assertSame(200.0, (float) $candidate['total_target_balance']);
+        $this->assertSame(1, $candidate['contracts_call']);
+        $this->assertSame(1, $candidate['contracts_put']);
     }
 }

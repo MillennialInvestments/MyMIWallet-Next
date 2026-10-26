@@ -53,6 +53,8 @@ class OptionsScannerEngine
      *
      * @param array $options [
      *   'universe' => list<string>,
+     *   'strategy' => string ('strangle'|'straddle', default 'strangle'),
+     *   'otm_offset_pct' => float (default from config: 4.0),
      *   'target_profit' => float (default from config: 200.0),
      *   'call_debit' => float (default from config: 0.95),
      *   'put_debit' => float (default from config: 0.95),
@@ -74,6 +76,9 @@ class OptionsScannerEngine
         $universe = ! empty($options['universe']) ? (array) $options['universe'] : $cfg->universe;
         $universe = array_values(array_unique(array_map('strtoupper', $universe)));
 
+        $strategy = (string) ($options['strategy'] ?? $cfg->defaultStrategy ?? 'strangle');
+        $otmOffsetPct = (float) ($options['otm_offset_pct'] ?? $cfg->defaultOtmOffsetPct ?? 4.0);
+
         $targetProfit = (float) ($options['target_profit'] ?? $cfg->targetNetProfit);
         $callDebit = (float) ($options['call_debit'] ?? $cfg->defaultCallDebit);
         $putDebit = (float) ($options['put_debit'] ?? $cfg->defaultPutDebit);
@@ -94,6 +99,8 @@ class OptionsScannerEngine
 
         foreach ($universe as $ticker) {
             $candidate = $this->evaluateTicker($ticker, [
+                'strategy' => $strategy,
+                'otm_offset_pct' => $otmOffsetPct,
                 'target_profit' => $targetProfit,
                 'call_debit' => $callDebit,
                 'put_debit' => $putDebit,
@@ -131,6 +138,7 @@ class OptionsScannerEngine
             'universe_count' => count($universe),
             'scanned_count' => count($results),
             'qualified_count' => count($qualified),
+            'strategy' => $strategy,
             'target_balance_call' => $callTargetBalance,
             'target_balance_put' => $putTargetBalance,
             'total_target_balance' => $totalTargetBalance,
@@ -147,19 +155,37 @@ class OptionsScannerEngine
         $candles = $this->fetchCandles($ticker);
         $price = $this->extractCurrentPrice($ticker, $candles);
 
-        // Derive ATM Strike or use explicit strikes
-        $atmStrike = round($price, 0);
-        if ($price > 250) {
-            $atmStrike = round($price / 5.0) * 5.0; // Round to nearest 5 for large tickers
+        $strategy = (string) ($params['strategy'] ?? 'strangle');
+        $otmOffsetPct = (float) ($params['otm_offset_pct'] ?? 4.0);
+
+        // Strike Step Size ($0.50, $1.00, or $5.00 for price > 250)
+        $stepSize = $price > 250.0 ? 5.0 : ($price > 50.0 ? 1.0 : 0.5);
+
+        // Derive Strikes based on Strategy
+        if ($strategy === 'straddle') {
+            $atmStrike = round($price / $stepSize) * $stepSize;
+            $callStrike = isset($params['call_strike']) && (float) $params['call_strike'] > 0
+                ? (float) $params['call_strike']
+                : (float) $atmStrike;
+            $putStrike = isset($params['put_strike']) && (float) $params['put_strike'] > 0
+                ? (float) $params['put_strike']
+                : (float) $atmStrike;
+            $strategyName = 'long_straddle';
+        } else {
+            // Default: OTM Strangle (Call ABOVE price, Put BELOW price)
+            $defaultCallStrike = round(($price * (1.0 + ($otmOffsetPct / 100.0))) / $stepSize) * $stepSize;
+            $defaultPutStrike  = round(($price * (1.0 - ($otmOffsetPct / 100.0))) / $stepSize) * $stepSize;
+
+            $callStrike = isset($params['call_strike']) && (float) $params['call_strike'] > 0
+                ? (float) $params['call_strike']
+                : (float) $defaultCallStrike;
+
+            $putStrike = isset($params['put_strike']) && (float) $params['put_strike'] > 0
+                ? (float) $params['put_strike']
+                : (float) $defaultPutStrike;
+
+            $strategyName = 'long_strangle';
         }
-
-        $callStrike = isset($params['call_strike']) && (float) $params['call_strike'] > 0
-            ? (float) $params['call_strike']
-            : (float) $atmStrike;
-
-        $putStrike = isset($params['put_strike']) && (float) $params['put_strike'] > 0
-            ? (float) $params['put_strike']
-            : (float) $atmStrike;
 
         // Position sizing based on target balance entry ($100 Call / $100 Put)
         $callDebit = (float) $params['call_debit'];
@@ -247,7 +273,7 @@ class OptionsScannerEngine
 
         return [
             'ticker' => $ticker,
-            'strategy' => 'long_straddle',
+            'strategy' => $strategyName,
             'expiry' => $params['expiry'],
             'dte' => (int) $params['dte'],
             'stock_price' => round($price, 4),

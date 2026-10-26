@@ -5,9 +5,12 @@ indicator("MyMI Options Opportunity & Trade Momentum Tracker v6", overlay=true, 
 // 1. INPUT CONFIGURATION (VARIABLE STRATEGY & BALANCE SETTINGS)
 // =========================================================================
 var string GRP_OPT = "Weekly Options Strategy & Position"
-callStrikeInput     = input.float(0.0, "Call Strike Price (0 = Auto ATM)", group=GRP_OPT, step=0.5)
-putStrikeInput      = input.float(0.0, "Put Strike Price (0 = Auto ATM)", group=GRP_OPT, step=0.5)
+strategyStructure   = input.string("OTM Strangle (Recommended)", "Strategy Structure", options=["OTM Strangle (Recommended)", "ATM Straddle", "Custom Strikes"], group=GRP_OPT)
+otmOffsetPct        = input.float(4.0, "Auto OTM Strike Distance (%)", group=GRP_OPT, step=0.5, tooltip="For OTM Strangle: % above market for Call strike, % below for Put strike")
+callStrikeInput     = input.float(0.0, "Manual Call Strike (used if > 0)", group=GRP_OPT, step=0.5, tooltip="E.g. $210 for a $200 stock")
+putStrikeInput      = input.float(0.0, "Manual Put Strike (used if > 0)", group=GRP_OPT, step=0.5, tooltip="E.g. $150 or $190 for a $200 stock")
 strikeInterval      = input.float(0.0, "Strike Step/Interval (0 = Auto: $0.5, $1, $5)", group=GRP_OPT, step=0.5)
+
 targetBalanceCall   = input.float(100.0, "Call Target Entry Balance ($)", group=GRP_OPT, step=10.0)
 targetBalancePut    = input.float(100.0, "Put Target Entry Balance ($)", group=GRP_OPT, step=10.0)
 entryDebitCall      = input.float(0.95, "Call Leg Entry Debit ($)", group=GRP_OPT, step=0.05)
@@ -15,7 +18,7 @@ entryDebitPut       = input.float(0.95, "Put Leg Entry Debit ($)", group=GRP_OPT
 targetNetProfit     = input.float(200.0, "Target Net Profit ($)", group=GRP_OPT, step=25.0)
 sizingMode          = input.string("Target Balance ($100/leg)", "Position Sizing Mode", options=["Target Balance ($100/leg)", "Fixed Contract Pairs"], group=GRP_OPT)
 contractPairs       = input.int(1, "Fixed Contract Pairs (if Fixed mode)", group=GRP_OPT, minval=1)
-entryPriceStock     = input.float(0.0, "Entry Stock Price (0 = Current Close)", group=GRP_OPT)
+entryPriceStock     = input.float(0.0, "Entry Stock Price (0 = Auto Session Open / Current)", group=GRP_OPT)
 enableWebhookAlerts = input.bool(true, "Enable Structured Webhook Alerts", group=GRP_OPT)
 webhookSecret       = input.string("mymi-options-secure-key", "Webhook Secret / Bearer Token", group=GRP_OPT)
 
@@ -48,13 +51,31 @@ velocity = ta.ema(ta.roc(close, 3), 3)
 // =========================================================================
 // 3. STRIKES & TARGET BALANCE ENTRY POSITION MODELING
 // =========================================================================
-// Dynamic strike calculation when not explicitly set
-autoStep = close > 250.0 ? 5.0 : (close > 50.0 ? 1.0 : 0.5)
-stepSize = strikeInterval > 0 ? strikeInterval : autoStep
-atmBase  = math.round(close / stepSize) * stepSize
+// Entry Price Anchor (explicit input, session open, or first bar)
+sessionOpen = ta.valuewhen(ta.change(time("D")) != 0, open, 0)
+effectiveEntryPrice = entryPriceStock > 0 ? entryPriceStock : (na(sessionOpen) ? close : sessionOpen)
 
-calcCallStrike = callStrikeInput > 0 ? callStrikeInput : atmBase
-calcPutStrike  = putStrikeInput > 0 ? putStrikeInput : atmBase
+// Strike Step Size
+autoStep = effectiveEntryPrice > 250.0 ? 5.0 : (effectiveEntryPrice > 50.0 ? 1.0 : 0.5)
+stepSize = strikeInterval > 0 ? strikeInterval : autoStep
+
+// Compute Strikes based on strategy structure
+float calcCallStrike = 0.0
+float calcPutStrike  = 0.0
+
+if strategyStructure == "Custom Strikes" or (callStrikeInput > 0 and putStrikeInput > 0)
+    calcCallStrike := callStrikeInput > 0 ? callStrikeInput : math.round((effectiveEntryPrice * (1.0 + (otmOffsetPct / 100.0))) / stepSize) * stepSize
+    calcPutStrike  := putStrikeInput > 0  ? putStrikeInput  : math.round((effectiveEntryPrice * (1.0 - (otmOffsetPct / 100.0))) / stepSize) * stepSize
+else if strategyStructure == "ATM Straddle"
+    atmBase = math.round(effectiveEntryPrice / stepSize) * stepSize
+    calcCallStrike := callStrikeInput > 0 ? callStrikeInput : atmBase
+    calcPutStrike  := putStrikeInput > 0  ? putStrikeInput  : atmBase
+else
+    // Default: OTM Strangle (Call ABOVE price e.g. $210, Put BELOW price e.g. $190 or $150)
+    rawCall = effectiveEntryPrice * (1.0 + (otmOffsetPct / 100.0))
+    rawPut  = effectiveEntryPrice * (1.0 - (otmOffsetPct / 100.0))
+    calcCallStrike := callStrikeInput > 0 ? callStrikeInput : math.round(rawCall / stepSize) * stepSize
+    calcPutStrike  := putStrikeInput > 0  ? putStrikeInput  : math.round(rawPut  / stepSize) * stepSize
 
 // Position sizing by target balance ($100 Call / $100 Put default) or fixed contracts
 int contractsCall = 1
@@ -79,17 +100,40 @@ float totalInvested        = actualOutlayCall + actualOutlayPut   // e.g. $190.0
 float combinedEntryDebit   = entryDebitCall + entryDebitPut       // e.g. $1.90 combined debit per pair
 float maxContracts         = math.max(contractsCall, contractsPut)
 float requiredExitPerPair  = combinedEntryDebit + (targetNetProfit / (100.0 * maxContracts)) // e.g. $3.90
-float effectiveEntryPrice  = entryPriceStock > 0 ? entryPriceStock : close[0]
 
-// Real-time Option Leg Valuation Relative to Configured Strikes
-displacementCall = close - calcCallStrike
-displacementPut  = calcPutStrike - close
+// =========================================================================
+// Real-time Option Leg Valuation Relative to Entry & OTM Strikes
+// =========================================================================
+stockMove  = close - effectiveEntryPrice
+distToCall = math.max(0.5, calcCallStrike - effectiveEntryPrice)
+distToPut  = math.max(0.5, effectiveEntryPrice - calcPutStrike)
 
-estDeltaCall = 0.50 + math.min(0.40, math.max(-0.40, (displacementCall / (atr14 * 2.0)) * 0.40))
-estDeltaPut  = 0.50 + math.min(0.40, math.max(-0.40, (displacementPut  / (atr14 * 2.0)) * 0.40))
+float estCallVal = entryDebitCall
+float estPutVal  = entryDebitPut
 
-estCallVal = math.max(0.05, entryDebitCall + (displacementCall * estDeltaCall))
-estPutVal  = math.max(0.05, entryDebitPut + (displacementPut * estDeltaPut))
+if stockMove > 0
+    // Stock is rallying UP towards / beyond Call Strike
+    coverageCall = stockMove / distToCall
+    callDelta = coverageCall < 1.0 ? (0.28 + (0.22 * coverageCall)) : math.min(0.95, 0.50 + (0.45 * math.min(1.0, (stockMove - distToCall) / math.max(1.0, atr14 * 2.0))))
+    estCallVal := math.max(entryDebitCall * 0.10, entryDebitCall + (stockMove * callDelta))
+    if close > calcCallStrike
+        estCallVal := math.max(estCallVal, (close - calcCallStrike) + (entryDebitCall * 0.50))
+    // Put decays as price moves away
+    estPutVal := math.max(0.02, entryDebitPut - (stockMove * 0.10))
+else if stockMove < 0
+    // Stock is dumping DOWN towards / beyond Put Strike
+    downMove = math.abs(stockMove)
+    coveragePut = downMove / distToPut
+    putDelta = coveragePut < 1.0 ? (0.28 + (0.22 * coveragePut)) : math.min(0.95, 0.50 + (0.45 * math.min(1.0, (downMove - distToPut) / math.max(1.0, atr14 * 2.0))))
+    estPutVal := math.max(entryDebitPut * 0.10, entryDebitPut + (downMove * putDelta))
+    if close < calcPutStrike
+        estPutVal := math.max(estPutVal, (calcPutStrike - close) + (entryDebitPut * 0.50))
+    // Call decays as price moves away
+    estCallVal := math.max(0.02, entryDebitCall - (downMove * 0.10))
+else
+    estCallVal := entryDebitCall
+    estPutVal  := entryDebitPut
+
 estCombinedBid = estCallVal + estPutVal
 estTotalValue = (estCallVal * 100.0 * contractsCall) + (estPutVal * 100.0 * contractsPut)
 unrealizedPnl = estTotalValue - totalInvested
@@ -119,8 +163,9 @@ plot(baseEma, "Baseline EMA (55)", color=color.new(color.blue, 20), linewidth=2)
 plot(vwapVal, "Session VWAP", color=color.new(color.purple, 10), linewidth=2)
 
 // Horizontal Strike Level Plots
-plot(calcCallStrike, "Call Strike", color=color.new(color.teal, 35), linewidth=1, style=plot.style_circles)
-plot(calcPutStrike,  "Put Strike",  color=color.new(color.maroon, 35), linewidth=1, style=plot.style_circles)
+plot(calcCallStrike, "Call Strike Level", color=color.new(color.teal, 20), linewidth=2, style=plot.style_linebr)
+plot(calcPutStrike,  "Put Strike Level",  color=color.new(color.maroon, 20), linewidth=2, style=plot.style_linebr)
+plot(effectiveEntryPrice, "Entry Anchor Price", color=color.new(color.silver, 50), linewidth=1, style=plot.style_circles)
 
 // Signal Shapes
 plotshape(targetReached and not targetReached[1], "Target Reached ($200 Net)", shape.labelup, location.belowbar, color=color.green, text="TARGET\n+$200", textcolor=color.white, size=size.normal)
@@ -130,8 +175,9 @@ plotshape(warnPeakDrawdown and not warnPeakDrawdown[1], "Peak Trailing Warning",
 // Dashboard Table
 var table dash = table.new(position.top_right, 2, 9, bgcolor=color.new(color.black, 20), border_width=1, border_color=color.gray)
 if barstate.islast
-    table.cell(dash, 0, 0, "MyMI Straddle", bgcolor=color.blue, text_color=color.white)
-    table.cell(dash, 1, 0, syminfo.ticker, bgcolor=color.blue, text_color=color.white)
+    string stratLabel = strategyStructure == "ATM Straddle" ? "MyMI Straddle" : "MyMI Strangle (OTM)"
+    table.cell(dash, 0, 0, stratLabel, bgcolor=color.blue, text_color=color.white)
+    table.cell(dash, 1, 0, syminfo.ticker + " ($" + str.tostring(close, "#.##") + ")", bgcolor=color.blue, text_color=color.white)
     
     table.cell(dash, 0, 1, "Call / Put Strikes", text_color=color.silver)
     table.cell(dash, 1, 1, "C: $" + str.tostring(calcCallStrike, "#.##") + " / P: $" + str.tostring(calcPutStrike, "#.##"), text_color=color.yellow)
@@ -165,13 +211,13 @@ if barstate.islast
 // =========================================================================
 if enableWebhookAlerts
     if targetReached and not targetReached[1]
-        string jsonTarget = '{"secret":"' + webhookSecret + '","ticker":"' + syminfo.ticker + '","signal":"target_reached","timeframe":"' + timeframe.period + '","price":' + str.tostring(close) + ',"call_strike":' + str.tostring(calcCallStrike) + ',"put_strike":' + str.tostring(calcPutStrike) + ',"target_balance_call":' + str.tostring(targetBalanceCall) + ',"target_balance_put":' + str.tostring(targetBalancePut) + ',"combined_bid":' + str.tostring(estCombinedBid) + ',"unrealized_pnl":' + str.tostring(unrealizedPnl) + ',"rvol":' + str.tostring(rvol) + ',"timestamp":"' + str.tostring(timenow) + '"}'
+        string jsonTarget = '{"secret":"' + webhookSecret + '","ticker":"' + syminfo.ticker + '","strategy":"' + strategyStructure + '","signal":"target_reached","timeframe":"' + timeframe.period + '","price":' + str.tostring(close) + ',"call_strike":' + str.tostring(calcCallStrike) + ',"put_strike":' + str.tostring(calcPutStrike) + ',"target_balance_call":' + str.tostring(targetBalanceCall) + ',"target_balance_put":' + str.tostring(targetBalancePut) + ',"combined_bid":' + str.tostring(estCombinedBid) + ',"unrealized_pnl":' + str.tostring(unrealizedPnl) + ',"rvol":' + str.tostring(rvol) + ',"timestamp":"' + str.tostring(timenow) + '"}'
         alert(jsonTarget, alert.freq_once_per_bar_close)
         
     if warnMomentumFade and not warnMomentumFade[1]
-        string jsonFade = '{"secret":"' + webhookSecret + '","ticker":"' + syminfo.ticker + '","signal":"momentum_weakening","timeframe":"' + timeframe.period + '","price":' + str.tostring(close) + ',"call_strike":' + str.tostring(calcCallStrike) + ',"put_strike":' + str.tostring(calcPutStrike) + ',"target_balance_call":' + str.tostring(targetBalanceCall) + ',"target_balance_put":' + str.tostring(targetBalancePut) + ',"combined_bid":' + str.tostring(estCombinedBid) + ',"unrealized_pnl":' + str.tostring(unrealizedPnl) + ',"rvol":' + str.tostring(rvol) + ',"timestamp":"' + str.tostring(timenow) + '"}'
+        string jsonFade = '{"secret":"' + webhookSecret + '","ticker":"' + syminfo.ticker + '","strategy":"' + strategyStructure + '","signal":"momentum_weakening","timeframe":"' + timeframe.period + '","price":' + str.tostring(close) + ',"call_strike":' + str.tostring(calcCallStrike) + ',"put_strike":' + str.tostring(calcPutStrike) + ',"target_balance_call":' + str.tostring(targetBalanceCall) + ',"target_balance_put":' + str.tostring(targetBalancePut) + ',"combined_bid":' + str.tostring(estCombinedBid) + ',"unrealized_pnl":' + str.tostring(unrealizedPnl) + ',"rvol":' + str.tostring(rvol) + ',"timestamp":"' + str.tostring(timenow) + '"}'
         alert(jsonFade, alert.freq_once_per_bar_close)
 
     if warnPeakDrawdown and not warnPeakDrawdown[1]
-        string jsonDrawdown = '{"secret":"' + webhookSecret + '","ticker":"' + syminfo.ticker + '","signal":"peak_drawdown","timeframe":"' + timeframe.period + '","price":' + str.tostring(close) + ',"call_strike":' + str.tostring(calcCallStrike) + ',"put_strike":' + str.tostring(calcPutStrike) + ',"target_balance_call":' + str.tostring(targetBalanceCall) + ',"target_balance_put":' + str.tostring(targetBalancePut) + ',"combined_bid":' + str.tostring(estCombinedBid) + ',"peak_pnl":' + str.tostring(peakPnl) + ',"unrealized_pnl":' + str.tostring(unrealizedPnl) + ',"timestamp":"' + str.tostring(timenow) + '"}'
+        string jsonDrawdown = '{"secret":"' + webhookSecret + '","ticker":"' + syminfo.ticker + '","strategy":"' + strategyStructure + '","signal":"peak_drawdown","timeframe":"' + timeframe.period + '","price":' + str.tostring(close) + ',"call_strike":' + str.tostring(calcCallStrike) + ',"put_strike":' + str.tostring(calcPutStrike) + ',"target_balance_call":' + str.tostring(targetBalanceCall) + ',"target_balance_put":' + str.tostring(targetBalancePut) + ',"combined_bid":' + str.tostring(estCombinedBid) + ',"peak_pnl":' + str.tostring(peakPnl) + ',"unrealized_pnl":' + str.tostring(unrealizedPnl) + ',"timestamp":"' + str.tostring(timenow) + '"}'
         alert(jsonDrawdown, alert.freq_once_per_bar_close)

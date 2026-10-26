@@ -23,6 +23,8 @@ class OptionsSimulateStraddle extends SafeBaseCommand
         'ticker' => 'Ticker symbol (default: NVDA)',
     ];
     protected $options     = [
+        '--strategy'     => 'Strategy structure: strangle (default, OTM strikes) or straddle (ATM strikes)',
+        '--otm-offset'   => 'Out-of-the-money offset percentage for strangle strikes (default: 4.0)',
         '--balance-call' => 'Call leg target entry balance in USD (default: from config, $100.00)',
         '--balance-put'  => 'Put leg target entry balance in USD (default: from config, $100.00)',
         '--call-strike'  => 'Explicit Call strike price (default: ATM rounded)',
@@ -63,13 +65,22 @@ class OptionsSimulateStraddle extends SafeBaseCommand
         $callTargetBalance = isset($flags['balance-call']) ? (float) $flags['balance-call'] : $cfg->callTargetBalance;
         $putTargetBalance  = isset($flags['balance-put'])  ? (float) $flags['balance-put']  : $cfg->putTargetBalance;
 
-        // Strikes
-        $atmStrike = round($stockPrice, 0);
-        if ($stockPrice > 250) {
-            $atmStrike = round($stockPrice / 5.0) * 5.0;
+        // Strategy & Strikes
+        $strategy = (string) ($flags['strategy'] ?? $cfg->defaultStrategy ?? 'strangle');
+        $otmOffset = isset($flags['otm-offset']) ? (float) $flags['otm-offset'] : ($cfg->defaultOtmOffsetPct ?? 4.0);
+        $stepSize = $stockPrice > 250.0 ? 5.0 : ($stockPrice > 50.0 ? 1.0 : 0.5);
+
+        if ($strategy === 'straddle') {
+            $atmStrike = round($stockPrice / $stepSize) * $stepSize;
+            $callStrike = isset($flags['call-strike']) ? (float) $flags['call-strike'] : $atmStrike;
+            $putStrike  = isset($flags['put-strike'])  ? (float) $flags['put-strike']  : $atmStrike;
+        } else {
+            // Default: OTM Strangle (Call above stock, Put below stock)
+            $defaultCall = round(($stockPrice * (1.0 + ($otmOffset / 100.0))) / $stepSize) * $stepSize;
+            $defaultPut  = round(($stockPrice * (1.0 - ($otmOffset / 100.0))) / $stepSize) * $stepSize;
+            $callStrike = isset($flags['call-strike']) ? (float) $flags['call-strike'] : $defaultCall;
+            $putStrike  = isset($flags['put-strike'])  ? (float) $flags['put-strike']  : $defaultPut;
         }
-        $callStrike = isset($flags['call-strike']) ? (float) $flags['call-strike'] : $atmStrike;
-        $putStrike  = isset($flags['put-strike'])  ? (float) $flags['put-strike']  : $atmStrike;
 
         // Contracts sizing
         if (isset($flags['contracts'])) {
@@ -93,7 +104,7 @@ class OptionsSimulateStraddle extends SafeBaseCommand
         CLI::write('=========================================================================', 'cyan');
         CLI::write('         MyMI Weekly Options Momentum Strategy · Paper Position          ', 'green');
         CLI::write('=========================================================================', 'cyan');
-        CLI::write(sprintf('Position UUID: %s%s', $uuid, $dryRun ? ' [DRY-RUN]' : ''), 'yellow');
+        CLI::write(sprintf('Position UUID: %s%s | Strategy: %s', $uuid, $dryRun ? ' [DRY-RUN]' : '', strtoupper($strategy)), 'yellow');
         CLI::write(sprintf(' - Underlier: %s at $%.2f', $ticker, $stockPrice), 'white');
         CLI::write(sprintf(' - Call Leg: Strike $%.2f | Debit: $%.2f | Target Balance: $%.2f -> %d contract(s) ($%.2f outlay)', $callStrike, $callDebit, $callTargetBalance, $contractsCall, $actualOutlayCall), 'white');
         CLI::write(sprintf(' - Put Leg:  Strike $%.2f | Debit: $%.2f | Target Balance: $%.2f -> %d contract(s) ($%.2f outlay)', $putStrike, $putDebit, $putTargetBalance, $contractsPut, $actualOutlayPut), 'white');
@@ -126,7 +137,8 @@ class OptionsSimulateStraddle extends SafeBaseCommand
                 callStrike: $callStrike,
                 putStrike: $putStrike,
                 callTargetBalance: $callTargetBalance,
-                putTargetBalance: $putTargetBalance
+                putTargetBalance: $putTargetBalance,
+                strategy: $strategy
             );
 
             CLI::write(sprintf('Successfully saved position #%d to database.', $result['position_id']), 'green');

@@ -18,6 +18,8 @@ class OptionsScan extends SafeBaseCommand
     protected $usage       = 'options:scan [--universe=NVDA,TSLA,AMD] [--balance-call=100] [--balance-put=100] [--profit=200] [--call=0.95] [--put=0.95] [--dte=5] [--min-rvol=1.2] [--dry-run]';
     protected $options     = [
         '--universe'     => 'Comma-separated ticker universe (default: NVDA,TSLA,AMD,COIN,SPY,QQQ,IWM)',
+        '--strategy'     => 'Strategy structure: strangle (default, OTM strikes) or straddle (ATM strikes)',
+        '--otm-offset'   => 'Out-of-the-money offset percentage for strangle strikes (default: 4.0)',
         '--balance-call' => 'Call leg target entry balance in USD (default: from config, $100.00)',
         '--balance-put'  => 'Put leg target entry balance in USD (default: from config, $100.00)',
         '--profit'       => 'Target net profit in USD (default: 200.0)',
@@ -48,6 +50,8 @@ class OptionsScan extends SafeBaseCommand
 
         $universeRaw = (string) ($flags['universe'] ?? '');
         $universe = $universeRaw !== '' ? explode(',', $universeRaw) : $cfg->universe;
+        $strategy = (string) ($flags['strategy'] ?? $cfg->defaultStrategy ?? 'strangle');
+        $otmOffsetPct = isset($flags['otm-offset']) ? (float) $flags['otm-offset'] : ($cfg->defaultOtmOffsetPct ?? 4.0);
         $callTargetBalance = isset($flags['balance-call']) ? (float) $flags['balance-call'] : $cfg->callTargetBalance;
         $putTargetBalance  = isset($flags['balance-put'])  ? (float) $flags['balance-put']  : $cfg->putTargetBalance;
         $targetProfit = isset($flags['profit']) ? (float) $flags['profit'] : $cfg->targetNetProfit;
@@ -61,7 +65,7 @@ class OptionsScan extends SafeBaseCommand
         CLI::write('      MyMI Options Opportunity Scanner · Two-Sided Weekly Momentum       ', 'green');
         CLI::write('=========================================================================', 'cyan');
         CLI::write(sprintf('Target Balance: $%.2f Call + $%.2f Put = $%.2f Total Entry Balance', $callTargetBalance, $putTargetBalance, $callTargetBalance + $putTargetBalance), 'yellow');
-        CLI::write(sprintf('Pricing Target: $%.2f Call + $%.2f Put = $%.2f Debit | Target Net Profit: +$%.2f', $callDebit, $putDebit, $callDebit + $putDebit, $targetProfit), 'white');
+        CLI::write(sprintf('Strategy: %s (%s) | Pricing: $%.2f Call + $%.2f Put = $%.2f Debit | Target Profit: +$%.2f', strtoupper($strategy), $strategy === 'straddle' ? 'ATM Strikes' : sprintf('OTM +/-%.1f%% Strikes', $otmOffsetPct), $callDebit, $putDebit, $callDebit + $putDebit, $targetProfit), 'white');
         CLI::write(sprintf('Universe: %s (%d tickers) | DTE: %d days | Min RVOL: %.2fx%s', implode(', ', $universe), count($universe), $dte, $minRvol, $dryRun ? ' [DRY-RUN]' : ''), 'white');
         CLI::newLine();
 
@@ -78,6 +82,8 @@ class OptionsScan extends SafeBaseCommand
 
         $result = $scanner->scan([
             'universe' => $universe,
+            'strategy' => $strategy,
+            'otm_offset_pct' => $otmOffsetPct,
             'target_profit' => $targetProfit,
             'call_debit' => $callDebit,
             'put_debit' => $putDebit,
@@ -100,8 +106,8 @@ class OptionsScan extends SafeBaseCommand
             $tableRows[] = [
                 $r['ticker'],
                 sprintf('$%.2f', $r['stock_price']),
-                sprintf('$%.0f', $r['call_strike']),
-                sprintf('$%.0f', $r['put_strike']),
+                sprintf($r['call_strike'] == round($r['call_strike']) ? '$%.0f' : '$%.2f', $r['call_strike']),
+                sprintf($r['put_strike'] == round($r['put_strike']) ? '$%.0f' : '$%.2f', $r['put_strike']),
                 sprintf('$%.0fC / $%.0fP', $r['call_target_balance'], $r['put_target_balance']),
                 sprintf('$%.2f', $r['historical_5d_range']),
                 sprintf('%.2fx', $r['rvol_20d']),

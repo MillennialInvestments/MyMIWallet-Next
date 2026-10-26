@@ -15,6 +15,17 @@ use CodeIgniter\Config\BaseConfig;
 class OptionsStrategy extends BaseConfig
 {
     /**
+     * Default options strategy structure: 'strangle' (OTM legs) or 'straddle' (ATM legs).
+     */
+    public string $defaultStrategy = 'strangle';
+
+    /**
+     * Default Out-of-the-Money offset percentage for strangle strikes.
+     * E.g. 4.0% puts Call strike at +4% above market and Put strike at -4% below market.
+     */
+    public float $defaultOtmOffsetPct = 4.0;
+
+    /**
      * Target capital balance entry for the Call leg (in USD).
      * Default: $100.00
      */
