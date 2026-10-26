@@ -11,23 +11,31 @@ use App\Models\Options\OptionsPositionLegModel;
 use App\Models\Options\OptionsPositionModel;
 use App\Services\Options\OptionsMomentumManager;
 use CodeIgniter\CLI\CLI;
+use Config\OptionsStrategy;
 
 class OptionsSimulateStraddle extends SafeBaseCommand
 {
     protected $group       = 'Options';
     protected $name        = 'options:simulate-straddle';
-    protected $description = 'Open a simulated paper-trade $0.95 call + $0.95 put straddle with $200 target net profit.';
-    protected $usage       = 'options:simulate-straddle [ticker] [--contracts=1] [--call=0.95] [--put=0.95] [--price=142.50] [--dte=5] [--dry-run]';
+    protected $description = 'Open a simulated paper-trade weekly options straddle with $100 target balance per leg and $200 target profit.';
+    protected $usage       = 'options:simulate-straddle [ticker] [--balance-call=100] [--balance-put=100] [--call-strike=143] [--put-strike=143] [--contracts=1] [--call=0.95] [--put=0.95] [--price=142.50] [--dte=5] [--dry-run]';
     protected $arguments   = [
         'ticker' => 'Ticker symbol (default: NVDA)',
     ];
     protected $options     = [
-        '--contracts' => 'Number of contract pairs (default: 1)',
-        '--call'      => 'Call debit per contract (default: 0.95)',
-        '--put'       => 'Put debit per contract (default: 0.95)',
-        '--price'     => 'Underlying stock price (default: 142.50)',
-        '--dte'       => 'Days to expiry (default: 5)',
-        '--dry-run'   => 'Calculate and preview straddle economics without persisting to database',
+        '--strategy'     => 'Strategy structure: strangle (default, OTM strikes) or straddle (ATM strikes)',
+        '--otm-offset'   => 'Out-of-the-money offset percentage for strangle strikes (default: 4.0)',
+        '--balance-call' => 'Call leg target entry balance in USD (default: from config, $100.00)',
+        '--balance-put'  => 'Put leg target entry balance in USD (default: from config, $100.00)',
+        '--call-strike'  => 'Explicit Call strike price (default: ATM rounded)',
+        '--put-strike'   => 'Explicit Put strike price (default: ATM rounded)',
+        '--contracts'    => 'Override contract pairs count directly',
+        '--call'         => 'Call debit per contract (default: 0.95)',
+        '--put'          => 'Put debit per contract (default: 0.95)',
+        '--price'        => 'Underlying stock price (default: 142.50)',
+        '--dte'              => 'Days to expiry (default: 5)',
+        '--alphavantage-key' => 'AlphaVantage API key to inspect catalyst news',
+        '--dry-run'          => 'Calculate and preview straddle economics without persisting to database',
     ];
 
     public function run(array $params)
@@ -43,31 +51,80 @@ class OptionsSimulateStraddle extends SafeBaseCommand
             }
         }
 
-        $ticker = strtoupper((string) ($args[0] ?? $flags['ticker'] ?? 'NVDA'));
-        $contracts = isset($flags['contracts']) ? max(1, (int) $flags['contracts']) : 1;
-        $callDebit = isset($flags['call']) ? (float) $flags['call'] : 0.95;
-        $putDebit = isset($flags['put']) ? (float) $flags['put'] : 0.95;
-        $stockPrice = isset($flags['price']) ? (float) $flags['price'] : 142.50;
-        $dte = isset($flags['dte']) ? (int) $flags['dte'] : 5;
+        $cfg = function_exists('config') ? config('OptionsStrategy') : new OptionsStrategy();
+        if (! ($cfg instanceof OptionsStrategy)) {
+            $cfg = new OptionsStrategy();
+        }
 
+        $ticker = strtoupper((string) ($args[0] ?? $flags['ticker'] ?? 'NVDA'));
+        $callDebit = isset($flags['call']) ? (float) $flags['call'] : $cfg->defaultCallDebit;
+        $putDebit = isset($flags['put']) ? (float) $flags['put'] : $cfg->defaultPutDebit;
+        $stockPrice = isset($flags['price']) ? (float) $flags['price'] : 142.50;
+        $dte = isset($flags['dte']) ? (int) $flags['dte'] : $cfg->defaultDte;
+
+        // Target balance configuration ($100 Call / $100 Put)
+        $callTargetBalance = isset($flags['balance-call']) ? (float) $flags['balance-call'] : $cfg->callTargetBalance;
+        $putTargetBalance  = isset($flags['balance-put'])  ? (float) $flags['balance-put']  : $cfg->putTargetBalance;
+
+        // Strategy & Strikes
+        $strategy = (string) ($flags['strategy'] ?? $cfg->defaultStrategy ?? 'strangle');
+        $otmOffset = isset($flags['otm-offset']) ? (float) $flags['otm-offset'] : ($cfg->defaultOtmOffsetPct ?? 4.0);
+        $stepSize = $stockPrice > 250.0 ? 5.0 : ($stockPrice > 50.0 ? 1.0 : 0.5);
+
+        if ($strategy === 'straddle') {
+            $atmStrike = round($stockPrice / $stepSize) * $stepSize;
+            $callStrike = isset($flags['call-strike']) ? (float) $flags['call-strike'] : $atmStrike;
+            $putStrike  = isset($flags['put-strike'])  ? (float) $flags['put-strike']  : $atmStrike;
+        } else {
+            // Default: OTM Strangle (Call above stock, Put below stock)
+            $defaultCall = round(($stockPrice * (1.0 + ($otmOffset / 100.0))) / $stepSize) * $stepSize;
+            $defaultPut  = round(($stockPrice * (1.0 - ($otmOffset / 100.0))) / $stepSize) * $stepSize;
+            $callStrike = isset($flags['call-strike']) ? (float) $flags['call-strike'] : $defaultCall;
+            $putStrike  = isset($flags['put-strike'])  ? (float) $flags['put-strike']  : $defaultPut;
+        }
+
+        // Contracts sizing
+        if (isset($flags['contracts'])) {
+            $contractsCall = max(1, (int) $flags['contracts']);
+            $contractsPut  = max(1, (int) $flags['contracts']);
+        } else {
+            $contractsCall = max(1, (int) round($callTargetBalance / ($callDebit * 100.0)));
+            $contractsPut  = max(1, (int) round($putTargetBalance  / ($putDebit * 100.0)));
+        }
+
+        $contracts = max($contractsCall, $contractsPut);
+        $actualOutlayCall = $contractsCall * $callDebit * 100.0;
+        $actualOutlayPut  = $contractsPut * $putDebit * 100.0;
+        $totalDebit = $actualOutlayCall + $actualOutlayPut;
         $combinedDebit = $callDebit + $putDebit; // $1.90
-        $totalDebit = $combinedDebit * 100.0 * $contracts; // $190.00
-        $targetProfit = 200.00 * $contracts; // $200.00
+        $targetProfit = $cfg->targetNetProfit * $contracts; // $200.00
         $targetExitPerPair = $combinedDebit + ($targetProfit / (100.0 * $contracts)); // $3.90
         $uuid = sprintf('opt-%s-%s-%s', strtolower($ticker), date('Ymd-His'), bin2hex(random_bytes(4)));
-        $strike = round($stockPrice, 0);
         $expiry = date('Y-m-d', strtotime("+{$dte} days"));
 
         CLI::write('=========================================================================', 'cyan');
         CLI::write('         MyMI Weekly Options Momentum Strategy · Paper Position          ', 'green');
         CLI::write('=========================================================================', 'cyan');
-        CLI::write(sprintf('Position UUID: %s%s', $uuid, $dryRun ? ' [DRY-RUN]' : ''), 'yellow');
-        CLI::write(sprintf(' - Underlier: %s at $%.2f | ATM Strike: $%.0f', $ticker, $stockPrice, $strike), 'white');
-        CLI::write(sprintf(' - Strategy: Long Straddle (1 Call @ $%.2f + 1 Put @ $%.2f)', $callDebit, $putDebit), 'white');
+        CLI::write(sprintf('Position UUID: %s%s | Strategy: %s', $uuid, $dryRun ? ' [DRY-RUN]' : '', strtoupper($strategy)), 'yellow');
+        CLI::write(sprintf(' - Underlier: %s at $%.2f', $ticker, $stockPrice), 'white');
+        CLI::write(sprintf(' - Call Leg: Strike $%.2f | Debit: $%.2f | Target Balance: $%.2f -> %d contract(s) ($%.2f outlay)', $callStrike, $callDebit, $callTargetBalance, $contractsCall, $actualOutlayCall), 'white');
+        CLI::write(sprintf(' - Put Leg:  Strike $%.2f | Debit: $%.2f | Target Balance: $%.2f -> %d contract(s) ($%.2f outlay)', $putStrike, $putDebit, $putTargetBalance, $contractsPut, $actualOutlayPut), 'white');
         CLI::write(sprintf(' - Expiration: %s (%d DTE)', $expiry, $dte), 'white');
-        CLI::write(sprintf(' - Total Outlay: $%.2f ($%.2f / pair x %d pair%s)', $totalDebit, $combinedDebit, $contracts, $contracts > 1 ? 's' : ''), 'yellow');
+
+        $avKey = $flags['alphavantage-key'] ?? null;
+        $catalystSvc = new \App\Services\Options\AlphaVantageCatalystService($avKey);
+        if ($catalystSvc->isConfigured()) {
+            $cat = $catalystSvc->getTickerCatalyst($ticker);
+            if ($cat['available']) {
+                CLI::write(sprintf(' - AlphaVantage Catalyst: %s (%+.2f) | %s', $cat['sentiment_label'], $cat['sentiment_score'], $cat['catalyst_type']), 'cyan');
+                if (! empty($cat['top_headline'])) {
+                    CLI::write(sprintf('   Headline: "%s"', substr($cat['top_headline'], 0, 75)), 'white');
+                }
+            }
+        }
+        CLI::write(sprintf(' - Total Target Balance: $%.2f | Actual Total Outlay: $%.2f', $callTargetBalance + $putTargetBalance, $totalDebit), 'yellow');
         CLI::write(sprintf(' - Target Net Profit: +$%.2f', $targetProfit), 'yellow');
-        CLI::write(sprintf(' - Required Combined Exit: $%.2f / pair ($%.2f total position value)', $targetExitPerPair, $targetExitPerPair * 100 * $contracts), 'yellow');
+        CLI::write(sprintf(' - Required Combined Exit: $%.2f / pair ($%.2f total value)', $targetExitPerPair, $targetExitPerPair * 100 * $contracts), 'yellow');
         CLI::newLine();
 
         if ($dryRun) {
@@ -89,14 +146,18 @@ class OptionsSimulateStraddle extends SafeBaseCommand
                 putDebit: $putDebit,
                 contracts: $contracts,
                 stockPrice: $stockPrice,
-                dte: $dte
+                dte: $dte,
+                callStrike: $callStrike,
+                putStrike: $putStrike,
+                callTargetBalance: $callTargetBalance,
+                putTargetBalance: $putTargetBalance,
+                strategy: $strategy
             );
 
             CLI::write(sprintf('Successfully saved position #%d to database.', $result['position_id']), 'green');
             CLI::write('Position is now active and will be tracked by `php spark options:monitor`.', 'green');
         } catch (\Throwable $e) {
-            CLI::write('NOTE: Database persistence skipped (MySQL not connected).', 'yellow');
-            CLI::write('To persist positions to MySQL, configure .env with your MySQL credentials or install local mysql-server.', 'light_gray');
+            CLI::write('NOTE: Database persistence skipped: ' . $e->getMessage(), 'yellow');
         }
 
         return EXIT_SUCCESS;

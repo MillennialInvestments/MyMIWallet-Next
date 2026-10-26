@@ -2,147 +2,387 @@
 indicator("MyMI Options Opportunity & Trade Momentum Tracker v6", overlay=true, precision=2)
 
 // =========================================================================
-// 1. INPUT CONFIGURATION
+// 1. INPUT CONFIGURATION (VARIABLE STRATEGY & BALANCE SETTINGS)
 // =========================================================================
 var string GRP_OPT = "Weekly Options Strategy & Position"
-entryDebitCall     = input.float(0.95, "Call Leg Entry Debit ($)", group=GRP_OPT, step=0.05)
-entryDebitPut      = input.float(0.95, "Put Leg Entry Debit ($)", group=GRP_OPT, step=0.05)
-targetNetProfit    = input.float(200.0, "Target Net Profit ($)", group=GRP_OPT, step=25.0)
-contractPairs      = input.int(1, "Contract Pairs Count", group=GRP_OPT, minval=1)
-entryPriceStock    = input.float(0.0, "Entry Stock Price (0 = Current ATM)", group=GRP_OPT)
-enableWebhookAlerts= input.bool(true, "Enable Structured Webhook Alerts", group=GRP_OPT)
-webhookSecret      = input.string("mymi-options-secure-key", "Webhook Secret / Bearer Token", group=GRP_OPT)
+strategyStructure   = input.string("OTM Strangle (Recommended)", "Strategy Structure", options=["OTM Strangle (Recommended)", "ATM Straddle", "Custom Strikes"], group=GRP_OPT)
+otmOffsetPct        = input.float(4.0, "Auto OTM Strike Distance (%)", group=GRP_OPT, step=0.5, tooltip="For OTM Strangle: % above market for Call strike, % below for Put strike")
+callStrikeInput     = input.float(0.0, "Manual Call Strike (used if > 0)", group=GRP_OPT, step=0.5, tooltip="E.g. $210 for a $200 stock")
+putStrikeInput      = input.float(0.0, "Manual Put Strike (used if > 0)", group=GRP_OPT, step=0.5, tooltip="E.g. $150 or $190 for a $200 stock")
+strikeInterval      = input.float(0.0, "Strike Step/Interval (0 = Auto: $0.5, $1, $5)", group=GRP_OPT, step=0.5)
 
-var string GRP_MOM = "Momentum & Volume Acceleration"
-rvolThreshold      = input.float(1.5, "RVOL Warning Trigger Level", group=GRP_MOM, step=0.1)
-trailRetracePct    = input.float(25.0, "Peak Profit Trailing Retrace Warning (%)", group=GRP_MOM, step=5.0)
-fastEmaLen         = input.int(9, "Fast EMA Length", group=GRP_MOM)
-slowEmaLen         = input.int(21, "Slow EMA Length", group=GRP_MOM)
-baselineEmaLen     = input.int(55, "Baseline EMA Length", group=GRP_MOM)
+targetBalanceCall   = input.float(100.0, "Call Target Entry Balance ($)", group=GRP_OPT, step=10.0, tooltip="Capital allocation for the Call leg (e.g. $100.00)")
+targetBalancePut    = input.float(100.0, "Put Target Entry Balance ($)", group=GRP_OPT, step=10.0, tooltip="Capital allocation for the Put leg (e.g. $100.00)")
+entryDebitCall      = input.float(0.95, "Call Leg Entry Debit ($)", group=GRP_OPT, step=0.05)
+entryDebitPut       = input.float(0.95, "Put Leg Entry Debit ($)", group=GRP_OPT, step=0.05)
+targetNetProfit     = input.float(200.0, "Target Net Profit ($)", group=GRP_OPT, step=25.0)
+sizingMode          = input.string("Target Balance ($100/leg)", "Position Sizing Mode", options=["Target Balance ($100/leg)", "Fixed Contract Pairs"], group=GRP_OPT)
+contractPairs       = input.int(1, "Fixed Contract Pairs (if Fixed mode)", group=GRP_OPT, minval=1)
+entryPriceStock     = input.float(0.0, "Entry Stock Price (0 = Auto Session Open / Current)", group=GRP_OPT, tooltip="Set to 0 to use session open, or enter your exact stock price when opening the strangle (e.g. $200.00)")
+enableWebhookAlerts = input.bool(true, "Enable Structured Webhook Alerts", group=GRP_OPT)
+webhookSecret       = input.string("mymi-options-secure-key", "Webhook Secret / Bearer Token", group=GRP_OPT)
+
+var string GRP_MOM  = "Momentum Shifts & Visual Alerts"
+showIgnitionLabels  = input.bool(true, "Show Call/Put Momentum Shift Labels", group=GRP_MOM)
+showStrikeBreaches  = input.bool(true, "Show In-The-Money Strike Breach Labels", group=GRP_MOM)
+showExitAlertLabels = input.bool(true, "Show Profit Target & Warning Labels", group=GRP_MOM)
+colorBarsMomentum   = input.bool(true, "Color Bars by Active Momentum Flow", group=GRP_MOM)
+rvolThreshold       = input.float(1.2, "RVOL Warning Trigger Level", group=GRP_MOM, step=0.1)
+trailRetracePct     = input.float(25.0, "Peak Profit Trailing Retrace Warning (%)", group=GRP_MOM, step=5.0)
+fastEmaLen          = input.int(9, "Fast EMA Length", group=GRP_MOM)
+slowEmaLen          = input.int(21, "Slow EMA Length", group=GRP_MOM)
+baselineEmaLen      = input.int(55, "Baseline EMA Length", group=GRP_MOM)
 
 // =========================================================================
 // 2. CORE MOMENTUM & VOLUME ACCELERATION CALCULATIONS
 // =========================================================================
-// Technical Overlays
-fastEma = ta.ema(close, fastEmaLen)
-slowEma = ta.ema(close, slowEmaLen)
-baseEma = ta.ema(close, baselineEmaLen)
-vwapVal = ta.vwap(close)
-atr14   = ta.atr(14)
-
-// Volume & RVOL
+fastEma  = ta.ema(close, fastEmaLen)
+slowEma  = ta.ema(close, slowEmaLen)
+baseEma  = ta.ema(close, baselineEmaLen)
+vwapVal  = ta.vwap(close)
+atr14    = ta.atr(14)
 volSma20 = ta.sma(volume, 20)
 rvol     = volSma20 > 0 ? (volume / volSma20) : 1.0
 
-// Volume Acceleration: current volume vs 5-bar and 15-bar volume rates
 volRate5  = ta.sma(volume, 5)
 volAccel5 = volRate5 > 0 ? (volume / volRate5) : 1.0
 
-// Price Displacement Efficiency: |Delta Price| per million shares
 deltaPrice = math.abs(close - close[1])
 sharesInMillions = math.max(0.01, volume / 1000000.0)
 dispEfficiency = deltaPrice / sharesInMillions
-
-// Velocity (price rate of change smoothed)
 velocity = ta.ema(ta.roc(close, 3), 3)
 
 // =========================================================================
-// 3. TWO-SIDED OPTIONS POSITION MODELING
+// 3. STRIKES & TARGET BALANCE ENTRY POSITION MODELING
 // =========================================================================
-var float combinedEntryDebit = entryDebitCall + entryDebitPut // $1.90 per pair
-var float totalInvested = combinedEntryDebit * 100.0 * contractPairs // $190.00
-var float requiredExitPerPair = combinedEntryDebit + (targetNetProfit / (100.0 * contractPairs)) // $3.90
-var float effectiveEntryPrice = entryPriceStock > 0 ? entryPriceStock : close[0]
+sessionOpen = ta.valuewhen(ta.change(time("D")) != 0, open, 0)
+effectiveEntryPrice = entryPriceStock > 0 ? entryPriceStock : (na(sessionOpen) ? close : sessionOpen)
 
-// Simulated option leg intrinsic & delta expansion
-priceDisplacement = close - effectiveEntryPrice
-callIntrinsic = math.max(0.0, priceDisplacement)
-putIntrinsic  = math.max(0.0, -priceDisplacement)
+// Strike Step Size ($0.50, $1.00, or $5.00 for price > 250)
+autoStep = effectiveEntryPrice > 250.0 ? 5.0 : (effectiveEntryPrice > 50.0 ? 1.0 : 0.5)
+stepSize = strikeInterval > 0 ? strikeInterval : autoStep
 
-// Model combined option valuation
-// In the money leg captures ~0.60-0.90 delta, out of money decays
-estDeltaCall = 0.50 + math.min(0.40, math.max(-0.40, (priceDisplacement / (atr14 * 2.0)) * 0.40))
-estDeltaPut  = 0.50 - math.min(0.40, math.max(-0.40, (priceDisplacement / (atr14 * 2.0)) * 0.40))
+// Compute Strikes based on strategy structure
+float calcCallStrike = 0.0
+float calcPutStrike  = 0.0
 
-estCallVal = math.max(0.05, entryDebitCall + (priceDisplacement * estDeltaCall))
-estPutVal  = math.max(0.05, entryDebitPut - (priceDisplacement * estDeltaPut))
+if strategyStructure == "Custom Strikes" or (callStrikeInput > 0 and putStrikeInput > 0)
+    calcCallStrike := callStrikeInput > 0 ? callStrikeInput : math.round((effectiveEntryPrice * (1.0 + (otmOffsetPct / 100.0))) / stepSize) * stepSize
+    calcPutStrike  := putStrikeInput > 0  ? putStrikeInput  : math.round((effectiveEntryPrice * (1.0 - (otmOffsetPct / 100.0))) / stepSize) * stepSize
+else if strategyStructure == "ATM Straddle"
+    atmBase = math.round(effectiveEntryPrice / stepSize) * stepSize
+    calcCallStrike := callStrikeInput > 0 ? callStrikeInput : atmBase
+    calcPutStrike  := putStrikeInput > 0  ? putStrikeInput  : atmBase
+else
+    // Default: OTM Strangle (Call ABOVE price e.g. $210, Put BELOW price e.g. $150 or $190)
+    rawCall = effectiveEntryPrice * (1.0 + (otmOffsetPct / 100.0))
+    rawPut  = effectiveEntryPrice * (1.0 - (otmOffsetPct / 100.0))
+    calcCallStrike := callStrikeInput > 0 ? callStrikeInput : math.round(rawCall / stepSize) * stepSize
+    calcPutStrike  := putStrikeInput > 0  ? putStrikeInput  : math.round(rawPut  / stepSize) * stepSize
+
+// Position sizing by target balance ($100 Call / $100 Put default) or fixed contracts
+int contractsCall = 1
+int contractsPut  = 1
+float actualOutlayCall = 0.0
+float actualOutlayPut  = 0.0
+
+if sizingMode == "Target Balance ($100/leg)"
+    contractsCall := math.max(1, math.round(targetBalanceCall / (entryDebitCall * 100.0)))
+    contractsPut  := math.max(1, math.round(targetBalancePut / (entryDebitPut * 100.0)))
+    actualOutlayCall := contractsCall * entryDebitCall * 100.0
+    actualOutlayPut  := contractsPut * entryDebitPut * 100.0
+else
+    contractsCall := contractPairs
+    contractsPut  := contractPairs
+    actualOutlayCall := contractsCall * entryDebitCall * 100.0
+    actualOutlayPut  := contractsPut * entryDebitPut * 100.0
+
+float totalTargetBalance   = targetBalanceCall + targetBalancePut // e.g. $200.00 target allocation
+float totalInvested        = actualOutlayCall + actualOutlayPut   // e.g. $190.00 actual capital deployed
+float combinedEntryDebit   = entryDebitCall + entryDebitPut       // e.g. $1.90 combined debit per pair
+float maxContracts         = math.max(contractsCall, contractsPut)
+float requiredExitPerPair  = combinedEntryDebit + (targetNetProfit / (100.0 * maxContracts)) // e.g. $3.90
+
+// =========================================================================
+// Real-time Option Leg Valuation Relative to Entry & OTM Strikes
+// =========================================================================
+stockMove  = close - effectiveEntryPrice
+distToCall = math.max(0.5, calcCallStrike - effectiveEntryPrice)
+distToPut  = math.max(0.5, effectiveEntryPrice - calcPutStrike)
+
+float estCallVal = entryDebitCall
+float estPutVal  = entryDebitPut
+
+if stockMove > 0
+    // Stock is rallying UP towards / beyond Call Strike ($210)
+    coverageCall = stockMove / distToCall
+    callDelta = coverageCall < 1.0 ? (0.28 + (0.22 * coverageCall)) : math.min(0.95, 0.50 + (0.45 * math.min(1.0, (stockMove - distToCall) / math.max(1.0, atr14 * 2.0))))
+    estCallVal := math.max(entryDebitCall * 0.10, entryDebitCall + (stockMove * callDelta))
+    if close > calcCallStrike
+        estCallVal := math.max(estCallVal, (close - calcCallStrike) + (entryDebitCall * 0.50))
+    // Put decays as price moves away
+    estPutVal := math.max(0.02, entryDebitPut - (stockMove * 0.10))
+else if stockMove < 0
+    // Stock is dumping DOWN towards / beyond Put Strike ($150)
+    downMove = math.abs(stockMove)
+    coveragePut = downMove / distToPut
+    putDelta = coveragePut < 1.0 ? (0.28 + (0.22 * coveragePut)) : math.min(0.95, 0.50 + (0.45 * math.min(1.0, (downMove - distToPut) / math.max(1.0, atr14 * 2.0))))
+    estPutVal := math.max(entryDebitPut * 0.10, entryDebitPut + (downMove * putDelta))
+    if close < calcPutStrike
+        estPutVal := math.max(estPutVal, (calcPutStrike - close) + (entryDebitPut * 0.50))
+    // Call decays as price moves away
+    estCallVal := math.max(0.02, entryDebitCall - (downMove * 0.10))
+else
+    estCallVal := entryDebitCall
+    estPutVal  := entryDebitPut
+
 estCombinedBid = estCallVal + estPutVal
-estTotalValue = estCombinedBid * 100.0 * contractPairs
+estTotalValue = (estCallVal * 100.0 * contractsCall) + (estPutVal * 100.0 * contractsPut)
 unrealizedPnl = estTotalValue - totalInvested
+unrealizedPct = totalInvested > 0 ? (unrealizedPnl / totalInvested) * 100.0 : 0.0
 
 // High water mark / Peak unrealized P&L
 var float peakPnl = 0.0
 peakPnl := math.max(peakPnl, unrealizedPnl)
 
 // =========================================================================
-// 4. ACTIONABLE EXIT, REVERSAL & WARNING TRIGGERS
+// 4. ACTIONABLE MOMENTUM SHIFTS & CLEAR DIRECTIONAL SIGNALS
 // =========================================================================
-// 1. Profit Target Reached
+// 1. Momentum Ignition Shifts (Directional Acceleration)
+bullishShift = (ta.crossover(fastEma, slowEma) or (ta.crossover(close, fastEma) and close > vwapVal)) and rvol >= 1.0
+bearishShift = (ta.crossunder(fastEma, slowEma) or (ta.crossunder(close, fastEma) and close < vwapVal)) and rvol >= 1.0
+
+// 2. In-The-Money Strike Breaches
+callStrikeBreached = ta.crossover(close, calcCallStrike)
+putStrikeBreached  = ta.crossunder(close, calcPutStrike)
+
+// 3. Profit Target Reached ($200 Net / $3.90 Combined Exit)
 targetReached = estCombinedBid >= requiredExitPerPair or unrealizedPnl >= targetNetProfit
 
-// 2. Momentum Weakening Warning
-// Price crosses against prevailing side of straddle or velocity stalls with fading volume
-prevailingLong  = close > effectiveEntryPrice
-prevailingShort = close < effectiveEntryPrice
-momentumFading  = (prevailingLong and ta.crossunder(close, fastEma)) or (prevailingShort and ta.crossover(close, fastEma)) or (rvol < 0.9 and math.abs(velocity) < 0.2)
-warnMomentumFade = momentumFading and unrealizedPnl > 50.0 and not targetReached
+// 4. Momentum Exhaustion / Fading Warning
+prevailingLong   = close > effectiveEntryPrice
+prevailingShort  = close < effectiveEntryPrice
+momentumFading   = (prevailingLong and ta.crossunder(close, fastEma)) or (prevailingShort and ta.crossover(close, fastEma)) or (rvol < 0.85 and math.abs(velocity) < 0.15)
+warnMomentumFade = momentumFading and unrealizedPnl > 40.0 and not targetReached
 
-// 3. Peak-Profit Trailing Warning
-// If profit was >= $100 and retraces by trailRetracePct%
-warnPeakDrawdown = peakPnl >= 100.0 and (unrealizedPnl < (peakPnl * (1.0 - (trailRetracePct / 100.0)))) and unrealizedPnl > 0.0
+// 5. Peak Profit Trailing Retrace Warning
+warnPeakDrawdown = peakPnl >= 75.0 and (unrealizedPnl < (peakPnl * (1.0 - (trailRetracePct / 100.0)))) and unrealizedPnl > 0.0
+
+// Active Momentum Flow Classification
+string currentMomentumFlow = "CONSOLIDATING ⏸"
+color flowColor = color.gray
+
+if targetReached
+    currentMomentumFlow := "TARGET REACHED 💰"
+    flowColor := color.green
+else if warnPeakDrawdown
+    currentMomentumFlow := "PEAK RETRACE 🚨"
+    flowColor := color.red
+else if warnMomentumFade
+    currentMomentumFlow := "MOM FADING ⚠️"
+    flowColor := color.orange
+else if close > calcCallStrike
+    currentMomentumFlow := "CALL ITM (SURGING) 🎯"
+    flowColor := color.teal
+else if close < calcPutStrike
+    currentMomentumFlow := "PUT ITM (SURGING) 🎯"
+    flowColor := color.maroon
+else if close > baseEma and fastEma > slowEma
+    currentMomentumFlow := "CALL ACCEL ▲"
+    flowColor := color.teal
+else if close < baseEma and fastEma < slowEma
+    currentMomentumFlow := "PUT ACCEL ▼"
+    flowColor := color.maroon
 
 // =========================================================================
-// 5. VISUALIZATION OVERLAYS
+// 5. VISUALIZATION OVERLAYS & PROMINENT MOMENTUM LABELS
 // =========================================================================
+// Moving Averages and Anchor VWAP
 plot(fastEma, "Fast EMA (9)", color=color.new(color.teal, 0), linewidth=1)
 plot(slowEma, "Slow EMA (21)", color=color.new(color.orange, 0), linewidth=1)
 plot(baseEma, "Baseline EMA (55)", color=color.new(color.blue, 20), linewidth=2)
 plot(vwapVal, "Session VWAP", color=color.new(color.purple, 10), linewidth=2)
 
-// Signal Shapes
-plotshape(targetReached and not targetReached[1], "Target Reached ($200 Net)", shape.labelup, location.belowbar, color=color.green, text="TARGET\n+$200", textcolor=color.white, size=size.normal)
-plotshape(warnMomentumFade and not warnMomentumFade[1], "Momentum Weakening Warning", shape.triangledown, location.abovebar, color=color.yellow, text="MOM FADE", textcolor=color.black, size=size.small)
-plotshape(warnPeakDrawdown and not warnPeakDrawdown[1], "Peak Trailing Warning", shape.flag, location.abovebar, color=color.red, text="PEAK DROP", textcolor=color.white, size=size.small)
+// Horizontal Strike Level Plots
+plot(calcCallStrike, "Call Strike Level", color=color.new(color.teal, 10), linewidth=2, style=plot.style_linebr)
+plot(calcPutStrike,  "Put Strike Level",  color=color.new(color.maroon, 10), linewidth=2, style=plot.style_linebr)
+plot(effectiveEntryPrice, "Entry Anchor Price", color=color.new(color.silver, 30), linewidth=1, style=plot.style_circles)
 
-// Dashboard Table
-var table dash = table.new(position.top_right, 2, 7, bgcolor=color.new(color.black, 20), border_width=1, border_color=color.gray)
-if barstate.islast
-    table.cell(dash, 0, 0, "MyMI Straddle", bgcolor=color.blue, text_color=color.white)
-    table.cell(dash, 1, 0, syminfo.ticker, bgcolor=color.blue, text_color=color.white)
-    
-    table.cell(dash, 0, 1, "Entry Debit", text_color=color.silver)
-    table.cell(dash, 1, 1, "$" + str.tostring(combinedEntryDebit, "#.##") + " ($" + str.tostring(totalInvested, "#") + ")", text_color=color.white)
-    
-    table.cell(dash, 0, 2, "Current Bid", text_color=color.silver)
-    table.cell(dash, 1, 2, "$" + str.tostring(estCombinedBid, "#.##"), text_color=color.white)
-    
-    color pnlCol = unrealizedPnl >= targetNetProfit ? color.green : (unrealizedPnl > 0 ? color.teal : color.red)
-    table.cell(dash, 0, 3, "Unrealized P&L", text_color=color.silver)
-    table.cell(dash, 1, 3, (unrealizedPnl >= 0 ? "+$" : "-$") + str.tostring(math.abs(unrealizedPnl), "#.##"), bgcolor=pnlCol, text_color=color.white)
-    
-    table.cell(dash, 0, 4, "Target Profit", text_color=color.silver)
-    table.cell(dash, 1, 4, "+$" + str.tostring(targetNetProfit, "#.##") + " ($" + str.tostring(requiredExitPerPair, "#.##") + ")", text_color=color.green)
-    
-    table.cell(dash, 0, 5, "RVOL / Accel", text_color=color.silver)
-    table.cell(dash, 1, 5, str.tostring(rvol, "#.##") + "x / " + str.tostring(volAccel5, "#.##") + "x", text_color=color.white)
-    
-    string statusText = targetReached ? "TARGET REACHED" : (warnPeakDrawdown ? "PEAK DRAWDOWN" : (warnMomentumFade ? "MOM WEAKENING" : "ACTIVE / HOLD"))
-    color statusBg = targetReached ? color.green : (warnPeakDrawdown ? color.red : (warnMomentumFade ? color.yellow : color.teal))
-    table.cell(dash, 0, 6, "Strategy Status", text_color=color.silver)
-    table.cell(dash, 1, 6, statusText, bgcolor=statusBg, text_color=color.black)
+// Bar Coloring by Momentum Flow
+barcolor(colorBarsMomentum ? (targetReached ? color.lime : (warnPeakDrawdown ? color.red : (close > baseEma and fastEma > slowEma and rvol >= 1.0 ? color.new(color.teal, 20) : (close < baseEma and fastEma < slowEma and rvol >= 1.0 ? color.new(color.maroon, 20) : na)))) : na)
+
+// -------------------------------------------------------------------------
+// Pronounced Momentum Shift Labels (Clear & Unmistakable)
+// -------------------------------------------------------------------------
+// 1. Call Momentum Ignition Shift (Bullish Acceleration)
+plotshape(showIgnitionLabels and bullishShift and not bullishShift[1] and not targetReached,
+     "Call Momentum Ignition ▲",
+     shape.labelup,
+     location.belowbar,
+     color=color.green,
+     text="CALL IGNITION ▲
+Bullish Shift Toward $" + str.tostring(calcCallStrike, "#.##") + "
+RVOL: " + str.tostring(rvol, "#.#") + "x",
+     textcolor=color.white,
+     size=size.normal)
+
+// 2. Put Momentum Ignition Shift (Bearish Acceleration)
+plotshape(showIgnitionLabels and bearishShift and not bearishShift[1] and not targetReached,
+     "Put Momentum Ignition ▼",
+     shape.labeldown,
+     location.abovebar,
+     color=color.red,
+     text="PUT IGNITION ▼
+Bearish Shift Toward $" + str.tostring(calcPutStrike, "#.##") + "
+RVOL: " + str.tostring(rvol, "#.#") + "x",
+     textcolor=color.white,
+     size=size.normal)
+
+// 3. Call Strike Breached (In-The-Money)
+plotshape(showStrikeBreaches and callStrikeBreached,
+     "Call Strike In-The-Money 🎯",
+     shape.labelup,
+     location.belowbar,
+     color=color.teal,
+     text="🎯 CALL STRIKE IN-THE-MONEY!
+Crossed $" + str.tostring(calcCallStrike, "#.##") + " Strike
+Delta > 0.50 Expanding Rapidly",
+     textcolor=color.white,
+     size=size.large)
+
+// 4. Put Strike Breached (In-The-Money)
+plotshape(showStrikeBreaches and putStrikeBreached,
+     "Put Strike In-The-Money 🎯",
+     shape.labeldown,
+     location.abovebar,
+     color=color.maroon,
+     text="🎯 PUT STRIKE IN-THE-MONEY!
+Crossed $" + str.tostring(calcPutStrike, "#.##") + " Strike
+Delta > 0.50 Expanding Rapidly",
+     textcolor=color.white,
+     size=size.large)
+
+// 5. Profit Target Reached ($200 Net)
+plotshape(showExitAlertLabels and targetReached and not targetReached[1],
+     "Target Reached ($200 Net Profit) 💰",
+     shape.labelup,
+     location.belowbar,
+     color=color.lime,
+     text="💰 PROFIT TARGET REACHED!
++$200 NET PROFIT (+105%)
+Combined Exit: $" + str.tostring(estCombinedBid, "#.##") + "
+ACTION: CLOSE BOTH LEGS NOW",
+     textcolor=color.black,
+     size=size.large)
+
+// 6. Momentum Weakening Warning
+plotshape(showExitAlertLabels and warnMomentumFade and not warnMomentumFade[1],
+     "Momentum Exhaustion Warning ⚠️",
+     shape.labeldown,
+     location.abovebar,
+     color=color.yellow,
+     text="⚠️ MOMENTUM EXHAUSTION
+Velocity Slowing / EMA Cross
+Unrealized: +$" + str.tostring(unrealizedPnl, "#.##") + "
+ACTION: Consider Trimming / Lock Gains",
+     textcolor=color.black,
+     size=size.normal)
+
+// 7. Peak Profit Trailing Retrace Warning
+plotshape(showExitAlertLabels and warnPeakDrawdown and not warnPeakDrawdown[1],
+     "Peak Profit Retrace Warning 🚨",
+     shape.flag,
+     location.abovebar,
+     color=color.red,
+     text="🚨 PEAK PROFIT RETRACE
+Dropped > " + str.tostring(trailRetracePct, "#") + "% From Peak (+$" + str.tostring(peakPnl, "#.##") + ")
+Current: +$" + str.tostring(unrealizedPnl, "#.##") + "
+ACTION: Trailing Stop Triggered",
+     textcolor=color.white,
+     size=size.normal)
 
 // =========================================================================
-// 6. STRUCTURED WEBHOOK ALERTS (DISPATCH TO MyMI WALLET)
+// 6. ENHANCED DASHBOARD HUD TABLE (HIGH VISIBILITY & CLARITY)
+// =========================================================================
+var table dash = table.new(position.top_right, 2, 10, bgcolor=color.new(color.black, 15), border_width=1, border_color=color.gray)
+if barstate.islast
+    string stratLabel = strategyStructure == "ATM Straddle" ? "MyMI Straddle (ATM)" : "MyMI Strangle (OTM)"
+    table.cell(dash, 0, 0, stratLabel, bgcolor=color.blue, text_color=color.white)
+    table.cell(dash, 1, 0, syminfo.ticker + " ($" + str.tostring(close, "#.##") + ")", bgcolor=color.blue, text_color=color.white)
+    
+    table.cell(dash, 0, 1, "Call / Put Strikes", text_color=color.silver)
+    table.cell(dash, 1, 1, "C: $" + str.tostring(calcCallStrike, "#.##") + " / P: $" + str.tostring(calcPutStrike, "#.##"), text_color=color.yellow)
+
+    table.cell(dash, 0, 2, "Entry Anchor", text_color=color.silver)
+    table.cell(dash, 1, 2, "$" + str.tostring(effectiveEntryPrice, "#.##") + " (Dist: C +$" + str.tostring(calcCallStrike - effectiveEntryPrice, "#.##") + " / P -$" + str.tostring(effectiveEntryPrice - calcPutStrike, "#.##") + ")", text_color=color.white)
+    
+    table.cell(dash, 0, 3, "Target Balance", text_color=color.silver)
+    table.cell(dash, 1, 3, "$" + str.tostring(targetBalanceCall, "#") + " C / $" + str.tostring(targetBalancePut, "#") + " P ($" + str.tostring(totalTargetBalance, "#") + " Budget)", text_color=color.white)
+    
+    table.cell(dash, 0, 4, "Capital Outlay", text_color=color.silver)
+    table.cell(dash, 1, 4, "$" + str.tostring(totalInvested, "#.##") + " (" + str.tostring(contractsCall) + "C / " + str.tostring(contractsPut) + "P)", text_color=color.white)
+    
+    table.cell(dash, 0, 5, "Current Bid / Debit", text_color=color.silver)
+    table.cell(dash, 1, 5, "$" + str.tostring(estCombinedBid, "#.##") + " (Entry: $" + str.tostring(combinedEntryDebit, "#.##") + ")", text_color=color.white)
+    
+    color pnlCol = unrealizedPnl >= targetNetProfit ? color.green : (unrealizedPnl > 0 ? color.teal : color.red)
+    table.cell(dash, 0, 6, "Unrealized P&L", text_color=color.silver)
+    table.cell(dash, 1, 6, (unrealizedPnl >= 0 ? "+$" : "-$") + str.tostring(math.abs(unrealizedPnl), "#.##") + " (" + (unrealizedPct >= 0 ? "+" : "") + str.tostring(unrealizedPct, "#.#") + "%)", bgcolor=pnlCol, text_color=color.white)
+    
+    table.cell(dash, 0, 7, "Target Profit ($200)", text_color=color.silver)
+    table.cell(dash, 1, 7, "+$" + str.tostring(targetNetProfit, "#.##") + " (Exit @ $" + str.tostring(requiredExitPerPair, "#.##") + "/pair)", text_color=color.green)
+    
+    table.cell(dash, 0, 8, "Momentum Flow", text_color=color.silver)
+    table.cell(dash, 1, 8, currentMomentumFlow, bgcolor=flowColor, text_color=color.white)
+    
+    // Action Plan for the Trader
+    string actionText = "AWAITING VOLUME / ACCEL"
+    color actionBg = color.navy
+    if targetReached
+        actionText := "TAKE PROFIT: CLOSE BOTH LEGS"
+        actionBg := color.green
+    else if warnPeakDrawdown
+        actionText := "TRAILING EXIT: PROTECT GAINS"
+        actionBg := color.red
+    else if warnMomentumFade
+        actionText := "MOMENTUM FADING: TRIM / LOCK"
+        actionBg := color.maroon
+    else if close > calcCallStrike
+        actionText := "CALL RUNNING: HOLD (TRAIL EMA9)"
+        actionBg := color.teal
+    else if close < calcPutStrike
+        actionText := "PUT RUNNING: HOLD (TRAIL EMA9)"
+        actionBg := color.purple
+    else if close > baseEma and fastEma > slowEma
+        actionText := "CALL SURGING: RIDE UPWARD"
+        actionBg := color.teal
+    else if close < baseEma and fastEma < slowEma
+        actionText := "PUT SURGING: RIDE DOWNWARD"
+        actionBg := color.maroon
+
+    table.cell(dash, 0, 9, "Action Guidance", text_color=color.silver)
+    table.cell(dash, 1, 9, actionText, bgcolor=actionBg, text_color=color.white)
+
+// =========================================================================
+// 7. STRUCTURED WEBHOOK ALERTS (DISPATCH TO MyMI WALLET)
 // =========================================================================
 if enableWebhookAlerts
     if targetReached and not targetReached[1]
-        string jsonTarget = '{"secret":"' + webhookSecret + '","ticker":"' + syminfo.ticker + '","signal":"target_reached","timeframe":"' + timeframe.period + '","price":' + str.tostring(close) + ',"combined_bid":' + str.tostring(estCombinedBid) + ',"unrealized_pnl":' + str.tostring(unrealizedPnl) + ',"rvol":' + str.tostring(rvol) + ',"timestamp":"' + str.tostring(timenow) + '"}'
+        string jsonTarget = '{"secret":"' + webhookSecret + '","ticker":"' + syminfo.ticker + '","strategy":"' + strategyStructure + '","signal":"target_reached","timeframe":"' + timeframe.period + '","price":' + str.tostring(close) + ',"call_strike":' + str.tostring(calcCallStrike) + ',"put_strike":' + str.tostring(calcPutStrike) + ',"target_balance_call":' + str.tostring(targetBalanceCall) + ',"target_balance_put":' + str.tostring(targetBalancePut) + ',"combined_bid":' + str.tostring(estCombinedBid) + ',"unrealized_pnl":' + str.tostring(unrealizedPnl) + ',"rvol":' + str.tostring(rvol) + ',"timestamp":"' + str.tostring(timenow) + '"}'
         alert(jsonTarget, alert.freq_once_per_bar_close)
         
     if warnMomentumFade and not warnMomentumFade[1]
-        string jsonFade = '{"secret":"' + webhookSecret + '","ticker":"' + syminfo.ticker + '","signal":"momentum_weakening","timeframe":"' + timeframe.period + '","price":' + str.tostring(close) + ',"combined_bid":' + str.tostring(estCombinedBid) + ',"unrealized_pnl":' + str.tostring(unrealizedPnl) + ',"rvol":' + str.tostring(rvol) + ',"timestamp":"' + str.tostring(timenow) + '"}'
+        string jsonFade = '{"secret":"' + webhookSecret + '","ticker":"' + syminfo.ticker + '","strategy":"' + strategyStructure + '","signal":"momentum_weakening","timeframe":"' + timeframe.period + '","price":' + str.tostring(close) + ',"call_strike":' + str.tostring(calcCallStrike) + ',"put_strike":' + str.tostring(calcPutStrike) + ',"target_balance_call":' + str.tostring(targetBalanceCall) + ',"target_balance_put":' + str.tostring(targetBalancePut) + ',"combined_bid":' + str.tostring(estCombinedBid) + ',"unrealized_pnl":' + str.tostring(unrealizedPnl) + ',"rvol":' + str.tostring(rvol) + ',"timestamp":"' + str.tostring(timenow) + '"}'
         alert(jsonFade, alert.freq_once_per_bar_close)
 
     if warnPeakDrawdown and not warnPeakDrawdown[1]
-        string jsonDrawdown = '{"secret":"' + webhookSecret + '","ticker":"' + syminfo.ticker + '","signal":"peak_drawdown","timeframe":"' + timeframe.period + '","price":' + str.tostring(close) + ',"combined_bid":' + str.tostring(estCombinedBid) + ',"peak_pnl":' + str.tostring(peakPnl) + ',"unrealized_pnl":' + str.tostring(unrealizedPnl) + ',"timestamp":"' + str.tostring(timenow) + '"}'
+        string jsonDrawdown = '{"secret":"' + webhookSecret + '","ticker":"' + syminfo.ticker + '","strategy":"' + strategyStructure + '","signal":"peak_drawdown","timeframe":"' + timeframe.period + '","price":' + str.tostring(close) + ',"call_strike":' + str.tostring(calcCallStrike) + ',"put_strike":' + str.tostring(calcPutStrike) + ',"target_balance_call":' + str.tostring(targetBalanceCall) + ',"target_balance_put":' + str.tostring(targetBalancePut) + ',"combined_bid":' + str.tostring(estCombinedBid) + ',"peak_pnl":' + str.tostring(peakPnl) + ',"unrealized_pnl":' + str.tostring(unrealizedPnl) + ',"timestamp":"' + str.tostring(timenow) + '"}'
         alert(jsonDrawdown, alert.freq_once_per_bar_close)
+
+    if callStrikeBreached
+        string jsonCallBreach = '{"secret":"' + webhookSecret + '","ticker":"' + syminfo.ticker + '","strategy":"' + strategyStructure + '","signal":"call_strike_breached","timeframe":"' + timeframe.period + '","price":' + str.tostring(close) + ',"call_strike":' + str.tostring(calcCallStrike) + ',"unrealized_pnl":' + str.tostring(unrealizedPnl) + ',"rvol":' + str.tostring(rvol) + ',"timestamp":"' + str.tostring(timenow) + '"}'
+        alert(jsonCallBreach, alert.freq_once_per_bar_close)
+
+    if putStrikeBreached
+        string jsonPutBreach = '{"secret":"' + webhookSecret + '","ticker":"' + syminfo.ticker + '","strategy":"' + strategyStructure + '","signal":"put_strike_breached","timeframe":"' + timeframe.period + '","price":' + str.tostring(close) + ',"put_strike":' + str.tostring(calcPutStrike) + ',"unrealized_pnl":' + str.tostring(unrealizedPnl) + ',"rvol":' + str.tostring(rvol) + ',"timestamp":"' + str.tostring(timenow) + '"}'
+        alert(jsonPutBreach, alert.freq_once_per_bar_close)

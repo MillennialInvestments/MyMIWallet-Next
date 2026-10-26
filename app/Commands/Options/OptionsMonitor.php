@@ -38,7 +38,7 @@ class OptionsMonitor extends SafeBaseCommand
             $exitAlertModel = new OptionsExitAlertModel();
 
             $manager = new OptionsMomentumManager($positionModel, $legModel, $historyModel, $exitAlertModel);
-            $summary = $manager->evaluateActivePositions();
+            $summary = $manager->evaluateAllActive();
 
             CLI::write(sprintf('Evaluated %d active positions | %d alerts generated%s', $summary['active_count'], $summary['alerts_generated'], $dryRun ? ' [DRY-RUN]' : ''), 'yellow');
             CLI::newLine();
