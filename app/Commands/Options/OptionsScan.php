@@ -27,8 +27,10 @@ class OptionsScan extends SafeBaseCommand
         '--put'          => 'Put leg target debit in USD (default: 0.95)',
         '--dte'          => 'Target days to expiration (default: 5)',
         '--min-rvol'     => 'Minimum relative volume (default: 1.2)',
-        '--max-iv-rv'    => 'Maximum IV/RV ratio (default: 1.8)',
-        '--dry-run'      => 'Preview scan without saving candidate rows',
+        '--max-iv-rv'        => 'Maximum IV/RV ratio (default: 1.8)',
+        '--alphavantage-key' => 'AlphaVantage API key for news sentiment & catalyst analysis',
+        '--skip-news'         => 'Skip AlphaVantage news calls for faster offline scan',
+        '--dry-run'          => 'Preview scan without saving candidate rows',
     ];
 
     public function run(array $params)
@@ -92,14 +94,24 @@ class OptionsScan extends SafeBaseCommand
             'dte' => $dte,
             'min_rvol' => $minRvol,
             'max_iv_rv' => $maxIvRv,
+            'alphavantage_key' => $flags['alphavantage-key'] ?? null,
+            'skip_catalyst' => isset($flags['skip-news']),
             'dry_run' => $dryRun,
         ]);
 
         CLI::write(sprintf('Scanned: %d tickers | Qualified: %d opportunities', $result['scanned_count'], $result['qualified_count']), 'green');
+
+        if (! empty($result['macro_catalysts']['available'])) {
+            $macro = $result['macro_catalysts'];
+            CLI::write(sprintf('AlphaVantage Macro Catalyst Pulse: %s Sentiment (score: %+.2f)', $macro['macro_sentiment_label'], $macro['macro_sentiment_score']), 'cyan');
+            if (! empty($macro['top_macro_headlines'][0])) {
+                CLI::write(sprintf(' -> Top Macro Driver: "%s"', $macro['top_macro_headlines'][0]), 'white');
+            }
+        }
         CLI::newLine();
 
         // Print formatted table of results
-        $headers = ['Ticker', 'Price', 'Call Strk', 'Put Strk', 'Target Bal', '5D Range', 'RVOL', 'Reachability', 'Score', 'Status'];
+        $headers = ['Ticker', 'Price', 'Call Strk', 'Put Strk', 'Target Bal', '5D Range', 'RVOL', 'News Catalyst', 'Score', 'Status'];
         $tableRows = [];
 
         foreach ($result['all_results'] as $r) {
@@ -111,7 +123,9 @@ class OptionsScan extends SafeBaseCommand
                 sprintf('$%.0fC / $%.0fP', $r['call_target_balance'], $r['put_target_balance']),
                 sprintf('$%.2f', $r['historical_5d_range']),
                 sprintf('%.2fx', $r['rvol_20d']),
-                sprintf('%.1f%%', $r['reachability_score']),
+                (! empty($r['news_catalyst_detected']) && $r['news_catalyst_boost'] > 0)
+                    ? sprintf('%s (+%.1f)', $r['news_sentiment_label'], $r['news_catalyst_boost'])
+                    : ($r['news_sentiment_label'] ?? 'Neutral'),
                 sprintf('%.1f', $r['ranking_score']),
                 $r['scan_status'] === 'qualified' ? 'QUALIFIED' : 'REJECTED',
             ];

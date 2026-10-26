@@ -26,6 +26,26 @@ class OptionsStrategy extends BaseConfig
     public float $defaultOtmOffsetPct = 4.0;
 
     /**
+     * AlphaVantage API key for economic news sentiment & ticker catalyst analysis.
+     */
+    public string $alphaVantageApiKey = '';
+
+    /**
+     * Enable AlphaVantage news sentiment & catalyst analysis in scanner.
+     */
+    public bool $enableAlphaVantageCatalyst = true;
+
+    /**
+     * Minimum absolute sentiment score threshold to qualify as a strong catalyst.
+     */
+    public float $catalystMinSentimentScore = 0.15;
+
+    /**
+     * Weight of catalyst score in options candidate ranking.
+     */
+    public float $catalystWeightInRanking = 15.0;
+
+    /**
      * Target capital balance entry for the Call leg (in USD).
      * Default: $100.00
      */

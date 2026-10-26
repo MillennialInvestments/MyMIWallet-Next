@@ -337,4 +337,102 @@ final class OptionsMomentumTest extends CIUnitTestCase
         $this->assertSame(1, $candidate['contracts_call']);
         $this->assertSame(1, $candidate['contracts_put']);
     }
+
+    /**
+     * Test AlphaVantage catalyst service parses news sentiment and detects earnings catalyst.
+     */
+    public function testAlphaVantageCatalystServiceParsesPayloadAndComputesBoost(): void
+    {
+        $mockHttp = new class {
+            public function get(string $url): string {
+                return json_encode([
+                    'items' => '5',
+                    'feed' => [
+                        [
+                            'title' => 'NVIDIA Reports Record Q3 Earnings and Data Center Revenue Growth',
+                            'summary' => 'NVIDIA quarterly results exceeded consensus expectations with strong AI momentum.',
+                            'url' => 'https://example.com/nvda-earnings',
+                            'time_published' => '20261026T120000',
+                            'overall_sentiment_score' => 0.45,
+                            'overall_sentiment_label' => 'Bullish',
+                            'ticker_sentiment' => [
+                                [
+                                    'ticker' => 'NVDA',
+                                    'relevance_score' => '0.90',
+                                    'ticker_sentiment_score' => '0.52',
+                                    'ticker_sentiment_label' => 'Bullish',
+                                ],
+                            ],
+                        ],
+                    ],
+                ]);
+            }
+        };
+
+        $service = new \App\Services\Options\AlphaVantageCatalystService('test-key', $mockHttp);
+        $catalyst = $service->getTickerCatalyst('NVDA', false);
+
+        $this->assertTrue($catalyst['available']);
+        $this->assertSame('NVDA', $catalyst['ticker']);
+        $this->assertTrue($catalyst['catalyst_detected']);
+        $this->assertSame('earnings_report', $catalyst['catalyst_type']);
+        $this->assertSame('Bullish', $catalyst['sentiment_label']);
+        $this->assertGreaterThan(0.30, $catalyst['sentiment_score']);
+        $this->assertGreaterThan(5.0, $catalyst['catalyst_momentum_boost']);
+        $this->assertStringContainsString('NVIDIA Reports Record', $catalyst['top_headline']);
+    }
+
+    /**
+     * Test AlphaVantage catalyst service returns graceful neutral fallback when key is missing.
+     */
+    public function testAlphaVantageCatalystServiceGracefulFallbackWhenNoKey(): void
+    {
+        $service = new \App\Services\Options\AlphaVantageCatalystService('');
+        $catalyst = $service->getTickerCatalyst('TSLA');
+
+        $this->assertFalse($catalyst['available']);
+        $this->assertSame('Neutral', $catalyst['sentiment_label']);
+        $this->assertSame(0.0, (float) $catalyst['sentiment_score']);
+        $this->assertFalse($catalyst['catalyst_detected']);
+        $this->assertSame(0.0, (float) $catalyst['catalyst_momentum_boost']);
+    }
+
+    /**
+     * Test options scanner integrates AlphaVantage catalyst boost into candidate ranking.
+     */
+    public function testOptionsScannerIntegratesCatalystServiceBoost(): void
+    {
+        $mockHttp = new class {
+            public function get(string $url): string {
+                return json_encode([
+                    'feed' => [
+                        [
+                            'title' => 'AMD Announces Breakthrough AI GPU Partnership and Deal',
+                            'summary' => 'Major multi-billion cloud contract partnership announced.',
+                            'overall_sentiment_score' => 0.40,
+                            'ticker_sentiment' => [
+                                ['ticker' => 'AMD', 'relevance_score' => '0.85', 'ticker_sentiment_score' => '0.45'],
+                            ],
+                        ],
+                    ],
+                ]);
+            }
+        };
+
+        $catalystSvc = new \App\Services\Options\AlphaVantageCatalystService('key-123', $mockHttp);
+        $scanner = new \App\Services\Options\OptionsScannerEngine(null, null, $catalystSvc);
+
+        $res = $scanner->scan([
+            'universe' => ['AMD'],
+            'strategy' => 'strangle',
+            'dry_run' => true,
+        ]);
+
+        $this->assertSame(1, $res['scanned_count']);
+        $candidate = $res['all_results'][0];
+
+        $this->assertTrue($candidate['news_catalyst_detected']);
+        $this->assertSame('deal_ma', $candidate['news_catalyst_type']);
+        $this->assertGreaterThan(0.0, (float) $candidate['news_catalyst_boost']);
+    }
 }

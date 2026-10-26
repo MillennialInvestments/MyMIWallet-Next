@@ -33,8 +33,9 @@ class OptionsSimulateStraddle extends SafeBaseCommand
         '--call'         => 'Call debit per contract (default: 0.95)',
         '--put'          => 'Put debit per contract (default: 0.95)',
         '--price'        => 'Underlying stock price (default: 142.50)',
-        '--dte'          => 'Days to expiry (default: 5)',
-        '--dry-run'      => 'Calculate and preview straddle economics without persisting to database',
+        '--dte'              => 'Days to expiry (default: 5)',
+        '--alphavantage-key' => 'AlphaVantage API key to inspect catalyst news',
+        '--dry-run'          => 'Calculate and preview straddle economics without persisting to database',
     ];
 
     public function run(array $params)
@@ -109,6 +110,18 @@ class OptionsSimulateStraddle extends SafeBaseCommand
         CLI::write(sprintf(' - Call Leg: Strike $%.2f | Debit: $%.2f | Target Balance: $%.2f -> %d contract(s) ($%.2f outlay)', $callStrike, $callDebit, $callTargetBalance, $contractsCall, $actualOutlayCall), 'white');
         CLI::write(sprintf(' - Put Leg:  Strike $%.2f | Debit: $%.2f | Target Balance: $%.2f -> %d contract(s) ($%.2f outlay)', $putStrike, $putDebit, $putTargetBalance, $contractsPut, $actualOutlayPut), 'white');
         CLI::write(sprintf(' - Expiration: %s (%d DTE)', $expiry, $dte), 'white');
+
+        $avKey = $flags['alphavantage-key'] ?? null;
+        $catalystSvc = new \App\Services\Options\AlphaVantageCatalystService($avKey);
+        if ($catalystSvc->isConfigured()) {
+            $cat = $catalystSvc->getTickerCatalyst($ticker);
+            if ($cat['available']) {
+                CLI::write(sprintf(' - AlphaVantage Catalyst: %s (%+.2f) | %s', $cat['sentiment_label'], $cat['sentiment_score'], $cat['catalyst_type']), 'cyan');
+                if (! empty($cat['top_headline'])) {
+                    CLI::write(sprintf('   Headline: "%s"', substr($cat['top_headline'], 0, 75)), 'white');
+                }
+            }
+        }
         CLI::write(sprintf(' - Total Target Balance: $%.2f | Actual Total Outlay: $%.2f', $callTargetBalance + $putTargetBalance, $totalDebit), 'yellow');
         CLI::write(sprintf(' - Target Net Profit: +$%.2f', $targetProfit), 'yellow');
         CLI::write(sprintf(' - Required Combined Exit: $%.2f / pair ($%.2f total value)', $targetExitPerPair, $targetExitPerPair * 100 * $contracts), 'yellow');

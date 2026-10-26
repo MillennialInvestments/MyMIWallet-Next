@@ -97,6 +97,9 @@
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#tab-pine"><em class="icon ni ni-code"></em><span>TradingView Pine v6 Webhook</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#tab-catalysts"><em class="icon ni ni-bulb"></em><span>AlphaVantage Catalysts & News</span></a>
+            </li>
         </ul>
         <div class="tab-content">
             <!-- TAB 1: POSITIONS -->
@@ -318,6 +321,41 @@
                         <a href="<?php echo site_url('docs/tradingview/MyMI_Options_Momentum_Tracker_v6.pine'); ?>" target="_blank" class="btn btn-primary btn-sm">
                             <em class="icon ni ni-download"></em><span>Download Pine Script v6 File</span>
                         </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: ALPHAVANTAGE NEWS & MACRO CATALYSTS -->
+            <div class="tab-pane" id="tab-catalysts">
+                <div class="card-inner">
+                    <div class="card-title-group mb-3">
+                        <div class="card-title">
+                            <h6 class="title">AlphaVantage Economic News & Ticker Catalyst Engine</h6>
+                            <p class="text-soft">Identify breaking earnings announcements, M&amp;A developments, and macroeconomic moves that trigger high-velocity momentum shifts.</p>
+                        </div>
+                    </div>
+                    <div class="row g-gs">
+                        <div class="col-lg-6">
+                            <h6>Catalyst Integration Features</h6>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>NEWS_SENTIMENT Ingestion:</strong> Analyzes overall &amp; ticker-specific sentiment scores (-1.0 to +1.0) and relevance weights.</li>
+                                <li class="list-group-item"><strong>Catalyst Classification:</strong> Automatically categorizes catalysts (Earnings Reports, Deal/M&amp;A, Analyst Upgrades, Macro/Regulatory).</li>
+                                <li class="list-group-item"><strong>Momentum Ranking Boost:</strong> Tickers with breaking catalysts receive up to a +20 point ranking boost to elevate strike-breach candidates.</li>
+                                <li class="list-group-item"><strong>Macroeconomic Pulse:</strong> Ingests economy-wide headlines affecting index ETFs (SPY, QQQ, IWM).</li>
+                                <li class="list-group-item"><strong>Configurable API Key:</strong> Set <code>ALPHA_VANTAGE_API_KEY</code> in <code>.env</code> or supply via <code>--alphavantage-key</code>.</li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6">
+                            <h6>CLI Commands with AlphaVantage</h6>
+                            <pre class="bg-light p-3 rounded fs-12px"><code># Run weekly options scanner with AlphaVantage news sentiment
+php spark options:scan --alphavantage-key=YOUR_KEY
+
+# Open simulated strangle and check active underlier news
+php spark options:simulate-straddle NVDA --call-strike=210 --put-strike=150
+
+# Fast offline scan without API calls
+php spark options:scan --skip-news --dry-run</code></pre>
+                        </div>
                     </div>
                 </div>
             </div>

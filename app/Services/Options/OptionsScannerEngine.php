@@ -26,7 +26,9 @@ class OptionsScannerEngine
     public function __construct(
         private readonly ?OptionsScanCandidateModel $candidateModel = null,
         private readonly ?ProviderRouter $providerRouter = null,
+        private ?AlphaVantageCatalystService $catalystService = null,
     ) {
+        $this->catalystService = $this->catalystService ?? new AlphaVantageCatalystService();
     }
 
     /**
@@ -78,6 +80,14 @@ class OptionsScannerEngine
 
         $strategy = (string) ($options['strategy'] ?? $cfg->defaultStrategy ?? 'strangle');
         $otmOffsetPct = (float) ($options['otm_offset_pct'] ?? $cfg->defaultOtmOffsetPct ?? 4.0);
+        $avKey = isset($options['alphavantage_key']) ? (string) $options['alphavantage_key'] : null;
+        if ($avKey !== null && $this->catalystService !== null) {
+            $this->catalystService = new AlphaVantageCatalystService($avKey);
+        }
+        $skipCatalyst = (bool) ($options['skip_catalyst'] ?? false);
+        $macroCatalysts = (! $skipCatalyst && $this->catalystService !== null)
+            ? $this->catalystService->getMacroEconomicUpdates()
+            : ['available' => false, 'macro_sentiment_score' => 0.0, 'macro_sentiment_label' => 'Neutral', 'top_macro_headlines' => [], 'key_topics' => []];
 
         $targetProfit = (float) ($options['target_profit'] ?? $cfg->targetNetProfit);
         $callDebit = (float) ($options['call_debit'] ?? $cfg->defaultCallDebit);
@@ -142,6 +152,7 @@ class OptionsScannerEngine
             'target_balance_call' => $callTargetBalance,
             'target_balance_put' => $putTargetBalance,
             'total_target_balance' => $totalTargetBalance,
+            'macro_catalysts' => $macroCatalysts,
             'top_ranked' => array_slice($results, 0, 5),
             'all_results' => $results,
         ];
@@ -246,6 +257,20 @@ class OptionsScannerEngine
             'dte' => (int) $params['dte'],
         ]);
 
+        // AlphaVantage News & Ticker Catalyst Analysis
+        $skipCatalyst = (bool) ($params['skip_catalyst'] ?? false);
+        $catalystData = (! $skipCatalyst && $this->catalystService !== null)
+            ? $this->catalystService->getTickerCatalyst($ticker)
+            : [
+                'available' => false,
+                'sentiment_score' => 0.0,
+                'sentiment_label' => 'Neutral',
+                'catalyst_detected' => false,
+                'catalyst_type' => 'none',
+                'catalyst_momentum_boost' => 0.0,
+                'top_headline' => '',
+            ];
+
         // Composite Ranking Score (0 - 100)
         $rankingScore = $this->calculateRankingScore([
             'reachability_score' => $reachabilityScore,
@@ -254,6 +279,7 @@ class OptionsScannerEngine
             'rvol' => $rvol,
             'vol_accel_5m' => $volAccel5m,
             'range_expansion' => $rangeExpansionRatio,
+            'catalyst_boost' => $catalystData['catalyst_momentum_boost'] ?? 0.0,
         ]);
 
         // Screening decisions
@@ -312,6 +338,12 @@ class OptionsScannerEngine
             'spread_pct' => round($spreadPct, 4),
             'reachability_score' => round($reachabilityScore, 2),
             'ranking_score' => round($rankingScore, 2),
+            'news_catalyst_detected' => $catalystData['catalyst_detected'] ?? false,
+            'news_catalyst_type' => $catalystData['catalyst_type'] ?? 'none',
+            'news_sentiment_label' => $catalystData['sentiment_label'] ?? 'Neutral',
+            'news_sentiment_score' => $catalystData['sentiment_score'] ?? 0.0,
+            'news_top_headline' => $catalystData['top_headline'] ?? '',
+            'news_catalyst_boost' => $catalystData['catalyst_momentum_boost'] ?? 0.0,
             'scan_status' => $status,
             'rejection_reason' => $rejectionReason,
             'scanned_at' => $params['now'],
@@ -355,8 +387,9 @@ class OptionsScannerEngine
         $rangeComponent = min(10.0, max(0.0, ($rangeExpansion - 0.5) * 8.0));
         $dispComponent = min(10.0, max(0.0, $displacement * 5.0));
 
-        $total = $reachComponent + $rvolComponent + $accelComponent + $rangeComponent + $dispComponent;
-        return max(5.0, min(98.5, $total));
+        $catalystBoost = (float) ($data['catalyst_boost'] ?? 0.0);
+        $total = $reachComponent + $rvolComponent + $accelComponent + $rangeComponent + $dispComponent + $catalystBoost;
+        return max(5.0, min(99.0, $total));
     }
 
     private function fetchCandles(string $ticker): array
