@@ -240,9 +240,7 @@ plotshape(showIgnitionLabels and bullishShift and not bullishShift[1] and not ta
      shape.labelup,
      location.belowbar,
      color=color.green,
-     text="CALL IGNITION ▲
-Bullish Shift Toward $" + str.tostring(calcCallStrike, "#.##") + "
-RVOL: " + str.tostring(rvol, "#.#") + "x",
+     text="CALL IGNITION ▲\nBullish Shift Toward $" + str.tostring(calcCallStrike, "#.##") + "\nRVOL: " + str.tostring(rvol, "#.#") + "x",
      textcolor=color.white,
      size=size.normal)
 
@@ -252,9 +250,7 @@ plotshape(showIgnitionLabels and bearishShift and not bearishShift[1] and not ta
      shape.labeldown,
      location.abovebar,
      color=color.red,
-     text="PUT IGNITION ▼
-Bearish Shift Toward $" + str.tostring(calcPutStrike, "#.##") + "
-RVOL: " + str.tostring(rvol, "#.#") + "x",
+     text="PUT IGNITION ▼\nBearish Shift Toward $" + str.tostring(calcPutStrike, "#.##") + "\nRVOL: " + str.tostring(rvol, "#.#") + "x",
      textcolor=color.white,
      size=size.normal)
 
@@ -264,9 +260,7 @@ plotshape(showStrikeBreaches and callStrikeBreached,
      shape.labelup,
      location.belowbar,
      color=color.teal,
-     text="🎯 CALL STRIKE IN-THE-MONEY!
-Crossed $" + str.tostring(calcCallStrike, "#.##") + " Strike
-Delta > 0.50 Expanding Rapidly",
+     text="🎯 CALL STRIKE IN-THE-MONEY!\nCrossed $" + str.tostring(calcCallStrike, "#.##") + " Strike\nDelta > 0.50 Expanding Rapidly",
      textcolor=color.white,
      size=size.large)
 
@@ -276,9 +270,7 @@ plotshape(showStrikeBreaches and putStrikeBreached,
      shape.labeldown,
      location.abovebar,
      color=color.maroon,
-     text="🎯 PUT STRIKE IN-THE-MONEY!
-Crossed $" + str.tostring(calcPutStrike, "#.##") + " Strike
-Delta > 0.50 Expanding Rapidly",
+     text="🎯 PUT STRIKE IN-THE-MONEY!\nCrossed $" + str.tostring(calcPutStrike, "#.##") + " Strike\nDelta > 0.50 Expanding Rapidly",
      textcolor=color.white,
      size=size.large)
 
@@ -288,10 +280,7 @@ plotshape(showExitAlertLabels and targetReached and not targetReached[1],
      shape.labelup,
      location.belowbar,
      color=color.lime,
-     text="💰 PROFIT TARGET REACHED!
-+$200 NET PROFIT (+105%)
-Combined Exit: $" + str.tostring(estCombinedBid, "#.##") + "
-ACTION: CLOSE BOTH LEGS NOW",
+     text="💰 PROFIT TARGET REACHED!\n+$200 NET PROFIT (+105%)\nCombined Exit: $" + str.tostring(estCombinedBid, "#.##") + "\nACTION: CLOSE BOTH LEGS NOW",
      textcolor=color.black,
      size=size.large)
 
@@ -301,10 +290,7 @@ plotshape(showExitAlertLabels and warnMomentumFade and not warnMomentumFade[1],
      shape.labeldown,
      location.abovebar,
      color=color.yellow,
-     text="⚠️ MOMENTUM EXHAUSTION
-Velocity Slowing / EMA Cross
-Unrealized: +$" + str.tostring(unrealizedPnl, "#.##") + "
-ACTION: Consider Trimming / Lock Gains",
+     text="⚠️ MOMENTUM EXHAUSTION\nVelocity Slowing / EMA Cross\nUnrealized: +$" + str.tostring(unrealizedPnl, "#.##") + "\nACTION: Consider Trimming / Lock Gains",
      textcolor=color.black,
      size=size.normal)
 
@@ -314,10 +300,7 @@ plotshape(showExitAlertLabels and warnPeakDrawdown and not warnPeakDrawdown[1],
      shape.flag,
      location.abovebar,
      color=color.red,
-     text="🚨 PEAK PROFIT RETRACE
-Dropped > " + str.tostring(trailRetracePct, "#") + "% From Peak (+$" + str.tostring(peakPnl, "#.##") + ")
-Current: +$" + str.tostring(unrealizedPnl, "#.##") + "
-ACTION: Trailing Stop Triggered",
+     text="🚨 PEAK PROFIT RETRACE\nDropped > " + str.tostring(trailRetracePct, "#") + "% From Peak (+$" + str.tostring(peakPnl, "#.##") + ")\nCurrent: +$" + str.tostring(unrealizedPnl, "#.##") + "\nACTION: Trailing Stop Triggered",
      textcolor=color.white,
      size=size.normal)
 
