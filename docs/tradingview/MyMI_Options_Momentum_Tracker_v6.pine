@@ -5,20 +5,21 @@ indicator("MyMI Options Opportunity & Trade Momentum Tracker v6", overlay=true, 
 // 1. INPUT CONFIGURATION (VARIABLE STRATEGY & BALANCE SETTINGS)
 // =========================================================================
 var string GRP_OPT = "Weekly Options Strategy & Position"
-strategyStructure   = input.string("OTM Strangle (Recommended)", "Strategy Structure", options=["OTM Strangle (Recommended)", "ATM Straddle", "Custom Strikes"], group=GRP_OPT)
-otmOffsetPct        = input.float(4.0, "Auto OTM Strike Distance (%)", group=GRP_OPT, step=0.5, tooltip="For OTM Strangle: % above market for Call strike, % below for Put strike")
-callStrikeInput     = input.float(0.0, "Manual Call Strike (used if > 0)", group=GRP_OPT, step=0.5, tooltip="E.g. $210 for a $200 stock")
-putStrikeInput      = input.float(0.0, "Manual Put Strike (used if > 0)", group=GRP_OPT, step=0.5, tooltip="E.g. $150 or $190 for a $200 stock")
-strikeInterval      = input.float(0.0, "Strike Step/Interval (0 = Auto: $0.5, $1, $5)", group=GRP_OPT, step=0.5)
+strategyStructure   = input.string("2 Strikes OTM (Brent Sweet Spot)", "Strategy Structure", options=["2 Strikes OTM (Brent Sweet Spot)", "1 Strike OTM (Aggressive Gamma)", "Percentage OTM", "ATM Straddle", "Custom Strikes"], group=GRP_OPT, tooltip="Brent Sweet Spot: 2 strikes out from ATM (e.g. $192.50 Call / $182.50 Put on $187.50 BA)")
+strikesOtmCount     = input.int(2, "Strikes OTM Count (if Strikes mode)", group=GRP_OPT, minval=1, maxval=10, tooltip="Number of strikes out of the money from ATM (default 2 strikes: e.g. $192.50 Call / $182.50 Put on $187.50 BA)")
+otmOffsetPct        = input.float(2.6, "Auto OTM Strike Distance (%)", group=GRP_OPT, step=0.1, tooltip="For Percentage OTM: % above market for Call strike, % below for Put strike (2.6% matches $192.50/$182.50 on $187.50 BA)")
+strikeInterval      = input.float(0.0, "Strike Step/Interval (0 = Auto: $0.50, $1.00, $2.50, $5.00)", group=GRP_OPT, step=0.5, tooltip="Leave 0 for Auto-detection, or set explicitly (e.g. 2.50 for BA/AAPL, 1.00 for SPY/QQQ, 5.00 for TSLA/NVDA)")
+callStrikeInput     = input.float(0.0, "Manual Call Strike (used if > 0)", group=GRP_OPT, step=0.5, tooltip="E.g. $192.50 for BA, $210 for NVDA")
+putStrikeInput      = input.float(0.0, "Manual Put Strike (used if > 0)", group=GRP_OPT, step=0.5, tooltip="E.g. $182.50 for BA, $150 for NVDA")
 
 targetBalanceCall   = input.float(100.0, "Call Target Entry Balance ($)", group=GRP_OPT, step=10.0, tooltip="Capital allocation for the Call leg (e.g. $100.00)")
 targetBalancePut    = input.float(100.0, "Put Target Entry Balance ($)", group=GRP_OPT, step=10.0, tooltip="Capital allocation for the Put leg (e.g. $100.00)")
-entryDebitCall      = input.float(0.95, "Call Leg Entry Debit ($)", group=GRP_OPT, step=0.05)
-entryDebitPut       = input.float(0.95, "Put Leg Entry Debit ($)", group=GRP_OPT, step=0.05)
+entryDebitCall      = input.float(0.95, "Call Leg Entry Debit ($)", group=GRP_OPT, step=0.05, tooltip="Per-contract entry debit for the Call leg (e.g. $0.95 or $3.15 from thinkorswim)")
+entryDebitPut       = input.float(0.95, "Put Leg Entry Debit ($)", group=GRP_OPT, step=0.05, tooltip="Per-contract entry debit for the Put leg (e.g. $0.95 or $3.02 from thinkorswim)")
 targetNetProfit     = input.float(200.0, "Target Net Profit ($)", group=GRP_OPT, step=25.0)
 sizingMode          = input.string("Target Balance ($100/leg)", "Position Sizing Mode", options=["Target Balance ($100/leg)", "Fixed Contract Pairs"], group=GRP_OPT)
 contractPairs       = input.int(1, "Fixed Contract Pairs (if Fixed mode)", group=GRP_OPT, minval=1)
-entryPriceStock     = input.float(0.0, "Entry Stock Price (0 = Auto Session Open / Current)", group=GRP_OPT, tooltip="Set to 0 to use session open, or enter your exact stock price when opening the strangle (e.g. $200.00)")
+entryPriceStock     = input.float(0.0, "Entry Stock Price (0 = Auto Session Open / Current)", group=GRP_OPT, tooltip="Set to 0 to use session open, or enter your exact stock price when opening the strangle (e.g. $187.50 for BA, $200.00 for NVDA)")
 enableWebhookAlerts = input.bool(true, "Enable Structured Webhook Alerts", group=GRP_OPT)
 webhookSecret       = input.string("mymi-options-secure-key", "Webhook Secret / Bearer Token", group=GRP_OPT)
 
@@ -58,23 +59,42 @@ velocity = ta.ema(ta.roc(close, 3), 3)
 sessionOpen = ta.valuewhen(ta.change(time("D")) != 0, open, 0)
 effectiveEntryPrice = entryPriceStock > 0 ? entryPriceStock : (na(sessionOpen) ? close : sessionOpen)
 
-// Strike Step Size ($0.50, $1.00, or $5.00 for price > 250)
-autoStep = effectiveEntryPrice > 250.0 ? 5.0 : (effectiveEntryPrice > 50.0 ? 1.0 : 0.5)
-stepSize = strikeInterval > 0 ? strikeInterval : autoStep
+// Detect Strike Step Size ($0.50, $1.00, $2.50, or $5.00)
+// Large-cap equities between $75-$250 (e.g. BA, AAPL, DIS, IBM) trade on $2.50 strike intervals
+float detectedStep = 1.0
+if effectiveEntryPrice > 250.0
+    detectedStep := 5.0
+else if str.contains(syminfo.ticker, "BA") or syminfo.ticker == "BA"
+    detectedStep := 2.5
+else if effectiveEntryPrice >= 75.0 and effectiveEntryPrice <= 250.0 and (syminfo.ticker == "AAPL" or syminfo.ticker == "DIS" or syminfo.ticker == "IBM")
+    detectedStep := 2.5
+else if effectiveEntryPrice > 50.0
+    detectedStep := 1.0
+else
+    detectedStep := 0.5
+
+stepSize = strikeInterval > 0 ? strikeInterval : detectedStep
 
 // Compute Strikes based on strategy structure
 float calcCallStrike = 0.0
 float calcPutStrike  = 0.0
 
+atmBase = math.round(effectiveEntryPrice / stepSize) * stepSize
+
 if strategyStructure == "Custom Strikes" or (callStrikeInput > 0 and putStrikeInput > 0)
-    calcCallStrike := callStrikeInput > 0 ? callStrikeInput : math.round((effectiveEntryPrice * (1.0 + (otmOffsetPct / 100.0))) / stepSize) * stepSize
-    calcPutStrike  := putStrikeInput > 0  ? putStrikeInput  : math.round((effectiveEntryPrice * (1.0 - (otmOffsetPct / 100.0))) / stepSize) * stepSize
+    calcCallStrike := callStrikeInput > 0 ? callStrikeInput : (atmBase + (strikesOtmCount * stepSize))
+    calcPutStrike  := putStrikeInput > 0  ? putStrikeInput  : (atmBase - (strikesOtmCount * stepSize))
 else if strategyStructure == "ATM Straddle"
-    atmBase = math.round(effectiveEntryPrice / stepSize) * stepSize
     calcCallStrike := callStrikeInput > 0 ? callStrikeInput : atmBase
     calcPutStrike  := putStrikeInput > 0  ? putStrikeInput  : atmBase
+else if strategyStructure == "1 Strike OTM (Aggressive Gamma)"
+    calcCallStrike := callStrikeInput > 0 ? callStrikeInput : (atmBase + (1 * stepSize))
+    calcPutStrike  := putStrikeInput > 0  ? putStrikeInput  : (atmBase - (1 * stepSize))
+else if strategyStructure == "2 Strikes OTM (Brent Sweet Spot)"
+    calcCallStrike := callStrikeInput > 0 ? callStrikeInput : (atmBase + (strikesOtmCount * stepSize))
+    calcPutStrike  := putStrikeInput > 0  ? putStrikeInput  : (atmBase - (strikesOtmCount * stepSize))
 else
-    // Default: OTM Strangle (Call ABOVE price e.g. $210, Put BELOW price e.g. $150 or $190)
+    // Percentage OTM: Call ABOVE price, Put BELOW price
     rawCall = effectiveEntryPrice * (1.0 + (otmOffsetPct / 100.0))
     rawPut  = effectiveEntryPrice * (1.0 - (otmOffsetPct / 100.0))
     calcCallStrike := callStrikeInput > 0 ? callStrikeInput : math.round(rawCall / stepSize) * stepSize
@@ -306,7 +326,7 @@ ACTION: Trailing Stop Triggered",
 // =========================================================================
 var table dash = table.new(position.top_right, 2, 10, bgcolor=color.new(color.black, 15), border_width=1, border_color=color.gray)
 if barstate.islast
-    string stratLabel = strategyStructure == "ATM Straddle" ? "MyMI Straddle (ATM)" : "MyMI Strangle (OTM)"
+    string stratLabel = strategyStructure == "ATM Straddle" ? "MyMI Straddle (ATM)" : (strategyStructure == "2 Strikes OTM (Brent Sweet Spot)" ? "Brent Strangle (2 OTM)" : "MyMI Strangle (OTM)")
     table.cell(dash, 0, 0, stratLabel, bgcolor=color.blue, text_color=color.white)
     table.cell(dash, 1, 0, syminfo.ticker + " ($" + str.tostring(close, "#.##") + ")", bgcolor=color.blue, text_color=color.white)
     

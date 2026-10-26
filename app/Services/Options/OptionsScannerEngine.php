@@ -166,15 +166,19 @@ class OptionsScannerEngine
         $candles = $this->fetchCandles($ticker);
         $price = $this->extractCurrentPrice($ticker, $candles);
 
+        $cfg = $this->resolveConfig();
         $strategy = (string) ($params['strategy'] ?? 'strangle');
-        $otmOffsetPct = (float) ($params['otm_offset_pct'] ?? 4.0);
+        $otmOffsetPct = (float) ($params['otm_offset_pct'] ?? $cfg->defaultOtmOffsetPct ?? 2.6);
+        $strikesOtm = (int) ($params['strikes_otm'] ?? $cfg->defaultStrikesOtm ?? 2);
 
-        // Strike Step Size ($0.50, $1.00, or $5.00 for price > 250)
-        $stepSize = $price > 250.0 ? 5.0 : ($price > 50.0 ? 1.0 : 0.5);
+        // Strike Step Size ($0.50, $1.00, $2.50, or $5.00 for price > 250)
+        // Check for ticker-specific strike intervals (e.g. $2.50 for BA, AAPL, DIS)
+        $stepOverrides = $cfg->strikeStepOverrides ?? ['BA' => 2.50, 'AAPL' => 2.50, 'DIS' => 2.50];
+        $stepSize = (float) ($params['strike_step'] ?? ($stepOverrides[$ticker] ?? ($price > 250.0 ? 5.0 : ($price > 50.0 ? 1.0 : 0.5))));
+        $atmStrike = round($price / $stepSize) * $stepSize;
 
         // Derive Strikes based on Strategy
         if ($strategy === 'straddle') {
-            $atmStrike = round($price / $stepSize) * $stepSize;
             $callStrike = isset($params['call_strike']) && (float) $params['call_strike'] > 0
                 ? (float) $params['call_strike']
                 : (float) $atmStrike;
@@ -183,9 +187,14 @@ class OptionsScannerEngine
                 : (float) $atmStrike;
             $strategyName = 'long_straddle';
         } else {
-            // Default: OTM Strangle (Call ABOVE price, Put BELOW price)
-            $defaultCallStrike = round(($price * (1.0 + ($otmOffsetPct / 100.0))) / $stepSize) * $stepSize;
-            $defaultPutStrike  = round(($price * (1.0 - ($otmOffsetPct / 100.0))) / $stepSize) * $stepSize;
+            // Default: OTM Strangle (Brent Sweet Spot: 2 strikes out from ATM)
+            if ($strikesOtm > 0 && (! isset($params['otm_offset_pct']) || (float) $params['otm_offset_pct'] === 2.6 || (float) $params['otm_offset_pct'] === 4.0)) {
+                $defaultCallStrike = $atmStrike + ($strikesOtm * $stepSize);
+                $defaultPutStrike  = $atmStrike - ($strikesOtm * $stepSize);
+            } else {
+                $defaultCallStrike = round(($price * (1.0 + ($otmOffsetPct / 100.0))) / $stepSize) * $stepSize;
+                $defaultPutStrike  = round(($price * (1.0 - ($otmOffsetPct / 100.0))) / $stepSize) * $stepSize;
+            }
 
             $callStrike = isset($params['call_strike']) && (float) $params['call_strike'] > 0
                 ? (float) $params['call_strike']
@@ -422,6 +431,7 @@ class OptionsScannerEngine
             'TSLA' => 220.00,
             'AMD' => 156.00,
             'COIN' => 215.00,
+            'BA' => 187.50,
             'SPY' => 580.00,
             'QQQ' => 495.00,
             'IWM' => 222.00,

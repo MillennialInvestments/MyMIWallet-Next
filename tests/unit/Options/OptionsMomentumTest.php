@@ -436,4 +436,26 @@ final class OptionsMomentumTest extends CIUnitTestCase
         $this->assertSame('deal_ma', $candidate['news_catalyst_type']);
         $this->assertGreaterThan(0.0, (float) $candidate['news_catalyst_boost']);
     }
+
+    public function testBrentTwoStrikesOtmStrangleSelectionForBoeing(): void
+    {
+        $scanner = new \App\Services\Options\OptionsScannerEngine();
+
+        // Boeing at $187.53 should automatically select $192.50 Call and $182.50 Put (2 strikes OTM on $2.50 step)
+        $res = $scanner->scan([
+            'universe' => ['BA'],
+            'strategy' => 'strangle',
+            'dry_run' => true,
+        ]);
+
+        $this->assertSame(1, $res['scanned_count']);
+        $candidate = $res['all_results'][0];
+
+        $this->assertSame('BA', $candidate['ticker']);
+        $this->assertSame(192.5, (float) $candidate['call_strike']);
+        $this->assertSame(182.5, (float) $candidate['put_strike']);
+        $this->assertSame('long_strangle', $candidate['strategy']);
+        $this->assertSame(100.0, (float) $candidate['call_target_balance']);
+        $this->assertSame(100.0, (float) $candidate['put_target_balance']);
+    }
 }

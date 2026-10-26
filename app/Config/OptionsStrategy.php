@@ -21,9 +21,23 @@ class OptionsStrategy extends BaseConfig
 
     /**
      * Default Out-of-the-Money offset percentage for strangle strikes.
-     * E.g. 4.0% puts Call strike at +4% above market and Put strike at -4% below market.
+     * 2.6% gives symmetric wings that match Brent's sweet spot (e.g. $192.50/$182.50 on $187.50 BA).
      */
-    public float $defaultOtmOffsetPct = 4.0;
+    public float $defaultOtmOffsetPct = 2.6;
+
+    /**
+     * Default number of strikes out of the money from ATM (Brent Sweet Spot: 2 strikes out).
+     */
+    public int $defaultStrikesOtm = 2;
+
+    /**
+     * Equities with non-dollar strike step intervals (e.g. $2.50 steps for BA, AAPL, DIS).
+     */
+    public array $strikeStepOverrides = [
+        "BA"   => 2.50,
+        "AAPL" => 2.50,
+        "DIS"  => 2.50,
+    ];
 
     /**
      * AlphaVantage API key for economic news sentiment & ticker catalyst analysis.
@@ -101,6 +115,7 @@ class OptionsStrategy extends BaseConfig
         'TSLA',
         'AMD',
         'COIN',
+        'BA',
         'SPY',
         'QQQ',
         'IWM',

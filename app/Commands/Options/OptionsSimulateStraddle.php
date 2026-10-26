@@ -68,17 +68,24 @@ class OptionsSimulateStraddle extends SafeBaseCommand
 
         // Strategy & Strikes
         $strategy = (string) ($flags['strategy'] ?? $cfg->defaultStrategy ?? 'strangle');
-        $otmOffset = isset($flags['otm-offset']) ? (float) $flags['otm-offset'] : ($cfg->defaultOtmOffsetPct ?? 4.0);
-        $stepSize = $stockPrice > 250.0 ? 5.0 : ($stockPrice > 50.0 ? 1.0 : 0.5);
+        $otmOffset = isset($flags['otm-offset']) ? (float) $flags['otm-offset'] : ($cfg->defaultOtmOffsetPct ?? 2.6);
+        $strikesOtm = isset($flags['strikes-otm']) ? (int) $flags['strikes-otm'] : ($cfg->defaultStrikesOtm ?? 2);
+        $stepOverrides = $cfg->strikeStepOverrides ?? ['BA' => 2.50, 'AAPL' => 2.50, 'DIS' => 2.50];
+        $stepSize = isset($flags['strike-step']) ? (float) $flags['strike-step'] : ($stepOverrides[$ticker] ?? ($stockPrice > 250.0 ? 5.0 : ($stockPrice > 50.0 ? 1.0 : 0.5)));
+        $atmStrike = round($stockPrice / $stepSize) * $stepSize;
 
         if ($strategy === 'straddle') {
-            $atmStrike = round($stockPrice / $stepSize) * $stepSize;
             $callStrike = isset($flags['call-strike']) ? (float) $flags['call-strike'] : $atmStrike;
             $putStrike  = isset($flags['put-strike'])  ? (float) $flags['put-strike']  : $atmStrike;
         } else {
-            // Default: OTM Strangle (Call above stock, Put below stock)
-            $defaultCall = round(($stockPrice * (1.0 + ($otmOffset / 100.0))) / $stepSize) * $stepSize;
-            $defaultPut  = round(($stockPrice * (1.0 - ($otmOffset / 100.0))) / $stepSize) * $stepSize;
+            // Default: OTM Strangle (Brent Sweet Spot: 2 strikes out from ATM)
+            if ($strikesOtm > 0 && (! isset($flags['otm-offset']) || (float) $flags['otm-offset'] === 2.6 || (float) $flags['otm-offset'] === 4.0)) {
+                $defaultCall = $atmStrike + ($strikesOtm * $stepSize);
+                $defaultPut  = $atmStrike - ($strikesOtm * $stepSize);
+            } else {
+                $defaultCall = round(($stockPrice * (1.0 + ($otmOffset / 100.0))) / $stepSize) * $stepSize;
+                $defaultPut  = round(($stockPrice * (1.0 - ($otmOffset / 100.0))) / $stepSize) * $stepSize;
+            }
             $callStrike = isset($flags['call-strike']) ? (float) $flags['call-strike'] : $defaultCall;
             $putStrike  = isset($flags['put-strike'])  ? (float) $flags['put-strike']  : $defaultPut;
         }
