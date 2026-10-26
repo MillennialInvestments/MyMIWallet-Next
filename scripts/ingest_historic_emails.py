@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
-MyMI Historic Email Archive Ingestion Engine
-Zero-dependency, segmented/batched historic ingestion of ~117,000 emails from DreamHost IMAP into MySQL.
-Features persistent cursor checkpointing, memory safety, and duplicate prevention.
+MyMI Historic Email Archive Ingestion Helper
+Zero-dependency IMAP extraction of historic emails from DreamHost into structured JSON for CodeIgniter database insertion.
 """
 
 import sys
@@ -16,14 +15,6 @@ import re
 from html import unescape
 from datetime import datetime
 import hashlib
-
-try:
-    import MySQLdb
-except ImportError:
-    try:
-        import pymysql as MySQLdb
-    except ImportError:
-        MySQLdb = None
 
 
 def decode_mime(header_val):
@@ -55,7 +46,6 @@ def parse_date(date_str):
     if not date_str:
         return datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
     try:
-        # Standard email date format
         import email.utils
         parsed_tuple = email.utils.parsedate_tz(date_str)
         if parsed_tuple:
@@ -108,15 +98,15 @@ def save_cursor(cursor_file, cursor_data):
         sys.stderr.write(f"Warning: Failed saving cursor: {e}\n")
 
 
-def ingest_segment(host, port, user, password, limit, cursor_file, db_config, direction='newest_first'):
+def ingest_segment(host, port, user, password, limit, cursor_file, direction='newest_first'):
     report = {
+        "status": "success",
         "mailbox": user,
         "scanned": 0,
-        "inserted": 0,
-        "duplicates": 0,
-        "errors": [],
         "cursor_seq": 0,
-        "total_mailbox": 0
+        "total_mailbox": 0,
+        "messages": [],
+        "errors": []
     }
     
     # Load cursor
@@ -128,6 +118,7 @@ def ingest_segment(host, port, user, password, limit, cursor_file, db_config, di
         M.login(user, password)
         res, count_data = M.select('INBOX', readonly=True)
         if res != 'OK':
+            report["status"] = "error"
             report["errors"].append(f"Failed selecting INBOX: {res}")
             return report
             
@@ -142,13 +133,11 @@ def ingest_segment(host, port, user, password, limit, cursor_file, db_config, di
         # Calculate window based on cursor
         last_seq = mb_cursor.get("last_seq", 0)
         if direction == 'newest_first':
-            # Slicing from the end backwards
             start_idx = max(0, total_uids - last_seq - limit)
             end_idx = max(0, total_uids - last_seq)
             batch_uids = all_uids[start_idx:end_idx]
             batch_uids.reverse()
         else:
-            # Slicing from beginning forwards (chronological)
             start_idx = last_seq
             end_idx = min(total_uids, last_seq + limit)
             batch_uids = all_uids[start_idx:end_idx]
@@ -158,23 +147,6 @@ def ingest_segment(host, port, user, password, limit, cursor_file, db_config, di
             return report
             
         report["scanned"] = len(batch_uids)
-        
-        # Connect to DB if available
-        conn = None
-        if db_config and MySQLdb:
-            try:
-                conn = MySQLdb.connect(
-                    host=db_config.get('host', '127.0.0.1'),
-                    user=db_config.get('user', 'mymiwebapp'),
-                    passwd=db_config.get('password', ''),
-                    db=db_config.get('database', 'mymiwallet'),
-                    port=int(db_config.get('port', 3306)),
-                    charset='utf8mb4'
-                )
-            except Exception as dbe:
-                report["errors"].append(f"Database connection error: {dbe}")
-                
-        cursor = conn.cursor() if conn else None
         
         for uid in batch_uids:
             try:
@@ -191,7 +163,6 @@ def ingest_segment(host, port, user, password, limit, cursor_file, db_config, di
                 sql_date = parse_date(date_str)
                 msg_id = msg.get('Message-ID', f"uid-{uid.decode()}-{user}")
                 
-                # Deduplication identifier
                 identifier = hashlib.md5(f"{msg_id}|{user}".encode('utf-8')).hexdigest()
                 
                 body = ""
@@ -208,37 +179,25 @@ def ingest_segment(host, port, user, password, limit, cursor_file, db_config, di
                 clean_body = clean_body_text(body)
                 headline, ticker = extract_headline_and_ticker(subject, clean_body)
                 
-                if cursor and conn:
-                    # Check existence by email_identifier
-                    cursor.execute("SELECT id FROM bf_marketing_temp_scraper WHERE email_identifier = %s LIMIT 1", (identifier,))
-                    if cursor.fetchone():
-                        report["duplicates"] += 1
-                        continue
-                        
-                    sql = """
-                    INSERT INTO bf_marketing_temp_scraper (
-                        source_type, source_provider, sender_email, source_message_id,
-                        ticker, title, content, email_identifier, email_date,
-                        email_sender, email_subject, email_body, status, processed,
-                        source_mailbox, imap_uid, date_scraped
-                    ) VALUES (
-                        %s, %s, %s, %s,
-                        %s, %s, %s, %s, %s,
-                        %s, %s, %s, %s, %s,
-                        %s, %s, %s
-                    )
-                    """
-                    cursor.execute(sql, (
-                        'historic_email_archive', 'thinkorswim' if 'thinkorswim' in from_addr.lower() else 'news_feed',
-                        from_addr[:250], msg_id[:250],
-                        ticker[:20], headline[:250], clean_body[:5000], identifier, sql_date,
-                        from_addr[:250], subject[:490], clean_body[:5000], 'pending', 0,
-                        user[:250], int(uid.decode()) if uid.decode().isdigit() else 0, sql_date
-                    ))
-                    conn.commit()
-                    report["inserted"] += 1
-                else:
-                    report["inserted"] += 1
+                report["messages"].append({
+                    "email_identifier": identifier,
+                    "source_type": "historic_email_archive",
+                    "source_provider": "thinkorswim" if "thinkorswim" in from_addr.lower() else "news_feed",
+                    "sender_email": from_addr[:250],
+                    "source_message_id": msg_id[:250],
+                    "ticker": ticker[:20],
+                    "title": headline[:250],
+                    "content": clean_body[:5000],
+                    "email_date": sql_date,
+                    "email_sender": from_addr[:250],
+                    "email_subject": subject[:490],
+                    "email_body": clean_body[:5000],
+                    "source_mailbox": user[:250],
+                    "imap_uid": int(uid.decode()) if uid.decode().isdigit() else 0,
+                    "date_scraped": sql_date,
+                    "status": "pending",
+                    "processed": 0
+                })
                     
             except Exception as item_err:
                 report["errors"].append(f"UID {uid.decode()} error: {item_err}")
@@ -255,10 +214,6 @@ def ingest_segment(host, port, user, password, limit, cursor_file, db_config, di
         report["cursor_seq"] = new_seq
         
         try:
-            if cursor:
-                cursor.close()
-            if conn:
-                conn.close()
             M.close()
             M.logout()
         except Exception:
@@ -267,6 +222,7 @@ def ingest_segment(host, port, user, password, limit, cursor_file, db_config, di
         return report
 
     except Exception as e:
+        report["status"] = "error"
         report["errors"].append(str(e))
         return report
 
@@ -279,10 +235,6 @@ def main():
     parser.add_argument("--password", required=True)
     parser.add_argument("--limit", type=int, default=50)
     parser.add_argument("--cursor", default="/apps/TBI/www/mymiwallet/shared/writable/aiops/historic_email_cursor.json")
-    parser.add_argument("--db-host", default="127.0.0.1")
-    parser.add_argument("--db-user", default="")
-    parser.add_argument("--db-pass", default="")
-    parser.add_argument("--db-name", default="")
     parser.add_argument("--reset-cursor", action="store_true")
     
     args = parser.parse_args()
@@ -293,21 +245,10 @@ def main():
             if args.user in c:
                 del c[args.user]
                 save_cursor(args.cursor, c)
-                print(f"Cursor reset for {args.user}")
-        except Exception as e:
-            print(f"Error resetting cursor: {e}")
+        except Exception:
+            pass
             
-    db_config = None
-    if args.db_user and args.db_pass and args.db_name:
-        db_config = {
-            "host": args.db_host,
-            "user": args.db_user,
-            "password": args.db_pass,
-            "database": args.db_name,
-            "port": 3306
-        }
-        
-    res = ingest_segment(args.host, args.port, args.user, args.password, args.limit, args.cursor, db_config)
+    res = ingest_segment(args.host, args.port, args.user, args.password, args.limit, args.cursor)
     print(json.dumps(res, indent=2))
 
 

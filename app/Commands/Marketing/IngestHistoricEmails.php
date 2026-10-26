@@ -25,7 +25,7 @@ class IngestHistoricEmails extends SafeBaseCommand
     {
         [$args, $flags] = $this->parseParams($params);
 
-        $limit = isset($flags['limit']) ? max(10, (int) $flags['limit']) : 250;
+        $limit = isset($flags['limit']) ? max(5, (int) $flags['limit']) : 250;
         $batches = isset($flags['batches']) ? max(1, (int) $flags['batches']) : 1;
         $target = strtolower((string) ($flags['mailbox'] ?? 'all'));
         $resetCursor = isset($flags['reset-cursor']);
@@ -36,11 +36,6 @@ class IngestHistoricEmails extends SafeBaseCommand
         CLI::write(sprintf("Configuration: %d batch(es) of %d emails | Target Mailbox: %s\n", $batches, $limit, $target));
 
         $db = Database::connect();
-        $dbHost = (string) $db->hostname;
-        $dbUser = (string) $db->username;
-        $dbPass = (string) $db->password;
-        $dbName = (string) $db->database;
-
         $scriptPath = ROOTPATH . 'scripts/ingest_historic_emails.py';
         $cursorFile = WRITEPATH . 'aiops/historic_email_cursor.json';
 
@@ -71,17 +66,13 @@ class IngestHistoricEmails extends SafeBaseCommand
                 CLI::write(sprintf(" - Running batch %d of %d (limit: %d)...", $b, $batches, $limit), 'white');
 
                 $cmd = sprintf(
-                    'python3 %s --host=%s --port=993 --user=%s --password=%s --limit=%d --cursor=%s --db-host=%s --db-user=%s --db-pass=%s --db-name=%s %s',
+                    'python3 %s --host=%s --port=993 --user=%s --password=%s --limit=%d --cursor=%s %s',
                     escapeshellarg($scriptPath),
                     escapeshellarg((string) env('alerts.imap.host', 'imap.dreamhost.com')),
                     escapeshellarg($mb['user']),
                     escapeshellarg($mb['pass']),
                     $limit,
                     escapeshellarg($cursorFile),
-                    escapeshellarg($dbHost),
-                    escapeshellarg($dbUser),
-                    escapeshellarg($dbPass),
-                    escapeshellarg($dbName),
                     ($resetCursor && $b === 1) ? '--reset-cursor' : ''
                 );
 
@@ -100,21 +91,46 @@ class IngestHistoricEmails extends SafeBaseCommand
                 }
 
                 $scanned = (int) ($res['scanned'] ?? 0);
-                $inserted = (int) ($res['inserted'] ?? 0);
-                $duplicates = (int) ($res['duplicates'] ?? 0);
                 $cursorSeq = (int) ($res['cursor_seq'] ?? 0);
                 $totalMb = (int) ($res['total_mailbox'] ?? 0);
+                $messages = $res['messages'] ?? [];
+
+                $batchInserted = 0;
+                $batchDuplicates = 0;
+
+                // Native CodeIgniter database insertion with duplicate check
+                if (! empty($messages) && $db->tableExists('bf_marketing_temp_scraper')) {
+                    $table = $db->table('bf_marketing_temp_scraper');
+                    $fields = array_flip($db->getFieldNames('bf_marketing_temp_scraper'));
+
+                    foreach ($messages as $msg) {
+                        $ident = (string) ($msg['email_identifier'] ?? '');
+                        if ($ident === '') {
+                            continue;
+                        }
+
+                        $exists = $table->where('email_identifier', $ident)->countAllResults();
+                        if ($exists > 0) {
+                            $batchDuplicates++;
+                            continue;
+                        }
+
+                        $clean = array_intersect_key($msg, $fields);
+                        $table->insert($clean);
+                        $batchInserted++;
+                    }
+                }
 
                 $grandTotalScanned += $scanned;
-                $grandTotalInserted += $inserted;
-                $grandTotalDuplicates += $duplicates;
+                $grandTotalInserted += $batchInserted;
+                $grandTotalDuplicates += $batchDuplicates;
 
                 CLI::write(sprintf(
                     "   Batch %d Result: Scanned: %d | Newly Archived: %d | Duplicates: %d | Cursor: %d / %d",
                     $b,
                     $scanned,
-                    $inserted,
-                    $duplicates,
+                    $batchInserted,
+                    $batchDuplicates,
                     $cursorSeq,
                     $totalMb
                 ), 'green');
@@ -124,9 +140,8 @@ class IngestHistoricEmails extends SafeBaseCommand
                     break;
                 }
 
-                // Friendly breath between batches for IMAP server politeness
                 if ($b < $batches) {
-                    usleep(500000); // 0.5s pause
+                    usleep(500000); // 0.5s pause between batches
                 }
             }
             CLI::write("");
