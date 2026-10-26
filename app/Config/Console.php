@@ -289,6 +289,7 @@ class Console extends BaseConfig
         \App\Commands\Marketing\NewsSeedTest::class,
         \App\Commands\Marketing\NotificationTest::class,
         \App\Commands\Marketing\DistroPipeline::class,
+        \App\Commands\Marketing\IngestHistoricEmails::class,
         \App\Commands\Marketing\Pipeline::class,
         \App\Commands\Marketing\PreviewControlledDistribution::class,
         \App\Commands\Marketing\ProcessNotifications::class,

@@ -49,7 +49,7 @@ class ContentDistroEngine
      * @param array<string, mixed> $input
      * @return array<string, mixed>
      */
-    public function generatePackage(array $input): array
+    public function generatePackage(array $input, bool $synthesizeVoiceover = false): array
     {
         $ticker = strtoupper(trim((string) ($input['ticker'] ?? 'SPY')));
         $type = (string) ($input['type'] ?? 'trade_alert');
@@ -65,8 +65,23 @@ class ContentDistroEngine
         // 1. TikTok & YouTube Shorts Video Script
         $videoData = $this->buildVideoScript($ticker, $type, $headline, $strategy, $callStrike, $putStrike, $underlierPrice, $targetProfit, $note);
 
-        // 2. Audio Voiceover Synthesis
-        $voiceover = $this->voiceoverService->generate($videoData['narration_script'], 'vo_' . strtolower($ticker) . '_' . date('Ymd_His'));
+        // 2. Audio Voiceover Synthesis (Prepped Mode by default, synthesized on-demand)
+        $shouldSynthesize = $synthesizeVoiceover || (bool) ($input['synthesize_voiceover'] ?? false);
+        if ($shouldSynthesize) {
+            $voiceover = $this->voiceoverService->generate($videoData['narration_script'], 'vo_' . strtolower($ticker) . '_' . date('Ymd_His'));
+        } else {
+            $wordCount = str_word_count($videoData['narration_script']);
+            $durationEst = max(15.0, round(($wordCount / 130) * 60, 2));
+            $voiceover = [
+                'status' => 'prepped',
+                'file_name' => null,
+                'file_path' => null,
+                'file_url' => null,
+                'duration_est' => $durationEst,
+                'text' => $videoData['narration_script'],
+                'message' => 'Narration script is prepped and ready for on-demand synthesis upon distribution.',
+            ];
+        }
         $videoData['voiceover'] = $voiceover;
 
         // 3. Discord Rich Embed
@@ -168,6 +183,24 @@ class ContentDistroEngine
             'dispatched_at' => date('Y-m-d H:i:s'),
             'destinations' => [],
         ];
+
+        // On-demand voiceover synthesis for prepped packages before distribution
+        $videoPkg = $bundle['n8n_payload']['video_package'] ?? [];
+        if (empty($videoPkg['voiceover_url']) && ! empty($videoPkg['narration_script'])) {
+            $ticker = (string) ($record['primary_category'] ?? $bundle['n8n_payload']['ticker'] ?? 'TBI');
+            $vo = $this->voiceoverService->generate($videoPkg['narration_script'], 'vo_' . strtolower($ticker) . '_' . date('Ymd_His'));
+            if (! empty($vo['file_url'])) {
+                $bundle['n8n_payload']['video_package']['voiceover_url'] = $vo['file_url'];
+                $bundle['n8n_payload']['video_package']['duration_est'] = $vo['duration_est'] ?? 30.0;
+                $bundle['voiceover'] = $vo;
+                $results['on_demand_voiceover'] = $vo;
+
+                $this->db->table('bf_marketing_generated_content')->where('id', $generatedContentId)->update([
+                    'content_json' => json_encode($bundle, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+                    'voice_script' => $videoPkg['narration_script'],
+                ]);
+            }
+        }
 
         // DISCORD
         if (in_array('discord', $destinations, true)) {

@@ -50,6 +50,8 @@ final class MarketingDistroTest extends CIUnitTestCase
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             source_type VARCHAR(64),
             source_id INTEGER,
+            primary_category VARCHAR(64),
+            voice_script TEXT,
             title TEXT,
             content_json TEXT,
             status VARCHAR(32) DEFAULT 'completed',
@@ -196,9 +198,9 @@ final class MarketingDistroTest extends CIUnitTestCase
         $this->assertCount(3, $package['video']['visual_beats']);
         $this->assertNotEmpty($package['video']['narration_script']);
 
-        // Voiceover
-        $this->assertTrue($package['voiceover']['success']);
-        $this->assertNotNull($package['voiceover']['file_url']);
+        // Voiceover (Prepped Mode)
+        $this->assertSame('prepped', $package['voiceover']['status']);
+        $this->assertNotEmpty($package['voiceover']['text']);
 
         // Discord embed
         $this->assertStringContainsString('BA', $package['discord']['title']);

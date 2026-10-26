@@ -156,9 +156,14 @@
                                     <span class="text-secondary" style="font-size: 10px;">
                                         <?= esc($item['mailbox'] ?? 'alerts@mymiwallet.com') ?> • <?= esc(substr($item['date_scraped'] ?? '', 5, 11)) ?>
                                     </span>
-                                    <button class="btn btn-xs btn-outline-primary py-0 px-2 text-white" style="font-size: 10px;" onclick="event.stopPropagation(); triggerGenerateForId(<?= (int) $item['id'] ?>);">
-                                        ⚡ Generate
-                                    </button>
+                                    <div class="d-flex gap-1">
+                                        <button class="btn btn-xs btn-outline-primary py-0 px-2 text-white" style="font-size: 10px;" title="Load & prep scripts" onclick="event.stopPropagation(); triggerGenerateForId(<?= (int) $item['id'] ?>);">
+                                            ⚡ Prep
+                                        </button>
+                                        <button class="btn btn-xs btn-success py-0 px-2 text-black fw-bold" style="font-size: 10px;" title="Synthesize audio & distribute highlight" onclick="event.stopPropagation(); triggerHighlightDistribute(<?= (int) $item['id'] ?>, '<?= esc($ticker) ?>');">
+                                            🚀 Distribute
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -573,6 +578,59 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Voiceover error: ' + err.message);
         });
     });
+
+    // Direct Highlight & Distribute from Feed item
+    window.triggerHighlightDistribute = function(feedId, ticker) {
+        var toast = document.createElement('div');
+        toast.className = 'position-fixed bottom-0 end-0 p-3';
+        toast.style.zIndex = '9999';
+        toast.innerHTML = '<div class="alert alert-info py-2 px-3 shadow d-flex align-items-center gap-2"><div class="spinner-border spinner-border-sm"></div><span>Preparing $' + ticker + ' highlight video, voiceover & distributing...</span></div>';
+        document.body.appendChild(toast);
+
+        var formData = new FormData();
+        formData.append('temp_id', feedId);
+        formData.append('ticker', ticker);
+
+        fetch('/API/Marketing/Distro/generate', {
+            method: 'POST',
+            body: formData,
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(pkg) {
+            currentGeneratedId = pkg.generated_content_id;
+            var distData = new FormData();
+            distData.append('generated_content_id', currentGeneratedId);
+            distData.append('destinations[]', 'discord');
+            distData.append('destinations[]', 'email');
+            distData.append('destinations[]', 'n8n');
+
+            return fetch('/API/Marketing/Distro/distribute', {
+                method: 'POST',
+                body: distData,
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            });
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(distRes) {
+            toast.remove();
+            alert('🚀 $' + ticker + ' Outperformed Setup Distributed!
+Video & on-demand voiceover synthesized and dispatched to Discord, Email subscribers, and n8n social media pipeline.');
+            if (distRes.on_demand_voiceover && distRes.on_demand_voiceover.file_url) {
+                var player = document.getElementById('voiceoverAudioPlayer');
+                var src = document.getElementById('voiceoverAudioSource');
+                if (player && src) {
+                    src.src = distRes.on_demand_voiceover.file_url;
+                    player.load();
+                }
+            }
+            location.reload();
+        })
+        .catch(function(err) {
+            toast.remove();
+            alert('Highlight & Distribute failed: ' + err);
+        });
+    };
 
     // Master Distribute Button
     document.getElementById('btnApproveDistribute').addEventListener('click', function() {
