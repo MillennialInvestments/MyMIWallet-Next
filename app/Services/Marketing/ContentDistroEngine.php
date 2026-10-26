@@ -286,8 +286,9 @@ class ContentDistroEngine
                 'user_id' => null,
                 'to_email' => $recipient,
                 'subject' => $subject,
+                'body' => $html,
                 'type' => 'marketing_trade_alert_blast',
-                'status' => 'queued',
+                'status' => 'pending',
                 'error_message' => null,
                 'provider' => 'smtp',
                 'meta_json' => json_encode([

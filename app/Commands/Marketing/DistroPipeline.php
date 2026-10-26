@@ -35,6 +35,9 @@ class DistroPipeline extends SafeBaseCommand
             $fetch = true;
             $generate = true;
             $distribute = true;
+        } elseif ($distribute && ! $generate) {
+            // Auto-enable generation if distribute is specifically requested
+            $generate = true;
         }
 
         // 1. INTAKE STAGE
