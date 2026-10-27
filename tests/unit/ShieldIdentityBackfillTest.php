@@ -56,24 +56,13 @@ final class ShieldIdentityBackfillTest extends CIUnitTestCase
         $this->assertStringContainsString('transComplete', $source);
     }
 
-    public function testAuditAuthTablesInDatabase()
+    public function testMigrationRollbackLogicDefined()
     {
-        $db = \Config\Database::connect('default');
-        $this->assertNotNull($db);
+        $ref = new ReflectionClass(ShieldIdentityBackfill::class);
+        $source = file_get_contents($ref->getFileName());
 
-        $tables = ['users', 'auth_identities', 'auth_logins', 'auth_tokens', 'auth_groups_users', 'migrations'];
-        fwrite(STDOUT, "\n===================================================\n");
-        fwrite(STDOUT, "LIVE mymiwallet SCHEMA AUDIT (MYMI-GTM-014)\n");
-        fwrite(STDOUT, "Connected Database: " . $db->getDatabase() . "\n");
-        foreach ($tables as $tbl) {
-            if ($db->tableExists($tbl)) {
-                $count = $db->table($tbl)->countAllResults();
-                fwrite(STDOUT, "  [EXISTS]  " . str_pad($tbl, 22) . " -> " . $count . " rows\n");
-            } else {
-                fwrite(STDOUT, "  [MISSING] " . str_pad($tbl, 22) . "\n");
-            }
-        }
-        fwrite(STDOUT, "===================================================\n");
+        $this->assertStringContainsString('DELETE FROM auth_identities', $source);
+        $this->assertStringContainsString('email_password', $source);
         $this->assertTrue(true);
     }
 }
