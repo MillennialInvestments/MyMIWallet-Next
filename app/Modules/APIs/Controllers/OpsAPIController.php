@@ -209,6 +209,25 @@ class OpsAPIController extends BaseAPIController
         ]);
     }
 
+    public function opcacheReset(): ResponseInterface
+    {
+        $authError = $this->authorizeRequest();
+        if ($authError instanceof ResponseInterface) {
+            return $authError;
+        }
+
+        $reset = false;
+        if (function_exists('opcache_reset')) {
+            $reset = @opcache_reset();
+        }
+
+        return $this->respond([
+            'status'        => $reset ? 'success' : 'skipped',
+            'opcache_reset' => $reset,
+            'timestamp'     => time(),
+        ]);
+    }
+
     /**
      * @return bool|ResponseInterface
      */

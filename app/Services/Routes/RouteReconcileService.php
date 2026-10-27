@@ -9,10 +9,11 @@ final class RouteReconcileService
     public function run(): array
     {
         $routes = service('routes');
-        $collection = $routes->getRoutes();
+        $collection = $this->readVerbMapViaReflection($routes);
 
         if (! is_array($collection) || $collection === []) {
-            $collection = $this->readVerbMapViaReflection($routes);
+            $routesArray = $routes->getRoutes();
+            $collection = ['get' => is_array($routesArray) ? $routesArray : []];
         }
 
         $controllerIndex = $this->buildControllerIndex();
@@ -31,6 +32,10 @@ final class RouteReconcileService
             }
 
             foreach ($routeMap as $route => $handler) {
+                if (method_exists($routes, 'isRedirect') && $routes->isRedirect((string) $route)) {
+                    continue;
+                }
+
                 $summary['scanned']++;
 
                 $parsed = $this->parseHandler($handler);
@@ -44,6 +49,10 @@ final class RouteReconcileService
                         'issue' => $parsed['issue'],
                         'suggestion' => $this->suggestFix($parsed, $controllerIndex),
                     ];
+                    continue;
+                }
+
+                if ($parsed['class'] === null) {
                     continue;
                 }
 
@@ -83,7 +92,23 @@ final class RouteReconcileService
 
     private function parseHandler($handler): array
     {
-        $raw = is_string($handler) ? $handler : (is_array($handler) ? implode('::', $handler) : 'unknown');
+        if (is_array($handler) && isset($handler['handler'])) {
+            $handler = $handler['handler'];
+        }
+
+        if ($handler instanceof \Closure) {
+            return ['raw' => 'closure', 'class' => null, 'method' => null, 'issue' => null];
+        }
+
+        if (is_array($handler) && isset($handler[0], $handler[1])) {
+            $class = is_object($handler[0]) ? get_class($handler[0]) : (string) $handler[0];
+            $method = (string) $handler[1];
+            $raw = $class . '::' . $method;
+        } elseif (is_string($handler)) {
+            $raw = $handler;
+        } else {
+            return ['raw' => 'unknown', 'class' => null, 'method' => null, 'issue' => 'invalid_handler'];
+        }
 
         $rawNorm = ltrim($raw, '\\');
 

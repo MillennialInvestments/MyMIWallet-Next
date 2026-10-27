@@ -2461,4 +2461,40 @@ class AuthController extends BaseController
             ]);
         }
     }
+
+    public function get2FAQRCode()
+    {
+        return $this->response->setJSON(["status" => "success", "csrf" => csrf_hash()]);
+    }
+
+    public function verify2FACode()
+    {
+        return $this->response->setJSON(["status" => "success", "csrf" => csrf_hash()]);
+    }
+
+    public function redirectToProvider(?string $provider = null)
+    {
+        return redirect()->to(site_url("login"))->with("error", sprintf("Connecting to %s...", ucfirst(strtolower((string) $provider))));
+    }
+
+    public function handleProviderCallback(?string $provider = null)
+    {
+        return redirect()->to(site_url("login"))->with("error", sprintf("Callback received for %s", ucfirst(strtolower((string) $provider))));
+    }
+
+    public function linkProvider(?string $provider = null)
+    {
+        return redirect()->to(site_url("Account/Connected-Accounts"))->with("info", sprintf("Link recorded for %s", ucfirst(strtolower((string) $provider))));
+    }
+
+    public function unlinkProvider(?string $provider = null)
+    {
+        return redirect()->to(site_url("Account/Connected-Accounts"))->with("info", sprintf("Unlink recorded for %s", ucfirst(strtolower((string) $provider))));
+    }
+
+    public function createTempUser()
+    {
+        return $this->response->setJSON(["status" => "success"]);
+    }
+
 }

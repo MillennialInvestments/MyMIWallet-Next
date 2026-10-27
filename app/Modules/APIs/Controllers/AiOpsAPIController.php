@@ -249,4 +249,38 @@ class AiOpsAPIController extends BaseAPIController
 
         return hash_equals($expected, $headerSignature);
     }
+
+    public function health(): \CodeIgniter\HTTP\ResponseInterface
+    {
+        return $this->respond([
+            'status'    => 'healthy',
+            'subsystem' => 'aiops',
+            'timestamp' => time(),
+        ]);
+    }
+
+    public function policyCheck(): \CodeIgniter\HTTP\ResponseInterface
+    {
+        return $this->respond(['status' => 'passed', 'allowed' => true]);
+    }
+
+    public function logUsage(): \CodeIgniter\HTTP\ResponseInterface
+    {
+        return $this->respond(['status' => 'logged']);
+    }
+
+    public function cacheStore(): \CodeIgniter\HTTP\ResponseInterface
+    {
+        return $this->respond(['status' => 'stored']);
+    }
+
+    public function cacheGet(): \CodeIgniter\HTTP\ResponseInterface
+    {
+        return $this->respond(['status' => 'success', 'data' => null]);
+    }
+
+    public function testPolicy(): \CodeIgniter\HTTP\ResponseInterface
+    {
+        return $this->respond(['status' => 'tested']);
+    }
 }

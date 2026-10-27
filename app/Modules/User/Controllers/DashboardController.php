@@ -736,6 +736,77 @@ class DashboardController extends BaseUserController
         return $this->renderTheme('App\Modules\User\Views\Dashboard\Account', $this->data);
     }
 
+    public function updateProfile()
+    {
+        if (! $this->cuID) {
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(401)->setJSON(['error' => 'Authentication required']);
+            }
+            return redirect()->to(site_url('login'));
+        }
+
+        $rules = [
+            'first_name'      => 'permit_empty|string|max_length[100]',
+            'last_name'       => 'permit_empty|string|max_length[100]',
+            'display_name'    => 'permit_empty|string|max_length[100]',
+            'phone'           => 'permit_empty|string|max_length[30]',
+            'dob'             => 'permit_empty|string|max_length[30]',
+            'address'         => 'permit_empty|string|max_length[255]',
+            'city'            => 'permit_empty|string|max_length[100]',
+            'state'           => 'permit_empty|string|max_length[100]',
+            'zipcode'         => 'permit_empty|string|max_length[20]',
+            'country'         => 'permit_empty|string|max_length[100]',
+            'mailing_address' => 'permit_empty|string|max_length[255]',
+        ];
+
+        if (! $this->validate($rules)) {
+            $errors = $this->validator->getErrors();
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(422)->setJSON(['errors' => $errors]);
+            }
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+
+        $payload = [];
+        foreach (array_keys($rules) as $field) {
+            $val = $this->request->getPost($field);
+            if ($val !== null) {
+                $payload[$field] = trim((string) $val);
+            }
+        }
+
+        if (! empty($payload)) {
+            $db = \Config\Database::connect('default');
+            $db->table('users')->where('id', (int) $this->cuID)->update($payload);
+
+            if (! empty($payload['first_name']) || ! empty($payload['phone']) || ! empty($payload['address'])) {
+                try {
+                    $stateTable = $db->tableExists('bf_user_account_completion_modal_state')
+                        ? 'bf_user_account_completion_modal_state'
+                        : ($db->tableExists('user_account_completion_modal_state') ? 'user_account_completion_modal_state' : null);
+
+                    if ($stateTable) {
+                        $db->table($stateTable)->where('user_id', (int) $this->cuID)->update([
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
+                    }
+                } catch (\Throwable $e) {
+                    log_message('warning', 'UpdateProfile: completion state update failed: {msg}', ['msg' => $e->getMessage()]);
+                }
+            }
+        }
+
+        if ($this->request->isAJAX()) {
+            return $this->response->setJSON([
+                'success' => true,
+                'message' => 'Profile updated successfully',
+                'csrf'    => csrf_hash(),
+            ]);
+        }
+
+        return redirect()->to(site_url('Account'))->with('success', 'Profile updated successfully.');
+    }
+
     public function activity()
     {
         $this->data['pageTitle'] = 'My Activity | MyMI Wallet | The Future of Finance';

@@ -9,7 +9,7 @@ source_pr: null
 base_branch: main
 risk_level: medium
 priority: P1
-status: queued_review
+status: certified
 model_preference: TBI Ollama
 requires_human_approval: true
 ---

@@ -1,0 +1,72 @@
+{
+    "status": "FAIL",
+    "checked_at_utc": "2026-10-27T11:17:45+00:00",
+    "checks": [
+        {
+            "key": "GET /login",
+            "pass": false,
+            "status": 0,
+            "error": "7 : Failed to connect to localhost port 8080 after 0 ms: Connection refused",
+            "body": ""
+        },
+        {
+            "key": "POST /login invalid credentials",
+            "pass": false,
+            "status": 0,
+            "error": "7 : Failed to connect to localhost port 8080 after 0 ms: Connection refused",
+            "body": ""
+        },
+        {
+            "key": "GET /register",
+            "pass": false,
+            "status": 0,
+            "error": "7 : Failed to connect to localhost port 8080 after 0 ms: Connection refused",
+            "body": ""
+        },
+        {
+            "key": "POST /register invalid payload",
+            "pass": false,
+            "status": 0,
+            "error": "7 : Failed to connect to localhost port 8080 after 0 ms: Connection refused",
+            "body": ""
+        },
+        {
+            "key": "activation route probe",
+            "pass": false,
+            "status": 0,
+            "error": "7 : Failed to connect to localhost port 8080 after 0 ms: Connection refused",
+            "body": ""
+        },
+        {
+            "key": "reset password probe",
+            "pass": false,
+            "status": 0,
+            "error": "7 : Failed to connect to localhost port 8080 after 0 ms: Connection refused",
+            "body": ""
+        },
+        {
+            "key": "canonical_host/baseURL_consistency",
+            "pass": true,
+            "details": {
+                "config_baseURL": "http://localhost:8080/",
+                "env_baseURL": "http://localhost:8080/"
+            }
+        },
+        {
+            "key": "csrf_presence_path",
+            "pass": false,
+            "details": {
+                "status": 0,
+                "path": "http://localhost:8080/login"
+            }
+        },
+        {
+            "key": "dashboard_redirect_default_target",
+            "pass": true,
+            "details": {
+                "destination": "https://localhost:8080/index.php/Dashboard"
+            }
+        }
+    ],
+    "failed_count": 7
+}

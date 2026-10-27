@@ -1,15 +1,538 @@
 # Routes Reconcile Report
 
-- Generated (UTC): `2026-03-07T11:22:38Z`
-- Reconcile command requested: `php spark routes:reconcile`
-- Result: `not available in this repository (command not found)`
-- Reconciliation command used: `php spark routes:repair --apply=1`
-- Issues export command: `php spark routes:docs --mode=issues`
+- Generated: `2026-10-27T17:56:57Z`
+- Total scanned: `1674`
+- Missing class: `101`
+- Missing method: `191`
+- Invalid handler: `1`
 
-## Summary
-- Total exported routes: `1491`
-- Route issues found in export: `0`
-- Distinct issue types: `0`
-
-## Issue Counts
-- None detected by `routes:docs --mode=issues`.
+## Issues
+- `GET sw.js` => `\App\Controllers\ServiceWorker::index` [missing_class]
+- `GET Dev/BitcoinTest` => `\App\Controllers\Dev\BitcoinTest::index` [missing_class]
+- `GET debug/common-data/smoke` => `\App\Controllers\Debug\CommonDataController::smoke` [missing_class]
+- `GET api/health` => `\App\Controllers\Api\HealthController::index` [missing_class]
+- `GET _ops/opcache-reset` => `\App\Controllers\Ops::opcacheReset` [missing_class]
+- `GET API/Budget/summary` => `\App\Modules\APIs\Controllers\BudgetAPIController::summary` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\BudgetAPIController::summary`
+- `GET API/Budget/credit` => `\App\Modules\APIs\Controllers\BudgetAPIController::credit` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\BudgetAPIController::credit`
+- `GET API/Budget/available` => `\App\Modules\APIs\Controllers\BudgetAPIController::available` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\BudgetAPIController::available`
+- `GET API/Budget/repayment` => `\App\Modules\APIs\Controllers\BudgetAPIController::repayment` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\BudgetAPIController::repayment`
+- `GET API/Budget/categories` => `\App\Modules\APIs\Controllers\BudgetAPIController::categories` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\BudgetAPIController::categories`
+- `GET API/Budget/transactions` => `\App\Modules\APIs\Controllers\BudgetAPIController::transactions` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\BudgetAPIController::transactions`
+- `GET API/Budget/goals` => `\App\Modules\APIs\Controllers\BudgetAPIController::goals` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\BudgetAPIController::goals`
+- `GET API/Budget/insights` => `\App\Modules\APIs\Controllers\BudgetAPIController::insights` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\BudgetAPIController::insights`
+- `GET API/Budget/trends` => `\App\Modules\APIs\Controllers\BudgetAPIController::trends` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\BudgetAPIController::trends`
+- `GET API/Budget/net-worth` => `\App\Modules\APIs\Controllers\BudgetAPIController::netWorth` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\BudgetAPIController::netWorth`
+- `GET API/Budget/cash-flow` => `\App\Modules\APIs\Controllers\BudgetAPIController::cashFlow` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\BudgetAPIController::cashFlow`
+- `GET API/Budget/budgets` => `\App\Modules\APIs\Controllers\BudgetAPIController::budgets` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\BudgetAPIController::budgets`
+- `GET API/Budget/savings-goals` => `\App\Modules\APIs\Controllers\BudgetAPIController::savingsGoals` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\BudgetAPIController::savingsGoals`
+- `GET API/Budget/investment-accounts` => `\App\Modules\APIs\Controllers\BudgetAPIController::investmentAccounts` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\BudgetAPIController::investmentAccounts`
+- `GET API/Budget/linked-accounts` => `\App\Modules\APIs\Controllers\BudgetAPIController::linkedAccounts` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\BudgetAPIController::linkedAccounts`
+- `GET API/Budget/add-linked-account` => `\App\Modules\APIs\Controllers\BudgetAPIController::addLinkedAccount` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\BudgetAPIController::addLinkedAccount`
+- `GET API/Budget/remove-linked-account/([^/]+)` => `\App\Modules\APIs\Controllers\BudgetAPIController::removeLinkedAccount/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\BudgetAPIController::removeLinkedAccount`
+- `GET API/Budget/refresh-linked-account/([^/]+)` => `\App\Modules\APIs\Controllers\BudgetAPIController::refreshLinkedAccount/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\BudgetAPIController::refreshLinkedAccount`
+- `GET API/DripCampaign/Enroll/([0-9]+)` => `\App\Modules\APIs\Controllers\DripCampaignAPIController::enrollUser/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\DripCampaignAPIController::enrollUser`
+- `GET API/DripCampaign/TestCron` => `\App\Modules\APIs\Controllers\DripCampaignAPIController::testDripCron` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\DripCampaignAPIController::testDripCron`
+- `GET API/Investments` => `\App\Modules\APIs\Controllers\InvestmentsAPIController:index` [invalid_handler]
+  - Suggestion: `App\Modules\APIs\Controllers\InvestmentsAPIController::index`
+- `GET API/SMTP/test` => `\App\Modules\APIs\Controllers\SmtpTestController::probe` [missing_class]
+- `GET API/Marketing/previewBufferItem/([0-9]+)` => `\App\Modules\APIs\Controllers\MarketingAPIController::previewBufferItem/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::previewBufferItem`
+- `GET API/Marketing/previewPendingSummaries` => `\App\Modules\APIs\Controllers\MarketingAPIController::previewPendingSummaries` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::previewPendingSummaries`
+- `GET API/Marketing/runScheduledTasks` => `\App\Modules\APIs\Controllers\MarketingAPIController::runScheduledTasks` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::runScheduledTasks`
+- `GET API/Marketing/Search/([^/]+)/(.*)` => `\App\Modules\APIs\Controllers\ManagementController::index/$1/$2` [missing_class]
+  - Suggestion: `App\Modules\Management\Controllers\ManagementController::index`
+- `GET API/Marketing/Large-Content/Form` => `\App\Modules\APIs\Controllers\MarketingAPIController::submitLargeContentForm` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::submitLargeContentForm`
+- `GET API/Marketing/Manual-Content/Form` => `\App\Modules\APIs\Controllers\MarketingAPIController::shortLongContentForm` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::shortLongContentForm`
+- `GET API/Marketing` => `\App\Modules\APIs\Controllers\MarketingAPIController::index` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::index`
+- `GET API/Marketing/Add/([^/]+)` => `\App\Modules\APIs\Controllers\MarketingAPIController::add/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::add`
+- `GET API/Marketing/Approve-Content/([0-9]+)` => `\App\Modules\APIs\Controllers\MarketingAPIController::approveContent/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::approveContent`
+- `GET API/Marketing/Blog-Creator` => `\App\Modules\APIs\Controllers\MarketingAPIController::blogCreator` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::blogCreator`
+- `GET API/Marketing/Blogs` => `\App\Modules\APIs\Controllers\MarketingAPIController::blogs` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::blogs`
+- `GET API/Marketing/Campaigns` => `\App\Modules\APIs\Controllers\MarketingAPIController::campaigns` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::campaigns`
+- `GET API/Marketing/Content-Review` => `\App\Modules\APIs\Controllers\MarketingAPIController::contentReview` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::contentReview`
+- `GET API/Marketing/Content/Generator` => `\App\Modules\APIs\Controllers\MarketingAPIController::contentGenerator` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::contentGenerator`
+- `GET API/Marketing/Content/Listing` => `\App\Modules\APIs\Controllers\MarketingAPIController::contentListing` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::contentListing`
+- `GET API/Marketing/Daily-Log` => `\App\Modules\APIs\Controllers\MarketingAPIController::viewDailyLogs` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::viewDailyLogs`
+- `GET API/Marketing/Edit-Content/([0-9]+)` => `\App\Modules\APIs\Controllers\MarketingAPIController::editContent/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::editContent`
+- `GET API/Marketing/Email/(.*)/(.*)` => `\App\Modules\APIs\Controllers\MarketingAPIController::viewEmail/$1/$2` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::viewEmail`
+- `GET API/Marketing/fetchEmails` => `\App\Modules\APIs\Controllers\MarketingAPIController::fetchEmails` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::fetchEmails`
+- `GET API/Marketing/Financial-News` => `\App\Modules\APIs\Controllers\MarketingAPIController::financialNews` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::financialNews`
+- `GET API/Marketing/generateContent` => `\App\Modules\APIs\Controllers\MarketingAPIController::generateContent` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::generateContent`
+- `GET API/Marketing/generateNewsletter` => `\App\Modules\APIs\Controllers\MarketingAPIController::generateNewsletterContent` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::generateNewsletterContent`
+- `GET API/Marketing/getRecentScrapes` => `\App\Modules\APIs\Controllers\MarketingAPIController::getRecentScrapes` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::getRecentScrapes`
+- `GET API/Marketing/Grouped-Content-Drafts` => `\App\Modules\APIs\Controllers\MarketingAPIController::generateGroupedContentDrafts` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::generateGroupedContentDrafts`
+- `GET API/Marketing/Ideas` => `\App\Modules\APIs\Controllers\MarketingAPIController::ideas` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::ideas`
+- `GET API/Marketing/Post-Creator` => `\App\Modules\APIs\Controllers\MarketingAPIController::postCreator` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::postCreator`
+- `GET API/Marketing/previewGeneratedPost/([0-9]+)` => `\App\Modules\APIs\Controllers\MarketingAPIController::previewGeneratedPost/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::previewGeneratedPost`
+- `GET API/Marketing/Promote` => `\App\Modules\APIs\Controllers\MarketingAPIController::promote` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::promote`
+- `GET API/Marketing/Promote/([^/]+)` => `\App\Modules\APIs\Controllers\MarketingAPIController::promote` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::promote`
+- `GET API/Marketing/Research` => `\App\Modules\APIs\Controllers\AlertsAPIController::research` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\AlertsAPIController::research`
+- `GET API/Marketing/RunContentGeneration` => `\App\Modules\APIs\Controllers\Management\MarketingAPIController::runContentGeneration` [missing_class]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::runContentGeneration`
+- `GET API/Marketing/Quick-Scraper` => `\App\Modules\APIs\Controllers\MarketingAPIController::standaloneScrape` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::standaloneScrape`
+- `GET API/Marketing/Reject-Content/([0-9]+)` => `\App\Modules\APIs\Controllers\MarketingAPIController::rejectContent/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::rejectContent`
+- `GET API/Marketing/Schedule` => `\App\Modules\APIs\Controllers\MarketingAPIController::schedule` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::schedule`
+- `GET API/Marketing/Schedule/([^/]+)` => `\App\Modules\APIs\Controllers\MarketingAPIController::schedule/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::schedule`
+- `GET API/Marketing/scheduleNewsletters` => `\App\Modules\APIs\Controllers\MarketingAPIController::scheduleNewsletterCampaign` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::scheduleNewsletterCampaign`
+- `GET API/Marketing/submitDailyLog` => `\App\Modules\APIs\Controllers\MarketingAPIController::submitDailyLog` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::submitDailyLog`
+- `GET API/Marketing/sendNotification` => `\App\Modules\APIs\Controllers\MarketingAPIController::sendNotification` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::sendNotification`
+- `GET API/Marketing/sendNewsletter` => `\App\Modules\APIs\Controllers\MarketingAPIController::sendScheduleNewsletter` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::sendScheduleNewsletter`
+- `GET API/Marketing/Communities` => `\App\Modules\APIs\Controllers\MarketingAPIController::communities` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::communities`
+- `GET API/Marketing/Test` => `\App\Modules\APIs\Controllers\MarketingAPIController::test` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::test`
+- `GET API/Marketing/Twitter` => `\App\Modules\APIs\Controllers\MarketingAPIController::twitterDashboard` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::twitterDashboard`
+- `GET API/Marketing/Video-Creator` => `\App\Modules\APIs\Controllers\MarketingAPIController::videoCreator` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::videoCreator`
+- `GET API/Marketing/View-Email/([^/]+)/([^/]+)` => `\App\Modules\APIs\Controllers\MarketingAPIController::viewEmail/$1/$2` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::viewEmail`
+- `GET API/Marketing/View-Grouped-Summaries` => `\App\Modules\APIs\Controllers\MarketingAPIController::View-Grouped-Summaries` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::View-Grouped-Summaries`
+- `GET API/Marketing/MyMI-Gold/Tasks/Add` => `\App\Modules\APIs\Controllers\WalletsAPIController::addUserGoldTasks` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\WalletsAPIController::addUserGoldTasks`
+- `GET API/Marketing/Email-Templates/create` => `\App\Modules\APIs\Controllers\EmailTemplateController::create` [missing_class]
+- `GET API/Marketing/Email-Queue` => `\App\Modules\APIs\Controllers\EmailQueueController::index` [missing_class]
+- `GET API/Marketing/Email-Queue/create` => `\App\Modules\APIs\Controllers\EmailQueueController::create` [missing_class]
+- `GET API/Marketing/getPlatforms` => `\App\Modules\APIs\Controllers\ManagementAPIController::getPlatforms` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\ManagementAPIController::getPlatforms`
+- `GET API/Marketing/getPlatformRules/([^/]+)` => `\App\Modules\APIs\Controllers\ManagementAPIController::getPlatformRules/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\ManagementAPIController::getPlatformRules`
+- `GET API/Marketing/listSuggestions/([^/]+)/([^/]+)` => `\App\Modules\APIs\Controllers\ManagementAPIController::listSuggestions/$1/$2` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\ManagementAPIController::listSuggestions`
+- `GET API/Predictions` => `\App\Modules\APIs\Controllers\PredictionsAPIController::index` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\PredictionsAPIController::index`
+- `GET API/Predictions/Markets` => `\App\Modules\APIs\Controllers\PredictionsAPIController::markets` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\PredictionsAPIController::markets`
+- `GET API/Predictions/Market/([0-9]+)` => `\App\Modules\APIs\Controllers\PredictionsAPIController::view/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\PredictionsAPIController::view`
+- `GET API/Predictions/Portfolio` => `\App\Modules\APIs\Controllers\PredictionsAPIController::portfolio` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\PredictionsAPIController::portfolio`
+- `GET API/Predictions/Settlements` => `\App\Modules\APIs\Controllers\PredictionsAPIController::settlements` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\PredictionsAPIController::settlements`
+- `GET API/Predictions/Latest` => `\App\Modules\APIs\Controllers\PredictionsAPIController::latest` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\PredictionsAPIController::latest`
+- `GET API/Solana/getMarketPrice/([^/]+)` => `\App\Modules\APIs\Controllers\SolanaAPIController::get/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\SolanaAPIController::get`
+- `GET Blog/Investing/The-Beginners-Guide-To-Option-Trading` => `\App\Modules\Blog\Controllers\InvestingController::TheBeginnersGuideToOptionTrading` [missing_method]
+  - Suggestion: `App\Modules\Blog\Controllers\InvestingController::TheBeginnersGuideToOptionTrading`
+- `GET Blog/Investing/The-Fundamentals-Of-Investing` => `\App\Modules\Blog\Controllers\InvestingController::TheFundamentalsOfInvesting` [missing_method]
+  - Suggestion: `App\Modules\Blog\Controllers\InvestingController::TheFundamentalsOfInvesting`
+- `GET Blog/Investing/Tips-For-Effective-Investment-Portfolio-Management` => `\App\Modules\Blog\Controllers\InvestingController::TipsForEffectiveInvestmentPortfolioManagement` [missing_method]
+  - Suggestion: `App\Modules\Blog\Controllers\InvestingController::TipsForEffectiveInvestmentPortfolioManagement`
+- `GET Management/banUnverifiedUsers` => `\App\Modules\Management\Controllers\ManagementAdminController::banUnverifiedUsers` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\ManagementAdminController::banUnverifiedUsers`
+- `GET Management/processQueuedEmails` => `\App\Modules\Management\Controllers\ManagementAdminController::processQueuedEmails` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\ManagementAdminController::processQueuedEmails`
+- `GET Management/resendActivationEmailsBatch` => `\App\Modules\Management\Controllers\ManagementAdminController::resendActivationEmailsBatch` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\ManagementAdminController::resendActivationEmailsBatch`
+- `GET Management/resendActivationEmailsBatchQueued` => `\App\Modules\Management\Controllers\ManagementAdminController::resendActivationEmailsBatchQueued` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\ManagementAdminController::resendActivationEmailsBatchQueued`
+- `GET Management/sendTestActivationEmail` => `\App\Modules\Management\Controllers\ManagementAdminController::sendTestActivationEmail` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\ManagementAdminController::sendTestActivationEmail`
+- `GET Management/Alerts/Crypto/([^/]+)/([^/]+)` => `\App\Modules\Management\Controllers\Management\AlertsAdminController::stockOverview/$1/$2` [missing_class]
+  - Suggestion: `App\Modules\Management\Controllers\AlertsAdminController::stockOverview`
+- `GET Management/Alerts/Stock/([^/]+)/([^/]+)` => `\App\Modules\Management\Controllers\Management\AlertsAdminController::stockOverview/$1/$2` [missing_class]
+  - Suggestion: `App\Modules\Management\Controllers\AlertsAdminController::stockOverview`
+- `GET Management/Alerts/Tasks/fetchAlerts` => `\App\Modules\Management\Controllers\Management\AlertsAdminController::fetchData` [missing_class]
+  - Suggestion: `App\Modules\Management\Controllers\AlertsAdminController::fetchData`
+- `GET Management/Alerts/Top-Performance/Weekly` => `\App\Modules\Management\Controllers\AlertsAdminController::topPerformanceWeekly` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\AlertsAdminController::topPerformanceWeekly`
+- `GET Management/Alerts/weeklyTopPerformance` => `\App\Modules\Management\Controllers\AlertsAdminController::topPerformanceWeekly` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\AlertsAdminController::topPerformanceWeekly`
+- `GET Management/Email/autoScheduleDrafts` => `\App\Modules\Management\Controllers\EmailAdminController::autoScheduleDrafts` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\EmailAdminController::autoScheduleDrafts`
+- `GET Management/Marketing/Blog-Creator` => `\App\Modules\Management\Controllers\MarketingAdminController::blogCreator` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\MarketingAdminController::blogCreator`
+- `GET Management/Marketing/Content/Listing` => `\App\Modules\Management\Controllers\MarketingAdminController::contentListing` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\MarketingAdminController::contentListing`
+- `GET Management/Marketing/fetchEmails` => `\App\Modules\Management\Controllers\MarketingAdminController::fetchEmails` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\MarketingAdminController::fetchEmails`
+- `GET Management/Marketing/Research` => `\App\Modules\Management\Controllers\AlertsController::research` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\AlertsController::research`
+- `GET Management/Marketing/RunContentGeneration` => `\App\Modules\Management\Controllers\Management\MarketingAdminController::runContentGeneration` [missing_class]
+  - Suggestion: `App\Modules\Management\Controllers\MarketingAdminController::runContentGeneration`
+- `GET Management/Marketing/sendNotification` => `\App\Modules\Management\Controllers\MarketingAdminController::sendNotification` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\MarketingAdminController::sendNotification`
+- `GET Management/Marketing/sendNewsletter` => `\App\Modules\Management\Controllers\MarketingAdminController::sendScheduleNewsletter` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\MarketingAdminController::sendScheduleNewsletter`
+- `GET Management/Marketing/Test` => `\App\Modules\Management\Controllers\MarketingAdminController::test` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\MarketingAdminController::test`
+- `GET Management/Marketing/Video-Creator` => `\App\Modules\Management\Controllers\MarketingAdminController::videoCreator` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\MarketingAdminController::videoCreator`
+- `GET Management/Marketing/View-Grouped-Summaries` => `\App\Modules\Management\Controllers\MarketingAdminController::View-Grouped-Summaries` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\MarketingAdminController::View-Grouped-Summaries`
+- `GET Management/Marketing/MyMI-Gold/Tasks/Add` => `\App\Modules\Management\Controllers\WalletsAdminController::addUserGoldTasks` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\WalletsAdminController::addUserGoldTasks`
+- `GET Management/Marketing/Email-Templates/create` => `\App\Modules\Management\Controllers\EmailTemplateController::create` [missing_class]
+- `GET Management/Marketing/Email-Queue` => `\App\Modules\Management\Controllers\EmailQueueController::index` [missing_class]
+- `GET Management/Marketing/Email-Queue/create` => `\App\Modules\Management\Controllers\EmailQueueController::create` [missing_class]
+- `GET Management/Marketing/Email` => `\App\Modules\Management\Controllers\EmailController::index` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\EmailController::index`
+- `GET Management/Marketing/Exchange` => `\App\Modules\Management\Controllers\MarketingController::index` [missing_class]
+- `GET Management/Marketing/Exchange/Edit/([^/]+)` => `\App\Modules\Management\Controllers\MarketingController::edit/$1` [missing_class]
+- `GET Management/Marketing/Exchange/Top-Communities` => `\App\Modules\Management\Controllers\MarketingController::topCommunities` [missing_class]
+- `GET Management/Marketing/Exchange/Top-Communities/([^/]+)` => `\App\Modules\Management\Controllers\MarketingController::topCommunities/$1` [missing_class]
+- `GET Management/Operations` => `\App\Modules\Management\Controllers\OperationsController::index` [missing_class]
+- `GET Management/Partners` => `\App\Modules\Management\Controllers\PartnersController::index` [missing_class]
+- `GET Management/Projects` => `\App\Modules\Management\Controllers\ProjectsController::index` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ProjectsController::index`
+- `GET Management/Projects/Quick-Intake` => `\App\Modules\Management\Controllers\ProjectsController::realEstateQuickIntake` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ProjectsController::realEstateQuickIntake`
+- `GET Management/Referrals` => `\App\Modules\Management\Controllers\ReferralsController::index` [missing_class]
+- `GET Management/Security` => `\App\Modules\Management\Controllers\SecurityController::index` [missing_class]
+- `GET Management/Services` => `\App\Modules\Management\Controllers\ServicesController::index` [missing_class]
+- `GET Management/Users` => `\App\Modules\Management\Controllers\UsersController::index` [missing_class]
+- `GET Management/Users/Profile/([^/]+)` => `\App\Modules\Management\Controllers\UsersController::profile` [missing_class]
+- `GET Management/Users/ajaxBlockUser/([^/]+)` => `\App\Modules\Management\Controllers\UsersController::ajaxBlockUser` [missing_class]
+- `GET Management/Users/ajaxBulkBanUsers` => `\App\Modules\Management\Controllers\UsersController::ajaxBulkBanUsers` [missing_class]
+- `GET Management/Wallets` => `\App\Modules\Management\Controllers\WalletsController::index` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::index`
+- `GET Management/Wallets/Reconcile` => `\App\Modules\Management\Controllers\WalletsController::reconcile` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::reconcile`
+- `GET Management/Web-Design` => `\App\Modules\Management\Controllers\WebDesignController::index` [missing_class]
+- `GET Auctions` => `\App\Controllers\AuctionsController::index` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\AuctionsController::index`
+- `GET Auctions/Item/([0-9]+)` => `\App\Controllers\AuctionsController::item/$1` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\AuctionsController::item`
+- `GET Auctions/Poll/([0-9]+)` => `\App\Controllers\AuctionsController::poll/$1` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\AuctionsController::poll`
+- `GET Exchange/Solana/Wallet/Verify-Ownership` => `\App\Modules\Exchange\Controllers\SolanaController::verifyWalletOwnership` [missing_method]
+  - Suggestion: `App\Modules\Exchange\Controllers\SolanaController::verifyWalletOwnership`
+- `GET Investments/Autosave` => `\App\Modules\User\Controllers\InvestmentsController::autoSave` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\InvestmentsController::autoSave`
+- `GET Investments/Overview` => `\App\Modules\User\Controllers\InvestmentsController::overview` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\InvestmentsController::overview`
+- `GET Investments/Test` => `\App\Modules\User\Controllers\InvestmentsController::test` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\InvestmentsController::test`
+- `GET Investments/Watchlist` => `\App\Modules\User\Controllers\InvestmentsController::watchlist` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\InvestmentsController::watchlist`
+- `GET Investments/Crypto-Overview` => `\App\Modules\User\Controllers\InvestmentsController::cryptoOverview` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\InvestmentsController::cryptoOverview`
+- `GET Investments/Economic-Data` => `\App\Modules\User\Controllers\InvestmentsController::economicData` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\InvestmentsController::economicData`
+- `GET Investments/Market-News` => `\App\Modules\User\Controllers\InvestmentsController::marketNews` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\InvestmentsController::marketNews`
+- `GET Investments/MyMI-News` => `\App\Modules\User\Controllers\InvestmentsController::MyMINews` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\InvestmentsController::MyMINews`
+- `GET Investments/MyMI-Research` => `\App\Modules\User\Controllers\InvestmentsController::MyMIResearch` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\InvestmentsController::MyMIResearch`
+- `GET Investments/Stock-Overview` => `\App\Modules\User\Controllers\InvestmentsController::stockOverview` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\InvestmentsController::stockOverview`
+- `GET Announcements` => `\App\Modules\Blog\Controllers\AnnouncementsController::index` [missing_class]
+- `GET Assets` => `\App\Modules\Management\Controllers\AssetsController::index` [missing_class]
+- `GET Wallets/Account-Manager` => `\App\Modules\User\Controllers\WalletsController::accountManager` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::accountManager`
+- `GET Wallets/Add/([^/]+)/([^/]+)` => `\App\Modules\User\Controllers\WalletsController::addFetch/$1/$2` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::addFetch`
+- `GET Wallets/Add/Bank-Account` => `\App\Modules\User\Controllers\WalletsController::createBankeAccount` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::createBankeAccount`
+- `GET Wallets/Attach-Account` => `\App\Modules\User\Controllers\WalletsController::attachAccount` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::attachAccount`
+- `GET Wallets/Attach-Account/([^/]+)/([^/]+)/([^/]+)` => `\App\Modules\User\Controllers\WalletsController::attachAccount/$1/$2/$3` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::attachAccount`
+- `GET Wallets/Banking/([^/]+)` => `\App\Modules\User\Controllers\WalletsController::addAccount` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::addAccount`
+- `GET Wallets/Create` => `\App\Modules\User\Controllers\WalletsController::generateWallet` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::generateWallet`
+- `GET Wallets/Coin-Swap` => `\App\Modules\User\Controllers\WalletsController::coinSwap` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::coinSwap`
+- `GET Wallets/Coin-Swap/([^/]+)` => `\App\Modules\User\Controllers\WalletsController::coinSwap/$1` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::coinSwap`
+- `GET Wallets/Deposit/Fetch` => `\App\Modules\User\Controllers\WalletsController::addDepositFetch` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::addDepositFetch`
+- `GET Wallets/Feature-Manager` => `\App\Modules\User\Controllers\WalletsController::featureManager` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::featureManager`
+- `GET Wallets/Generate-Wallet` => `\App\Modules\User\Controllers\WalletsController::generateWallet` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::generateWallet`
+- `GET Wallets/Link-Account` => `\App\Modules\User\Controllers\WalletsController::linkAccount` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::linkAccount`
+- `GET Wallets/Link-Account/([^/]+)` => `\App\Modules\User\Controllers\WalletsController::linkAccount/$1` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::linkAccount`
+- `GET Wallets/Link-Account/([^/]+)/([^/]+)` => `\App\Modules\User\Controllers\WalletsController::linkAccount/$1` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::linkAccount`
+- `GET Wallets/Link-Account/Success` => `\App\Modules\User\Controllers\WalletsController::linkAccountSuccess` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::linkAccountSuccess`
+- `GET Wallets/Link-Account/Success/([^/]+)` => `\App\Modules\User\Controllers\WalletsController::linkAccountSuccess/$1` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::linkAccountSuccess`
+- `GET Wallets/Manager` => `\App\Modules\User\Controllers\WalletsController::walletManager` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::walletManager`
+- `GET Wallets/Purchase-Manager` => `\App\Modules\User\Controllers\WalletsController::purchaseManager` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::purchaseManager`
+- `GET Wallets/Purchase/Memberships/Customize` => `\App\Modules\User\Controllers\WalletsController::customizeMembership` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::customizeMembership`
+- `GET Wallets/Wallet-Generator` => `\App\Modules\User\Controllers\WalletsController::walletGenerator` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::walletGenerator`
+- `GET Wallets/Wallet-Selection` => `\App\Modules\User\Controllers\WalletsController::walletSelections` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::walletSelections`
+- `GET Wallets/Wallet-Transactions` => `\App\Modules\User\Controllers\WalletsController::walletTransaction` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::walletTransaction`
+- `GET Wallets/Wallet-Transaction/([^/]+)` => `\App\Modules\User\Controllers\WalletsController::walletTransaction/$1` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::walletTransaction`
+- `GET Wallets/Withdraw/Fetch` => `\App\Modules\User\Controllers\WalletsController::addWithdrawFetch` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::addWithdrawFetch`
+- `GET Features/MyMI-Gold` => `\App\Modules\Advertise\Controllers\HowItWorks::MyMIGold` [missing_class]
+  - Suggestion: `App\Modules\Blog\Controllers\HowItWorks::MyMIGold`
+- `GET API/Alerts/processBrokerEmails` => `\App\Modules\APIs\Controllers\AlertsController::processBrokerEmails` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\AlertsController::processBrokerEmails`
+- `GET API/Alerts/processAllEmails` => `\App\Modules\APIs\Controllers\AlertsController::processAllEmails` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\AlertsController::processAllEmails`
+- `GET API/Alerts/previewScraper/([0-9]+)` => `\App\Modules\APIs\Controllers\AlertsController::previewScraper/$1` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\AlertsController::previewScraper`
+- `GET API/Ops/public-pages/report` => `\App\Modules\APIs\Controllers\OpsPublicPagesController::report` [missing_class]
+- `GET Management/Marketing/Blogger` => `\App\Controllers\App\Modules\Management\Controllers\Marketing\BloggerController::index` [missing_class]
+- `GET Management/Marketing/Blogger/preview/(.*)` => `\App\Controllers\App\Modules\Management\Controllers\Marketing\BloggerController::preview/$1` [missing_class]
+- `GET Management/ContentEngine/previewPost/([0-9]+)` => `\App\Controllers\App\Modules\Management\Controllers\ContentEngineController::previewPost/$1` [missing_class]
+  - Suggestion: `App\Modules\ContentEngine\Controllers\ContentEngineController::previewPost`
+- `GET Management/OpsInbox` => `\App\Controllers\App\Modules\Management\Controllers\OpsInboxController::index` [missing_class]
+- `GET Management/OpsInbox/view/([0-9]+)` => `\App\Controllers\App\Modules\Management\Controllers\OpsInboxController::view/$1` [missing_class]
+- `POST Auth/link-robinhood` => `\App\Controllers\AuthController::linkRobinhood` [missing_method]
+  - Suggestion: `App\Controllers\AuthController::linkRobinhood`
+- `POST Auth/link-snaptrade` => `\App\Controllers\AuthController::linkSnapTrade` [missing_method]
+  - Suggestion: `App\Controllers\AuthController::linkSnapTrade`
+- `POST API/Mdit/webhooks/onramp` => `\App\Modules\APIs\Controllers\MditWebhookController::onramp` [missing_class]
+- `POST API/Chat/tool` => `\App\Modules\APIs\Controllers\ChatController::tool` [missing_method]
+- `POST API/Management/Projects/fetchInbox` => `\App\Modules\APIs\Controllers\ProjectsController::fetchProjectEmails` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ProjectsController::fetchProjectEmails`
+- `POST API/Management/Projects/parseInbox` => `\App\Modules\APIs\Controllers\ProjectsController::parseProjectEmails` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ProjectsController::parseProjectEmails`
+- `POST API/Management/Projects/promoteLead/([0-9]+)` => `\App\Modules\APIs\Controllers\ProjectsController::promoteLead/$1` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ProjectsController::promoteLead`
+- `POST API/Management/Projects/updateProject/([0-9]+)` => `\App\Modules\APIs\Controllers\ProjectsController::updateProject/$1` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ProjectsController::updateProject`
+- `POST API/Management/Projects/openCommitments/([0-9]+)` => `\App\Modules\APIs\Controllers\ProjectsController::openCommitments/$1` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ProjectsController::openCommitments`
+- `POST API/Management/Projects/checkThreshold/([0-9]+)` => `\App\Modules\APIs\Controllers\ProjectsController::checkThreshold/$1` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ProjectsController::checkThreshold`
+- `POST API/Management/Projects/launchPrivateAuction/([0-9]+)` => `\App\Modules\APIs\Controllers\ProjectsController::launchPrivateAuction/$1` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ProjectsController::launchPrivateAuction`
+- `POST API/Management/Projects/settlePrivateAuction/([0-9]+)` => `\App\Modules\APIs\Controllers\ProjectsController::settlePrivateAuction/$1` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ProjectsController::settlePrivateAuction`
+- `POST API/Management/Projects/markFunded/([0-9]+)` => `\App\Modules\APIs\Controllers\ProjectsController::markFunded/$1` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ProjectsController::markFunded`
+- `POST API/Management/Projects/createQuarterlyDistribution/([0-9]+)` => `\App\Modules\APIs\Controllers\ProjectsController::createQuarterlyDistribution/$1` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ProjectsController::createQuarterlyDistribution`
+- `POST API/Management/Projects/runPayouts/([0-9]+)` => `\App\Modules\APIs\Controllers\ProjectsController::runPayouts/$1` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ProjectsController::runPayouts`
+- `POST API/Management/Projects/processMonthlyWithdrawals/([0-9]+)` => `\App\Modules\APIs\Controllers\ProjectsController::processMonthlyWithdrawals/$1` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ProjectsController::processMonthlyWithdrawals`
+- `POST API/Referrals/bulk-update-status` => `\App\Modules\APIs\Controllers\ReferralController::bulkUpdateStatus` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ReferralController::bulkUpdateStatus`
+- `POST API/Referrals/bulk-delete` => `\App\Modules\APIs\Controllers\ReferralController::bulkDelete` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ReferralController::bulkDelete`
+- `POST API/Marketing` => `\App\Modules\APIs\Controllers\MarketingAPIController::index` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::index`
+- `POST API/Marketing/approvePost/([0-9]+)` => `\App\Modules\APIs\Controllers\MarketingAPIController::approvePost/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::approvePost`
+- `POST API/Marketing/submitManualContent` => `\App\Modules\APIs\Controllers\MarketingAPIController::submitManualContent` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::submitManualContent`
+- `POST API/Marketing/validateSymbol` => `\App\Modules\APIs\Controllers\MarketingAPIController::validateSymbol` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::validateSymbol`
+- `POST API/Marketing/Add-Subscriber` => `\App\Modules\APIs\Controllers\MarketingAPIController::addSubscriber` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::addSubscriber`
+- `POST API/Marketing/fetchMissingLogos` => `\App\Modules\APIs\Controllers\MarketingAPIController::fetchMissingLogos` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::fetchMissingLogos`
+- `POST API/Marketing/generateAutomatedContent` => `\App\Modules\APIs\Controllers\MarketingAPIController::generateAutomatedContent` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::generateAutomatedContent`
+- `POST API/Marketing/PublishBlog/([0-9]+)` => `\App\Modules\APIs\Controllers\Management\MarketingAPIController::publishBlog/$1` [missing_class]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::publishBlog`
+- `POST API/Marketing/Save-Content-Edit/([0-9]+)` => `\App\Modules\APIs\Controllers\MarketingAPIController::saveContentEdit/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::saveContentEdit`
+- `POST API/Marketing/Scrape-Link` => `\App\Modules\APIs\Controllers\MarketingAPIController::scrapeLink` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\MarketingAPIController::scrapeLink`
+- `POST API/Marketing/MyMI-Gold/Tasks/Add` => `\App\Modules\APIs\Controllers\WalletsAPIController::addUserGoldTasks` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\WalletsAPIController::addUserGoldTasks`
+- `POST API/Marketing//Email-Templates/store` => `\App\Modules\APIs\Controllers\EmailTemplateController::store` [missing_class]
+- `POST API/Marketing/Email-Queue/store` => `\App\Modules\APIs\Controllers\EmailQueueController::store` [missing_class]
+- `POST API/Marketing/Email-Queue/processQueue` => `\App\Modules\APIs\Controllers\EmailQueueController::processQueue` [missing_class]
+- `POST API/Marketing/savePlatform` => `\App\Modules\APIs\Controllers\ManagementAPIController::savePlatform` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\ManagementAPIController::savePlatform`
+- `POST API/Marketing/upsertPlatformRule` => `\App\Modules\APIs\Controllers\ManagementAPIController::upsertPlatformRule` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\ManagementAPIController::upsertPlatformRule`
+- `POST API/Marketing/searchTaxonomy` => `\App\Modules\APIs\Controllers\ManagementAPIController::searchTaxonomy` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\ManagementAPIController::searchTaxonomy`
+- `POST API/Marketing/saveTaxonomy` => `\App\Modules\APIs\Controllers\ManagementAPIController::saveTaxonomy` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\ManagementAPIController::saveTaxonomy`
+- `POST API/Marketing/getPostingPlan` => `\App\Modules\APIs\Controllers\ManagementAPIController::getPostingPlan` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\ManagementAPIController::getPostingPlan`
+- `POST API/Marketing/composePost` => `\App\Modules\APIs\Controllers\ManagementAPIController::composePost` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\ManagementAPIController::composePost`
+- `POST Management/saveSuggestion` => `\App\Modules\Management\Controllers\ManagementAdminController::saveSuggestion` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\ManagementAdminController::saveSuggestion`
+- `POST Management/Email/updateCampaign/([0-9]+)` => `\App\Modules\Management\Controllers\EmailAdminController::updateCampaign/$1` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\EmailAdminController::updateCampaign`
+- `POST Management/Marketing/PublishBlog/([0-9]+)` => `\App\Modules\Management\Controllers\Management\MarketingAdminController::publishBlog/$1` [missing_class]
+  - Suggestion: `App\Modules\Management\Controllers\MarketingAdminController::publishBlog`
+- `POST Management/Marketing/MyMI-Gold/Tasks/Add` => `\App\Modules\Management\Controllers\WalletsAdminController::addUserGoldTasks` [missing_method]
+  - Suggestion: `App\Modules\Management\Controllers\WalletsAdminController::addUserGoldTasks`
+- `POST Management/Marketing//Email-Templates/store` => `\App\Modules\Management\Controllers\EmailTemplateController::store` [missing_class]
+- `POST Management/Marketing/Email-Queue/store` => `\App\Modules\Management\Controllers\EmailQueueController::store` [missing_class]
+- `POST Management/Marketing/Email-Queue/processQueue` => `\App\Modules\Management\Controllers\EmailQueueController::processQueue` [missing_class]
+- `POST Management/Marketing/Exchange/Edit/([^/]+)` => `\App\Modules\Management\Controllers\MarketingController::edit/$1` [missing_class]
+- `POST Management/Projects/Approve/([^/]+)` => `\App\Modules\Management\Controllers\ProjectsController::approveProject/$1` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ProjectsController::approveProject`
+- `POST Management/Projects/Edit/([^/]+)` => `\App\Modules\Management\Controllers\ProjectsController::approveProject/$1` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ProjectsController::approveProject`
+- `POST Management/Projects/Reject/([^/]+)` => `\App\Modules\Management\Controllers\ProjectsController::rejectProject/$1` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ProjectsController::rejectProject`
+- `POST Management/Projects/Quick-Intake` => `\App\Modules\Management\Controllers\ProjectsController::realEstateQuickSubmit` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\ProjectsController::realEstateQuickSubmit`
+- `POST Management/Users/ajaxBlockUser/([^/]+)` => `\App\Modules\Management\Controllers\UsersController::ajaxBlockUser` [missing_class]
+- `POST Management/Users/ajaxBulkBanUsers` => `\App\Modules\Management\Controllers\UsersController::ajaxBulkBanUsers` [missing_class]
+- `POST Management/Wallets/EmailUserAboutIssue/([0-9]+)/([0-9]+)` => `\App\Modules\Management\Controllers\WalletsController::emailUserAboutIssue/$1/$2` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::emailUserAboutIssue`
+- `POST Auctions/Create` => `\App\Controllers\AuctionsController::create` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\AuctionsController::create`
+- `POST Auctions/Bid/([0-9]+)` => `\App\Controllers\AuctionsController::bid/$1` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\AuctionsController::bid`
+- `POST Exchange/DigiByte/disconnectWallet` => `\App\Modules\Exchange\Controllers\DigiByteController::disconnectWallet` [missing_method]
+  - Suggestion: `App\Modules\Exchange\Controllers\DigiByteController::disconnectWallet`
+- `POST Exchange/DigiByte/refreshWallet` => `\App\Modules\Exchange\Controllers\DigiByteController::refreshWallet` [missing_method]
+  - Suggestion: `App\Modules\Exchange\Controllers\DigiByteController::refreshWallet`
+- `POST Exchange/DigiByte/getAssets` => `\App\Modules\Exchange\Controllers\DigiByteController::getAssets` [missing_method]
+  - Suggestion: `App\Modules\Exchange\Controllers\DigiByteController::getAssets`
+- `POST Exchange/DigiByte/createWallet` => `\App\Modules\Exchange\Controllers\DigiByteController::createWallet` [missing_method]
+  - Suggestion: `App\Modules\Exchange\Controllers\DigiByteController::createWallet`
+- `POST Exchange/DigiByte/connectWallet` => `\App\Modules\Exchange\Controllers\DigiByteController::connectWallet` [missing_method]
+  - Suggestion: `App\Modules\Exchange\Controllers\DigiByteController::connectWallet`
+- `POST Exchange/Solana/Wallet/Verify-Ownership` => `\App\Modules\Exchange\Controllers\SolanaController::verifyWalletOwnership` [missing_method]
+  - Suggestion: `App\Modules\Exchange\Controllers\SolanaController::verifyWalletOwnership`
+- `POST Investments/Autosave` => `\App\Modules\User\Controllers\InvestmentsController::autoSave` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\InvestmentsController::autoSave`
+- `POST Investments/Overview` => `\App\Modules\User\Controllers\InvestmentsController::overview` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\InvestmentsController::overview`
+- `POST Investments/Test` => `\App\Modules\User\Controllers\InvestmentsController::test` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\InvestmentsController::test`
+- `POST Investments/Watchlist` => `\App\Modules\User\Controllers\InvestmentsController::watchlist` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\InvestmentsController::watchlist`
+- `POST Wallets/Account-Manager` => `\App\Modules\User\Controllers\WalletsController::accountManager` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::accountManager`
+- `POST Wallets/Add/([^/]+)/([^/]+)` => `\App\Modules\User\Controllers\WalletsController::addFetch/$1/$2` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::addFetch`
+- `POST Wallets/Add/Bank-Account` => `\App\Modules\User\Controllers\WalletsController::createBankeAccount` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::createBankeAccount`
+- `POST Wallets/Attach-Account` => `\App\Modules\User\Controllers\WalletsController::attachAccount` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::attachAccount`
+- `POST Wallets/Attach-Account/([^/]+)/([^/]+)/([^/]+)` => `\App\Modules\User\Controllers\WalletsController::attachAccount/$1/$2/$3` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::attachAccount`
+- `POST Wallets/Banking/([^/]+)` => `\App\Modules\User\Controllers\WalletsController::addAccount` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::addAccount`
+- `POST Wallets/Create` => `\App\Modules\User\Controllers\WalletsController::generateWallet` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::generateWallet`
+- `POST Wallets/Coin-Swap` => `\App\Modules\User\Controllers\WalletsController::coinSwap` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::coinSwap`
+- `POST Wallets/Coin-Swap/([^/]+)` => `\App\Modules\User\Controllers\WalletsController::coinSwap/$1` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::coinSwap`
+- `POST Wallets/Deposit/Fetch` => `\App\Modules\User\Controllers\WalletsController::addDepositFetch` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::addDepositFetch`
+- `POST Wallets/Feature-Manager` => `\App\Modules\User\Controllers\WalletsController::featureManager` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::featureManager`
+- `POST Wallets/Generate-Wallet` => `\App\Modules\User\Controllers\WalletsController::generateWallet` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::generateWallet`
+- `POST Wallets/Link-Account` => `\App\Modules\User\Controllers\WalletsController::linkAccount` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::linkAccount`
+- `POST Wallets/Link-Account/([^/]+)` => `\App\Modules\User\Controllers\WalletsController::linkAccount/$1` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::linkAccount`
+- `POST Wallets/Link-Account/([^/]+)/([^/]+)` => `\App\Modules\User\Controllers\WalletsController::linkAccount/$1` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::linkAccount`
+- `POST Wallets/Link-Account/Success` => `\App\Modules\User\Controllers\WalletsController::linkAccountSuccess` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::linkAccountSuccess`
+- `POST Wallets/Link-Account/Success/([^/]+)` => `\App\Modules\User\Controllers\WalletsController::linkAccountSuccess/$1` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::linkAccountSuccess`
+- `POST Wallets/Manager` => `\App\Modules\User\Controllers\WalletsController::walletManager` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::walletManager`
+- `POST Wallets/Purchase-Manager` => `\App\Modules\User\Controllers\WalletsController::purchaseManager` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::purchaseManager`
+- `POST Wallets/Purchase/Memberships/Customize` => `\App\Modules\User\Controllers\WalletsController::customizeMembership` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::customizeMembership`
+- `POST Wallets/Wallet-Generator` => `\App\Modules\User\Controllers\WalletsController::walletGenerator` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::walletGenerator`
+- `POST Wallets/Wallet-Selection` => `\App\Modules\User\Controllers\WalletsController::walletSelections` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::walletSelections`
+- `POST Wallets/Wallet-Transactions` => `\App\Modules\User\Controllers\WalletsController::walletTransaction` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::walletTransaction`
+- `POST Wallets/Wallet-Transaction/([^/]+)` => `\App\Modules\User\Controllers\WalletsController::walletTransaction/$1` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::walletTransaction`
+- `POST Wallets/Withdraw/Fetch` => `\App\Modules\User\Controllers\WalletsController::addWithdrawFetch` [missing_method]
+  - Suggestion: `App\Modules\User\Controllers\WalletsController::addWithdrawFetch`
+- `POST API/Bitcoin/buildUnsignedPsbt` => `\App\Modules\APIs\Controllers\BitcoinController::buildUnsignedPsbt` [missing_class]
+- `POST API/Bitcoin/broadcastSignedTx` => `\App\Modules\APIs\Controllers\BitcoinController::broadcastSignedTx` [missing_class]
+- `POST API/Alerts/processBrokerEmails` => `\App\Modules\APIs\Controllers\AlertsController::processBrokerEmails` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\AlertsController::processBrokerEmails`
+- `POST API/Alerts/processAllEmails` => `\App\Modules\APIs\Controllers\AlertsController::processAllEmails` [missing_class]
+  - Suggestion: `App\Modules\User\Controllers\AlertsController::processAllEmails`
+- `POST API/Ops/public-pages/import` => `\App\Modules\APIs\Controllers\OpsPublicPagesController::import` [missing_class]
+- `POST API/Ops/public-pages/run` => `\App\Modules\APIs\Controllers\OpsPublicPagesController::run` [missing_class]
+- `POST Management/Marketing/Blogger/generate` => `\App\Controllers\App\Modules\Management\Controllers\Marketing\BloggerController::generate` [missing_class]
+- `POST Management/Marketing/Blogger/repurpose` => `\App\Controllers\App\Modules\Management\Controllers\Marketing\BloggerController::repurpose` [missing_class]
+- `POST Management/Marketing/Blogger/schedule` => `\App\Controllers\App\Modules\Management\Controllers\Marketing\BloggerController::schedule` [missing_class]
+- `POST Management/Marketing/Blogger/save` => `\App\Controllers\App\Modules\Management\Controllers\Marketing\BloggerController::save` [missing_class]
+- `POST Management/Marketing/Blogs/Backfill-Excerpts` => `\App\Controllers\App\Modules\Management\Controllers\MarketingController::backfillBlogExcerpts` [missing_class]
+- `POST Management/OpsInbox/create-task-file/([0-9]+)` => `\App\Controllers\App\Modules\Management\Controllers\OpsInboxController::createTaskFile/$1` [missing_class]
+- `POST Management/OpsInbox/create-task-registry/([0-9]+)` => `\App\Controllers\App\Modules\Management\Controllers\OpsInboxController::createTaskRegistry/$1` [missing_class]
+- `POST Management/OpsInbox/approve/([0-9]+)` => `\App\Controllers\App\Modules\Management\Controllers\OpsInboxController::markApproved/$1` [missing_class]
+- `POST Management/OpsInbox/reject/([0-9]+)` => `\App\Controllers\App\Modules\Management\Controllers\OpsInboxController::reject/$1` [missing_class]
+- `DELETE API/Marketing/deletePlatform/([0-9]+)` => `\App\Modules\APIs\Controllers\ManagementAPIController::deletePlatform/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\ManagementAPIController::deletePlatform`
+- `DELETE API/Marketing/deletePlatformRule/([0-9]+)` => `\App\Modules\APIs\Controllers\ManagementAPIController::deletePlatformRule/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\ManagementAPIController::deletePlatformRule`
+- `DELETE API/Marketing/deleteTaxonomy/([0-9]+)` => `\App\Modules\APIs\Controllers\ManagementAPIController::deleteTaxonomy/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\ManagementAPIController::deleteTaxonomy`
+- `DELETE API/Marketing/deleteSuggestion/([0-9]+)` => `\App\Modules\APIs\Controllers\ManagementAPIController::deleteSuggestion/$1` [missing_method]
+  - Suggestion: `App\Modules\APIs\Controllers\ManagementAPIController::deleteSuggestion`

@@ -63,15 +63,6 @@ class OnboardingWalkthroughController extends BaseUserController
             'updated_at' => $now,
         ]);
 
-        $profileTable = $this->db()->table('bf_user_profiles');
-        $existingProfile = $profileTable->where('user_id', $userId)->get()->getRowArray();
-        if ($existingProfile) {
-            $profileTable->where('user_id', $userId)->update($profilePayload);
-        } else {
-            $profilePayload['created_at'] = $now;
-            $profileTable->insert($profilePayload);
-        }
-
         $employmentPayload = $this->filterPayloadByColumns('bf_user_employment', [
             'user_id'         => $userId,
             'employment_type' => $employmentType,
@@ -81,13 +72,38 @@ class OnboardingWalkthroughController extends BaseUserController
             'updated_at'      => $now,
         ]);
 
-        $employmentTable = $this->db()->table('bf_user_employment');
-        $existingEmployment = $employmentTable->where('user_id', $userId)->get()->getRowArray();
-        if ($existingEmployment) {
-            $employmentTable->where('user_id', $userId)->update($employmentPayload);
-        } else {
-            $employmentPayload['created_at'] = $now;
-            $employmentTable->insert($employmentPayload);
+        $db = $this->db();
+        $db->transBegin();
+
+        try {
+            $profileTable = $db->table('bf_user_profiles');
+            $existingProfile = $profileTable->where('user_id', $userId)->get()->getRowArray();
+            if ($existingProfile) {
+                $profileTable->where('user_id', $userId)->update($profilePayload);
+            } else {
+                $profilePayload['created_at'] = $now;
+                $profileTable->insert($profilePayload);
+            }
+
+            $employmentTable = $db->table('bf_user_employment');
+            $existingEmployment = $employmentTable->where('user_id', $userId)->get()->getRowArray();
+            if ($existingEmployment) {
+                $employmentTable->where('user_id', $userId)->update($employmentPayload);
+            } else {
+                $employmentPayload['created_at'] = $now;
+                $employmentTable->insert($employmentPayload);
+            }
+
+            if ($db->transStatus() === false) {
+                $db->transRollback();
+                throw new \RuntimeException('Database transaction failed during profile save.');
+            }
+
+            $db->transCommit();
+        } catch (\Throwable $e) {
+            $db->transRollback();
+            log_message('error', 'Onboarding profile save failed: {message}', ['message' => $e->getMessage()]);
+            return $this->respondError('Failed to save profile: ' . $e->getMessage(), 500);
         }
 
         log_message('info', 'Onboarding profile saved for user_id={id}', ['id' => $userId]);
@@ -158,7 +174,22 @@ class OnboardingWalkthroughController extends BaseUserController
             return $this->respondError('Budgeting table not available.', 500);
         }
 
-        $this->db()->table('bf_users_budgeting')->insert($payload);
+        $db = $this->db();
+        $db->transBegin();
+
+        try {
+            $db->table('bf_users_budgeting')->insert($payload);
+
+            if ($db->transStatus() === false) {
+                $db->transRollback();
+                throw new \RuntimeException('Database transaction failed during budget income save.');
+            }
+
+            $db->transCommit();
+        } catch (\Throwable $e) {
+            $db->transRollback();
+            return $this->respondError('Failed to save income: ' . $e->getMessage(), 500);
+        }
 
         log_message('info', 'Onboarding income saved for user_id={id}', ['id' => $userId]);
 
@@ -193,50 +224,65 @@ class OnboardingWalkthroughController extends BaseUserController
         $now = new DateTimeImmutable('now');
 
         $saved = false;
+        $db = $this->db();
+        $db->transBegin();
 
-        if ($creditBalance > 0 && $this->db()->tableExists('bf_users_credit_accounts')) {
-            $creditPayload = $this->filterPayloadByColumns('bf_users_credit_accounts', [
-                'status'            => 1,
-                'beta'              => 0,
-                'date'              => $now->format('F jS, Y'),
-                'time'              => $now->format('g:i A'),
-                'user_id'           => $userId,
-                'user_email'        => $email,
-                'username'          => $username,
-                'account_type'      => 'Credit',
-                'creditor'          => 'Onboarding',
-                'available_balance' => $creditBalance,
-                'current_balance'   => $creditBalance,
-            ]);
-            if (! empty($creditPayload)) {
-                $this->db()->table('bf_users_credit_accounts')->insert($creditPayload);
-                $saved = true;
+        try {
+            if ($creditBalance > 0 && $db->tableExists('bf_users_credit_accounts')) {
+                $creditPayload = $this->filterPayloadByColumns('bf_users_credit_accounts', [
+                    'status'            => 1,
+                    'beta'              => 0,
+                    'date'              => $now->format('F jS, Y'),
+                    'time'              => $now->format('g:i A'),
+                    'user_id'           => $userId,
+                    'user_email'        => $email,
+                    'username'          => $username,
+                    'account_type'      => 'Credit',
+                    'creditor'          => 'Onboarding',
+                    'available_balance' => $creditBalance,
+                    'current_balance'   => $creditBalance,
+                ]);
+                if (! empty($creditPayload)) {
+                    $db->table('bf_users_credit_accounts')->insert($creditPayload);
+                    $saved = true;
+                }
             }
-        }
 
-        if ($debtBalance > 0 && $this->db()->tableExists('bf_users_debt_accounts')) {
-            $debtPayload = $this->filterPayloadByColumns('bf_users_debt_accounts', [
-                'status'            => 1,
-                'beta'              => 0,
-                'date'              => $now->format('F jS, Y'),
-                'time'              => $now->format('g:i A'),
-                'user_id'           => $userId,
-                'user_email'        => $email,
-                'username'          => $username,
-                'account_type'      => 'Debt',
-                'debtor'            => 'Onboarding',
-                'available_balance' => $debtBalance,
-                'current_balance'   => $debtBalance,
-            ]);
-            if (! empty($debtPayload)) {
-                $this->db()->table('bf_users_debt_accounts')->insert($debtPayload);
-                $saved = true;
+            if ($debtBalance > 0 && $db->tableExists('bf_users_debt_accounts')) {
+                $debtPayload = $this->filterPayloadByColumns('bf_users_debt_accounts', [
+                    'status'            => 1,
+                    'beta'              => 0,
+                    'date'              => $now->format('F jS, Y'),
+                    'time'              => $now->format('g:i A'),
+                    'user_id'           => $userId,
+                    'user_email'        => $email,
+                    'username'          => $username,
+                    'account_type'      => 'Debt',
+                    'debtor'            => 'Onboarding',
+                    'available_balance' => $debtBalance,
+                    'current_balance'   => $debtBalance,
+                ]);
+                if (! empty($debtPayload)) {
+                    $db->table('bf_users_debt_accounts')->insert($debtPayload);
+                    $saved = true;
+                }
             }
-        }
 
-        if (! $saved) {
-            log_message('error', 'Onboarding credit/debt failed: tables unavailable for user_id={id}', ['id' => $userId]);
-            return $this->respondError('Credit/debt tables not available.', 500);
+            if (! $saved) {
+                $db->transRollback();
+                log_message('error', 'Onboarding credit/debt failed: tables unavailable for user_id={id}', ['id' => $userId]);
+                return $this->respondError('Credit/debt tables not available.', 500);
+            }
+
+            if ($db->transStatus() === false) {
+                $db->transRollback();
+                throw new \RuntimeException('Database transaction failed during credit/debt save.');
+            }
+
+            $db->transCommit();
+        } catch (\Throwable $e) {
+            $db->transRollback();
+            return $this->respondError('Failed to save credit/debt: ' . $e->getMessage(), 500);
         }
 
         log_message('info', 'Onboarding credit/debt saved for user_id={id}', ['id' => $userId]);
@@ -300,7 +346,22 @@ class OnboardingWalkthroughController extends BaseUserController
             return $this->respondError('Budgeting table not available.', 500);
         }
 
-        $this->db()->table('bf_users_budgeting')->insert($payload);
+        $db = $this->db();
+        $db->transBegin();
+
+        try {
+            $db->table('bf_users_budgeting')->insert($payload);
+
+            if ($db->transStatus() === false) {
+                $db->transRollback();
+                throw new \RuntimeException('Database transaction failed during recurring expense save.');
+            }
+
+            $db->transCommit();
+        } catch (\Throwable $e) {
+            $db->transRollback();
+            return $this->respondError('Failed to save recurring expense: ' . $e->getMessage(), 500);
+        }
 
         log_message('info', 'Onboarding recurring expense saved for user_id={id}', ['id' => $userId]);
 
@@ -341,7 +402,22 @@ class OnboardingWalkthroughController extends BaseUserController
             return $this->respondError('Watchlist table not available.', 500);
         }
 
-        $this->db()->table('bf_users_watchlist')->insert($payload);
+        $db = $this->db();
+        $db->transBegin();
+
+        try {
+            $db->table('bf_users_watchlist')->insert($payload);
+
+            if ($db->transStatus() === false) {
+                $db->transRollback();
+                throw new \RuntimeException('Database transaction failed during watchlist save.');
+            }
+
+            $db->transCommit();
+        } catch (\Throwable $e) {
+            $db->transRollback();
+            return $this->respondError('Failed to save watchlist: ' . $e->getMessage(), 500);
+        }
 
         log_message('info', 'Onboarding watchlist saved for user_id={id}', ['id' => $userId]);
 

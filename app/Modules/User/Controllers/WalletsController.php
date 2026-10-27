@@ -901,6 +901,11 @@ class WalletsController extends BaseUserController
         return $this->renderWalletLandingPage();
     }
 
+    public function MyMIWallet(): ResponseInterface|string
+    {
+        return $this->renderWalletLandingPage();
+    }
+
     public function checking(): ResponseInterface|string
     {
         return $this->renderWalletLandingPage();
@@ -1690,9 +1695,30 @@ class WalletsController extends BaseUserController
             return $blocked;
         }
 
+        $isJson = $this->request->isAJAX() || str_contains(strtolower((string) $this->request->getHeaderLine('Accept')), 'application/json');
+
         $amount   = (float) $this->request->getPost('amount');
         $walletID = (int) $this->request->getPost('wallet_id');
-        $currency = (string) ($this->request->getPost('currency') ?? 'USD');
+        $currency = strtoupper((string) ($this->request->getPost('currency') ?? 'USD'));
+
+        if ($amount <= 0) {
+            $msg = 'Deposit amount must be greater than zero.';
+            if ($isJson) {
+                return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $msg, 'csrfHash' => csrf_hash()]);
+            }
+            return redirect()->back()->withInput()->with('error', $msg);
+        }
+
+        if ($walletID <= 0) {
+            $msg = 'Valid wallet ID is required.';
+            if ($isJson) {
+                return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $msg, 'csrfHash' => csrf_hash()]);
+            }
+            return redirect()->back()->withInput()->with('error', $msg);
+        }
+
+        $db = \Config\Database::connect();
+        $db->transBegin();
 
         try {
             $convertedAmount = $this->currencyService->convert($amount, $currency, 'USD');
@@ -1700,11 +1726,39 @@ class WalletsController extends BaseUserController
 
             $this->resolveWalletService()->depositFunds($walletID, $convertedAmount);
             $this->transactionService->completeDeposit($transactionID);
+
+            if ($db->transStatus() === false) {
+                $db->transRollback();
+                throw new \RuntimeException('Database transaction failed during deposit.');
+            }
+
+            $db->transCommit();
             $this->invalidateWalletCache($this->currentWalletUserId());
 
+            if ($isJson) {
+                return $this->response->setJSON([
+                    'status'         => 'success',
+                    'message'        => 'Deposit successful.',
+                    'transaction_id' => $transactionID,
+                    'amount'         => $convertedAmount,
+                    'csrfHash'       => csrf_hash(),
+                ]);
+            }
+
             return redirect()->to('/Wallets')->with('message', 'Deposit successful.');
-        } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Error during deposit: ' . $e->getMessage());
+        } catch (\Throwable $e) {
+            $db->transRollback();
+            log_message('error', 'WalletsController::deposit failed: {message}', ['message' => $e->getMessage()]);
+
+            if ($isJson) {
+                return $this->response->setStatusCode(500)->setJSON([
+                    'status'   => 'error',
+                    'message'  => 'Error during deposit: ' . $e->getMessage(),
+                    'csrfHash' => csrf_hash(),
+                ]);
+            }
+
+            return redirect()->back()->withInput()->with('error', 'Error during deposit: ' . $e->getMessage());
         }
     }
 
@@ -1714,21 +1768,82 @@ class WalletsController extends BaseUserController
             return $blocked;
         }
 
+        $isJson = $this->request->isAJAX() || str_contains(strtolower((string) $this->request->getHeaderLine('Accept')), 'application/json');
+
         $amount   = (float) $this->request->getPost('amount');
         $walletID = (int) $this->request->getPost('wallet_id');
-        $currency = (string) ($this->request->getPost('currency') ?? 'USD');
+        $currency = strtoupper((string) ($this->request->getPost('currency') ?? 'USD'));
+
+        if ($amount <= 0) {
+            $msg = 'Withdrawal amount must be greater than zero.';
+            if ($isJson) {
+                return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $msg, 'csrfHash' => csrf_hash()]);
+            }
+            return redirect()->back()->withInput()->with('error', $msg);
+        }
+
+        if ($walletID <= 0) {
+            $msg = 'Valid wallet ID is required.';
+            if ($isJson) {
+                return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $msg, 'csrfHash' => csrf_hash()]);
+            }
+            return redirect()->back()->withInput()->with('error', $msg);
+        }
+
+        $db = \Config\Database::connect();
+        $db->transBegin();
 
         try {
             $convertedAmount = $this->currencyService->convert($amount, $currency, 'USD');
-            $transactionID = $this->transactionService->logTransaction('Withdrawal', $walletID, $this->currentWalletUserId(), $convertedAmount);
 
+            // Balance check guard
+            $wallet = $this->walletModel->find($walletID);
+            $currentBalance = (float) ($wallet['balance'] ?? $wallet['total_balance'] ?? 0);
+            if ($currentBalance < $convertedAmount) {
+                $db->transRollback();
+                $msg = sprintf('Insufficient funds. Available: $%.2f, Requested: $%.2f', $currentBalance, $convertedAmount);
+                if ($isJson) {
+                    return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $msg, 'csrfHash' => csrf_hash()]);
+                }
+                return redirect()->back()->withInput()->with('error', $msg);
+            }
+
+            $transactionID = $this->transactionService->logTransaction('Withdrawal', $walletID, $this->currentWalletUserId(), $convertedAmount);
             $this->resolveWalletService()->withdrawFunds($walletID, $convertedAmount);
             $this->transactionService->completeDeposit($transactionID);
+
+            if ($db->transStatus() === false) {
+                $db->transRollback();
+                throw new \RuntimeException('Database transaction failed during withdrawal.');
+            }
+
+            $db->transCommit();
             $this->invalidateWalletCache($this->currentWalletUserId());
 
+            if ($isJson) {
+                return $this->response->setJSON([
+                    'status'         => 'success',
+                    'message'        => 'Withdrawal successful.',
+                    'transaction_id' => $transactionID,
+                    'amount'         => $convertedAmount,
+                    'csrfHash'       => csrf_hash(),
+                ]);
+            }
+
             return redirect()->to('/Wallets')->with('message', 'Withdrawal successful.');
-        } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Error during withdrawal: ' . $e->getMessage());
+        } catch (\Throwable $e) {
+            $db->transRollback();
+            log_message('error', 'WalletsController::withdraw failed: {message}', ['message' => $e->getMessage()]);
+
+            if ($isJson) {
+                return $this->response->setStatusCode(500)->setJSON([
+                    'status'   => 'error',
+                    'message'  => 'Error during withdrawal: ' . $e->getMessage(),
+                    'csrfHash' => csrf_hash(),
+                ]);
+            }
+
+            return redirect()->back()->withInput()->with('error', 'Error during withdrawal: ' . $e->getMessage());
         }
     }
 
@@ -1738,22 +1853,79 @@ class WalletsController extends BaseUserController
             return $blocked;
         }
 
+        $isJson = $this->request->isAJAX() || str_contains(strtolower((string) $this->request->getHeaderLine('Accept')), 'application/json');
+
         $fromWalletID = (int) $this->request->getPost('from_wallet_id');
         $toWalletID   = (int) $this->request->getPost('to_wallet_id');
         $amount       = (float) $this->request->getPost('amount');
-        $fromCurrency = (string) $this->request->getPost('from_currency');
-        $toCurrency   = (string) $this->request->getPost('to_currency');
+        $fromCurrency = strtoupper((string) ($this->request->getPost('from_currency') ?? 'USD'));
+        $toCurrency   = strtoupper((string) ($this->request->getPost('to_currency') ?? 'USD'));
+
+        if ($amount <= 0) {
+            $msg = 'Exchange amount must be greater than zero.';
+            if ($isJson) {
+                return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $msg, 'csrfHash' => csrf_hash()]);
+            }
+            return redirect()->back()->withInput()->with('error', $msg);
+        }
+
+        if ($fromWalletID <= 0 || $toWalletID <= 0) {
+            $msg = 'Source and destination wallet IDs are required.';
+            if ($isJson) {
+                return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $msg, 'csrfHash' => csrf_hash()]);
+            }
+            return redirect()->back()->withInput()->with('error', $msg);
+        }
+
+        if ($fromWalletID === $toWalletID) {
+            $msg = 'Source and destination wallets must be different.';
+            if ($isJson) {
+                return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $msg, 'csrfHash' => csrf_hash()]);
+            }
+            return redirect()->back()->withInput()->with('error', $msg);
+        }
+
+        $db = \Config\Database::connect();
+        $db->transBegin();
 
         try {
             $convertedAmount = $this->currencyService->convert($amount, $fromCurrency, $toCurrency);
 
-            $this->transactionService->logTransaction('Exchange', $fromWalletID, $this->currentWalletUserId(), $convertedAmount);
+            $transactionID = $this->transactionService->logTransaction('Exchange', $fromWalletID, $this->currentWalletUserId(), $convertedAmount);
             $this->resolveWalletService()->exchangeFunds($fromWalletID, $toWalletID, $convertedAmount);
+
+            if ($db->transStatus() === false) {
+                $db->transRollback();
+                throw new \RuntimeException('Database transaction failed during currency exchange.');
+            }
+
+            $db->transCommit();
             $this->invalidateWalletCache($this->currentWalletUserId());
 
+            if ($isJson) {
+                return $this->response->setJSON([
+                    'status'         => 'success',
+                    'message'        => 'Currency exchanged successfully.',
+                    'transaction_id' => $transactionID,
+                    'amount'         => $convertedAmount,
+                    'csrfHash'       => csrf_hash(),
+                ]);
+            }
+
             return redirect()->to('/Wallets')->with('message', 'Currency exchanged successfully.');
-        } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Error during currency exchange: ' . $e->getMessage());
+        } catch (\Throwable $e) {
+            $db->transRollback();
+            log_message('error', 'WalletsController::exchangeCurrency failed: {message}', ['message' => $e->getMessage()]);
+
+            if ($isJson) {
+                return $this->response->setStatusCode(500)->setJSON([
+                    'status'   => 'error',
+                    'message'  => 'Error during currency exchange: ' . $e->getMessage(),
+                    'csrfHash' => csrf_hash(),
+                ]);
+            }
+
+            return redirect()->back()->withInput()->with('error', 'Error during currency exchange: ' . $e->getMessage());
         }
     }
 
@@ -1952,6 +2124,56 @@ class WalletsController extends BaseUserController
     {
         if ($blocked = $this->guardWalletFeature()) {
             return $blocked;
+        }
+
+        if (strtolower($this->request->getMethod()) === 'post') {
+            $isJson = $this->request->isAJAX() || str_contains(strtolower((string) $this->request->getHeaderLine('Accept')), 'application/json');
+
+            $fromWalletID = (int) $this->request->getPost('from_wallet_id');
+            $toWalletID   = (int) $this->request->getPost('to_wallet_id');
+            $amount       = (float) $this->request->getPost('amount');
+
+            if ($amount <= 0) {
+                $msg = 'Transfer amount must be greater than zero.';
+                return $isJson ? $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $msg, 'csrfHash' => csrf_hash()]) : redirect()->back()->withInput()->with('error', $msg);
+            }
+
+            if ($fromWalletID <= 0 || $toWalletID <= 0 || $fromWalletID === $toWalletID) {
+                $msg = 'Distinct source and destination wallet IDs are required.';
+                return $isJson ? $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => $msg, 'csrfHash' => csrf_hash()]) : redirect()->back()->withInput()->with('error', $msg);
+            }
+
+            $db = \Config\Database::connect();
+            $db->transBegin();
+
+            try {
+                $this->resolveWalletService()->withdrawFunds($fromWalletID, $amount);
+                $this->resolveWalletService()->depositFunds($toWalletID, $amount);
+
+                if ($db->transStatus() === false) {
+                    $db->transRollback();
+                    throw new \RuntimeException('Database transaction failed during funds transfer.');
+                }
+
+                $db->transCommit();
+                $this->invalidateWalletCache($this->currentWalletUserId());
+
+                if ($isJson) {
+                    return $this->response->setJSON([
+                        'status'   => 'success',
+                        'message'  => 'Funds transferred successfully.',
+                        'amount'   => $amount,
+                        'csrfHash' => csrf_hash(),
+                    ]);
+                }
+
+                return redirect()->to('/Wallets')->with('message', 'Funds transferred successfully.');
+            } catch (\Throwable $e) {
+                $db->transRollback();
+                return $isJson
+                    ? $this->response->setStatusCode(500)->setJSON(['status' => 'error', 'message' => $e->getMessage(), 'csrfHash' => csrf_hash()])
+                    : redirect()->back()->withInput()->with('error', 'Error during funds transfer: ' . $e->getMessage());
+            }
         }
 
         $this->data['pageTitle'] = 'Transfer Funds | MyMI Wallet | The Future of Finance';

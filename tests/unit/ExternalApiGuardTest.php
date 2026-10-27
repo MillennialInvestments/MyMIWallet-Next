@@ -8,20 +8,29 @@ final class ExternalApiGuardTest extends CIUnitTestCase
 {
     public function testProviderCapStopsCallsAfterLimit(): void
     {
-        $policy = new ExternalApiPolicy();
-        $policy->providerCaps = [
-            'alphavantage' => 2,
-        ];
-        $policy->enableBackoff = false;
-        $policy->microSleepBackoffUs = 0;
+        $prevEnv = getenv('MYMI_DISABLE_EXTERNAL');
+        putenv('MYMI_DISABLE_EXTERNAL');
 
-        $guard = new ExternalApiGuard($policy);
+        try {
+            $policy = new ExternalApiPolicy();
+            $policy->providerCaps = [
+                'alphavantage' => 2,
+            ];
+            $policy->enableBackoff = false;
+            $policy->microSleepBackoffUs = 0;
 
-        $this->assertTrue($guard->allow('alphavantage'));
-        $this->assertTrue($guard->allow('alphavantage'));
-        $this->assertFalse($guard->allow('alphavantage'));
+            $guard = new ExternalApiGuard($policy);
 
-        $counts = $guard->counts();
-        $this->assertSame(3, $counts['alphavantage']);
+            $this->assertTrue($guard->allow('alphavantage'));
+            $this->assertTrue($guard->allow('alphavantage'));
+            $this->assertFalse($guard->allow('alphavantage'));
+
+            $counts = $guard->counts();
+            $this->assertSame(3, $counts['alphavantage']);
+        } finally {
+            if ($prevEnv !== false) {
+                putenv('MYMI_DISABLE_EXTERNAL=' . $prevEnv);
+            }
+        }
     }
 }

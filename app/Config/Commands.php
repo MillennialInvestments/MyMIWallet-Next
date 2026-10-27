@@ -35,5 +35,7 @@ class Commands extends BaseConfig
         'aiops:solana-digest' => \App\Commands\SolanaDigest::class,
         'aiops:solana-transaction-audit' => \App\Commands\SolanaTransactionAudit::class,
         'exchange:create-tbi-project-coin-drafts' => \App\Commands\CreateTbiProjectCoinDrafts::class,
+        'mymi:shield-backfill' => \App\Commands\ShieldBackfill::class,
+        'mymi:lifecycle-healthcheck' => \App\Commands\UserLifecycleHealthcheck::class,
     ];
 }

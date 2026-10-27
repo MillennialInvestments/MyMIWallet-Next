@@ -281,7 +281,7 @@ class AccountController extends BaseUserController
             $m->insert($payload);
         }
         $userId = (int) session('cuID');
-        $this->invalidateCrudCache(array_filtre([
+        $this->invalidateCrudCache(array_filter([
             'account',
             $userId > 0 ? $userId : null,
         ]));
@@ -295,21 +295,55 @@ class AccountController extends BaseUserController
 
     public function verify2fa()
     {
-        $code = (string) $this->request->getPost('code');
-        if (! preg_match('~^\d{6}$~', $code)) {
-            return $this->failJson('Invalid code.');
+        $code = trim((string) $this->request->getPost('code'));
+        if ($code === '') {
+            return $this->failJson('Verification code is required.');
         }
+
         $m = new \App\Models\UserTwoFactorModel();
         $row = $m->byUser((int) session('cuID'));
         if (! $row || (int) $row['is_enabled'] !== 1) {
             return $this->failJson('2FA not enabled.');
         }
-        $secret = \App\Libraries\Security\Crypto::decrypt($row['secret_ciphertext'], $row['secret_iv'], $row['secret_tag']);
-        if (! \App\Libraries\Security\TotpService::verify($secret, $code)) {
-            return $this->failJson('Invalid TOTP code.');
+
+        // 1. Check 6-digit TOTP code
+        if (preg_match('~^\d{6}$~', $code)) {
+            $secret = \App\Libraries\Security\Crypto::decrypt($row['secret_ciphertext'], $row['secret_iv'], $row['secret_tag']);
+            if (! \App\Libraries\Security\TotpService::verify($secret, $code)) {
+                return $this->failJson('Invalid TOTP code.');
+            }
+            session()->set('2fa_verified_at', time());
+            audit('2fa.verify.totp', [], 'user');
+            return $this->okJson('2FA verified.');
         }
-        session()->set('2fa_verified_at', time());
-        return $this->okJson('2FA verified.');
+
+        // 2. Check 8-character backup code (single-use consumption)
+        $cleanBackup = strtoupper(preg_replace('/[^a-zA-Z0-9]/', '', $code));
+        if (strlen($cleanBackup) === 8) {
+            $backupHashes = json_decode((string) ($row['backup_codes_hashes'] ?? '[]'), true) ?: [];
+            $matchedIndex = null;
+            foreach ($backupHashes as $idx => $hash) {
+                if (function_exists('crypto_verify_password') && crypto_verify_password($cleanBackup, $hash)) {
+                    $matchedIndex = $idx;
+                    break;
+                }
+            }
+
+            if ($matchedIndex !== null) {
+                unset($backupHashes[$matchedIndex]);
+                $m->update($row['id'], [
+                    'backup_codes_hashes' => json_encode(array_values($backupHashes)),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
+                session()->set('2fa_verified_at', time());
+                audit('2fa.verify.backup', ['remaining_codes' => count($backupHashes)], 'user');
+                return $this->okJson('2FA verified with backup code.');
+            }
+
+            return $this->failJson('Invalid backup code.');
+        }
+
+        return $this->failJson('Invalid verification code format.');
     }
 
     public function disable2fa()

@@ -486,6 +486,8 @@ class Console extends BaseConfig
         \App\Commands\TrafficSpikeGuard::class,
         \App\Commands\Ux\JourneyAudit::class,
         \App\Commands\WalletsWarmSummaryCache::class,
+        \App\Commands\ShieldBackfill::class,
+        \App\Commands\UserLifecycleHealthcheck::class,
     ];
 
     public bool $showHelp = true;

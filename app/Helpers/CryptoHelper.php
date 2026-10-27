@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use RuntimeException;
-
 if (! function_exists('crypto_generate_salt')) {
     function crypto_generate_salt(int $length = 32): string
     {

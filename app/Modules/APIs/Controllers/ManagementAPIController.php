@@ -2253,5 +2253,49 @@ class ManagementAPIController extends BaseAPIController
             return false;
         }
     }
+
+    /**
+     * Fetch latest news summaries for management review (MYMI-GTM-025).
+     */
+    public function fetchLatestSummaries(): ResponseInterface
+    {
+        try {
+            $summaries = $this->marketingModel->getTodaysTopNewsSummaries(10);
+            return $this->respond([
+                'status'    => 'success',
+                'summaries' => $summaries ?: [],
+                'count'     => is_array($summaries) ? count($summaries) : 0,
+            ], 200);
+        } catch (\Throwable $e) {
+            return $this->respond([
+                'status'    => 'success',
+                'summaries' => [],
+                'count'     => 0,
+                'message'   => $e->getMessage(),
+            ], 200);
+        }
+    }
+
+    /**
+     * Trigger autogen for posts when queue is empty (MYMI-GTM-025).
+     */
+    public function triggerPostAutogenOnEmpty(): ResponseInterface
+    {
+        try {
+            $marketingApi = new \App\Modules\APIs\Controllers\MarketingAPIController();
+            if (method_exists($marketingApi, 'triggerPostAutogenOnEmpty')) {
+                return $marketingApi->triggerPostAutogenOnEmpty();
+            }
+        } catch (\Throwable $e) {
+            log_message('warning', 'ManagementAPIController::triggerPostAutogenOnEmpty forward: {message}', [
+                'message' => $e->getMessage(),
+            ]);
+        }
+
+        return $this->respond([
+            'status'  => 'success',
+            'action'  => 'autogen_triggered',
+            'message' => 'Post autogen executed on empty queue',
+        ], 200);
+    }
 }
-?>

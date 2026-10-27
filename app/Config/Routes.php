@@ -213,8 +213,8 @@ $routes->group('API/CoinVault', ['namespace' => '\App\Modules\CoinVault\Controll
 
 // Docs index for AI orchestration
 $routes->group('API/Docs', ['namespace' => '\App\Modules\APIs\Controllers'], static function($routes) {
-    $routes->get('index', 'DocsController::index');
-    $routes->get('view', 'DocsController::view');
+    $routes->get('index', 'DocsAPIController::index');
+    $routes->get('view', 'DocsAPIController::view');
 });
 
 // (Optional) temporarily enable auto-routing to confirm controller wiring
@@ -400,6 +400,13 @@ $routes->group('', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 
     $routes->get('/Account/Notifications', 'DashboardController::notifications', ['as' => 'notifications']);
     $routes->get('/Account/Security', 'DashboardController::Security', ['as' => 'security']);
     $routes->get('/Account/Social-Media', 'DashboardController::SocialMedia', ['as' => 'social-media']);
+
+    // TOTP 2FA Management Endpoints
+    $routes->get('/Account/2fa', 'AccountController::twoFactor', ['as' => 'account.2fa']);
+    $routes->post('/Account/2fa/enable', 'AccountController::enable2fa', ['as' => 'account.2fa.enable']);
+    $routes->post('/Account/2fa/verify', 'AccountController::verify2fa', ['as' => 'account.2fa.verify']);
+    $routes->post('/Account/2fa/disable', 'AccountController::disable2fa', ['as' => 'account.2fa.disable']);
+    $routes->post('/Account/2fa/backup/regenerate', 'AccountController::regenerateBackupCodes', ['as' => 'account.2fa.backup.regenerate']);
     $routes->get('/Accounts/createLinkToken', 'AccountController::createLinkToken', ['as' => 'create-link-token']);
     $routes->get('/Search', 'SearchController::index');
     $routes->get('/Search/(:segment)', 'SearchController::index/$1');
@@ -426,7 +433,7 @@ $routes->group('', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 
 });
 
 
-$routes->group('Advisor', static function($routes) {
+$routes->group('Advisor', ['namespace' => '\App\Modules\Advisor\Controllers'], static function($routes) {
     $routes->get('/', 'AdvisorController::index');
     $routes->post('generateInsight', 'AdvisorController::generateAdvisorInsight');
     $routes->post('generateStoryboard', 'AdvisorController::generateNewsStoryboard');
@@ -477,13 +484,13 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->post('receiveResult', 'AiOpsAPIController::receiveResult');
     });
     $routes->group('AIOps', static function($routes) {
-        $routes->get('health', 'AiOpsAPIController::health');
-        $routes->post('policy/check', 'AiOpsAPIController::policyCheck');
-        $routes->post('usage/log', 'AiOpsAPIController::logUsage');
-        $routes->post('cache/store', 'AiOpsAPIController::cacheStore');
-        $routes->get('cache/get', 'AiOpsAPIController::cacheGet');
-        $routes->post('test/policy', 'AiOpsAPIController::testPolicy');
-        $routes->post('toggle', 'AiOpsAPIController::toggle', ['filter' => 'permission:admin.access']);
+        $routes->get('health', 'AIOpsAPIController::health');
+        $routes->post('policy/check', 'AIOpsAPIController::policyCheck');
+        $routes->post('usage/log', 'AIOpsAPIController::logUsage');
+        $routes->post('cache/store', 'AIOpsAPIController::cacheStore');
+        $routes->get('cache/get', 'AIOpsAPIController::cacheGet');
+        $routes->post('test/policy', 'AIOpsAPIController::testPolicy');
+        $routes->post('toggle', 'AIOpsAPIController::toggle', ['filter' => 'permission:admin.access']);
     });
     $routes->post('Alerts/backfillEmailAlerts', 'AlertsAPIController::backfillEmailAlerts', ['filter' => 'internalToken']);
     $routes->get('cronFetchAndGenerateNews', 'ManagementAPIController::cronFetchAndGenerateNews', ['filter' => 'cronKey']);
@@ -627,7 +634,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('cronGenerateDailyCommunityPosts', 'MarketingAPIController::cronGenerateDailyCommunityPosts');
         $routes->get('cronQueueDistribution', 'MarketingAPIController::cronQueueDistribution');
 
-        $routes->group('Advisor', static function($routes) {
+        $routes->group('Advisor', ['namespace' => '\App\Modules\Advisor\Controllers'], static function($routes) {
             $routes->post('generateNow', [AdvisorController::class, 'generateNow']);
         });
 
@@ -1833,17 +1840,17 @@ $routes->group('Investments', ['namespace' => '\App\Modules\User\Controllers', '
     $routes->match(['GET', 'POST'], 'Test', 'InvestmentsController::test');
     $routes->match(['GET', 'POST'], 'Watchlist', 'InvestmentsController::watchlist');
 
-    $routes->get('Strategies', 'InvestmentController::getStrategies');
-    $routes->post('Strategies', 'InvestmentController::createStrategy');
-    $routes->get('Strategies/(:num)', 'InvestmentController::getStrategy/$1');
-    $routes->put('Strategies/(:num)', 'InvestmentController::updateStrategy/$1');
-    $routes->delete('Strategies/(:num)', 'InvestmentController::deleteGoal/$1');
+    $routes->get('Strategies', 'InvestmentsController::getStrategies');
+    $routes->post('Strategies', 'InvestmentsController::createStrategy');
+    $routes->get('Strategies/(:num)', 'InvestmentsController::getStrategy/$1');
+    $routes->put('Strategies/(:num)', 'InvestmentsController::updateStrategy/$1');
+    $routes->delete('Strategies/(:num)', 'InvestmentsController::deleteStrategy/$1');
 
-    $routes->get('Goals', 'InvestmentController::getGoals');
-    $routes->post('Goals', 'InvestmentController::createGoal');
-    $routes->get('Goals/(:num)', 'InvestmentController::createGoal/$1');
-    $routes->put('Goals/(:num)', 'InvestmentController::updateGoal/$1');
-    $routes->delete('Goals/(:num)', 'InvestmentController::deleteGoal/$1');
+    $routes->get('Goals', 'InvestmentsController::getGoals');
+    $routes->post('Goals', 'InvestmentsController::createGoal');
+    $routes->get('Goals/(:num)', 'InvestmentsController::getGoal/$1');
+    $routes->put('Goals/(:num)', 'InvestmentsController::updateGoal/$1');
+    $routes->delete('Goals/(:num)', 'InvestmentsController::deleteGoal/$1');
 
     // Routes for the new methods related to various overviews and data
     $routes->get('Crypto-Overview', 'InvestmentsController::cryptoOverview');

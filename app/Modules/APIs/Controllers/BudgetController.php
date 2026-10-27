@@ -96,6 +96,47 @@ class BudgetController extends BaseAPIController
         });
     }
 
+    public function trends(): ResponseInterface
+    {
+        return $this->handleRequest('trends', 'Failed to load budget trends', function (int $userId): array {
+            return [
+                'trends' => [
+                    'income'   => method_exists($this->budgetService, 'getMonthlyIncome') ? ($this->budgetService->getMonthlyIncome($userId) ?? 0.0) : 0.0,
+                    'expenses' => method_exists($this->budgetService, 'getMonthlyExpenses') ? ($this->budgetService->getMonthlyExpenses($userId) ?? 0.0) : 0.0,
+                ],
+            ];
+        });
+    }
+
+    public function netWorth(): ResponseInterface
+    {
+        return $this->handleRequest('netWorth', 'Failed to load net worth', function (int $userId): array {
+            return [
+                'net_worth' => method_exists($this->budgetService, 'getNetWorth') ? ($this->budgetService->getNetWorth($userId) ?? 0.0) : 0.0,
+            ];
+        });
+    }
+
+    public function cashFlow(): ResponseInterface
+    {
+        return $this->handleRequest('cashFlow', 'Failed to load cash flow', function (int $userId): array {
+            return [
+                'cash_flow' => method_exists($this->budgetService, 'getCashFlow') ? ($this->budgetService->getCashFlow($userId) ?? 0.0) : 0.0,
+            ];
+        });
+    }
+
+    public function budgets(): ResponseInterface
+    {
+        return $this->handleRequest('budgets', 'Failed to load budgets', function (int $userId): array {
+            $records = method_exists($this->budgetService, 'getBudgetRecordsByUser') ? ($this->budgetService->getBudgetRecordsByUser($userId) ?? []) : [];
+            return [
+                'budgets' => $records,
+                'count'   => is_countable($records) ? count($records) : 0,
+            ];
+        });
+    }
+
     protected function handleRequest(string $method, string $failureMessage, callable $resolver): ResponseInterface
     {
         $requestUri = (string) $this->request->getUri();

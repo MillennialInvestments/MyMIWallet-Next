@@ -1167,5 +1167,398 @@ class InvestmentsController extends BaseUserController
             });
         }, $filename);
     }
+
+    /**
+     * =========================================================================
+     * INVESTMENT STRATEGY & GOAL HANDLERS (MYMI-GTM-024)
+     * =========================================================================
+     */
+
+    public function getStrategies(): ResponseInterface
+    {
+        $userId = (int) ($this->cuID ?? $this->session->get('user_id') ?? (function_exists('user_id') ? user_id() : 0));
+        if ($userId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'Authentication required'], 401);
+        }
+
+        try {
+            $db = \Config\Database::connect();
+            $strategies = $db->table('bf_investment_strategies')
+                ->where('user_id', $userId)
+                ->orderBy('created_on', 'DESC')
+                ->get()
+                ->getResultArray();
+        } catch (\Throwable $e) {
+            log_message('warning', 'InvestmentsController::getStrategies database fallback: {message}', [
+                'message' => $e->getMessage(),
+            ]);
+            $strategies = [];
+        }
+
+        return $this->respond([
+            'status'     => 'success',
+            'user_id'    => $userId,
+            'strategies' => $strategies,
+            'count'      => count($strategies),
+        ]);
+    }
+
+    public function getStrategy($id = null): ResponseInterface
+    {
+        $userId = (int) ($this->cuID ?? $this->session->get('user_id') ?? (function_exists('user_id') ? user_id() : 0));
+        if ($userId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'Authentication required'], 401);
+        }
+
+        $strategyId = (int) $id;
+        if ($strategyId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'Invalid strategy ID'], 400);
+        }
+
+        try {
+            $db = \Config\Database::connect();
+            $strategy = $db->table('bf_investment_strategies')
+                ->where('id', $strategyId)
+                ->where('user_id', $userId)
+                ->get()
+                ->getRowArray();
+
+            if (! $strategy) {
+                return $this->respond(['status' => 'error', 'message' => 'Strategy not found'], 404);
+            }
+
+            return $this->respond([
+                'status'   => 'success',
+                'strategy' => $strategy,
+            ]);
+        } catch (\Throwable $e) {
+            return $this->respond(['status' => 'error', 'message' => 'Database error: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function createStrategy(): ResponseInterface
+    {
+        $userId = (int) ($this->cuID ?? $this->session->get('user_id') ?? (function_exists('user_id') ? user_id() : 0));
+        if ($userId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'Authentication required'], 401);
+        }
+
+        $payload = $this->request->getJSON(true) ?: $this->request->getPost();
+        $name = trim((string) ($payload['strategy_name'] ?? $payload['name'] ?? ''));
+        $description = trim((string) ($payload['description'] ?? ''));
+
+        if ($name === '') {
+            return $this->respond(['status' => 'error', 'message' => 'Strategy name is required'], 422);
+        }
+
+        $insertData = [
+            'user_id'       => $userId,
+            'strategy_name' => $name,
+            'description'   => $description,
+            'created_on'    => date('Y-m-d H:i:s'),
+            'modified_on'   => date('Y-m-d H:i:s'),
+        ];
+
+        try {
+            $db = \Config\Database::connect();
+            $db->table('bf_investment_strategies')->insert($insertData);
+            $newId = (int) $db->insertID();
+
+            return $this->respondCreated([
+                'status'      => 'success',
+                'message'     => 'Strategy created successfully',
+                'strategy_id' => $newId,
+                'strategy'    => $insertData + ['id' => $newId],
+            ]);
+        } catch (\Throwable $e) {
+            return $this->respond(['status' => 'error', 'message' => 'Failed to create strategy: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function updateStrategy($id = null): ResponseInterface
+    {
+        $userId = (int) ($this->cuID ?? $this->session->get('user_id') ?? (function_exists('user_id') ? user_id() : 0));
+        if ($userId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'Authentication required'], 401);
+        }
+
+        $strategyId = (int) $id;
+        if ($strategyId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'Invalid strategy ID'], 400);
+        }
+
+        $payload = $this->request->getJSON(true) ?: $this->request->getRawInput();
+        if (empty($payload)) {
+            $payload = $this->request->getPost();
+        }
+
+        $updateData = ['modified_on' => date('Y-m-d H:i:s')];
+        if (isset($payload['strategy_name'])) {
+            $updateData['strategy_name'] = trim((string) $payload['strategy_name']);
+        }
+        if (isset($payload['description'])) {
+            $updateData['description'] = trim((string) $payload['description']);
+        }
+
+        try {
+            $db = \Config\Database::connect();
+            $existing = $db->table('bf_investment_strategies')
+                ->where('id', $strategyId)
+                ->where('user_id', $userId)
+                ->countAllResults();
+
+            if ($existing === 0) {
+                return $this->respond(['status' => 'error', 'message' => 'Strategy not found or access denied'], 404);
+            }
+
+            $db->table('bf_investment_strategies')
+                ->where('id', $strategyId)
+                ->where('user_id', $userId)
+                ->update($updateData);
+
+            return $this->respond([
+                'status'  => 'success',
+                'message' => 'Strategy updated successfully',
+                'id'      => $strategyId,
+            ]);
+        } catch (\Throwable $e) {
+            return $this->respond(['status' => 'error', 'message' => 'Failed to update strategy: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function deleteStrategy($id = null): ResponseInterface
+    {
+        $userId = (int) ($this->cuID ?? $this->session->get('user_id') ?? (function_exists('user_id') ? user_id() : 0));
+        if ($userId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'Authentication required'], 401);
+        }
+
+        $strategyId = (int) $id;
+        if ($strategyId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'Invalid strategy ID'], 400);
+        }
+
+        try {
+            $db = \Config\Database::connect();
+            $existing = $db->table('bf_investment_strategies')
+                ->where('id', $strategyId)
+                ->where('user_id', $userId)
+                ->countAllResults();
+
+            if ($existing === 0) {
+                return $this->respond(['status' => 'error', 'message' => 'Strategy not found or access denied'], 404);
+            }
+
+            $db->table('bf_investment_strategies')
+                ->where('id', $strategyId)
+                ->where('user_id', $userId)
+                ->delete();
+
+            return $this->respond([
+                'status'  => 'success',
+                'message' => 'Strategy deleted successfully',
+                'id'      => $strategyId,
+            ]);
+        } catch (\Throwable $e) {
+            return $this->respond(['status' => 'error', 'message' => 'Failed to delete strategy: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function getGoals(): ResponseInterface
+    {
+        $userId = (int) ($this->cuID ?? $this->session->get('user_id') ?? (function_exists('user_id') ? user_id() : 0));
+        if ($userId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'Authentication required'], 401);
+        }
+
+        try {
+            $db = \Config\Database::connect();
+            $goals = $db->table('bf_financial_goals')
+                ->where('user_id', $userId)
+                ->get()
+                ->getResultArray();
+        } catch (\Throwable $e) {
+            log_message('warning', 'InvestmentsController::getGoals database fallback: {message}', [
+                'message' => $e->getMessage(),
+            ]);
+            $goals = [];
+        }
+
+        return $this->respond([
+            'status'  => 'success',
+            'user_id' => $userId,
+            'goals'   => $goals,
+            'count'   => count($goals),
+        ]);
+    }
+
+    public function getGoal($id = null): ResponseInterface
+    {
+        $userId = (int) ($this->cuID ?? $this->session->get('user_id') ?? (function_exists('user_id') ? user_id() : 0));
+        if ($userId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'Authentication required'], 401);
+        }
+
+        $goalId = (int) $id;
+        if ($goalId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'Invalid goal ID'], 400);
+        }
+
+        try {
+            $db = \Config\Database::connect();
+            $goal = $db->table('bf_financial_goals')
+                ->where('id', $goalId)
+                ->where('user_id', $userId)
+                ->get()
+                ->getRowArray();
+
+            if (! $goal) {
+                return $this->respond(['status' => 'error', 'message' => 'Goal not found'], 404);
+            }
+
+            return $this->respond([
+                'status' => 'success',
+                'goal'   => $goal,
+            ]);
+        } catch (\Throwable $e) {
+            return $this->respond(['status' => 'error', 'message' => 'Database error: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function createGoal(): ResponseInterface
+    {
+        $userId = (int) ($this->cuID ?? $this->session->get('user_id') ?? (function_exists('user_id') ? user_id() : 0));
+        if ($userId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'Authentication required'], 401);
+        }
+
+        $payload = $this->request->getJSON(true) ?: $this->request->getPost();
+        $name = trim((string) ($payload['goal_name'] ?? $payload['title'] ?? ''));
+        $targetAmount = (float) ($payload['target_amount'] ?? $payload['amount'] ?? 0);
+
+        if ($name === '') {
+            return $this->respond(['status' => 'error', 'message' => 'Goal name is required'], 422);
+        }
+
+        $insertData = [
+            'user_id'        => $userId,
+            'goal_name'      => $name,
+            'target_amount'  => $targetAmount,
+            'current_amount' => (float) ($payload['current_amount'] ?? 0),
+            'target_date'    => (string) ($payload['target_date'] ?? date('Y-m-d', strtotime('+1 year'))),
+            'status'         => (string) ($payload['status'] ?? 'In Progress'),
+            'created_at'     => date('Y-m-d H:i:s'),
+            'updated_at'     => date('Y-m-d H:i:s'),
+        ];
+
+        try {
+            $db = \Config\Database::connect();
+            $db->table('bf_financial_goals')->insert($insertData);
+            $newId = (int) $db->insertID();
+
+            return $this->respondCreated([
+                'status'  => 'success',
+                'message' => 'Goal created successfully',
+                'goal_id' => $newId,
+                'goal'    => $insertData + ['id' => $newId],
+            ]);
+        } catch (\Throwable $e) {
+            return $this->respond(['status' => 'error', 'message' => 'Failed to create goal: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function updateGoal($id = null): ResponseInterface
+    {
+        $userId = (int) ($this->cuID ?? $this->session->get('user_id') ?? (function_exists('user_id') ? user_id() : 0));
+        if ($userId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'Authentication required'], 401);
+        }
+
+        $goalId = (int) $id;
+        if ($goalId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'Invalid goal ID'], 400);
+        }
+
+        $payload = $this->request->getJSON(true) ?: $this->request->getRawInput();
+        if (empty($payload)) {
+            $payload = $this->request->getPost();
+        }
+
+        $updateData = ['updated_at' => date('Y-m-d H:i:s')];
+        if (isset($payload['goal_name'])) {
+            $updateData['goal_name'] = trim((string) $payload['goal_name']);
+        }
+        if (isset($payload['target_amount'])) {
+            $updateData['target_amount'] = (float) $payload['target_amount'];
+        }
+        if (isset($payload['current_amount'])) {
+            $updateData['current_amount'] = (float) $payload['current_amount'];
+        }
+        if (isset($payload['status'])) {
+            $updateData['status'] = trim((string) $payload['status']);
+        }
+
+        try {
+            $db = \Config\Database::connect();
+            $existing = $db->table('bf_financial_goals')
+                ->where('id', $goalId)
+                ->where('user_id', $userId)
+                ->countAllResults();
+
+            if ($existing === 0) {
+                return $this->respond(['status' => 'error', 'message' => 'Goal not found or access denied'], 404);
+            }
+
+            $db->table('bf_financial_goals')
+                ->where('id', $goalId)
+                ->where('user_id', $userId)
+                ->update($updateData);
+
+            return $this->respond([
+                'status'  => 'success',
+                'message' => 'Goal updated successfully',
+                'id'      => $goalId,
+            ]);
+        } catch (\Throwable $e) {
+            return $this->respond(['status' => 'error', 'message' => 'Failed to update goal: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function deleteGoal($id = null): ResponseInterface
+    {
+        $userId = (int) ($this->cuID ?? $this->session->get('user_id') ?? (function_exists('user_id') ? user_id() : 0));
+        if ($userId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'Authentication required'], 401);
+        }
+
+        $goalId = (int) $id;
+        if ($goalId <= 0) {
+            return $this->respond(['status' => 'error', 'message' => 'Invalid goal ID'], 400);
+        }
+
+        try {
+            $db = \Config\Database::connect();
+            $existing = $db->table('bf_financial_goals')
+                ->where('id', $goalId)
+                ->where('user_id', $userId)
+                ->countAllResults();
+
+            if ($existing === 0) {
+                return $this->respond(['status' => 'error', 'message' => 'Goal not found or access denied'], 404);
+            }
+
+            $db->table('bf_financial_goals')
+                ->where('id', $goalId)
+                ->where('user_id', $userId)
+                ->delete();
+
+            return $this->respond([
+                'status'  => 'success',
+                'message' => 'Goal deleted successfully',
+                'id'      => $goalId,
+            ]);
+        } catch (\Throwable $e) {
+            return $this->respond(['status' => 'error', 'message' => 'Failed to delete goal: ' . $e->getMessage()], 500);
+        }
+    }
 }
-?>
