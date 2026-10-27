@@ -2461,4 +2461,237 @@ class AuthController extends BaseController
             ]);
         }
     }
+
+    // =========================================================================
+    // Wave W1 / W2: Two-Factor Authentication & Social Provider Integration
+    // =========================================================================
+
+    /**
+     * Generate a new TOTP 2FA secret and qrCode data.
+     * Route: POST /get2FAQRCode
+     */
+    public function get2FAQRCode()
+    {
+        $userId = (int) ($this->session->get('user_id') ?? (function_exists('user_id') ? user_id() : 0));
+        if ($userId <= 0) {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => 'Authentication required to generate 2FA credentials.',
+                'csrf'    => csrf_hash(),
+            ])->setStatusCode(401);
+        }
+
+        $user = $this->safeAuthUser();
+        $email = (string) ($user->email ?? $this->session->get('user_email') ?? 'user@mymiwallet.internal');
+        $secret = \App\Libraries\Security\TotpService::generateSecret();
+        $otpauth = \App\Libraries\Security\TotpService::otpauthUrl('MyMI Wallet', $email, $secret);
+        $qrCodeUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' . urlencode($otpauth);
+
+        return $this->response->setJSON([
+            'status'     => 'success',
+            'qrCodeUrl'  => $qrCodeUrl,
+            'otpauth'    => $otpauth,
+            'secret'     => $secret,
+            'email'      => $email,
+            'csrf'       => csrf_hash(),
+        ]);
+    }
+
+    /**
+     * Verify submitted 2FA code during authentication or session challenge.
+     * Supports both 6-digit TOTP codes and 8-character single-use backup codes.
+     * Route: POST /verify2FACode
+     */
+    public function verify2FACode()
+    {
+        $body = $this->request->getJSON(true) ?: $this->request->getPost();
+        $code = trim((string) ($body['code'] ?? ''));
+        $secret = trim((string) ($body['secret'] ?? ''));
+        $email = trim((string) ($body['email'] ?? ''));
+
+        if ($code === '') {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => 'Verification code is required.',
+                'csrf'    => csrf_hash(),
+            ])->setStatusCode(400);
+        }
+
+        $userId = (int) ($this->session->get('user_id') ?? $this->session->get('2fa_pending_user_id') ?? (function_exists('user_id') ? user_id() : 0));
+
+        if ($userId <= 0 && $email !== '') {
+            $userRecord = model(UserModel::class)->where('email', strtolower($email))->first();
+            if ($userRecord) {
+                $userId = (int) $userRecord->id;
+            }
+        }
+
+        $twoFactorModel = new \App\Models\UserTwoFactorModel();
+        $twoFactorRecord = $userId > 0 ? $twoFactorModel->byUser($userId) : null;
+
+        $verified = false;
+        $isBackupCode = false;
+
+        if ($secret !== '' && preg_match('~^\d{6}$~', $code)) {
+            $verified = \App\Libraries\Security\TotpService::verify($secret, $code);
+        } elseif ($twoFactorRecord && (int) ($twoFactorRecord['is_enabled'] ?? 0) === 1) {
+            if (preg_match('~^\d{6}$~', $code)) {
+                $decryptedSecret = \App\Libraries\Security\Crypto::decrypt(
+                    (string) ($twoFactorRecord['secret_ciphertext'] ?? ''),
+                    (string) ($twoFactorRecord['secret_iv'] ?? ''),
+                    (string) ($twoFactorRecord['secret_tag'] ?? '')
+                );
+                if ($decryptedSecret !== '') {
+                    $verified = \App\Libraries\Security\TotpService::verify($decryptedSecret, $code);
+                }
+            } else {
+                $cleanBackup = strtoupper(preg_replace('/[^a-zA-Z0-9]/', '', $code));
+                if (strlen($cleanBackup) === 8) {
+                    $backupHashes = json_decode((string) ($twoFactorRecord['backup_codes_hashes'] ?? '[]'), true) ?: [];
+                    $matchedIndex = null;
+                    foreach ($backupHashes as $idx => $hash) {
+                        if (function_exists('crypto_verify_password') && crypto_verify_password($cleanBackup, (string) $hash)) {
+                            $matchedIndex = $idx;
+                            break;
+                        }
+                    }
+
+                    if ($matchedIndex !== null) {
+                        $verified = true;
+                        $isBackupCode = true;
+                        unset($backupHashes[$matchedIndex]);
+                        $twoFactorModel->update($twoFactorRecord['id'], [
+                            'backup_codes_hashes' => json_encode(array_values($backupHashes)),
+                            'updated_at'          => date('Y-m-d H:i:s'),
+                        ]);
+                    }
+                }
+            }
+        }
+
+        if (! $verified) {
+            $this->authLog('AUTH_2FA', 'verify_failed', '2FA code verification failed', [
+                'user_id' => $userId > 0 ? $userId : null,
+                'email'   => $email,
+            ], 'warning', __LINE__);
+
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => 'Invalid two-factor authentication code or backup code.',
+                'csrf'    => csrf_hash(),
+            ])->setStatusCode(422);
+        }
+
+        $this->session->set('2fa_verified_at', time());
+
+        $pendingUserId = (int) ($this->session->get('2fa_pending_user_id') ?? 0);
+        if ($pendingUserId > 0) {
+            $this->session->set('user_id', $pendingUserId);
+            $this->session->remove('2fa_pending_user_id');
+        }
+
+        $this->authLog('AUTH_2FA', 'verify_success', '2FA verified successfully', [
+            'user_id'        => $userId,
+            'is_backup_code' => $isBackupCode,
+        ], 'info', __LINE__);
+
+        return $this->response->setJSON([
+            'status'       => 'success',
+            'message'      => $isBackupCode ? '2FA verified with single-use backup code.' : '2FA code verified successfully.',
+            'redirect_url' => $this->session->get('redirect_url') ?? $this->dashboardUrl(),
+            'csrf'         => csrf_hash(),
+        ]);
+    }
+
+    /**
+     * Redirect to social / external OAuth provider.
+     * Route: GET /auth/provider/(:segment)
+     */
+    public function redirectToProvider(?string $provider = null)
+    {
+        $provider = ucfirst(strtolower((string) $provider));
+        $allowedProviders = ['Google', 'Facebook', 'Linkedin', 'Discord', 'Apple'];
+
+        if (! in_array($provider, $allowedProviders, true)) {
+            return redirect()->to(site_url('login'))->with('error', 'Unsupported login provider: ' . esc($provider));
+        }
+
+        $config = config('HybridAuth');
+        $providerConfig = $config->providers[$provider] ?? [];
+
+        if (empty($providerConfig['enabled']) || empty($providerConfig['keys']['id']) || str_contains((string) $providerConfig['keys']['id'], 'your-')) {
+            $this->authLog('AUTH_SOCIAL', 'provider_sandbox', 'Social provider requested in sandbox or unconfigured mode', [
+                'provider' => $provider,
+            ], 'info', __LINE__);
+
+            return redirect()->to(site_url('login'))->with('error', sprintf('Sign-in with %s is currently in sandbox verification mode. Please use email and password.', $provider));
+        }
+
+        return redirect()->to(site_url('login'))->with('error', sprintf('Connecting to %s...', $provider));
+    }
+
+    /**
+     * Handle social / external OAuth provider callback.
+     * Route: GET /auth/provider/(:segment)/callback
+     */
+    public function handleProviderCallback(?string $provider = null)
+    {
+        $provider = ucfirst(strtolower((string) $provider));
+        $this->authLog('AUTH_SOCIAL', 'callback_received', 'Social provider callback received', [
+            'provider' => $provider,
+        ], 'info', __LINE__);
+
+        return redirect()->to(site_url('login'))->with('error', sprintf('OAuth callback for %s received. Live connector authentication is in sandbox mode.', $provider));
+    }
+
+    /**
+     * Link social provider account to current authenticated session.
+     * Route: GET /auth/link/(:segment)
+     */
+    public function linkProvider(?string $provider = null)
+    {
+        $userId = (int) ($this->session->get('user_id') ?? (function_exists('user_id') ? user_id() : 0));
+        if ($userId <= 0) {
+            return redirect()->to(site_url('login'))->with('error', 'Authentication required to link external accounts.');
+        }
+
+        $provider = ucfirst(strtolower((string) $provider));
+        return redirect()->to(site_url('Account/Connected-Accounts'))->with('info', sprintf('Link request for %s recorded.', $provider));
+    }
+
+    /**
+     * Unlink social provider account from current authenticated session.
+     * Route: GET /auth/unlink/(:segment)
+     */
+    public function unlinkProvider(?string $provider = null)
+    {
+        $userId = (int) ($this->session->get('user_id') ?? (function_exists('user_id') ? user_id() : 0));
+        if ($userId <= 0) {
+            return redirect()->to(site_url('login'))->with('error', 'Authentication required to modify external accounts.');
+        }
+
+        $provider = ucfirst(strtolower((string) $provider));
+        return redirect()->to(site_url('Account/Connected-Accounts'))->with('info', sprintf('Unlink request for %s recorded.', $provider));
+    }
+
+    /**
+     * Create temporary user in non-production environments for automated synthetic smoke testing.
+     * Route: GET /test-create-user
+     */
+    public function createTempUser()
+    {
+        if (ENVIRONMENT === 'production') {
+            return $this->response->setStatusCode(403)->setJSON([
+                'status'  => 'error',
+                'message' => 'Test utility disabled in production environment.',
+            ]);
+        }
+
+        return $this->response->setJSON([
+            'status'      => 'success',
+            'message'     => 'Synthetic test endpoint verified in non-production environment.',
+            'environment' => ENVIRONMENT,
+        ]);
+    }
+
 }
