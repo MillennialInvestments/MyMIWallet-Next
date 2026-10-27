@@ -1,6 +1,6 @@
 # Routes Reconcile Report
 
-- Generated: `2026-10-27T12:49:24Z`
+- Generated: `2026-10-27T15:05:47Z`
 - Total scanned: `8`
 - Missing class: `1`
 - Missing method: `0`

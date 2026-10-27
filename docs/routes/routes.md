@@ -1,6 +1,6 @@
 # Routes Export
 
-- Generated (UTC): `2026-10-27T12:49:24Z`
+- Generated (UTC): `2026-10-27T15:05:47Z`
 - Environment: `production`
 - Mode: `all`
 - Limit: `0`
