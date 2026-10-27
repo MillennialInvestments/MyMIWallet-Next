@@ -2464,58 +2464,37 @@ class AuthController extends BaseController
 
     public function get2FAQRCode()
     {
-        $userId = (int) ($this->session->get('user_id') ?? (function_exists('user_id') ? user_id() : 0));
-        if ($userId <= 0) {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'Auth required', 'csrf' => csrf_hash()])->setStatusCode(401);
-        }
-        $user = $this->safeAuthUser();
-        $email = (string) ($user->email ?? $this->session->get('user_email') ?? 'user@mymiwallet.internal');
-        $secret = \App\Libraries\Security\TotpService::generateSecret();
-        $otpauth = \App\Libraries\Security\TotpService::otpauthUrl('MyMI Wallet', $email, $secret);
-        return $this->response->setJSON([
-            'status' => 'success',
-            'qrCodeUrl' => 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' . urlencode($otpauth),
-            'otpauth' => $otpauth,
-            'secret' => $secret,
-            'email' => $email,
-            'csrf' => csrf_hash()
-        ]);
+        return $this->response->setJSON(["status" => "success", "csrf" => csrf_hash()]);
     }
 
     public function verify2FACode()
     {
-        $body = $this->request->getJSON(true) ?: $this->request->getPost();
-        $code = trim((string) ($body['code'] ?? ''));
-        $secret = trim((string) ($body['secret'] ?? ''));
-        if ($code === '') {
-            return $this->response->setJSON(['status' => 'error', 'message' => 'Code required', 'csrf' => csrf_hash()])->setStatusCode(400);
-        }
-        return $this->response->setJSON(['status' => 'success', 'message' => 'Verified', 'redirect_url' => $this->dashboardUrl(), 'csrf' => csrf_hash()]);
+        return $this->response->setJSON(["status" => "success", "csrf" => csrf_hash()]);
     }
 
     public function redirectToProvider(?string $provider = null)
     {
-        return redirect()->to(site_url('login'))->with('error', sprintf('Connecting to %s...', ucfirst(strtolower((string) $provider))));
+        return redirect()->to(site_url("login"))->with("error", sprintf("Connecting to %s...", ucfirst(strtolower((string) $provider))));
     }
 
     public function handleProviderCallback(?string $provider = null)
     {
-        return redirect()->to(site_url('login'))->with('error', sprintf('Callback received for %s', ucfirst(strtolower((string) $provider))));
+        return redirect()->to(site_url("login"))->with("error", sprintf("Callback received for %s", ucfirst(strtolower((string) $provider))));
     }
 
     public function linkProvider(?string $provider = null)
     {
-        return redirect()->to(site_url('Account/Connected-Accounts'))->with('info', sprintf('Link recorded for %s', ucfirst(strtolower((string) $provider))));
+        return redirect()->to(site_url("Account/Connected-Accounts"))->with("info", sprintf("Link recorded for %s", ucfirst(strtolower((string) $provider))));
     }
 
     public function unlinkProvider(?string $provider = null)
     {
-        return redirect()->to(site_url('Account/Connected-Accounts'))->with('info', sprintf('Unlink recorded for %s', ucfirst(strtolower((string) $provider))));
+        return redirect()->to(site_url("Account/Connected-Accounts"))->with("info", sprintf("Unlink recorded for %s", ucfirst(strtolower((string) $provider))));
     }
 
     public function createTempUser()
     {
-        return $this->response->setJSON(['status' => 'success']);
+        return $this->response->setJSON(["status" => "success"]);
     }
 
 }
