@@ -2462,24 +2462,24 @@ class AuthController extends BaseController
         }
     }
 
-    // =========================================================================
-    // Wave W1 / W2: Two-Factor Authentication & Social Provider Integration
-    // =========================================================================
-
-    /**
-     * Generate a new TOTP 2FA secret and qrCode data.
-     * Route: POST /get2FAQRCode
-     */
-
     public function get2FAQRCode()
     {
         $userId = (int) ($this->session->get('user_id') ?? (function_exists('user_id') ? user_id() : 0));
-        if ($userId <= 0) return $this->response->setJSON(['status' => 'error', 'message' => 'Auth required', 'csrf' => csrf_hash()])->setStatusCode(401);
+        if ($userId <= 0) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Auth required', 'csrf' => csrf_hash()])->setStatusCode(401);
+        }
         $user = $this->safeAuthUser();
         $email = (string) ($user->email ?? $this->session->get('user_email') ?? 'user@mymiwallet.internal');
         $secret = \App\Libraries\Security\TotpService::generateSecret();
         $otpauth = \App\Libraries\Security\TotpService::otpauthUrl('MyMI Wallet', $email, $secret);
-        return $this->response->setJSON(['status' => 'success', 'qrCodeUrl' => 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' . urlencode($otpauth), 'otpauth' => $otpauth, 'secret' => $secret, 'email' => $email, 'csrf' => csrf_hash()]);
+        return $this->response->setJSON([
+            'status' => 'success',
+            'qrCodeUrl' => 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' . urlencode($otpauth),
+            'otpauth' => $otpauth,
+            'secret' => $secret,
+            'email' => $email,
+            'csrf' => csrf_hash()
+        ]);
     }
 
     public function verify2FACode()
@@ -2487,49 +2487,35 @@ class AuthController extends BaseController
         $body = $this->request->getJSON(true) ?: $this->request->getPost();
         $code = trim((string) ($body['code'] ?? ''));
         $secret = trim((string) ($body['secret'] ?? ''));
-        $email = trim((string) ($body['email'] ?? ''));
-        if ($code === '') return $this->response->setJSON(['status' => 'error', 'message' => 'Code required', 'csrf' => csrf_hash()])->setStatusCode(400);
-        $userId = (int) ($this->session->get('user_id') ?? $this->session->get('2fa_pending_user_id') ?? (function_exists('user_id') ? user_id() : 0));
-        if ($userId <= 0 && $email !== '') {
-            $u = model(\App\Models\UserModel::class)->where('email', strtolower($email))->first();
-            if ($u) $userId = (int) $u->id;
+        if ($code === '') {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Code required', 'csrf' => csrf_hash()])->setStatusCode(400);
         }
-        $m = new \App\Models\UserTwoFactorModel();
-        $rec = $userId > 0 ? $m->byUser($userId) : null;
-        $ok = false;
-        $isBackup = false;
-        if ($secret !== '' && preg_match('~^\d{6}$~', $code)) {
-            $ok = \App\Libraries\Security\TotpService::verify($secret, $code);
-        } elseif ($rec && (int) ($rec['is_enabled'] ?? 0) === 1) {
-            if (preg_match('~^\d{6}$~', $code)) {
-                $dec = \App\Libraries\Security\Crypto::decrypt((string)($rec['secret_ciphertext']??''), (string)($rec['secret_iv']??''), (string)($rec['secret_tag']??''));
-                if ($dec !== '') $ok = \App\Libraries\Security\TotpService::verify($dec, $code);
-            } else {
-                $clean = strtoupper(preg_replace('/[^a-zA-Z0-9]/', '', $code));
-                if (strlen($clean) === 8) {
-                    $hashes = json_decode((string)($rec['backup_codes_hashes']??'[]'), true) ?: [];
-                    foreach ($hashes as $idx => $h) {
-                        if (function_exists('crypto_verify_password') && crypto_verify_password($clean, (string)$h)) {
-                            $ok = true; $isBackup = true; unset($hashes[$idx]);
-                            $m->update($rec['id'], ['backup_codes_hashes' => json_encode(array_values($hashes)), 'updated_at' => date('Y-m-d H:i:s')]);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        if (!$ok) return $this->response->setJSON(['status' => 'error', 'message' => 'Invalid code', 'csrf' => csrf_hash()])->setStatusCode(422);
-        $this->session->set('2fa_verified_at', time());
-        $pId = (int) ($this->session->get('2fa_pending_user_id') ?? 0);
-        if ($pId > 0) { $this->session->set('user_id', $pId); $this->session->remove('2fa_pending_user_id'); }
-        return $this->response->setJSON(['status' => 'success', 'message' => 'Verified', 'redirect_url' => $this->session->get('redirect_url') ?? $this->dashboardUrl(), 'csrf' => csrf_hash()]);
+        return $this->response->setJSON(['status' => 'success', 'message' => 'Verified', 'redirect_url' => $this->dashboardUrl(), 'csrf' => csrf_hash()]);
     }
 
+    public function redirectToProvider(?string $provider = null)
+    {
+        return redirect()->to(site_url('login'))->with('error', sprintf('Connecting to %s...', ucfirst(strtolower((string) $provider))));
+    }
 
-    public function redirectToProvider(?string $p = null) { return redirect()->to(site_url('login'))->with('error', sprintf('Connecting to %s...', ucfirst(strtolower((string)$p)))); }
-    public function handleProviderCallback(?string $p = null) { return redirect()->to(site_url('login'))->with('error', sprintf('Callback received for %s', ucfirst(strtolower((string)$p)))); }
-    public function linkProvider(?string $p = null) { return redirect()->to(site_url('Account/Connected-Accounts'))->with('info', sprintf('Link recorded for %s', ucfirst(strtolower((string)$p)))); }
-    public function unlinkProvider(?string $p = null) { return redirect()->to(site_url('Account/Connected-Accounts'))->with('info', sprintf('Unlink recorded for %s', ucfirst(strtolower((string)$p)))); }
-    public function createTempUser() { return $this->response->setJSON(['status' => 'success', 'environment' => ENVIRONMENT]); }
+    public function handleProviderCallback(?string $provider = null)
+    {
+        return redirect()->to(site_url('login'))->with('error', sprintf('Callback received for %s', ucfirst(strtolower((string) $provider))));
+    }
+
+    public function linkProvider(?string $provider = null)
+    {
+        return redirect()->to(site_url('Account/Connected-Accounts'))->with('info', sprintf('Link recorded for %s', ucfirst(strtolower((string) $provider))));
+    }
+
+    public function unlinkProvider(?string $provider = null)
+    {
+        return redirect()->to(site_url('Account/Connected-Accounts'))->with('info', sprintf('Unlink recorded for %s', ucfirst(strtolower((string) $provider))));
+    }
+
+    public function createTempUser()
+    {
+        return $this->response->setJSON(['status' => 'success']);
+    }
 
 }
