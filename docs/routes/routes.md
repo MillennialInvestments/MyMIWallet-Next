@@ -1,24 +1,21 @@
 # Routes Export
 
-- Generated (UTC): `2026-04-02T09:57:00Z`
-- Environment: `development`
+- Generated (UTC): `2026-10-27T12:49:24Z`
+- Environment: `production`
 - Mode: `all`
 - Limit: `0`
 
 ## Summary
-- Total routes: `1562`
-- Methods: `{"GET":1018,"POST":511,"PUT":3,"DELETE":12,"PATCH":0,"OPTIONS":0,"CLI":1,"OTHER":17}`
-- Surface groups: `{"Public/User":794,"API":744,"Admin":13,"Ops":11}`
+- Total routes: `1672`
+- Methods: `{"GET":1070,"POST":565,"PUT":4,"DELETE":13,"PATCH":0,"OPTIONS":0,"CLI":1,"OTHER":19}`
+- Surface groups: `{"Public/User":835,"API":807,"Admin":19,"Ops":11}`
 
 ## Routes
 
 | Method | Route | Handler | Surface | Issues |
 |---|---|---|---|---|
-| GET | ([^/]+)/register | unknown_handler | Public/User |  |
-| POST | ([^/]+)/register | unknown_handler | Public/User |  |
-| GET | ([^/]+)/register/([^/]+) | unknown_handler | Public/User |  |
-| POST | ([^/]+)/register/([^/]+) | unknown_handler | Public/User |  |
 | GET | / | unknown_handler | Public/User |  |
+| HEAD | / | unknown_handler | Public/User |  |
 | GET | API | unknown_handler | Public/User |  |
 | POST | API | unknown_handler | Public/User |  |
 | POST | API/AI/Chat | unknown_handler | API |  |
@@ -254,6 +251,12 @@
 | GET | API/Chat/me | unknown_handler | API |  |
 | POST | API/Chat/tool | unknown_handler | API |  |
 | GET | API/Chat/usage | unknown_handler | API |  |
+| POST | API/CoinVault/approveContribution/([0-9]+) | unknown_handler | API |  |
+| POST | API/CoinVault/approvePayout/([0-9]+) | unknown_handler | API |  |
+| POST | API/CoinVault/contributionEvent | unknown_handler | API |  |
+| POST | API/CoinVault/rejectContribution/([0-9]+) | unknown_handler | API |  |
+| POST | API/CoinVault/rejectPayout/([0-9]+) | unknown_handler | API |  |
+| POST | API/CoinVault/requestPayout | unknown_handler | API |  |
 | POST | API/ContentEngine/approvePost/([0-9]+) | unknown_handler | API |  |
 | GET | API/ContentEngine/drafts/([^/]+) | unknown_handler | API |  |
 | POST | API/ContentEngine/ingestScanner | unknown_handler | API |  |
@@ -272,10 +275,14 @@
 | POST | API/Discord/enqueue | unknown_handler | API |  |
 | GET | API/Discord/health | unknown_handler | API |  |
 | POST | API/Discord/interactions | unknown_handler | API |  |
+| GET | API/Discord/lookup/crypto | unknown_handler | API |  |
+| GET | API/Discord/lookup/quote | unknown_handler | API |  |
+| GET | API/Discord/lookup/ticker | unknown_handler | API |  |
 | POST | API/Discord/messageHook | unknown_handler | API |  |
 | GET | API/Discord/onboardingSteps | unknown_handler | API |  |
 | GET | API/Discord/process-queue | unknown_handler | API |  |
 | DELETE | API/Discord/purge-dead | unknown_handler | API |  |
+| POST | API/Discord/register-guild-commands | unknown_handler | API |  |
 | GET | API/Discord/sharingGuide | unknown_handler | API |  |
 | POST | API/Discord/test | unknown_handler | API |  |
 | POST | API/Discord/webhook | unknown_handler | API |  |
@@ -354,6 +361,13 @@
 | GET | API/Management/Ops | unknown_handler | API |  |
 | POST | API/Management/Ops/ajaxDispatch | unknown_handler | API |  |
 | GET | API/Management/Ops/ajaxStatus | unknown_handler | API |  |
+| GET | API/Management/Projects/TBI-Coins/([0-9]+) | unknown_handler | API |  |
+| POST | API/Management/Projects/TBI-Coins/Approve-Contribution/([0-9]+) | unknown_handler | API |  |
+| POST | API/Management/Projects/TBI-Coins/Create-Defaults/([0-9]+) | unknown_handler | API |  |
+| POST | API/Management/Projects/TBI-Coins/Prepare-Exchange-Asset/([0-9]+) | unknown_handler | API |  |
+| POST | API/Management/Projects/TBI-Coins/Prepare-Solana-Mint/([0-9]+) | unknown_handler | API |  |
+| POST | API/Management/Projects/TBI-Coins/Record-Contribution | unknown_handler | API |  |
+| POST | API/Management/Projects/TBI-Coins/Reject-Contribution/([0-9]+) | unknown_handler | API |  |
 | POST | API/Management/Projects/checkThreshold/([0-9]+) | unknown_handler | API |  |
 | POST | API/Management/Projects/createQuarterlyDistribution/([0-9]+) | unknown_handler | API |  |
 | POST | API/Management/Projects/fetchInbox | unknown_handler | API |  |
@@ -467,6 +481,7 @@
 | GET | API/Marketing/GenerateFromSimilar/([0-9]+) | unknown_handler | API |  |
 | GET | API/Marketing/Grouped-Content-Drafts | unknown_handler | API |  |
 | GET | API/Marketing/Ideas | unknown_handler | API |  |
+| POST | API/Marketing/Ingress | unknown_handler | API |  |
 | GET | API/Marketing/Large-Content/Form | unknown_handler | API |  |
 | GET | API/Marketing/Manual-Content/Form | unknown_handler | API |  |
 | GET | API/Marketing/MyMI-Gold/Tasks/Add | unknown_handler | API |  |
@@ -510,6 +525,10 @@
 | DELETE | API/Marketing/deleteTaxonomy/([0-9]+) | unknown_handler | API |  |
 | DELETE | API/Marketing/deleteTemplate/([0-9]+) | unknown_handler | API |  |
 | GET | API/Marketing/distributeHighScoreContent | unknown_handler | API |  |
+| GET | API/Marketing/distributionChannelTotals | unknown_handler | API |  |
+| GET | API/Marketing/distributionFailedSummary | unknown_handler | API |  |
+| GET | API/Marketing/distributionHistory/([0-9]+) | unknown_handler | API |  |
+| GET | API/Marketing/distributionSummary | unknown_handler | API |  |
 | GET | API/Marketing/downloadVoiceover/(.*) | unknown_handler | API |  |
 | POST | API/Marketing/duplicateVideoContent/([0-9]+) | unknown_handler | API |  |
 | GET | API/Marketing/emailPostForApproval/([0-9]+) | unknown_handler | API |  |
@@ -543,6 +562,7 @@
 | GET | API/Marketing/generateKimiPosts | unknown_handler | API |  |
 | GET | API/Marketing/generateKimiSummaries | unknown_handler | API |  |
 | GET | API/Marketing/generateLivePreview | unknown_handler | API |  |
+| POST | API/Marketing/generateMarketingPackage | unknown_handler | API |  |
 | GET | API/Marketing/generateNewsletter | unknown_handler | API |  |
 | GET | API/Marketing/generatePostMediaContent | unknown_handler | API |  |
 | POST | API/Marketing/generatePostMediaContent | unknown_handler | API |  |
@@ -560,6 +580,7 @@
 | POST | API/Marketing/getPostingPlan | unknown_handler | API |  |
 | GET | API/Marketing/getRecentScrapes | unknown_handler | API |  |
 | GET | API/Marketing/getScrapeDetails/([0-9]+) | unknown_handler | API |  |
+| POST | API/Marketing/getStoryUpdates | unknown_handler | API |  |
 | GET | API/Marketing/getStoryboardPackage/([0-9]+) | unknown_handler | API |  |
 | GET | API/Marketing/getTemplates | unknown_handler | API |  |
 | GET | API/Marketing/getTopGeneratedPosts | unknown_handler | API |  |
@@ -575,13 +596,33 @@
 | GET | API/Marketing/previewPendingSummaries | unknown_handler | API |  |
 | GET | API/Marketing/processMarketingTempEmails/([0-9]+)/([^/]+) | unknown_handler | API |  |
 | GET | API/Marketing/processMarketingTempEmails/([0-9]+)/([^/]+)/([0-9]+) | unknown_handler | API |  |
+| GET | API/Marketing/processPendingCampaigns | unknown_handler | API |  |
+| POST | API/Marketing/processPendingCampaigns | unknown_handler | API |  |
+| GET | API/Marketing/processPendingGeneratedContent | unknown_handler | API |  |
+| POST | API/Marketing/processPendingGeneratedContent | unknown_handler | API |  |
+| GET | API/Marketing/processPendingNotifications | unknown_handler | API |  |
+| POST | API/Marketing/processPendingNotifications | unknown_handler | API |  |
+| GET | API/Marketing/processPendingTempScraper | unknown_handler | API |  |
+| POST | API/Marketing/processPendingTempScraper | unknown_handler | API |  |
 | GET | API/Marketing/publishGroupedContentDraft | unknown_handler | API |  |
 | GET | API/Marketing/rankBufferPostsDaily | unknown_handler | API |  |
 | POST | API/Marketing/rejectBufferItem/([0-9]+) | unknown_handler | API |  |
 | GET | API/Marketing/reprocessIncompleteEmails | unknown_handler | API |  |
+| GET | API/Marketing/retryDistributionTargets | unknown_handler | API |  |
+| POST | API/Marketing/retryDistributionTargets | unknown_handler | API |  |
+| GET | API/Marketing/retryDistributionTargets/([0-9]+) | unknown_handler | API |  |
+| POST | API/Marketing/retryDistributionTargets/([0-9]+) | unknown_handler | API |  |
 | GET | API/Marketing/runContentGenerationBatch | unknown_handler | API |  |
 | GET | API/Marketing/runKeywordBackfillBatch | unknown_handler | API |  |
 | GET | API/Marketing/runKeywordEnrichment | unknown_handler | API |  |
+| GET | API/Marketing/runMarketingPipeline | unknown_handler | API |  |
+| POST | API/Marketing/runMarketingPipeline | unknown_handler | API |  |
+| GET | API/Marketing/runNewsGenerate | unknown_handler | API |  |
+| POST | API/Marketing/runNewsGenerate | unknown_handler | API |  |
+| GET | API/Marketing/runNewsPipeline | unknown_handler | API |  |
+| POST | API/Marketing/runNewsPipeline | unknown_handler | API |  |
+| GET | API/Marketing/runNewsScrape | unknown_handler | API |  |
+| POST | API/Marketing/runNewsScrape | unknown_handler | API |  |
 | GET | API/Marketing/runScheduledTasks | unknown_handler | API |  |
 | POST | API/Marketing/savePlatform | unknown_handler | API |  |
 | POST | API/Marketing/saveSuggestion | unknown_handler | API |  |
@@ -612,6 +653,7 @@
 | POST | API/Marketing/updatePlatformToggle/([0-9]+) | unknown_handler | API |  |
 | POST | API/Marketing/updatePostSchedule/([0-9]+) | unknown_handler | API |  |
 | POST | API/Marketing/updateVideoContent/([0-9]+) | unknown_handler | API |  |
+| POST | API/Marketing/uploadNotification | unknown_handler | API |  |
 | POST | API/Marketing/upsertPlatformRule | unknown_handler | API |  |
 | POST | API/Marketing/validateSymbol | unknown_handler | API |  |
 | POST | API/Mdit/accreditation/attest | unknown_handler | API |  |
@@ -685,6 +727,8 @@
 | POST | API/Predictions/PlaceOrder | unknown_handler | API |  |
 | GET | API/Predictions/Portfolio | unknown_handler | API |  |
 | GET | API/Predictions/Settlements | unknown_handler | API |  |
+| GET | API/PropFirms/replay/([0-9]+)/([^/]+) | unknown_handler | API |  |
+| GET | API/PropFirms/replay/([0-9]+)/diagnostics | unknown_handler | API |  |
 | POST | API/Referrals/bulk-delete | unknown_handler | API |  |
 | POST | API/Referrals/bulk-update-status | unknown_handler | API |  |
 | GET | API/SMTP/test | unknown_handler | API |  |
@@ -702,9 +746,11 @@
 | GET | API/Solana/health | unknown_handler | API |  |
 | GET | API/Solana/provisionDefaultWallet | unknown_handler | API |  |
 | POST | API/Solana/swap/execute | unknown_handler | API |  |
+| POST | API/Solana/swap/preview | unknown_handler | API |  |
 | POST | API/Solana/swap/quote | unknown_handler | API |  |
 | POST | API/Solana/token/create | unknown_handler | API |  |
 | POST | API/Solana/token/mint | unknown_handler | API |  |
+| POST | API/Solana/transaction/preview | unknown_handler | API |  |
 | POST | API/Solana/transfer | unknown_handler | API |  |
 | GET | API/Solana/updatePrices | unknown_handler | API |  |
 | GET | API/Solana/updateTokens | unknown_handler | API |  |
@@ -740,12 +786,15 @@
 | POST | API/Wallets/Plaid/Exchange | unknown_handler | API |  |
 | GET | API/Wallets/Plaid/Link-Token | unknown_handler | API |  |
 | GET | API/Wallets/Plaid/OAuth-Return | unknown_handler | API |  |
+| POST | API/Wallets/Plaid/Refresh/([0-9]+) | unknown_handler | API |  |
+| POST | API/Wallets/Plaid/Sync-Transactions/([0-9]+) | unknown_handler | API |  |
 | GET | API/Wallets/Plaid/Webhook | unknown_handler | API |  |
 | POST | API/Wallets/Snaptrade/Connect-URL | unknown_handler | API |  |
 | DELETE | API/Wallets/Unlink/([0-9]+) | unknown_handler | API |  |
 | PUT | API/Wallets/Update/([0-9]+) | unknown_handler | API |  |
 | GET | API/Wallets/providers | unknown_handler | API |  |
 | GET | API/Wallets/summary | unknown_handler | API |  |
+| GET | API/account-state/([0-9]+) | unknown_handler | API |  |
 | GET | API/cronFetchAndGenerateNews | unknown_handler | API |  |
 | GET | API/docs | unknown_handler | API |  |
 | POST | API/eSports/cancelEvent | unknown_handler | API |  |
@@ -757,12 +806,23 @@
 | POST | API/eSports/lockEscrow | unknown_handler | API |  |
 | POST | API/eSports/receiveResultWebhook | unknown_handler | API |  |
 | POST | API/eSports/settlePayouts | unknown_handler | API |  |
+| GET | API/management/run-cron-tasks | unknown_handler | API |  |
+| POST | API/management/run-cron-tasks | unknown_handler | API |  |
+| GET | API/mobile/alerts | unknown_handler | API |  |
+| POST | API/mobile/auth/login | unknown_handler | API |  |
+| POST | API/mobile/auth/logout | unknown_handler | API |  |
+| POST | API/mobile/auth/register | unknown_handler | API |  |
+| GET | API/mobile/budget | unknown_handler | API |  |
+| GET | API/mobile/dashboard | unknown_handler | API |  |
+| GET | API/mobile/investments | unknown_handler | API |  |
+| GET | API/mobile/me | unknown_handler | API |  |
 | GET | API/v1/Health | unknown_handler | API |  |
 | GET | API/v1/Health/spark | unknown_handler | API |  |
 | GET | API/v1/Ops/status | unknown_handler | API |  |
 | GET | API/v1/Status | unknown_handler | API |  |
 | POST | API/v1/Status | unknown_handler | API |  |
 | GET | Account | unknown_handler | Public/User |  |
+| POST | Account | unknown_handler | Public/User |  |
 | GET | Account/Activity | unknown_handler | Public/User |  |
 | GET | Account/Billing | unknown_handler | Public/User |  |
 | GET | Account/Connected-Accounts | unknown_handler | Public/User |  |
@@ -770,6 +830,12 @@
 | GET | Account/Security | unknown_handler | Public/User |  |
 | GET | Account/Social-Media | unknown_handler | Public/User |  |
 | GET | Accounts/createLinkToken | unknown_handler | Public/User |  |
+| GET | Admin/CoinVault | unknown_handler | Admin |  |
+| GET | Admin/CoinVault/Contributions | unknown_handler | Admin |  |
+| GET | Admin/CoinVault/Payouts | unknown_handler | Admin |  |
+| GET | Admin/CoinVault/Project/([0-9]+) | unknown_handler | Admin |  |
+| GET | Admin/CoinVault/Projects | unknown_handler | Admin |  |
+| GET | Admin/CoinVault/Wallet/([0-9]+) | unknown_handler | Admin |  |
 | GET | Admin/Tax | unknown_handler | Admin |  |
 | GET | Admin/Tax/Jurisdictions | unknown_handler | Admin |  |
 | POST | Admin/Tax/Jurisdictions | unknown_handler | Admin |  |
@@ -804,6 +870,7 @@
 | GET | Auctions/Poll/([0-9]+) | unknown_handler | Public/User |  |
 | POST | Auth/link-robinhood | unknown_handler | Public/User |  |
 | POST | Auth/link-snaptrade | unknown_handler | Public/User |  |
+| GET | Beta/register | unknown_handler | Public/User |  |
 | GET | Blog | unknown_handler | Public/User |  |
 | GET | Blog/([^/]+) | unknown_handler | Public/User |  |
 | GET | Blog/([^/]+)/([^/]+) | unknown_handler | Public/User |  |
@@ -891,14 +958,18 @@
 | GET | Corporate-Earnings/([^/]+) | unknown_handler | Public/User |  |
 | GET | Customer-Support | unknown_handler | Public/User |  |
 | GET | Dashboard | unknown_handler | Public/User |  |
+| GET | Dashboard/Economy | unknown_handler | Public/User |  |
 | GET | Dashboard/Economy/Widget | unknown_handler | Public/User |  |
 | GET | Dashboard/LoadingScreen | unknown_handler | Public/User |  |
+| * | Dashboard/PropFirm | unknown_handler | Public/User |  |
+| GET | Dashboard/PropFirms | unknown_handler | Public/User |  |
 | GET | Dashboard/Transaction-Modal/([^/]+) | unknown_handler | Public/User |  |
 | GET | Dashboard/Transaction-Modal/([^/]+)/([^/]+) | unknown_handler | Public/User |  |
 | GET | Dashboard/Transaction-Modal/([^/]+)/([^/]+)/([^/]+) | unknown_handler | Public/User |  |
 | GET | Dashboard/Transaction-Modal/([^/]+)/([^/]+)/([^/]+)/([^/]+) | unknown_handler | Public/User |  |
 | GET | Dashboard/Transaction-Modal/([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+) | unknown_handler | Public/User |  |
 | GET | Dashboard/Transaction-Modal/([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+) | unknown_handler | Public/User |  |
+| POST | Dashboard/account-completion/dismiss | unknown_handler | Public/User |  |
 | GET | Dashboard/checkOnboardingStatus | unknown_handler | Public/User |  |
 | POST | Dashboard/completeOnboardingStep/([^/]+) | unknown_handler | Public/User |  |
 | GET | Dashboard/continue-setup-modal | unknown_handler | Public/User |  |
@@ -910,6 +981,7 @@
 | POST | Dashboard/onboarding/recurring-expense | unknown_handler | Public/User |  |
 | POST | Dashboard/onboarding/source-welcome/complete | unknown_handler | Public/User |  |
 | POST | Dashboard/onboarding/watchlist | unknown_handler | Public/User |  |
+| GET | Dashboard/propfirms | unknown_handler | Public/User |  |
 | POST | Dashboard/setup/dismiss | unknown_handler | Public/User |  |
 | GET | Debug/auth-audit-cache | unknown_handler | Public/User |  |
 | GET | Debug/whoami | unknown_handler | Public/User |  |
@@ -920,6 +992,7 @@
 | POST | Discord/register/([^/]+) | unknown_handler | Public/User |  |
 | GET | Economic-Calendar | unknown_handler | Public/User |  |
 | GET | Economic-Calendar/([^/]+) | unknown_handler | Public/User |  |
+| GET | Economic-Intelligence | unknown_handler | Public/User |  |
 | GET | Exchange | unknown_handler | Public/User |  |
 | POST | Exchange/DigiByte/connectWallet | unknown_handler | Public/User |  |
 | POST | Exchange/DigiByte/createWallet | unknown_handler | Public/User |  |
@@ -958,6 +1031,7 @@
 | GET | Exchange/Solana/Test-Page | unknown_handler | Public/User |  |
 | POST | Exchange/Solana/Wallet/Connect | unknown_handler | Public/User |  |
 | POST | Exchange/Solana/Wallet/Disconnect | unknown_handler | Public/User |  |
+| GET | Exchange/Solana/Wallet/Disconnect/([^/]+) | unknown_handler | Public/User |  |
 | GET | Exchange/Solana/Wallet/Execute-Swap | unknown_handler | Public/User |  |
 | POST | Exchange/Solana/Wallet/Execute-Swap | unknown_handler | Public/User |  |
 | POST | Exchange/Solana/Wallet/Refresh | unknown_handler | Public/User |  |
@@ -987,6 +1061,7 @@
 | GET | Features/Brokerage-Integration | unknown_handler | Public/User |  |
 | GET | Features/Brokerage-Integrations | unknown_handler | Public/User |  |
 | GET | Features/MyMI-Gold | unknown_handler | Public/User |  |
+| GET | Free/register | unknown_handler | Public/User |  |
 | GET | Getting-Started | unknown_handler | Public/User |  |
 | GET | Getting-Started/([^/]+) | unknown_handler | Public/User |  |
 | GET | Getting-Started/([^/]+)/([^/]+) | unknown_handler | Public/User |  |
@@ -1110,14 +1185,14 @@
 | GET | Management/ContentEngine/previewPost/([0-9]+) | unknown_handler | Public/User |  |
 | GET | Management/Development | unknown_handler | Public/User |  |
 | GET | Management/Discord | unknown_handler | Public/User |  |
-| POST | Management/Discord/Discord/Channels/Delete | unknown_handler | Public/User |  |
-| POST | Management/Discord/Discord/Channels/Save | unknown_handler | Public/User |  |
-| POST | Management/Discord/Discord/Policies/Delete | unknown_handler | Public/User |  |
-| POST | Management/Discord/Discord/Policies/Save | unknown_handler | Public/User |  |
-| POST | Management/Discord/Discord/Subscriptions/Delete | unknown_handler | Public/User |  |
-| POST | Management/Discord/Discord/Subscriptions/Save | unknown_handler | Public/User |  |
-| POST | Management/Discord/Discord/Templates/Delete | unknown_handler | Public/User |  |
-| POST | Management/Discord/Discord/Templates/Save | unknown_handler | Public/User |  |
+| POST | Management/Discord/Channels/Delete | unknown_handler | Public/User |  |
+| POST | Management/Discord/Channels/Save | unknown_handler | Public/User |  |
+| POST | Management/Discord/Policies/Delete | unknown_handler | Public/User |  |
+| POST | Management/Discord/Policies/Save | unknown_handler | Public/User |  |
+| POST | Management/Discord/Subscriptions/Delete | unknown_handler | Public/User |  |
+| POST | Management/Discord/Subscriptions/Save | unknown_handler | Public/User |  |
+| POST | Management/Discord/Templates/Delete | unknown_handler | Public/User |  |
+| POST | Management/Discord/Templates/Save | unknown_handler | Public/User |  |
 | GET | Management/Docs | unknown_handler | Public/User |  |
 | GET | Management/Docs/(.*) | unknown_handler | Public/User |  |
 | GET | Management/Drip-Campaigns | unknown_handler | Public/User |  |
@@ -1320,6 +1395,29 @@
 | POST | Projects/Request-Monthly-Withdrawal/([0-9]+) | unknown_handler | Public/User |  |
 | GET | Projects/View/([0-9]+) | unknown_handler | Public/User |  |
 | POST | Projects/Withdraw-Commit/([0-9]+) | unknown_handler | Public/User |  |
+| GET | PropFirms | unknown_handler | Public/User |  |
+| GET | PropFirms/Accounts | unknown_handler | Public/User |  |
+| POST | PropFirms/Accounts | unknown_handler | Public/User |  |
+| GET | PropFirms/Accounts/([0-9]+) | unknown_handler | Public/User |  |
+| PUT | PropFirms/Accounts/([0-9]+) | unknown_handler | Public/User |  |
+| DELETE | PropFirms/Accounts/([0-9]+) | unknown_handler | Public/User |  |
+| POST | PropFirms/Accounts/([0-9]+)/connect-broker | unknown_handler | Public/User |  |
+| GET | PropFirms/Accounts/([0-9]+)/edit | unknown_handler | Public/User |  |
+| POST | PropFirms/Accounts/([0-9]+)/refresh-state | unknown_handler | Public/User |  |
+| POST | PropFirms/Accounts/([0-9]+)/tradovate/connect | unknown_handler | Public/User |  |
+| POST | PropFirms/Accounts/([0-9]+)/tradovate/disconnect | unknown_handler | Public/User |  |
+| POST | PropFirms/Accounts/([0-9]+)/tradovate/sync | unknown_handler | Public/User |  |
+| POST | PropFirms/Accounts/([0-9]+)/tradovate/sync-fills | unknown_handler | Public/User |  |
+| POST | PropFirms/Accounts/([0-9]+)/tradovate/sync-orders | unknown_handler | Public/User |  |
+| POST | PropFirms/Accounts/([0-9]+)/tradovate/sync-positions | unknown_handler | Public/User |  |
+| GET | PropFirms/Accounts/create | unknown_handler | Public/User |  |
+| GET | PropFirms/Notifications | unknown_handler | Public/User |  |
+| POST | PropFirms/Notifications/([0-9]+)/read | unknown_handler | Public/User |  |
+| GET | PropFirms/Replay/([0-9]+)/([^/]+) | unknown_handler | Public/User |  |
+| POST | PropFirms/Replay/([0-9]+)/save-review | unknown_handler | Public/User |  |
+| GET | PropFirms/RuleSets | unknown_handler | Public/User |  |
+| POST | PropFirms/Rules/SeedDefaults | unknown_handler | Public/User |  |
+| POST | PropFirms/Signals/scan/([0-9]+) | unknown_handler | Public/User |  |
 | GET | Purchase/MyMIGold | unknown_handler | Public/User |  |
 | GET | Referrals | unknown_handler | Public/User |  |
 | POST | Referrals | unknown_handler | Public/User |  |
@@ -1348,6 +1446,7 @@
 | GET | Support | unknown_handler | Public/User |  |
 | GET | Support/(.*) | unknown_handler | Public/User |  |
 | GET | Support/Account | unknown_handler | Public/User |  |
+| GET | Support/Article | unknown_handler | Public/User |  |
 | GET | Support/Article/([^/]+) | unknown_handler | Public/User |  |
 | GET | Support/Discord | unknown_handler | Public/User |  |
 | GET | Support/FAQ | unknown_handler | Public/User |  |
@@ -1421,6 +1520,8 @@
 | POST | Wallets/Credit/Edit/Account/([^/]+) | unknown_handler | Public/User |  |
 | GET | Wallets/Crypto | unknown_handler | Public/User |  |
 | POST | Wallets/Crypto | unknown_handler | Public/User |  |
+| GET | Wallets/Crypto/Details/([^/]+) | unknown_handler | Public/User |  |
+| POST | Wallets/Crypto/Details/([^/]+) | unknown_handler | Public/User |  |
 | GET | Wallets/Debt | unknown_handler | Public/User |  |
 | POST | Wallets/Debt | unknown_handler | Public/User |  |
 | GET | Wallets/Debt/Details/([^/]+) | unknown_handler | Public/User |  |
@@ -1489,6 +1590,7 @@
 | POST | Wallets/Purchase/Memberships/([^/]+)/([^/]+) | unknown_handler | Public/User |  |
 | GET | Wallets/Purchase/Memberships/Customize | unknown_handler | Public/User |  |
 | POST | Wallets/Purchase/Memberships/Customize | unknown_handler | Public/User |  |
+| GET | Wallets/Purchase/Memberships/Pro | unknown_handler | Public/User |  |
 | GET | Wallets/Purchase/Memberships/Success | unknown_handler | Public/User |  |
 | POST | Wallets/Purchase/Memberships/Success | unknown_handler | Public/User |  |
 | GET | Wallets/Purchase/MyMI-Gold | unknown_handler | Public/User |  |
@@ -1520,6 +1622,7 @@
 | POST | activate-account/([^/]+) | unknown_handler | Public/User |  |
 | GET | admin/ops/health | unknown_handler | Admin |  |
 | POST | admin/ops/health/run | unknown_handler | Admin |  |
+| POST | api/account/update-profile | unknown_handler | API |  |
 | GET | api/admin/chat-usage | unknown_handler | API |  |
 | POST | api/aiops/manual-run | unknown_handler | API |  |
 | GET | api/health | unknown_handler | API |  |
@@ -1532,9 +1635,9 @@
 | GET | blog | unknown_handler | Public/User |  |
 | GET | blog/([^/]+) | unknown_handler | Public/User |  |
 | GET | blog/category/([^/]+) | unknown_handler | Public/User |  |
+| GET | dashboard | unknown_handler | Public/User |  |
 | POST | debug | unknown_handler | Public/User |  |
 | GET | debug/common-data/smoke | unknown_handler | Public/User |  |
-| GET | debug/manual-exception | unknown_handler | Public/User |  |
 | GET | debug/register-success-probe | unknown_handler | Public/User |  |
 | GET | forgot | unknown_handler | Public/User |  |
 | POST | forgot | unknown_handler | Public/User |  |
@@ -1546,17 +1649,29 @@
 | * | index.php | unknown_handler | Public/User |  |
 | GET | index.php | unknown_handler | Public/User |  |
 | * | index.php/(.*) | unknown_handler | Public/User |  |
+| GET | index.php/Blog | unknown_handler | Public/User |  |
+| GET | index.php/Blog/([^/]+) | unknown_handler | Public/User |  |
+| GET | index.php/Blog/([^/]+)/([^/]+) | unknown_handler | Public/User |  |
+| GET | index.php/How-It-Works | unknown_handler | Public/User |  |
+| GET | index.php/How-It-Works/([^/]+) | unknown_handler | Public/User |  |
 | * | index.php/images/(.*) | unknown_handler | Public/User |  |
-| GET | investments/economy/update_all | unknown_handler | Public/User |  |
+| GET | index.php/login | unknown_handler | Public/User |  |
+| POST | index.php/login | unknown_handler | Public/User |  |
+| GET | index.php/register | unknown_handler | Public/User |  |
+| POST | index.php/register | unknown_handler | Public/User |  |
 | POST | investments/economy/update_all | unknown_handler | Public/User |  |
 | GET | investments/fundamentals/([^/]+) | unknown_handler | Public/User |  |
 | GET | login | unknown_handler | Public/User |  |
 | POST | login | unknown_handler | Public/User |  |
+| GET | login-shield | unknown_handler | Public/User |  |
+| POST | login-shield | unknown_handler | Public/User |  |
 | GET | logout | unknown_handler | Public/User |  |
 | POST | logout | unknown_handler | Public/User |  |
 | GET | ops/health | unknown_handler | Ops |  |
 | GET | register | unknown_handler | Public/User |  |
 | POST | register | unknown_handler | Public/User |  |
+| GET | register-shield | unknown_handler | Public/User |  |
+| POST | register-shield | unknown_handler | Public/User |  |
 | GET | register/([^/]+) | unknown_handler | Public/User |  |
 | POST | register/resend-activation | unknown_handler | Public/User |  |
 | GET | register/success | unknown_handler | Public/User |  |
@@ -1569,10 +1684,5 @@
 | GET | sw.js | unknown_handler | Public/User |  |
 | GET | system/diag | unknown_handler | Public/User |  |
 | GET | system/healthz | unknown_handler | Public/User |  |
-| GET | test-403 | unknown_handler | Public/User |  |
-| GET | test-404 | unknown_handler | Public/User |  |
-| GET | test-500 | unknown_handler | Public/User |  |
-| GET | test-504 | unknown_handler | Public/User |  |
 | GET | test-create-user | unknown_handler | Public/User |  |
-| GET | test/crash | unknown_handler | Public/User |  |
 | POST | verify2FACode | unknown_handler | Public/User |  |

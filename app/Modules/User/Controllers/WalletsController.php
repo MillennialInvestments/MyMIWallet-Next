@@ -897,6 +897,10 @@ class WalletsController extends BaseUserController
     }
 
     public function index(): ResponseInterface|string
+    public function MyMIWallet(): ResponseInterface|string
+    {
+        return $this->renderWalletLandingPage();
+    }
     {
         return $this->renderWalletLandingPage();
     }
