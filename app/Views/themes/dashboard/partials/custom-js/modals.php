@@ -4,6 +4,7 @@ $subViewData = is_array($subViewData ?? null) ? $subViewData : [];
 echo view('ManagementModule\Views\Marketing\index\modals');
 echo view('UserModule\Views\Dashboard\modals\onboarding', $subViewData);
 echo view('UserModule\Views\Dashboard\modals\account_completion', $subViewData);
+echo view('UserModule\Views\Dashboard\modals\today_news', $subViewData);
 ?>
 <!-- Modal Structure -->
 <div class="modal fade" id="connectWalletModal" aria-hidden="true" aria-labelledby="connectWalletModalLabel" tabindex="-1">

@@ -95,6 +95,7 @@
             <?php 
             $controlCenterData = [];
             echo view('UserModule\Views\Dashboard\Account\ControlCenter', $controlCenterData); 
+            echo view('UserModule\Views\Dashboard\Account\modals\profile_edit', $controlCenterData);
             ?>
         </div><!-- .card-aside-wrap -->
     </div><!-- .card -->

@@ -392,6 +392,8 @@ $routes->get('register', 'AuthController::register', ['as' => 'register']);
 // All Remaining Custom Routes
 $routes->group('', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
     $routes->get('/Account', 'DashboardController::account', ['as' => 'account']);
+    $routes->post('/Account', 'DashboardController::updateProfile', ['as' => 'account.update']);
+    $routes->post('api/account/update-profile', 'DashboardController::updateProfile', ['as' => 'api.account.update-profile']);
     $routes->get('/Account/Activity', 'DashboardController::activity', ['as' => 'activity']);
     $routes->get('/Account/Billing', 'DashboardController::billing', ['as' => 'billing']);
     $routes->get('/Account/Connected-Accounts', 'DashboardController::connectedAccounts', ['as' => 'connected-accounts']);
