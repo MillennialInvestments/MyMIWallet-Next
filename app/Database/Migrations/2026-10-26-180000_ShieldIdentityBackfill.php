@@ -17,25 +17,29 @@ class ShieldIdentityBackfill extends Migration
     {
         $db = $this->db;
 
-        // ---------------------------------------------------------------------
+        if (! $db->tableExists('users')) {
+            return;
+        }
+
         // Step 1: Pre-Flight Invariant Validation (Zero Duplicate Principals)
-        // ---------------------------------------------------------------------
-        $duplicateCheck = $db->query("
-            SELECT LOWER(TRIM(email)) AS normalized_email, COUNT(*) AS cnt, GROUP_CONCAT(id) AS user_ids
-            FROM users
-            WHERE email IS NOT NULL AND TRIM(email) != ''
-            GROUP BY LOWER(TRIM(email))
-            HAVING COUNT(*) > 1
-        ")->getResultArray();
+        $duplicateCheck = [];
+        if ($db->fieldExists('email', 'users')) {
+            $q = $db->query("
+                SELECT LOWER(TRIM(email)) AS normalized_email, COUNT(*) AS cnt, GROUP_CONCAT(id) AS user_ids
+                FROM users
+                WHERE email IS NOT NULL AND TRIM(email) != ''
+                GROUP BY LOWER(TRIM(email))
+                HAVING COUNT(*) > 1
+            ");
+            $duplicateCheck = ($q && is_object($q)) ? $q->getResultArray() : [];
+        }
 
         if (! empty($duplicateCheck)) {
             $collisions = json_encode($duplicateCheck, JSON_PRETTY_PRINT);
             throw new RuntimeException("Migration aborted: Duplicate email principals detected in users table:\n" . $collisions);
         }
 
-        // ---------------------------------------------------------------------
         // Step 2: Defensive Schema Additions on 'users' Table
-        // ---------------------------------------------------------------------
         $fields = $db->getFieldData('users');
         $existingColumns = array_map(static fn($f) => $f->name, $fields);
 
@@ -56,9 +60,7 @@ class ShieldIdentityBackfill extends Migration
             $this->forge->addColumn('users', $addFields);
         }
 
-        // ---------------------------------------------------------------------
         // Step 3: Resolve Dynamic Credential Columns Resiliently
-        // ---------------------------------------------------------------------
         $hasPasswordHash = in_array('password_hash', $existingColumns, true);
         $hasPassword     = in_array('password', $existingColumns, true);
 
@@ -73,11 +75,14 @@ class ShieldIdentityBackfill extends Migration
         }
 
         $hasCreatedAt = in_array('created_at', $existingColumns, true);
-        $createdExpr  = $hasCreatedAt ? 'COALESCE(u.created_at, NOW())' : 'NOW()';
+        $now = date('Y-m-d H:i:s');
+        $createdExpr  = $hasCreatedAt ? "COALESCE(u.created_at, '{$now}')" : "'{$now}'";
 
-        // ---------------------------------------------------------------------
         // Step 4: Atomic Idempotent Credential Backfill
-        // ---------------------------------------------------------------------
+        if (! $db->tableExists('auth_identities') || ! $db->fieldExists('email', 'users')) {
+            return;
+        }
+
         $db->transStart();
 
         $db->query("
@@ -99,7 +104,7 @@ class ShieldIdentityBackfill extends Migration
                 {$pwdExpr},
                 0,
                 {$createdExpr},
-                NOW()
+                '{$now}'
             FROM users u
             WHERE u.email IS NOT NULL AND TRIM(u.email) != ''
               AND NOT EXISTS (
@@ -124,7 +129,10 @@ class ShieldIdentityBackfill extends Migration
     {
         $db = $this->db;
 
-        // Targeted Rollback: Remove backfilled identities for existing users
+        if (! $db->tableExists('auth_identities') || ! $db->tableExists('users')) {
+            return;
+        }
+
         $db->transStart();
         $db->query("
             DELETE FROM auth_identities 

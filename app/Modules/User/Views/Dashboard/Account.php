@@ -117,6 +117,7 @@ $subViewData = [
             </div>
             <?php 
             echo view('UserModule\Views\Dashboard\Account\ControlCenter', $subViewData); 
+            echo view('UserModule\Views\Dashboard\Account\modals\profile_edit', $subViewData);
             ?>
         </div><!-- .card-aside-wrap -->
     </div><!-- .card -->
