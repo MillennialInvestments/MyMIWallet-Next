@@ -458,4 +458,213 @@ final class OptionsMomentumTest extends CIUnitTestCase
         $this->assertSame(100.0, (float) $candidate['call_target_balance']);
         $this->assertSame(100.0, (float) $candidate['put_target_balance']);
     }
+
+    /**
+     * Acceptance Test 1: 1C/1P at 0.95 each, 100 multiplier, fees 0
+     * Outlay: 190.00; Target liquidation proceeds: 390.00; Expiration targets: 108.90 / 91.10.
+     */
+    public function testAcceptanceCase1C1PExpirationTargets(): void
+    {
+        $manager = new OptionsMomentumManager(
+            $this->createMock(OptionsPositionModel::class),
+            $this->createMock(OptionsPositionLegModel::class),
+            $this->createMock(OptionsPositionHistoryModel::class),
+            $this->createMock(OptionsExitAlertModel::class)
+        );
+
+        $res = $manager->calculateExpirationTargets(
+            callStrike: 105.0,
+            putStrike: 95.0,
+            callContracts: 1,
+            putContracts: 1,
+            callDebit: 0.95,
+            putDebit: 0.95,
+            targetProfit: 200.0,
+            multiplier: 100,
+            fees: 0.0
+        );
+
+        $this->assertEqualsWithDelta(190.0, $res['outlay'], 0.0001);
+        $this->assertEqualsWithDelta(390.0, $res['target_liquidation'], 0.0001);
+        $this->assertEqualsWithDelta(108.90, $res['call_expiration_target'], 0.0001);
+        $this->assertEqualsWithDelta(91.10, $res['put_expiration_target'], 0.0001);
+    }
+
+    /**
+     * Acceptance Test 2: 2C/2P at 0.95 each, 100 multiplier, fees 0
+     * Outlay: 380.00; Total liquidation target: 580.00; Expiration targets: 107.90 / 92.10.
+     */
+    public function testAcceptanceCase2C2PExpirationTargets(): void
+    {
+        $manager = new OptionsMomentumManager(
+            $this->createMock(OptionsPositionModel::class),
+            $this->createMock(OptionsPositionLegModel::class),
+            $this->createMock(OptionsPositionHistoryModel::class),
+            $this->createMock(OptionsExitAlertModel::class)
+        );
+
+        $res = $manager->calculateExpirationTargets(
+            callStrike: 105.0,
+            putStrike: 95.0,
+            callContracts: 2,
+            putContracts: 2,
+            callDebit: 0.95,
+            putDebit: 0.95,
+            targetProfit: 200.0,
+            multiplier: 100,
+            fees: 0.0
+        );
+
+        $this->assertEqualsWithDelta(380.0, $res['outlay'], 0.0001);
+        $this->assertEqualsWithDelta(580.0, $res['target_liquidation'], 0.0001);
+        $this->assertEqualsWithDelta(107.90, $res['call_expiration_target'], 0.0001);
+        $this->assertEqualsWithDelta(92.10, $res['put_expiration_target'], 0.0001);
+    }
+
+    /**
+     * Acceptance Test 3: 3C/1P at 0.95 each, 100 multiplier, fees 0
+     * Outlay: 380.00; Total liquidation target: 580.00; Expiration targets: 106.9333... / 89.20.
+     */
+    public function testAcceptanceCase3C1PExpirationTargets(): void
+    {
+        $manager = new OptionsMomentumManager(
+            $this->createMock(OptionsPositionModel::class),
+            $this->createMock(OptionsPositionLegModel::class),
+            $this->createMock(OptionsPositionHistoryModel::class),
+            $this->createMock(OptionsExitAlertModel::class)
+        );
+
+        $res = $manager->calculateExpirationTargets(
+            callStrike: 105.0,
+            putStrike: 95.0,
+            callContracts: 3,
+            putContracts: 1,
+            callDebit: 0.95,
+            putDebit: 0.95,
+            targetProfit: 200.0,
+            multiplier: 100,
+            fees: 0.0
+        );
+
+        $this->assertEqualsWithDelta(380.0, $res['outlay'], 0.0001);
+        $this->assertEqualsWithDelta(580.0, $res['target_liquidation'], 0.0001);
+        $this->assertEqualsWithDelta(106.9333, $res['call_expiration_target'], 0.0005);
+        $this->assertEqualsWithDelta(89.20, $res['put_expiration_target'], 0.0001);
+    }
+
+    /**
+     * Negative Test 4: Unknown quote, stale quote, missing option ID
+     * P&L target unavailable, no profit alert generated.
+     */
+    public function testStaleOrMissingQuotesDisableProfitAlerts(): void
+    {
+        $posModel = $this->createMock(OptionsPositionModel::class);
+        $legModel = $this->createMock(OptionsPositionLegModel::class);
+        $historyModel = $this->createMock(OptionsPositionHistoryModel::class);
+        $exitAlertModel = $this->createMock(OptionsExitAlertModel::class);
+
+        // Legs return null for current_bid (no live quote available)
+        $legModel->method('getLegsForPosition')->willReturn([
+            ['leg_type' => 'call', 'current_bid' => null, 'fill_price' => 0.95],
+            ['leg_type' => 'put',  'current_bid' => null, 'fill_price' => 0.95],
+        ]);
+
+        // No exit alert should EVER be inserted when quotes are missing/stale
+        $exitAlertModel->expects($this->never())->method('insert');
+
+        $manager = new OptionsMomentumManager($posModel, $legModel, $historyModel, $exitAlertModel);
+
+        $eval = $manager->evaluatePosition([
+            'id' => 99,
+            'ticker' => 'NVDA',
+            'strategy' => 'long_strangle',
+            'contracts_count' => 1,
+            'total_entry_debit' => 190.0,
+            'target_net_profit' => 200.0,
+            'status' => 'open',
+        ]);
+
+        $this->assertSame('stale_or_unavailable', $eval['quote_status']);
+        $this->assertNull($eval['combined_bid']);
+        $this->assertNull($eval['unrealized_pnl']);
+        $this->assertSame('warning_quote_stale', $eval['status']);
+        $this->assertEmpty($eval['alerts']);
+    }
+
+    /**
+     * Negative Test 5: Unknown trade_uuid in webhook payload
+     * Must be rejected with no auto-attachment to wrong tenant or position.
+     */
+    public function testWebhookRejectsUnknownTradeUuidWithoutAutoAttaching(): void
+    {
+        $signalModel = $this->createMock(OptionsSignalEventModel::class);
+        $posModel = $this->createMock(OptionsPositionModel::class);
+        $momentumManager = $this->createMock(OptionsMomentumManager::class);
+
+        // findByUuid returns null (trade_uuid not found)
+        $posModel->method('findByUuid')->willReturn(null);
+        // Momentum manager must NEVER be invoked on an unknown position
+        $momentumManager->expects($this->never())->method('handleMomentumSignal');
+
+        $service = new TradingViewWebhookService($signalModel, $posModel, $momentumManager);
+
+        $res = $service->ingest([
+            'ticker' => 'TSLA',
+            'trade_uuid' => 'non-existent-trade-uuid-12345',
+            'signal' => 'momentum_weakening',
+            'price' => 215.50,
+            'timestamp' => '2026-10-29 10:00:00',
+        ]);
+
+        $this->assertSame('rejected', $res['status']);
+        $this->assertStringContainsString('Unknown trade_uuid', $res['reason']);
+    }
+
+    /**
+     * Scoped MCP Tool Service: verify dispatch for all 6 tools.
+     */
+    public function testOptionsMcpToolServiceDispatchesAllSixTools(): void
+    {
+        $mcpService = new \App\Services\Options\OptionsMcpToolService();
+
+        // 1. options_get_candidates
+        $candRes = $mcpService->dispatch('options_get_candidates', ['limit' => 5, 'live_scan' => true]);
+        $this->assertSame('success', $candRes['status']);
+        $this->assertArrayHasKey('candidates', $candRes);
+
+        // 2. options_get_signal_history
+        $histRes = $mcpService->dispatch('options_get_signal_history', ['limit' => 5]);
+        $this->assertSame('success', $histRes['status']);
+        $this->assertArrayHasKey('events', $histRes);
+
+        // 3. options_get_positions
+        $posRes = $mcpService->dispatch('options_get_positions', ['status' => 'all']);
+        $this->assertSame('success', $posRes['status']);
+        $this->assertArrayHasKey('positions', $posRes);
+
+        // 4. options_explain_signal
+        $explainRes = $mcpService->dispatch('options_explain_signal', [
+            'ticker' => 'NVDA',
+            'signal_type' => 'bos_bullish',
+        ]);
+        $this->assertSame('success', $explainRes['status']);
+        $this->assertSame('expansion_long', $explainRes['analysis']['classification']);
+
+        // 5. options_get_data_quality
+        $dqRes = $mcpService->dispatch('options_get_data_quality', ['ticker' => 'NVDA']);
+        $this->assertSame('success', $dqRes['status']);
+        $this->assertArrayHasKey('quality_status', $dqRes);
+
+        // 6. options_backtest_report
+        $btRes = $mcpService->dispatch('options_backtest_report', [
+            'ticker' => 'NVDA',
+            'target_profit' => 200.0,
+        ]);
+        $this->assertSame('success', $btRes['status']);
+        $this->assertSame('NVDA', $btRes['ticker']);
+        $this->assertEqualsWithDelta(190.0, $btRes['entry_outlay'], 0.001);
+        $this->assertEqualsWithDelta(390.0, $btRes['required_exit_value'], 0.001);
+        $this->assertEqualsWithDelta(3.90, $btRes['required_underlying_move'], 0.001);
+        $this->assertGreaterThan(50.0, $btRes['estimated_target_hit_rate_pct']);
+    }
 }

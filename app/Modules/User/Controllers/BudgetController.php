@@ -416,8 +416,6 @@ class BudgetController extends BaseUserController
         }
         $this->trace('[METHOD_ENTRY] ' . __FUNCTION__);
         $this->trace('[AJAX CHECK] isAJAX=' . ($this->request->isAJAX() ? 'YES' : 'NO'));
-        $this->trace('[AJAX_HEADERS] ' . json_encode($this->request->headers()));
-        $this->trace('[AJAX_POST] ' . json_encode($this->request->getPost()));
 
         $userId = $this->resolveAuthenticatedUserId();
         if ($userId === null) {
@@ -446,8 +444,8 @@ class BudgetController extends BaseUserController
         }
 
         log_message('debug', 'Budget/Account-Manager Content-Type: ' . $contentType);
-        log_message('debug', 'Budget/Account-Manager POST: ' . json_encode($post));
-        log_message('debug', 'Budget/Account-Manager JSON: ' . json_encode($json));
+        log_message('debug', 'Budget/Account-Manager POST keys: ' . json_encode(is_array($post) ? array_keys($post) : []));
+        log_message('debug', 'Budget/Account-Manager JSON keys: ' . json_encode(is_array($json) ? array_keys($json) : []));
 
         if (!is_array($post) || $post === []) {
             $post = $json;
@@ -634,7 +632,7 @@ class BudgetController extends BaseUserController
                     }
                 
                     if ($this->debug === 1) {
-                        log_message('debug', 'BudgetController L473 - Sending $accountData to Model: ' . print_r($accountData, true));
+                        log_message('debug', 'BudgetController L473 - Sending $accountData keys to Model: ' . json_encode(array_keys($accountData)));
                     }
 
                     $this->logMemory('before-db-insert');
@@ -661,7 +659,12 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
                         return $this->budgetEnvelope('error', null, ['account_id' => 'Account identifier is required for updates.'], 400);
                     }
 
-                    $updated = $this->budgetService->update($accountId, $accountData);
+                    if (!is_array($existingRecord) || (int) ($existingRecord['accountCreator'] ?? 0) !== $userId) {
+                        $this->logSecurityEvent('accountManager', 'Unauthorized edit attempt on budget record.', $userId, ['account_id' => $accountId]);
+                        return $this->budgetEnvelope('error', $accountId, ['account_id' => 'You are not authorized to edit this budget record.'], 403);
+                    }
+
+                    $updated = $this->budgetService->update($accountId, $accountData, $userId);
                     if ($updated) {
                         $this->invalidateCrudCache(array_filter([
                             'budget',
@@ -1019,24 +1022,29 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
     public function approveRecurringSchedule($accountID)
     {
         log_message('debug', '[BudgetController::METHOD_ENTRY] approveRecurringSchedule');
-        log_message('debug', 'BudgetController::approveRecurringSchedule - Start processing for AccountID: ' . $accountID);
-    
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->budgetEnvelope('error', (int) $accountID, ['auth' => 'Authentication required.'], 401);
+        }
+
+        $parentAccount = $this->budgetModel->getAccountInformation((int) $accountID, $userId);
+        if (!is_array($parentAccount) || $parentAccount === []) {
+            return $this->budgetEnvelope('error', (int) $accountID, ['account_id' => 'Account not found or access denied.'], 403);
+        }
+
         // Check if the request content type is JSON
         $contentType = strtolower((string) $this->request->getHeaderLine('Content-Type'));
 
         if (str_contains($contentType, 'application/json')) {
             $formData = json_decode($this->request->getBody(), true);
         } else {
-            $formData = $this->request->getPost(true);
+            $formData = $this->request->getPost();
         }
     
-        // Log the raw input if formData is invalid
         if (!$formData) {
             log_message('error', 'BudgetController::approveRecurringSchedule - Invalid input received.');
             return $this->budgetEnvelope('error', (int) $accountID, ['payload' => 'Invalid request data. Please ensure the payload is correct.'], 400);
         }
-    
-        log_message('debug', 'BudgetController::approveRecurringSchedule - Received Data: ' . print_r($formData, true));
     
         // Extract and validate recurringData
         $recurringData = $formData['recurringData'] ?? [];
@@ -1065,7 +1073,7 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
             $data = [
                 'status' => 1,
                 'mode' => 'Recurring',
-                'created_by' => $this->cuID,
+                'created_by' => $userId,
                 'unix_timestamp' => time(),
                 'designated_date' => $formattedDate,
                 'month' => $designMonth,
@@ -1074,18 +1082,20 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
                 'net_amount' => $netAmount,
                 'gross_amount' => $grossAmount,
                 'recurring_account' => 'Yes',
-                'name' => $schedule['accountName'] ?? null, // Add name
-                'account_type' => $schedule['accountType'] ?? null, // Add account type
-                'source_type' => $schedule['accountSourceType'] ?? null, // Add source type
+                'name' => $schedule['accountName'] ?? ($parentAccount['name'] ?? null),
+                'account_type' => $schedule['accountType'] ?? ($parentAccount['account_type'] ?? null),
+                'source_type' => $schedule['accountSourceType'] ?? ($parentAccount['source_type'] ?? null),
             ];
-        
-            log_message('debug', 'Processed Recurring Schedule Entry: ' . print_r($data, true));
         
             if (!$this->budgetModel->approveRecurringSchedule($data)) {
                 log_message('error', 'Failed to insert recurring schedule data for Account ID: ' . $accountID);
             }
         }        
     
+        $this->invalidateCrudCache(array_filter([
+            'budget',
+            'user:' . $userId,
+        ]));
         log_message('info', 'Successfully inserted recurring schedules for Account ID: ' . $accountID);
     
         return $this->budgetEnvelope('success', (int) $accountID);
@@ -1093,27 +1103,28 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
     
     public function approveRecurringScheduleOld($accountID) {
         log_message('debug', '[BudgetController::METHOD_ENTRY] approveRecurringScheduleOld');
-        log_message('debug', 'Request headers: ' . print_r($this->request->getHeaders(), true));
-        log_message('debug', 'Request body: ' . $this->request->getBody());
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return redirect()->to('/login');
+        }
         
         // Get JSON request data if the form is sent via AJAX or standard POST request for normal form submission
-        $jsonData = $this->request->getPost(); // Use getPost() if the form is a regular POST form
+        $jsonData = $this->request->getPost();
         
         if (!$jsonData) {
             session()->setFlashdata('error', 'Invalid request.');
             return redirect()->back();
         }
-        log_message('debug', 'BudgetController L273 - $approveRecurringSchedule - $jsonData: ' . print_r($jsonData, true));
-        // Pass the form data to the service for processing
-        if ($this->getBudgetService()->approveRecurringSchedule($accountID, $jsonData)) {
+        $result = $this->getBudgetService()->approveRecurringSchedule($accountID, $jsonData, $userId);
+        if (!empty($result['success'])) {
             $this->invalidateCrudCache(array_filter([
                 'budget',
-                $this->cuID ? 'user:' . $this->cuID : null,
+                'user:' . $userId,
             ]));
             session()->setFlashdata('message', 'Recurring schedules successfully created.');
             return redirect()->to('/Budget');
         } else {
-            log_message('error', $result['message']);
+            log_message('error', $result['message'] ?? 'Failed to insert recurring schedule.');
             session()->setFlashdata('error', 'Failed to insert recurring schedule.');
             return redirect()->back();
         }    
@@ -1121,12 +1132,16 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
 
     public function bulkDelete() {
         log_message('debug', '[BudgetController::METHOD_ENTRY] bulkDelete');
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Authentication required.']);
+        }
         $ids = $this->request->getPost('ids');
 
-        if ($this->getBudgetService()->bulkDelete($ids)) {
+        if ($this->getBudgetService()->bulkDelete($ids, $userId)) {
             $this->invalidateCrudCache(array_filter([
                 'budget',
-                $this->cuID ? 'user:' . $this->cuID : null,
+                'user:' . $userId,
             ]));
             return $this->response->setJSON(['status' => 'success', 'message' => 'Records deleted successfully.']);
         } else {
@@ -1136,13 +1151,17 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
 
     public function bulkUpdateStatus() {
         log_message('debug', '[BudgetController::METHOD_ENTRY] bulkUpdateStatus');
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Authentication required.']);
+        }
         $ids = $this->request->getPost('ids');
         $status = $this->request->getPost('status');
 
-        if ($this->getBudgetService()->bulkUpdateStatus($ids, $status)) {
+        if ($this->getBudgetService()->bulkUpdateStatus($ids, $status, $userId)) {
             $this->invalidateCrudCache(array_filter([
                 'budget',
-                $this->cuID ? 'user:' . $this->cuID : null,
+                'user:' . $userId,
             ]));
             return $this->response->setJSON(['status' => 'success', 'message' => 'Records updated successfully.']);
         } else {
@@ -1153,14 +1172,22 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
     public function cancelAccount($accountID)
     {
         log_message('debug', '[BudgetController::METHOD_ENTRY] cancelAccount');
-        $accountInfo = $this->budgetModel->getUserBudgetRecord($this->cuID, $accountID);
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return redirect()->to('/login');
+        }
+        $accountInfo = $this->budgetModel->getUserBudgetRecord($userId, $accountID);
+        if (empty($accountInfo)) {
+            session()->setFlashdata('error', 'Account not found or access denied.');
+            return redirect()->to('/Budget');
+        }
 
         foreach($accountInfo as $account) {
-            if ($account['recurring_account_primary'] === 'Yes') {
-                if ($this->budgetModel->cancelAccount($accountID)) {
+            if (($account['recurring_account_primary'] ?? 'No') === 'Yes') {
+                if ($this->budgetModel->cancelAccount($accountID, $userId)) {
                     $this->invalidateCrudCache(array_filter([
                         'budget',
-                        $this->cuID ? 'user:' . $this->cuID : null,
+                        'user:' . $userId,
                     ]));
                     session()->setFlashdata('message', 'Recurring Account deleted.');
                     return redirect()->to('/Budget');
@@ -1169,10 +1196,10 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
                     return redirect()->to("/Budget/Edit/{$accountID}");
                 }
             } else {
-                if ($this->budgetModel->cancelSubaccount($accountID)) {
+                if ($this->budgetModel->cancelSubaccount($accountID, $userId)) {
                     $this->invalidateCrudCache(array_filter([
                         'budget',
-                        $this->cuID ? 'user:' . $this->cuID : null,
+                        'user:' . $userId,
                     ]));
                     session()->setFlashdata('message', 'Subaccount deleted.');
                     return redirect()->to("/Budget/Edit/{$accountID}");
@@ -2069,23 +2096,30 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
     
     public function forecastBudget($accountId) {
         log_message('debug', '[BudgetController::METHOD_ENTRY] forecastBudget');
-        // Fetch account details using the model
-        $account = $this->budgetModel->getAccountInformation($accountId);
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->respondUnauthorized('User not logged in.');
+        }
+
+        // Fetch account details scoped to the authenticated user
+        $account = $this->budgetModel->getAccountInformation((int) $accountId, $userId);
     
         if ($account) {
             $recurringSchedule = $account['recurring_schedule'];
             $designatedDate = $account['designated_date'];
-            $userId = $account['created_by'];
     
             // Generate forecast using the BudgetService
             $forecast = $this->getBudgetService()->forecastRecurringSchedule($recurringSchedule, $designatedDate);
     
             // Save forecast using the model
-            foreach ($forecast as $date) {
-                $this->budgetModel->saveForecast($userId, $accountId, $date, $recurringSchedule);
+            foreach ($forecast as $entry) {
+                $forecastDate = is_array($entry) ? ($entry['due_date'] ?? $entry['dueDate'] ?? null) : $entry;
+                if (!empty($forecastDate)) {
+                    $this->budgetModel->saveForecast($userId, (int) $accountId, (string) $forecastDate, (string) $recurringSchedule);
+                }
             }
         } else {
-            log_message('error', 'Account not found for forecasting. Account ID: ' . $accountId);
+            log_message('error', 'Account not found or unauthorized for forecasting. Account ID: ' . $accountId);
         }
     }    
     
@@ -2111,6 +2145,18 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
     {
         log_message('debug', '[BudgetController::METHOD_ENTRY] paid');
 
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(401)->setJSON([
+                    'status'    => 'error',
+                    'accountID' => (int) $accountID,
+                    'message'   => 'Authentication required.',
+                ]);
+            }
+            return redirect()->to('/login');
+        }
+
         $accountID = (int) $accountID;
 
         if ($accountID <= 0) {
@@ -2127,12 +2173,12 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
         }
 
         try {
-            $updated = $this->getBudgetService()->markAsPaid($accountID);
+            $updated = $this->getBudgetService()->markAsPaid($accountID, $userId);
 
             if ($updated) {
                 $this->invalidateCrudCache(array_filter([
                     'budget',
-                    $this->cuID ? 'user:' . $this->cuID : null,
+                    'user:' . $userId,
                 ]));
 
                 if ($this->request->isAJAX()) {
@@ -2177,6 +2223,18 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
     {
         log_message('debug', '[BudgetController::METHOD_ENTRY] unpaid');
 
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(401)->setJSON([
+                    'status'    => 'error',
+                    'accountID' => (int) $accountID,
+                    'message'   => 'Authentication required.',
+                ]);
+            }
+            return redirect()->to('/login');
+        }
+
         $accountID = (int) $accountID;
 
         if ($accountID <= 0) {
@@ -2193,12 +2251,12 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
         }
 
         try {
-            $updated = $this->getBudgetService()->markAsUnpaid($accountID);
+            $updated = $this->getBudgetService()->markAsUnpaid($accountID, $userId);
 
             if ($updated) {
                 $this->invalidateCrudCache(array_filter([
                     'budget',
-                    $this->cuID ? 'user:' . $this->cuID : null,
+                    'user:' . $userId,
                 ]));
 
                 if ($this->request->isAJAX()) {
@@ -2243,6 +2301,18 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
     {
         log_message('debug', '[BudgetController::METHOD_ENTRY] deleteAccount');
 
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(401)->setJSON([
+                    'status'    => 'error',
+                    'accountID' => (int) $accountID,
+                    'message'   => 'Authentication required.',
+                ]);
+            }
+            return redirect()->to('/login');
+        }
+
         $accountID = (int) $accountID;
 
         if ($accountID <= 0) {
@@ -2259,7 +2329,7 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
         }
 
         try {
-            $deleted = $this->getBudgetService()->cancelAccount($accountID);
+            $deleted = $this->getBudgetService()->cancelAccount($accountID, $userId);
 
             if ($deleted) {
                 $this->invalidateCrudCache(array_filter([

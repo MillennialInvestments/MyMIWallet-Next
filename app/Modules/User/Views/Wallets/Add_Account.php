@@ -161,7 +161,8 @@ if ($this->uri->segment(1) === 'Content-Creator') {
         <div class="col-12">
             <div class="card card-bordered pricing">
                 <div class="card-body">
-                    <form class="form-horizontal" id="add_user_wallet">
+                    <form class="form-horizontal" id="add_user_wallet" action="<?= site_url('Wallets/Account-Manager'); ?>" method="POST">
+                        <?= csrf_field() ?>
                         <fieldset>
                             <?php
                             Template::block($pageView, $pageView, $fieldData);
@@ -190,10 +191,12 @@ const addNewWalletForm		    = document.querySelector("#add_user_wallet");
 const addNewWalletSubmit	    = {};
 if (addNewWalletForm) { 
     addNewWalletForm.addEventListener("submit", async (e) => {
-        //Do no refresh
         e.preventDefault();
+        if (addNewWalletForm.dataset.submitting === "1") {
+            return;
+        }
+        addNewWalletForm.dataset.submitting = "1";
 		const formData 		= new FormData(); 
-        //Get Form data in object OR
 		addNewWalletForm.querySelectorAll("input").forEach((inputField) => {
             formData.append(inputField.name,inputField.value);
             addNewWalletSubmit[inputField.name] = inputField.value;
@@ -202,30 +205,21 @@ if (addNewWalletForm) {
             formData.append(inputField.name,inputField.value);
             addNewWalletSubmit[inputField.name] = inputField.value;
         });  
-        //Get form data in array of objects OPTION 2
-        // form.querySelectorAll("input").forEach((inputField) => {
-        //     submit.push({ name: inputField.name, value: inputField.value });
-        // });
-        //Console log to show you how it looks
-        // console.log(addNewWalletSubmit);
-        // console.log(JSON.stringify(addNewWalletSubmit));
-        console.log(...formData);
-        //Fetch
         try {
-            const result = await fetch("<?= site_url('User/Wallets/Wallet_Manager'); ?>", {
-			
+            const result = await fetch("<?= site_url('Wallets/Account-Manager'); ?>", {
 			method: "POST",
 			body: JSON.stringify(addNewWalletSubmit),
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "X-Requested-With": "XMLHttpRequest"
+            },
 			credentials: "same-origin",
 			redirect: "manual",
             });
-            const data = await result;
-		    location.href = <?php echo '\'' . $redirectURL . '\'';?>;
-            console.log(data);
+            location.href = <?php echo '\'' . $redirectURL . '\'';?>;
         } catch (err) {
-            //If fetch doesn't work, maker 
-            console.log(err);
+            addNewWalletForm.dataset.submitting = "0";
         }
     });
 }

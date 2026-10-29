@@ -11,6 +11,8 @@ class MyMIBudgetTest extends CIUnitTestCase
     public function testAllUserBudgetInfoProducesStructuredSnapshots(): void
     {
         $library = new class extends MyMIBudget {
+            public $cuID;
+
             public function __construct()
             {
                 // Intentionally skip parent constructor.
@@ -28,6 +30,11 @@ class MyMIBudgetTest extends CIUnitTestCase
         $budgetModel = new class {
             public function getUserBudgetRecords($cuID = null): array
             {
+                $tz = new \DateTimeZone('America/Chicago');
+                $thisMonthDay1 = (new \DateTimeImmutable('first day of this month', $tz))->format('Y-m-d');
+                $thisMonthDay2 = (new \DateTimeImmutable('first day of this month', $tz))->modify('+1 day')->format('Y-m-d');
+                $lastMonthDay  = (new \DateTimeImmutable('first day of last month', $tz))->modify('+14 days')->format('Y-m-d');
+
                 return [
                     [
                         'id' => 1,
@@ -35,7 +42,7 @@ class MyMIBudgetTest extends CIUnitTestCase
                         'account_type' => 'Income',
                         'source_type' => 'Salary',
                         'net_amount' => 4000,
-                        'designated_date' => '2024-07-01',
+                        'designated_date' => $thisMonthDay1,
                     ],
                     [
                         'id' => 2,
@@ -43,7 +50,7 @@ class MyMIBudgetTest extends CIUnitTestCase
                         'account_type' => 'Expense',
                         'source_type' => 'Housing',
                         'net_amount' => -1500,
-                        'designated_date' => '2024-07-02',
+                        'designated_date' => $thisMonthDay2,
                     ],
                     [
                         'id' => 3,
@@ -52,7 +59,7 @@ class MyMIBudgetTest extends CIUnitTestCase
                         'source_type' => 'Loan',
                         'is_debt' => 1,
                         'net_amount' => -200,
-                        'designated_date' => '2024-06-15',
+                        'designated_date' => $lastMonthDay,
                     ],
                 ];
             }

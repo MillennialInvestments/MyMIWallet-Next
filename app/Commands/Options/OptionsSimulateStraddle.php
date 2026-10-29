@@ -30,6 +30,8 @@ class OptionsSimulateStraddle extends SafeBaseCommand
         '--call-strike'  => 'Explicit Call strike price (default: ATM rounded)',
         '--put-strike'   => 'Explicit Put strike price (default: ATM rounded)',
         '--contracts'    => 'Override contract pairs count directly',
+        '--call-contracts'=> 'Explicit Call contracts count (v7 independent sizing)',
+        '--put-contracts' => 'Explicit Put contracts count (v7 independent sizing)',
         '--call'         => 'Call debit per contract (default: 0.95)',
         '--put'          => 'Put debit per contract (default: 0.95)',
         '--price'        => 'Underlying stock price (default: 142.50)',
@@ -90,8 +92,11 @@ class OptionsSimulateStraddle extends SafeBaseCommand
             $putStrike  = isset($flags['put-strike'])  ? (float) $flags['put-strike']  : $defaultPut;
         }
 
-        // Contracts sizing
-        if (isset($flags['contracts'])) {
+        // Contracts sizing (v7 supports independent Call & Put counts)
+        if (isset($flags['call-contracts']) || isset($flags['put-contracts'])) {
+            $contractsCall = max(0, (int) ($flags['call-contracts'] ?? 1));
+            $contractsPut  = max(0, (int) ($flags['put-contracts'] ?? 1));
+        } elseif (isset($flags['contracts'])) {
             $contractsCall = max(1, (int) $flags['contracts']);
             $contractsPut  = max(1, (int) $flags['contracts']);
         } else {
@@ -104,19 +109,28 @@ class OptionsSimulateStraddle extends SafeBaseCommand
         $actualOutlayPut  = $contractsPut * $putDebit * 100.0;
         $totalDebit = $actualOutlayCall + $actualOutlayPut;
         $combinedDebit = $callDebit + $putDebit; // $1.90
-        $targetProfit = $cfg->targetNetProfit * $contracts; // $200.00
-        $targetExitPerPair = $combinedDebit + ($targetProfit / (100.0 * $contracts)); // $3.90
+        $targetProfit = isset($flags['target-profit']) ? (float) $flags['target-profit'] : (float) $cfg->targetNetProfit; // default $200.00 net position profit
+        $targetLiquidation = $totalDebit + $targetProfit;
+        $targetExitPerPair = ($contractsCall + $contractsPut) > 0
+            ? round(($targetLiquidation / (($contractsCall + $contractsPut) / 2.0)) / 100.0, 4)
+            : ($combinedDebit + ($targetProfit / (100.0 * max(1, $contracts))));
+
+        $callExpiryTarget = $contractsCall > 0 ? round($callStrike + ($targetLiquidation / ($contractsCall * 100.0)), 4) : 0.0;
+        $putExpiryTarget  = $contractsPut  > 0 ? round($putStrike  - ($targetLiquidation / ($contractsPut  * 100.0)), 4) : 0.0;
+
         $uuid = sprintf('opt-%s-%s-%s', strtolower($ticker), date('Ymd-His'), bin2hex(random_bytes(4)));
         $expiry = date('Y-m-d', strtotime("+{$dte} days"));
 
         CLI::write('=========================================================================', 'cyan');
-        CLI::write('         MyMI Weekly Options Momentum Strategy · Paper Position          ', 'green');
+        CLI::write('         MyMI Weekly Options Momentum Strategy · Paper Position (v7)      ', 'green');
         CLI::write('=========================================================================', 'cyan');
         CLI::write(sprintf('Position UUID: %s%s | Strategy: %s', $uuid, $dryRun ? ' [DRY-RUN]' : '', strtoupper($strategy)), 'yellow');
         CLI::write(sprintf(' - Underlier: %s at $%.2f', $ticker, $stockPrice), 'white');
-        CLI::write(sprintf(' - Call Leg: Strike $%.2f | Debit: $%.2f | Target Balance: $%.2f -> %d contract(s) ($%.2f outlay)', $callStrike, $callDebit, $callTargetBalance, $contractsCall, $actualOutlayCall), 'white');
-        CLI::write(sprintf(' - Put Leg:  Strike $%.2f | Debit: $%.2f | Target Balance: $%.2f -> %d contract(s) ($%.2f outlay)', $putStrike, $putDebit, $putTargetBalance, $contractsPut, $actualOutlayPut), 'white');
+        CLI::write(sprintf(' - Call Leg: Strike $%.2f | Debit: $%.2f -> %d contract(s) ($%.2f outlay)', $callStrike, $callDebit, $contractsCall, $actualOutlayCall), 'white');
+        CLI::write(sprintf(' - Put Leg:  Strike $%.2f | Debit: $%.2f -> %d contract(s) ($%.2f outlay)', $putStrike, $putDebit, $contractsPut, $actualOutlayPut), 'white');
         CLI::write(sprintf(' - Expiration: %s (%d DTE)', $expiry, $dte), 'white');
+        CLI::write(sprintf(' - Total Outlay: $%.2f | Target Net Profit: +$%.2f | Liquidation Target: $%.2f', $totalDebit, $targetProfit, $targetLiquidation), 'yellow');
+        CLI::write(sprintf(' - Expiration Targets: Call >= $%.2f | Put <= $%.2f', $callExpiryTarget, $putExpiryTarget), 'green');
 
         $avKey = $flags['alphavantage-key'] ?? null;
         $catalystSvc = new \App\Services\Options\AlphaVantageCatalystService($avKey);

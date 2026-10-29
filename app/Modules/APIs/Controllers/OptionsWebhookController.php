@@ -34,11 +34,21 @@ class OptionsWebhookController extends BaseAPIController
             return $this->error('Empty or invalid JSON webhook payload', 400);
         }
 
-        // Webhook security verification
-        $secret = (string) ($payload['secret'] ?? $this->request->getHeaderLine('X-MyMI-Secret'));
-        $expectedSecret = getenv('OPTIONS_WEBHOOK_SECRET') ?: 'mymi-options-secure-key';
+        // Webhook security verification: fail-closed, require authenticated ingress, timing-safe compare
+        $authHeader = (string) $this->request->getHeaderLine('Authorization');
+        $bearerToken = '';
+        if (preg_match('/Bearer\s+(.*)$/i', $authHeader, $matches)) {
+            $bearerToken = trim($matches[1]);
+        }
 
-        if ($secret !== $expectedSecret) {
+        $secret = (string) ($this->request->getHeaderLine('X-MyMI-Secret') ?: $bearerToken ?: ($payload['secret'] ?? ''));
+        $expectedSecret = (string) (getenv('OPTIONS_WEBHOOK_SECRET') ?: (function_exists('env') ? env('OPTIONS_WEBHOOK_SECRET') : ''));
+
+        if ($expectedSecret === '') {
+            return $this->error('Webhook ingress secret is not configured on this host. Access denied.', 401);
+        }
+
+        if ($secret === '' || ! hash_equals($expectedSecret, $secret)) {
             return $this->error('Unauthorized webhook secret token', 401);
         }
 

@@ -1277,6 +1277,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('providers', 'WalletsAPIController::providers');
 
         // CRUD
+        $routes->post('Add', 'WalletsAPIController::add');
         $routes->post('Create', 'WalletsAPIController::create');
         $routes->put('Update/(:num)', 'WalletsAPIController::update/$1');
         $routes->delete('Unlink/(:num)', 'WalletsAPIController::unlink/$1');

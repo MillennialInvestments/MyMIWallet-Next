@@ -20,12 +20,20 @@ class TransactionService
     // Log a new transaction in the system
     public function logTransaction($type, $transactionID, $userID, $amount, $status)
     {
+        $normalizedAmount = round((float) $amount, 2);
+        if (!is_finite($normalizedAmount) || $normalizedAmount <= 0.0) {
+            throw new Exception("Transaction amount must be a positive finite number.");
+        }
+        if ((int) $userID <= 0) {
+            throw new Exception("Authenticated user ID is required to log a transaction.");
+        }
+
         $data = [
-            'user_id' => $userID,
-            'transaction_type' => $type,
-            'transaction_id' => $transactionID,
-            'amount' => $amount,
-            'status' => $status,
+            'user_id' => (int) $userID,
+            'transaction_type' => (string) $type,
+            'transaction_id' => (string) $transactionID,
+            'amount' => $normalizedAmount,
+            'status' => (string) $status,
             'created_at' => date('Y-m-d H:i:s')
         ];
 
@@ -37,20 +45,31 @@ class TransactionService
     }
 
     // Retrieve transaction data by transaction ID
-    public function getTransactionData($transactionID)
+    public function getTransactionData($transactionID, ?int $userId = null)
     {
-        return $this->transactionModel->getTransactionById($transactionID);
+        $transaction = $this->transactionModel->getTransactionById($transactionID);
+        if (is_array($transaction) && $userId !== null && $userId > 0) {
+            if ((int) ($transaction['user_id'] ?? 0) !== $userId) {
+                return null;
+            }
+        }
+        return $transaction;
     }
 
     // Complete a deposit operation
-    public function completeDeposit($transactionID, $amount)
+    public function completeDeposit($transactionID, $amount, ?int $userId = null)
     {
-        $transaction = $this->getTransactionData($transactionID);
+        $normalizedAmount = round((float) $amount, 2);
+        if (!is_finite($normalizedAmount) || $normalizedAmount <= 0.0) {
+            throw new Exception("Deposit amount must be greater than zero.");
+        }
 
-        if ($transaction && $transaction['status'] === 'Pending') {
+        $transaction = $this->getTransactionData($transactionID, $userId);
+
+        if ($transaction && ($transaction['status'] ?? '') === 'Pending') {
             $updatedData = [
                 'status' => 'Completed',
-                'amount' => $amount,
+                'amount' => $normalizedAmount,
                 'completed_at' => date('Y-m-d H:i:s')
             ];
 
@@ -61,11 +80,11 @@ class TransactionService
     }
 
     // Reverse a transaction (e.g., for refunds or errors)
-    public function reverseTransaction($transactionID)
+    public function reverseTransaction($transactionID, ?int $userId = null)
     {
-        $transaction = $this->getTransactionData($transactionID);
+        $transaction = $this->getTransactionData($transactionID, $userId);
 
-        if ($transaction && $transaction['status'] === 'Completed') {
+        if ($transaction && ($transaction['status'] ?? '') === 'Completed') {
             $updatedData = [
                 'status' => 'Reversed',
                 'reversed_at' => date('Y-m-d H:i:s')

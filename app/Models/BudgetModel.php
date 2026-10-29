@@ -280,9 +280,51 @@ class BudgetModel extends ObservedModel
         return $accountType === 'income' ? 'income' : 'expense';
     }
 
+    /**
+     * Redact sensitive financial or authentication fields before logging.
+     *
+     * @param mixed $payload
+     * @return array<string, mixed>
+     */
+    private function redactSensitiveLogData($payload): array
+    {
+        if (! is_array($payload)) {
+            return [];
+        }
+
+        $sensitiveKeys = [
+            'account_number',
+            'routing_number',
+            'access_token',
+            'public_token',
+            'refresh_token',
+            'token',
+            'secret',
+            'password',
+            'credentials',
+            'raw_payload',
+            'ssn',
+            'tax_id',
+        ];
+
+        $sanitized = [];
+        foreach ($payload as $key => $value) {
+            $normalizedKey = strtolower((string) $key);
+            if (in_array($normalizedKey, $sensitiveKeys, true)) {
+                $sanitized[$key] = '[REDACTED]';
+            } elseif (is_array($value)) {
+                $sanitized[$key] = $this->redactSensitiveLogData($value);
+            } else {
+                $sanitized[$key] = $value;
+            }
+        }
+
+        return $sanitized;
+    }
+
     public function insert($data = null, bool $returnID = true)
     {
-        log_message('debug', '[DB INSERT] Data=' . json_encode($data));
+        log_message('debug', '[DB INSERT] BudgetModel keys=' . json_encode(array_keys($this->redactSensitiveLogData(is_array($data) ? $data : []))));
 
         return parent::insert($data, $returnID);
     }
@@ -291,23 +333,26 @@ class BudgetModel extends ObservedModel
         return $this->insert($data);
     }
 
-    public function approveRecurringAccount($accountID) {
+    public function approveRecurringAccount($accountID, ?int $userId = null) {
         if (empty($accountID)) {
             log_message('error', 'No accountID provided for recurring account approval.');
             return false;
         }
-        // Ensure we're updating only the specific account by using a "where" clause
-        return $this->where('id', $accountID)
-                    ->set(['status' => 1])
-                    ->update();
+        $builder = $this->db->table('bf_users_budgeting')->where('id', (int) $accountID);
+        if ($userId !== null && $userId > 0) {
+            $builder->where('created_by', $userId);
+        }
+
+        return (bool) $builder->update(['status' => 1]);
     }
 
     public function approveRecurringSchedule($data) {
-        log_message('debug', 'BudgetModel L38 - $approveRecurringSchedule - $data: ' . (print_r($data, true)));
         if (!$data) {
             log_message('error', 'No data provided for recurring schedule approval.');
             return false;
         }
+
+        log_message('debug', 'BudgetModel::approveRecurringSchedule keys=' . json_encode(array_keys($this->redactSensitiveLogData(is_array($data) ? $data : []))));
 
         $result = $this->db->table('bf_users_budgeting')->insert($data);
 
@@ -319,28 +364,68 @@ class BudgetModel extends ObservedModel
         return true;
     }
 
-    public function attachAccount($accountID, $walletID) {
-        return $this->update($accountID, ['wallet_id' => $walletID]);
+    public function attachAccount($accountID, $walletID, ?int $userId = null) {
+        $builder = $this->db->table('bf_users_budgeting')->where('id', (int) $accountID);
+        if ($userId !== null && $userId > 0) {
+            $builder->where('created_by', $userId);
+        }
+        return (bool) $builder->update(['wallet_id' => $walletID]);
     }
 
-    public function bulkDelete($ids) {
-        return $this->whereIn('id', $ids)->set(['status' => 0, 'deleted' => 1])->update();
+    public function bulkDelete($ids, ?int $userId = null) {
+        $normalizedIds = array_values(array_filter(array_map('intval', (array) $ids), static fn (int $id): bool => $id > 0));
+        if ($normalizedIds === []) {
+            return false;
+        }
+
+        $builder = $this->db->table('bf_users_budgeting')->whereIn('id', $normalizedIds);
+        if ($userId !== null && $userId > 0) {
+            $builder->where('created_by', $userId);
+        }
+
+        $builder->update(['status' => 0, 'deleted' => 1]);
+        return $this->db->affectedRows() > 0;
     }
 
-    public function bulkUpdateStatus($ids, $status) {
-        return $this->whereIn('id', $ids)->set(['status' => $status])->update();
+    public function bulkUpdateStatus($ids, $status, ?int $userId = null) {
+        $normalizedIds = array_values(array_filter(array_map('intval', (array) $ids), static fn (int $id): bool => $id > 0));
+        if ($normalizedIds === []) {
+            return false;
+        }
+
+        $builder = $this->db->table('bf_users_budgeting')->whereIn('id', $normalizedIds);
+        if ($userId !== null && $userId > 0) {
+            $builder->where('created_by', $userId);
+        }
+
+        $builder->update(['status' => (int) $status]);
+        return $this->db->affectedRows() > 0;
     }
 
-    public function cancelAccount($accountID) {
+    public function cancelAccount($accountID, ?int $userId = null) {
+        if ($userId !== null && $userId > 0 && $this->getAccountInformation((int) $accountID, $userId) === null) {
+            return false;
+        }
         $builder = $this->db->table('bf_users_budgeting');
-        $builder->where('id', $accountID);
-        return $builder->update(['deleted' => 1]);
+        $builder->where('id', (int) $accountID);
+        if ($userId !== null && $userId > 0) {
+            $builder->where('created_by', $userId);
+        }
+        $builder->update(['status' => 0, 'deleted' => 1]);
+        return $this->db->affectedRows() > 0;
     }
 
-    public function cancelSubaccount($accountID) {
+    public function cancelSubaccount($accountID, ?int $userId = null) {
+        if ($userId !== null && $userId > 0 && $this->getAccountInformation((int) $accountID, $userId) === null) {
+            return false;
+        }
         $builder = $this->db->table('bf_users_budgeting');
-        $builder->where('id', $accountID);
-        return $builder->update(['deleted' => 1]);
+        $builder->where('id', (int) $accountID);
+        if ($userId !== null && $userId > 0) {
+            $builder->where('created_by', $userId);
+        }
+        $builder->update(['status' => 0, 'deleted' => 1]);
+        return $this->db->affectedRows() > 0;
     }
 
     public function getAccounts($cuID) {
@@ -364,9 +449,12 @@ class BudgetModel extends ObservedModel
                     ->findAll();
     }
 
-    public function getAccountInformation($accountID) {
+    public function getAccountInformation($accountID, ?int $userId = null) {
         $builder = $this->db->table('bf_users_budgeting');
-        $builder->where('id', $accountID);
+        $builder->where('id', (int) $accountID);
+        if ($userId !== null && $userId > 0) {
+            $builder->where('created_by', $userId);
+        }
         $result = $builder->get()->getRowArray();
         return $result;
     }
@@ -1350,9 +1438,9 @@ class BudgetModel extends ObservedModel
     }
 
     public function insertDebtAccount($data) {
-        $db = \Config\Database::connect();
+        $db = $this->db ?? \Config\Database::connect();
         $builder = $db->table('bf_users_debt_accounts');
-        log_message('info', 'Attempting to insert debt account data: ' . print_r($data, true));
+        log_message('info', 'Attempting to insert debt account keys=' . json_encode(array_keys($this->redactSensitiveLogData(is_array($data) ? $data : []))));
         if ($builder->insert($data)) {
             $insertID = $db->insertID();
             log_message('info', 'Debt account insert successful: ID ' . $insertID);
@@ -1363,12 +1451,20 @@ class BudgetModel extends ObservedModel
         }
     }
 
-    public function paidAccount($accountID) {
-        return $this->update($accountID, [
-            'paid' => '1',
+    public function paidAccount($accountID, ?int $userId = null) {
+        $builder = $this->db->table('bf_users_budgeting')
+            ->where('id', (int) $accountID)
+            ->where('paid', 0);
+        if ($userId !== null && $userId > 0) {
+            $builder->where('created_by', $userId);
+        }
+        $builder->update([
+            'paid' => 1,
             'paid_date' => date("Y-m-d"),
             'paid_time' => date("H:i:s"),
         ]);
+
+        return $this->db->affectedRows() > 0;
     }
 
     public function saveForecast($userId, $accountId, $forecastDate, $recurringSchedule) {
@@ -1394,11 +1490,20 @@ class BudgetModel extends ObservedModel
             ->countAllResults();
     }
 
-    public function updateAccount($accountID, $data) {
+    public function updateAccount($accountID, $data, ?int $userId = null) {
+        if (! is_array($data) || $data === []) {
+            return false;
+        }
 
-        // log_message('debug', 'Attempting to update account. ID: ' . $accountID . ' Data: ' . print_r($data, true));
+        if ($userId !== null && $userId > 0) {
+            $existing = $this->getAccountInformation((int) $accountID, $userId);
+            if (! is_array($existing) || $existing === []) {
+                log_message('warning', 'BudgetModel::updateAccount denied or missing for account ID: ' . (int) $accountID . ' user: ' . $userId);
+                return false;
+            }
+        }
+
         if ($this->update($accountID, $data)) {
-            // log_message('debug', 'Update successful for account ID: ' . $accountID);
             return true;
         } else {
             log_message('error', 'Update failed for account ID: ' . $accountID);
@@ -1406,8 +1511,12 @@ class BudgetModel extends ObservedModel
         }
     }
 
-    public function updateDebtAccount($accountId, $data){
-        return $this->db->table('bf_users_debt_accounts')->where('id', $accountId)->update($data);
+    public function updateDebtAccount($accountId, $data, ?int $userId = null){
+        $builder = $this->db->table('bf_users_debt_accounts')->where('id', (int) $accountId);
+        if ($userId !== null && $userId > 0) {
+            $builder->where('user_id', $userId);
+        }
+        return $builder->update($data);
     }
 
     public function updateForecastEntry($userId, $forecastDate, array $data): bool
@@ -1418,19 +1527,43 @@ class BudgetModel extends ObservedModel
             ->update($data);
     }
 
-    public function updateWalletBalance($walletID, $amount) {
-        $walletModel = new \App\Models\WalletModel(); // Assuming WalletModel exists
-        $wallet = $walletModel->find($walletID);
-        if ($wallet) {
-            $newBalance = $wallet['balance'] + $amount; // Assuming 'balance' is the field name in your wallet table
-            $walletModel->update($walletID, ['balance' => $newBalance]);
-            return true;
+    public function updateWalletBalance($walletID, $amount, ?int $userId = null) {
+        $walletBuilder = $this->db->table('bf_users_wallet')->where('id', (int) $walletID);
+        if ($userId !== null && $userId > 0) {
+            $walletBuilder->where('user_id', $userId);
         }
-        return false;
+        $wallet = $walletBuilder->get()->getRowArray();
+        if (! is_array($wallet) || $wallet === []) {
+            return false;
+        }
+
+        $currentBalance = isset($wallet['amount']) && is_numeric($wallet['amount'])
+            ? (float) $wallet['amount']
+            : (float) ($wallet['balance'] ?? 0.0);
+        $newBalance = round($currentBalance + (float) $amount, 2);
+
+        $updatePayload = ['amount' => $newBalance];
+        if (array_key_exists('balance', $wallet)) {
+            $updatePayload['balance'] = $newBalance;
+        }
+
+        $updateBuilder = $this->db->table('bf_users_wallet')->where('id', (int) $walletID);
+        if ($userId !== null && $userId > 0) {
+            $updateBuilder->where('user_id', $userId);
+        }
+        return (bool) $updateBuilder->update($updatePayload);
     }
 
-    public function unpaidAccount($accountID) {
-        return $this->update($accountID, ['paid' => 0]);
+    public function unpaidAccount($accountID, ?int $userId = null) {
+        $builder = $this->db->table('bf_users_budgeting')
+            ->where('id', (int) $accountID)
+            ->where('paid', 1);
+        if ($userId !== null && $userId > 0) {
+            $builder->where('created_by', $userId);
+        }
+        $builder->update(['paid' => 0, 'status' => 1]);
+
+        return $this->db->affectedRows() > 0;
     }
     // public function getUserBudgetRecords($cuID) {
     //     $builder = $this->db->table('bf_users_budgeting');

@@ -89,7 +89,7 @@ $fieldData = array(
     </button>
 </div>
 <div class="modal-body">
-    <form class="form-horizontal" id="add_user_budgeting_account" action="<?= site_url('Wallets/Add'); ?>" method="POST">
+    <form class="form-horizontal" id="add_user_budgeting_account" action="<?= site_url('Budget/Account-Manager'); ?>" method="POST">
         <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
 
         <!-- Account Information Section -->
@@ -211,7 +211,7 @@ $fieldData = array(
                             </div>
                         </div>
                         <div class="pricing-body">                                
-                            <form class="form-horizontal" id="add_user_budgeting_account">
+                            <form class="form-horizontal" id="add_user_budgeting_account" action="<?= site_url('Budget/Account-Manager'); ?>" method="POST">
                                 <input type="hidden" name="<?= csrf_token(); ?>" value="<?= csrf_hash(); ?>">
                                 <fieldset>
                                     <?php echo view('UserModule\Views\Budget\Add\user_fields', $fieldData); ?>

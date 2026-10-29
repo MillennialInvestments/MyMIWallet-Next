@@ -40,26 +40,105 @@ class WalletModel extends Model
 
     // --- Core wallet ops -----------------------------------------------------
 
-    public function addTokensToWallet($walletId, $amount)
+    public function getWalletRow(int $walletId, ?int $userId = null): ?array
     {
-        return $this->db->table($this->table)
-            ->set('amount', "amount + {$amount}", false)
-            ->where('id', $walletId)
-            ->update();
+        if ($walletId <= 0) {
+            return null;
+        }
+
+        $builder = $this->db->table($this->table)->where('id', $walletId);
+        if ($userId !== null && $userId > 0) {
+            $builder->where('user_id', $userId);
+        }
+
+        $row = $builder->get()->getRowArray();
+        if (! is_array($row) || $row === []) {
+            return null;
+        }
+
+        $effectiveBalance = isset($row['amount']) && is_numeric($row['amount'])
+            ? (float) $row['amount']
+            : (float) ($row['balance'] ?? 0.0);
+        $row['amount']  = round($effectiveBalance, 2);
+        $row['balance'] = round(isset($row['balance']) && is_numeric($row['balance']) ? (float) $row['balance'] : $effectiveBalance, 2);
+        $row['currency'] = ! empty($row['currency']) ? strtoupper(trim((string) $row['currency'])) : 'USD';
+
+        return $row;
     }
 
-    public function deductFunds($walletId, $amount)
+    public function addTokensToWallet($walletId, $amount, ?int $userId = null): bool
     {
-        return $this->db->table($this->table)
-            ->set('amount', "amount - {$amount}", false)
-            ->where('id', $walletId)
-            ->update();
+        $walletId = (int) $walletId;
+        $normalizedAmount = round((float) $amount, 2);
+        if ($walletId <= 0 || ! is_finite($normalizedAmount) || $normalizedAmount <= 0.0) {
+            return false;
+        }
+
+        $row = $this->getWalletRow($walletId, $userId);
+        if ($row === null) {
+            return false;
+        }
+
+        $cols = $this->getWalletDeleteColumns($this->table);
+        $builder = $this->db->table($this->table)->where('id', $walletId);
+        if ($userId !== null && $userId > 0) {
+            $builder->where('user_id', $userId);
+        }
+
+        $formatted = number_format($normalizedAmount, 2, '.', '');
+        $builder->set('amount', "ROUND(COALESCE(amount, 0) + {$formatted}, 2)", false);
+        if (isset($cols['balance'])) {
+            $builder->set('balance', "ROUND(COALESCE(balance, amount, 0) + {$formatted}, 2)", false);
+        }
+
+        return (bool) $builder->update() && $this->db->affectedRows() > 0;
     }
 
-    public function deleteWallet($walletId)
+    public function deductFunds($walletId, $amount, ?int $userId = null): bool
+    {
+        $walletId = (int) $walletId;
+        $normalizedAmount = round((float) $amount, 2);
+        if ($walletId <= 0 || ! is_finite($normalizedAmount) || $normalizedAmount <= 0.0) {
+            return false;
+        }
+
+        $row = $this->getWalletRow($walletId, $userId);
+        if ($row === null) {
+            return false;
+        }
+
+        $available = (float) ($row['amount'] ?? 0.0);
+        if ($available + 0.00001 < $normalizedAmount) {
+            return false;
+        }
+
+        $cols = $this->getWalletDeleteColumns($this->table);
+        $formatted = number_format($normalizedAmount, 2, '.', '');
+
+        $builder = $this->db->table($this->table)
+            ->where('id', $walletId)
+            ->where("COALESCE(amount, 0) >= {$formatted}", null, false);
+        if ($userId !== null && $userId > 0) {
+            $builder->where('user_id', $userId);
+        }
+
+        $builder->set('amount', "ROUND(COALESCE(amount, 0) - {$formatted}, 2)", false);
+        if (isset($cols['balance'])) {
+            $builder->set('balance', "ROUND(COALESCE(balance, amount, 0) - {$formatted}, 2)", false);
+        }
+
+        $updated = (bool) $builder->update();
+        return $updated && $this->db->affectedRows() > 0;
+    }
+
+    public function deleteWallet($walletId, ?int $userId = null)
     {
         $data = ['active' => 0, 'deleted' => 1];
-        return $this->db->table('bf_users_wallet')->where('id', $walletId)->update($data);
+        $builder = $this->db->table('bf_users_wallet')->where('id', (int) $walletId);
+        if ($userId !== null && $userId > 0) {
+            $builder->where('user_id', $userId);
+        }
+        return $builder->update($data);
     }
 
     private function normalizeDeleteWalletType(string $accountType): ?array
@@ -1728,11 +1807,14 @@ class WalletModel extends Model
 
     public function logAuditTrail($userId, $walletId, $action, $details)
     {
+        if (! $this->db->tableExists('bf_users_audit_log')) {
+            return true;
+        }
         $auditData = [
             'user_id'   => $userId,
             'wallet_id' => $walletId,
             'action'    => $action,
-            'details'   => json_encode($details),
+            'details'   => is_string($details) ? $details : json_encode($details),
             'created_at'=> date('Y-m-d H:i:s'),
         ];
         $result = $this->db->table('bf_users_audit_log')->insert($auditData);
@@ -1741,6 +1823,94 @@ class WalletModel extends Model
             return false;
         }
         return true;
+    }
+
+    public function logAudit($walletId, string $status, array $transactions = [], ?int $userId = null): bool
+    {
+        $walletRow = $this->getWalletRow((int) $walletId);
+        $resolvedUserId = $userId ?? (int) ($walletRow['user_id'] ?? 0);
+        return (bool) $this->logAuditTrail($resolvedUserId, (int) $walletId, 'wallet_audit:' . $status, [
+            'status'            => $status,
+            'transaction_count' => count($transactions),
+        ]);
+    }
+
+    public function logTransaction($walletId, string $type, float $amount, array $meta = []): int
+    {
+        $walletRow = $this->getWalletRow((int) $walletId);
+        $userId = (int) ($meta['user_id'] ?? ($walletRow['user_id'] ?? 0));
+        $currency = strtoupper(trim((string) ($meta['currency'] ?? ($walletRow['currency'] ?? 'USD'))));
+        $now = date('Y-m-d H:i:s');
+
+        return $this->insertWalletTransaction([
+            'status'          => (string) ($meta['status'] ?? 'Completed'),
+            'active'          => 'Yes',
+            'unix_timestamp'  => time(),
+            'submitted_date'  => $now,
+            'posted_date'     => $now,
+            'trans_type'      => ucfirst(strtolower(trim($type))),
+            'type'            => strtolower(trim($type)),
+            'currency'        => $currency,
+            'wallet_id'       => (int) $walletId,
+            'user_id'         => $userId,
+            'user_email'      => (string) ($meta['user_email'] ?? ($walletRow['user_email'] ?? '')),
+            'nickname'        => (string) ($meta['nickname'] ?? ($walletRow['nickname'] ?? '')),
+            'amount'          => round($amount, 2),
+            'provider'        => (string) ($meta['provider'] ?? 'internal'),
+            'external_id'     => (string) ($meta['external_id'] ?? ('tx_' . bin2hex(random_bytes(8)))),
+        ]);
+    }
+
+    public function logCurrencyExchange($fromWalletId, $toWalletId, float $amount, float $convertedAmount, string $fromCurrency, string $toCurrency, float $rate, ?int $userId = null): bool
+    {
+        $outId = $this->logTransaction((int) $fromWalletId, 'currency_exchange', -abs($amount), [
+            'user_id'  => $userId,
+            'currency' => $fromCurrency,
+            'provider' => sprintf('fx:%s->%s@%0.6f', strtoupper($fromCurrency), strtoupper($toCurrency), $rate),
+        ]);
+        $inId = $this->logTransaction((int) $toWalletId, 'currency_exchange', abs($convertedAmount), [
+            'user_id'  => $userId,
+            'currency' => $toCurrency,
+            'provider' => sprintf('fx:%s->%s@%0.6f', strtoupper($fromCurrency), strtoupper($toCurrency), $rate),
+        ]);
+
+        return $outId > 0 && $inId > 0;
+    }
+
+    public function getWalletTransactions($walletId, ?int $userId = null): array
+    {
+        return $this->getTransactionHistory((int) $walletId, $userId, 500);
+    }
+
+    public function getWalletBalance($walletId, ?int $userId = null): float
+    {
+        $row = $this->getWalletRow((int) $walletId, $userId);
+        return $row !== null ? (float) ($row['amount'] ?? 0.0) : 0.0;
+    }
+
+    public function getTransactionsByPeriod($walletId, string $period = 'monthly', ?int $userId = null): array
+    {
+        return $this->getTransactionHistory((int) $walletId, $userId, 200);
+    }
+
+    public function updateWalletStatus($walletId, string $status, ?int $userId = null): bool
+    {
+        $walletId = (int) $walletId;
+        if ($walletId <= 0) {
+            return false;
+        }
+        $normalized = strtolower(trim($status));
+        $isActive = in_array($normalized, ['active', '1', 'yes', 'unfrozen'], true) ? 1 : 0;
+
+        $builder = $this->db->table($this->table)->where('id', $walletId);
+        if ($userId !== null && $userId > 0) {
+            $builder->where('user_id', $userId);
+        }
+
+        return (bool) $builder->update([
+            'status' => $status,
+            'active' => $isActive,
+        ]);
     }
 
     public function transferTokens($walletId, $amount)

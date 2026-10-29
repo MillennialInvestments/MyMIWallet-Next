@@ -49,23 +49,18 @@ class TradingViewWebhookService
             ];
         }
 
-        // Link with active position if available
+        // Enforce exact authenticated trade/position identity (no ticker-only arbitrary fallback)
         $positionId = null;
         if (! empty($payload['trade_uuid'])) {
-            $pos = $this->positionModel->findByUuid((string) $payload['trade_uuid']);
-            if ($pos) {
-                $positionId = (int) $pos['id'];
+            $tradeUuid = (string) $payload['trade_uuid'];
+            $pos = $this->positionModel->findByUuid($tradeUuid);
+            if (! $pos) {
+                return [
+                    'status' => 'rejected',
+                    'reason' => sprintf('Unknown trade_uuid "%s": exact position not found. Auto-attachment disallowed.', $tradeUuid),
+                ];
             }
-        }
-        if ($positionId === null) {
-            $activeForTicker = $this->positionModel
-                ->where('ticker', $ticker)
-                ->whereIn('status', ['open', 'warning_momentum', 'warning_trailing', 'warning_theta', 'target_reached'])
-                ->orderBy('created_at', 'DESC')
-                ->first();
-            if ($activeForTicker) {
-                $positionId = (int) $activeForTicker['id'];
-            }
+            $positionId = (int) $pos['id'];
         }
 
         $now = date('Y-m-d H:i:s');

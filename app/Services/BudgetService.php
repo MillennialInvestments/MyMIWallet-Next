@@ -12,6 +12,7 @@ use CodeIgniter\I18n\Time;
 use DateInterval;
 use DateTime;
 use DateTimeImmutable;
+use DateTimeInterface;
 use DateTimeZone;
 use RuntimeException;
 use UnexpectedValueException;
@@ -43,7 +44,7 @@ class BudgetService
         log_message($level, '[SERVICE] ' . static::class . ' ' . $message);
     }
 
-    public function __construct(?int $userId = null)
+    public function __construct(?int $userId = null, $budgetModel = null, $accountsModel = null, ?string $timezone = null)
     {
         helper(['budget']);
         $this->auth = service('authentication');
@@ -51,8 +52,12 @@ class BudgetService
         $this->siteSettings = config('SiteSettings');
         $this->debug = $this->siteSettings->debug;
 
-        $this->accountsModel = new AccountsModel();
-        $this->budgetModel = new BudgetModel();
+        if ($timezone !== null && trim($timezone) !== '') {
+            $this->timezone = $timezone;
+        }
+
+        $this->accountsModel = $accountsModel ?? new AccountsModel();
+        $this->budgetModel = $budgetModel ?? new BudgetModel();
         // $this->userModel = new UserModel();
 
         // Initialize UserService and pass required dependencies
@@ -323,6 +328,7 @@ class BudgetService
                 'account_type'      => isset($input['account_type']) ? trim((string) $input['account_type']) : null,
                 'source_type'       => $source,
                 'is_debt'           => $isDebt ? 1 : 0,
+                'wallet_id'         => isset($input['wallet_id']) && (int) $input['wallet_id'] > 0 ? (int) $input['wallet_id'] : null,
                 'intervals'         => $input['intervals'] ?? null,
                 'due_date_estimated'=> $dueDate['estimated'],
             ];
@@ -371,21 +377,37 @@ class BudgetService
             'Daily',
             'Weekly',
             'Bi-Weekly',
+            'Bi-Monthly',
+            'Semi-Monthly',
             'Monthly',
             'Quarterly',
             'Semi-Annual',
+            'Semi-Annually',
+            'Annual',
             'Annually',
             '15th/Last',
             '15/Last',
         ];
 
-        if ($recurringSchedule === '' || !in_array($recurringSchedule, $allowedSchedules, true)) {
+        $matchedSchedule = null;
+        foreach ($allowedSchedules as $candidate) {
+            if (strcasecmp($candidate, $recurringSchedule) === 0) {
+                $matchedSchedule = $candidate;
+                break;
+            }
+        }
+
+        if ($recurringSchedule === '' || $matchedSchedule === null) {
             throw new \UnexpectedValueException('Recurring schedule is required and must match the allowed options.');
         }
 
-        if ($recurringSchedule === '15/Last') {
-            $recurringSchedule = '15th/Last';
-        }
+        $recurringSchedule = match ($matchedSchedule) {
+            '15/Last'       => '15th/Last',
+            'Annual'        => 'Annually',
+            'Semi-Annually' => 'Semi-Annual',
+            'Semi-Monthly'  => 'Bi-Monthly',
+            default         => $matchedSchedule,
+        };
 
         $accountData['recurring_schedule'] = $recurringSchedule;
 
@@ -396,6 +418,9 @@ class BudgetService
     {
         $this->serviceTrace('::' . __FUNCTION__);
         try {
+            if ($this->cuID !== null && $this->cuID > 0) {
+                $data['created_by'] = (int) $this->cuID;
+            }
             $data = $this->applyRecurringScheduleRules($data);
 
             log_message('debug', 'BudgetService::save normalized recurring payload: ' . json_encode([
@@ -414,10 +439,14 @@ class BudgetService
         }
     }
 
-    public function update(int $accountId, array $data): bool
+    public function update(int $accountId, array $data, ?int $userId = null): bool
     {
         $this->serviceTrace('::' . __FUNCTION__);
         try {
+            $ownerId = $userId ?? $this->cuID ?? (isset($data['created_by']) ? (int) $data['created_by'] : null);
+            if ($ownerId !== null && $ownerId > 0) {
+                $data['created_by'] = (int) $ownerId;
+            }
             $data = $this->applyRecurringScheduleRules($data);
 
             log_message('debug', 'BudgetService::update normalized recurring payload: ' . json_encode([
@@ -427,7 +456,7 @@ class BudgetService
                 'intervals' => $data['intervals'] ?? null,
             ]));
 
-            $updated = $this->budgetModel->updateAccount($accountId, $data);
+            $updated = $this->budgetModel->updateAccount($accountId, $data, $ownerId !== null && $ownerId > 0 ? (int) $ownerId : null);
             if ($updated) {
                 $this->invalidateExecutiveSummaryCache();
             }
@@ -898,18 +927,20 @@ class BudgetService
             (int) $to->format('Y')
         );
 
-        $filtered         = [];
-        $notes            = $periodWarnings;
-        $incomeBudgeted   = 0.0;
-        $expenseBudgeted  = 0.0;
-        $fixedExpenses    = 0.0;
-        $variableExpenses = 0.0;
-        $savingsReserved  = 0.0;
-        $adjustments      = 0.0;
+        $filtered                   = [];
+        $notes                      = $periodWarnings;
+        $incomeBudgeted             = 0.0;
+        $expenseBudgeted            = 0.0;
+        $fixedExpenses              = 0.0;
+        $variableExpenses           = 0.0;
+        $savingsReserved            = 0.0;
+        $adjustments                = 0.0;
+        $budgetedDebtPayments       = 0.0;
+        $budgetedSavingsInExpenses  = 0.0;
 
         foreach ($records as $record) {
             $recordDate = $this->parseRecordDate($record);
-            if (!$recordDate instanceof DateTime) {
+            if (!$recordDate instanceof DateTimeInterface) {
                 $notes[] = sprintf('Budget record %s missing a valid due date and was excluded.', $record['id'] ?? 'unknown');
                 continue;
             }
@@ -922,9 +953,10 @@ class BudgetService
             $record['_recordDate'] = $recordDate->format('Y-m-d');
             $filtered[] = $record;
 
-            $netAmount = $this->asFloat($record['net_amount'] ?? 0);
+            $netAmount = abs($this->asFloat($record['net_amount'] ?? 0));
             $classification = $this->classifyRecord($record);
             $isRecurring = strtolower((string) ($record['recurring_account'] ?? '')) === 'yes';
+            $isSavings = $this->looksLikeSavings($record);
 
             if ($classification === 'income') {
                 $incomeBudgeted += $netAmount;
@@ -935,14 +967,20 @@ class BudgetService
                 } else {
                     $variableExpenses += $netAmount;
                 }
+                if ($classification === 'debt' || !empty($record['is_debt'])) {
+                    $budgetedDebtPayments += $netAmount;
+                }
+                if ($isSavings) {
+                    $budgetedSavingsInExpenses += $netAmount;
+                }
             }
 
-            if ($this->looksLikeSavings($record)) {
+            if ($isSavings) {
                 $savingsReserved += $netAmount;
             }
 
             if ($this->looksLikeAdjustment($record)) {
-                $adjustments += $netAmount;
+                $adjustments += $this->asFloat($record['net_amount'] ?? 0);
             }
         }
 
@@ -972,12 +1010,14 @@ class BudgetService
                     'budgeted' => round($expenseBudgeted, 2),
                     'actual'   => round($expenseActual, 2),
                 ],
-                'fixedExpenses'        => round($fixedExpenses, 2),
-                'variableExpenses'     => round($variableExpenses, 2),
-                'savingsReserved'      => round($savingsReserved, 2),
-                'adjustments'          => round($adjustments, 2),
-                'minDebtPayments'      => round($debtMinimums['total'], 2),
-                'debtMinimumBreakdown' => $debtMinimums,
+                'fixedExpenses'             => round($fixedExpenses, 2),
+                'variableExpenses'          => round($variableExpenses, 2),
+                'savingsReserved'           => round($savingsReserved, 2),
+                'adjustments'               => round($adjustments, 2),
+                'minDebtPayments'           => round($debtMinimums['total'], 2),
+                'budgetedDebtPayments'      => round($budgetedDebtPayments, 2),
+                'budgetedSavingsInExpenses' => round($budgetedSavingsInExpenses, 2),
+                'debtMinimumBreakdown'      => $debtMinimums,
             ],
             'flags' => [
                 'actualsAvailable' => $actualsAvailable,
@@ -1012,13 +1052,138 @@ class BudgetService
         return round($total, 2);
     }
 
-    private function extractActuals(int $userId, Time $from, Time $to): array
+    public function extractActuals(int $userId, Time $from, Time $to): array
     {
-        // Placeholder for future integration with transaction aggregations (Plaid, wallet sync, etc.)
+        $fromTs   = $from->getTimestamp();
+        $toTs     = $to->getTimestamp();
+        $fromDate = $from->format('Y-m-d');
+        $toDate   = $to->format('Y-m-d');
+
+        $paidBudgetIncome  = 0.0;
+        $paidBudgetExpense = 0.0;
+        $walletInflows     = 0.0;
+        $walletOutflows    = 0.0;
+        $internalTransfers = 0.0;
+        $paidBudgetIds     = [];
+        $hasDataSource     = false;
+
+        try {
+            if (isset($this->budgetModel) && method_exists($this->budgetModel, 'getPeriodRecords')) {
+                $hasDataSource = true;
+                $records = $this->budgetModel->getPeriodRecords(
+                    $userId,
+                    $fromTs,
+                    $toTs,
+                    (int) $from->format('Y'),
+                    (int) $to->format('Y')
+                );
+
+                foreach ($records as $record) {
+                    if ((int) ($record['paid'] ?? 0) !== 1 || (int) ($record['deleted'] ?? 0) === 1) {
+                        continue;
+                    }
+
+                    $recordDate = $this->parseRecordDate($record);
+                    if (!$recordDate instanceof DateTimeInterface) {
+                        continue;
+                    }
+                    $ts = $recordDate->getTimestamp();
+                    if ($ts < $fromTs || $ts > $toTs) {
+                        continue;
+                    }
+
+                    $amount = abs($this->asFloat($record['net_amount'] ?? 0.0));
+                    $classification = $this->classifyRecord($record);
+                    if ($classification === 'income') {
+                        $paidBudgetIncome += $amount;
+                    } else {
+                        $paidBudgetExpense += $amount;
+                    }
+
+                    if (!empty($record['id'])) {
+                        $paidBudgetIds[(int) $record['id']] = true;
+                    }
+                }
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'BudgetService::extractActuals budget query error: {msg}', ['msg' => $e->getMessage()]);
+        }
+
+        try {
+            $db = isset($this->budgetModel->db) && $this->budgetModel->db !== null
+                ? $this->budgetModel->db
+                : \Config\Database::connect();
+
+            if ($db->tableExists('bf_users_wallet_transactions')) {
+                $hasDataSource = true;
+                $builder = $db->table('bf_users_wallet_transactions')
+                    ->where('user_id', $userId);
+
+                $rows = $builder->get()->getResultArray();
+                foreach ($rows as $tx) {
+                    $status = strtolower(trim((string) ($tx['status'] ?? 'completed')));
+                    if (in_array($status, ['failed', 'cancelled', 'canceled', 'pending', 'reversed', 'removed'], true)) {
+                        continue;
+                    }
+
+                    $txDateStr = (string) ($tx['submitted_date'] ?? $tx['created_at'] ?? $tx['unix_timestamp'] ?? '');
+                    $txTs = null;
+                    if (is_numeric($txDateStr) && (int) $txDateStr > 0) {
+                        $txTs = (int) $txDateStr;
+                    } elseif ($txDateStr !== '') {
+                        $parsed = strtotime($txDateStr);
+                        if ($parsed !== false) {
+                            $txTs = $parsed;
+                        }
+                    }
+
+                    if ($txTs !== null && ($txTs < $fromTs || $txTs > $toTs)) {
+                        $txDay = date('Y-m-d', $txTs);
+                        if ($txDay < $fromDate || $txDay > $toDate) {
+                            continue;
+                        }
+                    }
+
+                    $linkedBudgetId = (int) ($tx['budget_id'] ?? 0);
+                    if ($linkedBudgetId > 0 && isset($paidBudgetIds[$linkedBudgetId])) {
+                        continue;
+                    }
+
+                    $transType = strtolower(trim((string) ($tx['trans_type'] ?? $tx['type'] ?? '')));
+                    $amount = abs($this->asFloat($tx['amount'] ?? 0.0));
+                    if ($amount <= 0.0) {
+                        continue;
+                    }
+
+                    if (in_array($transType, ['transfer', 'internal transfer', 'internal_transfer', 'wallet transfer', 'currency_exchange'], true)) {
+                        $internalTransfers += $amount;
+                        continue;
+                    }
+
+                    if (in_array($transType, ['deposit', 'income', 'credit', 'dividend', 'refund'], true)) {
+                        $walletInflows += $amount;
+                    } elseif (in_array($transType, ['withdraw', 'withdrawal', 'expense', 'debit', 'payment', 'bill', 'fee'], true)) {
+                        $walletOutflows += $amount;
+                    }
+                }
+            }
+        } catch (\Throwable $e) {
+            log_message('debug', 'BudgetService::extractActuals wallet ledger inspection skipped: {msg}', ['msg' => $e->getMessage()]);
+        }
+
+        $totalIncome  = round($paidBudgetIncome + $walletInflows, 2);
+        $totalExpense = round($paidBudgetExpense + $walletOutflows, 2);
+
         return [
-            'income'   => 0.0,
-            'expense'  => 0.0,
-            'available'=> false,
+            'income'            => $totalIncome,
+            'expense'           => $totalExpense,
+            'net'               => round($totalIncome - $totalExpense, 2),
+            'paidBudgetIncome'  => round($paidBudgetIncome, 2),
+            'paidBudgetExpense' => round($paidBudgetExpense, 2),
+            'walletInflows'     => round($walletInflows, 2),
+            'walletOutflows'    => round($walletOutflows, 2),
+            'internalTransfers' => round($internalTransfers, 2),
+            'available'         => $hasDataSource,
         ];
     }
 
@@ -1045,14 +1210,20 @@ class BudgetService
 
     private function calculateAvailableAmount(array $totals): array
     {
-        $income      = (float) ($totals['income']['budgeted'] ?? 0);
-        $fixed       = (float) ($totals['fixedExpenses'] ?? 0);
-        $variable    = (float) ($totals['variableExpenses'] ?? 0);
-        $minDebt     = (float) ($totals['minDebtPayments'] ?? 0);
-        $adjustments = (float) ($totals['adjustments'] ?? 0);
-        $reserved    = (float) ($totals['savingsReserved'] ?? 0);
+        $income          = (float) ($totals['income']['budgeted'] ?? 0);
+        $fixed           = (float) ($totals['fixedExpenses'] ?? 0);
+        $variable        = (float) ($totals['variableExpenses'] ?? 0);
+        $minDebt         = (float) ($totals['minDebtPayments'] ?? 0);
+        $adjustments     = (float) ($totals['adjustments'] ?? 0);
+        $reserved        = (float) ($totals['savingsReserved'] ?? 0);
+        $budgetedDebt    = (float) ($totals['budgetedDebtPayments'] ?? 0);
+        $budgetedSavings = (float) ($totals['budgetedSavingsInExpenses'] ?? 0);
 
-        $raw = $income - $fixed - $variable - $minDebt + $adjustments - $reserved;
+        // Prevent double-subtracting debt minimums or savings allocations already included in fixed/variable expenses
+        $effectiveMinDebt = max(0.0, $minDebt - $budgetedDebt);
+        $effectiveSavings = max(0.0, $reserved - $budgetedSavings);
+
+        $raw = $income - $fixed - $variable - $effectiveMinDebt + $adjustments - $effectiveSavings;
         $clamped = $raw < 0 ? 0.0 : $raw;
         $overAllocation = $raw < 0 ? abs($raw) : 0.0;
 
@@ -1065,8 +1236,10 @@ class BudgetService
                 'fixedExpenses'   => round($fixed, 2),
                 'variableBudget'  => round($variable, 2),
                 'minDebtPayments' => round($minDebt, 2),
+                'effectiveDebt'   => round($effectiveMinDebt, 2),
                 'adjustments'     => round($adjustments, 2),
                 'reservedSavings' => round($reserved, 2),
+                'effectiveSavings'=> round($effectiveSavings, 2),
             ],
         ];
     }
@@ -1490,64 +1663,74 @@ class BudgetService
         return $this->budgetModel->insertAccount($accountData);
     }
 
-    public function approveRecurringSchedule($accountID, $formData) {
-        // Log input data
-        log_message('debug', 'BudgetService L45 - Approving recurring schedule for AccountID: ' . $accountID . ' with data: ' . print_r($formData, true));
-    
-        // Validate the required fields
-        // if (empty($formData['netAmount'])) {
-        //     return ['success' => false, 'message' => 'Missing net or gross amount in request.'];
-        // }
-    
-        $userId = $this->requireUserId();
-    
-        $netAmount = floatval(str_replace(',', '', $formData['netAmount']));
-        $grossAmount = floatval(str_replace(',', '', $formData['grossAmount']));
+    public function approveRecurringSchedule($accountID, $formData, ?int $userId = null) {
+        $resolvedUserId = $userId ?? $this->cuID ?? $this->requireUserId();
+        if ($resolvedUserId <= 0) {
+            return ['success' => false, 'message' => 'Authentication required.'];
+        }
 
-        log_message('debug', 'BudgetService L861 - $netAmount: ' . $netAmount . ' | $grossAmount: ' . $grossAmount);
+        $parentRecord = $this->budgetModel->getAccountInformation((int) $accountID, (int) $resolvedUserId);
+        if (is_array($parentRecord) && $parentRecord !== [] && (int) ($parentRecord['created_by'] ?? 0) !== (int) $resolvedUserId) {
+            log_message('warning', 'BudgetService::approveRecurringSchedule denied cross-user access for Account ID: ' . (int) $accountID);
+            return ['success' => false, 'message' => 'Unauthorized account access.'];
+        }
+
+        $netAmount = floatval(str_replace(',', '', (string) ($formData['netAmount'] ?? '0')));
+        $grossAmount = floatval(str_replace(',', '', (string) ($formData['grossAmount'] ?? $netAmount)));
+
+        $dueDateRaw = (string) ($formData['dueDate'] ?? date('m/d/Y'));
+        $dueTimestamp = strtotime($dueDateRaw) ?: time();
 
         // Prepare the data for insertion
         $data = [
-            'account_id' => $accountID,
+            'account_id' => (int) $accountID,
             'status' => 1,
-            'beta' => $this->siteSettings->beta,
+            'beta' => $this->siteSettings->beta ?? 'No',
             'mode' => 'Recurring',
-            'created_by' => $userId ?? $this->cuID ?? 0,
-            'created_by_email' => $formData['cuEmail'] ?? '',
+            'created_by' => (int) $resolvedUserId,
+            'created_by_email' => (string) ($parentRecord['created_by_email'] ?? $formData['cuEmail'] ?? ''),
             'unix_timestamp' => time(),
-            'designated_date' => $formData['dueDate'] ?? '',
-            'month' => date('m', strtotime($formData['dueDate'])),
-            'day' => date('d', strtotime($formData['dueDate'])),
-            'year' => date('Y', strtotime($formData['dueDate'])),
-            'username' => $formData['cuUsername'] ?? '',
-            'name' => $formData['accountName'] ?? '',
+            'designated_date' => date('m/d/Y', $dueTimestamp),
+            'month' => (int) date('m', $dueTimestamp),
+            'day' => (int) date('d', $dueTimestamp),
+            'year' => (int) date('Y', $dueTimestamp),
+            'username' => (string) ($parentRecord['username'] ?? $formData['cuUsername'] ?? ''),
+            'name' => (string) ($formData['accountName'] ?? $parentRecord['name'] ?? ''),
             'net_amount' => $netAmount,
             'gross_amount' => $grossAmount,
             'recurring_account' => 'Yes',
-            'account_type' => $formData['accountType'] ?? '',
-            'source_type' => $formData['accountSourceType'] ?? '',
+            'account_type' => (string) ($formData['accountType'] ?? $parentRecord['account_type'] ?? ''),
+            'source_type' => (string) ($formData['accountSourceType'] ?? $parentRecord['source_type'] ?? ''),
         ];
-    
-        log_message('debug', 'BudgetService L885 - $data Array: '. (print_r($data, true)));
-        
+
         // Insert the schedule into the database
         if (!$this->budgetModel->approveRecurringSchedule($data)) {
             log_message('error', 'Failed to insert recurring schedule for Account ID: ' . $accountID);
             return ['success' => false, 'message' => 'Failed to insert recurring schedule.'];
         }
-        log_message('debug', 'Successfully inserted recurring schedule for Account ID: ' . $accountID);
-    
+        $this->invalidateExecutiveSummaryCache();
+
         return ['success' => true, 'message' => 'Recurring schedules successfully created.'];
     }
 
     // Method to bulk delete multiple accounts
-    public function bulkDelete($ids) {
-        return $this->budgetModel->bulkDelete($ids);
+    public function bulkDelete($ids, ?int $userId = null) {
+        $resolvedUserId = $userId ?? $this->cuID;
+        $result = $this->budgetModel->bulkDelete($ids, $resolvedUserId !== null && $resolvedUserId > 0 ? (int) $resolvedUserId : null);
+        if ($result) {
+            $this->invalidateExecutiveSummaryCache();
+        }
+        return $result;
     }
     
     // Method to bulk update the status of multiple accounts
-    public function bulkUpdateStatus($ids, $status) {
-        return $this->budgetModel->bulkUpdateStatus($ids, $status);
+    public function bulkUpdateStatus($ids, $status, ?int $userId = null) {
+        $resolvedUserId = $userId ?? $this->cuID;
+        $result = $this->budgetModel->bulkUpdateStatus($ids, $status, $resolvedUserId !== null && $resolvedUserId > 0 ? (int) $resolvedUserId : null);
+        if ($result) {
+            $this->invalidateExecutiveSummaryCache();
+        }
+        return $result;
     }
 
     public function calculateDebtPayoff($totalDebt, $interestRate, $monthlyPayment) {
@@ -1723,12 +1906,22 @@ class BudgetService
     }
 
     // Services for canceling or bulk updating accounts
-    public function cancelAccount($accountId) {
-        return $this->budgetModel->cancelAccount($accountId);
+    public function cancelAccount($accountId, ?int $userId = null) {
+        $resolvedUserId = $userId ?? $this->cuID;
+        $result = $this->budgetModel->cancelAccount($accountId, $resolvedUserId !== null && $resolvedUserId > 0 ? (int) $resolvedUserId : null);
+        if ($result) {
+            $this->invalidateExecutiveSummaryCache();
+        }
+        return $result;
     }
 
-    public function cancelSubaccount($accountId) {
-        return $this->budgetModel->cancelSubaccount($accountId);
+    public function cancelSubaccount($accountId, ?int $userId = null) {
+        $resolvedUserId = $userId ?? $this->cuID;
+        $result = $this->budgetModel->cancelSubaccount($accountId, $resolvedUserId !== null && $resolvedUserId > 0 ? (int) $resolvedUserId : null);
+        if ($result) {
+            $this->invalidateExecutiveSummaryCache();
+        }
+        return $result;
     }
 
     public function createSavingsGoal($userId, $goalName, $targetAmount, $targetDate) {
@@ -2626,115 +2819,205 @@ class BudgetService
     }
 
     /**
-     * Marks a budget item as paid.
+     * Marks a budget item as paid with strict ownership verification, idempotency, and atomic balance mutation.
      *
-     * @param int $budgetId
+     * @param int|string $accountID
+     * @param int|null $userId
      * @return bool
      */
-    public function markAsPaid($accountID)
+    public function markAsPaid($accountID, ?int $userId = null): bool
     {
-        $budgetRecord = $this->budgetModel->getAccountInformation($accountID);
-        
-        if (!$budgetRecord) {
-            log_message('error', "markAsPaid: Budget record not found for Account ID: {$accountID}");
+        $accountId = (int) $accountID;
+        if ($accountId <= 0) {
             return false;
         }
-    
-        $isDebt = $budgetRecord['is_debt'] ?? 0;
-        $netAmount = $budgetRecord['net_amount'] ?? 0;
-        $walletID = $budgetRecord['wallet_id'] ?? null;
-        $userID = $budgetRecord['created_by'] ?? null;
+
+        $actorUserId = $userId ?? $this->cuID;
+        $budgetRecord = $this->budgetModel->getAccountInformation(
+            $accountId,
+            $actorUserId !== null && $actorUserId > 0 ? (int) $actorUserId : null
+        );
+
+        if (!is_array($budgetRecord) || $budgetRecord === []) {
+            log_message('warning', "markAsPaid: Budget record not found or unauthorized for Account ID: {$accountId}");
+            return false;
+        }
+
+        $recordOwnerId = (int) ($budgetRecord['created_by'] ?? 0);
+        if ($actorUserId !== null && $actorUserId > 0 && $recordOwnerId !== (int) $actorUserId) {
+            log_message('warning', "markAsPaid: Cross-user access denied for Account ID: {$accountId} by User ID: {$actorUserId}");
+            return false;
+        }
+
+        // Idempotent guard: already paid -> do not apply duplicate balance deduction
+        if ((int) ($budgetRecord['paid'] ?? 0) === 1) {
+            log_message('info', "markAsPaid: Account ID {$accountId} is already marked paid; skipping duplicate balance mutation.");
+            return true;
+        }
+
+        $isDebt     = !empty($budgetRecord['is_debt']);
+        $netAmount  = abs((float) ($budgetRecord['net_amount'] ?? 0.0));
+        $walletID   = !empty($budgetRecord['wallet_id']) ? (int) $budgetRecord['wallet_id'] : null;
         $sourceType = $budgetRecord['source_type'] ?? null;
-    
-        // Ensure all fields are correctly set
-        $updateData = [
-            'status'       => 1, // Ensures status is always 1
-            'paid'         => 1, // Marks as paid
-            'paid_date'    => date("Y-m-d"),
-            'paid_time'    => date("H:i:s"),
-            'submitted_on' => date("Y-m-d H:i:s") // Ensures timestamp is stored
-        ];
-    
-        $updateStatus = $this->budgetModel->updateAccount($accountID, $updateData);
-    
-        if (!$updateStatus) {
-            log_message('error', "markAsPaid: Failed to update budget record as paid for Account ID: {$accountID}");
-            return false;
-        }
-    
-        if ($isDebt) {
-            log_message('info', "markAsPaid: Processing debt payment update for Account ID: {$accountID}");
-    
-            if ($walletID) {
-                $this->budgetModel->updateWalletBalance($walletID, -$netAmount);
-                log_message('info', "markAsPaid: Wallet ID {$walletID} balance updated by -{$netAmount}");
-            } else {
-                $debtAccount = $this->budgetModel->getDebtAccountByUserAndSource($userID, $sourceType);
-                if ($debtAccount) {
-                    $this->budgetModel->updateDebtAccount($debtAccount['id'], [
-                        'current_balance' => $debtAccount['current_balance'] - $netAmount,
-                    ]);
-                    log_message('info', "markAsPaid: Debt account ID {$debtAccount['id']} balance updated by -{$netAmount}");
-                } else {
-                    log_message('error', "markAsPaid: No debt account found for User ID: {$userID} and Source: {$sourceType}");
+
+        $db = $this->budgetModel->db ?? \Config\Database::connect();
+        $db->transBegin();
+
+        try {
+            $transitionBuilder = $db->table('bf_users_budgeting')
+                ->where('id', $accountId)
+                ->where('paid', 0);
+            if ($recordOwnerId > 0) {
+                $transitionBuilder->where('created_by', $recordOwnerId);
+            }
+
+            $transitionBuilder->update([
+                'status'       => 1,
+                'paid'         => 1,
+                'paid_date'    => date('Y-m-d'),
+                'paid_time'    => date('H:i:s'),
+                'submitted_on' => date('Y-m-d H:i:s'),
+            ]);
+
+            if ($db->affectedRows() === 0) {
+                // Concurrent request already marked it paid
+                $db->transRollback();
+                return true;
+            }
+
+            if ($isDebt && $netAmount > 0.0) {
+                if ($walletID !== null && $walletID > 0) {
+                    $walletUpdated = $this->budgetModel->updateWalletBalance($walletID, -$netAmount, $recordOwnerId > 0 ? $recordOwnerId : null);
+                    if (!$walletUpdated) {
+                        throw new \RuntimeException("Failed to update wallet {$walletID} for budget payment {$accountId}");
+                    }
+                } elseif ($recordOwnerId > 0 && !empty($sourceType)) {
+                    $debtAccount = $this->budgetModel->getDebtAccountByUserAndSource($recordOwnerId, $sourceType);
+                    if (is_array($debtAccount) && !empty($debtAccount['id'])) {
+                        $newDebtBalance = round(max(0.0, (float) ($debtAccount['current_balance'] ?? 0.0) - $netAmount), 2);
+                        $this->budgetModel->updateDebtAccount((int) $debtAccount['id'], [
+                            'current_balance' => $newDebtBalance,
+                        ], $recordOwnerId);
+                    }
                 }
             }
+
+            if ($db->transStatus() === false) {
+                $db->transRollback();
+                return false;
+            }
+
+            $db->transCommit();
+            unset($this->requestCache['userBudget:' . $recordOwnerId]);
+            $this->invalidateExecutiveSummaryCache();
+
+            return true;
+        } catch (\Throwable $e) {
+            $db->transRollback();
+            log_message('error', "markAsPaid: Transaction failed for Account ID {$accountId}: " . $e->getMessage());
+            return false;
         }
-    
-        return true;
     }
-    
-    public function markAsUnpaid($accountID)
+
+    /**
+     * Reverses a paid budget item back to unpaid with strict ownership verification, idempotency, and atomic balance restoration.
+     *
+     * @param int|string $accountID
+     * @param int|null $userId
+     * @return bool
+     */
+    public function markAsUnpaid($accountID, ?int $userId = null): bool
     {
-        $budgetRecord = $this->budgetModel->getAccountInformation($accountID);
-    
-        if (!$budgetRecord) {
-            log_message('error', "markAsUnpaid: Budget record not found for Account ID: {$accountID}");
+        $accountId = (int) $accountID;
+        if ($accountId <= 0) {
             return false;
         }
-    
-        $isDebt = $budgetRecord['is_debt'] ?? 0;
-        $netAmount = $budgetRecord['net_amount'] ?? 0;
-        $walletID = $budgetRecord['wallet_id'] ?? null;
-        $userID = $budgetRecord['created_by'] ?? null;
+
+        $actorUserId = $userId ?? $this->cuID;
+        $budgetRecord = $this->budgetModel->getAccountInformation(
+            $accountId,
+            $actorUserId !== null && $actorUserId > 0 ? (int) $actorUserId : null
+        );
+
+        if (!is_array($budgetRecord) || $budgetRecord === []) {
+            log_message('warning', "markAsUnpaid: Budget record not found or unauthorized for Account ID: {$accountId}");
+            return false;
+        }
+
+        $recordOwnerId = (int) ($budgetRecord['created_by'] ?? 0);
+        if ($actorUserId !== null && $actorUserId > 0 && $recordOwnerId !== (int) $actorUserId) {
+            log_message('warning', "markAsUnpaid: Cross-user access denied for Account ID: {$accountId} by User ID: {$actorUserId}");
+            return false;
+        }
+
+        // Idempotent guard: already unpaid -> do not apply duplicate balance restoration
+        if ((int) ($budgetRecord['paid'] ?? 0) === 0) {
+            log_message('info', "markAsUnpaid: Account ID {$accountId} is already unpaid; skipping duplicate balance restoration.");
+            return true;
+        }
+
+        $isDebt     = !empty($budgetRecord['is_debt']);
+        $netAmount  = abs((float) ($budgetRecord['net_amount'] ?? 0.0));
+        $walletID   = !empty($budgetRecord['wallet_id']) ? (int) $budgetRecord['wallet_id'] : null;
         $sourceType = $budgetRecord['source_type'] ?? null;
-    
-        // Reset fields to unpaid
-        $updateData = [
-            'status'       => 0, // Reset status if necessary
-            'paid'         => 0, // Mark as unpaid
-            'paid_date'    => null,
-            'paid_time'    => null,
-            'submitted_on' => date("Y-m-d H:i:s") // Maintain timestamp
-        ];
-    
-        $updateStatus = $this->budgetModel->updateAccount($accountID, $updateData);
-    
-        if (!$updateStatus) {
-            log_message('error', "markAsUnpaid: Failed to update budget record as unpaid for Account ID: {$accountID}");
-            return false;
-        }
-    
-        if ($isDebt) {
-            log_message('info', "markAsUnpaid: Processing debt payment reversal for Account ID: {$accountID}");
-    
-            if ($walletID) {
-                $this->budgetModel->updateWalletBalance($walletID, $netAmount);
-                log_message('info', "markAsUnpaid: Wallet ID {$walletID} balance restored by +{$netAmount}");
-            } else {
-                $debtAccount = $this->budgetModel->getDebtAccountByUserAndSource($userID, $sourceType);
-                if ($debtAccount) {
-                    $this->budgetModel->updateDebtAccount($debtAccount['id'], [
-                        'current_balance' => $debtAccount['current_balance'] + $netAmount,
-                    ]);
-                    log_message('info', "markAsUnpaid: Debt account ID {$debtAccount['id']} balance restored by +{$netAmount}");
-                } else {
-                    log_message('error', "markAsUnpaid: No debt account found for User ID: {$userID} and Source: {$sourceType}");
+
+        $db = $this->budgetModel->db ?? \Config\Database::connect();
+        $db->transBegin();
+
+        try {
+            $transitionBuilder = $db->table('bf_users_budgeting')
+                ->where('id', $accountId)
+                ->where('paid', 1);
+            if ($recordOwnerId > 0) {
+                $transitionBuilder->where('created_by', $recordOwnerId);
+            }
+
+            // Preserve status = 1 so the unpaid obligation remains active in user budgets
+            $transitionBuilder->update([
+                'status'       => 1,
+                'paid'         => 0,
+                'paid_date'    => null,
+                'paid_time'    => null,
+                'submitted_on' => date('Y-m-d H:i:s'),
+            ]);
+
+            if ($db->affectedRows() === 0) {
+                $db->transRollback();
+                return true;
+            }
+
+            if ($isDebt && $netAmount > 0.0) {
+                if ($walletID !== null && $walletID > 0) {
+                    $walletUpdated = $this->budgetModel->updateWalletBalance($walletID, $netAmount, $recordOwnerId > 0 ? $recordOwnerId : null);
+                    if (!$walletUpdated) {
+                        throw new \RuntimeException("Failed to restore wallet {$walletID} for budget reversal {$accountId}");
+                    }
+                } elseif ($recordOwnerId > 0 && !empty($sourceType)) {
+                    $debtAccount = $this->budgetModel->getDebtAccountByUserAndSource($recordOwnerId, $sourceType);
+                    if (is_array($debtAccount) && !empty($debtAccount['id'])) {
+                        $restoredDebtBalance = round((float) ($debtAccount['current_balance'] ?? 0.0) + $netAmount, 2);
+                        $this->budgetModel->updateDebtAccount((int) $debtAccount['id'], [
+                            'current_balance' => $restoredDebtBalance,
+                        ], $recordOwnerId);
+                    }
                 }
             }
+
+            if ($db->transStatus() === false) {
+                $db->transRollback();
+                return false;
+            }
+
+            $db->transCommit();
+            unset($this->requestCache['userBudget:' . $recordOwnerId]);
+            $this->invalidateExecutiveSummaryCache();
+
+            return true;
+        } catch (\Throwable $e) {
+            $db->transRollback();
+            log_message('error', "markAsUnpaid: Transaction failed for Account ID {$accountId}: " . $e->getMessage());
+            return false;
         }
-    
-        return true;
     }
     
     // Preparing and adding account data for new entries or updates

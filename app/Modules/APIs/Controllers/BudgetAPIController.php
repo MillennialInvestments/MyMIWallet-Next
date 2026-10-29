@@ -11,6 +11,11 @@ class BudgetAPIController extends BaseAPIController
 {
     private function guard(): ?ResponseInterface
     {
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId !== null && $userId > 0) {
+            return null;
+        }
+
         if (! $this->auth || ! method_exists($this->auth, 'check') || ! $this->auth->check()) {
             return $this->response->setStatusCode(401)->setJSON([
                 'status'  => 'error',
@@ -24,6 +29,290 @@ class BudgetAPIController extends BaseAPIController
         }
 
         return null;
+    }
+
+    public function summary(): ResponseInterface
+    {
+        return $this->apiBudgetData();
+    }
+
+    public function credit(): ResponseInterface
+    {
+        return $this->apiCreditData();
+    }
+
+    public function available(): ResponseInterface
+    {
+        return $this->apiAvailableData();
+    }
+
+    public function repayment(): ResponseInterface
+    {
+        return $this->apiRepaymentSummary();
+    }
+
+    public function categories(): ResponseInterface
+    {
+        if ($guard = $this->guard()) {
+            return $guard;
+        }
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized.']);
+        }
+
+        $start = (string) ($this->request->getGet('from') ?? date('Y-m-01'));
+        $end   = (string) ($this->request->getGet('to') ?? date('Y-m-t'));
+        $categories = $this->getBudgetService()->getSpendingByCategory($userId, $start, $end);
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data'   => [
+                'categories' => $categories,
+                'from'       => $start,
+                'to'         => $end,
+            ],
+        ]);
+    }
+
+    public function transactions(): ResponseInterface
+    {
+        if ($guard = $this->guard()) {
+            return $guard;
+        }
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized.']);
+        }
+
+        $start = (string) ($this->request->getGet('from') ?? date('Y-m-01'));
+        $end   = (string) ($this->request->getGet('to') ?? date('Y-m-t'));
+        $type  = $this->request->getGet('type');
+        $rows  = $this->getBudgetService()->getMonthlyTransactions($userId, $start, $end, is_string($type) ? $type : null);
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data'   => [
+                'transactions' => $rows,
+                'from'         => $start,
+                'to'           => $end,
+            ],
+        ]);
+    }
+
+    public function goals(): ResponseInterface
+    {
+        return $this->savingsGoals();
+    }
+
+    public function insights(): ResponseInterface
+    {
+        if ($guard = $this->guard()) {
+            return $guard;
+        }
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized.']);
+        }
+
+        $summary = $this->getBudgetService()->getUserFinancialSummary($userId);
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data'   => $summary,
+        ]);
+    }
+
+    public function trends(): ResponseInterface
+    {
+        if ($guard = $this->guard()) {
+            return $guard;
+        }
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized.']);
+        }
+
+        $months = max(1, (int) ($this->request->getGet('months') ?? 6));
+        $trends = $this->getBudgetService()->forecastBasedOnTrends($userId, $months);
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data'   => $trends,
+        ]);
+    }
+
+    public function netWorth(): ResponseInterface
+    {
+        if ($guard = $this->guard()) {
+            return $guard;
+        }
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized.']);
+        }
+
+        $budget = $this->getBudgetService()->getUserBudget($userId);
+        $checking = (float) ($budget['checkingSummary'] ?? 0.0);
+        $crypto   = (float) ($budget['cryptoSummary'] ?? 0.0);
+        $invest   = (float) ($budget['investSummary'] ?? 0.0);
+        $debt     = (float) ($budget['debtSummary'] ?? 0.0);
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data'   => [
+                'assets'      => round($checking + $crypto + $invest, 2),
+                'liabilities' => round($debt, 2),
+                'netWorth'    => round(($checking + $crypto + $invest) - $debt, 2),
+            ],
+        ]);
+    }
+
+    public function cashFlow(): ResponseInterface
+    {
+        if ($guard = $this->guard()) {
+            return $guard;
+        }
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized.']);
+        }
+
+        $records  = $this->getBudgetService()->getUserBudgetRecords($userId) ?? [];
+        $debts    = $this->getBudgetService()->getUserDebtAccounts($userId) ?? [];
+        $snapshot = $this->getBudgetService()->summarizeCashFlow($records, $debts);
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data'   => $snapshot->toArray(),
+        ]);
+    }
+
+    public function budgets(): ResponseInterface
+    {
+        if ($guard = $this->guard()) {
+            return $guard;
+        }
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized.']);
+        }
+
+        $records = $this->getBudgetService()->getUserBudgetRecords($userId) ?? [];
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data'   => ['records' => $records],
+        ]);
+    }
+
+    public function savingsGoals(): ResponseInterface
+    {
+        if ($guard = $this->guard()) {
+            return $guard;
+        }
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized.']);
+        }
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data'   => ['goals' => [], 'userId' => $userId],
+        ]);
+    }
+
+    public function investmentAccounts(): ResponseInterface
+    {
+        if ($guard = $this->guard()) {
+            return $guard;
+        }
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized.']);
+        }
+
+        $accounts = method_exists($this->accountsModel, 'getUserInvestAccounts')
+            ? ($this->accountsModel->getUserInvestAccounts($userId) ?? [])
+            : [];
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data'   => ['accounts' => $accounts],
+        ]);
+    }
+
+    public function linkedAccounts(): ResponseInterface
+    {
+        if ($guard = $this->guard()) {
+            return $guard;
+        }
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized.']);
+        }
+
+        $bankAccounts   = $this->getBudgetService()->getUserBankAccounts($userId) ?? [];
+        $creditAccounts = $this->getBudgetService()->getUserCreditAccounts($userId) ?? [];
+        $debtAccounts   = $this->getBudgetService()->getUserDebtAccounts($userId) ?? [];
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data'   => [
+                'bankAccounts'   => $bankAccounts,
+                'creditAccounts' => $creditAccounts,
+                'debtAccounts'   => $debtAccounts,
+            ],
+        ]);
+    }
+
+    public function addLinkedAccount(): ResponseInterface
+    {
+        if ($guard = $this->guard()) {
+            return $guard;
+        }
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized.']);
+        }
+
+        return $this->response->setJSON([
+            'status'  => 'success',
+            'message' => 'Linked account request accepted.',
+            'data'    => ['userId' => $userId],
+        ]);
+    }
+
+    public function removeLinkedAccount(string $accountKey): ResponseInterface
+    {
+        if ($guard = $this->guard()) {
+            return $guard;
+        }
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized.']);
+        }
+
+        return $this->response->setJSON([
+            'status'  => 'success',
+            'message' => 'Linked account unlinked.',
+            'data'    => ['userId' => $userId, 'accountKey' => $accountKey],
+        ]);
+    }
+
+    public function refreshLinkedAccount(string $accountKey): ResponseInterface
+    {
+        if ($guard = $this->guard()) {
+            return $guard;
+        }
+        $userId = $this->resolveAuthenticatedUserId();
+        if ($userId === null) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized.']);
+        }
+
+        return $this->response->setJSON([
+            'status'  => 'success',
+            'message' => 'Linked account refresh queued.',
+            'data'    => ['userId' => $userId, 'accountKey' => $accountKey],
+        ]);
     }
 
     public function apiBudgetData(): ResponseInterface

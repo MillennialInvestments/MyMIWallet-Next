@@ -207,18 +207,29 @@ class OptionsScannerEngine
             $strategyName = 'long_strangle';
         }
 
-        // Position sizing based on target balance entry ($100 Call / $100 Put)
+        // Position sizing based on independent contracts (v7) or target balance entry ($100 Call / $100 Put)
         $callDebit = (float) $params['call_debit'];
         $putDebit = (float) $params['put_debit'];
         $callTargetBalance = (float) ($params['call_target_balance'] ?? 100.00);
         $putTargetBalance = (float) ($params['put_target_balance'] ?? 100.00);
         $totalTargetBalance = $callTargetBalance + $putTargetBalance;
 
-        $contractsCall = max(1, (int) round($callTargetBalance / ($callDebit * 100.0)));
-        $contractsPut = max(1, (int) round($putTargetBalance / ($putDebit * 100.0)));
+        $contractsCall = isset($params['contracts_call']) && (int) $params['contracts_call'] > 0
+            ? (int) $params['contracts_call']
+            : max(1, (int) round($callTargetBalance / ($callDebit * 100.0)));
+        $contractsPut = isset($params['contracts_put']) && (int) $params['contracts_put'] > 0
+            ? (int) $params['contracts_put']
+            : max(1, (int) round($putTargetBalance / ($putDebit * 100.0)));
+
         $actualOutlayCall = $contractsCall * $callDebit * 100.0;
         $actualOutlayPut = $contractsPut * $putDebit * 100.0;
-        $totalEntryDebit = $actualOutlayCall + $actualOutlayPut;
+        $fees = (float) ($params['fees'] ?? 0.0);
+        $totalEntryDebit = $actualOutlayCall + $actualOutlayPut + $fees;
+
+        $targetProfit = (float) $params['target_profit'];
+        $targetLiquidation = $totalEntryDebit + $targetProfit;
+        $callExpirationTarget = $contractsCall > 0 ? round($callStrike + ($targetLiquidation / ($contractsCall * 100.0)), 4) : 0.0;
+        $putExpirationTarget = $contractsPut > 0 ? round($putStrike - ($targetLiquidation / ($contractsPut * 100.0)), 4) : 0.0;
 
         $atr14 = $this->calculateATR($candles, 14, $price);
         $historical5dRange = $this->calculate5DayRange($candles, $atr14);
@@ -345,6 +356,9 @@ class OptionsScannerEngine
             'realized_vol_20d' => round($realizedVol20d, 4),
             'iv_rv_ratio' => round($ivRvRatio, 4),
             'spread_pct' => round($spreadPct, 4),
+            'target_liquidation' => round($targetLiquidation, 4),
+            'call_expiration_target' => $callExpirationTarget,
+            'put_expiration_target' => $putExpirationTarget,
             'reachability_score' => round($reachabilityScore, 2),
             'ranking_score' => round($rankingScore, 2),
             'news_catalyst_detected' => $catalystData['catalyst_detected'] ?? false,

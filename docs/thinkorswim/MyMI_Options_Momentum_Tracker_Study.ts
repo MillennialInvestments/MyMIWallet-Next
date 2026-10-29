@@ -1,25 +1,25 @@
 # =========================================================================
 # MyMI Options Position & Trade Momentum Manager · thinkorswim Chart Study
-# Two-Sided Weekly Momentum Strategy ($100 Call / $100 Put Target Balance)
+# Two - Sided Weekly Momentum Strategy ($100 Call / $100 Put Target Balance)
 # Matching CodeIgniter OptionsMomentumManager & TradingView Pine v6
 # =========================================================================
 
 # -------------------------------------------------------------------------
 # 1. INPUT CONFIGURATION & STRATEGY SETTINGS
 # -------------------------------------------------------------------------
-input strategyMode = {default BRENT_SWEET_SPOT_2_OTM, AGGRESSIVE_GAMMA_1_OTM, PERCENT_OTM, ATM_STRADDLE, CUSTOM_STRIKES};
+input strategyMode = { default BRENT_SWEET_SPOT_2_OTM, AGGRESSIVE_GAMMA_1_OTM, PERCENT_OTM, ATM_STRADDLE, CUSTOM_STRIKES };
 input strikesOtmCount = 2;          # Default: 2 strikes out from ATM (Brent Sweet Spot)
-input otmOffsetPct = 2.6;           # 2.6% matches $192.50/$182.50 on $187.50 BA
-input strikeIntervalOverride = 0.0; # 0 = Auto-detect ($2.50 BA/AAPL, $5.00 >$250, $1.00 SPY/QQQ)
+input otmOffsetPct = 2.6;           # 2.6% matches $192.50 / $182.50 on $187.50 BA
+input strikeIntervalOverride = 0.0; # 0 = Auto‑detect ($2.50 BA/AAPL/DIS, $5.00 > $250, $1.00 SPY/QQQ)
 input manualCallStrike = 0.0;       # Optional manual Call strike override
 input manualPutStrike = 0.0;        # Optional manual Put strike override
 
 input targetBalanceCall = 100.0;    # Target entry balance allocated to Call leg ($100.00)
 input targetBalancePut = 100.0;     # Target entry balance allocated to Put leg ($100.00)
-input entryDebitCall = 0.95;        # Per-contract entry debit for Call (e.g. $0.95 or $3.15 BA)
-input entryDebitPut = 0.95;         # Per-contract entry debit for Put (e.g. $0.95 or $3.02 BA)
+input entryDebitCall = 0.95;        # Per‑contract entry debit for Call (e.g. $0.95 or $3.15 BA)
+input entryDebitPut = 0.95;         # Per‑contract entry debit for Put (e.g. $0.95 or $3.02 BA)
 input targetNetProfit = 200.0;      # Target net profit in USD (default +$200.00)
-input entryStockPrice = 0.0;        # Set to 0 for auto session open, or enter open price
+input entryStockPrice = 0.0;        # 0 = auto session open, otherwise use supplied price
 
 input showEmaLines = yes;
 input showVwapLine = yes;
@@ -27,7 +27,7 @@ input showStrikeLines = yes;
 input showBubbles = yes;
 input enableAudioAlerts = yes;
 input rvolThreshold = 1.20;
-input trailRetracePct = 25.0;       # Alert when unrealized profit retraces >25% from peak
+input trailRetracePct = 25.0;       # Alert when unrealized profit retraces > 25% from peak
 
 input fastEmaLen = 9;
 input slowEmaLen = 21;
@@ -46,90 +46,90 @@ def volAccel5 = if volSma20 > 0 then volSma5 / volSma20 else 1.0;
 def fastEmaVal = ExpAverage(p, fastEmaLen);
 def slowEmaVal = ExpAverage(p, slowEmaLen);
 def baseEmaVal = ExpAverage(p, baselineEmaLen);
-def vwapVal = reference VWAP()."VWAP";
+def vwapVal = vwap;
 def atr14 = ATR(14);
+
+def sym = GetSymbol();
 
 # -------------------------------------------------------------------------
 # 3. STRIKE STEP SIZE & BRENT SWEET SPOT CALCULATION
 # -------------------------------------------------------------------------
-# Auto-detect strike intervals ($2.50 for BA, AAPL, DIS, $5.00 for >$250, etc.)
-def sym = GetSymbol();
-def isBA = (sym == "BA");
-def isAAPL = (sym == "AAPL");
-def isDIS = (sym == "DIS");
-def isIBM = (sym == "IBM");
+# Auto‑detect strike intervals ($2.50 for BA, AAPL, DIS; $5.00 for > $250; etc.)
+# Removed boolean defs; using direct symbol checks in detectedStep
 
 def sessionStartPrice = if !IsNaN(open(period = AggregationPeriod.DAY)) then open(period = AggregationPeriod.DAY) else p;
 def effectiveEntry = if entryStockPrice > 0 then entryStockPrice else sessionStartPrice;
 
-def detectedStep = if effectiveEntry > 250.0 then 5.0
-                   else if isBA or isAAPL or isDIS or isIBM then 2.5
-                   else if effectiveEntry >= 75.0 and effectiveEntry <= 250.0 then 2.5
-                   else if effectiveEntry > 50.0 then 1.0
+def detectedStep = if effectiveEntry > 250 then 5.0
+                   else if sym == "BA" or sym == "AAPL" or sym == "DIS" or sym == "IBM" then 2.5
+                   else if effectiveEntry >= 75 and effectiveEntry <= 250 then 2.5
+                   else if effectiveEntry > 50 then 1.0
                    else 0.5;
 
 def stepSize = if strikeIntervalOverride > 0 then strikeIntervalOverride else detectedStep;
 def atmBase = Round(effectiveEntry / stepSize, 0) * stepSize;
 
-# Compute Call & Put strikes according to selected strategy structure
+# Compute Call & Put strikes according to selected strategy
+
 def calcCallStrike;
 def calcPutStrike;
 
 switch (strategyMode) {
-case CUSTOM_STRIKES:
-    calcCallStrike = if manualCallStrike > 0 then manualCallStrike else atmBase + (strikesOtmCount * stepSize);
-    calcPutStrike  = if manualPutStrike > 0  then manualPutStrike  else atmBase - (strikesOtmCount * stepSize);
-case ATM_STRADDLE:
-    calcCallStrike = if manualCallStrike > 0 then manualCallStrike else atmBase;
-    calcPutStrike  = if manualPutStrike > 0  then manualPutStrike  else atmBase;
-case AGGRESSIVE_GAMMA_1_OTM:
-    calcCallStrike = if manualCallStrike > 0 then manualCallStrike else atmBase + (1 * stepSize);
-    calcPutStrike  = if manualPutStrike > 0  then manualPutStrike  else atmBase - (1 * stepSize);
-case PERCENT_OTM:
-    calcCallStrike = if manualCallStrike > 0 then manualCallStrike else Round((effectiveEntry * (1.0 + (otmOffsetPct / 100.0))) / stepSize, 0) * stepSize;
-    calcPutStrike  = if manualPutStrike > 0  then manualPutStrike  else Round((effectiveEntry * (1.0 - (otmOffsetPct / 100.0))) / stepSize, 0) * stepSize;
-default:
-    # BRENT_SWEET_SPOT_2_OTM: 2 strikes out from ATM
-    calcCallStrike = if manualCallStrike > 0 then manualCallStrike else atmBase + (strikesOtmCount * stepSize);
-    calcPutStrike  = if manualPutStrike > 0  then manualPutStrike  else atmBase - (strikesOtmCount * stepSize);
+    case CUSTOM_STRIKES:
+        calcCallStrike = if manualCallStrike > 0 then manualCallStrike else atmBase + (strikesOtmCount * stepSize);
+        calcPutStrike = if manualPutStrike > 0 then manualPutStrike else atmBase - (strikesOtmCount * stepSize);
+    case ATM_STRADDLE:
+        calcCallStrike = if manualCallStrike > 0 then manualCallStrike else atmBase;
+        calcPutStrike = if manualPutStrike > 0 then manualPutStrike else atmBase;
+    case AGGRESSIVE_GAMMA_1_OTM:
+        calcCallStrike = if manualCallStrike > 0 then manualCallStrike else atmBase + stepSize;
+        calcPutStrike = if manualPutStrike > 0 then manualPutStrike else atmBase - stepSize;
+    case PERCENT_OTM:
+        calcCallStrike = if manualCallStrike > 0 then manualCallStrike else Round((effectiveEntry * (1 + otmOffsetPct/100)) / stepSize, 0) * stepSize;
+        calcPutStrike = if manualPutStrike > 0 then manualPutStrike else Round((effectiveEntry * (1 - otmOffsetPct/100)) / stepSize, 0) * stepSize;
+    default: # BRENT_SWEET_SPOT_2_OTM
+        calcCallStrike = if manualCallStrike > 0 then manualCallStrike else atmBase + (strikesOtmCount * stepSize);
+        calcPutStrike = if manualPutStrike > 0 then manualPutStrike else atmBase - (strikesOtmCount * stepSize);
 }
 
-# Position Sizing based on target balance entry ($100 Call / $100 Put)
-def contractsCall = Max(1, Round(targetBalanceCall / (entryDebitCall * 100.0), 0));
-def contractsPut  = Max(1, Round(targetBalancePut / (entryDebitPut * 100.0), 0));
-def totalInvested = (contractsCall * entryDebitCall * 100.0) + (contractsPut * entryDebitPut * 100.0);
+# Position sizing based on target balances
+
+def contractsCall = Max(1, Round(targetBalanceCall / (entryDebitCall * 100), 0));
+def contractsPut = Max(1, Round(targetBalancePut / (entryDebitPut * 100), 0));
+def totalInvested = (contractsCall * entryDebitCall * 100) + (contractsPut * entryDebitPut * 100);
 def combinedEntryDebit = entryDebitCall + entryDebitPut;
-def requiredExitPerPair = combinedEntryDebit + (targetNetProfit / 100.0);
+def requiredExitPerPair = combinedEntryDebit + (targetNetProfit / 100);
 
 # -------------------------------------------------------------------------
 # 4. DYNAMIC SYNTHETIC VALUATION & P&L ENGINE
 # -------------------------------------------------------------------------
-def deltaUp   = Max(0.0, p - effectiveEntry);
-def deltaDown = Max(0.0, effectiveEntry - p);
+def deltaUp = Max(0, p - effectiveEntry);
+def deltaDown = Max(0, effectiveEntry - p);
 
-# Approximate gamma acceleration and decaying loser wing
-def callIntrinsic = Max(0.0, p - calcCallStrike);
-def putIntrinsic  = Max(0.0, calcPutStrike - p);
+def callIntrinsic = Max(0, p - calcCallStrike);
+def putIntrinsic = Max(0, calcPutStrike - p);
 
 def estCallBid = Max(0.05, entryDebitCall + (deltaUp * 0.45) + (callIntrinsic * 0.55) - (deltaDown * 0.20));
-def estPutBid  = Max(0.05, entryDebitPut  + (deltaDown * 0.45) + (putIntrinsic * 0.55) - (deltaUp * 0.20));
+def estPutBid = Max(0.05, entryDebitPut + (deltaDown * 0.45) + (putIntrinsic * 0.55) - (deltaUp * 0.20));
 def estCombinedBid = estCallBid + estPutBid;
 
-def currentTotalValue = (contractsCall * estCallBid * 100.0) + (contractsPut * estPutBid * 100.0);
+def currentTotalValue = (contractsCall * estCallBid * 100) + (contractsPut * estPutBid * 100);
 def unrealizedPnl = currentTotalValue - totalInvested;
-def unrealizedPct = if totalInvested > 0 then (unrealizedPnl / totalInvested) * 100.0 else 0.0;
+def unrealizedPct = if totalInvested > 0 then (unrealizedPnl / totalInvested) * 100 else 0;
 
-# Peak unrealized P&L tracking for trailing stop alerts
+# Peak tracking for trailing stop
+
 def peakPnl = CompoundValue(1, Max(unrealizedPnl, peakPnl[1]), unrealizedPnl);
 def profitDrawdown = peakPnl - unrealizedPnl;
-def drawdownPct = if peakPnl > 50.0 then (profitDrawdown / peakPnl) * 100.0 else 0.0;
+def drawdownPct = if peakPnl > 50 then (profitDrawdown / peakPnl) * 100 else 0;
 
-# Alert & Warning Triggers
+# Alerts & warnings
+
 def targetReached = (unrealizedPnl >= targetNetProfit) or (estCombinedBid >= requiredExitPerPair);
-def warnPeakDrawdown = (peakPnl >= 75.0) and (drawdownPct >= trailRetracePct);
+def warnPeakDrawdown = (peakPnl >= 75) and (drawdownPct >= trailRetracePct);
 def warnMomentumFade = (p[1] > fastEmaVal[1] and p < fastEmaVal) or (p[1] < fastEmaVal[1] and p > fastEmaVal);
 def callStrikeBreached = (p >= calcCallStrike) and (p[1] < calcCallStrike);
-def putStrikeBreached  = (p <= calcPutStrike) and (p[1] > calcPutStrike);
+def putStrikeBreached = (p <= calcPutStrike) and (p[1] > calcPutStrike);
 
 # -------------------------------------------------------------------------
 # 5. CHART PLOTS
@@ -166,58 +166,59 @@ VwapPlot.SetStyle(Curve.POINTS);
 # -------------------------------------------------------------------------
 # 6. ACTIONABLE CHART BUBBLES
 # -------------------------------------------------------------------------
-AddChartBubble(showBubbles and targetReached and !targetReached[1], high, 
-    "TARGET REACHED (+$" + AsText(unrealizedPnl, NumberFormat.TWO_DECIMAL_PLACES) + ")\nCLOSE BOTH LEGS", 
+AddChartBubble(showBubbles and targetReached and !targetReached[1], high,
+    "TARGET REACHED (+$" + AsDollars(unrealizedPnl) + ")\nCLOSE BOTH LEGS",
     Color.GREEN, yes);
 
-AddChartBubble(showBubbles and warnPeakDrawdown and !warnPeakDrawdown[1], high, 
-    "TRAILING EXIT (-" + AsText(drawdownPct, NumberFormat.ONE_DECIMAL_PLACE) + "% from peak)\nLOCK IN GAINS", 
+AddChartBubble(showBubbles and warnPeakDrawdown and !warnPeakDrawdown[1], high,
+    "TRAILING EXIT (-" + AsPercent(drawdownPct/100) + " from peak)\nLOCK IN GAINS",
     Color.RED, yes);
 
-AddChartBubble(showBubbles and callStrikeBreached, calcCallStrike, 
-    "CALL ITM BREACH ($" + AsText(calcCallStrike, NumberFormat.TWO_DECIMAL_PLACES) + ")", 
+AddChartBubble(showBubbles and callStrikeBreached, calcCallStrike,
+    "CALL ITM BREACH ($" + AsDollars(calcCallStrike) + ")",
     Color.CYAN, yes);
 
-AddChartBubble(showBubbles and putStrikeBreached, calcPutStrike, 
-    "PUT ITM BREACH ($" + AsText(calcPutStrike, NumberFormat.TWO_DECIMAL_PLACES) + ")", 
+AddChartBubble(showBubbles and putStrikeBreached, calcPutStrike,
+    "PUT ITM BREACH ($" + AsDollars(calcPutStrike) + ")",
     Color.MAGENTA, no);
 
 # -------------------------------------------------------------------------
-# 7. VISUAL DASHBOARD HUD LABELS (TOP-LEFT OF CHART)
+# 7. VISUAL DASHBOARD HUD LABELS (TOP‑LEFT)
 # -------------------------------------------------------------------------
-AddLabel(yes, 
-    "MyMI Options · Brent Strangle (2 OTM) · " + sym + " ($" + AsText(p, NumberFormat.TWO_DECIMAL_PLACES) + ")", 
+AddLabel(yes,
+    "MyMI Options · Brent Strangle (2 OTM) · " + sym + " ($" + AsDollars(p) + ")",
     Color.BLUE);
 
-AddLabel(yes, 
-    "Strikes: C $" + AsText(calcCallStrike, NumberFormat.TWO_DECIMAL_PLACES) + " / P $" + AsText(calcPutStrike, NumberFormat.TWO_DECIMAL_PLACES) + " (Step: $" + AsText(stepSize, NumberFormat.TWO_DECIMAL_PLACES) + ")", 
+AddLabel(yes,
+    "Strikes: C $" + AsDollars(calcCallStrike) + " / P $" + AsDollars(calcPutStrike) + " (Step $" + AsDollars(stepSize) + ")",
     Color.YELLOW);
 
-AddLabel(yes, 
-    "Allocation: $" + AsText(targetBalanceCall, NumberFormat.DOLLAR) + " C / $" + AsText(targetBalancePut, NumberFormat.DOLLAR) + " P | Invested: $" + AsText(totalInvested, NumberFormat.TWO_DECIMAL_PLACES) + " (" + AsText(contractsCall, NumberFormat.INDEX) + "C / " + AsText(contractsPut, NumberFormat.INDEX) + "P)", 
+AddLabel(yes,
+    "Allocation: $" + AsDollars(targetBalanceCall) + " C / $" + AsDollars(targetBalancePut) + " P | Invested: $" + AsDollars(totalInvested) + " (" + contractsCall + "C / " + contractsPut + "P)",
     Color.WHITE);
 
-AddLabel(yes, 
-    "Combined Debit: $" + AsText(estCombinedBid, NumberFormat.TWO_DECIMAL_PLACES) + " (Entry: $" + AsText(combinedEntryDebit, NumberFormat.TWO_DECIMAL_PLACES) + ")", 
+AddLabel(yes,
+    "Combined Debit: $" + AsDollars(estCombinedBid) + " (Entry: $" + AsDollars(combinedEntryDebit) + ")",
     Color.LIGHT_GRAY);
 
-AddLabel(yes, 
-    "Target Net Profit: +$" + AsText(targetNetProfit, NumberFormat.DOLLAR) + " (Exit @ $" + AsText(requiredExitPerPair, NumberFormat.TWO_DECIMAL_PLACES) + "/pair)", 
+AddLabel(yes,
+    "Target Net Profit: +$" + AsDollars(targetNetProfit) + " (Exit @ $" + AsDollars(requiredExitPerPair) + "/pair)",
     Color.GREEN);
 
-AddLabel(yes, 
-    "P&L: " + (if unrealizedPnl >= 0 then "+$" else "-$") + AsText(AbsValue(unrealizedPnl), NumberFormat.TWO_DECIMAL_PLACES) + " (" + AsText(unrealizedPct, NumberFormat.ONE_DECIMAL_PLACE) + "%)", 
+AddLabel(yes,
+    "P&L: " + (if unrealizedPnl >= 0 then "+$" else "-$") + AsDollars(AbsValue(unrealizedPnl)) + " (" + AsPercent(unrealizedPct/100) + ")",
     if unrealizedPnl >= targetNetProfit then Color.GREEN else if unrealizedPnl > 0 then Color.DARK_GREEN else Color.RED);
 
-AddLabel(yes, 
-    "RVOL: " + AsText(rvol, NumberFormat.TWO_DECIMAL_PLACES) + "x | Vol Accel 5m: " + AsText(volAccel5, NumberFormat.TWO_DECIMAL_PLACES) + "x", 
+AddLabel(yes,
+    "RVOL: " + AsText(rvol, "0.00") + "x | Vol Accel 5m: " + AsText(volAccel5, "0.00") + "x",
     if rvol >= rvolThreshold then Color.CYAN else Color.GRAY);
 
-# Action Guidance Label
-def callSurging = (p > fastEmaVal) and (fastEmaVal > slowEmaVal);
-def putSurging  = (p < fastEmaVal) and (fastEmaVal < slowEmaVal);
+# Action guidance label
 
-AddLabel(yes, 
+def callSurging = (p > fastEmaVal) and (fastEmaVal > slowEmaVal);
+def putSurging = (p < fastEmaVal) and (fastEmaVal < slowEmaVal);
+
+AddLabel(yes,
     if targetReached then "ACTION: TAKE PROFIT · CLOSE BOTH CONTRACTS"
     else if warnPeakDrawdown then "ACTION: TRAILING STOP TRIGGERED · PROTECT GAINS"
     else if p > calcCallStrike then "ACTION: CALL RUNNING (TRAIL EMA 9)"
@@ -234,18 +235,18 @@ AddLabel(yes,
 # -------------------------------------------------------------------------
 # 8. AUDIO & PUSH NOTIFICATIONS
 # -------------------------------------------------------------------------
-Alert(enableAudioAlerts and targetReached and !targetReached[1], 
-    "MyMI Options Profit Target Reached! Close both legs to lock in profit.", 
-    Alert.BAR, Sound.Bell);
+Alert(enableAudioAlerts and targetReached and !targetReached[1],
+      "MyMI Options Profit Target Reached! Close both legs to lock in profit.",
+      Alert.BAR, Sound.Bell);
 
-Alert(enableAudioAlerts and warnPeakDrawdown and !warnPeakDrawdown[1], 
-    "MyMI Options Trailing Retrace Warning: Profit dropped >25% from peak.", 
-    Alert.BAR, Sound.Ring);
+Alert(enableAudioAlerts and warnPeakDrawdown and !warnPeakDrawdown[1],
+      "MyMI Options Trailing Retrace Warning: Profit dropped >25% from peak.",
+      Alert.BAR, Sound.Ring);
 
-Alert(enableAudioAlerts and callStrikeBreached, 
-    "MyMI Options Call Strike Breached In-The-Money!", 
-    Alert.BAR, Sound.Ding);
+Alert(enableAudioAlerts and callStrikeBreached,
+      "MyMI Options Call Strike Breached In‑The‑Money!",
+      Alert.BAR, Sound.Ding);
 
-Alert(enableAudioAlerts and putStrikeBreached, 
-    "MyMI Options Put Strike Breached In-The-Money!", 
-    Alert.BAR, Sound.Ding);
+Alert(enableAudioAlerts and putStrikeBreached,
+      "MyMI Options Put Strike Breached In‑The‑Money!",
+      Alert.BAR, Sound.Ding);

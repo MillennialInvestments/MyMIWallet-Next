@@ -488,6 +488,7 @@ class Console extends BaseConfig
         \App\Commands\WalletsWarmSummaryCache::class,
         \App\Commands\ShieldBackfill::class,
         \App\Commands\UserLifecycleHealthcheck::class,
+        \App\Commands\Finance\CertifyMillionSubmissions::class,
     ];
 
     public bool $showHelp = true;

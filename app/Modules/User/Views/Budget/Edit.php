@@ -218,7 +218,7 @@ $addModalTitle                          = $configMode . ' Your ' . $accountName 
                 <div class="nk-block nk-block-lg">   
                     <div class="card card-bordered pricing px-2">
                         <div class="pricing-body">                               
-                            <form class="form-horizontal" id="edit_user_budgeting_account">
+                            <form class="form-horizontal" id="edit_user_budgeting_account" action="<?= site_url('Budget/Account-Manager'); ?>" method="POST">
                                 <fieldset>
                                     <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
 

@@ -155,6 +155,12 @@ class WalletsAPIController extends BaseAPIController
         }
     }
 
+    /** POST /API/Wallets/Add */
+    public function add(): ResponseInterface
+    {
+        return $this->create();
+    }
+
     /** POST /API/Wallets/Create */
     public function create(): ResponseInterface
     {
@@ -163,11 +169,72 @@ class WalletsAPIController extends BaseAPIController
             if (!$uid && function_exists('auth') && auth()->loggedIn()) { $uid = (int) auth()->user()->id; }
             if (!$uid) return $this->failUnauthorized('Unauthorized');
 
-            $category    = strtolower((string) $this->request->getPost('category'));
-            $provider    = strtolower((string) $this->request->getPost('provider'));
-            $label       = trim((string) $this->request->getPost('label'));
-            $status      = strtolower((string) ($this->request->getPost('status') ?? 'linked'));
-            $credentials = $this->parseCredentials($this->request->getPost('credentials'));
+            $post = $this->request->getPost() ?: [];
+            if ($post === []) {
+                try {
+                    $jsonBody = $this->request->getJSON(true);
+                    if (is_array($jsonBody)) {
+                        $post = $jsonBody;
+                    }
+                } catch (\Throwable $e) {}
+            }
+
+            if (isset($post['user_id']) && (int) $post['user_id'] > 0 && (int) $post['user_id'] !== $uid) {
+                return $this->failForbidden('User identity mismatch.');
+            }
+
+            $walletTypeRaw = strtolower(trim((string) ($post['wallet_type'] ?? '')));
+            $category      = strtolower(trim((string) ($post['category'] ?? '')));
+            $provider      = strtolower(trim((string) ($post['provider'] ?? '')));
+
+            if ($walletTypeRaw !== '' && ($category === '' || $provider === '')) {
+                $type = match ($walletTypeRaw) {
+                    'bank', 'banking', 'checking', 'savings', 'fiat' => 'bank',
+                    'credit'                                         => 'credit',
+                    'debt', 'loan'                                   => 'debt',
+                    'investment', 'invest', 'brokerage'              => 'investment',
+                    'crypto', 'cryptocurrency'                       => 'crypto',
+                    default                                          => null,
+                };
+
+                if ($type === null) {
+                    return $this->failValidationErrors('Invalid wallet_type supplied.');
+                }
+
+                $prepared = $this->walletService->prepareAccountData($post, $type);
+                $prepared += [
+                    'status'     => 1,
+                    'active'     => 1,
+                    'beta'       => in_array($post['beta'] ?? '0', ['1', 1, true, 'true', 'on', 'Yes', 'yes'], true) ? 1 : 0,
+                    'user_id'    => $uid,
+                    'user_email' => (string) (session('email') ?? $post['user_email'] ?? ''),
+                    'username'   => (string) (session('username') ?? $post['username'] ?? ''),
+                ];
+
+                $method = match ($type) {
+                    'bank'       => 'addBankWallet',
+                    'credit'     => 'addCreditWallet',
+                    'debt'       => 'addDebtWallet',
+                    'investment' => 'addInvestmentWallet',
+                    'crypto'     => 'addCryptoWallet',
+                };
+
+                $result = $this->walletService->{$method}($prepared);
+                $walletId = is_array($result) ? (int) ($result['wallet_id'] ?? $result['id'] ?? 0) : (int) $result;
+
+                $this->invalidateCaches(['wallets', 'user:' . $uid]);
+
+                return $this->respond([
+                    'status'    => 'success',
+                    'wallet_id' => $walletId,
+                    'type'      => $type,
+                    'csrfHash'  => csrf_hash(),
+                ]);
+            }
+
+            $label       = trim((string) ($post['label'] ?? $post['nickname'] ?? ''));
+            $status      = strtolower((string) ($post['status'] ?? 'linked'));
+            $credentials = $this->parseCredentials($post['credentials'] ?? null);
 
             if (!$category || !$provider) {
                 return $this->failValidationErrors('Missing category or provider');
@@ -178,7 +245,7 @@ class WalletsAPIController extends BaseAPIController
 
             $this->invalidateCaches(['wallets', 'user:' . $uid]);
 
-            return $this->respond(['status' => 'success', 'wallet_id' => $walletId]);
+            return $this->respond(['status' => 'success', 'wallet_id' => $walletId, 'csrfHash' => csrf_hash()]);
         } catch (\Throwable $e) {
             log_message('error', 'WalletsController::create error: {msg}', ['msg' => $e->getMessage()]);
             return $this->failServerError($e->getMessage());
