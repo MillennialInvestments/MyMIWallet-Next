@@ -9,6 +9,10 @@
         <?php if (session()->has('errors')) : foreach ((array) session('errors') as $error) : ?>
             <div class="alert alert-danger"><?= esc((string) $error) ?></div>
         <?php endforeach; endif; ?>
+        <?php $singleError = session('error'); ?>
+        <?php if (is_scalar($singleError) && trim((string) $singleError) !== '') : ?>
+            <div class="alert alert-danger" role="alert"><?= esc((string) $singleError) ?></div>
+        <?php endif; ?>
 
         <form id="register-form" data-auth-form="register" action="<?= site_url('register') ?>" method="post" accept-charset="utf-8" novalidate>
             <?= csrf_field() ?>

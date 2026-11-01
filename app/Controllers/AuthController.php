@@ -2397,13 +2397,12 @@ class AuthController extends BaseController
 
     private function isSuspiciousRegistration(string $email, string $username): bool
     {
-        $loadedAt = (int) ($this->request->getPost('auth_form_loaded_at') ?? $this->session->get('auth_form_loaded_at') ?? 0);
-        $elapsed = $loadedAt > 0 ? (time() - $loadedAt) : null;
+        // Fast autofill alone must not reject legitimate registrations.
+        // Retain the honeypot, throttler and suspicious-pattern checks.
         $spamEmailPattern = '/(mailinator|guerrillamail|tempmail|10minutemail|discardmail|fakemail|yopmail)/i';
         $suspiciousUsernamePattern = '/(test\\d{3,}|asdf|qwerty|admin\\d*|free\\s*money|crypto\\s*bot)/i';
 
-        return ($elapsed !== null && $elapsed >= 0 && $elapsed < 2)
-            || (bool) preg_match($spamEmailPattern, $email)
+        return (bool) preg_match($spamEmailPattern, $email)
             || (bool) preg_match($suspiciousUsernamePattern, $username);
     }
 
