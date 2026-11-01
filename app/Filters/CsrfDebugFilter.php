@@ -25,7 +25,14 @@ class CsrfDebugFilter extends CSRF
         try {
             return parent::before($request, $arguments);
         } catch (SecurityException $exception) {
-            log_message('warning', '[CSRF][EXCEPTION] ' . $exception->getMessage());
+            $path = strtolower(trim((string) $request->getUri()->getPath(), '/'));
+            if ($path === 'register') {
+                // Error level is captured by the current file logger.
+                // Do not log tokens, cookies, credentials or customer data.
+                log_message('error', '[AUTH_REGISTER_CSRF_REJECTED] Registration CSRF validation failed');
+            } else {
+                log_message('warning', '[CSRF][EXCEPTION] ' . $exception->getMessage());
+            }
             $this->logCsrfDebug($request, $exception);
 
             throw $exception;
