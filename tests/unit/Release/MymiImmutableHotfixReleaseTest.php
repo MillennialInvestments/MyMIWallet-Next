@@ -194,6 +194,21 @@ final class MymiImmutableHotfixReleaseTest extends TestCase
         MymiImmutableHotfixRelease::executePhase('plan', $m, $root, $hash);
     }
 
+    /** A missing intermediate component followed by .. must not become a valid symlink. */
+    public function testRefusesBrokenIntermediateNpmBinLink(): void
+    {
+        [$root, $m, $hash] = $this->fixture();
+        $baseline = $root . '/releases/' . self::OLD;
+        self::assertTrue(mkdir($baseline . '/node_modules/.bin', 0755, true));
+        self::assertTrue(mkdir($baseline . '/node_modules/mime', 0755, true));
+        file_put_contents($baseline . '/node_modules/mime/cli.js', 'console.log("mime");');
+        self::assertTrue(symlink('../missing/../mime/cli.js', $baseline . '/node_modules/.bin/mime'));
+        self::assertFalse(realpath($baseline . '/node_modules/.bin/mime'));
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('unapproved_release_symlink:node_modules/.bin/mime');
+        MymiImmutableHotfixRelease::executePhase('plan', $m, $root, $hash);
+    }
+
     public function testRefusesDirectoryTargetInNpmBinLink(): void
     {
         [$root, $m, $hash] = $this->fixture();

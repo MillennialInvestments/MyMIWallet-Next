@@ -455,7 +455,8 @@ final class MymiImmutableHotfixRelease extends SafeBaseCommand
         if (count($parts) < 2 || $parts[0] !== 'node_modules') {
             return false;
         }
-        $resolved = realpath($root . '/' . implode('/', $parts));
+        // Resolve the original symlink, not a normalized surrogate: missing/.. must remain broken.
+        $resolved = realpath($root . '/' . $relative);
         if ($resolved === false || ! str_starts_with($resolved, $nodeModules . '/')) {
             return false;
         }
