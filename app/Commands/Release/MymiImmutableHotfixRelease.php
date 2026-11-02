@@ -415,6 +415,54 @@ final class MymiImmutableHotfixRelease extends SafeBaseCommand
         return $cursor;
     }
 
+    /**
+     * Only portable npm CLI links inside this release are eligible.
+     * Reject absolute, escaping, missing, directory and unrelated links.
+     * The same guard is used during inventory AND copyTree.
+     */
+    private static function approvedPortableNodeBinLink(string $root, string $relative, string $target): bool
+    {
+        if (preg_match('#\Anode_modules/\.bin/[A-Za-z0-9][A-Za-z0-9._+-]*\z#D', $relative) !== 1) {
+            return false;
+        }
+        if ($target === '' || str_starts_with($target, '/') || str_contains($target, '\\')
+            || preg_match('/[\x00-\x1F\x7F]/', $target) === 1) {
+            return false;
+        }
+        if (is_link($root . '/node_modules') || is_link($root . '/node_modules/.bin')) {
+            return false;
+        }
+        $nodeModules = realpath($root . '/node_modules');
+        if ($nodeModules === false || ! is_dir($nodeModules)) {
+            return false;
+        }
+
+        // Lexically prove the relative target never leaves node_modules.
+        $parts = ['node_modules', '.bin'];
+        foreach (explode('/', $target) as $part) {
+            if ($part === '' || $part === '.') {
+                continue;
+            }
+            if ($part === '..') {
+                if (count($parts) <= 1) {
+                    return false;
+                }
+                array_pop($parts);
+                continue;
+            }
+            $parts[] = $part;
+        }
+        if (count($parts) < 2 || $parts[0] !== 'node_modules') {
+            return false;
+        }
+        // Resolve the original symlink, not a normalized surrogate: missing/.. must remain broken.
+        $resolved = realpath($root . '/' . $relative);
+        if ($resolved === false || ! str_starts_with($resolved, $nodeModules . '/')) {
+            return false;
+        }
+        return is_file($resolved) && ! is_dir($resolved);
+    }
+
     /** @return array{digest:string,total_bytes:int} */
     private static function inventory(string $directory): array
     {
@@ -436,10 +484,14 @@ final class MymiImmutableHotfixRelease extends SafeBaseCommand
                 throw new RuntimeException('release_inventory_too_large');
             }
             if ($item->isLink()) {
+                $target = readlink($item->getPathname());
+                if (is_string($target) && self::approvedPortableNodeBinLink($directory, $relative, $target)) {
+                    $entries[] = 'L|' . $relative . '|' . $target;
+                    continue;
+                }
                 if (! in_array($relative, ['.env', 'writable', 'vendor'], true)) {
                     throw new RuntimeException('unapproved_release_symlink:' . $relative);
                 }
-                $target = readlink($item->getPathname());
                 if (! is_string($target) || ! str_starts_with($target, '/') || str_contains($target, '/releases/')) {
                     throw new RuntimeException('unsafe_shared_runtime_symlink:' . $relative);
                 }
@@ -477,6 +529,12 @@ final class MymiImmutableHotfixRelease extends SafeBaseCommand
             }
             if ($item->isLink()) {
                 $link = readlink($item->getPathname());
+                if (is_string($link) && self::approvedPortableNodeBinLink($source, $relative, $link)) {
+                    if (! symlink($link, $target)) {
+                        throw new RuntimeException('copy_portable_node_bin_link_failed:' . $relative);
+                    }
+                    continue;
+                }
                 if (! in_array($relative, ['.env', 'writable', 'vendor'], true)
                     || ! is_string($link) || ! str_starts_with($link, '/') || str_contains($link, '/releases/')
                     || ! symlink($link, $target)) {

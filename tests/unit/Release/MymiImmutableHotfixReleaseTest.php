@@ -137,6 +137,90 @@ final class MymiImmutableHotfixReleaseTest extends TestCase
         self::assertTrue(MymiImmutableHotfixRelease::executePhase('verify', $m, $root, $hash)['active']);
     }
 
+    /** Test a real npm CLI link during both inventory and candidate copying. */
+    public function testPortableNpmBinLinkPreservedThroughBuildAndVerify(): void
+    {
+        [$root, $m, $hash] = $this->fixture();
+        $baseline = $root . '/releases/' . self::OLD;
+        self::assertTrue(mkdir($baseline . '/node_modules/.bin', 0755, true));
+        self::assertTrue(mkdir($baseline . '/node_modules/mime', 0755, true));
+        file_put_contents($baseline . '/node_modules/mime/cli.js', 'console.log("mime");');
+        self::assertTrue(symlink('../mime/cli.js', $baseline . '/node_modules/.bin/mime'));
+
+        $certified = MymiImmutableHotfixRelease::executePhase('certify', $m, $root, $hash);
+        self::assertSame(false, $certified['production_modified']);
+        $built = MymiImmutableHotfixRelease::executePhase('build', $m, $root, $hash, $certified['build_gate_sha256']);
+        $candidate = $root . '/releases/' . self::NEW;
+        self::assertTrue(is_link($candidate . '/node_modules/.bin/mime'));
+        self::assertSame('../mime/cli.js', readlink($candidate . '/node_modules/.bin/mime'));
+        self::assertSame('console.log("mime");', file_get_contents($candidate . '/node_modules/mime/cli.js'));
+        self::assertSame('releases/' . self::OLD, readlink($root . '/current'));
+        $verification = MymiImmutableHotfixRelease::executePhase('verify', $m, $root, $hash);
+        self::assertSame($built['candidate_inventory_sha256'], $verification['candidate_inventory_sha256']);
+        self::assertSame(false, $verification['active']);
+    }
+
+    /** Reject absolute npm CLI symlinks; no data provider is required. */
+    public function testRefusesAbsoluteNpmBinLink(): void
+    {
+        [$root, $m, $hash] = $this->fixture();
+        $baseline = $root . '/releases/' . self::OLD;
+        self::assertTrue(mkdir($baseline . '/node_modules/.bin', 0755, true));
+        self::assertTrue(symlink('/etc/passwd', $baseline . '/node_modules/.bin/mime'));
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('unapproved_release_symlink:node_modules/.bin/mime');
+        MymiImmutableHotfixRelease::executePhase('plan', $m, $root, $hash);
+    }
+
+    public function testRefusesEscapingNpmBinLink(): void
+    {
+        [$root, $m, $hash] = $this->fixture();
+        $baseline = $root . '/releases/' . self::OLD;
+        self::assertTrue(mkdir($baseline . '/node_modules/.bin', 0755, true));
+        self::assertTrue(symlink('../../../app/Controllers/AuthController.php', $baseline . '/node_modules/.bin/mime'));
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('unapproved_release_symlink:node_modules/.bin/mime');
+        MymiImmutableHotfixRelease::executePhase('certify', $m, $root, $hash);
+    }
+
+    public function testRefusesBrokenNpmBinLink(): void
+    {
+        [$root, $m, $hash] = $this->fixture();
+        $baseline = $root . '/releases/' . self::OLD;
+        self::assertTrue(mkdir($baseline . '/node_modules/.bin', 0755, true));
+        self::assertTrue(symlink('../missing/cli.js', $baseline . '/node_modules/.bin/mime'));
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('unapproved_release_symlink:node_modules/.bin/mime');
+        MymiImmutableHotfixRelease::executePhase('plan', $m, $root, $hash);
+    }
+
+    /** A missing intermediate component followed by .. must not become a valid symlink. */
+    public function testRefusesBrokenIntermediateNpmBinLink(): void
+    {
+        [$root, $m, $hash] = $this->fixture();
+        $baseline = $root . '/releases/' . self::OLD;
+        self::assertTrue(mkdir($baseline . '/node_modules/.bin', 0755, true));
+        self::assertTrue(mkdir($baseline . '/node_modules/mime', 0755, true));
+        file_put_contents($baseline . '/node_modules/mime/cli.js', 'console.log("mime");');
+        self::assertTrue(symlink('../missing/../mime/cli.js', $baseline . '/node_modules/.bin/mime'));
+        self::assertFalse(realpath($baseline . '/node_modules/.bin/mime'));
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('unapproved_release_symlink:node_modules/.bin/mime');
+        MymiImmutableHotfixRelease::executePhase('plan', $m, $root, $hash);
+    }
+
+    public function testRefusesDirectoryTargetInNpmBinLink(): void
+    {
+        [$root, $m, $hash] = $this->fixture();
+        $baseline = $root . '/releases/' . self::OLD;
+        self::assertTrue(mkdir($baseline . '/node_modules/.bin', 0755, true));
+        self::assertTrue(mkdir($baseline . '/node_modules/mime', 0755, true));
+        self::assertTrue(symlink('../mime', $baseline . '/node_modules/.bin/mime'));
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('unapproved_release_symlink:node_modules/.bin/mime');
+        MymiImmutableHotfixRelease::executePhase('plan', $m, $root, $hash);
+    }
+
     public function testRefusesUnexpectedSymlinkInBaseline(): void
     {
         [$root, $m, $hash] = $this->fixture();
