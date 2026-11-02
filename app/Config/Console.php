@@ -454,6 +454,7 @@ class Console extends BaseConfig
         \App\Commands\Routes\Repair::class,
         \App\Commands\RunAutomationQueue::class,
         \App\Commands\Runtime\CacheBoot::class,
+        \App\Commands\Release\MymiImmutableHotfixRelease::class,
         \App\Commands\Runtime\Check::class,
         \App\Commands\Runtime\Diagnose502::class,
         \App\Commands\Runtime\SparkDoctor::class,
