@@ -162,6 +162,7 @@ final class MymiImmutableHotfixRelease extends SafeBaseCommand
         if (is_link($evidence) || ! is_dir($evidence) || str_starts_with($evidence . '/', $root . '/')) {
             throw new RuntimeException('external_evidence_root_required');
         }
+        $legacyHostLinks = self::legacyDiagnosticBaseline($baseline, (string) $manifest['baseline_release_id']);
         $changeReport = [];
         foreach ($paths as $path) {
             $original = self::safeFile($baseline, $path);
@@ -190,7 +191,7 @@ final class MymiImmutableHotfixRelease extends SafeBaseCommand
             if (file_exists($release) || is_link($release)) {
                 throw new RuntimeException('release_already_exists');
             }
-            $size = self::inventory($baseline)['total_bytes'];
+            $size = self::inventory($baseline, $legacyHostLinks)['total_bytes'];
             if (disk_free_space($releaseDir) <= ($size + 64 * 1024 * 1024)) {
                 throw new RuntimeException('insufficient_disk_space');
             }
@@ -210,7 +211,7 @@ final class MymiImmutableHotfixRelease extends SafeBaseCommand
                 if (readlink($current) !== $expectedCurrentLink || file_exists($release) || is_link($release)) {
                     throw new RuntimeException('build_concurrent_release_drift');
                 }
-                $inventory = self::inventory($baseline);
+                $inventory = self::inventory($baseline, $legacyHostLinks);
                 if (disk_free_space($releaseDir) <= ($inventory['total_bytes'] + 64 * 1024 * 1024)) {
                     throw new RuntimeException('insufficient_disk_space');
                 }
@@ -226,8 +227,8 @@ final class MymiImmutableHotfixRelease extends SafeBaseCommand
                     throw new RuntimeException('staging_create_failed');
                 }
                 // Any partial staging remains preserved for separately approved recovery.
-                self::copyTree($baseline, $staging);
-                if (self::inventory($baseline)['digest'] !== $inventory['digest']) {
+                self::copyTree($baseline, $staging, $legacyHostLinks);
+                if (self::inventory($baseline, $legacyHostLinks)['digest'] !== $inventory['digest']) {
                     throw new RuntimeException('baseline_drift_during_candidate_copy');
                 }
                 foreach ($paths as $path) {
@@ -463,8 +464,59 @@ final class MymiImmutableHotfixRelease extends SafeBaseCommand
         return is_file($resolved) && ! is_dir($resolved);
     }
 
+    /**
+     * Legacy DreamHost diagnostic entries are allowed ONLY as immutable source
+     * inventory metadata on the historical October 26 baseline. They are never
+     * copied to candidates or accepted by candidate verification. All three
+     * fixed paths must exist, be symlinks, and retain the exact H1-reviewed
+     * literal target. This does not authorize their target or any other link.
+     */
+    private const LEGACY_HOST_DIAGNOSTIC_BASELINE = '20261026T205500Z-marketing-distro-1ff876823';
+    private const LEGACY_HOST_DIAGNOSTIC_PATHS = [
+        'chat/.dh-diag',
+        'aiops/.dh-diag',
+        'public/.dh-diag',
+    ];
+
+    private static function legacyDiagnosticBaseline(string $baseline, string $baselineId): bool
+    {
+        if ($baselineId !== self::LEGACY_HOST_DIAGNOSTIC_BASELINE) {
+            return false;
+        }
+        $present = 0;
+        foreach (self::LEGACY_HOST_DIAGNOSTIC_PATHS as $relative) {
+            $path = $baseline . '/' . $relative;
+            if (is_link($path)) {
+                if (readlink($path) !== '/dh/web/diag') {
+                    throw new RuntimeException('legacy_host_diagnostic_target_drift:' . $relative);
+                }
+                $present++;
+            } elseif (file_exists($path)) {
+                throw new RuntimeException('legacy_host_diagnostic_type_drift:' . $relative);
+            }
+        }
+        // The active production baseline must retain its certified H1 postimage.
+        // Empty legacy sets are tolerated only by isolated fixture roots.
+        $certifiedProductionBaseline = '/apps/TBI/www/mymiwallet/releases/'
+            . self::LEGACY_HOST_DIAGNOSTIC_BASELINE;
+        if ($baseline === $certifiedProductionBaseline
+            && $present !== count(self::LEGACY_HOST_DIAGNOSTIC_PATHS)) {
+            throw new RuntimeException('legacy_host_diagnostic_set_incomplete');
+        }
+        if ($present !== 0 && $present !== count(self::LEGACY_HOST_DIAGNOSTIC_PATHS)) {
+            throw new RuntimeException('legacy_host_diagnostic_set_incomplete');
+        }
+        return $present === count(self::LEGACY_HOST_DIAGNOSTIC_PATHS);
+    }
+
+    private static function isQuarantinedDiagnosticLink(string $relative, string $target): bool
+    {
+        return in_array($relative, self::LEGACY_HOST_DIAGNOSTIC_PATHS, true)
+            && $target === '/dh/web/diag';
+    }
+
     /** @return array{digest:string,total_bytes:int} */
-    private static function inventory(string $directory): array
+    private static function inventory(string $directory, bool $quarantineLegacy = false): array
     {
         $iterator = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($directory, FilesystemIterator::SKIP_DOTS),
@@ -487,6 +539,11 @@ final class MymiImmutableHotfixRelease extends SafeBaseCommand
                 $target = readlink($item->getPathname());
                 if (is_string($target) && self::approvedPortableNodeBinLink($directory, $relative, $target)) {
                     $entries[] = 'L|' . $relative . '|' . $target;
+                    continue;
+                }
+                if ($quarantineLegacy && is_string($target)
+                    && self::isQuarantinedDiagnosticLink($relative, $target)) {
+                    $entries[] = 'Q|' . $relative . '|' . $target;
                     continue;
                 }
                 if (! in_array($relative, ['.env', 'writable', 'vendor'], true)) {
@@ -513,7 +570,7 @@ final class MymiImmutableHotfixRelease extends SafeBaseCommand
         return ['digest' => hash('sha256', implode("\n", $entries)), 'total_bytes' => $bytes];
     }
 
-    private static function copyTree(string $source, string $destination): void
+    private static function copyTree(string $source, string $destination, bool $quarantineLegacy = false): void
     {
         $iterator = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($source, FilesystemIterator::SKIP_DOTS),
@@ -533,6 +590,11 @@ final class MymiImmutableHotfixRelease extends SafeBaseCommand
                     if (! symlink($link, $target)) {
                         throw new RuntimeException('copy_portable_node_bin_link_failed:' . $relative);
                     }
+                    continue;
+                }
+                if ($quarantineLegacy && is_string($link)
+                    && self::isQuarantinedDiagnosticLink($relative, $link)) {
+                    // Source baseline remains intact; no unsafe link is reproduced.
                     continue;
                 }
                 if (! in_array($relative, ['.env', 'writable', 'vendor'], true)

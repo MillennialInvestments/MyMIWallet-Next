@@ -221,6 +221,81 @@ final class MymiImmutableHotfixReleaseTest extends TestCase
         MymiImmutableHotfixRelease::executePhase('plan', $m, $root, $hash);
     }
 
+    /** Historical dangling host links may be inventoried but never copied. */
+    public function testLegacyDiagnosticLinksQuarantinedWithoutBaselineMutation(): void
+    {
+        [$root, $m, $hash] = $this->fixture();
+        $base = $root . '/releases/' . self::OLD;
+        $paths = ['chat/.dh-diag', 'aiops/.dh-diag', 'public/.dh-diag'];
+        foreach ($paths as $relative) {
+            self::assertTrue(mkdir(dirname($base . '/' . $relative), 0755, true));
+            self::assertTrue(symlink('/dh/web/diag', $base . '/' . $relative));
+        }
+        $plan = MymiImmutableHotfixRelease::executePhase('certify', $m, $root, $hash);
+        self::assertFalse($plan['production_modified']);
+        $built = MymiImmutableHotfixRelease::executePhase('build', $m, $root, $hash, $plan['build_gate_sha256']);
+        $candidate = $root . '/releases/' . self::NEW;
+        foreach ($paths as $relative) {
+            self::assertSame('/dh/web/diag', readlink($base . '/' . $relative));
+            self::assertFalse(is_link($candidate . '/' . $relative));
+            self::assertFalse(file_exists($candidate . '/' . $relative));
+        }
+        self::assertSame('releases/' . self::OLD, readlink($root . '/current'));
+        $verify = MymiImmutableHotfixRelease::executePhase('verify', $m, $root, $hash);
+        self::assertSame($built['candidate_inventory_sha256'], $verify['candidate_inventory_sha256']);
+        self::assertFalse($verify['active']);
+    }
+
+    public function testLegacyDiagnosticLinksRequireCompleteThreePathSet(): void
+    {
+        [$root, $m, $hash] = $this->fixture();
+        $path = $root . '/releases/' . self::OLD . '/chat/.dh-diag';
+        self::assertTrue(mkdir(dirname($path), 0755, true));
+        self::assertTrue(symlink('/dh/web/diag', $path));
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('legacy_host_diagnostic_set_incomplete');
+        MymiImmutableHotfixRelease::executePhase('plan', $m, $root, $hash);
+    }
+
+    public function testLegacyDiagnosticRejectsAlteredLiteralTarget(): void
+    {
+        [$root, $m, $hash] = $this->fixture();
+        $path = $root . '/releases/' . self::OLD . '/public/.dh-diag';
+        self::assertTrue(mkdir(dirname($path), 0755, true));
+        self::assertTrue(symlink('/etc/passwd', $path));
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('legacy_host_diagnostic_target_drift');
+        MymiImmutableHotfixRelease::executePhase('plan', $m, $root, $hash);
+    }
+
+    public function testLegacyDiagnosticDoesNotAllowOtherPaths(): void
+    {
+        [$root, $m, $hash] = $this->fixture();
+        $path = $root . '/releases/' . self::OLD . '/other/.dh-diag';
+        self::assertTrue(mkdir(dirname($path), 0755, true));
+        self::assertTrue(symlink('/dh/web/diag', $path));
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('unapproved_release_symlink:other/.dh-diag');
+        MymiImmutableHotfixRelease::executePhase('plan', $m, $root, $hash);
+    }
+
+    public function testLegacyDiagnosticLinkReintroducedInCandidateIsRejected(): void
+    {
+        [$root, $m, $hash] = $this->fixture();
+        $base = $root . '/releases/' . self::OLD;
+        foreach (['chat/.dh-diag', 'aiops/.dh-diag', 'public/.dh-diag'] as $relative) {
+            self::assertTrue(mkdir(dirname($base . '/' . $relative), 0755, true));
+            self::assertTrue(symlink('/dh/web/diag', $base . '/' . $relative));
+        }
+        $plan = MymiImmutableHotfixRelease::executePhase('certify', $m, $root, $hash);
+        MymiImmutableHotfixRelease::executePhase('build', $m, $root, $hash, $plan['build_gate_sha256']);
+        $candidate = $root . '/releases/' . self::NEW;
+        self::assertTrue(symlink('/dh/web/diag', $candidate . '/public/.dh-diag'));
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('unapproved_release_symlink:public/.dh-diag');
+        MymiImmutableHotfixRelease::executePhase('verify', $m, $root, $hash);
+    }
+
     public function testRefusesUnexpectedSymlinkInBaseline(): void
     {
         [$root, $m, $hash] = $this->fixture();
