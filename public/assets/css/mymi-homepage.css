@@ -1,0 +1,165 @@
+/* MyMI Wallet public homepage — scoped design system */
+.mymi-home {
+    --mymi-ink: #12254c;
+    --mymi-muted: #536581;
+    --mymi-blue: #366bfa;
+    --mymi-teal: #38cfc2;
+    --mymi-border: #e3eaf7;
+    --mymi-radius: 24px;
+    color: var(--mymi-ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+    line-height: 1.6;
+    background: #fff;
+    overflow: clip;
+}
+.mymi-home *, .mymi-home *::before, .mymi-home *::after { box-sizing: border-box; }
+.mymi-home h1, .mymi-home h2, .mymi-home h3, .mymi-home p { margin-top: 0; }
+.mymi-home h1, .mymi-home h2, .mymi-home h3 { letter-spacing: -.035em; line-height: 1.14; }
+.mymi-home h1 { font-size: clamp(2.4rem, 4.7vw, 4.75rem); font-weight: 800; }
+.mymi-home h2 { font-size: clamp(2rem, 3.25vw, 3.2rem); font-weight: 780; }
+.mymi-home h3 { font-size: clamp(1.23rem, 1.7vw, 1.55rem); font-weight: 730; }
+.mymi-home a { text-decoration: none; }
+.mymi-home a:focus-visible, .mymi-home summary:focus-visible {
+    outline: 3px solid var(--mymi-teal);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+.mymi-home__skip {
+    position: fixed; left: 16px; top: -120px; z-index: 1200;
+    padding: 12px 18px; background: #fff; color: #102459; border-radius: 10px;
+}
+.mymi-home__skip:focus { top: 12px; }
+.mymi-home__eyebrow {
+    font-size: .76rem; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 800; margin-bottom: 1.35rem; color: #3875fa;
+}
+.mymi-home__hero {
+    padding: clamp(7rem, 11vw, 10.3rem) 0 2.2rem;
+    background: radial-gradient(ellipse at 81% 25%, rgba(61, 118, 243, .30), transparent 42%),
+        linear-gradient(123deg, #061540, #111f58 55%, #0a2a65);
+    color: #fff;
+}
+.mymi-home__hero .mymi-home__eyebrow { color: #70e8da; }
+.mymi-home__hero-grid {
+    display: grid; grid-template-columns: minmax(0, 1.07fr) minmax(0, .93fr);
+    align-items: center; gap: clamp(2.2rem, 5vw, 5.2rem);
+}
+.mymi-home__hero-copy { max-width: 660px; }
+.mymi-home__hero h1 { color: #fff; margin-bottom: 1.65rem; }
+.mymi-home__lead { color: #d5e4ff; font-size: clamp(1.05rem, 1.4vw, 1.27rem); line-height: 1.75; max-width: 38rem; }
+.mymi-home__actions { display: flex; align-items: center; gap: .85rem; flex-wrap: wrap; margin-top: 2rem; }
+.mymi-home__btn {
+    min-height: 50px; padding: .83rem 1.45rem; border-radius: 12px;
+    display: inline-flex; justify-content: center; align-items: center;
+    font-weight: 750; gap: .6rem; line-height: 1.25; text-align: center;
+    transition: transform .16s ease, background-color .16s ease, box-shadow .16s ease;
+}
+.mymi-home__btn:hover { transform: translateY(-2px); }
+.mymi-home__btn--primary { background: #3fe0c9; color: #071a42; box-shadow: 0 12px 28px rgba(2, 8, 30, .14); }
+.mymi-home__btn--primary:hover, .mymi-home__btn--primary:focus { background: #8ef8e9; color: #071a42; }
+.mymi-home__btn--secondary { border: 1px solid #7c8ebc; color: #f6faff; background: rgba(255,255,255,.06); }
+.mymi-home__btn--secondary:hover, .mymi-home__btn--secondary:focus { background: rgba(255,255,255,.14); color: #fff; }
+.mymi-home__hero-note { margin: 1.3rem 0 0; color: #b1c5e9; font-size: .9rem; }
+.mymi-home__preview {
+    border: 1px solid rgba(197, 217, 255, .22); background: #f7faff;
+    color: #142c58; box-shadow: 0 32px 80px rgba(0, 7, 34, .38);
+    border-radius: 25px; padding: clamp(1rem, 2.5vw, 1.8rem);
+    transform: rotate(1.2deg);
+}
+.mymi-home__preview-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .5rem; }
+.mymi-home__preview-brand { font-size: .9rem; font-weight: 800; }
+.mymi-home__preview-tag { font-size: .7rem; color: #5a6a83; background: #e5efff; padding: .35rem .65rem; border-radius: 100px; }
+.mymi-home__preview-lead { padding: 1.7rem .15rem 1.15rem; border-bottom: 1px solid #e0e9f6; }
+.mymi-home__preview-lead span { display: block; font-size: .68rem; letter-spacing: .12em; font-weight: 800; color: #647c9f; margin-bottom: .55rem; }
+.mymi-home__preview-lead strong { font-size: clamp(1.25rem, 2.3vw, 1.9rem); letter-spacing: -.045em; display: block; }
+.mymi-home__preview-lead p { color: #5a6d89; font-size: .86rem; margin: .5rem 0 0; }
+.mymi-home__preview-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .85rem; padding-top: 1rem; }
+.mymi-home__preview-tile {
+    background: #fff; min-width: 0; padding: 1.15rem;
+    border: 1px solid #e6edf9; border-radius: 16px;
+    box-shadow: 0 5px 16px rgba(23, 56, 119, .045);
+}
+.mymi-home__preview-icon { color: #2d67e5; font-size: 1.35rem; line-height: 1; display: block; margin-bottom: .8rem; }
+.mymi-home__preview-tile strong { font-size: .94rem; display: block; }
+.mymi-home__preview-tile small { font-size: .73rem; color: #667996; display: block; margin-top: .2rem; }
+.mymi-home__preview-bars { height: 18px; display: flex; align-items: flex-end; gap: 4px; margin-top: 1rem; }
+.mymi-home__preview-bars i { height: 65%; background: #396ef4; flex: 1; border-radius: 4px; }
+.mymi-home__preview-bars i:nth-child(2) { height: 100%; background: #59cfc5; }
+.mymi-home__preview-bars i:nth-child(3) { height: 46%; background: #9cbbff; }
+.mymi-home__preview-line { height: 18px; margin-top: 1rem; border-bottom: 3px solid #46c9c4; transform: skewY(-9deg); }
+.mymi-home__preview-tile--wide { grid-column: 1 / -1; display: flex; align-items: center; gap: .9rem; }
+.mymi-home__preview-tile--wide .mymi-home__preview-icon { margin: 0; }
+.mymi-home__preview-status { margin-left: auto; color: #256b74; background: #d7f7f1; font-size: .7rem; font-weight: 800; border-radius: 100px; padding: .3rem .6rem; white-space: nowrap; }
+.mymi-home__hero-bottom { display: flex; gap: 1.4rem; flex-wrap: wrap; margin-top: clamp(3rem, 5vw, 5rem); padding-top: 1.6rem; border-top: 1px solid rgba(255,255,255,.15); }
+.mymi-home__hero-bottom span { color: #b9ccec; font-size: .73rem; font-weight: 700; letter-spacing: .12em; }
+.mymi-home__section { padding: clamp(4rem, 6.7vw, 6rem) 0; scroll-margin-top: 96px; }
+.mymi-home__section--light { background: #f7faff; }
+.mymi-home__section-heading { max-width: 710px; margin-bottom: 2.35rem; }
+.mymi-home__section-heading h2 { margin-bottom: 1.2rem; }
+.mymi-home__section-heading > p:not(.mymi-home__eyebrow) { color: var(--mymi-muted); font-size: 1.08rem; max-width: 620px; }
+.mymi-home__features { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+.mymi-home__feature-card {
+    background: #fff; border: 1px solid var(--mymi-border); padding: clamp(1.35rem, 2.2vw, 2rem);
+    min-width: 0; border-radius: var(--mymi-radius);
+    box-shadow: 0 12px 30px rgba(27, 64, 127, .045);
+}
+.mymi-home__feature-number { width: 43px; height: 43px; display: grid; place-items: center; background: #ebf2ff; color: #2459cb; border-radius: 12px; font-size: .78rem; font-weight: 850; margin-bottom: 1.75rem; }
+.mymi-home__feature-card h3 { margin-bottom: .75rem; }
+.mymi-home__feature-card p, .mymi-home__step p { color: var(--mymi-muted); font-size: .95rem; margin: 0; }
+.mymi-home__section--steps { background: #fff; }
+.mymi-home__steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.mymi-home__step { border-top: 3px solid #356ef4; padding: 1.5rem 1rem 0 0; }
+.mymi-home__step:nth-child(2) { border-top-color: #37b9ad; }
+.mymi-home__step:nth-child(3) { border-top-color: #779cf8; }
+.mymi-home__step-number { font-weight: 800; color: #8ea1bd; display: block; margin-bottom: 1.2rem; }
+.mymi-home__step h3 { margin-bottom: .8rem; }
+.mymi-home__section-action { margin-top: 2rem; }
+.mymi-home__text-link, .mymi-home__trust-layout a { color: #1f56ba; font-weight: 750; }
+.mymi-home__text-link:hover, .mymi-home__trust-layout a:hover { color: #133f8e; }
+.mymi-home__section--trust { background: #e9f1ff; }
+.mymi-home__trust-layout { display: grid; grid-template-columns: 1fr .9fr; gap: clamp(1.5rem, 6vw, 5rem); align-items: start; }
+.mymi-home__trust-layout h2 { max-width: 620px; }
+.mymi-home__trust-layout p { font-size: 1.07rem; color: #485d7f; line-height: 1.85; }
+.mymi-home__section--faq { background: #fff; }
+.mymi-home__faq { max-width: 860px; border-top: 1px solid var(--mymi-border); }
+.mymi-home__faq details { border-bottom: 1px solid var(--mymi-border); }
+.mymi-home__faq summary {
+    list-style: none; cursor: pointer; padding: 1.35rem .3rem; min-height: 54px;
+    font-size: 1.08rem; font-weight: 700; display: flex; align-items: center;
+    gap: 1rem; justify-content: space-between;
+}
+.mymi-home__faq summary::-webkit-details-marker { display: none; }
+.mymi-home__faq summary span { color: #3165dd; font-size: 1.5rem; }
+.mymi-home__faq details[open] summary span { transform: rotate(45deg); }
+.mymi-home__faq details p { margin: 0; padding: 0 .3rem 1.45rem; color: var(--mymi-muted); }
+.mymi-home__closing { background: #0d2157; padding: clamp(3.5rem, 6vw, 5.5rem) 0; color: #fff; }
+.mymi-home__closing-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+.mymi-home__closing h2 { color: #fff; margin-bottom: 1rem; max-width: 760px; }
+.mymi-home__closing p { margin: 0; color: #d0dffa; max-width: 590px; }
+.mymi-home__btn--closing { background: #3fe0c9; color: #061b42; flex-shrink: 0; }
+.mymi-home__btn--closing:hover, .mymi-home__btn--closing:focus { background: #8af5e7; color: #061b42; }
+
+@media (max-width: 991.98px) {
+    .mymi-home__hero-grid, .mymi-home__trust-layout { grid-template-columns: 1fr; }
+    .mymi-home__preview { max-width: 650px; transform: none; }
+    .mymi-home__features { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .mymi-home__closing-inner { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 575.98px) {
+    .mymi-home__hero { padding-top: 7.1rem; }
+    .mymi-home__hero h1 { font-size: clamp(2.25rem, 10vw, 3rem); }
+    .mymi-home__actions { align-items: stretch; }
+    .mymi-home__btn { width: 100%; }
+    .mymi-home__features, .mymi-home__steps { grid-template-columns: 1fr; }
+    .mymi-home__preview { padding: 1rem; }
+    .mymi-home__preview-tile { padding: .85rem; }
+    .mymi-home__preview-status { display: none; }
+    .mymi-home__hero-bottom { gap: .7rem 1rem; }
+    .mymi-home__hero-bottom span { font-size: .64rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .mymi-home *, .mymi-home *::before, .mymi-home *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}

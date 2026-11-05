@@ -12,5 +12,11 @@
 <link rel="stylesheet" href="<?= base_url('assets/css/mymiwallet.mobile.css') . '?v=' . (is_file(FCPATH.'assets/css/mymiwallet.mobile.css') ? filemtime(FCPATH.'assets/css/mymiwallet.mobile.css') : '1'); ?>">
 <!-- <link rel="stylesheet" href="<?= base_url('assets/css/website.css'); ?>"> -->
 
+<?php
+$homepageCss = FCPATH . 'assets/css/mymi-homepage.css';
+$homepageCssVersion = is_file($homepageCss) ? (string) filemtime($homepageCss) : '1';
+?>
+<link rel="stylesheet" href="<?= esc(base_url('assets/css/mymi-homepage.css') . '?v=' . $homepageCssVersion, 'attr') ?>">
+
 <?php $cspNonce = $cspNonce ?? $csp['script'] ?? ''; ?>
 <script nonce="<?= esc($cspNonce) ?>">window.__CSP_NONCE__='<?= esc($cspNonce) ?>'</script>
