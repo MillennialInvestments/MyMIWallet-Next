@@ -179,7 +179,7 @@ class Home extends BaseController
         $data = $this->buildCommonData([
             'layout'    => 'public',
             'pageName'  => 'Home',
-            'pageTitle' => 'MyMI Wallet | The Future of Finance | Budgeting & Investments',
+            'pageTitle' => 'MyMI Wallet | Budget, Track Investments and Plan with Confidence',
         ]);
         
 
