@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "tbi-gateway": {
+      "command": "tbi-gateway-mcp",
+      "args": [],
+      "env": {},
+      "enabledTools": [
+        "chat",
+        "models",
+        "health"
+      ],
+      "timeoutSeconds": 300
+    }
+  }
+}
