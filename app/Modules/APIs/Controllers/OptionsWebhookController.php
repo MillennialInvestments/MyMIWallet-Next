@@ -35,12 +35,22 @@ class OptionsWebhookController extends BaseAPIController
         }
 
         // Webhook security verification
-        $secret = (string) ($payload['secret'] ?? $this->request->getHeaderLine('X-MyMI-Secret'));
-        $expectedSecret = getenv('OPTIONS_WEBHOOK_SECRET') ?: 'mymi-options-secure-key';
+        // Never accept the historical hard-coded default secret.
+        $expectedSecret = trim((string) (getenv('OPTIONS_WEBHOOK_SECRET') ?: ''));
+        if ($expectedSecret === '') {
+            return $this->error('Webhook integration not configured', 503);
+        }
 
-        if ($secret !== $expectedSecret) {
+        $secret = (string) $this->request->getHeaderLine('X-MyMI-Secret');
+        if ($secret === '' && isset($payload['secret'])) {
+            $secret = (string) $payload['secret'];
+        }
+        if ($secret === '' || ! hash_equals($expectedSecret, $secret)) {
             return $this->error('Unauthorized webhook secret token', 401);
         }
+
+        // Remove legacy payload credentials before storage by ingest().
+        unset($payload['secret']);
 
         $signalModel = new OptionsSignalEventModel();
         $positionModel = new OptionsPositionModel();

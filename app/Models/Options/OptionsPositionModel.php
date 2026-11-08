@@ -72,6 +72,20 @@ class OptionsPositionModel extends Model
     }
 
     /**
+     * Resolve an exact trade UUID only inside a verified user/tenant scope.
+     */
+    public function findByUuidForUser(string $uuid, int $userId): ?array
+    {
+        if ($userId <= 0 || trim($uuid) === '') {
+            return null;
+        }
+
+        return $this->where('user_id', $userId)
+            ->where('trade_uuid', trim($uuid))
+            ->first();
+    }
+
+    /**
      * Calculate summary metrics across all active positions.
      *
      * @return array
