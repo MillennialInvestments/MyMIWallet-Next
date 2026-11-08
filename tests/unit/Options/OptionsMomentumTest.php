@@ -260,6 +260,88 @@ final class OptionsMomentumTest extends CIUnitTestCase
     /**
      * Test webhook idempotency deduplication.
      */
+
+    public function testAdvisoryWebhookDoesNotFallbackToTickerPosition(): void
+    {
+        $signals = $this->createMock(OptionsSignalEventModel::class);
+        $positions = $this->createMock(OptionsPositionModel::class);
+        $momentum = $this->createMock(OptionsMomentumManager::class);
+        $signals->method('isDuplicate')->willReturn(false);
+        $signals->method('insert')->willReturn(45);
+        $positions->expects($this->never())->method('findByUuidForUser');
+        $momentum->expects($this->never())->method('handleMomentumSignal');
+
+        $service = new TradingViewWebhookService($signals, $positions, $momentum);
+        $result = $service->ingest([
+            'ticker' => 'IREN',
+            'signal' => 'bos_bullish',
+            'timestamp' => '2026-11-06 15:00:00',
+        ]);
+        $this->assertSame('accepted', $result['status']);
+        $this->assertNull($result['position_id']);
+    }
+
+    public function testWebhookTradeUuidWithoutVerifiedTenantIsRejected(): void
+    {
+        $signals = $this->createMock(OptionsSignalEventModel::class);
+        $positions = $this->createMock(OptionsPositionModel::class);
+        $momentum = $this->createMock(OptionsMomentumManager::class);
+        $signals->method('isDuplicate')->willReturn(false);
+        $signals->expects($this->never())->method('insert');
+        $positions->expects($this->never())->method('findByUuidForUser');
+        $momentum->expects($this->never())->method('handleMomentumSignal');
+
+        $service = new TradingViewWebhookService($signals, $positions, $momentum);
+        $result = $service->ingest([
+            'ticker' => 'IREN',
+            'trade_uuid' => 'a-valid-looking-uuid',
+            'signal' => 'breakout_long',
+        ]);
+        $this->assertSame('rejected', $result['status']);
+        $this->assertStringContainsString('verified tenant', $result['reason']);
+    }
+
+    public function testWebhookRejectsTradeUuidOutsideVerifiedTenant(): void
+    {
+        $signals = $this->createMock(OptionsSignalEventModel::class);
+        $positions = $this->createMock(OptionsPositionModel::class);
+        $momentum = $this->createMock(OptionsMomentumManager::class);
+        $signals->method('isDuplicate')->willReturn(false);
+        $signals->expects($this->never())->method('insert');
+        $positions->expects($this->once())->method('findByUuidForUser')
+            ->with('tenant-crossing-trade', 7)->willReturn(null);
+        $momentum->expects($this->never())->method('handleMomentumSignal');
+
+        $service = new TradingViewWebhookService($signals, $positions, $momentum);
+        $result = $service->ingest([
+            'ticker' => 'IREN',
+            'trade_uuid' => 'tenant-crossing-trade',
+        ], 7);
+        $this->assertSame('rejected', $result['status']);
+    }
+
+    public function testWebhookLinksOnlyExactVerifiedTenantPosition(): void
+    {
+        $signals = $this->createMock(OptionsSignalEventModel::class);
+        $positions = $this->createMock(OptionsPositionModel::class);
+        $momentum = $this->createMock(OptionsMomentumManager::class);
+        $signals->method('isDuplicate')->willReturn(false);
+        $signals->method('insert')->willReturn(48);
+        $positions->expects($this->once())->method('findByUuidForUser')
+            ->with('matched-trade', 7)->willReturn(['id' => 71, 'user_id' => 7]);
+        $momentum->expects($this->once())->method('handleMomentumSignal')
+            ->with(71, 'bos_bullish', $this->anything())->willReturn(['status' => 'advisory']);
+
+        $service = new TradingViewWebhookService($signals, $positions, $momentum);
+        $result = $service->ingest([
+            'ticker' => 'IREN',
+            'trade_uuid' => 'matched-trade',
+            'signal' => 'bos_bullish',
+        ], 7);
+        $this->assertSame('accepted', $result['status']);
+        $this->assertSame(71, $result['position_id']);
+    }
+
     public function testWebhookIdempotencyDeduplication(): void
     {
         $signalModel = $this->createMock(OptionsSignalEventModel::class);

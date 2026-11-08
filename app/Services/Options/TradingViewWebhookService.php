@@ -22,7 +22,7 @@ class TradingViewWebhookService
      * @param array $payload
      * @return array Processing result.
      */
-    public function ingest(array $payload): array
+    public function ingest(array $payload, ?int $verifiedUserId = null): array
     {
         $ticker = strtoupper(trim((string) ($payload['ticker'] ?? $payload['symbol'] ?? '')));
         $signalType = trim((string) ($payload['signal'] ?? $payload['action'] ?? 'momentum_update'));
@@ -49,23 +49,26 @@ class TradingViewWebhookService
             ];
         }
 
-        // Link with active position if available
+        // A ticker alone is never an authorization to mutate an account's position.
+        // TradingView requests using the shared ingress secret remain advisory-only.
         $positionId = null;
-        if (! empty($payload['trade_uuid'])) {
-            $pos = $this->positionModel->findByUuid((string) $payload['trade_uuid']);
-            if ($pos) {
-                $positionId = (int) $pos['id'];
+        $tradeUuid = trim((string) ($payload['trade_uuid'] ?? ''));
+        if ($tradeUuid !== '') {
+            if ($verifiedUserId === null || $verifiedUserId <= 0) {
+                return [
+                    'status' => 'rejected',
+                    'reason' => 'Position association requires verified tenant identity.',
+                ];
             }
-        }
-        if ($positionId === null) {
-            $activeForTicker = $this->positionModel
-                ->where('ticker', $ticker)
-                ->whereIn('status', ['open', 'warning_momentum', 'warning_trailing', 'warning_theta', 'target_reached'])
-                ->orderBy('created_at', 'DESC')
-                ->first();
-            if ($activeForTicker) {
-                $positionId = (int) $activeForTicker['id'];
+
+            $pos = $this->positionModel->findByUuidForUser($tradeUuid, $verifiedUserId);
+            if (! $pos || (int) ($pos['user_id'] ?? 0) !== $verifiedUserId) {
+                return [
+                    'status' => 'rejected',
+                    'reason' => 'Position is unavailable for the verified tenant.',
+                ];
             }
+            $positionId = (int) $pos['id'];
         }
 
         $now = date('Y-m-d H:i:s');
