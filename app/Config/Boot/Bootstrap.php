@@ -1,5 +1,5 @@
 <?php
-namespace Config;
+namespace Config\Boot;
 
 use CodeIgniter\Config\BaseConfig;
 
