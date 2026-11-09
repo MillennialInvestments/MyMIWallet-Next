@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Preview the tested public navbar fix from its existing AIOps worktree.
-# Use --patch to print the candidate or --handoff to print the AIOps task.
+# Use --patch for the diff, --scope for the recipe input, or --handoff for the task.
 set -u
 set -o pipefail
 
@@ -14,10 +14,10 @@ stop() {
 emit_patch() {
     cat <<'MYMI_PUBLIC_NAVBAR_PATCH'
 diff --git a/app/Views/themes/public/layouts/_sitenav.php b/app/Views/themes/public/layouts/_sitenav.php
-index b0561db4..e10a4789 100644
+index b0561db4..8b6fec2b 100644
 --- a/app/Views/themes/public/layouts/_sitenav.php
 +++ b/app/Views/themes/public/layouts/_sitenav.php
-@@ -5,7 +5,7 @@ $authUser = null;
+@@ -5,43 +5,43 @@ $authUser = null;
  $authUserId = null;
  
  $homeUrl = site_url('/');
@@ -26,8 +26,10 @@ index b0561db4..e10a4789 100644
  $supportUrl = site_url('Support');
  $dashboardUrl = site_url('/Dashboard');
  $loginUrl = site_url('login');
-@@ -14,34 +14,33 @@ $brandImage = base_url('assets/images/MyMI-Wallet-Logo-White.png');
+ 
+ $brandImage = base_url('assets/images/MyMI-Wallet-Logo-White.png');
  $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto Asset Marketplace/Exchange';
++$cspNonce = $cspNonce ?? ($csp['script'] ?? service('renderer')->getData('cspNonce') ?? '');
  ?>
  
 -<!-- <nav class="intro-navbar navbar navbar-expand-lg navbar-dark bg-dark intro-navbar"> -->
@@ -71,7 +73,7 @@ index b0561db4..e10a4789 100644
          </li>
  
          <!-- <li class="nav-item intro-nav-item dropdown">
-@@ -57,10 +56,7 @@ $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto As
+@@ -57,10 +57,7 @@ $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto As
            </ul>
          </li> -->
  
@@ -83,29 +85,27 @@ index b0561db4..e10a4789 100644
            <?php if ($isLoggedIn): ?>
              <a href="<?= $dashboardUrl ?>" class="btn btn-primary text-white"><span>ACCOUNT</span></a>
              <a href="<?= site_url('/logout') ?>" class="btn btn-primary text-white"><span><em class="icon ni ni-signout"></em></span></a>
-diff --git a/app/Views/themes/public/layouts/js-links.php b/app/Views/themes/public/layouts/js-links.php
-index 713caf9d..a989ea3c 100644
---- a/app/Views/themes/public/layouts/js-links.php
-+++ b/app/Views/themes/public/layouts/js-links.php
-@@ -213,6 +213,13 @@ document.addEventListener('DOMContentLoaded', function () {
-         }
-     });
- 
-+    $('#publicNavbarNav').on('click', 'a', function(event) {
-+        var menu = event.delegateTarget;
-+        if (menu.classList.contains('show')) {
+@@ -72,3 +69,15 @@ $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto As
+     </div>
+   </div>
+ </nav>
++
++<script nonce="<?= esc($cspNonce, 'attr') ?>">
++(() => {
++    const menu = document.getElementById('publicNavbarNav');
++
++    menu.addEventListener('click', (event) => {
++        if (event.target.closest('a') && menu.classList.contains('show')) {
 +            window.bootstrap?.Collapse.getOrCreateInstance(menu, { toggle: false }).hide();
 +        }
 +    });
-+
-     $win.on('scroll', function() {
-         if ($win.scrollTop() > 0) {
-             if (!$introNav.hasClass(_navbar_fixed)) {
++})();
++</script>
 diff --git a/public/assets/css/responsive-overrides.css b/public/assets/css/responsive-overrides.css
-index a7e820ab..fe68a175 100644
+index a7e820ab..501a02fd 100644
 --- a/public/assets/css/responsive-overrides.css
 +++ b/public/assets/css/responsive-overrides.css
-@@ -295,6 +295,16 @@ a:focus {
+@@ -295,6 +295,33 @@ a:focus {
  .intro-navbar {
      background-color: #10006b;
  }
@@ -116,6 +116,23 @@ index a7e820ab..fe68a175 100644
 +    overflow: visible;
 +}
 +
++#publicNavbarNav .nav-link {
++    padding: 0.5rem 0.75rem;
++}
++
++.intro-navbar .navbar-toggler:focus-visible,
++#publicNavbarNav .nav-link:focus-visible {
++    outline: 2px solid #fff;
++    outline-offset: 2px;
++}
++
++@media (max-width: 991.98px) {
++    #publicNavbarNav.collapse.show {
++        max-height: calc(100dvh - 4.5rem);
++        overflow-y: auto;
++    }
++}
++
 +.intro #features {
 +    scroll-margin-top: 4.5rem;
 +}
@@ -123,6 +140,34 @@ index a7e820ab..fe68a175 100644
    background-color: #fff !important;
    transition: background-color 200ms linear;
 MYMI_PUBLIC_NAVBAR_PATCH
+}
+
+emit_scope() {
+    cat <<'MYMI_PUBLIC_NAVBAR_SCOPE'
+{
+  "allowed_source_paths": [
+    "app/Views/themes/public/layouts/_sitenav.php",
+    "public/assets/css/responsive-overrides.css"
+  ],
+  "read_only_source_paths": [],
+  "file_operations": [
+    {
+      "id": "apply-tested-public-navbar-diff",
+      "type": "apply_unified_diff",
+      "diff": "diff --git a/app/Views/themes/public/layouts/_sitenav.php b/app/Views/themes/public/layouts/_sitenav.php\nindex b0561db4..8b6fec2b 100644\n--- a/app/Views/themes/public/layouts/_sitenav.php\n+++ b/app/Views/themes/public/layouts/_sitenav.php\n@@ -5,43 +5,43 @@ $authUser = null;\n $authUserId = null;\n \n $homeUrl = site_url('/');\n-$featuresUrl = site_url('#features');\n+$featuresUrl = $homeUrl . '#features';\n $supportUrl = site_url('Support');\n $dashboardUrl = site_url('/Dashboard');\n $loginUrl = site_url('login');\n \n $brandImage = base_url('assets/images/MyMI-Wallet-Logo-White.png');\n $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto Asset Marketplace/Exchange';\n+$cspNonce = $cspNonce ?? ($csp['script'] ?? service('renderer')->getData('cspNonce') ?? '');\n ?>\n \n-<!-- <nav class=\"intro-navbar navbar navbar-expand-lg navbar-dark bg-dark intro-navbar\"> -->\n-<nav class=\"intro-navbar navbar navbar-expand-lg intro-navbar fixed-top\">\n-  <div class=\"container container-fluid w-80 px-5\">\n+<nav class=\"intro-navbar navbar navbar-expand-lg navbar-dark fixed-top\" aria-label=\"Main navigation\">\n+  <div class=\"container px-3 px-lg-4\">\n     <a class=\"navbar-brand d-flex align-items-center\" href=\"<?= $homeUrl ?>\">\n       <img class=\"logo-img logo-dark img-fluid\"\n            src=\"<?= esc($brandImage) ?>\" srcset=\"<?= esc($brandImage) ?>\"\n            alt=\"<?= esc($brandAlt) ?>\">\n     </a>\n \n-    <!-- <button class=\"navbar-toggler\" type=\"button\"\n+    <button class=\"navbar-toggler\" type=\"button\"\n             data-bs-toggle=\"collapse\"\n             data-bs-target=\"#publicNavbarNav\"\n             aria-controls=\"publicNavbarNav\"\n             aria-expanded=\"false\"\n             aria-label=\"Toggle navigation\">\n-      <span class=\"navbar-toggler-icon\"></span>\n-    </button> -->\n+      <span class=\"navbar-toggler-icon bg-transparent\" aria-hidden=\"true\"></span>\n+    </button>\n \n-    <div class=\"navbar-collapse intro-nav d-block\" id=\"publicNavbarNav\">\n-      <ul class=\"navbar-nav w-100 w-lg-auto mt-0 ps-4 ps-lg-0 align-items-lg-center gap-lg-2\">\n+    <div class=\"collapse navbar-collapse\" id=\"publicNavbarNav\">\n+      <ul class=\"navbar-nav w-100 py-2 py-lg-0 align-items-lg-center gap-lg-2\">\n         <li class=\"nav-item intro-nav-item\">\n-          <a href=\"<?= $homeUrl ?>\" class=\"link-to nav-link intro-nav-link\">Home</a>\n+          <a href=\"<?= $homeUrl ?>\" class=\"nav-link intro-nav-link\">Home</a>\n         </li>\n         <li class=\"nav-item intro-nav-item\">\n-          <a href=\"<?= $featuresUrl ?>\" class=\"link-to nav-link intro-nav-link\">Features</a>\n+          <a href=\"<?= $featuresUrl ?>\" class=\"nav-link intro-nav-link\">Features</a>\n         </li>\n         <li class=\"nav-item intro-nav-item\">\n-          <a href=\"<?= site_url('How-It-Works'); ?>\" class=\"link-to nav-link intro-nav-link\">How It Works</a>\n+          <a href=\"<?= site_url('How-It-Works'); ?>\" class=\"nav-link intro-nav-link\">How It Works</a>\n         </li>\n \n         <!-- <li class=\"nav-item intro-nav-item dropdown\">\n@@ -57,10 +57,7 @@ $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto As\n           </ul>\n         </li> -->\n \n-        <!-- spacer that only grows on lg+ to push the last item right -->\n-        <li class=\"d-none d-lg-block flex-lg-grow-1\"></li>\n-\n-        <li class=\"nav-item intro-nav-item pb-1 ps-lg-1 ms-lg-0\">\n+        <li class=\"nav-item intro-nav-item ps-lg-1 ms-lg-auto\">\n           <?php if ($isLoggedIn): ?>\n             <a href=\"<?= $dashboardUrl ?>\" class=\"btn btn-primary text-white\"><span>ACCOUNT</span></a>\n             <a href=\"<?= site_url('/logout') ?>\" class=\"btn btn-primary text-white\"><span><em class=\"icon ni ni-signout\"></em></span></a>\n@@ -72,3 +69,15 @@ $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto As\n     </div>\n   </div>\n </nav>\n+\n+<script nonce=\"<?= esc($cspNonce, 'attr') ?>\">\n+(() => {\n+    const menu = document.getElementById('publicNavbarNav');\n+\n+    menu.addEventListener('click', (event) => {\n+        if (event.target.closest('a') && menu.classList.contains('show')) {\n+            window.bootstrap?.Collapse.getOrCreateInstance(menu, { toggle: false }).hide();\n+        }\n+    });\n+})();\n+</script>\ndiff --git a/public/assets/css/responsive-overrides.css b/public/assets/css/responsive-overrides.css\nindex a7e820ab..501a02fd 100644\n--- a/public/assets/css/responsive-overrides.css\n+++ b/public/assets/css/responsive-overrides.css\n@@ -295,6 +295,33 @@ a:focus {\n .intro-navbar {\n     background-color: #10006b;\n }\n+\n+/* Override the legacy collapse height while keeping Bootstrap's transition. */\n+#publicNavbarNav.collapse {\n+    height: auto;\n+    overflow: visible;\n+}\n+\n+#publicNavbarNav .nav-link {\n+    padding: 0.5rem 0.75rem;\n+}\n+\n+.intro-navbar .navbar-toggler:focus-visible,\n+#publicNavbarNav .nav-link:focus-visible {\n+    outline: 2px solid #fff;\n+    outline-offset: 2px;\n+}\n+\n+@media (max-width: 991.98px) {\n+    #publicNavbarNav.collapse.show {\n+        max-height: calc(100dvh - 4.5rem);\n+        overflow-y: auto;\n+    }\n+}\n+\n+.intro #features {\n+    scroll-margin-top: 4.5rem;\n+}\n /* .intro-navbar.scrolled {\n   background-color: #fff !important;\n   transition: background-color 200ms linear;\n",
+      "preimage_hashes": {
+        "app/Views/themes/public/layouts/_sitenav.php": "439fb8eb661b8418e1c43970c10bbcb305968511e905a3c78f29713fc5056b7d",
+        "public/assets/css/responsive-overrides.css": "46f1c035784e2bc515acbfc952b314ea13022b00495ba393439f01528eba59eb"
+      }
+    }
+  ],
+  "validation_commands": [
+    "php -l app/Views/themes/public/layouts/_sitenav.php",
+    "git diff --check"
+  ],
+  "rollback_commands": []
+}
+MYMI_PUBLIC_NAVBAR_SCOPE
 }
 
 emit_handoff() {
@@ -155,18 +200,17 @@ The live homepage returned HTTP 200 during verification. Its active sitenav forc
 
 # Current State
 
-- Resume MYMI-GTM-058 on the existing branch `feature/mymi-gtm-058-public-navbar-collapse-20261103`. This upload is a temporary transport copy.
-- Native baseline preview passed, but the apply stopped before source mutation. Recover the existing mission's objective and approved worktree environment before reconciling the baseline.
-- The exact three-file candidate passed PHP syntax, whitespace checks, and an isolated Chromium fixture using repository theme assets and Bootstrap 5.3.3 at 320, 390, 768, 991, 992, and 1440 px. Touch, keyboard, the Features offset, How It Works, and Login navigation passed in the fixture.
+- AIOps restored the MYMI-GTM-058 objective and reconciled the existing feature worktree to main. The approved worktree environment remains to be bootstrapped.
+- The original pinned proposal was preserved. Its menu was clipped at 320 px. This replacement candidate keeps the same two-file boundary and needs its own exact recipe approval.
+- The replacement passed PHP syntax, a local Chromium fixture with a nonce-based script policy, and viewport checks at 320, 375, 390, 768, 991, 992, 1280, and 1440 px. Touch, keyboard, the Features offset, How It Works, and Login navigation passed in the fixture.
 
 # What Needs To Change
 
-Recover the existing mission's objective and worktree bootstrap via a supported AIOps repair procedure. Do not create the lock directory or synthesize objective records to pass the gate. Revalidate the baseline and grant current source scope through the control plane. Bind the existing candidate to a deterministic Class-1 recipe limited to the three listed files. Preview, apply through the approved recipe, and package the validated feature PR. The companion Bash package emits the exact patch with `--patch` and checks the recorded source blobs in its default mode.
+Resume the existing mission. Verify the current baseline and approved worktree environment. The transport script emits the tested patch with `--patch` and exact deterministic recipe input with `--scope`. Approve only the exact candidate and source scope, preview, apply through AIOps, and validate the feature PR.
 
 # Files To Inspect
 
 - `app/Views/themes/public/layouts/_sitenav.php` with preimage Git blob `b0561db4d0afcf623156f8e67f016683c6c3a274`
-- `app/Views/themes/public/layouts/js-links.php` with preimage Git blob `713caf9dd3c5429e48223129e3628943bd90ac95`
 - `public/assets/css/responsive-overrides.css` with preimage Git blob `a7e820ab015938d050b90d356a9e7e14ad14ac6f`
 
 # Files To Avoid
@@ -175,14 +219,14 @@ Keep the shared Bootstrap assets, dashboard navigation, authentication, budget f
 
 # Commands To Run
 
-From the existing worktree, use `ai check` and `ai next` after supported recovery. Re-run the native baseline reconciliation preview from the TBI control checkout with the current mission config and worktree. Check the patch preimages, then use the approved recipe's preview and validators. Run `php -l` on both changed PHP files, `git diff --check`, `vendor/bin/phpunit`, and browser smoke checks on a non-production build. Run `ai finish --dry-run` and preserve the owner gate.
+From the existing worktree, use `ai check` and `ai next` after supported recovery. Re-run the native baseline reconciliation preview from the TBI control checkout with the current mission config and worktree. Check the patch preimages, then use the approved recipe's preview and validators. Run `php -l` on the changed PHP view, `git diff --check`, `vendor/bin/phpunit`, and browser smoke checks on a non-production build. Run `ai finish --dry-run` and preserve the owner gate.
 
 # Acceptance Criteria
 
 - The public mobile toggle changes `aria-expanded`, the menu opens without clipping, and a selected link closes it.
 - At desktop widths all four links remain visible. Home, Features, How It Works and Login use their existing destinations.
 - Features works from the homepage and another public page, landing below the navbar.
-- The approved diff contains exactly the three paths above and passes the required checks. The PR is ready for owner review.
+- The approved diff contains exactly the two paths above and passes the required checks. The PR is ready for owner review.
 
 # Risks
 
@@ -194,15 +238,16 @@ Use the deterministic recipe's exact preimages or a bounded reverse patch in the
 
 # Final Report Requirements
 
-Include the current mission, recipe and approval IDs, exact branch and PR head, three-path scope, checks, risks, rollback, and any remaining owner gate. Record the missing objective-directory precondition that allowed baseline preview to pass before apply stopped as an AIOps operational finding, and route a durable prevention update to AGENTS.md through governance.
+Include the current mission, recipe and approval IDs, exact branch and PR head, two-path scope, checks, risks, rollback, and any remaining owner gate. Record the preserved original proposal and this corrected candidate, and route any durable operational findings through governance.
 MYMI_PUBLIC_NAVBAR_HANDOFF
 }
 
 case "${1:---preview}" in
     --patch) emit_patch; exit ;;
+    --scope) emit_scope; exit ;;
     --handoff) emit_handoff; exit ;;
     --preview) ;;
-    *) stop 'Use --preview, --patch, or --handoff.' ;;
+    *) stop 'Use --preview, --patch, --scope, or --handoff.' ;;
 esac
 
 worktree=$(git rev-parse --show-toplevel 2>/dev/null) ||
@@ -229,12 +274,11 @@ while read -r expected file; do
     fi
 done <<'MYMI_PUBLIC_NAVBAR_PREIMAGES'
 b0561db4d0afcf623156f8e67f016683c6c3a274 app/Views/themes/public/layouts/_sitenav.php
-713caf9dd3c5429e48223129e3628943bd90ac95 app/Views/themes/public/layouts/js-links.php
 a7e820ab015938d050b90d356a9e7e14ad14ac6f public/assets/css/responsive-overrides.css
 MYMI_PUBLIC_NAVBAR_PREIMAGES
 
 if ! emit_patch | git --no-optional-locks apply --check --index --whitespace=error-all -; then
-    stop 'The three-file patch did not pass its read-only check.'
+    stop 'The two-file patch did not pass its read-only check.'
 fi
 printf '%s\n' 'PASS: The exact navbar candidate fits the current worktree.'
 printf 'HEAD=%s\nORIGIN_MAIN=%s\n' "$(git rev-parse HEAD)" "$(git rev-parse origin/main)"
