@@ -165,7 +165,9 @@ emit_scope() {
     "php -l app/Views/themes/public/layouts/_sitenav.php",
     "git diff --check"
   ],
-  "rollback_commands": []
+  "rollback_commands": [
+    "git restore --source=14b9ab53f38d29a2f5420372bce74d1512a690e3 --worktree -- app/Views/themes/public/layouts/_sitenav.php public/assets/css/responsive-overrides.css"
+  ]
 }
 MYMI_PUBLIC_NAVBAR_SCOPE
 }
