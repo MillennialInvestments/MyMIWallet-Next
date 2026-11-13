@@ -1,0 +1,92 @@
+name: Workflow Lint
+
+# MYMI-GTM-006: workflow syntax and action lint gate.
+#
+# 1. YAML syntax: every file in .github/workflows must parse (blocking).
+#    Malformed workflows fail before any job runs and silently stop CI, which
+#    is the failure mode recorded for ci-health.yml in the 2026-09-20 audit.
+# 2. actionlint: workflow files changed in the PR/push range are linted
+#    (blocking). Unchanged inherited workflows are not linted here, so existing
+#    debt does not block unrelated work; lint them in a dedicated successor.
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+      - 'scripts/ci/pr_diff_range.sh'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/**'
+      - 'scripts/ci/pr_diff_range.sh'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: workflow-lint-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  workflow-lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout (full history for range diff)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: YAML syntax of all workflows (blocking)
+        run: |
+          python3 -m pip install --quiet --user 'PyYAML==6.0.2'
+          python3 - <<'PY'
+          import glob, sys, yaml
+          files = sorted(glob.glob('.github/workflows/*.yml') + glob.glob('.github/workflows/*.yaml'))
+          bad = 0
+          for path in files:
+              try:
+                  with open(path, encoding='utf-8') as fh:
+                      doc = yaml.safe_load(fh)
+                  if not isinstance(doc, dict) or 'jobs' not in doc:
+                      raise ValueError('top-level mapping with a "jobs" key is required')
+              except Exception as exc:  # report every bad file, then fail
+                  bad += 1
+                  print(f'::error file={path}::Invalid workflow YAML: {exc}')
+          print(f'Checked {len(files)} workflow files, {bad} invalid.')
+          sys.exit(1 if bad else 0)
+          PY
+
+      - name: Resolve commit range
+        id: range
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+          PUSH_AFTER: ${{ github.sha }}
+        run: |
+          range="$(bash scripts/ci/pr_diff_range.sh)"
+          {
+            echo "base=${range% *}"
+            echo "head=${range#* }"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: actionlint on changed workflows (blocking)
+        env:
+          BASE: ${{ steps.range.outputs.base }}
+          HEAD: ${{ steps.range.outputs.head }}
+        run: |
+          mapfile -t changed < <(git diff --name-only --diff-filter=ACMR "$BASE" "$HEAD" -- '.github/workflows/*.yml' '.github/workflows/*.yaml')
+          if [ "${#changed[@]}" -eq 0 ]; then
+            echo "No workflow files changed in range."
+            exit 0
+          fi
+          printf 'Linting: %s\n' "${changed[@]}"
+          docker run --rm \
+            --user "$(id -u):$(id -g)" \
+            -v "$GITHUB_WORKSPACE:/repo" \
+            -w /repo \
+            rhysd/actionlint:1.7.1 \
+            -color "${changed[@]}"
