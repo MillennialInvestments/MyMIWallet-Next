@@ -1,6 +1,6 @@
 # MYMI-GTM-002: Stop tracking `chat/.env`
 
-- Status: PROPOSED (owner runs the host step before merge)
+- Status: HOST STEP DONE, merge pending
 - Last updated: 2026-11-13
 - Related: [MYMI-GTM-001 credential containment](MYMI-GTM-001_CREDENTIAL_CONTAINMENT.md)
 
@@ -31,6 +31,6 @@ It prints no values.
 
 | Step | Time (UTC) | Result |
 | --- | --- | --- |
-| Host script run | pending | pending |
+| Host script run (owner, sha256 `14f2e054…`) | 23:16 | Live env copied to `shared/chat.env` (owner:www-data, 640); drop-in `10-shared-env.conf` loaded (`EnvironmentFiles=…/shared/chat.env`); `current/chat/.env` is now a symlink; service active; `/health` returned `{"status":"ok","enabled":true}` |
 | PR merged | pending | pending |
 | `git ls-files chat/.env` on main is empty | pending | pending |
