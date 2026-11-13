@@ -41,3 +41,14 @@ task completion. Adopt, re-run under AIOps, or close.
 ## Rollback
 
 Revert the PR. Both workflows are additive and change no application runtime code.
+
+## Added scope: duplicate Config\Bootstrap (CI unblock)
+
+Requested by the owner on 2026-11-13. `14b9ab5` added `app/Config/Bootstrap.php` but left the earlier copy at
+`app/Config/Boot/Bootstrap.php` (from `c714af5`). Two declarations of `Config\Bootstrap` made
+`scripts/check_duplicates.php` (`audit` job) and `scripts/ci/psr4_audit.php` (`psr4` job) fail on main and on every PR.
+
+- Change: remove `app/Config/Boot/Bootstrap.php`. `app/Config/Boot/` holds per-environment boot scripts that CodeIgniter includes by file name, not config classes. Nothing references the removed file.
+- Evidence (PHP 8.3.6 sandbox): before the change, check_duplicates exited 1 and the PSR-4 audit reported 1 violation. After the change, check_duplicates exits 0, the PSR-4 audit passes, and `php -l app/Config/Bootstrap.php` is clean.
+- Follow-up, NOT fixed here: nothing calls `Config\Bootstrap::bootstrap()`, and `CodeIgniter\Config\BaseConfig` has no `registerProviders()` method, so the gateway provider is still never registered. `composer.json` also points a path repository at `../timothyburks/...` and sets `minimum-stability: dev`. Track both as a separate gateway-wiring task.
+- Rollback: `git revert` this commit. It restores the file and the CI failure.
