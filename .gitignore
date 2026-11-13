@@ -38,7 +38,6 @@ chat/.env*
 phpunit.xml
 *.map
 !/chat/.env.example
-!/chat/.env
 /chat/chat.pid
 /chat/logs/chat.log
 
