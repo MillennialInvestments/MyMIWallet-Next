@@ -98,9 +98,12 @@ class AiOpsAPIController extends BaseAPIController
             return $this->failValidationErrors('Unsupported toggle');
         }
 
-        $userId    = function_exists('auth') ? auth()->user()->id : null;
+        $userId    = $this->currentUserId();
         if ($userId === null) {
             return $this->fail('Unauthorized', 401);
+        }
+        if (! $this->isAdmin()) {
+            return $this->fail('Forbidden', 403);
         }
         $override  = new SiteSettingsOverride();
         $override->save($key, (string) $value, $userId);
@@ -124,13 +127,18 @@ class AiOpsAPIController extends BaseAPIController
         $payload    = $this->request->getJSON(true) ?? $this->request->getPost();
         $jobKey     = $payload['jobKey'] ?? '';
         $subsystem  = $payload['subsystem'] ?? $this->mapSubsystem($jobKey);
-        $userId     = function_exists('auth') ? auth()->user()->id : null;
+        $userId     = $this->currentUserId();
         $webhookUrl = $this->getWebhookUrl($jobKey);
         $signature  = $this->request->getHeaderLine('X-MyMI-Signature');
 
         $rawBody = $this->request->getBody();
-        if ($userId === null && ! $this->isValidSignature($rawBody, $signature)) {
-            return $this->fail('Unauthorized', 401);
+        if (! $this->isValidSignature($rawBody, $signature)) {
+            if ($userId === null) {
+                return $this->fail('Unauthorized', 401);
+            }
+            if (! $this->isAdmin()) {
+                return $this->fail('Forbidden', 403);
+            }
         }
 
         if (! $jobKey || ! $subsystem || ! $webhookUrl) {
@@ -211,6 +219,30 @@ class AiOpsAPIController extends BaseAPIController
         return $this->respond(['status' => 'ok', 'runId' => $runId]);
     }
 
+    protected function currentUserId(): ?int
+    {
+        try {
+            $user = function_exists('auth') ? auth()->user() : null;
+        } catch (Throwable $e) {
+            return null;
+        }
+
+        return isset($user->id) ? (int) $user->id : null;
+    }
+
+    /**
+     * Toggling AI Ops settings or starting runs is an admin action, not something
+     * any logged-in member may do.
+     */
+    protected function isAdmin(): bool
+    {
+        if (function_exists('has_permission') && has_permission('admin.access')) {
+            return true;
+        }
+
+        return function_exists('in_groups') && in_groups(['admin', 'superadmin']);
+    }
+
     protected function mapSubsystem(string $jobKey): ?string
     {
         return match ($jobKey) {
@@ -244,7 +276,11 @@ class AiOpsAPIController extends BaseAPIController
         if (! str_starts_with($headerSignature, 'sha256=')) {
             return false;
         }
-        $secret = env('AI_OPS_SHARED_SECRET') ?: '';
+        $secret = (string) (env('AI_OPS_SHARED_SECRET') ?: '');
+        if ($secret === '') {
+            // Without a configured secret anyone could compute the HMAC.
+            return false;
+        }
         $expected = 'sha256=' . hash_hmac('sha256', $rawBody, $secret);
 
         return hash_equals($expected, $headerSignature);
