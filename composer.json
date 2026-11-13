@@ -64,16 +64,5 @@
         "lint:csp": "bash scripts/lint_csp.sh",
         "audit:duplicate-classes": "php scripts/check_duplicates.php",
         "lint:psr4": "php scripts/psr4_scan.php"
-    },
-    "repositories": {
-        "tbi-gateway": {
-            "type": "path",
-            "url": "../timothyburks/.agents/plugins/tbi-gateway",
-            "options": {
-                "symlink": true
-            }
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
