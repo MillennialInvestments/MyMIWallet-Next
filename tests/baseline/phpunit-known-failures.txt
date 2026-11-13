@@ -7,7 +7,6 @@
 ExternalApiGuardTest::testProviderCapStopsCallsAfterLimit
 Tests\Unit\Marketing\MarketFeed\MarketFeedPersistenceDatabaseTest::testSqlitePersistenceContract
 Tests\Unit\Marketing\MarketFeed\Transport\SystemPublicIpv4ResolverTest::testRejectsNonPublicAddresses with data set #11
-Tests\Unit\Marketing\MarketingDistroTest::testVoiceoverServiceGeneratesValidMp3
 Tests\Unit\Marketing\MarketingDistroTest::testContentDistroEngineGeneratesFullPackage
 Tests\Unit\Marketing\MarketingDistroTest::testDispatchQueuesAndLogsOutputs
 MditPhase1Test::testDepositDeniedWhenNotVerified

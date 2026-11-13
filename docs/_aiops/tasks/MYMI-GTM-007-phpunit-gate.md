@@ -20,7 +20,7 @@ Since 2026-04-20, CI's PHPUnit steps have run **zero tests**. Commit `0894a666a`
 - unit: 196 tests, 1036 assertions, 7 errors, 6 failures. auth-smoke: 9 tests, 1 error, 4 failures.
 - Gate positive cases: unit and auth reports against the full baseline both exit 0.
 - Gate negative cases: removing one baseline entry exits 1 with a NEW error. An empty report exits 2. A missing report exits 2.
-- The CI runner's failure set may differ from the sandbox's. Reconcile the baseline to the first CI run, and document every change.
+- First CI run (PHP 8.2.35, run 43428529967): unit had 196 tests (12 failing), auth-smoke had 9 tests (5 failing), and the gate passed with new=0. `MarketingDistroTest::testVoiceoverServiceGeneratesValidMp3` failed only in the sandbox and passes on the CI runner, so it was removed from the baseline. The baseline now holds 17 entries, matching CI.
 
 ## Risks
 
