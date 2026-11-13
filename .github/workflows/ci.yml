@@ -94,27 +94,24 @@ jobs:
       - name: API Versioning Gate
         run: php spark api:versioning-check
 
-      - name: PHPUnit (unit)
+      - name: PHPUnit (unit) - baseline-ratchet gate
+        # MYMI-GTM-007: blocking. Fails on any failing test not listed in
+        # tests/baseline/phpunit-known-failures.txt, on an empty suite, or on a
+        # missing report. Known baseline failures are reported as warnings.
         run: |
-          if [ -x vendor/bin/phpunit ]; then
-            vendor/bin/phpunit --testsuite unit || true
-          elif command -v phpunit >/dev/null 2>&1; then
-            phpunit --testsuite unit || true
-          else
-            echo "PHPUnit not installed; skipping unit suite during baseline CI stabilization."
-          fi
-          echo "PHPUnit unit suite is report-only here during baseline CI stabilization."
+          mkdir -p writable/ci
+          vendor/bin/phpunit --testsuite unit --log-junit writable/ci/phpunit-unit.xml
+          echo "phpunit exit=$? (gated by baseline below)"
+          python3 scripts/ci/phpunit_baseline_gate.py unit writable/ci/phpunit-unit.xml tests/baseline/phpunit-known-failures.txt
+        shell: bash {0}
 
-      - name: PHPUnit (auth smoke)
+      - name: PHPUnit (auth smoke) - baseline-ratchet gate
         run: |
-          if [ -x vendor/bin/phpunit ]; then
-            vendor/bin/phpunit --testsuite auth-smoke || true
-          elif command -v phpunit >/dev/null 2>&1; then
-            phpunit --testsuite auth-smoke || true
-          else
-            echo "PHPUnit not installed; skipping auth smoke suite during baseline CI stabilization."
-          fi
-          echo "PHPUnit auth smoke suite is report-only here during baseline CI stabilization."
+          mkdir -p writable/ci
+          vendor/bin/phpunit --testsuite auth-smoke --log-junit writable/ci/phpunit-auth-smoke.xml
+          echo "phpunit exit=$? (gated by baseline below)"
+          python3 scripts/ci/phpunit_baseline_gate.py auth-smoke writable/ci/phpunit-auth-smoke.xml tests/baseline/phpunit-known-failures.txt
+        shell: bash {0}
 
       - name: Auth Flow Smoke Command
         run: php spark auth:flow-smoke
