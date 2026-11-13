@@ -21,6 +21,10 @@ final class MarketingDiscordDistributionTest extends CIUnitTestCase
         parent::setUp();
         $db = Database::connect();
 
+        // Both Marketing distro tests share the SQLite CI database but declare
+        // different fixture schemas for this table; recreate it so neither
+        // inherits the other's columns.
+        $db->query('DROP TABLE IF EXISTS bf_marketing_generated_content');
         $db->query('CREATE TABLE IF NOT EXISTS bf_marketing_generated_content (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             story_id INTEGER NULL,

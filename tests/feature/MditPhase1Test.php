@@ -9,17 +9,33 @@ use App\Services\MDIT\MditRedemptionService;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\FeatureTestTrait;
+use Tests\Support\Database\AppliesAppMigrations;
 
 /**
  * @internal
  */
 final class MditPhase1Test extends CIUnitTestCase
 {
+    use AppliesAppMigrations;
     use DatabaseTestTrait;
     use FeatureTestTrait;
 
-    protected $migrate = true;
-    protected $refresh = true;
+    // Build only the MDIT schema; see AppliesAppMigrations for why the full
+    // migration chain is not run here. MYMI-GTM-007.
+    protected $migrate = false;
+    protected $refresh = false;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->applyAppMigrations(
+            $this->db,
+            ['2026-04-01-000105_CreateMditPhase1Tables.php'],
+            ['bf_mdit_investor_profiles', 'bf_mdit_wallets', 'bf_mdit_deposits', 'bf_mdit_token_ledger',
+                'bf_mdit_redemptions', 'bf_mdit_nav_snapshots', 'bf_mdit_disclosures_acceptance', 'bf_mdit_webhook_events'],
+        );
+    }
 
     public function testDepositDeniedWhenNotVerified(): void
     {
@@ -33,8 +49,15 @@ final class MditPhase1Test extends CIUnitTestCase
             'created_on' => date('Y-m-d H:i:s'),
         ]);
 
-        $result = $this->withoutFilters()
-            ->withSession(['user_id' => 1])
+        // An authenticated user (id 1) with no KYC/accreditation profile. Route
+        // filters stay on; only the authentication service is stubbed.
+        \Config\Services::injectMock('authentication', new class () {
+            public function check(): bool { return true; }
+            public function id(): int { return 1; }
+            public function user(): ?object { return null; }
+        });
+
+        $result = $this->withSession(['user_id' => 1])
             ->withHeaders(['Accept' => 'application/json'])
             ->post('API/Mdit/deposits/initiate', [
                 'chain' => 'ETH',
@@ -43,7 +66,8 @@ final class MditPhase1Test extends CIUnitTestCase
                 'wallet_address' => '0xTESTWALLET',
             ]);
 
-        $this->assertSame(403, $result->getStatusCode());
+        $result->assertStatus(403);
+        $this->assertStringContainsString('KYC/Accreditation required.', (string) $result->response()->getBody());
     }
 
     public function testMintIdempotencyPreventsDoubleMint(): void

@@ -136,6 +136,10 @@ final class SystemPublicIpv4Resolver implements PublicIpv4ResolverInterface
                 '198.18.0.0/15',
                 '198.51.100.0/24',
                 '203.0.113.0/24',
+                // Multicast and reserved space: PHP's NO_RES_RANGE flag does
+                // not reliably cover these on PHP 8.2+, so list them explicitly.
+                '224.0.0.0/4',
+                '240.0.0.0/4',
             ] as $cidr
         ) {
             if (

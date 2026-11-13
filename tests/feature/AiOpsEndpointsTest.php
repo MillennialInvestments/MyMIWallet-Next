@@ -13,8 +13,8 @@ final class AiOpsEndpointsTest extends CIUnitTestCase
     public function testStatusEndpointReturnsJson(): void
     {
         $result = $this->get('/API/AiOps/status');
-        $this->assertSame(200, $result->getStatusCode());
-        $payload = $result->getJSON(true);
+        $this->assertSame(200, $result->response()->getStatusCode());
+        $payload = json_decode((string) $result->getJSON(), true);
         $this->assertIsArray($payload);
         $this->assertArrayHasKey('settings', $payload);
         $this->assertArrayHasKey('caps', $payload);

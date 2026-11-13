@@ -1,0 +1,8 @@
+# MYMI-GTM-007 PHPUnit baseline: tests failing on main when the suites were
+# restored (2026-11-13). CI warns on these and FAILS on any failing test that
+# is not listed here. Shrink this list only; never add an entry to get green.
+# Each entry needs an owning successor task before release certification.
+
+# --- unit suite ---
+
+# --- auth-smoke suite (W1 identity: GTM-016/017) ---

@@ -34,15 +34,19 @@ final class RegistrationFlowTest extends CIUnitTestCase
 
         $response->assertStatus(200);
         $response->assertSee('Why Join the MyMI Wallet Discord Community?');
-        $response->assertSee('name="source_slug" value="discord"', false);
+        // assertSee() matches text, not markup; check the hidden campaign field in the raw HTML.
+        $this->assertStringContainsString('name="source_slug" value="discord"', (string) $response->getBody());
     }
 
-    public function testUnknownSourceRegisterFallsBackSafely(): void
+    public function testUnknownSourceRegisterIsNotRouted(): void
     {
+        // Generic "(:segment)/register" routes are intentionally disabled in
+        // app/Config/Routes.php so /register stays canonical; only explicit
+        // campaign routes (e.g. Discord/register) render the form.
         $response = $this->get('/UnknownSource/register');
 
-        $response->assertStatus(200);
-        $response->assertSee('Create Your Free Account!');
+        $response->assertStatus(404);
+        $response->assertDontSee('Create Your Free Account!');
     }
 }
 

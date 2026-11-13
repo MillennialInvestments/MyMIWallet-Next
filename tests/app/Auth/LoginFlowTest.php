@@ -37,6 +37,52 @@ final class LoginFlowTest extends CIUnitTestCase
             updated_at TEXT NULL,
             deleted_at TEXT NULL
         )');
+        // attemptLogin() looks the identifier up via Myth\Auth UserModel before
+        // calling the (mocked) authentication service, so the table must exist.
+        $db->query('CREATE TABLE IF NOT EXISTS bf_users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email TEXT NULL,
+            username TEXT NULL,
+            password_hash TEXT NULL,
+            reset_hash TEXT NULL,
+            activate_hash TEXT NULL,
+            status TEXT NULL,
+            status_message TEXT NULL,
+            active INTEGER DEFAULT 0,
+            force_pass_reset INTEGER DEFAULT 0,
+            banned INTEGER DEFAULT 0,
+            created_at TEXT NULL,
+            updated_at TEXT NULL,
+            deleted_at TEXT NULL
+        )');
+    }
+
+    /**
+     * POST to the login route with a valid CSRF token. The csrf filter is
+     * enforced on login (app/Config/Filters.php), so a token-less POST is
+     * correctly rejected before reaching AuthController::attemptLogin().
+     */
+    private function postLogin(array $fields)
+    {
+        $token = csrf_hash();
+
+        return $this->withSession([csrf_token() => $token])
+            ->post('login', [csrf_token() => $token] + $fields);
+    }
+
+    public function testLoginPostWithoutCsrfTokenIsRejected(): void
+    {
+        $auth = new FakeAuthentication(false, true);
+        Services::injectMock('authentication', $auth);
+
+        $response = $this->post('login', [
+            'login' => 'valid@example.com',
+            'password' => 'correct-pass',
+        ]);
+
+        $response->assertRedirect();
+        $this->assertFalse($auth->check(), 'login must not be attempted without a CSRF token');
+        $this->assertNull(session('auth_message'));
     }
 
     public function testLoginPageRendersForLoggedOutVisitor(): void
@@ -64,7 +110,7 @@ final class LoginFlowTest extends CIUnitTestCase
         $auth->setError('Invalid credentials');
         Services::injectMock('authentication', $auth);
 
-        $response = $this->post('login', [
+        $response = $this->postLogin([
             'login' => 'bad@example.com',
             'password' => 'wrong-pass',
         ]);
@@ -85,7 +131,7 @@ final class LoginFlowTest extends CIUnitTestCase
         ]);
         Services::injectMock('authentication', $auth);
 
-        $response = $this->post('login', [
+        $response = $this->postLogin([
             'login' => 'valid@example.com',
             'password' => 'correct-pass',
             'remember' => '1',

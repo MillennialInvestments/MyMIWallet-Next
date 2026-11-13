@@ -116,6 +116,10 @@ class Database extends Config
         }
 
         if (ENVIRONMENT === 'testing') {
+            // One shared in-memory connection under test. Without this, models
+            // (default group) and DatabaseTestTrait migrations (tests group) each
+            // open their own ':memory:' database and cannot see each other's tables.
+            $this->defaultGroup = 'tests';
             $this->default = [
                 'DSN'         => '',
                 'hostname'    => '',
