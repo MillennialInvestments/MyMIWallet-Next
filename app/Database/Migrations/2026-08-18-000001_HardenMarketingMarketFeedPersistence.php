@@ -36,6 +36,11 @@ final class HardenMarketingMarketFeedPersistence extends Migration
         ];
 
         foreach ($fields as $name => $definition) {
+            // fieldExists() reads a per-connection field-name cache that
+            // addColumn() does not invalidate; clear it so re-running up()
+            // stays idempotent instead of re-adding existing columns.
+            $this->db->resetDataCache();
+
             if ($this->db->fieldExists($name, $table)) {
                 continue;
             }

@@ -335,6 +335,20 @@ class Services extends CoreServices
         return new MyMIInvestments();
     }
 
+    /**
+     * Used as service('mymialerts') by ScannerAlertBridge and AlertsController.
+     * It was never defined, so those callers received null (TypeError on
+     * /API/Scanner/status). MYMI-GTM-007.
+     */
+    public static function myMIAlerts(bool $getShared = true): \App\Libraries\MyMIAlerts
+    {
+        if ($getShared) {
+            return static::getSharedInstance('myMIAlerts');
+        }
+
+        return new \App\Libraries\MyMIAlerts();
+    }
+
     public static function kimiClient(bool $getShared = true): KimiClient
     {
         if ($getShared) {

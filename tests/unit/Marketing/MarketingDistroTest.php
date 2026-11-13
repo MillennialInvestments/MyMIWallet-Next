@@ -46,6 +46,10 @@ final class MarketingDistroTest extends CIUnitTestCase
             metadata TEXT
         )");
 
+        // Both Marketing distro tests share the SQLite CI database but declare
+        // different fixture schemas for this table; recreate it so neither
+        // inherits the other's columns.
+        $db->query('DROP TABLE IF EXISTS bf_marketing_generated_content');
         $db->query("CREATE TABLE IF NOT EXISTS bf_marketing_generated_content (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             source_type VARCHAR(64),

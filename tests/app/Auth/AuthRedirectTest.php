@@ -18,7 +18,7 @@ final class AuthRedirectTest extends CIUnitTestCase
             public function track(string $event, array $data = [], ?int $userId = null, ?string $channel = null): void {}
         });
 
-        $response = $this->get('login');
+        $response = $this->get('login')->response();
 
         $this->assertSame('no-store, no-cache, must-revalidate, max-age=0', $response->getHeaderLine('Cache-Control'));
         $this->assertSame('no-cache', $response->getHeaderLine('Pragma'));

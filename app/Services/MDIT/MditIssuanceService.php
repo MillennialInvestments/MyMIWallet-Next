@@ -28,17 +28,20 @@ class MditIssuanceService
             throw new \RuntimeException('Deposit not found.');
         }
 
+        // Idempotency first: a successful mint moves the deposit to MINTED, so a
+        // retried call must return the existing ledger entry instead of failing
+        // the status check below.
+        $existing = $this->ledger->where('source_deposit_id', $depositId)->first();
+        if ($existing) {
+            return $existing;
+        }
+
         if (($deposit['status'] ?? '') !== 'CONFIRMED_ONCHAIN') {
             throw new \RuntimeException('Deposit is not confirmed on-chain.');
         }
 
         if (strtoupper((string) ($deposit['asset_symbol'] ?? '')) !== 'USDC') {
             throw new \RuntimeException('Only USDC deposits are supported in Phase 1.');
-        }
-
-        $existing = $this->ledger->where('source_deposit_id', $depositId)->first();
-        if ($existing) {
-            return $existing;
         }
 
         $latestNav = $this->navService->latestSnapshot();

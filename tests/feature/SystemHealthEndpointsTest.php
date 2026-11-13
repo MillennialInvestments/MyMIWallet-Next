@@ -14,9 +14,9 @@ final class SystemHealthEndpointsTest extends CIUnitTestCase
     {
         $result = $this->get('system/healthz');
 
-        $this->assertContains($result->getStatusCode(), [200, 503], 'healthz should respond without routing errors');
+        $this->assertContains($result->response()->getStatusCode(), [200, 503], 'healthz should respond without routing errors');
 
-        $payload = $result->getJSON(true);
+        $payload = json_decode((string) $result->getJSON(), true);
         $this->assertIsArray($payload);
         $this->assertArrayHasKey('status', $payload);
         $this->assertArrayHasKey('timestamp', $payload);
@@ -28,9 +28,9 @@ final class SystemHealthEndpointsTest extends CIUnitTestCase
     {
         $result = $this->get('system/diag');
 
-        $this->assertContains($result->getStatusCode(), [200, 503], 'diag should respond without routing errors');
+        $this->assertContains($result->response()->getStatusCode(), [200, 503], 'diag should respond without routing errors');
 
-        $payload = $result->getJSON(true);
+        $payload = json_decode((string) $result->getJSON(), true);
         $this->assertArrayHasKey('system', $payload);
         $this->assertArrayHasKey('checks', $payload);
 

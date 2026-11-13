@@ -4,22 +4,5 @@
 # Each entry needs an owning successor task before release certification.
 
 # --- unit suite ---
-ExternalApiGuardTest::testProviderCapStopsCallsAfterLimit
-Tests\Unit\Marketing\MarketFeed\MarketFeedPersistenceDatabaseTest::testSqlitePersistenceContract
-Tests\Unit\Marketing\MarketFeed\Transport\SystemPublicIpv4ResolverTest::testRejectsNonPublicAddresses with data set #11
-Tests\Unit\Marketing\MarketingDistroTest::testContentDistroEngineGeneratesFullPackage
-Tests\Unit\Marketing\MarketingDistroTest::testDispatchQueuesAndLogsOutputs
-MditPhase1Test::testDepositDeniedWhenNotVerified
-MditPhase1Test::testMintIdempotencyPreventsDoubleMint
-MditPhase1Test::testNavComputeHandlesZeroSupply
-Tests\Feature\ScannerEndpointsTest::testStatusEndpointExists
-AiOpsEndpointsTest::testStatusEndpointReturnsJson
-SystemHealthEndpointsTest::testHealthzReturnsStructuredJson
-SystemHealthEndpointsTest::testDiagIncludesBuildMetadata
 
 # --- auth-smoke suite (W1 identity: GTM-016/017) ---
-AuthRedirectTest::testNoCacheFilterHeadersAppliedOnLoginRoute
-LoginFlowTest::testInvalidCredentialsReturnToLoginWithAuthMessage
-LoginFlowTest::testValidCredentialsRedirectToDashboardWithFlashMessage
-RegistrationFlowTest::testUnknownSourceRegisterFallsBackSafely
-RegistrationFlowTest::testDiscordRegisterPageLoadsWithDiscordContent
