@@ -247,16 +247,16 @@
         },
         {
             "name": "codeigniter4/settings",
-            "version": "v2.3.0",
+            "version": "v2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeigniter4/settings.git",
-                "reference": "f0cd3e2453683323d7feeaaee05987dbeb32fa74"
+                "reference": "7cbd2e2146e32211cc8194d9c35632631500adad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeigniter4/settings/zipball/f0cd3e2453683323d7feeaaee05987dbeb32fa74",
-                "reference": "f0cd3e2453683323d7feeaaee05987dbeb32fa74",
+                "url": "https://api.github.com/repos/codeigniter4/settings/zipball/7cbd2e2146e32211cc8194d9c35632631500adad",
+                "reference": "7cbd2e2146e32211cc8194d9c35632631500adad",
                 "shasum": ""
             },
             "require": {
@@ -295,9 +295,9 @@
             ],
             "support": {
                 "issues": "https://github.com/codeigniter4/settings/issues",
-                "source": "https://github.com/codeigniter4/settings/tree/v2.3.0"
+                "source": "https://github.com/codeigniter4/settings/tree/v2.4.0"
             },
-            "time": "2026-02-15T08:22:36+00:00"
+            "time": "2026-07-30T16:03:46+00:00"
         },
         {
             "name": "codeigniter4/shield",
@@ -3490,5 +3490,5 @@
     "platform-overrides": {
         "php": "8.2.0"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
