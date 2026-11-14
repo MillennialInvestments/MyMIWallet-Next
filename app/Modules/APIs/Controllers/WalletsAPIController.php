@@ -239,11 +239,26 @@ class WalletsAPIController extends BaseAPIController
             ->setBody($body);
     }
 
+    /** POST /API/Wallets/Plaid/Webhook (GTM-035): verified, and only metadata is logged. */
     public function plaidWebhook()
     {
-        $body = $this->request->getJSON(true) ?: $this->request->getRawInput();
-        log_message('debug', 'Plaid webhook: '.json_encode($body));
-        return $this->response->setStatusCode(200);
+        $raw = (string) $this->request->getBody();
+        $jwt = trim($this->request->getHeaderLine('Plaid-Verification'));
+        $plaid = new \App\Libraries\MyMIPlaid();
+        $verifier = new \App\Libraries\Security\PlaidWebhookVerifier(
+            static fn (string $kid): ?array => $plaid->getWebhookVerificationKey($kid)
+        );
+        if ($jwt === '' || ! $verifier->verify($raw, $jwt)) {
+            log_message('warning', 'Plaid webhook rejected: invalid or missing Plaid-Verification header');
+            return $this->response->setStatusCode(401)->setJSON(['error' => 'invalid_signature']);
+        }
+        $body = json_decode($raw, true) ?: [];
+        log_message('info', 'Plaid webhook {type}/{code} item={item}', [
+            'type' => (string) ($body['webhook_type'] ?? ''),
+            'code' => (string) ($body['webhook_code'] ?? ''),
+            'item' => (string) ($body['item_id'] ?? ''),
+        ]);
+        return $this->response->setStatusCode(200)->setJSON(['status' => 'ok']);
     }
 
     /** PUT /API/Wallets/Update/{id} */

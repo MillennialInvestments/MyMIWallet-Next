@@ -922,7 +922,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('getEmailQueueTrend', 'EmailAPIController::getEmailQueueTrend');
         $routes->get('processScheduledCampaigns', 'EmailAPIController::processScheduledCampaigns');
         $routes->get('sendMassTestCampaign', 'EmailAPIController::sendMassTestCampaign');
-        $routes->get('trackBounceWebhook', 'EmailAPIController::trackBounceWebhook');
+        $routes->match(['GET', 'POST'], 'trackBounceWebhook', 'EmailAPIController::trackBounceWebhook');
         $routes->get('unsubscribe/(:any)', 'EmailAPIController::unsubscribe/$1');
     });
 
@@ -1294,7 +1294,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('Plaid/Config-Debug', 'WalletsAPIController::plaidConfigDebug');
         $routes->get('Plaid/Env', 'WalletsAPIController::plaidEnv');
         $routes->get('Plaid/OAuth-Return', 'WalletsAPIController::plaidOAuthReturn');
-        $routes->get('Plaid/Webhook', 'WalletsAPIController::plaidWebhook');
+        $routes->post('Plaid/Webhook', 'WalletsAPIController::plaidWebhook');
         $routes->get('Plaid/Link-Token', 'WalletsAPIController::plaidLinkToken');
         $routes->post('Plaid/Exchange', 'WalletsAPIController::plaidExchange');
         $routes->post('Plaid/Refresh/(:num)', 'WalletsAPIController::refreshPlaidWallet/$1');
