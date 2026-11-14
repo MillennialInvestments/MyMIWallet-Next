@@ -40,20 +40,59 @@ class WalletModel extends Model
 
     // --- Core wallet ops -----------------------------------------------------
 
-    public function addTokensToWallet($walletId, $amount)
+    /**
+     * Adds a positive amount to a wallet. Returns false for a bad amount or unknown wallet.
+     */
+    public function addTokensToWallet($walletId, $amount): bool
     {
-        return $this->db->table($this->table)
-            ->set('amount', "amount + {$amount}", false)
-            ->where('id', $walletId)
+        $value = self::normalizeAmount($amount);
+        if ($value === null || (int) $walletId <= 0) {
+            return false;
+        }
+        $this->db->table($this->table)
+            ->set('amount', 'amount + ' . $value, false)
+            ->where('id', (int) $walletId)
             ->update();
+
+        return $this->db->affectedRows() > 0;
     }
 
-    public function deductFunds($walletId, $amount)
+    /**
+     * Subtracts a positive amount only when the wallet holds at least that much
+     * (GTM-032: no overdraft, no SQL built from caller input).
+     */
+    public function deductFunds($walletId, $amount): bool
     {
-        return $this->db->table($this->table)
-            ->set('amount', "amount - {$amount}", false)
-            ->where('id', $walletId)
+        $value = self::normalizeAmount($amount);
+        if ($value === null || (int) $walletId <= 0) {
+            return false;
+        }
+        $this->db->table($this->table)
+            ->set('amount', 'amount - ' . $value, false)
+            ->where('id', (int) $walletId)
+            ->where('amount >=', $value, false)
             ->update();
+
+        return $this->db->affectedRows() > 0;
+    }
+
+    /**
+     * Returns a positive amount as a plain decimal string, or null.
+     */
+    public static function normalizeAmount($amount): ?string
+    {
+        if (is_string($amount)) {
+            $amount = trim($amount);
+        }
+        if (! is_numeric($amount)) {
+            return null;
+        }
+        $f = (float) $amount;
+        if (! is_finite($f) || $f <= 0) {
+            return null;
+        }
+
+        return rtrim(rtrim(sprintf('%.8F', $f), '0'), '.');
     }
 
     public function deleteWallet($walletId)
@@ -474,7 +513,7 @@ class WalletModel extends Model
         $builder->where('user_id', $cuID);
         $builder->where('transaction_id', $trans_id);
         $result = $builder->get()->getRowArray();
-        return !empty($result) && $result['user_id'] === $cuID;
+        return ! empty($result) && (int) $result['user_id'] === (int) $cuID;
     }
 
     public function attachWalletToBudgetRecord($recordID, $walletID)

@@ -836,7 +836,9 @@ class WalletService
         }
         if ($this->validateTransactionLimits($walletId, $convertedAmount)) {
             // update main wallet amount
-            $this->walletModel->addTokensToWallet($walletId, $convertedAmount);
+            if (! $this->walletModel->addTokensToWallet($walletId, $convertedAmount)) {
+                return false;
+            }
             // optional: log transaction via TransactionModel or wallet transactions table
             $this->logTransaction('Deposit', $walletId, $convertedAmount);
             // audit trail (best-effort user id)
@@ -857,9 +859,10 @@ class WalletService
         if ($this->detectFraud($walletId, $convertedAmount)) {
             return false;
         }
-        // naive balance check—replace with your own get balance if available
-        // (or allow negative for liabilities if needed)
-        $this->walletModel->deductFunds($walletId, $convertedAmount);
+        // deductFunds() refuses to overdraw, so stop here when it fails.
+        if (! $this->walletModel->deductFunds($walletId, $convertedAmount)) {
+            return false;
+        }
         $this->logTransaction('Withdrawal', $walletId, $convertedAmount);
         $userId = method_exists($this->walletModel, 'getUserIdFromWallet')
             ? $this->walletModel->getUserIdFromWallet($walletId)
