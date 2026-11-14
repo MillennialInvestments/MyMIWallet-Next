@@ -3,7 +3,8 @@
 # releases/, then (separately) migrates and switches `current` to it.
 #
 #   bash mymi-release.sh build [git-ref]     # build releases/<stamp>-<sha7>; live site untouched
-#   bash mymi-release.sh activate <release>  # backup, migrate (App namespace), switch current, restart, health check
+#   MIGRATE='<name> ...' bash mymi-release.sh activate <release>
+#                                            # backup, run only the named migrations, switch current, restart, health check
 #   bash mymi-release.sh rollback <release>  # point current back at an older release (no DB changes)
 #
 # Never prints secrets. Never deletes old releases.
@@ -96,12 +97,17 @@ activate)
   echo "--- backup ---"
   sudo bash "$R/scripts/ops/backup/mysql-backup.sh"
 
-  echo "--- migrate (App namespace only) ---"
-  # Clear the shared file locator cache first (see build), then run and show what is still pending.
-  (cd "$R" && php spark cache:clear >/dev/null && php spark migrate -n App)
-  PENDING="$(cd "$R" && php spark migrate:status 2>/dev/null | grep -E '^\| App ' | grep -E '\| ---' || true)"
-  [ -z "$PENDING" ] || { echo "$PENDING"; die "App migrations still pending after migrate; nothing was switched"; }
-
+  echo "--- migrate (only the migrations named in MIGRATE) ---"
+  # `spark migrate` would run every pending App migration, and production has
+  # older ones (auth backfills) that must not run unreviewed. So run only the
+  # ones named in MIGRATE, then list whatever is still pending.
+  # The file locator cache in shared/writable still lists the live release, so clear it first.
+  (cd "$R" && php spark cache:clear >/dev/null)
+  for m in ${MIGRATE:-}; do
+    (cd "$R" && php scripts/ops/db/run-migrations.php "$m") || die "migration $m failed; nothing was switched"
+  done
+  echo "App migrations still pending (not run):"
+  (cd "$R" && php spark migrate:status 2>/dev/null | grep -E '^\| App ' | grep -E '\| ---' | awk -F'|' '{print "  " $3 $4}' || true)
   echo "--- switch ---"
   switch_to "$REL"
   (cd "$BASE/current" && php spark cache:clear >/dev/null 2>&1 || true)
