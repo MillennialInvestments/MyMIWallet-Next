@@ -8,6 +8,7 @@ class FullDocsAudit extends SafeBaseCommand
 {
     protected $group = 'Docs';
     protected $name = 'docs:full-audit';
+    protected $description = 'Run the full documentation audit.';
 
     public function run(array $params)
     {

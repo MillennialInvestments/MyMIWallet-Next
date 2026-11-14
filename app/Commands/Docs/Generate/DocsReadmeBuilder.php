@@ -9,6 +9,7 @@ class DocsReadmeBuilder extends SafeBaseCommand
 {
     protected $group = 'Docs Generate';
     protected $name = 'docs:readme:build';
+    protected $description = 'Build README.md indexes for documentation folders.';
 
     public function run(array $params)
     {

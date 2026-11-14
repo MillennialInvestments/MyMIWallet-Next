@@ -9,6 +9,7 @@ class GoogleScan extends SafeBaseCommand
 {
     protected $group = 'research';
     protected $name = 'research:google:scan';
+    protected $description = 'Run research search scans and save the results.';
 
     public function run(array $params)
     {

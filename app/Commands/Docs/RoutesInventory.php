@@ -8,6 +8,7 @@ class RoutesInventory extends SafeBaseCommand
 {
     protected $group = 'Docs';
     protected $name = 'docs:routes:inventory';
+    protected $description = 'Export an inventory of registered routes.';
 
     public function run(array $params)
     {

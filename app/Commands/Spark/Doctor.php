@@ -142,8 +142,8 @@ class Doctor extends SafeBaseCommand
         $paths = [
             ROOTPATH . 'writable',
             ROOTPATH . 'writable/cache',
-            ROOTPATH . 'writable/cache/FactoriesCache',
-            ROOTPATH . 'writable/cache/FileLocatorCache',
+            // FactoriesCache_* and FileLocatorCache are cache files CI4 creates on demand, so a
+            // fresh checkout won't have them. Only the directories must exist and be writable.
             ROOTPATH . 'writable/logs',
         ];
 

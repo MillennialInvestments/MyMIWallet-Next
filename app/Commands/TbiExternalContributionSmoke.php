@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
 use Throwable;
 
-class TbiExternalContributionSmoke extends BaseCommand
+class TbiExternalContributionSmoke extends SafeBaseCommand
 {
     protected $group = 'CoinVault';
     protected $name = 'coinvault:tbi-external-contribution-smoke';

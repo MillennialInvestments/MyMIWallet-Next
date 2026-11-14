@@ -183,7 +183,8 @@ class FilesystemLint extends SafeBaseCommand
 
     private function resolveSubsystem(string $relativePath): string
     {
-        if (str_contains($relativePath, '/AiOps/') || str_contains($relativePath, '/AIops/')) {
+        $lower = strtolower($relativePath);
+        if (str_contains($lower, '/aiops/') || str_contains($relativePath, '/Ollama/')) {
             return 'aiops';
         }
         if (str_contains($relativePath, '/Codex/')) {
@@ -194,6 +195,10 @@ class FilesystemLint extends SafeBaseCommand
         }
         if (str_contains($relativePath, 'GapTracker')) {
             return 'gap_tracker';
+        }
+        // Documentation and API inventory generators write their reports under docs/.
+        if (str_contains($relativePath, '/Docs/') || str_contains($relativePath, '/API/') || str_contains($relativePath, '/Platform/')) {
+            return 'docs';
         }
 
         return 'ops';
@@ -207,6 +212,7 @@ class FilesystemLint extends SafeBaseCommand
             'codex' => 'docs/_codex/autofix.json',
             'support' => 'docs/_support/autofix.json',
             'gap_tracker' => 'docs/_gap-tracker/autofix.json',
+            'docs' => 'docs/_ops/autofix.json',
         ];
 
         if (str_contains($arg, 'WRITEPATH') && str_contains($arg, 'ci/')) {
@@ -244,7 +250,8 @@ class FilesystemLint extends SafeBaseCommand
             return false;
         }
 
-        return ! str_contains($arg, 'logs');
+        // writable/logs and writable/audit are the runtime output folders, not committed artifacts.
+        return ! str_contains($arg, 'logs') && ! preg_match('#(WRITEPATH\s*\.\s*[\'"]|writable/)audit\b#', $arg);
     }
 
     private function buildReplacementLine(string $line, string $call, string $firstArg, string $resolvedPath): string

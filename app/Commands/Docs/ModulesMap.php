@@ -8,6 +8,7 @@ class ModulesMap extends SafeBaseCommand
 {
     protected $group = 'Docs';
     protected $name = 'docs:modules:map';
+    protected $description = 'Export a map of application modules for the docs.';
 
     public function run(array $params)
     {

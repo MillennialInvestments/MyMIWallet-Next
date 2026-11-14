@@ -2,10 +2,9 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class SolanaPreviewBrowserRuntimeSmoke extends BaseCommand
+class SolanaPreviewBrowserRuntimeSmoke extends SafeBaseCommand
 {
     protected $group       = 'Solana';
     protected $name        = 'solana:preview-browser-runtime:smoke';

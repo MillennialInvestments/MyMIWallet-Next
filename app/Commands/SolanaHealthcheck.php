@@ -2,10 +2,9 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class SolanaHealthcheck extends BaseCommand
+class SolanaHealthcheck extends SafeBaseCommand
 {
     protected $group = 'AIOps';
     protected $name = 'aiops:solana-healthcheck';

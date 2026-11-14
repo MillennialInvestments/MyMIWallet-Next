@@ -2,10 +2,9 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class SolanaTransactionAudit extends BaseCommand
+class SolanaTransactionAudit extends SafeBaseCommand
 {
     protected $group = 'AIOps';
     protected $name = 'aiops:solana-transaction-audit';

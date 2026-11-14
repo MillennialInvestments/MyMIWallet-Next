@@ -9,6 +9,7 @@ class ViewDirectories extends SafeBaseCommand
 {
     protected $group = 'Docs Scan';
     protected $name = 'docs:views:dirs';
+    protected $description = 'List view directories.';
 
     public function run(array $params)
     {

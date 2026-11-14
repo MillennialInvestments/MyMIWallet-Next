@@ -26,6 +26,9 @@ class FilesystemGovernance extends BaseConfig
         'gap_tracker' => [
             'docs/_gap-tracker/',
         ],
+        'docs' => [
+            'docs/',
+        ],
         'default' => [
             'docs/',
             'ci/',

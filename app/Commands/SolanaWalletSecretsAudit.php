@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Throwable;
 
-class SolanaWalletSecretsAudit extends BaseCommand
+class SolanaWalletSecretsAudit extends SafeBaseCommand
 {
     protected $group       = 'Solana';
     protected $name        = 'solana:wallet-secrets:audit';

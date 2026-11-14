@@ -8,6 +8,7 @@ class DependenciesMap extends SafeBaseCommand
 {
     protected $group = 'Docs';
     protected $name = 'docs:dependencies:map';
+    protected $description = 'Export a map of project dependencies for the docs.';
 
     public function run(array $params)
     {
