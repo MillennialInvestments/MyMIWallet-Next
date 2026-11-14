@@ -8,6 +8,7 @@ class DatabaseMap extends SafeBaseCommand
 {
     protected $group = 'Docs';
     protected $name = 'docs:database:map';
+    protected $description = 'Map each model file to its database table (docs/_database_map.json).';
 
     public function run(array $params)
     {

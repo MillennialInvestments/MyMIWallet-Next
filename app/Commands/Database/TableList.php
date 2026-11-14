@@ -2,11 +2,12 @@
 
 namespace App\Commands\Database;
 
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
+
 use CodeIgniter\CLI\CLI;
 use Config\Database;
 
-class TableList extends BaseCommand
+class TableList extends SafeBaseCommand
 {
     protected $group = 'Database';
     protected $name = 'db:table-list';

@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
 
-class ShieldBackfill extends BaseCommand
+class ShieldBackfill extends SafeBaseCommand
 {
     protected $group       = 'MyMI';
     protected $name        = 'mymi:shield-backfill';

@@ -9,6 +9,7 @@ class ViewFiles extends SafeBaseCommand
 {
     protected $group = 'Docs Scan';
     protected $name = 'docs:views:list';
+    protected $description = 'List view files.';
 
     public function run(array $params)
     {

@@ -9,6 +9,7 @@ class ThinkOrSwimImport extends SafeBaseCommand
 {
     protected $group = 'research';
     protected $name = 'research:alerts:watchlist-import';
+    protected $description = 'Import a thinkorswim watchlist into research alerts.';
 
     public function run(array $params)
     {

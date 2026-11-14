@@ -8,6 +8,7 @@ class ExportViewTxt extends SafeBaseCommand
 {
     protected $group = 'Docs Export';
     protected $name = 'docs:views:export';
+    protected $description = 'Export view files as plain text for documentation.';
 
     public function run(array $params)
     {

@@ -153,7 +153,7 @@ class Audit extends SafeBaseCommand
             ];
         }
 
-        $groupNeedle = "$routes->group('API', ['filter' => 'internalToken'], static function($routes) {";
+        $groupNeedle = '$routes->group(\'API\', [\'filter\' => \'internalToken\'], static function($routes) {';
         $groupStart = strpos($routesSource, $groupNeedle);
 
         if ($groupStart === false) {

@@ -2,10 +2,9 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class CreateTbiProjectCoinDrafts extends BaseCommand
+class CreateTbiProjectCoinDrafts extends SafeBaseCommand
 {
     protected $group = 'Exchange';
     protected $name = 'exchange:create-tbi-project-coin-drafts';

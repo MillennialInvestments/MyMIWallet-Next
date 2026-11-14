@@ -2,10 +2,9 @@
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class SolanaDigest extends BaseCommand
+class SolanaDigest extends SafeBaseCommand
 {
     protected $group = 'AIOps';
     protected $name = 'aiops:solana-digest';

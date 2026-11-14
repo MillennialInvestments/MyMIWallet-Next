@@ -10,6 +10,7 @@ class DocsSystem extends SafeBaseCommand
 {
     protected $group = 'Docs';
     protected $name = 'docs:sync-system';
+    protected $description = 'Sync the documentation system files.';
 
     public function run(array $params)
     {

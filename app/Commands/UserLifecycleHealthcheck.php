@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Commands;
 
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Database;
 use Config\Services;
 
-class UserLifecycleHealthcheck extends BaseCommand
+class UserLifecycleHealthcheck extends SafeBaseCommand
 {
     protected $group       = 'MyMI';
     protected $name        = 'mymi:lifecycle-healthcheck';

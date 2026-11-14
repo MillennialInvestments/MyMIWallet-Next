@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace App\Commands;
 
 use App\Services\AIOps\CodeAnalyzerService;
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Throwable;
 
-class AnalyzeCode extends BaseCommand
+class AnalyzeCode extends SafeBaseCommand
 {
     protected $group       = 'AIOps';
     protected $name        = 'aiops:analyze:code';

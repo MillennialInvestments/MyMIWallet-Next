@@ -9,6 +9,7 @@ class MarketDataCompile extends SafeBaseCommand
 {
     protected $group = 'research';
     protected $name = 'research:data:compile';
+    protected $description = 'Compile market quote data for research symbols.';
 
     public function run(array $params)
     {

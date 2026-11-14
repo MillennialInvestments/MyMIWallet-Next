@@ -10,6 +10,7 @@ class FinancialNewsCollect extends SafeBaseCommand
 {
     protected $group = 'research';
     protected $name = 'research:news:collect';
+    protected $description = 'Collect financial news headlines from RSS feeds.';
 
     public function run(array $params)
     {

@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Commands\CoinVault;
 
+use App\Commands\SafeBaseCommand;
+
 use App\Modules\CoinVault\Services\CoinVaultService;
-use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
-class Audit extends BaseCommand
+class Audit extends SafeBaseCommand
 {
     protected $group = 'CoinVault';
     protected $name = 'coinvault:audit';
