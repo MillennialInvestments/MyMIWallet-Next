@@ -20,20 +20,20 @@ final class TwoFactorFilterTest extends CIUnitTestCase
     {
         parent::setUp();
         $db = db_connect();
-        $db->query('CREATE TABLE IF NOT EXISTS bf_user_2fa (
+        $db->query('CREATE TABLE IF NOT EXISTS bf_users_2fa (
             id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, is_enabled INTEGER DEFAULT 0,
             secret_ciphertext BLOB NULL, secret_iv BLOB NULL, secret_tag BLOB NULL,
             backup_codes_hashes TEXT NULL, created_at DATETIME NULL, updated_at DATETIME NULL)');
-        $db->table('bf_user_2fa')->where('user_id >', 0)->delete();
-        $db->table('bf_user_2fa')->insert(['user_id' => 4201, 'is_enabled' => 1]);
-        $db->table('bf_user_2fa')->insert(['user_id' => 4202, 'is_enabled' => 0]);
+        $db->table('bf_users_2fa')->where('user_id >', 0)->delete();
+        $db->table('bf_users_2fa')->insert(['user_id' => 4201, 'is_enabled' => 1]);
+        $db->table('bf_users_2fa')->insert(['user_id' => 4202, 'is_enabled' => 0]);
         session()->remove(['user_id', 'cuID', TwoFactorService::SESSION_VERIFIED, TwoFactorService::SESSION_STATE]);
         Services::resetSingle('response');
     }
 
     protected function tearDown(): void
     {
-        db_connect()->table('bf_user_2fa')->whereIn('user_id', [4201, 4202])->delete();
+        db_connect()->table('bf_users_2fa')->whereIn('user_id', [4201, 4202])->delete();
         session()->remove(['user_id', 'cuID', TwoFactorService::SESSION_VERIFIED, TwoFactorService::SESSION_STATE]);
         parent::tearDown();
     }

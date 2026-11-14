@@ -53,7 +53,7 @@ class Privacy extends BaseConfig
     /** Rows deleted on erasure (no retention need). */
     public array $eraseTables = [
         'bf_user_ip_history' => 'user_id',
-        'bf_user_2fa'        => 'user_id',
+        'bf_users_2fa'        => 'user_id',
         'bf_users_sessions'  => 'user_id',
         'bf_users_watchlist' => 'user_id',
     ];

@@ -19,7 +19,9 @@ final class PlaidWebhookVerifierTest extends CIUnitTestCase
         $this->key = openssl_pkey_new(['curve_name' => 'prime256v1', 'private_key_type' => OPENSSL_KEYTYPE_EC]);
         $d = openssl_pkey_get_details($this->key);
         $b64 = static fn (string $v): string => rtrim(strtr(base64_encode($v), '+/', '-_'), '=');
-        $this->jwk = ['kty' => 'EC', 'crv' => 'P-256', 'kid' => 'k1', 'x' => $b64($d['ec']['x']), 'y' => $b64($d['ec']['y']), 'expired_at' => null];
+        // OpenSSL drops leading zero bytes; a JWK coordinate is always 32 bytes (RFC 7518 6.2.1.2).
+        $pad = static fn (string $v): string => str_pad($v, 32, "\x00", STR_PAD_LEFT);
+        $this->jwk = ['kty' => 'EC', 'crv' => 'P-256', 'kid' => 'k1', 'x' => $b64($pad($d['ec']['x'])), 'y' => $b64($pad($d['ec']['y'])), 'expired_at' => null];
     }
 
     public function testValidSignatureAccepted(): void
