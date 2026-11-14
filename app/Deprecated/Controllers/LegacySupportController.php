@@ -14,7 +14,7 @@ class LegacySupportController extends UserController
     use ResponseTrait;
 
     private $supportModel;
-    private $siteSettings;
+    protected $siteSettings;
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {

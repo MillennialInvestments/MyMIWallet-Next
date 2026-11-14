@@ -9,17 +9,14 @@ use App\Models\{AccountsModel, AnnouncementsModel, BudgetModel, DesignModel, Inv
 use Config\Services;
 use Myth\Auth\Authorization\GroupModel;
 use CodeIgniter\API\ResponseTrait;
-use CodeIgniter\API\RequestTrait;
 use CodeIgniter\HTTP\IncomingRequest;
 
 #[\AllowDynamicProperties]
 class SupportAdminController extends BaseAdminController
 {
     use ResponseTrait;
-    use RequestTrait;
 
     protected $auth;
-    protected $format;
     
     protected $request;
     protected $session;

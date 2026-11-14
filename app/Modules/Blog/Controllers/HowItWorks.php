@@ -16,7 +16,7 @@ class HowItWorks extends UserController
     private $myMIAnalytics;
     private $MyMIGoldModel;
     private $pageSEOModel;
-    private $siteSettings;
+    protected $siteSettings;
     private $subscribeModel;
     private $userModel;
 

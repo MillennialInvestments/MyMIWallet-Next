@@ -84,6 +84,9 @@ jobs:
       - name: API Governance Audit
         run: php spark api:audit
 
+      - name: Route handler check (GTM-022)
+        run: php spark routes:verify-handlers
+
       - name: API Filters Gate
         run: php spark api:filters-check
 
