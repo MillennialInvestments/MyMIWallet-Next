@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class UserTwoFactorModel extends Model
 {
-    protected $table      = 'bf_user_2fa';
+    protected $table      = 'bf_users_2fa';
     protected $primaryKey = 'id';
     protected $allowedFields = [
         'user_id','is_enabled','secret_ciphertext','secret_iv','secret_tag','backup_codes_hashes','created_at','updated_at'

@@ -29,17 +29,17 @@ final class TwoFactorChallengeTest extends CIUnitTestCase
             public function user() { return null; }
         });
         $db = db_connect();
-        $db->query('CREATE TABLE IF NOT EXISTS bf_user_2fa (
+        $db->query('CREATE TABLE IF NOT EXISTS bf_users_2fa (
             id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, is_enabled INTEGER DEFAULT 0,
             secret_ciphertext BLOB NULL, secret_iv BLOB NULL, secret_tag BLOB NULL,
             backup_codes_hashes TEXT NULL, created_at DATETIME NULL, updated_at DATETIME NULL)');
-        $db->table('bf_user_2fa')->where('user_id', self::UID)->delete();
+        $db->table('bf_users_2fa')->where('user_id', self::UID)->delete();
         $this->secret = TotpService::generateSecret();
         $enc = Crypto::encrypt($this->secret);
         // Binary values go in as hex literals: an SQLite string literal stops at a NUL byte,
         // which made this test fail whenever the random IV or ciphertext contained one.
         $db->query(sprintf(
-            "INSERT INTO bf_user_2fa (user_id, is_enabled, secret_ciphertext, secret_iv, secret_tag) VALUES (%d, 1, X'%s', X'%s', X'%s')",
+            "INSERT INTO bf_users_2fa (user_id, is_enabled, secret_ciphertext, secret_iv, secret_tag) VALUES (%d, 1, X'%s', X'%s', X'%s')",
             self::UID,
             bin2hex($enc['ciphertext']),
             bin2hex($enc['iv']),
@@ -49,7 +49,7 @@ final class TwoFactorChallengeTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
-        db_connect()->table('bf_user_2fa')->where('user_id', self::UID)->delete();
+        db_connect()->table('bf_users_2fa')->where('user_id', self::UID)->delete();
         parent::tearDown();
     }
 
