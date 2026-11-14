@@ -234,40 +234,49 @@ class AccountController extends BaseUserController
         ]);
     }
 
-    // PATCH: TOTP 2FA endpoints
+    // TOTP 2FA endpoints (GTM-020)
     public function twoFactor()
     {
+        $userId = (int) session('cuID');
         $m = new \App\Models\UserTwoFactorModel();
-        $row = $m->byUser((int) session('cuID'));
-        $proposedSecret = \App\Libraries\Security\TotpService::generateSecret();
-        $otpauth = \App\Libraries\Security\TotpService::otpauthUrl('MyMI Wallet', (string) session('cuID'), $proposedSecret);
+        $row = $m->byUser($userId);
+        // The proposed secret lives in the session; the form never carries it.
+        $proposedSecret = (string) (session('2fa_proposed_secret') ?: '');
+        if ($proposedSecret === '') {
+            $proposedSecret = \App\Libraries\Security\TotpService::generateSecret();
+            session()->set('2fa_proposed_secret', $proposedSecret);
+        }
+        $label = (string) (session('user_email') ?: session('username') ?: $userId);
+        $otpauth = \App\Libraries\Security\TotpService::otpauthUrl('MyMI Wallet', $label, $proposedSecret);
         return view('themes/dashboard/layouts/index', [
             'pageTitle' => 'Two-Factor Authentication',
             'content' => view('App\\Modules\\User\\Views\\Account\\twofactor', [
                 'row' => $row,
                 'proposedSecret' => $proposedSecret,
-                'otpauth' => $otpauth,
+                'qrDataUri' => \App\Services\TwoFactorService::qrDataUri($otpauth),
             ]),
         ]);
     }
 
     public function enable2fa()
     {
-        $secret = (string) $this->request->getPost('secret');
+        $secret = (string) (session('2fa_proposed_secret') ?: '');
         $code   = (string) $this->request->getPost('code');
-        if (! $secret || ! preg_match('~^\d{6}$~', $code)) {
+        if ($secret === '' || ! preg_match('~^\d{6}$~', $code)) {
             return $this->failJson('Invalid input.');
         }
         if (! \App\Libraries\Security\TotpService::verify($secret, $code)) {
             return $this->failJson('Invalid TOTP code.');
         }
+        require_once APPPATH . 'Helpers/CryptoHelper.php';
         $enc = \App\Libraries\Security\Crypto::encrypt($secret);
         $backup = $this->generateBackupCodes();
         $hashes = array_map(static fn($c) => crypto_hash_password($c), $backup);
+        $userId = (int) session('cuID');
         $m = new \App\Models\UserTwoFactorModel();
-        $exists = $m->byUser((int) session('cuID'));
+        $exists = $m->byUser($userId);
         $payload = [
-            'user_id' => (int) session('cuID'),
+            'user_id' => $userId,
             'is_enabled' => 1,
             'secret_ciphertext' => $enc['ciphertext'],
             'secret_iv' => $enc['iv'],
@@ -278,12 +287,16 @@ class AccountController extends BaseUserController
         if ($exists) {
             $m->update($exists['id'], $payload);
         } else {
+            $payload['created_at'] = date('Y-m-d H:i:s');
             $m->insert($payload);
         }
-        $userId = (int) session('cuID');
-        $this->invalidateCrudCache(array_filtre([
+        session()->remove('2fa_proposed_secret');
+        $twoFactor = new \App\Services\TwoFactorService();
+        $twoFactor->rememberState($userId, true);
+        $twoFactor->markVerified($userId);
+        $this->invalidateCrudCache(array_filter([
             'account',
-            $userId > 0 ? $userId : null,
+            $userId > 0 ? 'user:' . $userId : null,
         ]));
         audit('2fa.enable', [], 'user');
         return $this->response->setJSON([
@@ -295,28 +308,29 @@ class AccountController extends BaseUserController
 
     public function verify2fa()
     {
-        $code = (string) $this->request->getPost('code');
-        if (! preg_match('~^\d{6}$~', $code)) {
-            return $this->failJson('Invalid code.');
-        }
-        $m = new \App\Models\UserTwoFactorModel();
-        $row = $m->byUser((int) session('cuID'));
-        if (! $row || (int) $row['is_enabled'] !== 1) {
+        $userId = (int) session('cuID');
+        $twoFactor = new \App\Services\TwoFactorService();
+        if (! $twoFactor->isEnabled($userId)) {
             return $this->failJson('2FA not enabled.');
         }
-        $secret = \App\Libraries\Security\Crypto::decrypt($row['secret_ciphertext'], $row['secret_iv'], $row['secret_tag']);
-        if (! \App\Libraries\Security\TotpService::verify($secret, $code)) {
-            return $this->failJson('Invalid TOTP code.');
+        if (! $twoFactor->verifyCode($userId, (string) $this->request->getPost('code'))) {
+            return $this->failJson('Invalid code.');
         }
-        session()->set('2fa_verified_at', time());
+        $twoFactor->markVerified($userId);
         return $this->okJson('2FA verified.');
     }
 
     public function disable2fa()
     {
+        $userId = (int) session('cuID');
+        $twoFactor = new \App\Services\TwoFactorService();
         $m = new \App\Models\UserTwoFactorModel();
-        $row = $m->byUser((int) session('cuID'));
-        if ($row) {
+        $row = $m->byUser($userId);
+        if ($row && (int) $row['is_enabled'] === 1) {
+            // Turning 2FA off needs a current code, so a hijacked session cannot do it.
+            if (! $twoFactor->verifyCode($userId, (string) $this->request->getPost('code'))) {
+                return $this->failJson('Enter a current code to turn off two-factor.');
+            }
             $m->update($row['id'], [
                 'is_enabled' => 0,
                 'secret_ciphertext' => null,
@@ -327,7 +341,7 @@ class AccountController extends BaseUserController
             ]);
             audit('2fa.disable', [], 'user');
         }
-        $userId = (int) session('cuID');
+        $twoFactor->rememberState($userId, false);
         $this->invalidateCrudCache(array_filter([
             'account',
             $userId > 0 ? 'user:' . $userId : null,
@@ -342,6 +356,7 @@ class AccountController extends BaseUserController
         if (! $row || (int) $row['is_enabled'] !== 1) {
             return $this->failJson('2FA not enabled.');
         }
+        require_once APPPATH . 'Helpers/CryptoHelper.php';
         $codes = $this->generateBackupCodes();
         $hashes = array_map(static fn($c) => crypto_hash_password($c), $codes);
         $m->update($row['id'], [

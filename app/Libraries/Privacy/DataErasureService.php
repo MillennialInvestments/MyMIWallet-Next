@@ -1,29 +1,88 @@
 <?php
+
 namespace App\Libraries\Privacy;
 
 use CodeIgniter\Database\BaseConnection;
+use Config\Privacy;
 
+/**
+ * Erases a user's personal data (GTM-045). The account row is pseudonymized and
+ * deactivated; financial records stay without personal details.
+ */
 class DataErasureService
 {
-    public function __construct(private BaseConnection $db) {}
+    private Privacy $cfg;
 
+    public function __construct(private BaseConnection $db, ?Privacy $cfg = null)
+    {
+        $this->cfg = $cfg ?? config(Privacy::class);
+    }
+
+    /** Returns the number of rows changed or deleted. */
     public function pseudonymizeUser(int $userId): int
     {
+        if ($userId <= 0) {
+            return 0;
+        }
         $count = 0;
-        $count += $this->db->table('bf_user_profiles')->where('user_id',$userId)
-            ->set([
-                'phone'=>null,'street'=>null,'city'=>null,'state'=>null,'postal_code'=>null,
-                'phone_ciphertext'=>null,'phone_iv'=>null,'phone_tag'=>null,
-                'street_ciphertext'=>null,'street_iv'=>null,'street_tag'=>null,
-                'city_ciphertext'=>null,'city_iv'=>null,'city_tag'=>null,
-                'state_ciphertext'=>null,'state_iv'=>null,'state_tag'=>null,
-                'postal_code_ciphertext'=>null,'postal_code_iv'=>null,'postal_code_tag'=>null,
-                'phone_sha'=>null
-            ])->update() ? $this->db->affectedRows() : 0;
+        $this->db->transStart();
 
-        $count += $this->db->table('users')->where('id',$userId)
-            ->set(['display_name' => 'Deleted User #'.$userId])->update() ? $this->db->affectedRows() : 0;
+        $users = $this->cfg->usersTable;
+        if ($this->db->tableExists($users, false)) {
+            $fields = $this->db->getFieldNames($users);
+            $set = [];
+            $candidates = [
+                'email'         => 'deleted+' . $userId . '@invalid.mymiwallet',
+                'username'      => 'deleted_' . $userId,
+                'display_name'  => 'Deleted User #' . $userId,
+                'first_name'    => null,
+                'last_name'     => null,
+                'name'          => null,
+                'phone'         => null,
+                'avatar'        => null,
+                'password_hash' => null,
+                'reset_hash'    => null,
+                'activate_hash' => null,
+                'active'        => 0,
+                'status'        => 'erased',
+            ];
+            foreach ($candidates as $col => $val) {
+                if (in_array($col, $fields, true)) {
+                    $set[$col] = $val;
+                }
+            }
+            if ($set !== []) {
+                $this->db->table($users)->where('id', $userId)->update($set);
+                $count += $this->db->affectedRows();
+            }
+        }
 
-        return $count;
+        foreach ($this->cfg->scrubColumns as $table => $cols) {
+            if (! $this->db->tableExists($table, false)) {
+                continue;
+            }
+            $fields = $this->db->getFieldNames($table);
+            $set = [];
+            foreach ($cols as $c) {
+                if (in_array($c, $fields, true)) {
+                    $set[$c] = null;
+                }
+            }
+            if ($set !== [] && in_array('user_id', $fields, true)) {
+                $this->db->table($table)->where('user_id', $userId)->update($set);
+                $count += $this->db->affectedRows();
+            }
+        }
+
+        foreach ($this->cfg->eraseTables as $table => $userColumn) {
+            if ($this->db->tableExists($table, false) && in_array($userColumn, $this->db->getFieldNames($table), true)) {
+                $this->db->table($table)->where($userColumn, $userId)->delete();
+                $count += $this->db->affectedRows();
+            }
+        }
+
+        $this->db->transComplete();
+
+        return $this->db->transStatus() ? $count : 0;
     }
 }

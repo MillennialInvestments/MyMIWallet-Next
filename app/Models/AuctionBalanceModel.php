@@ -43,12 +43,12 @@ class AuctionBalanceModel extends Model
         $this->ensure($userId);
 
         $db  = $this->db;
-        $own = $db->transDepth() === 0;
+        $own = $db->transDepth === 0;
         if ($own) {
             $db->transBegin();
         }
 
-        $row = $db->query('SELECT * FROM bf_auction_balances WHERE user_id = ? FOR UPDATE', [$userId])->getRowArray();
+        $row = $this->lockRow($userId);
         if (! $row) {
             if ($own) {
                 $db->transRollback();
@@ -86,12 +86,12 @@ class AuctionBalanceModel extends Model
         $this->ensure($userId);
 
         $db  = $this->db;
-        $own = $db->transDepth() === 0;
+        $own = $db->transDepth === 0;
         if ($own) {
             $db->transBegin();
         }
 
-        $row = $db->query('SELECT * FROM bf_auction_balances WHERE user_id = ? FOR UPDATE', [$userId])->getRowArray();
+        $row = $this->lockRow($userId);
         if (! $row) {
             if ($own) {
                 $db->transRollback();
@@ -129,12 +129,12 @@ class AuctionBalanceModel extends Model
         $this->ensure($userId);
 
         $db  = $this->db;
-        $own = $db->transDepth() === 0;
+        $own = $db->transDepth === 0;
         if ($own) {
             $db->transBegin();
         }
 
-        $row = $db->query('SELECT * FROM bf_auction_balances WHERE user_id = ? FOR UPDATE', [$userId])->getRowArray();
+        $row = $this->lockRow($userId);
         if (! $row) {
             if ($own) {
                 $db->transRollback();
@@ -186,12 +186,12 @@ class AuctionBalanceModel extends Model
         $this->ensure($userId);
 
         $db  = $this->db;
-        $own = $db->transDepth() === 0;
+        $own = $db->transDepth === 0;
         if ($own) {
             $db->transBegin();
         }
 
-        $row = $db->query('SELECT * FROM bf_auction_balances WHERE user_id = ? FOR UPDATE', [$userId])->getRowArray();
+        $row = $this->lockRow($userId);
         if (! $row) {
             if ($own) {
                 $db->transRollback();
@@ -210,5 +210,19 @@ class AuctionBalanceModel extends Model
         }
 
         return true;
+    }
+
+    /**
+     * Reads the balance row with a row lock. SQLite (tests) has no FOR UPDATE;
+     * its write transaction already locks the database.
+     */
+    private function lockRow(int $userId): ?array
+    {
+        $sql = 'SELECT * FROM bf_auction_balances WHERE user_id = ?';
+        if (stripos($this->db->DBDriver, 'sqlite') === false) {
+            $sql .= ' FOR UPDATE';
+        }
+
+        return $this->db->query($sql, [$userId])->getRowArray();
     }
 }

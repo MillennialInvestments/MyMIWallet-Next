@@ -324,12 +324,25 @@ class EmailAPIController extends BaseAPIController
 
     public function trackBounceWebhook()
     {
-        $payload = $this->request->getJSON(true);
+        // GTM-035: only the email provider may mark addresses undeliverable.
+        $expected = trim((string) env('ESP_WEBHOOK_SECRET'));
+        $provided = trim($this->request->getHeaderLine('X-Webhook-Token'));
+        if ($provided === '') {
+            $provided = (string) $this->request->getGet('token');
+        }
+        if ($expected === '') {
+            log_message('warning', '[ESP Webhook] ESP_WEBHOOK_SECRET is not set; bounce webhook disabled.');
+            return $this->respond(['status' => 'error', 'message' => 'Webhook disabled.'], 503);
+        }
+        if ($provided === '' || ! hash_equals($expected, $provided)) {
+            return $this->failUnauthorized('Invalid webhook token.');
+        }
 
-        log_message('info', '[ESP Webhook] Raw Payload: ' . json_encode($payload));
+        $payload = $this->request->getJSON(true) ?: (array) $this->request->getPost();
 
-        $email = $payload['recipient'] ?? $payload['email'] ?? null;
-        $reason = $payload['reason'] ?? $payload['description'] ?? 'Unknown bounce reason';
+        // Postmark sends Email/Description; other providers use recipient/reason.
+        $email = $payload['Email'] ?? $payload['recipient'] ?? $payload['email'] ?? null;
+        $reason = $payload['Description'] ?? $payload['reason'] ?? $payload['description'] ?? 'Unknown bounce reason';
 
         if (!$email) {
             log_message('error', '[ESP Webhook] Missing email in bounce payload.');
@@ -338,7 +351,7 @@ class EmailAPIController extends BaseAPIController
 
         $this->marketingModel->markEmailAsUndeliverable($email, $reason);
 
-        log_message('info', "[ESP Webhook] Bounce tracked for {$email}: {$reason}");
+        log_message('info', '[ESP Webhook] Bounce tracked for recipient hash {hash}', ['hash' => substr(hash('sha256', strtolower((string) $email)), 0, 12)]);
 
         return $this->respond(['status' => 'success', 'message' => "Bounce recorded for $email."]);
     }

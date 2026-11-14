@@ -15,7 +15,9 @@ final class RegistrationFlowTest extends CIUnitTestCase
         parent::setUp();
 
         Services::injectMock('authentication', new RegistrationFakeAuthentication(false));
-        Services::injectMock('eventTracker', new class {
+        Services::injectMock('eventTracker', new class extends \App\Services\EventTracker {
+            public function __construct() {}
+
             public function track(string $event, array $data = [], ?int $userId = null, ?string $channel = null): void {}
         });
     }

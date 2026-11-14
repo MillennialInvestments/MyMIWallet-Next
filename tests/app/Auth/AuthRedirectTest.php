@@ -14,7 +14,9 @@ final class AuthRedirectTest extends CIUnitTestCase
     public function testNoCacheFilterHeadersAppliedOnLoginRoute(): void
     {
         Services::injectMock('authentication', new FakeAuthenticationForRedirect(false));
-        Services::injectMock('eventTracker', new class {
+        Services::injectMock('eventTracker', new class extends \App\Services\EventTracker {
+            public function __construct() {}
+
             public function track(string $event, array $data = [], ?int $userId = null, ?string $channel = null): void {}
         });
 

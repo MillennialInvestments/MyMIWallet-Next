@@ -10,6 +10,8 @@
         "slack": "https://codeigniterchat.slack.com"
     },
     "require": {
+        "php": "^8.1",
+        "chillerlan/php-qrcode": "^5.0",
         "codeigniter4/framework": "^4.0",
         "codeigniter4/settings": "^2.3",
         "codeigniter4/shield": "^1.0",
@@ -17,7 +19,6 @@
         "erusev/parsedown": "^1.7",
         "guzzlehttp/guzzle": "^7.10",
         "myth/auth": "^1.1",
-        "php": "^8.1",
         "predis/predis": "^3.4",
         "sebastian/diff": "^5.1",
         "tatter/alerts": "^3.1",
@@ -52,7 +53,10 @@
         "prepend-autoloader": false,
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "8.2.0"
+        }
     },
     "scripts": {
         "test": "phpunit",

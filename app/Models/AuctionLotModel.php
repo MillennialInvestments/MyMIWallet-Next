@@ -110,7 +110,7 @@ class AuctionLotModel extends Model
     public function applyAntiSnipeIfNeeded(int $lotId, $bidTime): ?array
     {
         $db            = $this->db;
-        $ownTransaction = $db->transDepth() === 0;
+        $ownTransaction = $db->transDepth === 0;
         if ($ownTransaction) {
             $db->transStart();
         }

@@ -90,6 +90,31 @@ class MyMIPlaid
         return null;
     }
 
+    /**
+     * Public JWK used to verify the Plaid-Verification header on webhooks.
+     * Cached for an hour; returns null when Plaid does not know the key id.
+     */
+    public function getWebhookVerificationKey(string $keyId): ?array
+    {
+        $cacheKey = 'plaid_webhook_jwk_' . preg_replace('/[^A-Za-z0-9_-]/', '', $keyId);
+        $cached = cache($cacheKey);
+        if (is_array($cached)) {
+            return $cached;
+        }
+        $j = $this->post('/webhook_verification_key/get', [
+            'client_id' => $this->clientId,
+            'secret'    => $this->secret,
+            'key_id'    => $keyId,
+        ]);
+        $key = $j['key'] ?? null;
+        if (! is_array($key)) {
+            return null;
+        }
+        cache()->save($cacheKey, $key, 3600);
+
+        return $key;
+    }
+
     public function exchangePublicToken(string $publicToken): array
     {
         $j = $this->post('/item/public_token/exchange', [

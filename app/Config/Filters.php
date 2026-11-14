@@ -57,6 +57,9 @@ class Filters extends BaseConfig
         'maintenance'   => \App\Filters\MaintenanceModeFilter::class,
         'login'         => \App\Filters\LoginFilter::class,
         'authcheck'     => \App\Filters\AuthCheckFilter::class,
+        'twofactor'     => \App\Filters\TwoFactorFilter::class,
+        'apiAdmin'      => \App\Filters\ApiAdminFilter::class,
+        'apiUser'       => \App\Filters\AuthCheckFilter::class,
         'csrf'          => \App\Filters\CsrfDebugFilter::class,
         'auth'          => \App\Filters\AuthFilter::class,  
         'cronKey'       => \App\Filters\CronKeyFilter::class,   
@@ -65,6 +68,7 @@ class Filters extends BaseConfig
         // 'csp'           => \App\Filters\CspFilter::class,
         
         'cspoff'        => \App\Filters\CspOff::class,
+        'securityHeaders' => \App\Filters\SecurityHeadersFilter::class,
         'toolbar'       => DebugToolbar::class,
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
@@ -87,6 +91,7 @@ class Filters extends BaseConfig
         'before' => [
             'maintenance' => [
                 'except' => [
+                    'csp-report',
                     'Maintenance',
                     'Support',
                     'Support/*',
@@ -106,6 +111,7 @@ class Filters extends BaseConfig
             'sessionRevoked',
             'csrf' => [
                 'except' => [
+                    'csp-report',
                     'API/*',
                     'api/*',
                     'debugbar*',
@@ -150,6 +156,7 @@ class Filters extends BaseConfig
             // ],
             'authcheck' => [
                 'except' => [
+                    'csp-report',
                     'login',
                     'register',
                     'register/*',
@@ -276,7 +283,8 @@ class Filters extends BaseConfig
                     '_debugbar*',
                 ],
             ],
-
+            // GTM-020: hold users with 2FA on at the challenge until verified.
+            'twofactor',
         ],
         'after' => [
             'toolbar' => [
@@ -288,7 +296,8 @@ class Filters extends BaseConfig
                 ],
             ],
             // 'csp' => ['except' => ['API/*', 'assets/*']],
-            'cspoff',
+            // GTM-030: security headers + report-only CSP (replaces cspoff).
+            'securityHeaders',
             'sessionTracker',
             'requestLifecycle',
             'observability',
@@ -320,6 +329,84 @@ class Filters extends BaseConfig
      */
     public array $filters = [
 
+        // GTM-027: admin-only write APIs (admin session, or X-Cron-Key / X-Internal-Token).
+        'apiAdmin' => [
+            'before' => [
+                'api/aiops/manual-run',
+                'API/CoinVault/approveContribution/*',
+                'API/CoinVault/rejectContribution/*',
+                'API/CoinVault/approvePayout/*',
+                'API/CoinVault/rejectPayout/*',
+                'API/Discord/enqueue',
+                'API/Discord/broadcast',
+                'API/Discord/register-guild-commands',
+                'API/Discord/messageHook',
+                'API/Discord/webhook',
+                'API/Discord/test',
+                'API/Discord/purge-dead',
+                'API/Management/Chat/*',
+                'API/Alerts/addTradeAlert',
+                'API/Alerts/createTradeAlert',
+                'API/Alerts/createTradeAlert/*',
+                'API/Alerts/Alerts/generateAdvisorMediaFromAlert',
+                'API/Alerts/Alerts/generateAdvisorMediaFromAlert/*',
+                'API/Alerts/hideTradeAlert',
+                'API/Alerts/manageTradeAlert',
+                'API/Alerts/markAlertAsSentAndSendEmail/*',
+                'API/Alerts/processAlerts',
+                'API/Alerts/processEmailAlerts',
+                'API/Alerts/processTradeAlerts',
+                'API/Alerts/processTradeBatch',
+                'API/Alerts/sendAlert',
+                'API/Alerts/storeMarketingContent',
+                'API/Alerts/updateBatchPrices',
+                'API/Alerts/updateChartOverride',
+                'API/Alerts/updateExchange',
+                'API/Alerts/updateTradeAlerts',
+                'API/Alerts/generateVoiceoverScript',
+                'API/Alerts/generateVoiceoverAndMarketingContent',
+                'API/Alerts/generateAndStoreVoiceover',
+                'API/Alerts/generateSocialMediaPosts',
+                'API/Alerts/postMarketingContentToSocials',
+                'API/Alerts/gen-keys',
+                'API/Auctions/settle/*',
+                'API/Auctions/escrow/*',
+                'API/Email/createDraftCampaign',
+                'API/Email/scheduleCampaignApi/*',
+                'API/Email/deleteCampaign/*',
+                'API/eSports/lockEscrow',
+                'API/eSports/cancelEvent',
+                'API/eSports/settlePayouts',
+                'API/Investments/news',
+                'API/Investments/news/*',
+                'API/Marketing/Distro/*',
+                'API/Wallets/Plaid/Config-Debug',
+            ],
+        ],
+        // GTM-027: signed-in user write APIs (JSON 401 when signed out).
+        'apiUser' => [
+            'before' => [
+                'API/AI/Chat',
+                'API/AI/LinkSettings',
+                'API/Alerts/generateTradeAlertSummary',
+                'API/Alerts/getLatestPrices',
+                'API/Alerts/submitTradeAlert',
+                'API/Auctions/fmv',
+                'API/Auctions/topup',
+                'API/eSports/createEvent',
+                'API/eSports/joinEvent',
+                'API/Investments/validateSymbol',
+                'API/Predictions/PlaceOrder',
+                'API/Predictions/CancelOrder',
+                'API/Wallets/Banking/Update/*',
+                'API/Wallets/Credit/Update/*',
+                'API/Wallets/Debt/Update/*',
+                'API/Wallets/Investments/Update/*',
+                'API/Wallets/Crypto/Update/*',
+                'API/User/Comments/Add',
+                'API/Users/Comments/Add',
+            ],
+        ],
         'login' => [
             'before' => [
                 'Dashboard',
@@ -380,8 +467,6 @@ class Filters extends BaseConfig
                 'resend-activation',
                 'resend-activate-account',
                 'Auth/*',
-                'get2FAQRCode',
-                'verify2FACode',
             ],
             'except' => [
                 'API/*',

@@ -26,6 +26,9 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
 
+      - name: Composer security audit
+        run: composer audit --locked --no-interaction
+
       - name: Rebuild autoload cache
         run: composer dump-autoload
 
@@ -80,6 +83,9 @@ jobs:
 
       - name: API Governance Audit
         run: php spark api:audit
+
+      - name: Route handler check (GTM-022)
+        run: php spark routes:verify-handlers
 
       - name: API Filters Gate
         run: php spark api:filters-check

@@ -1,0 +1,2 @@
+# Public RFC 6238 test vector (base32 of "12345678901234567890"), not a credential.
+4f292454ec91628c6ff851e7d8c632ad8d2a8bed:tests/unit/Security/TotpServiceTest.php:generic-api-key:15
