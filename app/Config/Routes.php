@@ -305,6 +305,9 @@ $routes->group('', ['namespace' => 'App\Controllers'], static function($routes) 
 // Explicit Solana API smoke-test route for production case-sensitive URLs.
 $routes->get('API/Solana/health', '\App\Modules\APIs\Controllers\SolanaAPIController::health');
 
+// CSP violation reports (GTM-030)
+$routes->post('csp-report', '\\App\\Controllers\\CspReportController::report');
+
 // --- Auth Routes ---
 // $routes->group('', ['namespace' => 'Myth\Auth\Controllers'], static function ($routes) {
 $routes->group('', ['namespace' => 'App\Controllers', 'filter' => 'no-cache'], static function ($routes) {

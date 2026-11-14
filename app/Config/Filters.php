@@ -68,6 +68,7 @@ class Filters extends BaseConfig
         // 'csp'           => \App\Filters\CspFilter::class,
         
         'cspoff'        => \App\Filters\CspOff::class,
+        'securityHeaders' => \App\Filters\SecurityHeadersFilter::class,
         'toolbar'       => DebugToolbar::class,
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
@@ -90,6 +91,7 @@ class Filters extends BaseConfig
         'before' => [
             'maintenance' => [
                 'except' => [
+                    'csp-report',
                     'Maintenance',
                     'Support',
                     'Support/*',
@@ -109,6 +111,7 @@ class Filters extends BaseConfig
             'sessionRevoked',
             'csrf' => [
                 'except' => [
+                    'csp-report',
                     'API/*',
                     'api/*',
                     'debugbar*',
@@ -153,6 +156,7 @@ class Filters extends BaseConfig
             // ],
             'authcheck' => [
                 'except' => [
+                    'csp-report',
                     'login',
                     'register',
                     'register/*',
@@ -292,7 +296,8 @@ class Filters extends BaseConfig
                 ],
             ],
             // 'csp' => ['except' => ['API/*', 'assets/*']],
-            'cspoff',
+            // GTM-030: security headers + report-only CSP (replaces cspoff).
+            'securityHeaders',
             'sessionTracker',
             'requestLifecycle',
             'observability',
