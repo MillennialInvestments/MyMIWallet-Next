@@ -533,6 +533,9 @@ class AuthController extends BaseController
             );
         }
 
+        // GTM-020: a fresh login must pass the two-factor challenge again.
+        (new \App\Services\TwoFactorService())->clearVerification();
+
         $this->session->regenerate(true);
         $destination = $this->determineRedirectDestination();
         $this->authLog('AUTH_SUCCESS', 'redirect', 'Login redirect resolved', [

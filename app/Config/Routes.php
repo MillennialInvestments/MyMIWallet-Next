@@ -378,9 +378,13 @@ $routes->get('register', 'AuthController::register', ['as' => 'register']);
     $routes->post('forgot', 'AuthController::attemptForgot');
     $routes->post('reset-password', 'AuthController::attemptReset', ['as' => 'reset-password-attempt']);
 
-    // 2FA
-    $routes->post('get2FAQRCode', 'AuthController::get2FAQRCode', ['as' => 'get-2FA-QRCode']);
-    $routes->post('verify2FACode', 'AuthController::verify2FACode', ['as' => 'verify-2FA-Code']);
+    // 2FA (GTM-020): login challenge, plus account enrollment
+    $routes->get('Auth/Two-Factor', 'Auth\\TwoFactorChallengeController::show', ['as' => 'two-factor-challenge']);
+    $routes->post('Auth/Two-Factor/verify', 'Auth\\TwoFactorChallengeController::verify', ['as' => 'two-factor-verify']);
+    $routes->get('Account/Two-Factor', '\\App\\Modules\\User\\Controllers\\AccountController::twoFactor', ['filter' => 'login', 'as' => 'account-two-factor']);
+    $routes->post('Account/2fa/enable', '\\App\\Modules\\User\\Controllers\\AccountController::enable2fa', ['filter' => 'login']);
+    $routes->post('Account/2fa/disable', '\\App\\Modules\\User\\Controllers\\AccountController::disable2fa', ['filter' => 'login']);
+    $routes->post('Account/2fa/backup/regenerate', '\\App\\Modules\\User\\Controllers\\AccountController::regenerateBackupCodes', ['filter' => 'login']);
 
     // --- HybridAuth secondary gateway ---
     $routes->get('auth/provider/(:segment)', 'AuthController::redirectToProvider/$1', ['as' => 'auth-provider']);

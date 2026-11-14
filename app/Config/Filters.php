@@ -57,6 +57,7 @@ class Filters extends BaseConfig
         'maintenance'   => \App\Filters\MaintenanceModeFilter::class,
         'login'         => \App\Filters\LoginFilter::class,
         'authcheck'     => \App\Filters\AuthCheckFilter::class,
+        'twofactor'     => \App\Filters\TwoFactorFilter::class,
         'csrf'          => \App\Filters\CsrfDebugFilter::class,
         'auth'          => \App\Filters\AuthFilter::class,  
         'cronKey'       => \App\Filters\CronKeyFilter::class,   
@@ -276,7 +277,8 @@ class Filters extends BaseConfig
                     '_debugbar*',
                 ],
             ],
-
+            // GTM-020: hold users with 2FA on at the challenge until verified.
+            'twofactor',
         ],
         'after' => [
             'toolbar' => [
@@ -380,8 +382,6 @@ class Filters extends BaseConfig
                 'resend-activation',
                 'resend-activate-account',
                 'Auth/*',
-                'get2FAQRCode',
-                'verify2FACode',
             ],
             'except' => [
                 'API/*',
