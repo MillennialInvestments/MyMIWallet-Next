@@ -10,6 +10,9 @@ use Config\Privacy;
  */
 class DataExportService
 {
+    /** Upper bound per table so one export can't exhaust memory. */
+    public const MAX_ROWS_PER_TABLE = 50000;
+
     private Privacy $cfg;
 
     public function __construct(private BaseConnection $db, ?Privacy $cfg = null)
@@ -35,7 +38,7 @@ class DataExportService
             if (! $this->db->tableExists($table, false) || ! in_array($userColumn, $this->db->getFieldNames($table), true)) {
                 continue;
             }
-            $rows = $this->db->table($table)->where($userColumn, $userId)->get()->getResultArray();
+            $rows = $this->db->table($table)->where($userColumn, $userId)->limit(self::MAX_ROWS_PER_TABLE)->get()->getResultArray();
             $bundle['tables'][$table] = array_map(fn (array $r): array => $this->clean($r), $rows);
         }
 

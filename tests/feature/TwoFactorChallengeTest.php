@@ -36,10 +36,15 @@ final class TwoFactorChallengeTest extends CIUnitTestCase
         $db->table('bf_user_2fa')->where('user_id', self::UID)->delete();
         $this->secret = TotpService::generateSecret();
         $enc = Crypto::encrypt($this->secret);
-        $db->table('bf_user_2fa')->insert([
-            'user_id' => self::UID, 'is_enabled' => 1,
-            'secret_ciphertext' => $enc['ciphertext'], 'secret_iv' => $enc['iv'], 'secret_tag' => $enc['tag'],
-        ]);
+        // Binary values go in as hex literals: an SQLite string literal stops at a NUL byte,
+        // which made this test fail whenever the random IV or ciphertext contained one.
+        $db->query(sprintf(
+            "INSERT INTO bf_user_2fa (user_id, is_enabled, secret_ciphertext, secret_iv, secret_tag) VALUES (%d, 1, X'%s', X'%s', X'%s')",
+            self::UID,
+            bin2hex($enc['ciphertext']),
+            bin2hex($enc['iv']),
+            bin2hex($enc['tag'])
+        ));
     }
 
     protected function tearDown(): void
