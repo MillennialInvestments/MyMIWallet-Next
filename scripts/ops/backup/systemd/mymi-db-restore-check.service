@@ -1,0 +1,8 @@
+[Unit]
+Description=MyMI Wallet weekly restore check
+After=mysql.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /apps/TBI/www/mymiwallet/current/scripts/ops/backup/mysql-restore-check.sh
+Nice=15

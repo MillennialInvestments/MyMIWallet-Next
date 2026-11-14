@@ -1,0 +1,9 @@
+[Unit]
+Description=MyMI Wallet nightly database backup
+After=mysql.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /apps/TBI/www/mymiwallet/current/scripts/ops/backup/mysql-backup.sh
+Nice=10
+IOSchedulingClass=idle
