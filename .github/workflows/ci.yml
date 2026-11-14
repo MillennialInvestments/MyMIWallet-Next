@@ -26,6 +26,9 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
 
+      - name: Composer security audit
+        run: composer audit --locked --no-interaction
+
       - name: Rebuild autoload cache
         run: composer dump-autoload
 

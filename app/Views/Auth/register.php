@@ -1,8 +1,7 @@
 <?php
 $req = service('request');
 $uri = $uri ?? ($req ? $req->getUri() : null);
-$this->config = config(\App\Legacy\Auth\Config\Auth::class);
-$config = $this->config;
+$config = config(\App\Legacy\Auth\Config\Auth::class);
 $referralLink = isset($_SERVER['HTTP_REFERER']) ? (string) $_SERVER['HTTP_REFERER'] : site_url('register');
 $referralParts = parse_url($referralLink);
 if (is_array($referralParts) && ! empty($referralParts['query'])) {

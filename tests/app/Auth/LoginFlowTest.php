@@ -15,12 +15,16 @@ final class LoginFlowTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        Services::injectMock('eventTracker', new class {
+        Services::injectMock('eventTracker', new class extends \App\Services\EventTracker {
+            public function __construct() {}
+
             public function track(string $event, array $data = [], ?int $userId = null, ?string $channel = null): void {}
         });
 
-        Services::injectMock('safeCache', new class {
-            public function clearUserNamespace(int $userId): void {}
+        Services::injectMock('safeCache', new class extends \App\Libraries\SafeCache {
+            public function __construct() {}
+
+            public function clearUserNamespace(int $userId, array $modules = []): void {}
         });
 
         $db = db_connect();
