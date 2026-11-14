@@ -3,7 +3,8 @@
 # releases/, then (separately) migrates and switches `current` to it.
 #
 #   bash mymi-release.sh build [git-ref]     # build releases/<stamp>-<sha7>; live site untouched
-#   bash mymi-release.sh activate <release>  # backup, migrate (App namespace), switch current, restart, health check
+#   MIGRATE='<name> ...' bash mymi-release.sh activate <release>
+#                                            # backup, run only the named migrations, switch current, restart, health check
 #   bash mymi-release.sh rollback <release>  # point current back at an older release (no DB changes)
 #
 # Never prints secrets. Never deletes old releases.
@@ -19,8 +20,17 @@ CMD="${1:-}"; ARG="${2:-}"
 
 die() { echo "ERROR: $*" >&2; exit 1; }
 current_target() { readlink -f "$BASE/current"; }
+# Spark commands run in a release that is not live yet get their own writable
+# dir. The shared one holds CodeIgniter's file locator cache, and filling it
+# from a candidate release would make the live site load the candidate's files.
+private_writable() {
+  mkdir -p "$1/.writable-cli"/{cache,logs,session,uploads,debugbar}
+  ln -sfn "$1/.writable-cli" "$1/writable"
+}
+shared_writable() { ln -sfn "$BASE/shared/writable" "$1/writable"; }
 switch_to() { # atomic symlink swap
   local rel="$1"
+  shared_writable "$BASE/releases/$rel"
   ln -sfn "releases/$rel" "$BASE/current.next"
   mv -T "$BASE/current.next" "$BASE/current"
 }
@@ -53,7 +63,7 @@ build)
   git -C "$REPO" archive "$SHA" | tar -x -C "$R"
   # writable and .env are shared across releases.
   [ -d "$R/writable" ] && rm -rf -- "$R/writable"
-  ln -s "$BASE/shared/writable" "$R/writable"
+  private_writable "$R"
   ln -s "$BASE/shared/.env" "$R/.env"
   echo "$SHA" > "$R/REVISION"
 
@@ -77,10 +87,11 @@ build)
 
   echo "--- checks ---"
   (cd "$R" && php -l app/Config/Routes.php >/dev/null && { php spark list >/dev/null 2>&1 || php spark list >/dev/null; }) || die "spark failed to boot in the new release"
-  echo "Pending App migrations (these will run on activate):"
+  echo "Pending App migrations (activate runs only the ones you name in MIGRATE):"
   (cd "$R" && php spark migrate:status 2>/dev/null | grep -E '^\| App ' | grep -E '\| ---' || echo "  none")
+  shared_writable "$R"
   echo
-  echo "Built. Nothing live changed. Next: bash $0 activate $REL"
+  echo "Built. Nothing live changed. Next: MIGRATE='<names>' bash $0 activate $REL"
   ;;
 
 activate)
@@ -93,8 +104,17 @@ activate)
   echo "--- backup ---"
   sudo bash "$R/scripts/ops/backup/mysql-backup.sh"
 
-  echo "--- migrate (App namespace only) ---"
-  (cd "$R" && php spark migrate -n App)
+  echo "--- migrate (only the migrations named in MIGRATE) ---"
+  # `spark migrate` would run every pending App migration, and production has
+  # older ones (auth backfills) that must not run unreviewed. So run only the
+  # ones named in MIGRATE, then list whatever is still pending.
+  private_writable "$R"
+  for m in ${MIGRATE:-}; do
+    (cd "$R" && php scripts/ops/db/run-migrations.php "$m") || die "migration $m failed; nothing was switched"
+  done
+  echo "App migrations still pending (not run):"
+  (cd "$R" && php spark migrate:status 2>/dev/null | grep -E '^\| App ' | grep -E '\| ---' | awk -F'|' '{print "  " $3 $4}' || true)
+  shared_writable "$R"
 
   echo "--- switch ---"
   switch_to "$REL"
