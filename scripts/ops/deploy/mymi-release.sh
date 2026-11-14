@@ -77,6 +77,9 @@ build)
 
   echo "--- checks ---"
   (cd "$R" && php -l app/Config/Routes.php >/dev/null && { php spark list >/dev/null 2>&1 || php spark list >/dev/null; }) || die "spark failed to boot in the new release"
+  # The file locator cache lives in shared/writable and still lists the live
+  # release's files, so clear it or new migrations are invisible here.
+  (cd "$R" && php spark cache:clear >/dev/null 2>&1 || true)
   echo "Pending App migrations (these will run on activate):"
   (cd "$R" && php spark migrate:status 2>/dev/null | grep -E '^\| App ' | grep -E '\| ---' || echo "  none")
   echo
@@ -94,7 +97,10 @@ activate)
   sudo bash "$R/scripts/ops/backup/mysql-backup.sh"
 
   echo "--- migrate (App namespace only) ---"
-  (cd "$R" && php spark migrate -n App)
+  # Clear the shared file locator cache first (see build), then run and show what is still pending.
+  (cd "$R" && php spark cache:clear >/dev/null && php spark migrate -n App)
+  PENDING="$(cd "$R" && php spark migrate:status 2>/dev/null | grep -E '^\| App ' | grep -E '\| ---' || true)"
+  [ -z "$PENDING" ] || { echo "$PENDING"; die "App migrations still pending after migrate; nothing was switched"; }
 
   echo "--- switch ---"
   switch_to "$REL"
