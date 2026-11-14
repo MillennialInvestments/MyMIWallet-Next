@@ -344,7 +344,7 @@ $cuFullAddress          = $cuAddress . ', ' . $cuCity . ', ' . $cuState . ', ' .
                             <div class="<?php e($formGroup); ?><?php echo form_error('private_key') ? $errorClass : ''; ?>">
                                 <label class="<?php e($formLabel); ?>" for="private_key">Private Key</label>
                                 <div class="<?php e($formConCol); ?>">
-                                    <input id="private_key" name="private_key" value="<?php echo set_value('private_key', isset($user) ? $user->private_key : $cuPrivateKey); ?>" class="<?php e($formControl); ?>">
+                                    <input id="private_key" name="private_key" value="<?php echo set_value('private_key', isset($user) ? \App\Libraries\SensitiveField::hidePrivateKey($user->private_key ?? null) : $cuPrivateKey); ?>" class="<?php e($formControl); ?>">
                                     <p class="help-text">Store Your Private Key somewhere safe and secure.</p>
                                 </div>
                             </div>
@@ -1159,7 +1159,7 @@ $cuFullAddress          = $cuAddress . ', ' . $cuCity . ', ' . $cuState . ', ' .
                                             <div class="data-col" id="col_ssn">
                                                 <span class="data-label w-25">Social Security Number</span>
                                                 <span class="data-value w-100" id="ssn"><?php echo $cuSSN; ?></span>
-                                                <input id="ssn" name="ssn" type="hidden" value="<?php echo set_value('ssn', isset($user) ? $user->ssn : $cuSSN); ?>">
+                                                <input id="ssn" name="ssn" type="hidden" value="<?php echo set_value('ssn', isset($user) ? \App\Libraries\SensitiveField::maskSsn($user->ssn ?? null) : $cuSSN); ?>">
                                             </div>
                                             <div class="data-col data-col-end w-15">
                                                 <span class="data-more" onclick="ssn_Switch(event, document.getElementById('col_ssn'))"><em class="icon ni ni-forward-ios"></em></span>
@@ -1179,7 +1179,7 @@ $cuFullAddress          = $cuAddress . ', ' . $cuCity . ', ' . $cuState . ', ' .
                                                         <span class="d-none" id="${input}">${input}</span>
                                                         <div class="<?php echo $formGroup; ?>">      
                                                             <div class="<?php echo $formConCol; ?>">       
-                                                                <input type="password" class="<?php echo $formControl; ?>" name="ssn" id="ssn" placeholder="Enter Social Security Number" value="<?php echo set_value('ssn', isset($user) ? $user->ssn : $cuSSN); ?>">	
+                                                                <input type="password" class="<?php echo $formControl; ?>" name="ssn" id="ssn" placeholder="Enter Social Security Number" value="<?php echo set_value('ssn', isset($user) ? \App\Libraries\SensitiveField::maskSsn($user->ssn ?? null) : $cuSSN); ?>">	
                                                             </div>
                                                         </div>
                                                     </span>
@@ -1201,7 +1201,7 @@ $cuFullAddress          = $cuAddress . ', ' . $cuCity . ', ' . $cuState . ', ' .
                                                 element.innerHTML = `
                                                 <span class="data-label w-25">Social Security Number</span>
                                                 <span class="data-value w-100" id="ssn"><?php echo $cuSSN; ?></span>
-                                                <input type="hidden" name="ssn" id="ssn" value="<?php echo set_value('ssn', isset($user) ? $user->ssn : $cuSSN); ?>">	
+                                                <input type="hidden" name="ssn" id="ssn" value="<?php echo set_value('ssn', isset($user) ? \App\Libraries\SensitiveField::maskSsn($user->ssn ?? null) : $cuSSN); ?>">	
                                                 `;
                                                 // Change the onClick attribute
                                                 element.setAttribute('onClick', 'ssn_Switch(event, this)');
