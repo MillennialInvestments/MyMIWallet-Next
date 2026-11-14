@@ -40,7 +40,8 @@ final class CreateAuctionTablesMigrationTest extends CIUnitTestCase
                 $this->assertContains($f, $cols, "{$m->table}.{$f} missing");
             }
         }
-        foreach (['user_id', 'lot_id', 'action', 'meta_json', 'created_at'] as $f) {
+        // Columns written by AuctionBidModel, AuctionLotModel and AuctionSettlementModel activity inserts.
+        foreach (['user_id', 'lot_id', 'item_id', 'action', 'meta_json', 'created_at'] as $f) {
             $this->assertContains($f, $db->getFieldNames('bf_auction_activity'));
         }
 

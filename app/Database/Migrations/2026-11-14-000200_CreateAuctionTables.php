@@ -108,10 +108,11 @@ class CreateAuctionTables extends Migration
             'id'         => $id,
             'user_id'    => ['type' => 'BIGINT', 'unsigned' => true, 'null' => true],
             'lot_id'     => ['type' => 'BIGINT', 'unsigned' => true, 'null' => true],
+            'item_id'    => ['type' => 'BIGINT', 'unsigned' => true, 'null' => true],
             'action'     => ['type' => 'VARCHAR', 'constraint' => 64],
             'meta_json'  => ['type' => 'TEXT', 'null' => true],
             'created_at' => $now,
-        ], [['lot_id'], ['user_id']]);
+        ], [['lot_id'], ['user_id'], ['item_id']]);
     }
 
     public function down()
