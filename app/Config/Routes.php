@@ -386,6 +386,14 @@ $routes->get('register', 'AuthController::register', ['as' => 'register']);
     $routes->post('Account/2fa/disable', '\\App\\Modules\\User\\Controllers\\AccountController::disable2fa', ['filter' => 'login']);
     $routes->post('Account/2fa/backup/regenerate', '\\App\\Modules\\User\\Controllers\\AccountController::regenerateBackupCodes', ['filter' => 'login']);
 
+    // Privacy export and erasure (GTM-045)
+    $routes->get('Account/Privacy/Requests', '\\App\\Modules\\User\\Controllers\\PrivacyController::status', ['filter' => 'login']);
+    $routes->post('Account/Privacy/Export', '\\App\\Modules\\User\\Controllers\\PrivacyController::requestExport', ['filter' => 'login']);
+    $routes->get('Account/Privacy/Download/(:num)', '\\App\\Modules\\User\\Controllers\\PrivacyController::download/$1', ['filter' => 'login']);
+    $routes->post('Account/Privacy/Erase', '\\App\\Modules\\User\\Controllers\\PrivacyController::requestErasure', ['filter' => 'login']);
+    $routes->post('Management/Privacy/Erase/(:num)/Approve', '\\App\\Modules\\User\\Controllers\\PrivacyController::adminApproveErasure/$1', ['filter' => 'role:admin']);
+    $routes->post('Management/Privacy/Erase/(:num)/Reject', '\\App\\Modules\\User\\Controllers\\PrivacyController::adminRejectErasure/$1', ['filter' => 'role:admin']);
+
     // --- HybridAuth secondary gateway ---
     $routes->get('auth/provider/(:segment)', 'AuthController::redirectToProvider/$1', ['as' => 'auth-provider']);
     $routes->get('auth/provider/(:segment)/callback', 'AuthController::handleProviderCallback/$1', ['as' => 'auth-provider-callback']);
