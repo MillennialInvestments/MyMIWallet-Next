@@ -559,7 +559,7 @@ class MyMIUser
             'cuKYC'                         => $userData['kyc'],
             'cuKYCVerified'                 => $userData['kyc_verified'],
             'cuDOB'                         => $userData['dob'],
-            'cuSSN'                         => $userData['ssn'],
+            'cuSSN'                         => \App\Libraries\SensitiveField::maskSsn($userData['ssn'] ?? null),
             'cuPhone'                       => $userData['phone'] ?? '',
             'cuCompany'                     => $userData['organization'],
             'cuAddress'                     => $userData['address'],
@@ -577,7 +577,7 @@ class MyMIUser
             'cuWalletID'                    => $userData['wallet_id'], // Assuming this is the correct field
             'walletID'                      => $userData['wallet_id'],
             'cuPublicKey'                   => $userData['wallet_id'], // Double-check this'], seems like a duplicate
-            'cuPrivateKey'                  => $userData['private_key'],
+            'cuPrivateKey'                  => \App\Libraries\SensitiveField::hidePrivateKey($userData['private_key'] ?? null),
             'cuSignupDate'                  => $userData['signup_date'],
             'cuLastLogin'                   => $userData['last_login'],
             'cuReferrerCode'                => $userData['referrer_code'],            

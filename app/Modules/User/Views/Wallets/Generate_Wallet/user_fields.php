@@ -39,7 +39,7 @@ $controlInput   							= 'form-control full-width';
 		Private Key	
 	</label>
     <div class="<?php e($controlClass); ?>">
-		<input class="<?php e($controlInput); ?>" type="text" id="private_key" name="private_key" value="<?php echo set_value('private_key', isset($user) ? $user->private_key : ''); ?>" />
+		<input class="<?php e($controlInput); ?>" type="text" id="private_key" name="private_key" value="<?php echo set_value('private_key', isset($user) ? \App\Libraries\SensitiveField::hidePrivateKey($user->private_key ?? null) : ''); ?>" />
 		<p class="help-text">Store Your Private Key somewhere safe and secure.</p>
     </div>
 </div>  

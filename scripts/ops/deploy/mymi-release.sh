@@ -35,8 +35,12 @@ switch_to() { # atomic symlink swap
   mv -T "$BASE/current.next" "$BASE/current"
 }
 health() {
-  local site chat
-  site="$(curl -s -o /dev/null -w '%{http_code}' "$SITE_URL" || true)"
+  local site chat body
+  body="$(mktemp)"
+  site="$(curl -s -o "$body" -w '%{http_code}' "$SITE_URL" || true)"
+  # PHP can print a fatal error with status 200, so check the page body too.
+  if grep -qiE 'Fatal error|Uncaught Error|Failed to open stream' "$body"; then site="$site+PHP-ERROR"; fi
+  rm -f "$body"
   chat="$(curl -fsS "$CHAT_HEALTH" 2>/dev/null || echo FAILED)"
   echo "site: $site   chat: $chat"
   [ "$site" = "200" ] && [ "$chat" != "FAILED" ]
@@ -82,8 +86,11 @@ build)
     fi
   done
 
-  chgrp -R www-data "$R" 2>/dev/null || true
-  chmod -R g+rX,o-rwx "$R"
+  # php-fpm runs as www-data and must be able to read every file.
+  chgrp -R www-data "$R" 2>/dev/null || sudo chgrp -R www-data "$R"
+  chmod -R g+rX,o-rwx "$R" 2>/dev/null || sudo chmod -R g+rX,o-rwx "$R"
+  sudo -u www-data test -r "$R/vendor/autoload.php" && sudo -u www-data test -r "$R/public/index.php" \
+    || die "www-data cannot read the new release; fix permissions before activating"
 
   echo "--- checks ---"
   (cd "$R" && php -l app/Config/Routes.php >/dev/null && { php spark list >/dev/null 2>&1 || php spark list >/dev/null; }) || die "spark failed to boot in the new release"
@@ -99,6 +106,9 @@ activate)
   R="$BASE/releases/$REL"; [ -d "$R" ] && [ -f "$R/REVISION" ] || die "$R is not a built release"
   PREV="$(basename "$(current_target)")"
   [ "$PREV" != "$REL" ] || die "$REL is already current"
+  [ -z "$(sudo find "$R" -path "$R/node_modules" -prune -o -path "$R/chat/node_modules" -prune -o ! -type l ! -group www-data -print -quit)" ] \
+    && sudo -u www-data test -r "$R/vendor/autoload.php" \
+    || die "$R is not fully readable by www-data (run: sudo chgrp -R www-data $R && sudo chmod -R g+rX $R)"
   echo "Activating $REL (previous: $PREV)"
 
   echo "--- backup ---"
