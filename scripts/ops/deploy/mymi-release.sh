@@ -106,7 +106,7 @@ activate)
   R="$BASE/releases/$REL"; [ -d "$R" ] && [ -f "$R/REVISION" ] || die "$R is not a built release"
   PREV="$(basename "$(current_target)")"
   [ "$PREV" != "$REL" ] || die "$REL is already current"
-  [ -z "$(sudo find "$R" -path "$R/node_modules" -prune -o -path "$R/chat/node_modules" -prune -o ! -type l ! -group www-data -print -quit)" ] \
+  [ -z "$(sudo find "$R" -path "$R/node_modules" -prune -o -path "$R/chat/node_modules" -prune -o -path "$R/.writable-cli" -prune -o ! -type l ! -group www-data -print -quit)" ] \
     && sudo -u www-data test -r "$R/vendor/autoload.php" \
     || die "$R is not fully readable by www-data (run: sudo chgrp -R www-data $R && sudo chmod -R g+rX $R)"
   echo "Activating $REL (previous: $PREV)"
