@@ -47,23 +47,32 @@ if [ "$MODE" = "stage" ]; then
   u="$(q "SELECT COUNT(*) FROM \`$SCRATCH\`.bf_users_wallet w LEFT JOIN \`$LIVE\`.bf_users u ON u.id = w.user_id WHERE u.id IS NULL" 2>/dev/null || echo '?')"
   echo
   echo "Wallets whose user_id has no matching live user: $u"
+  # Written last, so --apply can tell a finished stage from an interrupted one.
+  q "CREATE TABLE \`$SCRATCH\`.\`_stage_complete\` (dump VARCHAR(512), at DATETIME); INSERT INTO \`$SCRATCH\`.\`_stage_complete\` VALUES ('$(basename "$DUMP")', NOW());"
   echo "Nothing in $LIVE was changed. Review the counts, then run with --apply."
   exit 0
 fi
 
 [ "$MODE" = "--apply" ] || { echo "Unknown option: $MODE" >&2; exit 1; }
-[ "$(q "SELECT COUNT(*) FROM information_schema.schemata WHERE schema_name='$SCRATCH'")" = "1" ] || { echo "Run the stage step first." >&2; exit 1; }
-if ! find "$BACKUP_DIR" -maxdepth 1 -name '*.sql.gz*' -mmin -120 2>/dev/null | grep -q .; then
-  echo "No backup newer than 2 hours in $BACKUP_DIR. Run mysql-backup.sh first." >&2; exit 1
+exists "$SCRATCH" _stage_complete || { echo "No completed stage found. Run the stage step (without --apply) first." >&2; exit 1; }
+# mysql-backup.sh writes the .sha256 only after a dump finishes, so it marks a complete backup.
+if ! find "$BACKUP_DIR" -maxdepth 1 -name "${LIVE}_*.sha256" -mmin -120 2>/dev/null | grep -q .; then
+  echo "No completed backup of $LIVE newer than 2 hours in $BACKUP_DIR. Run mysql-backup.sh first." >&2; exit 1
 fi
 
 echo "Restoring into $LIVE ..."
 for t in $TABLES; do
   exists "$SCRATCH" "$t" || { echo "  $t: not in dump, skipped"; continue; }
   if exists "$LIVE" "$t"; then echo "  $t: already in live, skipped"; continue; fi
-  q "SET SESSION sql_mode='NO_ENGINE_SUBSTITUTION'; CREATE TABLE \`$LIVE\`.\`$t\` LIKE \`$SCRATCH\`.\`$t\`; INSERT INTO \`$LIVE\`.\`$t\` SELECT * FROM \`$SCRATCH\`.\`$t\`;"
-  a="$(q "SELECT COUNT(*) FROM \`$SCRATCH\`.\`$t\`")"; b="$(q "SELECT COUNT(*) FROM \`$LIVE\`.\`$t\`")"
-  [ "$a" = "$b" ] && echo "  $t: restored $b rows" || { echo "  $t: COUNT MISMATCH scratch=$a live=$b" >&2; exit 2; }
+  # Load into a side table first and rename it into place only after the counts match,
+  # so an interrupted run never leaves a half-filled table under the real name.
+  tmp="${t}__restoring"
+  q "DROP TABLE IF EXISTS \`$LIVE\`.\`$tmp\`;"
+  q "SET SESSION sql_mode='NO_ENGINE_SUBSTITUTION'; CREATE TABLE \`$LIVE\`.\`$tmp\` LIKE \`$SCRATCH\`.\`$t\`; INSERT INTO \`$LIVE\`.\`$tmp\` SELECT * FROM \`$SCRATCH\`.\`$t\`;"
+  a="$(q "SELECT COUNT(*) FROM \`$SCRATCH\`.\`$t\`")"; b="$(q "SELECT COUNT(*) FROM \`$LIVE\`.\`$tmp\`")"
+  [ "$a" = "$b" ] || { echo "  $t: COUNT MISMATCH scratch=$a staged=$b; left $tmp for inspection" >&2; exit 2; }
+  q "RENAME TABLE \`$LIVE\`.\`$tmp\` TO \`$LIVE\`.\`$t\`;"
+  echo "  $t: restored $b rows"
 done
 q "DROP DATABASE \`$SCRATCH\`;"
 echo "Done. Scratch DB dropped. Check the site: curl -s -o /dev/null -w '%{http_code}\n' https://www.mymiwallet.com/"
