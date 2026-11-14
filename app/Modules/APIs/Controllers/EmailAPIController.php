@@ -340,8 +340,9 @@ class EmailAPIController extends BaseAPIController
 
         $payload = $this->request->getJSON(true) ?: (array) $this->request->getPost();
 
-        $email = $payload['recipient'] ?? $payload['email'] ?? null;
-        $reason = $payload['reason'] ?? $payload['description'] ?? 'Unknown bounce reason';
+        // Postmark sends Email/Description; other providers use recipient/reason.
+        $email = $payload['Email'] ?? $payload['recipient'] ?? $payload['email'] ?? null;
+        $reason = $payload['Description'] ?? $payload['reason'] ?? $payload['description'] ?? 'Unknown bounce reason';
 
         if (!$email) {
             log_message('error', '[ESP Webhook] Missing email in bounce payload.');
