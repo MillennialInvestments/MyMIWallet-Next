@@ -7,10 +7,61 @@ namespace App\Services\AIOps;
 use App\Models\AIOps\FormTestModel;
 use CodeIgniter\Config\Services;
 
+/**
+ * Sends one generated form submission (GT-FORM-HARNESS-001).
+ *
+ * execute() refuses to send anything, and writes nothing to the database,
+ * unless $options['policy'] is an allowed FormSubmissionPolicy decision.
+ * Use plan() to preview the request without sending it.
+ */
 class FormTestExecutor
 {
+    /**
+     * Preview the request that execute() would send. No network, no DB.
+     */
+    public function plan(array $analysis, int $formIndex = 0): array
+    {
+        $form = $this->selectForm($analysis, $formIndex);
+        if ($form === null) {
+            return ['ok' => false, 'status' => 'BLOCKED', 'reason' => 'no_form'];
+        }
+
+        $names = array_map(static fn ($i) => is_array($i) ? (string) ($i['name'] ?? '') : (string) $i, (array) ($form['inputs'] ?? []));
+
+        return [
+            'ok'      => true,
+            'status'  => 'SKIPPED',
+            'reason'  => 'dry_run',
+            'method'  => strtoupper((string) ($form['method'] ?? 'GET')),
+            'action'  => (string) ($form['action'] ?? ''),
+            'payload' => $this->generatePayload($names),
+        ];
+    }
+
     public function execute(array $analysis, array $options = []): array
     {
+        $policy = $options['policy'] ?? null;
+        if (! is_array($policy) || ($policy['allowed'] ?? false) !== true) {
+            return [
+                'ok'             => false,
+                'status'         => 'BLOCKED',
+                'reason'         => is_array($policy) ? (string) ($policy['reason'] ?? 'policy_denied') : 'policy_missing',
+                'test_id'        => null,
+                'error_detected' => false,
+                'analysis'       => $analysis,
+            ];
+        }
+
+        $selected = $this->selectForm($analysis, (int) ($options['form_index'] ?? 0));
+        if ($selected !== null) {
+            $analysis['form'] = [
+                'action' => $selected['action'] ?? '',
+                'method' => $selected['method'] ?? 'GET',
+                'inputs' => array_map(static fn ($i) => is_array($i) ? (string) ($i['name'] ?? '') : (string) $i, (array) ($selected['inputs'] ?? [])),
+            ];
+            $analysis['route'] = $selected['route'] ?? ($analysis['route'] ?? []);
+        }
+
         $model = new FormTestModel();
 
         $source = $analysis['source'] ?? ['type' => 'text', 'value' => ''];
@@ -88,6 +139,16 @@ class FormTestExecutor
         ];
     }
 
+    private function selectForm(array $analysis, int $index): ?array
+    {
+        $forms = (array) ($analysis['forms'] ?? []);
+        if ($forms !== []) {
+            return $forms[$index] ?? null;
+        }
+
+        return isset($analysis['form']) && is_array($analysis['form']) ? $analysis['form'] : null;
+    }
+
     private function generatePayload(array $inputs): array
     {
         $payload = [];
@@ -101,7 +162,8 @@ class FormTestExecutor
 
             // Common patterns
             if (str_contains($n, 'email')) {
-                $payload[$name] = 'test+' . date('YmdHis') . '@example.com';
+                // Synthetic identity on a reserved TLD (RFC 2606): never a real inbox.
+                $payload[$name] = 'aiops-form-test+' . date('YmdHis') . '@example.test';
                 continue;
             }
 
@@ -131,7 +193,7 @@ class FormTestExecutor
             }
 
             if (str_contains($n, 'url') || str_contains($n, 'link')) {
-                $payload[$name] = 'https://example.com/' . date('YmdHis');
+                $payload[$name] = 'https://example.test/' . date('YmdHis');
                 continue;
             }
 

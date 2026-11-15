@@ -6,78 +6,183 @@ namespace App\Services\AIOps;
 
 use Config\Database;
 
+/**
+ * Platform form inventory + seeder readiness audit (GT-FORM-HARNESS-001).
+ *
+ * Default run is read-only: no submissions, no seeders, no DB queries, and
+ * reports go to FormSubmissionPolicy::reportDir() (WRITEPATH or an external
+ * directory), never into the source tree.
+ *
+ * Options:
+ *  - dry_run (bool, default true)
+ *  - policy (array)       FormSubmissionPolicy decision; submissions and seeders
+ *                         run only when it is allowed AND dry_run is false
+ *  - db_counts (bool)     read table row counts for seed readiness (read-only SELECTs)
+ *  - seeder (string)      seeder to validate (run only under an allowed policy)
+ *  - limit (int)          max files
+ *  - report_dir (string)  override report location (must pass reportDir() rules)
+ *  - write_reports (bool, default true)
+ */
 class FormDebugSeederAuditService
 {
     public function run(array $options = []): array
     {
         $dryRun = (bool) ($options['dry_run'] ?? true);
-        $seederInput = $options['seeder'] ?? null;
-        $submitEnabled = (bool) ($options['submit'] ?? false);
-        $limit = isset($options['limit']) ? max(1, (int) $options['limit']) : null;
+        $policy = is_array($options['policy'] ?? null) ? $options['policy'] : ['allowed' => false, 'reason' => 'policy_missing'];
+        $live   = ! $dryRun && ($policy['allowed'] ?? false) === true;
+        $limit  = isset($options['limit']) ? max(1, (int) $options['limit']) : null;
 
-        $seederResult = $this->maybeRunSeeder($seederInput, $dryRun);
+        $seederResult = $this->maybeRunSeeder($options['seeder'] ?? null, ! $live);
 
         $formFiles = $this->discoverFormFiles();
         if ($limit !== null) {
             $formFiles = array_slice($formFiles, 0, $limit);
         }
 
-        $dbTableCounts = $this->safeTableCounts();
-        $intelligence = new FormIntelligenceService();
-        $executor = new FormTestExecutor();
+        $dbTableCounts = ! empty($options['db_counts']) ? $this->safeTableCounts() : [];
+        $intelligence  = new FormIntelligenceService();
+        $executor      = new FormTestExecutor();
 
-        $forms = [];
+        $corpus = $this->referenceCorpus();
+
+        $entries = [];
         foreach ($formFiles as $file) {
-            $html = (string) @file_get_contents($file);
-            $analysis = $intelligence->analyze(['type' => 'file', 'value' => $file]);
+            $rel = $this->relative($file);
+            $referenced = $this->isViewReferenced($rel, $corpus);
+            foreach ($intelligence->inventory((string) @file_get_contents($file), $rel) as $entry) {
+                $entry['view_referenced'] = $referenced;
+                $entry['seed_readiness'] = $dbTableCounts === []
+                    ? ['note' => 'DB counts not requested (--with-db-counts).']
+                    : $this->reviewSeedReadiness($file, $entry, $dbTableCounts);
 
-            $tableReview = $this->reviewSeedReadiness($file, $analysis, $dbTableCounts);
-            $submission = [
-                'executed' => false,
-                'reason' => 'Dry-run or submit disabled.',
-            ];
-
-            if ($submitEnabled && ($analysis['ok'] ?? false)) {
-                $execution = $executor->execute($analysis);
-                $submission = [
-                    'executed' => true,
-                    'test_id' => $execution['test_id'] ?? null,
-                    'error_detected' => (bool) ($execution['error_detected'] ?? false),
-                    'status' => $execution['submit']['status'] ?? null,
-                    'final_url' => $execution['submit']['final_url'] ?? null,
-                ];
+                $entry['submission'] = ['executed' => false, 'status' => 'SKIPPED', 'reason' => $live ? 'not_selected' : 'dry_run'];
+                if ($live && $entry['kind'] === 'form' && $entry['status'] === FormIntelligenceService::STATUS_PASS) {
+                    $execution = $executor->execute(['ok' => true, 'source' => ['type' => 'file', 'value' => $rel], 'forms' => [$entry]], ['policy' => $policy]);
+                    $entry['submission'] = [
+                        'executed'       => ($execution['test_id'] ?? null) !== null,
+                        'status'         => ($execution['error_detected'] ?? false) ? 'FAIL' : (($execution['ok'] ?? false) ? 'PASS' : ($execution['status'] ?? 'BLOCKED')),
+                        'test_id'        => $execution['test_id'] ?? null,
+                        'http_status'    => $execution['submit']['status'] ?? null,
+                    ];
+                }
+                $entries[] = $entry;
             }
-
-            $forms[] = [
-                'file' => $file,
-                'contains_form' => str_contains(strtolower($html), '<form'),
-                'analysis_ok' => (bool) ($analysis['ok'] ?? false),
-                'form' => $analysis['form'] ?? null,
-                'route' => $analysis['route'] ?? null,
-                'seed_readiness' => $tableReview,
-                'seeder_recommendation' => $this->recommendSeeder($tableReview),
-                'submission' => $submission,
-            ];
         }
 
         $report = [
-            'generated_at_utc' => gmdate('Y-m-d H:i:s'),
-            'options' => [
-                'dry_run' => $dryRun,
-                'submit' => $submitEnabled,
-                'limit' => $limit,
+            'schema'           => 'mymi.form-inventory.v1',
+            'generated_at_utc' => gmdate('Y-m-d\TH:i:s\Z'),
+            'source_sha'       => $this->sourceSha(),
+            'options'          => [
+                'dry_run'   => $dryRun,
+                'live'      => $live,
+                'policy'    => $policy['reason'] ?? null,
+                'db_counts' => $dbTableCounts !== [],
+                'limit'     => $limit,
             ],
-            'seeder' => $seederResult,
-            'summary' => $this->buildSummary($forms, $formFiles),
-            'forms' => $forms,
+            'seeder'  => $seederResult,
+            'summary' => $this->buildSummary($entries, $formFiles),
+            'forms'   => $entries,
         ];
 
-        $reportFiles = $this->writeReports($report);
-        $report['report_files'] = $reportFiles;
+        if (($options['write_reports'] ?? true) !== false) {
+            $report['report_files'] = $this->writeReports($report, $options['report_dir'] ?? null);
+        }
 
         return $report;
     }
 
+    /**
+     * FAIL entries as stable baseline lines (no line numbers):
+     * file <TAB> kind <TAB> METHOD <TAB> action <TAB> reason
+     *
+     * @return list<string>
+     */
+    public static function gapLines(array $entries): array
+    {
+        $lines = [];
+        foreach ($entries as $e) {
+            if (($e['status'] ?? '') === FormIntelligenceService::STATUS_FAIL) {
+                $lines[] = implode("\t", [$e['file'], $e['kind'], $e['method'], $e['action'], $e['reason']]);
+            }
+        }
+        $lines = array_values(array_unique($lines));
+        sort($lines, SORT_STRING);
+
+        return $lines;
+    }
+
+    /**
+     * All PHP under app/ keyed by relative path, used to tell whether a view
+     * is rendered or included anywhere (UNREACHABLE when it is not).
+     *
+     * @return array<string, string>
+     */
+    private function referenceCorpus(): array
+    {
+        $out = [];
+        $it  = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(APPPATH, \FilesystemIterator::SKIP_DOTS));
+        foreach ($it as $f) {
+            if ($f->isFile() && str_ends_with($f->getFilename(), '.php')) {
+                $out[$this->relative($f->getPathname())] = (string) @file_get_contents($f->getPathname());
+            }
+        }
+
+        return $out;
+    }
+
+    /**
+     * Heuristic: the view's last two path segments (without .php), e.g.
+     * "<Folder>/<View>", appear in another PHP file as a view name.
+     * Null when the file is not under a Views directory.
+     */
+    private function isViewReferenced(string $rel, array $corpus): ?bool
+    {
+        if (! preg_match('#/Views/(.+)\.(php|html)$#', $rel, $m)) {
+            return null;
+        }
+        $parts = explode('/', $m[1]);
+        $tail  = array_slice($parts, -2);
+        $name  = end($parts);
+        $re    = '#' . implode('[\\\\/]+', array_map(static fn ($p) => preg_quote($p, '#'), $tail)) . '(?:\.php)?(?![\w\\\\/-])#';
+
+        foreach ($corpus as $path => $code) {
+            if ($path === $rel || ! str_contains($code, $name)) {
+                continue;
+            }
+            if (preg_match($re, $code) === 1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function relative(string $file): string
+    {
+        $root = rtrim(realpath(ROOTPATH) ?: ROOTPATH, '/') . '/';
+        $real = realpath($file) ?: $file;
+
+        return str_starts_with($real, $root) ? substr($real, strlen($root)) : $real;
+    }
+
+    private function sourceSha(): ?string
+    {
+        $head = ROOTPATH . '.git/HEAD';
+        if (! is_file($head)) {
+            return null;
+        }
+        $ref = trim((string) @file_get_contents($head));
+        if (str_starts_with($ref, 'ref: ')) {
+            $refFile = ROOTPATH . '.git/' . substr($ref, 5);
+
+            return is_file($refFile) ? trim((string) @file_get_contents($refFile)) : null;
+        }
+
+        return $ref !== '' ? $ref : null;
+    }
+
+    /** $dryRun is true unless a live, policy-approved run was requested. */
     private function maybeRunSeeder($seederInput, bool $dryRun): array
     {
         if (! is_string($seederInput) || trim($seederInput) === '') {
@@ -179,7 +284,7 @@ class FormDebugSeederAuditService
                 }
 
                 $content = (string) @file_get_contents($path);
-                if ($content !== '' && preg_match('/<form\b/i', $content) === 1) {
+                if ($content !== '' && preg_match('/<form\b|form_open(_multipart)?\(|\bfetch\(|\$\.(ajax|post|get)\(|\baxios\./i', $content) === 1) {
                     $files[] = $path;
                 }
             }
@@ -213,9 +318,11 @@ class FormDebugSeederAuditService
 
     private function reviewSeedReadiness(string $file, array $analysis, array $tableCounts): array
     {
-        $form = (array) ($analysis['form'] ?? []);
-        $action = strtolower((string) ($form['action'] ?? ''));
-        $inputs = array_map(static fn($v) => strtolower((string) $v), (array) ($form['inputs'] ?? []));
+        $action = strtolower((string) ($analysis['action'] ?? ''));
+        $inputs = array_map(
+            static fn ($v) => strtolower(is_array($v) ? (string) ($v['name'] ?? '') : (string) $v),
+            (array) ($analysis['inputs'] ?? [])
+        );
 
         $tokens = array_filter(array_unique(array_merge(
             preg_split('/[^a-z0-9]+/i', basename($file)) ?: [],
@@ -284,92 +391,92 @@ class FormDebugSeederAuditService
         ];
     }
 
-    private function buildSummary(array $forms, array $formFiles): array
+    private function buildSummary(array $entries, array $formFiles): array
     {
+        $byStatus = ['PASS' => 0, 'FAIL' => 0, 'BLOCKED' => 0, 'SKIPPED' => 0];
+        $byReason = [];
+        $byKind   = [];
+        $unreferencedFails = 0;
+        $unreferencedFiles = [];
+        $submitted = 0;
         $withGaps = 0;
-        $executed = 0;
 
-        foreach ($forms as $form) {
-            $missing = (array) ($form['seed_readiness']['missing_seed_tables'] ?? []);
-            if (! empty($missing)) {
+        foreach ($entries as $e) {
+            $byStatus[$e['status']] = ($byStatus[$e['status']] ?? 0) + 1;
+            $byReason[$e['reason']] = ($byReason[$e['reason']] ?? 0) + 1;
+            $byKind[$e['kind']]     = ($byKind[$e['kind']] ?? 0) + 1;
+            if (($e['view_referenced'] ?? null) === false) {
+                $unreferencedFiles[$e['file']] = true;
+                if ($e['status'] === FormIntelligenceService::STATUS_FAIL) {
+                    $unreferencedFails++;
+                }
+            }
+            if (($e['submission']['executed'] ?? false) === true) {
+                $submitted++;
+            }
+            if (! empty($e['seed_readiness']['missing_seed_tables'])) {
                 $withGaps++;
             }
-
-            if (($form['submission']['executed'] ?? false) === true) {
-                $executed++;
-            }
         }
+        ksort($byReason);
+        ksort($byKind);
 
         return [
-            'forms_discovered' => count($formFiles),
-            'forms_analyzed' => count($forms),
+            'files_scanned'        => count($formFiles),
+            'entries'              => count($entries),
+            'forms_discovered'     => $byKind['form'] ?? 0,
+            'js_requests'          => $byKind['js'] ?? 0,
+            'forms_analyzed'       => count($entries),
             'forms_with_data_gaps' => $withGaps,
-            'forms_submitted' => $executed,
+            'forms_submitted'      => $submitted,
+            'by_status'            => $byStatus,
+            'unreferenced_view_files' => count($unreferencedFiles),
+            'fails_in_unreferenced_views' => $unreferencedFails,
+            'by_reason'            => $byReason,
         ];
     }
 
-    private function writeReports(array $report): array
+    private function writeReports(array $report, ?string $override = null): array
     {
+        $dir = FormSubmissionPolicy::reportDir($override);
+        if (! is_dir($dir) && ! @mkdir($dir, 0775, true) && ! is_dir($dir)) {
+            return ['error' => 'Could not create report directory: ' . $dir];
+        }
+
         $stamp = gmdate('Ymd_His');
+        $json  = $dir . '/form-inventory-' . $stamp . '.json';
+        $md    = $dir . '/form-inventory-' . $stamp . '.md';
 
-        $docsDir = ROOTPATH . 'docs/_aiops/form-tests';
-        $writableDir = WRITEPATH . 'aiops/form-tests';
+        @file_put_contents($json, json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        @file_put_contents($md, $this->toMarkdown($report));
 
-        if (! is_dir($docsDir)) {
-            @mkdir($docsDir, 0775, true);
-        }
-
-        if (! is_dir($writableDir)) {
-            @mkdir($writableDir, 0775, true);
-        }
-
-        $docsMd = $docsDir . '/form-debug-seeder-audit-' . $stamp . '.md';
-        $writableJson = $writableDir . '/form-debug-seeder-audit-' . $stamp . '.json';
-
-        @file_put_contents($docsMd, $this->toMarkdown($report));
-        @file_put_contents($writableJson, json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-
-        return [
-            'docs_markdown' => $docsMd,
-            'writable_json' => $writableJson,
-        ];
+        return ['json' => $json, 'markdown' => $md];
     }
 
     private function toMarkdown(array $report): string
     {
         $summary = $report['summary'] ?? [];
-        $forms = $report['forms'] ?? [];
-        $seeder = $report['seeder'] ?? [];
-
-        $lines = [];
-        $lines[] = '# Form Debug + Seeder Audit Report';
+        $lines = [
+            '# Form inventory report',
+            '',
+            '- Generated (UTC): ' . ($report['generated_at_utc'] ?? ''),
+            '- Source SHA: ' . ($report['source_sha'] ?? 'unknown'),
+            '- Live submissions: ' . (! empty($report['options']['live']) ? 'yes' : 'no') . ' (policy: ' . ($report['options']['policy'] ?? '') . ')',
+            '- Files scanned: ' . ($summary['files_scanned'] ?? 0) . '; forms: ' . ($summary['forms_discovered'] ?? 0) . '; JS requests: ' . ($summary['js_requests'] ?? 0),
+            '',
+            '| Status | Count |',
+            '|---|---|',
+        ];
+        foreach ((array) ($summary['by_status'] ?? []) as $status => $n) {
+            $lines[] = '| ' . $status . ' | ' . $n . ' |';
+        }
         $lines[] = '';
-        $lines[] = '- Generated (UTC): ' . ($report['generated_at_utc'] ?? '');
-        $lines[] = '- Dry Run: ' . (! empty($report['options']['dry_run']) ? 'yes' : 'no');
-        $lines[] = '- Submission Enabled: ' . (! empty($report['options']['submit']) ? 'yes' : 'no');
-        $lines[] = '- Seeder Note: ' . ($seeder['note'] ?? '');
-        $lines[] = '';
-        $lines[] = '## Summary';
-        $lines[] = '';
-        $lines[] = '- Forms discovered: ' . (string) ($summary['forms_discovered'] ?? 0);
-        $lines[] = '- Forms analyzed: ' . (string) ($summary['forms_analyzed'] ?? 0);
-        $lines[] = '- Forms with data gaps: ' . (string) ($summary['forms_with_data_gaps'] ?? 0);
-        $lines[] = '- Forms submitted: ' . (string) ($summary['forms_submitted'] ?? 0);
-        $lines[] = '';
-        $lines[] = '## Form Review';
-        $lines[] = '';
-
-        foreach ($forms as $index => $form) {
-            $lines[] = '### ' . ($index + 1) . '. ' . (($form['file'] ?? 'unknown'));
-            $lines[] = '- Analysis OK: ' . (($form['analysis_ok'] ?? false) ? 'yes' : 'no');
-            $lines[] = '- Action: ' . (($form['form']['action'] ?? '(none)'));
-            $lines[] = '- Method: ' . (($form['form']['method'] ?? '(none)'));
-            $lines[] = '- Inputs: ' . implode(', ', (array) ($form['form']['inputs'] ?? []));
-            $lines[] = '- Seed Note: ' . (($form['seed_readiness']['note'] ?? ''));
-            $lines[] = '- Missing Seed Tables: ' . implode(', ', (array) ($form['seed_readiness']['missing_seed_tables'] ?? []));
-            $lines[] = '- Seeder Recommendation: ' . (($form['seeder_recommendation']['recommendation'] ?? ''));
-            $lines[] = '- Submission: ' . (! empty($form['submission']['executed']) ? 'executed' : 'not executed');
-            $lines[] = '';
+        $lines[] = '| Key | Status | Reason | Kind | Method | Action | Source |';
+        $lines[] = '|---|---|---|---|---|---|---|';
+        foreach ((array) ($report['forms'] ?? []) as $e) {
+            $lines[] = sprintf('| %s | %s | %s | %s | %s | `%s` | %s:%d |',
+                $e['key'], $e['status'], $e['reason'], $e['kind'], $e['method'],
+                str_replace('|', '\|', (string) $e['action']), $e['file'], $e['line']);
         }
 
         return implode("\n", $lines) . "\n";

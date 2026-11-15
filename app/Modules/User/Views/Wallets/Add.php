@@ -168,7 +168,7 @@ if ($accountType === 'addBankAccount') {
 	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div> 
 <div class="modal-body">
-    <form class="form-horizontal" id="add_user_wallet" action="<?= site_url('API/Wallets/Add') ?>" method="POST">
+    <form class="form-horizontal" id="add_user_wallet" action="<?= site_url('Wallets/Add') ?>" method="POST">
         <?= csrf_field() ?>
 
 		<fieldset>

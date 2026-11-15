@@ -14,6 +14,8 @@
         <testsuite name="unit">
             <directory suffix="Test.php">tests/unit</directory>
             <directory suffix="Test.php">tests/feature</directory>
+            <!-- Mutation guard matrix (#709) sat outside every suite, so CI never ran it. -->
+            <directory suffix="Test.php">tests/app/Security</directory>
         </testsuite>
         <testsuite name="auth-smoke">
             <directory suffix="Test.php">tests/app/Auth</directory>

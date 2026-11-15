@@ -12,6 +12,7 @@ use App\Services\{
     MarketingService,
     SolanaService,
     TransactionService,
+    WalletBalanceService,
     WalletService,
     WalletSummaryCalculator
 };
@@ -264,7 +265,7 @@ class WalletsController extends BaseUserController
             'status'     => $status,
             'active'     => $active,
             'beta'       => $beta,
-            'user_id'    => (int) ($post['user_id'] ?? $this->currentWalletUserId()),
+            'user_id'    => $this->currentWalletUserId(), // never a posted user_id (IDOR)
             'user_email' => (string) ($post['user_email'] ?? ''),
             'username'   => (string) ($post['username'] ?? ''),
             'updated_on' => $now,
@@ -991,7 +992,8 @@ class WalletsController extends BaseUserController
                     'status'     => 1,
                     'active'     => in_array($post['active'] ?? '1', ['1', 1, true, 'true', 'on', 'Yes', 'yes'], true) ? 1 : 0,
                     'beta'       => in_array($post['beta'] ?? '0', ['1', 1, true, 'true', 'on', 'Yes', 'yes'], true) ? 1 : 0,
-                    'user_id'    => (int) ($post['user_id'] ?? $this->currentWalletUserId()),
+                    // Never trust a posted user_id: a wallet is always created for the signed-in user (IDOR).
+                    'user_id'    => $this->currentWalletUserId(),
                     'user_email' => (string) ($post['user_email'] ?? ''),
                     'username'   => (string) ($post['username'] ?? ''),
                 ];
@@ -1686,50 +1688,65 @@ class WalletsController extends BaseUserController
 
     public function deposit(): ResponseInterface|string
     {
-        if ($blocked = $this->guardWalletFeature()) {
-            return $blocked;
-        }
-
-        $amount   = (float) $this->request->getPost('amount');
-        $walletID = (int) $this->request->getPost('wallet_id');
-        $currency = (string) ($this->request->getPost('currency') ?? 'USD');
-
-        try {
-            $convertedAmount = $this->currencyService->convert($amount, $currency, 'USD');
-            $transactionID = $this->transactionService->logTransaction('Deposit', $walletID, $this->currentWalletUserId(), $convertedAmount);
-
-            $this->resolveWalletService()->depositFunds($walletID, $convertedAmount);
-            $this->transactionService->completeDeposit($transactionID);
-            $this->invalidateWalletCache($this->currentWalletUserId());
-
-            return redirect()->to('/Wallets')->with('message', 'Deposit successful.');
-        } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Error during deposit: ' . $e->getMessage());
-        }
+        return $this->applyBalanceChange(WalletBalanceService::TYPE_DEPOSIT);
     }
 
     public function withdraw(): ResponseInterface|string
+    {
+        return $this->applyBalanceChange(WalletBalanceService::TYPE_WITHDRAWAL);
+    }
+
+    /**
+     * MYMI-GT-FORM-LEDGER-001: deposit/withdraw form handler.
+     *
+     * Previously these handlers called TransactionService with the wrong
+     * number of arguments (fatal on every request), never checked that the
+     * wallet belonged to the user, ignored a failed balance update and still
+     * reported success. Now: POST only, USD only, owner-scoped and atomic via
+     * WalletBalanceService; the optional request_id field makes it idempotent.
+     */
+    private function applyBalanceChange(string $type): ResponseInterface|string
     {
         if ($blocked = $this->guardWalletFeature()) {
             return $blocked;
         }
 
-        $amount   = (float) $this->request->getPost('amount');
-        $walletID = (int) $this->request->getPost('wallet_id');
-        $currency = (string) ($this->request->getPost('currency') ?? 'USD');
+        $label = $type === WalletBalanceService::TYPE_DEPOSIT ? 'Deposit' : 'Withdrawal';
 
-        try {
-            $convertedAmount = $this->currencyService->convert($amount, $currency, 'USD');
-            $transactionID = $this->transactionService->logTransaction('Withdrawal', $walletID, $this->currentWalletUserId(), $convertedAmount);
-
-            $this->resolveWalletService()->withdrawFunds($walletID, $convertedAmount);
-            $this->transactionService->completeDeposit($transactionID);
-            $this->invalidateWalletCache($this->currentWalletUserId());
-
-            return redirect()->to('/Wallets')->with('message', 'Withdrawal successful.');
-        } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Error during withdrawal: ' . $e->getMessage());
+        if (strtolower($this->request->getMethod()) !== 'post') {
+            return redirect()->to('/Wallets')->with('error', $label . ' must be submitted from the wallet form.');
         }
+
+        $currency = strtoupper(trim((string) ($this->request->getPost('currency') ?? 'USD')));
+        if ($currency !== 'USD') {
+            return redirect()->back()->with('error', $label . ' failed: only USD is supported.');
+        }
+
+        $userId    = $this->currentWalletUserId();
+        $walletId  = (int) $this->request->getPost('wallet_id');
+        $amount    = $this->request->getPost('amount');
+        $requestId = substr(trim((string) ($this->request->getPost('request_id') ?? '')), 0, 64);
+
+        $service = new WalletBalanceService();
+        $result  = $type === WalletBalanceService::TYPE_DEPOSIT
+            ? $service->deposit($userId, $walletId, $amount, $requestId)
+            : $service->withdraw($userId, $walletId, $amount, $requestId);
+
+        if ($result['ok']) {
+            $this->invalidateWalletCache($userId);
+
+            return redirect()->to('/Wallets')->with('message', $label . ' successful.');
+        }
+
+        $messages = [
+            'unauthenticated'   => 'Please sign in again.',
+            'wallet_not_found'  => 'That wallet was not found.',
+            'invalid_amount'    => 'Enter an amount greater than zero.',
+            'insufficient_funds' => 'The wallet balance is too low for this withdrawal.',
+            'duplicate_request' => 'This request was already processed.',
+        ];
+
+        return redirect()->back()->with('error', $label . ' failed: ' . ($messages[$result['reason']] ?? 'please try again later.'));
     }
 
     public function exchangeCurrency(): ResponseInterface|string
@@ -1738,23 +1755,9 @@ class WalletsController extends BaseUserController
             return $blocked;
         }
 
-        $fromWalletID = (int) $this->request->getPost('from_wallet_id');
-        $toWalletID   = (int) $this->request->getPost('to_wallet_id');
-        $amount       = (float) $this->request->getPost('amount');
-        $fromCurrency = (string) $this->request->getPost('from_currency');
-        $toCurrency   = (string) $this->request->getPost('to_currency');
-
-        try {
-            $convertedAmount = $this->currencyService->convert($amount, $fromCurrency, $toCurrency);
-
-            $this->transactionService->logTransaction('Exchange', $fromWalletID, $this->currentWalletUserId(), $convertedAmount);
-            $this->resolveWalletService()->exchangeFunds($fromWalletID, $toWalletID, $convertedAmount);
-            $this->invalidateWalletCache($this->currentWalletUserId());
-
-            return redirect()->to('/Wallets')->with('message', 'Currency exchanged successfully.');
-        } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Error during currency exchange: ' . $e->getMessage());
-        }
+        // WalletService::exchangeFunds() does not exist, so this handler was a
+        // fatal error on every call. Refuse explicitly until it is built.
+        return redirect()->to('/Wallets')->with('error', 'Currency exchange is not available yet.');
     }
 
     public function details($accountID = null): ResponseInterface|string
