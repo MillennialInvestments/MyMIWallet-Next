@@ -50,12 +50,30 @@ class Tax extends BaseController
         $templateId = (int) ($this->request->getPost('template_id') ?? $this->request->getGet('template_id') ?? 0);
         $templateId = $templateId ?: (int) ($this->taxTemplateModel->getActiveTemplates()[0]['id'] ?? 0);
 
-        $periodStart = $this->request->getPost('period_start') ?? date('Y-m-01');
-        $periodEnd   = $this->request->getPost('period_end') ?? (new DateTime($periodStart))->add(new DateInterval('P1M'))->sub(new DateInterval('P1D'))->format('Y-m-d');
+        if ($templateId <= 0 || ! $this->taxTemplateModel->find($templateId)) {
+            return redirect()->to('/Tax')->with('error', 'Pick a tax form template first.');
+        }
+
+        // A bad date used to reach new DateTime() and end in a 500.
+        $periodStart = self::validDate($this->request->getPost('period_start')) ?? date('Y-m-01');
+        $periodEnd   = self::validDate($this->request->getPost('period_end'))
+            ?? (new DateTime($periodStart))->add(new DateInterval('P1M'))->sub(new DateInterval('P1D'))->format('Y-m-d');
+        if ($periodEnd < $periodStart) {
+            return redirect()->to('/Tax')->with('error', 'The period end must be on or after the start.');
+        }
 
         $returnId = $this->taxReturnModel->createReturn($this->currentUserId, $templateId, $periodStart, $periodEnd);
 
         return redirect()->to("/Tax/edit/{$returnId}")->with('message', 'Return created. Start entering your lines.');
+    }
+
+    /** Y-m-d date or null. */
+    public static function validDate($value): ?string
+    {
+        $value = is_scalar($value) ? trim((string) $value) : '';
+        $d = DateTime::createFromFormat('!Y-m-d', $value);
+
+        return ($d !== false && $d->format('Y-m-d') === $value) ? $value : null;
     }
 
     public function edit(int $id)
