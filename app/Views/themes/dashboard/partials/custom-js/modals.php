@@ -15,6 +15,31 @@ $subViewData = is_array($subViewData ?? null) ? $subViewData : [];
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.nk-wrap .modal, .nk-app-root .modal').forEach(lift);
     });
+
+    // Safety net: never leave the page under an overlay with no visible modal.
+    function sweep() {
+        var open = Array.prototype.some.call(document.querySelectorAll('.modal'), function (m) {
+            return m.classList.contains('show') && getComputedStyle(m).opacity !== '0';
+        });
+        if (open) {
+            return;
+        }
+        document.querySelectorAll('.modal').forEach(function (m) {
+            if (m.style.display === 'block' && !m.classList.contains('show')) {
+                m.style.display = 'none';
+                m.setAttribute('aria-hidden', 'true');
+            }
+        });
+        document.querySelectorAll('.modal-backdrop').forEach(function (b) { b.remove(); });
+        document.body.classList.remove('modal-open');
+        document.body.style.removeProperty('overflow');
+        document.body.style.removeProperty('padding-right');
+    }
+    window.addEventListener('load', function () {
+        setTimeout(sweep, 1500);
+        setTimeout(sweep, 4000);
+    });
+    document.addEventListener('hidden.bs.modal', function () { setTimeout(sweep, 50); });
 })();
 </script>
 <?php
