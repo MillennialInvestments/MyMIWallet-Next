@@ -239,7 +239,7 @@ $(document).on('click', '.ban-user-btn', function (e) {
 
     if (confirm('Are you sure you want to ban this user?')) {
         $.ajax({
-            url: '/index.php/Management/Users/ajaxBlockUser',
+            url: '<?= site_url('Management/Users/ajaxBlockUser') ?>',
             method: 'POST',
             data: { user_id: userID },
             success: function (response) {

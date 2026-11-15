@@ -5,14 +5,14 @@ $premium_wallet_cost            = $this->config->item('wallet_cost');
 if ($walletType === 'Fiat') {
     $walletLink                 = 'Add-Wallet/Free/Fiat';
     if ($premium_wallet_cost > $MyMIGoldCoinSum) {
-        $automatedWalletLink    = 'User/Wallets/Purchase_Gold';
+        $automatedWalletLink    = 'Wallets/Purchase/MyMI-Gold';
     } elseif ($premium_wallet_cost < $MyMIGoldCoinSum) {
         $automatedWalletLink    = 'Purchase-Wallet/Fiat';
     }
 } elseif ($walletType === 'Digital') {
     $walletLink                 = 'Add-Wallet/Free/Digital';
     if ($premium_wallet_cost > $MyMIGoldCoinSum) {
-        $automatedWalletLink    = 'User/Wallets/Purchase_Gold';
+        $automatedWalletLink    = 'Wallets/Purchase/MyMI-Gold';
     } elseif ($premium_wallet_cost < $MyMIGoldCoinSum) {
         $automatedWalletLink    = 'Purchase-Wallet/Digital';
     }

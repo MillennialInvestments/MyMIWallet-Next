@@ -76,7 +76,7 @@ class InstitutesController extends BaseUserController
 
     public function register()
     {
-        if ($this->request->getMethod() == 'post') {
+        if (strtolower($this->request->getMethod()) == 'post') {
             $instituteData = [
                 'user_id' => $this->request->getPost('user_id'),
                 'name' => $this->request->getPost('name'),
@@ -108,7 +108,7 @@ class InstitutesController extends BaseUserController
 
     public function edit($id)
     {
-        if ($this->request->getMethod() == 'post') {
+        if (strtolower($this->request->getMethod()) == 'post') {
             $instituteData = [
                 'name' => $this->request->getPost('name'),
                 'specialty' => $this->request->getPost('specialty'),

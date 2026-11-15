@@ -127,6 +127,41 @@
             </div>
         </div>
 
+        <!-- GT-FORM-ROUTES-001: retirement goals form (the save script existed, the form did not). -->
+        <?php $g = $retirementGoals ?? []; $gv = static fn (string $k) => esc((string) ($g[$k] ?? ''), 'attr'); ?>
+        <div class="col-md-12 col-lg-12">
+            <div class="card card-bordered">
+                <div class="card-inner">
+                    <h6 class="title mb-3">My Retirement Goals</h6>
+                    <form id="retirement-goals-form" method="post" action="<?= esc(site_url('Investments/saveRetirementPlan'), 'attr') ?>">
+                        <?= csrf_field() ?>
+                        <div class="row g-3">
+                            <?php foreach ([
+                                'current_age' => ['Current Age', '1'], 'retirement_age' => ['Retirement Age', '1'],
+                                'current_savings' => ['Current Savings ($)', '0.01'], 'monthly_contribution' => ['Monthly Contribution ($)', '0.01'],
+                                'target_amount' => ['Retirement Target ($)', '0.01'], 'expected_return' => ['Expected Annual Return (%)', '0.1'],
+                            ] as $key => [$label, $step]): ?>
+                            <div class="col-sm-6 col-lg-4">
+                                <label class="form-label" for="rg_<?= $key ?>"><?= esc($label) ?></label>
+                                <input type="number" min="0" step="<?= $step ?>" class="form-control" id="rg_<?= $key ?>" name="<?= $key ?>" value="<?= $gv($key) ?>">
+                            </div>
+                            <?php endforeach; ?>
+                            <div class="col-sm-6 col-lg-4">
+                                <label class="form-label" for="rg_risk_profile">Risk Profile</label>
+                                <select class="form-select" id="rg_risk_profile" name="risk_profile">
+                                    <?php foreach (['' => 'Select', 'conservative' => 'Conservative', 'moderate' => 'Moderate', 'aggressive' => 'Aggressive'] as $val => $text): ?>
+                                        <option value="<?= $val ?>"<?= ($g['risk_profile'] ?? '') === $val ? ' selected' : '' ?>><?= $text ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">Save Goals</button>
+                        <div id="retirement-goals-result" class="mt-2" role="status" aria-live="polite"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <!-- Message Section -->
         <!-- <div class="col-md-12 col-lg-4">
             <div class="card card-bordered">
@@ -159,29 +194,24 @@
 
 
 <script <?= $nonce['script'] ?? '' ?>>
-    document.getElementById('retirement-goals-form').addEventListener('submit', function(event) {
+    document.getElementById('retirement-goals-form')?.addEventListener('submit', function (event) {
         event.preventDefault();
-        const formData = new FormData(this);
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        fetch('<?= site_url('/Investments/saveRetirementPlan') ?>', {
+        const out = document.getElementById('retirement-goals-result');
+        const payload = Object.fromEntries(new FormData(this).entries());
+        fetch(this.action, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                "X-CSRF-TOKEN": csrfToken, // Include the CSRF token in the headers
-            },
-            body: formData
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+            credentials: 'same-origin',
+            body: JSON.stringify(payload),
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Retirement goals saved successfully!');
-                location.reload();
-            } else {
-                alert('Failed to save goals: ' + data.message);
-            }
+        .then((r) => r.json().then((data) => ({ ok: r.ok, data })))
+        .then(({ ok, data }) => {
+            out.className = 'mt-2 alert ' + (ok ? 'alert-success' : 'alert-danger');
+            out.textContent = data.message || (ok ? 'Saved.' : 'Could not save.');
         })
-        .catch(error => {
-            console.error('Error saving retirement goals:', error);
+        .catch(() => {
+            out.className = 'mt-2 alert alert-danger';
+            out.textContent = 'Network error. Please try again.';
         });
     });
 </script>

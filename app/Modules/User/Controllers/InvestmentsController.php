@@ -663,7 +663,7 @@ class InvestmentsController extends BaseUserController
         $this->data['pageTitle'] = 'Edit Trade | MyMI Wallet | The Future of Finance';
         $this->data['trade'] = $this->investmentModel->getTradeById($tradeId);
         
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             $updateData = $this->request->getPost();
             $this->investmentModel->updateTrade($tradeId, $updateData);
             $userId = (int) ($trade['user_id'] ?? ($updateData['user_id'] ?? 0));
@@ -700,6 +700,7 @@ class InvestmentsController extends BaseUserController
     
         // Pass other data as needed
         $this->commonData(); // Ensure other necessary data is prepared
+        $this->data['retirementGoals'] = (new \App\Services\Forms\UserPreferenceService())->get((int) ($cuID ?? 0), 'investments.retirement_goals');
     
         return $this->renderTheme('App\Modules\User\Views\Investments\retirement', $this->data);
     }   
@@ -1022,7 +1023,7 @@ class InvestmentsController extends BaseUserController
 
     private function validateSaveRequest()
     {
-        if (!$this->request->isAJAX() || $this->request->getMethod() !== 'post') {
+        if (!$this->request->isAJAX() || strtolower($this->request->getMethod()) !== 'post') {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('This action is not allowed');
         }
     }
@@ -1166,6 +1167,111 @@ class InvestmentsController extends BaseUserController
                 $sheet->fromArray($data);
             });
         }, $filename);
+    }
+
+    // ---------------------------------------------------------------------
+    // GT-FORM-ROUTES-001: retirement goals and economic data (FRED) endpoints.
+    // ---------------------------------------------------------------------
+
+    /** Fields of the retirement goals form, with their default values. */
+    public const RETIREMENT_GOAL_FIELDS = [
+        'current_age' => 0, 'retirement_age' => 0, 'current_savings' => 0, 'monthly_contribution' => 0,
+        'target_amount' => 0, 'expected_return' => 0, 'risk_profile' => '',
+    ];
+
+    /** POST Investments/saveRetirementPlan: saves the user's retirement goals. */
+    public function saveRetirementPlan()
+    {
+        $userId = (int) ($this->cuID ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Please sign in.']);
+        }
+        $json = $this->request->getJSON(true);
+        $input = is_array($json) ? $json : (array) $this->request->getPost();
+        $goals = \App\Services\Forms\UserPreferenceService::shape(self::RETIREMENT_GOAL_FIELDS, $input);
+        if ($goals['retirement_age'] > 0 && $goals['current_age'] > 0 && $goals['retirement_age'] <= $goals['current_age']) {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => 'Retirement age must be after your current age.']);
+        }
+        $goals['saved_at'] = date('c');
+
+        $ok = (new \App\Services\Forms\UserPreferenceService())->put($userId, 'investments.retirement_goals', $goals);
+
+        return $this->response->setStatusCode($ok ? 200 : 503)->setJSON($ok
+            ? ['status' => 'success', 'message' => 'Retirement goals saved.', 'goals' => $goals]
+            : ['status' => 'error', 'message' => 'Retirement goals could not be saved yet.']);
+    }
+
+    /** GET Investments/fetchEconomicData?seriesId=GDP: latest observations from FRED (read only). */
+    public function fetchEconomicData()
+    {
+        $series = strtoupper(trim((string) $this->request->getGet('seriesId')));
+        if (! preg_match('/^[A-Z0-9_]{1,40}$/', $series)) {
+            return $this->response->setStatusCode(422)->setJSON(['error' => 'Invalid series id.']);
+        }
+        $cacheKey = 'fred_obs_' . $series;
+        $rows = cache($cacheKey);
+        if (! is_array($rows)) {
+            try {
+                $rows = (new \App\Libraries\FRED())->fetchData($series);
+            } catch (\Throwable $e) {
+                log_message('error', 'fetchEconomicData failed: {m}', ['m' => $e->getMessage()]);
+                $rows = [];
+            }
+            $rows = array_slice(is_array($rows) ? $rows : [], -120);
+            cache()->save($cacheKey, $rows, 3600);
+        }
+        $liked = (new \App\Services\Forms\UserPreferenceService())->get((int) ($this->cuID ?? 0), 'investments.economic_likes');
+
+        return $this->response->setJSON(array_map(static fn ($r) => [
+            'id'    => $series,
+            'date'  => (string) ($r['date'] ?? ''),
+            'value' => (string) ($r['value'] ?? ''),
+            'liked' => in_array($series, (array) ($liked['series'] ?? []), true),
+        ], array_reverse($rows)));
+    }
+
+    /** GET Investments/searchEconomicData?searchText=inflation: FRED series search (read only). */
+    public function searchEconomicData()
+    {
+        $text = mb_substr(trim(strip_tags((string) $this->request->getGet('searchText'))), 0, 80);
+        if (mb_strlen($text) < 2) {
+            return $this->response->setJSON([]);
+        }
+        try {
+            $result = (new \App\Libraries\FRED())->searchSeries($text);
+        } catch (\Throwable $e) {
+            log_message('error', 'searchEconomicData failed: {m}', ['m' => $e->getMessage()]);
+            $result = [];
+        }
+        $series = array_slice((array) ($result['seriess'] ?? []), 0, 20);
+
+        return $this->response->setJSON(array_map(static fn ($s) => [
+            'id'    => (string) ($s['id'] ?? ''),
+            'title' => (string) ($s['title'] ?? ''),
+        ], $series));
+    }
+
+    /** POST Investments/likeEconomicData: toggles a saved ("liked") FRED series for the user. */
+    public function likeEconomicData()
+    {
+        $userId = (int) ($this->cuID ?? 0);
+        $series = strtoupper(trim((string) ($this->request->getPost('id') ?? '')));
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'error' => 'Please sign in.']);
+        }
+        if (! preg_match('/^[A-Z0-9_]{1,40}$/', $series)) {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'error' => 'Invalid series id.']);
+        }
+        $prefs = new \App\Services\Forms\UserPreferenceService();
+        $data = $prefs->get($userId, 'investments.economic_likes');
+        $list = array_values(array_filter((array) ($data['series'] ?? []), 'is_string'));
+        $liked = ! in_array($series, $list, true);
+        $list = $liked ? array_slice(array_merge([$series], $list), 0, 100) : array_values(array_diff($list, [$series]));
+        $ok = $prefs->put($userId, 'investments.economic_likes', ['series' => $list]);
+
+        return $this->response->setStatusCode($ok ? 200 : 503)->setJSON($ok
+            ? ['status' => 'success', 'liked' => $liked]
+            : ['status' => 'error', 'error' => 'Could not save yet.']);
     }
 }
 ?>

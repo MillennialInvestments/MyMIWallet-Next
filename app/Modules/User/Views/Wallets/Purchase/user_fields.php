@@ -181,6 +181,10 @@ document.getElementById("gold_coins").addEventListener("input", function() {
     document.querySelector(".transaction-subtotal-label").innerText = formatNumber(totalCoinsReceived, 8) + ' Gold';
 });
 
+<?php if (! (function_exists('feature_enabled') && feature_enabled('FEATURE_MYMIGOLD_PURCHASES'))): ?>
+    // GT-FORM-ROUTES-001: purchases are switched off, so no PayPal button (a captured payment could not be recorded).
+    (function () { var c = document.getElementById('paypal-button-container'); if (c) { c.innerHTML = '<div class="alert alert-info mb-0">Online purchases are not open yet.</div>'; } })();
+<?php else: ?>
 paypal.Buttons({
     createOrder: function(data, actions) {
         var transCost = parseFloat(document.getElementById("transCost").innerText.replace(/,/g, '')) || 0;
@@ -203,10 +207,17 @@ paypal.Buttons({
                 method: 'POST',
                 body: formData,
                 credentials: 'same-origin'
-            }).then(function() {
-                window.location.href = '<?=site_url("/Wallets/Purchase/MyMIGold/Complete")?>';
+            }).then(function(response) {
+                return response.json().catch(function () { return {}; }).then(function (json) {
+                    if (response.status === 200) {
+                        window.location.href = json.redirect || '<?=site_url("Wallets/Purchase/MyMI-Gold/Complete")?>';
+                    } else {
+                        alert(json.message || 'We could not confirm this payment. Please contact support with your PayPal receipt.');
+                    }
+                });
             });
         });
     }
 }).render('#paypal-button-container');
+<?php endif; ?>
 </script>

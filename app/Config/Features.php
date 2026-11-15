@@ -23,6 +23,12 @@ class Features extends BaseConfig
             'FEATURE_WALLETS' => $this->readBool('FEATURE_WALLETS', false),
             'FEATURE_PREDICTIONS' => $this->readBool('FEATURE_PREDICTIONS', false),
             'FEATURE_MARKETING_AUTOMATION' => $this->readBool('FEATURE_MARKETING_AUTOMATION', true),
+            // GT-FORM-ROUTES-001: money, crypto and payment flows. Off until the owner turns each one on.
+            'FEATURE_SOLANA_TRADING' => $this->readBool('FEATURE_SOLANA_TRADING', false),
+            'FEATURE_AUCTIONS' => $this->readBool('FEATURE_AUCTIONS', false),
+            'FEATURE_PROJECT_INVESTING' => $this->readBool('FEATURE_PROJECT_INVESTING', false),
+            'FEATURE_MYMIGOLD_PURCHASES' => $this->readBool('FEATURE_MYMIGOLD_PURCHASES', false),
+            'FEATURE_MEMBERSHIP_PURCHASES' => $this->readBool('FEATURE_MEMBERSHIP_PURCHASES', false),
         ];
     }
 

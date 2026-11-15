@@ -1,7 +1,7 @@
 <?php // /app/Modules/Management/Views/Marketing/Drip/create.php ?>
 <div class="container mt-5">
     <h1 class="mb-4">📤 Create New Drip Campaign</h1>
-    <form method="post" action="<?= site_url('Management/Drip-Campaigns/store') ?>" id="dripCampaignForm">
+    <form method="post" action="<?= site_url('Management/Drip-Campaigns/Create') ?>" id="dripCampaignForm">
 
         <!-- 🎯 Campaign Basics -->
         <div class="row mb-3">
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 <script <?= $nonce['script'] ?? '' ?>>
 function loadTemplatePreview(templateName) {
-    fetch('Management/DripCampaign/previewTemplate', {
+    fetch('<?= site_url('Management/Drip-Campaigns/previewTemplate') ?>', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: 'template=' + encodeURIComponent(templateName)

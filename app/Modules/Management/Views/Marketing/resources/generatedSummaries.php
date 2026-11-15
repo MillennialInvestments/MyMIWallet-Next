@@ -344,7 +344,7 @@ async function refreshGeneratedSummaries() {
     summariesBlock.innerHTML = spinnerHtml;
 
     try {
-        const response = await fetch('<?= site_url("API/Marketing/fetchGeneratedSummariesJson") ?>');
+        const response = await fetch('<?= site_url("Management/Marketing/fetchGeneratedSummariesJson") ?>');
         const data = await response.json();
 
         if (data.status !== 'success') {

@@ -264,7 +264,7 @@ document.getElementById('standaloneScraperForm')?.addEventListener('submit', fun
             document.getElementById('url').value = ''; // Clear the input
 
             // Update summaries block
-            fetch("<?= site_url('API/Marketing/fetchGeneratedSummariesBlock') ?>")
+            fetch("<?= site_url('Management/Marketing/fetchGeneratedSummariesBlock') ?>")
                 .then(res => res.text())
                 .then(html => {
                     document.getElementById('generatedSummariesBlock').innerHTML = html;
@@ -362,7 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <?php if (aiKimiEnabled()): ?>
     document.getElementById('marketingGenerateStoryboard')?.addEventListener('click', async () => {
         try {
-            const response = await fetch('Advisor/generateStoryboard', { method: 'POST' });
+            const response = await fetch('/Advisor/generateStoryboard', { method: 'POST' });
             const json = await response.json();
             const storyboard = json?.content || json?.data?.choices?.[0]?.message?.content || '';
 
@@ -389,13 +389,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     document.getElementById('marketingKimiSummaries')?.addEventListener('click', async () => {
-        const res = await fetch('Marketing/generateKimiSummaries');
+        const res = await fetch('<?= site_url('Management/Marketing/generateKimiSummaries') ?>');
         const json = await res.json();
         showKimiResults(json?.data || json);
     });
 
     document.getElementById('marketingKimiPosts')?.addEventListener('click', async () => {
-        const res = await fetch('Marketing/generateKimiPosts');
+        const res = await fetch('<?= site_url('Management/Marketing/generateKimiPosts') ?>');
         const json = await res.json();
         showKimiResults(json?.data || json);
     });

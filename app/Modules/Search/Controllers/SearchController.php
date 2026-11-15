@@ -29,12 +29,19 @@ class SearchController extends BaseController
             ];
         }, $out['items']);
 
-        // optional: log query for basic analytics (no PII)
-        db_connect()->table('bf_search_logs')->insert([
-            'q'       => mb_substr($q, 0, 200),
-            'user_id' => (int)(session('cuID') ?? 0) ?: null,
-            'results' => (int)$out['total'],
-        ]);
+        // optional: log query for basic analytics (no PII); the table is optional
+        try {
+            $db = db_connect();
+            if ($db->tableExists('bf_search_logs')) {
+                $db->table('bf_search_logs')->insert([
+                    'q'       => mb_substr($q, 0, 200),
+                    'user_id' => (int)(session('cuID') ?? 0) ?: null,
+                    'results' => (int)$out['total'],
+                ]);
+            }
+        } catch (\Throwable $e) {
+            log_message('warning', 'Search log skipped: ' . $e->getMessage());
+        }
 
         return $this->response->setJSON([
             'status' => 'success',

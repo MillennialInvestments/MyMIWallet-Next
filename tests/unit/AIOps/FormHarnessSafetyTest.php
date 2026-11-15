@@ -25,7 +25,9 @@ final class FormHarnessSafetyTest extends TestCase
             ['method' => 'GET', 'route' => 'Budget/Add', 'handler' => '\App\Modules\User\Controllers\BudgetController::addForm'],
             ['method' => 'POST', 'route' => 'Wallets/Edit/([0-9]+)', 'handler' => '\App\Modules\User\Controllers\WalletsController::edit/$1'],
             ['method' => 'GET', 'route' => 'Subscribe/Submit', 'handler' => '\App\Controllers\SubscribeController::submit'],
-            ['method' => 'POST', 'route' => 'API/Notes/save', 'handler' => '\App\Controllers\NotesController::save'],
+            ['method' => 'POST', 'route' => 'API/Notes/save', 'handler' => static fn () => null],
+            ['method' => 'POST', 'route' => 'Gone/Save', 'handler' => '\\App\\Controllers\\NoSuchController::save'],
+            ['method' => 'GET', 'route' => 'API/Reports/run', 'handler' => static fn () => null, 'filters' => ['apiToken', 'ratelimit']],
         ]);
     }
 
@@ -158,6 +160,31 @@ PHP;
         // JS: fetch with method option, and a case-only match.
         $this->assertSame(['PASS', 'POST', '/API/Notes/save'], [$by['js 12']['status'], $by['js 12']['method'], $by['js 12']['action']]);
         $this->assertSame(['FAIL', 'case_mismatch'], [$by['js 13']['status'], $by['js 13']['reason']]);
+    }
+
+    public function testDetectsMissingHandlersTokenRoutesRelativeUrlsAndSkipsCommentedCalls(): void
+    {
+        $src = <<<'PHP'
+<form action="/Gone/Save" method="post"></form>
+<script>
+fetch('/API/Reports/run');
+fetch('/API/Reports/run', { headers: { 'Authorization': 'Bearer ' + key } });
+fetch('API/Notes/save', { method: 'POST' });
+// fetch('/nowhere/at/all', { method: 'POST' });
+</script>
+PHP;
+        $entries = (new FormIntelligenceService($this->matcher()))->inventory($src, 'app/Views/demo2.php');
+        $by = [];
+        foreach ($entries as $e) {
+            $by[$e['kind'] . ' ' . $e['line']] = [$e['status'], $e['reason']];
+        }
+
+        $this->assertSame([
+            'form 1' => ['FAIL', 'handler_missing'],
+            'js 3'   => ['FAIL', 'token_only_route'],
+            'js 4'   => ['PASS', 'route_matched'],
+            'js 5'   => ['FAIL', 'relative_url'],
+        ], $by, 'The commented-out call on line 6 must not be reported.');
     }
 
     public function testKeysAreStableAndLegacyFilesAreSkipped(): void

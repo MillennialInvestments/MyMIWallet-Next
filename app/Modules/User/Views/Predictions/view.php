@@ -95,8 +95,8 @@ document.getElementById('placeOrderForm')?.addEventListener('submit', async (e) 
   resEl.innerHTML = 'Placing order...';
 
   try {
-    const rsp = await fetch('<?=site_url('API/Predictions/orders/place')?>', {
-      method: 'POST', headers: { 'Content-Type':'application/json' },
+    const rsp = await fetch('<?=site_url('API/Predictions/PlaceOrder')?>', {
+      method: 'POST', headers: { 'Content-Type':'application/json', 'Accept':'application/json', 'X-Requested-With':'XMLHttpRequest' }, credentials: 'same-origin',
       body: JSON.stringify(data)
     });
     const json = await rsp.json();

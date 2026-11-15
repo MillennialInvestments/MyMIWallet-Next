@@ -2122,51 +2122,115 @@ class WalletsController extends BaseUserController
         return $this->purchaseGold();
     }
 
+    /**
+     * GT-FORM-ROUTES-001: POST Wallets/MyMIGPayPalCallback, after the browser has
+     * captured a PayPal order for MyMI Gold. Behind the "mymigold_purchases"
+     * switch (off by default).
+     *
+     * The old handler wrote a "completed" purchase using the user id, amount and
+     * order id the browser sent, without asking PayPal, so any signed-in user
+     * could credit Gold to any account. Now the user comes from the session, the
+     * order is checked with PayPal server to server, each order id is used once,
+     * and the Gold amount is worked out from PayPal's captured amount.
+     */
     public function handleMyMIGPayPalCallback(): ResponseInterface|string
     {
         if ($blocked = $this->guardWalletFeature()) {
             return $blocked;
         }
 
-        $request = $this->request;
+        $userId = $this->currentWalletUserId();
+        $json = $this->request->getJSON(true);
+        $input = is_array($json) ? $json : (array) $this->request->getPost();
+        $orderId = (string) ($input['transaction_id'] ?? '');
+        $claimed = is_numeric($input['total_cost'] ?? null) ? (float) $input['total_cost'] : null;
 
-        $transactionID = $request->getPost('transaction_id');
-        $totalCost     = $request->getPost('total_cost');
-        $walletID      = $request->getPost('wallet_id');
-        $userID        = $request->getPost('user_id');
-        $userEmail     = $request->getPost('user_email');
-        $transFee      = $request->getPost('trans_fee');
+        $claims = new \App\Services\Payments\PaymentClaimService();
+        $result = $claims->claim($userId, 'mymigold', $orderId, $claimed, ['wallet_id' => (string) ($input['wallet_id'] ?? '')]);
 
-        $data = [
-            'transaction_id' => $transactionID,
-            'total_cost'     => $totalCost,
-            'user_id'        => $userID,
-            'wallet_id'      => $walletID,
-            'user_email'     => $userEmail,
+        if (! $result['ok']) {
+            $pending = in_array($result['reason'], ['not_configured', 'lookup_failed', 'auth_failed'], true);
+
+            return $this->response->setStatusCode($pending ? 202 : 422)->setJSON([
+                'status'  => $pending ? 'pending' : 'error',
+                'message' => $pending
+                    ? 'Payment received. We are confirming it with PayPal and will credit your Gold once it is confirmed.'
+                    : 'This payment could not be confirmed.',
+                'reason'  => $result['reason'],
+            ]);
+        }
+
+        $coinValue = (float) ($this->siteSettings->MyMIGCoinValue ?? 1) ?: 1.0;
+        $percent = (float) ($this->siteSettings->transPercent ?? 0);
+        $flatFee = (float) ($this->siteSettings->transFee ?? 0);
+        $paid = (float) $result['amount'];
+        $fees = round($paid * $percent + $flatFee, 2);
+        $coins = round(max(0, $paid - $fees) / $coinValue, 8);
+
+        $row = [
+            'transaction_id' => strtoupper($orderId),
+            'total_cost'     => $paid,
+            'user_id'        => $userId,
+            'wallet_id'      => preg_replace('/[^A-Za-z0-9_\-]/', '', (string) ($input['wallet_id'] ?? '')),
             'status'         => 'completed',
             'active'         => 1,
             'unix_timestamp' => time(),
             'submitted_date' => date('Y-m-d H:i:s'),
             'trans_type'     => 'MyMI Gold Purchase',
-            'currency'       => 'USD',
-            'amount'         => $totalCost,
-            'fees'           => $transFee,
+            'currency'       => $result['currency'] ?: 'USD',
+            'amount'         => $coins,
+            'fees'           => $fees,
             'type'           => 'Purchase',
         ];
 
-        if (isset($this->walletsModel) && method_exists($this->walletsModel, 'submitMyMIGold')) {
-            $this->walletsModel->submitMyMIGold($data);
-        } elseif ($this->mymigoldModel && method_exists($this->mymigoldModel, 'submitMyMIGold')) {
-            $this->mymigoldModel->submitMyMIGold($data);
-        } else {
-            log_message('error', 'WalletsController::handleMyMIGPayPalCallback no submitMyMIGold method available.');
+        $db = db_connect();
+        $db->transStart();
+        ($this->walletModel ?? new WalletModel())->submitMyMIGold($row);
+        $claims->markFulfilled((int) $result['claim_id']);
+        $db->transComplete();
 
-            return redirect()->back()->with('error', 'Unable to submit MyMI Gold purchase.');
+        if (! $db->transStatus()) {
+            return $this->response->setStatusCode(500)->setJSON(['status' => 'error', 'message' => 'Payment confirmed but Gold could not be credited. Support has the record.']);
         }
 
-        $this->invalidateWalletCache((int) $userID);
+        $this->invalidateWalletCache($userId);
 
-        return redirect()->to('/Wallets/Purchase/MyMIGold/Complete/' . $transactionID);
+        return $this->response->setJSON([
+            'status'   => 'success',
+            'message'  => 'Payment confirmed. ' . $coins . ' MyMI Gold added.',
+            'redirect' => site_url('Wallets/Purchase/MyMI-Gold/Complete'),
+        ]);
+    }
+
+    /**
+     * GT-FORM-ROUTES-001: POST Memberships/PurchaseCallback, after the browser has
+     * captured a PayPal order for a membership. Behind "membership_purchases".
+     * The order is verified with PayPal and stored as a payment claim; the
+     * membership itself is applied by an admin from that verified claim, because
+     * there is no membership-grant code to call safely yet.
+     */
+    public function membershipPurchaseCallback(): ResponseInterface
+    {
+        $userId = $this->currentWalletUserId();
+        $input = (array) $this->request->getPost();
+        $detail = [];
+        foreach (['membership_level', 'membership', 'plan', 'billing_cycle', 'features'] as $key) {
+            if (isset($input[$key]) && is_scalar($input[$key])) {
+                $detail[$key] = mb_substr(strip_tags((string) $input[$key]), 0, 100);
+            }
+        }
+        $claimed = is_numeric($input['total_cost'] ?? null) ? (float) $input['total_cost'] : null;
+
+        $result = (new \App\Services\Payments\PaymentClaimService())->claim($userId, 'membership', (string) ($input['transaction_id'] ?? ''), $claimed, $detail);
+
+        if ($result['ok'] || in_array($result['reason'], ['not_configured', 'lookup_failed', 'auth_failed'], true)) {
+            return $this->response->setStatusCode($result['ok'] ? 200 : 202)->setJSON([
+                'status'  => $result['ok'] ? 'success' : 'pending',
+                'message' => 'Thanks! Your payment was received and your membership will be activated once it is confirmed.',
+            ]);
+        }
+
+        return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => 'This payment could not be confirmed.', 'reason' => $result['reason']]);
     }
 
     public function purchaseMembershipSuccess(): ResponseInterface|string

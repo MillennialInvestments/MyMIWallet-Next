@@ -105,6 +105,9 @@ document.getElementById("gold_coins").addEventListener("input", function() {
 </script>
 <script src="https://www.paypal.com/sdk/js?client-id=<?= $client_id ?>&currency=USD"></script>  
 <script <?= $nonce['script'] ?? '' ?>>
+<?php if (! (function_exists('feature_enabled') && feature_enabled('FEATURE_MYMIGOLD_PURCHASES'))): ?>
+(function () { var c = document.getElementById('paypal-button-container'); if (c) { c.innerHTML = '<div class="alert alert-info mb-0">Online purchases are not open yet.</div>'; } })();
+<?php else: ?>
 paypal.Buttons({
     createOrder: function(data, actions) {
         var transCost = parseFloat(document.getElementById("transCost").innerText.replace(/,/g, '')) || 0;
@@ -133,6 +136,7 @@ paypal.Buttons({
         });
     }
 }).render('#paypal-button-container');
+<?php endif; ?>
 </script>
 <script <?= $nonce['script'] ?? '' ?>>
 document.addEventListener('DOMContentLoaded', function() {

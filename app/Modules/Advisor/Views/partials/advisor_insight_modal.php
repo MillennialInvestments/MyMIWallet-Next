@@ -24,7 +24,7 @@
         const summernoteEl = $('#advisor-insight-body');
 
         const loadInsight = async (payload) => {
-            const response = await fetch('Advisor/generateInsight', {
+            const response = await fetch('/Advisor/generateInsight', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload || {}),
@@ -44,11 +44,19 @@
 
         const saveToNotes = async () => {
             const content = summernoteEl.summernote('code');
-            await fetch('Notes/save', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ content, source: 'advisor_insight' }),
-            });
+            const btn = document.getElementById('save-advisor-insight');
+            try {
+                const res = await fetch(<?= json_encode(site_url('Notes/save')) ?>, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+                    credentials: 'same-origin',
+                    body: JSON.stringify({ content, source: 'advisor_insight' }),
+                });
+                const json = await res.json().catch(() => ({}));
+                if (btn) { btn.textContent = res.ok ? 'Saved' : (json.message || 'Could not save'); }
+            } catch (e) {
+                if (btn) { btn.textContent = 'Could not save'; }
+            }
         };
 
         const initModal = async () => {

@@ -44,6 +44,7 @@ $viewFileData               = [
         <meta name="csrf-header" content="<?= esc(config('Security')->headerName ?? 'X-CSRF-TOKEN', 'attr') ?>">
         <meta name="csrf-token"  content="<?= esc(csrf_hash(), 'attr') ?>">
     <?php endif; ?>
+    <script src="<?= base_url('assets/js/csrf-shim.js') ?>" nonce="<?= esc($cspNonce ?? '') ?>"></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2FS4BNS0SL"></script>
     <script nonce="<?= esc($cspNonce) ?>">

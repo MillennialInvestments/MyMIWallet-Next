@@ -345,21 +345,21 @@ function fmt_int($v)   { return number_format((float)$v, 0); }
       btn.addEventListener('click', e=>{
         const pid = e.currentTarget.dataset.projectId;
         document.getElementById('commit_project_id').value = pid;
-        document.getElementById('formCommit').setAttribute('action', '<?= site_url('Projects/commitInvestment') ?>' + '/' + pid);
+        document.getElementById('formCommit').setAttribute('action', '<?= site_url('Projects/SubmitCommit') ?>');
       });
     });
     document.querySelectorAll('.act-invest').forEach(btn=>{
       btn.addEventListener('click', e=>{
         const pid = e.currentTarget.dataset.projectId;
         document.getElementById('invest_project_id').value = pid;
-        document.getElementById('formInvest').setAttribute('action', '<?= site_url('User/Projects/SubmitInvest') ?>' + '/' + pid);
+        document.getElementById('formInvest').setAttribute('action', '<?= site_url('Projects/SubmitInvest') ?>');
       });
     });
     document.querySelectorAll('.act-sell').forEach(btn=>{
       btn.addEventListener('click', e=>{
         const pid = e.currentTarget.dataset.projectId;
         document.getElementById('sell_project_id').value = pid;
-        document.getElementById('formSell').setAttribute('action', '<?= site_url('User/Projects/SubmitSell') ?>' + '/' + pid);
+        document.getElementById('formSell').setAttribute('action', '<?= site_url('Projects/SubmitSell') ?>');
       });
     });
   }

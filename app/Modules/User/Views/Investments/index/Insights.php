@@ -317,44 +317,9 @@
     }
 
 
-    function refreshWatchlistPrices() {
-        fetch('<?php echo site_url('/Investments/API/getSymbolsByTradeType/'); ?>')
-            .then(response => response.json())
-            .then(data => updateWatchlistPrices(data))
-            .catch(error => console.error('Error refreshing watchlist prices:', error));
-    }
-
-    function updateWatchlistPrices(data) {
-        data.forEach(asset => {
-            const assetRow = document.querySelector(`#watchlistTableBody .asset-${asset.id}`);
-            if(assetRow) {
-                const priceCell = assetRow.querySelector('.asset-price');
-                if(priceCell) {
-                    priceCell.textContent = asset.currentPrice;
-                }
-            }
-        });
-    }
-
-    function refreshActiveTradesPrices() {
-        fetch('<?php echo site_url('/Investments/API/getSymbolsByTradeType/'); ?>')
-            .then(response => response.json())
-            .then(data => updateActiveTradesPrices(data))
-            .catch(error => console.error('Error refreshing active trades prices:', error));
-    }
-
-    function updateActiveTradesPrices(data) {
-        data.forEach(trade => {
-            const tradeRow = document.querySelector(`#activeTradesTableBody .trade-${trade.id}`);
-            if(tradeRow) {
-                const priceCell = tradeRow.querySelector('.trade-value');
-                if(priceCell) {
-                    priceCell.textContent = trade.currentValue;
-                }
-            }
-        });
-    }
-    
+    // GT-FORM-ROUTES-001: refreshWatchlistPrices()/refreshActiveTradesPrices() were removed.
+    // Nothing called them, and they fetched a symbol-search URL that never returned prices.
+    // The watchlist table is filled by the request above.
 </script>
 <script <?= $nonce['script'] ?? '' ?>>
     $(document).ready(function() {

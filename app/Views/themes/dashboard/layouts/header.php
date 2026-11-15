@@ -17,6 +17,7 @@
         <meta name="csrf-header" content="<?= esc(config('Security')->headerName ?? 'X-CSRF-TOKEN', 'attr') ?>">
         <meta name="csrf-token"  content="<?= esc(csrf_hash(), 'attr') ?>">
     <?php endif; ?>
+    <script src="<?= base_url('assets/js/csrf-shim.js') ?>" <?= $nonce['script'] ?? '' ?>></script>
     <link rel="manifest" href="/manifest.webmanifest">
     <meta name="theme-color" content="#0ea5e9">
     <script <?= $nonce['script'] ?? '' ?>>

@@ -211,7 +211,7 @@ $fieldData = array(
             const formData = $(this).serialize(); // Serialize form data
 
             $.ajax({
-                url: '<?= site_url('User/Projects/AddComment'); ?>', // AddComment controller method
+                url: '<?= site_url('Projects/AddComment'); ?>', // AddComment controller method
                 method: 'POST',
                 data: formData,
                 success: function (response) {

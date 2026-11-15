@@ -451,7 +451,7 @@ class MarketingAdminController extends BaseAdminController
             }
     
             // Handle GET request (form display)
-            if ($this->request->getMethod() === 'get') {
+            if (strtolower($this->request->getMethod()) === 'get') {
                 log_message('debug', 'Handling GET request for type: ' . $type);
     
                 if ($type === 'Schedule') {
@@ -486,7 +486,7 @@ class MarketingAdminController extends BaseAdminController
     }  
 
     public function addSchedule() {
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             $additionalInfo = $this->request->getPost('additional_info');
     
             // Validate and parse the JSON input
@@ -942,7 +942,7 @@ class MarketingAdminController extends BaseAdminController
         }
     
         // Handle form submission
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             $validation = \Config\Services::validation();
             $validation->setRules([
                 'coin_name'  => 'required',
@@ -1259,7 +1259,12 @@ class MarketingAdminController extends BaseAdminController
         return $this->respond(['status' => 'complete', 'processed_titles' => $results]);
     }
     
-    public function generateContentFromTweet($tweetId) {
+    public function generateContentFromTweet($tweetId = null) {
+        // The Twitter dashboard form posts tweet_id; a route segment still wins when given.
+        $tweetId = $tweetId ?? $this->request->getPost('tweet_id');
+        if ($tweetId === null || $tweetId === '') {
+            return $this->failValidationErrors('Missing tweet_id');
+        }
         $tweet = $this->marketingModel->getTweetById($tweetId);
 
         if (!$tweet) {
@@ -1468,7 +1473,7 @@ class MarketingAdminController extends BaseAdminController
     }  
 
     public function importScheduleCSV() {
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             $file = $this->request->getFile('csv_file');
             
             if ($file->isValid() && !$file->hasMoved()) {
@@ -2209,7 +2214,7 @@ class MarketingAdminController extends BaseAdminController
     }
 
     public function submitMarketIdeas() {
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             $data = [
                 'title' => $this->request->getPost('title'),
                 'description' => htmlentities($this->request->getPost('description'), ENT_QUOTES, 'UTF-8'),
@@ -2263,31 +2268,68 @@ class MarketingAdminController extends BaseAdminController
             if ($channel === 'Discord') {
                 $this->data['tokens'] = $exchangeTokens['discord'];
                 $this->data['pageTitle'] = 'Discord Communities';
-                $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\discord', $this->data);
+                return $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\discord', $this->data);
             } elseif ($channel === 'Facebook') {
                 $this->data['tokens'] = $exchangeTokens['facebook'];
                 $this->data['pageTitle'] = 'Facebook Communities';
-                $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\facebook', $this->data);
+                return $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\facebook', $this->data);
             } elseif ($channel === 'Twitter') {
                 $this->data['tokens'] = $exchangeTokens['x_twitter'];
                 $this->data['pageTitle'] = 'Twitter Communities';
-                $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\twitter', $this->data);
+                return $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\twitter', $this->data);
             } elseif ($channel === 'Website') {
                 $this->data['tokens'] = $exchangeTokens['website'];
                 $this->data['pageTitle'] = 'Website Communities';
-                $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\website', $this->data);
+                return $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\website', $this->data);
             } else {
                 // Default to 'all' if the channel is not recognized
                 $this->data['tokens'] = $exchangeTokens['all'];
                 $this->data['pageTitle'] = 'All Communities';
-                $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\all_tokens', $this->data);
+                return $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\all_tokens', $this->data);
             }
         } else {
             // If no channel is specified, show all tokens
             $this->data['tokens'] = $exchangeTokens['all'];
             $this->data['pageTitle'] = 'All Communities';
-            $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\all_tokens', $this->data);
+            return $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\all_tokens', $this->data);
         }
+    }
+
+    /**
+     * GT-FORM-ROUTES-001: the "Refresh" button on the Top Communities pages
+     * (it called "solana/market-refresh", which never existed).
+     */
+    public function topCommunitiesRefresh($channel = 'Website')
+    {
+        $map = ['Discord' => 'discord', 'Facebook' => 'facebook', 'Twitter' => 'x_twitter', 'Website' => 'website'];
+        $key = $map[$channel] ?? 'all';
+        $tokens = (new MyMIExchange())->getSolanaTokens();
+
+        return $this->response->setJSON(['status' => 'success', 'tokens' => array_values((array) ($tokens[$key] ?? []))]);
+    }
+
+    /**
+     * GT-FORM-ROUTES-001: the Content Generator form. Saves a draft only; nothing is posted anywhere.
+     */
+    public function addContent()
+    {
+        $type  = (string) $this->request->getPost('contentType');
+        $title = trim(strip_tags((string) $this->request->getPost('contentTitle')));
+        $body  = trim((string) $this->request->getPost('contentBody'));
+        if (! in_array($type, ['blogPost', 'socialMedia', 'newsletter'], true) || $title === '' || $body === '') {
+            return redirect()->back()->withInput()->with('error', 'Pick a type and enter a title and content.');
+        }
+
+        $saved = $this->marketingModel->insertGeneratedContent([
+            'title'      => mb_substr($title, 0, 255),
+            'summary'    => $body,
+            'status'     => 'draft',
+            'category'   => $type,
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        return redirect()->to(site_url('Management/Marketing/Content/Generator'))
+            ->with($saved ? 'message' : 'error', $saved ? 'Draft saved.' : 'Could not save the draft.');
     }
 
     public function triggerPostAutogenOnEmpty()
@@ -2315,10 +2357,17 @@ class MarketingAdminController extends BaseAdminController
             'tweets' => []
         ];
 
-        if ($this->request->getMethod() === 'post') {
-            $hashtags = $this->request->getPost('hashtags');
+        if (strtolower($this->request->getMethod()) === 'post') {
+            $json = $this->request->getJSON(true);
+            $hashtags = is_array($json) ? ($json['hashtags'] ?? '') : $this->request->getPost('hashtags');
             $tweets = $this->getMyMIMarketing()->fetchTweets($hashtags);
             $data['tweets'] = $tweets;
+            $data['hashtags'] = (string) $hashtags;
+
+            // The page's fetchTweets() posts JSON and reads data.tweets.
+            if (is_array($json) || $this->request->isAJAX()) {
+                return $this->response->setJSON(['status' => 'success', 'tweets' => $tweets ?: []]);
+            }
         }
 
         return $this->renderTheme('Management/Marketing/Twitter', $data);
