@@ -65,7 +65,7 @@ $referralCode = $referralCode ?? '';
     </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
     (function() {
         if (window.jQuery && $.fn && $.fn.DataTable) {
             initDataTableSafe($('#referral-conversion-table'),{

@@ -119,3 +119,28 @@ button:focus, button:focus-visible,
 .nk-menu-item.has-sub.active > .nk-menu-sub {
   display: block;
 }
+
+/* Dashboard sidebar show/hide (assets/js/sidebar-toggle.js) */
+#mymiSidebarOpen {
+  display: none;
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 1031;
+}
+@media (min-width: 992px) {
+  body.mymi-sidebar-collapsed .nk-sidebar {
+    transform: translateX(-100%);
+    visibility: hidden;
+  }
+  body.mymi-sidebar-collapsed .nk-sidebar + .nk-wrap {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+  body.mymi-sidebar-collapsed .nk-wrap > .nk-header-fixed {
+    left: 0 !important;
+  }
+  body.mymi-sidebar-collapsed #mymiSidebarOpen {
+    display: inline-flex;
+  }
+}

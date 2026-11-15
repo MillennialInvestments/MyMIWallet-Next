@@ -41,7 +41,7 @@
     <?php if (ENVIRONMENT !== 'production'): ?>
         <script src="<?= base_url('assets/js/dev-html-guard.js') ?>" defer></script>
         <!-- Clarity tracking code for https://mymiwallet.com/ -->
-        <script type="text/javascript">
+        <script<?= script_nonce_attr() ?>>
             (function(c,l,a,r,i,t,y){
                 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
                 t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;

@@ -36,7 +36,7 @@ $projects = is_array($projects ?? null) ? $projects : [];
     </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
 document.addEventListener('DOMContentLoaded', function () {
     if (window.__mymiProjectsTableInitialized) {
         return;

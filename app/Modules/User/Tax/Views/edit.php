@@ -61,7 +61,7 @@
     </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
     function saveLine(returnId, lineNumber, amount, explainText) {
         return fetch('Tax/ajax/saveLine', {
             method: 'POST',

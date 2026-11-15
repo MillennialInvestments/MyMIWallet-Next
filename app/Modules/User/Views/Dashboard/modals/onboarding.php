@@ -206,7 +206,7 @@ $stepStatus = [
     </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
 document.addEventListener('DOMContentLoaded', () => {
     const progress = <?= json_encode($progressPayload, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>;
     const csrfTokenName = <?= json_encode(csrf_token()) ?>;

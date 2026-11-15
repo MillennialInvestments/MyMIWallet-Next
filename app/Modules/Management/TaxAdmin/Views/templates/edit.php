@@ -52,7 +52,7 @@
     <?= view('App\\Modules\\Management\\TaxAdmin\\Views\\templates\\partials\\line_row', ['line' => ['id' => '', 'line_number' => '', 'label' => '', 'type' => 'input', 'calc_rule' => '', 'requires_explain' => 0, 'sort_order' => 0], 'idx' => '__IDX__']); ?>
 </template>
 
-<script>
+<script<?= script_nonce_attr() ?>>
     document.getElementById('addLineRow')?.addEventListener('click', () => {
         const tpl = document.getElementById('lineRowTemplate').innerHTML.replace(/__IDX__/g, Date.now());
         const wrapper = document.getElementById('linesWrapper');

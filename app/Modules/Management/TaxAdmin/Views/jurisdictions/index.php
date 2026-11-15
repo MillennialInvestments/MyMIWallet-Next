@@ -85,7 +85,7 @@
     </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
     document.addEventListener('DOMContentLoaded', () => {
         if (window.$ && $.fn.DataTable) {
             initDataTableSafe($('#jurisdictionTable'));

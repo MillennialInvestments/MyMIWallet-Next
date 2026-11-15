@@ -70,7 +70,7 @@ $latestIngestId = $contentEngine['latest_ingest_id'] ?? null;
     </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
 (function() {
     const tierNav = document.getElementById('ce-tier-nav');
     const ideaList = document.getElementById('ce-idea-list');

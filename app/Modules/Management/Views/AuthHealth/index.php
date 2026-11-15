@@ -87,7 +87,7 @@ $runs = $authHealthRuns ?? [];
     </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
     (function() {
         if (window.jQuery && $.fn && $.fn.DataTable) {
             initDataTableSafe($('#auth-health-table'),{

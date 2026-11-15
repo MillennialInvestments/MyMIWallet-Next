@@ -40,6 +40,9 @@ echo view('themes/dashboard/layouts/header', $subViewData);
         <?php //echo view('themes/dashboard/layouts/data_distribution', $subViewData); ?>
         <div class="nk-app-root">
             <div class="nk-main">
+                <button type="button" class="btn btn-dark btn-icon" id="mymiSidebarOpen" data-mymi-sidebar-toggle aria-label="Show sidebar" aria-controls="collapseSidebar">
+                    <em class="icon ni ni-menu"></em>
+                </button>
                 <?php echo view('themes/dashboard/layouts/sidebar', $subViewData); ?>
                 <div class="nk-wrap db-nk-wrap px-3 px-md-1 pl-xxl-3">
                     <?php echo view('themes/dashboard/layouts/_sitenav', $subViewData); ?>

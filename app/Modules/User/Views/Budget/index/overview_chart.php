@@ -375,10 +375,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const availableData = budgetPayload.availableData || [];
       const repaymentSummary = budgetPayload.repaymentSummary || [];
 
-      console.log('budgetData', budgetData);
-      console.log('creditData', creditData);
-      console.log('availableData', availableData);
-      console.log('repaymentSummary', repaymentSummary);
       const cleanData   = state.budgetData.filter(isValidRecord);
       const lowerAmount = getSelectedValue('#chart-lower-options') || -1;
       const upperAmount = getSelectedValue('#chart-upper-options') || 12;

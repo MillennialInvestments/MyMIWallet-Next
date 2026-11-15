@@ -357,7 +357,7 @@ $scannerSignals = $scannerSignals ?? [];
 </div>
 <?php endif; ?>
 
-<script>
+<script<?= script_nonce_attr() ?>>
 document.addEventListener('DOMContentLoaded', function () {
     if (typeof $ !== 'undefined' && $.fn.DataTable) {
         initDataTableSafe($('#openAlertsTable'),{

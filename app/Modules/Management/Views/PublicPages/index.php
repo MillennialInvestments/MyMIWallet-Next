@@ -14,6 +14,6 @@
         </tbody>
     </table>
 </div>
-<script>
+<script<?= script_nonce_attr() ?>>
 function generateNow(pageId){fetch('<?= site_url('Management/PublicPages/ajaxGenerateNow') ?>/'+encodeURIComponent(pageId),{method:'POST'}).then(()=>location.reload());}
 </script>

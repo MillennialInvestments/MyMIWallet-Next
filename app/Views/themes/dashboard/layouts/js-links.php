@@ -31,6 +31,7 @@ $dataTablesHelperVersion = is_file($dataTablesHelperPath) ? filemtime($dataTable
   window.MYMI_DEBUG_SIDEBAR = <?= $debugSidebar ? 'true' : 'false' ?>;
 </script>
 <script src="<?= base_url('assets/js/sidebar-menu-fix.js'); ?>" <?= $scriptNonceAttr ?> defer></script>
+<script src="<?= base_url('assets/js/sidebar-toggle.js') . '?v=' . (is_file(FCPATH . 'assets/js/sidebar-toggle.js') ? filemtime(FCPATH . 'assets/js/sidebar-toggle.js') : '1'); ?>" <?= $scriptNonceAttr ?> defer></script>
 
 <?php if ($u = asset_if_exists('assets/js/fetch-helper.js')): ?>
   <script src="<?= $u ?>" <?= $scriptNonceAttr ?> defer></script>

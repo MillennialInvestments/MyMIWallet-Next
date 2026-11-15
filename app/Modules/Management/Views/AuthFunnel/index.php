@@ -129,7 +129,7 @@ $chartData = [
 </div>
 
 <script src="<?= base_url('assets/vendor/chart.js/2.1.2/Chart.min.js'); ?>"></script>
-<script>
+<script<?= script_nonce_attr() ?>>
     (function() {
         const chartData = <?= json_encode($chartData, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>;
         const ctx = document.getElementById('authFunnelTrendChart');

@@ -37,7 +37,7 @@
     </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
     (function ($) {
         const baseUrl = '<?= site_url("API/Investments/news"); ?>';
 

@@ -503,7 +503,7 @@ $policyActions   = ['drop' => 'Drop', 'mask' => 'Mask'];
     </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
 (function(){
     const buttons = document.querySelectorAll('[data-discord-test]');
     buttons.forEach(btn => {

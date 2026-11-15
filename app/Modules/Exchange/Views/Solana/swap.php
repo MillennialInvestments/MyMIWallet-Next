@@ -27,7 +27,7 @@ if (! function_exists('mymi_solana_safe_uri_segment')) {
 
 <!-- MyMI Solana runtime guard: ensure jQuery exists before inline Solana scripts. -->
 
-<script>
+<script<?= script_nonce_attr() ?>>
 // MYMI_SOLANA_SWAP_FETCH_SAFETY_20260602
 window.mymiSolanaSwapRuntime = window.mymiSolanaSwapRuntime || (function () {
     const state = {
@@ -189,7 +189,7 @@ window.mymiSolanaSwapRuntime = window.mymiSolanaSwapRuntime || (function () {
 })();
 </script>
 
-<script>
+<script<?= script_nonce_attr() ?>>
 // MYMI_SOLANA_SWAP_FETCHPRICES_COMPAT_20260602
 window.fetchPrices = window.fetchPrices || async function fetchPrices() {
     const runtime = window.mymiSolanaSwapRuntime || null;
@@ -299,7 +299,7 @@ window.fetchPrices = window.fetchPrices || async function fetchPrices() {
 
 
 
-<script>
+<script<?= script_nonce_attr() ?>>
 (function () {
     if (window.mymiSolanaEnsureJqueryLoaded) {
         return;
@@ -885,7 +885,7 @@ mymiWhenJqueryReady(function () {
 
 <?php if (! defined('MYMI_SOLANA_PREVIEW_UX_MODAL_PHASE14_20260603')): ?>
 <?php define('MYMI_SOLANA_PREVIEW_UX_MODAL_PHASE14_20260603', true); ?>
-<script>
+<script<?= script_nonce_attr() ?>>
 window.mymiSolanaPreviewConfig = Object.assign({}, window.mymiSolanaPreviewConfig || {}, {
     swapPreviewUrl: "<?= site_url('API/Solana/swap/preview') ?>",
     transactionPreviewUrl: "<?= site_url('API/Solana/transaction/preview') ?>",

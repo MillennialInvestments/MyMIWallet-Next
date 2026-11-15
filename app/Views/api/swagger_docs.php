@@ -8,7 +8,7 @@
 <body>
 <div id="swagger-ui"></div>
 <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
-<script>
+<script<?= script_nonce_attr() ?>>
   window.onload = () => {
     window.ui = SwaggerUIBundle({
       url: "<?= esc($specUrl) ?>",

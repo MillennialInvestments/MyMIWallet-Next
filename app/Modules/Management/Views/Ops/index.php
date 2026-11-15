@@ -119,7 +119,7 @@
     </div>
 </section>
 
-<script>
+<script<?= script_nonce_attr() ?>>
 (function() {
     const initialData = <?php echo json_encode($ops ?? [], JSON_UNESCAPED_SLASHES); ?>;
     <?php if (function_exists('csrf_hash')): ?>
