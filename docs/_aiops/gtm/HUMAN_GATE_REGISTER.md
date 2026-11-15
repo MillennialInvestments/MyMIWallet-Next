@@ -2,8 +2,9 @@
 
 How the remaining GTM work is split:
 
-- **Agent work.** Code, tests, docs and PRs. Claude does these without asking,
-  merges when CI is green, and lists them as done or next.
+- **Agent work.** Code, tests, docs and PRs. Claude prepares these for
+  review without asking. Per `AGENTS.md`, agents never auto-merge or deploy:
+  a PR is merged only when Tim asks for it in the thread, and only Tim deploys.
 - **Human gate.** Anything that changes production, touches secrets or
   customer data, needs an outside account, or is a legal or business call.
   Each gate below names one owner and one concrete ask. Nothing behind a gate
