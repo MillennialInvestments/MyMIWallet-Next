@@ -41,7 +41,7 @@ need auth_reset_attempts id email ip_address user_agent token created_at
 need auth_activation_attempts id ip_address user_agent token created_at
 need auth_groups id name
 need auth_groups_users group_id user_id
-need bf_users_2fa user_id
+need bf_users_2fa user_id is_enabled secret_ciphertext secret_iv secret_tag backup_codes_hashes
 need bf_user_ip_history id email ip_address
 
 echo "== Shield tables (not used for login today, see docs/adr/0002)"
