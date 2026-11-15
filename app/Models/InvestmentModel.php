@@ -658,6 +658,19 @@ class InvestmentModel extends Model
     {
         log_message('debug', 'InvestmentModel L259 - $tradeData[id]: ' . $tradeData['id']);
         if (isset($tradeData['id']) && !empty($tradeData['id'])) {
+            // Only the owner may update a trade: an edit posted with someone
+            // else's trade id used to overwrite (and take over) that trade.
+            $owned = $this->db->table($this->table)
+                ->where($this->primaryKey, $tradeData['id'])
+                ->where('user_id', (int) ($tradeData['user_id'] ?? 0))
+                ->countAllResults() > 0;
+            if (! $owned) {
+                log_message('warning', 'InvestmentModel::saveTrade refused update of trade {id} not owned by user {uid}', [
+                    'id' => $tradeData['id'], 'uid' => $tradeData['user_id'] ?? null,
+                ]);
+
+                return false;
+            }
             log_message('debug', 'InvestmentModel L259 - Updated, did not insert');
             $result = $this->update($tradeData['id'], $tradeData);
         } else {

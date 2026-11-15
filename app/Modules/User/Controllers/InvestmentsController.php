@@ -790,11 +790,16 @@ class InvestmentsController extends BaseUserController
             }
     
             log_message('debug', 'InvestmentsController::accountManager L310 - Processing investment.');
+            // Records always belong to the signed-in user, never to a posted user_id.
+            $json['user_id'] = $this->cuID;
             $response = $this->processInvestment($json);
     
             if ($response->getStatusCode() === 200) {
                 log_message('debug', 'Investment processed successfully.');
                 return $this->response->setJSON(['status' => 'success']);
+            }
+            if ($response->getStatusCode() >= 400 && $response->getStatusCode() < 500) {
+                return $response; // validation message, not a server error
             }
     
             log_message('error', 'Failed to process investment.');
@@ -808,7 +813,7 @@ class InvestmentsController extends BaseUserController
     private function processInvestment(array $json) {
         $validation = $this->validateTradeInput($json);
         if (!$validation['isValid']) {
-            log_message('error', $validation['message']);
+            log_message('notice', $validation['message']);
             return $this->fail($validation['message'], 400);
         }
     
@@ -833,17 +838,17 @@ class InvestmentsController extends BaseUserController
     
     private function computeTradeData(array $json) {
         $totalTradeCost = (float)$json['shares'] * (float)$json['price'];
-        $json['user_id'] = $json['user_id'] ?? $this->cuID;        
+        $json['user_id'] = $this->cuID; // never trust a posted user_id
 
         // Fetch data from UserService
         $userData = $this->getuserService()->commonData(); 
         $tradeData = [
             'id' => $json['id'] ?? '',
             'status' => 'Active',
-            'user_id' => $json['user_id'] ?? $this->cuID,
+            'user_id' => $this->cuID,
             'user_email' => $userData['cuEmail'],
             'username' => $userData['cuUsername'],
-            'modified_by' => $json['user_id'] ?? $this->cuID,
+            'modified_by' => $this->cuID,
             'open_date' => $json['open_date'] ?? 'N/A',
             'open_time' => $json['open_time'] ?? 'N/A',
             'trade_type' => $json['trade_type'] ?? '',
@@ -1134,7 +1139,7 @@ class InvestmentsController extends BaseUserController
         $requiredFields = ['trade_type', 'symbol', 'shares', 'price', 'user_id'];
         foreach ($requiredFields as $field) {
             if (empty($json[$field])) {
-                log_message('error', "Validation failed: Missing required field {$field}");
+                log_message('notice', "Validation failed: Missing required field {$field}");
                 return ['isValid' => false, 'message' => "Missing required field: {$field}"];
             }
         }
