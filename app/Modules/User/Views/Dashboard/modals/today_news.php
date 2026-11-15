@@ -105,6 +105,9 @@ document.addEventListener('DOMContentLoaded', function () {
             var newsModalEl = document.getElementById('<?= esc($modalId) ?>');
             if (newsModalEl) {
                 setTimeout(function () {
+                    if (document.body.classList.contains('modal-open') || document.querySelector('.modal.show')) {
+                        return;
+                    }
                     var modal = bootstrap.Modal.getOrCreateInstance(newsModalEl);
                     modal.show();
                 }, 400);
