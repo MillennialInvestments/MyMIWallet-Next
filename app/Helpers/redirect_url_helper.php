@@ -97,6 +97,18 @@ if (! function_exists('redirect_url_sanitize')) {
             return null;
         }
 
+        // Never send a user back to something that is not a page: browser
+        // beacons (CSP reports), APIs, static files, health checks.
+        $pagePath = str_starts_with($normalizedPath, 'index.php/') ? substr($normalizedPath, 10) : $normalizedPath;
+        foreach (['csp', 'api/', 'assets/', 'favicon', 'health', 'system/health', 'auth/two-factor', 'debugbar', '_debugbar', '.well-known/'] as $prefix) {
+            if (str_starts_with($pagePath, $prefix)) {
+                return null;
+            }
+        }
+        if (preg_match('#\.(js|mjs|css|map|json|png|jpe?g|gif|svg|ico|webp|woff2?|ttf|txt|xml|webmanifest)$#', $pagePath) === 1) {
+            return null;
+        }
+
         return $clean;
     }
 }
@@ -128,8 +140,11 @@ if (! function_exists('redirect_url_store')) {
         $route = trim((string) ($context['route'] ?? ($request ? $request->getUri()->getPath() : '')), '/');
         $requestId = (string) ($context['request_id'] ?? redirect_url_request_id());
 
+        // Only a page the user navigated to (GET) is a place to come back to.
+        $method = $request && method_exists($request, 'getMethod') ? strtoupper((string) $request->getMethod()) : 'GET';
+
         $accepted = false;
-        if (! $session->has('redirect_url') && $sanitized !== null && $sanitized !== '') {
+        if ($method === 'GET' && ! $session->has('redirect_url') && $sanitized !== null && $sanitized !== '') {
             $session->set('redirect_url', $sanitized);
             $accepted = true;
         }

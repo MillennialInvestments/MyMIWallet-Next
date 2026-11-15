@@ -14,7 +14,7 @@ final class PasswordResetTokenTest extends CIUnitTestCase
 {
     public function testPlainFallbackResetEmailRendersAWorkingLink(): void
     {
-        $this->assertInstanceOf(\Myth\Auth\Authentication\Resetters\ResetterInterface::class, service('resetter'));
+        $this->assertInstanceOf(\Myth\Auth\Authentication\Resetters\ResetterInterface::class, \Config\Services::resetter(null, false));
 
         // The branded sender falls back to Myth's own template and config (GTM-017).
         $html = view((new \Myth\Auth\Config\Auth())->views['emailForgot'], ['hash' => 'abc123']);

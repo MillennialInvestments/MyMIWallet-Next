@@ -30,4 +30,12 @@ final class DashboardModalsRenderedOnceTest extends CIUnitTestCase
             $this->assertStringContainsString("document.body.classList.contains('modal-open')", $source, $modal);
         }
     }
+
+    public function testModalsAreLiftedOutOfTheLayoutBeforeOpening(): void
+    {
+        $source = (string) file_get_contents(APPPATH . 'Views/themes/dashboard/partials/custom-js/modals.php');
+
+        $this->assertStringContainsString("addEventListener('show.bs.modal'", $source);
+        $this->assertStringContainsString('document.body.appendChild(modal)', $source);
+    }
 }
