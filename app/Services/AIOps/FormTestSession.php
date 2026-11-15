@@ -149,6 +149,7 @@ final class FormTestSession
             $payload[$this->csrfName] = $this->csrfToken;
         }
 
+        $startedAt = date('Y-m-d H:i:s');
         $resp = $this->client(false)->request('POST', site_url('login'), $this->requestOptions() + ['form_params' => $payload]);
         $this->absorb($resp);
         $location = $resp->getHeaderLine('Location');
@@ -166,6 +167,9 @@ final class FormTestSession
 
         if (! $this->loggedIn) {
             $this->notes[] = 'Login page says: ' . ($this->loginPageMessage() ?? '(no message found)');
+            foreach (self::appLogSince($startedAt) as $line) {
+                $this->notes[] = 'app log: ' . $line;
+            }
         }
 
         // The token is kept per session; read it again from a signed-in page.
@@ -183,6 +187,34 @@ final class FormTestSession
         } catch (\Throwable $e) {
             return 'could not read the login page: ' . $e->getMessage();
         }
+    }
+
+    /**
+     * The sign-in lines the site wrote to its own log since $since. The form
+     * test runs on the server as the web user, so it can read the log.
+     *
+     * @return list<string>
+     */
+    public static function appLogSince(string $since, ?string $logDir = null, int $max = 12): array
+    {
+        $file = rtrim($logDir ?? (WRITEPATH . 'logs'), '/') . '/log-' . substr($since, 0, 10) . '.php';
+        if (! is_readable($file)) {
+            return ['(cannot read ' . $file . ')'];
+        }
+        $out = [];
+        foreach (file($file, FILE_IGNORE_NEW_LINES) ?: [] as $line) {
+            if (! preg_match('/^[A-Z]+ - (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) --> (.*)$/', $line, $m) || $m[1] < $since) {
+                continue;
+            }
+            if (preg_match('/AUTH_(FAIL|SPAM|LOGIN)|CSRF|Security|honeypot|throttl|Login|attemptLogin|SecurityException|not allowed/i', $m[2])) {
+                $out[] = substr($m[1], 11) . ' ' . mb_substr($m[2], 0, 160);
+                if (count($out) >= $max) {
+                    break;
+                }
+            }
+        }
+
+        return $out !== [] ? $out : ['(no sign-in lines in the log since ' . $since . ')'];
     }
 
     public static function extractAlert(string $html): ?string

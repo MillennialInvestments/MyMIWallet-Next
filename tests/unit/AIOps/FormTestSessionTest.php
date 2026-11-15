@@ -66,4 +66,22 @@ final class FormTestSessionTest extends CIUnitTestCase
         $this->assertSame('Login failed. Please verify your password. AUTH-LOGIN-003', FormTestSession::extractAlert($html));
         $this->assertNull(FormTestSession::extractAlert('<p>ok</p>'));
     }
+
+    public function testAppLogSinceReturnsOnlyNewSignInLines(): void
+    {
+        $dir = sys_get_temp_dir() . '/formtest-log-' . bin2hex(random_bytes(3));
+        mkdir($dir);
+        file_put_contents($dir . '/log-2026-11-15.php', implode("\n", [
+            'NOTICE - 2026-11-15 22:30:00 --> [AUTH_FAIL] old line',
+            'INFO - 2026-11-15 22:35:01 --> CSRF token verified.',
+            'DEBUG - 2026-11-15 22:35:01 --> unrelated',
+            'NOTICE - 2026-11-15 22:35:02 --> [AUTH_FAIL] Login validation failed',
+        ]));
+
+        $lines = FormTestSession::appLogSince('2026-11-15 22:35:00', $dir);
+
+        $this->assertSame(['22:35:01 CSRF token verified.', '22:35:02 [AUTH_FAIL] Login validation failed'], $lines);
+        array_map('unlink', glob($dir . '/*'));
+        rmdir($dir);
+    }
 }
