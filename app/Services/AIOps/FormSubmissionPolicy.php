@@ -64,6 +64,39 @@ final class FormSubmissionPolicy
         return ['allowed' => true, 'reason' => 'approved', 'host' => $host];
     }
 
+    /**
+     * STAGING-001 destructive-form skip list. Even on an approved staging run
+     * the harness never submits to these targets: they move money, send mail or
+     * messages to real people, call outside providers, change sign-in
+     * credentials, delete data, or start admin jobs. Matched against the
+     * action path, case-insensitive. Label => regex.
+     */
+    public const DESTRUCTIVE_TARGETS = [
+        'deletes or unlinks data'      => '~(^|/|-|_)(delete|remove|unlink|destroy|purge|erase|deactivate|close-?account|cancel)~i',
+        'signs the user out'           => '~(^|/)logout~i',
+        'changes sign-in credentials'  => '~(password|reset|2fa|two-?factor|/security|/auth/|activate)~i',
+        'privacy request (erasure)'    => '~privacy~i',
+        'moves money or crypto'        => '~(solana|exchange|auction|swap|transfer|mint|token/|purchase|paypal|checkout|payment|deposit|withdraw|redemption|mdit|submitcommit|submitinvest|submitsell|placeorder|predictions|mymigold|memberships/)~i',
+        'sends mail or messages'       => '~(email|campaign|massresend|distro|sendall|send-?alert|broadcast|discord|zapier|social|notify|invite)~i',
+        'calls an outside provider'    => '~(plaid|snaptrade|robinhood|link-|connect-url|webhook)~i',
+        'starts an admin job'          => '~(^|/)(management|api/management)(/|$)|cron|run-?daily|spam|ban|block-user|backfill|generate~i',
+    ];
+
+    /** Returns why a target is on the skip list, or null when it may be submitted. */
+    public static function destructiveReason(string $action): ?string
+    {
+        $path = (string) (parse_url($action, PHP_URL_PATH) ?? $action);
+        $path = '/' . ltrim(preg_replace('~^/?index\.php~i', '', $path) ?? $path, '/');
+
+        foreach (self::DESTRUCTIVE_TARGETS as $label => $regex) {
+            if (preg_match($regex, $path) === 1) {
+                return $label;
+            }
+        }
+
+        return null;
+    }
+
     /** @return list<string> */
     public static function allowedHostsFromEnv(): array
     {

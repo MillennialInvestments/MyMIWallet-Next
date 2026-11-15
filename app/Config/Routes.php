@@ -1027,7 +1027,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('distributeHighScoreContent', 'MarketingAPIController::distributeHighScoreContent', ['filter' => 'apiToken']);
         $routes->get('emailPostForApproval/(:num)', 'MarketingAPIController::emailPostForApproval/$1');
         $routes->get('fetchBufferPaginated', 'MarketingAPIController::fetchBufferPaginated');
-        $routes->get('fetchFinalizedSummariesBlock', 'MarketingAPIController::fetchFinalizedSummariesBlock');
+        $routes->get('fetchFinalizedSummariesBlock', 'MarketingAPIController::fetchFinalizedSummariesBlock', ['filter' => 'apiAdmin']); // API-AUTH-001: admin page block
         $routes->get('fetchGeneratedSummaries', 'MarketingAPIController::fetchGeneratedSummaries', ['filter' => 'apiToken']);
         $routes->get('fetchGeneratedSummariesBlock', 'MarketingAPIController::fetchGeneratedSummariesBlock', ['filter' => 'apiToken']);
         $routes->get('fetchGeneratedSummariesJson', 'MarketingAPIController::fetchGeneratedSummariesJson', ['filter' => 'apiToken']);
@@ -1089,7 +1089,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('processMarketingTempEmails/(:num)/(:segment)/(:num)', 'MarketingAPIController::processMarketingTempEmails/$1/$2/$3', ['filter' => 'apiToken']);
         $routes->get('processMarketingTempEmails/(:num)/(:segment)', 'MarketingAPIController::processMarketingTempEmails/$1/$2', ['filter' => 'apiToken']);
         $routes->get('publishGroupedContentDraft', 'MarketingAPIController::publishGroupedContentDraft', ['filter' => 'apiToken']);
-        $routes->get('rankBufferPostsDaily', 'MarketingAPIController::rankBufferPostsDaily');
+        $routes->get('rankBufferPostsDaily', 'MarketingAPIController::rankBufferPostsDaily', ['filter' => 'apiAdmin']); // API-AUTH-001
         $routes->match(['GET', 'POST'], 'runNewsScrape', 'MarketingAPIController::runNewsScrape', ['filter' => 'apiToken']);
         $routes->match(['GET', 'POST'], 'runNewsGenerate', 'MarketingAPIController::runNewsGenerate', ['filter' => 'apiToken']);
         $routes->match(['GET', 'POST'], 'runNewsPipeline', 'MarketingAPIController::runNewsPipeline', ['filter' => 'apiToken']);
@@ -1115,7 +1115,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('Timeline/(:segment)', 'MarketingAPIController::timeline/$1');
         $routes->get('Timeline', 'MarketingAPIController::viewTimelineGrouped');
         $routes->get('triggerBackfill', 'MarketingAPIController::reprocessIncompleteEmails', ['filter' => 'internalToken']);
-        $routes->get('triggerPostAutogenOnEmpty', 'MarketingAPIController::triggerPostAutogenOnEmpty');
+        $routes->get('triggerPostAutogenOnEmpty', 'MarketingAPIController::triggerPostAutogenOnEmpty', ['filter' => 'apiAdmin']); // API-AUTH-001
         $routes->post('updateCampaignLinks', 'MarketingAPIController::updateCampaignLinks', ['filter' => 'apiToken']);
         $routes->post('updateInsight', 'MarketingAPIController::updateInsight', ['filter' => 'apiToken']);
         $routes->post('updateCampaignMessageField', 'MarketingAPIController::updateCampaignMessageField', ['filter' => 'apiToken']);
@@ -1272,20 +1272,20 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('getExchangePrice/(:segment)', 'SolanaAPIController::getExchangePrice/$1');
         $routes->get('getAssetsData', 'SolanaAPIController::getAssetsData');
         $routes->get('provisionDefaultWallet', 'SolanaAPIController::provisionDefaultWallet');
-        $routes->get('updatePrices', 'SolanaAPIController::updateSolanaPrices');
-        $routes->get('updateTokens', 'SolanaAPIController::updateSolanaTokens');
+        $routes->get('updatePrices', 'SolanaAPIController::updateSolanaPrices', ['filter' => 'apiAdmin']); // API-AUTH-001: price job trigger
+        $routes->get('updateTokens', 'SolanaAPIController::updateSolanaTokens', ['filter' => 'apiAdmin']); // API-AUTH-001: token job trigger
 
         // New Routes - Codex Pull Request https://github.com/MillennialInvestments/MyMIWallet/pull/35/files#diff-bfda09f2b1b5c0bbb67e81be1c5a9e3f3c0abcff17f9890caa17e3557bb25653R1-R4
         $routes->get('health', 'SolanaAPIController::health');
         $routes->get('wallet/(:segment)/balance', 'SolanaAPIController::getBalance/$1');
         $routes->get('wallet/(:segment)/tokens', 'SolanaAPIController::getTokenAccounts/$1');
-        $routes->post('transfer', 'SolanaAPIController::transfer', ['filter' => 'csrf']);
-        $routes->post('swap/quote', 'SolanaAPIController::quote', ['filter' => 'csrf']);
-        $routes->post('transaction/preview', 'SolanaAPIController::preview', ['filter' => 'csrf']);
-        $routes->post('swap/preview', 'SolanaAPIController::preview', ['filter' => 'csrf']);
-        $routes->post('swap/execute', 'SolanaAPIController::swap', ['filter' => 'csrf']);
-        $routes->post('token/create', 'SolanaAPIController::createToken', ['filter' => 'csrf']);
-        $routes->post('token/mint', 'SolanaAPIController::mint', ['filter' => 'csrf']);
+        $routes->post('transfer', 'SolanaAPIController::transfer', ['filter' => ['csrf', 'apiUser', 'feature:solana_trading']]); // API-AUTH-001
+        $routes->post('swap/quote', 'SolanaAPIController::quote', ['filter' => ['csrf', 'apiUser']]); // API-AUTH-001
+        $routes->post('transaction/preview', 'SolanaAPIController::preview', ['filter' => ['csrf', 'apiUser']]); // API-AUTH-001
+        $routes->post('swap/preview', 'SolanaAPIController::preview', ['filter' => ['csrf', 'apiUser']]); // API-AUTH-001
+        $routes->post('swap/execute', 'SolanaAPIController::swap', ['filter' => ['csrf', 'apiUser', 'feature:solana_trading']]); // API-AUTH-001
+        $routes->post('token/create', 'SolanaAPIController::createToken', ['filter' => ['csrf', 'apiUser', 'feature:solana_trading']]); // API-AUTH-001
+        $routes->post('token/mint', 'SolanaAPIController::mint', ['filter' => ['csrf', 'apiUser', 'feature:solana_trading']]); // API-AUTH-001
     });
 
     $routes->group('Support', function($routes) {

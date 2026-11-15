@@ -111,6 +111,19 @@ class FormTestExecutor
         $row['controller_class'] = (string)($route['controller'] ?? '');
         $row['route_match'] = (string)($route['route'] ?? '');
 
+        // STAGING-001: never submit to a target on the destructive skip list.
+        $skipReason = FormSubmissionPolicy::destructiveReason($action);
+        if ($skipReason !== null) {
+            return [
+                'ok'             => false,
+                'status'         => 'SKIPPED',
+                'reason'         => 'destructive_target: ' . $skipReason,
+                'test_id'        => null,
+                'error_detected' => false,
+                'analysis'       => $analysis,
+            ];
+        }
+
         $payload = $this->generatePayload($inputs);
         $row['generated_payload'] = json_encode($payload, JSON_UNESCAPED_SLASHES);
 
