@@ -394,7 +394,7 @@ class UserModel extends Model
      */
     public function withGroup(string $groupName)
     {
-        $getResult = $this->db->table('auth_groups')->where('name', $groupName)->get();
+        $getResult = $this->db->table('auth_groups')->where('name', $groupName)->limit(1)->get();
         $group = ($getResult !== false) ? $getResult->getFirstRow() : null;
 
         $this->assignGroup = $group->id ?? null;
