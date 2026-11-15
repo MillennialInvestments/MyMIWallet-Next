@@ -343,6 +343,11 @@ perms() {
   find "$STG_BASE" -path "$STG_BASE/shared/writable" -prune -o -exec chgrp -h "$grp" {} +
   find "$STG_BASE" -path "$STG_BASE/shared/writable" -prune -o -type d -exec chmod g+rxs {} +
   find "$STG_BASE" -path "$STG_BASE/shared/writable" -prune -o -type f -exec chmod g+r {} +
+  # writable: php-fpm writes cache, logs and sessions here.
+  chown -R "$fpm_user:$grp" "$STG_BASE/shared/writable"
+  chmod -R ug+rwX "$STG_BASE/shared/writable"
+  find "$STG_BASE/shared/writable" -type d -exec chmod g+s {} +
+  sudo -u "$fpm_user" test -w "$STG_BASE/shared/writable/cache" || echo "perms: $fpm_user still cannot write $STG_BASE/shared/writable/cache"
   if sudo -u "$fpm_user" test -r "$STG_BASE/current/public/index.php" && sudo -u "$fpm_user" test -r "$STG_BASE/shared/.env"; then
     echo "perms: $fpm_user can read the staging site (group $grp)"
   else
