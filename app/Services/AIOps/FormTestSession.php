@@ -195,7 +195,7 @@ final class FormTestSession
      *
      * @return list<string>
      */
-    public static function appLogSince(string $since, ?string $logDir = null, int $max = 12): array
+    public static function appLogSince(string $since, ?string $logDir = null, int $max = 25): array
     {
         $file = rtrim($logDir ?? (WRITEPATH . 'logs'), '/') . '/log-' . substr($since, 0, 10) . '.php';
         if (! is_readable($file)) {
@@ -204,6 +204,9 @@ final class FormTestSession
         $out = [];
         foreach (file($file, FILE_IGNORE_NEW_LINES) ?: [] as $line) {
             if (! preg_match('/^[A-Z]+ - (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) --> (.*)$/', $line, $m) || $m[1] < $since) {
+                continue;
+            }
+            if (preg_match('/\[REQUEST\]|\[LIFECYCLE\]|\[FILTER_|\[ROUTE\]|AUTH_VIEW|VIEW_REDIRECT/', $m[2])) {
                 continue;
             }
             if (preg_match('/AUTH_(FAIL|SPAM|LOGIN)|CSRF|Security|honeypot|throttl|Login|attemptLogin|SecurityException|not allowed/i', $m[2])) {

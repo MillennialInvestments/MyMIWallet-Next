@@ -74,6 +74,7 @@ final class FormTestSessionTest extends CIUnitTestCase
         file_put_contents($dir . '/log-2026-11-15.php', implode("\n", [
             'NOTICE - 2026-11-15 22:30:00 --> [AUTH_FAIL] old line',
             'INFO - 2026-11-15 22:35:01 --> CSRF token verified.',
+            'DEBUG - 2026-11-15 22:35:01 --> [REQ_ID=ab] [ROUTE] Controller=AuthController Method=attemptLogin',
             'DEBUG - 2026-11-15 22:35:01 --> unrelated',
             'NOTICE - 2026-11-15 22:35:02 --> [AUTH_FAIL] Login validation failed',
         ]));
