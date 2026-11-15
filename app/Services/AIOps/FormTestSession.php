@@ -164,8 +164,39 @@ final class FormTestSession
                 $this->cookies !== [] ? implode(',', array_keys($this->cookies)) : 'none'
             );
 
+        if (! $this->loggedIn) {
+            $this->notes[] = 'Login page says: ' . ($this->loginPageMessage() ?? '(no message found)');
+        }
+
         // The token is kept per session; read it again from a signed-in page.
         $this->refreshCsrf($this->loggedIn ? 'Dashboard' : 'login');
+    }
+
+    /** The error the login page shows after a failed sign-in (flash message), as plain text. */
+    private function loginPageMessage(): ?string
+    {
+        try {
+            $resp = $this->client(false)->request('GET', site_url('login'), $this->requestOptions());
+            $this->absorb($resp);
+
+            return self::extractAlert((string) $resp->getBody());
+        } catch (\Throwable $e) {
+            return 'could not read the login page: ' . $e->getMessage();
+        }
+    }
+
+    public static function extractAlert(string $html): ?string
+    {
+        if (preg_match_all('~class=["\'][^"\']*\balert\b[^"\']*["\'][^>]*>(.*?)</div>~is', $html, $m)) {
+            foreach ($m[1] as $chunk) {
+                $text = trim(preg_replace('/\s+/', ' ', html_entity_decode(strip_tags($chunk))));
+                if ($text !== '') {
+                    return mb_substr($text, 0, 240);
+                }
+            }
+        }
+
+        return null;
     }
 
     public static function extractCsrf(string $html, string $name): ?string

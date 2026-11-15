@@ -70,16 +70,16 @@ storage_ok=1
 smart_disk() {
   local d="$1" out typ n h found=0
   out="$(smartctl -H "$d" 2>&1 || true)"
-  h="$(printf '%s\n' "$out" | grep -iE 'overall-health|SMART Health Status' | sed 's/.*: *//' | head -1)"
+  h="$(printf '%s\n' "$out" | grep -iE 'overall-health|SMART Health Status' | sed 's/.*: *//' | head -1 || true)"
   if [ -n "$h" ]; then echo "  SMART $d: $h"; [ "$h" = PASSED ] || [ "$h" = OK ] || storage_ok=0; return; fi
-  typ="$(printf '%s\n' "$out" | grep -oE "requires option '-d [a-z]+" | awk '{print $NF}' | head -1)"
+  typ="$(printf '%s\n' "$out" | grep -oE "requires option '-d [a-z]+" | awk '{print $NF}' | head -1 || true)"
   [ -n "$typ" ] || { echo "  SMART $d: unknown ($(printf '%s' "$out" | tail -1 | cut -c1-120))"; return; }
   for n in $(seq 0 31); do
     out="$(smartctl -H -i -d "$typ,$n" "$d" 2>&1 || true)"
-    h="$(printf '%s\n' "$out" | grep -iE 'overall-health|SMART Health Status' | sed 's/.*: *//' | head -1)"
+    h="$(printf '%s\n' "$out" | grep -iE 'overall-health|SMART Health Status' | sed 's/.*: *//' | head -1 || true)"
     [ -n "$h" ] || continue
     found=$((found + 1))
-    echo "  SMART $d $typ,$n: $h  ($(printf '%s\n' "$out" | grep -iE '^(Device Model|Product|Serial Number|User Capacity)' | sed 's/^[^:]*: *//' | tr '\n' ' ' | cut -c1-90))"
+    echo "  SMART $d $typ,$n: $h  ($(printf '%s\n' "$out" | grep -iE '^(Device Model|Product|Serial Number|User Capacity)' | sed 's/^[^:]*: *//' | tr '\n' ' ' | cut -c1-90 || true))"
     [ "$h" = PASSED ] || [ "$h" = OK ] || storage_ok=0
   done
   [ "$found" -gt 0 ] || echo "  SMART $d: behind a $typ controller, but no drive answered on $typ,0-31"

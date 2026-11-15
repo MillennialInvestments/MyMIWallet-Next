@@ -59,4 +59,11 @@ final class FormTestSessionTest extends CIUnitTestCase
 
         $this->assertSame(['ci_session' => 'one', 'remember' => 'two'], $session->cookies());
     }
+
+    public function testExtractsLoginAlertText(): void
+    {
+        $html = '<div class="alert alert-danger" role="alert"><strong>Login failed.</strong> Please verify your password. AUTH-LOGIN-003</div>';
+        $this->assertSame('Login failed. Please verify your password. AUTH-LOGIN-003', FormTestSession::extractAlert($html));
+        $this->assertNull(FormTestSession::extractAlert('<p>ok</p>'));
+    }
 }
