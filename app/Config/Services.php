@@ -85,6 +85,40 @@ class Services extends CoreServices
         return new ShieldAuth($config);
     }
 
+    /**
+     * GTM-017: activation mail goes through the branded MailService sender
+     * (App\Legacy\Auth\Authentication\Activators\EmailActivator), which falls back
+     * to Myth's plain template if the branded send fails. Same lookup as Myth's
+     * own service, but against the app's legacy Myth config.
+     */
+    public static function activator(?\Myth\Auth\Config\Auth $config = null, bool $getShared = true): \Myth\Auth\Authentication\Activators\ActivatorInterface
+    {
+        if ($getShared) {
+            return static::getSharedInstance('activator', $config);
+        }
+
+        $config ??= config(LegacyMythAuthConfig::class);
+        $class = $config->requireActivation ?? \Myth\Auth\Authentication\Activators\UserActivator::class;
+
+        return new $class($config);
+    }
+
+    /**
+     * GTM-017: reset mail goes through the branded MailService sender, with the
+     * same plain-template fallback.
+     */
+    public static function resetter(?\Myth\Auth\Config\Auth $config = null, bool $getShared = true): \Myth\Auth\Authentication\Resetters\ResetterInterface
+    {
+        if ($getShared) {
+            return static::getSharedInstance('resetter', $config);
+        }
+
+        $config ??= config(LegacyMythAuthConfig::class);
+        $class = $config->activeResetter ?? \Myth\Auth\Authentication\Resetters\EmailResetter::class;
+
+        return new $class($config);
+    }
+
     public static function authentication(
         string $lib = 'local',
         ?\CodeIgniter\Model $userModel = null,

@@ -587,6 +587,20 @@ class AuthController extends BaseController
         return $response;
     }
 
+    /**
+     * GTM-019: GET /logout no longer logs anyone out, so another site cannot
+     * sign a user out with an image tag or a link. It shows a one-button page
+     * that POSTs to /logout with the CSRF token.
+     */
+    public function logoutConfirm()
+    {
+        if ((int) ($this->session->get('user_id') ?? 0) <= 0 && ! $this->session->get('logged_in')) {
+            return redirect()->route('login');
+        }
+
+        return $this->response->setBody(view('Auth/logout_confirm'));
+    }
+
     private function clearUserCacheKeys(int $userId): void
     {
         if ($userId <= 0) {

@@ -126,9 +126,12 @@ form.d-flex.align-items-center button.btn {
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <a class="dropdown-item d-flex align-items-center gap-2" href="<?= site_url('/logout'); ?>">
-                                    <em class="icon ni ni-signout"></em><span>Sign out</span>
-                                </a>
+                                <form action="<?= site_url('logout') ?>" method="post" class="m-0">
+                                    <?= csrf_field() ?>
+                                    <button type="submit" class="dropdown-item d-flex align-items-center gap-2">
+                                        <em class="icon ni ni-signout"></em><span>Sign out</span>
+                                    </button>
+                                </form>
                             </li>
                         </ul>
                     </div>

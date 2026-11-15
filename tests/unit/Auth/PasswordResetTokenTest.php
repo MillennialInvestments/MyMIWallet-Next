@@ -12,13 +12,19 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class PasswordResetTokenTest extends CIUnitTestCase
 {
-    public function testResetEmailRendersAWorkingLink(): void
+    public function testPlainFallbackResetEmailRendersAWorkingLink(): void
     {
-        $resetter = service('resetter');
-        $this->assertInstanceOf(\Myth\Auth\Authentication\Resetters\ResetterInterface::class, $resetter);
+        $this->assertInstanceOf(\Myth\Auth\Authentication\Resetters\ResetterInterface::class, service('resetter'));
 
-        $config = (new ReflectionProperty($resetter, 'config'))->getValue($resetter);
-        $html   = view($config->views['emailForgot'], ['hash' => 'abc123']);
+        // The branded sender falls back to Myth's own template and config (GTM-017).
+        $html = view((new \Myth\Auth\Config\Auth())->views['emailForgot'], ['hash' => 'abc123']);
+
+        $this->assertStringContainsString(url_to('reset-password') . '?token=abc123', $html);
+    }
+
+    public function testBrandedResetEmailRendersAWorkingLink(): void
+    {
+        $html = view('emails/reset', ['name' => 'Member', 'ctaLabel' => 'Reset My Password', 'supportEmail' => 'support@example.com', 'actionUrl' => url_to('reset-password') . '?token=abc123']);
 
         $this->assertStringContainsString(url_to('reset-password') . '?token=abc123', $html);
     }
