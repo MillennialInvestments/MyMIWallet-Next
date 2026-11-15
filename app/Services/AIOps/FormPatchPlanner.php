@@ -26,7 +26,8 @@ class FormPatchPlanner
         $analysis = $executionResult['analysis'] ?? [];
         $row      = $executionResult['row'] ?? [];
 
-        $jobDir = ROOTPATH . 'docs/_aiops/patch_jobs/';
+        // Never write into the source tree (GT-FORM-HARNESS-001).
+        $jobDir = FormSubmissionPolicy::reportDir() . '/patch_jobs/';
         if (!is_dir($jobDir)) {
             @mkdir($jobDir, 0775, true);
         }
