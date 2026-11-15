@@ -11,13 +11,21 @@ $subViewData = is_array($subViewData ?? null) ? $subViewData : [];
             document.body.appendChild(modal);
         }
     }
-    document.addEventListener('show.bs.modal', function (event) { lift(event.target); }, true);
+    var lastShowAt = 0;
+    document.addEventListener('show.bs.modal', function (event) { lastShowAt = Date.now(); lift(event.target); }, true);
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.nk-wrap .modal, .nk-app-root .modal').forEach(lift);
     });
 
     // Safety net: never leave the page under an overlay with no visible modal.
     function sweep() {
+        // A normal open finishes its fade in ~0.3s; leave one in progress alone
+        // and look again once it should be done.
+        var sinceShow = Date.now() - lastShowAt;
+        if (sinceShow < 1200) {
+            setTimeout(sweep, 1200 - sinceShow);
+            return;
+        }
         var open = Array.prototype.some.call(document.querySelectorAll('.modal'), function (m) {
             return m.classList.contains('show') && getComputedStyle(m).opacity !== '0';
         });

@@ -46,6 +46,7 @@ final class DashboardModalsRenderedOnceTest extends CIUnitTestCase
 
         $modals = (string) file_get_contents(APPPATH . 'Views/themes/dashboard/partials/custom-js/modals.php');
         $this->assertStringContainsString('function sweep()', $modals);
+        $this->assertStringContainsString('lastShowAt = Date.now()', $modals, 'a modal that is still opening must not be swept');
         $this->assertStringContainsString(".modal-backdrop').forEach(function (b) { b.remove(); })", $modals);
     }
 }
