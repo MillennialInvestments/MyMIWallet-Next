@@ -19,8 +19,18 @@ class OpsHealthController extends UserController
         $summary = $service->latestSummary();
 
         if (! $summary) {
-            return $this->failNotFound('No EnvDoctor report available.');
+            // No report yet is a normal state on a fresh host, not a missing
+            // route: answer 200 so the dashboard card shows "unknown".
+            return $this->respond([
+                'status' => 'unknown',
+                'score' => null,
+                'generated_at' => null,
+                'top_findings' => [],
+                'message' => 'No EnvDoctor report available yet.',
+            ]);
         }
+
+        unset($summary['report_path']);
 
         return $this->respond($summary);
     }

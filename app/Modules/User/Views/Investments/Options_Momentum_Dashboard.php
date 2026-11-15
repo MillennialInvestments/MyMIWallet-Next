@@ -296,7 +296,7 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item"><strong>Webhook Endpoint:</strong> <code>https://www.mymiwallet.com/API/Options/webhook</code></li>
                                 <li class="list-group-item"><strong>HTTP Method:</strong> <code>POST</code> (application/json)</li>
-                                <li class="list-group-item"><strong>Secret Header / Field:</strong> <code>mymi-options-secure-key</code></li>
+                                <li class="list-group-item"><strong>Secret Header / Field:</strong> <code>X-MyMI-Secret</code> or <code>"secret"</code>, set to the value of <code>OPTIONS_WEBHOOK_SECRET</code> (ask an admin; the webhook is off until it is set)</li>
                                 <li class="list-group-item"><strong>Target Balance Defaults:</strong> <code>$100.00 Call / $100.00 Put</code> (configurable in <code>app/Config/OptionsStrategy.php</code> or <code>.env</code>)</li>
                                 <li class="list-group-item"><strong>Idempotency:</strong> Handled automatically via SHA-256 event hash</li>
                             </ul>
@@ -304,7 +304,7 @@
                         <div class="col-lg-6">
                             <h6>TradingView Alert JSON Template</h6>
                             <pre class="bg-light p-3 rounded fs-12px"><code>{
-  "secret": "mymi-options-secure-key",
+  "secret": "YOUR_OPTIONS_WEBHOOK_SECRET",
   "ticker": "{{ticker}}",
   "signal": "momentum_weakening",
   "timeframe": "{{interval}}",

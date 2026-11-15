@@ -181,10 +181,10 @@ if (ENVIRONMENT !== 'production') {
         throw new \Exception('Manual test exception');
     });
 }
-$routes->get('ops/health', '\\App\\Controllers\\OpsHealthController::index');
+$routes->get('ops/health', '\\App\\Controllers\\OpsHealthController::index', ['filter' => 'permission:admin.access']);
 $routes->get('Maintenance', 'MaintenanceController::index');
 
-$routes->get('API/Ops/health-score', '\\App\\Controllers\\OpsHealthController::score');
+$routes->get('API/Ops/health-score', '\\App\\Controllers\\OpsHealthController::score', ['filter' => 'permission:admin.access']);
 $routes->get('API/Ops/filesystem-status', '\\App\\Controllers\\Api\\OpsFilesystemStatusController::index', ['filter' => 'permission:admin.access']);
 $routes->get('API/docs', '\\App\\Controllers\\Api\\SwaggerDocsController::index', ['filter' => 'permission:admin.access']);
 $routes->group('admin/ops', ['filter' => 'permission:admin.access'], static function ($routes) {
@@ -299,7 +299,7 @@ $routes->group('', ['namespace' => 'App\Controllers'], static function($routes) 
     $routes->get('api/health', 'Api\\HealthController::index'); // convenient alias
     $routes->get('api/admin/chat-usage', 'Api\\AdminChatUsageController::index', ['filter' => 'permission:admin.access']);
     $routes->post('api/aiops/manual-run', 'Api\\AiOpsManualRunController::run', ['filter' => 'permission:admin.access']);
-    $routes->get('ops/health', 'OpsHealthController::index');
+    $routes->get('ops/health', 'OpsHealthController::index', ['filter' => 'permission:admin.access']);
 
     // Ops (protected by X-OPCACHE-RESET header)
     $routes->get('_ops/opcache-reset', 'Ops::opcacheReset');
@@ -764,7 +764,9 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->match(['GET', 'POST'], 'postMarketingContentToSocials', 'AlertsAPIController::postMarketingContentToSocials');
 
         $routes->match(['GET', 'POST'], 'gen-keys', 'AlertsAPIController::genKeys'); // Robinhood API Library :: generate keys
-        $routes->match(['GET', 'POST'], 'sign', 'AlertsAPIController::sign'); // Robinhood API Library :: sign
+        // Signs a Robinhood request with a caller-supplied private key: POST only
+        // (never a key in a GET URL) and only for signed-in users (GTM-027).
+        $routes->post('sign', 'AlertsAPIController::sign', ['filter' => 'login']); // Robinhood API Library :: sign
     });
 
     // ------------------------
