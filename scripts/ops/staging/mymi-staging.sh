@@ -11,6 +11,8 @@
 #   sudo bash mymi-staging.sh form-test [limit]  # submit every safe form on staging, signed in as staging-tester
 #   sudo bash mymi-staging.sh revision      # print the git sha staging is running
 #   sudo bash mymi-staging.sh smart         # drive health only (SMART, through RAID cards too)
+#   sudo bash mymi-staging.sh tester-check  # read-only: why staging-tester cannot sign in
+#   sudo bash mymi-staging.sh reset-testers # recreate both test accounts with the saved passwords
 #
 # What it never does: write to the live database, the live site folder, the
 # live .env, or the live nginx site. It reads the live .env (for DB host/port
@@ -412,6 +414,20 @@ form_test() {
     -u "$fpm_user" php spark aiops:form:test "${args[@]}")
 }
 
+# Read-only: the tester row and whether the saved password matches it.
+tester_check() {
+  local pw cols sel; pw="$(cred_get STAGING_TESTER_PASSWORD)"
+  cols="$("${MYSQL[@]}" -N -e "SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='$STG_DB' AND TABLE_NAME='bf_users'")"
+  sel="id, email"; for c in active deleted deleted_at status banned force_pass_reset; do printf '%s\n' "$cols" | grep -qx "$c" && sel="$sel, $c"; done
+  echo "bf_users rows for staging-tester (by email, or id 3693):"
+  "${MYSQL[@]}" "$STG_DB" -e "SELECT $sel FROM bf_users WHERE email LIKE 'staging-tester%' OR username='staging_tester' OR id=3693"
+  echo "users view row:"; "${MYSQL[@]}" "$STG_DB" -e "SELECT id, email FROM users WHERE email='staging-tester@staging.invalid'" 2>&1 | sed 's/^/  /'
+  local hash; hash="$("${MYSQL[@]}" -N "$STG_DB" -e "SELECT password_hash FROM bf_users WHERE email='staging-tester@staging.invalid' ORDER BY id DESC LIMIT 1")"
+  if [ -z "$hash" ]; then echo "password: no row with that email"
+  elif PW="$pw" H="$hash" php -r 'exit(password_verify(getenv("PW"), getenv("H")) ? 0 : 1);'; then echo "password: saved password MATCHES"
+  else echo "password: saved password does NOT match (run: sudo bash $0 set-password tester)"; fi
+}
+
 smoke() {
   local pw code; pw="$(cred_get STAGING_SITE_PASSWORD)"
   code="$(curl -s -o /tmp/mymi-staging-smoke.html -w '%{http_code}' -u "staging:$pw" -H "Host: $HOST" -H 'X-Forwarded-Proto: https' "http://127.0.0.1/" || true)"
@@ -445,6 +461,8 @@ set-password) set_password "${ARG:-tester}" ;;
 vhost) vhost; smoke ;;
 form-test) form_test "$ARG" ;;
 revision) cat "$STG_BASE/current/REVISION" ;;
+tester-check) tester_check ;;
+reset-testers) test_accounts; tester_check ;;
 smart) storage_ok=1; for d in $(lsblk -dno NAME,TYPE | awk '$2=="disk"{print "/dev/"$1}'); do smart_disk "$d"; done; [ "$storage_ok" = 1 ] && echo "SMART: all drives that answered report healthy" || echo "SMART: at least one drive is NOT healthy" ;;
-*) sed -n '2,13p' "$0"; exit 1 ;;
+*) sed -n '2,15p' "$0"; exit 1 ;;
 esac

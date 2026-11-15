@@ -63,6 +63,11 @@ final class FormTestSession
         return $this->notes;
     }
 
+    public function wantsLogin(): bool
+    {
+        return $this->login !== null && $this->password !== null;
+    }
+
     public function isLoggedIn(): bool
     {
         return $this->loggedIn;
@@ -157,8 +162,8 @@ final class FormTestSession
         $this->notes[] = $this->loggedIn
             ? 'Signed in as the form-test account (redirect to ' . (parse_url($location, PHP_URL_PATH) ?: '/') . ').'
             : sprintf(
-                'Sign-in failed (HTTP %d, redirect to %s, csrf token %s, cookies sent: %s); submits run anonymous. '
-                . 'If the redirect is /login the password is wrong: run sudo bash ~/mymi-staging.sh set-password tester.',
+                'Sign-in failed (HTTP %d, redirect to %s, csrf token %s, cookies sent: %s). '
+                . 'Live submits are stopped. Check the account: sudo bash ~/mymi-staging.sh tester-check',
                 $resp->getStatusCode(),
                 parse_url($location, PHP_URL_PATH) ?: 'none',
                 $this->csrfToken !== null ? 'found' : 'MISSING',

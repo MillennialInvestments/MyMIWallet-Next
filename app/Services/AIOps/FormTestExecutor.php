@@ -137,15 +137,29 @@ class FormTestExecutor
             ];
         }
 
-        // Guest-only auth forms (sign in, sign up, reset, activation) say
-        // nothing useful when posted by the signed-in test account, and can
-        // end its session. They are covered by the auth-smoke tests.
+        // Guest-only auth forms (sign in, sign up, reset, activation) create
+        // accounts, send mail or end the tester's session when posted with
+        // junk. The auth-smoke tests cover them.
         $session = $this->session();
-        if ($session !== null && $session->isLoggedIn() && self::isGuestAuthForm($action)) {
+        if ($session !== null && $session->wantsLogin()) {
+            $session->ensureLoggedIn();
+            if (! $session->isLoggedIn()) {
+                // Submitting signed out only produces 401s and noise.
+                return [
+                    'ok'             => false,
+                    'status'         => 'BLOCKED',
+                    'reason'         => 'tester_sign_in_failed',
+                    'test_id'        => null,
+                    'error_detected' => false,
+                    'analysis'       => $analysis,
+                ];
+            }
+        }
+        if ($session !== null && self::isGuestAuthForm($action)) {
             return [
                 'ok'             => false,
                 'status'         => 'SKIPPED',
-                'reason'         => 'guest_auth_form_while_signed_in',
+                'reason'         => 'guest_auth_form',
                 'test_id'        => null,
                 'error_detected' => false,
                 'analysis'       => $analysis,
