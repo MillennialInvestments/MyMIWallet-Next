@@ -61,8 +61,9 @@ final class ShieldIdentityBackfillTest extends CIUnitTestCase
         $ref = new ReflectionClass(ShieldIdentityBackfill::class);
         $source = file_get_contents($ref->getFileName());
 
-        $this->assertStringContainsString('DELETE FROM auth_identities', $source);
+        // down() must be scoped to the rows this backfill tagged (GTM-015).
+        $this->assertStringContainsString('BACKFILL_MARKER', $source);
+        $this->assertStringNotContainsString('user_id IN (SELECT id FROM users)', $source);
         $this->assertStringContainsString('email_password', $source);
-        $this->assertTrue(true);
     }
 }

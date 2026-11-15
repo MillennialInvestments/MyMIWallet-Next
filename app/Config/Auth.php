@@ -25,6 +25,14 @@ class Auth extends ShieldAuth
     public bool $debug = false;
 
     /**
+     * GTM-018: Myth/Auth's User::generateResetHash() reads config('Auth')->resetTime,
+     * and config('Auth') is this Shield config. Without it, every password reset
+     * request for a real account threw "Undefined property". Keep in step with
+     * App\Legacy\Auth\Config\Auth::$resetTime.
+     */
+    public int $resetTime = 3600;
+
+    /**
      * Keep Shield migration routes rendering existing app templates.
      *
      * @var array<string, string>

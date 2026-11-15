@@ -276,15 +276,18 @@ $routes->get('/Terms-Of-Service', 'Home::termsOfService');
 $routes->get('/resend-activation', 'AuthController::resendActivation', ['as' => 'resend-activation']);
 $routes->post('/resend-activation', 'AuthController::resendActivationCode', ['as' => 'resend-activation-code']);
 
-// Dev tools
-$routes->get('Dev/BitcoinTest', '\App\Controllers\Dev\BitcoinTest::index');
-$routes->get('Debug/whoami', 'Debug::whoami');
-$routes->get('Debug/auth-audit-cache', 'Debug::authAuditCacheSelfTest');
+// Dev tools. GTM-016: never served in production. whoami echoes the session id and
+// request headers (cookies), and the probes are diagnostics only.
+if (ENVIRONMENT !== 'production') {
+    $routes->get('Dev/BitcoinTest', '\App\Controllers\Dev\BitcoinTest::index');
+    $routes->get('Debug/whoami', 'Debug::whoami');
+    $routes->get('Debug/auth-audit-cache', 'Debug::authAuditCacheSelfTest');
 
-$routes->group('debug', ['namespace' => '\App\Controllers\Debug'], static function ($routes) {
-    $routes->get('common-data/smoke', 'CommonDataController::smoke');
-});
-$routes->get('debug/register-success-probe', 'AuthController::registerSuccessProbe');
+    $routes->group('debug', ['namespace' => '\App\Controllers\Debug'], static function ($routes) {
+        $routes->get('common-data/smoke', 'CommonDataController::smoke');
+    });
+    $routes->get('debug/register-success-probe', 'AuthController::registerSuccessProbe');
+}
 $routes->get('API/Management/error-heatmap', 'SystemDebugController::errorHeatmap', ['filter' => 'permission:admin.access']);
 $routes->get('Management/System-Debug', 'SystemDebugController::index', ['filter' => 'permission:admin.access']);
 
@@ -333,11 +336,15 @@ $routes->get('register', 'AuthController::register', ['as' => 'register']);
     $routes->post('register/resend-activation', 'AuthController::resendRegistrationActivation', ['as' => 'register-resend-activation']);
 // });
 
-    // Shield migration test routes (parallel to Myth/Auth routes).
-    $routes->get('login-shield', '\\App\\Controllers\\ShieldAuth\\Login::index', ['as' => 'login-shield']);
-    $routes->post('login-shield', '\\App\\Controllers\\ShieldAuth\\Login::attempt', ['as' => 'login-shield-submit']);
-    $routes->get('register-shield', '\\App\\Controllers\\ShieldAuth\\Register::index', ['as' => 'register-shield']);
-    $routes->post('register-shield', '\\App\\Controllers\\ShieldAuth\\Register::attempt', ['as' => 'register-shield-submit']);
+    // Shield migration test routes (parallel to the live AuthController flow).
+    // GTM-013/017: not the canonical runtime, so never served in production. The
+    // register-shield form creates accounts with no validation, throttle, or activation.
+    if (ENVIRONMENT !== 'production') {
+        $routes->get('login-shield', '\\App\\Controllers\\ShieldAuth\\Login::index', ['as' => 'login-shield']);
+        $routes->post('login-shield', '\\App\\Controllers\\ShieldAuth\\Login::attempt', ['as' => 'login-shield-submit']);
+        $routes->get('register-shield', '\\App\\Controllers\\ShieldAuth\\Register::index', ['as' => 'register-shield']);
+        $routes->post('register-shield', '\\App\\Controllers\\ShieldAuth\\Register::attempt', ['as' => 'register-shield-submit']);
+    }
 
 // $routes->group('', ['namespace' => 'App\Controllers'], static function ($routes) {
 
@@ -346,8 +353,8 @@ $routes->get('register', 'AuthController::register', ['as' => 'register']);
         return redirect()->to(site_url('login'));
     });
 
-    // Utility
-    $routes->get('test-create-user', 'AuthController::createTempUser');
+    // GTM-016: removed `test-create-user`. It pointed at AuthController::createTempUser,
+    // which no longer exists.
 
     // Existing integrations you already wired
     $routes->post('Auth/link-robinhood', 'AuthController::linkRobinhood');

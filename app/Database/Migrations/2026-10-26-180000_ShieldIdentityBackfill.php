@@ -13,6 +13,9 @@ use RuntimeException;
  */
 class ShieldIdentityBackfill extends Migration
 {
+    /** Stored in auth_identities.name so down() removes only rows this backfill created. */
+    public const BACKFILL_MARKER = 'gtm015-backfill';
+
     public function up()
     {
         $db = $this->db;
@@ -99,7 +102,7 @@ class ShieldIdentityBackfill extends Migration
             SELECT 
                 u.id,
                 'email_password',
-                NULL,
+                '" . self::BACKFILL_MARKER . "',
                 LOWER(TRIM(u.email)),
                 {$pwdExpr},
                 0,
@@ -133,12 +136,13 @@ class ShieldIdentityBackfill extends Migration
             return;
         }
 
+        // Only remove the rows this migration created (tagged in `name`). Identities
+        // made by real registrations or password changes are never touched.
         $db->transStart();
-        $db->query("
-            DELETE FROM auth_identities 
-            WHERE type = 'email_password' 
-              AND user_id IN (SELECT id FROM users)
-        ");
+        $db->table('auth_identities')
+            ->where('type', 'email_password')
+            ->where('name', self::BACKFILL_MARKER)
+            ->delete();
         $db->transComplete();
     }
 }
