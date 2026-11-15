@@ -85,7 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    if (!document.getElementById('onboardingWalkthroughModal')?.classList.contains('show')) {
+    // Bootstrap adds .show after its fade, but marks <body> modal-open as soon as show() runs.
+    if (!document.body.classList.contains('modal-open') && !document.querySelector('.modal.show')) {
         new bootstrap.Modal(modalElement).show();
     }
 });

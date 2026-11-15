@@ -238,5 +238,6 @@ echo view('themes/dashboard/layouts/js-links', $subViewData);
 if (ENVIRONMENT !== 'production') {
     echo vite_tags('app', $scriptNonceValue);
 }
-echo view('themes/dashboard/layouts/custom-js', $subViewData);
+// custom-js (and the dashboard modals in it) is already rendered by js-links above.
+// Rendering it twice duplicated every modal, so each one opened twice.
 ?>
