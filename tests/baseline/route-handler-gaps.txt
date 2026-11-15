@@ -5,15 +5,12 @@ App\Controllers\AuctionsController::create
 App\Controllers\AuctionsController::index
 App\Controllers\AuctionsController::item
 App\Controllers\AuctionsController::poll
-App\Controllers\AuthController::createTempUser
 App\Controllers\AuthController::handleProviderCallback
 App\Controllers\AuthController::linkProvider
 App\Controllers\AuthController::linkRobinhood
 App\Controllers\AuthController::linkSnapTrade
 App\Controllers\AuthController::redirectToProvider
 App\Controllers\AuthController::unlinkProvider
-App\Controllers\Debug\CommonDataController::smoke
-App\Controllers\Dev\BitcoinTest::index
 App\Controllers\Ops::opcacheReset
 App\Controllers\ServiceWorker::index
 App\Modules\APIs\Controllers\APIController::getSymbolsByTradeType

@@ -1407,26 +1407,35 @@ class AuthController extends BaseController
         }
 
         $users = model(UserModel::class);
+        $email = strtolower(trim((string) $this->request->getPost('email')));
+        $ip    = $this->request->getIPAddress();
+        $this->ipHistoryModel->record(null, $email, $ip, (string) $this->request->getUserAgent());
 
-        $email = (string) $this->request->getPost('email');
-        $this->ipHistoryModel->record(null, $email, $this->request->getIPAddress(), (string) $this->request->getUserAgent());
-        log_message('info', '[AUTH] Password reset requested', [
-            'email' => $email,
-            'ip'    => $this->request->getIPAddress(),
-        ]);
+        // GTM-018: every request gets the same answer, so the form cannot be used
+        // to find out which emails have accounts. Throttle per address and per IP
+        // so it cannot be used to flood someone's inbox.
+        $generic   = lang('Auth.forgotEmailSent');
+        $emailHash = substr(hash('sha256', $email), 0, 12);
+        $throttler = service('throttler');
+        if ($throttler->check(md5('auth-forgot-ip:' . $ip), 5, MINUTE * 15) === false
+            || $throttler->check(md5('auth-forgot-email:' . $email), 3, HOUR) === false) {
+            log_message('warning', '[AUTH] Password reset throttled', ['email_hash' => $emailHash, 'ip' => $ip]);
+            $this->setAuthMessage('success', $generic);
 
-        $user = $users->where('email', $email)->first();
-
-        if (null === $user) {
-            $this->setAuthMessage('danger', lang('Auth.forgotNoUser'));
-            log_message('warning', '[AUTH] Password reset request: user not found', [
-                'email' => $email,
-                'ip'    => $this->request->getIPAddress(),
-            ]);
-            return redirect()->back();
+            return redirect()->route('reset-password');
         }
 
-        // Save the reset hash /
+        log_message('info', '[AUTH] Password reset requested', ['email_hash' => $emailHash, 'ip' => $ip]);
+
+        $user = $users->where('email', $email)->first();
+        if (null === $user) {
+            log_message('info', '[AUTH] Password reset request: no matching account', ['email_hash' => $emailHash, 'ip' => $ip]);
+            $this->setAuthMessage('success', $generic);
+
+            return redirect()->route('reset-password');
+        }
+
+        // Save the reset hash
         $user->generateResetHash();
         $users->save($user);
 
@@ -1434,18 +1443,18 @@ class AuthController extends BaseController
         $sent     = $resetter->send($user);
 
         if (! $sent) {
-            $this->setAuthMessage('danger', $resetter->error() ?? lang('Auth.unknownError'));
             log_message('error', '[AUTH] Password reset email failed', [
-                'email' => $email,
-                'error' => $resetter->error() ?? lang('Auth.unknownError'),
+                'email_hash' => $emailHash,
+                'error'      => $resetter->error() ?? lang('Auth.unknownError'),
             ]);
+            $this->setAuthMessage('danger', lang('Auth.unknownError'));
+
             return redirect()->back()->withInput();
         }
 
-        $this->setAuthMessage('success', lang('Auth.forgotEmailSent'));
-        log_message('info', '[AUTH] Password reset email sent', [
-            'email' => $email,
-        ]);
+        $this->setAuthMessage('success', $generic);
+        log_message('info', '[AUTH] Password reset email sent', ['email_hash' => $emailHash]);
+
         return redirect()->route('reset-password');
     }
 

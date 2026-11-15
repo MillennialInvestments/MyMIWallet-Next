@@ -374,6 +374,7 @@ class Filters extends BaseConfig
                 'API/Email/createDraftCampaign',
                 'API/Email/scheduleCampaignApi/*',
                 'API/Email/deleteCampaign/*',
+                'API/Email/sendMassTestCampaign',
                 'API/eSports/lockEscrow',
                 'API/eSports/cancelEvent',
                 'API/eSports/settlePayouts',

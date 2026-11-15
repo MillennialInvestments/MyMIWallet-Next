@@ -37,7 +37,7 @@ return [
     'forgotNoUser'    => 'Unable to locate a user with that email.',
     'forgotSubject'   => 'Password Reset Instructions',
     'resetSuccess'    => 'Your password has been successfully changed. Please login with the new password.',
-    'forgotEmailSent' => 'A security token has been emailed to you. Enter it in the box below to continue.',
+    'forgotEmailSent' => 'If that email has an account, we have sent it a security token. Enter it in the box below to continue.',
     'errorEmailSent'  => 'Unable to send email with password reset instructions to: {0}',
     'errorResetting'  => 'Unable to send reset instructions to {0}',
 
