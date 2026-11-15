@@ -116,7 +116,8 @@ class FormIntelligenceService
         $base = strtolower(basename($path));
 
         return preg_match('/(-\d{6,8}\.php$|[-_ ]copy\b|copy\.php$|_orig\b|-orig\b|backup|[-_]old\.php$|\.bak|-test\.php$|_test\.php$)/', $base) === 1
-            || preg_match('#/(backup|backups|old|_old|legacy|archive)/#i', '/' . strtolower($path)) === 1;
+            || preg_match('#/(backup|backups|old|_old|legacy|archive)/#i', '/' . strtolower($path)) === 1
+            || preg_match('#\(original\)|[ _-]copy(/|\.php$| \d)|_orig/#i', $path) === 1;
     }
 
     // ------------------------------------------------------------------ parse
@@ -275,6 +276,9 @@ class FormIntelligenceService
     /** @return list<array<string, mixed>> */
     private function extractJsCalls(string $src): array
     {
+        // Requests inside HTML comments are disabled code; blank them, keep newlines.
+        $src = preg_replace_callback('#<!--.*?-->#s', static fn ($m) => str_repeat("\n", substr_count($m[0], "\n")), $src) ?? $src;
+
         $q = '(?<q>[\'"`])(?<u>(?:(?!\k<q>).){0,300}?)\k<q>';
         $patterns = [
             ['#\bfetch\(\s*' . $q . '#s', null],

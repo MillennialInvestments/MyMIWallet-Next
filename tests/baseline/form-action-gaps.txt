@@ -26,7 +26,6 @@ app/Modules/Management/Views/Alerts/resources/sendDiscordAlert.php	js	POST	/API/
 app/Modules/Management/Views/AuthHealth/index.php	js	POST	/API/Management/runAuthSmoke	no_route
 app/Modules/Management/Views/Email/campaign_dashboard.php	js	GET	/API/Email/fetchTagAnalytics	no_route
 app/Modules/Management/Views/EmailOutbox/index.php	js	POST	/Management/EmailOutbox/send-test	no_route
-app/Modules/Management/Views/Marketing/Add.php	js	POST	/Management/Marketing/SubmitForm	no_route
 app/Modules/Management/Views/Marketing/Blog/Subscribe.php	js	POST	/CFA/Analysis/Application/Account_Manager	no_route
 app/Modules/Management/Views/Marketing/Drip/create.php	form	POST	/Management/Drip-Campaigns/store	no_route
 app/Modules/Management/Views/Marketing/Drip/create.php	js	POST	/Management/DripCampaign/previewTemplate	no_route
@@ -80,9 +79,6 @@ app/Modules/Management/Views/index.php	js	GET	/Management/runCronManually	no_rou
 app/Modules/Search/Views/index.php	js	GET	/API/Search	no_route
 app/Modules/Support/Views/_partials/_feedback.php	form	POST	/Support/Feedback	verb_mismatch
 app/Modules/User/Views/Budget/Settings.php	form	POST	/budget/settings/save	case_mismatch
-app/Modules/User/Views/Budget_Orig/index.php	js	POST	/Budget/bulkDelete	no_route
-app/Modules/User/Views/Budget_Orig/index.php	js	POST	/Budget/bulkUpdateStatus	no_route
-app/Modules/User/Views/Budget_Orig/index.php	js	POST	/path_to_your_controller_method	no_route
 app/Modules/User/Views/Dashboard/forms/onboarding.php	js	POST	/dashboard/completeOnboardingStep/{php}	case_mismatch
 app/Modules/User/Views/Investments/Add/form.php	js	POST	/add_new_wallet	no_route
 app/Modules/User/Views/Investments/Add/user_fields-new.php	js	POST	/Autosave	no_route
@@ -125,8 +121,6 @@ app/Modules/User/Views/Referral_Program/New_Affiliate_Information.php	form	POST	
 app/Modules/User/Views/Subscribe/header_subscribe.php	js	POST	/Blog/Email/Subscription/Account-Manager	no_route
 app/Modules/User/Views/Support/Feedback.php	js	POST	/User/Support/Communication_Manager	no_route
 app/Modules/User/Views/Support/Request.php	js	POST	/Support/Manager	verb_mismatch
-app/Modules/User/Views/Wallets/Add.php	form	POST	/API/Wallets/Add	no_route
-app/Modules/User/Views/Wallets/Add.php	js	POST	/Wallets/accountManager	no_route
 app/Modules/User/Views/Wallets/Add/form.php	js	POST	/User/Wallets/Wallet_Manager	no_route
 app/Modules/User/Views/Wallets/Add_Account.php	js	POST	/User/Wallets/Wallet_Manager	no_route
 app/Modules/User/Views/Wallets/Add_Deposit_Fetch.php	js	POST	/User/Wallets/Wallet_Transaction	no_route
@@ -139,7 +133,6 @@ app/Modules/User/Views/Wallets/Create_Bank_Account_Modal.php	form	POST	/Wallets/
 app/Modules/User/Views/Wallets/Deposit_Funds.php	form	POST	/Deposit-Funds	no_route
 app/Modules/User/Views/Wallets/Edit_Account.php	js	POST	/User/Wallets/Wallet_Manager	no_route
 app/Modules/User/Views/Wallets/Generate_Wallet.php	js	POST	/User/Wallets/Wallet_Generator	no_route
-app/Modules/User/Views/Wallets/Link_Account (Original)/Import-Trades.php	js	POST	/User/Wallets/Wallet_Manager	no_route
 app/Modules/User/Views/Wallets/Link_Account/Import-Trades.php	js	POST	/User/Wallets/Wallet_Manager	no_route
 app/Modules/User/Views/Wallets/MyMI_Gold/order_form.php	js	POST	/User/Wallets/Purchase_Coins_Transaction	no_route
 app/Modules/User/Views/Wallets/Purchase/Memberships/Customize.php	js	POST	/Memberships/PurchaseCallback	verb_mismatch

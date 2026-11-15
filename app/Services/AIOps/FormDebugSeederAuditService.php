@@ -43,10 +43,14 @@ class FormDebugSeederAuditService
         $intelligence  = new FormIntelligenceService();
         $executor      = new FormTestExecutor();
 
+        $corpus = $this->referenceCorpus();
+
         $entries = [];
         foreach ($formFiles as $file) {
             $rel = $this->relative($file);
+            $referenced = $this->isViewReferenced($rel, $corpus);
             foreach ($intelligence->inventory((string) @file_get_contents($file), $rel) as $entry) {
+                $entry['view_referenced'] = $referenced;
                 $entry['seed_readiness'] = $dbTableCounts === []
                     ? ['note' => 'DB counts not requested (--with-db-counts).']
                     : $this->reviewSeedReadiness($file, $entry, $dbTableCounts);
@@ -106,6 +110,52 @@ class FormDebugSeederAuditService
         sort($lines, SORT_STRING);
 
         return $lines;
+    }
+
+    /**
+     * All PHP under app/ keyed by relative path, used to tell whether a view
+     * is rendered or included anywhere (UNREACHABLE when it is not).
+     *
+     * @return array<string, string>
+     */
+    private function referenceCorpus(): array
+    {
+        $out = [];
+        $it  = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(APPPATH, \FilesystemIterator::SKIP_DOTS));
+        foreach ($it as $f) {
+            if ($f->isFile() && str_ends_with($f->getFilename(), '.php')) {
+                $out[$this->relative($f->getPathname())] = (string) @file_get_contents($f->getPathname());
+            }
+        }
+
+        return $out;
+    }
+
+    /**
+     * Heuristic: the view's last two path segments (without .php), e.g.
+     * "<Folder>/<View>", appear in another PHP file as a view name.
+     * Null when the file is not under a Views directory.
+     */
+    private function isViewReferenced(string $rel, array $corpus): ?bool
+    {
+        if (! preg_match('#/Views/(.+)\.(php|html)$#', $rel, $m)) {
+            return null;
+        }
+        $parts = explode('/', $m[1]);
+        $tail  = array_slice($parts, -2);
+        $name  = end($parts);
+        $re    = '#' . implode('[\\\\/]+', array_map(static fn ($p) => preg_quote($p, '#'), $tail)) . '(?:\.php)?(?![\w\\\\/-])#';
+
+        foreach ($corpus as $path => $code) {
+            if ($path === $rel || ! str_contains($code, $name)) {
+                continue;
+            }
+            if (preg_match($re, $code) === 1) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function relative(string $file): string
@@ -346,6 +396,8 @@ class FormDebugSeederAuditService
         $byStatus = ['PASS' => 0, 'FAIL' => 0, 'BLOCKED' => 0, 'SKIPPED' => 0];
         $byReason = [];
         $byKind   = [];
+        $unreferencedFails = 0;
+        $unreferencedFiles = [];
         $submitted = 0;
         $withGaps = 0;
 
@@ -353,6 +405,12 @@ class FormDebugSeederAuditService
             $byStatus[$e['status']] = ($byStatus[$e['status']] ?? 0) + 1;
             $byReason[$e['reason']] = ($byReason[$e['reason']] ?? 0) + 1;
             $byKind[$e['kind']]     = ($byKind[$e['kind']] ?? 0) + 1;
+            if (($e['view_referenced'] ?? null) === false) {
+                $unreferencedFiles[$e['file']] = true;
+                if ($e['status'] === FormIntelligenceService::STATUS_FAIL) {
+                    $unreferencedFails++;
+                }
+            }
             if (($e['submission']['executed'] ?? false) === true) {
                 $submitted++;
             }
@@ -372,6 +430,8 @@ class FormDebugSeederAuditService
             'forms_with_data_gaps' => $withGaps,
             'forms_submitted'      => $submitted,
             'by_status'            => $byStatus,
+            'unreferenced_view_files' => count($unreferencedFiles),
+            'fails_in_unreferenced_views' => $unreferencedFails,
             'by_reason'            => $byReason,
         ];
     }
