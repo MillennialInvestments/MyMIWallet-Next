@@ -80,13 +80,13 @@ final class WalletBalanceService
                 ->select('id')
                 ->where('id', $walletId)
                 ->where('user_id', $userId)
-                ->get();
+                ->limit(1)->get();
             if ($owned === false || $owned->getRowArray() === null) {
                 return $this->fail('wallet_not_found');
             }
 
             if ($requestId !== '') {
-                $dup = $this->db->table($this->ledgerTable)->select('id')->where('transaction_id', $txId)->get();
+                $dup = $this->db->table($this->ledgerTable)->select('id')->where('transaction_id', $txId)->limit(1)->get();
                 if ($dup === false) {
                     return $this->fail('ledger_read_failed');
                 }
@@ -137,7 +137,7 @@ final class WalletBalanceService
             return $this->fail('internal_error');
         }
 
-        $row = $this->db->table($this->walletTable)->select('amount')->where('id', $walletId)->get()->getRowArray();
+        $row = $this->db->table($this->walletTable)->select('amount')->where('id', $walletId)->limit(1)->get()->getRowArray();
 
         return [
             'ok'             => true,
