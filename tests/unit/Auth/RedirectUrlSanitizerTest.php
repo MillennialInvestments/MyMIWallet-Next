@@ -42,4 +42,13 @@ final class RedirectUrlSanitizerTest extends CIUnitTestCase
         $current = site_url('Budget?utm_campaign=spring&_ga=123&view=monthly');
         $this->assertSame('/Budget?view=monthly', redirect_url_sanitize($current));
     }
+
+    public function testRejectsBeaconsApisAndStaticFiles(): void
+    {
+        foreach (['/csp-report', '/csp', '/api/v1/version', '/API/Email/x', '/assets/js/app.js', '/favicon.ico', '/health', '/Auth/Two-Factor', '/manifest.webmanifest'] as $target) {
+            $this->assertNull(redirect_url_sanitize(site_url(ltrim($target, '/'))), $target);
+        }
+
+        $this->assertSame('/Dashboard', redirect_url_sanitize(site_url('Dashboard')));
+    }
 }

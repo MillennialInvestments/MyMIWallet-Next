@@ -1,5 +1,23 @@
 <?php
 $subViewData = is_array($subViewData ?? null) ? $subViewData : [];
+?>
+<script <?= $nonce['script'] ?? '' ?>>
+// Dashboard modals are rendered inside .nk-wrap, which forms its own stacking
+// context, so Bootstrap's backdrop (appended to <body>) covered them: users saw
+// a dark overlay and no modal. Move each modal to <body> before it opens.
+(function () {
+    function lift(modal) {
+        if (modal && modal.classList && modal.classList.contains('modal') && modal.parentElement !== document.body) {
+            document.body.appendChild(modal);
+        }
+    }
+    document.addEventListener('show.bs.modal', function (event) { lift(event.target); }, true);
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.nk-wrap .modal, .nk-app-root .modal').forEach(lift);
+    });
+})();
+</script>
+<?php
 // echo view('UserModule\Views\Dashboard\Investor_Profile\Security\Reset_Password');
 echo view('ManagementModule\Views\Marketing\index\modals');
 echo view('UserModule\Views\Dashboard\modals\onboarding', $subViewData);

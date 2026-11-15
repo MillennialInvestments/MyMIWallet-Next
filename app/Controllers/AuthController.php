@@ -2038,6 +2038,12 @@ class AuthController extends BaseController
             return false;
         }
 
+        // Same rules as when the target was saved: pages only, no beacons or APIs.
+        helper('redirect_url');
+        if (redirect_url_sanitize($url) === null) {
+            return false;
+        }
+
         if (! $this->passesRedirectValidation($url)) {
             return false;
         }
