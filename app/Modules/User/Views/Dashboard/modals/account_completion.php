@@ -85,10 +85,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Bootstrap adds .show after its fade, but marks <body> modal-open as soon as show() runs.
-    if (!document.body.classList.contains('modal-open') && !document.querySelector('.modal.show')) {
-        new bootstrap.Modal(modalElement).show();
-    }
+    // No auto-open: the dashboard already shows a "Continue setup" banner, and
+    // the auto-opened modal could leave a blank overlay over the whole page.
+    // Open it on demand with data-bs-toggle="modal" data-bs-target="#accountCompletionModal".
 });
 </script>
 <?php endif; ?>

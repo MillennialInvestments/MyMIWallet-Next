@@ -25,7 +25,7 @@ final class DashboardModalsRenderedOnceTest extends CIUnitTestCase
 
     public function testAutoOpeningModalsYieldToAModalThatIsAlreadyOpening(): void
     {
-        foreach (['account_completion', 'today_news'] as $modal) {
+        foreach (['today_news'] as $modal) {
             $source = (string) file_get_contents(APPPATH . 'Modules/User/Views/Dashboard/modals/' . $modal . '.php');
             $this->assertStringContainsString("document.body.classList.contains('modal-open')", $source, $modal);
         }
@@ -37,5 +37,16 @@ final class DashboardModalsRenderedOnceTest extends CIUnitTestCase
 
         $this->assertStringContainsString("addEventListener('show.bs.modal'", $source);
         $this->assertStringContainsString('document.body.appendChild(modal)', $source);
+    }
+
+    public function testAccountCompletionDoesNotAutoOpenAndOverlaysAreSwept(): void
+    {
+        $completion = (string) file_get_contents(APPPATH . 'Modules/User/Views/Dashboard/modals/account_completion.php');
+        $this->assertStringNotContainsString('.show()', $completion, 'the dashboard banner replaces the auto-opened modal');
+
+        $modals = (string) file_get_contents(APPPATH . 'Views/themes/dashboard/partials/custom-js/modals.php');
+        $this->assertStringContainsString('function sweep()', $modals);
+        $this->assertStringContainsString('lastShowAt = Date.now()', $modals, 'a modal that is still opening must not be swept');
+        $this->assertStringContainsString(".modal-backdrop').forEach(function (b) { b.remove(); })", $modals);
     }
 }
