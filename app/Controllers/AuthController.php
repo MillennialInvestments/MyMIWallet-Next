@@ -302,9 +302,29 @@ class AuthController extends BaseController
                 $attempt = $this->auth->attempt($credentials, $remember);
             }
         } catch (Throwable $e) {
+            $attempt = false;
+            // AUTH-LOGIN-005: Myth's login() sets the session before its
+            // housekeeping (remember-token purge on ~20% of logins, login
+            // event). If only that housekeeping throws, the person is signed
+            // in; keep them signed in and log the fault instead of failing.
+            $signedInId = $this->session->get('logged_in');
+            if ($nativeVerified && ! $isBanned && $signedInId !== null
+                && (string) $signedInId === (string) ($userRecord->id ?? '')) {
+                $this->authLog('AUTH_LOGIN', 'post_login_housekeeping_failed', 'Signed in, but post-login housekeeping threw', [
+                    'user_id' => $userRecord->id ?? null,
+                    'exception' => $e->getMessage(),
+                    'file' => basename($e->getFile()) . ':' . $e->getLine(),
+                    'request_id' => $requestId,
+                ], 'warning', __LINE__);
+                $attempt = true;
+            }
+        }
+
+        if (isset($e) && $attempt === false) {
             $this->authLog('AUTH_FAIL', 'exception', 'Authentication attempt threw exception', [
                 'identifier' => $identifier,
                 'exception' => $e->getMessage(),
+                'file' => basename($e->getFile()) . ':' . $e->getLine(),
                 'redirect_target' => site_url('login'),
             ], 'error', __LINE__);
             $context = [
