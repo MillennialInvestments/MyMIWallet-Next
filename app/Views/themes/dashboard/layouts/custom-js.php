@@ -163,14 +163,9 @@ if ($useGoogleAnalytics ?? true) {
                 });
             }
             <?php endif; ?>
-            $('input[name="q"]').on('keyup', function() {
-                var keyword = $(this).val();
-                if (keyword.length > 2) {
-                    $.get('<?= site_url("/search"); ?>', { q: keyword }, function(data) {
-                        $('.search-results').html(data);
-                    });
-                }
-            });
+            // GT-FORM-ROUTES-001: the old keyup live-search requested "/search" (a 404: routes
+            // are case-sensitive) on every keystroke and wrote into a ".search-results" element
+            // that no layout renders. The search form itself submits to /Search.
             $('body').on('click', '.close', function() {
                 $(this).closest('.modal').modal('hide');
             });

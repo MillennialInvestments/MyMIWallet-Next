@@ -69,7 +69,7 @@ class DripCampaignAdminController extends BaseAdminController
         $this->data['campaign_id'] = $campaignId;
         $this->data['pageTitle'] = 'Add Campaign Step';
 
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             $data = $this->request->getPost([
                 'step_number', 'name', 'subject', 'view_file', 'delay_days', 'delay_hours', 'is_active'
             ]);
@@ -87,7 +87,7 @@ class DripCampaignAdminController extends BaseAdminController
         $this->commonData();
         $this->data['pageTitle'] = 'Create Drip Campaign';
 
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             $postData = $this->request->getPost([
                 'name', 'description', 'audience_tags', 'segment_id',
                 'content_type', 'template_id', 'utm_source', 'utm_medium',
@@ -105,7 +105,7 @@ class DripCampaignAdminController extends BaseAdminController
             $postData['created_by'] = $this->cuID;
 
             $this->dripModel->createCampaign($postData);
-            return redirect()->to('/Management/DripCampaigns')->with('success', 'Campaign created.');
+            return redirect()->to(site_url('Management/Drip-Campaigns'))->with('success', 'Campaign created.');
         }
 
         return $this->renderTheme('ManagementModule\Views\Marketing\Drip\create', $this->data);
@@ -127,8 +127,16 @@ class DripCampaignAdminController extends BaseAdminController
     
     public function previewTemplate()
     {
-        $template = $this->request->getPost('template');
-        $rendered = view("Email/Templates/$template", [], ['saveData' => true]);
+        // Only a plain template name: the value is used in a view path.
+        $template = (string) $this->request->getPost('template');
+        if (! preg_match('/^[A-Za-z0-9_\-]{1,80}$/', $template)) {
+            return $this->response->setStatusCode(400)->setJSON(['html' => '', 'error' => 'Invalid template name.']);
+        }
+        try {
+            $rendered = view("Email/Templates/$template", [], ['saveData' => true]);
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(404)->setJSON(['html' => '', 'error' => 'Template not found.']);
+        }
         return $this->response->setJSON(['html' => $rendered]);
     }
 

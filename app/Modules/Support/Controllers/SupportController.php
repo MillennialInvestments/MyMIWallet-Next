@@ -39,6 +39,66 @@ class SupportController extends UserController
         return $this->renderTheme('SupportModule\Views\Support\index', $data);
     }
 
+    /**
+     * GT-FORM-ROUTES-001: POST /Support/Manager, the "Submit Request" form (JSON or form-encoded).
+     */
+    public function submitRequest()
+    {
+        $json  = $this->request->getJSON(true);
+        $input = is_array($json) ? $json : (array) $this->request->getPost();
+
+        [$userId, $email] = $this->sessionIdentity();
+        $result = (new \App\Services\Forms\SupportRequestService())->submit($userId, $email, $input, 'General');
+
+        if (! $result['ok']) {
+            return $this->response->setStatusCode($result['reason'] === 'invalid_input' ? 422 : 500)->setJSON([
+                'status'  => 'error',
+                'message' => $result['reason'] === 'invalid_input' ? 'Please check the form and try again.' : 'Your request could not be saved.',
+                'errors'  => $result['errors'] ?? [],
+            ]);
+        }
+
+        return $this->response->setJSON([
+            'status'     => 'success',
+            'message'    => 'Thanks! Your request #' . $result['id'] . ' was received and our team will follow up by email.',
+            'request_id' => $result['id'],
+        ]);
+    }
+
+    /**
+     * GT-FORM-ROUTES-001: POST /Support/Feedback, the "Was this helpful?" box on KB articles.
+     */
+    public function submitArticleFeedback()
+    {
+        $slug    = mb_substr(preg_replace('/[^A-Za-z0-9_\-]/', '', (string) $this->request->getPost('slug')), 0, 120);
+        $helpful = $this->request->getPost('helpful') === 'yes' ? 'yes' : 'no';
+        $note    = trim((string) $this->request->getPost('note'));
+
+        [$userId, $email] = $this->sessionIdentity();
+        $result = (new \App\Services\Forms\SupportRequestService())->submit($userId, $email ?: 'anonymous@feedback.invalid', [
+            'topic'   => 'Article Feedback',
+            'details' => "Article: {$slug}\nHelpful: {$helpful}" . ($note !== '' ? "\nNote: {$note}" : ''),
+        ], 'Article Feedback');
+
+        $target = $slug !== '' ? site_url('Support/Article/' . $slug) : site_url('Support');
+
+        return redirect()->to($target)->with($result['ok'] ? 'message' : 'error', $result['ok']
+            ? 'Thanks for the feedback!'
+            : 'Sorry, we could not save your feedback.');
+    }
+
+    /** @return array{0: ?int, 1: ?string} */
+    private function sessionIdentity(): array
+    {
+        $userId = (int) ($this->cuID ?? session('cuID') ?? 0);
+        if ($userId <= 0) {
+            return [null, null];
+        }
+        $row = $this->userModel?->select('email')->where('id', $userId)->limit(1)->get()->getRowArray();
+
+        return [$userId, is_array($row) ? (string) ($row['email'] ?? '') : null];
+    }
+
     public function view(string $slug = '')
     {
         $slug = trim($slug);

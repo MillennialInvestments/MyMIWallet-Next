@@ -73,7 +73,7 @@ document.getElementById('insightEditorForm').addEventListener('submit', function
     e.preventDefault();
     const formData = new FormData(this);
 
-    fetch('<?= site_url("/API/Management/updateInsight") ?>', {
+    fetch('<?= site_url("Management/Marketing/updateInsight") ?>', {
         method: 'POST',
         body: formData
     })
@@ -98,7 +98,7 @@ function updatePlatformPreview() {
     const summary = document.querySelector('textarea[name="summary"]').value;
     const keywords = document.querySelector('input[name="keywords"]').value;
 
-    fetch('<?= site_url('/API/Marketing/generateLivePreview') ?>', {
+    fetch('<?= site_url('Management/Marketing/generateLivePreview') ?>', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ title, summary, keywords })
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 <script <?= $nonce['script'] ?? '' ?>>
 document.addEventListener("DOMContentLoaded", function () {
-    fetch(`/index.php/API/Marketing/generateThreadFromSummary/<?= esc($summary['id']) ?>`)
+    fetch(`<?= site_url('Management/Marketing/generateThreadFromSummary/' . (int) ($summary['id'] ?? 0)) ?>`)
         .then(res => res.json())
         .then(data => {
             if (data.status === 'success') {

@@ -186,7 +186,7 @@ class ProjectsController extends BaseUserController
 
     protected function ensurePost(): void
     {
-        if ($this->request->getMethod() !== 'post') {
+        if (strtolower($this->request->getMethod()) !== 'post') {
             throw PageNotFoundException::forPageNotFound();
         }
     }

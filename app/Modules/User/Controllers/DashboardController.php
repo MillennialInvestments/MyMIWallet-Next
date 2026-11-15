@@ -753,6 +753,33 @@ class DashboardController extends BaseUserController
         return $this->renderTheme('App\Modules\User\Views\Dashboard\Account', $this->data);
     }
 
+    /**
+     * GT-FORM-ROUTES-001: POST /Account and POST /api/account/update-profile (both login-filtered).
+     * The routes existed but this method did not, so every profile save failed.
+     */
+    public function updateProfile()
+    {
+        $userId = (int) ($this->cuID ?? 0);
+        $result = (new \App\Services\Forms\ProfileUpdateService())->update($userId, (array) $this->request->getPost());
+
+        $messages = [
+            'updated'           => 'Profile updated.',
+            'unauthenticated'   => 'Please sign in again.',
+            'invalid_input'     => 'Please check the highlighted fields.',
+            'nothing_to_update' => 'Nothing to update.',
+            'user_not_found'    => 'Account not found.',
+        ];
+        $message = $messages[$result['reason']] ?? 'Could not update your profile.';
+
+        if ($this->request->isAJAX()) {
+            return $this->response
+                ->setStatusCode($result['ok'] ? 200 : ($result['reason'] === 'unauthenticated' ? 401 : 422))
+                ->setJSON(['success' => $result['ok'], 'message' => $message, 'errors' => $result['errors'] ?? []]);
+        }
+
+        return redirect()->to(site_url('Account'))->with($result['ok'] ? 'message' : 'error', $message);
+    }
+
     public function activity()
     {
         $this->data['pageTitle'] = 'My Activity | MyMI Wallet | The Future of Finance';

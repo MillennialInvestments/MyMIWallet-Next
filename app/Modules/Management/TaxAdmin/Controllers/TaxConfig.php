@@ -67,7 +67,7 @@ class TaxConfig extends BaseController
             return redirect()->to('/Admin/Tax/Templates')->with('error', 'Template not found.');
         }
 
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             $before = json_encode($template);
             $templatePayload = [
                 'name'      => $this->request->getPost('name'),
@@ -123,7 +123,7 @@ class TaxConfig extends BaseController
     {
         $this->ensureAdmin();
 
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             $payload = [
                 'state'  => $this->request->getPost('state'),
                 'parish' => $this->request->getPost('parish'),
@@ -167,7 +167,7 @@ class TaxConfig extends BaseController
     {
         $this->ensureAdmin();
 
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             $jurisdictionId = (int) $this->request->getPost('jurisdiction_id');
             $startDate      = $this->request->getPost('effective_start');
             $endDate        = $this->request->getPost('effective_end') ?: null;
@@ -206,7 +206,7 @@ class TaxConfig extends BaseController
             return redirect()->to('/Admin/Tax/Rates')->with('error', 'Rate not found.');
         }
 
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             $payload = [
                 'jurisdiction_id' => (int) $this->request->getPost('jurisdiction_id'),
                 'rate_total'      => $this->request->getPost('rate_total'),

@@ -106,7 +106,7 @@ $(document).ready(function () {
 
     // Stub for generate (replace with actual logic)
     window.generatePost = function(id) {
-        fetch(`<?= site_url('API/Marketing/generatePostsFromSummary') ?>/${id}`)
+        fetch(`<?= site_url('Management/Marketing/generatePostsFromSummary') ?>/${id}`)
             .then(res => res.json())
             .then(data => {
                 if (data.status === 'success') {

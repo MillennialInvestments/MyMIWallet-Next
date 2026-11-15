@@ -294,6 +294,12 @@ class FormIntelligenceService
             }
             foreach ($all as $m) {
                 $offset  = $m[0][1];
+                // A call on a "//" line (or inside a "/* */" block's " * " lines) is commented out.
+                $lineStart = strrpos(substr($src, 0, $offset), "\n");
+                $linePrefix = ltrim(substr($src, $lineStart === false ? 0 : $lineStart + 1, $offset - ($lineStart === false ? 0 : $lineStart + 1)));
+                if (preg_match('#^(//|\*|/\*)#', $linePrefix)) {
+                    continue;
+                }
                 $quote   = $m['q'][0];
                 $url     = $m['u'][0];
                 $after   = substr($src, $m[0][1] + strlen($m[0][0]), 40);
@@ -323,6 +329,8 @@ class FormIntelligenceService
                     'enctype'    => null,
                     'csrf'       => null,
                     'inputs'     => [],
+                    // The call sends a service credential itself (rare; normally a browser has none).
+                    'sends_token' => preg_match('#Authorization|X-API-Token|X-Cron-Key|cron_key|api_token#i', $window) === 1,
                 ];
             }
         }
@@ -418,6 +426,18 @@ class FormIntelligenceService
             }
         }
         $e['route'] = $match;
+
+        // A relative URL resolves against the current page path, so it only works
+        // from a top-level page. Helpers (site_url etc.) always give a leading slash.
+        $raw = trim((string) $e['raw_action']);
+        if ($match['matched'] && $raw !== '' && ! preg_match('#^(/|https?:|//|\{|\$\{|\?|\#)#i', $raw)) {
+            return $set($e, self::STATUS_FAIL, 'relative_url');
+        }
+
+        // A browser page has a session, not a service token: apiToken/cronKey routes reject it.
+        if ($match['matched'] && array_intersect($match['filters'] ?? [], FormRouteMatcher::TOKEN_FILTERS) !== [] && empty($e['sends_token'])) {
+            return $set($e, self::STATUS_FAIL, 'token_only_route');
+        }
 
         if ($match['matched']) {
             return $set($e, self::STATUS_PASS, $sampled ? 'route_matched_sampled_segment' : 'route_matched');

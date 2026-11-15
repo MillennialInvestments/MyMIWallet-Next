@@ -44,7 +44,7 @@ class LegacySupportController extends UserController
     {
         $data = new \stdClass();
 
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             $inputData = [
                 'url_link' => $this->request->getPost('url_link'),
                 'email' => $this->request->getPost('email'),
@@ -76,7 +76,7 @@ class LegacySupportController extends UserController
     {
         $data = new \stdClass();
     
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             $inputData = [
                 'res_id' => $this->request->getPost('res_id'),
                 'user_id' => $this->request->getPost('user_id'),

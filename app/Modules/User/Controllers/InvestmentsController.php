@@ -663,7 +663,7 @@ class InvestmentsController extends BaseUserController
         $this->data['pageTitle'] = 'Edit Trade | MyMI Wallet | The Future of Finance';
         $this->data['trade'] = $this->investmentModel->getTradeById($tradeId);
         
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             $updateData = $this->request->getPost();
             $this->investmentModel->updateTrade($tradeId, $updateData);
             $userId = (int) ($trade['user_id'] ?? ($updateData['user_id'] ?? 0));
@@ -1022,7 +1022,7 @@ class InvestmentsController extends BaseUserController
 
     private function validateSaveRequest()
     {
-        if (!$this->request->isAJAX() || $this->request->getMethod() !== 'post') {
+        if (!$this->request->isAJAX() || strtolower($this->request->getMethod()) !== 'post') {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('This action is not allowed');
         }
     }

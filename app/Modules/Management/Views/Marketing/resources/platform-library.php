@@ -41,7 +41,7 @@
 <script <?= $nonce['script'] ?? '' ?>>
 // ⚙️ Minimal client-side hooks
 $('#btnTestPlan').on('click', function(){
-    fetch('API/Management/getPostingPlan', {
+    fetch('<?= site_url('Management/Marketing/getPostingPlan') ?>', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ platformKey: 'twitter', contentType: 'marketing', tickers: ['TSLA'], keywords: ['breakout'] })
@@ -51,7 +51,7 @@ $('#btnTestPlan').on('click', function(){
 });
 
 $('#btnComposePost').on('click', function(){
-    fetch('API/Management/composePost', {
+    fetch('<?= site_url('Management/Marketing/composePost') ?>', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ platformKey: 'twitter', contentType: 'marketing', baseCopy: 'Sample copy', tickers: ['TSLA'], keywords: ['breakout'] })

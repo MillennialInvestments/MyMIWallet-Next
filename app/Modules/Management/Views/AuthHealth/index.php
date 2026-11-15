@@ -111,7 +111,7 @@ $runs = $authHealthRuns ?? [];
                 }
 
                 try {
-                    const response = await fetch("<?= site_url('API/Management/runAuthSmoke'); ?>", {
+                    const response = await fetch("<?= site_url('Management/AuthHealth/runAuthSmoke'); ?>", {
                         method: 'POST',
                         headers: {
                             'Accept': 'application/json'

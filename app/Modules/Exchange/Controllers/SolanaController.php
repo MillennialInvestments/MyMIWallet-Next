@@ -519,7 +519,7 @@ $addr = $svc->normalizeAddress($row);
             return $premiumGuard;
         }
 
-        if ($this->request->getMethod() == 'post') {
+        if (strtolower($this->request->getMethod()) == 'post') {
             try {
                 // Extract inputs
                 $amount = floatval($this->request->getPost('amount'));

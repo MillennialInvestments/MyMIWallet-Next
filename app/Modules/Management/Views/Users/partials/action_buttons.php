@@ -10,7 +10,7 @@ $pageURIB = service('uri')->getSegment(2);
 <button id="checkSpamUsersBtn" class="btn btn-danger">Check for Spam Users</button>
 <script <?= $nonce['script'] ?? '' ?>>
 $('#checkSpamUsersBtn').on('click', function () {
-    $.get('<?php echo site_url("/API/Management/checkForSpamUsers"); ?>', function (res) {
+    $.get('<?php echo site_url("Management/Users/checkForSpamUsers"); ?>', function (res) {
         if (res.status === 'success') {
             alert(res.message);
             console.table(res.data); // Optional: dump results to console

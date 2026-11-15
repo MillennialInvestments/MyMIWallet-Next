@@ -146,7 +146,7 @@ document.getElementById('sellAmount').addEventListener('input', function () {
 document.getElementById('refreshPrice').addEventListener('click', function() {
     document.getElementById('price-loader').style.display = 'inline-block';
 
-    fetch('index.php/API/Solana/getMarketPrice')
+    fetch('/index.php/API/Solana/getMarketPrice')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

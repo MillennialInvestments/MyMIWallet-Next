@@ -16,7 +16,10 @@ use CodeIgniter\Router\DefinedRouteCollector;
  */
 final class FormRouteMatcher
 {
-    /** @var list<array{method:string, route:string, handler:string}> */
+    /** Route filters that need a service credential a browser session does not have. */
+    public const TOKEN_FILTERS = ['apiToken', 'cronKey'];
+
+    /** @var list<array{method:string, route:string, handler:string, filters:list<string>}> */
     private array $routes;
 
     /**
@@ -29,6 +32,7 @@ final class FormRouteMatcher
             'method'  => strtoupper((string) $r['method']),
             'route'   => (string) $r['route'],
             'handler' => is_string($r['handler'] ?? null) ? $r['handler'] : '(Closure)',
+            'filters' => array_values(array_map(static fn ($f) => explode(':', (string) $f, 2)[0], (array) ($r['filters'] ?? []))),
         ], $routes ?? self::loadDefinedRoutes());
     }
 
@@ -38,7 +42,13 @@ final class FormRouteMatcher
         $collection = service('routes')->loadRoutes();
         $out = [];
         foreach ((new DefinedRouteCollector($collection))->collect() as $route) {
-            $out[] = ['method' => $route['method'], 'route' => $route['route'], 'handler' => $route['handler']];
+            $filters = [];
+            try {
+                $filters = $collection->getFiltersForRoute($route['route'], $route['method']);
+            } catch (\Throwable) {
+                // older framework or odd route key: no filter data
+            }
+            $out[] = ['method' => $route['method'], 'route' => $route['route'], 'handler' => $route['handler'], 'filters' => $filters];
         }
 
         return $out;
@@ -92,6 +102,11 @@ final class FormRouteMatcher
         }
 
         if ($chosen !== null) {
+            if (! self::handlerExists($chosen['handler'])) {
+                return $this->result(false, 'handler_missing', $chosen, $verbs,
+                    'Route exists but its controller method does not: ' . $chosen['handler']);
+            }
+
             return $this->result(true, 'matched', $chosen, $verbs, null);
         }
 
@@ -106,6 +121,19 @@ final class FormRouteMatcher
         }
 
         return $this->result(false, 'no_route', null, [], 'No defined route matches /' . $uri);
+    }
+
+    /** Closures and views count as existing; "Class::method/$1" must resolve. */
+    public static function handlerExists(string $handler): bool
+    {
+        if (! str_contains($handler, '::')) {
+            return true;
+        }
+        [$class, $method] = explode('::', $handler, 2);
+        $class  = ltrim($class, '\\');
+        $method = (string) preg_replace('#/.*$#', '', $method);
+
+        return class_exists($class) && (method_exists($class, $method) || method_exists($class, '_remap'));
     }
 
     private function result(bool $matched, string $status, ?array $route, array $verbs, ?string $note): array
@@ -123,6 +151,7 @@ final class FormRouteMatcher
             'handler'    => $handler,
             'controller' => $controller,
             'verbs'      => $verbs,
+            'filters'    => $route['filters'] ?? [],
             'note'       => $note,
         ];
     }

@@ -217,7 +217,7 @@ class SolanaAPIController extends BaseAPIController {
             return $premiumGuard;
         }
 
-        if ($this->request->getMethod() == 'post') {
+        if (strtolower($this->request->getMethod()) == 'post') {
             try {
                 $fromToken = $this->request->getPost('from_token');
                 $toToken = $this->request->getPost('to_token');

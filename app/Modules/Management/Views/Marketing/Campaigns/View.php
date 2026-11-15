@@ -425,7 +425,7 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: '<?= site_url("API/Marketing/updateCampaignLinks") ?>',
+            url: '<?= site_url("Management/Marketing/updateCampaignLinks") ?>',
             method: 'POST',
             data: {
                 campaign_id: campaignId,
@@ -492,7 +492,7 @@ $(document).on('click', '.save-btn', function () {
     const csrfToken = $('#csrfToken').val();
 
     $.ajax({
-        url: '<?= site_url("API/Marketing/updateCampaignMessageField") ?>',
+        url: '<?= site_url("Management/Marketing/updateCampaignMessageField") ?>',
         method: 'POST',
         data: {
             campaign_id: campaignId,

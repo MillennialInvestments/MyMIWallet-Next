@@ -24,7 +24,7 @@
         const summernoteEl = $('#advisor-insight-body');
 
         const loadInsight = async (payload) => {
-            const response = await fetch('Advisor/generateInsight', {
+            const response = await fetch('/Advisor/generateInsight', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload || {}),

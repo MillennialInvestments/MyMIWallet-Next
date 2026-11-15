@@ -1472,6 +1472,43 @@ class MarketingAPIController extends BaseAPIController
         }
     }
     
+    /**
+     * GT-FORM-ROUTES-001: saves the admin's edits from the "Generate Post Media" modal onto the
+     * newest generated-content row for that post (written by generatePostMediaContent()).
+     */
+    public function savePostMedia()
+    {
+        $postId = (int) $this->request->getPost('post_id');
+        if ($postId <= 0) {
+            return $this->fail('Missing post ID', 400);
+        }
+
+        $fields = ['voice_script', 'facebook_message', 'linkedin_message', 'discord_message',
+            'stocktwits_message', 'tiktok_message', 'youtube_message', 'email_message', 'hashtags'];
+        $update = [];
+        foreach ($fields as $field) {
+            $value = $this->request->getPost($field);
+            if ($value !== null) {
+                $update[$field] = mb_substr(trim((string) $value), 0, 20000);
+            }
+        }
+        if ($update === []) {
+            return $this->fail('Nothing to save.', 400);
+        }
+
+        $db  = db_connect();
+        $row = $db->table('bf_marketing_generated_content')
+            ->select('id')->where('campaign_id', $postId)->orderBy('id', 'DESC')->limit(1)->get()->getRowArray();
+        if ($row === null) {
+            return $this->failNotFound('Generate the post media first, then save it.');
+        }
+
+        $update['updated_at'] = date('Y-m-d H:i:s');
+        $db->table('bf_marketing_generated_content')->where('id', (int) $row['id'])->update($update);
+
+        return $this->response->setJSON(['status' => 'success', 'id' => (int) $row['id'], 'csrfHash' => csrf_hash()]);
+    }
+
     public function getGeneratedPostsPaginated()
     {
         $page = (int) $this->request->getGet('page') ?: 1;
@@ -2166,7 +2203,7 @@ class MarketingAPIController extends BaseAPIController
     public function runKeywordBackfillBatch()
     {
         helper('text');
-        $limit = (int) $this->request->getGet('limit') ?? 10;
+        $limit = (int) ($this->request->getGet('limit') ?? 10);
         $triggerWords = ['crypto', 'bitcoin', 'market', 'stocks', 'inflation', 'fed', 'economy']; // ⬅️ Customize this as needed
     
         $results = [
