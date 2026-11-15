@@ -5,6 +5,7 @@
 #   sudo bash mymi-staging.sh setup         # everything below, in order, then a smoke test
 #   sudo bash mymi-staging.sh db-refresh    # reload the newest nightly backup into the staging DB and scrub it
 #   sudo bash mymi-staging.sh deploy [ref]  # build <ref> (default main) into staging and switch to it
+#   sudo bash mymi-staging.sh set-password tester|admin  # pick a test-account password (kept across db-refresh)
 #   sudo bash mymi-staging.sh perms         # let nginx/php-fpm read the staging files, then smoke test
 #   sudo bash mymi-staging.sh vhost         # nginx site with a password prompt + noindex, then HTTPS if DNS is up
 #
@@ -355,6 +356,18 @@ perms() {
   fi
 }
 
+# Set a test account's password to one you choose, and save it so db-refresh keeps it.
+set_password() {
+  local who="${1:-tester}" pw pw2 hash
+  case "$who" in tester|admin) ;; *) die "usage: sudo bash $0 set-password tester|admin";; esac
+  read -rsp "New staging-$who password: " pw; echo; read -rsp "Again: " pw2; echo
+  [ -n "$pw" ] && [ "$pw" = "$pw2" ] || die "passwords empty or different; nothing changed"
+  hash="$(PW="$pw" php -r 'echo password_hash(getenv("PW"), PASSWORD_DEFAULT);')"
+  "${MYSQL[@]}" "$STG_DB" -e "UPDATE bf_users SET password_hash='$hash' WHERE email='staging-$who@staging.invalid'"
+  cred_set "STAGING_${who^^}_PASSWORD" "$pw"
+  echo "staging-$who@staging.invalid password set and saved in $CREDS"
+}
+
 smoke() {
   local pw code; pw="$(cred_get STAGING_SITE_PASSWORD)"
   code="$(curl -s -o /tmp/mymi-staging-smoke.html -w '%{http_code}' -u "staging:$pw" -H "Host: $HOST" -H 'X-Forwarded-Proto: https' "http://127.0.0.1/" || true)"
@@ -384,6 +397,7 @@ setup)
 db-refresh) check || die "fix the blockers above first"; db_refresh ;;
 deploy) deploy "${ARG:-main}"; smoke ;;
 perms) perms; smoke ;;
+set-password) set_password "${ARG:-tester}" ;;
 vhost) vhost; smoke ;;
 *) sed -n '2,10p' "$0"; exit 1 ;;
 esac
