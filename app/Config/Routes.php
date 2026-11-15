@@ -922,7 +922,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('click/(:segment)', 'DripCampaignAPIController::click/$1');
         $routes->get('Enroll/(:num)', 'DripCampaignAPIController::enrollUser/$1');
         $routes->get('open/(:segment)', 'DripCampaignAPIController::open/$1');
-        $routes->get('processBatch', 'DripCampaignAPIController::processBatch');
+        $routes->get('processBatch', 'DripCampaignAPIController::processBatch', ['filter' => 'apiAdmin']); // GT-FORM-ROUTES-001: sends mail; was unauthenticated
         $routes->get('TestCron', 'DripCampaignAPIController::testDripCron', ['filter' => 'cronKey']);
     });
 
@@ -944,7 +944,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('getCampaignStats/(:num)', 'EmailAPIController::getCampaignStats/$1');
         $routes->get('getEmailQueueStats', 'EmailAPIController::getEmailQueueStats');
         $routes->get('getEmailQueueTrend', 'EmailAPIController::getEmailQueueTrend');
-        $routes->get('processScheduledCampaigns', 'EmailAPIController::processScheduledCampaigns');
+        $routes->get('processScheduledCampaigns', 'EmailAPIController::processScheduledCampaigns', ['filter' => 'apiAdmin']); // GT-FORM-ROUTES-001: sends mail; was unauthenticated
         $routes->get('sendMassTestCampaign', 'EmailAPIController::sendMassTestCampaign');
         $routes->match(['GET', 'POST'], 'trackBounceWebhook', 'EmailAPIController::trackBounceWebhook');
         $routes->get('unsubscribe/(:any)', 'EmailAPIController::unsubscribe/$1');
@@ -1079,7 +1079,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('getTopGeneratedPosts', 'MarketingAPIController::getTopGeneratedPosts', ['filter' => 'apiToken']);
         $routes->get('getTopKeywordChart/(:num)', 'MarketingAPIController::getTopKeywordChart/$1');
         $routes->get('groupSimilarSummariesByCosine', 'MarketingAPIController::groupSimilarSummariesByCosine');
-        $routes->get('massResendActivationEmails', 'MarketingAPIController::massResendActivationEmails');
+        $routes->get('massResendActivationEmails', 'MarketingAPIController::massResendActivationEmails', ['filter' => 'apiAdmin']); // GT-FORM-ROUTES-001: sends mail; was unauthenticated
         $routes->get('monitorKeywords', 'MarketingAPIController::monitorKeywordsAndScrape', ['filter' => 'apiToken']);
         $routes->get('previewBufferItem/(:num)', 'MarketingAPIController::previewBufferItem/$1');
         $routes->get('previewPendingSummaries', 'MarketingAPIController::previewPendingSummaries');
@@ -1097,7 +1097,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('runKeywordEnrichment', 'MarketingAPIController::runKeywordEnrichment', ['filter' => 'apiToken']);
         $routes->get('runScheduledTasks', 'MarketingAPIController::runScheduledTasks', ['filter' => 'apiToken']);
         $routes->get('Search/(:segment)/(:any)', 'ManagementController::index/$1/$2');
-        $routes->get('sendWalkthroughEmails', 'MarketingAPIController::sendWalkthroughEmails');
+        $routes->get('sendWalkthroughEmails', 'MarketingAPIController::sendWalkthroughEmails', ['filter' => 'apiAdmin']); // GT-FORM-ROUTES-001: sends mail; was unauthenticated
         $routes->get('scheduleApprovedPost/(:num)', 'MarketingAPIController::scheduleApprovedPost/$1');
         $routes->get('schedulePost/(:any)/(:any)/(:any)', 'MarketingAPIController::schedulePost/$1/$2/$3');
         $routes->get('sharePost/(:num)/(:segment)', 'MarketingAPIController::sharePost/$1/$2');
@@ -1173,8 +1173,8 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('scheduleNewsletters', 'MarketingAPIController::scheduleNewsletterCampaign', ['filter' => 'apiToken']);
         $routes->get('submitDailyLog', 'MarketingAPIController::submitDailyLog', ['filter' => 'apiToken']);
         $routes->post('Scrape-Link', 'MarketingAPIController::scrapeLink', ['filter' => 'apiToken']);
-        $routes->get('sendNotification', 'MarketingAPIController::sendNotification');
-        $routes->get('sendNewsletter', 'MarketingAPIController::sendScheduleNewsletter');
+        $routes->get('sendNotification', 'MarketingAPIController::sendNotification', ['filter' => 'apiAdmin']); // GT-FORM-ROUTES-001: sends mail; was unauthenticated
+        $routes->get('sendNewsletter', 'MarketingAPIController::sendScheduleNewsletter', ['filter' => 'apiAdmin']); // GT-FORM-ROUTES-001: sends mail; was unauthenticated
         $routes->get('Communities', 'MarketingAPIController::communities');
         $routes->get('Test', 'MarketingAPIController::test');
         $routes->get('Twitter', 'MarketingAPIController::twitterDashboard');
