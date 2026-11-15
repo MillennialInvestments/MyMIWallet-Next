@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Commands\Security;
 
 use App\Libraries\StoredSecret;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
 /**
@@ -15,13 +15,14 @@ use CodeIgniter\CLI\CLI;
  * With --apply each value is encrypted, decrypted again and compared before
  * the row is written, all inside one transaction.
  */
-class EncryptLegacyKeys extends BaseCommand
+class EncryptLegacyKeys extends SafeBaseCommand
 {
     protected $group       = 'security';
     protected $name        = 'security:encrypt-legacy-keys';
-    protected $description = 'Encrypt plain-text wallet private keys at rest (dry run unless --apply).';
-    protected $usage       = 'security:encrypt-legacy-keys [--apply]';
+    protected $description = 'Encrypt plain-text wallet private keys at rest (report only unless --apply).';
+    protected $usage       = 'security:encrypt-legacy-keys --approve [--apply]';
     protected $options     = [
+        '--approve' => 'Required by the safe-command base (report only without --apply).',
         '--apply' => 'Write the encrypted values. Without it nothing changes.',
     ];
 
@@ -32,9 +33,15 @@ class EncryptLegacyKeys extends BaseCommand
         'wallets'         => ['id', 'private_key'],
     ];
 
+    public function isDestructive(): bool
+    {
+        return true;
+    }
+
     public function run(array $params)
     {
-        $apply = CLI::getOption('apply') !== null || in_array('--apply', $params, true);
+        [, $flags] = $this->parseParams($params);
+        $apply = isset($flags['apply']) || CLI::getOption('apply') !== null;
         $key = (string) config('Encryption')->key;
         if ($key === '') {
             CLI::error('BLOCKER: encryption.key is not set in .env, so nothing can be encrypted. Nothing changed.');
