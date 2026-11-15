@@ -286,7 +286,10 @@ class FormTestExecutor
             $session = $this->session();
             if ($session !== null) {
                 $payload = $session->preparePayload($method, $payload);
-                $options += $session->requestOptions();
+                $extra = $session->requestOptions();
+                $options['headers'] = array_merge($options['headers'], (array) ($extra['headers'] ?? []));
+                unset($extra['headers']);
+                $options += $extra;
             }
 
             if (in_array($method, ['POST', 'PUT', 'PATCH', 'DELETE'], true)) {
@@ -298,6 +301,9 @@ class FormTestExecutor
             }
 
             $resp = $client->request($method, $url, $options);
+            if ($session !== null) {
+                $session->absorb($resp);
+            }
 
             $headers = '';
             foreach ($resp->getHeaders() as $k => $vals) {

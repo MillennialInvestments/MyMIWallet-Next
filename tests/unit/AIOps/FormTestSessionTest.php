@@ -27,12 +27,17 @@ final class FormTestSessionTest extends CIUnitTestCase
         $this->assertNull(FormTestSession::extractCsrf('<p>no token</p>', 'csrf_test_name'));
     }
 
-    public function testRequestOptionsCarryBasicAuthAndCookieJar(): void
+    public function testRequestOptionsCarryBasicAuthAndSessionCookies(): void
     {
-        $opts = (new FormTestSession(null, null, 'staging:secret-pass'))->requestOptions();
+        $session = new FormTestSession(null, null, 'staging:secret-pass');
+        $session->absorbCookieLine('ci_session=abc123; expires=Mon, 16-Nov-2026 00:00:00 GMT; path=/; HttpOnly');
+        $session->absorbCookieLine('ci_session=def456; path=/');
+        $session->absorbCookieLine('other=1; path=/');
+        $session->absorbCookieLine('other=deleted; path=/');
+        $opts = $session->requestOptions();
 
         $this->assertSame(['staging', 'secret-pass', 'basic'], $opts['auth']);
-        $this->assertNotEmpty($opts['cookie']);
+        $this->assertSame('ci_session=def456', $opts['headers']['Cookie']);
     }
 
     public function testNoEnvMeansNoSession(): void
@@ -42,5 +47,16 @@ final class FormTestSessionTest extends CIUnitTestCase
         unset($_ENV['AIOPS_FORM_TEST_BASIC_AUTH'], $_ENV['AIOPS_FORM_TEST_LOGIN'], $_SERVER['AIOPS_FORM_TEST_BASIC_AUTH'], $_SERVER['AIOPS_FORM_TEST_LOGIN']);
 
         $this->assertNull(FormTestSession::fromEnv());
+    }
+
+    public function testAbsorbReadsEverySetCookieHeader(): void
+    {
+        $response = new \CodeIgniter\HTTP\Response(config('App'));
+        $response->addHeader('Set-Cookie', 'ci_session=one; path=/');
+        $response->addHeader('Set-Cookie', 'remember=two; path=/');
+        $session = new FormTestSession();
+        $session->absorb($response);
+
+        $this->assertSame(['ci_session' => 'one', 'remember' => 'two'], $session->cookies());
     }
 }

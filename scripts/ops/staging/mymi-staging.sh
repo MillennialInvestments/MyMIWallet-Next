@@ -10,6 +10,7 @@
 #   sudo bash mymi-staging.sh vhost         # nginx site with a password prompt + noindex, then HTTPS if DNS is up
 #   sudo bash mymi-staging.sh form-test [limit]  # submit every safe form on staging, signed in as staging-tester
 #   sudo bash mymi-staging.sh revision      # print the git sha staging is running
+#   sudo bash mymi-staging.sh smart         # drive health only (SMART, through RAID cards too)
 #
 # What it never does: write to the live database, the live site folder, the
 # live .env, or the live nginx site. It reads the live .env (for DB host/port
@@ -64,6 +65,26 @@ newest_backup() { ls -1t "$BACKUP_DIR"/*.sql.gz 2>/dev/null | head -1 || true; }
 
 # ---------------------------------------------------------------- check
 storage_ok=1
+# SMART health of one disk. Disks behind a RAID card (HP Smart Array "cciss",
+# LSI "megaraid") need -d <type>,N per physical drive, so walk N until one is missing.
+smart_disk() {
+  local d="$1" out typ n h found=0
+  out="$(smartctl -H "$d" 2>&1 || true)"
+  h="$(printf '%s\n' "$out" | grep -iE 'overall-health|SMART Health Status' | sed 's/.*: *//' | head -1)"
+  if [ -n "$h" ]; then echo "  SMART $d: $h"; [ "$h" = PASSED ] || [ "$h" = OK ] || storage_ok=0; return; fi
+  typ="$(printf '%s\n' "$out" | grep -oE "requires option '-d [a-z]+" | awk '{print $NF}' | head -1)"
+  [ -n "$typ" ] || { echo "  SMART $d: unknown ($(printf '%s' "$out" | tail -1 | cut -c1-120))"; return; }
+  for n in $(seq 0 31); do
+    out="$(smartctl -H -i -d "$typ,$n" "$d" 2>&1 || true)"
+    h="$(printf '%s\n' "$out" | grep -iE 'overall-health|SMART Health Status' | sed 's/.*: *//' | head -1)"
+    [ -n "$h" ] || continue
+    found=$((found + 1))
+    echo "  SMART $d $typ,$n: $h  ($(printf '%s\n' "$out" | grep -iE '^(Device Model|Product|Serial Number|User Capacity)' | sed 's/^[^:]*: *//' | tr '\n' ' ' | cut -c1-90))"
+    [ "$h" = PASSED ] || [ "$h" = OK ] || storage_ok=0
+  done
+  [ "$found" -gt 0 ] || echo "  SMART $d: behind a $typ controller, but no drive answered on $typ,0-31"
+}
+
 check() {
   local blockers=0 f
   echo "Host: $HOST   live DB: $LIVE_DB   staging DB: $STG_DB"
@@ -76,8 +97,12 @@ check() {
   echo "  kernel disk errors since boot: $ioerr"; [ "$ioerr" = 0 ] || storage_ok=0
   if command -v smartctl >/dev/null; then
     for d in $(lsblk -dno NAME,TYPE | awk '$2=="disk"{print "/dev/"$1}'); do
-      echo "  SMART $d: $(smartctl -H "$d" 2>/dev/null | grep -iE 'overall-health|SMART Health Status' | sed 's/.*: *//' || echo unknown)"
+      smart_disk "$d"
     done
+    if command -v ssacli >/dev/null; then
+      echo "  HP Smart Array (ssacli):"; ssacli ctrl all show status 2>/dev/null | grep -iE 'status|slot' | sed 's/^ */    /'
+      ssacli ctrl all show config 2>/dev/null | grep -iE 'logicaldrive|physicaldrive' | sed 's/^ */    /'
+    fi
   else echo "  SMART: smartctl not installed (apt install smartmontools)"; fi
   local datadir; datadir="$("${MYSQL[@]}" -N -e 'SELECT @@datadir' 2>/dev/null || echo /var/lib/mysql)"
   f="$(newest_backup)"
@@ -420,5 +445,6 @@ set-password) set_password "${ARG:-tester}" ;;
 vhost) vhost; smoke ;;
 form-test) form_test "$ARG" ;;
 revision) cat "$STG_BASE/current/REVISION" ;;
-*) sed -n '2,12p' "$0"; exit 1 ;;
+smart) storage_ok=1; for d in $(lsblk -dno NAME,TYPE | awk '$2=="disk"{print "/dev/"$1}'); do smart_disk "$d"; done; [ "$storage_ok" = 1 ] && echo "SMART: all drives that answered report healthy" || echo "SMART: at least one drive is NOT healthy" ;;
+*) sed -n '2,13p' "$0"; exit 1 ;;
 esac

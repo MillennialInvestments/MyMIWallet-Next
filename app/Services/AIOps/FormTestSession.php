@@ -22,8 +22,10 @@ final class FormTestSession
 {
     private ?string $basicUser = null;
     private ?string $basicPass = null;
-    private string $cookieFile;
+    /** @var array<string, string> cookie name => value, kept by hand (no curl cookie jar) */
+    private array $cookies = [];
     private bool $loggedIn = false;
+    private bool $loginTried = false;
     private ?string $csrfToken = null;
     private string $csrfName;
     /** @var list<string> */
@@ -37,7 +39,6 @@ final class FormTestSession
         if ($basicAuth !== null && str_contains($basicAuth, ':')) {
             [$this->basicUser, $this->basicPass] = explode(':', $basicAuth, 2);
         }
-        $this->cookieFile = tempnam(sys_get_temp_dir(), 'formtest-cookies-') ?: (WRITEPATH . 'formtest-cookies.txt');
         $this->csrfName = (string) (config('Security')->tokenName ?? 'csrf_test_name');
     }
 
@@ -56,13 +57,6 @@ final class FormTestSession
         return new self($login !== '' ? $login : null, $password !== '' ? $password : null, $basic !== '' ? $basic : null);
     }
 
-    public function __destruct()
-    {
-        if (is_file($this->cookieFile)) {
-            @unlink($this->cookieFile);
-        }
-    }
-
     /** @return list<string> */
     public function notes(): array
     {
@@ -74,10 +68,17 @@ final class FormTestSession
         return $this->loggedIn;
     }
 
-    /** Options to merge into a curlrequest call: basic auth and the cookie jar. */
+    /** Options to merge into a curlrequest call: basic auth and the session cookies. */
     public function requestOptions(): array
     {
-        $opts = ['cookie' => $this->cookieFile];
+        $opts = ['headers' => []];
+        if ($this->cookies !== []) {
+            $pairs = [];
+            foreach ($this->cookies as $name => $value) {
+                $pairs[] = $name . '=' . $value;
+            }
+            $opts['headers']['Cookie'] = implode('; ', $pairs);
+        }
         if ($this->basicUser !== null) {
             $opts['auth'] = [$this->basicUser, (string) $this->basicPass, 'basic'];
         }
@@ -96,14 +97,51 @@ final class FormTestSession
         return $payload;
     }
 
+    /** Keeps the cookies a response sets (the session id changes at sign-in). */
+    public function absorb($response): void
+    {
+        $headers = $response->header('Set-Cookie');
+        foreach (is_array($headers) ? $headers : ($headers === null ? [] : [$headers]) as $header) {
+            foreach ((array) $header->getValue() as $line) {
+                $this->absorbCookieLine((string) $line);
+            }
+        }
+    }
+
+    public function absorbCookieLine(string $line): void
+    {
+        $first = trim(explode(';', $line, 2)[0]);
+        if (! str_contains($first, '=')) {
+            return;
+        }
+        [$name, $value] = array_map('trim', explode('=', $first, 2));
+        if ($name === '') {
+            return;
+        }
+        if ($value === '' || strcasecmp($value, 'deleted') === 0) {
+            unset($this->cookies[$name]);
+            return;
+        }
+        $this->cookies[$name] = $value;
+    }
+
+    /** @return array<string, string> */
+    public function cookies(): array
+    {
+        return $this->cookies;
+    }
+
     public function ensureLoggedIn(): void
     {
-        if ($this->loggedIn || $this->login === null || $this->password === null) {
-            if ($this->csrfToken === null) {
+        // Sign in at most once per run: retrying on every form trips the login rate limit.
+        if ($this->loggedIn || $this->loginTried || $this->login === null || $this->password === null) {
+            if ($this->csrfToken === null && ! $this->loginTried) {
+                $this->loginTried = true;
                 $this->refreshCsrf('login');
             }
             return;
         }
+        $this->loginTried = true;
 
         $this->refreshCsrf('login');
         $payload = ['login' => $this->login, 'password' => $this->password];
@@ -112,11 +150,19 @@ final class FormTestSession
         }
 
         $resp = $this->client(false)->request('POST', site_url('login'), $this->requestOptions() + ['form_params' => $payload]);
+        $this->absorb($resp);
         $location = $resp->getHeaderLine('Location');
         $this->loggedIn = in_array($resp->getStatusCode(), [302, 303], true) && stripos($location, 'login') === false;
         $this->notes[] = $this->loggedIn
-            ? 'Signed in as the form-test account.'
-            : 'Sign-in failed (HTTP ' . $resp->getStatusCode() . '); submits run anonymous.';
+            ? 'Signed in as the form-test account (redirect to ' . (parse_url($location, PHP_URL_PATH) ?: '/') . ').'
+            : sprintf(
+                'Sign-in failed (HTTP %d, redirect to %s, csrf token %s, cookies sent: %s); submits run anonymous. '
+                . 'If the redirect is /login the password is wrong: run sudo bash ~/mymi-staging.sh set-password tester.',
+                $resp->getStatusCode(),
+                parse_url($location, PHP_URL_PATH) ?: 'none',
+                $this->csrfToken !== null ? 'found' : 'MISSING',
+                $this->cookies !== [] ? implode(',', array_keys($this->cookies)) : 'none'
+            );
 
         // The token is kept per session; read it again from a signed-in page.
         $this->refreshCsrf($this->loggedIn ? 'Dashboard' : 'login');
@@ -142,7 +188,8 @@ final class FormTestSession
     private function refreshCsrf(string $path): void
     {
         try {
-            $resp = $this->client(true)->request('GET', site_url($path), $this->requestOptions());
+            $resp = $this->client(false)->request('GET', site_url($path), $this->requestOptions());
+            $this->absorb($resp);
             $token = self::extractCsrf((string) $resp->getBody(), $this->csrfName);
             if ($token !== null) {
                 $this->csrfToken = $token;
