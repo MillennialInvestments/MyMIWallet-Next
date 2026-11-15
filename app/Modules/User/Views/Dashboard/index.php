@@ -79,6 +79,8 @@ $allocationChartData = [
     'values' => $allocationValues,
 ];
 
+$showOpsHealth = ! empty($showOpsHealth);
+$forecastAnalyticsAllowed = ! empty($forecastAnalyticsAllowed);
 $forecastConfig = config('MyMIForecasting');
 $showConfidenceHeatmap = $forecastConfig->features['confidenceHeatmaps'] ?? false;
 $heatmapTimeframes = $forecastConfig->heatmap['timeframes'] ?? ['5m', '15m', '1h'];
@@ -404,6 +406,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </a>
         </div>
+        <?php if (! empty($showOpsHealth)): // admin-only operational cards ?>
         <div class="col-lg-4 col-md-6">
             <div class="card card-bordered card-full h-100" data-ops-health>
                 <div class="card-inner">
@@ -490,6 +493,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         </div>
+        <?php endif; ?>
     </div>
 
     <div class="row g-gs mt-1">
@@ -530,7 +534,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     </div>
 
-    <?php if ($showConfidenceHeatmap): ?>
+    <?php if ($showConfidenceHeatmap && $forecastAnalyticsAllowed): ?>
     <div class="row g-gs mt-1">
         <div class="col-12">
             <div class="card card-bordered card-full h-100">
@@ -867,7 +871,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 </div>
 
-<?php if (!empty($forecastHeatmapEnabled)): ?>
+<?php if (!empty($forecastHeatmapEnabled) && $forecastAnalyticsAllowed): ?>
 <div class="nk-block mt-4">
     <div class="row g-gs">
         <div class="col-lg-8">
@@ -916,7 +920,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <h4 class="mb-0" id="forecastQualityRate">--%</h4>
                         <div class="small text-soft" id="forecastQualityUpdated">Last evaluated: --</div>
                     </div>
-                    <div id="forecastHighlights">
+                    <div id="forecastHighlightsCompact">
                         <div class="text-soft small">Loading highlights…</div>
                     </div>
                 </div>
@@ -941,7 +945,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const heatmapTable = document.getElementById('forecastHeatmapTable');
     const heatmapStatus = document.getElementById('forecastHeatmapStatus');
     const heatmapSelect = document.getElementById('forecastHeatmapTimeframe');
-    const highlightsWrap = document.getElementById('forecastHighlights');
+    const highlightsWrap = document.getElementById('forecastHighlightsCompact');
     const qualityRate = document.getElementById('forecastQualityRate');
     const qualityUpdated = document.getElementById('forecastQualityUpdated');
 
@@ -1063,6 +1067,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadForecastQuality() {
+        if (!qualityRate && !qualityUpdated) return;
         fetch('API/Investments/getForecastAccuracySummary?window=7d')
             .then(resp => resp.json())
             .then(data => {
@@ -1083,9 +1088,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (heatmapSelect) {
         heatmapSelect.addEventListener('change', loadHeatmap);
     }
-    loadHeatmap();
-    loadHighlights();
-    loadForecastQuality();
+    // Premium forecast analytics answer 403 for members without access, so
+    // only call them when the server says this user is entitled.
+    if (<?= $forecastAnalyticsAllowed ? 'true' : 'false' ?>) {
+        loadHeatmap();
+        loadHighlights();
+        loadForecastQuality();
+    }
 
     const sparklineEl = document.getElementById('netWorthSparkline');
     const allocationEl = document.getElementById('allocationChart');
@@ -1201,7 +1210,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadForecastHighlights();
 
-    <?php if ($showConfidenceHeatmap): ?>
+    <?php if ($showConfidenceHeatmap && $forecastAnalyticsAllowed): ?>
     async function loadConfidenceHeatmap() {
         const table = document.getElementById('confidenceHeatmapTable');
         const status = document.getElementById('confidenceHeatmapStatus');
@@ -1386,6 +1395,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const card = document.querySelector('[data-ops-health]');
+    // The card is only rendered for admins; /ops/health is admin-only too.
     if (!card) {
         return;
     }

@@ -35,10 +35,17 @@ class OptionsWebhookController extends BaseAPIController
         }
 
         // Webhook security verification
+        // Fail closed: there is no built-in default secret (the repo is
+        // public), so the webhook stays off until OPTIONS_WEBHOOK_SECRET is set.
         $secret = (string) ($payload['secret'] ?? $this->request->getHeaderLine('X-MyMI-Secret'));
-        $expectedSecret = getenv('OPTIONS_WEBHOOK_SECRET') ?: 'mymi-options-secure-key';
+        $expectedSecret = (string) (getenv('OPTIONS_WEBHOOK_SECRET') ?: '');
 
-        if ($secret !== $expectedSecret) {
+        if ($expectedSecret === '') {
+            log_message('warning', 'Options webhook rejected: OPTIONS_WEBHOOK_SECRET is not configured.');
+            return $this->error('Options webhook is not configured', 503);
+        }
+
+        if ($secret === '' || ! hash_equals($expectedSecret, $secret)) {
             return $this->error('Unauthorized webhook secret token', 401);
         }
 

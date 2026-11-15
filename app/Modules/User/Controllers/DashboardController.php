@@ -137,18 +137,35 @@ class DashboardController extends BaseUserController
         $accountCompletion = service('accountCompletionService');
         $this->data['accountCompletion'] = $accountCompletion->evaluate((int) $cuID);
 
-        try {
-            $this->data['opsHealth'] = (new EnvDoctorService())->latestSummary();
-        } catch (\Throwable $e) {
-            log_message('warning', 'DashboardController opsHealth unavailable: {msg}', ['msg' => $e->getMessage()]);
-            $this->data['opsHealth'] = null;
+        // Ops Health and the email pipeline cards show internal operational
+        // findings, so only admins load or see them.
+        $showOpsHealth = $this->dashboardViewerIsAdmin();
+        $this->data['showOpsHealth'] = $showOpsHealth;
+        $this->data['opsHealth'] = null;
+        $this->data['emailAuditHealth'] = null;
+
+        if ($showOpsHealth) {
+            try {
+                $this->data['opsHealth'] = (new EnvDoctorService())->latestSummary();
+            } catch (\Throwable $e) {
+                log_message('warning', 'DashboardController opsHealth unavailable: {msg}', ['msg' => $e->getMessage()]);
+            }
+
+            try {
+                $this->data['emailAuditHealth'] = $this->loadEmailScraperAuditHealth();
+            } catch (\Throwable $e) {
+                log_message('warning', 'DashboardController emailAuditHealth unavailable: {msg}', ['msg' => $e->getMessage()]);
+            }
         }
 
+        // Forecast analytics endpoints are premium; skip calling them for
+        // members without access instead of filling the console with 403s.
         try {
-            $this->data['emailAuditHealth'] = $this->loadEmailScraperAuditHealth();
+            helper('premium');
+            $this->data['forecastAnalyticsAllowed'] = premium_feature_enabled('investments.analytics', (int) $cuID);
         } catch (\Throwable $e) {
-            log_message('warning', 'DashboardController emailAuditHealth unavailable: {msg}', ['msg' => $e->getMessage()]);
-            $this->data['emailAuditHealth'] = null;
+            log_message('warning', 'DashboardController premium check failed: {msg}', ['msg' => $e->getMessage()]);
+            $this->data['forecastAnalyticsAllowed'] = false;
         }
 
         if ($this->session->get('onboarding_show_modal')) {
@@ -1741,5 +1758,15 @@ HTML;
         ];
     }
 
+
+    private function dashboardViewerIsAdmin(): bool
+    {
+        try {
+            helper('auth');
+
+            return function_exists('has_permission') && has_permission('admin.access');
+        } catch (\Throwable $e) {
+            return false;
+        }
+    }
 }
-?>
