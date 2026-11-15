@@ -85,4 +85,18 @@ final class FormTestSessionTest extends CIUnitTestCase
         array_map('unlink', glob($dir . '/*'));
         rmdir($dir);
     }
+
+    /** Regression: every live submit returned HTTP 0 because headers were implode()d as arrays. */
+    public function testHeaderTextHandlesSingleAndRepeatedHeaders(): void
+    {
+        $response = new \CodeIgniter\HTTP\Response(config('App'));
+        $response->setHeader('Content-Type', 'text/html');
+        $response->addHeader('Set-Cookie', 'a=1');
+        $response->addHeader('Set-Cookie', 'b=2');
+
+        $text = \App\Services\AIOps\FormTestExecutor::headerText($response);
+
+        $this->assertStringContainsString('Content-Type: text/html', $text);
+        $this->assertStringContainsString('Set-Cookie: a=1, b=2', $text);
+    }
 }

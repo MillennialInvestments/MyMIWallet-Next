@@ -248,6 +248,20 @@ class FormTestExecutor
         return $this->session;
     }
 
+    /**
+     * Response headers as text. headers() holds Header objects (a list of them
+     * for repeated headers such as Set-Cookie), so read each as a line.
+     */
+    public static function headerText($response): string
+    {
+        $text = '';
+        foreach (array_keys($response->headers()) as $name) {
+            $text .= $name . ': ' . $response->getHeaderLine($name) . "\n";
+        }
+
+        return $text;
+    }
+
     private function submit(string $method, string $action, array $payload): array
     {
         helper(['url']);
@@ -305,10 +319,7 @@ class FormTestExecutor
                 $session->absorb($resp);
             }
 
-            $headers = '';
-            foreach ($resp->getHeaders() as $k => $vals) {
-                $headers .= $k . ': ' . implode(', ', $vals) . "\n";
-            }
+            $headers = self::headerText($resp);
 
             return [
                 'status' => $resp->getStatusCode(),

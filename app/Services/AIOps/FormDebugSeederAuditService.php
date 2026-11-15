@@ -64,6 +64,9 @@ class FormDebugSeederAuditService
                         'test_id'        => $execution['test_id'] ?? null,
                         'http_status'    => $execution['submit']['status'] ?? null,
                     ];
+                    if ((int) ($execution['submit']['status'] ?? 0) === 0) {
+                        $entry['submission']['error'] = mb_substr((string) ($execution['submit']['body'] ?? ($execution['reason'] ?? '')), 0, 160);
+                    }
                 }
                 $entries[] = $entry;
             }
@@ -421,7 +424,7 @@ class FormDebugSeederAuditService
             if (($e['submission']['reason'] ?? null) !== 'dry_run' && ($e['submission']['reason'] ?? null) !== 'not_selected') {
                 $live[$subStatus] = ($live[$subStatus] ?? 0) + 1;
                 if ($subStatus === 'FAIL') {
-                    $liveFails[] = sprintf('%s %s %s -> HTTP %s', $e['file'] ?? '?', $e['method'] ?? '?', $e['action'] ?? '?', $e['submission']['http_status'] ?? '?');
+                    $liveFails[] = sprintf('%s %s %s -> HTTP %s%s', $e['file'] ?? '?', $e['method'] ?? '?', $e['action'] ?? '?', $e['submission']['http_status'] ?? '?', isset($e['submission']['error']) ? ' (' . $e['submission']['error'] . ')' : '');
                 }
             }
             if (! empty($e['seed_readiness']['missing_seed_tables'])) {
