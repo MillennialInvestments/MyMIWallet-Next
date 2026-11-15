@@ -45,6 +45,8 @@ final class DashboardSidebarToggleTest extends CIUnitTestCase
 
         $this->assertStringContainsString("mymi-sidebar-collapsed", $js);
         $this->assertStringContainsString('body.mymi-sidebar-collapsed .nk-sidebar + .nk-wrap', $css);
+        // website.css sizes the wrap as calc(100% - sidebar); collapsed must undo it.
+        $this->assertStringContainsString('width: 100% !important;', $css);
         $this->assertStringContainsString('assets/js/sidebar-toggle.js', $links);
     }
 }
