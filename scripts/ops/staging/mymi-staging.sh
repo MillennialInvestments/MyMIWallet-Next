@@ -54,6 +54,8 @@ cred_set() { # keeps one line per key
   printf '%s=%s\n' "$1" "$2" >> "$CREDS.tmp"; mv "$CREDS.tmp" "$CREDS"; chown "$OP_USER" "$CREDS"; chmod 600 "$CREDS"
 }
 newpw() { openssl rand -base64 30 | tr -dc 'A-Za-z0-9' | head -c 24; }
+# MySQL validate_password (MEDIUM/STRONG) wants upper, lower, digit and a special character.
+newdbpw() { printf '%s-Xz9_%s' "$(newpw)" "$(newpw | head -c 8)"; }
 newest_backup() { ls -1t "$BACKUP_DIR"/*.sql.gz 2>/dev/null | head -1 || true; }
 
 # ---------------------------------------------------------------- check
@@ -128,7 +130,9 @@ fastcgi_target() {
 write_env() {
   local src="$PROD_BASE/shared/.env" dst="$STG_BASE/shared/.env"
   mkdir -p "$STG_BASE/shared"; chown "$OP_USER" "$STG_BASE" "$STG_BASE/shared"
-  local dbpw; dbpw="$(cred_get STAGING_DB_PASSWORD)"; [ -n "$dbpw" ] || { dbpw="$(newpw)"; cred_set STAGING_DB_PASSWORD "$dbpw"; }
+  local dbpw; dbpw="$(cred_get STAGING_DB_PASSWORD)"
+  # Older runs made an all-letters-and-digits password that MySQL's policy rejects.
+  case "$dbpw" in *-Xz9_*) ;; *) dbpw="$(newdbpw)"; cred_set STAGING_DB_PASSWORD "$dbpw";; esac
   local enc; enc="$(cred_get STAGING_ENCRYPTION_KEY)"; [ -n "$enc" ] || { enc="hex2bin:$(openssl rand -hex 32)"; cred_set STAGING_ENCRYPTION_KEY "$enc"; }
   local dbhost dbport; dbhost="$(envval "$src" database.default.hostname)"; dbport="$(envval "$src" database.default.port)"
   {
@@ -172,6 +176,10 @@ db_refresh() {
   local f; f="$(newest_backup)"; [ -n "$f" ] || die "no backup in $BACKUP_DIR"
   if [ -r "$f.sha256" ]; then (cd "$(dirname "$f")" && sha256sum -c --quiet "$(basename "$f").sha256") || die "backup checksum failed"; fi
   local dbpw; dbpw="$(cred_get STAGING_DB_PASSWORD)"; [ -n "$dbpw" ] || die "no staging DB password yet; run setup"
+  local have; have="$("${MYSQL[@]}" -N -e "SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA='$STG_DB'")"
+  if [ "${REUSE_LOADED:-0}" = 1 ] && [ "$have" -gt 0 ]; then
+    say "REUSE_LOADED=1: keeping the $have tables already loaded in $STG_DB (scrub still runs)"
+  else
   say "loading $(basename "$f") into $STG_DB"
   "${MYSQL[@]}" -e "DROP DATABASE IF EXISTS \`$STG_DB\`; CREATE DATABASE \`$STG_DB\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
   local start; start=$(date +%s)
@@ -179,6 +187,7 @@ db_refresh() {
   # so nothing in the dump can land in the live database.
   gzip -cd "$f" | sed -E -e '/^(CREATE DATABASE|USE )/d' -e "s/\`$LIVE_DB\`\.//g" | "${MYSQL[@]}" "$STG_DB"
   echo "loaded in $(( $(date +%s) - start ))s: $("${MYSQL[@]}" -N -e "SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA='$STG_DB'") tables"
+  fi
   "${MYSQL[@]}" <<SQL
 CREATE USER IF NOT EXISTS '$STG_DB_USER'@'localhost' IDENTIFIED BY '$dbpw';
 CREATE USER IF NOT EXISTS '$STG_DB_USER'@'127.0.0.1' IDENTIFIED BY '$dbpw';
