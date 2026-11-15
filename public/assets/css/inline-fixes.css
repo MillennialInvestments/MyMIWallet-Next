@@ -133,8 +133,17 @@ button:focus, button:focus-visible,
     transform: translateX(-100%);
     visibility: hidden;
   }
-  body.mymi-sidebar-collapsed .nk-sidebar + .nk-wrap {
-    padding-left: 0 !important;
+  /* website.css sizes .db-nk-wrap as calc(100% - sidebar) with a left
+     margin; undo both so content spans the full width while collapsed.
+     The 64px gutter keeps the reopen button off the header. */
+  body.mymi-sidebar-collapsed .nk-sidebar + .nk-wrap,
+  body.mymi-sidebar-collapsed .db-nk-wrap {
+    padding-left: 64px !important;
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  body.mymi-sidebar-collapsed .nk-quick-nav {
     margin-left: 0 !important;
   }
   body.mymi-sidebar-collapsed .nk-wrap > .nk-header-fixed {
