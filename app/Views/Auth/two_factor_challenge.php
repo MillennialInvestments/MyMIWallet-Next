@@ -19,7 +19,10 @@
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Verify</button>
                     </form>
-                    <p class="mt-3"><a href="<?= site_url('logout') ?>">Sign out</a></p>
+                    <form action="<?= site_url('logout') ?>" method="post" class="mt-3">
+                        <?= csrf_field() ?>
+                        <button type="submit" class="btn btn-link p-0">Sign out</button>
+                    </form>
                 </div>
             </div>
         </div>

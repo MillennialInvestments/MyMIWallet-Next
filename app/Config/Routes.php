@@ -317,7 +317,8 @@ $routes->group('', ['namespace' => 'App\Controllers', 'filter' => 'no-cache'], s
     $routes->get('login', 'AuthController::login', ['as' => 'login']);
     $routes->post('login', 'AuthController::attemptLogin', ['as' => 'login-submit']);
     $routes->post('auth/resend-activation', 'AuthController::resendActivationCode', ['as' => 'auth/resend-activation']);
-    $routes->get('logout', 'AuthController::logout');
+    // GTM-019: GET only shows a confirm page; the logout itself is POST + CSRF.
+    $routes->get('logout', 'AuthController::logoutConfirm', ['as' => 'logout-confirm']);
     $routes->post('logout', 'AuthController::logout', ['as' => 'auth/logout']);
 
 

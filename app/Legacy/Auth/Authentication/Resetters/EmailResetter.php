@@ -6,43 +6,68 @@ namespace App\Legacy\Auth\Authentication\Resetters;
 
 use App\Libraries\MailService;
 use Myth\Auth\Authentication\Resetters\EmailResetter as BaseEmailResetter;
+use Myth\Auth\Config\Auth as AuthConfig;
+use Myth\Auth\Entities\User;
 
+/**
+ * GTM-017: sends the branded MailService email, and falls back to Myth's own plain
+ * template if the branded send fails or throws, so a mail-layer problem never
+ * blocks the password reset. The parent declares $error untyped, so this
+ * class must not redeclare it.
+ */
 class EmailResetter extends BaseEmailResetter
 {
-    protected ?string $error = null;
-    protected MailService $mailService;
+    private ?MailService $mailService;
 
-    public function __construct()
+    public function __construct(?AuthConfig $config = null, ?MailService $mailService = null)
     {
-        if (method_exists(get_parent_class($this), '__construct')) {
-            parent::__construct();
-        }
-
-        $this->mailService = new MailService();
+        parent::__construct($config);
+        $this->mailService = $mailService;
     }
 
-    public function send($user): bool
+    public function send(?User $user = null): bool
     {
         $token = (string) ($user->reset_hash ?? '');
+        if ($user === null || $token === '' || (string) ($user->email ?? '') === '') {
+            $this->error = lang('Auth.unknownError');
 
-        if ($token === '') {
-            $this->error = 'We couldn’t send your email right now. Please try again or contact support.';
             return false;
         }
 
-        $result = $this->mailService->sendPasswordResetEmail($user, $token, ['source' => 'auth-resetter']);
+        try {
+            $mail   = $this->mailService ??= new MailService();
+            $result = $mail->sendPasswordResetEmail($user, $token, ['source' => 'auth-resetter']);
+            if ($result['ok'] ?? false) {
+                $this->error = '';
 
-        if (! ($result['ok'] ?? false)) {
-            $this->error = 'We couldn’t send your email right now. Please try again or contact support.';
-            return false;
+                return true;
+            }
+            log_message('warning', 'auth-resetter: branded send failed, using plain template');
+        } catch (\Throwable $e) {
+            log_message('warning', 'auth-resetter: branded send threw {class}, using plain template', ['class' => $e::class]);
         }
 
-        $this->error = null;
-        return true;
+        // The app's legacy config points its email views at the branded
+        // templates, which expect a full URL rather than a bare token. Myth's
+        // own templates take the token, so send the plain mail with Myth's config.
+        $own          = $this->config;
+        $this->config = new AuthConfig();
+
+        try {
+            return parent::send($user);
+        } finally {
+            $this->config = $own;
+        }
     }
 
-    public function error(): ?string
+    /**
+     * Myth keys these settings by class name, and this subclass has no entry of
+     * its own, so read the parent's.
+     */
+    public function getResetterSettings()
     {
-        return $this->error;
+        $all = (array) ($this->config->userResetters ?? []);
+
+        return (object) ($all[static::class] ?? $all[BaseEmailResetter::class] ?? []);
     }
 }

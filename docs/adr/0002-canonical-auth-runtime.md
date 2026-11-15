@@ -11,7 +11,7 @@ Two auth libraries are installed, and the code mixes them:
 | Piece | What production actually runs |
 |---|---|
 | Login | `App\Controllers\AuthController::attemptLogin` looks the user up through Myth/Auth's `UserModel` (the `users` view over `bf_users`), then checks `password_verify` against `bf_users.password_hash`. It is throttled to 12 attempts a minute per login and IP, and rotates the session id on success. |
-| Registration, activation, reset | `AuthController` plus Myth/Auth's activator and resetter. Tokens live in `bf_users.activate_hash` and `bf_users.reset_hash` (128-bit random, reset expires after 1 hour). |
+| Registration, activation, reset | `AuthController` plus the app's branded activator and resetter (Myth/Auth subclasses, GTM-017). Tokens live in `bf_users.activate_hash` and `bf_users.reset_hash` (128-bit random, reset expires after 1 hour). |
 | Remember-me, login log | Myth/Auth tables `auth_tokens` and `auth_logins`. |
 | Roles | Myth/Auth groups (`auth_groups`, `auth_groups_users`) through the `role` and `permission` filters. |
 | 2FA | App code: `TwoFactorService`, `bf_users_2fa`, `twofactor` filter (GTM-020). |
@@ -41,6 +41,6 @@ Two auth libraries are installed, and the code mixes them:
 ## Follow-ups (atomic successors)
 
 - GTM-016: certify login on production with a real account (Tim), and record failure-path evidence.
-- GTM-017: the app's branded `MailService` activator and resetter (`App\Legacy\Auth\Authentication\*`) cannot load, because they redeclare the typed `$error` property. Activation and reset mail currently goes out through Myth's plain templates. Fix the classes, then switch the `activator` and `resetter` services to them.
-- GTM-019: `GET /logout` lets another site log a user out. Move it to POST-only once every logout link is a form.
+- GTM-017 (done 2026-11-15): the branded `MailService` activator and resetter load again. They no longer redeclare `$error`, and they match Myth's `send(?User)` signature. `Services::activator()` and `Services::resetter()` now return them. If the branded send fails or throws, they send Myth's plain template with Myth's own config, so a mail problem never blocks activation or reset.
+- GTM-019 (done 2026-11-15): `GET /logout` only shows a confirm page. The logout itself is `POST /logout` with the CSRF token, and the live navigation uses forms.
 - Post-launch: the Shield migration ADR described above.
