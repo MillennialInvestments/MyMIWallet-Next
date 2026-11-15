@@ -124,25 +124,59 @@ class FormTestExecutor
             ];
         }
 
+        // A PHP-built action such as /Projects/Commit/{php} (an echo tag in the view) cannot be
+        // resolved from the view file, so submitting it only tests the placeholder.
+        if (str_contains($action, '{') || str_contains($action, '<?')) {
+            return [
+                'ok'             => false,
+                'status'         => 'BLOCKED',
+                'reason'         => 'dynamic_action_url',
+                'test_id'        => null,
+                'error_detected' => false,
+                'analysis'       => $analysis,
+            ];
+        }
+
+        // Guest-only auth forms (sign in, sign up, reset, activation) say
+        // nothing useful when posted by the signed-in test account, and can
+        // end its session. They are covered by the auth-smoke tests.
+        $session = $this->session();
+        if ($session !== null && $session->isLoggedIn() && self::isGuestAuthForm($action)) {
+            return [
+                'ok'             => false,
+                'status'         => 'SKIPPED',
+                'reason'         => 'guest_auth_form_while_signed_in',
+                'test_id'        => null,
+                'error_detected' => false,
+                'analysis'       => $analysis,
+            ];
+        }
+
         $payload = $this->generatePayload($inputs);
         $row['generated_payload'] = json_encode($payload, JSON_UNESCAPED_SLASHES);
 
+        $since = date('Y-m-d H:i:s');
         $submitResult = $this->submit($method, $action, $payload);
 
         $row['response_status']  = $submitResult['status'] ?? null;
         $row['response_headers'] = $submitResult['headers'] ?? null;
         $row['response_body']    = $submitResult['body'] ?? null;
 
-        $logsSnapshot = $this->tailLogFile(50000);
+        // Only log lines written during this submit count; older errors in
+        // the day's log used to fail every later form.
+        $newErrors = self::errorLinesSince($since);
+        $logsSnapshot = implode("\n", $newErrors);
         $row['logs_snapshot'] = $logsSnapshot;
 
-        $errorDetected = $this->detectError($row['response_status'], (string)$row['response_body'], (string)$logsSnapshot);
+        $verdict = self::classify((int) ($row['response_status'] ?? 0), (string) ($submitResult['location'] ?? ''), (string) $row['response_body'], $newErrors);
+        $errorDetected = $verdict['fail'];
         $row['error_detected'] = $errorDetected ? 1 : 0;
 
         $id = $model->insert($row, true);
 
         return [
             'ok' => true,
+            'note' => $verdict['note'],
             'test_id' => $id,
             'analysis' => $analysis,
             'payload' => $payload,
@@ -248,6 +282,77 @@ class FormTestExecutor
         return $this->session;
     }
 
+    public static function isGuestAuthForm(string $action): bool
+    {
+        $path = strtolower(trim((string) (parse_url($action, PHP_URL_PATH) ?? $action), '/'));
+        $path = preg_replace('~^index\.php/~', '', $path);
+
+        return (bool) preg_match('~^(login|register(/.*)?|forgot(-password)?|resend-activation|auth/.*|reset-password.*)$~', $path);
+    }
+
+    /**
+     * PASS/FAIL for one live submit.
+     * - 2xx: pass unless the body or new log lines show an error
+     * - 3xx: pass (the handler answered with a redirect) unless it sent the
+     *   signed-in tester to /login
+     * - 400/422: pass, the handler rejected the generated junk input
+     * - anything else, or new ERROR/CRITICAL log lines: fail
+     *
+     * @param list<string> $newErrors
+     * @return array{fail: bool, note: string}
+     */
+    public static function classify(int $status, string $location, string $body, array $newErrors): array
+    {
+        if ($newErrors !== []) {
+            return ['fail' => true, 'note' => 'log: ' . mb_substr($newErrors[0], 0, 160)];
+        }
+        if ($status === 0) {
+            return ['fail' => true, 'note' => mb_substr($body, 0, 160)];
+        }
+        if ($status >= 300 && $status < 400) {
+            $path = (string) (parse_url($location, PHP_URL_PATH) ?? '');
+            if (preg_match('~/login$~i', $path)) {
+                return ['fail' => true, 'note' => 'redirected to /login (not allowed for the tester, or session lost)'];
+            }
+
+            return ['fail' => false, 'note' => 'redirect to ' . ($path !== '' ? $path : '?')];
+        }
+        if ($status === 400 || $status === 422) {
+            return ['fail' => false, 'note' => 'rejected the generated input (validation)'];
+        }
+        if ($status >= 400) {
+            return ['fail' => true, 'note' => 'HTTP ' . $status];
+        }
+        $hay = strtolower($body);
+        foreach (['fatal error', 'uncaught exception', 'whoops!', 'undefined variable', 'undefined array key', 'call to undefined method', 'databaseexception', 'sqlstate'] as $signal) {
+            if (str_contains($hay, $signal)) {
+                return ['fail' => true, 'note' => 'page shows: ' . $signal];
+            }
+        }
+
+        return ['fail' => false, 'note' => 'HTTP ' . $status];
+    }
+
+    /** @return list<string> ERROR/CRITICAL/ALERT/EMERGENCY lines the site logged since $since. */
+    public static function errorLinesSince(string $since, ?string $logDir = null, int $max = 5): array
+    {
+        $file = rtrim($logDir ?? (WRITEPATH . 'logs'), '/') . '/log-' . substr($since, 0, 10) . '.php';
+        if (! is_readable($file)) {
+            return [];
+        }
+        $out = [];
+        foreach (file($file, FILE_IGNORE_NEW_LINES) ?: [] as $line) {
+            if (preg_match('/^(ERROR|CRITICAL|ALERT|EMERGENCY) - (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) --> (.*)$/', $line, $m) && $m[2] >= $since) {
+                $out[] = $m[1] . ' ' . $m[3];
+                if (count($out) >= $max) {
+                    break;
+                }
+            }
+        }
+
+        return $out;
+    }
+
     /**
      * Response headers as text. headers() holds Header objects (a list of them
      * for repeated headers such as Set-Cookie), so read each as a line.
@@ -287,10 +392,12 @@ class FormTestExecutor
             $url = site_url(ltrim($url, '/'));
         }
 
+        // Do not follow redirects: the handler's own answer (usually a 303) is
+        // the result, and following it only tests the next page.
         $client = Services::curlrequest([
             'timeout' => 25,
             'http_errors' => false,
-            'allow_redirects' => true,
+            'allow_redirects' => false,
         ], null, null, false);
 
         try {
@@ -330,6 +437,7 @@ class FormTestExecutor
                 'headers' => $headers,
                 'body' => (string) $resp->getBody(),
                 'final_url' => $url,
+                'location' => $resp->hasHeader('Location') ? $resp->getHeaderLine('Location') : '',
             ];
         } catch (\Throwable $e) {
             return [
@@ -339,43 +447,6 @@ class FormTestExecutor
                 'final_url' => $url,
             ];
         }
-    }
-
-    private function detectError(?int $status, string $body, string $logs): bool
-    {
-        if ($status === null) {
-            return true;
-        }
-
-        if ($status >= 400 || $status === 0) {
-            return true;
-        }
-
-        $hay = strtolower($body . "\n" . $logs);
-
-        $signals = [
-            'fatal error',
-            'uncaught exception',
-            'codeigniter\\',
-            'whoops!',
-            'critical -',
-            'error -',
-            'undefined variable',
-            'undefined array key',
-            'call to undefined method',
-            'unsupported operand types',
-            'memory exhausted',
-            'databaseexception',
-            'sqlstate',
-        ];
-
-        foreach ($signals as $s) {
-            if (str_contains($hay, $s)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private function tailLogFile(int $maxBytes): string
