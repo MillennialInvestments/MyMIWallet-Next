@@ -54,7 +54,7 @@
   </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
 (function() {
   const weekKey = document.getElementById('weekKey').innerText;
 

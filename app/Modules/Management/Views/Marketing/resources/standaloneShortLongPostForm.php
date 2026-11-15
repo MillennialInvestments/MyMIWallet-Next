@@ -17,7 +17,7 @@
         </div>
     </div>
 </form>
-<script>
+<script<?= script_nonce_attr() ?>>
     document.getElementById('manualContentForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const form = document.getElementById('manualContentForm');

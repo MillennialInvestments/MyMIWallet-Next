@@ -101,7 +101,7 @@
 
 <?= view('App\\Modules\\Advisor\\Views\\partials\\advisor_insight_modal'); ?>
 
-<script>
+<script<?= script_nonce_attr() ?>>
     (function() {
         const userId = <?= json_encode($cuID ?? null); ?>;
 

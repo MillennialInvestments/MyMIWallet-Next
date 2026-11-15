@@ -1392,7 +1392,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 })();
 </script>
-<script>
+<script<?= script_nonce_attr() ?>>
 document.addEventListener('DOMContentLoaded', () => {
     const card = document.querySelector('[data-ops-health]');
     // The card is only rendered for admins; /ops/health is admin-only too.

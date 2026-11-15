@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
 (function () {
     const form = document.getElementById('chat-admin-form');
     const output = document.getElementById('chat-response');

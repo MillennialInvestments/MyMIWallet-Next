@@ -1,7 +1,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url('assets/js/Sophtron_Widget/server.js'); ?>" ></script>
     <script type="text/javascript" src="https://cdn.sophtron.com/sophtron-widget-loader-0.0.0.5.min.js" ></script>
-    <script type="text/javascript" >
+    <script<?= script_nonce_attr() ?>>
       var currentAction = 'Add';
       function onEvent(e){
         console.log(e)

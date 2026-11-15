@@ -1,5 +1,5 @@
 <!-- MyMI Solana runtime guard: ensure jQuery exists before inline Solana scripts. -->
-<script>
+<script<?= script_nonce_attr() ?>>
 (function () {
     if (window.mymiSolanaEnsureJqueryLoaded) {
         return;

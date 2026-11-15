@@ -88,7 +88,7 @@
     </div>
 </div>
 <?php if (ENVIRONMENT !== 'production'): ?>
-<script>
+<script<?= script_nonce_attr() ?>>
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('form');
     if (form) {

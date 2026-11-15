@@ -96,7 +96,7 @@
 						<br>
 
 						<button type="submit" class="btn btn-primary btn-block"><?=lang('Auth.loginAction')?></button>
-					    <script>
+					    <script<?= script_nonce_attr() ?>>
                         document.addEventListener('DOMContentLoaded', function () {
                             var form = document.getElementById('login-form');
                             if (!form) return;

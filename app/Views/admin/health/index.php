@@ -58,7 +58,7 @@ $colorClass = match ($colorState ?? 'gray') {
     </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
 document.addEventListener('DOMContentLoaded', function () {
     const button = document.getElementById('aiops-manual-run-btn');
     const status = document.getElementById('aiops-manual-run-status');

@@ -719,7 +719,7 @@ echo view($detailView, $accountInformation);
     </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
 function syncPlaidTransactionsFromDetails(button) {
     const walletId = button.getAttribute('data-wallet-id');
 
@@ -772,7 +772,7 @@ function syncPlaidTransactionsFromDetails(button) {
 }
 
 </script>
-<script>
+<script<?= script_nonce_attr() ?>>
 document.addEventListener('DOMContentLoaded', function () {
     const tableSelector = '#walletTransactionDatabase';
 

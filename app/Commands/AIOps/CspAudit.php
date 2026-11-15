@@ -29,7 +29,7 @@ class CspAudit extends SafeBaseCommand
             'style="' => '/\bstyle\s*=\s*["\"]/i',
             'onclick=' => '/\bonclick\s*=\s*["\"]/i',
             'onchange=' => '/\bonchange\s*=\s*["\"]/i',
-            '<script>' => '/<script(?![^>]*\bsrc=)(?![^>]*\bcsp_script_nonce\s*\()/i',
+            '<script>' => '/<script(?![^>]*\bsrc=)(?![^>]*\b(?:csp_script_nonce|script_nonce_attr)\s*\()(?![^>]*\bnonce)/i',
             '<style>' => '/<style(?![^>]*\bcsp_style_nonce\s*\()/i',
         ];
 

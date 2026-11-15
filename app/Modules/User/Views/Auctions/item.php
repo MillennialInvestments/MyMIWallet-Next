@@ -137,7 +137,7 @@
     </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
 (function() {
     const lotId = <?= $lotId ?>;
     const pollUrl = '<?= site_url('Auctions/Poll/' . $lotId) ?>';

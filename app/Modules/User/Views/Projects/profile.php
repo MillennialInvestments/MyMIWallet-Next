@@ -51,7 +51,7 @@ $navHistory = is_array($navHistory ?? null) ? $navHistory : [];
         </div>
     </div>
 
-    <script>
+    <script<?= script_nonce_attr() ?>>
         document.addEventListener('DOMContentLoaded', function () {
             const labels = <?= json_encode(array_map(static fn($row) => (string) ($row->created_at ?? ''), array_reverse($navHistory))) ?>;
             const navValues = <?= json_encode(array_map(static fn($row) => (float) ($row->nav_per_unit ?? 0), array_reverse($navHistory))) ?>;

@@ -1,5 +1,5 @@
 <!-- MyMI Solana runtime guard: ensure jQuery exists before inline Solana scripts. -->
-<script>
+<script<?= script_nonce_attr() ?>>
 (function () {
     if (window.mymiSolanaEnsureJqueryLoaded) {
         return;
@@ -250,7 +250,7 @@ function closeModal() {
 
 <?php if (! defined('MYMI_SOLANA_PREVIEW_UX_MODAL_PHASE14_20260603')): ?>
 <?php define('MYMI_SOLANA_PREVIEW_UX_MODAL_PHASE14_20260603', true); ?>
-<script>
+<script<?= script_nonce_attr() ?>>
 window.mymiSolanaPreviewConfig = Object.assign({}, window.mymiSolanaPreviewConfig || {}, {
     swapPreviewUrl: "<?= site_url('API/Solana/swap/preview') ?>",
     transactionPreviewUrl: "<?= site_url('API/Solana/transaction/preview') ?>",

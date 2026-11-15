@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
     (function() {
         const modalEl = document.getElementById('advisor-insight-modal');
         const summernoteEl = $('#advisor-insight-body');

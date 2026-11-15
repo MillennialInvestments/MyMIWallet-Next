@@ -118,7 +118,7 @@
     </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
     (function () {
         const usageCards = document.getElementById('usage-cards');
         const runsTable = document.querySelector('#runs-table tbody');

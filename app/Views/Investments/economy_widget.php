@@ -27,7 +27,7 @@ $yieldNegative = is_numeric($yieldSpread) && (float) $yieldSpread < 0;
     </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
 (function() {
     const unemploymentData = <?= json_encode($unemploymentSeries, JSON_UNESCAPED_SLASHES); ?>;
     const labels = unemploymentData.map(e => e.date);

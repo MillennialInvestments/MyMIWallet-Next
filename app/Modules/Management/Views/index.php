@@ -145,7 +145,7 @@ $autoloadStatusLabel = $autoloadViolations === 0
                 </div>
             </div>
         </div>
-        <script>
+        <script<?= script_nonce_attr() ?>>
             document.addEventListener('DOMContentLoaded', () => {
                 const endpoint = '<?= site_url('API/Management/getAutoloadHealth'); ?>';
                 fetch(endpoint, { credentials: 'same-origin' })
@@ -634,7 +634,7 @@ $autoloadStatusLabel = $autoloadViolations === 0
     // });
 </script>
 
-        <script>
+        <script<?= script_nonce_attr() ?>>
             document.addEventListener('DOMContentLoaded', function () {
                 const statusUrl = '<?= site_url('API/Management/subsystems/status'); ?>';
                 const actionUrl = '<?= site_url('API/Management/subsystems/action'); ?>';
