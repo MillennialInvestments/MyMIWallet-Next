@@ -72,9 +72,9 @@ $agent                  = service('request')->getUserAgent();
 			</a> 
 		</div>  
         <div class="nk-menu-trigger mr-n2">
-            <a type="button" class="user-card-wrap pt-1 pb-3 py-xl-2" data-bs-toggle="collapse" href="#collapseSidebar" role="button" aria-expanded="false" aria-controls="collapseSidebar">
+            <button type="button" class="user-card-wrap pt-1 pb-3 py-xl-2 btn btn-link p-0 border-0" id="mymiSidebarToggle" data-mymi-sidebar-toggle aria-expanded="true" aria-label="Hide sidebar">
                 <em class="icon ni ni-arrow-left" id="close-sidebar-nav-arrow" style="font-size:23px;"></em>
-            </a>
+            </button>
         </div>
 	</div>
 	<div class="nk-sidebar-element py-1">
