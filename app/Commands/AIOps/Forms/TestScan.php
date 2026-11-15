@@ -181,6 +181,10 @@ class TestScan extends SafeBaseCommand
         $policy = $result['policy'] ?? [];
         CLI::write('Mode: ' . (($policy['allowed'] ?? false) ? 'LIVE (approved)' : 'dry-run inventory') . ' [policy: ' . ($policy['reason'] ?? '?') . ']', ($policy['allowed'] ?? false) ? 'red' : 'green');
 
+        foreach ((array) ($result['session'] ?? []) as $note) {
+            CLI::write('Session: ' . $note, 'yellow');
+        }
+
         foreach ((array) ($result['summary']['by_status'] ?? []) as $status => $n) {
             CLI::write(sprintf('  %-8s %d', $status, $n));
         }

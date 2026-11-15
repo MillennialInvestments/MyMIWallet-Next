@@ -137,7 +137,7 @@ class AssetsModel extends Model
                            ->where('user_id', $userId)
                            ->get()
                            ->getRowArray();
-        return $wallet ? $wallet['private_key'] : null;
+        return $wallet ? \App\Libraries\StoredSecret::open($wallet['private_key'] ?? null) : null;
     }
     
     public function getAddress($userId)

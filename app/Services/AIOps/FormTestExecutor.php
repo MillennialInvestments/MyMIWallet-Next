@@ -222,6 +222,32 @@ class FormTestExecutor
         return $payload;
     }
 
+    private ?FormTestSession $session = null;
+    private bool $sessionResolved = false;
+
+    /** Lets a caller (or a test) give the executor a session; otherwise it is read from env once. */
+    public function useSession(?FormTestSession $session): void
+    {
+        $this->session = $session;
+        $this->sessionResolved = true;
+    }
+
+    /** @return list<string> What the staging session did (signed in, refused, ...). Empty when no session was used. */
+    public function sessionNotes(): array
+    {
+        return $this->sessionResolved && $this->session !== null ? $this->session->notes() : [];
+    }
+
+    private function session(): ?FormTestSession
+    {
+        if (! $this->sessionResolved) {
+            $this->session = FormTestSession::fromEnv();
+            $this->sessionResolved = true;
+        }
+
+        return $this->session;
+    }
+
     private function submit(string $method, string $action, array $payload): array
     {
         helper(['url']);
@@ -247,7 +273,7 @@ class FormTestExecutor
             'timeout' => 25,
             'http_errors' => false,
             'allow_redirects' => true,
-        ]);
+        ], null, null, false);
 
         try {
             $options = [
@@ -255,6 +281,13 @@ class FormTestExecutor
                     'Accept' => 'application/json, text/html;q=0.9,*/*;q=0.8',
                 ],
             ];
+
+            // STAGING-002: on staging, submit as the signed-in test account.
+            $session = $this->session();
+            if ($session !== null) {
+                $payload = $session->preparePayload($method, $payload);
+                $options += $session->requestOptions();
+            }
 
             if (in_array($method, ['POST', 'PUT', 'PATCH', 'DELETE'], true)) {
                 // Prefer form_params for classic forms

@@ -81,6 +81,7 @@ class FormDebugSeederAuditService
                 'limit'     => $limit,
             ],
             'seeder'  => $seederResult,
+            'session' => $executor->sessionNotes(),
             'summary' => $this->buildSummary($entries, $formFiles),
             'forms'   => $entries,
         ];

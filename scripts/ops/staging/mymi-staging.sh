@@ -8,6 +8,8 @@
 #   sudo bash mymi-staging.sh set-password tester|admin  # pick a test-account password (kept across db-refresh)
 #   sudo bash mymi-staging.sh perms         # let nginx/php-fpm read the staging files, then smoke test
 #   sudo bash mymi-staging.sh vhost         # nginx site with a password prompt + noindex, then HTTPS if DNS is up
+#   sudo bash mymi-staging.sh form-test [limit]  # submit every safe form on staging, signed in as staging-tester
+#   sudo bash mymi-staging.sh revision      # print the git sha staging is running
 #
 # What it never does: write to the live database, the live site folder, the
 # live .env, or the live nginx site. It reads the live .env (for DB host/port
@@ -368,6 +370,23 @@ set_password() {
   echo "staging-$who@staging.invalid password set and saved in $CREDS"
 }
 
+# Live form test against staging only, signed in as the tester account. The
+# harness itself refuses production, refuses hosts not listed below, and skips
+# every destructive target (money, mail, deletes, password, admin jobs).
+form_test() {
+  local limit="${1:-}" fpm_user site_pw tester_pw
+  fpm_user="$(stat -c %U "$STG_BASE/shared/writable")"
+  site_pw="$(cred_get STAGING_SITE_PASSWORD)"; tester_pw="$(cred_get STAGING_TESTER_PASSWORD)"
+  [ -n "$site_pw" ] && [ -n "$tester_pw" ] || die "site or tester password missing from $CREDS; run: sudo bash $0 set-password tester"
+  grep -q '^CI_ENVIRONMENT *= *staging' "$STG_BASE/shared/.env" || die "staging .env is not CI_ENVIRONMENT=staging; refusing"
+  export AIOPS_FORM_TEST_ALLOWED_HOSTS="$HOST" AIOPS_FORM_TEST_BASIC_AUTH="staging:$site_pw" \
+    AIOPS_FORM_TEST_LOGIN="staging-tester@staging.invalid" AIOPS_FORM_TEST_PASSWORD="$tester_pw"
+  local args=(--scan-all --submit --allow-destructive --approve); [ -n "$limit" ] && args+=("--limit=$limit")
+  say "form test on https://$HOST as staging-tester (revision $(cat "$STG_BASE/current/REVISION" 2>/dev/null || echo '?'))"
+  (cd "$STG_BASE/current" && sudo --preserve-env=AIOPS_FORM_TEST_ALLOWED_HOSTS,AIOPS_FORM_TEST_BASIC_AUTH,AIOPS_FORM_TEST_LOGIN,AIOPS_FORM_TEST_PASSWORD \
+    -u "$fpm_user" php spark aiops:form:test "${args[@]}")
+}
+
 smoke() {
   local pw code; pw="$(cred_get STAGING_SITE_PASSWORD)"
   code="$(curl -s -o /tmp/mymi-staging-smoke.html -w '%{http_code}' -u "staging:$pw" -H "Host: $HOST" -H 'X-Forwarded-Proto: https' "http://127.0.0.1/" || true)"
@@ -399,5 +418,7 @@ deploy) deploy "${ARG:-main}"; smoke ;;
 perms) perms; smoke ;;
 set-password) set_password "${ARG:-tester}" ;;
 vhost) vhost; smoke ;;
-*) sed -n '2,10p' "$0"; exit 1 ;;
+form-test) form_test "$ARG" ;;
+revision) cat "$STG_BASE/current/REVISION" ;;
+*) sed -n '2,12p' "$0"; exit 1 ;;
 esac
