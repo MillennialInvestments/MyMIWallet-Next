@@ -83,3 +83,77 @@ Search module JSON API.
 
 **CodeIgniter 3 code that cannot run on CI4:** Referral Program apply / new affiliate,
 User Support Feedback (`$this->config->item`, `Template::block`).
+
+## Second pass (2026-11-15, after the owner said "fix these too")
+
+Live FAILs 39 -> 0 (all FAILs 108 -> 64; the rest are in views no route renders).
+Gap baseline 107 -> 65 lines. Route handler baseline 186 -> 181 (Auctions fixed).
+
+### Switches (Config\Features, all OFF by default)
+
+The `feature` route filter was an empty stub. It now reads `Config\Features` and
+returns 503 (JSON for AJAX) before any controller code runs. Turn one on by
+setting it to `1` in the server `.env`:
+
+| Switch | Covers |
+|---|---|
+| `FEATURE_SOLANA_TRADING` | Exchange/Solana Swap, Create-Token, Purchase, Sell (controller network guard still applies) |
+| `FEATURE_AUCTIONS` | Auctions Create and Bid |
+| `FEATURE_PROJECT_INVESTING` | Projects SubmitCommit, SubmitInvest, SubmitSell |
+| `FEATURE_MYMIGOLD_PURCHASES` | Wallets/MyMIGPayPalCallback, and whether PayPal buttons for Gold are shown |
+| `FEATURE_MEMBERSHIP_PURCHASES` | Memberships/PurchaseCallback, and whether the membership PayPal button is shown |
+| `FEATURE_PREDICTIONS` (existed) | Predictions order and market routes |
+
+With a purchase switch off, the PayPal button is not shown, so nobody can pay
+for something we cannot record.
+
+### Security fixes found on the way
+
+* **MyMI Gold callback credited unverified purchases.** `handleMyMIGPayPalCallback`
+  wrote a "completed" Gold purchase using the user id, amount and order id from the
+  browser (GET or POST). Now: POST only, session user, switch, the order is fetched
+  from PayPal server to server (`PayPalOrderVerifier`, needs `PAYPAL_REST_CLIENT_ID`,
+  `PAYPAL_REST_SECRET`, optional `PAYPAL_REST_MODE=sandbox`), each order id is used
+  once (`bf_payment_claims`), and Gold is computed from PayPal's captured amount.
+  Without the PayPal REST keys every claim is stored as `unverified_not_configured`
+  and nothing is credited.
+* Predictions API: market create/settle, liquidity, and orders had no auth (several
+  were GET). Admin routes now need `apiAdmin`; orders need login; all need the switch.
+* Solana wallet disconnect could disconnect any user's wallet by id; now owner only.
+* Referral applications were saved as `active = 1` from a hidden field; now pending
+  review, and activation is admin only (POST).
+
+### What each former FAIL does now
+
+* CI3 rewrites: Referral apply (`Referral-Program/Apply`, `bf_users_referral_program`),
+  admin review (`Referral-Program/Applications`, `Activate/{id}`), Support feedback
+  (posts to `Support/Manager`).
+* New storage (migrations, owner runs them): `2026-11-15-000200_CreateUsersReferralProgram`,
+  `2026-11-15-000300_CreateFormFeatureTables` (`bf_user_preferences`,
+  `bf_discord_ai_notes` if missing, `bf_project_comments`, `bf_project_sale_requests`,
+  `bf_payment_claims`). Budget settings, retirement goals, liked economic series use
+  `bf_user_preferences`; Advisor "Save to Notes" uses `bf_discord_ai_notes`. Until the
+  migrations run these return a clear "not available yet" instead of an error.
+* Economic data: `Investments/fetchEconomicData`, `searchEconomicData` (FRED, read only,
+  cached 1 h), `likeEconomicData`.
+* Retirement page: the save script had no form; a goals form was added.
+* Projects: SubmitCommit/SubmitInvest record a commitment through the existing
+  `MyMIProjects::recordCommitment`; SubmitSell records a pending sale request;
+  AddComment stores a comment; user `Projects/Add` stores a `pending` proposal.
+* MyMI Gold order form rebuilt on the shared PayPal purchase fields (it called
+  CI3 `Template::block`, a fatal error).
+* Removed dead CodeIgniter 3 screens that no route renders: Exchange Buy/Sell/
+  Account_Information (+ field partials), Wallets Purchase_Gold (+ partial),
+  Link_Account Import-Trades/Upload-Trades. The Exchange order book and trade import
+  are features to build, not forms to fix.
+* Admin: `massResendActivationEmails` accepts POST (admin session) with a confirm
+  prompt; "Run CRON Now" posts to `Management/runCronManually` (admin only) with a
+  confirm prompt.
+
+### Before turning a switch on
+
+1. Run the two migrations with `scripts/ops/db/run-migrations.php` (never plain
+   `spark migrate` in production).
+2. For purchases: add the PayPal REST keys and test one sandbox order on staging.
+3. Solana: the controller's devnet/mainnet guard and the disabled private-key path
+   still apply; swap stays non-functional until signing is designed.

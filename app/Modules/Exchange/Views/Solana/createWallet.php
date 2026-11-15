@@ -68,7 +68,7 @@ $monthlySavingsPercentageFMT = number_format($monthlySavingsPercentage * 100, 0)
                 <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
             <?php endif; ?>
 
-            <form action="<?= base_url('Exchange/SolanaController/createWallet') ?>" method="post">
+            <form action="<?= site_url('Exchange/Solana/Create/Wallet') ?>" method="post">
                 <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
 
                 <div class="form-group">

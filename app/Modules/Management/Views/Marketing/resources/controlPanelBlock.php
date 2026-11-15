@@ -97,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ✅ Mass Resend Activation Emails
     window.massResendActivationEmails = async () => {
+        if (!window.confirm("Resend the activation email to every account that has not activated yet?")) { return; }
         const statusEl = document.getElementById("resend-status");
         statusEl.textContent = "⏳ Processing...";
         statusEl.classList.remove("text-danger", "text-success");

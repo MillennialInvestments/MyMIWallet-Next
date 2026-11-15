@@ -474,7 +474,59 @@ class ReferralController extends BaseUserController {
     public function Apply() {
         $this->commonData();
         $this->data['pageTitle'] = 'Apply for Referral Program | MyMI Wallet';
+        $this->data['referrerCode'] = $this->cuID ? \App\Services\Forms\ReferralApplicationService::referrerCode((int) $this->cuID) : '';
         return $this->renderTheme('UserModule\Views\Referral_Program/Apply', $this->data);
+    }
+
+    /**
+     * GT-FORM-ROUTES-001: POST Referral-Program/Apply. Replaces the CodeIgniter 3
+     * User/Referral_Program/Application_Manager endpoint. The user id comes from
+     * the session; the application waits for admin review (active = 0).
+     */
+    public function submitApplication() {
+        $this->commonData();
+        $userId = (int) ($this->cuID ?? 0);
+        $json = $this->request->getJSON(true);
+        $input = is_array($json) ? $json : (array) $this->request->getPost();
+
+        $result = (new \App\Services\Forms\ReferralApplicationService())->apply(
+            $userId,
+            (string) ($this->data['cuUserType'] ?? ''),
+            $input,
+            $this->request->getIPAddress()
+        );
+
+        $messages = [
+            'stored'          => 'Application submitted. Our team will review it within 24 to 48 hours.',
+            'already_applied' => 'You have already applied to the referral program.',
+            'invalid_input'   => 'Please check the form and try again.',
+            'not_signed_in'   => 'Please sign in to apply.',
+            'table_missing'   => 'Referral applications are not available yet.',
+            'db_error'        => 'Your application could not be saved. Please try again.',
+        ];
+        $message = $messages[$result['reason']] ?? $messages['db_error'];
+
+        if ($this->request->isAJAX() || is_array($json)) {
+            $code = $result['ok'] ? 200 : match ($result['reason']) {
+                'invalid_input' => 422,
+                'already_applied' => 409,
+                'not_signed_in' => 401,
+                default => 500,
+            };
+
+            return $this->response->setStatusCode($code)->setJSON([
+                'status'   => $result['ok'] ? 'success' : 'error',
+                'message'  => $message,
+                'errors'   => $result['errors'] ?? [],
+                'redirect' => $result['ok'] ? site_url('Referral-Program/Success') : null,
+            ]);
+        }
+
+        if ($result['ok']) {
+            return redirect()->to(site_url('Referral-Program/Success'));
+        }
+
+        return redirect()->back()->withInput()->with('error', $message);
     }
 
     /**
@@ -487,47 +539,23 @@ class ReferralController extends BaseUserController {
     }
 
     /**
-     * Handle new affiliate information submission.
+     * GT-FORM-ROUTES-001: admin list of referral applications (was the CodeIgniter 3
+     * New_Affiliate_Information form, whose save method never existed).
      */
     public function New_Affiliate_Information() {
-        helper(['form', 'url']);
-        $validation = \Config\Services::validation();
-        $validation->setRules([
-            'url_link' => 'trim',
-            'subpage_name' => 'trim',
-            'subpage_link' => 'trim',
-            'subpage_icon' => 'trim',
-        ]);
-
-        if (!$validation->withRequest($this->request)->run()) {
-            return $this->renderTheme('UserModule\Views\Referral_Program/New_Affiliate_Information', [
-                'validation' => $validation,
-                'pageType' => 'Automated',
-                'pageName' => 'Referral_Program_Activate_Affiliate',
-            ]);
-        } else {
-            $formData = $this->request->getPost();
-            if ($this->referralService->saveAffiliateInformation($formData)) {
-                return redirect()->to('/Referral-Program/Applications')->with('message', 'Submitted Successfully');
-            } else {
-                return $this->renderTheme('UserModule\Views\Referral_Program/New_Affiliate_Information', [
-                    'error' => 'There was a problem submitting your request. Please try again.',
-                    'pageType' => 'Automated',
-                    'pageName' => 'Referral_Program_Activate_Affiliate',
-                ]);
-            }
-        }
+        $this->commonData();
+        $this->data['pageTitle'] = 'Referral Applications | MyMI Wallet';
+        $this->data['applications'] = (new \App\Services\Forms\ReferralApplicationService())->listApplications();
+        return $this->renderTheme('UserModule\Views\Referral_Program/New_Affiliate_Information', $this->data);
     }
 
     /**
-     * Activate affiliate by ID and notify them via email.
+     * Activate an affiliate application (admin only, POST; see Routes.php).
      */
     public function Activate_Affiliate($id) {
-        if ($this->referralService->activateAffiliate($id)) {
-            return redirect()->to('/Referral-Program/Applications')->with('message', 'Affiliate Activated Successfully');
-        } else {
-            return redirect()->back()->with('error', 'Error in activating the affiliate.');
-        }
+        $ok = (new \App\Services\Forms\ReferralApplicationService())->activate((int) $id);
+        return redirect()->to(site_url('Referral-Program/Applications'))
+            ->with($ok ? 'message' : 'error', $ok ? 'Affiliate activated.' : 'Could not activate that affiliate.');
     }
 
     /**

@@ -62,7 +62,7 @@ $cuWalletID = $userAccount['cuWalletID'];
         </div>
         <div class="card">
             <div class="card-inner">
-                <form action="<?= base_url('Exchange/SolanaController/createToken') ?>" class="form-horizontal gy-3" id="createTokenForm" method="post">
+                <form action="<?= site_url('Exchange/Solana/Create-Token') ?>" class="form-horizontal gy-3" id="createTokenForm" method="post">
                     <!-- Hidden Inputs -->
                     <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
 

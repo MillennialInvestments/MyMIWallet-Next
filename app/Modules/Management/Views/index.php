@@ -521,8 +521,9 @@ $autoloadStatusLabel = $autoloadViolations === 0
         });
         $('#runNowBtn').on('click', function () {
             let btn = $(this);
+            if (!window.confirm('Run every scheduled job now? This can send email and call outside services.')) { return; }
             btn.attr('disabled', true).text('Running...');
-            $.get('<?php echo site_url("/Management/runCronManually"); ?>', function (data) {
+            $.post('<?php echo site_url("Management/runCronManually"); ?>', function (data) {
                 alert(data.message);
             }).fail(function (xhr) {
                 alert('Error: ' + (xhr.responseJSON.message || 'Unknown Error'));

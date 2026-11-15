@@ -150,6 +150,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+<?php if (! (function_exists('feature_enabled') && feature_enabled('FEATURE_MEMBERSHIP_PURCHASES'))): ?>
+    // GT-FORM-ROUTES-001: purchases are switched off, so no PayPal button (a captured payment could not be recorded).
+    (function () { var c = document.getElementById('paypal-subscription-container'); if (c) { c.innerHTML = '<div class="alert alert-info mb-0">Online purchases are not open yet.</div>'; } })();
+<?php else: ?>
     paypal.Buttons({
         createOrder: function(data, actions) {
             const totalCost = parseFloat(totalCostElement.innerText);
@@ -178,15 +182,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     body: formData,
                     credentials: 'same-origin'
                 }).then(function(response) {
-                    if (response.ok) {
-                        window.location.href = '<?=site_url("/Memberships/PurchaseComplete")?>';
-                    } else {
-                        alert('Payment failed, please try again.');
-                    }
+                    return response.json().catch(function () { return {}; }).then(function (json) {
+                        if (response.ok) {
+                            window.location.href = '<?=site_url("Wallets/Purchase/Memberships/Success")?>';
+                        } else {
+                            alert(json.message || 'We could not confirm this payment. Please contact support with your PayPal receipt.');
+                        }
+                    });
                 });
             });
         }
     }).render('#paypal-subscription-container');
+<?php endif; ?>
 });
 </script>
 <script <?= $nonce['script'] ?? '' ?>>

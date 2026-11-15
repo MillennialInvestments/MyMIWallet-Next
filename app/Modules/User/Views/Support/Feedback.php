@@ -1,85 +1,72 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php
-$errorClass                 = empty($errorClass) ? ' error' : $errorClass;
-$controlClass               = empty($controlClass) ? 'span6' : $controlClass;
-$thisURL                    = $this->uri->uri_string(); 
-$fieldData = array(
-    'errorClass'        => $errorClass,
-    'controlClass'      => $controlClass,
-    'thisURL'           => $thisURL, 
-);
+/**
+ * GT-FORM-ROUTES-001: user feedback form. Rewritten from CodeIgniter 3
+ * (Template::block, $this->router, $this->config) and repointed from the
+ * nonexistent User/Support/Communication_Manager to POST /Support/Manager,
+ * which stores the request in bf_support_requests. The user id and email come
+ * from the session on the server, never from hidden fields.
+ */
+$topics = ['Account', 'Assets', 'Billing', 'Development', 'Exchange', 'Investor', 'Partner', 'Security', 'Transaction'];
 ?>
-<form class="form-horizontal" id="add_user_feedback">
-    <fieldset>
-        <?php
-        Template::block('User/Support/Feedback/user_fields', 'User/Support/Feedback/user_fields', $fieldData);
-        ?>
-    </fieldset>
-    <fieldset>
-        <?php
-        // Allow modules to render custom fields. No payload is passed
-        // since the user has not been created, yet.
-        Events::trigger('render_user_form');
-        ?>
-        <!-- Start of User Meta -->
-        <?php //$this->load->view('users/user_meta', array('frontend_only' => true));?>
-        <!-- End of User Meta -->
-    </fieldset>
-    <fieldset>
-        <div class="control-group">
-            <div class="controls ml-3">
-                <input class="btn btn-primary" type="submit" name="register" id="addFeedbackSubmit" value="Submit" />
-            </div>
+<form class="form-horizontal" id="add_user_feedback" method="post" action="<?= esc(site_url('Support/Manager'), 'attr') ?>">
+    <?= csrf_field() ?>
+    <h4 class="card-title">Provide Your Feedback</h4>
+    <p class="card-description">Please fill out the information below.</p>
+    <hr>
+    <div class="form-group row mb-2">
+        <label for="topic" class="col-3 form-label">Topic</label>
+        <div class="col-9">
+            <select name="topic" class="form-control" id="topic" required>
+                <option value="">Select an option</option>
+                <?php foreach ($topics as $t): ?>
+                    <option value="<?= esc($t, 'attr') ?>"><?= esc($t) ?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
-    </fieldset>
-<?php echo form_close(); ?>	
-<?php if (validation_errors()) : ?>
-<div class="alert alert-error fade in">
-    <?php echo validation_errors(); ?>
-</div>
-<?php endif; ?>
-<script <?= $nonce['script'] ?? '' ?>> 
-const addFeedbackForm		= document.querySelector("#add_user_feedback");
-const addFeedbackSubmit	    = {};
-if (addFeedbackForm) { 
-    addFeedbackForm.addEventListener("submit", async (e) => {
-        //Do no refresh
+    </div>
+    <div class="form-group row mb-2">
+        <label class="col-3 form-label" for="details">Provide Your Feedback</label>
+        <div class="col-9">
+            <textarea class="form-control no-resize" name="details" id="details" rows="10" minlength="5" required placeholder="Tell us what's working and what isn't"></textarea>
+        </div>
+    </div>
+    <div class="mt-3">
+        <button class="btn btn-primary" type="submit" id="addFeedbackSubmit">Submit</button>
+    </div>
+    <div id="feedbackResult" class="mt-3" role="status" aria-live="polite"></div>
+</form>
+<script <?= $nonce['script'] ?? '' ?>>
+(function () {
+    const form = document.querySelector('#add_user_feedback');
+    if (!form) { return; }
+    const out = document.querySelector('#feedbackResult');
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
-		const formData 		= new FormData(); 
-        //Get Form data in object OR
-		addFeedbackForm.querySelectorAll("input").forEach((inputField) => {
-            formData.append(inputField.name,inputField.value);
-            addFeedbackSubmit[inputField.name] = inputField.value;
-        });  
-        addFeedbackForm.querySelectorAll("select").forEach((inputField) => {
-            formData.append(inputField.name,inputField.value);
-            addFeedbackSubmit[inputField.name] = inputField.value;
-        });  
-        //Get form data in array of objects OPTION 2
-        // form.querySelectorAll("input").forEach((inputField) => {
-        //     submit.push({ name: inputField.name, value: inputField.value });
-        // });
-        //Console log to show you how it looks
-        // console.log(addFeedbackSubmit);
-        // console.log(JSON.stringify(addFeedbackSubmit));
-        console.log(...formData);
-        //Fetch
+        const btn = document.querySelector('#addFeedbackSubmit');
+        btn.disabled = true;
+        out.className = 'mt-3';
+        out.textContent = '';
         try {
-            const result = await fetch("<?= site_url('User/Support/Communication_Manager'); ?>", {
-			
-			method: "POST",
-			body: JSON.stringify(addFeedbackSubmit),
-            headers: { "Content-Type": "application/json" },
-			credentials: "same-origin",
-			redirect: "manual",
+            const res = await fetch(form.action, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+                credentials: 'same-origin',
+                body: JSON.stringify({
+                    topic: form.topic.value || 'Feedback',
+                    subject: 'Feedback',
+                    details: form.details.value,
+                }),
             });
-            const data = await result;
-		    location.href = <?php echo '\'' . site_url('/Wallets/Link-Account/Confirm') . '\'';?>;
-            console.log(data);
+            const data = await res.json().catch(() => ({}));
+            out.className = 'mt-3 alert ' + (res.ok ? 'alert-success' : 'alert-danger');
+            out.textContent = data.message || (res.ok ? 'Thanks for the feedback!' : 'Sorry, we could not save your feedback.');
+            if (res.ok) { form.reset(); }
         } catch (err) {
-            //If fetch doesn't work, maker 
-            console.log(err);
+            out.className = 'mt-3 alert alert-danger';
+            out.textContent = 'Network error. Please try again.';
+        } finally {
+            btn.disabled = false;
         }
     });
-}
-</script> 
+})();
+</script>

@@ -21,7 +21,7 @@ class DocsController extends BaseController
     public function view($slug='')
     {
         $file = $this->resolvePath($slug ?: 'README');
-        if (!is_file($file)) return redirect()->to('/Docs');
+        if ($file === '' || !is_file($file)) return redirect()->to(site_url('Docs'));
         $md = file_get_contents($file) ?: '';
         $html = (new \Parsedown())->text($md);
         return view('App\Modules\Docs\Views\doc', ['html'=>$html,'slug'=>$slug]);
@@ -38,6 +38,10 @@ class DocsController extends BaseController
                     $hits[] = ['title'=>$f['title'],'slug'=>$f['slug']];
                 }
             }
+        }
+        if (! $this->request->isAJAX() && ! str_contains($this->request->getHeaderLine('Accept'), 'application/json')) {
+            // The docs page search box is a plain GET form: show the hits as the page list.
+            return view('App\Modules\Docs\Views\index', ['files'=>$hits, 'query'=>$q]);
         }
         return $this->response->setJSON(['status'=>'success','data'=>['hits'=>$hits],'csrf'=>csrf_hash()]);
     }
@@ -58,7 +62,14 @@ class DocsController extends BaseController
     private function resolvePath(string $slug): string
     {
         $slug = trim($slug,'/');
+        // Only paths inside the docs folder: no "..", no absolute paths, plain characters.
+        if ($slug === '' || str_contains($slug, '..') || ! preg_match('#^[A-Za-z0-9_./\- ]{1,200}$#', $slug)) {
+            return '';
+        }
         $p = str_replace('-', ' ', $slug);
-        return $this->dir().'/'.$p.'.md';
+        $path = $this->dir().'/'.$p.'.md';
+        $real = realpath($path);
+        $base = realpath($this->dir());
+        return ($real !== false && $base !== false && str_starts_with($real, $base . DIRECTORY_SEPARATOR)) ? $real : '';
     }
 }

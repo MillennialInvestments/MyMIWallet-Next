@@ -31,7 +31,7 @@ $formMode                       = $configMode;
         <h2 class="mb-4"><?= 'Integrate ' . esc($accountName) . ' - ' . esc($accountType) . ' Account'; ?></h2>
     <?php endif; ?> -->
 
-    <?= form_open('path/to/form/submit', ['class' => 'needs-validation', 'novalidate' => '']); ?>
+    <?= form_open('Investments/Account-Manager', ['class' => 'needs-validation', 'novalidate' => '']); ?>
 
     <?php if (session('cuUserType') === 'Beta'): ?>
         <input type="hidden" id="beta" name="beta" value="<?= old('beta', 'Yes'); ?>" />
@@ -322,7 +322,7 @@ document.querySelector('#trade_type').addEventListener('change', function() {
 // Populate symbol picker based on selected trade type
 function populateSymbolPicker(selectedType) {
     $.ajax({
-        url: <?php echo site_url('/Investments/API/getSymbolsByTradeType/'); ?> + selectedType,
+        url: <?= json_encode(site_url('Investments/API/getSymbolsByTradeType') . '/') ?> + encodeURIComponent(selectedType),
         success: function(data) {
             let options = '<option disabled selected>Choose Symbol</option>';
             data.forEach(function(symbol) {
@@ -346,25 +346,9 @@ $("a[href='#addWalletModal']").click(function(e) {
 
 // Function to save new wallet
 function saveNewWallet() {
-    const newWalletName = $('#newWalletName').val();
-    if (newWalletName) {
-        $.ajax({
-            url: 'path/to/save/wallet', // !! FIX THIS
-            method: 'POST',
-            data: { walletName: newWalletName },
-            success: function(data) {
-                if(data.success) {
-                    $('#wallet').append(`<option value="${data.walletId}" selected>${newWalletName}</option>`).selectpicker('refresh');
-                    $('#addWalletModal').modal('hide');
-                } else {
-                    alert('Failed to add new wallet');
-                }
-            },
-            error: function() {
-                alert('Error adding new wallet');
-            }
-        });
-    }
+    // GT-FORM-ROUTES-001: there is no quick "add wallet" endpoint ('path/to/save/wallet' was a
+    // placeholder). Send the user to the real Add Wallet form, which is owner-scoped.
+    window.location.href = <?= json_encode(site_url('Wallets/Add')) ?>;
 }
 
 // Manually toggle the dropdown for the selectpicker button

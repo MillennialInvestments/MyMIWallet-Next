@@ -1,10 +1,5 @@
 # Known route handler gaps (GTM-022..026). Remove a line once it is fixed.
 App\Controllers\Api\HealthController::index
-App\Controllers\AuctionsController::bid
-App\Controllers\AuctionsController::create
-App\Controllers\AuctionsController::index
-App\Controllers\AuctionsController::item
-App\Controllers\AuctionsController::poll
 App\Controllers\AuthController::handleProviderCallback
 App\Controllers\AuthController::linkProvider
 App\Controllers\AuthController::linkRobinhood

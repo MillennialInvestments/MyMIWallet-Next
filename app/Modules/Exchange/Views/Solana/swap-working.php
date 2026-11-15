@@ -92,7 +92,7 @@ $subViewData = [
                                 </div>
                             </div>
                             <div class="card-inner">
-                                <form class="form-horizontal gy-3" id="solanaCoinSwapForm" action="<?= base_url('Exchange/SolanaController/executeSwap') ?>" method="post">
+                                <form class="form-horizontal gy-3" id="solanaCoinSwapForm" action="<?= site_url('Exchange/Solana/Swap') ?>" method="post">
                                     <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
 
                                     <input type="hidden" name="user_id" value="<?= esc($cuID); ?>">

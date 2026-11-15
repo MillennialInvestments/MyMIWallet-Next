@@ -182,7 +182,7 @@ document.getElementById('buyForm').addEventListener('submit', function (event) {
     const formData = new FormData(this);
     formData.append('method', 'fiat'); // Set the method dynamically (crypto_swap, fiat, mymi_gold)
 
-    fetch('Exchange/Solana/Purchase', {
+    fetch(<?= json_encode(site_url('Exchange/Solana/Purchase')) ?>, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -206,7 +206,7 @@ document.getElementById('sellForm').addEventListener('submit', function (event) 
     event.preventDefault(); // Prevent default form submission
     const formData = new FormData(this);
 
-    fetch('Exchange/Solana/Sell', { // Ensure the correct URL is used for processing the sell request
+    fetch(<?= json_encode(site_url('Exchange/Solana/Sell')) ?>, { // Ensure the correct URL is used for processing the sell request
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

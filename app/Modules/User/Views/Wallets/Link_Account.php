@@ -39,7 +39,7 @@ if($pageURIC === 'Search') {
 } elseif ($pageURIC === 'Success') {
     echo view('UserModule/Wallets/Link_Account/Success', $fieldData);
 } elseif ($pageURIC === 'Upload-Trades') {
-    echo view('UserModule/Wallets/Link_Account/Upload-Trades', $fieldData);
+    echo '<div class="alert alert-info">Trade import is not available yet.</div>'; // GT-FORM-ROUTES-001: the CodeIgniter 3 import screen was removed
 } elseif ($pageURIC === 'Successful') {
     echo view('UserModule/Wallets/Link_Account/Successful', $fieldData);
     echo '<hr class="mb-3">';

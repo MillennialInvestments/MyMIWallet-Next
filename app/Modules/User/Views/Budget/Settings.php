@@ -9,14 +9,14 @@
         <div class="nk-block">
             <div class="row">
                 <div class="col-12">
-                    <form id="budget-settings-form" action="<?= site_url('budget/settings/save') ?>" method="post">
+                    <form id="budget-settings-form" action="<?= site_url('Budget/Settings/Save/' . rawurlencode((string) $budgetType)) ?>" method="post">
                         <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
 
                         <!-- Income Settings -->
                         <?php if ($budgetType == 'Income'): ?>
                             <div class="form-group mb-3">
                                 <label for="primaryIncomeSource" class="form-label">Primary Income Source</label>
-                                <input type="text" class="form-control" id="primaryIncomeSource" name="primaryIncomeSource" placeholder="e.g., Salary, Business" value="<?= $settingsData['primaryIncomeSource'] ?? '' ?>">
+                                <input type="text" class="form-control" id="primaryIncomeSource" name="primaryIncomeSource" placeholder="e.g., Salary, Business" value="<?= esc((string) ($settingsData['primaryIncomeSource'] ?? ''), 'attr') ?>">
                             </div>
                             <div class="form-group mb-3">
                                 <label for="incomeFrequency" class="form-label">Income Frequency</label>
@@ -40,16 +40,16 @@
                             <div class="form-group mb-3">
                                 <label for="incomeCategories" class="form-label">Income Categories</label>
                                 <select multiple class="form-control" id="incomeCategories" name="incomeCategories[]">
-                                    <option value="salary">Salary</option>
-                                    <option value="business">Business</option>
-                                    <option value="investments">Investments</option>
-                                    <option value="rental">Rental Income</option>
-                                    <option value="freelancing">Freelancing</option>
-                                    <option value="dividends">Dividends</option>
-                                    <option value="interest">Interest</option>
-                                    <option value="pension">Pension</option>
-                                    <option value="social security">Social Security</option>
-                                    <option value="other">Other</option>
+                                    <option value="salary"<?= in_array('salary', (array) ($settingsData['incomeCategories'] ?? []), true) ? ' selected' : '' ?>>Salary</option>
+                                    <option value="business"<?= in_array('business', (array) ($settingsData['incomeCategories'] ?? []), true) ? ' selected' : '' ?>>Business</option>
+                                    <option value="investments"<?= in_array('investments', (array) ($settingsData['incomeCategories'] ?? []), true) ? ' selected' : '' ?>>Investments</option>
+                                    <option value="rental"<?= in_array('rental', (array) ($settingsData['incomeCategories'] ?? []), true) ? ' selected' : '' ?>>Rental Income</option>
+                                    <option value="freelancing"<?= in_array('freelancing', (array) ($settingsData['incomeCategories'] ?? []), true) ? ' selected' : '' ?>>Freelancing</option>
+                                    <option value="dividends"<?= in_array('dividends', (array) ($settingsData['incomeCategories'] ?? []), true) ? ' selected' : '' ?>>Dividends</option>
+                                    <option value="interest"<?= in_array('interest', (array) ($settingsData['incomeCategories'] ?? []), true) ? ' selected' : '' ?>>Interest</option>
+                                    <option value="pension"<?= in_array('pension', (array) ($settingsData['incomeCategories'] ?? []), true) ? ' selected' : '' ?>>Pension</option>
+                                    <option value="social security"<?= in_array('social security', (array) ($settingsData['incomeCategories'] ?? []), true) ? ' selected' : '' ?>>Social Security</option>
+                                    <option value="other"<?= in_array('other', (array) ($settingsData['incomeCategories'] ?? []), true) ? ' selected' : '' ?>>Other</option>
                                 </select>
                             </div>
                         <?php endif; ?>
@@ -65,7 +65,7 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label for="monthlyBudgetLimit" class="form-label">Monthly Budget Limit</label>
-                                <input type="number" id="monthlyBudgetLimit" name="monthlyBudgetLimit" class="form-control" value="<?= $settingsData['monthlyBudgetLimit'] ?? 0 ?>">
+                                <input type="number" id="monthlyBudgetLimit" name="monthlyBudgetLimit" class="form-control" value="<?= esc((string) ($settingsData['monthlyBudgetLimit'] ?? 0), 'attr') ?>">
                             </div>
                             <div class="form-check mb-3">
                                 <input type="checkbox" id="criticalExpenseAlerts" name="criticalExpenseAlerts" class="form-check-input" <?= $settingsData['criticalExpenseAlerts'] ? 'checked' : '' ?>>
@@ -74,25 +74,25 @@
                             <div class="form-group mb-3">
                                 <label for="recurringExpenses" class="form-label">Recurring Expenses</label>
                                 <select multiple id="recurringExpenses" name="recurringExpenses[]" class="form-select">
-                                    <option value="rent">Rent/Mortgage</option>
-                                    <option value="utilities">Utilities</option>
-                                    <option value="subscriptions">Subscriptions</option>
-                                    <option value="insurance">Insurance</option>
+                                    <option value="rent"<?= in_array('rent', (array) ($settingsData['recurringExpenses'] ?? []), true) ? ' selected' : '' ?>>Rent/Mortgage</option>
+                                    <option value="utilities"<?= in_array('utilities', (array) ($settingsData['recurringExpenses'] ?? []), true) ? ' selected' : '' ?>>Utilities</option>
+                                    <option value="subscriptions"<?= in_array('subscriptions', (array) ($settingsData['recurringExpenses'] ?? []), true) ? ' selected' : '' ?>>Subscriptions</option>
+                                    <option value="insurance"<?= in_array('insurance', (array) ($settingsData['recurringExpenses'] ?? []), true) ? ' selected' : '' ?>>Insurance</option>
                                 </select>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="expenseCategories" class="form-label">Expense Categories</label>
                                 <select multiple id="expenseCategories" name="expenseCategories[]" class="form-select">
-                                    <option value="housing">Housing</option>
-                                    <option value="transportation">Transportation</option>
-                                    <option value="food">Food</option>
-                                    <option value="utilities">Utilities</option>
-                                    <option value="insurance">Insurance</option>
-                                    <option value="healthcare">Healthcare</option>
-                                    <option value="entertainment">Entertainment</option>
-                                    <option value="education">Education</option>
-                                    <option value="clothing">Clothing</option>
-                                    <option value="miscellaneous">Miscellaneous</option>
+                                    <option value="housing"<?= in_array('housing', (array) ($settingsData['expenseCategories'] ?? []), true) ? ' selected' : '' ?>>Housing</option>
+                                    <option value="transportation"<?= in_array('transportation', (array) ($settingsData['expenseCategories'] ?? []), true) ? ' selected' : '' ?>>Transportation</option>
+                                    <option value="food"<?= in_array('food', (array) ($settingsData['expenseCategories'] ?? []), true) ? ' selected' : '' ?>>Food</option>
+                                    <option value="utilities"<?= in_array('utilities', (array) ($settingsData['expenseCategories'] ?? []), true) ? ' selected' : '' ?>>Utilities</option>
+                                    <option value="insurance"<?= in_array('insurance', (array) ($settingsData['expenseCategories'] ?? []), true) ? ' selected' : '' ?>>Insurance</option>
+                                    <option value="healthcare"<?= in_array('healthcare', (array) ($settingsData['expenseCategories'] ?? []), true) ? ' selected' : '' ?>>Healthcare</option>
+                                    <option value="entertainment"<?= in_array('entertainment', (array) ($settingsData['expenseCategories'] ?? []), true) ? ' selected' : '' ?>>Entertainment</option>
+                                    <option value="education"<?= in_array('education', (array) ($settingsData['expenseCategories'] ?? []), true) ? ' selected' : '' ?>>Education</option>
+                                    <option value="clothing"<?= in_array('clothing', (array) ($settingsData['expenseCategories'] ?? []), true) ? ' selected' : '' ?>>Clothing</option>
+                                    <option value="miscellaneous"<?= in_array('miscellaneous', (array) ($settingsData['expenseCategories'] ?? []), true) ? ' selected' : '' ?>>Miscellaneous</option>
                                 </select>
                             </div>
                         <?php endif; ?>

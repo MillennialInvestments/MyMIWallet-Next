@@ -2268,31 +2268,68 @@ class MarketingAdminController extends BaseAdminController
             if ($channel === 'Discord') {
                 $this->data['tokens'] = $exchangeTokens['discord'];
                 $this->data['pageTitle'] = 'Discord Communities';
-                $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\discord', $this->data);
+                return $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\discord', $this->data);
             } elseif ($channel === 'Facebook') {
                 $this->data['tokens'] = $exchangeTokens['facebook'];
                 $this->data['pageTitle'] = 'Facebook Communities';
-                $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\facebook', $this->data);
+                return $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\facebook', $this->data);
             } elseif ($channel === 'Twitter') {
                 $this->data['tokens'] = $exchangeTokens['x_twitter'];
                 $this->data['pageTitle'] = 'Twitter Communities';
-                $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\twitter', $this->data);
+                return $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\twitter', $this->data);
             } elseif ($channel === 'Website') {
                 $this->data['tokens'] = $exchangeTokens['website'];
                 $this->data['pageTitle'] = 'Website Communities';
-                $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\website', $this->data);
+                return $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\website', $this->data);
             } else {
                 // Default to 'all' if the channel is not recognized
                 $this->data['tokens'] = $exchangeTokens['all'];
                 $this->data['pageTitle'] = 'All Communities';
-                $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\all_tokens', $this->data);
+                return $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\all_tokens', $this->data);
             }
         } else {
             // If no channel is specified, show all tokens
             $this->data['tokens'] = $exchangeTokens['all'];
             $this->data['pageTitle'] = 'All Communities';
-            $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\all_tokens', $this->data);
+            return $this->renderTheme('ManagementModule\Views\Marketing\Exchanges\includes\all_tokens', $this->data);
         }
+    }
+
+    /**
+     * GT-FORM-ROUTES-001: the "Refresh" button on the Top Communities pages
+     * (it called "solana/market-refresh", which never existed).
+     */
+    public function topCommunitiesRefresh($channel = 'Website')
+    {
+        $map = ['Discord' => 'discord', 'Facebook' => 'facebook', 'Twitter' => 'x_twitter', 'Website' => 'website'];
+        $key = $map[$channel] ?? 'all';
+        $tokens = (new MyMIExchange())->getSolanaTokens();
+
+        return $this->response->setJSON(['status' => 'success', 'tokens' => array_values((array) ($tokens[$key] ?? []))]);
+    }
+
+    /**
+     * GT-FORM-ROUTES-001: the Content Generator form. Saves a draft only; nothing is posted anywhere.
+     */
+    public function addContent()
+    {
+        $type  = (string) $this->request->getPost('contentType');
+        $title = trim(strip_tags((string) $this->request->getPost('contentTitle')));
+        $body  = trim((string) $this->request->getPost('contentBody'));
+        if (! in_array($type, ['blogPost', 'socialMedia', 'newsletter'], true) || $title === '' || $body === '') {
+            return redirect()->back()->withInput()->with('error', 'Pick a type and enter a title and content.');
+        }
+
+        $saved = $this->marketingModel->insertGeneratedContent([
+            'title'      => mb_substr($title, 0, 255),
+            'summary'    => $body,
+            'status'     => 'draft',
+            'category'   => $type,
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        return redirect()->to(site_url('Management/Marketing/Content/Generator'))
+            ->with($saved ? 'message' : 'error', $saved ? 'Draft saved.' : 'Could not save the draft.');
     }
 
     public function triggerPostAutogenOnEmpty()
