@@ -68,6 +68,23 @@ final class FormTestSession
         return $this->login !== null && $this->password !== null;
     }
 
+    /** True when a signed-in page still loads (the session survived the last submit). */
+    public function stillSignedIn(): bool
+    {
+        try {
+            $resp = $this->client(false)->request('GET', site_url('Dashboard'), $this->requestOptions());
+            $this->absorb($resp);
+            $ok = $resp->getStatusCode() === 200;
+            if (! $ok) {
+                $this->loggedIn = false;
+            }
+
+            return $ok;
+        } catch (\Throwable) {
+            return false;
+        }
+    }
+
     public function isLoggedIn(): bool
     {
         return $this->loggedIn;

@@ -764,9 +764,13 @@ class InvestmentsController extends BaseUserController
         log_message('debug', 'InvestmentsController::accountManager L290 - Raw Input: ' . $rawInput);
     
         $json = json_decode($rawInput, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            log_message('critical', 'JSON Parsing Error: ' . json_last_error_msg());
-            return $this->fail('Invalid JSON format: ' . json_last_error_msg(), 400);
+        if (json_last_error() !== JSON_ERROR_NONE || ! is_array($json)) {
+            // The add-investment page posts a normal form; the JS widgets post JSON.
+            $json = (array) $this->request->getPost();
+            if ($json === []) {
+                log_message('notice', 'InvestmentsController::accountManager: body is neither JSON nor a form post');
+                return $this->fail('Invalid request body.', 400);
+            }
         }
     
         log_message('debug', 'InvestmentsController::accountManager L297 - $json Array: ' . print_r($json, true));

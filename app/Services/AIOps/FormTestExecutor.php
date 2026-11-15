@@ -169,7 +169,9 @@ class FormTestExecutor
         $payload = $this->generatePayload($inputs);
         $row['generated_payload'] = json_encode($payload, JSON_UNESCAPED_SLASHES);
 
-        $since = date('Y-m-d H:i:s');
+        $logFile = rtrim(WRITEPATH . 'logs', '/') . '/log-' . date('Y-m-d') . '.php';
+        clearstatcache(true, $logFile);
+        $logOffset = is_file($logFile) ? (int) filesize($logFile) : 0;
         $submitResult = $this->submit($method, $action, $payload);
 
         $row['response_status']  = $submitResult['status'] ?? null;
@@ -178,11 +180,16 @@ class FormTestExecutor
 
         // Only log lines written during this submit count; older errors in
         // the day's log used to fail every later form.
-        $newErrors = self::errorLinesSince($since);
+        $newErrors = self::errorLinesAfter($logFile, $logOffset);
         $logsSnapshot = implode("\n", $newErrors);
         $row['logs_snapshot'] = $logsSnapshot;
 
         $verdict = self::classify((int) ($row['response_status'] ?? 0), (string) ($submitResult['location'] ?? ''), (string) $row['response_body'], $newErrors);
+        // A redirect to /login while the tester is still signed in is the
+        // route's role check (for example admin-only pages), not a broken form.
+        if ($verdict['fail'] && str_starts_with($verdict['note'], 'redirected to /login') && $session !== null && $session->stillSignedIn()) {
+            $verdict = ['fail' => false, 'note' => 'needs a role the tester does not have (redirected to /login, still signed in)'];
+        }
         $errorDetected = $verdict['fail'];
         $row['error_detected'] = $errorDetected ? 1 : 0;
 
@@ -345,6 +352,34 @@ class FormTestExecutor
         }
 
         return ['fail' => false, 'note' => 'HTTP ' . $status];
+    }
+
+    /**
+     * ERROR/CRITICAL/ALERT/EMERGENCY lines appended to $file after byte $offset,
+     * so only what this submit logged counts (several submits can share a second).
+     *
+     * @return list<string>
+     */
+    public static function errorLinesAfter(string $file, int $offset, int $max = 5): array
+    {
+        clearstatcache(true, $file);
+        if (! is_readable($file) || (int) filesize($file) <= $offset) {
+            return [];
+        }
+        $fh = fopen($file, 'rb');
+        if ($fh === false) {
+            return [];
+        }
+        fseek($fh, $offset);
+        $out = [];
+        while (($line = fgets($fh)) !== false && count($out) < $max) {
+            if (preg_match('/^(ERROR|CRITICAL|ALERT|EMERGENCY) - \S+ \S+ --> (.*)$/', rtrim($line, "\r\n"), $m)) {
+                $out[] = $m[1] . ' ' . $m[2];
+            }
+        }
+        fclose($fh);
+
+        return $out;
     }
 
     /** @return list<string> ERROR/CRITICAL/ALERT/EMERGENCY lines the site logged since $since. */

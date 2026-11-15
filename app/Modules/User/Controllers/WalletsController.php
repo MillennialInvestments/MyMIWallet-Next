@@ -966,7 +966,7 @@ class WalletsController extends BaseUserController
             };
 
             if ($type === null) {
-                log_message('error', 'WalletsController::add invalid wallet_type: {wallet_type}', [
+                log_message('notice', 'WalletsController::add invalid wallet_type: {wallet_type}', [
                     'wallet_type' => $walletTypeRaw,
                 ]);
 

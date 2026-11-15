@@ -62,4 +62,16 @@ final class FormLiveVerdictTest extends CIUnitTestCase
         array_map('unlink', glob($dir . '/*'));
         rmdir($dir);
     }
+
+    public function testErrorLinesAfterOffsetIgnoreEarlierSubmits(): void
+    {
+        $file = sys_get_temp_dir() . '/formverdict-' . bin2hex(random_bytes(3)) . '.php';
+        file_put_contents($file, "ERROR - 2026-11-15 23:00:00 --> earlier form\n");
+        $offset = (int) filesize($file);
+        file_put_contents($file, "INFO - 2026-11-15 23:00:00 --> fine\nCRITICAL - 2026-11-15 23:00:00 --> this form\n", FILE_APPEND);
+
+        $this->assertSame(['CRITICAL this form'], FormTestExecutor::errorLinesAfter($file, $offset));
+        $this->assertSame([], FormTestExecutor::errorLinesAfter($file, (int) filesize($file)));
+        unlink($file);
+    }
 }
