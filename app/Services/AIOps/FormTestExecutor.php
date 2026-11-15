@@ -255,8 +255,12 @@ class FormTestExecutor
     public static function headerText($response): string
     {
         $text = '';
-        foreach (array_keys($response->headers()) as $name) {
-            $text .= $name . ': ' . $response->getHeaderLine($name) . "\n";
+        foreach ($response->headers() as $name => $header) {
+            $values = [];
+            foreach (is_array($header) ? $header : [$header] as $h) {
+                $values[] = $h->getValueLine();
+            }
+            $text .= $name . ': ' . implode(', ', $values) . "\n";
         }
 
         return $text;
