@@ -59,6 +59,7 @@ like production) and `AIOPS_FORM_TEST_ALLOWED_HOSTS = staging.mymiwallet.com`.
 
 ## Day to day
 
+- Your own test-account password: `sudo bash mymi-staging.sh set-password tester` (or `admin`); db-refresh keeps it.
 - New release on staging: `sudo bash mymi-staging.sh deploy main` (or a branch).
   Add `MIGRATE='<names>'` to run named migrations on the staging DB only.
 - Fresh data: `sudo bash mymi-staging.sh db-refresh` (reloads and re-scrubs;

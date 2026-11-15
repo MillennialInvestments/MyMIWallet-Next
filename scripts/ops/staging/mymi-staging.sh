@@ -5,6 +5,8 @@
 #   sudo bash mymi-staging.sh setup         # everything below, in order, then a smoke test
 #   sudo bash mymi-staging.sh db-refresh    # reload the newest nightly backup into the staging DB and scrub it
 #   sudo bash mymi-staging.sh deploy [ref]  # build <ref> (default main) into staging and switch to it
+#   sudo bash mymi-staging.sh set-password tester|admin  # pick a test-account password (kept across db-refresh)
+#   sudo bash mymi-staging.sh perms         # let nginx/php-fpm read the staging files, then smoke test
 #   sudo bash mymi-staging.sh vhost         # nginx site with a password prompt + noindex, then HTTPS if DNS is up
 #
 # What it never does: write to the live database, the live site folder, the
@@ -54,6 +56,8 @@ cred_set() { # keeps one line per key
   printf '%s=%s\n' "$1" "$2" >> "$CREDS.tmp"; mv "$CREDS.tmp" "$CREDS"; chown "$OP_USER" "$CREDS"; chmod 600 "$CREDS"
 }
 newpw() { openssl rand -base64 30 | tr -dc 'A-Za-z0-9' | head -c 24; }
+# MySQL validate_password (MEDIUM/STRONG) wants upper, lower, digit and a special character.
+newdbpw() { printf '%s-Xz9_%s' "$(newpw)" "$(newpw | head -c 8)"; }
 newest_backup() { ls -1t "$BACKUP_DIR"/*.sql.gz 2>/dev/null | head -1 || true; }
 
 # ---------------------------------------------------------------- check
@@ -128,7 +132,9 @@ fastcgi_target() {
 write_env() {
   local src="$PROD_BASE/shared/.env" dst="$STG_BASE/shared/.env"
   mkdir -p "$STG_BASE/shared"; chown "$OP_USER" "$STG_BASE" "$STG_BASE/shared"
-  local dbpw; dbpw="$(cred_get STAGING_DB_PASSWORD)"; [ -n "$dbpw" ] || { dbpw="$(newpw)"; cred_set STAGING_DB_PASSWORD "$dbpw"; }
+  local dbpw; dbpw="$(cred_get STAGING_DB_PASSWORD)"
+  # Older runs made an all-letters-and-digits password that MySQL's policy rejects.
+  case "$dbpw" in *-Xz9_*) ;; *) dbpw="$(newdbpw)"; cred_set STAGING_DB_PASSWORD "$dbpw";; esac
   local enc; enc="$(cred_get STAGING_ENCRYPTION_KEY)"; [ -n "$enc" ] || { enc="hex2bin:$(openssl rand -hex 32)"; cred_set STAGING_ENCRYPTION_KEY "$enc"; }
   local dbhost dbport; dbhost="$(envval "$src" database.default.hostname)"; dbport="$(envval "$src" database.default.port)"
   {
@@ -172,6 +178,10 @@ db_refresh() {
   local f; f="$(newest_backup)"; [ -n "$f" ] || die "no backup in $BACKUP_DIR"
   if [ -r "$f.sha256" ]; then (cd "$(dirname "$f")" && sha256sum -c --quiet "$(basename "$f").sha256") || die "backup checksum failed"; fi
   local dbpw; dbpw="$(cred_get STAGING_DB_PASSWORD)"; [ -n "$dbpw" ] || die "no staging DB password yet; run setup"
+  local have; have="$("${MYSQL[@]}" -N -e "SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA='$STG_DB'")"
+  if [ "${REUSE_LOADED:-0}" = 1 ] && [ "$have" -gt 0 ]; then
+    say "REUSE_LOADED=1: keeping the $have tables already loaded in $STG_DB (scrub still runs)"
+  else
   say "loading $(basename "$f") into $STG_DB"
   "${MYSQL[@]}" -e "DROP DATABASE IF EXISTS \`$STG_DB\`; CREATE DATABASE \`$STG_DB\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
   local start; start=$(date +%s)
@@ -179,6 +189,7 @@ db_refresh() {
   # so nothing in the dump can land in the live database.
   gzip -cd "$f" | sed -E -e '/^(CREATE DATABASE|USE )/d' -e "s/\`$LIVE_DB\`\.//g" | "${MYSQL[@]}" "$STG_DB"
   echo "loaded in $(( $(date +%s) - start ))s: $("${MYSQL[@]}" -N -e "SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA='$STG_DB'") tables"
+  fi
   "${MYSQL[@]}" <<SQL
 CREATE USER IF NOT EXISTS '$STG_DB_USER'@'localhost' IDENTIFIED BY '$dbpw';
 CREATE USER IF NOT EXISTS '$STG_DB_USER'@'127.0.0.1' IDENTIFIED BY '$dbpw';
@@ -274,6 +285,7 @@ deploy() {
   ln -sfn "releases/$rel" "$STG_BASE/current.next" && mv -T "$STG_BASE/current.next" "$STG_BASE/current"
   systemctl reload "$(systemctl list-units --type=service --no-legend 'php*-fpm*' | awk '{print $1}' | head -1)" || true
   echo "staging is now $rel"
+  perms
 }
 
 # ---------------------------------------------------------------- vhost
@@ -323,11 +335,49 @@ NGX
   fi
 }
 
+# nginx and php-fpm must be able to read the staging files. umask 027 leaves
+# them owner-only, so give them the same group the live release uses.
+perms() {
+  local grp fpm_user
+  grp="$(stat -c %G "$(readlink -f "$PROD_BASE/current")")"
+  fpm_user="$(ps -eo user=,comm= | awk '$2 ~ /^php-fpm/ && $1 != "root" {print $1; exit}')"; fpm_user="${fpm_user:-www-data}"
+  find "$STG_BASE" -path "$STG_BASE/shared/writable" -prune -o -exec chgrp -h "$grp" {} +
+  find "$STG_BASE" -path "$STG_BASE/shared/writable" -prune -o -type d -exec chmod g+rxs {} +
+  find "$STG_BASE" -path "$STG_BASE/shared/writable" -prune -o -type f -exec chmod g+r {} +
+  # writable: php-fpm writes cache, logs and sessions here.
+  chown -R "$fpm_user:$grp" "$STG_BASE/shared/writable"
+  chmod -R ug+rwX "$STG_BASE/shared/writable"
+  find "$STG_BASE/shared/writable" -type d -exec chmod g+s {} +
+  sudo -u "$fpm_user" test -w "$STG_BASE/shared/writable/cache" || echo "perms: $fpm_user still cannot write $STG_BASE/shared/writable/cache"
+  if sudo -u "$fpm_user" test -r "$STG_BASE/current/public/index.php" && sudo -u "$fpm_user" test -r "$STG_BASE/shared/.env"; then
+    echo "perms: $fpm_user can read the staging site (group $grp)"
+  else
+    echo "perms: $fpm_user still cannot read the staging site:"; namei -l "$STG_BASE/current/public/index.php" | sed 's/^/  /'
+  fi
+}
+
+# Set a test account's password to one you choose, and save it so db-refresh keeps it.
+set_password() {
+  local who="${1:-tester}" pw pw2 hash
+  case "$who" in tester|admin) ;; *) die "usage: sudo bash $0 set-password tester|admin";; esac
+  read -rsp "New staging-$who password: " pw; echo; read -rsp "Again: " pw2; echo
+  [ -n "$pw" ] && [ "$pw" = "$pw2" ] || die "passwords empty or different; nothing changed"
+  hash="$(PW="$pw" php -r 'echo password_hash(getenv("PW"), PASSWORD_DEFAULT);')"
+  "${MYSQL[@]}" "$STG_DB" -e "UPDATE bf_users SET password_hash='$hash' WHERE email='staging-$who@staging.invalid'"
+  cred_set "STAGING_${who^^}_PASSWORD" "$pw"
+  echo "staging-$who@staging.invalid password set and saved in $CREDS"
+}
+
 smoke() {
   local pw code; pw="$(cred_get STAGING_SITE_PASSWORD)"
   code="$(curl -s -o /tmp/mymi-staging-smoke.html -w '%{http_code}' -u "staging:$pw" -H "Host: $HOST" -H 'X-Forwarded-Proto: https' "http://127.0.0.1/" || true)"
   grep -qiE 'Fatal error|Uncaught' /tmp/mymi-staging-smoke.html && code="$code+PHP-ERROR"
   echo "smoke: GET / on $HOST via 127.0.0.1 -> $code (200 or 301/302 to https is fine)"
+  case "$code" in 2*|30[1278]) ;; *)
+    echo "  body: $(head -c 300 /tmp/mymi-staging-smoke.html | tr '\n' ' ')"
+    echo "  nginx errors:"; tail -n 5 /var/log/nginx/error.log 2>/dev/null | sed 's/^/    /'
+    echo "  app log: $(ls -1t "$STG_BASE/shared/writable/logs"/*.log 2>/dev/null | head -1)"; tail -n 5 "$(ls -1t "$STG_BASE/shared/writable/logs"/*.log 2>/dev/null | head -1)" 2>/dev/null | cut -c1-300 | sed 's/^/    /' ;;
+  esac
 }
 
 case "$CMD" in
@@ -346,6 +396,8 @@ setup)
   ;;
 db-refresh) check || die "fix the blockers above first"; db_refresh ;;
 deploy) deploy "${ARG:-main}"; smoke ;;
+perms) perms; smoke ;;
+set-password) set_password "${ARG:-tester}" ;;
 vhost) vhost; smoke ;;
 *) sed -n '2,10p' "$0"; exit 1 ;;
 esac
