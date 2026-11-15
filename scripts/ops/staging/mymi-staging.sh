@@ -5,6 +5,7 @@
 #   sudo bash mymi-staging.sh setup         # everything below, in order, then a smoke test
 #   sudo bash mymi-staging.sh db-refresh    # reload the newest nightly backup into the staging DB and scrub it
 #   sudo bash mymi-staging.sh deploy [ref]  # build <ref> (default main) into staging and switch to it
+#   sudo bash mymi-staging.sh perms         # let nginx/php-fpm read the staging files, then smoke test
 #   sudo bash mymi-staging.sh vhost         # nginx site with a password prompt + noindex, then HTTPS if DNS is up
 #
 # What it never does: write to the live database, the live site folder, the
@@ -283,6 +284,7 @@ deploy() {
   ln -sfn "releases/$rel" "$STG_BASE/current.next" && mv -T "$STG_BASE/current.next" "$STG_BASE/current"
   systemctl reload "$(systemctl list-units --type=service --no-legend 'php*-fpm*' | awk '{print $1}' | head -1)" || true
   echo "staging is now $rel"
+  perms
 }
 
 # ---------------------------------------------------------------- vhost
@@ -332,11 +334,32 @@ NGX
   fi
 }
 
+# nginx and php-fpm must be able to read the staging files. umask 027 leaves
+# them owner-only, so give them the same group the live release uses.
+perms() {
+  local grp fpm_user
+  grp="$(stat -c %G "$(readlink -f "$PROD_BASE/current")")"
+  fpm_user="$(ps -eo user=,comm= | awk '$2 ~ /^php-fpm/ && $1 != "root" {print $1; exit}')"; fpm_user="${fpm_user:-www-data}"
+  find "$STG_BASE" -path "$STG_BASE/shared/writable" -prune -o -exec chgrp -h "$grp" {} +
+  find "$STG_BASE" -path "$STG_BASE/shared/writable" -prune -o -type d -exec chmod g+rxs {} +
+  find "$STG_BASE" -path "$STG_BASE/shared/writable" -prune -o -type f -exec chmod g+r {} +
+  if sudo -u "$fpm_user" test -r "$STG_BASE/current/public/index.php" && sudo -u "$fpm_user" test -r "$STG_BASE/shared/.env"; then
+    echo "perms: $fpm_user can read the staging site (group $grp)"
+  else
+    echo "perms: $fpm_user still cannot read the staging site:"; namei -l "$STG_BASE/current/public/index.php" | sed 's/^/  /'
+  fi
+}
+
 smoke() {
   local pw code; pw="$(cred_get STAGING_SITE_PASSWORD)"
   code="$(curl -s -o /tmp/mymi-staging-smoke.html -w '%{http_code}' -u "staging:$pw" -H "Host: $HOST" -H 'X-Forwarded-Proto: https' "http://127.0.0.1/" || true)"
   grep -qiE 'Fatal error|Uncaught' /tmp/mymi-staging-smoke.html && code="$code+PHP-ERROR"
   echo "smoke: GET / on $HOST via 127.0.0.1 -> $code (200 or 301/302 to https is fine)"
+  case "$code" in 2*|30[1278]) ;; *)
+    echo "  body: $(head -c 300 /tmp/mymi-staging-smoke.html | tr '\n' ' ')"
+    echo "  nginx errors:"; tail -n 5 /var/log/nginx/error.log 2>/dev/null | sed 's/^/    /'
+    echo "  app log: $(ls -1t "$STG_BASE/shared/writable/logs"/*.log 2>/dev/null | head -1)"; tail -n 5 "$(ls -1t "$STG_BASE/shared/writable/logs"/*.log 2>/dev/null | head -1)" 2>/dev/null | cut -c1-300 | sed 's/^/    /' ;;
+  esac
 }
 
 case "$CMD" in
@@ -355,6 +378,7 @@ setup)
   ;;
 db-refresh) check || die "fix the blockers above first"; db_refresh ;;
 deploy) deploy "${ARG:-main}"; smoke ;;
+perms) perms; smoke ;;
 vhost) vhost; smoke ;;
 *) sed -n '2,10p' "$0"; exit 1 ;;
 esac
