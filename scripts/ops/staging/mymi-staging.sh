@@ -440,10 +440,29 @@ smoke() {
   esac
 }
 
+# One staging command at a time: a db-refresh running under a form test (or a
+# second paste of setup) gave "table doesn't exist" errors on 2026-11-15.
+case "$CMD" in check|revision|smart|tester-check|"") ;; *)
+  exec 9>/run/lock/mymi-staging.lock
+  flock -n 9 || die "another mymi-staging.sh command is running; wait for it to finish" ;;
+esac
+
+# setup and db-refresh replace the whole staging database. Once it exists,
+# ask before doing that (MYMI_STAGING_CONFIRM=REFRESH skips the question).
+confirm_refresh() {
+  local have; have="$("${MYSQL[@]}" -N -e "SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA='$STG_DB'" 2>/dev/null || echo 0)"
+  [ "${have:-0}" -gt 0 ] || return 0
+  [ "${MYMI_STAGING_CONFIRM:-}" = REFRESH ] && return 0
+  echo "This replaces the staging database ($STG_DB, $have tables) with a fresh copy of the newest backup (about 10 minutes, staging is down meanwhile)."
+  local a; read -rp "Type REFRESH to continue: " a
+  [ "$a" = REFRESH ] || die "nothing changed"
+}
+
 case "$CMD" in
 check) check ;;
 setup)
   check || die "fix the blockers above first"
+  confirm_refresh
   write_env
   db_refresh
   deploy main
@@ -454,7 +473,7 @@ setup)
   echo "Test accounts: staging-tester@staging.invalid, staging-admin@staging.invalid"
   echo "All passwords: $CREDS  (view with: cat $CREDS)"
   ;;
-db-refresh) check || die "fix the blockers above first"; db_refresh ;;
+db-refresh) check || die "fix the blockers above first"; confirm_refresh; db_refresh ;;
 deploy) deploy "${ARG:-main}"; smoke ;;
 perms) perms; smoke ;;
 set-password) set_password "${ARG:-tester}" ;;
