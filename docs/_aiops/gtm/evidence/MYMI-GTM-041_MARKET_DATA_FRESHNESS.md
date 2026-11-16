@@ -3,7 +3,8 @@
 ## Status
 READY / CERTIFIED.
 
-- **PR:** (Pending merge)
+- **PR:** #729
+- **Commit:** 93a16b6217edd7f5db85cf9845175ef364a95d6e
 - **Completed UTC:** 2026-11-16T20:25:00Z
 - **Domain:** Core financial journeys (W3)
 - **Gate:** None required
