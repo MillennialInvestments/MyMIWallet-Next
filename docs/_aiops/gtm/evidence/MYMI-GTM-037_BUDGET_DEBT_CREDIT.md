@@ -3,7 +3,9 @@
 ## Status
 READY / CERTIFIED.
 
-- **PR:** #727
+- **PR:** [#727](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/727)
+- **Commit:** `904c605a0d72771e3e96843b2bbff41846877eb9`
+- **Release:** `20261116T192124Z-gtm-904c605a`
 - **Completed UTC:** 2026-11-16T15:05:00Z
 - **Domain:** Core financial journeys (W3)
 - **Gate:** None required
