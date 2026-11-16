@@ -310,19 +310,6 @@ class MyMIExchange
             $cuAssetVolume			    = $userAssetVolume['total_volume'];
         }
         
-        // $cuID = 2;
-        // $this->db->select_sum('current_value');
-        // $this->db->from('bf_exchanges');
-        // $this->db->where('market_pair', 'USD');
-        // $this->db->where('creator', $cuID);
-        // $getUserAssets						= $this->db->get();
-        // foreach($getUserAssets as $userAssets) {
-        // 	$cuAssetNetWorth = $userAssets['current_value'];
-        // }
-        
-        // foreach ($getUserAssetNetWorth as $userAssetNetWorth) {
-        // 	$cuAssetNetWorth		= $userAssetNetWorth['current_value'];
-        // }
         $cuAssetCount				    = $getUserAssetCount->num_rows();
         
         // foreach($getUserAssetInfo as $userAssetInfo) {
