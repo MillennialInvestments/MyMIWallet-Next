@@ -16,7 +16,7 @@ final class BudgetOwnershipTest extends CIUnitTestCase
     /** @var object */
     private $model;
 
-    private function service(array $record): BudgetService
+    private function service(array $record, bool $walletOwned = true): BudgetService
     {
         $this->model = new class ($record) {
             public array $calls = [];
@@ -37,9 +37,9 @@ final class BudgetOwnershipTest extends CIUnitTestCase
                 return true;
             }
 
-            public function updateWalletBalance($walletId, $amount, $ownerId = null)
+            public function updateWalletBalance($walletId, $amount)
             {
-                $this->calls[] = ['updateWalletBalance', $walletId, $amount, $ownerId];
+                $this->calls[] = ['updateWalletBalance', $walletId, $amount];
 
                 return true;
             }
@@ -50,7 +50,20 @@ final class BudgetOwnershipTest extends CIUnitTestCase
             }
         };
 
-        $svc = (new ReflectionClass(BudgetService::class))->newInstanceWithoutConstructor();
+        $class = new class () extends BudgetService {
+            public bool $walletOwned = true;
+
+            public function __construct()
+            {
+            }
+
+            protected function walletOwnedBy($walletID, $userID): bool
+            {
+                return $this->walletOwned;
+            }
+        };
+        $svc = (new ReflectionClass($class))->newInstanceWithoutConstructor();
+        $svc->walletOwned = $walletOwned;
         $prop = (new ReflectionClass(BudgetService::class))->getProperty('budgetModel');
         $prop->setAccessible(true);
         $prop->setValue($svc, $this->model);
@@ -71,13 +84,21 @@ final class BudgetOwnershipTest extends CIUnitTestCase
         $this->assertSame([], $this->model->calls, 'a non-owner must not touch the record or any wallet');
     }
 
-    public function testOwnerMarkPaidPassesOwnerToWalletUpdate(): void
+    public function testOwnerMarkPaidMovesOwnWallet(): void
     {
         $svc = $this->service($this->debt());
         $this->assertTrue($svc->markAsPaid(77, 10));
-        $this->assertContains(['updateWalletBalance', 5, -40, 10], $this->model->calls);
+        $this->assertContains(['updateWalletBalance', 5, -40], $this->model->calls);
         $this->assertTrue($svc->markAsUnpaid(77, 10));
-        $this->assertContains(['updateWalletBalance', 5, 40, 10], $this->model->calls);
+        $this->assertContains(['updateWalletBalance', 5, 40], $this->model->calls);
+    }
+
+    public function testForeignWalletOnDebtRecordChangesNothing(): void
+    {
+        $svc = $this->service($this->debt(), false);
+        $this->assertFalse($svc->markAsPaid(77, 10));
+        $this->assertFalse($svc->markAsUnpaid(77, 10));
+        $this->assertSame([], $this->model->calls, 'record must not be marked when the linked wallet is not the owner\'s');
     }
 
     public function testControllerChecksOwnershipBeforeMutating(): void
@@ -94,12 +115,5 @@ final class BudgetOwnershipTest extends CIUnitTestCase
         $this->assertNotFalse($guard, 'deleteAccount must check ownership');
         $this->assertNotFalse($cancel);
         $this->assertLessThan($cancel, $guard, 'ownership check must run before cancelAccount');
-    }
-
-    public function testWalletBalanceUpdateRefusesForeignWallet(): void
-    {
-        $src = (string) file_get_contents(APPPATH . 'Models/BudgetModel.php');
-        $this->assertMatchesRegularExpression('/function updateWalletBalance\(\$walletID, \$amount, \?int \$ownerId = null\)/', $src);
-        $this->assertStringContainsString("(int) (\$wallet['user_id'] ?? 0) !== \$ownerId", $src);
     }
 }

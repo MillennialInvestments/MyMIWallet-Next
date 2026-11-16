@@ -2631,6 +2631,24 @@ class BudgetService
      * @param int $budgetId
      * @return bool
      */
+    /**
+     * GTM-037: a budget record may only move the balance of a wallet its owner owns.
+     */
+    protected function walletOwnedBy($walletID, $userID): bool
+    {
+        $wallet = (new \App\Models\WalletModel())->find((int) $walletID);
+        $owned  = is_array($wallet) && $userID !== null && (int) ($wallet['user_id'] ?? 0) === (int) $userID;
+
+        if (! $owned) {
+            log_message('warning', 'BudgetService: wallet {wallet} is not owned by user {user}; balance not changed', [
+                'wallet' => $walletID,
+                'user'   => $userID,
+            ]);
+        }
+
+        return $owned;
+    }
+
     public function markAsPaid($accountID, ?int $actorUserId = null)
     {
         $budgetRecord = $this->budgetModel->getAccountInformation($accountID);
@@ -2666,6 +2684,10 @@ class BudgetService
             'submitted_on' => date("Y-m-d H:i:s") // Ensures timestamp is stored
         ];
     
+        if ($isDebt && $walletID && ! $this->walletOwnedBy($walletID, $userID)) {
+            return false;
+        }
+
         $updateStatus = $this->budgetModel->updateAccount($accountID, $updateData);
     
         if (!$updateStatus) {
@@ -2677,7 +2699,7 @@ class BudgetService
             log_message('info', "markAsPaid: Processing debt payment update for Account ID: {$accountID}");
     
             if ($walletID) {
-                $this->budgetModel->updateWalletBalance($walletID, -$netAmount, $userID !== null ? (int) $userID : null);
+                $this->budgetModel->updateWalletBalance($walletID, -$netAmount);
                 log_message('info', "markAsPaid: Wallet ID {$walletID} balance updated by -{$netAmount}");
             } else {
                 $debtAccount = $this->budgetModel->getDebtAccountByUserAndSource($userID, $sourceType);
@@ -2730,6 +2752,10 @@ class BudgetService
             'submitted_on' => date("Y-m-d H:i:s") // Maintain timestamp
         ];
     
+        if ($isDebt && $walletID && ! $this->walletOwnedBy($walletID, $userID)) {
+            return false;
+        }
+
         $updateStatus = $this->budgetModel->updateAccount($accountID, $updateData);
     
         if (!$updateStatus) {
@@ -2741,7 +2767,7 @@ class BudgetService
             log_message('info', "markAsUnpaid: Processing debt payment reversal for Account ID: {$accountID}");
     
             if ($walletID) {
-                $this->budgetModel->updateWalletBalance($walletID, $netAmount, $userID !== null ? (int) $userID : null);
+                $this->budgetModel->updateWalletBalance($walletID, $netAmount);
                 log_message('info', "markAsUnpaid: Wallet ID {$walletID} balance restored by +{$netAmount}");
             } else {
                 $debtAccount = $this->budgetModel->getDebtAccountByUserAndSource($userID, $sourceType);

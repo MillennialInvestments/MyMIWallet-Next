@@ -1418,14 +1418,9 @@ class BudgetModel extends ObservedModel
             ->update($data);
     }
 
-    public function updateWalletBalance($walletID, $amount, ?int $ownerId = null) {
+    public function updateWalletBalance($walletID, $amount) {
         $walletModel = new \App\Models\WalletModel(); // Assuming WalletModel exists
         $wallet = $walletModel->find($walletID);
-        // GTM-037: never move a balance on a wallet the budget owner does not own.
-        if ($wallet && $ownerId !== null && (int) ($wallet['user_id'] ?? 0) !== $ownerId) {
-            log_message('warning', 'updateWalletBalance: wallet {wallet} is not owned by user {user}', ['wallet' => $walletID, 'user' => $ownerId]);
-            return false;
-        }
         if ($wallet) {
             $newBalance = $wallet['balance'] + $amount; // Assuming 'balance' is the field name in your wallet table
             $walletModel->update($walletID, ['balance' => $newBalance]);
