@@ -70,6 +70,10 @@ switch_to() { # atomic symlink swap
   shared_writable "$BASE/releases/$rel"
   ln -sfn "releases/$rel" "$BASE/current.next"
   mv -T "$BASE/current.next" "$BASE/current"
+  # CI4's file-locator cache in shared/writable/cache stores absolute paths
+  # into the release that wrote it; after a switch (or once that release is
+  # pruned) they break spark and web requests. Drop it on every switch.
+  sudo find "$BASE/shared/writable/cache" -mindepth 1 -maxdepth 1 ! -name index.html ! -name .htaccess -exec rm -rf -- {} + 2>/dev/null || true
 }
 health() {
   local site chat body
