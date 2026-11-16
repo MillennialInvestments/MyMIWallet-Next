@@ -242,6 +242,7 @@ class Console extends BaseConfig
         \App\Commands\Gtm\GateAudit::class,
         \App\Commands\Gtm\LaunchAudit::class,
         \App\Commands\Gtm\LaunchSmoke::class,
+        \App\Commands\Gtm\PaymentReconciliation::class,
         \App\Commands\Health\Cache::class,
         \App\Commands\Health\Disk::class,
         \App\Commands\Health\GitSafety::class,
