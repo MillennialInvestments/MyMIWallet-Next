@@ -95,10 +95,27 @@ class WalletModel extends Model
         return rtrim(rtrim(sprintf('%.8F', $f), '0'), '.');
     }
 
-    public function deleteWallet($walletId)
+    public function deleteWallet(int $walletId, int $userId): bool
     {
-        $data = ['active' => 0, 'deleted' => 1];
-        return $this->db->table('bf_users_wallet')->where('id', $walletId)->update($data);
+        $walletId = (int) $walletId;
+        $userId   = (int) $userId;
+
+        if ($walletId <= 0 || $userId <= 0) {
+            return false;
+        }
+
+        $data = [
+            'active'     => 0,
+            'deleted'    => 1,
+            'updated_on' => date('Y-m-d H:i:s'),
+        ];
+
+        $this->db->table('bf_users_wallet')
+            ->where('id', $walletId)
+            ->where('user_id', (string) $userId)
+            ->update($data);
+
+        return $this->db->affectedRows() > 0;
     }
 
     private function normalizeDeleteWalletType(string $accountType): ?array
@@ -3037,6 +3054,16 @@ class WalletModel extends Model
             ->where('user_id', $userId)
             ->get()
             ->getRowArray();
+
+        if ($subsRow === null && $walletRow === null) {
+            log_message('error', 'WalletModel::updateAccountAndWallet neither subsidiary nor wallet row found for user', [
+                'type'    => $type,
+                'id'      => $id,
+                'user_id' => $userId,
+            ]);
+
+            return false;
+        }
 
         $this->db->transStart();
 

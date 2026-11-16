@@ -74,12 +74,13 @@ $statusBadgeClass = in_array(strtolower($statusText), ['1', 'active', 'linked'],
                                 </a>
                             </li>
                             <li>
-                                <a href="<?= esc($deleteHref) ?>"
-                                   class="btn btn-danger"
-                                   onclick="return confirm('Are you sure you want to delete this bank wallet?');">
-                                    <em class="icon ni ni-trash"></em>
-                                    <span>Delete</span>
-                                </a>
+                                <form action="<?= esc($deleteHref) ?>" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this credit wallet?');">
+                                    <?= csrf_field() ?>
+                                    <button type="submit" class="btn btn-danger">
+                                        <em class="icon ni ni-trash"></em>
+                                        <span>Delete</span>
+                                    </button>
+                                </form>
                             </li>
                         </ul>
                     </div>
