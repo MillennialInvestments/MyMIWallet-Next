@@ -72,4 +72,28 @@ class NewsletterController extends Controller
 
         return redirect()->back()->with($ok ? 'message' : 'error', $message);
     }
+
+    /**
+     * GT-FORM-ROUTES-001: POST /newsletter/store handles admin newsletter template/content submission.
+     */
+    public function store()
+    {
+        $subject = trim((string) ($this->request->getPost('subject') ?? ''));
+        $content = trim((string) ($this->request->getPost('content') ?? ''));
+
+        if ($subject === '' || $content === '') {
+            return $this->reply($this->request->isAJAX(), false, 'Subject and content are required.', 422);
+        }
+
+        $templateModel = new \App\Models\EmailTemplateModel();
+        $templateModel->save([
+            'title'      => $subject,
+            'subject'    => $subject,
+            'content'    => $content,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        return $this->reply($this->request->isAJAX(), true, 'Newsletter template saved.');
+    }
 }
