@@ -354,7 +354,9 @@ class FormTestExecutor
             return ['fail' => false, 'note' => 'rejected the generated input (validation)'];
         }
         if ($status >= 400) {
-            return ['fail' => true, 'note' => 'HTTP ' . $status];
+            $snippet = trim((string) preg_replace('/\s+/', ' ', strip_tags((string) preg_replace('~<(script|style)\b.*?</\1>~is', '', $body))));
+
+            return ['fail' => true, 'note' => 'HTTP ' . $status . ($snippet !== '' ? ': ' . mb_substr($snippet, 0, 160) : '')];
         }
         $hay = strtolower($body);
         foreach (['fatal error', 'uncaught exception', 'whoops!', 'undefined variable', 'undefined array key', 'call to undefined method', 'databaseexception', 'sqlstate'] as $signal) {

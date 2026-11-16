@@ -92,4 +92,11 @@ final class FormLiveVerdictTest extends CIUnitTestCase
         $this->assertFalse(FormTestExecutor::classify(404, '', '{"status":"error","message":"That project was not found."}', [])['fail']);
         $this->assertTrue(FormTestExecutor::classify(404, '', '<h1>404 Page Not Found</h1>', [])['fail']);
     }
+
+    public function testServerErrorNoteShowsBodyText(): void
+    {
+        $v = FormTestExecutor::classify(500, '', '<html><style>x{}</style><h1>Oops</h1> <p>Table missing</p></html>', []);
+        $this->assertTrue($v['fail']);
+        $this->assertSame('HTTP 500: Oops Table missing', $v['note']);
+    }
 }
