@@ -707,17 +707,15 @@ class WalletsAPIController extends BaseAPIController
 
             $svc = service('walletService');
             $prepared = $svc->prepareAccountData($payload, $type);
-            $method   = 'edit'.ucfirst($type).'Wallet';
-
-            if (!method_exists($svc, $method)) return $this->failServerError('Unsupported type');
-            $ok = $svc->$method((int)$id, $prepared);
+            $wm = new WalletModel();
+            $ok = $wm->updateAccountAndWallet($type, (int)$id, $prepared, (int)$uid);
 
             if ($ok) {
                 $this->invalidateCaches(['wallets', 'user:' . $uid]);
-                return $this->respond(['status'=>'success']);
+                return $this->respond(['status' => 'success']);
             }
 
-            return $this->failServerError('Update failed');
+            return $this->failNotFound('Account not found or access denied');
         } catch (\Throwable $e) {
             log_message('error', 'API Wallets updateByType error: {msg}', ['msg' => $e->getMessage()]);
             return $this->failServerError($e->getMessage());

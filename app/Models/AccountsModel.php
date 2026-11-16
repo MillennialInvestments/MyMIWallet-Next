@@ -311,10 +311,20 @@ class AccountsModel extends Model
         return $builder->update($data);
     }
     
-    public function deleteWallet($walletId) {
-        $builder = $this->db->table('bf_users_wallet');
-        $builder->where('id', $walletId);
-        return $builder->delete();
+    public function deleteWallet(int $walletId, int $userId): bool {
+        $walletId = (int) $walletId;
+        $userId   = (int) $userId;
+
+        if ($walletId <= 0 || $userId <= 0) {
+            return false;
+        }
+
+        $this->db->table('bf_users_wallet')
+            ->where('id', $walletId)
+            ->where('user_id', (string) $userId)
+            ->delete();
+
+        return $this->db->affectedRows() > 0;
     }
     
     public function addFundDeposit($data) {
