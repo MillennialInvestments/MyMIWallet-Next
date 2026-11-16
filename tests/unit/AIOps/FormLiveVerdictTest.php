@@ -74,4 +74,22 @@ final class FormLiveVerdictTest extends CIUnitTestCase
         $this->assertSame([], FormTestExecutor::errorLinesAfter($file, (int) filesize($file)));
         unlink($file);
     }
+
+    public function testAdminOnlyRefusalAndFeatureOffArePass(): void
+    {
+        $denied = ['ERROR [ROLE_FILTER] ACCESS DENIED', 'ERROR [AUTH FAILURE]'];
+        $this->assertFalse(FormTestExecutor::classify(303, 'https://staging.mymiwallet.com/Dashboard', '', $denied)['fail']);
+        $this->assertTrue(FormTestExecutor::classify(303, '/Dashboard', '', ['ERROR [ROLE_FILTER] ACCESS DENIED', 'CRITICAL boom'])['fail']);
+        $this->assertTrue(FormTestExecutor::classify(500, '', '', $denied)['fail']);
+
+        $off = '{"status":"disabled","feature":"project_investing","message":"' . \App\Filters\FeatureFlagFilter::DISABLED_MESSAGE . '"}';
+        $this->assertFalse(FormTestExecutor::classify(503, '', $off, [])['fail']);
+        $this->assertTrue(FormTestExecutor::classify(503, '', '{"status":"error","message":"This is not available yet."}', [])['fail']);
+    }
+
+    public function testHandlerJsonNotFoundIsPassButBare404Fails(): void
+    {
+        $this->assertFalse(FormTestExecutor::classify(404, '', '{"status":"error","message":"That project was not found."}', [])['fail']);
+        $this->assertTrue(FormTestExecutor::classify(404, '', '<h1>404 Page Not Found</h1>', [])['fail']);
+    }
 }

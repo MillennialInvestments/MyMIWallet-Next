@@ -175,8 +175,17 @@ class EarningsController extends UserController
             'close_price'      => $this->request->getPost('close_price')
         ];
 
-        $id = $this->request->getPost('id');
+        // An empty id would make update() target no row (CI throws) or, with
+        // other models, every row. Require a real row id.
+        $id = (int) $this->request->getPost('id');
+        $data = array_filter($data, static fn ($v) => $v !== null);
+        if ($id <= 0 || $data === []) {
+            return redirect()->back()->with('error', 'Pick an earnings entry and change at least one field.');
+        }
         $calendarModel = new InvestmentsCalendarModel();
+        if ($calendarModel->find($id) === null) {
+            return redirect()->back()->with('error', 'That earnings entry was not found.');
+        }
         $calendarModel->update($id, $data);
 
         return redirect()->back()->with('success', 'Earnings info updated.');

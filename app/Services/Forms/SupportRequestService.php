@@ -65,6 +65,8 @@ final class SupportRequestService
         $row = array_intersect_key($row, $columns);
 
         if (! $this->db->table($this->table)->insert($row)) {
+            log_message('error', 'Support request insert failed: ' . json_encode($this->db->error()));
+
             return ['ok' => false, 'reason' => 'store_failed'];
         }
 

@@ -324,8 +324,17 @@ class FormTestExecutor
      */
     public static function classify(int $status, string $location, string $body, array $newErrors): array
     {
+        // An admin-only form refusing the non-admin tester is the access
+        // control working, not a broken form.
+        $roleOnly = $newErrors !== [] && array_filter($newErrors, static fn ($l) => ! preg_match('/\[(ROLE_FILTER\] ACCESS DENIED|AUTH FAILURE\])/', $l)) === [];
+        if ($roleOnly && ($status === 401 || $status === 403 || ($status >= 300 && $status < 400))) {
+            return ['fail' => false, 'note' => 'admin-only: refused the non-admin tester'];
+        }
         if ($newErrors !== []) {
             return ['fail' => true, 'note' => 'log: ' . mb_substr($newErrors[0], 0, 160)];
+        }
+        if ($status === 503 && str_contains($body, \App\Filters\FeatureFlagFilter::DISABLED_MESSAGE)) {
+            return ['fail' => false, 'note' => 'feature switch is off'];
         }
         if ($status === 0) {
             return ['fail' => true, 'note' => mb_substr($body, 0, 160)];
@@ -337,6 +346,9 @@ class FormTestExecutor
             }
 
             return ['fail' => false, 'note' => 'redirect to ' . ($path !== '' ? $path : '?')];
+        }
+        if (($status === 401 || $status === 404) && preg_match('/"status"\s*:\s*"error"/', $body)) {
+            return ['fail' => false, 'note' => 'handler refused the generated input (HTTP ' . $status . ')'];
         }
         if ($status === 400 || $status === 422) {
             return ['fail' => false, 'note' => 'rejected the generated input (validation)'];

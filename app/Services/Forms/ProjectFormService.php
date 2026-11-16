@@ -139,7 +139,11 @@ final class ProjectFormService
             array_intersect_key($row, array_flip($this->db->getFieldNames('bf_projects'))),
             static fn ($v) => $v !== null
         );
-        $this->db->table('bf_projects')->insert($row);
+        if (! $this->db->table('bf_projects')->insert($row)) {
+            log_message('error', 'Project proposal insert failed: ' . json_encode($this->db->error()));
+
+            return ['ok' => false, 'reason' => 'store_failed', 'message' => 'Your project could not be saved.'];
+        }
 
         return ['ok' => true, 'reason' => 'stored', 'id' => (int) $this->db->insertID()];
     }
