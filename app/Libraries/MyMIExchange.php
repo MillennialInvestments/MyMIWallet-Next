@@ -60,7 +60,9 @@ class MyMIExchange
         $this->request                  = service('request');
         $this->session                  = Services::session();
         $this->siteSettings             = config('SiteSettings'); 
-        $this->chains                   = config('Exchanges')->chains;
+        // There is no Config\Exchanges class, so config('Exchanges') is null;
+        // reading ->chains on it threw and took every Projects page down.
+        $this->chains                   = config('Exchanges')?->chains ?? [];
 
         $this->MyMISolana               = service('myMISolana');
         if (! $this->MyMISolana instanceof MyMISolana) {

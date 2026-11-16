@@ -99,4 +99,18 @@ final class FormLiveVerdictTest extends CIUnitTestCase
         $this->assertTrue($v['fail']);
         $this->assertSame('HTTP 500: Oops Table missing', $v['note']);
     }
+
+    public function testEmergencyLogLinesAfterOffset(): void
+    {
+        $file = sys_get_temp_dir() . '/emergency-' . uniqid() . '.log';
+        file_put_contents($file, json_encode(['message' => 'BOOT FAILURE: old']) . PHP_EOL);
+        $offset = (int) filesize($file);
+        file_put_contents($file, json_encode(['message' => 'BOOT FAILURE: Attempt to read property "chains" on null', 'context' => ['trace' => "#0 /srv/rel/app/Libraries/MyMIExchange.php(63): x\n#1 y"]]) . PHP_EOL, FILE_APPEND);
+
+        $this->assertSame(
+            ['EMERGENCY BOOT FAILURE: Attempt to read property "chains" on null at app/Libraries/MyMIExchange.php:63'],
+            FormTestExecutor::emergencyLinesAfter($file, $offset)
+        );
+        unlink($file);
+    }
 }
