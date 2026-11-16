@@ -143,16 +143,6 @@ App\Modules\Management\Controllers\MarketingAdminController::test
 App\Modules\Management\Controllers\MarketingAdminController::videoCreator
 App\Modules\Management\Controllers\ReferralsController::index
 App\Modules\Management\Controllers\WalletsAdminController::addUserGoldTasks
-App\Modules\User\Controllers\InvestmentsController::MyMINews
-App\Modules\User\Controllers\InvestmentsController::MyMIResearch
-App\Modules\User\Controllers\InvestmentsController::autoSave
-App\Modules\User\Controllers\InvestmentsController::cryptoOverview
-App\Modules\User\Controllers\InvestmentsController::economicData
-App\Modules\User\Controllers\InvestmentsController::marketNews
-App\Modules\User\Controllers\InvestmentsController::overview
-App\Modules\User\Controllers\InvestmentsController::stockOverview
-App\Modules\User\Controllers\InvestmentsController::test
-App\Modules\User\Controllers\InvestmentsController::watchlist
 App\Modules\User\Controllers\WalletsController::MyMIWallet
 App\Modules\User\Controllers\WalletsController::accountManager
 App\Modules\User\Controllers\WalletsController::addAccount
