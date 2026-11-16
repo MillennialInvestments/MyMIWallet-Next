@@ -283,6 +283,30 @@ class ProjectsController extends BaseUserController
         return $this->formReply($result, 'Project submitted for review.');
     }
 
+    /** POST Projects/reportRevenue: records reported project revenue */
+    public function reportRevenue()
+    {
+        $this->ensurePost();
+        $projectId = (int) $this->request->getPost('project_id');
+        $amount = (float) $this->request->getPost('amount');
+        if ($projectId <= 0 || ! is_finite($amount) || $amount <= 0) {
+            return $this->formReply(['ok' => false, 'reason' => 'invalid_input'], 'Invalid revenue input.');
+        }
+
+        $userId = $this->currentUserId();
+        $db = db_connect();
+        if ($db->tableExists('bf_projects_fund_distributions')) {
+            $db->table('bf_projects_fund_distributions')->insert([
+                'project_id'        => $projectId,
+                'amount'            => $amount,
+                'distribution_date' => date('Y-m-d'),
+                'created_at'        => date('Y-m-d H:i:s'),
+            ]);
+        }
+
+        return $this->formReply(['ok' => true, 'reason' => 'stored'], 'Project revenue recorded.');
+    }
+
     protected function ensurePost(): void
     {
         if (strtolower($this->request->getMethod()) !== 'post') {

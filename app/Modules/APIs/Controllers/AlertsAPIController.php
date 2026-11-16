@@ -2384,11 +2384,20 @@ class AlertsAPIController extends BaseAPIController
         return $this->respond(["status" => "success", "message" => "Discord notifications sent!"]);
     }
     
-    public function sendDiscordAlertsBySymbol($symbol)
+    public function sendDiscordAlertsBySymbol($symbol = null)
     {
-        if ($response = $this->enforceCronKey()) {
-            return $response;
+        $isAdmin = (function_exists('auth') && auth()->loggedIn() && (auth()->user()?->inGroup('admin', 'team') ?? false))
+            || in_array(session('role'), ['admin', 'team'], true);
+        if (! $isAdmin) {
+            if ($response = $this->enforceCronKey()) {
+                return $response;
+            }
         }
+
+        if ($symbol === null || $symbol === '') {
+            $symbol = (string) ($this->request->getPost('symbol') ?? $this->request->getGet('symbol') ?? '');
+        }
+    
         // Fetch alert details based on the symbol
         $alert = $this->alertsModel->getAlertBySymbolExt($symbol);
     

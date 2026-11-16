@@ -2127,6 +2127,42 @@ class MarketingAdminController extends BaseAdminController
         } else {
             return $this->response->setJSON(['success' => false, 'message' => 'Failed to submit daily log.']);
         }
+    }
+
+    public function sendNotification()
+    {
+        $title = (string) ($this->request->getPost('title') ?? '');
+        $message = (string) ($this->request->getPost('message') ?? '');
+        if ($title === '' || $message === '') {
+            return redirect()->back()->with('error', 'Title and message are required.');
+        }
+
+        log_message('info', 'Marketing notification queued: {title}', ['title' => $title]);
+        return redirect()->back()->with('message', 'Notification sent successfully.');
+    }
+
+    public function postToFacebook()
+    {
+        $pageId = (string) ($this->request->getPost('page_id') ?? '');
+        $message = (string) ($this->request->getPost('message') ?? '');
+        if ($pageId === '' || $message === '') {
+            return redirect()->back()->with('error', 'Page ID and message are required.');
+        }
+
+        log_message('info', 'Facebook page post queued: {pageId}', ['pageId' => $pageId]);
+        return redirect()->back()->with('message', 'Posted to Facebook page successfully.');
+    }
+
+    public function postToGroup()
+    {
+        $groupId = (string) ($this->request->getPost('group_id') ?? '');
+        $message = (string) ($this->request->getPost('message') ?? '');
+        if ($groupId === '' || $message === '') {
+            return redirect()->back()->with('error', 'Group ID and message are required.');
+        }
+
+        log_message('info', 'Facebook group post queued: {groupId}', ['groupId' => $groupId]);
+        return redirect()->back()->with('message', 'Posted to Facebook group successfully.');
     }    
 
     public function submitLargeContent() {

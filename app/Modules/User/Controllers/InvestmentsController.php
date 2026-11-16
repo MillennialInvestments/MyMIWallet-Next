@@ -1273,5 +1273,130 @@ class InvestmentsController extends BaseUserController
             ? ['status' => 'success', 'liked' => $liked]
             : ['status' => 'error', 'error' => 'Could not save yet.']);
     }
+
+    // GT-FORM-ROUTES-001: Investment Strategies CRUD
+    public function getStrategies()
+    {
+        $userId = (int) ($this->cuID ?? 0);
+        $strategies = $this->investmentModel->getStrategiesByUser($userId);
+        return $this->response->setJSON($strategies);
+    }
+
+    public function getStrategy(int $id)
+    {
+        $strategy = $this->getMyMIInvestments()->getStrategyById($id);
+        if (! $strategy) {
+            return $this->response->setStatusCode(404)->setJSON(['status' => 'error', 'message' => 'Strategy not found']);
+        }
+        return $this->response->setJSON($strategy);
+    }
+
+    public function createStrategy()
+    {
+        $userId = (int) ($this->cuID ?? 0);
+        $data = [
+            'user_id'     => $userId,
+            'name'        => (string) ($this->request->getPost('name') ?? ''),
+            'description' => (string) ($this->request->getPost('description') ?? ''),
+            'created_at'  => date('Y-m-d H:i:s'),
+        ];
+        $id = $this->investmentModel->createStrategy($data);
+        return $this->response->setJSON(['status' => 'success', 'id' => $id]);
+    }
+
+    public function updateStrategy(int $id)
+    {
+        $input = $this->request->getRawInput() ?? [];
+        $data = array_filter([
+            'name'        => (string) ($input['name'] ?? $this->request->getPost('name') ?? ''),
+            'description' => (string) ($input['description'] ?? $this->request->getPost('description') ?? ''),
+        ]);
+        $this->investmentModel->updateStrategy($id, $data);
+        return $this->response->setJSON(['status' => 'success']);
+    }
+
+    public function deleteStrategy(int $id)
+    {
+        $this->investmentModel->deleteStrategy($id);
+        return $this->response->setJSON(['status' => 'success']);
+    }
+
+    // GT-FORM-ROUTES-001: Investment Financial Goals CRUD
+    public function getGoals()
+    {
+        $userId = (int) ($this->cuID ?? 0);
+        $goals = $this->investmentModel->getGoalsByUser($userId);
+        return $this->response->setJSON($goals);
+    }
+
+    public function getGoal(int $id)
+    {
+        $goal = $this->getMyMIInvestments()->getGoalById($id);
+        if (! $goal) {
+            return $this->response->setStatusCode(404)->setJSON(['status' => 'error', 'message' => 'Goal not found']);
+        }
+        return $this->response->setJSON($goal);
+    }
+
+    public function createGoal()
+    {
+        $userId = (int) ($this->cuID ?? 0);
+        $data = [
+            'user_id'       => $userId,
+            'name'          => (string) ($this->request->getPost('name') ?? ''),
+            'target_amount' => (float) ($this->request->getPost('target_amount') ?? 0),
+            'description'   => (string) ($this->request->getPost('description') ?? ''),
+            'created_at'    => date('Y-m-d H:i:s'),
+        ];
+        $id = $this->investmentModel->createGoal($data);
+        return $this->response->setJSON(['status' => 'success', 'id' => $id]);
+    }
+
+    public function updateGoal(int $id)
+    {
+        $input = $this->request->getRawInput() ?? [];
+        $data = array_filter([
+            'name'          => (string) ($input['name'] ?? $this->request->getPost('name') ?? ''),
+            'target_amount' => (float) ($input['target_amount'] ?? $this->request->getPost('target_amount') ?? 0),
+            'description'   => (string) ($input['description'] ?? $this->request->getPost('description') ?? ''),
+        ]);
+        $this->investmentModel->updateGoal($id, $data);
+        return $this->response->setJSON(['status' => 'success']);
+    }
+
+    public function deleteGoal(int $id)
+    {
+        $this->investmentModel->deleteGoal($id);
+        return $this->response->setJSON(['status' => 'success']);
+    }
+
+    // GT-FORM-ROUTES-001: Watchlist Add / Remove Form Handlers
+    public function addToWatchlist()
+    {
+        $symbol = trim((string) ($this->request->getPost('symbol') ?? ''));
+        if ($symbol === '') {
+            return redirect()->back()->with('error', 'Symbol is required');
+        }
+        $userId = (int) ($this->cuID ?? 0);
+        $this->investmentModel->addToWatchlist($userId, strtoupper($symbol));
+        if ($this->request->isAJAX()) {
+            return $this->response->setJSON(['status' => 'success', 'symbol' => strtoupper($symbol)]);
+        }
+        return redirect()->back()->with('success', 'Added to watchlist');
+    }
+
+    public function removeFromWatchlist()
+    {
+        $symbol = trim((string) ($this->request->getPost('symbol') ?? ''));
+        if ($symbol === '') {
+            return redirect()->back()->with('error', 'Symbol is required');
+        }
+        $userId = (int) ($this->cuID ?? 0);
+        $this->investmentModel->removeFromWatchlist($userId, strtoupper($symbol));
+        if ($this->request->isAJAX()) {
+            return $this->response->setJSON(['status' => 'success', 'symbol' => strtoupper($symbol)]);
+        }
+        return redirect()->back()->with('success', 'Removed from watchlist');
+    }
 }
 ?>

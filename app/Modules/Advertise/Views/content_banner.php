@@ -124,7 +124,7 @@ document.getElementById('button-addon2').addEventListener('click', function() {
     var email = document.getElementById('email').value;
     var referral = document.getElementById('referral').value;
 
-    fetch('Subscribe/Submit', {
+    fetch('/Subscribe/Submit', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

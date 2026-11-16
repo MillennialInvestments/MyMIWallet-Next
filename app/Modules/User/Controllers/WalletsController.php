@@ -2590,4 +2590,39 @@ class WalletsController extends BaseUserController
             }
         }
     }
+
+    /**
+     * GT-FORM-ROUTES-001: POST /add_new_wallet AJAX endpoint for inline modal wallet creation.
+     */
+    public function addNewWallet(): ResponseInterface
+    {
+        $userId = (int) ($this->cuID ?? session('user_id') ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+        $json = $this->request->getJSON(true) ?? [];
+        $walletName = trim((string) ($json['walletName'] ?? $this->request->getPost('walletName') ?? ''));
+        if ($walletName === '') {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => 'Wallet name is required']);
+        }
+
+        $wm = model(WalletModel::class);
+        $walletId = $wm->addInvestmentWallet([
+            'user_id'     => $userId,
+            'wallet_name' => $walletName,
+            'account'     => $walletName,
+            'type'        => 'investment',
+            'balance'     => 0.0,
+            'status'      => 'Active',
+            'created_at'  => date('Y-m-d H:i:s'),
+        ]);
+
+        $this->invalidateWalletCache($userId);
+
+        return $this->response->setJSON([
+            'status'     => 'success',
+            'wallet_id'  => $walletId,
+            'walletName' => $walletName,
+        ]);
+    }
 }

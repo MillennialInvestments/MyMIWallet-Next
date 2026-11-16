@@ -51,7 +51,7 @@ window.onload = function() {
         
         // Send the timezone offset to the server
         $.ajax({
-            url: 'YourController/setUserTimezone',
+            url: '/YourController/setUserTimezone',
             method: 'POST',
             data: {
                 timezoneOffset: timezoneOffset
