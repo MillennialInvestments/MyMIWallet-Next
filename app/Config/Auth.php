@@ -33,6 +33,18 @@ class Auth extends ShieldAuth
     public int $resetTime = 3600;
 
     /**
+     * AUTH-LOGIN-006: Myth's LoginModel reads config('Auth')->allowRemembering
+     * in purgeOldRememberTokens(), which Myth runs on about 1 in 5 logins, and
+     * config('Auth')->rememberLength when it refreshes a remember-me token.
+     * config('Auth') is this Shield config, so without these that login threw
+     * "Undefined property" after the session was already set. Keep in step with
+     * App\Legacy\Auth\Config\Auth.
+     */
+    public bool $allowRemembering = true;
+
+    public int $rememberLength = 30 * DAY;
+
+    /**
      * Keep Shield migration routes rendering existing app templates.
      *
      * @var array<string, string>
