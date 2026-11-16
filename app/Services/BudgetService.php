@@ -2631,10 +2631,39 @@ class BudgetService
      * @param int $budgetId
      * @return bool
      */
-    public function markAsPaid($accountID)
+    /**
+     * GTM-037: a budget record may only move the balance of a wallet its owner owns.
+     */
+    protected function walletOwnedBy($walletID, $userID): bool
+    {
+        $wallet = (new \App\Models\WalletModel())->find((int) $walletID);
+        $owned  = is_array($wallet) && $userID !== null && (int) ($wallet['user_id'] ?? 0) === (int) $userID;
+
+        if (! $owned) {
+            log_message('warning', 'BudgetService: wallet {wallet} is not owned by user {user}; balance not changed', [
+                'wallet' => $walletID,
+                'user'   => $userID,
+            ]);
+        }
+
+        return $owned;
+    }
+
+    public function markAsPaid($accountID, ?int $actorUserId = null)
     {
         $budgetRecord = $this->budgetModel->getAccountInformation($accountID);
-        
+
+        // GTM-037: only the record's owner may change its paid state (and,
+        // for debts, the linked wallet balance).
+        if ($budgetRecord && $actorUserId !== null && (int) ($budgetRecord['created_by'] ?? 0) !== $actorUserId) {
+            log_message('warning', 'markAsPaid: user {actor} is not the owner of budget record {id}', [
+                'actor' => $actorUserId,
+                'id'    => $accountID,
+            ]);
+
+            return false;
+        }
+
         if (!$budgetRecord) {
             log_message('error', "markAsPaid: Budget record not found for Account ID: {$accountID}");
             return false;
@@ -2655,6 +2684,10 @@ class BudgetService
             'submitted_on' => date("Y-m-d H:i:s") // Ensures timestamp is stored
         ];
     
+        if ($isDebt && $walletID && ! $this->walletOwnedBy($walletID, $userID)) {
+            return false;
+        }
+
         $updateStatus = $this->budgetModel->updateAccount($accountID, $updateData);
     
         if (!$updateStatus) {
@@ -2684,10 +2717,21 @@ class BudgetService
         return true;
     }
     
-    public function markAsUnpaid($accountID)
+    public function markAsUnpaid($accountID, ?int $actorUserId = null)
     {
         $budgetRecord = $this->budgetModel->getAccountInformation($accountID);
-    
+
+        // GTM-037: only the record's owner may change its paid state (and,
+        // for debts, the linked wallet balance).
+        if ($budgetRecord && $actorUserId !== null && (int) ($budgetRecord['created_by'] ?? 0) !== $actorUserId) {
+            log_message('warning', 'markAsUnpaid: user {actor} is not the owner of budget record {id}', [
+                'actor' => $actorUserId,
+                'id'    => $accountID,
+            ]);
+
+            return false;
+        }
+
         if (!$budgetRecord) {
             log_message('error', "markAsUnpaid: Budget record not found for Account ID: {$accountID}");
             return false;
@@ -2708,6 +2752,10 @@ class BudgetService
             'submitted_on' => date("Y-m-d H:i:s") // Maintain timestamp
         ];
     
+        if ($isDebt && $walletID && ! $this->walletOwnedBy($walletID, $userID)) {
+            return false;
+        }
+
         $updateStatus = $this->budgetModel->updateAccount($accountID, $updateData);
     
         if (!$updateStatus) {
