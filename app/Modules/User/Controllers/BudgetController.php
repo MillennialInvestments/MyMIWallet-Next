@@ -2127,7 +2127,7 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
         }
 
         try {
-            $updated = $this->getBudgetService()->markAsPaid($accountID);
+            $updated = $this->getBudgetService()->markAsPaid($accountID, (int) $this->cuID);
 
             if ($updated) {
                 $this->invalidateCrudCache(array_filter([
@@ -2193,7 +2193,7 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
         }
 
         try {
-            $updated = $this->getBudgetService()->markAsUnpaid($accountID);
+            $updated = $this->getBudgetService()->markAsUnpaid($accountID, (int) $this->cuID);
 
             if ($updated) {
                 $this->invalidateCrudCache(array_filter([
@@ -2256,6 +2256,20 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
 
             session()->setFlashdata('message', 'Invalid account ID.');
             return redirect()->back()->withInput();
+        }
+
+        // GTM-037: only the owner may delete a budget record.
+        if (empty($this->budgetModel->getUserBudgetRecord($this->cuID, $accountID))) {
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(404)->setJSON([
+                    'status'    => 'error',
+                    'accountID' => $accountID,
+                    'message'   => 'Account not found.',
+                ]);
+            }
+
+            session()->setFlashdata('message', 'Account not found.');
+            return redirect()->back();
         }
 
         try {

@@ -2631,10 +2631,21 @@ class BudgetService
      * @param int $budgetId
      * @return bool
      */
-    public function markAsPaid($accountID)
+    public function markAsPaid($accountID, ?int $actorUserId = null)
     {
         $budgetRecord = $this->budgetModel->getAccountInformation($accountID);
-        
+
+        // GTM-037: only the record's owner may change its paid state (and,
+        // for debts, the linked wallet balance).
+        if ($budgetRecord && $actorUserId !== null && (int) ($budgetRecord['created_by'] ?? 0) !== $actorUserId) {
+            log_message('warning', 'markAsPaid: user {actor} is not the owner of budget record {id}', [
+                'actor' => $actorUserId,
+                'id'    => $accountID,
+            ]);
+
+            return false;
+        }
+
         if (!$budgetRecord) {
             log_message('error', "markAsPaid: Budget record not found for Account ID: {$accountID}");
             return false;
@@ -2666,7 +2677,7 @@ class BudgetService
             log_message('info', "markAsPaid: Processing debt payment update for Account ID: {$accountID}");
     
             if ($walletID) {
-                $this->budgetModel->updateWalletBalance($walletID, -$netAmount);
+                $this->budgetModel->updateWalletBalance($walletID, -$netAmount, $userID !== null ? (int) $userID : null);
                 log_message('info', "markAsPaid: Wallet ID {$walletID} balance updated by -{$netAmount}");
             } else {
                 $debtAccount = $this->budgetModel->getDebtAccountByUserAndSource($userID, $sourceType);
@@ -2684,10 +2695,21 @@ class BudgetService
         return true;
     }
     
-    public function markAsUnpaid($accountID)
+    public function markAsUnpaid($accountID, ?int $actorUserId = null)
     {
         $budgetRecord = $this->budgetModel->getAccountInformation($accountID);
-    
+
+        // GTM-037: only the record's owner may change its paid state (and,
+        // for debts, the linked wallet balance).
+        if ($budgetRecord && $actorUserId !== null && (int) ($budgetRecord['created_by'] ?? 0) !== $actorUserId) {
+            log_message('warning', 'markAsUnpaid: user {actor} is not the owner of budget record {id}', [
+                'actor' => $actorUserId,
+                'id'    => $accountID,
+            ]);
+
+            return false;
+        }
+
         if (!$budgetRecord) {
             log_message('error', "markAsUnpaid: Budget record not found for Account ID: {$accountID}");
             return false;
@@ -2719,7 +2741,7 @@ class BudgetService
             log_message('info', "markAsUnpaid: Processing debt payment reversal for Account ID: {$accountID}");
     
             if ($walletID) {
-                $this->budgetModel->updateWalletBalance($walletID, $netAmount);
+                $this->budgetModel->updateWalletBalance($walletID, $netAmount, $userID !== null ? (int) $userID : null);
                 log_message('info', "markAsUnpaid: Wallet ID {$walletID} balance restored by +{$netAmount}");
             } else {
                 $debtAccount = $this->budgetModel->getDebtAccountByUserAndSource($userID, $sourceType);
