@@ -52,3 +52,16 @@ This repository participates in Teddy's centralized Codex ⇄ AIOps workflow. Co
 - **Staging Site (`https://staging.mymiwallet.com` on `gq-ai01`):** Deployed via `sudo bash scripts/ops/staging/mymi-staging.sh deploy <ref>`. Safe for live form submissions and destructive tests: run with `sudo -u www-data php -d display_errors=1 spark aiops:form:test --scan-all --submit --allow-destructive --approve`.
 - **Production (`/apps/TBI/www/mymiwallet/current`):** Strictly read-only for agents. No direct file edits or unverified migrations.
 
+
+## Release & Operations Lessons (2026-11)
+
+- **Release path:** `scripts/ops/deploy/mymi-release.sh build main`, then `MIGRATE='<names>' bash mymi-release.sh activate <exact release name>`. Activate refuses a commit that staging is not running; deploy it to staging and pass `mymi-staging.sh form-test` (FAIL 0) first. Never hand someone a placeholder release name.
+- **Never run plain `php spark migrate` in production.** `ShieldIdentityBackfill` (2026-10-26-180000) is intentionally unapplied; run only named migrations through `scripts/ops/db/run-migrations.php` (the `MIGRATE=` list).
+- **CI4 file-locator cache:** `shared/writable/cache` stores absolute paths into the release that wrote it. After a switch or a prune it breaks spark and web requests. Release and staging scripts clear it on every switch; clear it by hand if you ever move `current` yourself.
+- **Disk:** each release is a full copy (~0.5 GB). Releases auto-prune (`KEEP_RELEASES=4`) and builds refuse below `MIN_FREE_GB=3`. AIOps worktrees under `/apps/TBI/worktrees` are preserved until a certified successor closeout; never delete them for space.
+- **Storage failures are real:** on 2026-11-16 the HP Smart Array (P244br) dropped its disk, `/` went read-only and MySQL stopped. Signs: `Read-only file system`, `lsblk` shows no `sda`. Do not deploy; recover by reboot (SysRq `b` if needed), then check `tune2fs -l` state, MySQL recovery and site health.
+- **Backups:** nightly dump in `/var/backups/mymiwallet/mysql` (08:15 UTC), copied to gq-llm (`172.17.18.2:/srv/backups/mymiwallet/gq-ai01`) by `mymi-db-offsite.timer` (08:45/20:45 UTC) via `scripts/ops/backup/offsite-sync.sh`; `/var/backups/mymiwallet/.offsite-last-ok` records the last good copy. Weekly restore check runs Sundays.
+- **Config gotchas:** `config('Auth')` is Shield's config; legacy Myth code reading it needs properties mirrored in `app/Config/Auth.php`. Production `DBPrefix` is empty (`auth_tokens`, not `bf_auth_tokens`). Read config that may not exist null-safely (`config('X')?->y ?? default`).
+- **Request bodies:** `App\HTTP\IncomingRequest::getJSON()` returns null for non-JSON bodies, so `getJSON(true) ?: getPost()` is safe. JSON columns (e.g. `bf_projects.promotional_links`) reject empty or plain strings; encode before insert.
+- **Diagnosing 500s:** errors that escape CodeIgniter land in `writable/logs/emergency.log` (JSON lines) with the page "System temporarily unavailable."
+- **Operator style:** the owner runs server commands by hand from an iPad. Give one batched, copy-paste block per step, read-only checks first and mutating steps last behind explicit gates (`&&`, `FAIL 0` checks); write scratch output to `~`, not `/tmp`.
