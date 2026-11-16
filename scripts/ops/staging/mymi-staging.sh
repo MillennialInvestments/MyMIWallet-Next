@@ -8,6 +8,11 @@
 #   sudo bash mymi-staging.sh set-password tester|admin  # pick a test-account password (kept across db-refresh)
 #   sudo bash mymi-staging.sh perms         # let nginx/php-fpm read the staging files, then smoke test
 #   sudo bash mymi-staging.sh vhost         # nginx site with a password prompt + noindex, then HTTPS if DNS is up
+#   sudo bash mymi-staging.sh form-test [limit]  # submit every safe form on staging, signed in as staging-tester
+#   sudo bash mymi-staging.sh revision      # print the git sha staging is running
+#   sudo bash mymi-staging.sh smart         # drive health only (SMART, through RAID cards too)
+#   sudo bash mymi-staging.sh tester-check  # read-only: why staging-tester cannot sign in
+#   sudo bash mymi-staging.sh reset-testers # recreate both test accounts with the saved passwords
 #
 # What it never does: write to the live database, the live site folder, the
 # live .env, or the live nginx site. It reads the live .env (for DB host/port
@@ -62,6 +67,26 @@ newest_backup() { ls -1t "$BACKUP_DIR"/*.sql.gz 2>/dev/null | head -1 || true; }
 
 # ---------------------------------------------------------------- check
 storage_ok=1
+# SMART health of one disk. Disks behind a RAID card (HP Smart Array "cciss",
+# LSI "megaraid") need -d <type>,N per physical drive, so walk N until one is missing.
+smart_disk() {
+  local d="$1" out typ n h found=0
+  out="$(smartctl -H "$d" 2>&1 || true)"
+  h="$(printf '%s\n' "$out" | grep -iE 'overall-health|SMART Health Status' | sed 's/.*: *//' | head -1 || true)"
+  if [ -n "$h" ]; then echo "  SMART $d: $h"; [ "$h" = PASSED ] || [ "$h" = OK ] || storage_ok=0; return; fi
+  typ="$(printf '%s\n' "$out" | grep -oE "requires option '-d [a-z]+" | awk '{print $NF}' | head -1 || true)"
+  [ -n "$typ" ] || { echo "  SMART $d: unknown ($(printf '%s' "$out" | tail -1 | cut -c1-120))"; return; }
+  for n in $(seq 0 31); do
+    out="$(smartctl -H -i -d "$typ,$n" "$d" 2>&1 || true)"
+    h="$(printf '%s\n' "$out" | grep -iE 'overall-health|SMART Health Status' | sed 's/.*: *//' | head -1 || true)"
+    [ -n "$h" ] || continue
+    found=$((found + 1))
+    echo "  SMART $d $typ,$n: $h  ($(printf '%s\n' "$out" | grep -iE '^(Device Model|Product|Serial Number|User Capacity)' | sed 's/^[^:]*: *//' | tr '\n' ' ' | cut -c1-90 || true))"
+    [ "$h" = PASSED ] || [ "$h" = OK ] || storage_ok=0
+  done
+  [ "$found" -gt 0 ] || echo "  SMART $d: behind a $typ controller, but no drive answered on $typ,0-31"
+}
+
 check() {
   local blockers=0 f
   echo "Host: $HOST   live DB: $LIVE_DB   staging DB: $STG_DB"
@@ -74,8 +99,12 @@ check() {
   echo "  kernel disk errors since boot: $ioerr"; [ "$ioerr" = 0 ] || storage_ok=0
   if command -v smartctl >/dev/null; then
     for d in $(lsblk -dno NAME,TYPE | awk '$2=="disk"{print "/dev/"$1}'); do
-      echo "  SMART $d: $(smartctl -H "$d" 2>/dev/null | grep -iE 'overall-health|SMART Health Status' | sed 's/.*: *//' || echo unknown)"
+      smart_disk "$d"
     done
+    if command -v ssacli >/dev/null; then
+      echo "  HP Smart Array (ssacli):"; ssacli ctrl all show status 2>/dev/null | grep -iE 'status|slot' | sed 's/^ */    /'
+      ssacli ctrl all show config 2>/dev/null | grep -iE 'logicaldrive|physicaldrive' | sed 's/^ */    /'
+    fi
   else echo "  SMART: smartctl not installed (apt install smartmontools)"; fi
   local datadir; datadir="$("${MYSQL[@]}" -N -e 'SELECT @@datadir' 2>/dev/null || echo /var/lib/mysql)"
   f="$(newest_backup)"
@@ -368,6 +397,37 @@ set_password() {
   echo "staging-$who@staging.invalid password set and saved in $CREDS"
 }
 
+# Live form test against staging only, signed in as the tester account. The
+# harness itself refuses production, refuses hosts not listed below, and skips
+# every destructive target (money, mail, deletes, password, admin jobs).
+form_test() {
+  local limit="${1:-}" fpm_user site_pw tester_pw
+  fpm_user="$(stat -c %U "$STG_BASE/shared/writable")"
+  site_pw="$(cred_get STAGING_SITE_PASSWORD)"; tester_pw="$(cred_get STAGING_TESTER_PASSWORD)"
+  [ -n "$site_pw" ] && [ -n "$tester_pw" ] || die "site or tester password missing from $CREDS; run: sudo bash $0 set-password tester"
+  grep -q '^CI_ENVIRONMENT *= *staging' "$STG_BASE/shared/.env" || die "staging .env is not CI_ENVIRONMENT=staging; refusing"
+  export AIOPS_FORM_TEST_ALLOWED_HOSTS="$HOST" AIOPS_FORM_TEST_BASIC_AUTH="staging:$site_pw" \
+    AIOPS_FORM_TEST_LOGIN="staging-tester@staging.invalid" AIOPS_FORM_TEST_PASSWORD="$tester_pw"
+  local args=(--scan-all --submit --allow-destructive --approve); [ -n "$limit" ] && args+=("--limit=$limit")
+  say "form test on https://$HOST as staging-tester (revision $(cat "$STG_BASE/current/REVISION" 2>/dev/null || echo '?'))"
+  (cd "$STG_BASE/current" && sudo --preserve-env=AIOPS_FORM_TEST_ALLOWED_HOSTS,AIOPS_FORM_TEST_BASIC_AUTH,AIOPS_FORM_TEST_LOGIN,AIOPS_FORM_TEST_PASSWORD \
+    -u "$fpm_user" php spark aiops:form:test "${args[@]}")
+}
+
+# Read-only: the tester row and whether the saved password matches it.
+tester_check() {
+  local pw cols sel; pw="$(cred_get STAGING_TESTER_PASSWORD)"
+  cols="$("${MYSQL[@]}" -N -e "SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='$STG_DB' AND TABLE_NAME='bf_users'")"
+  sel="id, email"; for c in active deleted deleted_at status banned force_pass_reset; do printf '%s\n' "$cols" | grep -qx "$c" && sel="$sel, $c"; done
+  echo "bf_users rows for staging-tester (by email, or id 3693):"
+  "${MYSQL[@]}" "$STG_DB" -e "SELECT $sel FROM bf_users WHERE email LIKE 'staging-tester%' OR username='staging_tester' OR id=3693"
+  echo "users view row:"; "${MYSQL[@]}" "$STG_DB" -e "SELECT id, email FROM users WHERE email='staging-tester@staging.invalid'" 2>&1 | sed 's/^/  /'
+  local hash; hash="$("${MYSQL[@]}" -N "$STG_DB" -e "SELECT password_hash FROM bf_users WHERE email='staging-tester@staging.invalid' ORDER BY id DESC LIMIT 1")"
+  if [ -z "$hash" ]; then echo "password: no row with that email"
+  elif PW="$pw" H="$hash" php -r 'exit(password_verify(getenv("PW"), getenv("H")) ? 0 : 1);'; then echo "password: saved password MATCHES"
+  else echo "password: saved password does NOT match (run: sudo bash $0 set-password tester)"; fi
+}
+
 smoke() {
   local pw code; pw="$(cred_get STAGING_SITE_PASSWORD)"
   code="$(curl -s -o /tmp/mymi-staging-smoke.html -w '%{http_code}' -u "staging:$pw" -H "Host: $HOST" -H 'X-Forwarded-Proto: https' "http://127.0.0.1/" || true)"
@@ -380,10 +440,29 @@ smoke() {
   esac
 }
 
+# One staging command at a time: a db-refresh running under a form test (or a
+# second paste of setup) gave "table doesn't exist" errors on 2026-11-15.
+case "$CMD" in check|revision|smart|tester-check|"") ;; *)
+  exec 9>/run/lock/mymi-staging.lock
+  flock -n 9 || die "another mymi-staging.sh command is running; wait for it to finish" ;;
+esac
+
+# setup and db-refresh replace the whole staging database. Once it exists,
+# ask before doing that (MYMI_STAGING_CONFIRM=REFRESH skips the question).
+confirm_refresh() {
+  local have; have="$("${MYSQL[@]}" -N -e "SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA='$STG_DB'" 2>/dev/null || echo 0)"
+  [ "${have:-0}" -gt 0 ] || return 0
+  [ "${MYMI_STAGING_CONFIRM:-}" = REFRESH ] && return 0
+  echo "This replaces the staging database ($STG_DB, $have tables) with a fresh copy of the newest backup (about 10 minutes, staging is down meanwhile)."
+  local a; read -rp "Type REFRESH to continue: " a
+  [ "$a" = REFRESH ] || die "nothing changed"
+}
+
 case "$CMD" in
 check) check ;;
 setup)
   check || die "fix the blockers above first"
+  confirm_refresh
   write_env
   db_refresh
   deploy main
@@ -394,10 +473,15 @@ setup)
   echo "Test accounts: staging-tester@staging.invalid, staging-admin@staging.invalid"
   echo "All passwords: $CREDS  (view with: cat $CREDS)"
   ;;
-db-refresh) check || die "fix the blockers above first"; db_refresh ;;
+db-refresh) check || die "fix the blockers above first"; confirm_refresh; db_refresh ;;
 deploy) deploy "${ARG:-main}"; smoke ;;
 perms) perms; smoke ;;
 set-password) set_password "${ARG:-tester}" ;;
 vhost) vhost; smoke ;;
-*) sed -n '2,10p' "$0"; exit 1 ;;
+form-test) form_test "$ARG" ;;
+revision) cat "$STG_BASE/current/REVISION" ;;
+tester-check) tester_check ;;
+reset-testers) test_accounts; tester_check ;;
+smart) storage_ok=1; for d in $(lsblk -dno NAME,TYPE | awk '$2=="disk"{print "/dev/"$1}'); do smart_disk "$d"; done; [ "$storage_ok" = 1 ] && echo "SMART: all drives that answered report healthy" || echo "SMART: at least one drive is NOT healthy" ;;
+*) sed -n '2,15p' "$0"; exit 1 ;;
 esac

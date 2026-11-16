@@ -63,6 +63,7 @@ class FormDebugSeederAuditService
                         'status'         => ($execution['error_detected'] ?? false) ? 'FAIL' : (($execution['ok'] ?? false) ? 'PASS' : ($execution['status'] ?? 'BLOCKED')),
                         'test_id'        => $execution['test_id'] ?? null,
                         'http_status'    => $execution['submit']['status'] ?? null,
+                        'note'           => $execution['note'] ?? ($execution['reason'] ?? null),
                     ];
                 }
                 $entries[] = $entry;
@@ -81,6 +82,7 @@ class FormDebugSeederAuditService
                 'limit'     => $limit,
             ],
             'seeder'  => $seederResult,
+            'session' => $executor->sessionNotes(),
             'summary' => $this->buildSummary($entries, $formFiles),
             'forms'   => $entries,
         ];
@@ -400,6 +402,8 @@ class FormDebugSeederAuditService
         $unreferencedFiles = [];
         $submitted = 0;
         $withGaps = 0;
+        $live = ['PASS' => 0, 'FAIL' => 0, 'BLOCKED' => 0, 'SKIPPED' => 0];
+        $liveFails = [];
 
         foreach ($entries as $e) {
             $byStatus[$e['status']] = ($byStatus[$e['status']] ?? 0) + 1;
@@ -413,6 +417,13 @@ class FormDebugSeederAuditService
             }
             if (($e['submission']['executed'] ?? false) === true) {
                 $submitted++;
+            }
+            $subStatus = (string) ($e['submission']['status'] ?? 'SKIPPED');
+            if (($e['submission']['reason'] ?? null) !== 'dry_run' && ($e['submission']['reason'] ?? null) !== 'not_selected') {
+                $live[$subStatus] = ($live[$subStatus] ?? 0) + 1;
+                if ($subStatus === 'FAIL') {
+                    $liveFails[] = sprintf('%s %s %s -> HTTP %s%s', $e['file'] ?? '?', $e['method'] ?? '?', $e['action'] ?? '?', $e['submission']['http_status'] ?? '?', isset($e['submission']['note']) ? ' (' . $e['submission']['note'] . ')' : '');
+                }
             }
             if (! empty($e['seed_readiness']['missing_seed_tables'])) {
                 $withGaps++;
@@ -429,6 +440,8 @@ class FormDebugSeederAuditService
             'forms_analyzed'       => count($entries),
             'forms_with_data_gaps' => $withGaps,
             'forms_submitted'      => $submitted,
+            'live_submissions'     => $live,
+            'live_fails'           => $liveFails,
             'by_status'            => $byStatus,
             'unreferenced_view_files' => count($unreferencedFiles),
             'fails_in_unreferenced_views' => $unreferencedFails,

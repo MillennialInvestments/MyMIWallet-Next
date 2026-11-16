@@ -181,8 +181,21 @@ class TestScan extends SafeBaseCommand
         $policy = $result['policy'] ?? [];
         CLI::write('Mode: ' . (($policy['allowed'] ?? false) ? 'LIVE (approved)' : 'dry-run inventory') . ' [policy: ' . ($policy['reason'] ?? '?') . ']', ($policy['allowed'] ?? false) ? 'red' : 'green');
 
+        foreach ((array) ($result['session'] ?? []) as $note) {
+            CLI::write('Session: ' . $note, 'yellow');
+        }
+
         foreach ((array) ($result['summary']['by_status'] ?? []) as $status => $n) {
             CLI::write(sprintf('  %-8s %d', $status, $n));
+        }
+
+        if (($policy['allowed'] ?? false) && isset($result['summary']['live_submissions'])) {
+            $l = $result['summary']['live_submissions'];
+            CLI::write(sprintf('Live submits: %d sent  PASS %d  FAIL %d  BLOCKED %d  SKIPPED %d (static counts below are the scan, not the submits)',
+                (int) ($result['summary']['forms_submitted'] ?? 0), $l['PASS'] ?? 0, $l['FAIL'] ?? 0, $l['BLOCKED'] ?? 0, $l['SKIPPED'] ?? 0), 'yellow');
+            foreach ((array) ($result['summary']['live_fails'] ?? []) as $line) {
+                CLI::write('  LIVE FAIL ' . $line, 'red');
+            }
         }
 
         if (isset($result['summary']['files_scanned'])) {

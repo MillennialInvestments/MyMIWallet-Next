@@ -709,7 +709,7 @@ class WalletModel extends Model
     {
         return $this->db->table('users')
             ->set('beta_wallet', $beta)
-            ->set('private_key', $privateKey)
+            ->set('private_key', \App\Libraries\StoredSecret::seal($privateKey))
             ->set('wallet_id', $publicKey)
             ->where('id', $userId)
             ->update();

@@ -19,7 +19,16 @@ class NewsletterController extends Controller
 {
     public function subscribe()
     {
-        $json  = $this->request->getJSON(true);
+        // getJSON() throws on a non-JSON body, so a plain form post (the
+        // landing page form) used to end in a 500. Only read JSON when sent as JSON.
+        $json = null;
+        if (stripos($this->request->getHeaderLine('Content-Type'), 'json') !== false) {
+            try {
+                $json = $this->request->getJSON(true);
+            } catch (\Throwable) {
+                $json = null;
+            }
+        }
         $input = is_array($json) ? $json : (array) $this->request->getPost();
         $wantsJson = is_array($json) || $this->request->isAJAX();
 

@@ -62,17 +62,12 @@ class SearchController extends BaseUserController
         }
 
         if ($q !== '') {
-            $client = \Config\Services::curlrequest(['timeout' => 3.0]);
-            $url = site_url('API/Investments/searchTickers?query=' . urlencode($q) . '&limit=15');
-
+            // In-process call: the old HTTP call to our own API carried no
+            // session or basic auth and failed (401) on staging.
             try {
-                $response = $client->get($url);
-                $payload = json_decode($response->getBody(), true);
-                if (json_last_error() === JSON_ERROR_NONE) {
-                    $results = $payload['data'] ?? [];
-                }
+                $results = \App\Modules\APIs\Controllers\InvestmentsAPIController::tickerSearchData($q, 15);
             } catch (\Throwable $e) {
-                log_message('error', 'SearchController::index API error: {msg}', ['msg' => $e->getMessage()]);
+                log_message('error', 'SearchController::index ticker search error: {msg}', ['msg' => $e->getMessage()]);
             }
         }
 

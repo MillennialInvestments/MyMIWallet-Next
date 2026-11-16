@@ -152,7 +152,7 @@ class AccountsModel extends Model
     {
         $data = [
             'beta_wallet' => $beta,
-            'private_key' => $privateKey,
+            'private_key' => \App\Libraries\StoredSecret::seal($privateKey),
             'wallet_id' => $publicKey,
         ];
         return $this->update($userId, $data);

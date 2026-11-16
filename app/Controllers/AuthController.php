@@ -281,22 +281,50 @@ class AuthController extends BaseController
             sprintf('Auth credentials normalised for attempt using key "%s"', $type)
         );
 
-        try {
-            $attempt = $this->auth->attempt($credentials, $remember);
+        // AUTH-LOGIN-004: stored hashes are plain bcrypt, which Myth's prehashed
+        // Password::verify never accepts. When the native check already passed
+        // for an account that is not banned, sign in directly instead of making
+        // a Myth attempt that is certain to fail (and to log a failed attempt).
+        // Every other case still goes through Myth so its error branches apply.
+        $isBanned = $isBanned || strtolower((string) ($userRecord->status ?? '')) === 'banned';
+        $nativeVerified = $userFound && $userRecord !== null && isset($userRecord->password_hash) && ! $passwordVerifyFailed;
 
-            if (! $attempt && $userFound && ! $passwordVerifyFailed && $userRecord !== null && method_exists($this->auth, 'login')) {
-                $this->authLog('AUTH_LOGIN', 'legacy_password_hash_fallback', 'Myth/Auth attempt failed after native password verification; applying migrated hash compatibility login.', [
+        try {
+            if ($nativeVerified && ! $isBanned && method_exists($this->auth, 'login')) {
+                $this->authLog('AUTH_LOGIN', 'native_password_login', 'Native password verification passed; signing in directly.', [
                     'user_id' => $userRecord->id ?? null,
                     'identifier_type' => $type,
                     'request_id' => $requestId,
-                ], 'warning', __LINE__);
+                ], 'info', __LINE__);
 
                 $attempt = (bool) $this->auth->login($userRecord, $remember);
+            } else {
+                $attempt = $this->auth->attempt($credentials, $remember);
             }
         } catch (Throwable $e) {
+            $attempt = false;
+            // AUTH-LOGIN-005: Myth's login() sets the session before its
+            // housekeeping (remember-token purge on ~20% of logins, login
+            // event). If only that housekeeping throws, the person is signed
+            // in; keep them signed in and log the fault instead of failing.
+            $signedInId = $this->session->get('logged_in');
+            if ($nativeVerified && ! $isBanned && $signedInId !== null
+                && (string) $signedInId === (string) ($userRecord->id ?? '')) {
+                $this->authLog('AUTH_LOGIN', 'post_login_housekeeping_failed', 'Signed in, but post-login housekeeping threw', [
+                    'user_id' => $userRecord->id ?? null,
+                    'exception' => $e->getMessage(),
+                    'file' => basename($e->getFile()) . ':' . $e->getLine(),
+                    'request_id' => $requestId,
+                ], 'warning', __LINE__);
+                $attempt = true;
+            }
+        }
+
+        if (isset($e) && $attempt === false) {
             $this->authLog('AUTH_FAIL', 'exception', 'Authentication attempt threw exception', [
                 'identifier' => $identifier,
                 'exception' => $e->getMessage(),
+                'file' => basename($e->getFile()) . ':' . $e->getLine(),
                 'redirect_target' => site_url('login'),
             ], 'error', __LINE__);
             $context = [

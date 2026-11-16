@@ -144,6 +144,59 @@ final class LoginFlowTest extends CIUnitTestCase
         $response->assertRedirectTo(site_url('Dashboard'));
         $this->assertSame('success', session('auth_message.type'));
     }
+
+    /** AUTH-LOGIN-004: a verified bcrypt password signs in directly, with no Myth attempt. */
+    public function testNativeVerifiedPasswordSignsInWithoutMythAttempt(): void
+    {
+        db_connect()->table('bf_users')->insert([
+            'email' => 'native@example.com', 'username' => 'native_user',
+            'password_hash' => password_hash('correct-pass', PASSWORD_BCRYPT), 'active' => 0,
+        ]);
+        $auth = new FakeAuthentication(false, false);
+        Services::injectMock('authentication', $auth);
+
+        $response = $this->postLogin(['login' => 'native@example.com', 'password' => 'correct-pass']);
+
+        $response->assertRedirectTo(site_url('Dashboard'));
+        $this->assertSame(1, $auth->loginCalls);
+        $this->assertSame(0, $auth->attemptCalls);
+    }
+
+    /** AUTH-LOGIN-005: if Myth's post-login housekeeping throws after the session is set, stay signed in. */
+    public function testHousekeepingExceptionAfterSessionSetStillSignsIn(): void
+    {
+        db_connect()->table('bf_users')->insert([
+            'email' => 'purge@example.com', 'username' => 'purge_user',
+            'password_hash' => password_hash('correct-pass', PASSWORD_BCRYPT), 'active' => 0,
+        ]);
+        $id = (int) db_connect()->insertID();
+        $auth = new FakeAuthentication(false, false);
+        $auth->throwAfterSessionSet = true;
+        Services::injectMock('authentication', $auth);
+
+        $response = $this->postLogin(['login' => 'purge@example.com', 'password' => 'correct-pass']);
+
+        $response->assertRedirectTo(site_url('Dashboard'));
+        $this->assertSame(1, $auth->loginCalls);
+        $this->assertSame((string) $id, (string) session('logged_in'));
+    }
+
+    /** AUTH-LOGIN-004: a banned account never gets the direct sign-in, even with the right password. */
+    public function testBannedAccountDoesNotSignInDirectly(): void
+    {
+        db_connect()->table('bf_users')->insert([
+            'email' => 'banned@example.com', 'username' => 'banned_user',
+            'password_hash' => password_hash('correct-pass', PASSWORD_BCRYPT), 'active' => 1, 'status' => 'banned',
+        ]);
+        $auth = new FakeAuthentication(false, false);
+        Services::injectMock('authentication', $auth);
+
+        $this->postLogin(['login' => 'banned@example.com', 'password' => 'correct-pass'])->assertRedirect();
+
+        $this->assertSame(0, $auth->loginCalls);
+        $this->assertSame(1, $auth->attemptCalls);
+        $this->assertFalse($auth->check());
+    }
 }
 
 final class FakeAuthentication
@@ -181,8 +234,28 @@ final class FakeAuthentication
         return $this->loggedIn;
     }
 
+    public int $attemptCalls = 0;
+    public int $loginCalls = 0;
+    public bool $throwAfterSessionSet = false;
+
+    public function login($user = null, bool $remember = false): bool
+    {
+        $this->loginCalls++;
+        $this->loggedIn = true;
+        if (is_object($user)) {
+            $this->user = $user;
+        }
+        if ($this->throwAfterSessionSet) {
+            session()->set('logged_in', $this->user->id);
+            throw new \RuntimeException('Simulated remember-token purge failure');
+        }
+
+        return true;
+    }
+
     public function attempt(array $credentials, bool $remember = false): bool
     {
+        $this->attemptCalls++;
         $this->loggedIn = $this->attemptResult;
 
         return $this->attemptResult;
