@@ -172,6 +172,9 @@ class FormTestExecutor
         $logFile = rtrim(WRITEPATH . 'logs', '/') . '/log-' . date('Y-m-d') . '.php';
         clearstatcache(true, $logFile);
         $logOffset = is_file($logFile) ? (int) filesize($logFile) : 0;
+        $emergencyFile = rtrim(WRITEPATH . 'logs', '/') . '/emergency.log';
+        clearstatcache(true, $emergencyFile);
+        $emergencyOffset = is_file($emergencyFile) ? (int) filesize($emergencyFile) : 0;
         $submitResult = $this->submit($method, $action, $payload);
 
         $row['response_status']  = $submitResult['status'] ?? null;
@@ -180,7 +183,10 @@ class FormTestExecutor
 
         // Only log lines written during this submit count; older errors in
         // the day's log used to fail every later form.
-        $newErrors = self::errorLinesAfter($logFile, $logOffset);
+        $newErrors = array_merge(
+            self::emergencyLinesAfter($emergencyFile, $emergencyOffset),
+            self::errorLinesAfter($logFile, $logOffset)
+        );
         $logsSnapshot = implode("\n", $newErrors);
         $row['logs_snapshot'] = $logsSnapshot;
 
@@ -324,8 +330,17 @@ class FormTestExecutor
      */
     public static function classify(int $status, string $location, string $body, array $newErrors): array
     {
+        // An admin-only form refusing the non-admin tester is the access
+        // control working, not a broken form.
+        $roleOnly = $newErrors !== [] && array_filter($newErrors, static fn ($l) => ! preg_match('/\[(ROLE_FILTER\] ACCESS DENIED|AUTH FAILURE\])/', $l)) === [];
+        if ($roleOnly && ($status === 401 || $status === 403 || ($status >= 300 && $status < 400))) {
+            return ['fail' => false, 'note' => 'admin-only: refused the non-admin tester'];
+        }
         if ($newErrors !== []) {
             return ['fail' => true, 'note' => 'log: ' . mb_substr($newErrors[0], 0, 160)];
+        }
+        if ($status === 503 && str_contains($body, \App\Filters\FeatureFlagFilter::DISABLED_MESSAGE)) {
+            return ['fail' => false, 'note' => 'feature switch is off'];
         }
         if ($status === 0) {
             return ['fail' => true, 'note' => mb_substr($body, 0, 160)];
@@ -338,11 +353,16 @@ class FormTestExecutor
 
             return ['fail' => false, 'note' => 'redirect to ' . ($path !== '' ? $path : '?')];
         }
+        if (($status === 401 || $status === 404) && preg_match('/"status"\s*:\s*"error"/', $body)) {
+            return ['fail' => false, 'note' => 'handler refused the generated input (HTTP ' . $status . ')'];
+        }
         if ($status === 400 || $status === 422) {
             return ['fail' => false, 'note' => 'rejected the generated input (validation)'];
         }
         if ($status >= 400) {
-            return ['fail' => true, 'note' => 'HTTP ' . $status];
+            $snippet = trim((string) preg_replace('/\s+/', ' ', strip_tags((string) preg_replace('~<(script|style)\b.*?</\1>~is', '', $body))));
+
+            return ['fail' => true, 'note' => 'HTTP ' . $status . ($snippet !== '' ? ': ' . mb_substr($snippet, 0, 160) : '')];
         }
         $hay = strtolower($body);
         foreach (['fatal error', 'uncaught exception', 'whoops!', 'undefined variable', 'undefined array key', 'call to undefined method', 'databaseexception', 'sqlstate'] as $signal) {
@@ -360,6 +380,41 @@ class FormTestExecutor
      *
      * @return list<string>
      */
+    /**
+     * Failures that escape the framework (public/index.php's last-resort
+     * handler) go to emergency.log as JSON lines, not to the day's log.
+     *
+     * @return list<string>
+     */
+    public static function emergencyLinesAfter(string $file, int $offset, int $max = 3): array
+    {
+        clearstatcache(true, $file);
+        if (! is_readable($file) || (int) filesize($file) <= $offset) {
+            return [];
+        }
+        $fh = fopen($file, 'rb');
+        if ($fh === false) {
+            return [];
+        }
+        fseek($fh, $offset);
+        $out = [];
+        while (($line = fgets($fh)) !== false && count($out) < $max) {
+            $row = json_decode(trim($line), true);
+            $msg = is_array($row) ? (string) ($row['message'] ?? '') : trim($line);
+            if ($msg === '') {
+                continue;
+            }
+            $where = '';
+            if (is_array($row) && preg_match('~#0 \S*/(app/[^(]+)\((\d+)\)~', (string) ($row['context']['trace'] ?? ''), $m)) {
+                $where = ' at ' . $m[1] . ':' . $m[2];
+            }
+            $out[] = 'EMERGENCY ' . $msg . $where;
+        }
+        fclose($fh);
+
+        return $out;
+    }
+
     public static function errorLinesAfter(string $file, int $offset, int $max = 5): array
     {
         clearstatcache(true, $file);

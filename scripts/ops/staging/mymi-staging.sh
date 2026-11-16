@@ -298,6 +298,16 @@ deploy() {
   local ref="${1:-main}"
   [ -f "$STG_BASE/shared/.env" ] || die "no staging .env; run setup"
   as_op git -C "$REPO" fetch --quiet origin "$ref"
+  # Old staging builds helped fill the disk on 2026-11-16: keep the current
+  # one plus the newest STG_KEEP (default 2), and stop early when space is low.
+  local cur keepn=0 d; cur="$(basename "$(readlink -f "$STG_BASE/current" 2>/dev/null)")"
+  for d in $(ls -1d "$STG_BASE"/releases/*/ 2>/dev/null | sort -r); do
+    keepn=$((keepn + 1)); [ "$(basename "$d")" = "$cur" ] && continue
+    [ "$keepn" -le "${STG_KEEP:-2}" ] && continue
+    rm -rf -- "$d" && echo "  pruned staging $(basename "$d")"
+  done
+  local free; free="$(df -P --block-size=1G "$STG_BASE" | awk 'NR==2 {print $4}')"
+  [ "${free:-0}" -ge "${MIN_FREE_GB:-3}" ] || die "only ${free}G free; need ${MIN_FREE_GB:-3}G before building staging"
   local sha rel r; sha="$(as_op git -C "$REPO" rev-parse FETCH_HEAD)"; rel="$(date -u +%Y%m%dT%H%M%SZ)-${sha:0:8}"; r="$STG_BASE/releases/$rel"
   say "building staging $rel from $ref"
   as_op mkdir -p "$STG_BASE/releases" && as_op mkdir "$r"

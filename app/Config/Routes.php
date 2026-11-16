@@ -1362,7 +1362,7 @@ $routes->group('Blog', ['namespace' => '\App\Modules\Blog\Controllers'],  functi
     $routes->group('Earnings', function($routes) {
         $routes->get('/', 'EarningsController::index');
         $routes->get('Test', 'EarningsController::test');
-        $routes->post('update', 'EarningsController::update');
+        $routes->post('update', 'EarningsController::update', ['filter' => 'role:admin,team']); // edits the shared earnings calendar
         $routes->get('(:segment)', 'EarningsController::viewByDate'); // Catch any dynamic date
     });
     $routes->group('Investing', function($routes) {
@@ -1389,7 +1389,7 @@ $routes->group('Blog', ['namespace' => '\App\Modules\Blog\Controllers'],  functi
     $routes->get('(:segment)/(:segment)', 'BlogController::view/$1/$2');
     $routes->get('(:segment)', 'BlogController::view/$1');
 });
-$routes->post('earnings/update', '\App\Modules\Blog\Controllers\EarningsController::update');
+$routes->post('earnings/update', '\App\Modules\Blog\Controllers\EarningsController::update', ['filter' => 'role:admin,team']); // edits the shared earnings calendar
 $routes->get('index.php/Blog', static fn() => redirect()->to(site_url('Blog'), 301));
 $routes->get('index.php/Blog/(:segment)', static fn($slug) => redirect()->to(site_url('Blog/' . $slug), 301));
 $routes->get('index.php/Blog/(:segment)/(:segment)', static fn($a, $b) => redirect()->to(site_url('Blog/' . $a . '/' . $b), 301));

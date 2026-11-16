@@ -295,13 +295,25 @@ class ProjectsController extends BaseUserController
 
         $userId = $this->currentUserId();
         $db = db_connect();
+        // Only the project's creator may report its revenue; anyone else gets
+        // the same answer as for a project that does not exist.
+        $owned = $db->tableExists('bf_projects')
+            && $db->table('bf_projects')->select('id')->where(['id' => $projectId, 'created_by' => $userId])->limit(1)->get()->getRowArray() !== null;
+        if (! $owned) {
+            return $this->formReply(['ok' => false, 'reason' => 'not_found'], 'Project revenue recorded.');
+        }
         if ($db->tableExists('bf_projects_fund_distributions')) {
-            $db->table('bf_projects_fund_distributions')->insert([
+            $row = array_intersect_key([
                 'project_id'        => $projectId,
                 'amount'            => $amount,
                 'distribution_date' => date('Y-m-d'),
                 'created_at'        => date('Y-m-d H:i:s'),
-            ]);
+            ], array_flip($db->getFieldNames('bf_projects_fund_distributions')));
+            if (! $db->table('bf_projects_fund_distributions')->insert($row)) {
+                log_message('error', 'Project revenue insert failed: ' . json_encode($db->error()));
+
+                return $this->formReply(['ok' => false, 'reason' => 'store_failed', 'message' => 'Revenue could not be saved.'], '');
+            }
         }
 
         return $this->formReply(['ok' => true, 'reason' => 'stored'], 'Project revenue recorded.');

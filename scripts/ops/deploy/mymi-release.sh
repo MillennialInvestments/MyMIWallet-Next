@@ -26,6 +26,26 @@ CMD="${1:-}"; ARG="${2:-}"
 
 die() { echo "ERROR: $*" >&2; exit 1; }
 current_target() { readlink -f "$BASE/current"; }
+# Each release is a full copy of the app (~0.5 GB). On 2026-11-16 old
+# releases filled the disk and took the site down, so keep only the newest
+# KEEP_RELEASES (default 4) plus whatever current and the rollback target are.
+KEEP_RELEASES="${KEEP_RELEASES:-4}"
+MIN_FREE_GB="${MIN_FREE_GB:-3}"
+free_gb() { df -P --block-size=1G "$1" | awk 'NR==2 {print $4}'; }
+need_space() {
+  local f; f="$(free_gb "$BASE")"
+  [ "${f:-0}" -ge "$MIN_FREE_GB" ] || die "only ${f}G free on $(df -P "$BASE" | awk 'NR==2 {print $6}'); need ${MIN_FREE_GB}G. Free space first (old releases: bash $0 prune)."
+}
+prune_releases() {
+  local keep="$1"; shift
+  local n=0 d name
+  for d in $(ls -1d "$BASE"/releases/*/ 2>/dev/null | sort -r); do
+    name="$(basename "$d")"; n=$((n + 1))
+    case " $* " in *" $name "*) continue ;; esac
+    [ "$n" -le "$keep" ] && continue
+    sudo rm -rf -- "$BASE/releases/$name" && echo "  pruned $name"
+  done
+}
 staging_revision() { cat "$STAGING_BASE/current/REVISION" 2>/dev/null || sudo cat "$STAGING_BASE/current/REVISION" 2>/dev/null || true; }
 staging_gate() { # staging_gate <sha>
   [ "${SKIP_STAGING:-}" = 1 ] && { echo "Staging check skipped (SKIP_STAGING=1)."; return 0; }
@@ -78,6 +98,7 @@ build)
   R="$BASE/releases/$REL"
   CUR="$(current_target)"
   [ ! -e "$R" ] || die "$R already exists"
+  need_space
   echo "Building $REL from $REF ($SHA); current is $(basename "$CUR")"
 
   mkdir -p "$R"
@@ -122,6 +143,13 @@ build)
   echo "Next 2, live:    MIGRATE='<names>' bash $0 activate $REL"
   ;;
 
+prune)
+  CUR="$(basename "$(current_target)")"
+  echo "Pruning releases: keep newest $KEEP_RELEASES plus current ($CUR)"
+  prune_releases "$KEEP_RELEASES" "$CUR"
+  df -h "$BASE" | tail -1
+  ;;
+
 activate)
   REL="$ARG"; [ -n "$REL" ] || die "usage: activate <release>"
   R="$BASE/releases/$REL"; [ -d "$R" ] && [ -f "$R/REVISION" ] || die "$R is not a built release"
@@ -154,6 +182,8 @@ activate)
   restart
   if health; then
     echo "OK: $REL is live. Roll back with: bash $0 rollback $PREV"
+    echo "--- prune (keep newest $KEEP_RELEASES, plus $REL and $PREV) ---"
+    prune_releases "$KEEP_RELEASES" "$REL" "$PREV"
   else
     echo "Health check FAILED. Rolling the code back to $PREV (database migrations stay applied)."
     switch_to "$PREV"; restart; health || true
