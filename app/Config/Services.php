@@ -899,5 +899,23 @@ class Services extends CoreServices
         return new \App\Services\MobileAuthTokenService();
     }
 
+    /**
+     * The app's request class: getJSON() returns null for a form body instead
+     * of throwing (see App\HTTP\IncomingRequest).
+     */
+    public static function incomingrequest(?\Config\App $config = null, bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('request', $config);
+        }
 
+        $config ??= config(\Config\App::class);
+
+        return new \App\HTTP\IncomingRequest(
+            $config,
+            static::uri(),
+            'php://input',
+            new \CodeIgniter\HTTP\UserAgent(),
+        );
+    }
 }

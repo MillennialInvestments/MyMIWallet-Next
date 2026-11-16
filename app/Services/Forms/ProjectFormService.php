@@ -109,7 +109,9 @@ final class ProjectFormService
             'project_stage'      => $text('project_stage', 50),
             'completion_date'    => preg_match('/^\d{4}-\d{2}-\d{2}$/', (string) ($input['completion_date'] ?? '')) ? $input['completion_date'] : null,
             'remarks'            => $text('remarks', 1000),
-            'promotional_links'  => $text('promotional_links', 1000),
+            // bf_projects.promotional_links is a JSON column: store a JSON list
+            // of the links (an empty string is rejected by MySQL).
+            'promotional_links'  => self::linksJson($text('promotional_links', 1000)),
             'project_type'       => 'general',
             'is_system'          => 0,
             'status'             => 'pending',
@@ -139,6 +141,7 @@ final class ProjectFormService
             array_intersect_key($row, array_flip($this->db->getFieldNames('bf_projects'))),
             static fn ($v) => $v !== null
         );
+        $row = $this->fitJsonColumns('bf_projects', $row);
         if (! $this->db->table('bf_projects')->insert($row)) {
             log_message('error', 'Project proposal insert failed: ' . json_encode($this->db->error()));
 
@@ -146,5 +149,38 @@ final class ProjectFormService
         }
 
         return ['ok' => true, 'reason' => 'stored', 'id' => (int) $this->db->insertID()];
+    }
+
+    /** "a, b\nc" -> '["a","b","c"]'; nothing -> null. */
+    public static function linksJson(string $links): ?string
+    {
+        $list = array_values(array_filter(array_map('trim', preg_split('/[\s,]+/', $links) ?: [])));
+
+        return $list === [] ? null : json_encode($list, JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
+     * MySQL refuses a non-JSON string in a JSON column. Drop empty values and
+     * wrap any other plain string so the insert cannot fail on it.
+     *
+     * @param array<string, mixed> $row
+     *
+     * @return array<string, mixed>
+     */
+    private function fitJsonColumns(string $table, array $row): array
+    {
+        foreach ($this->db->getFieldData($table) as $field) {
+            if (strtolower((string) ($field->type ?? '')) !== 'json' || ! array_key_exists($field->name, $row)) {
+                continue;
+            }
+            $v = $row[$field->name];
+            if ($v === null || $v === '') {
+                unset($row[$field->name]);
+            } elseif (is_string($v) && json_decode($v) === null && json_last_error() !== JSON_ERROR_NONE) {
+                $row[$field->name] = json_encode($v);
+            }
+        }
+
+        return $row;
     }
 }
