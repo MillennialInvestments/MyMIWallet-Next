@@ -1,0 +1,10 @@
+[Unit]
+Description=Copy MyMI Wallet database backups to gq-llm
+After=network-online.target mymi-db-backup.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /usr/local/sbin/mymi-backup-offsite.sh
+Nice=10
+IOSchedulingClass=idle

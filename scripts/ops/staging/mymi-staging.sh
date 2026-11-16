@@ -322,6 +322,10 @@ deploy() {
     (cd "$r" && sudo -u "$wr_user" php spark cache:clear && sudo -u "$wr_user" php scripts/ops/db/run-migrations.php $MIGRATE)
   fi
   ln -sfn "releases/$rel" "$STG_BASE/current.next" && mv -T "$STG_BASE/current.next" "$STG_BASE/current"
+  # The shared cache holds CI4's file-locator cache with absolute paths into
+  # the previous release; once old releases are pruned those paths are gone
+  # and spark/web requests fail ("Cache boot failure"). Clear it on switch.
+  find "$STG_BASE/shared/writable/cache" -mindepth 1 -maxdepth 1 ! -name index.html ! -name .htaccess -exec rm -rf -- {} + 2>/dev/null || true
   systemctl reload "$(systemctl list-units --type=service --no-legend 'php*-fpm*' | awk '{print $1}' | head -1)" || true
   echo "staging is now $rel"
   perms
