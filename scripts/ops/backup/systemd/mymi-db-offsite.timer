@@ -1,0 +1,11 @@
+[Unit]
+Description=Copy MyMI Wallet backups off-host after the nightly backup
+
+[Timer]
+# The backup runs at 08:15 UTC (+ up to 10 min); copy at 08:45 and again at
+# 20:45 so a missed night is retried the same day.
+OnCalendar=*-*-* 08,20:45:00 UTC
+Persistent=true
+
+[Install]
+WantedBy=timers.target
