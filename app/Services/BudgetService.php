@@ -572,10 +572,10 @@ class BudgetService
             return $debt;
         }
 
-        $accountId = (int) ($debt['account_id'] ?? $debt['id'] ?? 0);
+        $accountId = (int) ($debt['account_id'] ?? $debt['accountId'] ?? $debt['id'] ?? 0);
         $principal = $this->asFloat($debt['principal'] ?? $debt['current_balance'] ?? 0.0);
-        $apr       = (float) ($debt['apr'] ?? $debt['interest_rate'] ?? 0.0);
-        $minimum   = $this->asFloat($debt['minimum_payment'] ?? $debt['payment_due'] ?? $debt['monthly_payment'] ?? 0.0);
+        $apr       = (float) ($debt['apr'] ?? $debt['annualPercentageRate'] ?? $debt['interest_rate'] ?? 0.0);
+        $minimum   = $this->asFloat($debt['minimum_payment'] ?? $debt['minimumPayment'] ?? $debt['payment_due'] ?? $debt['monthly_payment'] ?? 0.0);
 
         if ($apr > 1.0) {
             $apr = $apr / 100;
@@ -1552,19 +1552,46 @@ class BudgetService
 
     public function calculateDebtPayoff($totalDebt, $interestRate, $monthlyPayment) {
         $months = 0;
-        $remainingDebt = $totalDebt;
-        $totalInterest = 0;
+        $remainingDebt = (float) $totalDebt;
+        $totalInterest = 0.0;
+        $interestRate = (float) $interestRate;
+        $monthlyPayment = (float) $monthlyPayment;
 
-        while ($remainingDebt > 0) {
-            $interest = $remainingDebt * $interestRate / 12;
+        if ($remainingDebt <= 0.0 || $monthlyPayment <= 0.0) {
+            return [
+                'monthsToPayOff' => 0,
+                'totalInterest' => 0.0,
+            ];
+        }
+
+        $monthlyRate = $interestRate / 12;
+        if ($monthlyRate > 0 && ($remainingDebt * $monthlyRate) >= $monthlyPayment) {
+            return [
+                'monthsToPayOff' => null,
+                'totalInterest' => 0.0,
+                'negativeAmortization' => true,
+            ];
+        }
+
+        $maxMonths = 600;
+        while ($remainingDebt > 0 && $months < $maxMonths) {
+            $interest = $remainingDebt * $monthlyRate;
             $totalInterest += $interest;
-            $remainingDebt = $remainingDebt + $interest - $monthlyPayment;
+            $principalPayment = $monthlyPayment - $interest;
+            if ($principalPayment <= 0) {
+                return [
+                    'monthsToPayOff' => null,
+                    'totalInterest' => round($totalInterest, 2),
+                    'negativeAmortization' => true,
+                ];
+            }
+            $remainingDebt -= $principalPayment;
             $months++;
         }
 
         return [
             'monthsToPayOff' => $months,
-            'totalInterest' => $totalInterest,
+            'totalInterest' => round($totalInterest, 2),
         ];
     }
 
@@ -1573,13 +1600,40 @@ class BudgetService
      */
     public function calculateDebtRepayment($totalDebt, $interestRate, $monthlyPayment) {
         $months = 0;
-        $remainingDebt = $totalDebt;
-        $totalInterest = 0;
+        $remainingDebt = (float) $totalDebt;
+        $totalInterest = 0.0;
+        $interestRate = (float) $interestRate;
+        $monthlyPayment = (float) $monthlyPayment;
 
-        while ($remainingDebt > 0) {
-            $interest = $remainingDebt * ($interestRate / 100) / 12; 
+        if ($remainingDebt <= 0.0 || $monthlyPayment <= 0.0) {
+            return [
+                'monthsToPayOff' => 0,
+                'totalInterestPaid' => 0.0,
+            ];
+        }
+
+        $monthlyRate = ($interestRate / 100) / 12;
+        if ($monthlyRate > 0 && ($remainingDebt * $monthlyRate) >= $monthlyPayment) {
+            return [
+                'monthsToPayOff' => null,
+                'totalInterestPaid' => 0.0,
+                'negativeAmortization' => true,
+            ];
+        }
+
+        $maxMonths = 600;
+        while ($remainingDebt > 0 && $months < $maxMonths) {
+            $interest = $remainingDebt * $monthlyRate;
             $totalInterest += $interest;
-            $remainingDebt = $remainingDebt + $interest - $monthlyPayment;
+            $principalPayment = $monthlyPayment - $interest;
+            if ($principalPayment <= 0) {
+                return [
+                    'monthsToPayOff' => null,
+                    'totalInterestPaid' => round($totalInterest, 2),
+                    'negativeAmortization' => true,
+                ];
+            }
+            $remainingDebt -= $principalPayment;
             $months++;
         }
 
@@ -1689,18 +1743,37 @@ class BudgetService
             $interestRate = floatval($account['interest_rate']) / 100;
             $monthlyPayment = floatval($account['payment_due']);
             $iterations = 0;
-    
-            while ($currentBalance > 0 && $iterations < 1000) {
+            $maxMonths = 600;
+
+            if ($currentBalance <= 0.0 || $monthlyPayment <= 0.0) {
+                continue;
+            }
+
+            // Check negative amortization: if monthly interest is >= payment, schedule cannot pay off
+            $monthlyInterest = $currentBalance * ($interestRate / 12);
+            if ($interestRate > 0 && $monthlyInterest >= $monthlyPayment) {
+                $repaymentSchedules[] = [
+                    'account_id' => $account['id'],
+                    'bank_name' => $account['bank_name'] ?? '',
+                    'due_date' => $dueDate->format('Y-m-d'),
+                    'payment_due' => $monthlyPayment,
+                    'remaining_balance' => round($currentBalance, 2),
+                    'negative_amortization' => true,
+                ];
+                continue;
+            }
+
+            while ($currentBalance > 0 && $iterations < $maxMonths) {
                 $dueDate->modify('+1 month'); // Move due date forward
                 $interest = $currentBalance * $interestRate / 12;
                 $currentBalance = max($currentBalance + $interest - $monthlyPayment, 0);
-    
+
                 $repaymentSchedules[] = [
                     'account_id' => $account['id'],
                     'bank_name' => $account['bank_name'],
                     'due_date' => $dueDate->format('Y-m-d'),
                     'payment_due' => $monthlyPayment,
-                    'remaining_balance' => $currentBalance,
+                    'remaining_balance' => round($currentBalance, 2),
                 ];
                 $iterations++;
             }
@@ -2855,7 +2928,13 @@ class BudgetService
         $account = $this->budgetModel->getAccountById($table, $accountId);
 
         if ($account) {
-            $newBalance = $account['current_balance'] - $amount;
+            $ownerId = $account['user_id'] ?? $account['cuID'] ?? null;
+            if ($this->cuID !== null && $ownerId !== null && (int) $ownerId !== (int) $this->cuID) {
+                return false;
+            }
+
+            $currentBalance = (float) ($account['current_balance'] ?? 0.0);
+            $newBalance = max(0.0, round($currentBalance - (float) $amount, 2));
 
             return $this->budgetModel->updateAccountBalance($table, $accountId, $newBalance);
         }
