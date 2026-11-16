@@ -1155,6 +1155,11 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
         log_message('debug', '[BudgetController::METHOD_ENTRY] cancelAccount');
         $accountInfo = $this->budgetModel->getUserBudgetRecord($this->cuID, $accountID);
 
+        if (empty($accountInfo)) {
+            session()->setFlashdata('message', 'Account not found.');
+            return redirect()->to('/Budget');
+        }
+
         foreach($accountInfo as $account) {
             if ($account['recurring_account_primary'] === 'Yes') {
                 if ($this->budgetModel->cancelAccount($accountID)) {
