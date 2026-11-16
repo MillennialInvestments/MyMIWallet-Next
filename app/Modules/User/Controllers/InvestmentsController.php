@@ -1088,6 +1088,11 @@ class InvestmentsController extends BaseUserController
             return $this->featureGuardResponse;
         }
 
+        $userId = (int) ($this->cuID ?? session('user_id') ?? 0);
+        if ($userId <= 0) {
+            return $this->failUnauthorized('Authentication required.');
+        }
+
         log_message('debug', 'InvestmentsController: Starting saveTradeData');
         $decodedInput = $this->request->getJSON(true); // Parse JSON payload
         log_message('debug', 'Decoded Input: ' . print_r($decodedInput, true));
@@ -1098,40 +1103,98 @@ class InvestmentsController extends BaseUserController
         }
     
         $tradeInfo = $decodedInput['trade'] ?? null;
-        if (!$tradeInfo || !is_array($tradeInfo)) {
+        if (! $tradeInfo || ! is_array($tradeInfo)) {
             log_message('error', 'Invalid input structure for trade data');
             return $this->fail('Invalid trade data', 400);
         }
+
+        // Strict ownership scoping: never trust client-supplied user_id
+        $tradeInfo['user_id'] = $userId;
     
-        // Ensure the `id` is used to update an existing record
+        // Ensure the `id` is used to update an existing record with ownership check
         $result = null;
-        if (isset($tradeInfo['id']) && !empty($tradeInfo['id'])) {
-            $result = $this->investmentModel->updateTrade($tradeInfo['id'], $tradeInfo);
-            log_message('debug', "Updated trade with ID: {$tradeInfo['id']}");
+        if (isset($tradeInfo['id']) && ! empty($tradeInfo['id'])) {
+            $tradeId = (int) $tradeInfo['id'];
+            $existing = $this->investmentModel->getTradeById($tradeId);
+            if (! $existing) {
+                return $this->failNotFound('Trade record not found.');
+            }
+            if ((int) ($existing['user_id'] ?? 0) !== $userId) {
+                return $this->failForbidden('You do not have permission to modify this trade.');
+            }
+
+            $result = $this->investmentModel->updateTrade($tradeId, $tradeInfo);
+            log_message('debug', "Updated trade with ID: {$tradeId}");
         } else {
             $result = $this->investmentModel->addTrade($tradeInfo);
-            log_message('debug', "Inserted new trade: " . print_r($tradeInfo, true));
+            log_message('debug', "Inserted new trade for user {$userId}: " . print_r($tradeInfo, true));
         }
 
         if ($result) {
-            $userId = (int) ($tradeInfo['user_id'] ?? 0);
-            if (! $userId && !empty($tradeInfo['id'])) {
-                $existing = $this->investmentModel->getTradeById($tradeInfo['id']);
-                $userId = (int)($existing['user_id'] ?? 0);
-            }
-            if (! $userId) {
-                $userId = (int) ($this->cuID ?? 0);
-            }
-
-            $this->invalidateCrudCache(array_filter([
+            $this->invalidateCrudCache([
                 'investments',
-                $userId > 0 ? 'user:' . $userId : null,
-            ]));
+                'user:' . $userId,
+            ]);
 
             return $this->respond(['status' => 'success', 'message' => 'Trade saved successfully']);
-        } else {
-            return $this->fail('Failed to save trade data', 500);
         }
+
+        return $this->fail('Failed to save trade data', 500);
+    }
+
+    /**
+     * GTM-034: Import trades from CSV file or payload with duplicate detection.
+     */
+    public function importTradesCsv()
+    {
+        if ($this->featureGuardResponse instanceof \CodeIgniter\HTTP\ResponseInterface) {
+            return $this->featureGuardResponse;
+        }
+
+        $userId = (int) ($this->cuID ?? session('user_id') ?? 0);
+        if ($userId <= 0) {
+            return $this->failUnauthorized('Authentication required.');
+        }
+
+        $file = $this->request->getFile('csv_file');
+        $csvContent = '';
+
+        if ($file && $file->isValid() && ! $file->hasMoved()) {
+            $csvContent = (string) file_get_contents($file->getTempName());
+        } else {
+            $csvContent = (string) ($this->request->getPost('csv_content') ?? '');
+            if (empty($csvContent)) {
+                $json = $this->request->getJSON(true);
+                $csvContent = (string) ($json['csv_content'] ?? '');
+            }
+        }
+
+        if (trim($csvContent) === '') {
+            return $this->fail('CSV content or file is required.', 400);
+        }
+
+        $service = new \App\Services\TradeImportService($this->investmentModel);
+        $parseResult = $service->parseCsv($csvContent);
+        if (empty($parseResult['trades'])) {
+            $errorMsg = ! empty($parseResult['errors'])
+                ? implode('; ', $parseResult['errors'])
+                : 'No valid trade rows found in CSV.';
+            return $this->fail($errorMsg, 400);
+        }
+
+        $importResult = $service->importTrades($userId, $parseResult['trades'], true);
+        if (! $importResult['success']) {
+            return $this->fail('Import failed: ' . implode('; ', $importResult['errors']), 400);
+        }
+
+        $this->invalidateCrudCache(['investments', 'user:' . $userId]);
+
+        return $this->respond([
+            'status'          => 'success',
+            'imported_count'  => $importResult['imported_count'],
+            'duplicate_count' => $importResult['duplicate_count'],
+            'errors'          => $importResult['errors'],
+        ]);
     }
     
     private function validateTradeInput(array $json)

@@ -1488,21 +1488,22 @@ class InvestmentModel extends Model
         }
     }
     
-    public function importInvestmentsFromCSV($filePath)
+    public function importInvestmentsFromCSV($filePath, ?int $userId = null)
     {
-        $file = fopen($filePath, 'r');
-        while (($line = fgetcsv($file)) !== FALSE) {
-            $investmentData = [
-                'user_id' => $this->session->get('user_id'),
-                'symbol' => $line[0],
-                'shares' => $line[1],
-                'entry_price' => $line[2],
-                'current_price' => $line[3],
-                'trade_date' => $line[4],
+        $userId = (int) ($userId ?? ($this->session?->get('user_id') ?? 0));
+        if ($userId <= 0) {
+            return [
+                'success'         => false,
+                'imported_count'  => 0,
+                'duplicate_count' => 0,
+                'error_count'     => 1,
+                'imported_ids'    => [],
+                'errors'          => ['Valid user ID required for trade import.'],
             ];
-            $this->addTrade($investmentData);
         }
-        fclose($file);
+
+        $service = new \App\Services\TradeImportService($this);
+        return $service->importCsvFile($userId, (string) $filePath, true);
     }
 
     public function lastMonthTradePerformanceByUser($cuID) {
