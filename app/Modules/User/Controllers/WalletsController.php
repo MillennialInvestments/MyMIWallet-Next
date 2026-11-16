@@ -1568,6 +1568,21 @@ class WalletsController extends BaseUserController
                 'user_id'          => $userId,
             ]);
 
+            if (strtoupper($this->request->getMethod()) !== 'POST') {
+                if ($this->request->isAJAX() || strtolower($this->request->getHeaderLine('X-Requested-With')) === 'xmlhttprequest') {
+                    return $this->response->setStatusCode(405)->setJSON([
+                        'status'  => 'error',
+                        'message' => 'Method Not Allowed. Deletion requires a POST request.',
+                    ]);
+                }
+
+                return view('App\Modules\User\Views\Wallets\DeleteConfirm', [
+                    'walletID'       => $walletID,
+                    'accountType'    => $accountType,
+                    'childAccountId' => $childAccountId,
+                ]);
+            }
+
             $result = $this->getWalletService()->deleteWalletCascade(
                 $accountType,
                 $walletID,
