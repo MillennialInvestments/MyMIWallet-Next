@@ -71,11 +71,16 @@ For each task below, in order:
    - failure (provider down or bad signature returns a safe error)
 5. Run `vendor/bin/phpunit`. The only allowed failure is the known one above.
 6. Open the PR on its own branch. Update the task row in `tasks.csv`: Status `in_review`, Evidence_Link pointing to the PR.
-7. Give Tim one paste-able deploy block. He works from an iPad terminal, so batch everything into a single block:
+7. Give Tim one paste-able deploy block. He works from an iPad terminal, so batch everything into a single block.
+   `form-test` exits 0 even when a live submit fails, so the block must check the
+   "Live submits" line for `FAIL 0` before it activates:
 
    ```
-   bash ~/mymi-release.sh build main && sudo bash ~/mymi-staging.sh deploy <full main sha> && sudo bash ~/mymi-staging.sh form-test && MIGRATE='<names or empty>' bash ~/mymi-release.sh activate <exact release name printed by build>
+   bash ~/mymi-release.sh build main && sudo bash ~/mymi-staging.sh deploy <full main sha> && sudo bash ~/mymi-staging.sh form-test | tee ~/form-test-last.txt && grep -Eq 'Live submits:.* FAIL 0( |$)' ~/form-test-last.txt && MIGRATE='<names or empty>' bash ~/mymi-release.sh activate <exact release name printed by build>
    ```
+
+   Do not use `--strict` for this: it also counts static scan FAILs in views
+   that are not rendered, so it always fails today.
 
 8. After it is live, write an evidence file at `docs/_aiops/gtm/evidence/MYMI-GTM-0NN_<SHORT>.md` with:
    - PR and SHA
@@ -84,7 +89,7 @@ For each task below, in order:
    - staging form-test result
    - risks and rollback
 
-   Then set Status to `certified`.
+   Then set Status to `done`. The GTM queue script (`docs/_aiops/gtm/scripts/mymi_gtm.py`) treats only `done`, `complete`, `completed`, `closed` and `merged` as finished, so do not invent other statuses.
 
 ## 5. Roadmap (in order)
 
