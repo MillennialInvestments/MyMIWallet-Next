@@ -429,8 +429,10 @@ class DiscordAPIController extends BaseAPIController
 
     public function createLinkToken(): ResponseInterface
     {
-        $apiKey = env('DISCORD_LINK_API_KEY');
-        if ($apiKey && !hash_equals((string) $apiKey, (string) $this->request->getHeaderLine('X-API-Key'))) {
+        // API-AUTH-001: fail closed. With DISCORD_LINK_API_KEY unset this used to
+        // issue link tokens for any discord_user_id to anyone who asked.
+        $apiKey = trim((string) env('DISCORD_LINK_API_KEY'));
+        if ($apiKey === '' || ! hash_equals($apiKey, trim($this->request->getHeaderLine('X-API-Key')))) {
             return $this->failForbidden('Invalid API key');
         }
 

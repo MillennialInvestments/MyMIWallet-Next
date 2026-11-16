@@ -663,7 +663,7 @@ class InvestmentsController extends BaseUserController
         $this->data['pageTitle'] = 'Edit Trade | MyMI Wallet | The Future of Finance';
         $this->data['trade'] = $this->investmentModel->getTradeById($tradeId);
         
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             $updateData = $this->request->getPost();
             $this->investmentModel->updateTrade($tradeId, $updateData);
             $userId = (int) ($trade['user_id'] ?? ($updateData['user_id'] ?? 0));
@@ -700,6 +700,7 @@ class InvestmentsController extends BaseUserController
     
         // Pass other data as needed
         $this->commonData(); // Ensure other necessary data is prepared
+        $this->data['retirementGoals'] = (new \App\Services\Forms\UserPreferenceService())->get((int) ($cuID ?? 0), 'investments.retirement_goals');
     
         return $this->renderTheme('App\Modules\User\Views\Investments\retirement', $this->data);
     }   
@@ -763,9 +764,13 @@ class InvestmentsController extends BaseUserController
         log_message('debug', 'InvestmentsController::accountManager L290 - Raw Input: ' . $rawInput);
     
         $json = json_decode($rawInput, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            log_message('critical', 'JSON Parsing Error: ' . json_last_error_msg());
-            return $this->fail('Invalid JSON format: ' . json_last_error_msg(), 400);
+        if (json_last_error() !== JSON_ERROR_NONE || ! is_array($json)) {
+            // The add-investment page posts a normal form; the JS widgets post JSON.
+            $json = (array) $this->request->getPost();
+            if ($json === []) {
+                log_message('notice', 'InvestmentsController::accountManager: body is neither JSON nor a form post');
+                return $this->fail('Invalid request body.', 400);
+            }
         }
     
         log_message('debug', 'InvestmentsController::accountManager L297 - $json Array: ' . print_r($json, true));
@@ -785,11 +790,16 @@ class InvestmentsController extends BaseUserController
             }
     
             log_message('debug', 'InvestmentsController::accountManager L310 - Processing investment.');
+            // Records always belong to the signed-in user, never to a posted user_id.
+            $json['user_id'] = $this->cuID;
             $response = $this->processInvestment($json);
     
             if ($response->getStatusCode() === 200) {
                 log_message('debug', 'Investment processed successfully.');
                 return $this->response->setJSON(['status' => 'success']);
+            }
+            if ($response->getStatusCode() >= 400 && $response->getStatusCode() < 500) {
+                return $response; // validation message, not a server error
             }
     
             log_message('error', 'Failed to process investment.');
@@ -803,7 +813,7 @@ class InvestmentsController extends BaseUserController
     private function processInvestment(array $json) {
         $validation = $this->validateTradeInput($json);
         if (!$validation['isValid']) {
-            log_message('error', $validation['message']);
+            log_message('notice', $validation['message']);
             return $this->fail($validation['message'], 400);
         }
     
@@ -828,17 +838,17 @@ class InvestmentsController extends BaseUserController
     
     private function computeTradeData(array $json) {
         $totalTradeCost = (float)$json['shares'] * (float)$json['price'];
-        $json['user_id'] = $json['user_id'] ?? $this->cuID;        
+        $json['user_id'] = $this->cuID; // never trust a posted user_id
 
         // Fetch data from UserService
         $userData = $this->getuserService()->commonData(); 
         $tradeData = [
             'id' => $json['id'] ?? '',
             'status' => 'Active',
-            'user_id' => $json['user_id'] ?? $this->cuID,
+            'user_id' => $this->cuID,
             'user_email' => $userData['cuEmail'],
             'username' => $userData['cuUsername'],
-            'modified_by' => $json['user_id'] ?? $this->cuID,
+            'modified_by' => $this->cuID,
             'open_date' => $json['open_date'] ?? 'N/A',
             'open_time' => $json['open_time'] ?? 'N/A',
             'trade_type' => $json['trade_type'] ?? '',
@@ -1022,7 +1032,7 @@ class InvestmentsController extends BaseUserController
 
     private function validateSaveRequest()
     {
-        if (!$this->request->isAJAX() || $this->request->getMethod() !== 'post') {
+        if (!$this->request->isAJAX() || strtolower($this->request->getMethod()) !== 'post') {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('This action is not allowed');
         }
     }
@@ -1129,7 +1139,7 @@ class InvestmentsController extends BaseUserController
         $requiredFields = ['trade_type', 'symbol', 'shares', 'price', 'user_id'];
         foreach ($requiredFields as $field) {
             if (empty($json[$field])) {
-                log_message('error', "Validation failed: Missing required field {$field}");
+                log_message('notice', "Validation failed: Missing required field {$field}");
                 return ['isValid' => false, 'message' => "Missing required field: {$field}"];
             }
         }
@@ -1166,6 +1176,236 @@ class InvestmentsController extends BaseUserController
                 $sheet->fromArray($data);
             });
         }, $filename);
+    }
+
+    // ---------------------------------------------------------------------
+    // GT-FORM-ROUTES-001: retirement goals and economic data (FRED) endpoints.
+    // ---------------------------------------------------------------------
+
+    /** Fields of the retirement goals form, with their default values. */
+    public const RETIREMENT_GOAL_FIELDS = [
+        'current_age' => 0, 'retirement_age' => 0, 'current_savings' => 0, 'monthly_contribution' => 0,
+        'target_amount' => 0, 'expected_return' => 0, 'risk_profile' => '',
+    ];
+
+    /** POST Investments/saveRetirementPlan: saves the user's retirement goals. */
+    public function saveRetirementPlan()
+    {
+        $userId = (int) ($this->cuID ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Please sign in.']);
+        }
+        $json = $this->request->getJSON(true);
+        $input = is_array($json) ? $json : (array) $this->request->getPost();
+        $goals = \App\Services\Forms\UserPreferenceService::shape(self::RETIREMENT_GOAL_FIELDS, $input);
+        if ($goals['retirement_age'] > 0 && $goals['current_age'] > 0 && $goals['retirement_age'] <= $goals['current_age']) {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => 'Retirement age must be after your current age.']);
+        }
+        $goals['saved_at'] = date('c');
+
+        $ok = (new \App\Services\Forms\UserPreferenceService())->put($userId, 'investments.retirement_goals', $goals);
+
+        return $this->response->setStatusCode($ok ? 200 : 503)->setJSON($ok
+            ? ['status' => 'success', 'message' => 'Retirement goals saved.', 'goals' => $goals]
+            : ['status' => 'error', 'message' => 'Retirement goals could not be saved yet.']);
+    }
+
+    /** GET Investments/fetchEconomicData?seriesId=GDP: latest observations from FRED (read only). */
+    public function fetchEconomicData()
+    {
+        $series = strtoupper(trim((string) $this->request->getGet('seriesId')));
+        if (! preg_match('/^[A-Z0-9_]{1,40}$/', $series)) {
+            return $this->response->setStatusCode(422)->setJSON(['error' => 'Invalid series id.']);
+        }
+        $cacheKey = 'fred_obs_' . $series;
+        $rows = cache($cacheKey);
+        if (! is_array($rows)) {
+            try {
+                $rows = (new \App\Libraries\FRED())->fetchData($series);
+            } catch (\Throwable $e) {
+                log_message('error', 'fetchEconomicData failed: {m}', ['m' => $e->getMessage()]);
+                $rows = [];
+            }
+            $rows = array_slice(is_array($rows) ? $rows : [], -120);
+            cache()->save($cacheKey, $rows, 3600);
+        }
+        $liked = (new \App\Services\Forms\UserPreferenceService())->get((int) ($this->cuID ?? 0), 'investments.economic_likes');
+
+        return $this->response->setJSON(array_map(static fn ($r) => [
+            'id'    => $series,
+            'date'  => (string) ($r['date'] ?? ''),
+            'value' => (string) ($r['value'] ?? ''),
+            'liked' => in_array($series, (array) ($liked['series'] ?? []), true),
+        ], array_reverse($rows)));
+    }
+
+    /** GET Investments/searchEconomicData?searchText=inflation: FRED series search (read only). */
+    public function searchEconomicData()
+    {
+        $text = mb_substr(trim(strip_tags((string) $this->request->getGet('searchText'))), 0, 80);
+        if (mb_strlen($text) < 2) {
+            return $this->response->setJSON([]);
+        }
+        try {
+            $result = (new \App\Libraries\FRED())->searchSeries($text);
+        } catch (\Throwable $e) {
+            log_message('error', 'searchEconomicData failed: {m}', ['m' => $e->getMessage()]);
+            $result = [];
+        }
+        $series = array_slice((array) ($result['seriess'] ?? []), 0, 20);
+
+        return $this->response->setJSON(array_map(static fn ($s) => [
+            'id'    => (string) ($s['id'] ?? ''),
+            'title' => (string) ($s['title'] ?? ''),
+        ], $series));
+    }
+
+    /** POST Investments/likeEconomicData: toggles a saved ("liked") FRED series for the user. */
+    public function likeEconomicData()
+    {
+        $userId = (int) ($this->cuID ?? 0);
+        $series = strtoupper(trim((string) ($this->request->getPost('id') ?? '')));
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'error' => 'Please sign in.']);
+        }
+        if (! preg_match('/^[A-Z0-9_]{1,40}$/', $series)) {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'error' => 'Invalid series id.']);
+        }
+        $prefs = new \App\Services\Forms\UserPreferenceService();
+        $data = $prefs->get($userId, 'investments.economic_likes');
+        $list = array_values(array_filter((array) ($data['series'] ?? []), 'is_string'));
+        $liked = ! in_array($series, $list, true);
+        $list = $liked ? array_slice(array_merge([$series], $list), 0, 100) : array_values(array_diff($list, [$series]));
+        $ok = $prefs->put($userId, 'investments.economic_likes', ['series' => $list]);
+
+        return $this->response->setStatusCode($ok ? 200 : 503)->setJSON($ok
+            ? ['status' => 'success', 'liked' => $liked]
+            : ['status' => 'error', 'error' => 'Could not save yet.']);
+    }
+
+    // GT-FORM-ROUTES-001: Investment Strategies CRUD
+    public function getStrategies()
+    {
+        $userId = (int) ($this->cuID ?? 0);
+        $strategies = $this->investmentModel->getStrategiesByUser($userId);
+        return $this->response->setJSON($strategies);
+    }
+
+    public function getStrategy(int $id)
+    {
+        $strategy = $this->getMyMIInvestments()->getStrategyById($id);
+        if (! $strategy) {
+            return $this->response->setStatusCode(404)->setJSON(['status' => 'error', 'message' => 'Strategy not found']);
+        }
+        return $this->response->setJSON($strategy);
+    }
+
+    public function createStrategy()
+    {
+        $userId = (int) ($this->cuID ?? 0);
+        $data = [
+            'user_id'     => $userId,
+            'name'        => (string) ($this->request->getPost('name') ?? ''),
+            'description' => (string) ($this->request->getPost('description') ?? ''),
+            'created_at'  => date('Y-m-d H:i:s'),
+        ];
+        $id = $this->investmentModel->createStrategy($data);
+        return $this->response->setJSON(['status' => 'success', 'id' => $id]);
+    }
+
+    public function updateStrategy(int $id)
+    {
+        $input = $this->request->getRawInput() ?? [];
+        $data = array_filter([
+            'name'        => (string) ($input['name'] ?? $this->request->getPost('name') ?? ''),
+            'description' => (string) ($input['description'] ?? $this->request->getPost('description') ?? ''),
+        ]);
+        $this->investmentModel->updateStrategy($id, $data);
+        return $this->response->setJSON(['status' => 'success']);
+    }
+
+    public function deleteStrategy(int $id)
+    {
+        $this->investmentModel->deleteStrategy($id);
+        return $this->response->setJSON(['status' => 'success']);
+    }
+
+    // GT-FORM-ROUTES-001: Investment Financial Goals CRUD
+    public function getGoals()
+    {
+        $userId = (int) ($this->cuID ?? 0);
+        $goals = $this->investmentModel->getGoalsByUser($userId);
+        return $this->response->setJSON($goals);
+    }
+
+    public function getGoal(int $id)
+    {
+        $goal = $this->getMyMIInvestments()->getGoalById($id);
+        if (! $goal) {
+            return $this->response->setStatusCode(404)->setJSON(['status' => 'error', 'message' => 'Goal not found']);
+        }
+        return $this->response->setJSON($goal);
+    }
+
+    public function createGoal()
+    {
+        $userId = (int) ($this->cuID ?? 0);
+        $data = [
+            'user_id'       => $userId,
+            'name'          => (string) ($this->request->getPost('name') ?? ''),
+            'target_amount' => (float) ($this->request->getPost('target_amount') ?? 0),
+            'description'   => (string) ($this->request->getPost('description') ?? ''),
+            'created_at'    => date('Y-m-d H:i:s'),
+        ];
+        $id = $this->investmentModel->createGoal($data);
+        return $this->response->setJSON(['status' => 'success', 'id' => $id]);
+    }
+
+    public function updateGoal(int $id)
+    {
+        $input = $this->request->getRawInput() ?? [];
+        $data = array_filter([
+            'name'          => (string) ($input['name'] ?? $this->request->getPost('name') ?? ''),
+            'target_amount' => (float) ($input['target_amount'] ?? $this->request->getPost('target_amount') ?? 0),
+            'description'   => (string) ($input['description'] ?? $this->request->getPost('description') ?? ''),
+        ]);
+        $this->investmentModel->updateGoal($id, $data);
+        return $this->response->setJSON(['status' => 'success']);
+    }
+
+    public function deleteGoal(int $id)
+    {
+        $this->investmentModel->deleteGoal($id);
+        return $this->response->setJSON(['status' => 'success']);
+    }
+
+    // GT-FORM-ROUTES-001: Watchlist Add / Remove Form Handlers
+    public function addToWatchlist()
+    {
+        $symbol = trim((string) ($this->request->getPost('symbol') ?? ''));
+        if ($symbol === '') {
+            return redirect()->back()->with('error', 'Symbol is required');
+        }
+        $userId = (int) ($this->cuID ?? 0);
+        $this->investmentModel->addToWatchlist($userId, strtoupper($symbol));
+        if ($this->request->isAJAX()) {
+            return $this->response->setJSON(['status' => 'success', 'symbol' => strtoupper($symbol)]);
+        }
+        return redirect()->back()->with('success', 'Added to watchlist');
+    }
+
+    public function removeFromWatchlist()
+    {
+        $symbol = trim((string) ($this->request->getPost('symbol') ?? ''));
+        if ($symbol === '') {
+            return redirect()->back()->with('error', 'Symbol is required');
+        }
+        $userId = (int) ($this->cuID ?? 0);
+        $this->investmentModel->removeFromWatchlist($userId, strtoupper($symbol));
+        if ($this->request->isAJAX()) {
+            return $this->response->setJSON(['status' => 'success', 'symbol' => strtoupper($symbol)]);
+        }
+        return redirect()->back()->with('success', 'Removed from watchlist');
     }
 }
 ?>

@@ -30,7 +30,7 @@ POST API/Investments/reforecastTicker # admin; guardAdmin() (admin/superadmin gr
 POST API/Alerts/generateMarketingForAlert/([0-9]+) # management; signed-in user with role_id <= 2, 401/403 otherwise
 POST API/Chat/tool # signed-in user; auth check in controller, 401/403 otherwise
 POST API/Discord/completeOnboardingStep # Discord bot; X-Internal-Api-Token = DISCORD_INTERNAL_API_TOKEN (hash_equals); no session
-POST API/Discord/createLinkToken # signed-in user; 403 otherwise
+POST API/Discord/createLinkToken # service: DISCORD_LINK_API_KEY via X-API-Key, fails closed when unset
 POST API/Wallets/Create # signed-in user; auth check in controller, 401 otherwise
 POST API/Wallets/Link-Robinhood # signed-in user; auth check in controller, 401 otherwise
 POST API/Wallets/Link-Snaptrade # signed-in user; auth check in controller, 401 otherwise

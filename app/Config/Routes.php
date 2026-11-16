@@ -243,6 +243,8 @@ $routes->get('/Economic-Calendar/(:segment)', 'Home::economicCalendarContent/$1'
 $routes->get('/Getting-Started/(:segment)/(:segment)', 'Home::gettingStarted');
 $routes->get('/Getting-Started/(:segment)', 'Home::gettingStarted');
 $routes->get('/Getting-Started', 'Home::gettingStarted');
+$routes->post('Notes/save', '\\App\\Controllers\\NotesController::save', ['filter' => 'login']); // GT-FORM-ROUTES-001: Advisor "Save to Notes"
+$routes->post('Memberships/PurchaseCallback', '\\App\\Modules\\User\\Controllers\\WalletsController::membershipPurchaseCallback', ['filter' => ['login', 'feature:membership_purchases']]);
 $routes->get('/Memberships', 'Home::memberships');
 $routes->get('/Memberships/(:segment)', 'Home::memberships');
 
@@ -258,6 +260,9 @@ $routes->get('/Privacy-Policy', 'Home::privacyPolicy');
 $routes->get('/Legal/Privacy-Policy', 'Home::privacyPolicy');
 $routes->get('/Legal/Terms-And-Conditions', 'Home::terms');
 $routes->get('/Customer-Support', '\App\Modules\Support\Controllers\SupportController::index');
+// GT-FORM-ROUTES-001: public newsletter sign-up forms (landing page and blog posts).
+$routes->post('newsletter/subscribe', '\App\Controllers\NewsletterController::subscribe');
+$routes->post('Blog/Email/Subscription/Account-Manager', '\App\Controllers\NewsletterController::subscribe');
 $routes->get('/Investments/News', static fn() => redirect()->to(site_url('News'), 301));
 $routes->get('/Profile', '\App\Modules\User\Controllers\DashboardController::profile', ['filter' => 'login']);
 $routes->get('/Purchase/MyMIGold', static fn() => redirect()->to(site_url('Wallets/Purchase/MyMI-Gold'), 301));
@@ -580,6 +585,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
     $routes->post('Mdit/webhooks/onramp', '\\App\\Modules\\APIs\\Controllers\\MditWebhookAPIController::onramp');
     $routes->get('Chat/me', '\\App\\Modules\\APIs\\Controllers\\ChatAPIController::me');
     $routes->post('Chat/tool', '\\App\\Modules\\APIs\\Controllers\\ChatAPIController::tool');
+    $routes->get('Management/sharePost/(:num)/(:segment)', 'ManagementAPIController::sharePost/$1/$2', ['filter' => 'role:admin,team']);
 
     $routes->group('Management', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => 'cronKey'], function($routes) {
         $routes->match(['GET', 'POST'], 'Run-CRON-Tasks', 'ManagementAPIController::Run_CRON_Tasks');
@@ -742,6 +748,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->match(['GET', 'POST'], 'processTradeBatch', 'AlertsAPIController::processTradeBatch');
         $routes->match(['GET', 'POST'], 'sendAlert', 'AlertsAPIController::sendAlert');
         $routes->match(['GET', 'POST'], 'sendDiscordAlerts', 'AlertsAPIController::sendDiscordAlerts');
+        $routes->match(['GET', 'POST'], 'sendDiscordAlertsBySymbol', 'AlertsAPIController::sendDiscordAlertsBySymbol');
         $routes->match(['GET', 'POST'], 'sendDiscordAlertsBySymbol/(:segment)', 'AlertsAPIController::sendDiscordAlertsBySymbol/$1');
         $routes->match(['GET', 'POST'], 'storeMarketingContent', 'AlertsAPIController::storeMarketingContent');
         $routes->match(['GET', 'POST'], 'updateBatchPrices', 'AlertsAPIController::updateBatchPrices');
@@ -901,6 +908,10 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('getUserRepaymentSummary', '\App\Modules\APIs\Controllers\BudgetController::getUserRepaymentSummary');
     });
 
+    $routes->group('Email', function($routes) {
+        $routes->get('fetchTagAnalytics', 'EmailAPIController::fetchTagAnalytics');
+    });
+
     $routes->group('ContentEngine', function($routes) {
         $routes->post('ingestScanner', 'ContentEngineAPIController::ingestScanner', ['filter' => 'internalToken']);
         $routes->post('processIngest/(:num)', 'ContentEngineAPIController::processIngest/$1', ['filter' => 'internalToken']);
@@ -919,7 +930,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('click/(:segment)', 'DripCampaignAPIController::click/$1');
         $routes->get('Enroll/(:num)', 'DripCampaignAPIController::enrollUser/$1');
         $routes->get('open/(:segment)', 'DripCampaignAPIController::open/$1');
-        $routes->get('processBatch', 'DripCampaignAPIController::processBatch');
+        $routes->get('processBatch', 'DripCampaignAPIController::processBatch', ['filter' => 'apiAdmin']); // GT-FORM-ROUTES-001: sends mail; was unauthenticated
         $routes->get('TestCron', 'DripCampaignAPIController::testDripCron', ['filter' => 'cronKey']);
     });
 
@@ -941,7 +952,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('getCampaignStats/(:num)', 'EmailAPIController::getCampaignStats/$1');
         $routes->get('getEmailQueueStats', 'EmailAPIController::getEmailQueueStats');
         $routes->get('getEmailQueueTrend', 'EmailAPIController::getEmailQueueTrend');
-        $routes->get('processScheduledCampaigns', 'EmailAPIController::processScheduledCampaigns');
+        $routes->get('processScheduledCampaigns', 'EmailAPIController::processScheduledCampaigns', ['filter' => 'apiAdmin']); // GT-FORM-ROUTES-001: sends mail; was unauthenticated
         $routes->get('sendMassTestCampaign', 'EmailAPIController::sendMassTestCampaign');
         $routes->match(['GET', 'POST'], 'trackBounceWebhook', 'EmailAPIController::trackBounceWebhook');
         $routes->get('unsubscribe/(:any)', 'EmailAPIController::unsubscribe/$1');
@@ -1022,7 +1033,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('distributeHighScoreContent', 'MarketingAPIController::distributeHighScoreContent', ['filter' => 'apiToken']);
         $routes->get('emailPostForApproval/(:num)', 'MarketingAPIController::emailPostForApproval/$1');
         $routes->get('fetchBufferPaginated', 'MarketingAPIController::fetchBufferPaginated');
-        $routes->get('fetchFinalizedSummariesBlock', 'MarketingAPIController::fetchFinalizedSummariesBlock');
+        $routes->get('fetchFinalizedSummariesBlock', 'MarketingAPIController::fetchFinalizedSummariesBlock', ['filter' => 'apiAdmin']); // API-AUTH-001: admin page block
         $routes->get('fetchGeneratedSummaries', 'MarketingAPIController::fetchGeneratedSummaries', ['filter' => 'apiToken']);
         $routes->get('fetchGeneratedSummariesBlock', 'MarketingAPIController::fetchGeneratedSummariesBlock', ['filter' => 'apiToken']);
         $routes->get('fetchGeneratedSummariesJson', 'MarketingAPIController::fetchGeneratedSummariesJson', ['filter' => 'apiToken']);
@@ -1076,14 +1087,15 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('getTopGeneratedPosts', 'MarketingAPIController::getTopGeneratedPosts', ['filter' => 'apiToken']);
         $routes->get('getTopKeywordChart/(:num)', 'MarketingAPIController::getTopKeywordChart/$1');
         $routes->get('groupSimilarSummariesByCosine', 'MarketingAPIController::groupSimilarSummariesByCosine');
-        $routes->get('massResendActivationEmails', 'MarketingAPIController::massResendActivationEmails');
+        $routes->get('massResendActivationEmails', 'MarketingAPIController::massResendActivationEmails', ['filter' => 'apiAdmin']); // GT-FORM-ROUTES-001: sends mail; was unauthenticated
+        $routes->post('massResendActivationEmails', 'MarketingAPIController::massResendActivationEmails', ['filter' => 'apiAdmin']); // GT-FORM-ROUTES-001: control panel button posts here
         $routes->get('monitorKeywords', 'MarketingAPIController::monitorKeywordsAndScrape', ['filter' => 'apiToken']);
         $routes->get('previewBufferItem/(:num)', 'MarketingAPIController::previewBufferItem/$1');
         $routes->get('previewPendingSummaries', 'MarketingAPIController::previewPendingSummaries');
         $routes->get('processMarketingTempEmails/(:num)/(:segment)/(:num)', 'MarketingAPIController::processMarketingTempEmails/$1/$2/$3', ['filter' => 'apiToken']);
         $routes->get('processMarketingTempEmails/(:num)/(:segment)', 'MarketingAPIController::processMarketingTempEmails/$1/$2', ['filter' => 'apiToken']);
         $routes->get('publishGroupedContentDraft', 'MarketingAPIController::publishGroupedContentDraft', ['filter' => 'apiToken']);
-        $routes->get('rankBufferPostsDaily', 'MarketingAPIController::rankBufferPostsDaily');
+        $routes->get('rankBufferPostsDaily', 'MarketingAPIController::rankBufferPostsDaily', ['filter' => 'apiAdmin']); // API-AUTH-001
         $routes->match(['GET', 'POST'], 'runNewsScrape', 'MarketingAPIController::runNewsScrape', ['filter' => 'apiToken']);
         $routes->match(['GET', 'POST'], 'runNewsGenerate', 'MarketingAPIController::runNewsGenerate', ['filter' => 'apiToken']);
         $routes->match(['GET', 'POST'], 'runNewsPipeline', 'MarketingAPIController::runNewsPipeline', ['filter' => 'apiToken']);
@@ -1094,7 +1106,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('runKeywordEnrichment', 'MarketingAPIController::runKeywordEnrichment', ['filter' => 'apiToken']);
         $routes->get('runScheduledTasks', 'MarketingAPIController::runScheduledTasks', ['filter' => 'apiToken']);
         $routes->get('Search/(:segment)/(:any)', 'ManagementController::index/$1/$2');
-        $routes->get('sendWalkthroughEmails', 'MarketingAPIController::sendWalkthroughEmails');
+        $routes->get('sendWalkthroughEmails', 'MarketingAPIController::sendWalkthroughEmails', ['filter' => 'apiAdmin']); // GT-FORM-ROUTES-001: sends mail; was unauthenticated
         $routes->get('scheduleApprovedPost/(:num)', 'MarketingAPIController::scheduleApprovedPost/$1');
         $routes->get('schedulePost/(:any)/(:any)/(:any)', 'MarketingAPIController::schedulePost/$1/$2/$3');
         $routes->get('sharePost/(:num)/(:segment)', 'MarketingAPIController::sharePost/$1/$2');
@@ -1109,7 +1121,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('Timeline/(:segment)', 'MarketingAPIController::timeline/$1');
         $routes->get('Timeline', 'MarketingAPIController::viewTimelineGrouped');
         $routes->get('triggerBackfill', 'MarketingAPIController::reprocessIncompleteEmails', ['filter' => 'internalToken']);
-        $routes->get('triggerPostAutogenOnEmpty', 'MarketingAPIController::triggerPostAutogenOnEmpty');
+        $routes->get('triggerPostAutogenOnEmpty', 'MarketingAPIController::triggerPostAutogenOnEmpty', ['filter' => 'apiAdmin']); // API-AUTH-001
         $routes->post('updateCampaignLinks', 'MarketingAPIController::updateCampaignLinks', ['filter' => 'apiToken']);
         $routes->post('updateInsight', 'MarketingAPIController::updateInsight', ['filter' => 'apiToken']);
         $routes->post('updateCampaignMessageField', 'MarketingAPIController::updateCampaignMessageField', ['filter' => 'apiToken']);
@@ -1170,8 +1182,8 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('scheduleNewsletters', 'MarketingAPIController::scheduleNewsletterCampaign', ['filter' => 'apiToken']);
         $routes->get('submitDailyLog', 'MarketingAPIController::submitDailyLog', ['filter' => 'apiToken']);
         $routes->post('Scrape-Link', 'MarketingAPIController::scrapeLink', ['filter' => 'apiToken']);
-        $routes->get('sendNotification', 'MarketingAPIController::sendNotification');
-        $routes->get('sendNewsletter', 'MarketingAPIController::sendScheduleNewsletter');
+        $routes->get('sendNotification', 'MarketingAPIController::sendNotification', ['filter' => 'apiAdmin']); // GT-FORM-ROUTES-001: sends mail; was unauthenticated
+        $routes->get('sendNewsletter', 'MarketingAPIController::sendScheduleNewsletter', ['filter' => 'apiAdmin']); // GT-FORM-ROUTES-001: sends mail; was unauthenticated
         $routes->get('Communities', 'MarketingAPIController::communities');
         $routes->get('Test', 'MarketingAPIController::test');
         $routes->get('Twitter', 'MarketingAPIController::twitterDashboard');
@@ -1210,18 +1222,21 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
     // Predictions (API + CRON)
     $routes->group('Predictions', function($routes) {
         $routes->get('/', 'PredictionsAPIController::index');
-        $routes->get('Liquidity/Add', 'PredictionsAPIController::addLiquidity');
-        $routes->get('Liquidity/Remove', 'PredictionsAPIController::removeLiquidity');
+        // GT-FORM-ROUTES-001: state-changing prediction routes had no auth at all and
+        // several were GET. Orders now need a signed-in user and the predictions
+        // switch (FEATURE_PREDICTIONS, already off by default); market admin needs admin.
+        $routes->get('Liquidity/Add', 'PredictionsAPIController::addLiquidity', ['filter' => ['apiAdmin', 'feature:predictions']]);
+        $routes->get('Liquidity/Remove', 'PredictionsAPIController::removeLiquidity', ['filter' => ['apiAdmin', 'feature:predictions']]);
         $routes->get('Markets', 'PredictionsAPIController::markets');
         $routes->get('Market/(:num)', 'PredictionsAPIController::view/$1');
-        $routes->get('Markets/Create', 'PredictionsAPIController::createMarket');
-        $routes->get('Markets/Settle/(:num)', 'PredictionsAPIController::settle/$1');
-        $routes->get('Orders/Place', 'PredictionsAPIController::placeOrder');
-        $routes->get('Orders/Cancel', 'PredictionsAPIController::cancelOrder');
-        $routes->get('Portfolio', 'PredictionsAPIController::portfolio');
-        $routes->get('Settlements', 'PredictionsAPIController::settlements');
-        $routes->post('PlaceOrder', 'PredictionsAPIController::placeOrder');
-        $routes->post('CancelOrder', 'PredictionsAPIController::cancelOrder');
+        $routes->get('Markets/Create', 'PredictionsAPIController::createMarket', ['filter' => ['apiAdmin', 'feature:predictions']]);
+        $routes->get('Markets/Settle/(:num)', 'PredictionsAPIController::settle/$1', ['filter' => ['apiAdmin', 'feature:predictions']]);
+        $routes->get('Orders/Place', 'PredictionsAPIController::placeOrder', ['filter' => ['login', 'feature:predictions']]);
+        $routes->get('Orders/Cancel', 'PredictionsAPIController::cancelOrder', ['filter' => ['login', 'feature:predictions']]);
+        $routes->get('Portfolio', 'PredictionsAPIController::portfolio', ['filter' => 'login']);
+        $routes->get('Settlements', 'PredictionsAPIController::settlements', ['filter' => 'login']);
+        $routes->post('PlaceOrder', 'PredictionsAPIController::placeOrder', ['filter' => ['login', 'feature:predictions']]);
+        $routes->post('CancelOrder', 'PredictionsAPIController::cancelOrder', ['filter' => ['login', 'feature:predictions']]);
         $routes->get('Cron/Distribute-Fees', 'PredictionsAPIController::cronDistributeFees', ['filter' => 'cronKey']);
         $routes->get('Cron/Fetch-Market-Data', 'PredictionsAPIController::cronFetchMarketData', ['filter' => 'cronKey']);
         $routes->get('Cron/Fetch-User-Data', 'PredictionsAPIController::cronFetchUserData', ['filter' => 'cronKey']);
@@ -1263,20 +1278,20 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->get('getExchangePrice/(:segment)', 'SolanaAPIController::getExchangePrice/$1');
         $routes->get('getAssetsData', 'SolanaAPIController::getAssetsData');
         $routes->get('provisionDefaultWallet', 'SolanaAPIController::provisionDefaultWallet');
-        $routes->get('updatePrices', 'SolanaAPIController::updateSolanaPrices');
-        $routes->get('updateTokens', 'SolanaAPIController::updateSolanaTokens');
+        $routes->get('updatePrices', 'SolanaAPIController::updateSolanaPrices', ['filter' => 'apiAdmin']); // API-AUTH-001: price job trigger
+        $routes->get('updateTokens', 'SolanaAPIController::updateSolanaTokens', ['filter' => 'apiAdmin']); // API-AUTH-001: token job trigger
 
         // New Routes - Codex Pull Request https://github.com/MillennialInvestments/MyMIWallet/pull/35/files#diff-bfda09f2b1b5c0bbb67e81be1c5a9e3f3c0abcff17f9890caa17e3557bb25653R1-R4
         $routes->get('health', 'SolanaAPIController::health');
         $routes->get('wallet/(:segment)/balance', 'SolanaAPIController::getBalance/$1');
         $routes->get('wallet/(:segment)/tokens', 'SolanaAPIController::getTokenAccounts/$1');
-        $routes->post('transfer', 'SolanaAPIController::transfer', ['filter' => 'csrf']);
-        $routes->post('swap/quote', 'SolanaAPIController::quote', ['filter' => 'csrf']);
-        $routes->post('transaction/preview', 'SolanaAPIController::preview', ['filter' => 'csrf']);
-        $routes->post('swap/preview', 'SolanaAPIController::preview', ['filter' => 'csrf']);
-        $routes->post('swap/execute', 'SolanaAPIController::swap', ['filter' => 'csrf']);
-        $routes->post('token/create', 'SolanaAPIController::createToken', ['filter' => 'csrf']);
-        $routes->post('token/mint', 'SolanaAPIController::mint', ['filter' => 'csrf']);
+        $routes->post('transfer', 'SolanaAPIController::transfer', ['filter' => ['csrf', 'apiUser', 'feature:solana_trading']]); // API-AUTH-001
+        $routes->post('swap/quote', 'SolanaAPIController::quote', ['filter' => ['csrf', 'apiUser']]); // API-AUTH-001
+        $routes->post('transaction/preview', 'SolanaAPIController::preview', ['filter' => ['csrf', 'apiUser']]); // API-AUTH-001
+        $routes->post('swap/preview', 'SolanaAPIController::preview', ['filter' => ['csrf', 'apiUser']]); // API-AUTH-001
+        $routes->post('swap/execute', 'SolanaAPIController::swap', ['filter' => ['csrf', 'apiUser', 'feature:solana_trading']]); // API-AUTH-001
+        $routes->post('token/create', 'SolanaAPIController::createToken', ['filter' => ['csrf', 'apiUser', 'feature:solana_trading']]); // API-AUTH-001
+        $routes->post('token/mint', 'SolanaAPIController::mint', ['filter' => ['csrf', 'apiUser', 'feature:solana_trading']]); // API-AUTH-001
     });
 
     $routes->group('Support', function($routes) {
@@ -1347,6 +1362,7 @@ $routes->group('Blog', ['namespace' => '\App\Modules\Blog\Controllers'],  functi
     $routes->group('Earnings', function($routes) {
         $routes->get('/', 'EarningsController::index');
         $routes->get('Test', 'EarningsController::test');
+        $routes->post('update', 'EarningsController::update', ['filter' => 'role:admin,team']); // edits the shared earnings calendar
         $routes->get('(:segment)', 'EarningsController::viewByDate'); // Catch any dynamic date
     });
     $routes->group('Investing', function($routes) {
@@ -1373,6 +1389,7 @@ $routes->group('Blog', ['namespace' => '\App\Modules\Blog\Controllers'],  functi
     $routes->get('(:segment)/(:segment)', 'BlogController::view/$1/$2');
     $routes->get('(:segment)', 'BlogController::view/$1');
 });
+$routes->post('earnings/update', '\App\Modules\Blog\Controllers\EarningsController::update', ['filter' => 'role:admin,team']); // edits the shared earnings calendar
 $routes->get('index.php/Blog', static fn() => redirect()->to(site_url('Blog'), 301));
 $routes->get('index.php/Blog/(:segment)', static fn($slug) => redirect()->to(site_url('Blog/' . $slug), 301));
 $routes->get('index.php/Blog/(:segment)/(:segment)', static fn($a, $b) => redirect()->to(site_url('Blog/' . $a . '/' . $b), 301));
@@ -1411,8 +1428,12 @@ $routes->group('Dashboard', ['namespace' => '\App\Modules\User\Controllers', 'fi
     $routes->post('onboarding/source-welcome/complete', 'OnboardingWalkthroughController::completeSourceWelcome', ['as' => 'onboarding-complete-source-welcome']);
     $routes->post('account-completion/dismiss', 'OnboardingWalkthroughController::dismissAccountCompletion', ['as' => 'account-completion-dismiss']);
 });
+$routes->post('dashboard/completeOnboardingStep/(:segment)', '\App\Modules\User\Controllers\DashboardController::completeOnboardingStep/$1', ['filter' => ['login', 'noStore']]);
+
 
 $routes->group('Management', ['namespace' => '\App\Modules\Management\Controllers', 'filter' => 'role:admin,team'], function($routes) {
+    // GT-FORM-ROUTES-001: "Run CRON Now" on the admin dashboard (the API route needs the cron token).
+    $routes->post('runCronManually', '\\App\\Modules\\APIs\\Controllers\\ManagementAPIController::runCronManuallyAsAdmin', ['filter' => 'permission:admin.access']);
     $routes->get('/', 'ManagementAdminController::index');
     $routes->get('banUnverifiedUsers', 'ManagementAdminController::banUnverifiedUsers');
     $routes->get('processQueuedEmails', 'ManagementAdminController::processQueuedEmails');
@@ -1442,7 +1463,10 @@ $routes->group('Management', ['namespace' => '\App\Modules\Management\Controller
     $routes->group('Alerts', function($routes) {
         $routes->get('/', 'AlertsAdminController::index');
         $routes->get('Add/(:segment)', 'AlertsAdminController::add');
-        $routes->get('addTradeAlert', 'AlertsAdminController::addTradeAlert');
+        $routes->post('addTradeAlert', 'AlertsAdminController::addTradeAlert');
+        $routes->post('Advisor/generateNow', '\\App\\Modules\\Advisor\\Controllers\\AdvisorController::generateNow');
+        $routes->post('getFullMetrics', '\\App\\Modules\\APIs\\Controllers\\AlertsAPIController::getFullMetrics');
+        $routes->get('previewSignalFile/(:num)', '\\App\\Modules\\APIs\\Controllers\\AlertsAPIController::previewSignalFile/$1');
         $routes->get('Advisor/Media', 'AlertsAdminController::advisorMedia');
         $routes->post('Generate-Advisor-Package', 'AlertsAdminController::generateAdvisorPackage', ['filter' => 'auth']);
         $routes->get('Crypto/(:segment)/(:segment)', '\\App\\Modules\\Management\\Controllers\\AlertsAdminController::stockOverview/$1/$2');
@@ -1453,12 +1477,29 @@ $routes->group('Management', ['namespace' => '\App\Modules\Management\Controller
         $routes->get('Stock/(:segment)/(:segment)', '\\App\\Modules\\Management\\Controllers\\AlertsAdminController::stockOverview/$1/$2');
         $routes->get('Tasks/fetchAlerts', '\\App\\Modules\\Management\\Controllers\\AlertsAdminController::fetchData');
         $routes->get('Submit/TradingView', 'AlertsAdminController::submitTradingView');
+        $routes->post('Submit/TradingView', 'AlertsAdminController::submitTradingView');
+        $routes->post('submitTradingView', 'AlertsAdminController::submitTradingView');
         $routes->get('Test', 'AlertsAdminController::test');
         $routes->get('Test-Alert-Email', 'AlertsAdminController::testEmail');
         $routes->get('Test-Email', 'AlertsAdminController::sendTestEmail');
         $routes->get('Trades', 'AlertsAdminController::trades');
-        $routes->get('Top-Performance/Weekly', 'AlertsAdminController::topPerformanceWeekly');
-        $routes->get('weeklyTopPerformance', 'AlertsAdminController::topPerformanceWeekly');
+        $routes->get('Top-Performance/Weekly', 'AlertsAdminController::weeklyTopPerformance');
+        $routes->get('weeklyTopPerformance', 'AlertsAdminController::weeklyTopPerformance');
+    });
+    // GT-FORM-ROUTES-001: admin pages whose views existed but were never routed.
+    $routes->group('AuthHealth', ['filter' => 'permission:admin.access'], function($routes) {
+        $routes->get('/', 'AuthHealthAdminController::index');
+        $routes->get('details/(:num)', 'AuthHealthAdminController::details/$1');
+        $routes->post('runAuthSmoke', '\\App\\Modules\\APIs\\Controllers\\ManagementAPIController::runAuthSmoke');
+    });
+    $routes->group('EmailOutbox', ['filter' => 'permission:admin.access'], function($routes) {
+        $routes->get('/', 'EmailOutboxAdminController::index');
+        $routes->post('send-test', 'EmailOutboxAdminController::sendTest');
+    });
+    $routes->group('Chat', ['filter' => 'permission:admin.access'], function($routes) {
+        $routes->get('Usage', 'ChatUsageAdminController::index');
+        $routes->post('Settings', 'ChatUsageAdminController::saveSettings');
+        $routes->post('ResetUser', 'ChatUsageAdminController::resetUser');
     });
     $routes->group('Assets', function($routes) {
         $routes->get('/', 'AssetsAdminController::index');
@@ -1488,6 +1529,7 @@ $routes->group('Management', ['namespace' => '\App\Modules\Management\Controller
         $routes->match(['GET', 'POST'], 'Create', 'DripCampaignAdminController::create');
         $routes->get('(:num)/Steps', 'DripCampaignAdminController::viewSteps/$1');
         $routes->match(['GET', 'POST'], '(:num)/Steps/Add', 'DripCampaignAdminController::addStep/$1');
+        $routes->post('previewTemplate', 'DripCampaignAdminController::previewTemplate');
     });
     $routes->group('Email', function($routes) {
         $routes->get('/', 'EmailAdminController::index');
@@ -1572,12 +1614,37 @@ $routes->group('Management', ['namespace' => '\App\Modules\Management\Controller
         $routes->get('Schedule', 'MarketingAdminController::schedule');
         $routes->get('Schedule/(:segment)', 'MarketingAdminController::schedule/$1');
         $routes->get('scheduleNewsletters', 'MarketingAdminController::scheduleNewsletterCampaign');
-        $routes->get('submitDailyLog', 'MarketingAdminController::submitDailyLog');
+        $routes->match(['GET', 'POST'], 'submitDailyLog', 'MarketingAdminController::submitDailyLog');
         $routes->post('Scrape-Link', 'MarketingAdminController::scrapeLink'); // Ensure this is a POST route
-        $routes->get('sendNotification', 'MarketingAdminController::sendNotification');
+        $routes->match(['GET', 'POST'], 'sendNotification', 'MarketingAdminController::sendNotification');
         $routes->get('sendNewsletter', '\\App\\Modules\\Management\\Controllers\\MarketingAdminController::sendScheduledNewsletter');
         $routes->get('Test', 'MarketingAdminController::test');
-        $routes->get('Twitter', 'MarketingAdminController::twitterDashboard');
+        $routes->match(['GET', 'POST'], 'Twitter', 'MarketingAdminController::twitterDashboard');
+        $routes->post('GenerateContentFromTweet', 'MarketingAdminController::generateContentFromTweet');
+        $routes->post('submitLargeContent', 'MarketingAdminController::submitLargeContent');
+        $routes->post('submitManualContent', 'MarketingAdminController::submitManualContent');
+        $routes->post('addContent', 'MarketingAdminController::addContent');
+        // GT-FORM-ROUTES-001: admin pages call these API methods from the browser. The API/*
+        // routes need a service token, so give the session (role:admin,team + CSRF) its own path.
+        $routes->get('generateKimiSummaries', '\\App\\Modules\\APIs\\Controllers\\MarketingAPIController::generateKimiSummaries');
+        $routes->get('generateKimiPosts', '\\App\\Modules\\APIs\\Controllers\\MarketingAPIController::generateKimiPosts');
+        $routes->post('generatePostMediaContent', '\\App\\Modules\\APIs\\Controllers\\MarketingAPIController::generatePostMediaContent');
+        $routes->post('savePostMedia', '\\App\\Modules\\APIs\\Controllers\\MarketingAPIController::savePostMedia');
+        $routes->post('updateInsight', '\\App\\Modules\\APIs\\Controllers\\MarketingAPIController::updateInsight');
+        $routes->post('generateLivePreview', '\\App\\Modules\\APIs\\Controllers\\MarketingAPIController::generateLivePreview');
+        $routes->get('runKeywordBackfillBatch', '\\App\\Modules\\APIs\\Controllers\\MarketingAPIController::runKeywordBackfillBatch');
+        $routes->post('getPostingPlan', '\\App\\Modules\\APIs\\Controllers\\MarketingAPIController::getPostingPlan');
+        $routes->post('composePost', '\\App\\Modules\\APIs\\Controllers\\MarketingAPIController::composePost');
+        $routes->post('updateCampaignLinks', '\\App\\Modules\\APIs\\Controllers\\MarketingAPIController::updateCampaignLinks');
+        $routes->post('updateCampaignMessageField', '\\App\\Modules\\APIs\\Controllers\\MarketingAPIController::updateCampaignMessageField');
+        $routes->get('fetchGeneratedSummariesBlock', '\\App\\Modules\\APIs\\Controllers\\MarketingAPIController::fetchGeneratedSummariesBlock');
+        $routes->get('fetchGeneratedSummariesJson', '\\App\\Modules\\APIs\\Controllers\\MarketingAPIController::fetchGeneratedSummariesJson');
+        $routes->get('generatePostsFromSummary/(:num)', '\\App\\Modules\\APIs\\Controllers\\MarketingAPIController::generatePostsFromSummary/$1');
+        $routes->get('generateThreadFromSummary/(:num)', '\\App\\Modules\\APIs\\Controllers\\MarketingAPIController::generateThreadFromSummary/$1');
+        $routes->get('generateContentFromScraper', '\\App\\Modules\\APIs\\Controllers\\MarketingAPIController::generateContentFromScraper');
+        $routes->get('reprocessIncompleteEmails', '\\App\\Modules\\APIs\\Controllers\\MarketingAPIController::reprocessIncompleteEmails');
+        // generateDailyContentDigest (above) is the admin HTML/JSON variant; the control panel wants the API's status JSON.
+        $routes->get('runDailyContentDigest', '\\App\\Modules\\APIs\\Controllers\\MarketingAPIController::generateDailyContentDigest');
         $routes->get('Video-Creator', 'MarketingAdminController::videoCreator');
         $routes->get('View-Email/(:segment)/(:segment)', 'MarketingAdminController::viewEmail/$1/$2');
         $routes->get('View-Grouped-Summaries', '\\App\\Modules\\Management\\Controllers\\MarketingAdminController::viewGroupedSummaries');
@@ -1600,6 +1667,7 @@ $routes->group('Management', ['namespace' => '\App\Modules\Management\Controller
         $routes->match(['GET', 'POST'], 'Edit/(:segment)', '\\App\\Modules\\Management\\Controllers\\MarketingAdminController::edit/$1');
         $routes->get('Top-Communities', '\\App\\Modules\\Management\\Controllers\\MarketingAdminController::topCommunities');
         $routes->get('Top-Communities/(:segment)', '\\App\\Modules\\Management\\Controllers\\MarketingAdminController::topCommunities/$1');
+        $routes->get('Top-Communities-Refresh/(:segment)', '\\App\\Modules\\Management\\Controllers\\MarketingAdminController::topCommunitiesRefresh/$1');
     });
     $routes->group('Operations', function($routes) {
         $routes->get('/', '\\App\\Modules\\Management\\Controllers\\OperationsAdminController::index');
@@ -1612,6 +1680,7 @@ $routes->group('Management', ['namespace' => '\App\Modules\Management\Controller
     });
     $routes->group('Projects', function($routes) {
         $routes->get('/', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::index');
+        $routes->match(['GET', 'POST'], 'Add', 'ProjectsAdminController::add');
         $routes->post('Approve/(:segment)', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::approveProject/$1');
         $routes->post('Edit/(:segment)', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::approveProject/$1');
         $routes->post('Reject/(:segment)', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::rejectProject/$1');
@@ -1643,13 +1712,15 @@ $routes->group('Management', ['namespace' => '\App\Modules\Management\Controller
         $routes->get('/', '\\App\\Modules\\Management\\Controllers\\UsersAdminController::index');
         $routes->get('Profile/(:segment)', '\\App\\Modules\\Management\\Controllers\\UsersAdminController::profile');
         $routes->match(['GET', 'POST'], 'ajaxBlockUser/(:segment)', '\\App\\Modules\\Management\\Controllers\\UsersAdminController::ajaxBlockUser');
+        $routes->post('ajaxBlockUser', '\\App\\Modules\\Management\\Controllers\\UsersAdminController::ajaxBlockUser');
+        $routes->get('checkForSpamUsers', '\\App\\Modules\\APIs\\Controllers\\ManagementAPIController::checkForSpamUsers');
         $routes->match(['GET', 'POST'], 'ajaxBulkBanUsers', '\\App\\Modules\\Management\\Controllers\\UsersAdminController::ajaxBulkBanUsers');
     });
     $routes->group('Wallets', function($routes) {
         $routes->get('/', '\\App\\Modules\\Management\\Controllers\\WalletsAdminController::index');
         $routes->get('Reconcile', '\\App\\Modules\\Management\\Controllers\\WalletsAdminController::reconcile');
         $routes->post('EmailUserAboutIssue/(:num)/(:num)', '\\App\\Modules\\Management\\Controllers\\WalletsAdminController::emailUserAboutIssue/$1/$2');
-
+        $routes->post('NotifyUser', '\\App\\Modules\\Management\\Controllers\\WalletsAdminController::notifyUser');
     });
     $routes->group('Web-Design', function($routes) {
         $routes->get('/', '\\App\\Modules\\Management\\Controllers\\WebDesignAdminController::index');
@@ -1669,8 +1740,15 @@ $routes->group('Ops', ['namespace' => '\App\Modules\Ops\Controllers'], function(
     $routes->get('export/workbook.xlsx', 'OpsDashboardController::exportWorkbookXlsx');
 
 });
-$routes->group('Search', ['namespace' => '\App\Modules\APIs\Controllers'], function($routes) {
-    $routes->get('/', 'SearchController::index');
+// GT-FORM-ROUTES-001: the old "Search" group pointed at a class that does not exist
+// (/Search is served by the User SearchController above). Site-wide search page + JSON API:
+$routes->get('Search/All', '\\App\\Modules\\Search\\Controllers\\SearchController::view', ['filter' => 'login']);
+$routes->get('API/Search', '\\App\\Modules\\Search\\Controllers\\SearchController::api', ['filter' => 'login']);
+// Internal markdown docs (ROOTPATH/docs): admins only.
+$routes->group('Docs', ['namespace' => '\App\Modules\Docs\Controllers', 'filter' => 'permission:admin.access'], static function ($routes) {
+    $routes->get('/', 'DocsController::index');
+    $routes->get('Search', 'DocsController::search');
+    $routes->get('View/(:any)', 'DocsController::view/$1');
 });
 
 // Advisor
@@ -1690,11 +1768,14 @@ $routes->group('Alerts', ['namespace' => '\App\Modules\User\Controllers', 'filte
 });
 
 // Auctions:
-$routes->group('Auctions', static function($routes) {
+// GT-FORM-ROUTES-001: the group had no namespace, so every route pointed at a
+// controller that does not exist (App\Controllers\AuctionsController). Bids and
+// new lots move MyMI Gold, so they sit behind the auctions switch (off by default).
+$routes->group('Auctions', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 'login'], static function($routes) {
     $routes->get('/', 'AuctionsController::index');
     $routes->get('Item/(:num)', 'AuctionsController::item/$1');
-    $routes->post('Create', 'AuctionsController::create');
-    $routes->post('Bid/(:num)', 'AuctionsController::bid/$1');
+    $routes->post('Create', 'AuctionsController::create', ['filter' => ['login', 'feature:auctions']]);
+    $routes->post('Bid/(:num)', 'AuctionsController::bid/$1', ['filter' => ['login', 'feature:auctions']]);
     $routes->get('Poll/(:num)', 'AuctionsController::poll/$1');
 });
 
@@ -1740,6 +1821,7 @@ $routes->group('Budget', ['namespace' => '\App\Modules\User\Controllers', 'filte
     $routes->match(['GET', 'POST'], 'Recurring-Account/Schedule/(:segment)', 'BudgetController::recurringSchedule/$1');
     $routes->match(['GET', 'POST'], 'Recurring-Account/Edit/(:segment)', 'BudgetController::edit/$1');
     $routes->match(['GET', 'POST'], 'Settings/(:segment)', 'BudgetController::settings/$1');
+    $routes->post('Settings/Save/(:segment)', 'BudgetController::saveSettings/$1');
     $routes->match(['GET', 'POST'], 'Status/Paid/(:segment)', 'BudgetController::paid/$1');
     $routes->match(['GET', 'POST'], 'Status/Unpaid/(:segment)', 'BudgetController::unpaid/$1');
     // Add other necessary route definitions here
@@ -1809,6 +1891,13 @@ $routes->group('Exchange', ['namespace' => '\App\Modules\Exchange\Controllers', 
         $routes->post('Wallet/Connect', 'SolanaController::connectWallet', ['as' => 'mymi-solana-connect-wallet', 'filter' => 'csrf']);
         $routes->post('Wallet/Disconnect', 'SolanaController::disconnectWallet', ['as' => 'mymi-solana-disconnect-wallet', 'filter' => 'csrf']);
         $routes->post('Wallet/Refresh', 'SolanaController::refreshWallet', ['as' => 'mymi-solana-refresh-wallet', 'filter' => 'csrf']);
+        // GT-FORM-ROUTES-001: Solana screens. Trading actions sit behind the solana_trading switch (off by default)
+        // on top of the controller's own network/transaction guard.
+        $routes->post('Edit-Wallet', 'SolanaController::editWallet');
+        $routes->post('Swap', 'SolanaController::executeSwap', ['filter' => ['login', 'feature:solana_trading']]);
+        $routes->post('Create-Token', 'SolanaController::createToken', ['filter' => ['login', 'feature:solana_trading']]);
+        $routes->post('Purchase', 'SolanaController::purchaseSolana', ['filter' => ['login', 'feature:solana_trading']]);
+        $routes->post('Sell', 'SolanaController::sellSolana', ['filter' => ['login', 'feature:solana_trading']]);
     });
     $routes->group('Wallet', function($routes) {
         // Wallet Integration Links Here:
@@ -1846,6 +1935,11 @@ $routes->group('', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 
 $routes->group('Investments', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
     $routes->match(['GET', 'POST'], '/', 'InvestmentsController::index');
     $routes->get('forecastModal/(:segment)', 'InvestmentsController::forecastModal/$1');
+    $routes->get('API/getSymbolsByTradeType/(:segment)', 'InvestmentsController::getSymbolsByTradeType/$1');
+    $routes->post('saveRetirementPlan', 'InvestmentsController::saveRetirementPlan');
+    $routes->get('fetchEconomicData', 'InvestmentsController::fetchEconomicData');
+    $routes->get('searchEconomicData', 'InvestmentsController::searchEconomicData');
+    $routes->post('likeEconomicData', 'InvestmentsController::likeEconomicData');
     $routes->post('Account-Manager', 'InvestmentsController::accountManager'); // Account Manager to handle adding, editing, deleting Investments Records to/from Database
     $routes->match(['GET', 'POST'], 'Add', 'InvestmentsController::add'); // Add New Investment Records to Database
     $routes->match(['GET', 'POST'], 'Add/(:segment)', 'InvestmentsController::add'); // Add New Investment Records to Database
@@ -1858,17 +1952,17 @@ $routes->group('Investments', ['namespace' => '\App\Modules\User\Controllers', '
     $routes->match(['GET', 'POST'], 'Test', 'InvestmentsController::test');
     $routes->match(['GET', 'POST'], 'Watchlist', 'InvestmentsController::watchlist');
 
-    $routes->get('Strategies', 'InvestmentController::getStrategies');
-    $routes->post('Strategies', 'InvestmentController::createStrategy');
-    $routes->get('Strategies/(:num)', 'InvestmentController::getStrategy/$1');
-    $routes->put('Strategies/(:num)', 'InvestmentController::updateStrategy/$1');
-    $routes->delete('Strategies/(:num)', 'InvestmentController::deleteGoal/$1');
+    $routes->get('Strategies', 'InvestmentsController::getStrategies');
+    $routes->post('Strategies', 'InvestmentsController::createStrategy');
+    $routes->get('Strategies/(:num)', 'InvestmentsController::getStrategy/$1');
+    $routes->put('Strategies/(:num)', 'InvestmentsController::updateStrategy/$1');
+    $routes->delete('Strategies/(:num)', 'InvestmentsController::deleteStrategy/$1');
 
-    $routes->get('Goals', 'InvestmentController::getGoals');
-    $routes->post('Goals', 'InvestmentController::createGoal');
-    $routes->get('Goals/(:num)', 'InvestmentController::createGoal/$1');
-    $routes->put('Goals/(:num)', 'InvestmentController::updateGoal/$1');
-    $routes->delete('Goals/(:num)', 'InvestmentController::deleteGoal/$1');
+    $routes->get('Goals', 'InvestmentsController::getGoals');
+    $routes->post('Goals', 'InvestmentsController::createGoal');
+    $routes->get('Goals/(:num)', 'InvestmentsController::getGoal/$1');
+    $routes->put('Goals/(:num)', 'InvestmentsController::updateGoal/$1');
+    $routes->delete('Goals/(:num)', 'InvestmentsController::deleteGoal/$1');
 
     // Routes for the new methods related to various overviews and data
     $routes->get('Crypto-Overview', 'InvestmentsController::cryptoOverview');
@@ -1879,6 +1973,25 @@ $routes->group('Investments', ['namespace' => '\App\Modules\User\Controllers', '
     $routes->get('Stock-Overview', 'InvestmentsController::stockOverview');
     // Add other necessary route definitions here
 });
+
+$routes->group('investments', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
+    $routes->get('strategies', 'InvestmentsController::getStrategies');
+    $routes->post('strategies', 'InvestmentsController::createStrategy');
+    $routes->get('strategies/(:num)', 'InvestmentsController::getStrategy/$1');
+    $routes->put('strategies/(:num)', 'InvestmentsController::updateStrategy/$1');
+    $routes->delete('strategies/(:num)', 'InvestmentsController::deleteStrategy/$1');
+
+    $routes->get('goals', 'InvestmentsController::getGoals');
+    $routes->post('goals', 'InvestmentsController::createGoal');
+    $routes->get('goals/(:num)', 'InvestmentsController::getGoal/$1');
+    $routes->put('goals/(:num)', 'InvestmentsController::updateGoal/$1');
+    $routes->delete('goals/(:num)', 'InvestmentsController::deleteGoal/$1');
+});
+
+$routes->post('add-to-watchlist', '\App\Modules\User\Controllers\InvestmentsController::addToWatchlist', ['filter' => 'login']);
+$routes->post('remove-from-watchlist', '\App\Modules\User\Controllers\InvestmentsController::removeFromWatchlist', ['filter' => 'login']);
+$routes->post('add_new_wallet', '\App\Modules\User\Controllers\WalletsController::addNewWallet', ['filter' => 'login']);
+
 
 // Predictions (User)
 $routes->group('Predictions', ['namespace' => '\App\Modules\User\Controllers'], static function($routes) {
@@ -1903,6 +2016,15 @@ $routes->group('Projects', ['namespace' => '\App\Modules\User\Controllers'], sta
     $routes->get('Fund', 'ProjectsController::fund');
     $routes->get('Fund/(:num)', 'ProjectsController::fund/$1');
     $routes->post('PurchaseFundUnits', 'ProjectsController::purchaseFundUnits');
+    // GT-FORM-ROUTES-001: dashboard project modals.
+    $routes->post('SubmitCommit', 'ProjectsController::submitCommit', ['filter' => ['login', 'feature:project_investing']]);
+    $routes->post('SubmitInvest', 'ProjectsController::submitInvest', ['filter' => ['login', 'feature:project_investing']]);
+    $routes->post('SubmitSell', 'ProjectsController::submitSell', ['filter' => ['login', 'feature:project_investing']]);
+    $routes->post('AddComment', 'ProjectsController::addComment', ['filter' => 'login']);
+    $routes->post('Add', 'ProjectsController::submitProposal', ['filter' => 'login']);
+    $routes->post('Commit', 'ProjectsController::submitCommit', ['filter' => ['login', 'feature:project_investing']]);
+    $routes->post('Create', 'ProjectsController::submitProposal', ['filter' => 'login']);
+    $routes->post('reportRevenue', 'ProjectsController::reportRevenue', ['filter' => 'login']);
 });
 
 // Blog:
@@ -1977,6 +2099,9 @@ $routes->group('Support', ['namespace' => '\App\Modules\Support\Controllers'], f
     $routes->get('Discord', 'SupportController::discordOnboarding');
     $routes->get('FAQ', 'SupportController::view/FAQ');
     $routes->get('Feedback', 'SupportController::view/Feedback');
+    $routes->post('Feedback', 'SupportController::submitArticleFeedback');
+    $routes->post('Manager', 'SupportController::submitRequest');
+    $routes->post('Response', 'SupportController::submitRequest');
     $routes->get('Test', 'SupportController::view/Test');
     $routes->get('Test-Email', 'SupportController::view/Test-Email');
     $routes->get('(:any)', 'SupportController::view/$1');
@@ -1994,6 +2119,15 @@ $routes->group('Referrals', ['namespace' => '\App\Modules\User\Controllers', 'fi
     $routes->match(['GET', 'POST'], '/', 'ReferralController::index');
     $routes->match(['GET', 'POST'], 'Create', 'ReferralController::create');
     $routes->match(['GET', 'POST'], 'sendReferralEmail', 'ReferralController::sendReferralEmail');
+});
+// GT-FORM-ROUTES-001: referral program application (was CodeIgniter 3 Application_Manager).
+$routes->group('Referral-Program', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
+    $routes->get('Apply', 'ReferralController::Apply');
+    $routes->post('Apply', 'ReferralController::submitApplication');
+    $routes->get('Success', 'ReferralController::Success');
+    $routes->get('Agreement', 'ReferralController::Marketing_Affiliate_Program_Agreement');
+    $routes->get('Applications', 'ReferralController::New_Affiliate_Information', ['filter' => 'permission:admin.access']);
+    $routes->post('Activate/(:num)', 'ReferralController::Activate_Affiliate/$1', ['filter' => 'permission:admin.access']);
 });
 
 // User - Wallets
@@ -2054,7 +2188,8 @@ $routes->group('Wallets', ['namespace' => '\App\Modules\User\Controllers', 'filt
     $routes->match(['GET', 'POST'], 'Link-Account/Success', 'WalletsController::linkAccountSuccess', ['as' => 'wallets.link-account.success']);
     $routes->match(['GET', 'POST'], 'Link-Account/Success/(:segment)', 'WalletsController::linkAccountSuccess/$1', ['as' => 'wallets.link-account.success.segment']);
     $routes->match(['GET', 'POST'], 'Manager', 'WalletsController::walletManager', ['as' => 'wallets.manager']);
-    $routes->match(['GET', 'POST'], 'Wallets/MyMIGPayPalCallback', 'WalletsController::handleMyMIGPayPalCallback');
+    // GT-FORM-ROUTES-001: was GET/POST at Wallets/Wallets/..., unreachable from the views and unverified.
+    $routes->post('MyMIGPayPalCallback', 'WalletsController::handleMyMIGPayPalCallback', ['filter' => ['login', 'noStore', 'feature:mymigold_purchases']]);
     $routes->match(['GET', 'POST'], 'Purchase', 'WalletsController::purchase');
     $routes->match(['GET', 'POST'], 'Purchase-Manager', 'WalletsController::purchaseManager');
     $routes->match(['GET', 'POST'], 'Purchase/(:segment)', 'WalletsController::purchase');
@@ -2153,7 +2288,7 @@ $routes->group('Knowledgebase', ['namespace' => '\App\Modules\User\Controllers']
 $routes->group('Subscribe', ['namespace' => '\App\Modules\Blog\Controllers'], function($routes) {
     $routes->get('/', 'SubscribeController::index');
     $routes->get('/Daily-Financial-News', 'SubscribeController::index');
-    $routes->get('Submit', 'SubscribeController::submit');
+    $routes->match(['GET', 'POST'], 'Submit', 'SubscribeController::submit');
     // Define other routes for 'blog' module
 });
 
@@ -2596,6 +2731,41 @@ $routes->group('investments/economy', ['namespace' => '\App\Modules\User\Control
 });
 $routes->group('investments', ['namespace' => '\App\Modules\APIs\Controllers'], static function($routes) {
     $routes->get('fundamentals/(:segment)', 'InvestmentsAPIController::fundamentals/$1');
+});
+
+// GT-FORM-ROUTES-001: Email Queue and Template Admin Routes
+$routes->group('email-queue', ['namespace' => '\App\Modules\Management\Controllers\Marketing', 'filter' => 'role:admin,team'], function($routes) {
+    $routes->get('/', 'EmailQueueAdminController::index');
+    $routes->get('create', 'EmailQueueAdminController::create');
+    $routes->post('store', 'EmailQueueAdminController::store');
+    $routes->post('processQueue', 'EmailQueueAdminController::processQueue');
+});
+$routes->group('email-templates', ['namespace' => '\App\Modules\Management\Controllers\Marketing', 'filter' => 'role:admin,team'], function($routes) {
+    $routes->get('/', 'EmailTemplateAdminController::index');
+    $routes->get('create', 'EmailTemplateAdminController::create');
+    $routes->post('store', 'EmailTemplateAdminController::store');
+});
+
+// GT-FORM-ROUTES-001: Newsletter & Marketing Social/Notification Admin Routes
+$routes->post('newsletter/store', '\App\Controllers\NewsletterController::store', ['filter' => 'role:admin,team']);
+$routes->group('marketing', ['namespace' => '\App\Modules\Management\Controllers', 'filter' => 'role:admin,team'], function($routes) {
+    $routes->match(['GET', 'POST'], 'sendNotification', 'MarketingAdminController::sendNotification');
+    $routes->match(['GET', 'POST'], 'postToFacebook', 'MarketingAdminController::postToFacebook');
+    $routes->match(['GET', 'POST'], 'postToGroup', 'MarketingAdminController::postToGroup');
+});
+
+// GT-FORM-ROUTES-001: Admin Paginated Marketing API Routes (Session Auth)
+$routes->group('API/Management', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => 'role:admin,team'], function($routes) {
+    $routes->get('getGeneratedPostsPaginated', 'MarketingAPIController::getGeneratedPostsPaginated');
+    $routes->get('sharePost/(:num)/(:segment)', 'ManagementAPIController::sharePost/$1/$2');
+    $routes->get('fetchBufferPaginated', 'MarketingAPIController::fetchBufferPaginated');
+});
+
+// GT-FORM-ROUTES-001: User Timezone Offset Sync Route
+$routes->post('YourController/setUserTimezone', static function () {
+    $offset = (int) service('request')->getPost('timezoneOffset');
+    session()->set('timezone_offset', $offset);
+    return service('response')->setJSON(['status' => 'success', 'offset' => $offset]);
 });
 
 if (is_file(APPPATH . 'Modules/PropFirms/Config/Routes.php')) {

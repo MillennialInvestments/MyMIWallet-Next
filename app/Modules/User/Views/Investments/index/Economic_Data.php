@@ -175,7 +175,7 @@ $(document).ready(function() {
     $('#economicDataSelect').on('changed.bs.select', function() {
         var seriesId = $(this).val();
         $.ajax({
-            url: "<?php echo site_url('investments/fetchEconomicData'); ?>",
+            url: "<?php echo site_url('Investments/fetchEconomicData'); ?>",
             type: "GET",
             data: { seriesId: seriesId },
             success: function(data) {
@@ -213,7 +213,7 @@ $(document).ready(function() {
     $('#searchInput').on('input', function() {
         var searchText = $(this).val();
         $.ajax({
-            url: "<?php echo site_url('investments/searchEconomicData'); ?>",
+            url: "<?php echo site_url('Investments/searchEconomicData'); ?>",
             type: "GET",
             data: { searchText: searchText },
             success: function(data) {
@@ -226,7 +226,7 @@ $(document).ready(function() {
                     data.forEach(function(item) {
                         // Assuming 'item' has properties like 'title' and 'id'
                         var resultHTML = '<div class="search-result-item">' +
-                                          '<a href="detailedInfo.php?seriesId=' + item.id + '">' + item.title + '</a>' +
+                                          '<a href="https://fred.stlouisfed.org/series/' + encodeURIComponent(item.id) + '" target="_blank" rel="noopener">' + $('<span>').text(item.title).html() + '</a>' +
                                           '</div>';
                         $('#searchResults').append(resultHTML);
                     });

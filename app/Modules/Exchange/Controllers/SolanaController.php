@@ -499,7 +499,12 @@ $addr = $svc->normalizeAddress($row);
     }
     
     public function disconnectWallet($walletID = null) {
-        $getWalletInfo  = $this->solanaModel->disconnectWallet($walletID); 
+        $cuID = $this->currentUserId();
+        if ($cuID <= 0 || ! is_numeric($walletID ?? $this->request->getPost('wallet_id'))) {
+            return redirect()->to('/Exchange/Solana')->with('error', 'Failed to disconnect the wallet.');
+        }
+        $walletID = (int) ($walletID ?? $this->request->getPost('wallet_id'));
+        $getWalletInfo  = $this->solanaModel->disconnectWallet($walletID, $cuID);
         if ($getWalletInfo) {
             // Redirect the user back to /Exchange/Solana after disconnecting the wallet
             return redirect()->to('/Exchange/Solana')->with('message', 'Wallet disconnected successfully.');
@@ -508,6 +513,70 @@ $addr = $svc->normalizeAddress($row);
             return redirect()->to('/Exchange/Solana')->with('error', 'Failed to disconnect the wallet.');
         }
     }    
+
+    /**
+     * GT-FORM-ROUTES-001: POST Exchange/Solana/Edit-Wallet, the wallet settings
+     * form (name, enabled, notifications, auto staking). Only the owner's row
+     * is updated; no funds move.
+     */
+    public function editWallet()
+    {
+        $cuID = $this->currentUserId();
+        $walletId = (int) $this->request->getPost('wallet_id');
+        $wantsJson = $this->request->isAJAX();
+        $reply = function (bool $ok, string $message, int $code = 200) use ($wantsJson) {
+            if ($wantsJson) {
+                return $this->response->setStatusCode($code)->setJSON(['status' => $ok ? 'success' : 'error', 'success' => $ok, 'message' => $message]);
+            }
+
+            return redirect()->back()->with($ok ? 'message' : 'error', $message);
+        };
+        if ($cuID <= 0) {
+            return $reply(false, 'Please sign in.', 401);
+        }
+        if ($walletId <= 0) {
+            return $reply(false, 'Missing wallet.', 422);
+        }
+
+        $db = db_connect();
+        $owned = $db->table('bf_users_wallet')->select('id')->where('id', $walletId)->where('user_id', $cuID)->limit(1)->get()->getRowArray();
+        if (! is_array($owned)) {
+            return $reply(false, 'Wallet not found.', 404);
+        }
+
+        $columns = array_flip($db->getFieldNames('bf_users_wallet'));
+        $update = [];
+        $name = mb_substr(trim(strip_tags((string) $this->request->getPost('wallet_name'))), 0, 100);
+        if ($name !== '') {
+            foreach (['nickname', 'wallet_nickname', 'wallet_name', 'name'] as $col) {
+                if (isset($columns[$col])) {
+                    $update[$col] = $name;
+                    break;
+                }
+            }
+        }
+        $flags = [
+            'active'               => $this->request->getPost('wallet_status'),
+            'notifications'        => $this->request->getPost('wallet_notifications'),
+            'wallet_notifications' => $this->request->getPost('wallet_notifications'),
+            'auto_staking'         => $this->request->getPost('auto_staking'),
+        ];
+        foreach ($flags as $col => $value) {
+            if ($value !== null && isset($columns[$col])) {
+                $update[$col] = in_array((string) $value, ['1', 'on', 'true', 'yes'], true) ? 1 : 0;
+            }
+        }
+        if (isset($columns['modified_on'])) {
+            $update['modified_on'] = date('Y-m-d H:i:s');
+        }
+        if ($update === []) {
+            return $reply(false, 'Nothing to update.', 422);
+        }
+
+        $db->table('bf_users_wallet')->where('id', $walletId)->where('user_id', $cuID)->update($update);
+
+        return $reply(true, 'Wallet updated.');
+    }
 
     public function executeSwap() {
         $guard = $this->solanaTransactionGuard('executeSwap');
@@ -519,7 +588,7 @@ $addr = $svc->normalizeAddress($row);
             return $premiumGuard;
         }
 
-        if ($this->request->getMethod() == 'post') {
+        if (strtolower($this->request->getMethod()) == 'post') {
             try {
                 // Extract inputs
                 $amount = floatval($this->request->getPost('amount'));

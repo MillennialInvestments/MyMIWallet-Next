@@ -1,10 +1,5 @@
 # Known route handler gaps (GTM-022..026). Remove a line once it is fixed.
 App\Controllers\Api\HealthController::index
-App\Controllers\AuctionsController::bid
-App\Controllers\AuctionsController::create
-App\Controllers\AuctionsController::index
-App\Controllers\AuctionsController::item
-App\Controllers\AuctionsController::poll
 App\Controllers\AuthController::handleProviderCallback
 App\Controllers\AuthController::linkProvider
 App\Controllers\AuthController::linkRobinhood
@@ -127,7 +122,6 @@ App\Modules\Exchange\Controllers\DigiByteController::disconnectWallet
 App\Modules\Exchange\Controllers\DigiByteController::getAssets
 App\Modules\Exchange\Controllers\DigiByteController::refreshWallet
 App\Modules\Exchange\Controllers\SolanaController::verifyWalletOwnership
-App\Modules\Management\Controllers\AlertsAdminController::topPerformanceWeekly
 App\Modules\Management\Controllers\EmailAdminController::autoScheduleDrafts
 App\Modules\Management\Controllers\EmailAdminController::updateCampaign
 App\Modules\Management\Controllers\EmailQueueController::create
@@ -145,20 +139,10 @@ App\Modules\Management\Controllers\ManagementAdminController::sendTestActivation
 App\Modules\Management\Controllers\MarketingAdminController::blogCreator
 App\Modules\Management\Controllers\MarketingAdminController::contentListing
 App\Modules\Management\Controllers\MarketingAdminController::fetchEmails
-App\Modules\Management\Controllers\MarketingAdminController::sendNotification
 App\Modules\Management\Controllers\MarketingAdminController::test
 App\Modules\Management\Controllers\MarketingAdminController::videoCreator
 App\Modules\Management\Controllers\ReferralsController::index
 App\Modules\Management\Controllers\WalletsAdminController::addUserGoldTasks
-App\Modules\User\Controllers\DashboardController::updateProfile
-App\Modules\User\Controllers\InvestmentController::createGoal
-App\Modules\User\Controllers\InvestmentController::createStrategy
-App\Modules\User\Controllers\InvestmentController::deleteGoal
-App\Modules\User\Controllers\InvestmentController::getGoals
-App\Modules\User\Controllers\InvestmentController::getStrategies
-App\Modules\User\Controllers\InvestmentController::getStrategy
-App\Modules\User\Controllers\InvestmentController::updateGoal
-App\Modules\User\Controllers\InvestmentController::updateStrategy
 App\Modules\User\Controllers\InvestmentsController::MyMINews
 App\Modules\User\Controllers\InvestmentsController::MyMIResearch
 App\Modules\User\Controllers\InvestmentsController::autoSave

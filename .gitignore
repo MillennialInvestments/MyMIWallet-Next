@@ -36,6 +36,7 @@ chat/.env*
 !/.vscode/settings.json
 # Local PHPUnit overrides stay untracked; phpunit.xml.dist is the tracked CI contract (MYMI-GTM-007).
 phpunit.xml
+.phpunit.result.cache
 *.map
 !/chat/.env.example
 /chat/chat.pid

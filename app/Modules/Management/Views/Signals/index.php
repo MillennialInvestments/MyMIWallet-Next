@@ -90,7 +90,7 @@
     wrap.querySelectorAll('button[data-file-id]').forEach(btn => {
       btn.addEventListener('click', async () => {
         const id = btn.getAttribute('data-file-id');
-        const html = await fetch(`/API/Alerts/previewSignalFile/${id}`).then(r => r.text());
+        const html = await fetch(`<?= site_url('Management/Alerts/previewSignalFile') ?>/${encodeURIComponent(id)}`).then(r => r.text());
         document.getElementById('signalPreviewModalBody').innerHTML = html;
         const modal = new bootstrap.Modal(document.getElementById('signalPreviewModal'));
         modal.show();

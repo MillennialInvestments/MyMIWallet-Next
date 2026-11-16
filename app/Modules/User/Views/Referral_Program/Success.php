@@ -1,8 +1,5 @@
-<?php 
-$successData                            = array (
-    'success_note'                      => 'Referral Application Submitted<br>Please give our team up to 24-48 hrs<br>to review your application!',
-    'success_link'                      => '/Dashboard',
-    'success_btn'                       => 'Back to Dashboard',
-);
-echo view('UserModule/Dashboard/index/success-noto', $successData); 
-?>
+<div class="nk-block text-center py-5">
+    <h3>Referral Application Submitted</h3>
+    <p>Please give our team 24 to 48 hours to review your application.</p>
+    <a class="btn btn-primary" href="<?= site_url('Dashboard') ?>">Back to Dashboard</a>
+</div>

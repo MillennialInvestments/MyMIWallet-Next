@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
         statusEl.classList.remove('text-danger', 'text-success');
 
         try {
-            const response = await fetch("<?= site_url('API/Marketing/generateDailyContentDigest') ?>");
+            const response = await fetch("<?= site_url('Management/Marketing/runDailyContentDigest') ?>");
             const data = await response.json();
 
             if (data.status === 'success') {
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
             status.classList.remove("text-danger", "text-success");
 
             try {
-                const response = await fetch("<?= site_url('API/Marketing/generateContentFromScraper') ?>");
+                const response = await fetch("<?= site_url('Management/Marketing/generateContentFromScraper') ?>");
                 const data = await response.json();
 
                 if (data.status === "success") {
@@ -97,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ✅ Mass Resend Activation Emails
     window.massResendActivationEmails = async () => {
+        if (!window.confirm("Resend the activation email to every account that has not activated yet?")) { return; }
         const statusEl = document.getElementById("resend-status");
         statusEl.textContent = "⏳ Processing...";
         statusEl.classList.remove("text-danger", "text-success");
@@ -132,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!confirm("Reprocess up to 20 incomplete emails?")) return;
 
         try {
-            const response = await fetch("<?= site_url('API/Marketing/reprocessIncompleteEmails') ?>");
+            const response = await fetch("<?= site_url('Management/Marketing/reprocessIncompleteEmails') ?>");
             const data = await response.json();
             alert(data.message || "✅ Reprocessed successfully.");
         } catch (err) {
@@ -169,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
         statusEl.classList.remove("text-danger", "text-success");
 
         try {
-            const response = await fetch("<?= site_url('API/Management/runKeywordBackfillBatch') ?>");
+            const response = await fetch("<?= site_url('Management/Marketing/runKeywordBackfillBatch') ?>");
             const data = await response.json();
 
             if (data.status === "success") {

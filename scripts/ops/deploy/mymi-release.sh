@@ -7,6 +7,11 @@
 #                                            # backup, run only the named migrations, switch current, restart, health check
 #   bash mymi-release.sh rollback <release>  # point current back at an older release (no DB changes)
 #
+# Staging first: activate refuses a release whose commit is not what staging
+# (https://staging.mymiwallet.com) is running. Put it on staging with
+#   sudo bash mymi-staging.sh deploy <sha>
+# and check it there. SKIP_STAGING=1 skips the check (say why in the release notes).
+#
 # Never prints secrets. Never deletes old releases.
 set -euo pipefail
 umask 027
@@ -16,10 +21,42 @@ REPO="${REPO:-/apps/TBI/repos/mymiwallet-next}"
 REMOTE="${REMOTE:-origin}"
 SITE_URL="${SITE_URL:-https://www.mymiwallet.com/}"
 CHAT_HEALTH="${CHAT_HEALTH:-http://127.0.0.1:8300/health}"
+STAGING_BASE="${STAGING_BASE:-/apps/TBI/www/mymiwallet-staging}"
 CMD="${1:-}"; ARG="${2:-}"
 
 die() { echo "ERROR: $*" >&2; exit 1; }
 current_target() { readlink -f "$BASE/current"; }
+# Each release is a full copy of the app (~0.5 GB). On 2026-11-16 old
+# releases filled the disk and took the site down, so keep only the newest
+# KEEP_RELEASES (default 4) plus whatever current and the rollback target are.
+KEEP_RELEASES="${KEEP_RELEASES:-4}"
+MIN_FREE_GB="${MIN_FREE_GB:-3}"
+free_gb() { df -P --block-size=1G "$1" | awk 'NR==2 {print $4}'; }
+need_space() {
+  local f; f="$(free_gb "$BASE")"
+  [ "${f:-0}" -ge "$MIN_FREE_GB" ] || die "only ${f}G free on $(df -P "$BASE" | awk 'NR==2 {print $6}'); need ${MIN_FREE_GB}G. Free space first (old releases: bash $0 prune)."
+}
+prune_releases() {
+  local keep="$1"; shift
+  local n=0 d name
+  for d in $(ls -1d "$BASE"/releases/*/ 2>/dev/null | sort -r); do
+    name="$(basename "$d")"; n=$((n + 1))
+    case " $* " in *" $name "*) continue ;; esac
+    [ "$n" -le "$keep" ] && continue
+    sudo rm -rf -- "$BASE/releases/$name" && echo "  pruned $name"
+  done
+}
+staging_revision() { cat "$STAGING_BASE/current/REVISION" 2>/dev/null || sudo cat "$STAGING_BASE/current/REVISION" 2>/dev/null || true; }
+staging_gate() { # staging_gate <sha>
+  [ "${SKIP_STAGING:-}" = 1 ] && { echo "Staging check skipped (SKIP_STAGING=1)."; return 0; }
+  [ -d "$STAGING_BASE" ] || { echo "No staging site at $STAGING_BASE; staging check skipped."; return 0; }
+  local stg; stg="$(staging_revision)"
+  if [ "$stg" = "$1" ]; then
+    echo "Staging is running this commit (${1:0:8}). OK."
+  else
+    die "staging runs ${stg:-nothing} but this release is $1. Put it on staging first: sudo bash ~/mymi-staging.sh deploy $1  (then re-run this; SKIP_STAGING=1 to override)"
+  fi
+}
 # Spark commands run in a release that is not live yet get their own writable
 # dir. The shared one holds CodeIgniter's file locator cache, and filling it
 # from a candidate release would make the live site load the candidate's files.
@@ -33,6 +70,10 @@ switch_to() { # atomic symlink swap
   shared_writable "$BASE/releases/$rel"
   ln -sfn "releases/$rel" "$BASE/current.next"
   mv -T "$BASE/current.next" "$BASE/current"
+  # CI4's file-locator cache in shared/writable/cache stores absolute paths
+  # into the release that wrote it; after a switch (or once that release is
+  # pruned) they break spark and web requests. Drop it on every switch.
+  sudo find "$BASE/shared/writable/cache" -mindepth 1 -maxdepth 1 ! -name index.html ! -name .htaccess -exec rm -rf -- {} + 2>/dev/null || true
 }
 health() {
   local site chat body
@@ -61,6 +102,7 @@ build)
   R="$BASE/releases/$REL"
   CUR="$(current_target)"
   [ ! -e "$R" ] || die "$R already exists"
+  need_space
   echo "Building $REL from $REF ($SHA); current is $(basename "$CUR")"
 
   mkdir -p "$R"
@@ -98,7 +140,18 @@ build)
   (cd "$R" && php spark migrate:status 2>/dev/null | grep -E '^\| App ' | grep -E '\| ---' || echo "  none")
   shared_writable "$R"
   echo
-  echo "Built. Nothing live changed. Next: MIGRATE='<names>' bash $0 activate $REL"
+  echo "Built. Nothing live changed."
+  if [ "$(staging_revision)" != "$SHA" ] && [ -d "$STAGING_BASE" ]; then
+    echo "Next 1, staging: sudo bash ~/mymi-staging.sh deploy $SHA && sudo bash ~/mymi-staging.sh form-test"
+  fi
+  echo "Next 2, live:    MIGRATE='<names>' bash $0 activate $REL"
+  ;;
+
+prune)
+  CUR="$(basename "$(current_target)")"
+  echo "Pruning releases: keep newest $KEEP_RELEASES plus current ($CUR)"
+  prune_releases "$KEEP_RELEASES" "$CUR"
+  df -h "$BASE" | tail -1
   ;;
 
 activate)
@@ -109,6 +162,7 @@ activate)
   [ -z "$(sudo find "$R" -path "$R/node_modules" -prune -o -path "$R/chat/node_modules" -prune -o -path "$R/.writable-cli" -prune -o ! -type l ! -group www-data -print -quit)" ] \
     && sudo -u www-data test -r "$R/vendor/autoload.php" \
     || die "$R is not fully readable by www-data (run: sudo chgrp -R www-data $R && sudo chmod -R g+rX $R)"
+  staging_gate "$(cat "$R/REVISION")"
   echo "Activating $REL (previous: $PREV)"
 
   echo "--- backup ---"
@@ -132,6 +186,8 @@ activate)
   restart
   if health; then
     echo "OK: $REL is live. Roll back with: bash $0 rollback $PREV"
+    echo "--- prune (keep newest $KEEP_RELEASES, plus $REL and $PREV) ---"
+    prune_releases "$KEEP_RELEASES" "$REL" "$PREV"
   else
     echo "Health check FAILED. Rolling the code back to $PREV (database migrations stay applied)."
     switch_to "$PREV"; restart; health || true
@@ -145,5 +201,5 @@ rollback)
   ;;
 
 *)
-  sed -n '2,9p' "$0"; exit 1 ;;
+  sed -n '2,14p' "$0"; exit 1 ;;
 esac

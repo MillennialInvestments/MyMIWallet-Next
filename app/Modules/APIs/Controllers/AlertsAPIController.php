@@ -339,7 +339,7 @@ class AlertsAPIController extends BaseAPIController
 
     public function createTradeAlert()
     {
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             return $this->addTradeAlert();
         }
 
@@ -1796,7 +1796,7 @@ class AlertsAPIController extends BaseAPIController
 
         $wantsJson = $this->request->wantsJSON() || $this->request->getGet('format') === 'json';
 
-        if ($this->request->getMethod() === 'get' && ! $wantsJson) {
+        if (strtolower($this->request->getMethod()) === 'get' && ! $wantsJson) {
             $history = $this->alertsModel->getAlertHistoryById((int) $tradeId) ?? [];
 
             return view('ManagementModule\\Views\\Alerts\\modals\\manageTradeAlert', [
@@ -2384,11 +2384,20 @@ class AlertsAPIController extends BaseAPIController
         return $this->respond(["status" => "success", "message" => "Discord notifications sent!"]);
     }
     
-    public function sendDiscordAlertsBySymbol($symbol)
+    public function sendDiscordAlertsBySymbol($symbol = null)
     {
-        if ($response = $this->enforceCronKey()) {
-            return $response;
+        $isAdmin = (function_exists('auth') && auth()->loggedIn() && (auth()->user()?->inGroup('admin', 'team') ?? false))
+            || in_array(session('role'), ['admin', 'team'], true);
+        if (! $isAdmin) {
+            if ($response = $this->enforceCronKey()) {
+                return $response;
+            }
         }
+
+        if ($symbol === null || $symbol === '') {
+            $symbol = (string) ($this->request->getPost('symbol') ?? $this->request->getGet('symbol') ?? '');
+        }
+    
         // Fetch alert details based on the symbol
         $alert = $this->alertsModel->getAlertBySymbolExt($symbol);
     
@@ -2792,7 +2801,7 @@ class AlertsAPIController extends BaseAPIController
     
     public function updateExchange()
     {
-        if ($this->request->getMethod() === 'get') {
+        if (strtolower($this->request->getMethod()) === 'get') {
             $tradeId = $this->request->getGet('accountid')
                 ?? $this->request->getGet('trade_id')
                 ?? $this->request->getGet('id');
@@ -2841,7 +2850,7 @@ class AlertsAPIController extends BaseAPIController
     // In AlertsController.php: Add a method to handle fundamentals file upload
     public function uploadFundamentals()
     {
-        if ($this->request->getMethod() == 'post') {
+        if (strtolower($this->request->getMethod()) == 'post') {
             $file = $this->request->getFile('fundamentals_file');
             
             if ($file->isValid() && !$file->hasMoved()) {

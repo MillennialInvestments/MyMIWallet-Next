@@ -227,8 +227,10 @@ class UserModel extends Model
     
     public function getPendingActivationUsers()
     {
+        // Soft-deleted (spam) accounts must never receive activation mail.
         return $this->where('active', 0)
             ->where('activate_hash IS NOT NULL', null, false)
+            ->groupStart()->where('deleted', 0)->orWhere('deleted IS NULL', null, false)->groupEnd()
             ->get()
             ->getResultArray();
     }
@@ -392,7 +394,7 @@ class UserModel extends Model
      */
     public function withGroup(string $groupName)
     {
-        $getResult = $this->db->table('auth_groups')->where('name', $groupName)->get();
+        $getResult = $this->db->table('auth_groups')->where('name', $groupName)->limit(1)->get();
         $group = ($getResult !== false) ? $getResult->getFirstRow() : null;
 
         $this->assignGroup = $group->id ?? null;

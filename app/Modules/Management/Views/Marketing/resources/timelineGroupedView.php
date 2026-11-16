@@ -53,7 +53,7 @@
 
 <script <?= $nonce['script'] ?? '' ?>>
 function loadSummaryInsightModal(summaryId) {
-    fetch(`/index.php/API/Marketing/PreviewGeneratedPost/${summaryId}`)
+    fetch(`<?= site_url('Management/Marketing/previewGeneratedPost') ?>/${encodeURIComponent(summaryId)}`)
         .then(res => res.text())
         .then(html => {
             document.getElementById('insightModalBody').innerHTML = html;

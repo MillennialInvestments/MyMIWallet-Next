@@ -855,7 +855,7 @@ $subViewData                        = [
             statusDiv.text('Generating advisor media package...');
 
             $.ajax({
-                url: '/index.php/API/Advisor/generateNow',
+                url: '<?= site_url('Management/Alerts/Advisor/generateNow') ?>',
                 type: 'POST',
                 data: { user_id: userId },
                 success: function (res) {

@@ -462,6 +462,114 @@ class InvestmentsAPIController extends BaseAPIController
         return is_array($decoded) ? $decoded : [];
     }
 
+    /**
+     * Ticker search used by the API above and, in-process, by the site search
+     * page (which used to call this API over HTTP, without the user's session).
+     *
+     * @return list<array{symbol: string, name: string, exchange: string, currency: string, source: string}>
+     */
+    public static function tickerSearchData(string $q, int $limit): array
+    {
+        $q = trim($q);
+        $limit = max(1, min(25, $limit));
+        if ($q === '') {
+            return [];
+        }
+
+        /** @var \CodeIgniter\Database\BaseConnection $db */
+        $db = \Config\Database::connect();
+        $builder = $db->table('bf_investment_tickers');
+        $builder->select('symbol, name, exchange, currency');
+        $builder->like('symbol', $q, 'after');
+        $builder->orLike('name', $q);
+        $builder->limit($limit);
+
+        $rows = $builder->get()->getResultArray();
+
+        $data = [];
+        foreach ($rows as $row) {
+            $data[] = [
+                'symbol'   => (string) ($row['symbol'] ?? ''),
+                'name'     => (string) ($row['name'] ?? ''),
+                'exchange' => (string) ($row['exchange'] ?? ''),
+                'currency' => (string) ($row['currency'] ?? 'USD'),
+                'source'   => 'local',
+            ];
+        }
+
+        if (count($data) < $limit && mb_strlen($q) >= 2) {
+            helper('text');
+
+            $cache = \Config\Services::cache();
+            $cacheKey = 'ticker_search_' . md5(strtolower($q));
+            $cacheKeySanitized = sanitizeCacheKey($cacheKey);
+            $av = $cache->get($cacheKeySanitized);
+
+            if ($av === null) {
+                /** @var \App\Libraries\MyMIInvestments $inv */
+                $inv = service('mymiInvestments');
+
+                if (method_exists($inv, 'searchSymbols')) {
+                    $av = $inv->searchSymbols($q);
+                } else {
+                    $avAll = $inv->getSymbolsByTradeType('stock');
+                    $av = array_filter($avAll ?? [], static function ($row) use ($q) {
+                        $sym = strtolower((string) ($row['symbol'] ?? ''));
+                        $nam = strtolower((string) ($row['name'] ?? ''));
+                        $q2  = strtolower($q);
+
+                        return str_starts_with($sym, $q2) || strpos($nam, $q2) !== false;
+                    });
+                }
+
+                if (is_array($av)) {
+                    $cache->save($cacheKeySanitized, $av, 300);
+                }
+            }
+
+            $av = is_array($av) ? array_values($av) : [];
+            $seen = array_column($data, 'symbol');
+
+            /** @var \App\Libraries\MyMIInvestments|null $inv */
+            $inv ??= isset($inv) ? $inv : service('mymiInvestments');
+
+            foreach ($av as $row) {
+                if (count($data) >= $limit) {
+                    break;
+                }
+
+                $symbol   = (string) ($row['symbol'] ?? $row['1. symbol'] ?? '');
+                $name     = (string) ($row['name'] ?? $row['2. name'] ?? '');
+                $exchange = (string) ($row['exchange'] ?? $row['4. region'] ?? '');
+                $currency = (string) ($row['currency'] ?? $row['8. currency'] ?? 'USD');
+
+                if ($symbol === '' || in_array($symbol, $seen, true)) {
+                    continue;
+                }
+
+                $data[] = [
+                    'symbol'   => $symbol,
+                    'name'     => $name,
+                    'exchange' => $exchange,
+                    'currency' => $currency,
+                    'source'   => 'alpha',
+                ];
+                $seen[] = $symbol;
+
+                try {
+                    if (method_exists($inv, 'ensureTickerExists')) {
+                        $inv->ensureTickerExists($symbol);
+                    }
+                } catch (\Throwable $e) {
+                    log_message('warning', 'searchTickers ensureTickerExists failed: {msg}', ['msg' => $e->getMessage()]);
+                }
+            }
+        }
+
+
+        return array_values($data);
+    }
+
     public function searchTickers()
     {
         $q = trim((string) $this->request->getGet('query'));
@@ -473,99 +581,9 @@ class InvestmentsAPIController extends BaseAPIController
         }
 
         try {
-            /** @var \CodeIgniter\Database\BaseConnection $db */
-            $db = \Config\Database::connect();
-            $builder = $db->table('bf_investment_tickers');
-            $builder->select('symbol, name, exchange, currency');
-            $builder->like('symbol', $q, 'after');
-            $builder->orLike('name', $q);
-            $builder->limit($limit);
-
-            $rows = $builder->get()->getResultArray();
-
-            $data = [];
-            foreach ($rows as $row) {
-                $data[] = [
-                    'symbol'   => (string) ($row['symbol'] ?? ''),
-                    'name'     => (string) ($row['name'] ?? ''),
-                    'exchange' => (string) ($row['exchange'] ?? ''),
-                    'currency' => (string) ($row['currency'] ?? 'USD'),
-                    'source'   => 'local',
-                ];
-            }
-
-            if (count($data) < $limit && mb_strlen($q) >= 2) {
-                helper('text');
-
-                $cache = \Config\Services::cache();
-                $cacheKey = 'ticker_search_' . md5(strtolower($q));
-                $cacheKeySanitized = sanitizeCacheKey($cacheKey);
-                $av = $cache->get($cacheKeySanitized);
-
-                if ($av === null) {
-                    /** @var \App\Libraries\MyMIInvestments $inv */
-                    $inv = service('mymiInvestments');
-
-                    if (method_exists($inv, 'searchSymbols')) {
-                        $av = $inv->searchSymbols($q);
-                    } else {
-                        $avAll = $inv->getSymbolsByTradeType('stock');
-                        $av = array_filter($avAll ?? [], static function ($row) use ($q) {
-                            $sym = strtolower((string) ($row['symbol'] ?? ''));
-                            $nam = strtolower((string) ($row['name'] ?? ''));
-                            $q2  = strtolower($q);
-
-                            return str_starts_with($sym, $q2) || strpos($nam, $q2) !== false;
-                        });
-                    }
-
-                    if (is_array($av)) {
-                        $cache->save($cacheKeySanitized, $av, 300);
-                    }
-                }
-
-                $av = is_array($av) ? array_values($av) : [];
-                $seen = array_column($data, 'symbol');
-
-                /** @var \App\Libraries\MyMIInvestments|null $inv */
-                $inv ??= isset($inv) ? $inv : service('mymiInvestments');
-
-                foreach ($av as $row) {
-                    if (count($data) >= $limit) {
-                        break;
-                    }
-
-                    $symbol   = (string) ($row['symbol'] ?? $row['1. symbol'] ?? '');
-                    $name     = (string) ($row['name'] ?? $row['2. name'] ?? '');
-                    $exchange = (string) ($row['exchange'] ?? $row['4. region'] ?? '');
-                    $currency = (string) ($row['currency'] ?? $row['8. currency'] ?? 'USD');
-
-                    if ($symbol === '' || in_array($symbol, $seen, true)) {
-                        continue;
-                    }
-
-                    $data[] = [
-                        'symbol'   => $symbol,
-                        'name'     => $name,
-                        'exchange' => $exchange,
-                        'currency' => $currency,
-                        'source'   => 'alpha',
-                    ];
-                    $seen[] = $symbol;
-
-                    try {
-                        if (method_exists($inv, 'ensureTickerExists')) {
-                            $inv->ensureTickerExists($symbol);
-                        }
-                    } catch (\Throwable $e) {
-                        log_message('warning', 'searchTickers ensureTickerExists failed: {msg}', ['msg' => $e->getMessage()]);
-                    }
-                }
-            }
-
             return $this->response->setJSON([
                 'status' => 'success',
-                'data'   => array_values($data),
+                'data'   => self::tickerSearchData($q, $limit),
             ]);
         } catch (\Throwable $e) {
             log_message('error', 'searchTickers error: {msg}', ['msg' => $e->getMessage()]);

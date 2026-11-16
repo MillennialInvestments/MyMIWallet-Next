@@ -1,5 +1,5 @@
 <!-- app/Modules/Management/Views/Marketing/resources/standaloneLargeContentForm.php -->
-<form class="form-horizontal" id="largeContentForm" enctype="multipart/form-data" method="POST" action="<?= site_url('API/Marketing/submitLargeContent') ?>">
+<form class="form-horizontal" id="largeContentForm" enctype="multipart/form-data" method="POST" action="<?= site_url('Management/Marketing/submitLargeContent') ?>">
 
     <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
 

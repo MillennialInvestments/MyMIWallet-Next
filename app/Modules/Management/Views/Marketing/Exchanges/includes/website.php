@@ -209,7 +209,7 @@ $viewFileData                       = array(
 <script <?= $nonce['script'] ?? '' ?>>
     document.getElementById('marketRefreshBtn').addEventListener('click', function () {
         // Fetch the latest market data
-        fetch('<?= site_url('solana/market-refresh') ?>', {
+        fetch('<?= site_url('Management/Marketing/Exchange/Top-Communities-Refresh/Website') ?>', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

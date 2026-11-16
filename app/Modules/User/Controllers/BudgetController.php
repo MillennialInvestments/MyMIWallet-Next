@@ -2360,6 +2360,44 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
     // }
 
     // public function add()
+    /**
+     * GT-FORM-ROUTES-001: POST Budget/Settings/Save/{type}. Saves the settings form
+     * for one budget type into bf_user_preferences (scope "budget.<type>").
+     * Only the keys the settings page defines are kept.
+     */
+    public function saveSettings(string $type = '')
+    {
+        $defaults = [
+            'Income'      => ['primaryIncomeSource' => '', 'incomeFrequency' => '', 'automaticIncomeTracking' => false, 'incomeNotifications' => false, 'incomeCategories' => [], 'taxWithholdingPreferences' => false],
+            'Expenses'    => ['expenseTrackingMode' => '', 'monthlyBudgetLimit' => 0, 'criticalExpenseAlerts' => false, 'recurringExpenses' => [], 'expenseCategories' => [], 'savingsGoals' => []],
+            'Credit'      => ['debtRepaymentStrategy' => '', 'creditUtilizationAlert' => false, 'automaticPaymentReminders' => false, 'interestRateTracking' => false, 'creditScoreMonitoring' => false, 'debtFreeGoalDate' => ''],
+            'Investments' => ['riskToleranceProfile' => '', 'automaticInvestment' => false, 'investmentPortfolioOverview' => [], 'dividendReinvestment' => false, 'performanceAlerts' => false, 'taxLossHarvestingPreferences' => false],
+        ];
+        $defaults['Debt'] = $defaults['Credit'];
+
+        $userId = (int) ($this->cuID ?? session('cuID') ?? 0);
+        $back = site_url('Budget/Settings/' . rawurlencode($type));
+        if (! isset($defaults[$type])) {
+            return redirect()->to(site_url('Budget'))->with('error', 'Invalid budget type specified.');
+        }
+        if ($userId <= 0) {
+            return redirect()->to(site_url('login'));
+        }
+
+        $prefs = new \App\Services\Forms\UserPreferenceService();
+        $data = \App\Services\Forms\UserPreferenceService::shape($defaults[$type], (array) $this->request->getPost());
+        $ok = $prefs->put($userId, 'budget.' . $type, $data);
+
+        if ($this->request->isAJAX()) {
+            return $this->response->setStatusCode($ok ? 200 : 503)->setJSON([
+                'status'  => $ok ? 'success' : 'error',
+                'message' => $ok ? 'Settings saved.' : 'Settings could not be saved yet.',
+            ]);
+        }
+
+        return redirect()->to($back)->with($ok ? 'message' : 'error', $ok ? 'Settings saved.' : 'Settings could not be saved yet.');
+    }
+
     public function settings($type = null) {
         log_message('debug', '[BudgetController::METHOD_ENTRY] settings');
         $uri                                        = $this->request->getUri(); 
@@ -2421,6 +2459,10 @@ $this->trace('[JSON_RESPONSE] ' . __FUNCTION__ . ' accountID=' . $accountId);
                 return redirect()->back()->with('error', 'Invalid budget type specified.');
         }
     
+        // GT-FORM-ROUTES-001: overlay the user's saved settings on the defaults.
+        $saved = (new \App\Services\Forms\UserPreferenceService())->get((int) ($this->cuID ?? 0), 'budget.' . $budgetType);
+        $settingsData = array_merge($settingsData, \App\Services\Forms\UserPreferenceService::shape($settingsData, $saved + $settingsData));
+
         // Load common data and settings specific to the budget type
         $this->data['pageTitle']                    = 'Budget Settings | MyMI Wallet | The Future of Finance';
         $this->data['budgetType']                   = $budgetType;

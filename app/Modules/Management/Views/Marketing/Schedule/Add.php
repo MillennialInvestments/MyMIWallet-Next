@@ -245,11 +245,12 @@ $controlClass                               = empty($controlClass) ? 'span6' : $
     }
 
     async function submitForm(formData) {
-        const response = await fetch("<?php echo site_url('Management/Marketing/Marketing_Manager'); ?>", {
+        // GT-FORM-ROUTES-001: Marketing_Manager never existed. add('Schedule') reads form
+        // fields with getPost(), so send them form-encoded, not as JSON.
+        const response = await fetch("<?php echo site_url('Management/Marketing/Add/Schedule'); ?>", {
             method: "POST",
-            body: JSON.stringify(formData),
+            body: new URLSearchParams(formData),
             headers: { 
-                "Content-Type": "application/json",
                 "X-Requested-With": "XMLHttpRequest",
                 "X-CSRF-TOKEN": csrfToken, // Include the CSRF token in the headers
             },
@@ -261,7 +262,10 @@ $controlClass                               = empty($controlClass) ? 'span6' : $
     function handleSuccess(responseData) {
         const parsedData = typeof responseData === 'string' ? JSON.parse(responseData) : responseData;
         console.log('Operation successful:', parsedData);
-        const redirectURL = `<?php //echo $redirectURL; ?>`;
-        location.href = redirectURL;
+        if (!parsedData || parsedData.success !== true) {
+            alert((parsedData && (parsedData.error || parsedData.message)) || 'Could not save the schedule.');
+            return;
+        }
+        location.href = '<?= site_url('Management/Marketing/Schedule') ?>';
     }
 </script>

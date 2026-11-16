@@ -321,7 +321,7 @@ class ExchangeController extends UserController
             'pageName' => 'Investment_Request_Coins'
         ];
 
-        if ($this->request->getMethod() === 'post' && $this->validate([
+        if (strtolower($this->request->getMethod()) === 'post' && $this->validate([
             'amount' => 'required|greater_than_equal_to[5]'
         ])) {
             $formData = [
@@ -375,7 +375,7 @@ class ExchangeController extends UserController
             'pageName' => 'Investment_Request_Coins'
         ];
 
-        if ($this->request->getMethod() === 'post' && $this->validate([
+        if (strtolower($this->request->getMethod()) === 'post' && $this->validate([
             'amount' => 'required|greater_than_equal_to[5]'
         ])) {
             $formData = [
@@ -429,7 +429,7 @@ class ExchangeController extends UserController
             'pageName' => 'Account_Information'
         ];
 
-        if ($this->request->getMethod() === 'post' && $this->validate([
+        if (strtolower($this->request->getMethod()) === 'post' && $this->validate([
             'url_link' => 'trim',
             'subpage_name' => 'trim',
             'subpage_link' => 'trim',

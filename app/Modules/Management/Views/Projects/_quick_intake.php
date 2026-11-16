@@ -5,7 +5,7 @@
   <div class="alert alert-danger"><?= esc(session('error')) ?></div>
 <?php endif; ?>
 
-<form class="card p-3" id="reQuickIntake">
+<form class="card p-3" id="reQuickIntake" method="post" action="<?= site_url('Management/Projects/Quick-Intake'); ?>">
   <?= csrf_field(); ?>
   <h5 class="mb-2">Quick Property Intake</h5>
   <p class="text-muted mb-3">Paste a Zillow (or similar) link <em>or</em> type the address.</p>
@@ -29,7 +29,7 @@
 
   <div class="d-flex gap-2">
     <button class="btn btn-primary" type="submit">Submit</button>
-    <a class="btn btn-light" href="<?= site_url('Management/Projects/quick-intake'); ?>">Standalone Page</a>
+    <a class="btn btn-light" href="<?= site_url('Management/Projects/Quick-Intake'); ?>">Standalone Page</a>
   </div>
 </form>
 
@@ -44,14 +44,8 @@ document.getElementById('reQuickIntake').addEventListener('submit', function(e){
     postal_code:   document.getElementById('postal_code').value.trim()
   };
   if(!body.zillow_url && !body.address_line1){ alert('Provide a link or an address.'); return; }
-  const csrf = document.querySelector('input[name="<?= csrf_token() ?>"]').value;
-  fetch('<?= site_url('API/Projects/ingest/real-estate'); ?>', {
-    method:'POST',
-    headers:{'Content-Type':'application/json','Accept':'application/json','<?= csrf_header() ?>': csrf},
-    body: JSON.stringify(body)
-  }).then(r=>r.json()).then(d=>{
-    if(d.success){ location.reload(); }
-    else { alert(d.message || 'Submission failed.'); }
-  }).catch(err=>alert('Network error: '+err));
+  // GT-FORM-ROUTES-001: submit as a normal form to the session route; the old JSON call
+  // went to API/Projects/ingest/real-estate, which was never defined.
+  e.target.submit();
 });
 </script>

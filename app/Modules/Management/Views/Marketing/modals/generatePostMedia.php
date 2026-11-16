@@ -92,7 +92,7 @@ $('#generatePostMediaContentBtn').on('click', function () {
     payload[csrfName] = csrfToken;
 
     $.ajax({
-        url: '<?= site_url("API/Marketing/generatePostMediaContent") ?>',
+        url: '<?= site_url("Management/Marketing/generatePostMediaContent") ?>',
         method: 'POST',
         data: payload,
         dataType: 'json',
@@ -142,7 +142,7 @@ $('#savePostMediaBtn').on('click', function () {
     payload[csrfName] = csrfToken;
 
     $.ajax({
-        url: '<?= site_url("API/Marketing/savePostMedia") ?>',
+        url: '<?= site_url("Management/Marketing/savePostMedia") ?>',
         method: 'POST',
         data: payload,
         dataType: 'json',

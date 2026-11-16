@@ -12,6 +12,7 @@ use App\Services\{
     MarketingService,
     SolanaService,
     TransactionService,
+    WalletBalanceService,
     WalletService,
     WalletSummaryCalculator
 };
@@ -264,7 +265,7 @@ class WalletsController extends BaseUserController
             'status'     => $status,
             'active'     => $active,
             'beta'       => $beta,
-            'user_id'    => (int) ($post['user_id'] ?? $this->currentWalletUserId()),
+            'user_id'    => $this->currentWalletUserId(), // never a posted user_id (IDOR)
             'user_email' => (string) ($post['user_email'] ?? ''),
             'username'   => (string) ($post['username'] ?? ''),
             'updated_on' => $now,
@@ -965,7 +966,7 @@ class WalletsController extends BaseUserController
             };
 
             if ($type === null) {
-                log_message('error', 'WalletsController::add invalid wallet_type: {wallet_type}', [
+                log_message('notice', 'WalletsController::add invalid wallet_type: {wallet_type}', [
                     'wallet_type' => $walletTypeRaw,
                 ]);
 
@@ -991,7 +992,8 @@ class WalletsController extends BaseUserController
                     'status'     => 1,
                     'active'     => in_array($post['active'] ?? '1', ['1', 1, true, 'true', 'on', 'Yes', 'yes'], true) ? 1 : 0,
                     'beta'       => in_array($post['beta'] ?? '0', ['1', 1, true, 'true', 'on', 'Yes', 'yes'], true) ? 1 : 0,
-                    'user_id'    => (int) ($post['user_id'] ?? $this->currentWalletUserId()),
+                    // Never trust a posted user_id: a wallet is always created for the signed-in user (IDOR).
+                    'user_id'    => $this->currentWalletUserId(),
                     'user_email' => (string) ($post['user_email'] ?? ''),
                     'username'   => (string) ($post['username'] ?? ''),
                 ];
@@ -1686,50 +1688,65 @@ class WalletsController extends BaseUserController
 
     public function deposit(): ResponseInterface|string
     {
-        if ($blocked = $this->guardWalletFeature()) {
-            return $blocked;
-        }
-
-        $amount   = (float) $this->request->getPost('amount');
-        $walletID = (int) $this->request->getPost('wallet_id');
-        $currency = (string) ($this->request->getPost('currency') ?? 'USD');
-
-        try {
-            $convertedAmount = $this->currencyService->convert($amount, $currency, 'USD');
-            $transactionID = $this->transactionService->logTransaction('Deposit', $walletID, $this->currentWalletUserId(), $convertedAmount);
-
-            $this->resolveWalletService()->depositFunds($walletID, $convertedAmount);
-            $this->transactionService->completeDeposit($transactionID);
-            $this->invalidateWalletCache($this->currentWalletUserId());
-
-            return redirect()->to('/Wallets')->with('message', 'Deposit successful.');
-        } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Error during deposit: ' . $e->getMessage());
-        }
+        return $this->applyBalanceChange(WalletBalanceService::TYPE_DEPOSIT);
     }
 
     public function withdraw(): ResponseInterface|string
+    {
+        return $this->applyBalanceChange(WalletBalanceService::TYPE_WITHDRAWAL);
+    }
+
+    /**
+     * MYMI-GT-FORM-LEDGER-001: deposit/withdraw form handler.
+     *
+     * Previously these handlers called TransactionService with the wrong
+     * number of arguments (fatal on every request), never checked that the
+     * wallet belonged to the user, ignored a failed balance update and still
+     * reported success. Now: POST only, USD only, owner-scoped and atomic via
+     * WalletBalanceService; the optional request_id field makes it idempotent.
+     */
+    private function applyBalanceChange(string $type): ResponseInterface|string
     {
         if ($blocked = $this->guardWalletFeature()) {
             return $blocked;
         }
 
-        $amount   = (float) $this->request->getPost('amount');
-        $walletID = (int) $this->request->getPost('wallet_id');
-        $currency = (string) ($this->request->getPost('currency') ?? 'USD');
+        $label = $type === WalletBalanceService::TYPE_DEPOSIT ? 'Deposit' : 'Withdrawal';
 
-        try {
-            $convertedAmount = $this->currencyService->convert($amount, $currency, 'USD');
-            $transactionID = $this->transactionService->logTransaction('Withdrawal', $walletID, $this->currentWalletUserId(), $convertedAmount);
-
-            $this->resolveWalletService()->withdrawFunds($walletID, $convertedAmount);
-            $this->transactionService->completeDeposit($transactionID);
-            $this->invalidateWalletCache($this->currentWalletUserId());
-
-            return redirect()->to('/Wallets')->with('message', 'Withdrawal successful.');
-        } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Error during withdrawal: ' . $e->getMessage());
+        if (strtolower($this->request->getMethod()) !== 'post') {
+            return redirect()->to('/Wallets')->with('error', $label . ' must be submitted from the wallet form.');
         }
+
+        $currency = strtoupper(trim((string) ($this->request->getPost('currency') ?? 'USD')));
+        if ($currency !== 'USD') {
+            return redirect()->back()->with('error', $label . ' failed: only USD is supported.');
+        }
+
+        $userId    = $this->currentWalletUserId();
+        $walletId  = (int) $this->request->getPost('wallet_id');
+        $amount    = $this->request->getPost('amount');
+        $requestId = substr(trim((string) ($this->request->getPost('request_id') ?? '')), 0, 64);
+
+        $service = new WalletBalanceService();
+        $result  = $type === WalletBalanceService::TYPE_DEPOSIT
+            ? $service->deposit($userId, $walletId, $amount, $requestId)
+            : $service->withdraw($userId, $walletId, $amount, $requestId);
+
+        if ($result['ok']) {
+            $this->invalidateWalletCache($userId);
+
+            return redirect()->to('/Wallets')->with('message', $label . ' successful.');
+        }
+
+        $messages = [
+            'unauthenticated'   => 'Please sign in again.',
+            'wallet_not_found'  => 'That wallet was not found.',
+            'invalid_amount'    => 'Enter an amount greater than zero.',
+            'insufficient_funds' => 'The wallet balance is too low for this withdrawal.',
+            'duplicate_request' => 'This request was already processed.',
+        ];
+
+        return redirect()->back()->with('error', $label . ' failed: ' . ($messages[$result['reason']] ?? 'please try again later.'));
     }
 
     public function exchangeCurrency(): ResponseInterface|string
@@ -1738,23 +1755,9 @@ class WalletsController extends BaseUserController
             return $blocked;
         }
 
-        $fromWalletID = (int) $this->request->getPost('from_wallet_id');
-        $toWalletID   = (int) $this->request->getPost('to_wallet_id');
-        $amount       = (float) $this->request->getPost('amount');
-        $fromCurrency = (string) $this->request->getPost('from_currency');
-        $toCurrency   = (string) $this->request->getPost('to_currency');
-
-        try {
-            $convertedAmount = $this->currencyService->convert($amount, $fromCurrency, $toCurrency);
-
-            $this->transactionService->logTransaction('Exchange', $fromWalletID, $this->currentWalletUserId(), $convertedAmount);
-            $this->resolveWalletService()->exchangeFunds($fromWalletID, $toWalletID, $convertedAmount);
-            $this->invalidateWalletCache($this->currentWalletUserId());
-
-            return redirect()->to('/Wallets')->with('message', 'Currency exchanged successfully.');
-        } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Error during currency exchange: ' . $e->getMessage());
-        }
+        // WalletService::exchangeFunds() does not exist, so this handler was a
+        // fatal error on every call. Refuse explicitly until it is built.
+        return redirect()->to('/Wallets')->with('error', 'Currency exchange is not available yet.');
     }
 
     public function details($accountID = null): ResponseInterface|string
@@ -2119,51 +2122,115 @@ class WalletsController extends BaseUserController
         return $this->purchaseGold();
     }
 
+    /**
+     * GT-FORM-ROUTES-001: POST Wallets/MyMIGPayPalCallback, after the browser has
+     * captured a PayPal order for MyMI Gold. Behind the "mymigold_purchases"
+     * switch (off by default).
+     *
+     * The old handler wrote a "completed" purchase using the user id, amount and
+     * order id the browser sent, without asking PayPal, so any signed-in user
+     * could credit Gold to any account. Now the user comes from the session, the
+     * order is checked with PayPal server to server, each order id is used once,
+     * and the Gold amount is worked out from PayPal's captured amount.
+     */
     public function handleMyMIGPayPalCallback(): ResponseInterface|string
     {
         if ($blocked = $this->guardWalletFeature()) {
             return $blocked;
         }
 
-        $request = $this->request;
+        $userId = $this->currentWalletUserId();
+        $json = $this->request->getJSON(true);
+        $input = is_array($json) ? $json : (array) $this->request->getPost();
+        $orderId = (string) ($input['transaction_id'] ?? '');
+        $claimed = is_numeric($input['total_cost'] ?? null) ? (float) $input['total_cost'] : null;
 
-        $transactionID = $request->getPost('transaction_id');
-        $totalCost     = $request->getPost('total_cost');
-        $walletID      = $request->getPost('wallet_id');
-        $userID        = $request->getPost('user_id');
-        $userEmail     = $request->getPost('user_email');
-        $transFee      = $request->getPost('trans_fee');
+        $claims = new \App\Services\Payments\PaymentClaimService();
+        $result = $claims->claim($userId, 'mymigold', $orderId, $claimed, ['wallet_id' => (string) ($input['wallet_id'] ?? '')]);
 
-        $data = [
-            'transaction_id' => $transactionID,
-            'total_cost'     => $totalCost,
-            'user_id'        => $userID,
-            'wallet_id'      => $walletID,
-            'user_email'     => $userEmail,
+        if (! $result['ok']) {
+            $pending = in_array($result['reason'], ['not_configured', 'lookup_failed', 'auth_failed'], true);
+
+            return $this->response->setStatusCode($pending ? 202 : 422)->setJSON([
+                'status'  => $pending ? 'pending' : 'error',
+                'message' => $pending
+                    ? 'Payment received. We are confirming it with PayPal and will credit your Gold once it is confirmed.'
+                    : 'This payment could not be confirmed.',
+                'reason'  => $result['reason'],
+            ]);
+        }
+
+        $coinValue = (float) ($this->siteSettings->MyMIGCoinValue ?? 1) ?: 1.0;
+        $percent = (float) ($this->siteSettings->transPercent ?? 0);
+        $flatFee = (float) ($this->siteSettings->transFee ?? 0);
+        $paid = (float) $result['amount'];
+        $fees = round($paid * $percent + $flatFee, 2);
+        $coins = round(max(0, $paid - $fees) / $coinValue, 8);
+
+        $row = [
+            'transaction_id' => strtoupper($orderId),
+            'total_cost'     => $paid,
+            'user_id'        => $userId,
+            'wallet_id'      => preg_replace('/[^A-Za-z0-9_\-]/', '', (string) ($input['wallet_id'] ?? '')),
             'status'         => 'completed',
             'active'         => 1,
             'unix_timestamp' => time(),
             'submitted_date' => date('Y-m-d H:i:s'),
             'trans_type'     => 'MyMI Gold Purchase',
-            'currency'       => 'USD',
-            'amount'         => $totalCost,
-            'fees'           => $transFee,
+            'currency'       => $result['currency'] ?: 'USD',
+            'amount'         => $coins,
+            'fees'           => $fees,
             'type'           => 'Purchase',
         ];
 
-        if (isset($this->walletsModel) && method_exists($this->walletsModel, 'submitMyMIGold')) {
-            $this->walletsModel->submitMyMIGold($data);
-        } elseif ($this->mymigoldModel && method_exists($this->mymigoldModel, 'submitMyMIGold')) {
-            $this->mymigoldModel->submitMyMIGold($data);
-        } else {
-            log_message('error', 'WalletsController::handleMyMIGPayPalCallback no submitMyMIGold method available.');
+        $db = db_connect();
+        $db->transStart();
+        ($this->walletModel ?? new WalletModel())->submitMyMIGold($row);
+        $claims->markFulfilled((int) $result['claim_id']);
+        $db->transComplete();
 
-            return redirect()->back()->with('error', 'Unable to submit MyMI Gold purchase.');
+        if (! $db->transStatus()) {
+            return $this->response->setStatusCode(500)->setJSON(['status' => 'error', 'message' => 'Payment confirmed but Gold could not be credited. Support has the record.']);
         }
 
-        $this->invalidateWalletCache((int) $userID);
+        $this->invalidateWalletCache($userId);
 
-        return redirect()->to('/Wallets/Purchase/MyMIGold/Complete/' . $transactionID);
+        return $this->response->setJSON([
+            'status'   => 'success',
+            'message'  => 'Payment confirmed. ' . $coins . ' MyMI Gold added.',
+            'redirect' => site_url('Wallets/Purchase/MyMI-Gold/Complete'),
+        ]);
+    }
+
+    /**
+     * GT-FORM-ROUTES-001: POST Memberships/PurchaseCallback, after the browser has
+     * captured a PayPal order for a membership. Behind "membership_purchases".
+     * The order is verified with PayPal and stored as a payment claim; the
+     * membership itself is applied by an admin from that verified claim, because
+     * there is no membership-grant code to call safely yet.
+     */
+    public function membershipPurchaseCallback(): ResponseInterface
+    {
+        $userId = $this->currentWalletUserId();
+        $input = (array) $this->request->getPost();
+        $detail = [];
+        foreach (['membership_level', 'membership', 'plan', 'billing_cycle', 'features'] as $key) {
+            if (isset($input[$key]) && is_scalar($input[$key])) {
+                $detail[$key] = mb_substr(strip_tags((string) $input[$key]), 0, 100);
+            }
+        }
+        $claimed = is_numeric($input['total_cost'] ?? null) ? (float) $input['total_cost'] : null;
+
+        $result = (new \App\Services\Payments\PaymentClaimService())->claim($userId, 'membership', (string) ($input['transaction_id'] ?? ''), $claimed, $detail);
+
+        if ($result['ok'] || in_array($result['reason'], ['not_configured', 'lookup_failed', 'auth_failed'], true)) {
+            return $this->response->setStatusCode($result['ok'] ? 200 : 202)->setJSON([
+                'status'  => $result['ok'] ? 'success' : 'pending',
+                'message' => 'Thanks! Your payment was received and your membership will be activated once it is confirmed.',
+            ]);
+        }
+
+        return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => 'This payment could not be confirmed.', 'reason' => $result['reason']]);
     }
 
     public function purchaseMembershipSuccess(): ResponseInterface|string
@@ -2522,5 +2589,40 @@ class WalletsController extends BaseUserController
                 ]);
             }
         }
+    }
+
+    /**
+     * GT-FORM-ROUTES-001: POST /add_new_wallet AJAX endpoint for inline modal wallet creation.
+     */
+    public function addNewWallet(): ResponseInterface
+    {
+        $userId = (int) ($this->cuID ?? session('user_id') ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+        $json = $this->request->getJSON(true) ?? [];
+        $walletName = trim((string) ($json['walletName'] ?? $this->request->getPost('walletName') ?? ''));
+        if ($walletName === '') {
+            return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => 'Wallet name is required']);
+        }
+
+        $wm = model(WalletModel::class);
+        $walletId = $wm->addInvestmentWallet([
+            'user_id'     => $userId,
+            'wallet_name' => $walletName,
+            'account'     => $walletName,
+            'type'        => 'investment',
+            'balance'     => 0.0,
+            'status'      => 'Active',
+            'created_at'  => date('Y-m-d H:i:s'),
+        ]);
+
+        $this->invalidateWalletCache($userId);
+
+        return $this->response->setJSON([
+            'status'     => 'success',
+            'wallet_id'  => $walletId,
+            'walletName' => $walletName,
+        ]);
     }
 }

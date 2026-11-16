@@ -211,7 +211,7 @@ $fieldData = array(
             const formData = $(this).serialize(); // Serialize form data
 
             $.ajax({
-                url: '<?= site_url('User/Projects/SubmitInvest'); ?>', // SubmitInvest controller method
+                url: '<?= site_url('Projects/SubmitInvest'); ?>', // SubmitInvest controller method
                 method: 'POST',
                 data: formData,
                 success: function (response) {

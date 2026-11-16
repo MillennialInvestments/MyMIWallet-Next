@@ -1984,6 +1984,20 @@ class ManagementAPIController extends BaseAPIController
         return Http::jsonSuccess($result);
     }
 
+    /**
+     * GT-FORM-ROUTES-001: POST Management/runCronManually from the admin
+     * dashboard. The route is limited to admins (permission:admin.access) and
+     * CSRF-protected, so it does not need the cron token.
+     */
+    public function runCronManuallyAsAdmin()
+    {
+        log_message('info', 'Manual CRON run requested from the admin dashboard by user {id}', ['id' => session('cuID') ?? session('user_id')]);
+        $result = $this->executeCronWorkflow();
+        $result['message'] = 'Manual CRON execution complete.';
+
+        return Http::jsonSuccess($result);
+    }
+
     public function runDailyAlphaVantageDataPipeline() {
         if ($response = $this->requireCronAuth()) {
             return $response;

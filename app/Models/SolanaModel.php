@@ -162,13 +162,20 @@ class SolanaModel extends Model
         return (bool) preg_match('~^[1-9A-HJ-NP-Za-km-z]+$~', $address);
     }
 
-    public function disconnectWallet($walletID)
+    public function disconnectWallet($walletID, ?int $userId = null)
     {
         $data = [
             'active' => 0,
             'status' => 'disconnected',
         ];
-        return $this->db->table('bf_users_wallet')->where('id', $walletID)->update($data);
+        $builder = $this->db->table('bf_users_wallet')->where('id', $walletID);
+        if ($userId !== null) {
+            // GT-FORM-ROUTES-001: only the owner may disconnect a wallet.
+            $builder->where('user_id', $userId);
+        }
+        $builder->update($data);
+
+        return $this->db->affectedRows() > 0;
     }
 
     public function callContractFunction($contractAddress, $functionName, $parameters)

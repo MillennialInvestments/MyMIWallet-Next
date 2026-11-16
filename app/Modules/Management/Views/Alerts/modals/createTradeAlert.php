@@ -458,7 +458,7 @@ $(document).ready(function () {
             fetchTriggered = true;
 
             $.ajax({
-                url: "<?= site_url('API/Alerts/getFullMetrics') ?>",
+                url: "<?= site_url('Management/Alerts/getFullMetrics') ?>",
                 method: "POST",
                 dataType: "json",
                 data: {
@@ -649,7 +649,7 @@ ${summary || 'Summary not yet generated.'}
         button.prop('disabled', true).html('<em class="icon ni ni-reload fa-spin"></em> Fetching...');
 
         $.ajax({
-            url: `<?= site_url('API/Alerts/getFullMetrics') ?>`,
+            url: `<?= site_url('Management/Alerts/getFullMetrics') ?>`,
             method: 'POST',
             dataType: 'json',
             data: {

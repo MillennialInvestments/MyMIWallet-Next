@@ -58,7 +58,7 @@ $solanaListing = [];
                             <?php endif; ?>
 
                             <!-- Coin Swap Form -->
-                            <form id="solanaCoinSwapForm" action="<?= base_url('Exchange/SolanaController/executeSwap') ?>" method="post">                                
+                            <form id="solanaCoinSwapForm" action="<?= site_url('Exchange/Solana/Swap') ?>" method="post">
                                 <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
 
                                 <input id="beta" name="beta" value="<?php echo set_value('beta', $cuUserType === 'Beta' ? 'Yes' : 'No'); ?>" type="hidden">
