@@ -262,6 +262,7 @@ class Console extends BaseConfig
         \App\Commands\Mail\SendTest::class,
         \App\Commands\Mail\Test::class,
         \App\Commands\Mail\Verify::class,
+        \App\Commands\Market\MarketFreshnessAudit::class,
         \App\Commands\Marketing\ApproveGenerated::class,
         \App\Commands\Marketing\ApproveGeneratedContent::class,
         \App\Commands\Marketing\AuditDistribution::class,
