@@ -239,6 +239,7 @@ class Console extends BaseConfig
         \App\Commands\Gtm\BrokerRouteClassificationAudit::class,
         \App\Commands\Gtm\CronRouteSecurityValidation::class,
         \App\Commands\Gtm\HealthSnapshot::class,
+        \App\Commands\Gtm\GateAudit::class,
         \App\Commands\Gtm\LaunchAudit::class,
         \App\Commands\Gtm\LaunchSmoke::class,
         \App\Commands\Health\Cache::class,

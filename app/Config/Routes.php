@@ -445,6 +445,7 @@ $routes->group('', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 
     $routes->get('/Investments/Options', '\App\Modules\User\Controllers\OptionsController::index', ['as' => 'mymi-options-momentum']);
     $routes->get('/Trade-Tracker/getTradeData', 'InvestmentsController::getTradeData', ['as' => 'get-trade-tracker-data']);
     $routes->post('/Trade-Tracker/saveTradeData', 'InvestmentsController::saveTradeData', ['as' => 'save-trade-tracker-data']);
+    $routes->post('/Trade-Tracker/importCsv', 'InvestmentsController::importTradesCsv', ['as' => 'import-trade-tracker-csv']);
     $routes->get('/MyMI-Gold/Goals/(:segment)', 'DashboardController::goals', ['as' => 'mymi-gold-daily-goals']);
     // $routes->get('/MyMI-Gold/Goals/Daily', 'DashboardController::goals', ['as' => 'mymi-gold-daily-goals']);
     // $routes->get('/MyMI-Gold/Goals/Weekly', 'DashboardController::goals', ['as' => 'mymi-gold-weekly-goals']);
