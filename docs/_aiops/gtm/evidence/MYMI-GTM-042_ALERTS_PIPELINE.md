@@ -1,10 +1,11 @@
 # MYMI-GTM-042: Certify Alert Creation, Evaluation, Delivery, and History
 
 ## Status
-READY / CERTIFIED.
+MERGED / CERTIFIED.
 
-- **PR:** (Pending merge)
-- **Completed UTC:** 2026-11-17T13:30:00Z
+- **PR:** [#730](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/730)
+- **Commit:** `94726a61c`
+- **Completed UTC:** 2026-11-17T13:31:00Z
 - **Domain:** Core financial journeys (W3)
 - **Gate:** None required
 
