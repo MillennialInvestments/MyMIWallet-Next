@@ -2125,6 +2125,9 @@ $routes->group('Referrals', ['namespace' => '\App\Modules\User\Controllers', 'fi
     $routes->match(['GET', 'POST'], '/', 'ReferralController::index');
     $routes->match(['GET', 'POST'], 'Create', 'ReferralController::create');
     $routes->match(['GET', 'POST'], 'sendReferralEmail', 'ReferralController::sendReferralEmail');
+    $routes->match(['GET', 'POST'], 'share', 'ReferralController::share');
+    $routes->match(['GET', 'POST'], 'My_Referrals', 'ReferralController::My_Referrals');
+    $routes->match(['GET', 'POST'], 'processPayments', 'ReferralController::processPayments');
 });
 // GT-FORM-ROUTES-001: referral program application (was CodeIgniter 3 Application_Manager).
 $routes->group('Referral-Program', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
