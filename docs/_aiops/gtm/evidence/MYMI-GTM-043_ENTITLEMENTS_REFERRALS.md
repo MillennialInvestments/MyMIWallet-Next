@@ -1,9 +1,10 @@
 # MYMI-GTM-043: Certify Referrals, Memberships, Subscriptions, and Entitlements
 
 ## Status
-READY / CERTIFIED.
+MERGED / CERTIFIED.
 
-- **PR:** (Pending merge)
+- **PR:** [#731](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/731)
+- **Commit:** `769e55cc1`
 - **Completed UTC:** 2026-11-17T13:45:00Z
 - **Domain:** Core financial journeys (W3)
 - **Gate:** None required
