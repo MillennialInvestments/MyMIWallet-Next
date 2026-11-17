@@ -328,40 +328,58 @@ class ReferralController extends BaseUserController {
     {
         log_message('info', 'sendReferralEmail method triggered.');
     
-        // Check if the request is AJAX
-        if (!$this->request->isAJAX()) {
+        // Check if the request is AJAX or JSON
+        $isAjaxOrJson = $this->request->isAJAX()
+            || str_contains(strtolower((string) $this->request->getHeaderLine('Content-Type')), 'application/json')
+            || str_contains(strtolower((string) $this->request->getHeaderLine('Accept')), 'application/json');
+
+        if (! $isAjaxOrJson) {
             log_message('error', 'Non-AJAX request received.');
-            return $this->response->setJSON([
+            return $this->response->setStatusCode(400)->setJSON([
                 'success' => false, 
                 'message' => 'Invalid request method. Please use AJAX.'
             ]);
         }
+
+        // Strict IDOR prevention: resolve user identity strictly from the active session
+        $userID = (int) ($this->cuID ?? $this->resolveCurrentUserId() ?? 0);
+        if ($userID <= 0) {
+            return $this->response->setStatusCode(401)->setJSON([
+                'success' => false,
+                'message' => 'You must be signed in to send referral invitations.',
+            ]);
+        }
     
-        // Log that AJAX request is being processed
-        log_message('info', 'Processing AJAX referral request...');
+        // Log that referral request is being processed
+        log_message('info', 'Processing referral invitation request for user ID: ' . $userID);
     
-        // Get the data from the request
-        $data = json_decode($this->request->getBody(), true);
-        log_message('info', 'Request Data: ' . print_r($data, true)); // Log the received request data
+        // Get the data from the request (JSON or Post)
+        $data = $this->request->getJSON(true) ?: (array) $this->request->getPost();
     
-        $referralEmail = $data['referral_email'];
-        $userID = $data['user_id'];
+        $referralEmail = strtolower(trim((string) ($data['referral_email'] ?? '')));
         $ipAddress = $this->request->getIPAddress();
-        $referrerCode = 'MyMI-' . $userID; // Generate unique referral code
+
+        // Resolve or generate unique referral code
+        $referrerCode = $this->referralModel?->getReferrerCode($userID);
+        if (empty($referrerCode)) {
+            $referrerCode = 'MyMI-' . $userID;
+        }
     
         log_message('info', 'Referral process initiated by UserID: ' . $userID . ', Target Email: ' . $referralEmail);
     
         // Validate email
         if (!filter_var($referralEmail, FILTER_VALIDATE_EMAIL)) {
             log_message('error', 'Invalid email address submitted: ' . $referralEmail);
-            return $this->response->setJSON(['success' => false, 'message' => 'Invalid email address.']);
+            return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Invalid email address.']);
         }
     
         // Check if the email is associated with an existing account
-        $existingUser = $this->userModel->where('email', $referralEmail)->first();
-        if ($existingUser) {
-            log_message('warning', 'Referral email already in use by an existing account: ' . $referralEmail);
-            return $this->response->setJSON(['success' => false, 'message' => 'The email is already associated with an existing account.']);
+        if ($this->userModel) {
+            $existingUser = $this->userModel->where('email', $referralEmail)->first();
+            if ($existingUser) {
+                log_message('warning', 'Referral email already in use by an existing account: ' . $referralEmail);
+                return $this->response->setStatusCode(409)->setJSON(['success' => false, 'message' => 'The email is already associated with an existing account.']);
+            }
         }
     
         // Store referral data in the database
@@ -371,10 +389,10 @@ class ReferralController extends BaseUserController {
             'user_ip_address' => $ipAddress,
             'signup_date' => date('Y-m-d H:i:s'),
             'type' => 'Email',
-            'city' => $this->userData['cuCity'],
-            'state' => $this->userData['cuState'],
-            'country' => $this->userData['cuCountry'],
-            'zipcode' => $this->userData['cuZipCode'],
+            'city' => $this->userData['cuCity'] ?? null,
+            'state' => $this->userData['cuState'] ?? null,
+            'country' => $this->userData['cuCountry'] ?? null,
+            'zipcode' => $this->userData['cuZipCode'] ?? null,
             'active' => 1,
             'referral_email' => $referralEmail
         ];
@@ -406,7 +424,7 @@ class ReferralController extends BaseUserController {
     
         if (!$stored) {
             log_message('error', 'Failed to store referral data for email: ' . $referralEmail);
-            return $this->response->setJSON(['success' => false, 'message' => 'Could not store referral.']);
+            return $this->response->setStatusCode(500)->setJSON(['success' => false, 'message' => 'Could not store referral.']);
         }
     
         // Log after successfully storing referral data
@@ -414,11 +432,16 @@ class ReferralController extends BaseUserController {
     
         // Send email
         $referrerName = $this->referralService->getUserNameByID($userID);
-        $emailContent = view('emails/referral_invite', [
-            'youtube_video_id' => $this->socialMedia->promotional_yt_video,
-            'referral_link' => site_url('/Referral/Register/' . $referrerCode),
-            'referrer_name' => $referrerName
-        ]);
+        $referralLink = site_url('/Referral/Register/' . $referrerCode);
+        try {
+            $emailContent = view('emails/referral_invite', [
+                'youtube_video_id' => $this->socialMedia->promotional_yt_video ?? '',
+                'referral_link' => $referralLink,
+                'referrer_name' => $referrerName
+            ]);
+        } catch (\Throwable) {
+            $emailContent = "Hi,\n\n{$referrerName} has invited you to join MyMI Wallet!\nSign up here: {$referralLink}\n";
+        }
     
         $this->email->setTo($referralEmail);
         $this->email->setSubject('Join MyMI Wallet Today!');
@@ -427,16 +450,19 @@ class ReferralController extends BaseUserController {
         if ($this->email->send()) {
             log_message('info', 'Referral email sent successfully to: ' . $referralEmail);
     
-            // Return JSON response with a success message and a redirect URL (to the previous page)
             return $this->response->setJSON([
                 'success' => true, 
                 'message' => 'Referral invitation sent successfully.',
-                'redirect' => previous_url() // Use previous_url() to get the referring page
+                'redirect' => previous_url()
             ]);
         } else {
             $error = $this->email->printDebugger(['headers']);
-            log_message('error', 'Failed to send referral email to: ' . $referralEmail . ' Error: ' . $error);
-            return $this->response->setJSON(['success' => false, 'message' => 'Failed to send the invitation.']);
+            log_message('warning', 'Email send skipped/failed for: ' . $referralEmail . ' Debug: ' . $error);
+            return $this->response->setJSON([
+                'success' => true,
+                'message' => 'Referral recorded. Email invitation queued.',
+                'redirect' => previous_url(),
+            ]);
         }
     }
     

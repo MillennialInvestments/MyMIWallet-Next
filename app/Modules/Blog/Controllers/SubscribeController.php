@@ -43,8 +43,9 @@ class SubscribeController extends UserController
 
     public function submit()
     {
-        $email = $this->request->getPost('email');
-        $referral = $this->request->getPost('referral');
+        $json = $this->request->getJSON(true);
+        $email = $json['email'] ?? $this->request->getPost('email');
+        $referral = $json['referral'] ?? $this->request->getPost('referral');
 
         $result = $this->subscribeModel->insertEmail($email, $referral);
 

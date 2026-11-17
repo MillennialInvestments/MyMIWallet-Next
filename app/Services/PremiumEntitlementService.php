@@ -94,6 +94,26 @@ class PremiumEntitlementService
         return $this->resolve($userId, ['feature_key' => $featureKey])['featureAllowed'] === true;
     }
 
+    public function getUserTier(?int $userId): string
+    {
+        return (string) ($this->resolve($userId)['membershipTier'] ?? 'free');
+    }
+
+    public function getUserStatus(?int $userId): string
+    {
+        return (string) ($this->resolve($userId)['membershipStatus'] ?? 'free');
+    }
+
+    public function hasActiveMembership(?int $userId): bool
+    {
+        return ! empty($this->resolve($userId)['membershipActive']);
+    }
+
+    public function clearRequestCache(): void
+    {
+        $this->requestCache = [];
+    }
+
     /** @return array<string,array<string,mixed>> */
     public function catalog(): array
     {

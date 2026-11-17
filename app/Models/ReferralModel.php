@@ -77,19 +77,21 @@ class ReferralModel extends Model
         
     public function getAllReferrals()
     {
+        if (! $this->db->tableExists('bf_users_referrals')) {
+            return [];
+        }
+
         $builder = $this->db->table('bf_users_referrals')
             ->select('id, signup_date, referral_email, referrer_code, type, first_name, last_name, active, total_spend');
 
         $this->applyDeletedAtFilter($builder, 'bf_users_referrals');
 
-        return $builder->orderBy('signup_date', 'DESC')
-            ->get()
-            ->getResultArray();
+        return $builder->orderBy('signup_date', 'DESC')->limit(500)->get()->getResultArray();
     }
 
     public function getTotalReferrals($cuID, $cuReferrerCode)
     {
-        if (empty($cuReferrerCode)) {
+        if (empty($cuReferrerCode) || ! $this->db->tableExists('bf_users_referrals')) {
             return [];
         }
 
@@ -100,16 +102,14 @@ class ReferralModel extends Model
 
         $this->applyDeletedAtFilter($builder, 'bf_users_referrals');
 
-        return $builder->orderBy('signup_date', 'DESC')
-            ->get()
-            ->getResultArray();
+        return $builder->orderBy('signup_date', 'DESC')->limit(500)->get()->getResultArray();
     }
     
 
     public function getTotalActiveReferrals($cuID, $cuReferrerCode)
     {
         log_message('debug', 'ReferralModel L88 - $cuReferrerCode: ' . $cuReferrerCode); 
-        if (empty($cuReferrerCode)) {
+        if (empty($cuReferrerCode) || ! $this->db->tableExists('bf_users_referrals')) {
             return [];
         }
 
@@ -119,34 +119,35 @@ class ReferralModel extends Model
 
         $this->applyDeletedAtFilter($builder, 'bf_users_referrals');
 
-        return $builder->groupBy('DATE(signup_date)')
-            ->get()
-            ->getResultArray();
+        return $builder->groupBy('DATE(signup_date)')->limit(500)->get()->getResultArray();
     }
 
     public function getMonthlyReferralStats($cuReferrerCode)
     {
-        if (empty($cuReferrerCode)) {
+        if (empty($cuReferrerCode) || ! $this->db->tableExists('bf_users_referrals')) {
             return [];
         }
 
+        $isSqlite = ($this->db->DBDriver ?? '') === 'SQLite3';
+        $yearExpr = $isSqlite ? "strftime('%Y', signup_date)" : 'YEAR(signup_date)';
+        $monthExpr = $isSqlite ? "cast(strftime('%m', signup_date) as integer)" : 'MONTH(signup_date)';
+
         $builder = $this->db->table('bf_users_referrals')
             ->select(
-                'YEAR(signup_date) as year,' .
-                'MONTH(signup_date) as month,' .
-                'COUNT(*) as total,' .
-                'SUM(CASE WHEN active = 1 THEN 1 ELSE 0 END) as active,' .
+                "{$yearExpr} as year, " .
+                "{$monthExpr} as month, " .
+                'COUNT(*) as total, ' .
+                'SUM(CASE WHEN active = 1 THEN 1 ELSE 0 END) as active, ' .
                 'SUM(CASE WHEN COALESCE(total_spend, 0) > 0 THEN 1 ELSE 0 END) as paying'
             )
             ->where('referrer_code', $cuReferrerCode);
 
         $this->applyDeletedAtFilter($builder, 'bf_users_referrals');
 
-        return $builder->groupBy('YEAR(signup_date), MONTH(signup_date)')
-            ->orderBy('YEAR(signup_date)', 'ASC')
-            ->orderBy('MONTH(signup_date)', 'ASC')
-            ->get()
-            ->getResultArray();
+        return $builder->groupBy("{$yearExpr}, {$monthExpr}")
+            ->orderBy('year', 'ASC')
+            ->orderBy('month', 'ASC')
+            ->limit(100)->get()->getResultArray();
     }
 
     private function applyDeletedAtFilter(\CodeIgniter\Database\BaseBuilder $builder, string $table): void
@@ -209,12 +210,15 @@ class ReferralModel extends Model
 
     public function calculateCommission($cuID, $cuReferrerCode)
     {
+        if (empty($cuReferrerCode) || ! $this->db->tableExists('users')) {
+            return ['total_spending' => 0];
+        }
+
         // Step 1: Get all users referred by the current user using their referrer_code
         $referredUsers = $this->db->table('users')
-                                  ->select('id')
-                                  ->where('referrer_code', $cuReferrerCode)
-                                  ->get()
-                                  ->getResultArray();
+            ->select('id')
+            ->where('referrer_code', $cuReferrerCode)
+            ->limit(500)->get()->getResultArray();
     
         if (empty($referredUsers)) {
             // No referred users, return 0 as total spending
@@ -223,19 +227,24 @@ class ReferralModel extends Model
     
         // Extract the list of user IDs referred by the current user
         $referredUserIds = array_column($referredUsers, 'id');
+
+        if (! $this->db->tableExists('bf_users_wallet_transactions')) {
+            return ['total_spending' => 0];
+        }
     
         // Step 2: Sum up transactions for all referred users in the current month and year
-        $currentMonth = date('m');
-        $currentYear = date('Y');
+        $startDate = date('Y-m-01 00:00:00');
+        $endDate = date('Y-m-t 23:59:59');
     
         $query = $this->db->table('bf_users_wallet_transactions')
-                          ->select('SUM(amount) as total_spending')
-                          ->whereIn('user_id', $referredUserIds)
-                          ->where('MONTH(submitted_date)', $currentMonth)  // Use correct date column
-                          ->where('YEAR(submitted_date)', $currentYear)
-                          ->limit(20)->get();
+            ->select('COALESCE(SUM(amount), 0) as total_spending')
+            ->whereIn('user_id', $referredUserIds)
+            ->where('submitted_date >=', $startDate)
+            ->where('submitted_date <=', $endDate)
+            ->limit(1)->get();
     
-        return $query->getRowArray();
+        $row = $query->getRowArray();
+        return ['total_spending' => (float) ($row['total_spending'] ?? 0)];
     }   
 
     /**
@@ -246,23 +255,83 @@ class ReferralModel extends Model
      */
     public function getAffiliateDetails($userID)
     {
-        // Assuming that 'referrer_code' and 'email' are part of the 'users' table
+        if (! $this->db->tableExists('users')) {
+            return null;
+        }
+
         return $this->db->table('users')
-                        ->select('id, referrer_code, email') // Select needed columns
-                        ->where('id', $userID) // Filter by user ID
-                        ->get()
-                        ->getRowArray();
+            ->select('id, referrer_code, email')
+            ->where('id', (int) $userID)
+            ->limit(1)->get()->getRowArray();
     }
 
     // Example: get commission history for a specific user
     public function getUserCommissionHistory($userId)
     {
+        if (! $this->db->tableExists('bf_users_wallet_transactions')) {
+            return [];
+        }
+
         return $this->db->table('bf_users_wallet_transactions')
             ->select('id, transaction_id, amount, unix_timestamp')
+            ->where('user_id', (int) $userId)
+            ->orderBy('unix_timestamp', 'DESC')
+            ->limit(100)->get()->getResultArray();
+    }
+
+    public function getEarningsBreakdown($cuID): array
+    {
+        $userId = (int) $cuID;
+        $stats = [
+            'total_earned' => 0.00,
+            'pending_payout' => 0.00,
+            'paid_out' => 0.00,
+            'transactions' => [],
+        ];
+
+        if ($userId <= 0 || ! $this->db->tableExists('bf_users_wallet_transactions')) {
+            return $stats;
+        }
+
+        $rows = $this->db->table('bf_users_wallet_transactions')
+            ->select('id, transaction_id, amount, unix_timestamp, details')
             ->where('user_id', $userId)
-            ->orderBy('unix_timestamp', 'DESC') // Get latest first
-            ->get()
-            ->getResultArray();
+            ->where('type', 'commission')
+            ->orderBy('unix_timestamp', 'DESC')
+            ->limit(100)->get()->getResultArray();
+
+        $total = 0.0;
+        foreach ($rows as $row) {
+            $total += (float) ($row['amount'] ?? 0);
+        }
+
+        $stats['total_earned'] = $total;
+        $stats['transactions'] = $rows;
+        return $stats;
+    }
+
+    public function savePayout(array $data): bool|int|string
+    {
+        $table = 'bf_users_referral_payouts';
+        if (! $this->db->tableExists($table)) {
+            log_message('info', 'savePayout skipped: table bf_users_referral_payouts does not exist');
+            return true;
+        }
+
+        return $this->db->table($table)->insert($data);
+    }
+
+    public function updatePayoutStatus(int $userId, array $data): bool
+    {
+        $table = 'bf_users_referral_payouts';
+        if (! $this->db->tableExists($table)) {
+            return true;
+        }
+
+        return (bool) $this->db->table($table)
+            ->where('user_id', $userId)
+            ->where('status', 'Pending')
+            ->update($data);
     }
 
     public function storeReferral($data) {

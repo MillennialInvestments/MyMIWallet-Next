@@ -7,7 +7,7 @@ use App\Models\{MarketingModel, BudgetModel, MyMIGoldModel, SubscribeModel};
 #[\AllowDynamicProperties]
 class SubscribeController extends BaseUserController
 {
-    private $siteSettings;
+    protected $siteSettings;
 
     public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
     {
@@ -17,6 +17,7 @@ class SubscribeController extends BaseUserController
         $this->budgetModel = new BudgetModel();
         $this->mymigoldModel = new MyMIGoldModel();
         $this->subscribeModel = new SubscribeModel();
+        $this->referralModel = new \App\Models\ReferralModel();
     }
 
     public function index()
@@ -37,10 +38,12 @@ class SubscribeController extends BaseUserController
 
     public function Submit()
     {
-        $email = $this->request->getPost('email');
-        $referral = $this->request->getPost('referral');
+        $json = $this->request->getJSON(true);
+        $email = $json['email'] ?? $this->request->getPost('email');
+        $referral = $json['referral'] ?? $this->request->getPost('referral');
 
-        $result = $this->subscribeModel->insertEmail($email, $referral);
+        $userId = (int) ($this->cuID ?? auth()->id() ?? 0);
+        $result = $this->subscribeModel->insertEmail($email, $referral, $userId > 0 ? $userId : null);
 
         if (is_array($result) && !empty($result['success'])) {
             $this->invalidateCrudCache(['subscriptions']);
