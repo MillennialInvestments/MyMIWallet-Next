@@ -1489,13 +1489,11 @@ class AlertsModel extends Model
 
     public function getScannerAlerts(int $limit = 100): array
     {
-        $builder = $this->db->table('bf_investment_trade_alerts')
+        return $this->db->table('bf_investment_trade_alerts')
             ->where('active', 1)
             ->where('source', 'scanner')
             ->orderBy('created_on', 'DESC')
-            ->limit($limit);
-
-        return $builder->get()->getResultArray();
+            ->limit($limit)->get()->getResultArray();
     }
 
     public function getScannerAlertsForUserWatchlist(int $userId, int $limit = 100): array
@@ -1503,8 +1501,7 @@ class AlertsModel extends Model
         $watchlist = $this->db->table('bf_users_watchlist')
             ->select('symbol')
             ->where('user_id', $userId)
-            ->get()
-            ->getResultArray();
+            ->limit(200)->get()->getResultArray();
 
         $symbols = array_values(array_unique(array_filter(array_map(static fn($r) => strtoupper((string) ($r['symbol'] ?? '')), $watchlist))));
         if ($symbols === []) {
