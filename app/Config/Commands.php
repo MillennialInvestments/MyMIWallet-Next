@@ -36,5 +36,6 @@ class Commands extends BaseConfig
         'aiops:solana-transaction-audit' => \App\Commands\SolanaTransactionAudit::class,
         'exchange:create-tbi-project-coin-drafts' => \App\Commands\CreateTbiProjectCoinDrafts::class,
         'market:freshness:audit' => \App\Commands\Market\MarketFreshnessAudit::class,
+        'alerts:evaluate' => \App\Commands\Alerts\Evaluate::class,
     ];
 }

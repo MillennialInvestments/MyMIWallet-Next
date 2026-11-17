@@ -1765,7 +1765,12 @@ $routes->group('Advisors', ['filter' => 'login'], function($routes) {
 // Alerts:
 $routes->group('Alerts', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
     $routes->match(['GET', 'POST'], '/', 'AlertsController::index');
-    $routes->match(['GET', 'POST'], '/Trades', 'AlertsController::trades');
+    $routes->match(['GET', 'POST'], 'Trades', 'AlertsController::trades');
+    $routes->match(['GET', 'POST'], 'filterAlerts', 'AlertsController::filterAlerts');
+    $routes->get('View/(:num)', 'AlertsController::viewAlert/$1');
+    $routes->get('viewAlert/(:num)', 'AlertsController::viewAlert/$1');
+    $routes->get('getUserAlerts', 'AlertsController::getUserAlerts');
+    $routes->get('userAlerts', 'AlertsController::getUserAlerts');
 });
 
 // Auctions:
