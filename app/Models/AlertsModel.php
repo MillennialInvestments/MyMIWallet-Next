@@ -527,10 +527,15 @@ class AlertsModel extends Model
 
     public function getActiveTickers()
     {
-        return $this->db->table('bf_investment_alert_history')
-            ->select('ticker')
-            ->where('active', 1)
-            ->groupBy('ticker')
+        $builder = $this->db->table('bf_investment_alert_history')
+            ->select('ticker');
+
+        if ($this->hasColumn('bf_investment_alert_history', 'active')) {
+            $builder->where('active', 1);
+        }
+
+        return $builder->groupBy('ticker')
+            ->limit(100)
             ->get()
             ->getResultArray();
     }
@@ -1207,7 +1212,13 @@ class AlertsModel extends Model
 
     public function getFilteredUserAlerts($filters, $userID)
     {
-        $builder = $this->db->table('bf_investment_alert_history')->where('send_alert', 1);
+        $builder = $this->db->table('bf_investment_alert_history');
+        if ($this->hasColumn('bf_investment_alert_history', 'send_alert')) {
+            $builder->where('send_alert', 1);
+        }
+        if ($this->hasColumn('bf_investment_alert_history', 'user_id') && (int) $userID > 0) {
+            $builder->where('user_id', (int) $userID);
+        }
         if (!empty($filters['ticker'])) {
             $builder->where('ticker', strtoupper($filters['ticker']));
         }
@@ -2430,6 +2441,18 @@ class AlertsModel extends Model
             $data['execution_id'] = $snapshot['execution_id'];
         }
 
+        if ($this->hasColumn('bf_investment_alert_history', 'user_id') && isset($snapshot['user_id'])) {
+            $data['user_id'] = (int) $snapshot['user_id'];
+        }
+
+        if ($this->hasColumn('bf_investment_alert_history', 'price') && isset($snapshot['price'])) {
+            $data['price'] = (float) $snapshot['price'];
+        }
+
+        if ($this->hasColumn('bf_investment_alert_history', 'send_alert') && isset($snapshot['send_alert'])) {
+            $data['send_alert'] = (int) $snapshot['send_alert'];
+        }
+
         if ($this->hasColumn('bf_investment_alert_history', 'created_on')) {
             $data['created_on'] = $snapshot['created_on'] ?? date('Y-m-d H:i:s');
         }
@@ -3310,7 +3333,9 @@ class AlertsModel extends Model
     
         // Ensure `submitted_date` and `time` are always updated
         $alertData["submitted_date"] = date("Y-m-d");
-        $alertData["time"] = date("H:i:s");
+        if ($this->hasColumn('bf_investment_trade_alerts', 'time')) {
+            $alertData["time"] = date("H:i:s");
+        }
     
         // Ensure `alert_created` is marked as `1`
         $alertData["alert_created"] = 1;

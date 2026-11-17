@@ -108,6 +108,7 @@ class Console extends BaseConfig
         \App\Commands\API\ApiVersioningCheck::class,
         \App\Commands\API\DocsScrapeApi::class,
         \App\Commands\Alerts\Audit::class,
+        \App\Commands\Alerts\Evaluate::class,
         \App\Commands\Alerts\FetchRawEmails::class,
         \App\Commands\Alerts\Forecast::class,
         \App\Commands\Alerts\Ingest::class,

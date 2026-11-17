@@ -460,15 +460,14 @@ class AlertsAdminController extends BaseAdminController
     public function addTradeAlert()
     {
         $post = $this->request->getPost();
+        $userID = (int) ($this->cuID ?? $post['user_id'] ?? 0);
     
-        if (!isset($post['user_id'])) {
+        if ($userID <= 0) {
             return $this->respond([
                 'status'  => 'error',
                 'message' => 'Missing required user_id',
             ], 400);
         }
-    
-        $userID = intval($post['user_id']);
         $symbol = strtoupper(trim($post['symbol'] ?? ''));
         $entryPrice = floatval($post['entry_price'] ?? 0.00);
         $orderStatus = strtoupper($post['order_status'] ?? '');
@@ -516,7 +515,7 @@ class AlertsAdminController extends BaseAdminController
         $data['occurrences'] = 1;
     
         // ✅ Save new alert
-        $this->alertModel->addTrade($data);
+        $this->alertsModel->addTrade($data);
     
         return $this->respond([
             'status'  => 'success',
