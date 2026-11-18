@@ -24,7 +24,11 @@ final class MembershipFulfillmentTest extends CIUnitTestCase
         $db->query('DROP TABLE IF EXISTS bf_mf_claims');
         $db->query('DROP TABLE IF EXISTS bf_mf_subs');
         $db->query('CREATE TABLE bf_mf_claims (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, kind TEXT, provider TEXT, provider_txn_id TEXT, claimed_amount REAL, verified_amount REAL, currency TEXT, status TEXT, detail TEXT, created_at TEXT, updated_at TEXT)');
-        $db->query('CREATE TABLE bf_mf_subs (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, active INTEGER DEFAULT 0, subscription_name TEXT, membership_tier TEXT DEFAULT "free", membership_status TEXT DEFAULT "free", expires_at TEXT, updated_on TEXT)');
+        $db->query('DROP TABLE IF EXISTS bf_mf_users');
+        $db->query('CREATE TABLE bf_mf_users (id INTEGER PRIMARY KEY, email TEXT)');
+        $db->table('bf_mf_users')->insert(['id' => self::USER, 'email' => 'buyer@example.test']);
+        // Mirrors the legacy prod table: email is required, tier only accepts the enum values.
+        $db->query('CREATE TABLE bf_mf_subs (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, email TEXT NOT NULL, tier TEXT CHECK (tier IN ("Free","Tier 1","Tier 2","Tier 3")), active INTEGER DEFAULT 0, subscription_name TEXT, membership_tier TEXT DEFAULT "free", membership_status TEXT DEFAULT "free", expires_at TEXT, updated_on TEXT)');
         $db->resetDataCache();
     }
 
@@ -33,13 +37,14 @@ final class MembershipFulfillmentTest extends CIUnitTestCase
         $db = db_connect();
         $db->query('DROP TABLE IF EXISTS bf_mf_claims');
         $db->query('DROP TABLE IF EXISTS bf_mf_subs');
+        $db->query('DROP TABLE IF EXISTS bf_mf_users');
         $db->resetDataCache();
         parent::tearDown();
     }
 
     private function service(): MembershipFulfillmentService
     {
-        return new MembershipFulfillmentService(db_connect(), 'bf_mf_claims', 'bf_mf_subs');
+        return new MembershipFulfillmentService(db_connect(), 'bf_mf_claims', 'bf_mf_subs', 'bf_mf_users');
     }
 
     private function claim(float $amount, string $status = 'verified', string $currency = 'USD', int $user = self::USER, string $kind = 'membership'): int
@@ -72,6 +77,8 @@ final class MembershipFulfillmentTest extends CIUnitTestCase
         $this->assertSame('tier2', $result['tier']);
         $row = $this->sub();
         $this->assertSame('tier2', $row['membership_tier']);
+        $this->assertSame('Tier 2', $row['tier'], 'legacy enum value, not the plan name');
+        $this->assertSame('buyer@example.test', $row['email'], 'legacy table requires the buyer email');
         $this->assertSame('active', $row['membership_status']);
         $this->assertSame(1, (int) $row['active']);
         $this->assertSame(date('Y-m-d H:i:s', self::NOW + 30 * 86400), $row['expires_at']);

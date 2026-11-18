@@ -21,7 +21,7 @@ final class MembershipFulfillmentService
 
     private BaseConnection $db;
 
-    public function __construct(?BaseConnection $db = null, private readonly string $claimsTable = 'bf_payment_claims', private readonly string $table = self::TABLE)
+    public function __construct(?BaseConnection $db = null, private readonly string $claimsTable = 'bf_payment_claims', private readonly string $table = self::TABLE, private readonly string $usersTable = 'bf_users')
     {
         $this->db = $db ?? db_connect();
     }
@@ -97,8 +97,8 @@ final class MembershipFulfillmentService
         $row = ['membership_tier' => $plan['tier'], 'membership_status' => 'active', 'expires_at' => $expires];
         $optional = [
             'active'            => 1,
-            'tier'              => $plan['label'],
-            'status'            => 'active',
+            // Legacy enum('Free','Tier 1','Tier 2','Tier 3'); plan names are not valid values.
+            'tier'              => ['tier1' => 'Tier 1', 'tier2' => 'Tier 2', 'tier3' => 'Tier 3'][$plan['tier']] ?? 'Free',
             'subscription_name' => $plan['label'] . ' Membership',
             'source_channel'    => 'paypal',
             'updated_on'        => $stamp,
@@ -115,6 +115,10 @@ final class MembershipFulfillmentService
             if (in_array('created_on', $fields, true)) {
                 $row['created_on'] = $stamp;
             }
+            if (in_array('email', $fields, true)) {
+                // The legacy table requires an email on every row.
+                $row['email'] = $this->userEmail($userId);
+            }
             $this->db->table($this->table)->insert($row + ['user_id' => $userId]);
         }
 
@@ -130,6 +134,16 @@ final class MembershipFulfillmentService
         ]);
 
         return ['ok' => true, 'reason' => 'fulfilled', 'tier' => $plan['tier'], 'expires_at' => $expires];
+    }
+
+    private function userEmail(int $userId): string
+    {
+        if (! $this->db->tableExists($this->usersTable) || ! $this->db->fieldExists('email', $this->usersTable)) {
+            return '';
+        }
+        $user = $this->db->table($this->usersTable)->select('email')->where('id', $userId)->limit(1)->get()->getRowArray();
+
+        return (string) ($user['email'] ?? '');
     }
 
     /**
