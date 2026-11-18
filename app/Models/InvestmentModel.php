@@ -1338,26 +1338,54 @@ class InvestmentModel extends Model
     public function createStrategy($data)
     {
         $builder = $this->db->table('bf_investment_strategies');
-        return $builder->insert($data);
+        $builder->insert($data);
+        return (int) $this->db->insertID();
     }
 
     public function createGoal($data)
     {
         $builder = $this->db->table('bf_financial_goals');
-        return $builder->insert($data);
+        $builder->insert($data);
+        return (int) $this->db->insertID();
     }
 
-    public function deleteGoal($id)
+    public function getGoalById($id, ?int $userId = null)
     {
         $builder = $this->db->table('bf_financial_goals');
         $builder->where('id', $id);
-        return $builder->delete();
+        if ($userId !== null) {
+            $builder->where('user_id', $userId);
+        }
+        return $builder->limit(1)->get()->getRowArray();
     }
 
-    public function deleteStrategy($id)
+    public function getStrategyById($id, ?int $userId = null)
     {
         $builder = $this->db->table('bf_investment_strategies');
         $builder->where('id', $id);
+        if ($userId !== null) {
+            $builder->where('user_id', $userId);
+        }
+        return $builder->limit(1)->get()->getRowArray();
+    }
+
+    public function deleteGoal($id, ?int $userId = null)
+    {
+        $builder = $this->db->table('bf_financial_goals');
+        $builder->where('id', $id);
+        if ($userId !== null) {
+            $builder->where('user_id', $userId);
+        }
+        return $builder->delete();
+    }
+
+    public function deleteStrategy($id, ?int $userId = null)
+    {
+        $builder = $this->db->table('bf_investment_strategies');
+        $builder->where('id', $id);
+        if ($userId !== null) {
+            $builder->where('user_id', $userId);
+        }
         return $builder->delete();
     }
 
@@ -1488,21 +1516,22 @@ class InvestmentModel extends Model
         }
     }
     
-    public function importInvestmentsFromCSV($filePath)
+    public function importInvestmentsFromCSV($filePath, ?int $userId = null)
     {
-        $file = fopen($filePath, 'r');
-        while (($line = fgetcsv($file)) !== FALSE) {
-            $investmentData = [
-                'user_id' => $this->session->get('user_id'),
-                'symbol' => $line[0],
-                'shares' => $line[1],
-                'entry_price' => $line[2],
-                'current_price' => $line[3],
-                'trade_date' => $line[4],
+        $userId = (int) ($userId ?? ($this->session?->get('user_id') ?? 0));
+        if ($userId <= 0) {
+            return [
+                'success'         => false,
+                'imported_count'  => 0,
+                'duplicate_count' => 0,
+                'error_count'     => 1,
+                'imported_ids'    => [],
+                'errors'          => ['Valid user ID required for trade import.'],
             ];
-            $this->addTrade($investmentData);
         }
-        fclose($file);
+
+        $service = new \App\Services\TradeImportService($this);
+        return $service->importCsvFile($userId, (string) $filePath, true);
     }
 
     public function lastMonthTradePerformanceByUser($cuID) {
@@ -1552,10 +1581,13 @@ class InvestmentModel extends Model
         return $query->getRow()->net_gains ?? 0;
     }
 
-    public function updateGoal($id, $data)
+    public function updateGoal($id, $data, ?int $userId = null)
     {
         $builder = $this->db->table('bf_financial_goals');
         $builder->where('id', $id);
+        if ($userId !== null) {
+            $builder->where('user_id', $userId);
+        }
         return $builder->update($data);
     }
 
@@ -1574,10 +1606,13 @@ class InvestmentModel extends Model
             ]);
     }
 
-    public function updateStrategy($id, $data)
+    public function updateStrategy($id, $data, ?int $userId = null)
     {
         $builder = $this->db->table('bf_investment_strategies');
         $builder->where('id', $id);
+        if ($userId !== null) {
+            $builder->where('user_id', $userId);
+        }
         return $builder->update($data);
     }
 

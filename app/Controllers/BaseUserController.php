@@ -15,10 +15,14 @@ class BaseUserController extends UserController
     {
         parent::initController($request, $response, $logger);
 
+        if (! $this->session) {
+            $this->session = \Config\Services::session();
+        }
+
         $this->userId = $this->resolveCurrentUserId();
         $this->userContext = [
             'userId'    => $this->userId,
-            'userEmail' => $this->session->get('email') ?? null,
+            'userEmail' => $this->session?->get('email') ?? null,
             'isLoggedIn'=> $this->userId !== null,
         ];
 

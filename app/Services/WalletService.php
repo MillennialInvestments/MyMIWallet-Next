@@ -22,20 +22,20 @@ class WalletService
     protected $transactionModel;
     protected $userService;
 
-    public function __construct(LoggerInterface $logger, WalletModel $walletModel)
+    public function __construct(?LoggerInterface $logger = null, ?WalletModel $walletModel = null)
     {
         // Initialize config, session, request, models, and logger
         $this->siteSettings = config('SiteSettings');
         $this->request = service('request');
         $this->session = service('session');
-        $this->logger = $logger;
-        $this->walletModel = $walletModel;
+        $this->logger = $logger ?? service('logger');
+        $this->walletModel = $walletModel ?? new WalletModel();
         $this->accountsModel = new AccountsModel();
         $this->transactionModel = new TransactionModel();
-        $this->logger = $logger;
 
         // Initialize UserService with correct parameters
-        $this->userService = new UserService($this->siteSettings, $this->session->get('user_id'), $this->request);
+        $userId = $this->session ? ($this->session->get('user_id') ?? 0) : 0;
+        $this->userService = new UserService($this->siteSettings, $userId, $this->request);
     }
 
     /**
@@ -588,9 +588,13 @@ class WalletService
     }
     
     // 3. Delete Wallet
-    public function deleteWallet($accountId)
+    public function deleteWallet(int $accountId, int $userId): bool
     {
-        return $this->walletModel->deleteWallet($accountId);
+        if ($accountId <= 0 || $userId <= 0) {
+            return false;
+        }
+
+        return (bool) $this->walletModel->deleteWallet($accountId, $userId);
     }
 
     // // 5. Edit Bank Wallet

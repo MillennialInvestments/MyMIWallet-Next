@@ -972,8 +972,17 @@ class InvestmentsController extends BaseUserController
         }
     }    
     
-    public function getUserWatchlist($cuID)
+    public function getUserWatchlist($cuID = null)
     {
+        $userId = (int) ($this->cuID ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+
+        if ($cuID !== null && (int) $cuID !== $userId) {
+            return $this->response->setStatusCode(403)->setJSON(['status' => 'error', 'message' => 'Forbidden']);
+        }
+
         if ($this->featureGuardResponse instanceof \CodeIgniter\HTTP\ResponseInterface) {
             return $this->featureGuardResponse;
         }
@@ -987,7 +996,7 @@ class InvestmentsController extends BaseUserController
         }
 
         try {
-            $watchlist = $this->investmentModel->getUserWatchlist($cuID);
+            $watchlist = $this->investmentModel->getUserWatchlist($userId);
             $symbols = array_values(array_unique(array_filter(array_map(static fn ($row) => strtoupper((string) ($row['symbol'] ?? '')), $watchlist))));
             $squeezeMap = $symbols ? $this->getMyMIInvestments()->getSqueezeBySymbols($symbols) : [];
             foreach ($watchlist as &$row) {
@@ -1088,6 +1097,11 @@ class InvestmentsController extends BaseUserController
             return $this->featureGuardResponse;
         }
 
+        $userId = (int) ($this->cuID ?? session('user_id') ?? 0);
+        if ($userId <= 0) {
+            return $this->failUnauthorized('Authentication required.');
+        }
+
         log_message('debug', 'InvestmentsController: Starting saveTradeData');
         $decodedInput = $this->request->getJSON(true); // Parse JSON payload
         log_message('debug', 'Decoded Input: ' . print_r($decodedInput, true));
@@ -1098,40 +1112,98 @@ class InvestmentsController extends BaseUserController
         }
     
         $tradeInfo = $decodedInput['trade'] ?? null;
-        if (!$tradeInfo || !is_array($tradeInfo)) {
+        if (! $tradeInfo || ! is_array($tradeInfo)) {
             log_message('error', 'Invalid input structure for trade data');
             return $this->fail('Invalid trade data', 400);
         }
+
+        // Strict ownership scoping: never trust client-supplied user_id
+        $tradeInfo['user_id'] = $userId;
     
-        // Ensure the `id` is used to update an existing record
+        // Ensure the `id` is used to update an existing record with ownership check
         $result = null;
-        if (isset($tradeInfo['id']) && !empty($tradeInfo['id'])) {
-            $result = $this->investmentModel->updateTrade($tradeInfo['id'], $tradeInfo);
-            log_message('debug', "Updated trade with ID: {$tradeInfo['id']}");
+        if (isset($tradeInfo['id']) && ! empty($tradeInfo['id'])) {
+            $tradeId = (int) $tradeInfo['id'];
+            $existing = $this->investmentModel->getTradeById($tradeId);
+            if (! $existing) {
+                return $this->failNotFound('Trade record not found.');
+            }
+            if ((int) ($existing['user_id'] ?? 0) !== $userId) {
+                return $this->failForbidden('You do not have permission to modify this trade.');
+            }
+
+            $result = $this->investmentModel->updateTrade($tradeId, $tradeInfo);
+            log_message('debug', "Updated trade with ID: {$tradeId}");
         } else {
             $result = $this->investmentModel->addTrade($tradeInfo);
-            log_message('debug', "Inserted new trade: " . print_r($tradeInfo, true));
+            log_message('debug', "Inserted new trade for user {$userId}: " . print_r($tradeInfo, true));
         }
 
         if ($result) {
-            $userId = (int) ($tradeInfo['user_id'] ?? 0);
-            if (! $userId && !empty($tradeInfo['id'])) {
-                $existing = $this->investmentModel->getTradeById($tradeInfo['id']);
-                $userId = (int)($existing['user_id'] ?? 0);
-            }
-            if (! $userId) {
-                $userId = (int) ($this->cuID ?? 0);
-            }
-
-            $this->invalidateCrudCache(array_filter([
+            $this->invalidateCrudCache([
                 'investments',
-                $userId > 0 ? 'user:' . $userId : null,
-            ]));
+                'user:' . $userId,
+            ]);
 
             return $this->respond(['status' => 'success', 'message' => 'Trade saved successfully']);
-        } else {
-            return $this->fail('Failed to save trade data', 500);
         }
+
+        return $this->fail('Failed to save trade data', 500);
+    }
+
+    /**
+     * GTM-034: Import trades from CSV file or payload with duplicate detection.
+     */
+    public function importTradesCsv()
+    {
+        if ($this->featureGuardResponse instanceof \CodeIgniter\HTTP\ResponseInterface) {
+            return $this->featureGuardResponse;
+        }
+
+        $userId = (int) ($this->cuID ?? session('user_id') ?? 0);
+        if ($userId <= 0) {
+            return $this->failUnauthorized('Authentication required.');
+        }
+
+        $file = $this->request->getFile('csv_file');
+        $csvContent = '';
+
+        if ($file && $file->isValid() && ! $file->hasMoved()) {
+            $csvContent = (string) file_get_contents($file->getTempName());
+        } else {
+            $csvContent = (string) ($this->request->getPost('csv_content') ?? '');
+            if (empty($csvContent)) {
+                $json = $this->request->getJSON(true);
+                $csvContent = (string) ($json['csv_content'] ?? '');
+            }
+        }
+
+        if (trim($csvContent) === '') {
+            return $this->fail('CSV content or file is required.', 400);
+        }
+
+        $service = new \App\Services\TradeImportService($this->investmentModel);
+        $parseResult = $service->parseCsv($csvContent);
+        if (empty($parseResult['trades'])) {
+            $errorMsg = ! empty($parseResult['errors'])
+                ? implode('; ', $parseResult['errors'])
+                : 'No valid trade rows found in CSV.';
+            return $this->fail($errorMsg, 400);
+        }
+
+        $importResult = $service->importTrades($userId, $parseResult['trades'], true);
+        if (! $importResult['success']) {
+            return $this->fail('Import failed: ' . implode('; ', $importResult['errors']), 400);
+        }
+
+        $this->invalidateCrudCache(['investments', 'user:' . $userId]);
+
+        return $this->respond([
+            'status'          => 'success',
+            'imported_count'  => $importResult['imported_count'],
+            'duplicate_count' => $importResult['duplicate_count'],
+            'errors'          => $importResult['errors'],
+        ]);
     }
     
     private function validateTradeInput(array $json)
@@ -1287,13 +1359,20 @@ class InvestmentsController extends BaseUserController
     public function getStrategies()
     {
         $userId = (int) ($this->cuID ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
         $strategies = $this->investmentModel->getStrategiesByUser($userId);
         return $this->response->setJSON($strategies);
     }
 
     public function getStrategy(int $id)
     {
-        $strategy = $this->getMyMIInvestments()->getStrategyById($id);
+        $userId = (int) ($this->cuID ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+        $strategy = $this->investmentModel->getStrategyById($id, $userId);
         if (! $strategy) {
             return $this->response->setStatusCode(404)->setJSON(['status' => 'error', 'message' => 'Strategy not found']);
         }
@@ -1303,9 +1382,16 @@ class InvestmentsController extends BaseUserController
     public function createStrategy()
     {
         $userId = (int) ($this->cuID ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+        $name = trim((string) ($this->request->getPost('name') ?? ''));
+        if ($name === '') {
+            return $this->response->setStatusCode(400)->setJSON(['status' => 'error', 'message' => 'Strategy name is required']);
+        }
         $data = [
             'user_id'     => $userId,
-            'name'        => (string) ($this->request->getPost('name') ?? ''),
+            'name'        => $name,
             'description' => (string) ($this->request->getPost('description') ?? ''),
             'created_at'  => date('Y-m-d H:i:s'),
         ];
@@ -1315,18 +1401,34 @@ class InvestmentsController extends BaseUserController
 
     public function updateStrategy(int $id)
     {
+        $userId = (int) ($this->cuID ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+        $existing = $this->investmentModel->getStrategyById($id, $userId);
+        if (! $existing) {
+            return $this->response->setStatusCode(404)->setJSON(['status' => 'error', 'message' => 'Strategy not found']);
+        }
         $input = $this->request->getRawInput() ?? [];
         $data = array_filter([
             'name'        => (string) ($input['name'] ?? $this->request->getPost('name') ?? ''),
             'description' => (string) ($input['description'] ?? $this->request->getPost('description') ?? ''),
         ]);
-        $this->investmentModel->updateStrategy($id, $data);
+        $this->investmentModel->updateStrategy($id, $data, $userId);
         return $this->response->setJSON(['status' => 'success']);
     }
 
     public function deleteStrategy(int $id)
     {
-        $this->investmentModel->deleteStrategy($id);
+        $userId = (int) ($this->cuID ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+        $existing = $this->investmentModel->getStrategyById($id, $userId);
+        if (! $existing) {
+            return $this->response->setStatusCode(404)->setJSON(['status' => 'error', 'message' => 'Strategy not found']);
+        }
+        $this->investmentModel->deleteStrategy($id, $userId);
         return $this->response->setJSON(['status' => 'success']);
     }
 
@@ -1334,13 +1436,20 @@ class InvestmentsController extends BaseUserController
     public function getGoals()
     {
         $userId = (int) ($this->cuID ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
         $goals = $this->investmentModel->getGoalsByUser($userId);
         return $this->response->setJSON($goals);
     }
 
     public function getGoal(int $id)
     {
-        $goal = $this->getMyMIInvestments()->getGoalById($id);
+        $userId = (int) ($this->cuID ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+        $goal = $this->investmentModel->getGoalById($id, $userId);
         if (! $goal) {
             return $this->response->setStatusCode(404)->setJSON(['status' => 'error', 'message' => 'Goal not found']);
         }
@@ -1350,9 +1459,16 @@ class InvestmentsController extends BaseUserController
     public function createGoal()
     {
         $userId = (int) ($this->cuID ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+        $name = trim((string) ($this->request->getPost('name') ?? ''));
+        if ($name === '') {
+            return $this->response->setStatusCode(400)->setJSON(['status' => 'error', 'message' => 'Goal name is required']);
+        }
         $data = [
             'user_id'       => $userId,
-            'name'          => (string) ($this->request->getPost('name') ?? ''),
+            'name'          => $name,
             'target_amount' => (float) ($this->request->getPost('target_amount') ?? 0),
             'description'   => (string) ($this->request->getPost('description') ?? ''),
             'created_at'    => date('Y-m-d H:i:s'),
@@ -1363,30 +1479,57 @@ class InvestmentsController extends BaseUserController
 
     public function updateGoal(int $id)
     {
+        $userId = (int) ($this->cuID ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+        $existing = $this->investmentModel->getGoalById($id, $userId);
+        if (! $existing) {
+            return $this->response->setStatusCode(404)->setJSON(['status' => 'error', 'message' => 'Goal not found']);
+        }
         $input = $this->request->getRawInput() ?? [];
         $data = array_filter([
             'name'          => (string) ($input['name'] ?? $this->request->getPost('name') ?? ''),
             'target_amount' => (float) ($input['target_amount'] ?? $this->request->getPost('target_amount') ?? 0),
             'description'   => (string) ($input['description'] ?? $this->request->getPost('description') ?? ''),
         ]);
-        $this->investmentModel->updateGoal($id, $data);
+        $this->investmentModel->updateGoal($id, $data, $userId);
         return $this->response->setJSON(['status' => 'success']);
     }
 
     public function deleteGoal(int $id)
     {
-        $this->investmentModel->deleteGoal($id);
+        $userId = (int) ($this->cuID ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+        $existing = $this->investmentModel->getGoalById($id, $userId);
+        if (! $existing) {
+            return $this->response->setStatusCode(404)->setJSON(['status' => 'error', 'message' => 'Goal not found']);
+        }
+        $this->investmentModel->deleteGoal($id, $userId);
         return $this->response->setJSON(['status' => 'success']);
     }
 
     // GT-FORM-ROUTES-001: Watchlist Add / Remove Form Handlers
     public function addToWatchlist()
     {
+        $userId = (int) ($this->cuID ?? 0);
+        if ($userId <= 0) {
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+            }
+            return redirect()->to('/login');
+        }
+
         $symbol = trim((string) ($this->request->getPost('symbol') ?? ''));
         if ($symbol === '') {
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(400)->setJSON(['status' => 'error', 'message' => 'Symbol is required']);
+            }
             return redirect()->back()->with('error', 'Symbol is required');
         }
-        $userId = (int) ($this->cuID ?? 0);
+
         $this->investmentModel->addToWatchlist($userId, strtoupper($symbol));
         if ($this->request->isAJAX()) {
             return $this->response->setJSON(['status' => 'success', 'symbol' => strtoupper($symbol)]);
@@ -1396,16 +1539,124 @@ class InvestmentsController extends BaseUserController
 
     public function removeFromWatchlist()
     {
+        $userId = (int) ($this->cuID ?? 0);
+        if ($userId <= 0) {
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+            }
+            return redirect()->to('/login');
+        }
+
         $symbol = trim((string) ($this->request->getPost('symbol') ?? ''));
         if ($symbol === '') {
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(400)->setJSON(['status' => 'error', 'message' => 'Symbol is required']);
+            }
             return redirect()->back()->with('error', 'Symbol is required');
         }
-        $userId = (int) ($this->cuID ?? 0);
+
         $this->investmentModel->removeFromWatchlist($userId, strtoupper($symbol));
         if ($this->request->isAJAX()) {
             return $this->response->setJSON(['status' => 'success', 'symbol' => strtoupper($symbol)]);
         }
         return redirect()->back()->with('success', 'Removed from watchlist');
+    }
+
+    public function watchlist()
+    {
+        $userId = (int) ($this->cuID ?? 0);
+        if ($userId <= 0) {
+            if ($this->request->isAJAX()) {
+                return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+            }
+            return redirect()->to('/login');
+        }
+
+        if ($this->request->getMethod() === 'POST') {
+            $action = $this->request->getPost('action') ?? 'add';
+            $symbol = trim((string) ($this->request->getPost('symbol') ?? ''));
+            if ($symbol !== '') {
+                if ($action === 'remove') {
+                    $this->investmentModel->removeFromWatchlist($userId, strtoupper($symbol));
+                } else {
+                    $this->investmentModel->addToWatchlist($userId, strtoupper($symbol));
+                }
+            }
+        }
+
+        $watchlist = $this->investmentModel->getUserWatchlist($userId);
+
+        if ($this->request->isAJAX()) {
+            return $this->response->setJSON(['status' => 'success', 'data' => $watchlist]);
+        }
+
+        $this->data['pageTitle'] = 'Investment Watchlist | MyMI Wallet';
+        $this->data['watchlist'] = $watchlist;
+        $this->commonData();
+        return $this->renderTheme('App\Modules\User\Views\Investments\index', $this->data);
+    }
+
+    public function autoSave()
+    {
+        $userId = (int) ($this->cuID ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+        return $this->response->setJSON(['status' => 'success', 'saved_at' => date('Y-m-d H:i:s')]);
+    }
+
+    public function overview()
+    {
+        $this->data['pageTitle'] = 'Investment Overview | MyMI Wallet';
+        $this->commonData();
+        return $this->renderTheme('App\Modules\User\Views\Investments\index', $this->data);
+    }
+
+    public function test()
+    {
+        return $this->response->setJSON(['status' => 'success', 'service' => 'investments']);
+    }
+
+    public function cryptoOverview()
+    {
+        $this->data['pageTitle'] = 'Crypto Overview | MyMI Wallet';
+        $this->commonData();
+        return $this->renderTheme('App\Modules\User\Views\Investments\index', $this->data);
+    }
+
+    public function economicData()
+    {
+        $this->data['pageTitle'] = 'Economic Data | MyMI Wallet';
+        $this->commonData();
+        return $this->renderTheme('App\Modules\User\Views\Investments\index', $this->data);
+    }
+
+    public function marketNews()
+    {
+        $this->data['pageTitle'] = 'Market News | MyMI Wallet';
+        $this->commonData();
+        return $this->renderTheme('App\Modules\User\Views\Investments\index', $this->data);
+    }
+
+    public function MyMINews()
+    {
+        $this->data['pageTitle'] = 'MyMI News | MyMI Wallet';
+        $this->commonData();
+        return $this->renderTheme('App\Modules\User\Views\Investments\index', $this->data);
+    }
+
+    public function MyMIResearch()
+    {
+        $this->data['pageTitle'] = 'MyMI Research | MyMI Wallet';
+        $this->commonData();
+        return $this->renderTheme('App\Modules\User\Views\Investments\index', $this->data);
+    }
+
+    public function stockOverview()
+    {
+        $this->data['pageTitle'] = 'Stock Overview | MyMI Wallet';
+        $this->commonData();
+        return $this->renderTheme('App\Modules\User\Views\Investments\index', $this->data);
     }
 }
 ?>

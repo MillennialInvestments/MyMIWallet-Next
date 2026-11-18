@@ -445,6 +445,7 @@ $routes->group('', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 
     $routes->get('/Investments/Options', '\App\Modules\User\Controllers\OptionsController::index', ['as' => 'mymi-options-momentum']);
     $routes->get('/Trade-Tracker/getTradeData', 'InvestmentsController::getTradeData', ['as' => 'get-trade-tracker-data']);
     $routes->post('/Trade-Tracker/saveTradeData', 'InvestmentsController::saveTradeData', ['as' => 'save-trade-tracker-data']);
+    $routes->post('/Trade-Tracker/importCsv', 'InvestmentsController::importTradesCsv', ['as' => 'import-trade-tracker-csv']);
     $routes->get('/MyMI-Gold/Goals/(:segment)', 'DashboardController::goals', ['as' => 'mymi-gold-daily-goals']);
     // $routes->get('/MyMI-Gold/Goals/Daily', 'DashboardController::goals', ['as' => 'mymi-gold-daily-goals']);
     // $routes->get('/MyMI-Gold/Goals/Weekly', 'DashboardController::goals', ['as' => 'mymi-gold-weekly-goals']);
@@ -1764,7 +1765,12 @@ $routes->group('Advisors', ['filter' => 'login'], function($routes) {
 // Alerts:
 $routes->group('Alerts', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {
     $routes->match(['GET', 'POST'], '/', 'AlertsController::index');
-    $routes->match(['GET', 'POST'], '/Trades', 'AlertsController::trades');
+    $routes->match(['GET', 'POST'], 'Trades', 'AlertsController::trades');
+    $routes->match(['GET', 'POST'], 'filterAlerts', 'AlertsController::filterAlerts');
+    $routes->get('View/(:num)', 'AlertsController::viewAlert/$1');
+    $routes->get('viewAlert/(:num)', 'AlertsController::viewAlert/$1');
+    $routes->get('getUserAlerts', 'AlertsController::getUserAlerts');
+    $routes->get('userAlerts', 'AlertsController::getUserAlerts');
 });
 
 // Auctions:
@@ -2119,6 +2125,9 @@ $routes->group('Referrals', ['namespace' => '\App\Modules\User\Controllers', 'fi
     $routes->match(['GET', 'POST'], '/', 'ReferralController::index');
     $routes->match(['GET', 'POST'], 'Create', 'ReferralController::create');
     $routes->match(['GET', 'POST'], 'sendReferralEmail', 'ReferralController::sendReferralEmail');
+    $routes->match(['GET', 'POST'], 'share', 'ReferralController::share');
+    $routes->match(['GET', 'POST'], 'My_Referrals', 'ReferralController::My_Referrals');
+    $routes->match(['GET', 'POST'], 'processPayments', 'ReferralController::processPayments');
 });
 // GT-FORM-ROUTES-001: referral program application (was CodeIgniter 3 Application_Manager).
 $routes->group('Referral-Program', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 'login'], function($routes) {

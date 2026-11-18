@@ -78,12 +78,13 @@ $transactionCount = count($transactionHistory);
                                 </a>
                             </li>
                             <li>
-                                <a href="<?= esc($deleteHref) ?>"
-                                   class="btn btn-danger"
-                                   onclick="return confirm('Are you sure you want to delete this investment wallet?');">
-                                    <em class="icon ni ni-trash"></em>
-                                    <span>Delete</span>
-                                </a>
+                                <form action="<?= esc($deleteHref) ?>" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this investment wallet?');">
+                                    <?= csrf_field() ?>
+                                    <button type="submit" class="btn btn-danger">
+                                        <em class="icon ni ni-trash"></em>
+                                        <span>Delete</span>
+                                    </button>
+                                </form>
                             </li>
                         </ul>
                     </div>

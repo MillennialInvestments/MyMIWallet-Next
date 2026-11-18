@@ -18,6 +18,7 @@ class ReferralService
     protected $userModel;
     protected $siteSettings;
     protected $cuID;
+    protected $db;
 
     public function __construct()
     {
@@ -29,6 +30,7 @@ class ReferralService
         $this->userModel = new UserModel();
         $this->siteSettings = config('SiteSettings');
         $this->cuID = $this->session->get('user_id') ?? $this->auth->id() ?? 0;
+        $this->db = db_connect();
     }
 
     /**
@@ -225,19 +227,31 @@ class ReferralService
      */
     public function processReferralPayments($cuID)
     {
+        // Money switch protection: money cannot leave the platform without explicit gate approval
+        if (! (function_exists('feature_enabled') && feature_enabled('FEATURE_MEMBERSHIP_PURCHASES'))) {
+            log_message('info', 'processReferralPayments: payouts suppressed by money switch (FEATURE_MEMBERSHIP_PURCHASES=false).');
+            return false;
+        }
+
         $commission = $this->calculateCommissions($cuID);
         if ($commission > 0) {
-            // Call a function to handle automated payments via PayPal, Stripe, etc.
-            $this->payoutUser($cuID, $commission);
+            return $this->payoutUser($cuID, $commission);
         }
+
+        return false;
     }
 
     /**
      * Handle payouts to the affiliate using a payment gateway.
      */
-    private function payoutUser($cuID, $amount, $paymentMethod)
+    private function payoutUser($cuID, $amount, $paymentMethod = 'paypal')
     {
-        // Example payment integration logic based on the selected method
+        // Money switch protection
+        if (! (function_exists('feature_enabled') && feature_enabled('FEATURE_MEMBERSHIP_PURCHASES'))) {
+            log_message('info', "payoutUser: live payout suppressed by money switch for user {$cuID}");
+            return false;
+        }
+
         $paymentData = [
             'user_id' => $cuID,
             'amount' => $amount,
@@ -248,31 +262,38 @@ class ReferralService
         // Save the pending payment to the database (e.g. referral_payouts table)
         $this->referralModel->savePayout($paymentData);
     
+        $res = null;
         // Call the appropriate payment gateway based on the payment method
-        switch ($method) {
+        switch (strtolower((string) $paymentMethod)) {
             case 'paypal':
                 $service = new PayPalService();
-                return $service->payViaPayPal($cuID, $amount);
+                $res = $service->payViaPayPal($cuID, $amount);
+                break;
                 
             case 'cashapp':
                 $service = new CashAppService();
-                return $service->payViaCashApp($cuID, $amount);
+                $res = $service->payViaCashApp($cuID, $amount);
+                break;
 
             case 'applepay':
                 $service = new ApplePayService();
-                return $service->payViaApplePay($cuID, $amount);
+                $res = $service->payViaApplePay($cuID, $amount);
+                break;
 
             case 'googlepay':
                 $service = new GooglePayService();
-                return $service->payViaGooglePay($cuID, $amount);
+                $res = $service->payViaGooglePay($cuID, $amount);
+                break;
 
             case 'crypto':
                 $service = new CryptoService();
-                return $service->payViaCrypto($cuID, $amount);
+                $res = $service->payViaCrypto($cuID, $amount);
+                break;
 
             case 'plaid':
                 $service = new PlaidService();
-                return $service->payViaPlaid($cuID, $amount);
+                $res = $service->payViaPlaid($cuID, $amount);
+                break;
 
             default:
                 throw new \Exception('Payment method not supported.');
@@ -281,6 +302,7 @@ class ReferralService
         // Update payment status after success
         $paymentData['status'] = 'Paid';
         $this->referralModel->updatePayoutStatus($cuID, $paymentData);
+        return $res;
     }   
 
     private function payViaPayPal($cuID, $amount)
@@ -384,7 +406,7 @@ class ReferralService
                 log_message('debug', "Attempting to store subscriber data: " . print_r($subscriberData, true));
                 return $this->referralModel->storeSubscriber($subscriberData);
             } else { 
-                log_message('error', "Error storing referral data: " . $e->getMessage());
+                log_message('error', "Error storing referral data: unable to insert into bf_users_referrals");
                 return false;
             }
         } catch (\Exception $e) {
@@ -400,8 +422,8 @@ class ReferralService
             $userName = $user ? $user->username : 'Unknown';
             log_message("debug", "Fetched referrer name for UserID {$userID}: {$userName}");
             return $userName;
-        } catch (\Exception $e) {
-            $this->logger->error("Error fetching referrer name for UserID {$userID}: " . $e->getMessage());
+        } catch (\Throwable $e) {
+            log_message('error', "Error fetching referrer name for UserID {$userID}: " . $e->getMessage());
             return 'Unknown';
         }
     }
@@ -522,10 +544,13 @@ class ReferralService
     // Helper method to fetch pending referral invites
     public function getPendingReferrals()
     {
+        if (! $this->db->tableExists('bf_users_referrals')) {
+            return [];
+        }
+
         return $this->db->table('bf_users_referrals')
-                        ->where('status', 'pending') // Adjust this depending on how you're tracking status
-                        ->get()
-                        ->getResultArray();
+            ->where('status', 'pending')
+            ->limit(100)->get()->getResultArray();
     }
     
 

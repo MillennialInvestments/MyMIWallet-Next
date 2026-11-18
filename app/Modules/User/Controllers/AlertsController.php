@@ -446,8 +446,8 @@ class AlertsController extends BaseUserController
     public function viewAlert($alertID)
     {
         $alert = $this->alertsModel->getAlertById($alertID);
-        if (!$alert || $alert['send_alert'] != 1) {
-            return redirect()->to('/Users/Alerts')->with('error', 'Alert not found or not sent.');
+        if (!$alert || ($alert['send_alert'] ?? 0) != 1) {
+            return redirect()->to('/Alerts')->with('error', 'Alert not found or not sent.');
         }
 
         $this->data['pageTitle'] = "Trade Alert Details | {$alert['ticker']}";

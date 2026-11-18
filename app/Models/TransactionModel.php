@@ -21,21 +21,27 @@ class TransactionModel extends Model
     // Insert a new transaction with additional metadata
     public function insertTransaction($data)
     {
-        $data['transaction_id'] = $this->generateTransactionID();
-        $data['unix_timestamp'] = time();
-        $data['submitted_date'] = date('Y-m-d H:i:s');
-        $data['month'] = date('m');
-        $data['day'] = date('d');
-        $data['year'] = date('Y');
-        $data['time'] = date('H:i:s');
+        if (empty($data['transaction_id'])) {
+            $data['transaction_id'] = $this->generateTransactionID();
+        }
+        $data['unix_timestamp'] = $data['unix_timestamp'] ?? time();
+        $data['submitted_date'] = $data['submitted_date'] ?? date('Y-m-d H:i:s');
+        $data['month'] = $data['month'] ?? date('m');
+        $data['day'] = $data['day'] ?? date('d');
+        $data['year'] = $data['year'] ?? date('Y');
+        $data['time'] = $data['time'] ?? date('H:i:s');
 
         return $this->insert($data);
     }
 
-    // Update an existing transaction by transaction ID
-    public function updateTransaction($transactionID, $data)
+    // Update an existing transaction by transaction ID, optionally scoped to user
+    public function updateTransaction($transactionID, $data, ?int $userId = null)
     {
-        return $this->where('transaction_id', $transactionID)->set($data)->update();
+        $builder = $this->where('transaction_id', $transactionID);
+        if ($userId !== null && $userId > 0) {
+            $builder->where('user_id', $userId);
+        }
+        return $builder->set($data)->update();
     }
 
     // Fetch transaction by transaction ID
