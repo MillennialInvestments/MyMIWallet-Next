@@ -15,7 +15,6 @@ if ($siteSettings->beta === 1) {
 } else {
     $cuUserType = 'Investor'; 
 }
-$client_id = $cuUserType === 'Beta' ? 'AffPMSjviq6Zkkpvn79YQnawbzP6bnG7J71vfbMu5eYp9qUe7OnoaKtEksenCvMkV3EU6D0M_927_PX_' : 'AeNL90i_VizF7CId1oC3Buc7YlyPHJIO9BF3t0j1FwW7_RRLsTKfPyeFu30S_VRu6WydKw7ETUmtFp2n';
 ?>
 <div class="nk-block">
     <div class="row g-gs">
@@ -58,7 +57,7 @@ $client_id = $cuUserType === 'Beta' ? 'AffPMSjviq6Zkkpvn79YQnawbzP6bnG7J71vfbMu5
                     </div>
                     <?php endif; ?>
                     <div class="card-body">
-                        <p>Subscribe to the Basic Membership for only $<?= $membership_fee; ?>/month and enjoy our services.</p>
+                        <p>Subscribe to the Basic Membership for only $<?= $membership_fee; ?> for 30 days of access and enjoy our services.</p>
                         <?php if(!empty($promoCode)) : ?>
                         <fieldset>
                             <div class="form-group mb-3">
@@ -126,54 +125,7 @@ $client_id = $cuUserType === 'Beta' ? 'AffPMSjviq6Zkkpvn79YQnawbzP6bnG7J71vfbMu5
         </div><!-- .col -->
     </div><!-- .row -->
 </div>
-<script src="https://www.paypal.com/sdk/js?client-id=<?= $client_id ?>&vault=true&intent=subscription&currency=USD"></script>
-
-<script <?= $nonce['script'] ?? '' ?>>
-    // Ensure the DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', (event) => {
-        // Check if the PayPal SDK is loaded
-        if (typeof paypal !== 'undefined') {
-            // Initialize the PayPal buttons
-            paypal.Buttons({
-                // Set up the style of the PayPal button
-                // style: {
-                //     shape: 'rect',
-                //     color: 'gold',
-                //     layout: 'vertical',
-                //     label: 'subscribe'
-                // },
-                // Set up the subscription plan details
-                createSubscription: function (data, actions) {
-                    <?php if ($membership_type === 'Basic') : ?>
-                        <?php 
-                        // Check the condition for NEWYEARS discount
-                        $planId = 'P-2Y0165568W711230FMZFKWZA'; // Default plan ID
-                        if ($uri->getTotalSegments() >= 5 && $uri->getSegment(5) === 'NEWYEARS') {
-                            $planId = 'P-6AR32638WN322572VM5O5X5Q'; // NEWYEARS discount plan ID
-                        }
-                        ?>
-                        return actions.subscription.create({
-                            'plan_id': '<?php echo $planId; ?>' // Use the determined plan ID
-                        });
-                    <?php endif; ?>
-                },
-                // Handle approval of the subscription
-                onApprove: function (data, actions) {
-                    alert('You have successfully created subscription ' + data.subscriptionID);
-                    // Optional: Redirect to another page or handle post-subscription logic here
-                },
-                // Handle errors during the subscription process
-                onError: function (err) {
-                    console.error('PayPal Subscription Error:', err);
-                    alert('An error occurred during the subscription process. Please try again.');
-                }
-            }).render('#paypal-button-container'); // Replace with the ID of your PayPal button container
-        } else {
-            console.error('PayPal SDK could not be loaded.');
-        }
-    });
-
-</script>
+<?= view('UserModule\Views\Wallets\Purchase\Memberships\checkout', ['checkoutPlan' => 'basic']) ?>
 <script <?= $nonce['script'] ?? '' ?>>
   fbq('track', 'ViewContent', {
     content_name: 'Basic Memberships',
