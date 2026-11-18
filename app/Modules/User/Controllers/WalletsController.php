@@ -2238,9 +2238,28 @@ class WalletsController extends BaseUserController
 
         $result = (new \App\Services\Payments\PaymentClaimService())->claim($userId, 'membership', (string) ($input['transaction_id'] ?? ''), $claimed, $detail);
 
-        if ($result['ok'] || in_array($result['reason'], ['not_configured', 'lookup_failed', 'auth_failed'], true)) {
-            return $this->response->setStatusCode($result['ok'] ? 200 : 202)->setJSON([
-                'status'  => $result['ok'] ? 'success' : 'pending',
+        if ($result['ok']) {
+            // Activate the plan now: price and tier come from Config\MembershipPlans, the amount from PayPal.
+            $plan = (string) ($detail['plan'] ?? $detail['membership'] ?? $detail['membership_level'] ?? '');
+            $fulfilment = (new \App\Services\Payments\MembershipFulfillmentService())->fulfil($userId, (int) $result['claim_id'], $plan);
+            if ($fulfilment['ok']) {
+                return $this->response->setJSON([
+                    'status'     => 'success',
+                    'message'    => 'Thanks! Your membership is active.',
+                    'expires_at' => $fulfilment['expires_at'],
+                ]);
+            }
+            log_message('warning', 'Membership payment claim {claim} verified but not activated: {reason}', ['claim' => $result['claim_id'], 'reason' => $fulfilment['reason']]);
+
+            return $this->response->setStatusCode(202)->setJSON([
+                'status'  => 'pending',
+                'message' => 'Thanks! Your payment was received. Our team will activate your membership shortly.',
+            ]);
+        }
+
+        if (in_array($result['reason'], ['not_configured', 'lookup_failed', 'auth_failed'], true)) {
+            return $this->response->setStatusCode(202)->setJSON([
+                'status'  => 'pending',
                 'message' => 'Thanks! Your payment was received and your membership will be activated once it is confirmed.',
             ]);
         }

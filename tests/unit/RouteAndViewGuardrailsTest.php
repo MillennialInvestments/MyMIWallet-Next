@@ -57,15 +57,17 @@ final class RouteAndViewGuardrailsTest extends CIUnitTestCase
                 . $plan . '.php'
             ) ?: '';
 
+            // Plan pages no longer create PayPal subscriptions that nothing
+            // records; they use the shared verified checkout instead.
             $this->assertStringContainsString(
-                '<?php if ($membership_type === \'' . $plan . '\') : ?>',
+                "'checkoutPlan' => '" . strtolower($plan) . "'",
                 $partial
             );
             $this->assertStringNotContainsString(
                 '<?php if ($uri->getSegment(4) === \'' . $plan . '\') : ?>',
                 $partial
             );
-            $this->assertStringContainsString($paypalPlanId, $partial);
+            $this->assertStringNotContainsString($paypalPlanId, $partial);
 
             foreach ([
                 ['Memberships/' . $plan, 2],
