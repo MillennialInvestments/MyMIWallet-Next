@@ -2243,6 +2243,15 @@ class WalletsController extends BaseUserController
             $plan = (string) ($detail['plan'] ?? $detail['membership'] ?? $detail['membership_level'] ?? '');
             $fulfilment = (new \App\Services\Payments\MembershipFulfillmentService())->fulfil($userId, (int) $result['claim_id'], $plan);
             if ($fulfilment['ok']) {
+                $planInfo = config('MembershipPlans')->find($plan);
+                (new \App\Services\Payments\MembershipLifecycleService())->sendReceipt(
+                    $userId,
+                    (string) ($planInfo['label'] ?? 'Member'),
+                    (float) $result['amount'],
+                    (string) $fulfilment['expires_at'],
+                    strtoupper(trim((string) ($input['transaction_id'] ?? '')))
+                );
+
                 return $this->response->setJSON([
                     'status'     => 'success',
                     'message'    => 'Thanks! Your membership is active.',

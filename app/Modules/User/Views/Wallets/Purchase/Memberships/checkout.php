@@ -16,6 +16,8 @@ $mmSecretOk = (string) env('PAYPAL_REST_SECRET', '') !== '';
 $mmUserId   = function_exists('getCuID') ? (int) (getCuID() ?? 0) : 0;
 $mmReady    = $mmPlan !== null && $mmOpen && $mmClientId !== '' && $mmSecretOk;
 $mmNotice   = '';
+$mmCurrent  = $mmUserId > 0 ? (new \App\Services\Payments\MembershipLifecycleService())->current($mmUserId) : null;
+$mmCurrentText = $mmCurrent === null ? '' : 'Your ' . $mmCurrent['label'] . ' membership is active until ' . date('F j, Y', (int) strtotime($mmCurrent['expires_at'])) . '. Buying the same plan again adds 30 days.';
 if (! $mmReady) {
     $mmNotice = '<div class="alert alert-info mb-0">Online purchases are not open yet.</div>';
 } elseif ($mmUserId <= 0) {
@@ -42,6 +44,13 @@ document.addEventListener('DOMContentLoaded', function () {
     note.className = 'small text-muted';
     note.textContent = 'One payment of $' + price + ' for <?= (int) $mmPlan['days'] ?> days of access. It does not renew automatically.';
     box.parentNode.insertBefore(note, box);
+    var current = <?= json_encode($mmCurrentText, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+    if (current) {
+        var have = document.createElement('div');
+        have.className = 'alert alert-success';
+        have.textContent = current;
+        box.parentNode.insertBefore(have, note);
+    }
 
     function show(kind, text) {
         box.innerHTML = '';

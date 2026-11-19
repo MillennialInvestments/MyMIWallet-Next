@@ -59,21 +59,6 @@ if ($siteSettings->beta === 1) {
                     <div class="card-body">
                         <h6 class="card-subtitle"></h6>
                         <p>Subscribe to the <?= ucfirst($membership_type) ?> Membership for only $<?= $membership_fee; ?> for 30 days of access and enjoy our service.</p>
-                        <?php if(!empty($promoCode)) : ?>
-                        <fieldset>
-                            <div class="form-group mb-3">
-                                <label for="promo_code_input">Promo Code</label>
-                                <input type="text" id="promo_code_input" class="form-control" placeholder="Enter Promo Code" value="<?= $promoCode ?? '' ?>">
-                            </div>
-                        </fieldset>
-                        <?php else : ?>
-                        <fieldset>
-                            <div class="form-group mb-3">
-                                <label for="promo_code_input">Promo Code</label>
-                                <input type="text" id="promo_code_input" class="form-control" placeholder="Enter Promo Code">
-                            </div>
-                        </fieldset>
-                        <?php endif; ?>
                         <div id="paypal-button-container"></div>
                     </div>
                 </div>

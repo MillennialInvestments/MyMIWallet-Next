@@ -122,8 +122,31 @@ class PaymentReconciliationService
             }
 
             // Handle unverified claims
+            // A real payment that did not match its plan (MembershipFulfillmentService
+            // holds these as review_*): money was taken, so a person must act.
+            if (str_starts_with($claimStatus, 'review_')) {
+                $unfulfilledCount++;
+                $unfulfilledClaims[] = [
+                    'claim_id'        => (int) $claim['id'],
+                    'provider_txn_id' => $providerTxId,
+                    'user_id'         => (int) $claim['user_id'],
+                    'kind'            => (string) ($claim['kind'] ?? ''),
+                    'verified_amount' => $verifiedAmt,
+                    'status'          => $claimStatus,
+                    'created_at'      => (string) ($claim['created_at'] ?? ''),
+                ];
+                continue;
+            }
+
             if (! str_starts_with($claimStatus, 'verified') && $claimStatus !== 'fulfilled') {
                 $unverifiedCount++;
+                continue;
+            }
+
+            // Memberships are fulfilled in bf_users_subscriptions, not the wallet
+            // ledger: a fulfilled membership claim is reconciled as it stands.
+            if ((string) ($claim['kind'] ?? '') === 'membership' && $claimStatus === 'fulfilled') {
+                $reconciledCount++;
                 continue;
             }
 
