@@ -29,6 +29,8 @@ class Features extends BaseConfig
             'FEATURE_PROJECT_INVESTING' => $this->readBool('FEATURE_PROJECT_INVESTING', false),
             'FEATURE_MYMIGOLD_PURCHASES' => $this->readBool('FEATURE_MYMIGOLD_PURCHASES', false),
             'FEATURE_MEMBERSHIP_PURCHASES' => $this->readBool('FEATURE_MEMBERSHIP_PURCHASES', false),
+            // Auto-renewing monthly billing (PayPal Subscriptions). Needs FEATURE_MEMBERSHIP_PURCHASES too.
+            'FEATURE_MEMBERSHIP_SUBSCRIPTIONS' => $this->readBool('FEATURE_MEMBERSHIP_SUBSCRIPTIONS', false),
         ];
     }
 

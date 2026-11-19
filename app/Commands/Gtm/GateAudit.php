@@ -299,6 +299,7 @@ class GateAudit extends SafeBaseCommand
             'FEATURE_PROJECT_INVESTING',
             'FEATURE_MYMIGOLD_PURCHASES',
             'FEATURE_MEMBERSHIP_PURCHASES',
+            'FEATURE_MEMBERSHIP_SUBSCRIPTIONS',
         ];
 
         try {

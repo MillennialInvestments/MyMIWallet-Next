@@ -245,6 +245,11 @@ $routes->get('/Getting-Started/(:segment)', 'Home::gettingStarted');
 $routes->get('/Getting-Started', 'Home::gettingStarted');
 $routes->post('Notes/save', '\\App\\Controllers\\NotesController::save', ['filter' => 'login']); // GT-FORM-ROUTES-001: Advisor "Save to Notes"
 $routes->post('Memberships/PurchaseCallback', '\\App\\Modules\\User\\Controllers\\WalletsController::membershipPurchaseCallback', ['filter' => ['login', 'feature:membership_purchases']]);
+$routes->post('Memberships/SubscribeCallback', '\\App\\Modules\\User\\Controllers\\WalletsController::membershipSubscribeCallback', ['filter' => ['login', 'feature:membership_purchases,membership_subscriptions']]);
+// Cancelling must keep working after the switches are turned off.
+$routes->post('Memberships/CancelSubscription', '\\App\\Modules\\User\\Controllers\\WalletsController::membershipCancelSubscription', ['filter' => 'login']);
+// Under API/ so the global session, CSRF and maintenance filters do not stop PayPal; the paypalWebhook filter is the guard.
+$routes->post('API/PayPal/Webhook', '\\App\\Controllers\\PayPalWebhookController::receive', ['filter' => 'paypalWebhook']);
 $routes->get('/Memberships', 'Home::memberships');
 $routes->get('/Memberships/(:segment)', 'Home::memberships');
 

@@ -75,6 +75,70 @@ final class MembershipFulfillmentService
             return ['ok' => false, 'reason' => 'already_fulfilled'];
         }
 
+        $expires = $this->writeAccess($userId, $plan, $fields, $now, null);
+
+        $this->db->transComplete();
+        if ($this->db->transStatus() === false) {
+            log_message('error', 'Membership fulfilment failed for claim {claim}; payment is verified and needs manual activation', ['claim' => $claimId]);
+
+            return ['ok' => false, 'reason' => 'schema_error'];
+        }
+
+        log_message('info', 'Membership {tier} active for user {user} until {expires} (claim {claim})', [
+            'tier' => $plan['tier'], 'user' => $userId, 'expires' => $expires, 'claim' => $claimId,
+        ]);
+
+        return ['ok' => true, 'reason' => 'fulfilled', 'tier' => $plan['tier'], 'expires_at' => $expires];
+    }
+
+    /**
+     * Gives the member this plan until at least $until. Used for auto-renewing
+     * subscriptions, where each PayPal payment covers a period that starts at
+     * the payment time. Calling it twice with the same $until changes nothing,
+     * so a repeated webhook cannot add extra time.
+     *
+     * @return array{ok: bool, reason: string, tier?: string, expires_at?: string}
+     */
+    public function grantUntil(int $userId, string $planSlug, int $until, ?int $now = null): array
+    {
+        $now ??= time();
+        $plan = config('MembershipPlans')->find($planSlug);
+        if ($plan === null) {
+            return ['ok' => false, 'reason' => 'unknown_plan'];
+        }
+        if ($userId <= 0 || ! $this->db->tableExists($this->table)) {
+            return ['ok' => false, 'reason' => 'schema_missing'];
+        }
+        $fields = $this->db->getFieldNames($this->table);
+        foreach (['user_id', 'membership_tier', 'membership_status', 'expires_at'] as $required) {
+            if (! in_array($required, $fields, true)) {
+                return ['ok' => false, 'reason' => 'schema_missing'];
+            }
+        }
+
+        $this->db->transStart();
+        $expires = $this->writeAccess($userId, $plan, $fields, $now, $until);
+        $this->db->transComplete();
+        if ($this->db->transStatus() === false) {
+            log_message('error', 'Membership renewal write failed for user {user}', ['user' => $userId]);
+
+            return ['ok' => false, 'reason' => 'schema_error'];
+        }
+
+        return ['ok' => true, 'reason' => 'fulfilled', 'tier' => $plan['tier'], 'expires_at' => $expires];
+    }
+
+    /**
+     * Writes the access row. With $until null a purchase adds $plan['days']
+     * (stacking on a live plan of the same tier); otherwise access runs to
+     * $until, never shortening a live plan of the same tier.
+     *
+     * @param array{slug:string,label:string,tier:string,price:float,days:int} $plan
+     * @param list<string>                                                      $fields
+     */
+    private function writeAccess(int $userId, array $plan, array $fields, int $now, ?int $until): string
+    {
+        $stamp = date('Y-m-d H:i:s', $now);
         $builder = $this->db->table($this->table)->where('user_id', $userId);
         if (in_array('active', $fields, true)) {
             $builder->orderBy('active', 'DESC');
@@ -84,15 +148,19 @@ final class MembershipFulfillmentService
         }
         $current = $builder->limit(1)->get()->getRowArray();
 
-        // Renewing the same tier while it is still active adds time; any other purchase starts now.
-        $start = $now;
+        $liveEnd = null;
         if (is_array($current) && ($current['membership_status'] ?? '') === 'active' && (string) ($current['membership_tier'] ?? '') === $plan['tier']) {
             $currentEnd = strtotime((string) ($current['expires_at'] ?? ''));
             if ($currentEnd !== false && $currentEnd > $now) {
-                $start = $currentEnd;
+                $liveEnd = $currentEnd;
             }
         }
-        $expires = date('Y-m-d H:i:s', $start + $plan['days'] * 86400);
+        if ($until === null) {
+            // Renewing the same tier while it is still active adds time; any other purchase starts now.
+            $expires = date('Y-m-d H:i:s', ($liveEnd ?? $now) + $plan['days'] * 86400);
+        } else {
+            $expires = date('Y-m-d H:i:s', max($until, $liveEnd ?? 0));
+        }
 
         $row = ['membership_tier' => $plan['tier'], 'membership_status' => 'active', 'expires_at' => $expires];
         $optional = [
@@ -122,18 +190,7 @@ final class MembershipFulfillmentService
             $this->db->table($this->table)->insert($row + ['user_id' => $userId]);
         }
 
-        $this->db->transComplete();
-        if ($this->db->transStatus() === false) {
-            log_message('error', 'Membership fulfilment failed for claim {claim}; payment is verified and needs manual activation', ['claim' => $claimId]);
-
-            return ['ok' => false, 'reason' => 'schema_error'];
-        }
-
-        log_message('info', 'Membership {tier} active for user {user} until {expires} (claim {claim})', [
-            'tier' => $plan['tier'], 'user' => $userId, 'expires' => $expires, 'claim' => $claimId,
-        ]);
-
-        return ['ok' => true, 'reason' => 'fulfilled', 'tier' => $plan['tier'], 'expires_at' => $expires];
+        return $expires;
     }
 
     private function userEmail(int $userId): string

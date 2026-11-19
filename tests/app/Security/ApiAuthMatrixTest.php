@@ -27,6 +27,8 @@ final class ApiAuthMatrixTest extends CIUnitTestCase
         'auth', 'permission', 'role', 'marketingZapierIngress', 'AuthCheckFilter',
         'ApiAdminFilter', 'ApiTokenAuthFilter', 'CronKeyFilter', 'InternalTokenFilter',
         'LoginFilter', 'AuthFilter', 'PermissionFilter', 'RoleFilter', 'MarketingZapierIngressFilter',
+        // Service authentication: PayPal confirms the delivery's signature before the controller runs.
+        'paypalWebhook', 'PayPalWebhookFilter',
     ];
 
     private const BASELINE = ROOTPATH . 'tests/baseline/api-auth-matrix.txt';

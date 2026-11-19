@@ -51,6 +51,7 @@ class Filters extends BaseConfig
         'emailVerified' => \App\Filters\EmailVerifiedFilter::class,
         'idempotency'  => \App\Filters\IdempotencyFilter::class,
         'marketingZapierIngress' => \App\Filters\MarketingZapierIngressFilter::class,
+        'paypalWebhook'  => \App\Filters\PayPalWebhookFilter::class,
         // PATCH: observability filters
         'observability' => \App\Filters\ObservabilityFilter::class,
         'jsonException' => \App\Filters\JsonExceptionFilter::class,
