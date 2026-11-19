@@ -278,6 +278,19 @@ final class MembershipSubscriptionTest extends CIUnitTestCase
         $this->assertSame('active', $this->access()['membership_status']);
     }
 
+    public function testLatePaymentAfterCancelGivesAccessButDoesNotReopenBilling(): void
+    {
+        $this->remote['last_payment_time'] = '';
+        $this->service()->start(self::USER, 'pro', self::SUB, self::NOW);
+        $this->service()->cancel(self::USER, self::NOW);
+
+        $result = $this->service()->handleEvent($this->sale('SALE0000007'), self::NOW + 60);
+
+        $this->assertSame('renewed', $result['reason']);
+        $this->assertSame('active', $this->access()['membership_status']);
+        $this->assertNull($this->service()->activeFor(self::USER), 'still cancelled, so reminders and the monthly button behave correctly');
+    }
+
     public function testClientSendsTheEventUnchangedAndTrustsOnlyPayPalsAnswer(): void
     {
         $sent = [];

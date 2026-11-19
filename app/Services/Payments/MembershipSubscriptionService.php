@@ -137,9 +137,15 @@ final class MembershipSubscriptionService
         if ($type === 'PAYMENT.SALE.COMPLETED') {
             return $this->recordPayment($resource, $now);
         }
-        if ($type === 'BILLING.SUBSCRIPTION.ACTIVATED') {
+        if ($type === 'BILLING.SUBSCRIPTION.ACTIVATED' || $type === 'BILLING.SUBSCRIPTION.RE-ACTIVATED') {
             // Registers the subscription even if the member's browser never came back to us.
-            $known = $this->find(strtoupper(trim((string) ($resource['id'] ?? ''))), $now);
+            $subscriptionId = strtoupper(trim((string) ($resource['id'] ?? '')));
+            $known = $this->find($subscriptionId, $now);
+            if ($known !== null && ($known['status'] ?? '') === 'suspended') {
+                // PayPal resumed billing after a suspension. A cancelled subscription never comes back.
+                $this->db->table($this->table)->where('id', $known['id'])->where('status', 'suspended')
+                    ->update(['status' => 'active', 'updated_at' => date('Y-m-d H:i:s', $now)]);
+            }
 
             return ['ok' => true, 'reason' => $known === null ? 'unknown_subscription' : 'registered'];
         }
@@ -271,7 +277,8 @@ final class MembershipSubscriptionService
             $this->db->table($this->claimsTable)->insert($claim + ['status' => 'fulfilled']);
         }
         $this->db->table($this->table)->where('id', $row['id'])
-            ->update(['status' => 'active', 'last_paid_at' => date('Y-m-d H:i:s', $paidAt), 'updated_at' => $stamp]);
+            // Billing state is left alone: a late payment must not re-open a cancelled subscription.
+            ->update(['last_paid_at' => date('Y-m-d H:i:s', $paidAt), 'updated_at' => $stamp]);
 
         return [
             'ok'         => true,
