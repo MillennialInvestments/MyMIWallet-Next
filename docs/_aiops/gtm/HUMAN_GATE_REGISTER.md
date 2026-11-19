@@ -51,7 +51,7 @@ separate approval from Tim.
 | Investments, watchlists, trade tracking | 039, 040 | Strategy and goal routes (024), watchlist tests | none | none |
 | Market data and news | 041 | Freshness checks | Data keys present (Alpha Vantage, Finnhub) | none |
 | Alerts | 042 | Create, evaluate, deliver, history tests | Discord webhooks set on staging | none |
-| Referrals, memberships, subscriptions | 043 | Entitlement tests | G9 PayPal sandbox | `FEATURE_MEMBERSHIP_PURCHASES` |
+| Referrals, memberships, subscriptions | 043 | Entitlement tests | G9 PayPal sandbox | `FEATURE_MEMBERSHIP_PURCHASES`, `FEATURE_MEMBERSHIP_SUBSCRIPTIONS` (monthly auto-renew; also needs `PAYPAL_WEBHOOK_ID` and `PAYPAL_PLAN_ID_<PLAN>`) |
 | Support and notifications | 044 | Ticket and email tests | G12 Postmark approval | none |
 | Privacy export and erasure | 045 | Export and erase tests | G8 retention policy sign-off | none |
 | Exchange orders and balances | 046 | Order book and balance reconciliation are still to build (CI3 views removed in #713) | G9: exchange provider keys, once one is chosen | `FEATURE_AUCTIONS` and any exchange trading switch |

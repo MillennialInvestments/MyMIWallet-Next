@@ -2276,6 +2276,49 @@ class WalletsController extends BaseUserController
         return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => 'This payment could not be confirmed.', 'reason' => $result['reason']]);
     }
 
+    /**
+     * The member approved a monthly PayPal subscription. Access starts only
+     * when PayPal shows a completed payment for it.
+     */
+    public function membershipSubscribeCallback(): ResponseInterface
+    {
+        $userId = $this->currentWalletUserId();
+        $plan = mb_substr(strip_tags((string) $this->request->getPost('plan')), 0, 32);
+        $subscriptionId = (string) $this->request->getPost('subscription_id');
+
+        $result = (new \App\Services\Payments\MembershipSubscriptionService())->start($userId, $plan, $subscriptionId);
+        if ($result['ok']) {
+            return $this->response->setJSON([
+                'status'     => 'success',
+                'message'    => 'Thanks! Your membership is active and renews each month until you cancel.',
+                'expires_at' => $result['expires_at'],
+            ]);
+        }
+        if (in_array($result['reason'], ['payment_pending', 'lookup_failed', 'auth_failed'], true)) {
+            return $this->response->setStatusCode(202)->setJSON([
+                'status'  => 'pending',
+                'message' => 'Thanks! Your subscription is set up. Your membership starts as soon as PayPal confirms the first payment, usually within a few minutes.',
+            ]);
+        }
+        log_message('warning', 'Membership subscription for user {user} not started: {reason}', ['user' => $userId, 'reason' => $result['reason']]);
+
+        return $this->response->setStatusCode(422)->setJSON(['status' => 'error', 'message' => 'This subscription could not be confirmed.', 'reason' => $result['reason']]);
+    }
+
+    /** Stops future monthly payments for the signed-in member. Paid time is kept. */
+    public function membershipCancelSubscription(): ResponseInterface
+    {
+        $result = (new \App\Services\Payments\MembershipSubscriptionService())->cancel($this->currentWalletUserId());
+        if ($result['ok']) {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Auto-renew is off. You keep your membership until the end of the time you have paid for.']);
+        }
+        if ($result['cancelled'] === 0 && $result['failed'] === 0) {
+            return $this->response->setStatusCode(404)->setJSON(['status' => 'error', 'message' => 'You have no auto-renewing membership.']);
+        }
+
+        return $this->response->setStatusCode(502)->setJSON(['status' => 'error', 'message' => 'We could not reach PayPal to cancel. Please try again, or cancel from your PayPal account under automatic payments.']);
+    }
+
     public function purchaseMembershipSuccess(): ResponseInterface|string
     {
         if ($blocked = $this->guardWalletFeature()) {
