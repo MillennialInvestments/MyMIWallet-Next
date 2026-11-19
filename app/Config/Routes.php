@@ -248,7 +248,8 @@ $routes->post('Memberships/PurchaseCallback', '\\App\\Modules\\User\\Controllers
 $routes->post('Memberships/SubscribeCallback', '\\App\\Modules\\User\\Controllers\\WalletsController::membershipSubscribeCallback', ['filter' => ['login', 'feature:membership_purchases,membership_subscriptions']]);
 // Cancelling must keep working after the switches are turned off.
 $routes->post('Memberships/CancelSubscription', '\\App\\Modules\\User\\Controllers\\WalletsController::membershipCancelSubscription', ['filter' => 'login']);
-$routes->post('Webhooks/PayPal', '\\App\\Controllers\\PayPalWebhookController::receive', ['filter' => 'paypalWebhook']);
+// Under API/ so the global session, CSRF and maintenance filters do not stop PayPal; the paypalWebhook filter is the guard.
+$routes->post('API/PayPal/Webhook', '\\App\\Controllers\\PayPalWebhookController::receive', ['filter' => 'paypalWebhook']);
 $routes->get('/Memberships', 'Home::memberships');
 $routes->get('/Memberships/(:segment)', 'Home::memberships');
 

@@ -113,7 +113,6 @@ class Filters extends BaseConfig
             'csrf' => [
                 'except' => [
                     'csp-report',
-                    'Webhooks/PayPal', // signed by PayPal; guarded by the paypalWebhook route filter
                     'API/*',
                     'api/*',
                     'debugbar*',

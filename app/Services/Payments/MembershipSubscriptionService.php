@@ -137,6 +137,12 @@ final class MembershipSubscriptionService
         if ($type === 'PAYMENT.SALE.COMPLETED') {
             return $this->recordPayment($resource, $now);
         }
+        if ($type === 'BILLING.SUBSCRIPTION.ACTIVATED') {
+            // Registers the subscription even if the member's browser never came back to us.
+            $known = $this->find(strtoupper(trim((string) ($resource['id'] ?? ''))), $now);
+
+            return ['ok' => true, 'reason' => $known === null ? 'unknown_subscription' : 'registered'];
+        }
 
         $ends = [
             'BILLING.SUBSCRIPTION.CANCELLED' => 'cancelled',
@@ -205,8 +211,8 @@ final class MembershipSubscriptionService
             // A one-time order or a payment that is not ours.
             return ['ok' => true, 'reason' => 'ignored'];
         }
-        $row = $this->db->table($this->table)->where('provider_subscription_id', $subscriptionId)->limit(1)->get()->getRowArray();
-        if (! is_array($row)) {
+        $row = $this->find($subscriptionId, $now);
+        if ($row === null) {
             return ['ok' => true, 'reason' => 'unknown_subscription'];
         }
         $userId = (int) $row['user_id'];
@@ -276,6 +282,49 @@ final class MembershipSubscriptionService
             'plan'       => $plan['label'],
             'sale_id'    => $saleId,
         ];
+    }
+
+    /**
+     * The row for a subscription. If the browser callback never reached us
+     * (tab closed, PayPal lookup failed) there is no row yet, so it is rebuilt
+     * from PayPal: the subscription must carry one of our member ids and be on
+     * the PayPal plan configured for that membership plan.
+     *
+     * @return array<string,mixed>|null
+     */
+    private function find(string $subscriptionId, int $now): ?array
+    {
+        if ($subscriptionId === '') {
+            return null;
+        }
+        $row = $this->db->table($this->table)->where('provider_subscription_id', $subscriptionId)->limit(1)->get()->getRowArray();
+        if (is_array($row)) {
+            return $row;
+        }
+
+        $remote = $this->client->getSubscription($subscriptionId);
+        if (! $remote['ok'] || ! preg_match('/^mymi:(\d{1,10}):([a-z0-9]{1,32})$/', (string) ($remote['custom_id'] ?? ''), $m)) {
+            return null;
+        }
+        $plan = config('MembershipPlans')->find($m[2]);
+        $expectedPlanId = $plan === null ? '' : PayPalSubscriptionClient::planId($plan['slug']);
+        if ((int) $m[1] <= 0 || $expectedPlanId === '' || ($remote['plan_id'] ?? '') !== $expectedPlanId) {
+            return null;
+        }
+
+        $stamp = date('Y-m-d H:i:s', $now);
+        $this->db->table($this->table)->insert([
+            'user_id'                  => (int) $m[1],
+            'plan_slug'                => $plan['slug'],
+            'provider'                 => 'paypal',
+            'provider_subscription_id' => $subscriptionId,
+            'status'                   => 'active',
+            'created_at'               => $stamp,
+            'updated_at'               => $stamp,
+        ]);
+        log_message('notice', 'Membership subscription {sub} registered from PayPal for user {user}', ['sub' => $subscriptionId, 'user' => (int) $m[1]]);
+
+        return $this->db->table($this->table)->where('provider_subscription_id', $subscriptionId)->limit(1)->get()->getRowArray();
     }
 
     private function paidUntil(int $paidAt, int $days): int

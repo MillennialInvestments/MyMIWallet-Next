@@ -11,6 +11,7 @@ use App\Services\Payments\MembershipSubscriptionService;
 use App\Services\Payments\PayPalSubscriptionClient;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\FeatureTestTrait;
 
 /**
  * Auto-renewing memberships: access only for money PayPal confirms, only for
@@ -18,6 +19,8 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class MembershipSubscriptionTest extends CIUnitTestCase
 {
+    use FeatureTestTrait;
+
     private const USER  = 5101;
     private const OTHER = 5102;
     private const NOW   = 1795000000;
@@ -214,8 +217,31 @@ final class MembershipSubscriptionTest extends CIUnitTestCase
         $this->assertSame(['review_amount_mismatch', 'review_wrong_currency'], $statuses);
     }
 
+    public function testPaymentWebhookRegistersASubscriptionWhoseBrowserCallbackNeverArrived(): void
+    {
+        // start() was never called: the member closed the tab after approving.
+        $result = $this->service()->handleEvent($this->sale('SALE0000006'), self::NOW);
+
+        $this->assertSame('renewed', $result['reason']);
+        $this->assertSame(self::USER, $result['user_id']);
+        $this->assertSame('tier2', $this->access()['membership_tier']);
+        $this->assertSame('pro', $this->service()->activeFor(self::USER)['plan_slug'], 'the member can now see and cancel it');
+    }
+
+    public function testActivatedWebhookRegistersTheSubscriptionWithoutGivingAccess(): void
+    {
+        $result = $this->service()->handleEvent(['event_type' => 'BILLING.SUBSCRIPTION.ACTIVATED', 'resource' => ['id' => self::SUB]], self::NOW);
+
+        $this->assertSame('registered', $result['reason']);
+        $this->assertNotNull($this->service()->activeFor(self::USER));
+        $this->assertNull($this->access());
+    }
+
     public function testPaymentForUnknownSubscriptionChangesNothing(): void
     {
+        // PayPal knows it, but it was not created by our checkout for one of our plans.
+        $this->remote['custom_id'] = 'someone-else';
+        $this->remote['plan_id'] = 'P-NOTOURS';
         $result = $this->service()->handleEvent($this->sale('SALE0000005', 49.99, 'USD', null, 'I-NOTOURS00001'), self::NOW);
 
         $this->assertSame('unknown_subscription', $result['reason']);
@@ -312,6 +338,24 @@ final class MembershipSubscriptionTest extends CIUnitTestCase
         $this->assertSame(503, $off->getStatusCode());
     }
 
+    public function testWebhookRouteIsReachedWithoutASessionAndStoppedOnlyByTheSignatureFilter(): void
+    {
+        PayPalWebhookFilter::$client = new class () extends PayPalSubscriptionClient {
+            public function verifyWebhook(array $headers, string $rawBody): bool
+            {
+                return false;
+            }
+        };
+
+        $response = $this->withHeaders(['Content-Type' => 'application/json', 'Accept' => 'application/json'])
+            ->withBody('{"event_type":"PAYMENT.SALE.COMPLETED"}')
+            ->post('API/PayPal/Webhook');
+
+        // 401 from the global session guard would carry "Authentication required."
+        $response->assertStatus(401);
+        $this->assertStringContainsString('signature', (string) $response->getJSON());
+    }
+
     public function testSwitchIsOffByDefaultAndRoutesAreGuarded(): void
     {
         $this->assertFalse((new \Config\Features())->enabled('FEATURE_MEMBERSHIP_SUBSCRIPTIONS'));
@@ -319,7 +363,7 @@ final class MembershipSubscriptionTest extends CIUnitTestCase
         $routes = (string) file_get_contents(APPPATH . 'Config/Routes.php');
         $this->assertMatchesRegularExpression("#post\\('Memberships/SubscribeCallback'.*'login', 'feature:membership_purchases,membership_subscriptions'#", $routes);
         $this->assertMatchesRegularExpression("#post\\('Memberships/CancelSubscription'.*'filter' => 'login'#", $routes);
-        $this->assertMatchesRegularExpression("#post\\('Webhooks/PayPal'.*'filter' => 'paypalWebhook'#", $routes);
+        $this->assertMatchesRegularExpression("#post\\('API/PayPal/Webhook'.*'filter' => 'paypalWebhook'#", $routes);
     }
 
     public function testExpiryReminderSkipsAutoRenewMembersAndReadsEveryPage(): void
