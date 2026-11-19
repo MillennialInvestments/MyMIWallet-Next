@@ -23,7 +23,7 @@ final class MembershipLifecycleTest extends CIUnitTestCase
     {
         parent::setUp();
         $db = db_connect();
-        foreach (['bf_ml_subs', 'bf_ml_users', 'bf_payment_claims'] as $t) {
+        foreach (['bf_ml_subs', 'bf_ml_users', 'bf_payment_claims', 'bf_users_wallet_transactions'] as $t) {
             $db->query("DROP TABLE IF EXISTS {$t}");
         }
         $db->query('CREATE TABLE bf_ml_users (id INTEGER PRIMARY KEY, email TEXT)');
@@ -35,7 +35,7 @@ final class MembershipLifecycleTest extends CIUnitTestCase
     protected function tearDown(): void
     {
         $db = db_connect();
-        foreach (['bf_ml_subs', 'bf_ml_users', 'bf_payment_claims'] as $t) {
+        foreach (['bf_ml_subs', 'bf_ml_users', 'bf_payment_claims', 'bf_users_wallet_transactions'] as $t) {
             $db->query("DROP TABLE IF EXISTS {$t}");
         }
         $db->resetDataCache();
