@@ -144,6 +144,7 @@ $sourceWelcomeActions = is_array($sourceAwareWelcome['nextActions'] ?? null) ? $
                 <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-bs-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
                 <div class="toggle-expand-content" data-content="pageMenu">
                     <ul class="nk-block-tools g-3">
+                        <li><a href="#" class="btn btn-white btn-dim btn-outline-light" data-first-login-tour-open><em class="icon ni ni-play-circle"></em><span>Take the tour</span></a></li>
                         <li><a href="/Budget" class="btn btn-white btn-dim btn-outline-primary"><em class="icon ni ni-reports"></em><span>Budget Reports</span></a></li>
                         <li><a href="/Investments" class="btn btn-white btn-dim btn-outline-secondary"><em class="icon ni ni-chart-up"></em><span>Portfolio</span></a></li>
                         <?php if (aiKimiEnabled()): ?>
@@ -230,6 +231,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 <?php endif; ?>
+
+<?= view('App\\Modules\\User\\Views\\Dashboard\\index\\first-login-tour', ['firstLoginTour' => $firstLoginTour ?? [], 'firstLoginTourSlides' => $firstLoginTourSlides ?? [], 'tourDisplayName' => $displayName ?? '', 'nonce' => $nonce]) ?>
 
 <?php if ($showSetupBanner): ?>
 <div class="alert alert-info d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 p-5 mb-4" data-setup-banner="dashboard">

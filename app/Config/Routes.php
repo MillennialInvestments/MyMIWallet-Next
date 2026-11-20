@@ -1432,6 +1432,7 @@ $routes->group('Dashboard', ['namespace' => '\App\Modules\User\Controllers', 'fi
     $routes->post('onboarding/recurring-expense', 'OnboardingWalkthroughController::saveRecurringExpense', ['as' => 'onboarding-save-recurring']);
     $routes->post('onboarding/watchlist', 'OnboardingWalkthroughController::saveWatchlist', ['as' => 'onboarding-save-watchlist']);
     $routes->post('onboarding/source-welcome/complete', 'OnboardingWalkthroughController::completeSourceWelcome', ['as' => 'onboarding-complete-source-welcome']);
+    $routes->post('onboarding/tour/complete', 'OnboardingWalkthroughController::completeFirstLoginTour', ['as' => 'onboarding-complete-tour']);
     $routes->post('account-completion/dismiss', 'OnboardingWalkthroughController::dismissAccountCompletion', ['as' => 'account-completion-dismiss']);
 });
 $routes->post('dashboard/completeOnboardingStep/(:segment)', '\App\Modules\User\Controllers\DashboardController::completeOnboardingStep/$1', ['filter' => ['login', 'noStore']]);

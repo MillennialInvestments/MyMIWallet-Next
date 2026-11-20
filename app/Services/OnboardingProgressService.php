@@ -108,6 +108,64 @@ class OnboardingProgressService
         return $this->getSourceAwareWelcomeState($userId);
     }
 
+    /**
+     * First-login how-to tour (FirstLoginTour). It opens by itself once per
+     * member, until they finish or skip it; "Take the tour" replays it.
+     *
+     * @return array{show:bool,completedAt:?string,action:?string}
+     */
+    public function getFirstLoginTourState(int $userId): array
+    {
+        if (! $this->db->tableExists('bf_user_onboarding')) {
+            // Nowhere to remember it, so never open it by itself on every visit.
+            return ['show' => false, 'completedAt' => null, 'action' => null];
+        }
+
+        $steps = $this->getStepsFromRecord($this->ensureRecord($userId));
+        $completedAt = (string) ($steps['meta']['first_login_tour_completed_at'] ?? '');
+
+        return [
+            'show'        => $completedAt === '',
+            'completedAt' => $completedAt !== '' ? $completedAt : null,
+            'action'      => $completedAt !== '' ? (string) ($steps['meta']['first_login_tour_action'] ?? 'completed') : null,
+        ];
+    }
+
+    /**
+     * Records that the member finished or skipped the tour. The first answer
+     * is kept; a replay only adds an event.
+     *
+     * @return array{show:bool,completedAt:?string,action:?string}
+     */
+    public function markFirstLoginTour(int $userId, string $action = 'completed'): array
+    {
+        $action = in_array($action, ['completed', 'skipped'], true) ? $action : 'completed';
+
+        if ($this->db->tableExists('bf_user_onboarding')) {
+            $record = $this->ensureRecord($userId);
+            $steps = $this->getStepsFromRecord($record);
+            $steps['meta'] = is_array($steps['meta'] ?? null) ? $steps['meta'] : [];
+            $replay = ! empty($steps['meta']['first_login_tour_completed_at']);
+
+            if (! $replay) {
+                $steps['meta']['first_login_tour_completed_at'] = (new DateTimeImmutable('now'))->format('Y-m-d H:i:s');
+                $steps['meta']['first_login_tour_action'] = $action;
+                $this->updateSteps($userId, $steps, $record);
+            }
+
+            try {
+                service('eventTracker')->track('setup.first_login_tour', [
+                    'action' => $action,
+                    'replay' => $replay,
+                ], $userId, 'onboarding');
+            } catch (\Throwable $e) {
+                log_message('debug', 'OnboardingProgressService: tour event not tracked: {msg}', ['msg' => $e->getMessage()]);
+            }
+        }
+
+        return $this->getFirstLoginTourState($userId);
+    }
+
     public function shouldTriggerWalkthrough(int $userId): bool
     {
         $record = $this->ensureRecord($userId);
@@ -243,6 +301,8 @@ class OnboardingProgressService
             'meta' => [
                 'source_welcome_completed_at' => null,
                 'source_welcome_completion_action' => null,
+                'first_login_tour_completed_at' => null,
+                'first_login_tour_action' => null,
             ],
         ];
     }

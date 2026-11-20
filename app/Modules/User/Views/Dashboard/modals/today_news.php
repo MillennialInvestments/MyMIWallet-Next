@@ -94,7 +94,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var todayKey = 'mymi_news_dismissed_' + (new Date()).toISOString().slice(0, 10);
     var dismissedToday = localStorage.getItem(todayKey) === 'true';
 
-    if (!profileIncomplete && !dismissedToday) {
+    var tourPending = !!(window.MyMIFirstLoginTour && window.MyMIFirstLoginTour.autoOpen);
+
+    if (!profileIncomplete && !dismissedToday && !tourPending) {
         var walkthroughEl = document.getElementById('onboardingWalkthroughModal');
         var completionEl = document.getElementById('accountCompletionModal');
 
