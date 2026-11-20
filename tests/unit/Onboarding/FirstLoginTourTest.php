@@ -64,7 +64,22 @@ final class FirstLoginTourTest extends CIUnitTestCase
 
         $finish = FirstLoginTour::slides(self::ALL);
         $finish = end($finish);
-        $this->assertSame(['Budget/Add/Income', 'Wallets/Add/Bank', 'Wallets/Add/Crypto'], array_column($finish['moves'], 'url'));
+        $this->assertSame(['Budget/Add/Income', 'Wallets/Add/addBankAccount', 'Wallets/Add/addCryptoAccount'], array_column($finish['moves'], 'url'));
+    }
+
+    public function testWalletLinksUseTheSegmentsTheAddFormRecognises(): void
+    {
+        // Wallets/Add.php picks a form from the third URL segment; anything
+        // else falls through to a template that does not exist.
+        $addView = (string) file_get_contents(APPPATH . 'Modules/User/Views/Wallets/Add.php');
+        $finish = FirstLoginTour::slides(self::ALL);
+        $finish = end($finish);
+        foreach (array_column($finish['moves'], 'url') as $url) {
+            if (str_starts_with($url, 'Wallets/Add/')) {
+                $segment = substr($url, strlen('Wallets/Add/'));
+                $this->assertStringContainsString("\$accountType === '{$segment}'", $addView, $url);
+            }
+        }
     }
 
     public function testSwitchedOffModulesAreLeftOut(): void

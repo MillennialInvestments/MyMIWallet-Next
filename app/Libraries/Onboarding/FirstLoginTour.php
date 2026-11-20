@@ -211,7 +211,7 @@ final class FirstLoginTour
                             'Open Wallets to see your totals, and update balances when they change.',
                         ],
                         'tip'     => 'Give each account a nickname you will recognize, like "Everyday checking".',
-                        'cta'     => ['label' => 'Add a bank account', 'url' => 'Wallets/Add/Bank'],
+                        'cta'     => ['label' => 'Add a bank account', 'url' => 'Wallets/Add/addBankAccount'],
                     ],
                 ];
 
@@ -245,7 +245,7 @@ final class FirstLoginTour
                             'Check the dashboard: your net worth and allocation now include it.',
                         ],
                         'tip'     => 'No crypto yet? Skip this one. It will be here when you need it.',
-                        'cta'     => ['label' => 'Add crypto', 'url' => 'Wallets/Add/Crypto'],
+                        'cta'     => ['label' => 'Add crypto', 'url' => 'Wallets/Add/addCryptoAccount'],
                     ],
                 ];
         }
