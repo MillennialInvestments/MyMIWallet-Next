@@ -319,8 +319,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (<?= $showModal ? 'true' : 'false' ?>) {
-        const modal = new bootstrap.Modal(document.getElementById('onboardingWalkthroughModal'));
-        modal.show();
+        const openWalkthrough = () => {
+            const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('onboardingWalkthroughModal'));
+            modal.show();
+        };
+        // The first-login tour goes first; setup opens once it closes.
+        const tour = window.MyMIFirstLoginTour;
+        if (tour && tour.autoOpen && !tour.closed) {
+            document.addEventListener('mymi:first-login-tour-closed', openWalkthrough, { once: true });
+        } else {
+            openWalkthrough();
+        }
     }
 });
 </script>

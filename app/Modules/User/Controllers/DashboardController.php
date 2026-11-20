@@ -732,6 +732,16 @@ class DashboardController extends BaseUserController
         $this->data['setupStatus'] = $setupService->getSetupStatus($activeUserId);
         $this->data['setupPrefs'] = $setupService->getDismissPreferences($activeUserId);
         $this->data['setupContext'] = 'dashboard';
+
+        // First-login how-to tour: opens by itself once, "Take the tour" replays it.
+        try {
+            $this->data['firstLoginTour'] = service('onboardingProgressService')->getFirstLoginTourState($activeUserId);
+            $this->data['firstLoginTourSlides'] = \App\Libraries\Onboarding\FirstLoginTour::slides();
+        } catch (\Throwable $e) {
+            log_message('error', 'DashboardController::index first-login tour unavailable: {msg}', ['msg' => $e->getMessage()]);
+            $this->data['firstLoginTour'] = ['show' => false];
+            $this->data['firstLoginTourSlides'] = [];
+        }
         $this->data['forecastHeatmapEnabled'] = true;
         $this->data['forecastHeatmapDefaultTimeframe'] = '5m';
 
