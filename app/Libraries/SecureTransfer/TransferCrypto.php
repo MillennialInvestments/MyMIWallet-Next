@@ -166,10 +166,10 @@ final class TransferCrypto
             throw new InvalidArgumentException('ciphertext_hash_mismatch');
         }
         $entry = null;
+        $myKey = self::b64(sodium_crypto_box_publickey($recipientKeyPair));
         foreach ($manifest['recipients'] as $r) {
-            if ($r['wallet'] === $recipientWallet) {
+            if ($r['wallet'] === $recipientWallet && ($entry === null || $r['transfer_key'] === $myKey)) {
                 $entry = $r;
-                break;
             }
         }
         if ($entry === null) {

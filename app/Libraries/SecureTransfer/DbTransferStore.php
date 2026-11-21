@@ -80,7 +80,7 @@ final class DbTransferStore implements TransferStore
         return $this->db->table(self::TRANSFERS)->where('transfer_id', $transferId)->countAllResults() > 0;
     }
 
-    public function saveTransfer(int $senderUserId, array $manifest, string $signature, array $recipientWallets, int $now): void
+    public function saveTransfer(int $senderUserId, array $manifest, string $signature, array $recipientWallets, int $now): bool
     {
         $this->db->transStart();
         $this->db->table(self::TRANSFERS)->insert([
@@ -92,6 +92,7 @@ final class DbTransferStore implements TransferStore
             $this->db->table(self::RECIPIENTS)->insert(['transfer_id' => $manifest['transfer_id'], 'wallet' => $w]);
         }
         $this->db->transComplete();
+        return $this->db->transStatus();
     }
 
     public function inbox(array $wallets, int $now): array

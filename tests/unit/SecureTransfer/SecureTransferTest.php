@@ -315,6 +315,47 @@ class SecureTransferTest extends CIUnitTestCase
         $this->assertSame('key_not_found', $svc->revokeKey(1, $w['address'], $key)['error']);
     }
 
+    public function testEveryLinkedDeviceOfARecipientCanOpen(): void
+    {
+        [$svc, $store] = $this->service();
+        $files = new CiphertextStore($this->dir . '/store');
+        $alice = $this->wallet();
+        $bob = $this->wallet();
+        $aliceDev = $this->bind($svc, 1, $alice);
+        $laptop = $this->bind($svc, 2, $bob);
+        $phone = $this->bind($svc, 2, $bob);
+        $keys = $svc->recipientKeys($bob['address'])['keys'];
+        $this->assertCount(2, $keys);
+
+        $to = array_map(fn ($k) => ['wallet' => $bob['address'], 'transfer_key' => $k['transfer_key']], $keys);
+        [$ct, $m] = TransferCrypto::seal('both devices', 'a.txt', 'text/plain', $alice['address'],
+            base64_encode(sodium_crypto_box_publickey($aliceDev)), $to, $this->now + 86400, $this->now);
+        $sent = $svc->send(1, $m, $this->sign($alice, TransferCrypto::manifestMessage($m)), $this->upload($ct), $files);
+        $this->assertTrue($sent['ok'], json_encode($sent));
+        $this->assertCount(1, $svc->inbox(2)['transfers'], 'one inbox row per wallet, not per device');
+
+        foreach ([$laptop, $phone] as $device) {
+            [$plain] = TransferCrypto::open($ct, $m, $bob['address'], $device);
+            $this->assertSame('both devices', $plain);
+        }
+
+        // The same device twice is still refused.
+        $dup = [$to[0], $to[0]];
+        [$ct2, $m2] = TransferCrypto::seal('x', 'b.txt', 'text/plain', $alice['address'],
+            base64_encode(sodium_crypto_box_publickey($aliceDev)), $dup, $this->now + 86400, $this->now);
+        $again = $svc->send(1, $m2, $this->sign($alice, TransferCrypto::manifestMessage($m2)), $this->upload($ct2), $files);
+        $this->assertFalse($again['ok']);
+    }
+
+    public function testReusedTransferIdNeverOverwritesStoredCiphertext(): void
+    {
+        $files = new CiphertextStore($this->dir . '/store');
+        $id = str_repeat('ab', 16);
+        $this->assertTrue($files->put($id, $this->upload('first')));
+        $this->assertFalse($files->put($id, $this->upload('second')));
+        $this->assertSame('first', file_get_contents($files->path($id)));
+    }
+
     public function testConfigIsOffByDefault(): void
     {
         $this->assertFalse((new SecureTransfer())->enabled);

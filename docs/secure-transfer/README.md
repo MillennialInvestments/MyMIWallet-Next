@@ -24,7 +24,7 @@ The feature is **off by default**. With `SECURE_TRANSFER_ENABLED` unset, every r
    - fetches each recipient's linked keys and checks every binding signature itself, so it does not rely on the server's word;
    - makes a random 32-byte file key and encrypts the file in 64 KiB chunks with XSalsa20-Poly1305 (`crypto_secretbox`), nonce = 16 random bytes followed by the chunk index;
    - seals the name, type and size under the same key;
-   - wraps the file key for each recipient with `crypto_box` from a fresh ephemeral key pair;
+   - wraps the file key for every verified device of each recipient with `crypto_box` from a fresh ephemeral key pair (one manifest entry per wallet and device key, so a laptop and a phone can both open it);
    - writes a manifest (canonical JSON, sorted keys) and has the wallet sign `MyMI Secure Transfer manifest v1\nsha256: <hex>`.
 
    The server checks the manifest shape, limits, sender binding, recipient keys, ciphertext hash and the signature, then stores it.
@@ -40,6 +40,10 @@ PHP (`app/Libraries/SecureTransfer/TransferCrypto.php`, libsodium) and the brows
 - It does not protect a device that is already compromised, and the page code is served by the site, so a compromised site could serve bad JavaScript. Use HTTPS, the CSP nonces already in place, and keep releases reviewed.
 - Losing the browser's site data loses the device key. Files sent to that key can no longer be opened. The page says so.
 - Nothing goes on-chain. The wallet is used only to sign statements.
+- The sender's browser checks every binding signature, but it trusts the server's list of which keys are still active. A dishonest server could keep offering a key the recipient revoked. It still cannot invent a key.
+- The binding is a plain wallet `signMessage`. A phishing page could ask a user to sign an attacker's binding statement and link that wallet to the attacker's account. Users should only sign a statement whose `domain:` line is `mymiwallet.com`; a Sign-In-With-Solana style prompt is a later improvement.
+- Any signed-in user can see whether a wallet has linked devices (`/recipient/{wallet}`). That is needed to send to it.
+- A file sent before a device was linked opens only on the devices linked at the time.
 
 ## Routes
 

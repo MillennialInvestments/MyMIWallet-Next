@@ -62,6 +62,12 @@ class SecureTransferController extends UserController
         return is_array($json) ? $json : (array) $this->request->getPost();
     }
 
+    /** A request value as a string; arrays and objects become '' so they fail validation (422), not a 500. */
+    private static function str($value): string
+    {
+        return is_string($value) ? $value : (is_int($value) ? (string) $value : '');
+    }
+
     private function reply(array $result): ResponseInterface
     {
         $code = $result['ok'] ? 200 : (($result['error'] ?? '') === 'not_found' ? 404 : 422);
@@ -88,7 +94,7 @@ class SecureTransferController extends UserController
         if ($r = $this->guard()) {
             return $r;
         }
-        return $this->reply($this->service()->challenge($this->userId(), (string) ($this->input()['wallet'] ?? '')));
+        return $this->reply($this->service()->challenge($this->userId(), self::str($this->input()['wallet'] ?? '')));
     }
 
     public function bindKey()
@@ -97,8 +103,8 @@ class SecureTransferController extends UserController
             return $r;
         }
         $in = $this->input();
-        return $this->reply($this->service()->bindKey($this->userId(), (string) ($in['wallet'] ?? ''), (string) ($in['transfer_key'] ?? ''),
-            (string) ($in['nonce'] ?? ''), (int) ($in['issued_at'] ?? 0), (string) ($in['signature'] ?? '')));
+        return $this->reply($this->service()->bindKey($this->userId(), self::str($in['wallet'] ?? ''), self::str($in['transfer_key'] ?? ''),
+            self::str($in['nonce'] ?? ''), (int) (is_scalar($in['issued_at'] ?? null) ? $in['issued_at'] : 0), self::str($in['signature'] ?? '')));
     }
 
     public function myKeys()
@@ -115,7 +121,7 @@ class SecureTransferController extends UserController
             return $r;
         }
         $in = $this->input();
-        return $this->reply($this->service()->revokeKey($this->userId(), (string) ($in['wallet'] ?? ''), (string) ($in['transfer_key'] ?? '')));
+        return $this->reply($this->service()->revokeKey($this->userId(), self::str($in['wallet'] ?? ''), self::str($in['transfer_key'] ?? '')));
     }
 
     public function recipientKeys(string $wallet = '')
@@ -131,12 +137,12 @@ class SecureTransferController extends UserController
         if ($r = $this->guard()) {
             return $r;
         }
-        $manifest = json_decode((string) $this->request->getPost('manifest'), true);
+        $manifest = json_decode(self::str($this->request->getPost('manifest')), true);
         $file = $this->request->getFile('ciphertext');
         if (!is_array($manifest) || $file === null || !$file->isValid()) {
             return $this->reply(['ok' => false, 'error' => 'manifest_and_ciphertext_required']);
         }
-        $result = $this->service()->send($this->userId(), $manifest, (string) $this->request->getPost('signature'), $file->getTempName(), $this->files());
+        $result = $this->service()->send($this->userId(), $manifest, self::str($this->request->getPost('signature')), $file->getTempName(), $this->files());
         return $this->reply($result);
     }
 
@@ -162,7 +168,7 @@ class SecureTransferController extends UserController
         if ($r = $this->guard()) {
             return $r;
         }
-        $result = $this->service()->download($this->userId(), $transferId, (string) $this->request->getGet('wallet'), $this->files());
+        $result = $this->service()->download($this->userId(), $transferId, self::str($this->request->getGet('wallet')), $this->files());
         unset($result['path']);
         return $this->reply($result);
     }
@@ -172,7 +178,7 @@ class SecureTransferController extends UserController
         if ($r = $this->guard()) {
             return $r;
         }
-        $result = $this->service()->download($this->userId(), $transferId, (string) $this->request->getGet('wallet'), $this->files());
+        $result = $this->service()->download($this->userId(), $transferId, self::str($this->request->getGet('wallet')), $this->files());
         if (!$result['ok']) {
             return $this->reply($result);
         }
@@ -188,6 +194,6 @@ class SecureTransferController extends UserController
         if ($r = $this->guard()) {
             return $r;
         }
-        return $this->reply($this->service()->revokeTransfer($this->userId(), (string) ($this->input()['transfer_id'] ?? ''), $this->files()));
+        return $this->reply($this->service()->revokeTransfer($this->userId(), self::str($this->input()['transfer_id'] ?? ''), $this->files()));
     }
 }

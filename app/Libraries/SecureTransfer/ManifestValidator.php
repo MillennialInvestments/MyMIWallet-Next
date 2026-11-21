@@ -113,10 +113,12 @@ final class ManifestValidator
         if (!is_array($recipients) || !array_is_list($recipients) || $recipients === []) {
             return ['recipients_required'];
         }
-        if (count($recipients) > $this->config->maxRecipients) {
+        // One entry per (wallet, device key): a wallet with several linked devices gets one wrap per device.
+        if (count($recipients) > $this->config->maxRecipients * $this->config->maxKeysPerWallet) {
             return ['too_many_recipients'];
         }
         $seen = [];
+        $wallets = [];
         foreach ($recipients as $r) {
             if (!is_array($r) || self::sortedKeys($r) !== self::RECIPIENT_KEYS) {
                 return ['invalid_recipient_entry'];
@@ -124,14 +126,19 @@ final class ManifestValidator
             if (!is_string($r['wallet']) || Base58::walletPublicKey($r['wallet']) === null) {
                 return ['invalid_recipient_wallet'];
             }
-            if (isset($seen[$r['wallet']])) {
-                return ['duplicate_recipient'];
-            }
-            $seen[$r['wallet']] = true;
             foreach (['transfer_key', 'epk'] as $k) {
                 if (!is_string($r[$k]) || !TransferCrypto::isTransferKey($r[$k])) {
                     return ["invalid_recipient_{$k}"];
                 }
+            }
+            $pair = $r['wallet'] . '|' . $r['transfer_key'];
+            if (isset($seen[$pair])) {
+                return ['duplicate_recipient'];
+            }
+            $seen[$pair] = true;
+            $wallets[$r['wallet']] = true;
+            if (count($wallets) > $this->config->maxRecipients) {
+                return ['too_many_recipients'];
             }
             $nonce = is_string($r['nonce']) ? TransferCrypto::b64decode($r['nonce']) : null;
             $box = is_string($r['box']) ? TransferCrypto::b64decode($r['box']) : null;

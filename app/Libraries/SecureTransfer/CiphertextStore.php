@@ -36,11 +36,10 @@ final class CiphertextStore
             return false;
         }
         @chmod($tmp, 0600);
-        if (!@rename($tmp, $target)) {
-            @unlink($tmp);
-            return false;
-        }
-        return true;
+        // link() fails if the target exists, so a reused id can never overwrite another file.
+        $ok = @link($tmp, $target);
+        @unlink($tmp);
+        return $ok;
     }
 
     public function path(string $transferId): ?string

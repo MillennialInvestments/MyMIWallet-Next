@@ -92,11 +92,12 @@
       kp = kp || nacl.box.keyPair();
       pub = MST1.b64(kp.publicKey);
       text(status, 'Approve the link statement in your wallet…');
+      // Keep the key on this device before the server lists it, so a lost reply never strands files.
+      saveDevice(state.wallet, kp);
       var c = await postJson('/challenge', { wallet: state.wallet });
       var statement = MST1.bindingMessage(c.domain, state.wallet, pub, c.nonce, c.issued_at);
       var signature = await signText(statement);
       await postJson('/keys', { wallet: state.wallet, transfer_key: pub, nonce: c.nonce, issued_at: c.issued_at, signature: signature });
-      saveDevice(state.wallet, kp);
     }
     state.device = kp;
     text(status, 'This device can send and open files for ' + short(state.wallet) + '. Keep a backup of this browser profile: clearing site data removes the key, and files sent to it can no longer be opened.', 'text-success');
@@ -111,8 +112,8 @@
       var r = await api('/recipient/' + encodeURIComponent(wallets[i]));
       var good = r.keys.filter(function (k) { return MST1.verifyWalletSignature(wallets[i], k.statement, k.signature) && k.statement.indexOf('transfer_key: ' + k.transfer_key + '\n') > 0 && k.statement.indexOf('domain: ' + cfg.domain + '\n') > 0; });
       if (!good.length) throw new Error('No verified device key for ' + short(wallets[i]) + '. They need to open this page once first.');
-      // Send to the newest device; older devices are listed for revocation, not used.
-      out.push({ wallet: wallets[i], transfer_key: good[good.length - 1].transfer_key });
+      // Wrap the file key for every verified device of this wallet, so each one can open it.
+      good.forEach(function (k) { out.push({ wallet: wallets[i], transfer_key: k.transfer_key }); });
     }
     return out;
   }

@@ -154,7 +154,11 @@ final class SecureTransferService
         if (!$files->put($manifest['transfer_id'], $ciphertextPath)) {
             return self::refuse('storage_unavailable');
         }
-        $this->store->saveTransfer($userId, $manifest, $signature, array_column($manifest['recipients'], 'wallet'), $now);
+        $wallets = array_values(array_unique(array_column($manifest['recipients'], 'wallet')));
+        if (!$this->store->saveTransfer($userId, $manifest, $signature, $wallets, $now)) {
+            $files->delete($manifest['transfer_id']);
+            return self::refuse('storage_unavailable');
+        }
         return ['ok' => true, 'transfer_id' => $manifest['transfer_id'], 'expires_at' => $manifest['expires_at']];
     }
 

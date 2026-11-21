@@ -93,15 +93,19 @@ final class ArrayTransferStore implements TransferStore
         return isset($this->transfers[$transferId]);
     }
 
-    public function saveTransfer(int $senderUserId, array $manifest, string $signature, array $recipientWallets, int $now): void
+    public function saveTransfer(int $senderUserId, array $manifest, string $signature, array $recipientWallets, int $now): bool
     {
         $id = $manifest['transfer_id'];
+        if (isset($this->transfers[$id])) {
+            return false;
+        }
         $this->transfers[$id] = ['transfer_id' => $id, 'sender_user_id' => $senderUserId, 'sender_wallet' => $manifest['sender_wallet'],
             'manifest' => $manifest, 'signature' => $signature, 'ciphertext_bytes' => $manifest['ciphertext_bytes'],
             'created_at' => $now, 'expires_at' => $manifest['expires_at'], 'revoked_at' => null, 'purged_at' => null];
         foreach ($recipientWallets as $w) {
             $this->recipients[$id][$w] = ['downloaded_at' => null];
         }
+        return true;
     }
 
     private function live(array $t, int $now): bool

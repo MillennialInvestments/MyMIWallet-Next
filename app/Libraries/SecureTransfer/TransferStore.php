@@ -32,7 +32,7 @@ interface TransferStore
     public function transferExists(string $transferId): bool;
 
     /** @param list<string> $recipientWallets */
-    public function saveTransfer(int $senderUserId, array $manifest, string $signature, array $recipientWallets, int $now): void;
+    public function saveTransfer(int $senderUserId, array $manifest, string $signature, array $recipientWallets, int $now): bool;
 
     /** @return list<array> transfers addressed to any of these wallets, not expired, newest first */
     public function inbox(array $wallets, int $now): array;

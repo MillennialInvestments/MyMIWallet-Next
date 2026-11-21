@@ -137,7 +137,9 @@
   async function open(ciphertext, manifest, wallet, deviceKeyPair) {
     if ((await sha256Hex(ciphertext)) !== manifest.ciphertext_sha256) throw new Error('ciphertext_hash_mismatch');
     if (ciphertext.length !== manifest.ciphertext_bytes) throw new Error('ciphertext_length_mismatch');
-    var entry = manifest.recipients.filter(function (r) { return r.wallet === wallet; })[0];
+    var mine = b64(deviceKeyPair.publicKey);
+    var entries = manifest.recipients.filter(function (r) { return r.wallet === wallet; });
+    var entry = entries.filter(function (r) { return r.transfer_key === mine; })[0] || entries[0];
     if (!entry) throw new Error('not_a_recipient');
     var key = nacl.box.open(unb64(entry.box), unb64(entry.nonce), unb64(entry.epk), deviceKeyPair.secretKey);
     if (!key) throw new Error('key_unwrap_failed');
