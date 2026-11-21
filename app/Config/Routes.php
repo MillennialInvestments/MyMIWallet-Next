@@ -244,6 +244,21 @@ $routes->get('/Getting-Started/(:segment)/(:segment)', 'Home::gettingStarted');
 $routes->get('/Getting-Started/(:segment)', 'Home::gettingStarted');
 $routes->get('/Getting-Started', 'Home::gettingStarted');
 $routes->post('Notes/save', '\\App\\Controllers\\NotesController::save', ['filter' => 'login']); // GT-FORM-ROUTES-001: Advisor "Save to Notes"
+// MyMI Secure Transfer (MST1): end-to-end encrypted wallet-to-wallet files. 404 unless SECURE_TRANSFER_ENABLED.
+$routes->group('SecureTransfer', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function ($routes) {
+    $routes->get('/', 'SecureTransferController::index');
+    $routes->post('challenge', 'SecureTransferController::challenge');
+    $routes->post('keys', 'SecureTransferController::bindKey');
+    $routes->get('keys', 'SecureTransferController::myKeys');
+    $routes->post('keys/revoke', 'SecureTransferController::revokeKey');
+    $routes->get('recipient/(:segment)', 'SecureTransferController::recipientKeys/$1');
+    $routes->post('send', 'SecureTransferController::send');
+    $routes->get('inbox', 'SecureTransferController::inbox');
+    $routes->get('outbox', 'SecureTransferController::outbox');
+    $routes->get('transfer/(:segment)', 'SecureTransferController::manifest/$1');
+    $routes->get('blob/(:segment)', 'SecureTransferController::blob/$1');
+    $routes->post('revoke', 'SecureTransferController::revokeTransfer');
+});
 $routes->post('Memberships/PurchaseCallback', '\\App\\Modules\\User\\Controllers\\WalletsController::membershipPurchaseCallback', ['filter' => ['login', 'feature:membership_purchases']]);
 $routes->post('Memberships/SubscribeCallback', '\\App\\Modules\\User\\Controllers\\WalletsController::membershipSubscribeCallback', ['filter' => ['login', 'feature:membership_purchases,membership_subscriptions']]);
 // Cancelling must keep working after the switches are turned off.
@@ -472,6 +487,7 @@ $routes->group('API/v1', ['namespace' => '\App\Modules\APIs\Controllers', 'filte
     $routes->get('Health', 'HealthAPIController::index');
     $routes->get('Health/spark', 'HealthAPIController::spark');
     $routes->get('Ops/status', 'OpsAPIController::status');
+    $routes->get('SecureTransfer/status', 'SecureTransferAPIController::status'); // counts only, for the TBI AIOps MCP
 });
 
 // Backward-compatible legacy aliases (deprecated; migrate to /API/v1/*)
