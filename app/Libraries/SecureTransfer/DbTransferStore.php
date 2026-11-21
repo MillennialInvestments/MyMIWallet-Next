@@ -49,7 +49,7 @@ final class DbTransferStore implements TransferStore
     public function activeKeys(string $wallet): array
     {
         $rows = $this->db->table(self::KEYS)->select('wallet, transfer_key, created_at, statement, signature')
-            ->where('wallet', $wallet)->where('revoked_at', null)->orderBy('id', 'ASC')->get()->getResultArray();
+            ->where('wallet', $wallet)->where('revoked_at', null)->orderBy('id', 'ASC')->get(50)->getResultArray();
         return array_map(static fn ($r) => ['wallet' => $r['wallet'], 'transfer_key' => $r['transfer_key'], 'created_at' => (int) $r['created_at'],
             'statement' => $r['statement'], 'signature' => $r['signature']], $rows);
     }
@@ -57,7 +57,7 @@ final class DbTransferStore implements TransferStore
     public function keysForUser(int $userId): array
     {
         $rows = $this->db->table(self::KEYS)->select('wallet, transfer_key, created_at')
-            ->where('user_id', $userId)->where('revoked_at', null)->orderBy('id', 'ASC')->get()->getResultArray();
+            ->where('user_id', $userId)->where('revoked_at', null)->orderBy('id', 'ASC')->get(100)->getResultArray();
         return array_map(static fn ($r) => ['wallet' => $r['wallet'], 'transfer_key' => $r['transfer_key'], 'created_at' => (int) $r['created_at']], $rows);
     }
 
@@ -113,7 +113,7 @@ final class DbTransferStore implements TransferStore
         foreach ($rows as $row) {
             $row = $this->ints($row);
             $row['recipients'] = array_column($this->db->table(self::RECIPIENTS)->select('wallet')
-                ->where('transfer_id', $row['transfer_id'])->get()->getResultArray(), 'wallet');
+                ->where('transfer_id', $row['transfer_id'])->get(50)->getResultArray(), 'wallet');
             $out[] = $row;
         }
         return $out;

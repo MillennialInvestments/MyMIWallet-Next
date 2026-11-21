@@ -7,7 +7,7 @@ namespace App\Commands\SecureTransfer;
 use App\Libraries\SecureTransfer\CiphertextStore;
 use App\Libraries\SecureTransfer\DbTransferStore;
 use App\Libraries\SecureTransfer\SecureTransferService;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\SecureTransfer as SecureTransferConfig;
 
@@ -15,7 +15,7 @@ use Config\SecureTransfer as SecureTransferConfig;
  * Deletes the ciphertext of expired and withdrawn Secure Transfer files.
  * Lists only by default; --apply deletes. Metadata rows stay (marked purged).
  */
-class Purge extends BaseCommand
+class Purge extends SafeBaseCommand
 {
     protected $group = 'SecureTransfer';
     protected $name = 'securetransfer:purge';
