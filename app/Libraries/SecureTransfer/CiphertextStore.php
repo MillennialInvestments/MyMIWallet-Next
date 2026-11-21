@@ -38,6 +38,10 @@ final class CiphertextStore
         @chmod($tmp, 0600);
         // link() fails if the target exists, so a reused id can never overwrite another file.
         $ok = @link($tmp, $target);
+        if (!$ok && !file_exists($target)) {
+            // Filesystem without hard links: rename in the same directory instead.
+            $ok = @rename($tmp, $target);
+        }
         @unlink($tmp);
         return $ok;
     }

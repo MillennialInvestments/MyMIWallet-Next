@@ -44,6 +44,7 @@ PHP (`app/Libraries/SecureTransfer/TransferCrypto.php`, libsodium) and the brows
 - The binding is a plain wallet `signMessage`. A phishing page could ask a user to sign an attacker's binding statement and link that wallet to the attacker's account. Users should only sign a statement whose `domain:` line is `mymiwallet.com`; a Sign-In-With-Solana style prompt is a later improvement.
 - Any signed-in user can see whether a wallet has linked devices (`/recipient/{wallet}`). That is needed to send to it.
 - A file sent before a device was linked opens only on the devices linked at the time.
+- Daily send limits are checked before the upload is saved, so several uploads started at the same moment can go slightly over them.
 
 ## Routes
 

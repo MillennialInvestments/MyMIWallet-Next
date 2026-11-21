@@ -155,7 +155,12 @@ final class SecureTransferService
             return self::refuse('storage_unavailable');
         }
         $wallets = array_values(array_unique(array_column($manifest['recipients'], 'wallet')));
-        if (!$this->store->saveTransfer($userId, $manifest, $signature, $wallets, $now)) {
+        try {
+            $saved = $this->store->saveTransfer($userId, $manifest, $signature, $wallets, $now);
+        } catch (\Throwable $e) {
+            $saved = false; // DBDebug turns a failed insert into an exception
+        }
+        if (!$saved) {
             $files->delete($manifest['transfer_id']);
             return self::refuse('storage_unavailable');
         }
