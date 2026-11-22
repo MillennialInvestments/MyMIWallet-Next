@@ -113,8 +113,8 @@ final class SolanaWalletLifecycleTest extends CIUnitTestCase
         $this->assertFalse($this->solanaService->isValidPublicKey(str_repeat('A', 50)));
 
         // Hex 64-char public key converts to base58
-        $hexKey = '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef';
-        $normalizedFromHex = $this->solanaService->normalizeAddress($hexKey);
+        $hexPubkey = bin2hex(random_bytes(32));
+        $normalizedFromHex = $this->solanaService->normalizeAddress($hexPubkey);
         $this->assertNotNull($normalizedFromHex);
         $this->assertTrue($this->solanaService->isValidPublicKey($normalizedFromHex));
 

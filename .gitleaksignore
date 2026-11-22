@@ -1,2 +1,4 @@
 # Public RFC 6238 test vector (base32 of "12345678901234567890"), not a credential.
 4f292454ec91628c6ff851e7d8c632ad8d2a8bed:tests/unit/Security/TotpServiceTest.php:generic-api-key:15
+# Synthetic 32-byte hex test fixture in SolanaWalletLifecycleTest
+6ba259a7393939b5e007d66a60c4fb8c5288202b:tests/unit/Solana/SolanaWalletLifecycleTest.php:generic-api-key:116
