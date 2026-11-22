@@ -94,7 +94,12 @@ class AccountRescueAdminController extends BaseAdminController
         }
 
         $db = db_connect();
-        $db->table('login_attempts')->where('identifier', $email)->delete();
+        if ($db->tableExists('login_attempts')) {
+            $db->table('login_attempts')->where('identifier', $email)->delete();
+        }
+        if ($db->tableExists('auth_logins')) {
+            $db->table('auth_logins')->where('identifier', $email)->delete();
+        }
 
         log_message('info', '[SUPPORT] Account unlock requested', [
             'admin_id' => $this->currentAdminId(),
