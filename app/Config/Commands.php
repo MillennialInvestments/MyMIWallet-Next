@@ -38,5 +38,7 @@ class Commands extends BaseConfig
         'market:freshness:audit' => \App\Commands\Market\MarketFreshnessAudit::class,
         'alerts:evaluate' => \App\Commands\Alerts\Evaluate::class,
         'exchange:reconcile' => \App\Commands\Exchange\Reconcile::class,
+        'privacy:purge' => \App\Commands\Privacy\Purge::class,
+        'securetransfer:purge' => \App\Commands\SecureTransfer\Purge::class,
     ];
 }
