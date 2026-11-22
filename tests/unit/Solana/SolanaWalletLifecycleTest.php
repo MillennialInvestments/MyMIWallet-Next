@@ -46,6 +46,18 @@ final class SolanaWalletLifecycleTest extends CIUnitTestCase
             updated_on DATETIME NULL
         )');
 
+        // Defensively ensure columns exist if bf_users_wallet was pre-created by earlier tests
+        $existingCols = $this->db->getFieldNames('bf_users_wallet');
+        if (! in_array('status', $existingCols, true)) {
+            $this->db->query('ALTER TABLE bf_users_wallet ADD COLUMN status TEXT DEFAULT "Active"');
+        }
+        if (! in_array('active', $existingCols, true)) {
+            $this->db->query('ALTER TABLE bf_users_wallet ADD COLUMN active INTEGER DEFAULT 1');
+        }
+        if (! in_array('market', $existingCols, true)) {
+            $this->db->query('ALTER TABLE bf_users_wallet ADD COLUMN market TEXT NULL');
+        }
+
         // Clear tables
         $this->db->table('bf_exchanges_coin_addresses')->emptyTable();
         $this->db->table('bf_users_wallet')->emptyTable();
