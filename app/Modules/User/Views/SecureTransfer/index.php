@@ -24,10 +24,10 @@ $config = [
             <h5>1. Connect your wallet</h5>
             <p class="small text-soft">Your wallet signs a short statement that links it to a transfer key kept on this device. Signing costs nothing and sends no transaction.</p>
             <div class="d-flex flex-wrap gap-2 align-items-center">
-                <button type="button" class="btn btn-primary" id="mst1-connect">Connect wallet</button>
+                <button type="button" class="btn btn-primary" id="mst1-connect" data-mst1-pending="1">Connect wallet</button>
                 <span id="mst1-wallet" class="text-monospace small"></span>
             </div>
-            <div id="mst1-device" class="small mt-2"></div>
+            <div id="mst1-device" class="small mt-2 text-soft">Loading encryption…</div>
         </div>
     </div>
 
@@ -83,3 +83,13 @@ $config = [
 <script<?= script_nonce_attr() ?> src="<?= base_url('assets/vendor/tweetnacl/nacl-fast.min.js') ?>"></script>
 <script<?= script_nonce_attr() ?> src="<?= base_url('assets/js/secure-transfer/mst1.js') ?>"></script>
 <script<?= script_nonce_attr() ?> src="<?= base_url('assets/js/secure-transfer/secure-transfer-ui.js') ?>"></script>
+<script<?= script_nonce_attr() ?>>
+window.addEventListener('load', function () {
+  var b = document.getElementById('mst1-connect');
+  var d = document.getElementById('mst1-device');
+  if (b && d && b.hasAttribute('data-mst1-pending')) {
+    d.textContent = 'The encryption scripts did not load from <?= esc(base_url('assets/js/secure-transfer/'), 'js') ?>. Reload the page; if it keeps happening, report it to support.';
+    d.className = 'small mt-2 text-danger';
+  }
+});
+</script>

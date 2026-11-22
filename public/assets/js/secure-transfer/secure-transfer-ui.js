@@ -7,7 +7,19 @@
 (function () {
   'use strict';
   var root = document.getElementById('mst1-app');
-  if (!root || !window.MST1 || !window.nacl) return;
+  if (!root) return;
+  if (!window.MST1 || !window.nacl || !window.crypto || !window.crypto.subtle) {
+    var warn = document.getElementById('mst1-device');
+    if (warn) {
+      warn.textContent = !window.crypto || !window.crypto.subtle
+        ? 'This browser cannot encrypt files here. Open the page over HTTPS in a current browser.'
+        : 'The encryption scripts did not load. Reload the page; if it keeps happening, report it to support.';
+      warn.className = 'small mt-2 text-danger';
+    }
+    var pending = document.getElementById('mst1-connect');
+    if (pending) pending.removeAttribute('data-mst1-pending');
+    return;
+  }
   var cfg = JSON.parse(root.getAttribute('data-config') || '{}');
   var enc = new TextEncoder();
   var state = { wallet: null, provider: null, device: null };
@@ -78,6 +90,7 @@
     var p = provider();
     var status = $('mst1-device');
     if (!p) { text(status, 'No Solana wallet found in this browser. Install Phantom or Solflare and reload.', 'text-danger'); return; }
+    text(status, 'Waiting for your wallet. If nothing opens, click the wallet icon in your browser toolbar and unlock it.');
     var resp = await p.connect();
     var pk = (resp && resp.publicKey) || p.publicKey;
     state.provider = p;
@@ -228,7 +241,17 @@
     });
   }
 
-  $('mst1-connect').addEventListener('click', function () { connect().catch(function (e) { text($('mst1-device'), String(e.message || e), 'text-danger'); }); });
+  var connectBtn = $('mst1-connect');
+  connectBtn.addEventListener('click', function () {
+    connectBtn.disabled = true;
+    connect().catch(function (e) {
+      var msg = String((e && e.message) || e);
+      if (e && (e.code === 4001 || /reject/i.test(msg))) msg = 'You cancelled the request in your wallet. Click Connect wallet to try again.';
+      text($('mst1-device'), msg, 'text-danger');
+    }).then(function () { connectBtn.disabled = false; });
+  });
+  connectBtn.removeAttribute('data-mst1-pending');
+  text($('mst1-device'), '');
   $('mst1-send').addEventListener('click', send);
   $('mst1-refresh').addEventListener('click', function () { refresh().catch(function () {}); });
 })();
