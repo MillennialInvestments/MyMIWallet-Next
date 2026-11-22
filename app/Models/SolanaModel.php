@@ -83,10 +83,14 @@ class SolanaModel extends Model
     // }
 
 
+    protected string $addressTable = 'bf_exchanges_coin_addresses';
+
     public function attachExternalWallet(int $userId, string $address, string $label = 'MyMI Solana Wallet'): ?int
     {
+        unset($this->requestCache['defaultAddress:' . $userId]);
+
         // Clear other defaults if this is_default=1
-        $this->db->table($this->table)->where(['user_id'=>$userId,'chain'=>'solana'])->update(['is_default'=>0]);
+        $this->db->table($this->addressTable)->where(['user_id'=>$userId,'chain'=>'solana'])->update(['is_default'=>0]);
 
         $row = [
             'user_id'    => $userId,
@@ -98,7 +102,7 @@ class SolanaModel extends Model
             'updated_at' => date('Y-m-d H:i:s'),
         ];
 
-        $this->db->table($this->table)->insert($row);
+        $this->db->table($this->addressTable)->insert($row);
         return (int) $this->db->insertID();
     }
 
@@ -109,7 +113,7 @@ class SolanaModel extends Model
             return $this->requestCache[$cacheKey];
         }
 
-        $this->requestCache[$cacheKey] = $this->db->table('bf_exchanges_coin_addresses')
+        $this->requestCache[$cacheKey] = $this->db->table($this->addressTable)
             ->where(['user_id'=>$userId,'chain'=>'solana'])
             ->orderBy('is_default','DESC')->orderBy('id','ASC')
             ->get()->getRowArray() ?: null;
@@ -117,9 +121,14 @@ class SolanaModel extends Model
         return $this->requestCache[$cacheKey];
     }
 
+    public function getDefaultAddress(int $userId): ?array
+    {
+        return $this->getDefaultAddressFromExchangeTable($userId);
+    }
+
     public function listAddresses(int $userId): array
     {
-        return $this->db->table($this->table)
+        return $this->db->table($this->addressTable)
             ->where(['user_id'=>$userId,'chain'=>'solana'])
             ->orderBy('is_default','DESC')->orderBy('id','ASC')
             ->limit(20)->get()->getResultArray();
@@ -127,9 +136,11 @@ class SolanaModel extends Model
 
     public function setDefaultAddress(int $userId, int $id): bool
     {
+        unset($this->requestCache['defaultAddress:' . $userId]);
+
         $this->db->transStart();
-        $this->db->table($this->table)->where(['user_id'=>$userId,'chain'=>'solana'])->update(['is_default'=>0]);
-        $this->db->table($this->table)->where(['id'=>$id,'user_id'=>$userId])->update(['is_default'=>1,'updated_at'=>date('Y-m-d H:i:s')]);
+        $this->db->table($this->addressTable)->where(['user_id'=>$userId,'chain'=>'solana'])->update(['is_default'=>0]);
+        $this->db->table($this->addressTable)->where(['id'=>$id,'user_id'=>$userId])->update(['is_default'=>1,'updated_at'=>date('Y-m-d H:i:s')]);
         $this->db->transComplete();
         return $this->db->transStatus();
     }
@@ -145,7 +156,7 @@ class SolanaModel extends Model
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         ];
-        $this->db->table($this->table)->insert($row);
+        $this->db->table($this->addressTable)->insert($row);
         return (int) $this->db->insertID();
     }
 
