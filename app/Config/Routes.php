@@ -1865,6 +1865,13 @@ $routes->get('Exchange/Solana/Create', '\App\Modules\Exchange\Controllers\Solana
 $routes->group('Exchange', ['namespace' => '\App\Modules\Exchange\Controllers', 'filter' => 'login'], function($routes) {
     $routes->get('', 'ExchangeController::index', ['as' => 'mymi-exchange']);
     $routes->get('Projects/(:any)', 'ExchangeController::project/$1');
+    // Trading and order management routes (money switch: feature:exchange_trading, off by default)
+    $routes->post('CreateOrder', 'ExchangeController::createOrder', ['filter' => ['login', 'feature:exchange_trading']]);
+    $routes->post('CancelOrder', 'ExchangeController::cancelOrder', ['filter' => ['login', 'feature:exchange_trading']]);
+    $routes->post('Buy', 'ExchangeController::buy', ['filter' => ['login', 'feature:exchange_trading']]);
+    $routes->post('Sell', 'ExchangeController::sell', ['filter' => ['login', 'feature:exchange_trading']]);
+    $routes->post('OrderFetch', 'ExchangeController::orderFetch', ['filter' => ['login', 'feature:exchange_trading']]);
+    $routes->post('UpdateOrder', 'ExchangeController::updateOrder', ['filter' => ['login', 'feature:exchange_trading']]);
     $routes->group('DigiByte', function($routes) {
         $routes->post('fetchFrontendData', 'DigiByteController::fetchFrontendData', ['filter' => 'csrf']);
         $routes->post('provisionDefaultWallet', 'DigiByteController::provisionDefaultWallet', ['filter' => 'csrf']);
