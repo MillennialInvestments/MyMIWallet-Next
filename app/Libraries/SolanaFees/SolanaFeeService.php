@@ -69,7 +69,11 @@ final class SolanaFeeService
      *        finished (e.g. its transfer exists). A receipt left pending by a crash is reused only when
      *        this says it did not; without it, stale pending receipts are never reused.
      */
-    public function claim(string $kind, int $userId, string $payerWallet, string $signature, string $reference, ?callable $completed = null): array
+    /**
+     * @param array|null $tx the already-fetched transaction for $signature, when the caller has it
+     *                       (saves a second RPC lookup that could fail transiently)
+     */
+    public function claim(string $kind, int $userId, string $payerWallet, string $signature, string $reference, ?callable $completed = null, ?array $tx = null): array
     {
         $fee = $this->lamports($kind);
         if ($fee === 0) {
@@ -106,7 +110,7 @@ final class SolanaFeeService
             }
             return ['ok' => false, 'error' => 'fee_signature_already_used'];
         }
-        $tx = $this->rpc->getTransaction($signature);
+        $tx ??= $this->rpc->getTransaction($signature);
         if ($tx === null) {
             return ['ok' => false, 'error' => 'fee_payment_not_found'];
         }

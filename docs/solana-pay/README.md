@@ -19,12 +19,12 @@ Buyers pay for MyMI products in USDC on Solana from their own wallet. One signed
    - the SOL fee to the treasury;
    - a memo.
 3. The buyer signs and sends in their wallet.
-4. The page polls `GET Pay/Solana/Status/{reference}`. The server finds the transaction by its reference and checks it on-chain:
+4. The page polls `GET Pay/Solana/Status/{reference}`, and cron runs `php spark solanapay:reconcile` every minute so a paid order is delivered even if the buyer closed the page (a reload also resumes the open checkout). The server finds the transaction by its reference and checks it on-chain:
    - it succeeded;
    - it pays the exact amount, in the right token, to MyMI's USDC account;
    - a signer authorised it.
 
-   It then claims the fee once (`bf_solana_fee_receipts`), moves the checkout from pending to confirmed in one conditional update, records a verified `bf_payment_claims` row (`provider=solana`), delivers the order once, and writes `payment_confirmed` to the investigation record.
+   It then moves the checkout from pending to confirmed in one conditional update, claims the fee once (`bf_solana_fee_receipts`) from the same verified transaction, records a verified `bf_payment_claims` row (`provider=solana`), delivers the order once, and writes `payment_confirmed` to the investigation record.
 
 If the price arrived without the fee, the checkout goes to `review` and nothing is delivered. If delivery fails after a valid payment, it goes to `unfulfilled` for support.
 
@@ -45,3 +45,13 @@ The recipient wallet must already hold a USDC token account; checkout refuses wi
 ## Database
 
 Named migration: `2026-11-23-000400_CreateSolanaPayRequests` (`bf_solana_pay_requests`; unique reference and signature). It also needs `bf_payment_claims` from `2026-11-15-000300_CreateFormFeatureTables`.
+
+## Cron
+
+Run the sweep every minute as the web user, from the release's `current` directory:
+
+```
+* * * * * cd /apps/TBI/www/mymiwallet/current && php spark solanapay:reconcile >/dev/null 2>&1
+```
+
+It does nothing while Solana Pay is off or the table is missing, and each checkout is delivered at most once.

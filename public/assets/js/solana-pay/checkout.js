@@ -43,6 +43,36 @@
     box.classList.remove('d-none');
   }
 
+  // Remember the open checkout so a reload resumes it. The server also
+  // confirms checkouts on its own (solanapay:reconcile), so this is only
+  // for showing the result; the order is delivered either way.
+  var SAVE_KEY = 'mymi.solpay.open';
+  function save(data) {
+    try { localStorage.setItem(SAVE_KEY, JSON.stringify({ at: Date.now(), d: data })); } catch (e) { /* storage off */ }
+  }
+  function forget() {
+    try { localStorage.removeItem(SAVE_KEY); } catch (e) { /* storage off */ }
+  }
+  function saved() {
+    try {
+      var v = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null');
+      if (v && v.d && v.d.reference && Date.now() - v.at < 20 * 60 * 1000) return v.d;
+    } catch (e) { /* storage off */ }
+    forget();
+    return null;
+  }
+
+  function show(data) {
+    $('solpay-qr').src = data.qr;
+    $('solpay-open').href = data.url;
+    $('solpay-amount').textContent = data.usd;
+    $('solpay-fee').textContent = data.fee_sol && data.fee_sol !== '0' ? ' + ' + data.fee_sol + ' SOL fee' : '';
+    $('solpay-pay').classList.remove('d-none');
+    clearInterval(timer);
+    timer = setInterval(function () { poll(data.reference); }, 4000);
+    poll(data.reference);
+  }
+
   async function poll(reference) {
     try {
       var res = await fetch(cfg.base + '/Status/' + encodeURIComponent(reference), { credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } });
@@ -50,6 +80,7 @@
       var status = $('solpay-status');
       if (data.status === 'pending') { status.textContent = 'Waiting for payment…'; return; }
       clearInterval(timer);
+      forget();
       if (data.ok) {
         status.className = 'small text-success';
         status.textContent = data.message || 'Payment confirmed.';
@@ -68,6 +99,8 @@
   if (p.lot) $('solpay-lot').value = p.lot;
   if (p.gold_cents && /^\d+$/.test(p.gold_cents)) $('solpay-gold-cents').value = p.gold_cents;
   showFields();
+  var open = saved();
+  if (open) show(open);
 
   form.addEventListener('submit', async function (ev) {
     ev.preventDefault();
@@ -84,13 +117,8 @@
       if (newHash && meta) meta.content = newHash;
       var data = await res.json().catch(function () { return { ok: false, error: 'bad_response_' + res.status }; });
       if (!data.ok) { fail(data.error); return; }
-      $('solpay-qr').src = data.qr;
-      $('solpay-open').href = data.url;
-      $('solpay-amount').textContent = data.usd;
-      $('solpay-fee').textContent = data.fee_sol && data.fee_sol !== '0' ? ' + ' + data.fee_sol + ' SOL fee' : '';
-      $('solpay-pay').classList.remove('d-none');
-      clearInterval(timer);
-      timer = setInterval(function () { poll(data.reference); }, 4000);
+      save(data);
+      show(data);
     } catch (e) {
       fail('network');
     } finally {

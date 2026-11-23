@@ -30,6 +30,8 @@ final class SolanaPayServiceTest extends CIUnitTestCase
     /** @var list<array> */
     private array $fulfilled = [];
     private \CodeIgniter\Database\BaseConnection $sqlite;
+    /** getTransaction answers left before the fake RPC "goes down"; null = unlimited. */
+    private ?int $txLookupsLeft = null;
 
     protected function setUp(): void
     {
@@ -97,7 +99,7 @@ final class SolanaPayServiceTest extends CIUnitTestCase
     public function rpc(string $method, array $params): mixed
     {
         return match ($method) {
-            'getTransaction' => $this->chain[$params[0]] ?? null,
+            'getTransaction' => $this->txLookupsLeft !== null && $this->txLookupsLeft-- <= 0 ? null : ($this->chain[$params[0]] ?? null),
             'getSignaturesForAddress' => $this->byReference[$params[0]] ?? [],
             'getLatestBlockhash' => ['value' => ['blockhash' => Base58::encode(str_repeat("\x07", 32)), 'lastValidBlockHeight' => 1]],
             'getRecentPrioritizationFees' => [['slot' => 1, 'prioritizationFee' => 0], ['slot' => 2, 'prioritizationFee' => 5000], ['slot' => 3, 'prioritizationFee' => 9000]],
@@ -197,6 +199,30 @@ final class SolanaPayServiceTest extends CIUnitTestCase
         $this->assertSame('10.00', number_format((float) $claim['verified_amount'], 2));
         $this->assertSame(['payment_confirmed'], array_column($audit->find([]), 'event'));
         $this->assertSame('not_found', $svc->confirm($c['reference'], 8)['status'], 'another user cannot read or confirm it');
+    }
+
+    public function testFeeIsCheckedFromTheVerifiedTransactionNotASecondLookup(): void
+    {
+        $svc = $this->service();
+        $c = $svc->checkout(7, 'mymigold', '', 1000);
+        $this->pay($c['reference'], 10_000_000, 5_000_000);
+        $this->txLookupsLeft = 1; // RPC fails right after the price is verified
+
+        $this->assertSame('fulfilled', $svc->confirm($c['reference'], 7)['status']);
+        $this->assertCount(1, $this->fulfilled);
+    }
+
+    public function testReconcileDeliversPaidCheckoutsWithoutTheBrowser(): void
+    {
+        $svc = $this->service();
+        $paid = $svc->checkout(7, 'mymigold', '', 1000);
+        $open = $svc->checkout(8, 'mymigold', '', 2000);
+        $this->pay($paid['reference'], 10_000_000, 5_000_000);
+
+        $this->assertSame(['fulfilled' => 1, 'pending' => 1], $svc->reconcile());
+        $this->assertCount(1, $this->fulfilled);
+        $this->assertSame(['pending' => 1], $svc->reconcile(), 'a fulfilled checkout is not looked at again');
+        $this->assertSame('pending', $svc->confirm($open['reference'], 8)['status']);
     }
 
     public function testWrongAmountTokenOrRecipientIsNotAccepted(): void

@@ -165,6 +165,30 @@ final class SolanaPayService
     }
 
     /**
+     * Server-side sweep of open checkouts, so a paid order is delivered even
+     * when the buyer closed the checkout tab. Run from cron (solanapay:reconcile).
+     *
+     * @return array<string, int> count of checkouts by resulting status
+     */
+    public function reconcile(int $limit = 100): array
+    {
+        $rows = $this->db->table(self::TABLE)->select('reference, user_id')
+            ->where('status', 'pending')->where('expires_at >=', $this->now() - 86400)
+            ->orderBy('created_at', 'ASC')->limit(max(1, min($limit, 500)))->get()->getResultArray();
+        $counts = [];
+        foreach ($rows as $r) {
+            try {
+                $status = $this->confirm((string) $r['reference'], (int) $r['user_id'])['status'];
+            } catch (\Throwable $e) {
+                log_message('warning', 'Solana Pay reconcile {ref}: {m}', ['ref' => $r['reference'], 'm' => $e->getMessage()]);
+                $status = 'error';
+            }
+            $counts[$status] = ($counts[$status] ?? 0) + 1;
+        }
+        return $counts;
+    }
+
+    /**
      * Look for the payment on-chain and, the first time it is found valid,
      * record it and fulfil the order.
      *
@@ -194,7 +218,7 @@ final class SolanaPayService
                 log_message('notice', 'Solana Pay {ref}: transaction {sig} not accepted ({why})', ['ref' => $reference, 'sig' => $entry['signature'], 'why' => $check['error']]);
                 continue;
             }
-            return $this->accept($row, (string) $entry['signature'], $check['payer']);
+            return $this->accept($row, (string) $entry['signature'], $check['payer'], $tx);
         }
 
         if ((int) $row['expires_at'] < $this->now() - 120) {
@@ -250,7 +274,7 @@ final class SolanaPayService
         return ['ok' => false, 'error' => 'no_matching_transfer'];
     }
 
-    private function accept(array $row, string $signature, string $payer): array
+    private function accept(array $row, string $signature, string $payer, array $tx): array
     {
         $reference = (string) $row['reference'];
         $userId = (int) $row['user_id'];
@@ -263,7 +287,8 @@ final class SolanaPayService
         }
 
         if ((int) $row['fee_lamports'] > 0) {
-            $fee = $this->fees->claim('payment_processing', $userId, $payer, $signature, 'solanapay:' . $reference);
+            // Check the fee in the transaction we already verified: no second RPC lookup to fail transiently.
+            $fee = $this->fees->claim('payment_processing', $userId, $payer, $signature, 'solanapay:' . $reference, null, $tx);
             if (! $fee['ok']) {
                 log_message('warning', 'Solana Pay {ref}: price paid but fee refused ({why})', ['ref' => $reference, 'why' => $fee['error'] ?? '']);
                 $this->db->table(self::TABLE)->where('reference', $reference)
