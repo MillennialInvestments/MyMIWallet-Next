@@ -806,7 +806,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->post('settle/(:num)', 'AuctionsAPIController::settle/$1');
         $routes->post('escrow/release/(:num)', 'AuctionsAPIController::releaseEscrow/$1');
         $routes->post('escrow/refund/(:num)', 'AuctionsAPIController::refundEscrow/$1');
-        $routes->post('topup', 'AuctionsAPIController::topUp');
+        $routes->post('topup', 'AuctionsAPIController::topUp', ['filter' => 'feature:auctions']);
     });
 
     // ------------------------
@@ -2043,7 +2043,8 @@ $routes->group('Projects', ['namespace' => '\App\Modules\User\Controllers'], sta
     $routes->post('Accept-Private-Allocation/(:num)', 'ProjectsController::acceptPrivateAllocation/$1');
     $routes->get('Fund', 'ProjectsController::fund');
     $routes->get('Fund/(:num)', 'ProjectsController::fund/$1');
-    $routes->post('PurchaseFundUnits', 'ProjectsController::purchaseFundUnits');
+    // Issues units, so it needs a signed-in user and the investing switch (off by default) like Commit/Invest/Sell.
+    $routes->post('PurchaseFundUnits', 'ProjectsController::purchaseFundUnits', ['filter' => ['login', 'feature:project_investing']]);
     // GT-FORM-ROUTES-001: dashboard project modals.
     $routes->post('SubmitCommit', 'ProjectsController::submitCommit', ['filter' => ['login', 'feature:project_investing']]);
     $routes->post('SubmitInvest', 'ProjectsController::submitInvest', ['filter' => ['login', 'feature:project_investing']]);
