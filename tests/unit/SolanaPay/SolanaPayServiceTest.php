@@ -247,6 +247,43 @@ final class SolanaPayServiceTest extends CIUnitTestCase
         $this->assertSame('fulfilled', $this->service(9_000_000)->confirm($c['reference'], 7)['status']);
     }
 
+    public function testATreasuryChangeOrFeeOffAfterCheckoutDoesNotFailAPaidOrder(): void
+    {
+        $svc = $this->service(5_000_000);
+        $c = $svc->checkout(7, 'mymigold', '', 1000);
+        $this->pay($c['reference'], 10_000_000, 5_000_000);  // paid to the treasury quoted at checkout
+        $old = $this->treasury;
+        $this->treasury = Base58::encode(random_bytes(32)); // operator moves the treasury
+
+        $this->assertSame('fulfilled', $this->service(0)->confirm($c['reference'], 7)['status']);
+        $this->treasury = $old;
+    }
+
+    public function testOpenCheckoutsPerUserAreCapped(): void
+    {
+        $svc = $this->service();
+        for ($i = 0; $i < 5; $i++) {
+            $this->assertTrue($svc->checkout(7, 'mymigold', '', 1000)['ok']);
+        }
+        $this->assertSame('too_many_open_checkouts', $svc->checkout(7, 'mymigold', '', 1000)['error']);
+        $this->assertTrue($svc->checkout(8, 'mymigold', '', 1000)['ok'], 'another user is not affected');
+    }
+
+    public function testASignatureAlreadyUsedByAnotherCheckoutIsSkipped(): void
+    {
+        $svc = $this->service();
+        $a = $svc->checkout(7, 'mymigold', '', 1000);
+        $b = $svc->checkout(7, 'mymigold', '', 1000);
+        $sig = $this->pay($a['reference'], 10_000_000, 5_000_000);
+        $this->assertSame('fulfilled', $svc->confirm($a['reference'], 7)['status']);
+        // The same transaction also lists B's reference (a crafted two-reference payment).
+        $this->chain[$sig]['transaction']['message']['accountKeys'][] = ['pubkey' => $b['reference'], 'signer' => false, 'writable' => false];
+        $this->byReference[$b['reference']][] = ['signature' => $sig, 'err' => null];
+
+        $this->assertSame('pending', $svc->confirm($b['reference'], 7)['status']);
+        $this->assertCount(1, $this->fulfilled);
+    }
+
     /** Leave a paid checkout as if the process stopped right after the lock. */
     private function interrupt(SolanaPayService $svc, int $user): array
     {

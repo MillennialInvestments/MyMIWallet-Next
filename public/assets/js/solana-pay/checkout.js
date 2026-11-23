@@ -20,7 +20,9 @@
     recipient_usdc_account_missing: 'Checkout is not set up yet. Please try later.',
     checkout_expired: 'This checkout expired. Start a new one.',
     fee_not_paid: 'Payment received without the processing fee. Support will review it.',
-    sign_in_required: 'Please sign in again.'
+    sign_in_required: 'Please sign in again.',
+    too_many_open_checkouts: 'You have several unpaid checkouts open. Pay or wait for one to expire, then try again.',
+    wallet_not_yours: 'Pick one of your own wallets.'
   };
 
   function headers() {

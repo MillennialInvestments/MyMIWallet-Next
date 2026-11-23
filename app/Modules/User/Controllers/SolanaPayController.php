@@ -122,7 +122,15 @@ class SolanaPayController extends UserController
         switch ($purpose) {
             case 'mymigold':
                 $usd = $num($in['amount_usd'] ?? null);
-                return $usd === null ? [0, '', 'amount_required'] : [(int) round($usd * 100), (string) ($in['wallet_id'] ?? ''), null];
+                if ($usd === null) {
+                    return [0, '', 'amount_required'];
+                }
+                $wallet = (string) ($in['wallet_id'] ?? '');
+                if ($wallet !== '' && (! ctype_digit($wallet) || db_connect()->table('bf_users_wallet')->select('id')
+                    ->where('id', (int) $wallet)->where('user_id', $this->userId())->limit(1)->get()->getRowArray() === null)) {
+                    return [0, '', 'wallet_not_yours'];
+                }
+                return [(int) round($usd * 100), $wallet, null];
             case 'membership':
                 $plan = config('MembershipPlans')->find((string) ($in['plan'] ?? ''));
                 return $plan === null ? [0, '', 'unknown_plan'] : [(int) round($plan['price'] * 100), $plan['slug'], null];

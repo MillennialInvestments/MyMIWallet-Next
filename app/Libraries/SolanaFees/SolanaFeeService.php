@@ -70,17 +70,18 @@ final class SolanaFeeService
      *        this says it did not; without it, stale pending receipts are never reused.
      */
     /**
-     * @param array{tx?: array, not_before?: int, lamports?: int} $quote what a caller that priced the
+     * @param array{tx?: array, not_before?: int, lamports?: int, treasury?: string} $quote what a caller that priced the
      *        payment itself already knows: `tx` the fetched transaction (no second RPC lookup to fail
      *        transiently), `not_before` the oldest accepted block time (its own payment window, so late
-     *        verification is not "too old"), `lamports` the fee it quoted (a later price change
-     *        cannot invalidate a paid order)
+     *        verification is not "too old"), `lamports` and `treasury` the fee it quoted (a later
+     *        price or treasury change cannot invalidate a paid order)
      */
     public function claim(string $kind, int $userId, string $payerWallet, string $signature, string $reference, ?callable $completed = null, array $quote = []): array
     {
         $fee = isset($quote['lamports']) ? (int) $quote['lamports'] : $this->lamports($kind);
         $tx = $quote['tx'] ?? null;
         $notBefore = isset($quote['not_before']) ? (int) $quote['not_before'] : null;
+        $treasury = (string) ($quote['treasury'] ?? '') ?: $this->config->treasury;
         if ($fee === 0) {
             return ['ok' => true, 'charged' => false];
         }
@@ -129,12 +130,12 @@ final class SolanaFeeService
         if (!self::signedBy($tx, $payerWallet)) {
             return ['ok' => false, 'error' => 'fee_payment_not_from_your_wallet'];
         }
-        $paid = self::paidTo($tx, $payerWallet, $this->config->treasury);
+        $paid = self::paidTo($tx, $payerWallet, $treasury);
         if ($paid < $fee) {
             return ['ok' => false, 'error' => 'fee_payment_too_small', 'paid_lamports' => $paid, 'fee_lamports' => $fee];
         }
         $ok = $this->receipts->insert(['signature' => $signature, 'kind' => $kind, 'user_id' => $userId, 'payer_wallet' => $payerWallet,
-            'treasury' => $this->config->treasury, 'lamports' => $paid, 'fee_lamports' => $fee, 'reference' => $reference,
+            'treasury' => $treasury, 'lamports' => $paid, 'fee_lamports' => $fee, 'reference' => $reference,
             'cluster' => $this->config->cluster, 'block_time' => $blockTime, 'slot' => (int) ($tx['slot'] ?? 0), 'created_at' => $now]);
         if (!$ok) {
             return ['ok' => false, 'error' => 'fee_signature_already_used'];

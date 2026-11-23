@@ -25,6 +25,10 @@ use Config\SolanaPay as SolanaPayConfig;
  */
 final class SolanaPayService
 {
+    /** Most unpaid checkouts one user may hold open at once. */
+    private const MAX_OPEN_PER_USER = 5;
+    /** Pages of 100 signatures read per reference before giving up on "no payment". */
+    private const SIGNATURE_PAGES = 5;
     /** A `confirmed` checkout untouched this long was interrupted mid-delivery. */
     private const RESUME_AFTER_SECONDS = 300;
 
@@ -73,8 +77,16 @@ final class SolanaPayService
         }
 
         $now = $this->now();
+        $open = $this->db->table(self::TABLE)->where('user_id', $userId)->where('status', 'pending')
+            ->where('expires_at >=', $now)->countAllResults();
+        if ($open >= self::MAX_OPEN_PER_USER) {
+            return ['ok' => false, 'error' => 'too_many_open_checkouts'];
+        }
         $reference = Base58::encode(random_bytes(32));
-        $fee = $this->fees->lamports('payment_processing');
+        // Fix the fee terms on the checkout: the buyer signs for these, whatever the config says later.
+        $quote = $this->fees->quote('payment_processing');
+        $treasury = (string) ($quote['treasury'] ?? '');
+        $fee = $treasury === '' ? 0 : $this->fees->lamports('payment_processing');
         $this->db->table(self::TABLE)->insert([
             'reference'     => $reference,
             'user_id'       => $userId,
@@ -87,6 +99,7 @@ final class SolanaPayService
             'recipient'     => $this->config->recipient,
             'recipient_token_account' => $recipientAccount,
             'fee_lamports'  => $fee,
+            'fee_treasury'  => $treasury,
             'cluster'       => $this->config->cluster,
             'status'        => 'pending',
             'created_at'    => $now,
@@ -148,7 +161,7 @@ final class SolanaPayService
                 $account, $amount, $this->config->usdcDecimals, [$reference]),
         ];
         $fee = (int) $row['fee_lamports'];
-        $treasury = (string) $this->fees->quote('payment_processing')['treasury'];
+        $treasury = (string) ($row['fee_treasury'] ?? '');
         if ($fee > 0 && $treasury !== '') {
             $ixs[] = TransactionBuilder::systemTransfer($account, $treasury, $fee);
         }
@@ -177,7 +190,7 @@ final class SolanaPayService
     {
         $rows = $this->db->table(self::TABLE)->select('reference, user_id')
             ->where('status', 'pending')->where('expires_at >=', $this->now() - 86400)
-            ->orderBy('created_at', 'ASC')->limit(max(1, min($limit, 500)))->get()->getResultArray();
+            ->orderBy('payer_wallet IS NULL', 'ASC', false)->orderBy('created_at', 'ASC')->limit(max(1, min($limit, 500)))->get()->getResultArray();
         $counts = [];
         $stuck = $this->db->table(self::TABLE)->select('reference')
             ->where('status', 'confirmed')->where('updated_at <', $this->now() - self::RESUME_AFTER_SECONDS)
@@ -219,10 +232,10 @@ final class SolanaPayService
             return $this->state($row);
         }
 
-        $found = $this->rpc->call('getSignaturesForAddress', [$reference, ['limit' => 20, 'commitment' => 'confirmed']]);
-        // Only a complete answer from the chain can prove "no payment"; an RPC outage must leave the checkout open.
-        $complete = is_array($found);
-        foreach ($complete ? $found : [] as $entry) {
+        // Only a complete answer from the chain can prove "no payment": an RPC outage, or more
+        // transactions on the (public) reference than we page through, must leave the checkout open.
+        [$found, $complete] = $this->signaturesFor($reference, (int) $row['created_at'] - 120);
+        foreach ($found as $entry) {
             if (($entry['err'] ?? null) !== null || ! is_string($entry['signature'] ?? null)) {
                 continue;
             }
@@ -236,7 +249,10 @@ final class SolanaPayService
                 log_message('notice', 'Solana Pay {ref}: transaction {sig} not accepted ({why})', ['ref' => $reference, 'sig' => $entry['signature'], 'why' => $check['error']]);
                 continue;
             }
-            return $this->accept($row, (string) $entry['signature'], $check['payer'], $tx);
+            $accepted = $this->accept($row, (string) $entry['signature'], $check['payer'], $tx);
+            if ($accepted !== null) {
+                return $accepted;
+            }
         }
 
         if ($complete && (int) $row['expires_at'] < $this->now() - 120) {
@@ -292,12 +308,44 @@ final class SolanaPayService
         return ['ok' => false, 'error' => 'no_matching_transfer'];
     }
 
-    private function accept(array $row, string $signature, string $payer, array $tx): array
+    /**
+     * Newest-first signatures on $reference back to $notBefore, paging with `before`.
+     *
+     * @return array{0: list<array>, 1: bool} [entries, complete]
+     */
+    private function signaturesFor(string $reference, int $notBefore): array
+    {
+        $all = [];
+        $before = null;
+        for ($page = 0; $page < self::SIGNATURE_PAGES; $page++) {
+            $opts = ['limit' => 100, 'commitment' => 'confirmed'] + ($before !== null ? ['before' => $before] : []);
+            $batch = $this->rpc->call('getSignaturesForAddress', [$reference, $opts]);
+            if (! is_array($batch)) {
+                return [$all, false];
+            }
+            array_push($all, ...array_values($batch));
+            $last = end($batch);
+            if (count($batch) < 100 || ! is_array($last) || (int) ($last['blockTime'] ?? PHP_INT_MAX) < $notBefore) {
+                return [$all, true];
+            }
+            $before = (string) ($last['signature'] ?? '');
+        }
+        return [$all, false]; // flooded: keep the checkout open rather than call it unpaid
+    }
+
+    /** @return array|null null when this signature cannot be taken (already stored on another checkout) */
+    private function accept(array $row, string $signature, string $payer, array $tx): ?array
     {
         // Exactly one caller moves pending -> confirmed; everyone else just reports state.
         $now = $this->now();
-        $this->db->table(self::TABLE)->where('reference', (string) $row['reference'])->where('status', 'pending')
-            ->update(['status' => 'confirmed', 'signature' => $signature, 'payer_wallet' => $payer, 'updated_at' => $now]);
+        try {
+            $this->db->table(self::TABLE)->where('reference', (string) $row['reference'])->where('status', 'pending')
+                ->update(['status' => 'confirmed', 'signature' => $signature, 'payer_wallet' => $payer, 'updated_at' => $now]);
+        } catch (\CodeIgniter\Database\Exceptions\DatabaseException $e) {
+            // Unique signature: a transaction carrying two references pays only the first checkout.
+            log_message('notice', 'Solana Pay {ref}: signature {sig} already used by another checkout', ['ref' => $row['reference'], 'sig' => $signature]);
+            return null;
+        }
         if ($this->db->affectedRows() !== 1) {
             return $this->state($this->find((string) $row['reference']) ?? $row);
         }
@@ -348,7 +396,7 @@ final class SolanaPayService
             // Check the fee in the transaction we already verified, against this checkout's own
             // window and quoted fee, so a late check or a price change cannot fail a paid order.
             $fee = $this->fees->claim('payment_processing', $userId, $payer, $signature, 'solanapay:' . $reference, null,
-                ['tx' => $tx, 'not_before' => (int) $row['created_at'] - 120, 'lamports' => (int) $row['fee_lamports']]);
+                ['tx' => $tx, 'not_before' => (int) $row['created_at'] - 120, 'lamports' => (int) $row['fee_lamports'], 'treasury' => (string) ($row['fee_treasury'] ?? '')]);
             if (! $fee['ok']) {
                 log_message('warning', 'Solana Pay {ref}: price paid but fee refused ({why})', ['ref' => $reference, 'why' => $fee['error'] ?? '']);
                 $this->db->table(self::TABLE)->where('reference', $reference)

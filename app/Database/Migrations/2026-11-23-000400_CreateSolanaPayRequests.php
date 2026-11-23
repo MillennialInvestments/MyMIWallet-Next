@@ -33,6 +33,7 @@ class CreateSolanaPayRequests extends Migration
             'recipient'     => ['type' => 'VARCHAR', 'constraint' => 64],
             'recipient_token_account' => ['type' => 'VARCHAR', 'constraint' => 64, 'default' => ''],
             'fee_lamports'  => ['type' => 'BIGINT', 'constraint' => 20, 'unsigned' => true, 'default' => 0],
+            'fee_treasury'  => ['type' => 'VARCHAR', 'constraint' => 64, 'default' => ''],
             'cluster'       => ['type' => 'VARCHAR', 'constraint' => 16],
             'status'        => ['type' => 'VARCHAR', 'constraint' => 16, 'default' => 'pending'],
             'payer_wallet'  => ['type' => 'VARCHAR', 'constraint' => 64, 'null' => true],
