@@ -134,7 +134,7 @@ class OpsStatusService
         $lastHour = 0;
         $groups = [];
         $hourAgo = $this->now - 3600;
-        foreach ($this->tailLines($this->writePath . 'logs/log-' . $date . '.log') as $line) {
+        foreach ($this->tailLines($this->appLogFile($date)) as $line) {
             if (! preg_match('/^(CRITICAL|ALERT|EMERGENCY|ERROR|WARNING) - (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) --> (.*)$/', $line, $m)) {
                 continue;
             }
@@ -160,6 +160,33 @@ class OpsStatusService
             'hours_today'       => round(max(0, $this->now - $midnight) / 3600, 2),
             'top'               => $this->top($groups),
         ];
+    }
+
+    /**
+     * Today's CodeIgniter log. FileHandler names it log-<date>.<fileExtension>
+     * (MyMI's Config\Logger uses 'php'); fall back to .php then .log.
+     */
+    private function appLogFile(string $date): string
+    {
+        $exts = [];
+        try {
+            $handlers = config('Logger')->handlers ?? [];
+            foreach ($handlers as $class => $settings) {
+                if (str_ends_with((string) $class, 'FileHandler') && ! empty($settings['fileExtension'])) {
+                    $exts[] = ltrim((string) $settings['fileExtension'], '.');
+                }
+            }
+        } catch (Throwable $e) {
+            // keep the defaults below
+        }
+        foreach (array_unique(array_merge($exts, ['php', 'log'])) as $ext) {
+            $file = $this->writePath . 'logs/log-' . $date . '.' . $ext;
+            if (is_file($file)) {
+                return $file;
+            }
+        }
+
+        return $this->writePath . 'logs/log-' . $date . '.php';
     }
 
     /** Last-run files from `php spark ops:job:run` (writable/ops/last-run/<job>.json). */

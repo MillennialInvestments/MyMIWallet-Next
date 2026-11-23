@@ -54,7 +54,8 @@ final class OpsStatusServiceTest extends CIUnitTestCase
             . "CRITICAL - {$day} 14:59:00 --> DB timeout 3002 ms\n"
             . "WARNING - {$day} 14:59:00 --> slow\n"
             . "INFO - {$day} 14:59:00 --> fine\n";
-        file_put_contents($this->dir . '/writable/logs/log-' . $day . '.log', $log);
+        // FileHandler writes log-<date>.php by default (Config\Logger fileExtension).
+        file_put_contents($this->dir . '/writable/logs/log-' . $day . '.php', "<?php defined('SYSTEMPATH') || exit('No direct script access allowed'); ?>\n\n" . $log);
         file_put_contents($this->dir . '/root/REVISION', "ABCDEF1234567890abcdef1234567890abcdef12\n");
 
         $s = $this->service()->snapshot();
