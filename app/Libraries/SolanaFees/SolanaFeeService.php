@@ -90,6 +90,16 @@ final class SolanaFeeService
                 }
                 return ['ok' => false, 'error' => 'fee_signature_already_used'];
             }
+            if ($existing['kind'] !== $kind || (int) $existing['user_id'] !== $userId || $existing['payer_wallet'] !== $payerWallet
+                || ($existing['status'] ?? '') === 'spent') {
+                return ['ok' => false, 'error' => 'fee_signature_already_used'];
+            }
+            // A released payment must still meet today's terms: price, treasury, network and age.
+            $stillValid = (int) $existing['lamports'] >= $fee && $existing['treasury'] === $this->config->treasury
+                && $existing['cluster'] === $this->config->cluster && (int) $existing['block_time'] >= $now - $this->config->maxAgeSeconds;
+            if (!$stillValid) {
+                return ['ok' => false, 'error' => 'fee_payment_no_longer_valid', 'fee' => $this->quote($kind)];
+            }
             if ($existing['payer_wallet'] === $payerWallet
                 && $this->receipts->reclaim($signature, $userId, $kind, $reference, $now, $now - self::STALE_PENDING_SECONDS)) {
                 return ['ok' => true, 'charged' => true, 'lamports' => (int) $existing['lamports'], 'signature' => $signature, 'reused_unspent' => true];

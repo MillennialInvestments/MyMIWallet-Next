@@ -119,6 +119,21 @@ final class SolanaFeeServiceTest extends CIUnitTestCase
         $this->assertSame('fee_signature_already_used', $svc->claim('transfer_processing', 7, $this->payer, $sig, 'transfer-d')['error']);
     }
 
+    public function testReleasedReceiptMustMeetCurrentPriceAndAge(): void
+    {
+        $store = new ArrayFeeReceiptStore();
+        $svc = $this->service(null, $store);
+        $sig = $this->pay(5_000_000);
+        $this->assertTrue($svc->claim('transfer_processing', 7, $this->payer, $sig, 'a')['ok']);
+        $svc->settle($sig, 'a', false);
+        // Price went up after the failed send: the old payment no longer covers it.
+        $pricier = $this->service($this->config(20_000_000), $store);
+        $this->assertSame('fee_payment_no_longer_valid', $pricier->claim('transfer_processing', 7, $this->payer, $sig, 'b')['error']);
+        // Too old for a new charge.
+        $this->now += 7200;
+        $this->assertSame('fee_payment_no_longer_valid', $svc->claim('transfer_processing', 7, $this->payer, $sig, 'c')['error']);
+    }
+
     public function testCrashedPendingReceiptBecomesReusableAfterTimeout(): void
     {
         $svc = $this->service();
