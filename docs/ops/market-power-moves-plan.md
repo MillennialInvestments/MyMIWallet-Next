@@ -17,10 +17,11 @@ The governed n8n only observes and notifies. It never runs jobs, shell, git or D
 
 | Old workflow | New home |
 | --- | --- |
-| AIOps Watchdog, Chat Health Guard, Nightly Platform Digest, Log Spike Alert | Governed n8n workflow `mymiHealthWatch001`: read-only health probes, posting to the ops Discord only when something changes |
+| AIOps Watchdog, Chat Health Guard, Nightly Platform Digest, Log Spike Alert | Governed n8n: `mymiHealthWatch001` (public pages), `mymiDeepHealth001`, `mymiLogSpike001`, `mymiDailyDigest001` (through the MCP `mymi_status` tool and `GET /API/Ops/watch-status`) |
 | Market Content Push | MyMI power-moves feed (section 2), which reaches Discord through the bot's owner Publish queue |
-| Docs Gap Codex Handoff | Governed MCP `marketing_submit` / triage path (advise only) |
-| Daily Health + Logs, Nightly Routes + Security, Weekly DB Maintenance, Manual Ops Run | These run jobs, so they become MyMI systemd timers running `php spark` from the release, not n8n |
+| Docs Gap Codex Handoff | Docs gap counts in the daily digest |
+| Daily Health + Logs, Nightly Routes + Security, Weekly DB Maintenance | MyMI timers `mymi-ops-daily`, `mymi-ops-nightly`, opt-in `mymi-ops-db-weekly` (`docs/_ops/runbooks/ops-watch-and-timers.md`) |
+| Manual Ops Run | `php spark ops:job:run <job>` at a terminal |
 
 ## 2. Power-moves feed: spend free sources first
 

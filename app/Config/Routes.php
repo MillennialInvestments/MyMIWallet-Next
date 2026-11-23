@@ -2726,6 +2726,9 @@ $routes->group('Admin/Tax', ['namespace' => '\\App\\Modules\\Management\\TaxAdmi
     $routes->match(['GET', 'POST'], 'Rates/edit/(:num)', 'TaxConfig::editRate/$1');
 });
 
+// Read-only ops snapshot for the TBI AIOps watch. Its own token (MYMI_OPS_STATUS_TOKEN), GET only.
+$routes->get('API/Ops/watch-status', '\App\Controllers\Ops\OpsStatusController::index', ['filter' => 'opsStatusToken']);
+
 $routes->group('API/Ops', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => 'internalToken'], static function ($routes) {
     $routes->get('healthcheck', '\App\Modules\Ops\Controllers\OpsController::healthcheck');
     $routes->post('app/update', '\App\Modules\Ops\Controllers\OpsController::appUpdate');
