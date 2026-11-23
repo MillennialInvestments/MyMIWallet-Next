@@ -36,4 +36,4 @@ This is a read-only snapshot for the TBI AIOps MCP tool `mymi_status`. It report
 
 Messages are shortened, and emails, paths, long numbers and token-like strings are removed. It never runs spark or writes anything.
 
-Auth is `Authorization: Bearer <MYMI_OPS_STATUS_TOKEN>`, GET only. The token must be at least 32 characters, and it opens no other route. timothyburks `ops/aiops/tbi-mymi-ops-token.sh apply` creates it in `shared/.env` and the MCP env without printing it. When the token is unset, the route answers 503.
+Auth is `Authorization: Bearer <MYMI_OPS_STATUS_TOKEN>`, GET only. The token must be at least 32 characters, and it opens no other route. timothyburks `ops/aiops/tbi-mymi-ops-link.sh apply` creates it in `shared/.env` and the MCP env without printing it. When the token is unset, the route answers 503.
