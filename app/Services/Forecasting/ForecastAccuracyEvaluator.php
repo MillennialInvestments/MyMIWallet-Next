@@ -13,15 +13,15 @@ class ForecastAccuracyEvaluator
     private \Config\MyMIForecasting $config;
 
     public function __construct(
-        InvestmentForecastHistoryModel $historyModel,
-        InvestmentForecastAccuracyModel $accuracyModel,
-        MarketDataProviderInterface $provider,
-        \Config\MyMIForecasting $config
+        ?InvestmentForecastHistoryModel $historyModel = null,
+        ?InvestmentForecastAccuracyModel $accuracyModel = null,
+        ?MarketDataProviderInterface $provider = null,
+        ?\Config\MyMIForecasting $config = null
     ) {
-        $this->historyModel = $historyModel;
-        $this->accuracyModel = $accuracyModel;
-        $this->provider = $provider;
-        $this->config = $config;
+        $this->historyModel = $historyModel ?? new InvestmentForecastHistoryModel();
+        $this->accuracyModel = $accuracyModel ?? new InvestmentForecastAccuracyModel();
+        $this->provider = $provider ?? new \App\Services\Forecasting\Providers\AlphaVantageProvider();
+        $this->config = $config ?? config('MyMIForecasting');
     }
 
     public function evaluateExpiredForecasts(int $limit = 100): array
@@ -88,7 +88,7 @@ class ForecastAccuracyEvaluator
         $rows = $this->accuracyModel
             ->where('created_at >=', $cutoff)
             ->orderBy('created_at', 'DESC')
-            ->findAll();
+            ->findAll(100);
 
         $byTimeframe = [];
         $byDirection = [];

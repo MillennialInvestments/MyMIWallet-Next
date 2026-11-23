@@ -242,7 +242,7 @@ class InvestmentsController extends BaseUserController
         $latestForecasts = $forecastModel
             ->where('ticker', $ticker)
             ->orderBy('updated_at', 'DESC')
-            ->findAll();
+            ->findAll(20);
 
         $history = $historyModel
             ->where('ticker', $ticker)
@@ -290,7 +290,7 @@ class InvestmentsController extends BaseUserController
             ];
         }
 
-        $historyPayload = array_map(static function (array $snapshot): array {
+        $historyPayload = array_map(function (array $snapshot): array {
             return [
                 'recorded_at' => $snapshot['recorded_at'] ?? null,
                 'timeframe' => $snapshot['timeframe'] ?? null,
@@ -336,7 +336,7 @@ class InvestmentsController extends BaseUserController
         $latestForecasts = $forecastModel
             ->where('ticker', $ticker)
             ->orderBy('updated_at', 'DESC')
-            ->findAll();
+            ->findAll(20);
 
         $grouped = [];
         foreach ($latestForecasts as $forecast) {

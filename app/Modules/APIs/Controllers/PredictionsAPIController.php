@@ -16,7 +16,7 @@ class PredictionsAPIController extends BaseAPIController
 
     protected function uid(): int
     {
-        return (int) (service('auth')->id() ?? 0);
+        return (int) (auth()->id() ?? service('authentication')->id() ?? (service('auth')->id() ?? 0) ?: session()->get('user_id') ?? 0);
     }
 
     public function listMarkets()
@@ -45,10 +45,15 @@ class PredictionsAPIController extends BaseAPIController
 
     public function createMarket()
     {
+        $uid = $this->uid();
+        if ($uid <= 0) {
+            return $this->failUnauthorized('Authentication required');
+        }
+
         $payload = $this->request->getJSON(true) ?? [];
 
         try {
-            $id = $this->svc()->createMarket($payload, $this->uid());
+            $id = $this->svc()->createMarket($payload, $uid);
             return $this->respondCreated(['status' => 'success', 'market_id' => $id]);
         } catch (\Throwable $e) {
             log_message('error', 'Predictions createMarket failed: {m}', ['m' => $e->getMessage()]);
@@ -58,9 +63,14 @@ class PredictionsAPIController extends BaseAPIController
 
     public function placeOrder()
     {
+        $uid = $this->uid();
+        if ($uid <= 0) {
+            return $this->failUnauthorized('Authentication required');
+        }
+
         $payload = $this->request->getJSON(true) ?? [];
         try {
-            $out = $this->svc()->placeOrder($payload, $this->uid());
+            $out = $this->svc()->placeOrder($payload, $uid);
             return $this->respond(['status' => 'success', 'data' => $out]);
         } catch (\Throwable $e) {
             log_message('error', 'Predictions placeOrder failed: {m}', ['m' => $e->getMessage()]);
@@ -70,17 +80,38 @@ class PredictionsAPIController extends BaseAPIController
 
     public function cancelOrder()
     {
-        return $this->respond(['status' => 'success', 'message' => 'TODO']);
+        $uid = $this->uid();
+        if ($uid <= 0) {
+            return $this->failUnauthorized('Authentication required');
+        }
+
+        $payload = $this->request->getJSON(true) ?: $this->request->getPost();
+        $orderId = (int) ($payload['order_id'] ?? 0);
+        if ($orderId <= 0) {
+            return $this->failValidationErrors('order_id required');
+        }
+
+        try {
+            $ok = $this->svc()->cancelOrder($orderId, $uid);
+            return $this->respond(['status' => $ok ? 'success' : 'error', 'canceled' => $ok]);
+        } catch (\Throwable $e) {
+            return $this->fail($e->getMessage(), 400);
+        }
     }
 
     public function settle($marketId)
     {
+        $uid = $this->uid();
+        if ($uid <= 0) {
+            return $this->failUnauthorized('Authentication required');
+        }
+
         $payload = $this->request->getJSON(true) ?? [];
 
         try {
             $out = $this->svc()->settleMarket(
                 (int) $marketId,
-                $this->uid(),
+                $uid,
                 (int) ($payload['winning_option_id'] ?? 0),
                 $payload['note'] ?? ''
             );
@@ -94,12 +125,23 @@ class PredictionsAPIController extends BaseAPIController
 
     public function addLiquidity()
     {
-        return $this->respond(['status' => 'success', 'message' => 'TODO']);
+        $uid = $this->uid();
+        if ($uid <= 0) {
+            return $this->failUnauthorized('Authentication required');
+        }
+
+        $payload = $this->request->getJSON(true) ?: $this->request->getPost();
+        try {
+            $out = $this->svc()->addLiquidity((array) $payload, $uid);
+            return $this->respond(['status' => 'success', 'data' => $out]);
+        } catch (\Throwable $e) {
+            return $this->failValidationErrors($e->getMessage());
+        }
     }
 
     public function removeLiquidity()
     {
-        return $this->respond(['status' => 'success', 'message' => 'TODO']);
+        return $this->fail('Liquidity removal currently locked until market settlement.', 400);
     }
 
     public function lockMarkets()
