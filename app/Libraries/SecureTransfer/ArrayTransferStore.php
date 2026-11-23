@@ -217,4 +217,14 @@ final class ArrayTransferStore implements TransferStore
         }
         return ['live_transfers' => $live, 'live_ciphertext_bytes' => $bytes, 'transfers_last_24h' => $day, 'wallets_with_keys' => count($wallets)];
     }
+
+    public function transferParties(string $transferId): ?array
+    {
+        $t = $this->transfers[$transferId] ?? null;
+        if ($t === null) {
+            return null;
+        }
+        return ['sender_user_id' => (int) $t['sender_user_id'], 'sender_wallet' => $t['sender_wallet'],
+            'recipients' => array_keys($this->recipients[$transferId] ?? [])];
+    }
 }

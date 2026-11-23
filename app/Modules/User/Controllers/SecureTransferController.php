@@ -6,6 +6,7 @@ namespace App\Modules\User\Controllers;
 
 use App\Controllers\UserController;
 use App\Libraries\SecureTransfer\CiphertextStore;
+use App\Libraries\SecureTransfer\DbAuditLog;
 use App\Libraries\SecureTransfer\DbTransferStore;
 use App\Libraries\SecureTransfer\SecureTransferService;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -26,12 +27,20 @@ class SecureTransferController extends UserController
     private function enabled(): bool
     {
         $this->stConfig ??= config(SecureTransferConfig::class);
-        return $this->stConfig->enabled && db_connect()->tableExists('bf_secure_transfers');
+        $db = db_connect();
+        // The investigation record is required: no transfers without it.
+        return $this->stConfig->enabled && $db->tableExists('bf_secure_transfers') && DbAuditLog::available($db);
     }
 
     private function service(): SecureTransferService
     {
-        return $this->service ??= new SecureTransferService($this->stConfig, new DbTransferStore(db_connect()));
+        if ($this->service === null) {
+            $db = db_connect();
+            $audit = DbAuditLog::available($db) ? new DbAuditLog($db) : null;
+            $this->service = (new SecureTransferService($this->stConfig, new DbTransferStore($db), null, $audit))
+                ->withRequest($this->request->getIPAddress(), substr((string) $this->request->getUserAgent(), 0, 255));
+        }
+        return $this->service;
     }
 
     private function files(): CiphertextStore
@@ -169,7 +178,7 @@ class SecureTransferController extends UserController
         if ($r = $this->guard()) {
             return $r;
         }
-        $result = $this->service()->download($this->userId(), $transferId, self::str($this->request->getGet('wallet')), $this->files());
+        $result = $this->service()->download($this->userId(), $transferId, self::str($this->request->getGet('wallet')), $this->files(), 'manifest');
         unset($result['path']);
         return $this->reply($result);
     }

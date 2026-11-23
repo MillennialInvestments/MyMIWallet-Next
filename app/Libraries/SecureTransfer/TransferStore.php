@@ -55,4 +55,7 @@ interface TransferStore
 
     /** Counts only, for operators and the AIOps MCP. */
     public function stats(int $now): array;
+
+    /** Sender and recipient wallets of one transfer (any state), for legal-hold checks. */
+    public function transferParties(string $transferId): ?array;
 }

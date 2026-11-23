@@ -19,6 +19,7 @@ $config = [
     <div class="nk-block-head">
         <h3 class="nk-block-title">Secure File Transfer</h3>
         <p class="text-soft">Send a file to another wallet. It is encrypted on this device before it leaves, and only the recipient's device can open it. MyMI stores the locked file but cannot read it.</p>
+        <p class="small text-soft mb-0" id="mst1-records-notice"><strong>Records we keep:</strong> which account and wallet sent a transfer, to which wallets, when, from which IP address and device, and when it was opened or withdrawn. We share these records with law enforcement or regulators when the law requires it, and a legal hold can keep a locked file past its expiry. File contents and names stay encrypted and unreadable to us.</p>
     </div>
 
     <div class="card card-bordered mb-3">

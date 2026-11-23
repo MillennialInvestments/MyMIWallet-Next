@@ -2,7 +2,9 @@
 
 namespace Tests\Unit\SecureTransfer;
 
+use App\Libraries\SecureTransfer\ArrayAuditLog;
 use App\Libraries\SecureTransfer\ArrayTransferStore;
+use App\Libraries\SecureTransfer\AuditLog;
 use App\Libraries\SecureTransfer\Base58;
 use App\Libraries\SecureTransfer\CiphertextStore;
 use App\Libraries\SecureTransfer\ManifestValidator;
@@ -62,11 +64,113 @@ class SecureTransferTest extends CIUnitTestCase
         return new ArrayTransferStore();
     }
 
-    private function service(?\App\Libraries\SecureTransfer\TransferStore $store = null, ?SecureTransfer $config = null): array
+    protected function newAudit(): AuditLog
+    {
+        return new ArrayAuditLog();
+    }
+
+    /** Simulates someone editing a stored entry behind the application's back. */
+    protected function editAuditRow(AuditLog $audit, int $id, array $set): void
+    {
+        $this->assertInstanceOf(ArrayAuditLog::class, $audit);
+        $audit->rows[$id - 1] = array_merge($audit->rows[$id - 1], $set);
+    }
+
+    private function service(?\App\Libraries\SecureTransfer\TransferStore $store = null, ?SecureTransfer $config = null, ?AuditLog $audit = null): array
     {
         $store ??= $this->newStore();
-        $svc = new SecureTransferService($config ?? $this->config(), $store, fn () => $this->now);
+        $svc = new SecureTransferService($config ?? $this->config(), $store, fn () => $this->now, $audit);
         return [$svc, $store];
+    }
+
+    /** Alice (user 1) sends one file to Bob (user 2) with the given expiry; returns [svc, files, manifest, alice, bob]. */
+    private function sentTransfer(AuditLog $audit, int $ttl = 86400): array
+    {
+        [$svc] = $this->service(null, null, $audit);
+        $svc->withRequest('203.0.113.7', 'TestBrowser/1.0');
+        $files = new CiphertextStore($this->dir . '/store');
+        $alice = $this->wallet();
+        $bob = $this->wallet();
+        $dev = $this->bind($svc, 1, $alice);
+        $this->bind($svc, 2, $bob);
+        $bobKey = $svc->recipientKeys($bob['address'])['keys'][0]['transfer_key'];
+        [$ct, $m] = TransferCrypto::seal('evidence', 'a.txt', 'text/plain', $alice['address'], base64_encode(sodium_crypto_box_publickey($dev)),
+            [['wallet' => $bob['address'], 'transfer_key' => $bobKey]], $this->now + $ttl, $this->now);
+        $sent = $svc->send(1, $m, $this->sign($alice, TransferCrypto::manifestMessage($m)), $this->upload($ct), $files);
+        $this->assertTrue($sent['ok'], json_encode($sent));
+        return [$svc, $files, $m, $alice, $bob, $ct];
+    }
+
+    public function testInvestigationRecordTracksWhoSentWhatAndIsTamperEvident(): void
+    {
+        $audit = $this->newAudit();
+        [$svc, $files, $m, $alice, $bob, $ct] = $this->sentTransfer($audit);
+        $this->assertTrue($svc->download(2, $m['transfer_id'], $bob['address'], $files, 'manifest')['ok']);
+        $this->assertTrue($svc->download(2, $m['transfer_id'], $bob['address'], $files)['ok']);
+        $this->assertFalse($svc->download(1, $m['transfer_id'], $alice['address'], $files)['ok']);
+        // A forged send is refused and still recorded.
+        $forged = $svc->send(1, $m, base64_encode(str_repeat("\0", 64)), $this->upload($ct), $files);
+        $this->assertFalse($forged['ok']);
+
+        $events = array_column($audit->find([]), 'event');
+        $this->assertSame(['key_linked', 'key_linked', 'transfer_sent', 'transfer_accessed', 'transfer_accessed', 'transfer_refused'], $events);
+
+        $sent = $audit->find(['transfer_id' => $m['transfer_id']])[0];
+        $this->assertSame('transfer_sent', $sent['event']);
+        $this->assertSame(1, (int) $sent['user_id']);
+        $this->assertSame($alice['address'], $sent['wallet']);
+        $this->assertSame('203.0.113.7', $sent['ip']);
+        $this->assertSame('TestBrowser/1.0', $sent['user_agent']);
+        $detail = json_decode($sent['detail'], true);
+        $this->assertSame([$bob['address']], $detail['recipients']);
+        $this->assertSame(hash('sha256', $ct), $detail['ciphertext_sha256']);
+        $this->assertStringNotContainsString('evidence', json_encode($audit->find([])));
+        $this->assertStringNotContainsString('a.txt', json_encode($audit->find([])));
+
+        // Who touched Bob's wallet: his key link, the transfer to him, his downloads.
+        $this->assertCount(4, $audit->find(['wallet' => $bob['address']]));
+        $this->assertCount(3, $audit->find(['user_id' => 2]));
+        $this->assertSame(['ok' => true, 'entries' => 6], $audit->verify());
+
+        // Changing one recorded entry afterwards is detected at that entry.
+        $this->editAuditRow($audit, 3, ['ip' => '198.51.100.1']);
+        $broken = $audit->verify();
+        $this->assertFalse($broken['ok']);
+        $this->assertSame(3, $broken['broken_at']);
+    }
+
+    public function testLegalHoldKeepsCiphertextThroughWithdrawAndPurge(): void
+    {
+        $audit = $this->newAudit();
+        [$svc, $files, $m, $alice] = $this->sentTransfer($audit, 60);
+        $holdId = $audit->setHold('wallet', $alice['address'], 'subpoena 2026-001', 'owner', $this->now);
+        $this->assertTrue($audit->isHeld($m['transfer_id'], 1, [$alice['address']]));
+
+        $this->assertTrue($svc->revokeTransfer(1, $m['transfer_id'], $files)['ok']);
+        $this->assertNotNull($files->path($m['transfer_id']), 'held ciphertext must survive withdraw');
+        $this->now += 61;
+        $this->assertSame(['ok' => true, 'purgeable' => 0, 'held' => 1, 'applied' => true], $svc->purge($files, true));
+        $this->assertNotNull($files->path($m['transfer_id']), 'held ciphertext must survive purge');
+
+        $this->assertTrue($audit->releaseHold($holdId, 'owner', $this->now));
+        $this->assertFalse($audit->releaseHold($holdId, 'owner', $this->now));
+        $this->assertSame([], $audit->activeHolds());
+        $this->assertSame(1, $svc->purge($files, true)['purgeable']);
+        $this->assertNull($files->path($m['transfer_id']));
+        $events = array_column($audit->find(['transfer_id' => $m['transfer_id']]), 'event');
+        $this->assertSame(['transfer_sent', 'transfer_withdrawn', 'transfer_purged'], $events);
+        $this->assertTrue($audit->verify()['ok']);
+    }
+
+    public function testUserAndTransferHoldsMatchOnlyTheirScope(): void
+    {
+        $audit = $this->newAudit();
+        $audit->setHold('user', '7', 'case', 'owner', $this->now);
+        $audit->setHold('transfer', 'abc', 'case', 'owner', $this->now);
+        $this->assertTrue($audit->isHeld('zzz', 7, []));
+        $this->assertTrue($audit->isHeld('abc', 8, []));
+        $this->assertFalse($audit->isHeld('zzz', 8, ['someWallet']));
+        $this->assertCount(2, $audit->activeHolds());
     }
 
     /** Runs the two-step binding as the browser would; returns the device key pair. */
@@ -297,7 +401,7 @@ class SecureTransferTest extends CIUnitTestCase
 
         $this->now += 61;
         $this->assertSame([], $svc->inbox(2)['transfers']);
-        $this->assertSame(['ok' => true, 'purgeable' => 1, 'applied' => false], $svc->purge($files, false));
+        $this->assertSame(['ok' => true, 'purgeable' => 1, 'held' => 0, 'applied' => false], $svc->purge($files, false));
         $this->assertNotNull($files->path($m['transfer_id']));
         $svc->purge($files, true);
         $this->assertNull($files->path($m['transfer_id']));
