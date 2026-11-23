@@ -238,6 +238,15 @@ final class SolanaPayServiceTest extends CIUnitTestCase
         $this->assertSame('fulfilled', $svc->confirm($c['reference'], 7)['status']);
     }
 
+    public function testAFeePriceRiseAfterCheckoutDoesNotFailAPaidOrder(): void
+    {
+        $svc = $this->service(5_000_000);
+        $c = $svc->checkout(7, 'mymigold', '', 1000);
+        $this->pay($c['reference'], 10_000_000, 5_000_000);
+
+        $this->assertSame('fulfilled', $this->service(9_000_000)->confirm($c['reference'], 7)['status']);
+    }
+
     /** Leave a paid checkout as if the process stopped right after the lock. */
     private function interrupt(SolanaPayService $svc, int $user): array
     {

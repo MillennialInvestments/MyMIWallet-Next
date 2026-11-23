@@ -70,14 +70,17 @@ final class SolanaFeeService
      *        this says it did not; without it, stale pending receipts are never reused.
      */
     /**
-     * @param array|null $tx the already-fetched transaction for $signature, when the caller has it
-     *                       (saves a second RPC lookup that could fail transiently)
-     * @param int|null   $notBefore oldest accepted block time, when the caller has its own payment
-     *                       window (a checkout verified late must not fail as "too old")
+     * @param array{tx?: array, not_before?: int, lamports?: int} $quote what a caller that priced the
+     *        payment itself already knows: `tx` the fetched transaction (no second RPC lookup to fail
+     *        transiently), `not_before` the oldest accepted block time (its own payment window, so late
+     *        verification is not "too old"), `lamports` the fee it quoted (a later price change
+     *        cannot invalidate a paid order)
      */
-    public function claim(string $kind, int $userId, string $payerWallet, string $signature, string $reference, ?callable $completed = null, ?array $tx = null, ?int $notBefore = null): array
+    public function claim(string $kind, int $userId, string $payerWallet, string $signature, string $reference, ?callable $completed = null, array $quote = []): array
     {
-        $fee = $this->lamports($kind);
+        $fee = isset($quote['lamports']) ? (int) $quote['lamports'] : $this->lamports($kind);
+        $tx = $quote['tx'] ?? null;
+        $notBefore = isset($quote['not_before']) ? (int) $quote['not_before'] : null;
         if ($fee === 0) {
             return ['ok' => true, 'charged' => false];
         }

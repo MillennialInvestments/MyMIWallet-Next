@@ -79,6 +79,7 @@
       var data = await res.json();
       var status = $('solpay-status');
       if (data.status === 'pending') { status.textContent = 'Waiting for payment…'; return; }
+      if (data.status === 'confirmed') { status.textContent = data.message || 'Payment confirmed; finishing your order…'; return; }
       clearInterval(timer);
       forget();
       if (data.ok) {
