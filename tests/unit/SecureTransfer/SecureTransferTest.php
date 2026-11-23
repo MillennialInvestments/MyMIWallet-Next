@@ -162,6 +162,47 @@ class SecureTransferTest extends CIUnitTestCase
         $this->assertTrue($audit->verify()['ok']);
     }
 
+    public function testPurgePagesPastHeldTransfersAndFindPagesById(): void
+    {
+        $audit = $this->newAudit();
+        [$svc, $files] = $this->service(null, null, $audit);
+        $svc->purgePage = 2;
+        $files = new CiphertextStore($this->dir . '/store');
+        $alice = $this->wallet();
+        $bob = $this->wallet();
+        $dev = $this->bind($svc, 1, $alice);
+        $this->bind($svc, 2, $bob);
+        $bobKey = $svc->recipientKeys($bob['address'])['keys'][0]['transfer_key'];
+        $ids = [];
+        for ($i = 0; $i < 5; $i++) {
+            [$ct, $m] = TransferCrypto::seal('x' . $i, 'a', 'text/plain', $alice['address'], base64_encode(sodium_crypto_box_publickey($dev)),
+                [['wallet' => $bob['address'], 'transfer_key' => $bobKey]], $this->now + 60, $this->now);
+            $this->assertTrue($svc->send(1, $m, $this->sign($alice, TransferCrypto::manifestMessage($m)), $this->upload($ct), $files)['ok']);
+            $ids[] = $m['transfer_id'];
+        }
+        sort($ids);
+        // The first page (in id order) is entirely held; later pages must still be purged.
+        $audit->setHold('transfer', $ids[0], 'case', 'owner', $this->now);
+        $audit->setHold('transfer', $ids[1], 'case', 'owner', $this->now);
+        $this->now += 61;
+        $this->assertSame(['ok' => true, 'purgeable' => 3, 'held' => 2, 'applied' => true], $svc->purge($files, true));
+        $this->assertNotNull($files->path($ids[0]));
+        $this->assertNull($files->path($ids[4]));
+
+        $all = $audit->find(['user_id' => 1]);
+        $paged = [];
+        $after = 0;
+        do {
+            $page = $audit->find(['user_id' => 1, 'after_id' => $after], 2);
+            foreach ($page as $r) {
+                $paged[] = $r;
+                $after = (int) $r['id'];
+            }
+        } while (count($page) === 2);
+        $this->assertSame(array_column($all, 'id'), array_column($paged, 'id'));
+        $this->assertGreaterThan(5, count($paged));
+    }
+
     public function testUserAndTransferHoldsMatchOnlyTheirScope(): void
     {
         $audit = $this->newAudit();

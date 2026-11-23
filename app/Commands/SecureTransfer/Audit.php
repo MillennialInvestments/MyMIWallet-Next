@@ -117,26 +117,36 @@ class Audit extends SafeBaseCommand
             CLI::write('SEMANTIC_RESULT=FAILED REASON=give --user, --wallet or --transfer (exports are scoped, never the whole record)');
             return 1;
         }
-        $rows = $log->find($filters);
+        // Page through every match (no silent cap), writing as we go.
         $out = self::opt($params, 'out');
-        $lines = array_map(fn ($r) => json_encode($r, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE), $rows);
+        $fh = null;
         if ($out !== null && $out !== '') {
             $old = umask(0077);
-            $written = file_put_contents($out, implode("\n", $lines) . ($lines ? "\n" : ''), LOCK_EX);
+            $fh = @fopen($out, 'xb'); // never overwrite an earlier export
             umask($old);
-            if ($written === false) {
-                CLI::write('SEMANTIC_RESULT=FAILED REASON=cannot_write_out_file');
+            if ($fh === false) {
+                CLI::write('SEMANTIC_RESULT=FAILED REASON=cannot_create_out_file (it must not exist yet)');
                 return 1;
             }
             @chmod($out, 0600);
-        } else {
-            foreach ($lines as $l) {
-                CLI::write($l);
-            }
         }
-        $log->record('audit_export', ['detail' => ['filters' => $filters, 'rows' => count($rows), 'by' => $by,
+        $count = 0;
+        $after = 0;
+        do {
+            $rows = $log->find($filters + ['after_id' => $after], 5000);
+            foreach ($rows as $r) {
+                $line = json_encode($r, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+                $fh ? fwrite($fh, $line . "\n") : CLI::write($line);
+                $after = (int) $r['id'];
+                $count++;
+            }
+        } while (count($rows) === 5000);
+        if ($fh) {
+            fclose($fh);
+        }
+        $log->record('audit_export', ['detail' => ['filters' => $filters, 'rows' => $count, 'by' => $by,
             'case' => (string) self::opt($params, 'case'), 'file_sha256' => $out ? hash_file('sha256', $out) : null], 'created_at' => $now]);
-        CLI::write('SEMANTIC_RESULT=PASS ROWS=' . count($rows) . ($out ? ' OUT=' . $out . ' SHA256=' . hash_file('sha256', $out) : ''));
+        CLI::write('SEMANTIC_RESULT=PASS ROWS=' . $count . ($out ? ' OUT=' . $out . ' SHA256=' . hash_file('sha256', $out) : ''));
         return 0;
     }
 }

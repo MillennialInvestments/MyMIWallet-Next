@@ -12,6 +12,9 @@ use Config\SecureTransfer as SecureTransferConfig;
  */
 final class SecureTransferService
 {
+    /** Purge page size (smaller in tests). */
+    public int $purgePage = 1000;
+
     private const ID_RE = '/^[0-9a-f]{32}$/';
 
     /** IP and browser of the current request, for the investigation record. */
@@ -295,13 +298,19 @@ final class SecureTransferService
         $now = $this->now();
         $ids = [];
         $held = 0;
-        foreach ($this->store->purgeable($now) as $id) {
-            if ($this->held($id)) {
-                $held++;
-                continue;
+        // Page in id order so held transfers never block the ones after them.
+        $after = '';
+        do {
+            $page = $this->store->purgeable($now, $after, $this->purgePage);
+            foreach ($page as $id) {
+                $after = (string) $id;
+                if ($this->held($id)) {
+                    $held++;
+                    continue;
+                }
+                $ids[] = $id;
             }
-            $ids[] = $id;
-        }
+        } while (count($page) === $this->purgePage);
         if ($apply) {
             foreach ($ids as $id) {
                 $files->delete($id);

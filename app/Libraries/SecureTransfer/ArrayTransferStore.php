@@ -179,12 +179,18 @@ final class ArrayTransferStore implements TransferStore
         return 1;
     }
 
-    public function purgeable(int $now): array
+    public function purgeable(int $now, string $after = '', int $limit = 1000): array
     {
         $out = [];
-        foreach ($this->transfers as $id => $t) {
-            if ($t['purged_at'] === null && ($t['revoked_at'] !== null || $t['expires_at'] <= $now)) {
+        $ids = array_map('strval', array_keys($this->transfers));
+        sort($ids, SORT_STRING);
+        foreach ($ids as $id) {
+            $t = $this->transfers[$id];
+            if (strcmp($id, $after) > 0 && $t['purged_at'] === null && ($t['revoked_at'] !== null || $t['expires_at'] <= $now)) {
                 $out[] = $id;
+                if (count($out) >= $limit) {
+                    break;
+                }
             }
         }
         return $out;

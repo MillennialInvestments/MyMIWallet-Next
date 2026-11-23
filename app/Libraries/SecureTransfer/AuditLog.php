@@ -20,7 +20,7 @@ interface AuditLog
     public function record(string $event, array $entry): void;
 
     /**
-     * Entries matching the filters (user_id, wallet, transfer_id, from, to), oldest first.
+     * Entries matching the filters (user_id, wallet, transfer_id, from, to, after_id for paging), oldest first.
      *
      * @return list<array<string, mixed>>
      */

@@ -147,11 +147,11 @@ final class DbTransferStore implements TransferStore
         return $this->db->affectedRows();
     }
 
-    public function purgeable(int $now): array
+    public function purgeable(int $now, string $after = '', int $limit = 1000): array
     {
-        $rows = $this->db->table(self::TRANSFERS)->select('transfer_id')->where('purged_at', null)
+        $rows = $this->db->table(self::TRANSFERS)->select('transfer_id')->where('purged_at', null)->where('transfer_id >', $after)
             ->groupStart()->where('revoked_at IS NOT NULL', null, false)->orWhere('expires_at <=', $now)->groupEnd()
-            ->get(1000)->getResultArray();
+            ->orderBy('transfer_id', 'ASC')->get(max(1, min($limit, 1000)))->getResultArray();
         return array_column($rows, 'transfer_id');
     }
 

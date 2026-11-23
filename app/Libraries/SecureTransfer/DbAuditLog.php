@@ -48,6 +48,9 @@ final class DbAuditLog implements AuditLog
         if (isset($filters['transfer_id'])) {
             $q->where('transfer_id', (string) $filters['transfer_id']);
         }
+        if (isset($filters['after_id'])) {
+            $q->where('id >', (int) $filters['after_id']);
+        }
         if (isset($filters['from'])) {
             $q->where('created_at >=', (int) $filters['from']);
         }

@@ -33,6 +33,9 @@ final class ArrayAuditLog implements AuditLog
             if (isset($filters['transfer_id']) && $r['transfer_id'] !== $filters['transfer_id']) {
                 continue;
             }
+            if (isset($filters['after_id']) && $r['id'] <= (int) $filters['after_id']) {
+                continue;
+            }
             if (isset($filters['from']) && $r['created_at'] < (int) $filters['from']) {
                 continue;
             }
