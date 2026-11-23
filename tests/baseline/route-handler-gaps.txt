@@ -112,11 +112,6 @@ App\Modules\Blog\Controllers\AnnouncementsController::index
 App\Modules\Blog\Controllers\InvestingController::TheBeginnersGuideToOptionTrading
 App\Modules\Blog\Controllers\InvestingController::TheFundamentalsOfInvesting
 App\Modules\Blog\Controllers\InvestingController::TipsForEffectiveInvestmentPortfolioManagement
-App\Modules\Exchange\Controllers\DigiByteController::connectWallet
-App\Modules\Exchange\Controllers\DigiByteController::createWallet
-App\Modules\Exchange\Controllers\DigiByteController::disconnectWallet
-App\Modules\Exchange\Controllers\DigiByteController::getAssets
-App\Modules\Exchange\Controllers\DigiByteController::refreshWallet
 App\Modules\Exchange\Controllers\SolanaController::verifyWalletOwnership
 App\Modules\Management\Controllers\EmailAdminController::autoScheduleDrafts
 App\Modules\Management\Controllers\EmailAdminController::updateCampaign
