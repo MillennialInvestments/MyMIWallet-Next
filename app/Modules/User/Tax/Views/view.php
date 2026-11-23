@@ -63,4 +63,8 @@
             </div>
         </div>
     </div>
+
+    <div class="alert alert-light border mt-4 text-muted small" role="note">
+        <strong>Tax Disclaimer:</strong> MyMI Wallet provides calculation, preparation, and reporting tools for informational and organizational purposes only. MyMI Wallet is not a CPA, tax attorney, or registered tax advisory firm. The figures, summaries, and exports generated do not constitute formal tax, legal, or accounting advice. Always consult a licensed CPA or qualified tax professional before filing official returns with federal, state, or local authorities.
+    </div>
 </div>
