@@ -51,7 +51,7 @@ final class SolanaPayServiceTest extends CIUnitTestCase
         (new \App\Database\Migrations\CreateFormFeatureTables(\Config\Database::forge($this->sqlite)))->up();
     }
 
-    private function service(int $feeLamports = 5_000_000, ?ArrayAuditLog $audit = null): SolanaPayService
+    private function service(int $feeLamports = 5_000_000, ?ArrayAuditLog $audit = null, ?ArrayFeeReceiptStore $receipts = null): SolanaPayService
     {
         $fees = new SolanaFees();
         $fees->treasury = $this->treasury;
@@ -91,7 +91,7 @@ final class SolanaPayServiceTest extends CIUnitTestCase
             };
         }
 
-        return new SolanaPayService($cfg, $rpc, new SolanaFeeService($fees, $rpc, new ArrayFeeReceiptStore(), $clock),
+        return new SolanaPayService($cfg, $rpc, new SolanaFeeService($fees, $rpc, $receipts ?? new ArrayFeeReceiptStore(), $clock),
             $this->sqlite, $fulfillers, 'https://mymi.test/API/SolanaPay/Tx', $audit, $clock);
     }
 
@@ -269,6 +269,21 @@ final class SolanaPayServiceTest extends CIUnitTestCase
         $this->assertSame('fulfilled', $svc->confirm($c['reference'], 7)['status']);
         $this->now += 600;
         $this->assertSame([], $svc->reconcile());
+        $this->assertCount(1, $this->fulfilled);
+    }
+
+    public function testInterruptedRightAfterTheFeeClaimResumesWithoutReview(): void
+    {
+        $receipts = new ArrayFeeReceiptStore();
+        $svc = $this->service(5_000_000, null, $receipts);
+        $c = $this->interrupt($svc, 7);
+        $row = $this->sqlite->table(SolanaPayService::TABLE)->where('reference', $c['reference'])->get()->getRowArray();
+        $receipts->insert(['signature' => $row['signature'], 'kind' => 'payment_processing', 'user_id' => 7, 'payer_wallet' => $this->payer,
+            'treasury' => $this->treasury, 'lamports' => 5_000_000, 'fee_lamports' => 5_000_000, 'reference' => 'solanapay:' . $c['reference'],
+            'cluster' => 'devnet', 'block_time' => $this->now, 'slot' => 5, 'created_at' => $this->now]);
+
+        $this->now += 600;
+        $this->assertSame(['fulfilled' => 1], $svc->reconcile());
         $this->assertCount(1, $this->fulfilled);
     }
 

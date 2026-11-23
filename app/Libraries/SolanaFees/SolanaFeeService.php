@@ -142,6 +142,17 @@ final class SolanaFeeService
         return ['ok' => true, 'charged' => true, 'lamports' => $paid, 'signature' => $signature];
     }
 
+    /**
+     * Does a receipt for $signature already belong to $reference (pending or spent)?
+     * Lets a caller that was interrupted right after claim() recognise its own
+     * reservation instead of claiming again. A released receipt does not count.
+     */
+    public function heldBy(string $signature, string $reference): bool
+    {
+        $r = $this->receipts->find($signature);
+        return $r !== null && (string) $r['reference'] === $reference && in_array($r['status'] ?? '', ['pending', 'spent'], true);
+    }
+
     /** After claim(): $completed true marks the receipt spent, false releases it for a retry. */
     public function settle(string $signature, string $reference, bool $completed): void
     {

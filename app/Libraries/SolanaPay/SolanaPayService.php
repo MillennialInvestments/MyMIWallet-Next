@@ -339,7 +339,8 @@ final class SolanaPayService
         $signature = (string) $row['signature'];
         $payer = (string) $row['payer_wallet'];
 
-        if ((int) $row['fee_lamports'] > 0 && ($row['result'] ?? '') !== 'fee_claimed') {
+        if ((int) $row['fee_lamports'] > 0 && ($row['result'] ?? '') !== 'fee_claimed'
+            && ! $this->fees->heldBy($signature, 'solanapay:' . $reference)) { // stopped after claim(), before the marker
             $tx ??= $this->rpc->getTransaction($signature);
             if ($tx === null) {
                 return $this->state(['status' => 'confirmed'] + $row); // RPC down: the sweep retries later
