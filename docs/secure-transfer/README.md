@@ -20,6 +20,8 @@ The feature is **off by default**. With `SECURE_TRANSFER_ENABLED` unset, every r
 
    The server checks the Ed25519 signature against the wallet address before storing the key. A wallet stays tied to the first account that linked it.
 
+   Without a browser wallet, the user types their address instead. The page then shows each statement (the binding, and later each manifest) for the user to sign in their own wallet app and paste back. It accepts base58, base64 or hex, and checks the signature against the address in the browser before using it, so a typed address alone never links a wallet.
+
 2. **Send.** The sender's browser:
    - fetches each recipient's linked keys and checks every binding signature itself, so it does not rely on the server's word;
    - makes a random 32-byte file key and encrypts the file in 64 KiB chunks with XSalsa20-Poly1305 (`crypto_secretbox`), nonce = 16 random bytes followed by the chunk index;

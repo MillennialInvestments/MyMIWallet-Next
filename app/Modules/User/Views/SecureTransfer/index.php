@@ -23,11 +23,31 @@ $config = [
         <div class="card-inner">
             <h5>1. Connect your wallet</h5>
             <p class="small text-soft">Your wallet signs a short statement that links it to a transfer key kept on this device. Signing costs nothing and sends no transaction.</p>
-            <div class="d-flex flex-wrap gap-2 align-items-center">
-                <button type="button" class="btn btn-primary" id="mst1-connect" data-mst1-pending="1">Connect wallet</button>
-                <span id="mst1-wallet" class="text-monospace small"></span>
+            <div class="row g-2 align-items-center">
+                <div class="col-auto">
+                    <button type="button" class="btn btn-primary" id="mst1-connect" data-mst1-pending="1">Connect wallet</button>
+                </div>
+                <div class="col-auto small text-soft">or, without a browser wallet,</div>
+                <div class="col">
+                    <div class="input-group">
+                        <input type="text" class="form-control font-monospace" id="mst1-manual-wallet" placeholder="Enter your Solana wallet address" autocomplete="off" spellcheck="false" aria-label="Solana wallet address">
+                        <button type="button" class="btn btn-outline-primary" id="mst1-manual-use">Use this wallet</button>
+                    </div>
+                </div>
             </div>
+            <div class="small mt-2">Linked wallet: <span id="mst1-wallet" class="font-monospace">none yet</span></div>
             <div id="mst1-device" class="small mt-2 text-soft">Loading encryption…</div>
+            <div id="mst1-manual-sign" class="border rounded p-3 mt-3 d-none">
+                <p class="small mb-2"><strong>Sign this statement in your wallet app</strong> (Solflare, Phantom or any Solana wallet with "Sign message"), then paste the signature below. Signing is free and sends nothing. We check the signature here before using it, so a typed address alone can never link a wallet you don't own.</p>
+                <pre id="mst1-manual-statement" class="small bg-light p-2 mb-2" style="white-space: pre-wrap;"></pre>
+                <button type="button" class="btn btn-sm btn-outline-secondary mb-2" id="mst1-manual-copy">Copy statement</button>
+                <textarea class="form-control font-monospace" id="mst1-manual-sig" rows="2" placeholder="Paste the signature (base58, base64 or hex)" spellcheck="false"></textarea>
+                <div id="mst1-manual-error" class="small mt-2"></div>
+                <div class="mt-2 d-flex gap-2">
+                    <button type="button" class="btn btn-sm btn-primary" id="mst1-manual-ok">Submit signature</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" id="mst1-manual-cancel">Cancel</button>
+                </div>
+            </div>
         </div>
     </div>
 
