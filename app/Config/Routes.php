@@ -304,13 +304,17 @@ $routes->post('/resend-activation', 'AuthController::resendActivationCode', ['as
 // Dev tools. GTM-016: never served in production. whoami echoes the session id and
 // request headers (cookies), and the probes are diagnostics only.
 if (ENVIRONMENT !== 'production') {
-    $routes->get('Dev/BitcoinTest', '\App\Controllers\Dev\BitcoinTest::index');
+    if (class_exists('\App\Controllers\Dev\BitcoinTest')) {
+        $routes->get('Dev/BitcoinTest', '\App\Controllers\Dev\BitcoinTest::index');
+    }
     $routes->get('Debug/whoami', 'Debug::whoami');
     $routes->get('Debug/auth-audit-cache', 'Debug::authAuditCacheSelfTest');
 
-    $routes->group('debug', ['namespace' => '\App\Controllers\Debug'], static function ($routes) {
-        $routes->get('common-data/smoke', 'CommonDataController::smoke');
-    });
+    if (class_exists('\App\Controllers\Debug\CommonDataController')) {
+        $routes->group('debug', ['namespace' => '\App\Controllers\Debug'], static function ($routes) {
+            $routes->get('common-data/smoke', 'CommonDataController::smoke');
+        });
+    }
     $routes->get('debug/register-success-probe', 'AuthController::registerSuccessProbe');
 }
 $routes->get('API/Management/error-heatmap', 'SystemDebugController::errorHeatmap', ['filter' => 'permission:admin.access']);
@@ -2043,14 +2047,14 @@ $routes->group('Predictions', ['namespace' => '\App\Modules\User\Controllers'], 
 $routes->group('Projects', ['namespace' => '\App\Modules\User\Controllers'], static function($routes) {
     $routes->get('/', 'ProjectsController::index');
     $routes->get('View/(:num)', 'ProjectsController::view/$1');
-    $routes->post('Commit/(:num)', 'ProjectsController::commit/$1');
-    $routes->post('Withdraw-Commit/(:num)', 'ProjectsController::withdrawCommit/$1');
-    $routes->get('My/Commitments', 'ProjectsController::myCommitments');
-    $routes->post('Request-Monthly-Withdrawal/(:num)', 'ProjectsController::requestMonthlyWithdrawal/$1');
-    $routes->post('Accept-Private-Allocation/(:num)', 'ProjectsController::acceptPrivateAllocation/$1');
-    $routes->get('Fund', 'ProjectsController::fund');
-    $routes->get('Fund/(:num)', 'ProjectsController::fund/$1');
-    $routes->post('PurchaseFundUnits', 'ProjectsController::purchaseFundUnits');
+    $routes->post('Commit/(:num)', 'ProjectsController::commit/$1', ['filter' => ['login', 'feature:project_investing']]);
+    $routes->post('Withdraw-Commit/(:num)', 'ProjectsController::withdrawCommit/$1', ['filter' => ['login', 'feature:project_investing']]);
+    $routes->get('My/Commitments', 'ProjectsController::myCommitments', ['filter' => 'login']);
+    $routes->post('Request-Monthly-Withdrawal/(:num)', 'ProjectsController::requestMonthlyWithdrawal/$1', ['filter' => ['login', 'feature:project_investing']]);
+    $routes->post('Accept-Private-Allocation/(:num)', 'ProjectsController::acceptPrivateAllocation/$1', ['filter' => ['login', 'feature:project_investing']]);
+    $routes->get('Fund', 'ProjectsController::fund', ['filter' => 'login']);
+    $routes->get('Fund/(:num)', 'ProjectsController::fund/$1', ['filter' => 'login']);
+    $routes->post('PurchaseFundUnits', 'ProjectsController::purchaseFundUnits', ['filter' => ['login', 'feature:project_investing']]);
     // GT-FORM-ROUTES-001: dashboard project modals.
     $routes->post('SubmitCommit', 'ProjectsController::submitCommit', ['filter' => ['login', 'feature:project_investing']]);
     $routes->post('SubmitInvest', 'ProjectsController::submitInvest', ['filter' => ['login', 'feature:project_investing']]);

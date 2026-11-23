@@ -23,35 +23,52 @@ class CoinVaultApiController extends BaseController
 
     public function approveContribution(int $id)
     {
-        $adminId = (int) (service('authentication')->id() ?? 0);
+        $adminId = (int) (service('authentication')->id() ?? auth()->id() ?? session()->get('user_id') ?? 0);
+        if ($adminId <= 0) {
+            return $this->failUnauthorized('Admin authentication required.');
+        }
         $result = (new CoinVaultService())->approveContribution($id, $adminId);
         return $this->respond($result, $result['ok'] ? 200 : 400);
     }
 
     public function rejectContribution(int $id)
     {
-        $adminId = (int) (service('authentication')->id() ?? 0);
+        $adminId = (int) (service('authentication')->id() ?? auth()->id() ?? session()->get('user_id') ?? 0);
+        if ($adminId <= 0) {
+            return $this->failUnauthorized('Admin authentication required.');
+        }
         $ok = (new CoinVaultService())->rejectContribution($id, $adminId, (string) $this->request->getPost('reason'));
         return $this->respond(['ok' => $ok]);
     }
 
     public function requestPayout()
     {
+        $userId = (int) (service('authentication')->id() ?? auth()->id() ?? session()->get('user_id') ?? 0);
+        if ($userId <= 0) {
+            return $this->failUnauthorized('User authentication required.');
+        }
         $payload = $this->request->getJSON(true) ?: $this->request->getPost();
-        $userId = (int) (service('authentication')->id() ?? ($payload['user_id'] ?? 0));
         $result = (new CoinVaultService())->requestPayout((int) ($payload['project_id'] ?? 0), $userId, (float) ($payload['coin_amount'] ?? 0), (string) ($payload['memo'] ?? ''));
         return $this->respond($result, $result['ok'] ? 201 : 400);
     }
 
     public function approvePayout(int $id)
     {
-        $result = (new CoinVaultService())->approvePayout($id, (int) (service('authentication')->id() ?? 0));
+        $adminId = (int) (service('authentication')->id() ?? auth()->id() ?? session()->get('user_id') ?? 0);
+        if ($adminId <= 0) {
+            return $this->failUnauthorized('Admin authentication required.');
+        }
+        $result = (new CoinVaultService())->approvePayout($id, $adminId);
         return $this->respond($result, $result['ok'] ? 200 : 400);
     }
 
     public function rejectPayout(int $id)
     {
-        $result = (new CoinVaultService())->rejectPayout($id, (int) (service('authentication')->id() ?? 0), (string) $this->request->getPost('reason'));
+        $adminId = (int) (service('authentication')->id() ?? auth()->id() ?? session()->get('user_id') ?? 0);
+        if ($adminId <= 0) {
+            return $this->failUnauthorized('Admin authentication required.');
+        }
+        $result = (new CoinVaultService())->rejectPayout($id, $adminId, (string) $this->request->getPost('reason'));
         return $this->respond($result, $result['ok'] ? 200 : 400);
     }
 }
