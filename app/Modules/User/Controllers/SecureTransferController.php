@@ -85,6 +85,7 @@ class SecureTransferController extends UserController
             'maxBytes' => $this->stConfig->maxBytes,
             'maxDays' => $this->stConfig->maxDays,
             'maxRecipients' => $this->stConfig->maxRecipients,
+            'wcProjectId' => preg_match('/^[A-Za-z0-9]{8,64}$/', $this->stConfig->walletConnectProjectId) ? $this->stConfig->walletConnectProjectId : '',
         ];
         return $this->renderTheme('App\Modules\User\Views\SecureTransfer\index', $this->data);
     }

@@ -149,6 +149,99 @@
     await link(manualProvider(wallet), wallet);
   }
 
+  var B58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+  function base58Encode(bytes) {
+    var digits = [0];
+    for (var i = 0; i < bytes.length; i++) {
+      var carry = bytes[i];
+      for (var j = 0; j < digits.length; j++) { carry += digits[j] << 8; digits[j] = carry % 58; carry = (carry / 58) | 0; }
+      while (carry) { digits.push(carry % 58); carry = (carry / 58) | 0; }
+    }
+    var out = '';
+    for (var k = 0; k < bytes.length && bytes[k] === 0; k++) out += '1';
+    for (var q = digits.length - 1; q >= 0; q--) out += B58[digits[q]];
+    return out;
+  }
+
+  /* Phone wallet over WalletConnect: the page shows a QR code, the wallet app approves and signs. */
+  var SOLANA_MAINNET = 'solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp';
+  var wc = { client: null, loading: null };
+
+  function loadWalletConnect() {
+    if (window.MST1WC) return Promise.resolve(window.MST1WC);
+    if (wc.loading) return wc.loading;
+    wc.loading = new Promise(function (resolve, reject) {
+      var tag = document.createElement('script');
+      var me = document.querySelector('script[src*="secure-transfer-ui.js"]');
+      if (me && me.nonce) tag.nonce = me.nonce;
+      tag.src = cfg.wcScript;
+      tag.onload = function () { window.MST1WC ? resolve(window.MST1WC) : reject(new Error('The phone wallet module did not start.')); };
+      tag.onerror = function () { wc.loading = null; reject(new Error('The phone wallet module did not load. Reload and try again.')); };
+      document.head.appendChild(tag);
+    });
+    return wc.loading;
+  }
+
+  function wcProvider(client, session, wallet) {
+    return {
+      signMessage: async function (bytes) {
+        $('mst1-device').textContent = 'Approve the signature request in your phone wallet…';
+        var res = await client.request({
+          topic: session.topic,
+          chainId: SOLANA_MAINNET,
+          request: { method: 'solana_signMessage', params: { message: base58Encode(bytes), pubkey: wallet } }
+        });
+        var sig = decodeSignature(res && res.signature ? res.signature : res);
+        if (!sig) throw new Error('The phone wallet returned an unreadable signature.');
+        return { signature: sig };
+      }
+    };
+  }
+
+  async function connectPhone() {
+    var panel = $('mst1-wc-panel');
+    var status = $('mst1-wc-status');
+    text($('mst1-device'), 'Starting phone wallet connection…');
+    var lib = await loadWalletConnect();
+    if (!wc.client) {
+      wc.client = await lib.SignClient.init({
+        projectId: cfg.wcProjectId,
+        metadata: { name: 'MyMI Secure Transfer', description: 'Encrypted wallet-to-wallet files', url: location.origin, icons: [location.origin + '/favicon.ico'] }
+      });
+    }
+    var started = await wc.client.connect({
+      optionalNamespaces: { solana: { chains: [SOLANA_MAINNET], methods: ['solana_signMessage'], events: [] } }
+    });
+    var cancelled = false;
+    if (started.uri) {
+      var qr = lib.qrcode(0, 'M');
+      qr.addData(started.uri);
+      qr.make();
+      $('mst1-wc-qr').innerHTML = qr.createSvgTag({ cellSize: 5, margin: 2, scalable: false });
+      $('mst1-wc-open').href = started.uri;
+      status.textContent = 'Waiting for your phone wallet to approve…';
+      panel.classList.remove('d-none');
+      text($('mst1-device'), 'Scan the QR code below with your phone wallet.');
+    }
+    var cancel = new Promise(function (_, reject) {
+      $('mst1-wc-cancel').onclick = function () { cancelled = true; reject(new Error('Phone wallet connection cancelled.')); };
+    });
+    var session;
+    try {
+      session = await Promise.race([started.approval(), cancel]);
+    } finally {
+      panel.classList.add('d-none');
+      $('mst1-wc-qr').textContent = '';
+      $('mst1-wc-cancel').onclick = null;
+    }
+    if (cancelled) return;
+    var accounts = (session.namespaces.solana && session.namespaces.solana.accounts) || [];
+    var account = accounts.filter(function (a) { return a.indexOf(SOLANA_MAINNET + ':') === 0; })[0] || accounts[0];
+    if (!account) throw new Error('The phone wallet did not share a Solana account.');
+    var wallet = account.split(':').pop();
+    await link(wcProvider(wc.client, session, wallet), wallet);
+  }
+
   async function link(p, wallet) {
     var status = $('mst1-device');
     state.provider = p;
@@ -319,6 +412,14 @@
     var t = $('mst1-manual-statement').textContent;
     if (navigator.clipboard) navigator.clipboard.writeText(t).then(function () { $('mst1-manual-copy').textContent = 'Copied'; setTimeout(function () { $('mst1-manual-copy').textContent = 'Copy statement'; }, 1500); });
   });
+  if (cfg.wcProjectId && cfg.wcScript) {
+    $('mst1-wc-wrap').classList.remove('d-none');
+    $('mst1-wc').addEventListener('click', function () {
+      var b = $('mst1-wc');
+      b.disabled = true;
+      connectPhone().catch(function (e) { text($('mst1-device'), String((e && e.message) || e), 'text-danger'); }).then(function () { b.disabled = false; });
+    });
+  }
   connectBtn.removeAttribute('data-mst1-pending');
   text($('mst1-device'), '');
   $('mst1-send').addEventListener('click', send);

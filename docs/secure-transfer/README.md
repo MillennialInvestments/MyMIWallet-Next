@@ -20,7 +20,9 @@ The feature is **off by default**. With `SECURE_TRANSFER_ENABLED` unset, every r
 
    The server checks the Ed25519 signature against the wallet address before storing the key. A wallet stays tied to the first account that linked it.
 
-   Without a browser wallet, the user types their address instead. The page then shows each statement (the binding, and later each manifest) for the user to sign in their own wallet app and paste back. It accepts base58, base64 or hex, and checks the signature against the address in the browser before using it, so a typed address alone never links a wallet.
+   Without a browser wallet, the user can click **Connect with phone wallet**: the page loads a self-hosted WalletConnect client (`public/assets/vendor/walletconnect/`, only on click), shows a QR code, and the phone wallet approves the session and signs each statement with `solana_signMessage`. Phantom's app does not support WalletConnect; Solflare, Trust and Backpack do.
+
+   Or the user types their address instead. The page then shows each statement (the binding, and later each manifest) for the user to sign in their own wallet app and paste back. It accepts base58, base64 or hex, and checks the signature against the address in the browser before using it, so a typed address alone never links a wallet.
 
 2. **Send.** The sender's browser:
    - fetches each recipient's linked keys and checks every binding signature itself, so it does not rely on the server's word;
@@ -77,6 +79,7 @@ The user id always comes from the session, never from the request.
 | `SECURE_TRANSFER_DOMAIN` | `mymiwallet.com` |
 | `SECURE_TRANSFER_MAX_BYTES` | 25 MiB |
 | `SECURE_TRANSFER_STORAGE` | `writable/secure_transfer` (dirs 0700, files 0600) |
+| `SECURE_TRANSFER_WC_PROJECT_ID` | empty (QR button hidden). A free WalletConnect/Reown project ID from cloud.reown.com, with the site's domains allowed. Public, not a secret. |
 
 Other limits are in `app/Config/SecureTransfer.php`: 10 recipients, 30 days, 5 keys per wallet, 50 transfers and 250 MiB per user per day.
 
