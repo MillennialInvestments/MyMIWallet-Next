@@ -72,8 +72,10 @@ final class SolanaFeeService
     /**
      * @param array|null $tx the already-fetched transaction for $signature, when the caller has it
      *                       (saves a second RPC lookup that could fail transiently)
+     * @param int|null   $notBefore oldest accepted block time, when the caller has its own payment
+     *                       window (a checkout verified late must not fail as "too old")
      */
-    public function claim(string $kind, int $userId, string $payerWallet, string $signature, string $reference, ?callable $completed = null, ?array $tx = null): array
+    public function claim(string $kind, int $userId, string $payerWallet, string $signature, string $reference, ?callable $completed = null, ?array $tx = null, ?int $notBefore = null): array
     {
         $fee = $this->lamports($kind);
         if ($fee === 0) {
@@ -118,7 +120,7 @@ final class SolanaFeeService
             return ['ok' => false, 'error' => 'fee_payment_failed_on_chain'];
         }
         $blockTime = (int) ($tx['blockTime'] ?? 0);
-        if ($blockTime <= 0 || $blockTime < $now - $this->config->maxAgeSeconds || $blockTime > $now + 300) {
+        if ($blockTime <= 0 || $blockTime < ($notBefore ?? $now - $this->config->maxAgeSeconds) || $blockTime > $now + 300) {
             return ['ok' => false, 'error' => 'fee_payment_too_old'];
         }
         if (!self::signedBy($tx, $payerWallet)) {

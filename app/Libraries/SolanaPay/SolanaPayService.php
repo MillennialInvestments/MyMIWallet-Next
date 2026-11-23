@@ -344,8 +344,9 @@ final class SolanaPayService
             if ($tx === null) {
                 return $this->state(['status' => 'confirmed'] + $row); // RPC down: the sweep retries later
             }
-            // Check the fee in the transaction we already verified: no second RPC lookup to fail transiently.
-            $fee = $this->fees->claim('payment_processing', $userId, $payer, $signature, 'solanapay:' . $reference, null, $tx);
+            // Check the fee in the transaction we already verified (no second RPC lookup to fail
+            // transiently), against this checkout's own window so late verification is not "too old".
+            $fee = $this->fees->claim('payment_processing', $userId, $payer, $signature, 'solanapay:' . $reference, null, $tx, (int) $row['created_at'] - 120);
             if (! $fee['ok']) {
                 log_message('warning', 'Solana Pay {ref}: price paid but fee refused ({why})', ['ref' => $reference, 'why' => $fee['error'] ?? '']);
                 $this->db->table(self::TABLE)->where('reference', $reference)

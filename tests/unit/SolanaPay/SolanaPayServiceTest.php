@@ -230,7 +230,7 @@ final class SolanaPayServiceTest extends CIUnitTestCase
         $svc = $this->service();
         $c = $svc->checkout(7, 'mymigold', '', 1000);
         $this->pay($c['reference'], 10_000_000, 5_000_000);
-        $this->now += 3600;            // long past the window
+        $this->now += 7200;            // past the checkout window and the fee's usual max age
         $this->txLookupsLeft = 0;      // provider down
 
         $this->assertSame('pending', $svc->confirm($c['reference'], 7)['status']);
