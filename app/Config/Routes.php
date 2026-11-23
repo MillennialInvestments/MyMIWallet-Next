@@ -245,6 +245,17 @@ $routes->get('/Getting-Started/(:segment)', 'Home::gettingStarted');
 $routes->get('/Getting-Started', 'Home::gettingStarted');
 $routes->post('Notes/save', '\\App\\Controllers\\NotesController::save', ['filter' => 'login']); // GT-FORM-ROUTES-001: Advisor "Save to Notes"
 // MyMI Secure Transfer (MST1): end-to-end encrypted wallet-to-wallet files. 404 unless SECURE_TRANSFER_ENABLED.
+// Solana Pay checkout (USDC on Solana, buyer's own wallet signs). Off until SOLANA_PAY_ENABLED and migrated.
+$routes->group('Pay/Solana', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) {
+    $routes->get('/', 'SolanaPayController::index');
+    $routes->post('Checkout', 'SolanaPayController::checkout');
+    $routes->get('Status/(:segment)', 'SolanaPayController::status/$1');
+});
+// Called by the buyer's wallet app (Solana Pay transaction request); no session.
+$routes->get('API/SolanaPay/Tx/(:segment)', '\App\Modules\APIs\Controllers\SolanaPayTxController::describe/$1');
+$routes->post('API/SolanaPay/Tx/(:segment)', '\App\Modules\APIs\Controllers\SolanaPayTxController::transaction/$1');
+$routes->options('API/SolanaPay/Tx/(:segment)', '\App\Modules\APIs\Controllers\SolanaPayTxController::options/$1');
+
 $routes->group('SecureTransfer', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function ($routes) {
     $routes->get('/', 'SecureTransferController::index');
     $routes->post('challenge', 'SecureTransferController::challenge');

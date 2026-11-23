@@ -143,17 +143,23 @@ class PaymentReconciliationService
                 continue;
             }
 
-            // Memberships are fulfilled in bf_users_subscriptions, not the wallet
-            // ledger: a fulfilled membership claim is reconciled as it stands.
-            if ((string) ($claim['kind'] ?? '') === 'membership' && $claimStatus === 'fulfilled') {
+            // Memberships are fulfilled in bf_users_subscriptions, auction balance in
+            // the auction ledger and fund units in the fund ledger, not the wallet
+            // ledger: a fulfilled claim of those kinds is reconciled as it stands.
+            if (in_array((string) ($claim['kind'] ?? ''), ['membership', 'auction_topup', 'fund_units'], true) && $claimStatus === 'fulfilled') {
                 $reconciledCount++;
                 continue;
             }
 
+            // Solana Pay Gold purchases are written to the ledger under a short id.
+            $ledgerKey = (string) ($claim['provider'] ?? '') === 'solana'
+                ? strtoupper(\App\Libraries\SolanaPay\Fulfillers::ledgerId(trim((string) ($claim['provider_txn_id'] ?? ''))))
+                : $providerTxId;
+
             // Check if matching ledger entry exists
-            if (isset($transactions[$providerTxId])) {
-                $tx = $transactions[$providerTxId];
-                $matchedTxIds[$providerTxId] = true;
+            if (isset($transactions[$ledgerKey])) {
+                $tx = $transactions[$ledgerKey];
+                $matchedTxIds[$ledgerKey] = true;
                 $txTotalCost = (float) ($tx['total_cost'] ?? $tx['amount'] ?? 0);
                 $totalLedger += $txTotalCost;
                 $reconciledCount++;

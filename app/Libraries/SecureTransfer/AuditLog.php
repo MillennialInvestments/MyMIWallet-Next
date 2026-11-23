@@ -12,7 +12,8 @@ interface AuditLog
 {
     /** Events written by the service and the owner tools. */
     public const EVENTS = ['key_linked', 'key_link_refused', 'key_revoked', 'transfer_sent', 'transfer_refused',
-        'transfer_accessed', 'transfer_withdrawn', 'transfer_purged', 'hold_set', 'hold_released', 'audit_export'];
+        'transfer_accessed', 'transfer_withdrawn', 'transfer_purged', 'hold_set', 'hold_released', 'audit_export',
+        'payment_confirmed'];
 
     /** Hold scopes: one transfer, every transfer of a MyMI user, or every transfer touching a wallet. */
     public const HOLD_SCOPES = ['transfer', 'user', 'wallet'];

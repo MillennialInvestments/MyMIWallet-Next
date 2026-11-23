@@ -69,9 +69,19 @@ final class SolanaFeeService
      *        finished (e.g. its transfer exists). A receipt left pending by a crash is reused only when
      *        this says it did not; without it, stale pending receipts are never reused.
      */
-    public function claim(string $kind, int $userId, string $payerWallet, string $signature, string $reference, ?callable $completed = null): array
+    /**
+     * @param array{tx?: array, not_before?: int, lamports?: int, treasury?: string} $quote what a caller that priced the
+     *        payment itself already knows: `tx` the fetched transaction (no second RPC lookup to fail
+     *        transiently), `not_before` the oldest accepted block time (its own payment window, so late
+     *        verification is not "too old"), `lamports` and `treasury` the fee it quoted (a later
+     *        price or treasury change cannot invalidate a paid order)
+     */
+    public function claim(string $kind, int $userId, string $payerWallet, string $signature, string $reference, ?callable $completed = null, array $quote = []): array
     {
-        $fee = $this->lamports($kind);
+        $fee = isset($quote['lamports']) ? (int) $quote['lamports'] : $this->lamports($kind);
+        $tx = $quote['tx'] ?? null;
+        $notBefore = isset($quote['not_before']) ? (int) $quote['not_before'] : null;
+        $treasury = (string) ($quote['treasury'] ?? '') ?: $this->config->treasury;
         if ($fee === 0) {
             return ['ok' => true, 'charged' => false];
         }
@@ -106,7 +116,7 @@ final class SolanaFeeService
             }
             return ['ok' => false, 'error' => 'fee_signature_already_used'];
         }
-        $tx = $this->rpc->getTransaction($signature);
+        $tx ??= $this->rpc->getTransaction($signature);
         if ($tx === null) {
             return ['ok' => false, 'error' => 'fee_payment_not_found'];
         }
@@ -114,23 +124,34 @@ final class SolanaFeeService
             return ['ok' => false, 'error' => 'fee_payment_failed_on_chain'];
         }
         $blockTime = (int) ($tx['blockTime'] ?? 0);
-        if ($blockTime <= 0 || $blockTime < $now - $this->config->maxAgeSeconds || $blockTime > $now + 300) {
+        if ($blockTime <= 0 || $blockTime < ($notBefore ?? $now - $this->config->maxAgeSeconds) || $blockTime > $now + 300) {
             return ['ok' => false, 'error' => 'fee_payment_too_old'];
         }
         if (!self::signedBy($tx, $payerWallet)) {
             return ['ok' => false, 'error' => 'fee_payment_not_from_your_wallet'];
         }
-        $paid = self::paidTo($tx, $payerWallet, $this->config->treasury);
+        $paid = self::paidTo($tx, $payerWallet, $treasury);
         if ($paid < $fee) {
             return ['ok' => false, 'error' => 'fee_payment_too_small', 'paid_lamports' => $paid, 'fee_lamports' => $fee];
         }
         $ok = $this->receipts->insert(['signature' => $signature, 'kind' => $kind, 'user_id' => $userId, 'payer_wallet' => $payerWallet,
-            'treasury' => $this->config->treasury, 'lamports' => $paid, 'fee_lamports' => $fee, 'reference' => $reference,
+            'treasury' => $treasury, 'lamports' => $paid, 'fee_lamports' => $fee, 'reference' => $reference,
             'cluster' => $this->config->cluster, 'block_time' => $blockTime, 'slot' => (int) ($tx['slot'] ?? 0), 'created_at' => $now]);
         if (!$ok) {
             return ['ok' => false, 'error' => 'fee_signature_already_used'];
         }
         return ['ok' => true, 'charged' => true, 'lamports' => $paid, 'signature' => $signature];
+    }
+
+    /**
+     * Does a receipt for $signature already belong to $reference (pending or spent)?
+     * Lets a caller that was interrupted right after claim() recognise its own
+     * reservation instead of claiming again. A released receipt does not count.
+     */
+    public function heldBy(string $signature, string $reference): bool
+    {
+        $r = $this->receipts->find($signature);
+        return $r !== null && (string) $r['reference'] === $reference && in_array($r['status'] ?? '', ['pending', 'spent'], true);
     }
 
     /** After claim(): $completed true marks the receipt spent, false releases it for a retry. */
