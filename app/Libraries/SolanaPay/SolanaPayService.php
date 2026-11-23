@@ -371,7 +371,7 @@ final class SolanaPayService
         }
 
         $now = date('Y-m-d H:i:s', $this->now());
-        $this->db->table('bf_payment_claims')->insert([
+        $saved = $this->db->table('bf_payment_claims')->insert([
             'user_id'         => $userId,
             'kind'            => (string) $row['purpose'],
             'provider'        => 'solana',
@@ -384,7 +384,13 @@ final class SolanaPayService
             'created_at'      => $now,
             'updated_at'      => $now,
         ]);
-        $claimId = (int) $this->db->insertID();
+        $claimId = $saved ? (int) $this->db->insertID() : 0;
+        if ($claimId <= 0) {
+            // DBDebug off: the insert returned false. Nothing is delivered without its payment record,
+            // which is also the guard against a second delivery; the sweep retries from "confirmed".
+            log_message('error', 'Solana Pay {ref}: payment record not saved; delivery left for retry', ['ref' => $reference]);
+            return $this->state(['status' => 'confirmed'] + $row);
+        }
 
         try {
             $result = ($this->fulfillers[$row['purpose']])($userId, $claimId, $row);

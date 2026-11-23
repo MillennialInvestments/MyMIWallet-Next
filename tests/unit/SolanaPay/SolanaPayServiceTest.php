@@ -356,6 +356,24 @@ final class SolanaPayServiceTest extends CIUnitTestCase
         $this->assertTrue(SolanaPayService::verify($this->chain[$sig], $row)['ok']);
     }
 
+    public function testPaymentReconciliationMatchesSolanaClaims(): void
+    {
+        $this->sqlite->query('CREATE TABLE bf_users_wallet_transactions (id INTEGER PRIMARY KEY, user_id INT, transaction_id VARCHAR(64), trans_type VARCHAR(64), type VARCHAR(32), amount REAL, total_cost REAL, submitted_date VARCHAR(32))');
+        $this->sqlite->resetDataCache(); // table list is cached per connection
+        $ref = Base58::encode(random_bytes(32));
+        $claim = ['user_id' => 7, 'provider' => 'solana', 'claimed_amount' => 10, 'verified_amount' => 10, 'currency' => 'USD',
+            'status' => 'fulfilled', 'detail' => '{}', 'created_at' => '2026-01-01 00:00:00', 'updated_at' => '2026-01-01 00:00:00'];
+        $this->sqlite->table('bf_payment_claims')->insert(['kind' => 'mymigold', 'provider_txn_id' => $ref] + $claim);
+        $this->sqlite->table('bf_payment_claims')->insert(['kind' => 'auction_topup', 'provider_txn_id' => Base58::encode(random_bytes(32))] + $claim);
+        $this->sqlite->table('bf_users_wallet_transactions')->insert(['user_id' => 7, 'transaction_id' => \App\Libraries\SolanaPay\Fulfillers::ledgerId($ref),
+            'trans_type' => 'MyMI Gold Purchase (Solana USDC)', 'type' => 'Purchase', 'amount' => 9.5, 'total_cost' => 10, 'submitted_date' => '2026-01-01 00:00:00']);
+
+        $r = (new \App\Services\Payments\PaymentReconciliationService($this->sqlite))->reconcile();
+        $this->assertSame(2, $r['reconciled_count']);
+        $this->assertSame(0, $r['unfulfilled_count']);
+        $this->assertSame(0, $r['orphaned_tx_count']);
+    }
+
     public function testCompactU16MatchesTheSolanaEncoding(): void
     {
         $this->assertSame("\x00", TransactionBuilder::compactU16(0));

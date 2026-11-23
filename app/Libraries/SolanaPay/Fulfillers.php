@@ -27,6 +27,12 @@ final class Fulfillers
         ];
     }
 
+    /** Wallet-ledger transaction_id for a Solana Pay Gold purchase (PaymentReconciliationService matches on it). */
+    public static function ledgerId(string $reference): string
+    {
+        return 'SOLPAY-' . substr($reference, 0, 16);
+    }
+
     /** USD price of one MyMI Gold, as the PayPal path uses it. */
     public static function goldValue(): float
     {
@@ -42,7 +48,7 @@ final class Fulfillers
         $coins = round(max(0, $paid - $fees) / self::goldValue(), 8);
 
         $saved = (new WalletModel())->submitMyMIGold([
-            'transaction_id' => 'SOLPAY-' . substr((string) $row['reference'], 0, 16),
+            'transaction_id' => self::ledgerId((string) $row['reference']),
             'total_cost'     => $paid,
             'user_id'        => $userId,
             'wallet_id'      => preg_replace('/[^A-Za-z0-9_\-]/', '', (string) $row['purpose_ref']),
