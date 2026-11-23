@@ -225,6 +225,57 @@ final class SolanaPayServiceTest extends CIUnitTestCase
         $this->assertSame('pending', $svc->confirm($open['reference'], 8)['status']);
     }
 
+    public function testRpcOutageNeverExpiresAPaidCheckout(): void
+    {
+        $svc = $this->service();
+        $c = $svc->checkout(7, 'mymigold', '', 1000);
+        $this->pay($c['reference'], 10_000_000, 5_000_000);
+        $this->now += 3600;            // long past the window
+        $this->txLookupsLeft = 0;      // provider down
+
+        $this->assertSame('pending', $svc->confirm($c['reference'], 7)['status']);
+        $this->txLookupsLeft = null;   // provider back
+        $this->assertSame('fulfilled', $svc->confirm($c['reference'], 7)['status']);
+    }
+
+    /** Leave a paid checkout as if the process stopped right after the lock. */
+    private function interrupt(SolanaPayService $svc, int $user): array
+    {
+        $c = $svc->checkout($user, 'mymigold', '', 1000);
+        $sig = $this->pay($c['reference'], 10_000_000, 5_000_000);
+        $this->sqlite->table(SolanaPayService::TABLE)->where('reference', $c['reference'])
+            ->update(['status' => 'confirmed', 'signature' => $sig, 'payer_wallet' => $this->payer, 'updated_at' => $this->now]);
+        return $c;
+    }
+
+    public function testInterruptedDeliveryIsResumedOnceBySweep(): void
+    {
+        $svc = $this->service();
+        $c = $this->interrupt($svc, 7);
+        $this->assertSame([], $svc->reconcile(), 'too soon: the first attempt may still be running');
+
+        $this->now += 600;
+        $this->assertSame(['fulfilled' => 1], $svc->reconcile());
+        $this->assertCount(1, $this->fulfilled);
+        $this->assertSame('fulfilled', $svc->confirm($c['reference'], 7)['status']);
+        $this->now += 600;
+        $this->assertSame([], $svc->reconcile());
+        $this->assertCount(1, $this->fulfilled);
+    }
+
+    public function testInterruptedAfterThePaymentRecordGoesToSupport(): void
+    {
+        $svc = $this->service();
+        $c = $this->interrupt($svc, 7);
+        $this->sqlite->table(SolanaPayService::TABLE)->where('reference', $c['reference'])->update(['result' => 'fee_claimed']);
+        $this->sqlite->table('bf_payment_claims')->insert(['user_id' => 7, 'kind' => 'mymigold', 'provider' => 'solana', 'provider_txn_id' => $c['reference'],
+            'claimed_amount' => 10, 'verified_amount' => 10, 'currency' => 'USD', 'status' => 'verified', 'detail' => '{}', 'created_at' => '2026-01-01 00:00:00', 'updated_at' => '2026-01-01 00:00:00']);
+
+        $this->now += 600;
+        $this->assertSame(['unfulfilled' => 1], $svc->reconcile());
+        $this->assertSame([], $this->fulfilled, 'the fulfiller may already have run: never deliver twice');
+    }
+
     public function testWrongAmountTokenOrRecipientIsNotAccepted(): void
     {
         $svc = $this->service();

@@ -25,6 +25,9 @@ use Config\SolanaPay as SolanaPayConfig;
  */
 final class SolanaPayService
 {
+    /** A `confirmed` checkout untouched this long was interrupted mid-delivery. */
+    private const RESUME_AFTER_SECONDS = 300;
+
     public const TABLE = 'bf_solana_pay_requests';
 
     /**
@@ -176,6 +179,18 @@ final class SolanaPayService
             ->where('status', 'pending')->where('expires_at >=', $this->now() - 86400)
             ->orderBy('created_at', 'ASC')->limit(max(1, min($limit, 500)))->get()->getResultArray();
         $counts = [];
+        $stuck = $this->db->table(self::TABLE)->select('reference')
+            ->where('status', 'confirmed')->where('updated_at <', $this->now() - self::RESUME_AFTER_SECONDS)
+            ->orderBy('updated_at', 'ASC')->limit(50)->get()->getResultArray();
+        foreach ($stuck as $r) {
+            try {
+                $status = $this->resume((string) $r['reference'])['status'];
+            } catch (\Throwable $e) {
+                log_message('warning', 'Solana Pay resume {ref}: {m}', ['ref' => $r['reference'], 'm' => $e->getMessage()]);
+                $status = 'error';
+            }
+            $counts[$status] = ($counts[$status] ?? 0) + 1;
+        }
         foreach ($rows as $r) {
             try {
                 $status = $this->confirm((string) $r['reference'], (int) $r['user_id'])['status'];
@@ -205,12 +220,15 @@ final class SolanaPayService
         }
 
         $found = $this->rpc->call('getSignaturesForAddress', [$reference, ['limit' => 20, 'commitment' => 'confirmed']]);
-        foreach (is_array($found) ? $found : [] as $entry) {
+        // Only a complete answer from the chain can prove "no payment"; an RPC outage must leave the checkout open.
+        $complete = is_array($found);
+        foreach ($complete ? $found : [] as $entry) {
             if (($entry['err'] ?? null) !== null || ! is_string($entry['signature'] ?? null)) {
                 continue;
             }
             $tx = $this->rpc->getTransaction($entry['signature']);
             if ($tx === null) {
+                $complete = false;
                 continue;
             }
             $check = self::verify($tx, $row);
@@ -221,7 +239,7 @@ final class SolanaPayService
             return $this->accept($row, (string) $entry['signature'], $check['payer'], $tx);
         }
 
-        if ((int) $row['expires_at'] < $this->now() - 120) {
+        if ($complete && (int) $row['expires_at'] < $this->now() - 120) {
             $this->db->table(self::TABLE)->where('reference', $reference)->where('status', 'pending')
                 ->update(['status' => 'expired', 'updated_at' => $this->now()]);
             return ['ok' => false, 'status' => 'expired', 'error' => 'checkout_expired'];
@@ -276,17 +294,56 @@ final class SolanaPayService
 
     private function accept(array $row, string $signature, string $payer, array $tx): array
     {
-        $reference = (string) $row['reference'];
-        $userId = (int) $row['user_id'];
-
         // Exactly one caller moves pending -> confirmed; everyone else just reports state.
-        $this->db->table(self::TABLE)->where('reference', $reference)->where('status', 'pending')
-            ->update(['status' => 'confirmed', 'signature' => $signature, 'payer_wallet' => $payer, 'updated_at' => $this->now()]);
+        $now = $this->now();
+        $this->db->table(self::TABLE)->where('reference', (string) $row['reference'])->where('status', 'pending')
+            ->update(['status' => 'confirmed', 'signature' => $signature, 'payer_wallet' => $payer, 'updated_at' => $now]);
         if ($this->db->affectedRows() !== 1) {
-            return $this->state($this->find($reference) ?? $row);
+            return $this->state($this->find((string) $row['reference']) ?? $row);
         }
 
-        if ((int) $row['fee_lamports'] > 0) {
+        return $this->deliver(['status' => 'confirmed', 'signature' => $signature, 'payer_wallet' => $payer, 'updated_at' => $now] + $row, $tx);
+    }
+
+    /**
+     * Finish a checkout left in `confirmed` (process stopped mid-delivery).
+     * Takes a lease on the row first, so two sweeps never deliver the same one.
+     */
+    private function resume(string $reference): array
+    {
+        $row = $this->find($reference);
+        if ($row === null || $row['status'] !== 'confirmed' || (int) $row['updated_at'] >= $this->now() - self::RESUME_AFTER_SECONDS) {
+            return $row === null ? ['ok' => false, 'status' => 'not_found'] : $this->state($row);
+        }
+        $now = $this->now();
+        $this->db->table(self::TABLE)->where('reference', $reference)->where('status', 'confirmed')
+            ->where('updated_at', (int) $row['updated_at'])->update(['updated_at' => $now]);
+        if ($this->db->affectedRows() !== 1) {
+            return $this->state($row);
+        }
+        log_message('notice', 'Solana Pay {ref}: resuming an interrupted delivery', ['ref' => $reference]);
+
+        return $this->deliver(['updated_at' => $now] + $row, null);
+    }
+
+    /**
+     * Fee claim, payment record and fulfilment for a confirmed checkout. Safe
+     * to call again after an interruption: the fee is claimed once (result
+     * "fee_claimed"), and if a payment record already exists the fulfiller
+     * may have run, so the order goes to support instead of a second delivery.
+     */
+    private function deliver(array $row, ?array $tx): array
+    {
+        $reference = (string) $row['reference'];
+        $userId = (int) $row['user_id'];
+        $signature = (string) $row['signature'];
+        $payer = (string) $row['payer_wallet'];
+
+        if ((int) $row['fee_lamports'] > 0 && ($row['result'] ?? '') !== 'fee_claimed') {
+            $tx ??= $this->rpc->getTransaction($signature);
+            if ($tx === null) {
+                return $this->state(['status' => 'confirmed'] + $row); // RPC down: the sweep retries later
+            }
             // Check the fee in the transaction we already verified: no second RPC lookup to fail transiently.
             $fee = $this->fees->claim('payment_processing', $userId, $payer, $signature, 'solanapay:' . $reference, null, $tx);
             if (! $fee['ok']) {
@@ -295,6 +352,19 @@ final class SolanaPayService
                     ->update(['status' => 'review', 'result' => 'fee_' . ($fee['error'] ?? 'refused'), 'updated_at' => $this->now()]);
                 return $this->state(['status' => 'review'] + $row);
             }
+            $this->db->table(self::TABLE)->where('reference', $reference)->update(['result' => 'fee_claimed', 'updated_at' => $this->now()]);
+        }
+
+        $earlier = $this->db->table('bf_payment_claims')->select('id')->where('provider', 'solana')
+            ->where('provider_txn_id', $reference)->limit(1)->get()->getRowArray();
+        if ($earlier !== null) {
+            log_message('warning', 'Solana Pay {ref}: delivery was interrupted after the payment record; sent to support', ['ref' => $reference]);
+            $this->db->table(self::TABLE)->where('reference', $reference)
+                ->update(['status' => 'unfulfilled', 'claim_id' => (int) $earlier['id'], 'result' => 'interrupted_check_delivery', 'updated_at' => $this->now()]);
+            if ((int) $row['fee_lamports'] > 0) {
+                $this->fees->settle($signature, 'solanapay:' . $reference, true);
+            }
+            return $this->state(['status' => 'unfulfilled'] + $row);
         }
 
         $now = date('Y-m-d H:i:s', $this->now());
@@ -313,7 +383,6 @@ final class SolanaPayService
         ]);
         $claimId = (int) $this->db->insertID();
 
-        $row = ['status' => 'confirmed', 'signature' => $signature, 'payer_wallet' => $payer] + $row;
         try {
             $result = ($this->fulfillers[$row['purpose']])($userId, $claimId, $row);
         } catch (\Throwable $e) {
