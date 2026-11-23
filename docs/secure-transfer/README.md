@@ -112,7 +112,7 @@ Each step needs owner approval. Do not run plain `php spark migrate` in producti
 1. Deploy the merged ref to staging with `scripts/ops/staging/mymi-staging.sh deploy <ref>`.
 2. Run only these migrations, in order: `MIGRATE=2026-11-21-000100_CreateSecureTransferTables`, then `MIGRATE=2026-11-23-000100_CreateSecureTransferAuditTables`, using the release's named-migration path.
 3. Set `SECURE_TRANSFER_ENABLED=true` in staging `.env` and reload PHP-FPM.
-4. Test with two wallets: link, send, open, withdraw.
+4. Run `php spark securetransfer:smoke` as the web user. It makes two throwaway wallets and runs link, send, download, decrypt, legal hold, withdraw, purge and the record check through the real database and file store. No SOL is spent (wallets only sign messages). It refuses to run unless the site address contains `staging`. Optionally test by hand with two real wallets too.
 5. Add the purge job to cron: `php spark securetransfer:purge --apply` daily. Without `--apply` it only counts. With `--apply` it refuses to run if the audit tables are missing, and it skips transfers under a legal hold.
 6. Repeat for production after a separate approval.
 
