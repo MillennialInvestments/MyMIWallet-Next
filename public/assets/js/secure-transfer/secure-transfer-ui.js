@@ -159,7 +159,7 @@
       text(status, 'Uploading the encrypted file…');
       await api('/send', { method: 'POST', body: form });
       text(status, 'Sent. Only the recipients\' devices can open it.', 'text-success');
-      $('mst1-file').value = '';
+      $('mst1-file').value = ''; $('mst1-file-name').textContent = 'No file chosen';
       refresh();
     } catch (e) {
       text(status, String(e.message || e), 'text-danger');
@@ -253,5 +253,9 @@
   connectBtn.removeAttribute('data-mst1-pending');
   text($('mst1-device'), '');
   $('mst1-send').addEventListener('click', send);
+  $('mst1-file').addEventListener('change', function () {
+    var f = this.files && this.files[0];
+    $('mst1-file-name').textContent = f ? f.name + ' (' + size(f.size) + ')' : 'No file chosen';
+  });
   $('mst1-refresh').addEventListener('click', function () { refresh().catch(function () {}); });
 })();

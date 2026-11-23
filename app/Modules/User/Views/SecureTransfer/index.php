@@ -34,21 +34,26 @@ $config = [
     <div class="card card-bordered mb-3">
         <div class="card-inner">
             <h5>2. Send a file</h5>
-            <div class="row g-2">
-                <div class="col-md-6">
-                    <label class="form-label" for="mst1-to">Recipient wallet addresses (one per line)</label>
-                    <textarea class="form-control text-monospace" id="mst1-to" rows="3" autocomplete="off"></textarea>
+            <div class="form-group mb-3">
+                <label class="form-label" for="mst1-to">Recipient wallet addresses</label>
+                <div class="form-note mb-1">One Solana address per line. Each recipient must have opened this page once.</div>
+                <textarea class="form-control font-monospace" id="mst1-to" rows="3" autocomplete="off" spellcheck="false" placeholder="e.g. 7xKX...q9Fh"></textarea>
+            </div>
+            <div class="row g-3 align-items-end">
+                <div class="col-sm-8">
+                    <label class="form-label d-block" for="mst1-file">File</label>
+                    <input type="file" id="mst1-file" class="d-none" hidden>
+                    <div class="d-flex align-items-center gap-2">
+                        <label for="mst1-file" class="btn btn-outline-primary mb-0">Choose file</label>
+                        <span id="mst1-file-name" class="small text-soft text-truncate">No file chosen</span>
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <label class="form-label" for="mst1-file">File</label>
-                    <input class="form-control" type="file" id="mst1-file">
-                </div>
-                <div class="col-md-3">
+                <div class="col-sm-4">
                     <label class="form-label" for="mst1-days">Available for (days)</label>
                     <input class="form-control" type="number" id="mst1-days" min="1" value="7">
                 </div>
             </div>
-            <button type="button" class="btn btn-success mt-3" id="mst1-send" disabled>Encrypt and send</button>
+            <button type="button" class="btn btn-primary mt-3" id="mst1-send" disabled>Encrypt and send</button>
             <div id="mst1-send-status" class="small mt-2" role="status"></div>
         </div>
     </div>
@@ -80,9 +85,15 @@ $config = [
         </div>
     </div>
 </div>
-<script<?= script_nonce_attr() ?> src="<?= base_url('assets/vendor/tweetnacl/nacl-fast.min.js') ?>"></script>
-<script<?= script_nonce_attr() ?> src="<?= base_url('assets/js/secure-transfer/mst1.js') ?>"></script>
-<script<?= script_nonce_attr() ?> src="<?= base_url('assets/js/secure-transfer/secure-transfer-ui.js') ?>"></script>
+<script<?= script_nonce_attr() ?>>
+window.addEventListener('error', function (e) {
+  var d = document.getElementById('mst1-device');
+  if (d && e && e.message) { d.textContent = 'Page error: ' + e.message + (e.filename ? ' (' + e.filename.split('/').pop().split('?')[0] + ':' + e.lineno + ')' : ''); d.className = 'small mt-2 text-danger'; }
+});
+</script>
+<script<?= script_nonce_attr() ?> src="<?= base_url('assets/vendor/tweetnacl/nacl-fast.min.js') ?>?v=<?= is_file(FCPATH . 'assets/vendor/tweetnacl/nacl-fast.min.js') ? filemtime(FCPATH . 'assets/vendor/tweetnacl/nacl-fast.min.js') : '1' ?>"></script>
+<script<?= script_nonce_attr() ?> src="<?= base_url('assets/js/secure-transfer/mst1.js') ?>?v=<?= is_file(FCPATH . 'assets/js/secure-transfer/mst1.js') ? filemtime(FCPATH . 'assets/js/secure-transfer/mst1.js') : '1' ?>"></script>
+<script<?= script_nonce_attr() ?> src="<?= base_url('assets/js/secure-transfer/secure-transfer-ui.js') ?>?v=<?= is_file(FCPATH . 'assets/js/secure-transfer/secure-transfer-ui.js') ? filemtime(FCPATH . 'assets/js/secure-transfer/secure-transfer-ui.js') : '1' ?>"></script>
 <script<?= script_nonce_attr() ?>>
 window.addEventListener('load', function () {
   var b = document.getElementById('mst1-connect');
