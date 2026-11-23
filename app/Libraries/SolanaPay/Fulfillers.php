@@ -41,7 +41,7 @@ final class Fulfillers
         $fees = round($paid * (float) ($settings->transPercent ?? 0) + (float) ($settings->transFee ?? 0), 2);
         $coins = round(max(0, $paid - $fees) / self::goldValue(), 8);
 
-        (new WalletModel())->submitMyMIGold([
+        $saved = (new WalletModel())->submitMyMIGold([
             'transaction_id' => 'SOLPAY-' . substr((string) $row['reference'], 0, 16),
             'total_cost'     => $paid,
             'user_id'        => $userId,
@@ -56,6 +56,9 @@ final class Fulfillers
             'fees'           => $fees,
             'type'           => 'Purchase',
         ]);
+        if (! $saved) { // DBDebug off: a failed insert returns false instead of throwing
+            return ['ok' => false, 'reason' => 'gold_ledger_insert_failed'];
+        }
 
         return ['ok' => true, 'reason' => 'fulfilled', 'message' => 'Payment confirmed. ' . $coins . ' MyMI Gold added.'];
     }
@@ -91,6 +94,11 @@ final class Fulfillers
     {
         $r = (new MyMIProjects())->issueUnitsAtNav((int) $row['purpose_ref'], $userId, ((int) $row['usd_cents']) / 100, 'solanapay:' . $row['reference']);
 
-        return ['ok' => true, 'reason' => 'fulfilled', 'message' => 'Fund units issued: ' . ($r['units_issued'] ?? 0) . '.'];
+        // issueUnitsAtNav throws on every refusal; still never report units that were not issued.
+        if ((float) ($r['units_issued'] ?? 0) <= 0) {
+            return ['ok' => false, 'reason' => 'no_units_issued'];
+        }
+
+        return ['ok' => true, 'reason' => 'fulfilled', 'message' => 'Fund units issued: ' . $r['units_issued'] . '.'];
     }
 }
