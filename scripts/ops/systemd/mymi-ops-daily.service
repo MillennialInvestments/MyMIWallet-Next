@@ -1,0 +1,15 @@
+[Unit]
+Description=MyMI Wallet daily ops jobs (health check, log triage)
+After=mysql.service
+
+[Service]
+Type=oneshot
+User=www-data
+Group=www-data
+WorkingDirectory=/apps/TBI/www/mymiwallet/current
+# The first job may fail without skipping the second; each job's result is in writable/ops/last-run/.
+ExecStart=-/usr/bin/php spark ops:job:run ops.health.check
+ExecStart=/usr/bin/php spark ops:job:run ops.logs.triage_daily
+Nice=10
+IOSchedulingClass=idle
+TimeoutStartSec=20min
