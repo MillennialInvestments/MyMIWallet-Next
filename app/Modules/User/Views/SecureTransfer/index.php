@@ -12,6 +12,7 @@ $config = [
     'maxRecipients' => (int) ($st['maxRecipients'] ?? 10),
     'base' => rtrim(site_url('SecureTransfer'), '/'),
     'wcProjectId' => (string) ($st['wcProjectId'] ?? ''),
+    'fee' => is_array($st['fee'] ?? null) ? $st['fee'] : ['required' => false],
     'wcScript' => base_url('assets/vendor/walletconnect/walletconnect-sign-client.min.js') . '?v=' . (is_file(FCPATH . 'assets/vendor/walletconnect/walletconnect-sign-client.min.js') ? filemtime(FCPATH . 'assets/vendor/walletconnect/walletconnect-sign-client.min.js') : '1'),
 ];
 ?>
@@ -86,6 +87,15 @@ $config = [
                     <input class="form-control" type="number" id="mst1-days" min="1" value="7">
                 </div>
             </div>
+            <?php $fee = $config['fee']; if (!empty($fee['required'])): ?>
+            <div class="alert alert-light border mt-3 mb-0" id="mst1-fee">
+                <p class="small mb-2"><strong>Transfer processing fee: <?= esc($fee['sol']) ?> SOL</strong><?= ($fee['cluster'] ?? '') === 'devnet' ? ' (Solana devnet test network)' : '' ?>.
+                    From your linked wallet, send <?= esc($fee['sol']) ?> SOL to the MyMI treasury below, then paste the transaction signature. Each payment covers one transfer.</p>
+                <pre class="small bg-white p-2 mb-2" style="white-space: pre-wrap; word-break: break-all;"><?= esc($fee['treasury']) ?></pre>
+                <label class="form-label small" for="mst1-fee-sig">Fee transaction signature</label>
+                <input class="form-control font-monospace" id="mst1-fee-sig" autocomplete="off" spellcheck="false">
+            </div>
+            <?php endif; ?>
             <button type="button" class="btn btn-primary mt-3" id="mst1-send" disabled>Encrypt and send</button>
             <div id="mst1-send-status" class="small mt-2" role="status"></div>
         </div>

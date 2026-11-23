@@ -28,6 +28,15 @@ final class SecureTransferService
     ) {
     }
 
+    private ?\App\Libraries\SolanaFees\SolanaFeeService $fees = null;
+
+    /** Charge the transfer_processing SOL fee on send (when one is priced). */
+    public function withFees(?\App\Libraries\SolanaFees\SolanaFeeService $fees): self
+    {
+        $this->fees = $fees;
+        return $this;
+    }
+
     public function withRequest(?string $ip, ?string $userAgent): self
     {
         $this->request = ['ip' => $ip, 'user_agent' => $userAgent];
@@ -169,9 +178,9 @@ final class SecureTransferService
      * Accept a sealed transfer. $ciphertextPath is the uploaded temp file; on
      * success it is moved into storage and named by transfer id.
      */
-    public function send(int $userId, array $manifest, string $signature, string $ciphertextPath, CiphertextStore $files): array
+    public function send(int $userId, array $manifest, string $signature, string $ciphertextPath, CiphertextStore $files, string $feeSignature = ''): array
     {
-        $r = $this->checkAndSend($userId, $manifest, $signature, $ciphertextPath, $files);
+        $r = $this->checkAndSend($userId, $manifest, $signature, $ciphertextPath, $files, $feeSignature);
         $sender = is_string($manifest['sender_wallet'] ?? null) ? self::walletOrNull($manifest['sender_wallet']) : null;
         $tid = is_string($manifest['transfer_id'] ?? null) && preg_match(self::ID_RE, $manifest['transfer_id']) ? $manifest['transfer_id'] : null;
         if ($r['ok']) {
@@ -179,6 +188,7 @@ final class SecureTransferService
                 'recipients' => array_values(array_unique(array_column($manifest['recipients'], 'wallet'))),
                 'ciphertext_bytes' => $manifest['ciphertext_bytes'], 'ciphertext_sha256' => $manifest['ciphertext_sha256'],
                 'expires_at' => $manifest['expires_at'], 'manifest_signature' => $signature,
+                'fee' => $r['fee'] ?? null,
             ]);
         } else {
             $this->log('transfer_refused', $userId, $sender, $tid, ['reason' => $r['error']]);
@@ -186,7 +196,7 @@ final class SecureTransferService
         return $r;
     }
 
-    private function checkAndSend(int $userId, array $manifest, string $signature, string $ciphertextPath, CiphertextStore $files): array
+    private function checkAndSend(int $userId, array $manifest, string $signature, string $ciphertextPath, CiphertextStore $files, string $feeSignature = ''): array
     {
         $now = $this->now();
         $errors = (new ManifestValidator($this->config))->validate($manifest, $signature, $now);
@@ -222,6 +232,18 @@ final class SecureTransferService
         if (!hash_equals($manifest['ciphertext_sha256'], (string) hash_file('sha256', $ciphertextPath))) {
             return self::refuse('ciphertext_hash_mismatch');
         }
+        $fee = null;
+        if ($this->fees !== null && $this->fees->required('transfer_processing')) {
+            if ($feeSignature === '') {
+                return self::refuse('transfer_fee_required') + ['fee' => $this->fees->quote('transfer_processing')];
+            }
+            $paid = $this->fees->claim('transfer_processing', $userId, $manifest['sender_wallet'], $feeSignature, $manifest['transfer_id'],
+                fn (string $ref) => !$this->store->transferExists($ref));
+            if (!$paid['ok']) {
+                return self::refuse($paid['error']) + ['fee' => $this->fees->quote('transfer_processing')];
+            }
+            $fee = ['kind' => 'transfer_processing', 'signature' => $feeSignature, 'lamports' => $paid['lamports']];
+        }
         if (!$files->put($manifest['transfer_id'], $ciphertextPath)) {
             return self::refuse('storage_unavailable');
         }
@@ -235,7 +257,7 @@ final class SecureTransferService
             $files->delete($manifest['transfer_id']);
             return self::refuse('storage_unavailable');
         }
-        return ['ok' => true, 'transfer_id' => $manifest['transfer_id'], 'expires_at' => $manifest['expires_at']];
+        return ['ok' => true, 'transfer_id' => $manifest['transfer_id'], 'expires_at' => $manifest['expires_at']] + ($fee ? ['fee' => $fee] : []);
     }
 
     /** Transfers addressed to the user's bound wallets. Metadata only. */

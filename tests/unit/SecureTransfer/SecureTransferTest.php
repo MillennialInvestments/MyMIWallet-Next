@@ -203,6 +203,57 @@ class SecureTransferTest extends CIUnitTestCase
         $this->assertGreaterThan(5, count($paged));
     }
 
+    public function testTransferFeeMustBePaidFromTheSenderWalletOncePerTransfer(): void
+    {
+        $treasury = $this->wallet()['address'];
+        $fees = new \Config\SolanaFees();
+        $fees->treasury = $treasury;
+        $fees->lamports = ['transfer_processing' => 1_000_000, 'payment_processing' => 0];
+        $chain = [];
+        $rpc = new class ($chain) implements \App\Libraries\SolanaFees\SolanaRpc {
+            public function __construct(private array &$chain)
+            {
+            }
+
+            public function getTransaction(string $signature): ?array
+            {
+                return $this->chain[$signature] ?? null;
+            }
+        };
+        $feeSvc = new \App\Libraries\SolanaFees\SolanaFeeService($fees, $rpc, new \App\Libraries\SolanaFees\ArrayFeeReceiptStore(), fn () => $this->now);
+        [$svc] = $this->service();
+        $svc->withFees($feeSvc);
+        $files = new CiphertextStore($this->dir . '/store');
+        $alice = $this->wallet();
+        $bob = $this->wallet();
+        $dev = $this->bind($svc, 1, $alice);
+        $this->bind($svc, 2, $bob);
+        $bobKey = $svc->recipientKeys($bob['address'])['keys'][0]['transfer_key'];
+        $seal = function () use ($alice, $bob, $bobKey, $dev) {
+            [$ct, $m] = TransferCrypto::seal('x', 'a', 'text/plain', $alice['address'], base64_encode(sodium_crypto_box_publickey($dev)),
+                [['wallet' => $bob['address'], 'transfer_key' => $bobKey]], $this->now + 600, $this->now);
+            return [$ct, $m, $this->sign($alice, TransferCrypto::manifestMessage($m))];
+        };
+        $paySig = Base58::encode(random_bytes(64));
+        $chain[$paySig] = ['slot' => 1, 'blockTime' => $this->now - 10, 'meta' => ['err' => null],
+            'transaction' => ['message' => ['accountKeys' => [['pubkey' => $alice['address'], 'signer' => true]],
+                'instructions' => [['program' => 'system', 'parsed' => ['type' => 'transfer',
+                    'info' => ['source' => $alice['address'], 'destination' => $treasury, 'lamports' => 1_000_000]]]]]]];
+
+        [$ct, $m, $sig] = $seal();
+        $unpaid = $svc->send(1, $m, $sig, $this->upload($ct), $files);
+        $this->assertSame('transfer_fee_required', $unpaid['error']);
+        $this->assertSame('0.001', $unpaid['fee']['sol']);
+        $this->assertNull($files->path($m['transfer_id']));
+
+        $paid = $svc->send(1, $m, $sig, $this->upload($ct), $files, $paySig);
+        $this->assertTrue($paid['ok'], json_encode($paid));
+        $this->assertSame(1_000_000, $paid['fee']['lamports']);
+
+        [$ct2, $m2, $sig2] = $seal();
+        $this->assertSame('fee_signature_already_used', $svc->send(1, $m2, $sig2, $this->upload($ct2), $files, $paySig)['error']);
+    }
+
     public function testUserAndTransferHoldsMatchOnlyTheirScope(): void
     {
         $audit = $this->newAudit();

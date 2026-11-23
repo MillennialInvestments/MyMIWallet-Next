@@ -293,6 +293,11 @@
       if (!wallets.length) throw new Error('Add at least one recipient wallet.');
       if (wallets.length > cfg.maxRecipients) throw new Error('At most ' + cfg.maxRecipients + ' recipients.');
       if (file.size > cfg.maxBytes) throw new Error('The file is larger than ' + size(cfg.maxBytes) + '.');
+      var feeSig = '';
+      if (cfg.fee && cfg.fee.required) {
+        feeSig = $('mst1-fee-sig').value.trim();
+        if (!/^[1-9A-HJ-NP-Za-km-z]{80,90}$/.test(feeSig)) throw new Error('Pay the ' + cfg.fee.sol + ' SOL transfer fee first, then paste its transaction signature.');
+      }
       text(status, 'Checking recipients…');
       var recipients = await recipientKeys(wallets);
       text(status, 'Encrypting on this device…');
@@ -306,11 +311,13 @@
       var form = new FormData();
       form.append('manifest', JSON.stringify(sealed.manifest));
       form.append('signature', signature);
+      if (feeSig) form.append('fee_signature', feeSig);
       form.append('ciphertext', new Blob([sealed.ciphertext], { type: 'application/octet-stream' }), 'payload.mst1');
       text(status, 'Uploading the encrypted file…');
       await api('/send', { method: 'POST', body: form });
       text(status, 'Sent. Only the recipients\' devices can open it.', 'text-success');
       $('mst1-file').value = ''; $('mst1-file-name').textContent = 'No file chosen';
+      if ($('mst1-fee-sig')) $('mst1-fee-sig').value = '';
       refresh();
     } catch (e) {
       text(status, String(e.message || e), 'text-danger');
