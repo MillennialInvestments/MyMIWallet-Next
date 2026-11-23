@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Commands\Ops;
 
 use App\Services\Ops\OpsJobRunner;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
 /**
@@ -14,7 +14,7 @@ use CodeIgniter\CLI\CLI;
  * Runs one allowlisted ops job now (used by the mymi-ops-* systemd timers).
  * Exit 0 ok/degraded, 1 error, 2 refused.
  */
-class JobRun extends BaseCommand
+class JobRun extends SafeBaseCommand
 {
     protected $group       = 'Ops';
     protected $name        = 'ops:job:run';
