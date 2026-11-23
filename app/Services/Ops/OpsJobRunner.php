@@ -28,10 +28,14 @@ class OpsJobRunner
         'ops.db.maintenance',
     ];
 
-    /** The old default also probed aiops.mymiwallet.com, the retired DreamHost n8n. */
+    /**
+     * The old default also probed aiops.mymiwallet.com (the retired DreamHost
+     * n8n) and chat.mymiwallet.com. chat.mymiwallet.com answers 503 until the
+     * GhostOps Web / ChainLinX integration is served there; add it back here
+     * when it goes live so the health check watches it again.
+     */
     public const HEALTH_HOSTS = [
-        'mymiwallet.com'      => 'https://www.mymiwallet.com',
-        'chat.mymiwallet.com' => 'https://chat.mymiwallet.com',
+        'mymiwallet.com' => 'https://www.mymiwallet.com',
     ];
 
     private string $writePath;
