@@ -150,6 +150,18 @@ class OpsStatusService
             $this->group($groups, $m[3]);
         }
         $midnight = strtotime($date . ' 00:00:00') ?: $this->now;
+        // In the first hour after midnight the rolling hour also covers the end
+        // of yesterday's log; daily counts and top messages stay today's only.
+        if ($hourAgo < $midnight) {
+            foreach ($this->tailLines($this->appLogFile(date('Y-m-d', $midnight - 1))) as $line) {
+                if (preg_match('/^(CRITICAL|ALERT|EMERGENCY|ERROR) - (\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) --> /', $line, $m)) {
+                    $ts = strtotime($m[2]);
+                    if ($ts !== false && $ts >= $hourAgo && $ts < $midnight) {
+                        $lastHour++;
+                    }
+                }
+            }
+        }
 
         return [
             'date'              => $date,

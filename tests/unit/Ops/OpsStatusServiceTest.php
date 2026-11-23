@@ -85,4 +85,16 @@ final class OpsStatusServiceTest extends CIUnitTestCase
         $this->assertSame(2.0, $s['jobs'][0]['hours_since']);
         $this->assertSame(['count' => 2, 'high' => 1, 'top' => [['module' => 'APIs', 'doc' => 'docs/a.md']]], $s['docs_gaps']);
     }
+    public function testRollingHourCrossesMidnightButDailyCountsStayToday(): void
+    {
+        $this->now = strtotime('2026-11-24 00:05:00');
+        file_put_contents($this->dir . '/writable/logs/log-2026-11-23.php', "ERROR - 2026-11-23 23:55:00 --> late\n"
+            . "ERROR - 2026-11-23 22:00:00 --> earlier\n");
+        file_put_contents($this->dir . '/writable/logs/log-2026-11-24.php', "ERROR - 2026-11-24 00:01:00 --> early\n");
+        $log = $this->service()->snapshot()['app_log'];
+        $this->assertSame('2026-11-24', $log['date']);
+        $this->assertSame(1, $log['error']);  // today's file only
+        $this->assertSame(2, $log['errors_last_hour']);  // 23:55 and 00:01
+        $this->assertSame('early', $log['top'][0]['message']);
+    }
 }
