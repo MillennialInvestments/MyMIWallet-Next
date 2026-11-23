@@ -237,7 +237,8 @@ final class SecureTransferService
             if ($feeSignature === '') {
                 return self::refuse('transfer_fee_required') + ['fee' => $this->fees->quote('transfer_processing')];
             }
-            $paid = $this->fees->claim('transfer_processing', $userId, $manifest['sender_wallet'], $feeSignature, $manifest['transfer_id']);
+            $paid = $this->fees->claim('transfer_processing', $userId, $manifest['sender_wallet'], $feeSignature, $manifest['transfer_id'],
+                fn (string $ref) => $this->store->transferExists($ref));
             if (!$paid['ok']) {
                 return self::refuse($paid['error']) + ['fee' => $this->fees->quote('transfer_processing')];
             }

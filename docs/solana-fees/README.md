@@ -14,7 +14,7 @@ Two separate charges, each priced on its own:
 1. The page shows the fee and the treasury wallet.
 2. The user sends that amount from their own linked wallet to the treasury, in any Solana wallet app.
 3. They paste the transaction signature. The server checks it with the Solana RPC (`getTransaction`, `confirmed`): the transaction succeeded, it is at most `SOLANA_FEE_MAX_AGE_SECONDS` old (default 3600), it was signed by the user's wallet, and it moved at least the fee to the treasury.
-4. The receipt is stored in `bf_solana_fee_receipts` as `pending` while the charge runs, then `spent`, or `released` if the service failed for another reason. Only a released receipt (or one left pending over 15 minutes by a crash) can be used again, and only by the same user, through one atomic update, so one payment never covers two charges.
+4. The receipt is stored in `bf_solana_fee_receipts` as `pending` while the charge runs, then `spent`, or `released` if the service failed for another reason. Only a released receipt, or one left pending over 15 minutes by a crash whose transfer was never saved, can be used again, and only by the same user, through one atomic update, so one payment never covers two charges.
 
 The fee and its signature are also written into the Secure Transfer investigation record with the transfer.
 

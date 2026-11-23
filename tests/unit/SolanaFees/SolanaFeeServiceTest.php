@@ -125,7 +125,22 @@ final class SolanaFeeServiceTest extends CIUnitTestCase
         $sig = $this->pay(5_000_000);
         $this->assertTrue($svc->claim('transfer_processing', 7, $this->payer, $sig, 'transfer-a')['ok']);
         $this->now += SolanaFeeService::STALE_PENDING_SECONDS + 1;
-        $this->assertTrue($svc->claim('transfer_processing', 7, $this->payer, $sig, 'transfer-b')['ok']);
+        // Without a way to check the earlier attempt, a stale receipt is never reused.
+        $this->assertFalse($svc->claim('transfer_processing', 7, $this->payer, $sig, 'transfer-b')['ok']);
+        // The earlier attempt did finish (crash after save): still refused, and recorded as spent.
+        $store = new ArrayFeeReceiptStore();
+        $svc = $this->service(null, $store);
+        $sig2 = $this->pay(5_000_000);
+        $this->assertTrue($svc->claim('transfer_processing', 7, $this->payer, $sig2, 'saved-a')['ok']);
+        $this->now += SolanaFeeService::STALE_PENDING_SECONDS + 1;
+        $done = fn (string $ref) => $ref === 'saved-a';
+        $this->assertSame('fee_signature_already_used', $svc->claim('transfer_processing', 7, $this->payer, $sig2, 'saved-b', $done)['error']);
+        $this->assertSame('spent', $store->rows[$sig2]['status']);
+        // The earlier attempt never finished: the same user may reuse it.
+        $sig3 = $this->pay(5_000_000);
+        $this->assertTrue($svc->claim('transfer_processing', 7, $this->payer, $sig3, 'lost-a')['ok']);
+        $this->now += SolanaFeeService::STALE_PENDING_SECONDS + 1;
+        $this->assertTrue($svc->claim('transfer_processing', 7, $this->payer, $sig3, 'lost-b', $done)['ok']);
     }
 
     public function testRefusals(): void

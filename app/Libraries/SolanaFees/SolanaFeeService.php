@@ -64,7 +64,12 @@ final class SolanaFeeService
      * marks it spent (the charge completed) or released (it failed, so the same
      * user may retry with it). Only one request can hold a receipt at a time.
      */
-    public function claim(string $kind, int $userId, string $payerWallet, string $signature, string $reference): array
+    /**
+     * @param callable(string): bool|null $completed Tells whether an earlier reference's charge actually
+     *        finished (e.g. its transfer exists). A receipt left pending by a crash is reused only when
+     *        this says it did not; without it, stale pending receipts are never reused.
+     */
+    public function claim(string $kind, int $userId, string $payerWallet, string $signature, string $reference, ?callable $completed = null): array
     {
         $fee = $this->lamports($kind);
         if ($fee === 0) {
@@ -77,6 +82,14 @@ final class SolanaFeeService
         $now = $this->now();
         $existing = $this->receipts->find($signature);
         if ($existing !== null) {
+            $stale = ($existing['status'] ?? '') === 'pending' && (int) ($existing['updated_at'] ?? 0) < $now - self::STALE_PENDING_SECONDS;
+            if ($stale && ($completed === null || $completed((string) $existing['reference']))) {
+                // The crashed attempt may have finished its charge: never reuse; record it as spent when we know it was.
+                if ($completed !== null) {
+                    $this->receipts->settle($signature, (string) $existing['reference'], 'spent', $now);
+                }
+                return ['ok' => false, 'error' => 'fee_signature_already_used'];
+            }
             if ($existing['payer_wallet'] === $payerWallet
                 && $this->receipts->reclaim($signature, $userId, $kind, $reference, $now, $now - self::STALE_PENDING_SECONDS)) {
                 return ['ok' => true, 'charged' => true, 'lamports' => (int) $existing['lamports'], 'signature' => $signature, 'reused_unspent' => true];
