@@ -54,3 +54,6 @@ POST API/Broker/linkPlaidAccount # dead: controller class missing
 POST API/Investments/getSymbolsByTradeType/([^/]+) # dead: controller class missing
 POST API/Status # dead: controller class missing
 POST API/Status/([^/]+) # dead: controller class missing
+
+# Solana Pay transaction request (called by the buyer's wallet app, not a browser session)
+POST API/SolanaPay/Tx/([^/]+) # wallet; unguessable 32-byte reference; returns an UNSIGNED tx for the posted account, price fixed server-side; only notes the payer wallet on a pending request; payment verified on chain

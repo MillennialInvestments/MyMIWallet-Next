@@ -53,3 +53,6 @@ POST API/Broker/linkPlaidAccount # missing class BrokerAPIController
 POST API/Investments/getSymbolsByTradeType/([^/]+) # missing class APIController
 POST API/Status # missing class APIController
 POST API/Status/([^/]+) # missing class APIController
+
+# Solana Pay transaction request (wallet app caller, no session or cookies)
+POST API/SolanaPay/Tx/([^/]+) # wallet; no session; unguessable reference; builds an unsigned tx and only notes the payer wallet on a pending request; buyer signs in wallet, payment verified on chain
