@@ -237,14 +237,19 @@ final class SecureTransferService
             if ($feeSignature === '') {
                 return self::refuse('transfer_fee_required') + ['fee' => $this->fees->quote('transfer_processing')];
             }
-            $paid = $this->fees->claim('transfer_processing', $userId, $manifest['sender_wallet'], $feeSignature, $manifest['transfer_id'],
-                fn (string $ref) => !$this->store->transferExists($ref));
+            $paid = $this->fees->claim('transfer_processing', $userId, $manifest['sender_wallet'], $feeSignature, $manifest['transfer_id']);
             if (!$paid['ok']) {
                 return self::refuse($paid['error']) + ['fee' => $this->fees->quote('transfer_processing')];
             }
             $fee = ['kind' => 'transfer_processing', 'signature' => $feeSignature, 'lamports' => $paid['lamports']];
         }
+        $settle = function (bool $done) use ($fee, $feeSignature, $manifest): void {
+            if ($fee !== null) {
+                $this->fees->settle($feeSignature, $manifest['transfer_id'], $done);
+            }
+        };
         if (!$files->put($manifest['transfer_id'], $ciphertextPath)) {
+            $settle(false);
             return self::refuse('storage_unavailable');
         }
         $wallets = array_values(array_unique(array_column($manifest['recipients'], 'wallet')));
@@ -255,8 +260,10 @@ final class SecureTransferService
         }
         if (!$saved) {
             $files->delete($manifest['transfer_id']);
+            $settle(false);
             return self::refuse('storage_unavailable');
         }
+        $settle(true);
         return ['ok' => true, 'transfer_id' => $manifest['transfer_id'], 'expires_at' => $manifest['expires_at']] + ($fee ? ['fee' => $fee] : []);
     }
 

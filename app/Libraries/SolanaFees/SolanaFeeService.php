@@ -55,15 +55,16 @@ final class SolanaFeeService
         return rtrim(rtrim(number_format($lamports / 1_000_000_000, 9, '.', ''), '0'), '.') ?: '0';
     }
 
+    /** A pending receipt older than this is treated as an attempt that crashed. */
+    public const STALE_PENDING_SECONDS = 900;
+
     /**
-     * Accept $signature as payment of $kind by $payerWallet for $reference
-     * (a transfer id, payment id, ...). $unused tells whether an earlier claim's
-     * reference never completed, so a receipt is not lost when the service then
-     * failed for another reason.
-     *
-     * @param callable(string): bool|null $unused
+     * Reserve $signature as payment of $kind by $payerWallet for $reference (a
+     * transfer id, payment id, ...). The receipt stays 'pending' until settle()
+     * marks it spent (the charge completed) or released (it failed, so the same
+     * user may retry with it). Only one request can hold a receipt at a time.
      */
-    public function claim(string $kind, int $userId, string $payerWallet, string $signature, string $reference, ?callable $unused = null): array
+    public function claim(string $kind, int $userId, string $payerWallet, string $signature, string $reference): array
     {
         $fee = $this->lamports($kind);
         if ($fee === 0) {
@@ -73,13 +74,11 @@ final class SolanaFeeService
         if ($raw === null || strlen($raw) !== 64) {
             return ['ok' => false, 'error' => 'fee_signature_invalid'];
         }
+        $now = $this->now();
         $existing = $this->receipts->find($signature);
         if ($existing !== null) {
-            $sameOwner = (int) $existing['user_id'] === $userId && $existing['kind'] === $kind && $existing['payer_wallet'] === $payerWallet;
-            if ($sameOwner && $unused !== null && $unused((string) $existing['reference'])) {
-                if ($existing['reference'] !== $reference) {
-                    $this->receipts->rebind($signature, $reference);
-                }
+            if ($existing['payer_wallet'] === $payerWallet
+                && $this->receipts->reclaim($signature, $userId, $kind, $reference, $now, $now - self::STALE_PENDING_SECONDS)) {
                 return ['ok' => true, 'charged' => true, 'lamports' => (int) $existing['lamports'], 'signature' => $signature, 'reused_unspent' => true];
             }
             return ['ok' => false, 'error' => 'fee_signature_already_used'];
@@ -92,7 +91,6 @@ final class SolanaFeeService
             return ['ok' => false, 'error' => 'fee_payment_failed_on_chain'];
         }
         $blockTime = (int) ($tx['blockTime'] ?? 0);
-        $now = $this->now();
         if ($blockTime <= 0 || $blockTime < $now - $this->config->maxAgeSeconds || $blockTime > $now + 300) {
             return ['ok' => false, 'error' => 'fee_payment_too_old'];
         }
@@ -110,6 +108,12 @@ final class SolanaFeeService
             return ['ok' => false, 'error' => 'fee_signature_already_used'];
         }
         return ['ok' => true, 'charged' => true, 'lamports' => $paid, 'signature' => $signature];
+    }
+
+    /** After claim(): $completed true marks the receipt spent, false releases it for a retry. */
+    public function settle(string $signature, string $reference, bool $completed): void
+    {
+        $this->receipts->settle($signature, $reference, $completed ? 'spent' : 'released', $this->now());
     }
 
     private static function accountKeys(array $tx): array

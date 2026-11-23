@@ -92,20 +92,40 @@ final class SolanaFeeServiceTest extends CIUnitTestCase
         $r = $svc->claim('transfer_processing', 7, $this->payer, $sig, 'transfer-a');
         $this->assertTrue($r['ok'], json_encode($r));
         $this->assertSame(5_000_000, $store->rows[$sig]['lamports']);
+        $svc->settle($sig, 'transfer-a', true);
         $this->assertSame('transfer-a', $store->rows[$sig]['reference']);
         $this->assertSame('fee_signature_already_used', $svc->claim('transfer_processing', 7, $this->payer, $sig, 'transfer-b')['error']);
         // Paying the transfer fee does not pay the (separate, larger) payment fee.
         $this->assertSame('fee_signature_already_used', $svc->claim('payment_processing', 7, $this->payer, $sig, 'pay-1')['error']);
     }
 
-    public function testUnspentReceiptCanBeRetriedBySameUser(): void
+    public function testReceiptIsHeldWhilePendingAndReusableOnlyAfterRelease(): void
+    {
+        $store = new ArrayFeeReceiptStore();
+        $svc = $this->service(null, $store);
+        $sig = $this->pay(5_000_000);
+        $this->assertTrue($svc->claim('transfer_processing', 7, $this->payer, $sig, 'transfer-a')['ok']);
+        $this->assertSame('pending', $store->rows[$sig]['status']);
+        // A second request while A is still running cannot take the same payment.
+        $this->assertSame('fee_signature_already_used', $svc->claim('transfer_processing', 7, $this->payer, $sig, 'transfer-b')['error']);
+        // A failed: released, so the same user may retry with it; another user may not.
+        $svc->settle($sig, 'transfer-a', false);
+        $this->assertFalse($svc->claim('transfer_processing', 8, $this->payer, $sig, 'transfer-c')['ok']);
+        $this->assertTrue($svc->claim('transfer_processing', 7, $this->payer, $sig, 'transfer-b')['reused_unspent']);
+        // B completed: spent for good, and a late settle for A changes nothing.
+        $svc->settle($sig, 'transfer-b', true);
+        $svc->settle($sig, 'transfer-a', false);
+        $this->assertSame('spent', $store->rows[$sig]['status']);
+        $this->assertSame('fee_signature_already_used', $svc->claim('transfer_processing', 7, $this->payer, $sig, 'transfer-d')['error']);
+    }
+
+    public function testCrashedPendingReceiptBecomesReusableAfterTimeout(): void
     {
         $svc = $this->service();
         $sig = $this->pay(5_000_000);
         $this->assertTrue($svc->claim('transfer_processing', 7, $this->payer, $sig, 'transfer-a')['ok']);
-        $unused = fn (string $ref) => $ref === 'transfer-a';
-        $this->assertTrue($svc->claim('transfer_processing', 7, $this->payer, $sig, 'transfer-b', $unused)['reused_unspent']);
-        $this->assertFalse($svc->claim('transfer_processing', 8, $this->payer, $sig, 'transfer-c', fn () => true)['ok']);
+        $this->now += SolanaFeeService::STALE_PENDING_SECONDS + 1;
+        $this->assertTrue($svc->claim('transfer_processing', 7, $this->payer, $sig, 'transfer-b')['ok']);
     }
 
     public function testRefusals(): void
@@ -133,6 +153,12 @@ final class SolanaFeeServiceTest extends CIUnitTestCase
         $m = new \App\Database\Migrations\CreateSolanaFeeReceipts(\Config\Database::forge($db));
         $m->up();
         $m->up();
+        require_once APPPATH . 'Database/Migrations/2026-11-23-000300_AddSolanaFeeReceiptStatus.php';
+        $s = new \App\Database\Migrations\AddSolanaFeeReceiptStatus(\Config\Database::forge($db));
+        $this->assertFalse(\App\Libraries\SolanaFees\DbFeeReceiptStore::available($db));
+        $s->up();
+        $s->up();
+        $this->assertTrue(\App\Libraries\SolanaFees\DbFeeReceiptStore::available($db));
         $store = new \App\Libraries\SolanaFees\DbFeeReceiptStore($db);
         $svc = new SolanaFeeService($this->config(), new class ($this->chain) implements SolanaRpc {
             public function __construct(private array &$chain)
@@ -146,10 +172,13 @@ final class SolanaFeeServiceTest extends CIUnitTestCase
         }, $store, fn () => $this->now);
         $sig = $this->pay(5_000_000);
         $this->assertTrue($svc->claim('transfer_processing', 7, $this->payer, $sig, 'ref-1')['ok']);
-        $this->assertSame('ref-1', $store->find($sig)['reference']);
+        $this->assertSame('pending', $store->find($sig)['status']);
         $this->assertFalse($store->insert($store->find($sig)));
         $this->assertSame('fee_signature_already_used', $svc->claim('transfer_processing', 7, $this->payer, $sig, 'ref-2')['error']);
-        $this->assertTrue($svc->claim('transfer_processing', 7, $this->payer, $sig, 'ref-2', fn () => true)['ok']);
-        $this->assertSame('ref-2', $store->find($sig)['reference']);
+        $svc->settle($sig, 'ref-1', false);
+        $this->assertTrue($svc->claim('transfer_processing', 7, $this->payer, $sig, 'ref-2')['ok']);
+        $this->assertSame('fee_signature_already_used', $svc->claim('transfer_processing', 7, $this->payer, $sig, 'ref-3')['error']);
+        $svc->settle($sig, 'ref-2', true);
+        $this->assertSame(['ref-2', 'spent'], [$store->find($sig)['reference'], $store->find($sig)['status']]);
     }
 }

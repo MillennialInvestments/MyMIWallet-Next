@@ -14,7 +14,7 @@ Two separate charges, each priced on its own:
 1. The page shows the fee and the treasury wallet.
 2. The user sends that amount from their own linked wallet to the treasury, in any Solana wallet app.
 3. They paste the transaction signature. The server checks it with the Solana RPC (`getTransaction`, `confirmed`): the transaction succeeded, it is at most `SOLANA_FEE_MAX_AGE_SECONDS` old (default 3600), it was signed by the user's wallet, and it moved at least the fee to the treasury.
-4. The receipt is stored in `bf_solana_fee_receipts`. One signature pays one charge. If the service then fails for another reason, the same user can retry with the same signature.
+4. The receipt is stored in `bf_solana_fee_receipts` as `pending` while the charge runs, then `spent`, or `released` if the service failed for another reason. Only a released receipt (or one left pending over 15 minutes by a crash) can be used again, and only by the same user, through one atomic update, so one payment never covers two charges.
 
 The fee and its signature are also written into the Secure Transfer investigation record with the transfer.
 
@@ -32,7 +32,7 @@ MyMI receives fees for its own services into its own wallet. It does not hold, c
 
 ## Activation
 
-1. Run only `MIGRATE=2026-11-23-000200_CreateSolanaFeeReceipts`. While a transfer fee is priced and this table is missing, Secure Transfer stays off (404) instead of sending for free.
+1. Run only `MIGRATE='2026-11-23-000200_CreateSolanaFeeReceipts 2026-11-23-000300_AddSolanaFeeReceiptStatus'`. While a transfer fee is priced and this table is missing, Secure Transfer stays off (404) instead of sending for free.
 2. On staging, set the treasury, a price and the devnet RPC. Get free devnet SOL with `solana airdrop 1 <address> --url devnet`, or turn on devnet in Solflare (Settings, Network), then send a file and pay the fee.
 3. Production needs a separate approval, the real treasury address and the mainnet RPC.
 
