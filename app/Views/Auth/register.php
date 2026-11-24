@@ -133,7 +133,7 @@ log_message('debug', '[AUTH_REGISTER_VIEW] intro partial', ['resolvedIntroView' 
                     <div class="col-md-6">
                         <div class="p-3 rounded-3 h-100" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);">
                             <div class="d-flex align-items-center gap-2 mb-2">
-                                <span class="badge" style="background: #366bfa; color: #ffffff;"><em class="icon ni ni-activity"></em> Live Sync</span>
+                                <span class="badge d-inline-flex align-items-center gap-1 px-2 py-1" style="background: #366bfa; color: #ffffff;"><em class="icon ni ni-activity"></em> Live Sync</span>
                             </div>
                             <h5 class="h6 text-white fw-bold mb-1">Automated Portfolio Sync</h5>
                             <p class="small text-white-50 mb-0">Aggregate equities, ETFs, crypto, and bank balances without tedious manual data entry.</p>
@@ -143,7 +143,7 @@ log_message('debug', '[AUTH_REGISTER_VIEW] intro partial', ['resolvedIntroView' 
                     <div class="col-md-6">
                         <div class="p-3 rounded-3 h-100" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);">
                             <div class="d-flex align-items-center gap-2 mb-2">
-                                <span class="badge" style="background: #38cfc2; color: #061540;"><em class="icon ni ni-bulb"></em> Advisor</span>
+                                <span class="badge d-inline-flex align-items-center gap-1 px-2 py-1" style="background: #38cfc2; color: #061540;"><em class="icon ni ni-bulb"></em> Advisor</span>
                             </div>
                             <h5 class="h6 text-white fw-bold mb-1">AI-Assisted Insights</h5>
                             <p class="small text-white-50 mb-0">Receive automated audits on asset allocation drift, cash flow leaks, and rebalance opportunities.</p>
@@ -153,7 +153,7 @@ log_message('debug', '[AUTH_REGISTER_VIEW] intro partial', ['resolvedIntroView' 
                     <div class="col-md-6">
                         <div class="p-3 rounded-3 h-100" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);">
                             <div class="d-flex align-items-center gap-2 mb-2">
-                                <span class="badge" style="background: #20c997; color: #ffffff;"><em class="icon ni ni-swap"></em> Web3</span>
+                                <span class="badge d-inline-flex align-items-center gap-1 px-2 py-1" style="background: #20c997; color: #ffffff;"><em class="icon ni ni-swap"></em> Web3</span>
                             </div>
                             <h5 class="h6 text-white fw-bold mb-1">Solana Swap &amp; Fee Reclaims</h5>
                             <p class="small text-white-50 mb-0">Execute decentralized asset swaps with lowest platform margins and atomic fee reclaims.</p>
@@ -163,7 +163,7 @@ log_message('debug', '[AUTH_REGISTER_VIEW] intro partial', ['resolvedIntroView' 
                     <div class="col-md-6">
                         <div class="p-3 rounded-3 h-100" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);">
                             <div class="d-flex align-items-center gap-2 mb-2">
-                                <span class="badge" style="background: #f4bd0e; color: #1f2b3a;"><em class="icon ni ni-bell"></em> Real-Time</span>
+                                <span class="badge d-inline-flex align-items-center gap-1 px-2 py-1" style="background: #f4bd0e; color: #1f2b3a;"><em class="icon ni ni-bell"></em> Real-Time</span>
                             </div>
                             <h5 class="h6 text-white fw-bold mb-1">Custom Volatility Alerts</h5>
                             <p class="small text-white-50 mb-0">Set multi-condition alerts for budget ceilings, market moves, earnings dates, and payment alarms.</p>

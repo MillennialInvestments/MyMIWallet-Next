@@ -170,7 +170,7 @@
 					<div class="col-md-6">
 						<div class="p-3 rounded-3 h-100" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);">
 							<div class="d-flex align-items-center gap-2 mb-2">
-								<span class="badge" style="background: #f4bd0e; color: #1f2b3a;"><em class="icon ni ni-coins"></em> Ecosystem</span>
+								<span class="badge d-inline-flex align-items-center gap-1 px-2 py-1" style="background: #f4bd0e; color: #1f2b3a;"><em class="icon ni ni-coins"></em> Ecosystem</span>
 								<span class="small text-white-50">Token Utility</span>
 							</div>
 							<h5 class="h6 text-white fw-bold mb-1">MyMI Gold Rewards &amp; Upgrades</h5>
@@ -183,7 +183,7 @@
 					<div class="col-md-6">
 						<div class="p-3 rounded-3 h-100" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);">
 							<div class="d-flex align-items-center gap-2 mb-2">
-								<span class="badge" style="background: #20c997; color: #ffffff;"><em class="icon ni ni-swap"></em> Web3</span>
+								<span class="badge d-inline-flex align-items-center gap-1 px-2 py-1" style="background: #20c997; color: #ffffff;"><em class="icon ni ni-swap"></em> Web3</span>
 								<span class="small text-white-50">Instant Swap</span>
 							</div>
 							<h5 class="h6 text-white fw-bold mb-1">Solana Pay &amp; Asset Exchange</h5>
@@ -196,7 +196,7 @@
 					<div class="col-md-6">
 						<div class="p-3 rounded-3 h-100" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);">
 							<div class="d-flex align-items-center gap-2 mb-2">
-								<span class="badge" style="background: #366bfa; color: #ffffff;"><em class="icon ni ni-growth"></em> Intelligence</span>
+								<span class="badge d-inline-flex align-items-center gap-1 px-2 py-1" style="background: #366bfa; color: #ffffff;"><em class="icon ni ni-growth"></em> Intelligence</span>
 								<span class="small text-white-50">Predictive</span>
 							</div>
 							<h5 class="h6 text-white fw-bold mb-1">90-Day Cash-Flow Forecasting</h5>
@@ -209,7 +209,7 @@
 					<div class="col-md-6">
 						<div class="p-3 rounded-3 h-100" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);">
 							<div class="d-flex align-items-center gap-2 mb-2">
-								<span class="badge" style="background: #816bff; color: #ffffff;"><em class="icon ni ni-chat-circle"></em> Community</span>
+								<span class="badge d-inline-flex align-items-center gap-1 px-2 py-1" style="background: #816bff; color: #ffffff;"><em class="icon ni ni-chat-circle"></em> Community</span>
 								<span class="small text-white-50">Discord</span>
 							</div>
 							<h5 class="h6 text-white fw-bold mb-1">Live Market News &amp; Discord Alpha</h5>

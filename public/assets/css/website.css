@@ -68,9 +68,6 @@ a:focus {
     color: #0770fe;
     text-decoration: underline;
 }
-input[type="checkbox"] {
-    width: 15%;
-}
 body {
     background-color: white !important;
     border: none;

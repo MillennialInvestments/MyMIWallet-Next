@@ -390,3 +390,30 @@ footer.map-bg p.text-muted {
   color: #64748b !important;
   font-size: 0.8125rem !important;
 }
+
+/* =========================================================
+   Checkbox & Badge Form Controls Fixes
+   ========================================================= */
+
+/* Fix checkbox and radio sizing (undo legacy 15% width distortion) */
+input[type="checkbox"],
+input[type="checkbox"].form-check-input {
+  width: 1.15em !important;
+  height: 1.15em !important;
+  max-width: 1.15em !important;
+  margin-top: 0.25em;
+  vertical-align: top;
+  border-radius: 0.25em;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Ensure clean badge typography and spacing */
+.badge {
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 0.35rem 0.65rem;
+}
+.badge .icon {
+  margin-right: 0.25rem;
+}

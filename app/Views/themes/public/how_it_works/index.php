@@ -321,22 +321,44 @@ $faqs = [
                 </div>
             </div>
             <div class="col-lg-4 d-none d-lg-block">
-                <div class="p-4 rounded-4" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); backdrop-filter: blur(8px);">
-                    <div class="d-flex align-items-center gap-3 mb-3 pb-3 border-bottom border-light border-opacity-10">
-                        <div class="user-avatar bg-primary text-white"><em class="icon ni ni-check"></em></div>
+                <div class="p-4 rounded-4" style="background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.16); backdrop-filter: blur(8px);">
+                    <div class="d-flex align-items-center gap-3 mb-4 pb-3" style="border-bottom: 1px solid rgba(255, 255, 255, 0.15);">
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center shadow-sm" style="width: 44px; height: 44px; flex-shrink: 0;">
+                            <em class="icon ni ni-check" style="font-size: 1.25rem;"></em>
+                        </div>
                         <div>
-                            <div class="text-white fw-bold">Step-by-Step Unlocks</div>
-                            <small class="text-white-50">Grow as your net worth grows</small>
+                            <div class="text-white fw-bold fs-6 mb-0">Step-by-Step Unlocks</div>
+                            <div class="text-white-50 small">Grow as your net worth grows</div>
                         </div>
                     </div>
-                    <div class="small text-white-50 mb-2">Stage 1: Foundation (Day 1–30)</div>
-                    <div class="progress mb-3" style="height: 6px;"><div class="progress-bar bg-info" style="width: 25%"></div></div>
-                    <div class="small text-white-50 mb-2">Stage 2: Momentum (Mo 2–6)</div>
-                    <div class="progress mb-3" style="height: 6px;"><div class="progress-bar bg-success" style="width: 50%"></div></div>
-                    <div class="small text-white-50 mb-2">Stage 3: Wealth Building (Mo 6–12)</div>
-                    <div class="progress mb-3" style="height: 6px;"><div class="progress-bar bg-primary" style="width: 75%"></div></div>
-                    <div class="small text-white-50 mb-2">Stage 4: Web3 & Sovereignty (Yr 1+)</div>
-                    <div class="progress" style="height: 6px;"><div class="progress-bar bg-warning" style="width: 100%"></div></div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between text-white-50 small mb-1">
+                            <span>Stage 1: Foundation</span>
+                            <span>Day 1–30</span>
+                        </div>
+                        <div class="progress" style="height: 6px; background: rgba(255,255,255,0.15);"><div class="progress-bar bg-info" style="width: 25%"></div></div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between text-white-50 small mb-1">
+                            <span>Stage 2: Momentum</span>
+                            <span>Mo 2–6</span>
+                        </div>
+                        <div class="progress" style="height: 6px; background: rgba(255,255,255,0.15);"><div class="progress-bar bg-success" style="width: 50%"></div></div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between text-white-50 small mb-1">
+                            <span>Stage 3: Wealth Building</span>
+                            <span>Mo 6–12</span>
+                        </div>
+                        <div class="progress" style="height: 6px; background: rgba(255,255,255,0.15);"><div class="progress-bar bg-primary" style="width: 75%"></div></div>
+                    </div>
+                    <div class="mb-1">
+                        <div class="d-flex justify-content-between text-white-50 small mb-1">
+                            <span>Stage 4: Web3 &amp; Sovereignty</span>
+                            <span>Yr 1+</span>
+                        </div>
+                        <div class="progress" style="height: 6px; background: rgba(255,255,255,0.15);"><div class="progress-bar bg-warning" style="width: 100%"></div></div>
+                    </div>
                 </div>
             </div>
         </div>
