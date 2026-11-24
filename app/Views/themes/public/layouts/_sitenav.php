@@ -22,7 +22,7 @@ $brandImage = base_url('assets/images/MyMI-Wallet-Logo-White.png');
 $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto Asset Marketplace/Exchange';
 ?>
 
-<nav class="intro-navbar navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="intro-navbar navbar navbar-expand-lg navbar-dark fixed-top">
   <div class="container-fluid px-3 px-md-5">
     <a class="navbar-brand d-flex align-items-center" href="<?= $homeUrl ?>">
       <img class="logo-img logo-light img-fluid" style="max-height: 40px;"

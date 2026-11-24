@@ -71,9 +71,6 @@ a:focus {
 input[type="checkbox"] {
     width: 15%;
 }
-.intro-copyright {
-    color: #ffffff;
-}
 body {
     background-color: white !important;
     border: none;
