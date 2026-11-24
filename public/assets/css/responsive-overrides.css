@@ -2,10 +2,40 @@
 * {
     transition: background-color 300ms ease, color 300ms ease;
 }
-*:focus {
-    background-color: #3E61BC;
-    color: #fff;
-    outline: none;
+*:focus-visible {
+    outline: 2px solid #3E61BC !important;
+    outline-offset: 2px;
+}
+/* Accessibility: Screen Reader Only / Visually Hidden Utility */
+.sr-only, .visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* Accessibility: Skip Navigation Link */
+.skip-link {
+    position: absolute;
+    top: -50px;
+    left: 10px;
+    background: #1565d8;
+    color: #ffffff !important;
+    padding: 8px 16px;
+    z-index: 10000;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 0 0 4px 4px;
+    transition: top 200ms ease;
+}
+.skip-link:focus, .skip-link:focus-visible {
+    top: 0;
+    outline: 3px solid #ffc107 !important;
 }
 html, body {
     color: rgba(33, 37, 41, 1);
