@@ -1,2 +1,4 @@
 # Public RFC 6238 test vector (base32 of "12345678901234567890"), not a credential.
 4f292454ec91628c6ff851e7d8c632ad8d2a8bed:tests/unit/Security/TotpServiceTest.php:generic-api-key:15
+# Fixed HMAC test key in the TbiChatLink unit test (replaced with a low-entropy value in the next commit), not a credential.
+ba4ff3fafad8ca5b007ad96bc6582657ebc7b63e:tests/unit/TbiChat/TbiChatLinkTest.php:generic-api-key:19

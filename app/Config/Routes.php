@@ -1433,6 +1433,11 @@ $routes->get('index.php/Blog/(:segment)/(:segment)', static fn($a, $b) => redire
 $routes->get('Dashboard', '\App\Modules\User\Controllers\DashboardController::index', ['filter' => ['login', 'noStore']]);
 $routes->get('dashboard', '\App\Modules\User\Controllers\DashboardController::index', ['filter' => ['login', 'noStore']]);
 
+// MyMI AI chat on TBI AIOps (docs/aiops/tbi-tenant-chat.md): one-time sign-in
+// link to https://chat.mymiwallet.com for the signed-in member.
+$routes->get('AI-Chat', '\App\Controllers\AIChatController::open', ['filter' => ['login', 'noStore']]);
+$routes->get('ai-chat', '\App\Controllers\AIChatController::open', ['filter' => ['login', 'noStore']]);
+
 $routes->group('Dashboard', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
     $routes->get('/', 'DashboardController::index', ['as' => 'dashboard']);
     // Backward-compatible alias for legacy singular path
