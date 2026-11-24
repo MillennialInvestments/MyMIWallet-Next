@@ -25,7 +25,7 @@ $brandAlt = 'MyMI Wallet - Investment Accounting/Analytical Software & Crypto As
 <nav class="intro-navbar navbar navbar-expand-lg navbar-dark fixed-top">
   <div class="container-fluid px-3 px-md-5">
     <a class="navbar-brand d-flex align-items-center" href="<?= $homeUrl ?>">
-      <img class="logo-img logo-light img-fluid" style="max-height: 40px;"
+      <img class="logo-img logo-dark img-fluid" style="max-height: 40px;"
            src="<?= esc($brandImage) ?>" srcset="<?= esc($brandImage) ?>"
            alt="<?= esc($brandAlt) ?>">
     </a>
