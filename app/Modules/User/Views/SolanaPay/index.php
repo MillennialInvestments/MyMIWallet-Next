@@ -65,6 +65,7 @@ $feeSol = rtrim(rtrim(number_format(((int) ($sp['fee'] ?? 0)) / 1e9, 9, '.', '')
             </div>
             <div class="col-12">
                 <button class="btn btn-primary" type="submit" id="solpay-go">Get payment QR</button>
+                <p class="small text-muted mt-2 mb-0">By paying, you agree to our <a href="<?= site_url('Terms-Of-Service'); ?>" target="_blank">Terms of Service</a> and acknowledge our <a href="<?= site_url('disclaimer'); ?>" target="_blank">risk disclosures</a>.</p>
             </div>
         </form>
 
