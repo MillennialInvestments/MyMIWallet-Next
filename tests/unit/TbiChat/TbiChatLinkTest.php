@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class TbiChatLinkTest extends TestCase
 {
-    private const KEY = 'test-key-0123456789abcdef0123456789abcdef';
+    private const KEY = 'kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk';
     private const NOW = 1_800_000_000;
 
     private static function decode(string $part): array
