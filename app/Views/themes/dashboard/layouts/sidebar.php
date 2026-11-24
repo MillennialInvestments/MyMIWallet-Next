@@ -310,6 +310,13 @@ $agent                  = service('request')->getUserAgent();
 								<span class="nk-menu-icon"><em class="icon ni ni-pie"></em></span><span class="nk-menu-text">My Budget</span>
 							</a>
 						</li> 
+                        <?php if (\App\Libraries\TbiChat\TbiChatLink::fromEnv()->enabled()): ?>
+                        <li class="nk-menu-item">
+							<a href="<?php echo site_url('/AI-Chat'); ?>" class="nk-menu-link" rel="noopener">
+								<span class="nk-menu-icon"><em class="icon ni ni-chat"></em></span><span class="nk-menu-text">AI Chat</span>
+							</a>
+						</li>
+                        <?php endif; ?>
                         <?php 
                         if ($debtOperations === 1 && $creditOperations === 1) {
                         ?>
