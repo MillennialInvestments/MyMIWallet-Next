@@ -315,13 +315,17 @@ $routes->post('/resend-activation', 'AuthController::resendActivationCode', ['as
 // Dev tools. GTM-016: never served in production. whoami echoes the session id and
 // request headers (cookies), and the probes are diagnostics only.
 if (ENVIRONMENT !== 'production') {
-    $routes->get('Dev/BitcoinTest', '\App\Controllers\Dev\BitcoinTest::index');
+    if (class_exists('\App\Controllers\Dev\BitcoinTest')) {
+        $routes->get('Dev/BitcoinTest', '\App\Controllers\Dev\BitcoinTest::index');
+    }
     $routes->get('Debug/whoami', 'Debug::whoami');
     $routes->get('Debug/auth-audit-cache', 'Debug::authAuditCacheSelfTest');
 
-    $routes->group('debug', ['namespace' => '\App\Controllers\Debug'], static function ($routes) {
-        $routes->get('common-data/smoke', 'CommonDataController::smoke');
-    });
+    if (class_exists('\App\Controllers\Debug\CommonDataController')) {
+        $routes->group('debug', ['namespace' => '\App\Controllers\Debug'], static function ($routes) {
+            $routes->get('common-data/smoke', 'CommonDataController::smoke');
+        });
+    }
     $routes->get('debug/register-success-probe', 'AuthController::registerSuccessProbe');
 }
 $routes->get('API/Management/error-heatmap', 'SystemDebugController::errorHeatmap', ['filter' => 'permission:admin.access']);
