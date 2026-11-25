@@ -35,6 +35,8 @@ class Features extends BaseConfig
             'FEATURE_SANCTIONS_SCREENING' => $this->readBool('FEATURE_SANCTIONS_SCREENING', false),
             // MYMI-XCHAIN-001 W5: Non-custodial DEX swaps (Jupiter on Solana, 0x on EVM)
             'FEATURE_SWAPS' => $this->readBool('FEATURE_SWAPS', false),
+            // MYMI-XCHAIN-001 W6: MyMI Exchange paper trading provider
+            'FEATURE_EXCHANGE_PAPER' => $this->readBool('FEATURE_EXCHANGE_PAPER', false),
         ];
     }
 

@@ -2897,3 +2897,11 @@ $routes->get('Exchange/Solana/Create', '\App\Modules\Exchange\Controllers\Solana
 $routes->get('API/Solana/health', '\App\Modules\APIs\Controllers\SolanaAPIController::health');
 // END MyMI Solana public web route exposure
 
+// MYMI-XCHAIN-001 W6: MyMI Exchange paper trading routes
+$routes->group('Exchange/Paper', ['namespace' => '\App\Modules\Exchange\Controllers', 'filter' => ['login', 'noStore', 'feature:exchange_paper']], static function ($routes) {
+    $routes->get('/', 'PaperExchangeController::index');
+    $routes->post('Order', 'PaperExchangeController::order');
+    $routes->post('Cancel', 'PaperExchangeController::cancel');
+    $routes->get('Balances', 'PaperExchangeController::balances');
+});
+
