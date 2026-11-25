@@ -263,6 +263,11 @@ $routes->group('Pay/Crypto', ['namespace' => '\App\Modules\User\Controllers', 'f
     $routes->post('Checkout', 'SolanaPayController::cryptoCheckout');
     $routes->get('Status/(:segment)', 'SolanaPayController::cryptoStatus/$1');
 });
+// MYMI-XCHAIN-001 W5: Non-custodial DEX swaps (Jupiter on Solana, 0x on EVM)
+$routes->group('Swaps', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore', 'feature:swaps']], static function ($routes) {
+    $routes->get('/', 'SwapsController::index');
+    $routes->post('Quote', 'SwapsController::quote');
+});
 // Called by the buyer's wallet app (Solana Pay transaction request); no session.
 $routes->get('API/SolanaPay/Tx/(:segment)', '\App\Modules\APIs\Controllers\SolanaPayTxController::describe/$1');
 $routes->post('API/SolanaPay/Tx/(:segment)', '\App\Modules\APIs\Controllers\SolanaPayTxController::transaction/$1');

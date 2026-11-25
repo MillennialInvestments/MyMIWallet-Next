@@ -33,6 +33,8 @@ class Features extends BaseConfig
             'FEATURE_MEMBERSHIP_SUBSCRIPTIONS' => $this->readBool('FEATURE_MEMBERSHIP_SUBSCRIPTIONS', false),
             // MYMI-XCHAIN-001 W8: OFAC SDN and automated sanctions screening
             'FEATURE_SANCTIONS_SCREENING' => $this->readBool('FEATURE_SANCTIONS_SCREENING', false),
+            // MYMI-XCHAIN-001 W5: Non-custodial DEX swaps (Jupiter on Solana, 0x on EVM)
+            'FEATURE_SWAPS' => $this->readBool('FEATURE_SWAPS', false),
         ];
     }
 
