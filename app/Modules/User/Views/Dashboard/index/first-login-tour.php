@@ -111,6 +111,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
+    // Move modal directly to <body> so .modal-backdrop never renders on top of it
+    if (el.parentElement !== document.body) {
+        document.body.appendChild(el);
+    }
+
     const endpoint = <?= json_encode(site_url('Dashboard/onboarding/tour/complete')) ?>;
     const csrfName = <?= json_encode(csrf_token()) ?>;
     let csrfHash = <?= json_encode(csrf_hash()) ?>;

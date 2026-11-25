@@ -320,7 +320,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (<?= $showModal ? 'true' : 'false' ?>) {
         const openWalkthrough = () => {
-            const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('onboardingWalkthroughModal'));
+            const modalEl = document.getElementById('onboardingWalkthroughModal');
+            if (modalEl && modalEl.parentElement !== document.body) {
+                document.body.appendChild(modalEl);
+            }
+            const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
             modal.show();
         };
         // The first-login tour goes first; setup opens once it closes.
