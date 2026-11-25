@@ -40,6 +40,7 @@ POST API/eSports/receiveResultWebhook # webhook: shared secret
 POST API/CoinVault/contributionEvent # webhook: ExternalContributionService::ingest verifies the raw body signature
 
 # Public by design
+POST API/AI/Chat # public: in-controller AIChatQuotaService IP quota (5/day) or user session
 POST API/mobile/auth/login # public: sign-in endpoint
 POST API/mobile/auth/register # public: sign-up endpoint
 
