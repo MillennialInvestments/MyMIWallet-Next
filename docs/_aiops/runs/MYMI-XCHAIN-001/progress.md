@@ -82,6 +82,6 @@
 | W5 | Non-Custodial Swaps | `feature/mymi-xchain-001-w5-non-custodial-swaps` | [#784](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/784) | 5 tests / 28 assertions / form smoke 321 PASS | PASS | Jupiter (Solana) & 0x (EVM), sanctions screening, SWAPS_EXECUTE=false quote-only mode |
 | W6 | MyMI Exchange (Paper) | `feature/mymi-xchain-001-w6-exchange-paper` | [#785](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/785) | 9 tests / 31 assertions / form smoke 323 PASS | PASS | PaperExchangeProvider, order state machine, untradable assets guard, PartnerExchangeStub (G-PARTNER) |
 | W7 | MyMI Coin on MDIT | `feature/mymi-xchain-001-w7-mymicoin-mdit` | [#786](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/786) | 5 tests / 26 assertions / form smoke 325 PASS | PASS | Reg D 506(c) offering, accredited-only gate, MDIT ledger mint, zero public purchase button |
-| W9 | Staging Integration | `integration/mymi-xchain-001` | | | PENDING | |
+| W9 | Staging Integration | `integration/mymi-xchain-001` | [Branch](https://github.com/MillennialInvestments/MyMIWallet-Next/tree/integration/mymi-xchain-001) | 61 tests / 1294 assertions / smoke PASS | PASS | Merged W0-W7 without conflict; one-block staging packet & smoke script delivered |
 | W10 | Production Promotion Packets | `feature/mymi-xchain-001-w10-prod-packets` | | | PENDING | |
 | W11 | Closeout & Final Report | `feature/mymi-xchain-001-w11-closeout` | | | PENDING | |
