@@ -80,7 +80,7 @@
 | W2 | BTC Address Pool | `feature/mymi-xchain-001-w2-btc-address-pool` | [#782](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/782) | 28 CryptoPay tests / 143 assertions | PASS | Pre-generated address pool bf_btc_address_pool, import command, address matcher |
 | W3 | EVM One-Click Pay | `feature/mymi-xchain-001-w3-evm-one-click` | [#783](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/783) | 31 CryptoPay (149 assertions) / Node test 3 PASS | PASS | Call-data encoding, chainId pre-verification, zero external npm deps |
 | W5 | Non-Custodial Swaps | `feature/mymi-xchain-001-w5-non-custodial-swaps` | [#784](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/784) | 5 tests / 28 assertions / form smoke 321 PASS | PASS | Jupiter (Solana) & 0x (EVM), sanctions screening, SWAPS_EXECUTE=false quote-only mode |
-| W6 | MyMI Exchange (Paper) | `feature/mymi-xchain-001-w6-exchange-paper` | | | PENDING | |
+| W6 | MyMI Exchange (Paper) | `feature/mymi-xchain-001-w6-exchange-paper` | [#785](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/785) | 9 tests / 31 assertions / form smoke 323 PASS | PASS | PaperExchangeProvider, order state machine, untradable assets guard, PartnerExchangeStub (G-PARTNER) |
 | W7 | MyMI Coin on MDIT | `feature/mymi-xchain-001-w7-mymicoin-mdit` | | | PENDING | |
 | W9 | Staging Integration | `integration/mymi-xchain-001` | | | PENDING | |
 | W10 | Production Promotion Packets | `feature/mymi-xchain-001-w10-prod-packets` | | | PENDING | |
