@@ -56,7 +56,8 @@ final class CryptoPayLiveTest extends CIUnitTestCase
     /** The XRPL genesis account exists on every network. */
     private const XRPL_ACCOUNT = 'rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh';
     private const EVM_ADDRESS = '0x000000000000000000000000000000000000dEaD';
-    private const BTC_ADDRESS = ['testnet' => 'tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx', 'mainnet' => 'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kxv8f3t4'];
+    /** Probe addresses only: nobody holds keys for the mainnet one (random hash), so never send to it. */
+    private const BTC_ADDRESS = ['testnet' => 'tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx', 'mainnet' => 'bc1qwfduuxkjyepk99va30ruffrxskjft3209q6tsj'];
     private const SOLANA_DEVNET_GENESIS = 'EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG';
 
     private CryptoPayLiveHttp $http;
