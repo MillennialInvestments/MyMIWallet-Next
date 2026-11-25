@@ -251,6 +251,12 @@ $routes->group('Pay/Solana', ['namespace' => '\App\Modules\User\Controllers', 'f
     $routes->post('Checkout', 'SolanaPayController::checkout');
     $routes->get('Status/(:segment)', 'SolanaPayController::status/$1');
 });
+// Crypto checkout on Ethereum, Base, XRP Ledger and Bitcoin (buyer's own wallet pays). Off until CRYPTO_PAY_ENABLED, a network and migrated.
+$routes->group('Pay/Crypto', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) {
+    $routes->get('/', 'SolanaPayController::index');
+    $routes->post('Checkout', 'SolanaPayController::cryptoCheckout');
+    $routes->get('Status/(:segment)', 'SolanaPayController::cryptoStatus/$1');
+});
 // Called by the buyer's wallet app (Solana Pay transaction request); no session.
 $routes->get('API/SolanaPay/Tx/(:segment)', '\App\Modules\APIs\Controllers\SolanaPayTxController::describe/$1');
 $routes->post('API/SolanaPay/Tx/(:segment)', '\App\Modules\APIs\Controllers\SolanaPayTxController::transaction/$1');
@@ -1886,7 +1892,8 @@ $routes->get('Exchange/Solana/Create', '\App\Modules\Exchange\Controllers\Solana
 $routes->group('Exchange', ['namespace' => '\App\Modules\Exchange\Controllers', 'filter' => 'login'], function($routes) {
     $routes->get('', 'ExchangeController::index', ['as' => 'mymi-exchange']);
     $routes->get('Projects/(:any)', 'ExchangeController::project/$1');
-    $routes->group('DigiByte', function($routes) {
+    // DigiByte stays off (404) until FEATURE_DIGIBYTE=true: its library does not load yet.
+    $routes->group('DigiByte', ['filter' => 'feature:digibyte'], function($routes) {
         $routes->post('fetchFrontendData', 'DigiByteController::fetchFrontendData', ['filter' => 'csrf']);
         $routes->post('provisionDefaultWallet', 'DigiByteController::provisionDefaultWallet', ['filter' => 'csrf']);
         $routes->post('disconnectWallet', 'DigiByteController::disconnectWallet', ['filter' => 'csrf']);
