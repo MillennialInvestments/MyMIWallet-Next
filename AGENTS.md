@@ -71,6 +71,7 @@ This repository participates in Teddy's centralized Codex ⇄ AIOps workflow. Co
 - **Service worker:** `public/sw.js` must cache only `/assets/`. Caching signed-in pages or JSON served stale pages after deploys ("buttons do nothing").
 - **Money and legal records:** Secure Transfer's investigation record (`bf_secure_transfer_audit`) is add-only and hash-chained; never update or delete rows, and verify with `securetransfer:audit --verify`. SOL fee receipts (`bf_solana_fee_receipts`) are one per transaction signature; reuse only through the service's atomic reclaim, never by editing rows. Test fee flows on staging with devnet (`SOLANA_FEE_RPC`), never mainnet SOL.
 - **Operator style:** the owner runs server commands by hand from an iPad. Give one batched, copy-paste block per step, read-only checks first and mutating steps last behind explicit gates (`&&`, `FAIL 0` checks); write scratch output to `~`, not `/tmp`.
+- **Chat service permissions and env:** `mymi-wallet-chat.service` runs Node.js as a non-www-data user. Releases must keep `o+rX` permissions on the release directory and symlink `shared/chat.env` to `$R/chat/.env`, otherwise systemd fails at step `CHDIR` with Permission Denied and release health checks fail on `chat: FAILED`.
 
 ## Trading Intelligence, MCP & Options Accounting Lessons (2026-11)
 
