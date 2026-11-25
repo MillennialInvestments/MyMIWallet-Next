@@ -1,94 +1,151 @@
-# CodeIgniter 4 Application Starter
+# MyMI Wallet Platform
 
-## What is CodeIgniter?
+**Enterprise Fintech, Multi-Asset Budgeting & Options Trading Intelligence Platform**
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+- **Production URL:** [https://www.mymiwallet.com](https://www.mymiwallet.com)
+- **Staging URL:** [https://staging.mymiwallet.com](https://staging.mymiwallet.com)
+- **Centralized AIOps Gateway:** [https://aiops.timothyburks.com](https://aiops.timothyburks.com)
+- **Runtime Target:** PHP 8.2 on Teddy's DreamHost VPS + `gq-ai01` execution stack
+- **Framework:** CodeIgniter 4.7.6 full-stack with Shield RBAC, Myth auth compatibility, and Node.js chat daemon
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+---
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## 1. System Architecture
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+MyMI Wallet delivers personal financial management, multi-asset digital wallets (checking, savings, credit, debt, crypto, investment), 12-metric options trading campaign analytics, real-world asset auctions, and subscription management.
 
-## Installation & updates
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                        MyMI Wallet Client Surfaces                     │
+│    Web Views (CI4/Bootstrap)  •  Mobile App (Expo/React)  •  MCPs     │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ HTTP / WebSocket / stdio JSON-RPC
+                 ┌──────────────────┴──────────────────┐
+                 ▼                                     ▼
+     ┌───────────────────────┐             ┌───────────────────────┐
+     │    Web Controllers    │             │   MCP Agent Servers   │
+     │   Shield/Myth RBAC    │             │  mymi-trading/platform│
+     └───────────┬───────────┘             └───────────┬───────────┘
+                 │                                     │ Fast CLI Bootstrap
+                 ▼                                     ▼
+     ┌─────────────────────────────────────────────────────────────┐
+     │                Services & Business Logic Layer              │
+     │  WalletService • OptionsScoring • Plaid • SolanaFeeReclaim │
+     └──────────────────────────────┬──────────────────────────────┘
+                                    │
+                                    ▼
+     ┌─────────────────────────────────────────────────────────────┐
+     │                     Relational Database                     │
+     │      MySQL 8.0 (Production)  /  SQLite (Fast Unit Tests)     │
+     └─────────────────────────────────────────────────────────────┘
+```
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+---
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+## 2. Core Operational & Release Invariants
 
-## Setup
+These invariants are enforced by automated CI gates, pre-commit hooks, and deployment scripts:
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+1. **Never run plain `php spark migrate` in production:**
+   - `ShieldIdentityBackfill` (`2026-10-26-180000`) is intentionally unapplied.
+   - All migrations must be explicitly named via `MIGRATE='<names>' bash scripts/ops/deploy/mymi-release.sh activate <release_name>`.
+2. **Form Action Gap Ratchet:**
+   - [`tests/baseline/form-action-gaps.txt`](tests/baseline/form-action-gaps.txt) is an enforced **shrink-only ratchet**.
+   - Verified via `bash tests/smoke/form-certification-smoke.sh` (current threshold: $\ge$ 300 PASS, $\le$ 17 FAIL).
+3. **Zero Unsafe Database Queries:**
+   - Every model query must specify deterministic limits (`->limit(...)` or `->paginate(...)`) on the same invocation line.
+   - Verified via `php spark ops:model-limit:audit` (0 unsafe patterns required).
+4. **Fail-Closed IDOR Protection:**
+   - All mutation and private financial queries must resolve user identity strictly from the active session (`$this->cuID` or `auth()->id()`), never from client-supplied request bodies.
+5. **Chat Service Permissions (`mymi-wallet-chat.service`):**
+   - The Node.js chat service runs as a non-`www-data` user and requires directory readability (`o+rX`) and a symlinked `shared/chat.env` at `$R/chat/.env`.
 
-## Spark Runtime Validation & Safety
+---
 
-- **Static validation**: `php spark ops:commands:audit` and `php spark ops:commands:lint` enforce constructor safety, metadata, and docs coverage. See `docs/management/Command_Runtime_Audit.md`.
-- **Runtime validation**: Spark boot prerequisites (vendor, boot files, .env) are documented in `docs/management/Spark_Bootstrap_Requirements.md`.
-- **Automatic enforcement**: destructive commands require `--approve` and support `--dry-run` via `SafeBaseCommand`.
+## 3. Universal Model Context Protocol (MCP) Integration
 
-## Important Change with index.php
+MyMI Wallet includes native, stdio JSON-RPC 2.0 MCP servers that boot CodeIgniter 4 in **under 0.2 seconds** with strict `SOURCE_MUTATION=false` read-only guarantees:
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+- **`mymi-trading`** (`scripts/mcp/trading_mcp_server.py`): Market snapshots, options chain Greeks, scanner setups, strategy simulations, and 12-metric options campaign accounting.
+- **`mymi-platform`** (`scripts/mcp/mymi_platform_mcp_server.py`): System runtime diagnostics, user telemetry, webhook alerts feed, membership catalogs, schema health, and architectural code audits.
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+### Supported Clients
+Ready-to-paste configurations for **Google Antigravity, Anthropic Claude Desktop, OpenAI ChatGPT, VS Code, Cursor, and Cline** are fully documented in:
+👉 [`docs/mcp/UNIVERSAL_MCP_INTEGRATION_GUIDE.md`](docs/mcp/UNIVERSAL_MCP_INTEGRATION_GUIDE.md)
 
-**Please** read the user guide for a better explanation of how CI4 works!
+---
 
-## Repository Management
+## 4. Verification & Testing Suites
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+Execute test suites from the repository root:
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+```bash
+# 1. MCP Unit Tests (14 tests, 115 assertions)
+vendor/bin/phpunit tests/unit/Mcp/
 
-## Server Requirements
+# 2. Form Certification Smoke Suite & Ratchet Check
+bash tests/smoke/form-certification-smoke.sh
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+# 3. Model Memory Safety & Limit Audit (0 findings)
+php spark ops:model-limit:audit
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+# 4. Route Handlers Verification
+php spark routes:verify-handlers
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+# 5. Schema & Migration Idempotency Lint (116 migrations, 240 models)
+php scripts/ops/db/schema-migration-lint.php
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+# 6. Command Runtime Safety Audit
+php spark ops:commands:audit && php spark ops:commands:lint
+```
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+---
 
-## MyMI Wallet Architecture Notes (Config + Dashboard Caching)
+## 5. Deployment & Release Workflow
 
-- `Config\SiteSettings` is bootstrap-safe and does not perform DB override loading in its constructor.
-- Runtime overrides are applied after boot using `App\Libraries\SiteSettingsRuntime`.
-- Executive dashboard aggregation is centralized in `App\Services\DashboardService` with user-scoped cache keys and a 120-second TTL.
-- Budget mutations invalidate dashboard summary cache through `DashboardService::invalidateExecutiveDashboardSummary()` to prevent stale data.
+Deployments on `gq-ai01` follow an immutable release directory structure (`releases/<timestamp>-<sha>`) with automatic rollback and symlinked shared storage:
 
-## Centralized AIOPS + Ollama Endpoint Model (CI4)
+### Step 1: Deploy to Staging
+```bash
+sudo bash scripts/ops/staging/mymi-staging.sh deploy main
+```
 
-MyMI Wallet now resolves orchestration and LLM endpoints with an environment-driven model that is compatible with CI4, DreamHost, and PHP 8.2:
+### Step 2: Run Staging Form Tests
+```bash
+sudo bash scripts/ops/staging/mymi-staging.sh form-test
+```
+*(Requires `FAIL 0` on live form submissions before proceeding to production).*
 
-- **Primary AIOPS endpoint**: `https://aiops.timothyburks.com`
-- **Primary public Ollama endpoint**: `https://ollama.timothyburks.com`
-- **Optional same-server fallback**: `http://127.0.0.1:11434` (use only for explicitly internal CLI/server-side tasks)
+### Step 3: Build Production Release
+```bash
+sudo bash scripts/ops/deploy/mymi-release.sh build main
+```
 
-Recommended `.env` values:
+### Step 4: Activate Release
+```bash
+# Set MIGRATE only if new additive migrations are required:
+sudo bash scripts/ops/deploy/mymi-release.sh activate <release_name>
+```
+
+---
+
+## 6. Mobile Application (`mobile/`)
+
+An Expo + React Native companion application is located under `mobile/`:
+
+```bash
+cd mobile
+cp .env.example .env
+npm install
+npm run start
+```
+Refer to [`mobile/README.md`](mobile/README.md) for endpoint mappings and Expo authentication token workflows.
+
+---
+
+## 7. Centralized AIOps Configuration
+
+MyMI Wallet integrates with Teddy's centralized AIOps gateway:
 
 ```dotenv
 AIOPS_MODE=remote
@@ -102,11 +159,4 @@ OLLAMA_BASE_URL=https://ollama.timothyburks.com
 OLLAMA_INTERNAL_BASE_URL=http://127.0.0.1:11434
 OLLAMA_DEFAULT_CHAT_MODEL=qwen2.5-coder:0.5b
 OLLAMA_DEFAULT_EMBED_MODEL=mxbai-embed-large:latest
-OLLAMA_TIMEOUT=180
-OLLAMA_MAX_TOKENS=100
 ```
-
-Notes:
-- Do not commit real shared secrets.
-- App identity headers (`X-App-Key`, `X-App-Timestamp`, `X-App-Signature`) are wired for centralized AIOPS requests.
-- Ollama commands support `--prefer-internal=1` when same-server jobs must use local Ollama.
