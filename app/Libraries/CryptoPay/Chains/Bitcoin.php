@@ -190,6 +190,7 @@ final class Bitcoin implements ChainAdapter
         }
         if (! in_array($hash, self::GENESIS[$this->network] ?? [], true)) {
             log_message('error', 'Crypto checkout: Bitcoin endpoint {url} is not on {net}; not used', ['url' => parse_url($base, PHP_URL_HOST), 'net' => $this->network]);
+            \App\Libraries\CryptoPay\CryptoPayAlerts::endpointRefusal('bitcoin', $base, "genesis hash {$hash} does not match network {$this->network}");
             return false;
         }
         $this->verified[$base] = true;

@@ -202,6 +202,12 @@ $routes->group('Admin/CoinVault', ['namespace' => '\App\Modules\CoinVault\Contro
     $routes->get('Payouts', 'CoinVaultController::payouts');
     $routes->get('Wallet/(:num)', 'CoinVaultController::wallet/$1');
 });
+
+// Crypto checkout support admin routes (MYMI-XCHAIN-001 W1)
+$routes->group('Admin/Crypto', ['namespace' => '\App\Modules\Admin\Controllers', 'filter' => 'permission:admin.access'], static function ($routes) {
+    $routes->get('Checkouts', 'CryptoCheckoutsController::index');
+    $routes->post('Checkouts/Action', 'CryptoCheckoutsController::action');
+});
 $routes->group('API/CoinVault', ['namespace' => '\App\Modules\CoinVault\Controllers\Api'], static function ($routes) {
     $routes->post('contributionEvent', 'CoinVaultApiController::contributionEvent');
     $routes->post('approveContribution/(:num)', 'CoinVaultApiController::approveContribution/$1', ['filter' => 'permission:admin.access']);

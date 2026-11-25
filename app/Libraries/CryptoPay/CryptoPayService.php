@@ -79,10 +79,16 @@ final class CryptoPayService
         return $this->clock ? (int) ($this->clock)() : time();
     }
 
-    public function checkout(int $userId, string $chain, string $purpose, string $purposeRef, int $usdCents): array
+    public function checkout(int $userId, string $chain, string $purpose, string $purposeRef, int $usdCents, ?string $payerAddress = null): array
     {
         if ($userId <= 0) {
             return ['ok' => false, 'error' => 'not_signed_in'];
+        }
+        if ($payerAddress !== null && $payerAddress !== '') {
+            $screen = new \App\Services\Compliance\SanctionsScreen();
+            if ($screen->isEnabled() && $screen->isSanctioned($payerAddress)) {
+                return ['ok' => false, 'error' => 'SANCTIONED_ADDRESS'];
+            }
         }
         if (! isset(SolanaPayConfig::PURPOSES[$purpose], $this->fulfillers[$purpose])) {
             return ['ok' => false, 'error' => 'unknown_purpose'];
@@ -239,6 +245,7 @@ final class CryptoPayService
             return (string) $fn()['status'];
         } catch (\Throwable $e) {
             log_message('warning', 'Crypto checkout {ref}: {m}', ['ref' => $reference, 'm' => $e->getMessage()]);
+            CryptoPayAlerts::reconcileFailure($reference, $e->getMessage());
             return 'error';
         }
     }
@@ -261,6 +268,13 @@ final class CryptoPayService
         $required = (int) ($this->config->confirmations[$row['chain']] ?? 1);
         $waiting = null;
         foreach ($payments as $p) {
+            $screen = new \App\Services\Compliance\SanctionsScreen();
+            if ($screen->isEnabled() && ! empty($p['payer']) && $screen->isSanctioned((string) $p['payer'])) {
+                $this->db->table(self::TABLE)->where('reference', $reference)->where('status', 'pending')
+                    ->update(['status' => 'blocked', 'result' => 'SANCTIONED_ADDRESS', 'payer' => (string) $p['payer'], 'updated_at' => $this->now()]);
+                CryptoPayAlerts::notify('SANCTIONED_ADDRESS Detected', "Checkout {$reference} blocked: payer {$p['payer']} is sanctioned", ['ref' => $reference, 'payer' => $p['payer']]);
+                return ['ok' => false, 'status' => 'blocked', 'error' => 'SANCTIONED_ADDRESS'];
+            }
             if ($p['confirmations'] < $required) {
                 $waiting = max($waiting ?? 0, $p['confirmations']);
                 continue;
@@ -305,6 +319,7 @@ final class CryptoPayService
             return $this->state($this->find((string) $row['reference']) ?? $row);
         }
         log_message('warning', 'Crypto checkout {ref}: payment {p} arrived after the checkout expired; sent to support', ['ref' => $row['reference'], 'p' => $payment['id']]);
+        CryptoPayAlerts::latePayment((string) $row['reference'], (string) $payment['id'], (int) ($payment['amount'] ?? 0));
         return $this->state(['status' => 'unfulfilled', 'result' => 'late_payment', 'payment_id' => $payment['id']] + $row);
     }
 
