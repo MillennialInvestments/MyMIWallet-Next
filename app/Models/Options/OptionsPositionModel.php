@@ -68,7 +68,7 @@ class OptionsPositionModel extends Model
             $builder->where('user_id', $userId);
         }
 
-        return $builder->orderBy('created_at', 'DESC')->findAll();
+        return $builder->orderBy('created_at', 'DESC')->limit(100)->findAll();
     }
 
     /**

@@ -204,34 +204,49 @@ class TradingBridge
         $step = $price > 250 ? 5.0 : ($price > 50 ? 1.0 : 0.5);
         $atm = round($price / $step) * $step;
 
+        $bs = new \App\Services\Options\BlackScholesGreeks();
+        $dte = 5.0;
+        if (! empty($args['expiry'])) {
+            $expDt = \DateTimeImmutable::createFromFormat('Y-m-d', (string) $args['expiry']);
+            if ($expDt) {
+                $dte = max(0.5, (float) (new \DateTimeImmutable())->diff($expDt)->format('%r%a'));
+            }
+        }
+
         $strikes = [];
         for ($i = -4; $i <= 4; $i++) {
             $s = $atm + ($i * $step);
-            $dist = abs($s - $price);
             $iv = $cand ? (float) $cand['iv_call'] : 0.38;
-            $callBid = max(0.05, round(($price > $s ? ($price - $s) : 0) + ($iv * sqrt(5 / 365) * $price * 0.4), 2));
-            $putBid  = max(0.05, round(($s > $price ? ($s - $price) : 0) + ($iv * sqrt(5 / 365) * $price * 0.4), 2));
+
+            $callGreeks = $bs->calculate($price, $s, $dte, $iv, 'call');
+            $putGreeks  = $bs->calculate($price, $s, $dte, $iv, 'put');
 
             $strikes[] = [
                 'strike'    => $s,
                 'call'      => [
-                    'bid'   => $callBid,
-                    'ask'   => round($callBid + 0.05, 2),
-                    'iv'    => $iv,
-                    'delta' => round(max(0.05, min(0.95, 0.50 + (($price - $s) / ($step * 10)))), 2),
+                    'bid'         => max(0.01, round($callGreeks['price'] * 0.98, 2)),
+                    'ask'         => max(0.02, round($callGreeks['price'] * 1.02, 2)),
+                    'iv'          => $iv,
+                    'delta'       => $callGreeks['delta'],
+                    'gamma'       => $callGreeks['gamma'],
+                    'theta_daily' => $callGreeks['theta_daily'],
+                    'vega_point'  => $callGreeks['vega_point'],
                 ],
                 'put'       => [
-                    'bid'   => $putBid,
-                    'ask'   => round($putBid + 0.05, 2),
-                    'iv'    => $iv,
-                    'delta' => round(-max(0.05, min(0.95, 0.50 + (($s - $price) / ($step * 10)))), 2),
+                    'bid'         => max(0.01, round($putGreeks['price'] * 0.98, 2)),
+                    'ask'         => max(0.02, round($putGreeks['price'] * 1.02, 2)),
+                    'iv'          => $iv,
+                    'delta'       => $putGreeks['delta'],
+                    'gamma'       => $putGreeks['gamma'],
+                    'theta_daily' => $putGreeks['theta_daily'],
+                    'vega_point'  => $putGreeks['vega_point'],
                 ],
             ];
         }
 
         return [
             'status'     => 'success',
-            'provenance' => $this->getProvenance('ProviderRouter / Synthetic Baseline', 15, false),
+            'provenance' => $this->getProvenance('BlackScholesGreeks Engine / MarketRouter', 0, true),
             'data'       => [
                 'ticker'      => $ticker,
                 'stock_price' => $price,

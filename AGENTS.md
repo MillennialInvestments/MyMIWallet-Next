@@ -71,3 +71,21 @@ This repository participates in Teddy's centralized Codex ⇄ AIOps workflow. Co
 - **Service worker:** `public/sw.js` must cache only `/assets/`. Caching signed-in pages or JSON served stale pages after deploys ("buttons do nothing").
 - **Money and legal records:** Secure Transfer's investigation record (`bf_secure_transfer_audit`) is add-only and hash-chained; never update or delete rows, and verify with `securetransfer:audit --verify`. SOL fee receipts (`bf_solana_fee_receipts`) are one per transaction signature; reuse only through the service's atomic reclaim, never by editing rows. Test fee flows on staging with devnet (`SOLANA_FEE_RPC`), never mainnet SOL.
 - **Operator style:** the owner runs server commands by hand from an iPad. Give one batched, copy-paste block per step, read-only checks first and mutating steps last behind explicit gates (`&&`, `FAIL 0` checks); write scratch output to `~`, not `/tmp`.
+
+## Trading Intelligence, MCP & Options Accounting Lessons (2026-11)
+
+- **Residual Runner Operating Rule:** An economically funded option campaign ($C_{\text{rec}} \ge D_0$) is **never reported as risk-free** in UI, analytics, or LLM responses. While the initial cash debit is recovered, remaining contracts carry opportunity cost and total loss of current market value if expiring worthless.
+- **Fail-Closed IDOR Protection:** Any endpoint returning private positions, campaigns, trades, or portfolio balances (`/API/Options/positions`, `/Investments/Trade-Tracker/getTradeData`, etc.) must resolve user identity strictly from the active session (`$this->cuID` or `auth()->id()`), never from client-supplied parameters. Unauthenticated requests must immediately fail closed (`401 Unauthorized` or empty array).
+- **Separation of Control Planes (MCPs):** Customer-facing and analytical research MCPs (e.g., `trading_mcp_server.py`) must operate with `SOURCE_MUTATION=false`, strictly read-only tools, and zero shell or mutation access. Administrative tools (`privacy:purge`, `aiops_bridge`) belong exclusively to internal operator control planes (`mymi_aiops_mcp.py`).
+- **Data Provenance Metadata Contract:** Every financial MCP response must return explicit provenance: `provider`, `timestamp_utc`, `data_delay_sec`, `is_realtime`, `read_only=true`, and `mutation_allowed=false`.
+- **Sub-Second CI4 Framework Bootstrapping in CLI:** In Python-to-PHP MCP bridges or CLI scripts, requiring `tests/_support/bootstrap.php` boots CodeIgniter 4 in < 0.2 seconds without web server dependencies or constant collision warnings.
+- **Broker Import Symbology & Amount Disambiguation:** In brokerage CSV exports (e.g. Schwab), `Amount` represents net cash flow, not share or contract quantity. Always resolve `Quantity` for share/contract sizing, and use `OCCSymbolParser` for 21-char OCC symbology (`IREN  261120C00015000`) and human formats.
+- **Transaction Signature Hashing:** Non-deduplicating execution hashing must incorporate `order_id` and timestamp alongside ticker/action so repeated fills at the same price are preserved as valid distinct fills.
+- **12-Metric Options Campaign Accounting:** Decouple cash recovered ($C_{\text{rec}}$) from open liquidation value ($V_{\text{liq}}$). Recovery percentage evaluates against initial debit outlay ($D_0$), while fee-adjusted net P&L incorporates fees and mark-to-market liquidation value.
+- **Silent UI Clamping Audits:** Audit frontend JS for artificial clamps like `Math.max(0, ...)` that erase negative returns, which distort tax, risk, and P&L records.
+- **Zero Payload Debug Logging:** Never dump raw financial payloads into `log_message('debug', print_r($trades, true))`. Log only row counts or sanitized IDs.
+- **Role Guidelines for AI Workforce:**
+  - *Claude:* Architectural reviews, options contract parsing, and metadata contract compliance.
+  - *ChatGPT:* Data modeling, 12-metric accounting math, and user journey clarity.
+  - *Grok:* Red-team challenges, negative return boundaries, and fill deduplication invariants.
+  - *Gemini / Antigravity:* Full-stack CI4 implementation, DataTables re-init guards, and deterministic PHPUnit suites.

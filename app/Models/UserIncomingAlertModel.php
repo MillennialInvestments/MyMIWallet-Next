@@ -48,8 +48,7 @@ class UserIncomingAlertModel extends Model
         }
 
         return $builder->orderBy('id', 'DESC')
-            ->limit(max(1, min(200, $limit)))
-            ->findAll();
+            ->limit(max(1, min(200, $limit)))->findAll();
     }
 
     /**
@@ -65,7 +64,7 @@ class UserIncomingAlertModel extends Model
             ->where('user_id', $userId)
             ->where('status !=', 'archived')
             ->orderBy('id', 'DESC')
-            ->findAll();
+            ->limit(500)->findAll();
 
         if (count($allIds) > $keep) {
             $idsToArchive = array_column(array_slice($allIds, $keep), 'id');

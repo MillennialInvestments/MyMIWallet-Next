@@ -125,7 +125,7 @@ class ProjectsModel extends Model
         return $this->db->table('bf_projects_fund_holders')
             ->where('project_id', $projectId)
             ->orderBy('units_owned', 'DESC')
-            ->get()->getResultArray();
+            ->limit(500)->get()->getResultArray();
     }
 
     public function getFundHolderByUser(int $projectId, int $userId): ?array
@@ -169,8 +169,7 @@ class ProjectsModel extends Model
         return $this->db->table('bf_projects_fund_nav_history')
             ->where('project_id', $projectId)
             ->orderBy('created_at', 'DESC')
-            ->limit($limit)
-            ->get()->getResultArray();
+            ->limit($limit)->get()->getResultArray();
     }
 
     public function recordNAVSnapshot(array $data): int
@@ -194,8 +193,7 @@ class ProjectsModel extends Model
         return $this->db->table('bf_projects_fund_transactions')
             ->where('project_id', $projectId)
             ->orderBy('created_at', 'DESC')
-            ->limit($limit)
-            ->get()->getResultArray();
+            ->limit($limit)->get()->getResultArray();
     }
 
     public function createDistribution(array $data): int
@@ -212,7 +210,7 @@ class ProjectsModel extends Model
         return $this->db->table('bf_projects_fund_distributions')
             ->where('project_id', $projectId)
             ->orderBy('created_at', 'DESC')
-            ->get()->getResultArray();
+            ->limit(100)->get()->getResultArray();
     }
 
     public function getProjectFundSummary(int $projectId): array
@@ -324,8 +322,7 @@ class ProjectsModel extends Model
         return $this->db->table('bf_projects_fund_capital_flows')
             ->where('project_id', $projectId)
             ->orderBy('created_at', 'DESC')
-            ->limit($limit)
-            ->get()->getResultArray();
+            ->limit($limit)->get()->getResultArray();
     }
 
     public function logFundAuditEvent(int $projectId, ?int $actorUserId, string $actionType, array $context = []): int
@@ -346,8 +343,7 @@ class ProjectsModel extends Model
         return $this->db->table('bf_projects_fund_audit_logs')
             ->where('project_id', $projectId)
             ->orderBy('created_at', 'DESC')
-            ->limit($limit)
-            ->get()->getResultArray();
+            ->limit($limit)->get()->getResultArray();
     }
 
     public function getExchangeAssetById(int $assetId): ?array
