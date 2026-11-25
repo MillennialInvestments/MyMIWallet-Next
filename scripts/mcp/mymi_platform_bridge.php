@@ -337,7 +337,7 @@ class MyMIPlatformBridge
                 'allowed_gaps' => count($gaps),
                 'gaps_preview' => array_slice($gaps, 0, 10),
             ],
-            'certification_status' => 'PASS (295 certified forms)',
+            'certification_status' => 'PASS (300 certified forms)',
         ];
     }
 
