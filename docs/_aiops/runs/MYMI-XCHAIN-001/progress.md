@@ -79,7 +79,7 @@
 | W4 | MyMI Gold In-App Credit | `feature/mymi-xchain-001-w4-gold-in-app-credit` | [#781](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/781) | 6 tests / 44 assertions / smoke PASS | PASS | Closed-loop ledger bf_gold_ledger, pricing discount, cap, fulfillers |
 | W2 | BTC Address Pool | `feature/mymi-xchain-001-w2-btc-address-pool` | [#782](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/782) | 28 CryptoPay tests / 143 assertions | PASS | Pre-generated address pool bf_btc_address_pool, import command, address matcher |
 | W3 | EVM One-Click Pay | `feature/mymi-xchain-001-w3-evm-one-click` | [#783](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/783) | 31 CryptoPay (149 assertions) / Node test 3 PASS | PASS | Call-data encoding, chainId pre-verification, zero external npm deps |
-| W5 | Non-Custodial Swaps | `feature/mymi-xchain-001-w5-non-custodial-swaps` | | | PENDING | |
+| W5 | Non-Custodial Swaps | `feature/mymi-xchain-001-w5-non-custodial-swaps` | [#784](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/784) | 5 tests / 28 assertions / form smoke 321 PASS | PASS | Jupiter (Solana) & 0x (EVM), sanctions screening, SWAPS_EXECUTE=false quote-only mode |
 | W6 | MyMI Exchange (Paper) | `feature/mymi-xchain-001-w6-exchange-paper` | | | PENDING | |
 | W7 | MyMI Coin on MDIT | `feature/mymi-xchain-001-w7-mymicoin-mdit` | | | PENDING | |
 | W9 | Staging Integration | `integration/mymi-xchain-001` | | | PENDING | |
