@@ -1,0 +1,41 @@
+name: crypto-live-probe
+
+# Read-only probe of every crypto checkout chain against its public test and
+# main networks: block heights, address history, prices and network checks.
+# Never signs or sends anything. Runs daily and on demand.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 11 * * *'
+  push:
+    branches: ['claude/project-thread-whu2g4']
+    paths:
+      - 'app/Libraries/CryptoPay/**'
+      - 'tests/live/**'
+      - '.github/workflows/crypto-live-probe.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: PHP Setup
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Bootstrap CI .env
+        run: cp env/.env.ci.example .env
+
+      - name: Live probe
+        env:
+          CRYPTO_LIVE: '1'
+        run: vendor/bin/phpunit --no-coverage --display-skipped tests/live/CryptoPayLiveTest.php
