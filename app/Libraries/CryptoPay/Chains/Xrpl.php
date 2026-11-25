@@ -172,7 +172,8 @@ final class Xrpl implements ChainAdapter
 
     private function callAt(string $url, string $method, array $params): ?array
     {
-        $json = $this->http->postJson($url, ['method' => $method, 'params' => [$params]]);
+        // rippled wants an object here: an empty PHP array would encode as [] and be refused.
+        $json = $this->http->postJson($url, ['method' => $method, 'params' => [$params === [] ? new \stdClass() : $params]]);
         $result = $json['result'] ?? null;
         return is_array($result) && ($result['status'] ?? '') === 'success' ? $result : null;
     }

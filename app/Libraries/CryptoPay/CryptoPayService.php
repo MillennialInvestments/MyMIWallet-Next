@@ -279,7 +279,8 @@ final class CryptoPayService
         if ($waiting !== null) {
             return ['ok' => true, 'status' => 'pending', 'seen' => true, 'message' => sprintf('Payment seen; waiting for confirmations (%d of %d).', $waiting, $required)];
         }
-        if ($complete && (int) $row['expires_at'] < $this->now() - 120) {
+        // Kept open through the late-payment grace, so a payment in that window is still delivered.
+        if ($complete && (int) $row['expires_at'] + (self::LATE_GRACE[$row['chain']] ?? 0) < $this->now() - 120) {
             $this->db->table(self::TABLE)->where('reference', $reference)->where('status', 'pending')
                 ->update(['status' => 'expired', 'match_key' => null, 'updated_at' => $this->now()]);
             return ['ok' => false, 'status' => 'expired', 'error' => 'checkout_expired'];

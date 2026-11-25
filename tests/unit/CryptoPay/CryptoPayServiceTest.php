@@ -116,7 +116,7 @@ final class CryptoPayServiceTest extends CIUnitTestCase
     private function xrpl(array $b): ?array
     {
         return match ($b['method']) {
-            'server_info' => ['result' => ['status' => 'success', 'info' => ['network_id' => $this->xrplNetworkId, 'validated_ledger' => ['seq' => 9000]]]],
+            'server_info' => ! is_object($b['params'][0] ?? null) ? null : ['result' => ['status' => 'success', 'info' => ['network_id' => $this->xrplNetworkId, 'validated_ledger' => ['seq' => 9000]]]],
             'ledger' => ['result' => ['status' => 'success', 'ledger_index' => 9000]],
             'account_tx' => ['result' => ['status' => 'success', 'ledger_index_max' => 9100, 'transactions' => array_values(array_filter($this->xrplTxs,
                 static fn (array $t): bool => $t['ledger_index'] >= $b['params'][0]['ledger_index_min']))]],
