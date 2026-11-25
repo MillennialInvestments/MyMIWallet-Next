@@ -102,101 +102,77 @@
             </li>
         </ul>
         <div class="tab-content">
-            <!-- TAB 1: POSITIONS -->
+            <!-- TAB 1: POSITIONS & CAMPAIGNS -->
             <div class="tab-pane active" id="tab-positions">
                 <div class="card-inner">
                     <div class="card-title-group mb-3">
                         <div class="card-title">
-                            <h6 class="title">Active Two-Sided Positions</h6>
-                            <p class="text-soft">Real-time dual-leg tracking with peak profit trailing stops and theta decay monitors.</p>
+                            <h6 class="title">Active Two-Sided Options Campaigns</h6>
+                            <p class="text-soft">Real-time dual-leg tracking with 12-metric campaign accounting, cash-recovery progress, and residual runner status.</p>
                         </div>
-                        <div class="card-tools">
-                            <a href="#" class="btn btn-primary btn-sm"><em class="icon ni ni-plus"></em><span>Simulate Straddle</span></a>
+                    </div>
+                    <div class="alert alert-pro alert-warning mb-3">
+                        <div class="alert-text">
+                            <h6><em class="icon ni ni-shield-alert"></em> Residual Runner Operating Rule</h6>
+                            <p class="fs-12px mb-0">When an options campaign's original debit is fully recovered ($C_{\text{rec}} \ge D_0$), open residual contracts are economically funded but <strong>strictly not risk-free</strong>. Remaining contracts carry opportunity cost and total loss of current market value if expiring worthless.</p>
                         </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-tranx">
                             <thead>
                                 <tr class="tb-tnx-head">
-                                    <th class="tb-tnx-id"><span class="">Position ID</span></th>
-                                    <th class="tb-tnx-info">
-                                        <span class="tb-tnx-desc d-none d-sm-inline-block">
-                                            <span>Underlier</span>
-                                        </span>
-                                        <span class="tb-tnx-date d-md-inline-block d-none">
-                                            <span class="d-md-none">Date</span>
-                                            <span class="d-none d-md-block"><span>Strikes (Call / Put)</span></span>
-                                        </span>
-                                    </th>
-                                    <th class="tb-tnx-amt tb-tnx-req">
-                                        <span class="tb-tnx-total">Target Balance</span>
-                                        <span class="tb-tnx-status d-none d-md-inline-block">Outlay</span>
-                                    </th>
-                                    <th class="tb-tnx-amt tb-tnx-req">
-                                        <span class="tb-tnx-total">Combined Bid</span>
-                                        <span class="tb-tnx-status d-none d-md-inline-block">Target Exit</span>
-                                    </th>
-                                    <th class="tb-tnx-amt is-alt">
-                                        <span class="tb-tnx-total">Unrealized P&L</span>
-                                        <span class="tb-tnx-status d-none d-md-inline-block">High-Water Mark</span>
-                                    </th>
-                                    <th class="tb-tnx-status">
-                                        <h2>Status</h2>
-                                    </th>
-                                    <th class="tb-tnx-action">
-                                        <span>&nbsp;</span>
-                                    </th>
+                                    <th class="tb-tnx-id"><span>Campaign / Ticker</span></th>
+                                    <th><span>Strategy</span></th>
+                                    <th><span>Original Debit</span></th>
+                                    <th><span>Cash Recovered</span></th>
+                                    <th><span>Recovery %</span></th>
+                                    <th><span>Unrecovered Net Cost</span></th>
+                                    <th><span>Open Legs</span></th>
+                                    <th><span>Liquidation Value</span></th>
+                                    <th><span>Net P&amp;L</span></th>
+                                    <th><span>Runner Status</span></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="tb-tnx-item">
-                                    <td class="tb-tnx-id"><a href="#"><span>#2</span></a></td>
-                                    <td class="tb-tnx-info">
-                                        <div class="tb-tnx-desc">
-                                            <span class="title">NVDA (Straddle)</span>
-                                        </div>
-                                        <div class="tb-tnx-date">
-                                            <span class="date">Call: $145.00 / Put: $140.00</span>
-                                        </div>
-                                    </td>
-                                    <td class="tb-tnx-amount is-alt">
-                                        <div class="tb-tnx-total">
-                                            <span class="amount">$100 C / $100 P</span>
-                                        </div>
-                                        <div class="tb-tnx-status">
-                                            <span class="amount text-soft">$190.00</span>
-                                        </div>
-                                    </td>
-                                    <td class="tb-tnx-amount is-alt">
-                                        <div class="tb-tnx-total">
-                                            <span class="amount">$2.45</span>
-                                        </div>
-                                        <div class="tb-tnx-status">
-                                            <span class="amount text-primary">$3.90</span>
-                                        </div>
-                                    </td>
-                                    <td class="tb-tnx-amount is-alt">
-                                        <div class="tb-tnx-total">
-                                            <span class="amount text-success">+$55.00</span>
-                                        </div>
-                                        <div class="sub-text text-soft">Peak: +$75.00</div>
-                                    </td>
-                                    <td class="tb-tnx-status">
-                                        <span class="badge bg-success">ACTIVE HOLD</span>
-                                    </td>
-                                    <td class="tb-tnx-action">
-                                        <div class="dropdown">
-                                            <a class="text-soft dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
-                                                <ul class="link-list-plain">
-                                                    <li><a href="#">Take Profit</a></li>
-                                                    <li><a href="#">Harvest Leg</a></li>
-                                                    <li><a href="#">Tighten Stop</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <?php if (! empty($campaigns)): ?>
+                                    <?php foreach ($campaigns as $camp): ?>
+                                        <tr class="tb-tnx-item">
+                                            <td class="tb-tnx-id">
+                                                <strong><?= esc($camp['ticker']) ?></strong>
+                                            </td>
+                                            <td><?= esc(ucwords(str_replace('_', ' ', (string) ($camp['strategy'] ?? 'Strangle')))) ?></td>
+                                            <td>$<?= number_format((float) ($camp['total_original_premium_debit'] ?? 0), 2) ?></td>
+                                            <td class="text-success">+$<?= number_format((float) ($camp['cash_recovered'] ?? 0), 2) ?></td>
+                                            <td>
+                                                <div class="progress progress-sm">
+                                                    <div class="progress-bar bg-success" style="width: <?= min(100, max(0, (float) ($camp['premium_recovery_percentage'] ?? 0))) ?>%"></div>
+                                                </div>
+                                                <span class="fs-11px text-soft"><?= number_format((float) ($camp['premium_recovery_percentage'] ?? 0), 1) ?>%</span>
+                                            </td>
+                                            <td>$<?= number_format((float) ($camp['remaining_unrecovered_net_cost'] ?? 0), 2) ?></td>
+                                            <td><?= (int) ($camp['open_contract_quantities']['total'] ?? 0) ?> (<span class="text-primary"><?= (int) ($camp['open_contract_quantities']['calls'] ?? 0) ?>C</span> / <span class="text-danger"><?= (int) ($camp['open_contract_quantities']['puts'] ?? 0) ?>P</span>)</td>
+                                            <td>$<?= number_format((float) ($camp['current_executable_liquidation_value'] ?? 0), 2) ?></td>
+                                            <td class="<?= ((float) ($camp['fee_adjusted_campaign_pnl'] ?? 0)) >= 0 ? 'text-success' : 'text-danger' ?>">
+                                                <?= ((float) ($camp['fee_adjusted_campaign_pnl'] ?? 0)) >= 0 ? '+' : '' ?>$<?= number_format((float) ($camp['fee_adjusted_campaign_pnl'] ?? 0), 2) ?>
+                                            </td>
+                                            <td>
+                                                <?php if (! empty($camp['residual_runner_accounting']['has_residual_runner'])): ?>
+                                                    <span class="badge bg-warning"><em class="icon ni ni-bolt"></em> RUNNER ACTIVE (DEBIT FUNDED)</span>
+                                                <?php elseif ((float) ($camp['remaining_unrecovered_net_cost'] ?? 0) <= 0 && ((int) ($camp['open_contract_quantities']['total'] ?? 0)) === 0): ?>
+                                                    <span class="badge bg-success">CLOSED (PROFIT)</span>
+                                                <?php else: ?>
+                                                    <span class="badge bg-info">CAPITAL AT RISK</span>
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="10" class="text-center py-4 text-soft">
+                                            <em>No active options campaigns for this user. Simulate or enter a two-sided trade below to begin tracking recovery.</em>
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
@@ -208,14 +184,8 @@
                 <div class="card-inner">
                     <div class="card-title-group mb-3">
                         <div class="card-title">
-                            <h6 class="title">Liquid Weekly Opportunities (Ranked by Profit Reachability)</h6>
-                            <p class="text-soft">Evaluates 14D ATR, 5D historical range, RVOL, and price displacement efficiency against the $200 profit threshold.</p>
-                        </div>
-                    </div>
-                    <div class="alert alert-pro alert-primary">
-                        <div class="alert-text">
-                            <h6>Volume-per-Dollar & Price Efficiency Insight</h6>
-                            <p>Opportunities are filtered by <strong>Price Displacement Efficiency</strong> ($|\Delta P| / (\text{Volume} / 1\text{M})$) and <strong>Turnover Efficiency</strong> ($\% \Delta P / (\text{Turnover} / \$1\text{M})$) to ensure volume accelerates price movement rather than absorbing it.</p>
+                            <h6 class="title">Liquid Weekly Opportunities (5-Part Research Ranking)</h6>
+                            <p class="text-soft">Composite 100-pt evaluation: Technical Setup (25) + Catalyst (20) + Liquidity (20) + Risk/Reward (25) + Capital (10). Fails closed to <strong>NO TRADE</strong> below 70.0.</p>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -224,57 +194,72 @@
                                 <tr>
                                     <th>Ticker</th>
                                     <th>Stock Price</th>
-                                    <th>Call Strike</th>
-                                    <th>Put Strike</th>
-                                    <th>Target Balance</th>
-                                    <th>14D ATR</th>
-                                    <th>5D Range</th>
+                                    <th>Strikes (Call / Put)</th>
                                     <th>RVOL</th>
-                                    <th>Reachability</th>
-                                    <th>Rank Score</th>
+                                    <th>Tech / Cat / Liq / R:R / Cap</th>
+                                    <th>Total Score</th>
+                                    <th>Status</th>
                                     <th>Recommendation</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><strong>SPY</strong></td>
-                                    <td>$580.05</td>
-                                    <td>$580</td>
-                                    <td>$580</td>
-                                    <td>$100C / $100P</td>
-                                    <td>$24.80</td>
-                                    <td>$78.48</td>
-                                    <td>1.65x</td>
-                                    <td><span class="badge bg-success">95.0%</span></td>
-                                    <td><strong>74.2</strong></td>
-                                    <td><span class="badge badge-dim bg-success">Top Candidate</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>NVDA</strong></td>
-                                    <td>$142.50</td>
-                                    <td>$143</td>
-                                    <td>$143</td>
-                                    <td>$100C / $100P</td>
-                                    <td>$6.09</td>
-                                    <td>$19.28</td>
-                                    <td>1.58x</td>
-                                    <td><span class="badge bg-success">95.0%</span></td>
-                                    <td><strong>72.5</strong></td>
-                                    <td><span class="badge badge-dim bg-success">Top Candidate</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>COIN</strong></td>
-                                    <td>$215.00</td>
-                                    <td>$215</td>
-                                    <td>$215</td>
-                                    <td>$100C / $100P</td>
-                                    <td>$9.19</td>
-                                    <td>$29.09</td>
-                                    <td>1.52x</td>
-                                    <td><span class="badge bg-success">95.0%</span></td>
-                                    <td><strong>71.8</strong></td>
-                                    <td><span class="badge badge-dim bg-success">Top Candidate</span></td>
-                                </tr>
+                                <?php if (! empty($topOpportunities)): ?>
+                                    <?php foreach ($topOpportunities as $opp): ?>
+                                        <tr>
+                                            <td><strong><?= esc($opp['ticker']) ?></strong></td>
+                                            <td>$<?= number_format((float) ($opp['stock_price'] ?? 0), 2) ?></td>
+                                            <td>$<?= number_format((float) ($opp['call_strike'] ?? 0), 2) ?> / $<?= number_format((float) ($opp['put_strike'] ?? 0), 2) ?></td>
+                                            <td><?= number_format((float) ($opp['rvol_20d'] ?? 1.0), 2) ?>x</td>
+                                            <td>
+                                                <span class="fs-12px text-soft">
+                                                    <?= number_format((float) ($opp['ranking_breakdown']['technical_setup'] ?? 0), 0) ?> /
+                                                    <?= number_format((float) ($opp['ranking_breakdown']['catalyst_quality'] ?? 0), 0) ?> /
+                                                    <?= number_format((float) ($opp['ranking_breakdown']['execution_liquidity'] ?? 0), 0) ?> /
+                                                    <?= number_format((float) ($opp['ranking_breakdown']['risk_reward'] ?? 0), 0) ?> /
+                                                    <?= number_format((float) ($opp['ranking_breakdown']['capital_suitability'] ?? 0), 0) ?>
+                                                </span>
+                                            </td>
+                                            <td><strong><?= number_format((float) ($opp['ranking_score'] ?? 0), 1) ?></strong></td>
+                                            <td>
+                                                <?php if (($opp['scan_status'] ?? 'rejected') === 'qualified'): ?>
+                                                    <span class="badge bg-success">QUALIFIED</span>
+                                                <?php else: ?>
+                                                    <span class="badge bg-danger" title="<?= esc((string) ($opp['rejection_reason'] ?? 'Exclusion')) ?>">
+                                                        <?= esc((string) ($opp['exclusion_code'] ?? 'REJECTED')) ?>
+                                                    </span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <?php if (($opp['recommendation'] ?? '') === 'TRADE'): ?>
+                                                    <span class="badge badge-dim bg-success">TRADE</span>
+                                                <?php else: ?>
+                                                    <span class="badge badge-dim bg-secondary">NO TRADE</span>
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td><strong>SPY</strong></td>
+                                        <td>$580.05</td>
+                                        <td>$580.00 / $580.00</td>
+                                        <td>1.65x</td>
+                                        <td><span class="fs-12px text-soft">18 / 15 / 16 / 18 / 7</span></td>
+                                        <td><strong>74.2</strong></td>
+                                        <td><span class="badge bg-success">QUALIFIED</span></td>
+                                        <td><span class="badge badge-dim bg-success">TRADE</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>NVDA</strong></td>
+                                        <td>$142.50</td>
+                                        <td>$145.00 / $140.00</td>
+                                        <td>1.58x</td>
+                                        <td><span class="fs-12px text-soft">17 / 14 / 15 / 19 / 7</span></td>
+                                        <td><strong>72.5</strong></td>
+                                        <td><span class="badge bg-success">QUALIFIED</span></td>
+                                        <td><span class="badge badge-dim bg-success">TRADE</span></td>
+                                    </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>

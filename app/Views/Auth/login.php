@@ -129,7 +129,7 @@
 							<a href="<?= site_url('Support/Account') ?>" class="text-secondary text-decoration-none">Account Support</a>
 							<span>•</span>
 							<a class="text-secondary text-decoration-none" data-bs-toggle="collapse" href="#resend-activation" role="button" aria-expanded="<?= $showResendActivation ? 'true' : 'false' ?>" aria-controls="resend-activation">
-								Resend Email
+								Resend activation email
 							</a>
 						</div>
 					</div>

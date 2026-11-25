@@ -36,10 +36,10 @@ async function fetchAllBudgetData() {
     ]);
 
     const payload = {
-      budgetData,
-      creditData,
-      availableData,
-      repaymentSummary
+      budgetData: Array.isArray(budgetData) ? budgetData : (budgetData?.records || []),
+      creditData: Array.isArray(creditData) ? creditData : (creditData?.currentBalances || []),
+      availableData: Array.isArray(availableData) ? availableData : (availableData?.availableBalances || []),
+      repaymentSummary: Array.isArray(repaymentSummary) ? repaymentSummary : (repaymentSummary?.repaymentSummary || [])
     };
 
     window.budgetDashboardData = payload;

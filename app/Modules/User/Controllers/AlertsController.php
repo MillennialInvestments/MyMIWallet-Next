@@ -400,6 +400,10 @@ class AlertsController extends BaseUserController
 
     public function trades()
     {
+        if ($guard = premium_guard('alerts.trade_alerts')) {
+            return $guard;
+        }
+
         $userId = (int) ($this->cuID ?? session('cuID') ?? session('user_id') ?? 0);
         if ($userId <= 0) {
             if ($resp = $this->requireUserOrJson()) {
@@ -452,6 +456,10 @@ class AlertsController extends BaseUserController
         $alert = $this->alertsModel->getAlertById($alertID);
         if (!$alert || ($alert['send_alert'] ?? 0) != 1) {
             return redirect()->to('/Alerts')->with('error', 'Alert not found or not sent.');
+        }
+
+        if ($guard = premium_guard('alerts.trade_alerts')) {
+            return $guard;
         }
 
         $this->data['pageTitle'] = "Trade Alert Details | {$alert['ticker']}";

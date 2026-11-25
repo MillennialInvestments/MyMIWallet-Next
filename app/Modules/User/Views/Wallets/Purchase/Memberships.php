@@ -44,7 +44,7 @@ $isStagingContext = str_contains($host, 'staging') || str_contains($host, 'local
                 <!-- Header -->
                 <div class="nk-block-head text-center mb-4">
                     <span class="badge bg-primary-dim text-primary px-3 py-1 mb-2">TIERED FINANCIAL INTELLIGENCE</span>
-                    <h2 class="nk-block-title page-title">MyMI Wallet Membership Plans</h2>
+                    <h2 class="nk-block-title page-title">MyMI Membership Bundles</h2>
                     <div class="nk-block-des text-soft mx-auto" style="max-width: 680px;">
                         <p class="lead">Unlock institutional-grade budgeting, real-time alert webhooks, AI Copilot analytics, and multi-asset wealth management designed for your financial trajectory.</p>
                     </div>
@@ -292,7 +292,7 @@ $isStagingContext = str_contains($host, 'staging') || str_contains($host, 'local
                                         </thead>
                                         <tbody>
                                             <?php if ($getFeatures === []) : ?>
-                                            <tr><td colspan="5" class="text-muted">Membership feature comparisons are currently loading.</td></tr>
+                                            <tr><td colspan="5" class="text-muted">Membership feature comparisons are currently unavailable.</td></tr>
                                             <?php endif; ?>
                                             <?php foreach ($getFeatures as $features) : ?>
                                             <tr>
@@ -334,6 +334,54 @@ $isStagingContext = str_contains($host, 'staging') || str_contains($host, 'local
                                             </tr>
                                         </tfoot>
                                     </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features Breakdown Detail Cards -->
+                <div class="row g-gs d-none d-md-block mb-5" id="features-breakdown">
+                    <div class="col-12">
+                        <div class="card card-bordered">
+                            <div class="card-inner">
+                                <div class="nk-block-head">
+                                    <div class="nk-block-between g-3">
+                                        <div class="nk-block-head-content">
+                                            <h4 class="nk-block-title">Features Breakdown</h4>
+                                        </div>
+                                    </div>
+                                    <div class="nk-block-des text-soft">
+                                        <p>Learn more about what each feature offers to enhance your financial management experience.</p>
+                                    </div>
+                                </div>
+                                <div class="card-inner pt-3">
+                                    <div class="row g-gs">
+                                        <?php if ($getFeatures === []) : ?>
+                                        <p>Membership feature details are currently unavailable.</p>
+                                        <?php endif; ?>
+                                        <?php foreach ($getFeatures as $features) : ?>
+                                        <?php
+                                            $featurePrice = $features['feature_cost'] ?? '0.00';
+                                            if ($featurePrice === '0.00') {
+                                                $formattedPrice = '<strong>FREE</strong>';
+                                            } elseif ($featurePrice === 'QUOTE') {
+                                                $formattedPrice = '<a href="#">Request Quote</a>';
+                                            } else {
+                                                $formattedPrice = '$' . number_format((float)$featurePrice, 2);
+                                            }
+                                        ?>
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="card card-bordered h-100">
+                                                <div class="card-inner">
+                                                    <h5 class="card-title"><?= esc($features['feature_name'] ?? '') ?></h5>
+                                                    <h6 class="card-subtitle mb-2 text-muted"><?= $formattedPrice ?></h6>
+                                                    <p class="card-text text-soft small"><?= esc($features['feature_description'] ?? '') ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php endforeach; ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>

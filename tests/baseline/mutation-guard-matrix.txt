@@ -7,6 +7,7 @@
 # MutationRouteGuardMatrixTest until it is guarded or classified here.
 
 # Webhooks and machine callers (signature, shared secret or API key)
+POST API/Alerts/webhook/([^/]+) # webhook: AlertWebhookService validates user token segment; no session
 POST API/Discord/interactions # Discord; Ed25519 request signature (verifySignature); no session
 POST API/Email/trackBounceWebhook # Postmark; X-Webhook-Token = ESP_WEBHOOK_SECRET; no session
 POST API/eSports/receiveResultWebhook # provider; feature flag + webhook signature verify; no session
