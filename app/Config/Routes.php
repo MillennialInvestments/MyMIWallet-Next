@@ -308,7 +308,7 @@ $routes->post('newsletter/subscribe', '\App\Controllers\NewsletterController::su
 $routes->post('Blog/Email/Subscription/Account-Manager', '\App\Controllers\NewsletterController::subscribe');
 $routes->get('/Investments/News', static fn() => redirect()->to(site_url('News'), 301));
 $routes->get('/Profile', '\App\Modules\User\Controllers\DashboardController::profile', ['filter' => 'login']);
-$routes->get('/Purchase/MyMIGold', static fn() => redirect()->to(site_url('Wallets/Purchase/MyMI-Gold'), 301));
+$routes->get('/Purchase/MyMIGold', static fn() => redirect()->to(site_url('Wallets/Purchase/MyMI-Gold'), 301), ['filter' => ['login', 'feature:mymigold_purchases']]);
 $routes->post('auth/resend-activation', 'AuthController::resendActivationCode', ['as' => 'auth/resend-activation-legacy']);
 $routes->get('/How-It-Works/Purchase/MyMIGold', static fn() => redirect()->to(site_url('How-It-Works/Purchase-MyMI-Gold'), 301));
 $routes->get('/How-It-Works', '\\App\\Modules\\Blog\\Controllers\\HowItWorksController::index');
@@ -2268,7 +2268,7 @@ $routes->group('Wallets', ['namespace' => '\App\Modules\User\Controllers', 'filt
     $routes->match(['GET', 'POST'], 'Purchase/(:segment)/Complete', 'WalletsController::purchaseComplete');
     $routes->match(['GET', 'POST'], 'Purchase/Complete/(:segment)', 'WalletsController::purchaseComplete/$1');
     $routes->match(['GET', 'POST'], 'Purchase/Complete/(:segment)/(:segment)', 'WalletsController::purchaseComplete/$1/$2');
-    $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold', 'WalletsController::purchaseMyMIGold');
+    $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold', 'WalletsController::purchaseMyMIGold', ['filter' => ['login', 'noStore', 'feature:mymigold_purchases']]);
     // $routes->match(['GET', 'POST'], 'Purchase/Complete/MyMI-Gold', 'WalletsController::purchaseMyMIGold');
     // $routes->match(['GET', 'POST'], 'Purchase/Complete/MyMI-Gold/(:segment)', 'WalletsController::purchaseMyMIGold');
     // $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold/Complete/(:segment)', 'WalletsController::purchaseComplete/$1');

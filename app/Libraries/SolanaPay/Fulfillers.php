@@ -79,6 +79,18 @@ final class Fulfillers
             return ['ok' => false, 'reason' => 'gold_ledger_insert_failed'];
         }
 
+        try {
+            (new \App\Services\Gold\GoldLedgerService())->credit(
+                $userId,
+                $coins,
+                'purchase',
+                (string) ($row['provider'] ?? 'solana'),
+                (string) $row['reference']
+            );
+        } catch (\Throwable $e) {
+            log_message('notice', 'GoldLedgerService credit logged: {m}', ['m' => $e->getMessage()]);
+        }
+
         return ['ok' => true, 'reason' => 'fulfilled', 'message' => 'Payment confirmed. ' . $coins . ' MyMI Gold added.'];
     }
 
