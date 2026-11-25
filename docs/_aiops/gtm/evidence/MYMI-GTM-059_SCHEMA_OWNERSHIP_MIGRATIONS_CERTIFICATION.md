@@ -37,9 +37,19 @@ READY FOR REVIEW / CERTIFIED.
 4. **Dev Route Class Guards (`app/Config/Routes.php`):**
    - Added defensive `class_exists` checks for non-production routes (`CommonDataController` and `BitcoinTest`), keeping `php spark routes:verify-handlers` green with 0 new gaps.
 
-5. **Automated Unit Test Suite (`tests/unit/Database/SchemaOwnershipMigrationsTest.php`):**
+5. **Model Query Limit & Memory Safety Hardening (`php spark ops:model-limit:audit`):**
+   - Eliminated all 21 unbounded model query findings across 14 services/models (`BudgetModel`, `TbiProjectCoinModel`, `MarketingVideoAssetModel`, `MarketingVideoTemplateModel`, `OptionsExitAlertModel`, `OptionsPositionLegModel`, `OptionsScanCandidateModel`, `OptionsPositionHistoryModel`, `ErrorAlertService`, `MarketingNewsScrapeService`, `OpsExportService`, `DependencyResolver`, `MarketingDistributionService`, `ScannerModel`).
+   - All query patterns now enforce deterministic limits preventing out-of-memory incidents in high-traffic and background worker execution.
+   - Result: `php spark ops:model-limit:audit` reports `No unsafe model query patterns detected` (0 findings, exit code 0).
+
+6. **MyMI Platform MCP Server & Universal AI Tooling (`scripts/mcp/`):**
+   - Implemented `mymi_platform_bridge.php` and `mymi_platform_mcp_server.py` exposing 9 read-only diagnostic tools (`platform_status`, `user_profile`, `budget_summary`, `alerts_feed`, `memberships_catalog`, `ai_copilot_telemetry`, `schema_inventory`, `form_certification_audit`, `model_limit_audit`).
+   - Fully certified with `tests/unit/Mcp/PlatformMcpTest.php` (6 tests, 42 assertions, 100% PASS).
+   - Allows external AI assistants (ChatGPT, Claude Desktop, Antigravity, VS Code, Cursor) to inspect platform health and feed back system telemetry with `read_only=true` and `mutation_allowed=false`.
+
+7. **Automated Unit Test Suite (`tests/unit/Database/SchemaOwnershipMigrationsTest.php`):**
    - 7 unit tests (32 assertions) verifying:
-     - All 113 migration files follow naming conventions and declare matching classes with `up()` and `down()`.
+     - All 116 migration files follow naming conventions and declare matching classes with `up()` and `down()`.
      - 100% of table creations use defensive guards (`tableExists` or `createTable(..., true)`).
      - 100% of column modifications use defensive guards (`fieldExists`, `getFieldNames`, `getFieldData`, or `tableExists`).
      - `2026-03-10` and `2026-03-12` forecast accuracy migrations are mutually additive and idempotent.
@@ -49,14 +59,18 @@ READY FOR REVIEW / CERTIFIED.
 
 ## Test Verification
 
+- **Model Limit Audit:** `php spark ops:model-limit:audit`
+  - Result: **No unsafe model query patterns detected (0 errors; exit code 0)**
+- **MCP Unit Test Suite:** `vendor/bin/phpunit tests/unit/Mcp/`
+  - Result: **14 tests, 115 assertions, 100% PASS**
 - **Schema Ownership Test Suite:** `vendor/bin/phpunit tests/unit/Database/SchemaOwnershipMigrationsTest.php`
   - Result: **7 tests, 32 assertions, 100% PASS**
 - **Schema Migration Linter CLI:** `php scripts/ops/db/schema-migration-lint.php`
-  - Result: **113 migrations scanned, 0 errors; 238 models scanned, 0 missing table; PASS**
+  - Result: **116 migrations scanned, 0 errors; 240 models scanned, 0 missing table; PASS**
 - **Route Handlers Contract:** `php spark routes:verify-handlers`
   - Result: **158 known gaps, 0 new, 0 fixed but still in baseline; exit code 0**
 - **Form Certification Smoke Suite:** `bash tests/smoke/form-certification-smoke.sh`
-  - Result: **293 PASS, 22 FAIL (ratchet strictly preserved); exit code 0**
+  - Result: **295 PASS, 22 FAIL (ratchet strictly preserved); exit code 0**
 
 ## Risks & Rollback
 

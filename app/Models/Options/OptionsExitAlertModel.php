@@ -33,6 +33,6 @@ class OptionsExitAlertModel extends Model
     {
         return $this->where('status', 'pending')
             ->orderBy('created_at', 'ASC')
-            ->findAll();
+            ->limit(100)->findAll();
     }
 }
