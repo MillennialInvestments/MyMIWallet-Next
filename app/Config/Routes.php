@@ -2199,6 +2199,7 @@ $routes->group('Wallets', ['namespace' => '\App\Modules\User\Controllers', 'filt
     $routes->match(['GET', 'POST'], 'Add/(:segment)', 'WalletsController::add/$1', ['as' => 'wallets.add.segment']);
     $routes->match(['GET', 'POST'], 'Add/(:segment)/(:segment)', 'WalletsController::addFetch/$1/$2', ['as' => 'wallets.add.segment.segment']);
     $routes->match(['GET', 'POST'], 'Add/Bank-Account', 'WalletsController::createBankeAccount', ['as' => 'wallets.add.bank-account']);
+    $routes->match(['GET', 'POST'], 'Connect-Bank-Account', 'WalletsController::add', ['as' => 'wallets.connect-bank-account']);
     $routes->match(['GET', 'POST'], 'Attach-Account', 'WalletsController::attachAccount', ['as' => 'wallets.attach-account']);
     $routes->match(['GET', 'POST'], 'Attach-Account/(:segment)/(:segment)/(:segment)', 'WalletsController::attachAccount/$1/$2/$3', ['as' => 'wallets.attach-account.segment.segment.segment']);
     $routes->match(['GET', 'POST'], 'Bank', 'WalletsController::bank', ['as' => 'wallets.bank']);
@@ -2276,6 +2277,11 @@ $routes->group('Wallets', ['namespace' => '\App\Modules\User\Controllers', 'filt
     $routes->match(['GET', 'POST'], 'Withdraw/Fetch', 'WalletsController::addWithdrawFetch', ['as' => 'wallets.withdraw.fetch']);
     // Add other necessary route definitions here
 });
+
+// Top-level aliases for legacy form actions
+$routes->match(['GET', 'POST'], 'Deposit-Funds', '\App\Modules\User\Controllers\WalletsController::deposit', ['filter' => ['login', 'noStore']]);
+$routes->match(['GET', 'POST'], 'Withdraw-Funds', '\App\Modules\User\Controllers\WalletsController::withdraw', ['filter' => ['login', 'noStore']]);
+$routes->match(['GET', 'POST'], 'Web_Design/Test_Page_Email', '\App\Modules\Management\Controllers\APIAdminController::Test_Page_Email', ['filter' => ['login', 'noStore']]);
 
 // // Management - Admin:
 // $routes->group('Management', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {
