@@ -3,6 +3,29 @@
  * the payment is confirmed on chain. Never touches keys. */
 (function () {
   'use strict';
+
+  function hex64(v) { return (v || '').replace(/^0x/, '').padStart(64, '0'); }
+
+  function encodeErc20Transfer(recipient, amountRaw) {
+    var cleanRecipient = (recipient || '').toLowerCase().replace(/^0x/, '');
+    var amountHex = BigInt(amountRaw || 0).toString(16);
+    return '0xa9059cbb' + hex64(cleanRecipient) + hex64(amountHex);
+  }
+
+  if (typeof globalThis !== 'undefined') {
+    globalThis.hex64 = hex64;
+    globalThis.encodeErc20Transfer = encodeErc20Transfer;
+  }
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { hex64: hex64, encodeErc20Transfer: encodeErc20Transfer };
+  }
+  if (typeof window !== 'undefined') {
+    window.MyMICryptoPay = window.MyMICryptoPay || {};
+    window.MyMICryptoPay.hex64 = hex64;
+    window.MyMICryptoPay.encodeErc20Transfer = encodeErc20Transfer;
+  }
+
+  if (typeof document === 'undefined') return;
   var app = document.getElementById('solpay-app');
   var form = document.getElementById('solpay-form');
   if (!app || !form) return;
@@ -119,8 +142,6 @@
     poll(data);
   }
 
-  function hex64(v) { return v.replace(/^0x/, '').padStart(64, '0'); }
-
   // USDC transfer(recipient, amount) from the browser wallet (MetaMask and others) on the checkout's chain.
   async function payEvm() {
     var d = current;
@@ -128,13 +149,17 @@
     if (!d || !d.chain_id || !window.ethereum) return;
     try {
       var accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      var targetChain = '0x' + Number(d.chain_id).toString(16);
       try {
-        await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x' + Number(d.chain_id).toString(16) }] });
+        var currentChain = await window.ethereum.request({ method: 'eth_chainId' });
+        if (currentChain !== targetChain) {
+          await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: targetChain }] });
+        }
       } catch (e) {
         status.textContent = 'Switch your wallet to the right network (chain ' + d.chain_id + ') and try again.';
         return;
       }
-      var data = '0xa9059cbb' + hex64(d.recipient.toLowerCase()) + hex64(BigInt(d.amount_raw).toString(16));
+      var data = encodeErc20Transfer(d.recipient, d.amount_raw);
       await window.ethereum.request({ method: 'eth_sendTransaction', params: [{ from: accounts[0], to: d.contract, data: data }] });
       status.textContent = 'Sent. Waiting for confirmations…';
     } catch (e) {

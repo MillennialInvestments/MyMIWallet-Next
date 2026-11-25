@@ -13,7 +13,10 @@
 //   node wallets.mjs balances    test-coin balances of every wallet
 //   node wallets.mjs fund        free XRPL testnet XRP now; faucet links for the rest
 //   node wallets.mjs pay <checkout.json>   pay a checkout printed by `php spark cryptopay:test-checkout`
+//   node wallets.mjs bump <txid>          RBF fee-bump an unconfirmed bitcoin transaction
 //   node wallets.mjs sweep       send the treasuries' test coins back to the buyer
+//
+// Signet support: set TESTNET_BITCOIN_ESPLORA=https://mempool.space/signet/api
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -204,7 +207,7 @@ async function paySolana(c, w) {
   const conn = await solanaConn();
   const kp = Keypair.fromSecretKey(Buffer.from(w.secret, 'base64'));
   const url = decodeURIComponent(c.url.replace(/^solana:/, ''));
-  if (!/^https:\/\//.test(url)) stop('Solana Pay link is not an https transaction request');
+  if (!/^https?:\/\//.test(url)) stop('Solana Pay link is not an http/https transaction request');
   const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ account: kp.publicKey.toBase58() }) });
   const body = await r.json();
   if (!body.transaction) stop('checkout refused the transaction request: ' + JSON.stringify(body));
@@ -241,7 +244,13 @@ async function payBitcoin(to, sats, w, sweepAll = false) {
   const key = ECPair.fromWIF(w.secret, NET.bitcoin.network);
   const from = bitcoin.payments.p2wpkh({ pubkey: Buffer.from(key.publicKey), network: NET.bitcoin.network });
   const utxos = (await esplora(`/address/${from.address}/utxo`)).filter((u) => u.status.confirmed);
-  const rate = 2n; // sat/vB, plenty on Testnet4
+  let rate = 2n; // sat/vB floor on Testnet4
+  try {
+    const fees = await esplora('/v1/fees/recommended');
+    if (fees && typeof fees.halfHourFee === 'number') {
+      rate = BigInt(Math.max(2, Math.ceil(fees.halfHourFee)));
+    }
+  } catch {}
   const total = utxos.reduce((s, u) => s + BigInt(u.value), 0n);
   const vbytes = BigInt(11 + 68 * utxos.length + 31 * 2);
   const fee = rate * vbytes;
@@ -249,12 +258,53 @@ async function payBitcoin(to, sats, w, sweepAll = false) {
   const change = total - send - fee;
   if (send <= 546n || change < 0n) stop(`not enough confirmed test BTC (have ${total} sats)`);
   const psbt = new bitcoin.Psbt({ network: NET.bitcoin.network });
-  for (const u of utxos) psbt.addInput({ hash: u.txid, index: u.vout, witnessUtxo: { script: from.output, value: u.value } });
+  // BIP 125 Opt-In Replace-By-Fee: sequence 0xfffffffd
+  for (const u of utxos) psbt.addInput({ hash: u.txid, index: u.vout, witnessUtxo: { script: from.output, value: u.value }, sequence: 0xfffffffd });
   psbt.addOutput({ address: to, value: Number(send) });
   if (change > 546n) psbt.addOutput({ address: from.address, value: Number(change) });
   psbt.signAllInputs({ publicKey: Buffer.from(key.publicKey), sign: (h) => Buffer.from(key.sign(h)) });
   psbt.finalizeAllInputs();
   return esplora('/tx', { method: 'POST', body: psbt.extractTransaction().toHex() });
+}
+
+async function bump(txid) {
+  if (!txid) stop('usage: node wallets.mjs bump <txid>');
+  const d = load();
+  if (!d.buyer?.bitcoin) stop('no bitcoin buyer wallet found');
+  const key = ECPair.fromWIF(d.buyer.bitcoin.secret, NET.bitcoin.network);
+  const from = bitcoin.payments.p2wpkh({ pubkey: Buffer.from(key.publicKey), network: NET.bitcoin.network });
+  const tx = await esplora(`/tx/${txid}`);
+  if (!tx) stop(`transaction ${txid} not found on Esplora`);
+  if (tx.status?.confirmed) stop(`transaction ${txid} is already confirmed; cannot bump`);
+  const curFee = BigInt(tx.fee || 1000);
+  const curVsize = BigInt(tx.vsize || 150);
+  const newRate = (curFee / curVsize) + 2n;
+  const bumpFee = (curFee * 3n) / 2n + (newRate * curVsize);
+  console.log(`Bumping tx ${txid} from fee ${curFee} to ${bumpFee} sats...`);
+  const psbt = new bitcoin.Psbt({ network: NET.bitcoin.network });
+  for (const vin of tx.vin) {
+    psbt.addInput({
+      hash: vin.txid,
+      index: vin.vout,
+      witnessUtxo: { script: from.output, value: vin.prevout?.value || 0 },
+      sequence: 0xfffffffd,
+    });
+  }
+  for (const vout of tx.vout) {
+    if (vout.scriptpubkey_address === from.address) {
+      const newChange = BigInt(vout.value) - (bumpFee - curFee);
+      if (newChange > 546n) {
+        psbt.addOutput({ address: from.address, value: Number(newChange) });
+      }
+    } else {
+      psbt.addOutput({ address: vout.scriptpubkey_address, value: vout.value });
+    }
+  }
+  psbt.signAllInputs({ publicKey: Buffer.from(key.publicKey), sign: (h) => Buffer.from(key.sign(h)) });
+  psbt.finalizeAllInputs();
+  const newTxid = await esplora('/tx', { method: 'POST', body: psbt.extractTransaction().toHex() });
+  console.log(`BUMPED tx ${txid} -> new tx ${newTxid}`);
+  return newTxid;
 }
 
 // ---------- send the treasury's test coins back to the buyer ----------
@@ -306,10 +356,22 @@ async function sweep() {
   await step('bitcoin BTC', async () => payBitcoin(b.bitcoin.address, 0n, t.bitcoin, true));
 }
 
+function xpubPool(count = 50, startIdx = 0) {
+  const n = parseInt(count, 10) || 50;
+  const start = parseInt(startIdx, 10) || 0;
+  const addresses = [];
+  for (let i = 0; i < n; i++) {
+    const k = ECPair.makeRandom({ network: NET.bitcoin.network, rng: (len) => crypto.randomBytes(len) });
+    const { address } = bitcoin.payments.p2wpkh({ pubkey: Buffer.from(k.publicKey), network: NET.bitcoin.network });
+    addresses.push({ index: start + i, address });
+  }
+  console.log(JSON.stringify(addresses, null, 2));
+}
+
 const [cmd, arg] = process.argv.slice(2);
-const commands = { create, addresses, balances, fund, pay: () => pay(arg), sweep };
+const commands = { create, addresses, balances, fund, pay: () => pay(arg), bump: () => bump(arg), 'xpub-pool': () => xpubPool(arg, process.argv[3]), sweep };
 if (!commands[cmd]) {
-  console.log('usage: node wallets.mjs create|addresses|balances|fund|pay <checkout.json>|sweep');
+  console.log('usage: node wallets.mjs create|addresses|balances|fund|pay <checkout.json>|bump <txid>|xpub-pool [count]|sweep');
   process.exit(cmd ? 2 : 0);
 }
 await commands[cmd]();

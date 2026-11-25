@@ -234,6 +234,7 @@ final class EvmUsdc implements ChainAdapter
         }
         if ((int) hexdec($id) !== $this->chainId) {
             log_message('error', 'Crypto checkout: {chain} endpoint {url} is on chain {got}, expected {want}; not used', ['chain' => $this->chain, 'url' => parse_url($url, PHP_URL_HOST), 'got' => (int) hexdec($id), 'want' => $this->chainId]);
+            \App\Libraries\CryptoPay\CryptoPayAlerts::endpointRefusal($this->chain, $url, "reported chain " . hexdec($id) . ", expected {$this->chainId}");
             return false;
         }
         $this->verified[$url] = true;

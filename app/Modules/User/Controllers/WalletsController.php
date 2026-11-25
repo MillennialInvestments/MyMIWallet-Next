@@ -2151,6 +2151,10 @@ class WalletsController extends BaseUserController
             return $blocked;
         }
 
+        if (! config('Features')->enabled('FEATURE_MYMIGOLD_PURCHASES')) {
+            return redirect()->back()->with('error', 'This feature is not turned on yet.');
+        }
+
         $this->data['pageTitle'] = 'Purchase MyMI Gold | MyMI Wallet | The Future of Finance';
 
         $this->commonData();
@@ -2228,6 +2232,13 @@ class WalletsController extends BaseUserController
         $db->transStart();
         ($this->walletModel ?? new WalletModel())->submitMyMIGold($row);
         $claims->markFulfilled((int) $result['claim_id']);
+        (new \App\Services\Gold\GoldLedgerService())->credit(
+            $userId,
+            $coins,
+            'purchase',
+            'paypal',
+            strtoupper($orderId)
+        );
         $db->transComplete();
 
         if (! $db->transStatus()) {

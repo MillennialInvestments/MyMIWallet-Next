@@ -202,6 +202,12 @@ $routes->group('Admin/CoinVault', ['namespace' => '\App\Modules\CoinVault\Contro
     $routes->get('Payouts', 'CoinVaultController::payouts');
     $routes->get('Wallet/(:num)', 'CoinVaultController::wallet/$1');
 });
+
+// Crypto checkout support admin routes (MYMI-XCHAIN-001 W1)
+$routes->group('Admin/Crypto', ['namespace' => '\App\Modules\Admin\Controllers', 'filter' => 'permission:admin.access'], static function ($routes) {
+    $routes->get('Checkouts', 'CryptoCheckoutsController::index');
+    $routes->post('Checkouts/Action', 'CryptoCheckoutsController::action');
+});
 $routes->group('API/CoinVault', ['namespace' => '\App\Modules\CoinVault\Controllers\Api'], static function ($routes) {
     $routes->post('contributionEvent', 'CoinVaultApiController::contributionEvent');
     $routes->post('approveContribution/(:num)', 'CoinVaultApiController::approveContribution/$1', ['filter' => 'permission:admin.access']);
@@ -257,6 +263,11 @@ $routes->group('Pay/Crypto', ['namespace' => '\App\Modules\User\Controllers', 'f
     $routes->post('Checkout', 'SolanaPayController::cryptoCheckout');
     $routes->get('Status/(:segment)', 'SolanaPayController::cryptoStatus/$1');
 });
+// MYMI-XCHAIN-001 W5: Non-custodial DEX swaps (Jupiter on Solana, 0x on EVM)
+$routes->group('Swaps', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore', 'feature:swaps']], static function ($routes) {
+    $routes->get('/', 'SwapsController::index');
+    $routes->post('Quote', 'SwapsController::quote');
+});
 // Called by the buyer's wallet app (Solana Pay transaction request); no session.
 $routes->get('API/SolanaPay/Tx/(:segment)', '\App\Modules\APIs\Controllers\SolanaPayTxController::describe/$1');
 $routes->post('API/SolanaPay/Tx/(:segment)', '\App\Modules\APIs\Controllers\SolanaPayTxController::transaction/$1');
@@ -302,7 +313,7 @@ $routes->post('newsletter/subscribe', '\App\Controllers\NewsletterController::su
 $routes->post('Blog/Email/Subscription/Account-Manager', '\App\Controllers\NewsletterController::subscribe');
 $routes->get('/Investments/News', static fn() => redirect()->to(site_url('News'), 301));
 $routes->get('/Profile', '\App\Modules\User\Controllers\DashboardController::profile', ['filter' => 'login']);
-$routes->get('/Purchase/MyMIGold', static fn() => redirect()->to(site_url('Wallets/Purchase/MyMI-Gold'), 301));
+$routes->get('/Purchase/MyMIGold', static fn() => redirect()->to(site_url('Wallets/Purchase/MyMI-Gold'), 301), ['filter' => ['login', 'feature:mymigold_purchases']]);
 $routes->post('auth/resend-activation', 'AuthController::resendActivationCode', ['as' => 'auth/resend-activation-legacy']);
 $routes->get('/How-It-Works/Purchase/MyMIGold', static fn() => redirect()->to(site_url('How-It-Works/Purchase-MyMI-Gold'), 301));
 $routes->get('/How-It-Works', '\\App\\Modules\\Blog\\Controllers\\HowItWorksController::index');
@@ -2262,7 +2273,7 @@ $routes->group('Wallets', ['namespace' => '\App\Modules\User\Controllers', 'filt
     $routes->match(['GET', 'POST'], 'Purchase/(:segment)/Complete', 'WalletsController::purchaseComplete');
     $routes->match(['GET', 'POST'], 'Purchase/Complete/(:segment)', 'WalletsController::purchaseComplete/$1');
     $routes->match(['GET', 'POST'], 'Purchase/Complete/(:segment)/(:segment)', 'WalletsController::purchaseComplete/$1/$2');
-    $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold', 'WalletsController::purchaseMyMIGold');
+    $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold', 'WalletsController::purchaseMyMIGold', ['filter' => ['login', 'noStore', 'feature:mymigold_purchases']]);
     // $routes->match(['GET', 'POST'], 'Purchase/Complete/MyMI-Gold', 'WalletsController::purchaseMyMIGold');
     // $routes->match(['GET', 'POST'], 'Purchase/Complete/MyMI-Gold/(:segment)', 'WalletsController::purchaseMyMIGold');
     // $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold/Complete/(:segment)', 'WalletsController::purchaseComplete/$1');
@@ -2885,4 +2896,20 @@ $routes->get('Exchange/Solana/Assets', '\App\Modules\Exchange\Controllers\Solana
 $routes->get('Exchange/Solana/Create', '\App\Modules\Exchange\Controllers\SolanaController::create');
 $routes->get('API/Solana/health', '\App\Modules\APIs\Controllers\SolanaAPIController::health');
 // END MyMI Solana public web route exposure
+
+// MYMI-XCHAIN-001 W6: MyMI Exchange paper trading routes
+$routes->group('Exchange/Paper', ['namespace' => '\App\Modules\Exchange\Controllers', 'filter' => ['login', 'noStore', 'feature:exchange_paper']], static function ($routes) {
+    $routes->get('/', 'PaperExchangeController::index');
+    $routes->post('Order', 'PaperExchangeController::order');
+    $routes->post('Cancel', 'PaperExchangeController::cancel');
+    $routes->get('Balances', 'PaperExchangeController::balances');
+});
+
+// MYMI-XCHAIN-001 W7: MyMI Coin accredited offering routes under MDIT Reg D 506(c)
+$routes->group('Offerings/MyMI-Coin', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore', 'feature:mymicoin_offering']], static function ($routes) {
+    $routes->get('/', 'MyMICoinOfferingController::index');
+    $routes->post('Interest', 'MyMICoinOfferingController::interest');
+    $routes->post('Deposit', 'MyMICoinOfferingController::deposit');
+    $routes->post('Mint', 'MyMICoinOfferingController::mint');
+});
 
