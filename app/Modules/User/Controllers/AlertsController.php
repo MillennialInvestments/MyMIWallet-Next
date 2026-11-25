@@ -323,25 +323,11 @@ class AlertsController extends BaseUserController
 
     public function index()
     {
-        if ($premiumGuard = premium_guard('alerts.trade_alerts')) {
-            return $premiumGuard;
-        }
-
-        $this->data['pageTitle'] = 'Trade Alerts | MyMI Wallet | Market Insights';
-
-        $sentAlerts    = $this->alertsModel->getSentAlerts(50);
-        $marketDataMap = $this->alertsManager->fetchBatchMarketData($sentAlerts);
-        $alertsInfo    = $this->alertsManager->getAlertInfo() ?? [];
-        $pendingTradeAlerts = $alertsInfo['pendingTradeAlerts'] ?? [];
-
-        // ✅ these now safely lazy-init
-        $userId = $this->cuID;
-        if (!is_int($userId) || $userId <= 0) {
-            // If this is an API action, respond gracefully:
+        $userId = (int) ($this->cuID ?? session('cuID') ?? session('user_id') ?? 0);
+        if ($userId <= 0) {
             if ($resp = $this->requireUserOrJson()) {
                 return $resp;
             }
-            // If this is a page action, fall back to redirect (or show a friendly message)
             $currentUrl  = (string) current_url();
             redirect_url_store($currentUrl, [
                 'writer' => 'AlertsController::index',
@@ -350,9 +336,22 @@ class AlertsController extends BaseUserController
             ]);
 
             log_message('debug', 'AlertsController::index() redirecting guest to login from: ' . $currentUrl);
-
             return redirect()->to(site_url('login'));
         }
+
+        helper('premium');
+        $isPremium = premium_feature_enabled('alerts.trade_alerts', $userId);
+
+        $this->data['pageTitle'] = 'Trade Alerts & Webhook Integrator | MyMI Wallet';
+
+        $webhookService = new \App\Services\Alerts\AlertWebhookService();
+        $userWebhook = $webhookService->getOrCreateWebhook($userId);
+        $userIncomingAlerts = $webhookService->getUserAlerts($userId);
+
+        $sentAlerts    = $this->alertsModel->getSentAlerts($isPremium ? 50 : 5);
+        $marketDataMap = $this->alertsManager->fetchBatchMarketData($sentAlerts);
+        $alertsInfo    = $this->alertsManager->getAlertInfo() ?? [];
+        $pendingTradeAlerts = $alertsInfo['pendingTradeAlerts'] ?? [];
 
         $scannerSignals = $this->alertsModel->getScannerAlertsForUserWatchlist($userId, 100);
 
@@ -361,7 +360,7 @@ class AlertsController extends BaseUserController
         $advisor  = $this->getMyMIAdvisor()->generateAdvisorNotes($userId);
 
         $this->budgetModel->updateForecastEntry(
-            $this->cuID,
+            $userId,
             date('Y-m-01'),
             [
                 'advisor_notes'               => $advisor['summary'],
@@ -377,6 +376,9 @@ class AlertsController extends BaseUserController
             }
         }
 
+        $this->data['isPremium']                   = $isPremium;
+        $this->data['userWebhook']                 = $userWebhook;
+        $this->data['userIncomingAlerts']          = $userIncomingAlerts;
         $this->data['alerts']                      = $sentAlerts;
         $this->data['risk']                        = $risk;
         $this->data['forecast']                    = $forecast;
@@ -398,17 +400,19 @@ class AlertsController extends BaseUserController
 
     public function trades()
     {
-        if ($premiumGuard = premium_guard('alerts.trade_alerts')) {
-            return $premiumGuard;
-        }
-
-        $userId = $this->cuID;
-        if (!is_int($userId) || $userId <= 0) {
+        $userId = (int) ($this->cuID ?? session('cuID') ?? session('user_id') ?? 0);
+        if ($userId <= 0) {
             if ($resp = $this->requireUserOrJson()) {
                 return $resp;
             }
 
             return redirect()->to(site_url('login'));
+        }
+
+        helper('premium');
+        $isPremium = premium_feature_enabled('alerts.trade_alerts', $userId);
+        if (! $isPremium) {
+            return redirect()->to(site_url('Alerts'))->with('error', 'Trades history requires a Premium membership.');
         }
 
         $alerts = $this->alertsModel->getDistributedTradeAlertsForUser($userId, 200);

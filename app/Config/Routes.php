@@ -2701,6 +2701,11 @@ $routes->group('API/Alerts', ['namespace' => '\\App\\Modules\\APIs\\Controllers'
     $routes->match(['GET', 'POST'], 'processAllEmails', '\\App\\Modules\\APIs\\Controllers\\AlertsAPIController::processAllEmails');
     $routes->get('previewScraper/(:num)', '\\App\\Modules\\APIs\\Controllers\\AlertsAPIController::previewScraper/$1');
     $routes->get('scanner', 'AlertsAPIController::scanner', ['filter' => 'internalToken']);
+    // Centralized Inbound Webhook & User Alerts
+    $routes->post('webhook/(:segment)', 'AlertWebhookAPIController::receiveWebhook/$1');
+    $routes->post('regenerateWebhook', 'AlertWebhookAPIController::regenerateWebhook', ['filter' => 'login']);
+    $routes->get('userAlerts', 'AlertWebhookAPIController::userAlerts', ['filter' => 'login']);
+    $routes->post('dismissAlert/(:num)', 'AlertWebhookAPIController::dismissAlert/$1', ['filter' => 'login']);
 });
 
 $routes->group('API/Options', ['namespace' => '\App\Modules\APIs\Controllers'], static function($routes) {
