@@ -74,7 +74,7 @@
 | Wave | Name | Branch | PR | Tests Run | Result | Notes / Fleet Review |
 | --- | --- | --- | --- | --- | --- | --- |
 | W0 | Baseline & Ledgers | `feature/mymi-xchain-001-w0-baseline` | [#778](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/778) | 18 CryptoPay / 746 suite / smoke PASS | PASS | Baseline established; ledgers initialized. |
-| W1 | Chain Hardening | `feature/mymi-xchain-001-w1-chain-hardening` | | | PENDING | |
+| W1 | Chain Hardening | `feature/mymi-xchain-001-w1-chain-hardening` | [#779](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/779) | 25 CryptoPay / form smoke 319 PASS | PASS | Keyed RPC fallback, wallets.mjs RBF/bump, alerts, support admin, sanctions screen |
 | W8 | Compliance & Sanctions | `feature/mymi-xchain-001-w8-compliance-tooling` | | | PENDING | |
 | W4 | MyMI Gold In-App Credit | `feature/mymi-xchain-001-w4-gold-in-app-credit` | | | PENDING | |
 | W2 | BTC Address Pool | `feature/mymi-xchain-001-w2-btc-address-pool` | | | PENDING | |
