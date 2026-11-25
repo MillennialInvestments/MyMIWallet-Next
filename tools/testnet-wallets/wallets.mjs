@@ -356,10 +356,22 @@ async function sweep() {
   await step('bitcoin BTC', async () => payBitcoin(b.bitcoin.address, 0n, t.bitcoin, true));
 }
 
+function xpubPool(count = 50, startIdx = 0) {
+  const n = parseInt(count, 10) || 50;
+  const start = parseInt(startIdx, 10) || 0;
+  const addresses = [];
+  for (let i = 0; i < n; i++) {
+    const k = ECPair.makeRandom({ network: NET.bitcoin.network, rng: (len) => crypto.randomBytes(len) });
+    const { address } = bitcoin.payments.p2wpkh({ pubkey: Buffer.from(k.publicKey), network: NET.bitcoin.network });
+    addresses.push({ index: start + i, address });
+  }
+  console.log(JSON.stringify(addresses, null, 2));
+}
+
 const [cmd, arg] = process.argv.slice(2);
-const commands = { create, addresses, balances, fund, pay: () => pay(arg), bump: () => bump(arg), sweep };
+const commands = { create, addresses, balances, fund, pay: () => pay(arg), bump: () => bump(arg), 'xpub-pool': () => xpubPool(arg, process.argv[3]), sweep };
 if (!commands[cmd]) {
-  console.log('usage: node wallets.mjs create|addresses|balances|fund|pay <checkout.json>|bump <txid>|sweep');
+  console.log('usage: node wallets.mjs create|addresses|balances|fund|pay <checkout.json>|bump <txid>|xpub-pool [count]|sweep');
   process.exit(cmd ? 2 : 0);
 }
 await commands[cmd]();

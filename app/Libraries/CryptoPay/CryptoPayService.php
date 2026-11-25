@@ -118,9 +118,23 @@ final class CryptoPayService
             return ['ok' => false, 'error' => 'network_unavailable'];
         }
 
+        $reference = Base58::encode(random_bytes(16));
+        $poolService = new \App\Services\CryptoPay\BtcAddressPoolService($this->db);
+        $usingPool = false;
+        if ($chain === 'bitcoin' && $poolService->isConfigured($this->config->network)) {
+            $poolAddress = $poolService->acquireAddress($reference, $this->config->network);
+            if ($poolAddress === null) {
+                return ['ok' => false, 'error' => 'btc_pool_exhausted'];
+            }
+            $recipient = $poolAddress;
+            $usingPool = true;
+        }
+
         $amount = (int) $quote['amount'];
         $tag = null;
-        if ($adapter->matchMode() === ChainAdapter::MATCH_AMOUNT) {
+        if ($usingPool) {
+            $matchKey = 'bitcoin:address:' . $recipient;
+        } elseif ($adapter->matchMode() === ChainAdapter::MATCH_AMOUNT) {
             $step = max(1, $adapter->amountStep());
             $base = (int) (ceil($amount / $step) * $step);
             $amount = 0;
@@ -131,17 +145,18 @@ final class CryptoPayService
                     ->whereIn('status', ['pending', 'confirmed'])->where('expires_at >=', $now - 86400)->countAllResults();
                 $amount = $taken === 0 ? $candidate : 0;
             }
+            $matchKey = $chain . ':amount:' . $amount;
         } else {
             for ($i = 0; $i < self::TAG_TRIES && $tag === null; $i++) {
                 $candidate = random_int(1, 4294967295);
                 $tag = $this->db->table(self::TABLE)->where('chain', $chain)->where('dest_tag', $candidate)->countAllResults() === 0 ? $candidate : null;
             }
+            $matchKey = $chain . ':tag:' . $tag;
         }
         if ($amount <= 0 || ($adapter->matchMode() === ChainAdapter::MATCH_TAG && $tag === null)) {
             return ['ok' => false, 'error' => 'busy_try_again'];
         }
 
-        $reference = Base58::encode(random_bytes(16));
         $row = [
             'reference'      => $reference,
             'user_id'        => $userId,
@@ -156,7 +171,7 @@ final class CryptoPayService
             'asset_amount'   => $amount,
             'rate'           => (string) $quote['rate'],
             'dest_tag'       => $tag,
-            'match_key'      => $tag === null ? $chain . ':amount:' . $amount : $chain . ':tag:' . $tag,
+            'match_key'      => $matchKey,
             'recipient'      => $recipient,
             'start_cursor'   => $cursor,
             'scan_cursor'    => 0,
@@ -331,6 +346,9 @@ final class CryptoPayService
         }
         if ($this->db->affectedRows() !== 1) {
             return $this->state($this->find((string) $row['reference']) ?? $row);
+        }
+        if ($row['chain'] === 'bitcoin' && str_starts_with((string) ($row['match_key'] ?? ''), 'bitcoin:address:')) {
+            (new \App\Services\CryptoPay\BtcAddressPoolService($this->db))->markUsed((string) $row['recipient']);
         }
         return $this->deliver(['status' => 'confirmed', 'payment_id' => $payment['id'], 'payer' => $payment['payer'], 'updated_at' => $this->now()] + $row);
     }

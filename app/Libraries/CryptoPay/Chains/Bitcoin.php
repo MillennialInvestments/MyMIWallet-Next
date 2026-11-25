@@ -150,9 +150,15 @@ final class Bitcoin implements ChainAdapter
         $payer = (string) ($tx['vin'][0]['prevout']['scriptpubkey_address'] ?? '');
         $time = $height > 0 && is_numeric($tx['status']['block_time'] ?? null) ? (int) $tx['status']['block_time'] : null;
         $out = [];
+        $isAddressMatch = str_starts_with((string) ($row['match_key'] ?? ''), 'bitcoin:address:');
         foreach ((array) ($tx['vout'] ?? []) as $i => $vout) {
-            if (is_array($vout) && ($vout['scriptpubkey_address'] ?? '') === $row['recipient'] && (int) ($vout['value'] ?? -1) === (int) $row['asset_amount']) {
-                $out[] = ['id' => 'bitcoin:' . $txid . ':' . $i, 'amount' => (int) $vout['value'], 'payer' => $payer, 'confirmations' => $confirmations, 'time' => $time];
+            if (! is_array($vout) || ($vout['scriptpubkey_address'] ?? '') !== $row['recipient']) {
+                continue;
+            }
+            $val = (int) ($vout['value'] ?? -1);
+            $matched = $isAddressMatch ? ($val >= (int) $row['asset_amount']) : ($val === (int) $row['asset_amount']);
+            if ($matched) {
+                $out[] = ['id' => 'bitcoin:' . $txid . ':' . $i, 'amount' => $val, 'payer' => $payer, 'confirmations' => $confirmations, 'time' => $time];
             }
         }
         return $out;
