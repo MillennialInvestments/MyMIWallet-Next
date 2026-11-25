@@ -31,6 +31,25 @@
         "mymi.provider_health"
       ],
       "timeoutSeconds": 60
+    },
+    "mymi-platform": {
+      "command": "python3",
+      "args": [
+        "scripts/mcp/mymi_platform_mcp_server.py"
+      ],
+      "env": {},
+      "enabledTools": [
+        "mymi.platform_status",
+        "mymi.user_profile",
+        "mymi.budget_summary",
+        "mymi.alerts_feed",
+        "mymi.memberships_catalog",
+        "mymi.ai_copilot_telemetry",
+        "mymi.schema_inventory",
+        "mymi.form_certification_audit",
+        "mymi.model_limit_audit"
+      ],
+      "timeoutSeconds": 60
     }
   }
 }

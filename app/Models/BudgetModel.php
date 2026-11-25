@@ -1069,7 +1069,7 @@ class BudgetModel extends ObservedModel
                         ->orderBy('month', 'DESC')
                         ->orderBy('day', 'DESC')
                         ->orderBy('id', 'DESC');
-        $result = $builder->get()->getResultArray();
+        $result = $builder->limit(1000)->get()->getResultArray();
         // log_message('info', 'BudgetModel - L23: ' . print_r($result, true));
         return $result;
     }
@@ -1432,15 +1432,7 @@ class BudgetModel extends ObservedModel
     public function unpaidAccount($accountID) {
         return $this->update($accountID, ['paid' => 0]);
     }
-    // public function getUserBudgetRecords($cuID) {
-    //     $builder = $this->db->table('bf_users_budgeting');
-    //     $result = $builder->where('created_by', $cuID)
-    //                     //   ->where('status', 1)
-    //                     //   ->where('deleted', 0)
-    //                       ->get();
-    //     log_message('info', 'BudgetModel - L26: getUserBudgetRecords($cuID): ' . print_r($result->getResult(), true));
-    //     return $result;
-    // }
+
 
     // public function approveRecurringSchedule($accountID)
     // {

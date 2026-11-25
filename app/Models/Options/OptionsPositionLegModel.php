@@ -36,6 +36,6 @@ class OptionsPositionLegModel extends Model
 
     public function getLegsForPosition(int $positionId): array
     {
-        return $this->where('position_id', $positionId)->findAll();
+        return $this->where('position_id', $positionId)->limit(50)->findAll();
     }
 }
