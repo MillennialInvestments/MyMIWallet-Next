@@ -31,6 +31,8 @@ class Features extends BaseConfig
             'FEATURE_MEMBERSHIP_PURCHASES' => $this->readBool('FEATURE_MEMBERSHIP_PURCHASES', false),
             // Auto-renewing monthly billing (PayPal Subscriptions). Needs FEATURE_MEMBERSHIP_PURCHASES too.
             'FEATURE_MEMBERSHIP_SUBSCRIPTIONS' => $this->readBool('FEATURE_MEMBERSHIP_SUBSCRIPTIONS', false),
+            // MYMI-XCHAIN-001 W8: OFAC SDN and automated sanctions screening
+            'FEATURE_SANCTIONS_SCREENING' => $this->readBool('FEATURE_SANCTIONS_SCREENING', false),
         ];
     }
 
