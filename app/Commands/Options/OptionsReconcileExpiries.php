@@ -56,7 +56,7 @@ class OptionsReconcileExpiries extends SafeBaseCommand
             $expiredPositions = $builder->findAll();
         } catch (\Throwable $e) {
             CLI::write(sprintf('Notice: Database query skipped (%s).', $e->getMessage()), 'yellow');
-            CLI::write('The canonical repo lacks an active database connection. Safe for dry-runs and PHPUnit suites.', 'white');
+            CLI::write('The canonical checkout lacks an active database connection. Safe for dry-runs and PHPUnit suites.', 'white');
             return;
         }
 

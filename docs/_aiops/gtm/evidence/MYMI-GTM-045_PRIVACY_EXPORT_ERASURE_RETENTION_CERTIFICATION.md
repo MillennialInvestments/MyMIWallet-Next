@@ -26,7 +26,7 @@ Enforce GDPR / CCPA privacy data rights across the MyMI platform:
    - Fails closed if the target user ID is invalid or non-existent.
 
 2. **`App\Libraries\Privacy\DataErasureService`:**
-   - Soft-deletes / anonymizes user personal identifying records.
+   - Soft-deletes / anomymizes user personal identifying records.
    - Cleanses username, email address, password hash, and IP logs.
    - Retains financial ledger transactions with anonymized user linkage to maintain immutable audit balance equations.
 
