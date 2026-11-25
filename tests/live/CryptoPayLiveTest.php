@@ -4,12 +4,45 @@ use App\Libraries\CryptoPay\Chains\Bitcoin;
 use App\Libraries\CryptoPay\Chains\EvmUsdc;
 use App\Libraries\CryptoPay\Chains\Xrpl;
 use App\Libraries\CryptoPay\CurlHttp;
+use App\Libraries\CryptoPay\Http;
 use App\Libraries\CryptoPay\SpotPrice;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\CryptoPay as CryptoPayConfig;
 
 if (! defined('TESTPATH')) {
     require_once __DIR__ . '/../_support/bootstrap.php';
+}
+
+/** Real HTTP that also notes each request that got no usable answer, so a failed probe says which call failed. */
+final class CryptoPayLiveHttp implements Http
+{
+    /** @var list<string> */
+    public array $failed = [];
+    /** @var list<string> */
+    public array $gets = [];
+
+    public function __construct(private CurlHttp $inner)
+    {
+    }
+
+    public function postJson(string $url, array $body): ?array
+    {
+        $r = $this->inner->postJson($url, $body);
+        if ($r === null || isset($r['error'])) {
+            $this->failed[] = 'POST ' . parse_url($url, PHP_URL_HOST) . ' ' . ($body['method'] ?? '') . ($r === null ? '' : ' ' . json_encode($r['error']));
+        }
+        return $r;
+    }
+
+    public function get(string $url): ?string
+    {
+        $this->gets[] = (string) parse_url($url, PHP_URL_HOST) . parse_url($url, PHP_URL_PATH);
+        $r = $this->inner->get($url);
+        if ($r === null) {
+            $this->failed[] = 'GET ' . parse_url($url, PHP_URL_HOST) . parse_url($url, PHP_URL_PATH);
+        }
+        return $r;
+    }
 }
 
 /**
@@ -26,7 +59,7 @@ final class CryptoPayLiveTest extends CIUnitTestCase
     private const BTC_ADDRESS = ['testnet' => 'tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx', 'mainnet' => 'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kxv8f3t4'];
     private const SOLANA_DEVNET_GENESIS = 'EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG';
 
-    private CurlHttp $http;
+    private CryptoPayLiveHttp $http;
 
     protected function setUp(): void
     {
@@ -34,7 +67,7 @@ final class CryptoPayLiveTest extends CIUnitTestCase
         if (getenv('CRYPTO_LIVE') !== '1') {
             $this->markTestSkipped('live network probe: set CRYPTO_LIVE=1');
         }
-        $this->http = new CurlHttp(20);
+        $this->http = new CryptoPayLiveHttp(new CurlHttp(20));
     }
 
     private static function report(string $line): void
@@ -50,11 +83,19 @@ final class CryptoPayLiveTest extends CIUnitTestCase
 
     private function assertScan(string $label, object $adapter, array $row): void
     {
+        $this->http->failed = [];
+        $this->http->gets = [];
         $tip = $adapter->cursor();
         $this->assertIsInt($tip, $label . ': tip height');
         $this->assertGreaterThan(0, $tip);
         [$payments, $complete] = $adapter->payments($row + ['start_cursor' => max(1, $tip - 20), 'scan_cursor' => 0]);
         self::report(sprintf('%-18s tip=%d complete=%s matches=%d', $label, $tip, $complete ? 'yes' : 'NO', count($payments)));
+        foreach (array_unique($this->http->failed) as $f) {
+            self::report('  no answer: ' . $f);
+        }
+        if (! $complete) {
+            self::report('  requests: ' . implode(' | ', $this->http->gets));
+        }
         $this->assertTrue($complete, $label . ': a full read of recent history');
     }
 
