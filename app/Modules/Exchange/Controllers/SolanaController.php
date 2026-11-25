@@ -266,6 +266,7 @@ class SolanaController extends UserController {
     }
 
     public function index() {
+        $this->commonData();
         $this->data['pageTitle'] = 'Solana Exchange | MyMI Wallet | The Future of Finance';
 
         // // Check URI segment to determine if real-time data is needed
@@ -337,6 +338,7 @@ $addr = $svc->normalizeAddress($row);
     }
 
     public function assets() {
+        $this->commonData();
         $this->data['pageTitle'] = 'My Solana Assets | MyMI Wallet | The Future of Finance';
         return $this->renderTheme('App\Modules\Exchange\Views\Solana\assets', $this->data);
     }
@@ -358,6 +360,7 @@ $addr = $svc->normalizeAddress($row);
     }
 
     public function coinSwap() {
+        $this->commonData();
         $this->data['pageTitle'] = 'Solana Coin Swap | MyMI Wallet | The Future of Finance';
         return $this->renderTheme('App\Modules\Exchange\Views\Solana\swap', $this->data);
     }
@@ -385,6 +388,7 @@ $addr = $svc->normalizeAddress($row);
     }
 
     public function create() {
+        $this->commonData();
         $this->data['pageTitle'] = 'Create With Solana | MyMI Wallet | The Future of Finance';
         return $this->renderTheme('App\Modules\Exchange\Views\Solana\create', $this->data);
     }

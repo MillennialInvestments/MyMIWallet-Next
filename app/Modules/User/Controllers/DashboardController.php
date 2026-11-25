@@ -68,7 +68,9 @@ class DashboardController extends BaseUserController
 
     public function commonData(): array
     {
-        $this->data = parent::commonData();
+        $priorData  = $this->data ?? [];
+        $parentData = parent::commonData();
+        $this->data = array_merge(is_array($parentData) ? $parentData : [], $priorData);
         $cuID      = (int)($this->cuID ?? session('cuID') ?? session('user_id') ?? 0);
 
         if ($cuID <= 0) {
@@ -84,7 +86,7 @@ class DashboardController extends BaseUserController
         $this->data['debug'] = (string)$this->siteSettings->debug;
         $this->data['uri'] = $this->uri;
         $this->data['request'] = $this->request;
-        $this->data['cuID'] = $this->cuID;     
+        $this->data['cuID'] = $this->cuID;
 
         $userBudget = $this->getMyMIBudget()->getUserBudget($cuID) ?? [];
         $checkingSummary = (float) ($userBudget['checkingSummary'] ?? 0.0);
@@ -196,19 +198,19 @@ class DashboardController extends BaseUserController
         }
 
         // Then pass $cuSolanaDW to the view like you already do in $data
-        $data['cuSolanaDW'] = $cuSolanaDW;        // Ensure Solana network status exists to avoid "Undefined array key"
+        $this->data['cuSolanaDW'] = $cuSolanaDW;        // Ensure Solana network status exists to avoid "Undefined array key"
         try {
             $svc = $this->solanaService instanceof SolanaService ? $this->solanaService : (service('solanaService') ?: null);
             if ($svc instanceof SolanaService) {
-                $data['solanaNetworkStatus'] = $svc->getSafeNetworkStatus();
+                $this->data['solanaNetworkStatus'] = $svc->getSafeNetworkStatus();
                 $this->solanaService = $svc;
             } else {
                 log_message('info', 'DashboardController getNetworkStatus skipped: SolanaService not configured; returning offline');
-                $data['solanaNetworkStatus'] = ['healthy' => false, 'status' => 'offline', 'degraded' => true];
+                $this->data['solanaNetworkStatus'] = ['healthy' => false, 'status' => 'offline', 'degraded' => true];
             }
         } catch (\Throwable $e) {
             log_message('error', 'WalletsController getNetworkStatus failed: {msg}', ['msg' => $e->getMessage()]);
-            $data['solanaNetworkStatus'] = [
+            $this->data['solanaNetworkStatus'] = [
                 'healthy' => false,
                 'slot'    => null,
                 'version' => null,
@@ -222,25 +224,25 @@ class DashboardController extends BaseUserController
         if ($this->uri->getTotalSegments() >= 3) {
             $pageURIC = $this->uri->getSegment(3);
             if ($pageURIC === 'Alerts') {
-                $pageURID = $this->uri->getSegment(4); 
+                $pageURID = $this->uri->getSegment(4);
                 if ($pageURID === 'addChart') {
-                    log_message('debug', 'DashboardController L159 - $this->uri->getSegment(6): ' . $this->uri->getSegment(6)); 
-                    $tradeAlertID = $this->uri->getSegment(6); 
+                    log_message('debug', 'DashboardController L159 - $this->uri->getSegment(6): ' . $this->uri->getSegment(6));
+                    $tradeAlertID = $this->uri->getSegment(6);
                     $this->data['tradeAlertID'] = $tradeAlertID;
-                    $this->data['getAlertInfo'] = $this->alertsModel->getAlertById($tradeAlertID); 
+                    $this->data['getAlertInfo'] = $this->alertsModel->getAlertById($tradeAlertID);
                 }
 
                 if ($pageURID === 'createTradeAlert') {
                     $tradeAlertID = $this->uri->getSegment(5); // May be null for new alerts
-                    log_message('info', 'DashboardController L138 - $tradeAlertID: ' . $tradeAlertID); 
+                    log_message('info', 'DashboardController L138 - $tradeAlertID: ' . $tradeAlertID);
                     if (!isset($this->alertsModel)) {
                         $this->alertsModel = new AlertsModel();
                     }
-                
+
                     if (!empty($tradeAlertID)) {
                         // Existing Trade Alert
                         $alertData = $this->alertsModel->getAlertById($tradeAlertID);
-                
+
                         if ($alertData) {
                             $this->data['alert'] = $alertData;
                             $this->data['tradeAlertID'] = $tradeAlertID;
@@ -274,22 +276,22 @@ class DashboardController extends BaseUserController
                         log_message('info', 'DashboardController - Initializing new trade alert entry.');
                     }
                 }
-                
+
 
                 if ($pageURID === 'manageTradeAlert') {
-                    $tradeAlertID = $this->uri->getSegment(5); 
-                    
+                    $tradeAlertID = $this->uri->getSegment(5);
+
                     if (!isset($this->alertsModel)) {
-                        $this->alertsModel = new AlertsModel(); 
+                        $this->alertsModel = new AlertsModel();
                     }
 
                     if (!empty($tradeAlertID)) {
-                        $alertData = $this->alertsModel->getAlertById($tradeAlertID); 
-            
+                        $alertData = $this->alertsModel->getAlertById($tradeAlertID);
+
                         if ($alertData) {
                             if ($alertData['ticker']) {
-                                $this->data['alertHistory'] = $this->alertsModel->fetchAlertHistory($alertData['ticker']) ?? []; 
-                            } 
+                                $this->data['alertHistory'] = $this->alertsModel->fetchAlertHistory($alertData['ticker']) ?? [];
+                            }
                             $this->data['alert'] = $alertData;
                             $this->data['tradeAlertID'] = $tradeAlertID;
                         } else {
@@ -298,16 +300,16 @@ class DashboardController extends BaseUserController
                         }
                     }
                 }
-            
+
                 if ($pageURID === 'View') {
-                    $pageURIE = $this->uri->getSegment(4); 
+                    $pageURIE = $this->uri->getSegment(4);
                     if ($pageURIE === 'alertDetails') {
-                        $tradeAlertID = $this->uri->getSegment(5); 
+                        $tradeAlertID = $this->uri->getSegment(5);
                         $this->data['tradeAlertID'] = $tradeAlertID;
-                        $this->data['getAlertInfo'] = $MyMIAlerts->getTradeAlertInfo($tradeAlertID); 
+                        $this->data['getAlertInfo'] = $MyMIAlerts->getTradeAlertInfo($tradeAlertID);
                     }
                     if ($pageURIE === 'viewChart') {
-                        $tradeAlertID = $this->uri->getSegment(6); 
+                        $tradeAlertID = $this->uri->getSegment(6);
                         $this->data['tradeAlertID'] = $tradeAlertID;
                         $this->data['getAlertInfo'] = $MyMIAlerts->getTradeAlertInfo($tradeAlertID);
                     }
@@ -317,8 +319,8 @@ class DashboardController extends BaseUserController
                 $this->budgetService                                = new BudgetService();
                 $pageURID = $this->uri->getSegment(4);
                 if ($pageURID === 'View') {
-                    $pageURIF = $this->uri->getSegment(6); 
-                    if ($pageURIF === 'History') {                     
+                    $pageURIF = $this->uri->getSegment(6);
+                    if ($pageURIF === 'History') {
                         // Hydrate necessary data for the modal here
                         $budgetService = $this->getBudgetService();
                         $modalBudget   = $budgetService->getUserBudget($this->cuID) ?? [];
@@ -332,9 +334,9 @@ class DashboardController extends BaseUserController
                         $this->data['creditSummary'] = $this->getAccountService()->getCreditAvailable($this->cuID);
                     }
                 }
-            
+
             } elseif ($pageURIC === 'Campaign') {
-            } elseif ($pageURIC === 'Drip-Campaign') {                
+            } elseif ($pageURIC === 'Drip-Campaign') {
                 $this->marketingModel = new MarketingModel();
                 $pageURID = $this->uri->getSegment(4);
                 $campaignID = $this->uri->getSegment(5);
@@ -354,7 +356,7 @@ class DashboardController extends BaseUserController
                         log_message('info', 'User/DashboardController L231 - $generatedContent Array: ' . (print_r($generatedContent, true)));
                         log_message('info', 'User/DashboardController L232 - $generatedStepContent Array: ' . (print_r($generatedStepContent, true)));
                         if ($campaign) {
-                            $this->data['pageType'] = 'Campaign'; 
+                            $this->data['pageType'] = 'Campaign';
                             $this->data['dripCampaign'] = $campaign;
                             $this->data['dripCampaignSteps'] = $steps;
                             $this->data['generatedContent'] = $generatedContent[0] ?? null;
@@ -363,10 +365,10 @@ class DashboardController extends BaseUserController
                             log_message('error', '❌ Drip campaign not found for ID: ' . $campaignID);
                         }
                     }
-                }                
+                }
                 if (in_array($pageURID, ['viewCampaignStep', 'editCampaignStep', 'generateCampaignStepContent'])) {
                     if (!empty($campaignID)) {
-                        $stepID = $campaignID; 
+                        $stepID = $campaignID;
                         log_message('info', 'User/DashboardController L246 - $stepID: ' . $stepID);
                         $step = $this->marketingModel->getDripCampaignStepsById($stepID);
                         $campaign = $this->marketingModel->getDripCampaignById($campaignID);
@@ -377,7 +379,7 @@ class DashboardController extends BaseUserController
                         log_message('info', 'User/DashboardController L231 - $generatedContent Array: ' . (print_r($generatedContent, true)));
                         log_message('info', 'User/DashboardController L232 - $generatedStepContent Array: ' . (print_r($generatedStepContent, true)));
                         if ($campaign) {
-                            $this->data['pageType'] = 'Step'; 
+                            $this->data['pageType'] = 'Step';
                             $this->data['dripCampaign'] = $campaign;
                             $this->data['dripCampaignStep'] = $step;
                             $this->data['generatedContent'] = $generatedContent[0] ?? null;
@@ -438,7 +440,7 @@ class DashboardController extends BaseUserController
 
                     return $this->data;
                 }
-                
+
 //                 $this->MyMIInvestments                              = new MyMIInvestments(); // replaced by BaseController getter
                 $this->accountsModel                                = new AccountsModel();
                 $this->data['investDashboard']                      = $this->MyMIInvestments->getInvestmentDashboard($this->cuID);
@@ -499,20 +501,20 @@ class DashboardController extends BaseUserController
                         break;
                     // Add more investment cases as needed
                 }
-                $this->data['includeDateTime']                      = $includeDateTime; 
-                $this->data['includeWallets']                       = $includeWallets; 
+                $this->data['includeDateTime']                      = $includeDateTime;
+                $this->data['includeWallets']                       = $includeWallets;
                 $this->data['tradeType']                            = $tradeType;
                 $this->data['subViewTitle']                         = $subViewTitle;
                 $this->data['subViewFile']                          = $subViewDirectory . $subViewFile;
             } elseif ($pageURIC === 'Marketing') { // Segment-based Dynamic Logic for Marketing
-                
+
                 if (!isset($this->marketingModel)) {
                     $this->marketingModel = new MarketingModel();
                 }
                 // $this->MyMIMarketing                        = service('MyMIMarketing');
                 $this->data['recentMarketingPosts']         = $this->getMyMIMarketing()->getRecentPosts(10);
 
-                $this->data['managementTeam']               = $this->getMyMIMarketing()->getManagementTeam(); 
+                $this->data['managementTeam']               = $this->getMyMIMarketing()->getManagementTeam();
                 if (!empty($this->uri->getSegment(4))) {
                     $pageURID                               = $this->uri->getSegment(4);
                     if ($pageURID === 'addCampaign') {
@@ -522,7 +524,7 @@ class DashboardController extends BaseUserController
                             $this->data['campaignInfo']     = $this->getMyMIMarketing()->getCampaignByID($campaignID);
                             if (!$this->data['campaignInfo']) {
                                 log_message('error', 'No campaign info found for ID: ' . $campaignID);
-                            }                            
+                            }
                         }
                     } elseif ($pageURID === 'addIdea') {
                     } elseif ($pageURID === 'addSchedule') {
@@ -548,25 +550,25 @@ class DashboardController extends BaseUserController
                     } elseif ($pageURID === 'generatePostMedia' || $pageURID === 'previewGeneratedPost') {
                         $accountID = $this->uri->getSegment(5);
                         log_message('info', "DashboardController - $pageURID triggered. \$accountID: {$accountID}");
-                    
+
                         $post = $this->marketingModel->findFinalizedById($accountID);
                         if (!$post) {
                             log_message('error', "❌ {$pageURID}: Post not found for ID {$accountID}");
                             return "Error: Post not found.";
                         }
-                    
+
                         $marketing = service('MyMIMarketing');
-                    
+
                         // Clean, summarize, extract
                         $cleanedSummary = $marketing->cleanHtmlSummaryPreview($post['summary'] ?? '');
                         $sentences = $marketing->splitIntoSentences($cleanedSummary);
                         $topKeywords = $marketing->extractKeywords($sentences);
                         $formatted = esc(format_summary_preview($post['summary'] ?? ''));
-                    
+
                         // Add supplemental data
                         $post['cta'] = $marketing->generateCTA($post['summary'] ?? '');
                         $post['voiceover'] = $post['voice_script'] ?? null;
-                    
+
                         // Pass data to the view
                         $this->data['post'] = $post;
                         $this->data['summary'] = $post['summary'] ?? '';
@@ -574,27 +576,27 @@ class DashboardController extends BaseUserController
                         $this->data['cleaned_summary'] = $cleanedSummary;
                         $this->data['keywords'] = $topKeywords;
                         $this->data['voiceover_url'] = $post['voiceover_url'] ?? null;
-                    
+
                         log_message('debug', "✅ Modal prepared for {$pageURID}: {$accountID}");
                     }
-                    
+
                 }
             } elseif ($pageURIC === 'Projects') {
                 if(!empty($this->uri->getSegment(4))) {
-                    $pageURID = $this->uri->getSegment(4); 
+                    $pageURID = $this->uri->getSegment(4);
                     if ($pageURID === 'Admin') {
                         if (!empty($this->uri->getSegment(6))) {
-                            $pageURIE = $this->uri->getSegment(5); 
-                            $pageURIF = $this->uri->getSegment(6); 
-                            if ($pageURIF === 'viewProject') { 
-                                $getProjectInfo = $this->getMyMIProjects()->getProjectFullDetails($pageURIE); 
-                                $projectOwnerID = $getProjectInfo['created_by']; 
+                            $pageURIE = $this->uri->getSegment(5);
+                            $pageURIF = $this->uri->getSegment(6);
+                            if ($pageURIF === 'viewProject') {
+                                $getProjectInfo = $this->getMyMIProjects()->getProjectFullDetails($pageURIE);
+                                $projectOwnerID = $getProjectInfo['created_by'];
                                 $getOwnerInfo = $this->getMyMIUser()->getUserInformation($projectOwnerID);
                                 log_message('debug', 'DashboardController L250 - $getOwnerInfo Array: ' . (print_r($getOwnerInfo, true)));
-                                $this->data['project'] = $getProjectInfo; 
-                                $this->data['owner'] = $getOwnerInfo; 
+                                $this->data['project'] = $getProjectInfo;
+                                $this->data['owner'] = $getOwnerInfo;
                             }
-                        }   
+                        }
                     }
                 }
             } elseif ($pageURIC === 'Solana') {
@@ -613,9 +615,10 @@ class DashboardController extends BaseUserController
             }
         }
         $this->data['userNextGoal'] = $nextGoal ?? ['gold_reward' => 0];
+        $this->userAccountData();
         return $this->data;
 }
-    
+
     private function resolveCuID(?int $cuID): ?int
     {
         if (!empty($cuID) && $cuID > 0) return $cuID;
@@ -758,8 +761,8 @@ class DashboardController extends BaseUserController
     public function account()
     {
         $this->data['pageTitle'] = 'My Account | MyMI Wallet | The Future of Finance';
-        $this->userAccountData();
         $this->commonData();
+        $this->userAccountData();
         return $this->renderTheme('App\Modules\User\Views\Dashboard\Account', $this->data);
     }
 
@@ -794,19 +797,19 @@ class DashboardController extends BaseUserController
     {
         $this->data['pageTitle'] = 'My Activity | MyMI Wallet | The Future of Finance';
 
-        // $this->userModel = new UserModel(); 
+        // $this->userModel = new UserModel();
+        $this->commonData();
+        $this->userAccountData();
         $loginActivity = $this->userModel->getUserLoginActivity($this->cuID);
-        $this->data['loginActivity'] = $loginActivity; 
-        $this->userAccountData(); 
-        $this->commonData(); 
+        $this->data['loginActivity'] = $loginActivity;
         return $this->renderTheme('App\Modules\User\Views\Dashboard\Account\Activity', $this->data);
     }
 
     public function billing()
     {
         $this->data['pageTitle'] = 'Billing & Subscriptions | MyMI Wallet | The Future of Finance';
-        $this->userAccountData(); 
-        $this->commonData(); 
+        $this->commonData();
+        $this->userAccountData();
         return $this->renderTheme('App\Modules\User\Views\Dashboard\Account\Billing', $this->data);
     }
 
@@ -836,8 +839,8 @@ class DashboardController extends BaseUserController
     public function connectedAccounts()
     {
         $this->data['pageTitle'] = 'My Connected Accounts | MyMI Wallet | The Future of Finance';
-        $this->userAccountData(); 
-        $this->commonData(); 
+        $this->commonData();
+        $this->userAccountData();
         return $this->renderTheme('App\Modules\User\Views\Dashboard\Account\ConnectedAccounts', $this->data);
     }
 
@@ -864,9 +867,9 @@ class DashboardController extends BaseUserController
     public function goals($category = null)
     {
         $this->data['pageTitle'] = 'My Goals | MyMI Wallet | The Future of Finance';
-        // $this->data['taskCategory'] = $category ?? 'All'; 
-        $this->userAccountData(); 
-        $this->commonData(); 
+        // $this->data['taskCategory'] = $category ?? 'All';
+        $this->commonData();
+        $this->userAccountData();
         return $this->renderTheme('App\Modules\User\Views\Dashboard\Goals', $this->data);
     }
 
@@ -1448,8 +1451,8 @@ HTML;
     public function notifications()
     {
         $this->data['pageTitle'] = 'My Notifications | MyMI Wallet | The Future of Finance';
-        $this->userAccountData();
         $this->commonData();
+        $this->userAccountData();
         return $this->renderTheme('App\Modules\User\Views\Dashboard\Account\Notifications', $this->data);
     }
 
@@ -1532,8 +1535,8 @@ HTML;
         $this->data['pageTitle'] = 'My Performance | MyMI Wallet | The Future of Finance';
         $this->commonData();
         return $this->renderTheme('App\Modules\User\Views\Dashboard\Performance', $this->data);
-    }    
-    
+    }
+
     // public function profile($username = null)
     // {
     //     $this->data['pageTitle'] = 'My Performance | MyMI Wallet | The Future of Finance';
@@ -1546,39 +1549,39 @@ HTML;
         if ($cuUsername === null) {
             return redirect()->to('/Profile')->with('error', 'No username provided.');
         }
-    
+
         // Fetch user data based on the username
         $userInfo = $this->getMyMIUser()->getUserByUsername($cuUsername);
         $userID = $userInfo['id'];
-        $userProjects = $this->getMyMIProjects()->getUserProjects($userID); 
-        $totalActiveUsers = $this->getMyMIAnalytics()->reporting()['totalActiveUsers']; 
+        $userProjects = $this->getMyMIProjects()->getUserProjects($userID);
+        $totalActiveUsers = $this->getMyMIAnalytics()->reporting()['totalActiveUsers'];
 
         log_message('debug', 'DashboardController L344 - $totalActiveUsers: ' . (print_r($totalActiveUsers, true)));
-    
+
         if (!$userInfo) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException("Profile for user '{$cuUsername}' not found.");
         } else {
             log_message('debug', 'DashboardController L331 - Profile Method: Username = ' . $cuUsername);
         }
-    
+
         $this->data['pageTitle'] = "{$cuUsername} | Profile at MyMI Wallet | The Future of Finance";
         $this->commonData();
         $this->data['cuUsername'] = $cuUsername;
         $this->data['userProjects'] = $userProjects;
-        $this->data['totalActiveUsers'] = $totalActiveUsers; 
+        $this->data['totalActiveUsers'] = $totalActiveUsers;
         $this->data['userInfo'] = $userInfo; // Add user data for the view
-        
+
         return $this->renderTheme('App\Modules\User\Views\Dashboard\Profile', $this->data);
         // return $this->renderTheme('App\Modules\User\Views\Dashboard\Performance', $this->data);
     }
-    
+
     public function schedule()
     {
         $this->data['pageTitle'] = 'My Schedule | MyMI Wallet | The Future of Finance';
         $this->commonData();
         return $this->renderTheme('App\Modules\User\Views\Dashboard\Schedule', $this->data);
     }
-    
+
     private function scrapeAndGenerateContent($accountid, $category, $platform)
     {
         // Function to scrape and generate content
@@ -1629,17 +1632,23 @@ HTML;
     {
         $this->data['pageTitle'] = 'My Social Media | MyMI Wallet | The Future of Finance';
         $this->commonData();
-        $linkModel = new DiscordLinkModel();
+        $this->userAccountData();
+
+        $linkModel = null;
+        $db = \Config\Database::connect();
+        if ($db->tableExists('bf_discord_links')) {
+            $linkModel = new DiscordLinkModel();
+        }
 
         $linkMessage = null;
         $source      = $this->request->getGet('source');
         $token       = $this->request->getGet('code');
 
-        if ($source === 'discord' && $token) {
+        if ($linkModel && $source === 'discord' && $token) {
             $linkMessage = $linkModel->consumeToken($token, (int) $this->cuID);
         }
 
-        $this->data['discordLink']        = $linkModel->findByUserId($this->cuID);
+        $this->data['discordLink']        = $linkModel ? $linkModel->findByUserId($this->cuID) : null;
         $this->data['discordLinkMessage'] = $linkMessage;
         $this->data['discordLinkUrl']     = site_url('/Account/Social-Media?source=discord');
         $scopes = [];

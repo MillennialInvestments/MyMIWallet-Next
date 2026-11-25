@@ -374,9 +374,12 @@ class ProjectsModel extends Model
 
     public function getActiveProjectsWithStats(): array
     {
-        return $this->db->table('bf_projects p')
-            ->select(
-                'p.id,
+        if (! $this->db->tableExists('bf_projects')) {
+            return [];
+        }
+
+        $hasHolders = $this->db->tableExists('bf_projects_fund_holders');
+        $selectCols = 'p.id,
                 p.title,
                 p.description,
                 p.project_type,
@@ -385,10 +388,21 @@ class ProjectsModel extends Model
                 p.total_fund_value,
                 p.exchange_enabled,
                 p.linked_token_id,
-                p.ticker,
-                COUNT(DISTINCT h.user_id) as total_holders'
-            )
-            ->join('bf_projects_fund_holders h', 'h.project_id = p.id', 'left')
+                p.ticker';
+
+        if ($hasHolders) {
+            $selectCols .= ', COUNT(DISTINCT h.user_id) as total_holders';
+        } else {
+            $selectCols .= ', 0 as total_holders';
+        }
+
+        $builder = $this->db->table('bf_projects p')->select($selectCols);
+
+        if ($hasHolders) {
+            $builder->join('bf_projects_fund_holders h', 'h.project_id = p.id', 'left');
+        }
+
+        return $builder
             ->where('p.status', 'active')
             ->groupBy('p.id')
             ->orderBy('p.created_at', 'DESC')
@@ -398,6 +412,10 @@ class ProjectsModel extends Model
 
     public function getProjectFullDetails(int $projectId): array
     {
+        if (! $this->db->tableExists('bf_projects')) {
+            return [];
+        }
+
         $project = $this->db->table('bf_projects')
             ->where('id', $projectId)
             ->where('status', 'active')
@@ -408,16 +426,13 @@ class ProjectsModel extends Model
             return [];
         }
 
-        $holders = $this->db->table('bf_projects_fund_holders')
-            ->where('project_id', $projectId)
-            ->countAllResults();
+        $holders = $this->db->tableExists('bf_projects_fund_holders')
+            ? $this->db->table('bf_projects_fund_holders')->where('project_id', $projectId)->countAllResults()
+            : 0;
 
-        $navHistory = $this->db->table('bf_projects_fund_nav_history')
-            ->where('project_id', $projectId)
-            ->orderBy('created_at', 'DESC')
-            ->limit(60)
-            ->get()
-            ->getResult();
+        $navHistory = $this->db->tableExists('bf_projects_fund_nav_history')
+            ? $this->db->table('bf_projects_fund_nav_history')->where('project_id', $projectId)->orderBy('created_at', 'DESC')->limit(60)->get()->getResult()
+            : [];
 
         return [
             'project' => $project,

@@ -425,3 +425,18 @@ input[type="checkbox"].form-check-input {
 .badge .icon {
   margin-right: 0.25rem;
 }
+
+/* =========================================================
+   Fixed Header & Content Spacing Fix
+   Prevents content from colliding/overlapping with the fixed navbar
+   ========================================================= */
+.nk-wrap > .nk-content,
+.nk-content.content-wrapper {
+  margin-top: 65px !important;
+}
+@media (max-width: 991.98px) {
+  .nk-wrap > .nk-content,
+  .nk-content.content-wrapper {
+    margin-top: 75px !important;
+  }
+}
