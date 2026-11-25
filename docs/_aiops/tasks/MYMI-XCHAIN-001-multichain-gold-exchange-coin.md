@@ -4,7 +4,7 @@ repo_key: mymiwallet
 repo_name: MillennialInvestments/mymiwallet-next
 source_agent: Claude
 target_agent: Antigravity
-source_branch: claude/project-thread-whu2g4
+source_branch: claude/project-thread-whu2g4-xchain
 source_pr: null
 base_branch: main
 risk_level: high
