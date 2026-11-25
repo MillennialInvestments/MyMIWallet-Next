@@ -30,6 +30,7 @@ POST API/AiOps/receiveResult # in-method: AIOps service token
 POST API/Ops/dispatch # in-method: authorizeRequest() service token
 
 # Webhooks: public by design, request signature or shared secret checked inside
+POST API/Alerts/webhook/([^/]+) # webhook: AlertWebhookService validates user token segment
 POST API/Discord/interactions # webhook: Discord Ed25519 signature
 POST API/Email/trackBounceWebhook # webhook: ESP webhook token
 POST API/Mdit/webhooks/onramp # webhook: on-ramp signature
@@ -39,6 +40,7 @@ POST API/eSports/receiveResultWebhook # webhook: shared secret
 POST API/CoinVault/contributionEvent # webhook: ExternalContributionService::ingest verifies the raw body signature
 
 # Public by design
+POST API/AI/Chat # public: in-controller AIChatQuotaService IP quota (5/day) or user session
 POST API/mobile/auth/login # public: sign-in endpoint
 POST API/mobile/auth/register # public: sign-up endpoint
 

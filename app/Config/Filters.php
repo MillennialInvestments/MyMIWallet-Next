@@ -389,7 +389,6 @@ class Filters extends BaseConfig
         // GTM-027: signed-in user write APIs (JSON 401 when signed out).
         'apiUser' => [
             'before' => [
-                'API/AI/Chat',
                 'API/AI/LinkSettings',
                 'API/Alerts/generateTradeAlertSummary',
                 'API/Alerts/getLatestPrices',

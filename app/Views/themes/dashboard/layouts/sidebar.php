@@ -275,7 +275,7 @@ $agent                  = service('request')->getUserAgent();
                                 <li class="nk-menu-item">
                                     <form action="<?= site_url('logout') ?>" method="post" class="m-0">
                                         <?= csrf_field() ?>
-                                        <button type="submit" class="nk-menu-link border-0 bg-transparent w-100 text-start">
+                                        <button type="submit" class="nk-menu-link border-0 bg-transparent w-100 text-start" href="<?= site_url('logout') ?>">
                                             <span class="nk-menu-text">Sign Out</span>
                                         </button>
                                     </form>

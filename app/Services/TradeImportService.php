@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Libraries\Trades\OCCSymbolParser;
 use App\Models\InvestmentModel;
 use DateTime;
 use Exception;
@@ -90,6 +91,8 @@ class TradeImportService
 
     /**
      * Compute a deterministic hash for duplicate detection.
+     * Incorporates order/execution IDs, timestamps, and OCC contract identifiers
+     * so legitimate repeated fills at the same price are never falsely discarded.
      */
     public function computeTradeSignature(int $userId, array $trade): string
     {
@@ -98,8 +101,11 @@ class TradeImportService
         $price     = sprintf('%.4F', (float) ($trade['entry_price'] ?? 0));
         $openDate  = trim((string) ($trade['open_date'] ?? ''));
         $posType   = strtoupper(trim((string) ($trade['position_type'] ?? 'BUY')));
+        $orderId   = trim((string) ($trade['order_id'] ?? $trade['broker_order_id'] ?? ''));
+        $execTime  = trim((string) ($trade['open_time'] ?? $trade['execution_time'] ?? ''));
+        $occSymbol = trim((string) ($trade['details'] ?? $trade['occ_symbol'] ?? ''));
 
-        return hash('sha256', "{$userId}|{$symbol}|{$shares}|{$price}|{$openDate}|{$posType}");
+        return hash('sha256', "{$userId}|{$symbol}|{$shares}|{$price}|{$openDate}|{$posType}|{$orderId}|{$execTime}|{$occSymbol}");
     }
 
     /**
@@ -175,6 +181,16 @@ class TradeImportService
 
                 // Prepare record for insertion
                 $totalCost = (float) ($trade['total_trade_costs'] ?? ($shares * $price));
+                $jsonFields = array_filter([
+                    'order_id'            => $trade['order_id'] ?? null,
+                    'details'             => $trade['details'] ?? null,
+                    'strike'              => $trade['strike'] ?? null,
+                    'expiration'          => $trade['expiration'] ?? null,
+                    'number_of_contracts' => $trade['number_of_contracts'] ?? null,
+                    'total_fees'          => isset($trade['total_fees']) && (float) $trade['total_fees'] > 0 ? (float) $trade['total_fees'] : null,
+                    'occ_symbol'          => $trade['details'] ?? null,
+                ], static fn($v) => $v !== null);
+
                 $record = [
                     'user_id'           => $userId,
                     'symbol'            => $symbol,
@@ -184,14 +200,15 @@ class TradeImportService
                     'total_trade_cost'  => $totalCost,
                     'total_trade_costs' => $totalCost,
                     'order_status'      => $trade['order_status'] ?? 'Open',
-                    'trade_type'        => $trade['trade_type'] ?? 'Stock',
+                    'trade_type'        => (string) ($trade['trade_type'] ?? 'Stock'),
                     'position_type'     => $trade['position_type'] ?? 'BUY',
                     'open_date'         => $trade['open_date'] ?? date('Y-m-d'),
                     'submitted_date'    => date('Y-m-d H:i:s'),
                     'created_on'        => date('Y-m-d H:i:s'),
                     'status'            => 'Active',
                     'active'            => 1,
-                    'closed'            => 'false',
+                    'closed'            => ($trade['order_status'] ?? 'Open') === 'Closed' ? 'true' : 'false',
+                    'json_user_fields'  => ! empty($jsonFields) ? $jsonFields : null,
                 ];
 
                 $insertId = $this->investmentModel->addTrade($record);
@@ -278,22 +295,28 @@ class TradeImportService
         $map = [];
         foreach ($headers as $index => $raw) {
             $clean = strtolower(trim((string) $raw));
-            $clean = str_replace([' ', '_', '-'], '', $clean);
+            $clean = str_replace([' ', '_', '-', '&'], '', $clean);
 
             if (in_array($clean, ['symbol', 'ticker', 'asset', 'stocksymbol'], true)) {
                 $map['symbol'] = $index;
-            } elseif (in_array($clean, ['shares', 'quantity', 'qty', 'units', 'amount'], true)) {
+            } elseif (in_array($clean, ['shares', 'quantity', 'qty', 'units', 'contracts'], true)) {
                 $map['shares'] = $index;
-            } elseif (in_array($clean, ['price', 'entryprice', 'purchaseprice', 'avgprice', 'costpershare'], true)) {
+            } elseif (in_array($clean, ['price', 'entryprice', 'purchaseprice', 'avgprice', 'costpershare', 'execprice'], true)) {
                 $map['entry_price'] = $index;
             } elseif (in_array($clean, ['currentprice', 'marketprice', 'lastprice'], true)) {
                 $map['current_price'] = $index;
-            } elseif (in_array($clean, ['date', 'tradedate', 'opendate', 'executedate', 'datetime'], true)) {
+            } elseif (in_array($clean, ['date', 'tradedate', 'opendate', 'executedate', 'datetime', 'time'], true)) {
                 $map['open_date'] = $index;
-            } elseif (in_array($clean, ['type', 'tradetype', 'action', 'side', 'orderstatus', 'positiontype'], true)) {
+            } elseif (in_array($clean, ['type', 'tradetype', 'action', 'side', 'orderstatus', 'positiontype', 'orderside'], true)) {
                 $map['position_type'] = $index;
-            } elseif (in_array($clean, ['totalcost', 'totaltradecost', 'totaltradecosts', 'netamount', 'total'], true)) {
+            } elseif (in_array($clean, ['amount', 'netamount', 'totalcost', 'totaltradecost', 'totaltradecosts', 'total', 'cost'], true)) {
                 $map['total_trade_costs'] = $index;
+            } elseif (in_array($clean, ['fees', 'commissions', 'feescomm', 'commission', 'totalfees'], true)) {
+                $map['fees'] = $index;
+            } elseif (in_array($clean, ['orderid', 'order#', 'executionid', 'order', 'id'], true)) {
+                $map['order_id'] = $index;
+            } elseif (in_array($clean, ['description', 'securitydescription', 'desc', 'contract'], true)) {
+                $map['description'] = $index;
             }
         }
 
@@ -305,21 +328,41 @@ class TradeImportService
      */
     protected function parseRow(array $cols, array $headerMap, int $rowNum): array
     {
-        $symbolIndex = $headerMap['symbol'];
+        $symbolIndex = $headerMap['symbol'] ?? null;
         $sharesIndex = $headerMap['shares'];
         $priceIndex  = $headerMap['entry_price'];
 
-        $rawSymbol = trim((string) ($cols[$symbolIndex] ?? ''));
+        $rawSymbol = $symbolIndex !== null ? trim((string) ($cols[$symbolIndex] ?? '')) : '';
+        $rawDesc   = isset($headerMap['description']) ? trim((string) ($cols[$headerMap['description']] ?? '')) : '';
         $rawShares = trim((string) ($cols[$sharesIndex] ?? ''));
         $rawPrice  = trim((string) ($cols[$priceIndex] ?? ''));
 
-        if ($rawSymbol === '') {
+        // If symbol is missing or contains full option description, try parsing via OCCSymbolParser
+        $parsedOcc = OCCSymbolParser::parse($rawSymbol) ?? OCCSymbolParser::parse($rawDesc);
+
+        if ($rawSymbol === '' && $parsedOcc === null) {
             return ['error' => "Row {$rowNum}: Symbol cannot be empty."];
         }
 
-        $symbol = strtoupper($rawSymbol);
-        if (! preg_match('/^[A-Z0-9\.\-]{1,15}$/', $symbol)) {
-            return ['error' => "Row {$rowNum}: Invalid symbol format '{$rawSymbol}'."];
+        if ($parsedOcc !== null) {
+            $symbol = $parsedOcc['underlying'];
+            $isOption = true;
+            $details = $parsedOcc['occ_symbol'];
+            $tradeType = $parsedOcc['option_type'];
+            $strike = $parsedOcc['strike'];
+            $expiration = $parsedOcc['expiration'];
+            $multiplier = 100;
+        } else {
+            $symbol = strtoupper($rawSymbol);
+            if (! preg_match('/^[A-Z0-9\.\-]{1,15}$/', $symbol)) {
+                return ['error' => "Row {$rowNum}: Invalid symbol format '{$rawSymbol}'."];
+            }
+            $isOption = false;
+            $details = null;
+            $tradeType = 'Stock';
+            $strike = null;
+            $expiration = null;
+            $multiplier = 1;
         }
 
         // Clean currency / commas
@@ -351,18 +394,59 @@ class TradeImportService
             }
         }
 
-        // Position / Action resolution
-        $posType = 'BUY';
-        if (isset($headerMap['position_type'], $cols[$headerMap['position_type']])) {
-            $rawPos = strtoupper(trim((string) $cols[$headerMap['position_type']]));
-            if (in_array($rawPos, ['SELL', 'CLOSING', 'SHORT'], true)) {
-                $posType = 'SELL';
-            } elseif (in_array($rawPos, ['BUY', 'OPENING', 'LONG'], true)) {
-                $posType = 'BUY';
+        // Fees resolution
+        $fees = 0.0;
+        if (isset($headerMap['fees'], $cols[$headerMap['fees']])) {
+            $rawFees = str_replace(['$', ',', ' '], '', trim((string) $cols[$headerMap['fees']]));
+            if (is_numeric($rawFees) && (float) $rawFees >= 0) {
+                $fees = (float) $rawFees;
             }
         }
 
-        $totalCost = $shares * $price;
+        // Order ID resolution
+        $orderId = null;
+        if (isset($headerMap['order_id'], $cols[$headerMap['order_id']])) {
+            $rawOrderId = trim((string) $cols[$headerMap['order_id']]);
+            if ($rawOrderId !== '') {
+                $orderId = $rawOrderId;
+            }
+        }
+
+        // Position / Action resolution
+        $posType = 'BUY';
+        $orderStatus = 'Open';
+        $category = $isOption ? 'option_buy' : 'stock_buy';
+
+        if (isset($headerMap['position_type'], $cols[$headerMap['position_type']])) {
+            $rawPos = strtoupper(trim((string) $cols[$headerMap['position_type']]));
+            if (str_contains($rawPos, 'BUY TO OPEN') || $rawPos === 'BTO') {
+                $posType = 'BUY';
+                $orderStatus = 'Open';
+                $category = 'option_buy';
+            } elseif (str_contains($rawPos, 'SELL TO CLOSE') || $rawPos === 'STC') {
+                $posType = 'SELL';
+                $orderStatus = 'Closed';
+                $category = 'option_sell';
+            } elseif (str_contains($rawPos, 'SELL TO OPEN') || $rawPos === 'STO') {
+                $posType = 'SELL';
+                $orderStatus = 'Open';
+                $category = 'option_sell';
+            } elseif (str_contains($rawPos, 'BUY TO CLOSE') || $rawPos === 'BTC') {
+                $posType = 'BUY';
+                $orderStatus = 'Closed';
+                $category = 'option_buy';
+            } elseif (in_array($rawPos, ['SELL', 'CLOSING', 'SHORT'], true)) {
+                $posType = 'SELL';
+                $orderStatus = 'Closed';
+                $category = $isOption ? 'option_sell' : 'stock_sell';
+            } elseif (in_array($rawPos, ['BUY', 'OPENING', 'LONG'], true)) {
+                $posType = 'BUY';
+                $orderStatus = 'Open';
+                $category = $isOption ? 'option_buy' : 'stock_buy';
+            }
+        }
+
+        $totalCost = ($shares * $price * $multiplier) + $fees;
         if (isset($headerMap['total_trade_costs'], $cols[$headerMap['total_trade_costs']])) {
             $rawCost = str_replace(['$', ',', ' '], '', trim((string) $cols[$headerMap['total_trade_costs']]));
             if (is_numeric($rawCost) && (float) $rawCost > 0) {
@@ -372,15 +456,22 @@ class TradeImportService
 
         return [
             'trade' => [
-                'symbol'            => $symbol,
-                'shares'            => $shares,
-                'entry_price'       => $price,
-                'current_price'     => $price,
-                'total_trade_costs' => $totalCost,
-                'order_status'      => 'Open',
-                'trade_type'        => 'Stock',
-                'position_type'     => $posType,
-                'open_date'         => $openDate,
+                'order_id'            => $orderId,
+                'symbol'              => $symbol,
+                'details'             => $details,
+                'shares'              => $shares,
+                'number_of_contracts' => $isOption ? (int) $shares : null,
+                'strike'              => $strike,
+                'expiration'          => $expiration,
+                'entry_price'         => $price,
+                'current_price'       => $price,
+                'total_trade_costs'   => $totalCost,
+                'total_fees'          => $fees,
+                'order_status'        => $orderStatus,
+                'trade_type'          => $tradeType,
+                'category'            => $category,
+                'position_type'       => $posType,
+                'open_date'           => $openDate,
             ],
         ];
     }

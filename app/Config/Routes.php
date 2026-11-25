@@ -321,13 +321,17 @@ $routes->post('/resend-activation', 'AuthController::resendActivationCode', ['as
 // Dev tools. GTM-016: never served in production. whoami echoes the session id and
 // request headers (cookies), and the probes are diagnostics only.
 if (ENVIRONMENT !== 'production') {
-    $routes->get('Dev/BitcoinTest', '\App\Controllers\Dev\BitcoinTest::index');
+    if (class_exists('\App\Controllers\Dev\BitcoinTest')) {
+        $routes->get('Dev/BitcoinTest', '\App\Controllers\Dev\BitcoinTest::index');
+    }
     $routes->get('Debug/whoami', 'Debug::whoami');
     $routes->get('Debug/auth-audit-cache', 'Debug::authAuditCacheSelfTest');
 
-    $routes->group('debug', ['namespace' => '\App\Controllers\Debug'], static function ($routes) {
-        $routes->get('common-data/smoke', 'CommonDataController::smoke');
-    });
+    if (class_exists('\App\Controllers\Debug\CommonDataController')) {
+        $routes->group('debug', ['namespace' => '\App\Controllers\Debug'], static function ($routes) {
+            $routes->get('common-data/smoke', 'CommonDataController::smoke');
+        });
+    }
     $routes->get('debug/register-success-probe', 'AuthController::registerSuccessProbe');
 }
 $routes->get('API/Management/error-heatmap', 'SystemDebugController::errorHeatmap', ['filter' => 'permission:admin.access']);
@@ -479,6 +483,7 @@ $routes->group('', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 
     // $routes->get('/Support', 'DashboardController::support', ['as' => 'support']);
     // $routes->match(['GET', 'POST'], '/', 'InvestmentsController::tradeTracker');
     $routes->get('/Trade-Tracker', 'InvestmentsController::tradeTracker', ['as' => 'mymi-trade-tracker']);
+    $routes->get('/Investments/Trade-Tracker', 'InvestmentsController::tradeTracker', ['as' => 'mymi-investments-trade-tracker', 'filter' => 'login']);
     $routes->get('/Investments/Options', '\App\Modules\User\Controllers\OptionsController::index', ['as' => 'mymi-options-momentum']);
     $routes->get('/Trade-Tracker/getTradeData', 'InvestmentsController::getTradeData', ['as' => 'get-trade-tracker-data']);
     $routes->post('/Trade-Tracker/saveTradeData', 'InvestmentsController::saveTradeData', ['as' => 'save-trade-tracker-data']);
@@ -2704,12 +2709,23 @@ $routes->group('API/Alerts', ['namespace' => '\\App\\Modules\\APIs\\Controllers'
     $routes->match(['GET', 'POST'], 'processAllEmails', '\\App\\Modules\\APIs\\Controllers\\AlertsAPIController::processAllEmails');
     $routes->get('previewScraper/(:num)', '\\App\\Modules\\APIs\\Controllers\\AlertsAPIController::previewScraper/$1');
     $routes->get('scanner', 'AlertsAPIController::scanner', ['filter' => 'internalToken']);
+    // Centralized Inbound Webhook & User Alerts
+    $routes->post('webhook/(:segment)', 'AlertWebhookAPIController::receiveWebhook/$1');
+    $routes->post('regenerateWebhook', 'AlertWebhookAPIController::regenerateWebhook', ['filter' => 'login']);
+    $routes->get('userAlerts', 'AlertWebhookAPIController::userAlerts', ['filter' => 'login']);
+    $routes->post('dismissAlert/(:num)', 'AlertWebhookAPIController::dismissAlert/$1', ['filter' => 'login']);
+});
+
+$routes->group('API/Admin/PayPalSmokeTest', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => 'login'], static function($routes) {
+    $routes->post('audit', 'PayPalSmokeTestAPIController::audit');
+    $routes->post('probe', 'PayPalSmokeTestAPIController::probe');
+    $routes->post('simulate', 'PayPalSmokeTestAPIController::simulate');
 });
 
 $routes->group('API/Options', ['namespace' => '\App\Modules\APIs\Controllers'], static function($routes) {
     $routes->post('webhook', 'OptionsWebhookController::receiveWebhook');
     $routes->get('candidates', 'OptionsWebhookController::candidates');
-    $routes->get('positions', 'OptionsWebhookController::positions');
+    $routes->get('positions', 'OptionsWebhookController::positions', ['filter' => 'login']);
 });
 
 $routes->group('system', static function($routes) {
