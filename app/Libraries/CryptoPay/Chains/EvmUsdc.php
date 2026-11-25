@@ -19,6 +19,16 @@ final class EvmUsdc implements ChainAdapter
     /** Blocks per eth_getLogs call and calls per sweep (public RPCs cap the range). */
     private const CHUNK = 1000;
     private const MAX_CHUNKS = 10;
+    /**
+     * Blocks behind the head that are always read again. Public RPCs sit
+     * behind load balancers, and a lagging backend can answer eth_getLogs
+     * with nothing for blocks it has not seen yet; re-reading the newest
+     * blocks keeps such a payment from being skipped.
+     */
+    private const REREAD_BLOCKS = 20;
+
+    /** @var array<string, true> endpoints that reported this chain's id */
+    private array $verified = [];
 
     /** @param list<string> $endpoints */
     public function __construct(
@@ -84,15 +94,36 @@ final class EvmUsdc implements ChainAdapter
 
     public function cursor(): ?int
     {
-        $hex = $this->rpc('eth_blockNumber', []);
-        return is_string($hex) && preg_match('/^0x[0-9a-f]+$/i', $hex) ? (int) hexdec($hex) : null;
+        foreach ($this->endpoints as $url) {
+            $head = $this->head($url);
+            if ($head !== null) {
+                return $head;
+            }
+        }
+        return null;
     }
 
+    /**
+     * The head and the logs come from the same endpoint, so one sweep never
+     * mixes a fresh head from one node with logs from another that is behind.
+     */
     public function payments(array $row): array
     {
-        $latest = $this->cursor();
+        foreach ($this->endpoints as $url) {
+            $result = $this->scan($url, $row);
+            if ($result !== null) {
+                return $result;
+            }
+        }
+        return [[], false, null];
+    }
+
+    /** @return array{0: list<array>, 1: bool, 2: ?int}|null null when this endpoint could not be read at all */
+    private function scan(string $url, array $row): ?array
+    {
+        $latest = $this->head($url);
         if ($latest === null) {
-            return [[], false, null];
+            return null;
         }
         $recipient = strtolower((string) $row['recipient']);
         $topicTo = '0x' . str_pad(substr($recipient, 2), 64, '0', STR_PAD_LEFT);
@@ -102,11 +133,14 @@ final class EvmUsdc implements ChainAdapter
         $readTo = $from - 1;
         for ($i = 0; $i < self::MAX_CHUNKS && $from <= $latest; $i++) {
             $to = min($latest, $from + self::CHUNK - 1);
-            $logs = $this->rpc('eth_getLogs', [[
+            $logs = $this->rpcAt($url, 'eth_getLogs', [[
                 'fromBlock' => '0x' . dechex($from), 'toBlock' => '0x' . dechex($to),
                 'address' => $this->usdc, 'topics' => [self::TRANSFER_TOPIC, null, $topicTo],
             ]]);
             if (! is_array($logs)) {
+                if ($i === 0) {
+                    return null; // try the next endpoint
+                }
                 $complete = false;
                 break;
             }
@@ -122,8 +156,8 @@ final class EvmUsdc implements ChainAdapter
         if ($from <= $latest) {
             $complete = false; // more blocks than one sweep reads; the next sweep continues
         }
-        // Only blocks deep enough to be final are skipped next time; newer ones are read again.
-        $scannedTo = min($readTo, $latest - $this->confirmations + 1);
+        // Only blocks deep enough to be final, plus a margin, are skipped next time; newer ones are read again.
+        $scannedTo = min($readTo, $latest - $this->confirmations + 1 - self::REREAD_BLOCKS);
 
         return [$found, $complete, $scannedTo >= (int) $row['start_cursor'] ? $scannedTo : null];
     }
@@ -172,14 +206,36 @@ final class EvmUsdc implements ChainAdapter
         return sprintf('ethereum:%s@%d/transfer?address=%s&uint256=%s', $this->usdc, $this->chainId, strtolower((string) $row['recipient']), (string) $row['asset_amount']);
     }
 
-    private function rpc(string $method, array $params): mixed
+    private function head(string $url): ?int
     {
-        foreach ($this->endpoints as $url) {
-            $json = $this->http->postJson($url, ['jsonrpc' => '2.0', 'id' => 1, 'method' => $method, 'params' => $params]);
-            if (is_array($json) && array_key_exists('result', $json)) {
-                return $json['result'];
-            }
+        if (! $this->onChain($url)) {
+            return null;
         }
-        return null;
+        $hex = $this->rpcAt($url, 'eth_blockNumber', []);
+        return is_string($hex) && preg_match('/^0x[0-9a-f]+$/i', $hex) ? (int) hexdec($hex) : null;
+    }
+
+    /** An endpoint is used only after it reports this chain's id, so a testnet RPC can never settle a mainnet checkout. */
+    private function onChain(string $url): bool
+    {
+        if (isset($this->verified[$url])) {
+            return true;
+        }
+        $id = $this->rpcAt($url, 'eth_chainId', []);
+        if (! is_string($id) || ! preg_match('/^0x[0-9a-f]+$/i', $id)) {
+            return false;
+        }
+        if ((int) hexdec($id) !== $this->chainId) {
+            log_message('error', 'Crypto checkout: {chain} endpoint {url} is on chain {got}, expected {want}; not used', ['chain' => $this->chain, 'url' => parse_url($url, PHP_URL_HOST), 'got' => (int) hexdec($id), 'want' => $this->chainId]);
+            return false;
+        }
+        $this->verified[$url] = true;
+        return true;
+    }
+
+    private function rpcAt(string $url, string $method, array $params): mixed
+    {
+        $json = $this->http->postJson($url, ['jsonrpc' => '2.0', 'id' => 1, 'method' => $method, 'params' => $params]);
+        return is_array($json) && array_key_exists('result', $json) ? $json['result'] : null;
     }
 }

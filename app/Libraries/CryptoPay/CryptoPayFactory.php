@@ -41,7 +41,7 @@ final class CryptoPayFactory
             $urls = $config->endpoints[$chain];
             $out[$chain] = match ($chain) {
                 'ethereum', 'base' => new EvmUsdc($chain, CryptoPayConfig::CHAIN_IDS[$chain][$net], CryptoPayConfig::USDC[$chain][$net], $urls, $http, $config->confirmations[$chain]),
-                'xrpl'             => new Xrpl($urls, $http, $prices),
+                'xrpl'             => new Xrpl($net, $urls, $http, $prices),
                 'bitcoin'          => new Bitcoin($net, $urls, $http, $prices),
             };
         }

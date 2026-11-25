@@ -30,6 +30,11 @@ final class CryptoPayService
     private const MAX_OPEN_PER_USER = 5;
     private const RESUME_AFTER_SECONDS = 300;
     private const TAG_TRIES = 25;
+    /**
+     * Seconds after expiry a payment may still settle the checkout at its quoted
+     * rate. Bitcoin allows for miner clocks, which can run up to two hours off.
+     */
+    private const LATE_GRACE = ['xrpl' => 600, 'bitcoin' => 7200];
 
     public const TABLE = 'bf_crypto_pay_requests';
 
@@ -145,6 +150,7 @@ final class CryptoPayService
             'asset_amount'   => $amount,
             'rate'           => (string) $quote['rate'],
             'dest_tag'       => $tag,
+            'match_key'      => $tag === null ? $chain . ':amount:' . $amount : $chain . ':tag:' . $tag,
             'recipient'      => $recipient,
             'start_cursor'   => $cursor,
             'scan_cursor'    => 0,
@@ -153,9 +159,30 @@ final class CryptoPayService
             'expires_at'     => $now + $this->config->requestTtlSeconds,
             'updated_at'     => $now,
         ];
-        $this->db->table(self::TABLE)->insert($row);
+        if (! $this->insertOpen($row)) {
+            return ['ok' => false, 'error' => 'busy_try_again'];
+        }
 
         return ['ok' => true] + $this->instructions($row, $adapter);
+    }
+
+    /** Insert an open checkout; false when another one took the same amount or tag a moment earlier. */
+    private function insertOpen(array $row): bool
+    {
+        $error = null;
+        try {
+            $ok = (bool) $this->db->table(self::TABLE)->insert($row);
+        } catch (\CodeIgniter\Database\Exceptions\DatabaseException $e) {
+            $ok = false;
+            $error = $e;
+        }
+        if ($ok) {
+            return true;
+        }
+        if ($this->db->table(self::TABLE)->where('match_key', $row['match_key'])->countAllResults() > 0) {
+            return false;
+        }
+        throw $error ?? new \RuntimeException('crypto checkout not saved');
     }
 
     /** What the page shows: amounts, address, tag and the wallet link. */
@@ -231,10 +258,6 @@ final class CryptoPayService
         }
 
         [$payments, $complete, $scannedTo] = $adapter->payments($row);
-        if ($scannedTo !== null && $scannedTo > (int) $row['scan_cursor']) {
-            $this->db->table(self::TABLE)->where('reference', $reference)->where('status', 'pending')
-                ->update(['scan_cursor' => $scannedTo]);
-        }
         $required = (int) ($this->config->confirmations[$row['chain']] ?? 1);
         $waiting = null;
         foreach ($payments as $p) {
@@ -242,36 +265,83 @@ final class CryptoPayService
                 $waiting = max($waiting ?? 0, $p['confirmations']);
                 continue;
             }
-            $accepted = $this->accept($row, $p);
+            $accepted = $this->isLate($row, $p) ? $this->late($row, $p) : $this->accept($row, $p);
             if ($accepted !== null) {
                 return $accepted;
             }
+        }
+        // Saved only after every payment found was handled: a failure above
+        // throws first, so those blocks or ledgers are read again next time.
+        if ($scannedTo !== null && $scannedTo > (int) $row['scan_cursor']) {
+            $this->db->table(self::TABLE)->where('reference', $reference)->where('status', 'pending')
+                ->update(['scan_cursor' => $scannedTo]);
         }
         if ($waiting !== null) {
             return ['ok' => true, 'status' => 'pending', 'seen' => true, 'message' => sprintf('Payment seen; waiting for confirmations (%d of %d).', $waiting, $required)];
         }
         if ($complete && (int) $row['expires_at'] < $this->now() - 120) {
             $this->db->table(self::TABLE)->where('reference', $reference)->where('status', 'pending')
-                ->update(['status' => 'expired', 'updated_at' => $this->now()]);
+                ->update(['status' => 'expired', 'match_key' => null, 'updated_at' => $this->now()]);
             return ['ok' => false, 'status' => 'expired', 'error' => 'checkout_expired'];
         }
         return ['ok' => true, 'status' => 'pending', 'message' => 'Waiting for the payment.'];
     }
 
-    /** @param array{id: string, amount: int, payer: string, confirmations: int} $payment */
-    private function accept(array $row, array $payment): ?array
+    /** A payment the chain dates after the checkout expired (plus grace) is not delivered at the old rate. */
+    private function isLate(array $row, array $payment): bool
     {
-        $now = $this->now();
-        try {
-            $this->db->table(self::TABLE)->where('reference', (string) $row['reference'])->where('status', 'pending')
-                ->update(['status' => 'confirmed', 'payment_id' => $payment['id'], 'payer' => mb_substr($payment['payer'], 0, 100), 'updated_at' => $now]);
-        } catch (\CodeIgniter\Database\Exceptions\DatabaseException) {
-            return null; // this payment already settled another checkout
+        $grace = self::LATE_GRACE[$row['chain']] ?? null;
+        return $grace !== null && isset($payment['time']) && (int) $payment['time'] > (int) $row['expires_at'] + $grace;
+    }
+
+    /** Record a late payment for support (deliver or refund); it never settles at the expired quote. */
+    private function late(array $row, array $payment): ?array
+    {
+        if (! $this->claimPayment($row, $payment, ['status' => 'unfulfilled', 'result' => 'late_payment'])) {
+            return null;
         }
         if ($this->db->affectedRows() !== 1) {
             return $this->state($this->find((string) $row['reference']) ?? $row);
         }
-        return $this->deliver(['status' => 'confirmed', 'payment_id' => $payment['id'], 'payer' => $payment['payer'], 'updated_at' => $now] + $row);
+        log_message('warning', 'Crypto checkout {ref}: payment {p} arrived after the checkout expired; sent to support', ['ref' => $row['reference'], 'p' => $payment['id']]);
+        return $this->state(['status' => 'unfulfilled', 'result' => 'late_payment', 'payment_id' => $payment['id']] + $row);
+    }
+
+    /** @param array{id: string, amount: int, payer: string, confirmations: int} $payment */
+    private function accept(array $row, array $payment): ?array
+    {
+        if (! $this->claimPayment($row, $payment, ['status' => 'confirmed'])) {
+            return null;
+        }
+        if ($this->db->affectedRows() !== 1) {
+            return $this->state($this->find((string) $row['reference']) ?? $row);
+        }
+        return $this->deliver(['status' => 'confirmed', 'payment_id' => $payment['id'], 'payer' => $payment['payer'], 'updated_at' => $this->now()] + $row);
+    }
+
+    /**
+     * Ties the payment to this pending checkout. False only when the payment
+     * already settled another checkout (unique payment_id); any other database
+     * error is thrown, so the payment is read and tried again on the next sweep.
+     */
+    private function claimPayment(array $row, array $payment, array $set): bool
+    {
+        $error = null;
+        try {
+            $ok = $this->db->table(self::TABLE)->where('reference', (string) $row['reference'])->where('status', 'pending')
+                ->update($set + ['payment_id' => $payment['id'], 'payer' => mb_substr($payment['payer'], 0, 100), 'match_key' => null, 'updated_at' => $this->now()]);
+        } catch (\CodeIgniter\Database\Exceptions\DatabaseException $e) {
+            $ok = false;
+            $error = $e;
+        }
+        if ($ok !== false) {
+            return true;
+        }
+        $elsewhere = $this->db->table(self::TABLE)->where('payment_id', $payment['id'])->where('reference !=', (string) $row['reference'])->countAllResults();
+        if ($elsewhere > 0) {
+            return false;
+        }
+        throw $error ?? new \RuntimeException('crypto checkout payment not recorded');
     }
 
     private function resume(string $reference): array
@@ -360,7 +430,9 @@ final class CryptoPayService
         return match ($row['status']) {
             'fulfilled'   => ['ok' => true, 'status' => 'fulfilled', 'payment' => (string) $row['payment_id'], 'message' => 'Payment confirmed.'],
             'confirmed'   => ['ok' => true, 'status' => 'confirmed', 'payment' => (string) $row['payment_id'], 'message' => 'Payment confirmed; finishing your order.'],
-            'unfulfilled' => ['ok' => true, 'status' => 'unfulfilled', 'payment' => (string) $row['payment_id'], 'message' => 'Payment confirmed. Support will finish your order shortly.'],
+            'unfulfilled' => ($row['result'] ?? '') === 'late_payment'
+                ? ['ok' => true, 'status' => 'unfulfilled', 'payment' => (string) $row['payment_id'], 'message' => 'Payment received after this checkout expired. Support will finish your order or refund you.']
+                : ['ok' => true, 'status' => 'unfulfilled', 'payment' => (string) $row['payment_id'], 'message' => 'Payment confirmed. Support will finish your order shortly.'],
             'expired'     => ['ok' => false, 'status' => 'expired', 'error' => 'checkout_expired'],
             default       => ['ok' => true, 'status' => (string) $row['status']],
         };

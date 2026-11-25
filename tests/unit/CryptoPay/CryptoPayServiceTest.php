@@ -62,6 +62,9 @@ final class CryptoPayServiceTest extends CIUnitTestCase
     /** @var list<array> Esplora txs, newest first */
     private array $btcTxs = [];
     private int $btcTip = 100;
+    private string $evmChainId = '0x14a34'; // 84532, Base Sepolia
+    private int $xrplNetworkId = 1;
+    private const TESTNET4_GENESIS = '00000000da84f2bafbbc53dee25a72ae507ff4914b867c565be350b0da8bf043';
     /** @var list<array> */
     private array $fulfilled = [];
     private CryptoPayFakeHttp $http;
@@ -85,6 +88,7 @@ final class CryptoPayServiceTest extends CIUnitTestCase
         $this->http->post[self::XRPL_RPC] = fn (array $b): ?array => $this->xrpl($b);
         $this->setPrices('2.00', '2.01', '100000', '100100');
         $this->http->gets[self::ESPLORA . '/blocks/tip/height'] = null; // set per call below
+        $this->http->gets[self::ESPLORA . '/block-height/0'] = self::TESTNET4_GENESIS;
     }
 
     private function setPrices(string $xrpA, string $xrpB, string $btcA, string $btcB): void
@@ -101,6 +105,7 @@ final class CryptoPayServiceTest extends CIUnitTestCase
             return null;
         }
         return match ($b['method']) {
+            'eth_chainId' => ['result' => $this->evmChainId],
             'eth_blockNumber' => ['result' => '0x' . dechex($this->block)],
             'eth_getLogs' => ['result' => array_values(array_filter($this->logs, static fn (array $l): bool => hexdec($l['blockNumber']) >= hexdec($b['params'][0]['fromBlock'])
                 && hexdec($l['blockNumber']) <= hexdec($b['params'][0]['toBlock'])))],
@@ -111,6 +116,7 @@ final class CryptoPayServiceTest extends CIUnitTestCase
     private function xrpl(array $b): ?array
     {
         return match ($b['method']) {
+            'server_info' => ['result' => ['status' => 'success', 'info' => ['network_id' => $this->xrplNetworkId, 'validated_ledger' => ['seq' => 9000]]]],
             'ledger' => ['result' => ['status' => 'success', 'ledger_index' => 9000]],
             'account_tx' => ['result' => ['status' => 'success', 'ledger_index_max' => 9100, 'transactions' => array_values(array_filter($this->xrplTxs,
                 static fn (array $t): bool => $t['ledger_index'] >= $b['params'][0]['ledger_index_min']))]],
@@ -136,7 +142,7 @@ final class CryptoPayServiceTest extends CIUnitTestCase
         $prices = new SpotPrice($this->http);
         $chains = [
             'base'    => new EvmUsdc('base', 84532, self::USDC, [self::EVM_RPC_2, self::EVM_RPC], $this->http, 2),
-            'xrpl'    => new Xrpl([self::XRPL_RPC], $this->http, $prices),
+            'xrpl'    => new Xrpl('testnet', [self::XRPL_RPC], $this->http, $prices),
             'bitcoin' => new Bitcoin('testnet', [self::ESPLORA], $this->http, $prices),
         ];
         $fulfillers = [];
@@ -181,7 +187,7 @@ final class CryptoPayServiceTest extends CIUnitTestCase
         $this->assertSame(84532, $a['chain_id']);
         $this->assertSame('ethereum:' . self::USDC . '@84532/transfer?address=' . self::MYMI_EVM . '&uint256=' . $raw, $a['uri']);
         $this->assertSame(500, (int) $this->row($a['reference'])['start_cursor']);
-        $this->assertContains(self::EVM_RPC_2 . ' eth_blockNumber', $this->http->log, 'first endpoint tried, then failover');
+        $this->assertContains(self::EVM_RPC_2 . ' eth_chainId', $this->http->log, 'first endpoint tried, then failover');
 
         $this->assertSame('chain_not_available', $svc->checkout(7, 'ethereum', 'mymigold', '', 2500)['error']);
         $this->assertSame('chain_not_available', $svc->checkout(7, 'dogecoin', 'mymigold', '', 2500)['error']);
@@ -277,10 +283,13 @@ final class CryptoPayServiceTest extends CIUnitTestCase
         $c = $svc->checkout(7, 'base', 'mymigold', 'w1', 1000);
         $this->block = 520;
         $svc->confirm($c['reference'], 7);
-        $this->assertSame(519, (int) $this->row($c['reference'])['scan_cursor'], 'blocks with fewer than 2 confirmations are read again');
+        $this->assertSame(0, (int) $this->row($c['reference'])['scan_cursor'], 'the newest 20 blocks are always read again (lagging public nodes)');
+        $this->block = 560;
+        $svc->confirm($c['reference'], 7);
+        $this->assertSame(539, (int) $this->row($c['reference'])['scan_cursor'], 'blocks with fewer than 2 confirmations, plus a margin, are read again');
 
-        $this->usdcLog((int) $c['amount_raw'], 520);
-        $this->block = 521;
+        $this->usdcLog((int) $c['amount_raw'], 560);
+        $this->block = 561;
         $this->assertSame('fulfilled', $svc->confirm($c['reference'], 7)['status']);
     }
 
@@ -393,6 +402,92 @@ final class CryptoPayServiceTest extends CIUnitTestCase
         $cfg->network = 'testnet';
         $this->assertSame(['base'], $cfg->chains());
         $this->assertSame(84532, CryptoPayConfig::CHAIN_IDS['base']['testnet']);
+    }
+
+    public function testEndpointsOnTheWrongNetworkAreNeverUsed(): void
+    {
+        $this->evmChainId = '0x2105'; // Base mainnet answering where Base Sepolia is configured
+        $this->assertSame('network_unavailable', $this->service()->checkout(7, 'base', 'mymigold', 'w1', 1000)['error']);
+
+        $this->xrplNetworkId = 0; // an XRPL mainnet server where testnet is configured
+        $this->assertSame('network_unavailable', $this->service()->checkout(7, 'xrpl', 'mymigold', 'w1', 1000)['error']);
+        $mainnet = new Xrpl('mainnet', [self::XRPL_RPC], $this->http, new SpotPrice($this->http));
+        $this->xrplNetworkId = 1;
+        $this->assertNull($mainnet->cursor(), 'a mainnet checkout never reads the test network');
+
+        $this->http->gets[self::ESPLORA . '/blocks/tip/height'] = '100';
+        $this->http->gets[self::ESPLORA . '/block-height/0'] = '000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f';
+        $this->assertSame('network_unavailable', $this->service()->checkout(7, 'bitcoin', 'mymigold', 'w1', 1000)['error']);
+        $this->assertNotContains('GET ' . self::ESPLORA . '/blocks/tip/height', $this->http->log);
+    }
+
+    public function testXrplFloodDoesNotStallTheScan(): void
+    {
+        $svc = $this->service(0);
+        $c = $svc->checkout(7, 'xrpl', 'membership', 'starter', 1000);
+        $spam = static fn (int $ledger): array => ['ledger_index' => $ledger, 'validated' => true, 'hash' => strtoupper(bin2hex(random_bytes(32))),
+            'tx' => ['TransactionType' => 'Payment', 'Account' => self::BUYER_XRP, 'Destination' => self::MYMI_XRP, 'Amount' => '1'],
+            'meta' => ['TransactionResult' => 'tesSUCCESS', 'delivered_amount' => '1']];
+        // Every page is full and has a marker: 200 one-drop payments per ledger.
+        $this->http->post[self::XRPL_RPC] = function (array $b) use ($spam): ?array {
+            if ($b['method'] !== 'account_tx') {
+                return $this->xrpl($b);
+            }
+            $p = $b['params'][0];
+            $ledger = isset($p['marker']) ? (int) $p['marker'] : (int) $p['ledger_index_min'];
+            return ['result' => ['status' => 'success', 'ledger_index_max' => 99999, 'marker' => (string) ($ledger + 1),
+                'transactions' => array_map(static fn (): array => $spam($ledger), range(1, 200))]];
+        };
+        $this->assertSame('pending', $svc->confirm($c['reference'], 7)['status']);
+        $first = (int) $this->row($c['reference'])['scan_cursor'];
+        $this->assertSame(9003, $first, 'five ledgers read; the last one may be partial, so it is read again');
+        $svc->confirm($c['reference'], 7);
+        $this->assertSame(9007, (int) $this->row($c['reference'])['scan_cursor'], 'each sweep moves on past the flood');
+    }
+
+    public function testDatabaseErrorNeverLosesAPayment(): void
+    {
+        $svc = $this->service();
+        $c = $svc->checkout(7, 'base', 'mymigold', 'w1', 1000);
+        $this->usdcLog((int) $c['amount_raw'], 501);
+        $this->block = 560;
+        $this->sqlite->query("CREATE TRIGGER cp_fail BEFORE UPDATE OF status ON bf_crypto_pay_requests WHEN NEW.status = 'confirmed' BEGIN SELECT RAISE(ABORT, 'lock wait timeout'); END");
+        try {
+            $svc->confirm($c['reference'], 7);
+            $this->fail('a database error is not mistaken for "already settled"');
+        } catch (\CodeIgniter\Database\Exceptions\DatabaseException) {
+        }
+        $this->assertSame(0, (int) $this->row($c['reference'])['scan_cursor'], 'the block is read again');
+        $this->sqlite->query('DROP TRIGGER cp_fail');
+        $this->assertSame('fulfilled', $svc->confirm($c['reference'], 7)['status']);
+        $this->assertNull($this->row($c['reference'])['match_key'], 'the amount is free again once settled');
+    }
+
+    public function testLatePaymentGoesToSupportNotAtTheOldRate(): void
+    {
+        $svc = $this->service(0);
+        $c = $svc->checkout(7, 'xrpl', 'membership', 'starter', 1000);
+        $this->assertSame('xrpl:tag:' . $c['dest_tag'], $this->row($c['reference'])['match_key']);
+        $this->xrplTxs[] = ['ledger_index' => 9050, 'validated' => true, 'hash' => strtoupper(bin2hex(random_bytes(32))),
+            'tx' => ['TransactionType' => 'Payment', 'Account' => self::BUYER_XRP, 'Destination' => self::MYMI_XRP, 'DestinationTag' => $c['dest_tag'],
+                'Amount' => '5000000', 'date' => $c['expires_at'] + 601 - 946684800],
+            'meta' => ['TransactionResult' => 'tesSUCCESS', 'delivered_amount' => '5000000']];
+        $r = $svc->confirm($c['reference'], 7);
+        $this->assertSame('unfulfilled', $r['status']);
+        $this->assertStringContainsString('after this checkout expired', $r['message']);
+        $this->assertSame('late_payment', $this->row($c['reference'])['result']);
+        $this->assertSame([], $this->fulfilled, 'not delivered at the expired quote');
+    }
+
+    public function testTwoOpenCheckoutsNeverShareAnAmount(): void
+    {
+        $svc = $this->service();
+        $a = $svc->checkout(7, 'base', 'mymigold', 'w1', 1000);
+        $row = $this->row($a['reference']);
+        unset($row['id']);
+        $row['reference'] = 'Zz' . substr($row['reference'], 2);
+        $this->expectException(\CodeIgniter\Database\Exceptions\DatabaseException::class);
+        $this->sqlite->table('bf_crypto_pay_requests')->insert($row);
     }
 
     public function testLedgerKeysForReconciliation(): void

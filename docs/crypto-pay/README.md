@@ -52,7 +52,13 @@ Run only `MIGRATE=2026-11-25-000100_CreateCryptoPayRequests`. Then add the sweep
 ## Safety rules the code enforces
 
 - One payment settles one checkout (unique `payment_id`: chain, transaction and output/log index).
-- A payment older than the checkout never counts (EVM and XRPL from the checkout's block/ledger; Bitcoin by block time).
+- Two open checkouts never share an amount or destination tag (unique `match_key`, cleared when the checkout closes).
+- An endpoint is used only after it proves it is on the configured network (EVM `eth_chainId`, XRPL `server_info` network id, Bitcoin genesis block), so a test-network RPC in `.env` can never settle a mainnet order.
+- A payment older than the checkout never counts (read from the checkout's starting block, ledger or Bitcoin block height).
+- A payment the chain dates more than 10 minutes (XRP) or 2 hours (Bitcoin) after the checkout expired is not delivered at the old rate; it goes to support (`late_payment`) to finish or refund.
+- The scan position is saved only after every payment found was handled; a database error is retried, never taken as "already paid".
+- EVM: the newest 20 blocks are always read again, and one sweep takes the head and the logs from the same endpoint, so a lagging public node cannot hide a payment.
+- XRPL: a flood of tiny payments cannot stall the scan; each sweep moves past the ledgers it read in full. Confirmations are always 1 (a validated ledger is final).
 - XRP counts the delivered amount, never the requested one, so a partial payment cannot pass as full; tokens are ignored.
 - EVM: only the real USDC contract's Transfer logs to MyMI's address, not removed by a reorg.
 - Delivery waits for the configured confirmations; the page shows "Payment seen; waiting for confirmations".

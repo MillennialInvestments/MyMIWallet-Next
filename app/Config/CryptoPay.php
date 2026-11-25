@@ -83,6 +83,9 @@ class CryptoPay extends BaseConfig
             $urls = array_values(array_filter(array_map('trim', explode(',', (string) env('CRYPTO_PAY_' . $key . '_RPC', '')))));
             $this->endpoints[$chain] = $urls !== [] || $this->network === '' ? $urls : self::DEFAULT_ENDPOINTS[$chain][$this->network];
             $this->confirmations[$chain] = max(1, (int) env('CRYPTO_PAY_' . $key . '_CONFIRMATIONS', $this->network === '' ? 1 : self::DEFAULT_CONFIRMATIONS[$chain][$this->network]));
+            if ($chain === 'xrpl') {
+                $this->confirmations[$chain] = 1; // a validated ledger is final; the adapter reports 1
+            }
             $this->feeCents[$chain] = max(0, (int) env('CRYPTO_PAY_' . $key . '_FEE_CENTS', $defaultFee));
         }
     }

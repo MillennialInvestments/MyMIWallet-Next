@@ -48,10 +48,14 @@ interface ChainAdapter
     /**
      * Payments to $row's recipient that pay exactly this checkout.
      *
-     * @return array{0: list<array{id: string, amount: int, payer: string, confirmations: int}>, 1: bool, 2: ?int}
+     * Each payment may carry 'time' (Unix seconds the chain says it settled), so
+     * a payment made after the checkout expired is not delivered at an old rate.
+     *
+     * @return array{0: list<array{id: string, amount: int, payer: string, confirmations: int, time?: ?int}>, 1: bool, 2: ?int}
      *         [payments, complete, scanned_to]: complete is false when any lookup failed, so
      *         "no payment" is never concluded from a partial answer; scanned_to is how far
-     *         the chain was read (block or ledger), so the next sweep can continue from there
+     *         the chain was read (block or ledger), so the next sweep can continue from there.
+     *         Endpoints are used only after they prove they are on the configured network.
      */
     public function payments(array $row): array;
 

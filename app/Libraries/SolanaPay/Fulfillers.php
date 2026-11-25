@@ -69,7 +69,7 @@ final class Fulfillers
             'active'         => 1,
             'unix_timestamp' => time(),
             'submitted_date' => date('Y-m-d H:i:s'),
-            'trans_type'     => 'MyMI Gold Purchase (Solana USDC)',
+            'trans_type'     => isset($row['chain'], $row['asset']) ? 'MyMI Gold Purchase (' . ucfirst((string) $row['chain']) . ' ' . $row['asset'] . ')' : 'MyMI Gold Purchase (Solana USDC)',
             'currency'       => 'USD',
             'amount'         => $coins,
             'fees'           => $fees,

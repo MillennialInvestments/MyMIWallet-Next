@@ -83,7 +83,16 @@
     current = data;
     var crypto = data.chain && data.chain !== 'solana';
     $('solpay-qr').src = data.qr;
-    $('solpay-open').href = crypto ? data.uri : data.url;
+    var link = crypto ? data.uri : data.url;
+    var open = $('solpay-open');
+    // Only a real wallet link (scheme:...); an XRPL address?dt= text is for the QR only.
+    if (link && /^[a-z][a-z0-9+.-]*:/i.test(link)) {
+      open.href = link;
+      open.classList.remove('d-none');
+    } else {
+      open.removeAttribute('href');
+      open.classList.add('d-none');
+    }
     if (crypto) {
       $('solpay-amount').textContent = data.amount;
       $('solpay-asset').textContent = data.asset;
@@ -157,8 +166,11 @@
   if (chain) chain.addEventListener('change', showFields);
   $('solpay-evm').addEventListener('click', payEvm);
   var p = cfg.preset || {};
-  if (chain && p.chain && chain.querySelector('option[value="' + p.chain + '"]')) chain.value = p.chain;
-  if (p.purpose && purpose.querySelector('option[value="' + p.purpose + '"]')) purpose.value = p.purpose;
+  function hasOption(select, value) {
+    return !!select && Array.prototype.some.call(select.options, function (o) { return o.value === value; });
+  }
+  if (p.chain && hasOption(chain, p.chain)) chain.value = p.chain;
+  if (p.purpose && hasOption(purpose, p.purpose)) purpose.value = p.purpose;
   if (p.plan) $('solpay-plan').value = p.plan;
   if (p.project) $('solpay-project').value = p.project;
   if (p.lot) $('solpay-lot').value = p.lot;
