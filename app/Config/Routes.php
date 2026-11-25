@@ -2708,6 +2708,12 @@ $routes->group('API/Alerts', ['namespace' => '\\App\\Modules\\APIs\\Controllers'
     $routes->post('dismissAlert/(:num)', 'AlertWebhookAPIController::dismissAlert/$1', ['filter' => 'login']);
 });
 
+$routes->group('API/Admin/PayPalSmokeTest', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => 'login'], static function($routes) {
+    $routes->post('audit', 'PayPalSmokeTestAPIController::audit');
+    $routes->post('probe', 'PayPalSmokeTestAPIController::probe');
+    $routes->post('simulate', 'PayPalSmokeTestAPIController::simulate');
+});
+
 $routes->group('API/Options', ['namespace' => '\App\Modules\APIs\Controllers'], static function($routes) {
     $routes->post('webhook', 'OptionsWebhookController::receiveWebhook');
     $routes->get('candidates', 'OptionsWebhookController::candidates');
