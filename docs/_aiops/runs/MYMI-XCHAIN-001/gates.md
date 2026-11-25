@@ -14,3 +14,4 @@ This ledger records all owner, legal, partner, key, and package gates encountere
 | G-PKG | Dependencies | Any new external Composer / npm packages | Package approval by repository owner (no new external dependencies added in this run) | OPEN (Recorded) |
 | G-W3-SEPOLIA | EVM Browser Checkout | Staging browser wallet validation | Owner verification of MetaMask/EIP-1193 click-to-pay transaction on staging connected to Sepolia | OPEN (Pending staging deployment) |
 | G-W5-EXECUTE | Non-Custodial Swaps | Mainnet swap execution | Enable SWAPS_EXECUTE=true only when production live keys and contracts are approved by owner | OPEN (Quotes-only on staging) |
+| G-CHATROOM | Remote AIOps MCP | MCP chatroom check-in tool | Expose chatroom_checkin tool in live tbi-aiops daemon schema | OPEN (Recorded) |

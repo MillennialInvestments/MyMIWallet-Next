@@ -90,3 +90,13 @@ This repository participates in Teddy's centralized Codex ⇄ AIOps workflow. Co
   - *ChatGPT:* Data modeling, 12-metric accounting math, and user journey clarity.
   - *Grok:* Red-team challenges, negative return boundaries, and fill deduplication invariants.
   - *Gemini / Antigravity:* Full-stack CI4 implementation, DataTables re-init guards, and deterministic PHPUnit suites.
+
+## Multi-Chain, Gold, Swaps & Reg D Offering Lessons (2026-11)
+
+- **Keyed RPC Endpoint Ordering:** In multi-chain RPC configurations (`CRYPTO_PAY_ETHEREUM_RPC`, `CRYPTO_PAY_BASE_RPC`), always configure authenticated keyed providers first, keeping unauthenticated public nodes strictly as last-resort fallbacks to avoid RPC throttling during payment sweeps.
+- **Sub-Millisecond OFAC Sanctions Screening:** Sanctions screening must operate with O(1) in-memory keyed lookups (`array<string, true>`) against local files to guarantee sub-millisecond evaluation (< 0.05 ms) without introducing blocking external HTTP dependencies in critical payment/swap paths.
+- **Closed-Loop In-App Utility Credit Invariants:** Utility credits (MyMI Gold) must never expose withdrawal, export, cash-out, or peer-to-peer transfer endpoints. Refunds must return strictly to the original fiat/crypto funding method, and store checkouts must decouple USD base pricing from credit rates.
+- **Non-Custodial Swaps Liquidity Gating:** Because testnets lack decentralized exchange liquidity, staging environments must default to quote-only mode (`SWAPS_EXECUTE=false`). MyMI must never take custody of keys or assets; transactions must be signed directly in user self-custody wallets after sanctions verification.
+- **Reg D 506(c) Private Placement Offering Gating:** Private placement tokens (MyMI Coin) must enforce fail-closed accredited investor gating (`isVerifiedAndAccredited`) before deposit initiation or ledger minting. Offerings must have zero public purchase buttons, zero secondary exchange listings, and zero guaranteed return claims across all UI views and marketing materials.
+- **Spark Command FileLocator Cache Flush:** When registering new Spark commands or migrating modules, a stale `shared/writable/cache/FileLocatorCache` will hide newly created commands from `php spark list`. Always flush this cache file before executing or smoke-testing new CLI commands.
+
