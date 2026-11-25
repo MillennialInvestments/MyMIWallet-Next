@@ -38,16 +38,16 @@ FAIL_COUNT="$(echo "$SCAN_OUT" | awk '/FAIL/{print $2}' | head -n1)"
 
 echo
 echo "--- 4. Assertion Checks ---"
-echo "PASS Count: ${PASS_COUNT:-0} (Required: >= 300)"
-echo "FAIL Count: ${FAIL_COUNT:-999} (Required: <= 17)"
+echo "PASS Count: ${PASS_COUNT:-0} (Required: >= 317)"
+echo "FAIL Count: ${FAIL_COUNT:-999} (Required: <= 0)"
 
-if [ "${PASS_COUNT:-0}" -lt 300 ]; then
-    echo "ERROR: PASS count ${PASS_COUNT:-0} is below required threshold 300" >&2
+if [ "${PASS_COUNT:-0}" -lt 317 ]; then
+    echo "ERROR: PASS count ${PASS_COUNT:-0} is below required threshold 317" >&2
     exit 1
 fi
 
-if [ "${FAIL_COUNT:-999}" -gt 17 ]; then
-    echo "ERROR: FAIL count ${FAIL_COUNT:-999} exceeds maximum threshold 17" >&2
+if [ "${FAIL_COUNT:-999}" -gt 0 ]; then
+    echo "ERROR: FAIL count ${FAIL_COUNT:-999} exceeds maximum threshold 0" >&2
     exit 1
 fi
 

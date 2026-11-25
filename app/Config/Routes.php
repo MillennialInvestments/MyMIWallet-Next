@@ -2282,6 +2282,30 @@ $routes->group('Wallets', ['namespace' => '\App\Modules\User\Controllers', 'filt
 $routes->match(['GET', 'POST'], 'Deposit-Funds', '\App\Modules\User\Controllers\WalletsController::deposit', ['filter' => ['login', 'noStore']]);
 $routes->match(['GET', 'POST'], 'Withdraw-Funds', '\App\Modules\User\Controllers\WalletsController::withdraw', ['filter' => ['login', 'noStore']]);
 $routes->match(['GET', 'POST'], 'Web_Design/Test_Page_Email', '\App\Modules\Management\Controllers\APIAdminController::Test_Page_Email', ['filter' => ['login', 'noStore']]);
+$routes->match(['GET', 'POST'], 'Content-Creator', '\App\Modules\Management\Controllers\WebDesignAdminController::contentCreator', ['filter' => ['role:admin,team']]);
+$routes->match(['GET', 'POST'], 'CFA/Analysis/Application/Account_Manager', '\App\Modules\Advisor\Controllers\AdvisorController::cfaAccountManager', ['filter' => 'csrf']);
+
+// User - Wallets Legacy & Form Endpoints (GT-FORM-ROUTES-001)
+$routes->group('User/Wallets', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) {
+    $routes->match(['GET', 'POST'], 'Wallet_Manager', 'WalletsController::walletManager');
+    $routes->match(['GET', 'POST'], 'Wallet_Transaction', 'WalletsController::walletTransaction');
+    $routes->match(['GET', 'POST'], 'Purchase_Coins_Transaction', 'WalletsController::purchaseCoinsTransaction');
+    $routes->match(['GET', 'POST'], 'Wallet_Generator', 'WalletsController::walletGenerator');
+});
+
+// Plaid & Institutions compatibility routes (GT-FORM-ROUTES-001)
+$routes->group('Institutions/Integrations', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => ['login']], static function ($routes) {
+    $routes->post('savePublicToken', 'WalletsAPIController::plaidExchange');
+    $routes->post('exchange_public_token', 'WalletsAPIController::plaidExchange');
+    $routes->post('create_wallet', 'WalletsAPIController::create');
+});
+
+$routes->group('api', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => ['login']], static function ($routes) {
+    $routes->get('create_link_token', 'WalletsAPIController::plaidLinkToken');
+    $routes->post('exchange_public_token', 'WalletsAPIController::plaidExchange');
+    $routes->get('data', 'WalletsAPIController::index');
+    $routes->get('is_account_connected', 'WalletsAPIController::summary');
+});
 
 // // Management - Admin:
 // $routes->group('Management', ['namespace' => '\App\Modules\Management\Controllers'], function($routes) {

@@ -1,20 +1,3 @@
 # GT-FORM-ROUTES-001: form/JS actions with no matching route + method.
 # Columns: file<TAB>kind<TAB>METHOD<TAB>action<TAB>reason. Remove lines as they are fixed; never add one to get green.
 # Regenerate: php spark aiops:form:test --scan-all --no-report --write-gap-baseline
-app/Modules/Management/Views/Marketing/Blog/Subscribe.php	js	POST	/CFA/Analysis/Application/Account_Manager	no_route
-app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Integration.php	js	POST	/Institutions/Integrations/create_wallet	no_route
-app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Integration.php	js	POST	/Institutions/Integrations/exchange_public_token	no_route
-app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Integration.php	js	POST	/Institutions/Integrations/savePublicToken	no_route
-app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Link_Web.php	js	GET	/api/create_link_token	no_route
-app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Link_Web.php	js	GET	/api/data	no_route
-app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Link_Web.php	js	GET	/api/is_account_connected	no_route
-app/Modules/Management/Views/Web_Design/Content_Creator/Plaid/Link_Web.php	js	POST	/api/exchange_public_token	no_route
-app/Modules/Management/Views/Web_Design/Content_Creator/Sophtron_Widget.php	js	POST	/Content-Creator	no_route
-app/Modules/User/Views/Wallets/Add/form.php	js	POST	/User/Wallets/Wallet_Manager	no_route
-app/Modules/User/Views/Wallets/Add_Account.php	js	POST	/User/Wallets/Wallet_Manager	no_route
-app/Modules/User/Views/Wallets/Add_Deposit_Fetch.php	js	POST	/User/Wallets/Wallet_Transaction	no_route
-app/Modules/User/Views/Wallets/Add_Fiat_Wallet.php	js	POST	/User/Wallets/Purchase_Coins_Transaction	no_route
-app/Modules/User/Views/Wallets/Add_Fiat_Wallet.php	js	POST	/User/Wallets/Wallet_Manager	no_route
-app/Modules/User/Views/Wallets/Add_Withdraw_Fetch.php	js	POST	/User/Wallets/Wallet_Transaction	no_route
-app/Modules/User/Views/Wallets/Edit_Account.php	js	POST	/User/Wallets/Wallet_Manager	no_route
-app/Modules/User/Views/Wallets/Generate_Wallet.php	js	POST	/User/Wallets/Wallet_Generator	no_route
