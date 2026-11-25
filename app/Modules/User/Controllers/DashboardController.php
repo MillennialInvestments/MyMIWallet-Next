@@ -72,6 +72,7 @@ class DashboardController extends BaseUserController
         $parentData = parent::commonData();
         $this->data = array_merge(is_array($parentData) ? $parentData : [], $priorData);
         $cuID      = (int)($this->cuID ?? session('cuID') ?? session('user_id') ?? 0);
+        $this->cuID = $cuID;
 
         if ($cuID <= 0) {
             log_message('debug', 'DashboardController::commonData guest context; skipping authenticated data hydration.');
@@ -94,29 +95,29 @@ class DashboardController extends BaseUserController
         $this->data['checkingSummary'] = $checkingSummary;
         $this->data['checkingSummaryFMT'] = $userBudget['checkingSummaryFMT'] ?? '$0.00';
         // Other Budget-related data
-        $creditAccounts = $this->getAccountService()->getUserCreditAccounts($cuID);
-        $debtAccounts = $this->getAccountService()->getUserDebtAccounts($cuID);
-        $repaymentSummary = $this->getBudgetService()->getRepaymentSummary($cuID);
-        $repaymentSchedules = $this->getBudgetService()->calculateRepaymentSchedules($creditAccounts);
-        $currentBalances = $this->getBudgetService()->getCurrentBalances($creditAccounts);
-        $availableBalances = $this->getBudgetService()->getAvailableBalances($repaymentSchedules);
-        $totalAvailableBalance = $this->getBudgetService()->getTotalAvailableBalance($debtAccounts);
-        $this->data['userBudget'] = $this->getBudgetService()->getUserBudget($cuID);
-        $this->data['userBudgetRecords'] = $this->getBudgetService()->getUserBudgetRecords($cuID);
+        $creditAccounts = $this->getAccountService()->getUserCreditAccounts($cuID) ?? [];
+        $debtAccounts = $this->getAccountService()->getUserDebtAccounts($cuID) ?? [];
+        $repaymentSummary = $this->getBudgetService()->getRepaymentSummary($cuID) ?? [];
+        $repaymentSchedules = $this->getBudgetService()->calculateRepaymentSchedules($creditAccounts) ?? [];
+        $currentBalances = $this->getBudgetService()->getCurrentBalances($creditAccounts) ?? [];
+        $availableBalances = $this->getBudgetService()->getAvailableBalances($repaymentSchedules) ?? [];
+        $totalAvailableBalance = $this->getBudgetService()->getTotalAvailableBalance($debtAccounts) ?? 0.0;
+        $this->data['userBudget'] = $this->getBudgetService()->getUserBudget($cuID) ?? [];
+        $this->data['userBudgetRecords'] = $this->getBudgetService()->getUserBudgetRecords($cuID) ?? [];
         $this->data['currentBalances'] = $currentBalances;
         $this->data['availableBalances'] = $availableBalances;
         $this->data['totalAvailableBalance'] = $totalAvailableBalance;
         $this->data['repaymentSummary'] = $repaymentSummary;
         $this->data['repaymentSchedules'] = $repaymentSchedules;
-        $budgetInfo = $this->getMyMIBudget()->allUserBudgetInfo($cuID);
+        $budgetInfo = $this->getMyMIBudget()->allUserBudgetInfo($cuID) ?? [];
 
-        $dashboardInfo = $this->getMyMIDashboard()->dashboardInfo($cuID);
-        $this->data['completedGoals'] = $dashboardInfo['progressGoalData']['completions'];
-        $this->data['pendingGoals'] = $dashboardInfo['progressGoalData']['goals'];
-        $this->data['promotionalBanners'] = $dashboardInfo['promotionalBanners'];
+        $dashboardInfo = $this->getMyMIDashboard()->dashboardInfo($cuID) ?? [];
+        $this->data['completedGoals'] = $dashboardInfo['progressGoalData']['completions'] ?? [];
+        $this->data['pendingGoals'] = $dashboardInfo['progressGoalData']['goals'] ?? [];
+        $this->data['promotionalBanners'] = $dashboardInfo['promotionalBanners'] ?? [];
 
-        $userInfo = $this->getMyMIUser()->getUserInformation($cuID);
-        $this->data['cuWalletID'] = $userInfo['cuWalletID'];
+        $userInfo = $this->getMyMIUser()->getUserInformation($cuID) ?? [];
+        $this->data['cuWalletID'] = $userInfo['cuWalletID'] ?? null;
         $this->data['cuRole'] = $userInfo['cuRole'] ?? 4;
         $this->data['cuUserType'] = $userInfo['cuUserType'] ?? '';
         $this->data['cuEmail'] = $userInfo['cuEmail'] ?? '';
@@ -124,9 +125,9 @@ class DashboardController extends BaseUserController
         $this->data['cuUsername'] = $userInfo['cuUsername'] ?? '';
         $this->data['cuNameInitials'] = $userInfo['cuNameInitials'] ?? '';
         $this->data['cuKYC'] = $userInfo['cuKYC'] ?? '';
-        $this->data['cuWalletCount'] = $userInfo['cuWalletCount'];
-        $this->data['MyMIGCoinSum'] = $userInfo['MyMIGCoinSum'];
-        $this->data['walletID'] = $userInfo['walletID'];
+        $this->data['cuWalletCount'] = $userInfo['cuWalletCount'] ?? 0;
+        $this->data['MyMIGCoinSum'] = $userInfo['MyMIGCoinSum'] ?? 0;
+        $this->data['walletID'] = $userInfo['walletID'] ?? null;
 
         /** @var OnboardingProgressService $onboardingProgress */
         $onboardingProgress = service('onboardingProgressService');
@@ -183,7 +184,7 @@ class DashboardController extends BaseUserController
 
         $userSolanaData = $this->getSolanaService()->getSolanaData($cuID);
         $addrRow = model(\App\Models\SolanaModel::class)->getDefaultAddressFromExchangeTable($cuID);
-        $base58Address = $addrRow['address'] ?? null;
+        $base58Address = is_array($addrRow) ? ($addrRow['address'] ?? null) : null;
 
         // Make it available to the view (and copy to session for modals)
         if ($base58Address) {
@@ -748,7 +749,7 @@ class DashboardController extends BaseUserController
         $this->data['forecastHeatmapEnabled'] = true;
         $this->data['forecastHeatmapDefaultTimeframe'] = '5m';
 
-        return $this->renderTheme('User/Dashboard/index', $this->data);
+        return $this->renderTheme('App\Modules\User\Views\Dashboard\index', $this->data);
     }
 
     public function getForecastHighlights()
@@ -1675,7 +1676,8 @@ HTML;
 
     // Refactored userAccountData to ensure all account-related data is captured
     private function userAccountData() {
-        $userInfo = $this->getMyMIUser()->getUserInformation($this->cuID);
+        $userId = $this->currentUserId();
+        $userInfo = $this->getMyMIUser()->getUserInformation($userId) ?? [];
         $this->data['cuFirstName'] = $userInfo['cuFirstName'] ?? '';
         $this->data['cuMiddleName'] = $userInfo['cuMiddleName'] ?? '';
         $this->data['cuLastName'] = $userInfo['cuLastName'] ?? '';
@@ -1684,9 +1686,15 @@ HTML;
         $this->data['cuDOB'] = $userInfo['cuDOB'] ?? '';
         $this->data['cuMailingAddress'] = $userInfo['cuMailingAddress'] ?? '';
 
-        if ($this->siteSettings->solanaExchange === 1) {
+        if (($this->siteSettings->solanaExchange ?? 0) === 1) {
             $exchange = 'Solana';
-            $this->data['cuSolanaDW'] = $this->getMyMIDashboard()->getCryptoAccount($this->cuID, $exchange)['accountInfo'] ?? ['User Address Not Defined'];
+            try {
+                $crypto = $this->getMyMIDashboard()->getCryptoAccount($userId, $exchange);
+                $this->data['cuSolanaDW'] = $crypto['accountInfo'] ?? ['User Address Not Defined'];
+            } catch (\Throwable $e) {
+                log_message('warning', 'userAccountData getCryptoAccount failed: {msg}', ['msg' => $e->getMessage()]);
+                $this->data['cuSolanaDW'] = ['User Address Not Defined'];
+            }
         }
     }
 
