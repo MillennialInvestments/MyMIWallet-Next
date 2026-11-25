@@ -32,7 +32,17 @@ class TestCheckout extends SafeBaseCommand
 
     public function run(array $params)
     {
-        $opt = static fn (string $k, string $d = ''): string => (string) ($params[$k] ?? CLI::getOption($k) ?? $d);
+        // spark reads "--user 1"; "--user=1" arrives as an option named "user=1", so accept both.
+        $given = [];
+        foreach (array_merge(CLI::getOptions(), $params) as $k => $v) {
+            if (is_string($k) && str_contains($k, '=')) {
+                [$k, $v] = explode('=', $k, 2);
+            }
+            if (is_string($k) && $v !== null && $v !== '') {
+                $given[ltrim($k, '-')] = (string) $v;
+            }
+        }
+        $opt = static fn (string $k, string $d = ''): string => $given[$k] ?? $d;
         $user = (int) $opt('user');
         $chain = $opt('chain');
         $purpose = $opt('purpose', 'mymigold');
