@@ -1,5 +1,6 @@
-/* MyMI Solana Pay checkout page. Asks the server for a checkout, shows the
- * QR / wallet link and polls until the payment is confirmed on Solana. */
+/* MyMI crypto checkout page (Solana Pay, and USDC on Ethereum/Base, XRP, BTC).
+ * Asks the server for a checkout, shows the QR / wallet link and polls until
+ * the payment is confirmed on chain. Never touches keys. */
 (function () {
   'use strict';
   var app = document.getElementById('solpay-app');
@@ -8,6 +9,7 @@
   var cfg = JSON.parse(app.getAttribute('data-config') || '{}');
   var $ = function (id) { return document.getElementById(id); };
   var purpose = $('solpay-purpose');
+  var chain = $('solpay-chain');
   var timer = null;
 
   var messages = {
@@ -22,7 +24,11 @@
     fee_not_paid: 'Payment received without the processing fee. Support will review it.',
     sign_in_required: 'Please sign in again.',
     too_many_open_checkouts: 'You have several unpaid checkouts open. Pay or wait for one to expire, then try again.',
-    wallet_not_yours: 'Pick one of your own wallets.'
+    wallet_not_yours: 'Pick one of your own wallets.',
+    chain_not_available: 'That network is not available right now.',
+    price_unavailable: 'We could not get a reliable price right now. Try again in a minute.',
+    network_unavailable: 'That network cannot be reached right now. Try again in a minute.',
+    busy_try_again: 'Checkout is busy. Try again in a minute.'
   };
 
   function headers() {
@@ -33,11 +39,18 @@
     return h;
   }
 
+  function isSolana() { return !chain || chain.value === 'solana'; }
+
   function showFields() {
     document.querySelectorAll('.solpay-field').forEach(function (el) {
       el.classList.toggle('d-none', el.getAttribute('data-for') !== purpose.value);
     });
+    document.querySelectorAll('.solpay-chain-note').forEach(function (el) {
+      el.classList.toggle('d-none', el.getAttribute('data-for') !== (isSolana() ? 'solana' : 'crypto'));
+    });
   }
+
+  function baseFor(data) { return data && data.chain && data.chain !== 'solana' ? cfg.cryptoBase : cfg.base; }
 
   function fail(code) {
     var box = $('solpay-error');
@@ -64,23 +77,69 @@
     return null;
   }
 
+  var current = null;
+
   function show(data) {
+    current = data;
+    var crypto = data.chain && data.chain !== 'solana';
     $('solpay-qr').src = data.qr;
-    $('solpay-open').href = data.url;
-    $('solpay-amount').textContent = data.usd;
-    $('solpay-fee').textContent = data.fee_sol && data.fee_sol !== '0' ? ' + ' + data.fee_sol + ' SOL fee' : '';
+    $('solpay-open').href = crypto ? data.uri : data.url;
+    if (crypto) {
+      $('solpay-amount').textContent = data.amount;
+      $('solpay-asset').textContent = data.asset;
+      $('solpay-fee').textContent = '';
+      var line = '$' + data.usd + ' price' + (data.fee_usd !== '0.00' ? ' + $' + data.fee_usd + ' MyMI processing fee' : '') + ' = $' + data.total_usd;
+      if (data.asset !== 'USDC') line += ' at $' + data.rate + ' per ' + data.asset;
+      $('solpay-breakdown').textContent = line + '. Send the exact amount shown.';
+      $('solpay-address').textContent = data.recipient;
+      $('solpay-dest').classList.remove('d-none');
+      $('solpay-tag').textContent = data.dest_tag === null || data.dest_tag === undefined ? '' : String(data.dest_tag);
+      $('solpay-tag-box').classList.toggle('d-none', data.dest_tag === null || data.dest_tag === undefined);
+      $('solpay-evm').classList.toggle('d-none', !(data.chain_id && window.ethereum));
+    } else {
+      $('solpay-amount').textContent = data.usd;
+      $('solpay-asset').textContent = 'USDC';
+      $('solpay-fee').textContent = data.fee_sol && data.fee_sol !== '0' ? ' + ' + data.fee_sol + ' SOL fee' : '';
+      $('solpay-breakdown').textContent = '';
+      $('solpay-dest').classList.add('d-none');
+      $('solpay-evm').classList.add('d-none');
+    }
     $('solpay-pay').classList.remove('d-none');
     clearInterval(timer);
-    timer = setInterval(function () { poll(data.reference); }, 4000);
-    poll(data.reference);
+    timer = setInterval(function () { poll(data); }, crypto ? 8000 : 4000);
+    poll(data);
   }
 
-  async function poll(reference) {
+  function hex64(v) { return v.replace(/^0x/, '').padStart(64, '0'); }
+
+  // USDC transfer(recipient, amount) from the browser wallet (MetaMask and others) on the checkout's chain.
+  async function payEvm() {
+    var d = current;
+    var status = $('solpay-status');
+    if (!d || !d.chain_id || !window.ethereum) return;
     try {
-      var res = await fetch(cfg.base + '/Status/' + encodeURIComponent(reference), { credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+      var accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      try {
+        await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x' + Number(d.chain_id).toString(16) }] });
+      } catch (e) {
+        status.textContent = 'Switch your wallet to the right network (chain ' + d.chain_id + ') and try again.';
+        return;
+      }
+      var data = '0xa9059cbb' + hex64(d.recipient.toLowerCase()) + hex64(BigInt(d.amount_raw).toString(16));
+      await window.ethereum.request({ method: 'eth_sendTransaction', params: [{ from: accounts[0], to: d.contract, data: data }] });
+      status.textContent = 'Sent. Waiting for confirmations…';
+    } catch (e) {
+      status.textContent = 'The wallet did not send the payment.';
+    }
+  }
+
+  async function poll(data) {
+    var reference = data.reference;
+    try {
+      var res = await fetch(baseFor(data) + '/Status/' + encodeURIComponent(reference), { credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } });
       var data = await res.json();
       var status = $('solpay-status');
-      if (data.status === 'pending') { status.textContent = 'Waiting for payment…'; return; }
+      if (data.status === 'pending') { status.textContent = data.message || 'Waiting for payment…'; return; }
       if (data.status === 'confirmed') { status.textContent = data.message || 'Payment confirmed; finishing your order…'; return; }
       clearInterval(timer);
       forget();
@@ -95,7 +154,10 @@
   }
 
   purpose.addEventListener('change', showFields);
+  if (chain) chain.addEventListener('change', showFields);
+  $('solpay-evm').addEventListener('click', payEvm);
   var p = cfg.preset || {};
+  if (chain && p.chain && chain.querySelector('option[value="' + p.chain + '"]')) chain.value = p.chain;
   if (p.purpose && purpose.querySelector('option[value="' + p.purpose + '"]')) purpose.value = p.purpose;
   if (p.plan) $('solpay-plan').value = p.plan;
   if (p.project) $('solpay-project').value = p.project;
@@ -109,17 +171,19 @@
     ev.preventDefault();
     $('solpay-error').classList.add('d-none');
     var body = { purpose: purpose.value };
+    if (!isSolana()) body.chain = chain.value;
     form.querySelectorAll('.solpay-field[data-for="' + purpose.value + '"] input, .solpay-field[data-for="' + purpose.value + '"] select').forEach(function (el) {
       body[el.name] = el.value;
     });
     $('solpay-go').disabled = true;
     try {
-      var res = await fetch(cfg.base + '/Checkout', { method: 'POST', credentials: 'same-origin', headers: headers(), body: JSON.stringify(body) });
+      var res = await fetch((isSolana() ? cfg.base : cfg.cryptoBase) + '/Checkout', { method: 'POST', credentials: 'same-origin', headers: headers(), body: JSON.stringify(body) });
       var newHash = res.headers.get('X-CSRF-Token-Hash');
       var meta = document.querySelector('meta[name="csrf-token"]');
       if (newHash && meta) meta.content = newHash;
       var data = await res.json().catch(function () { return { ok: false, error: 'bad_response_' + res.status }; });
       if (!data.ok) { fail(data.error); return; }
+      if (!isSolana()) data.chain = chain.value;
       save(data);
       show(data);
     } catch (e) {

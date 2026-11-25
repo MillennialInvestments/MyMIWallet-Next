@@ -10,8 +10,8 @@ use App\Models\WalletModel;
 use App\Services\Payments\MembershipFulfillmentService;
 
 /**
- * What each verified Solana Pay checkout delivers. Each runs once per checkout
- * (SolanaPayService only calls it after winning the pending -> confirmed step)
+ * What each verified crypto checkout (Solana Pay or CryptoPay) delivers. Each runs once per
+ * checkout (the services only call it after winning the pending -> confirmed step)
  * against a verified bf_payment_claims row whose amount came from the chain.
  */
 final class Fulfillers
@@ -33,6 +33,19 @@ final class Fulfillers
         return 'SOLPAY-' . substr($reference, 0, 16);
     }
 
+    /**
+     * Wallet-ledger transaction_id a crypto checkout's Gold purchase is written
+     * under: SOLPAY-... for Solana Pay, CRYPTO-... for the other chains, and
+     * null for any other payment provider (whose ledger id is its own txn id).
+     */
+    public static function ledgerKey(string $provider, string $reference): ?string
+    {
+        if ($provider === 'solana') {
+            return self::ledgerId($reference);
+        }
+        return str_starts_with($provider, 'crypto-') ? 'CRYPTO-' . substr($reference, 0, 16) : null;
+    }
+
     /** USD price of one MyMI Gold, as the PayPal path uses it. */
     public static function goldValue(): float
     {
@@ -48,7 +61,7 @@ final class Fulfillers
         $coins = round(max(0, $paid - $fees) / self::goldValue(), 8);
 
         $saved = (new WalletModel())->submitMyMIGold([
-            'transaction_id' => self::ledgerId((string) $row['reference']),
+            'transaction_id' => self::ledgerKey((string) ($row['provider'] ?? 'solana'), (string) $row['reference']),
             'total_cost'     => $paid,
             'user_id'        => $userId,
             'wallet_id'      => preg_replace('/[^A-Za-z0-9_\-]/', '', (string) $row['purpose_ref']),
@@ -85,7 +98,7 @@ final class Fulfillers
         $r = model(AuctionPaymentModel::class)->processTopUp([
             'user_id'      => $userId,
             'amount_cents' => $goldCents,
-            'method'       => 'SOLANA_USDC',
+            'method'       => isset($row['chain']) ? 'CRYPTO_' . strtoupper((string) $row['chain']) . '_' . strtoupper((string) $row['asset']) : 'SOLANA_USDC',
             'lot_id'       => ctype_digit((string) $row['purpose_ref']) ? (int) $row['purpose_ref'] : null,
             'rate_used'    => self::goldValue(),
             'tx_ref'       => (string) $row['signature'] ?: (string) $row['reference'],
@@ -98,7 +111,7 @@ final class Fulfillers
 
     public static function fundUnits(int $userId, int $claimId, array $row): array
     {
-        $r = (new MyMIProjects())->issueUnitsAtNav((int) $row['purpose_ref'], $userId, ((int) $row['usd_cents']) / 100, 'solanapay:' . $row['reference']);
+        $r = (new MyMIProjects())->issueUnitsAtNav((int) $row['purpose_ref'], $userId, ((int) $row['usd_cents']) / 100, (isset($row['chain']) ? 'cryptopay:' : 'solanapay:') . $row['reference']);
 
         // issueUnitsAtNav throws on every refusal; still never report units that were not issued.
         if ((float) ($r['units_issued'] ?? 0) <= 0) {
