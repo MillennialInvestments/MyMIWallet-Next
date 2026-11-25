@@ -76,7 +76,7 @@
 | W0 | Baseline & Ledgers | `feature/mymi-xchain-001-w0-baseline` | [#778](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/778) | 18 CryptoPay / 746 suite / smoke PASS | PASS | Baseline established; ledgers initialized. |
 | W1 | Chain Hardening | `feature/mymi-xchain-001-w1-chain-hardening` | [#779](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/779) | 25 CryptoPay / form smoke 319 PASS | PASS | Keyed RPC fallback, wallets.mjs RBF/bump, alerts, support admin, sanctions screen |
 | W8 | Compliance & Sanctions | `feature/mymi-xchain-001-w8-compliance-tooling` | [#780](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/780) | 5 tests / 1016 assertions / benchmark <5ms | PASS | OFAC SDN updater, hash verification, offline seed, sub-5ms screening |
-| W4 | MyMI Gold In-App Credit | `feature/mymi-xchain-001-w4-gold-in-app-credit` | | | PENDING | |
+| W4 | MyMI Gold In-App Credit | `feature/mymi-xchain-001-w4-gold-in-app-credit` | [#781](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/781) | 6 tests / 44 assertions / smoke PASS | PASS | Closed-loop ledger bf_gold_ledger, pricing discount, cap, fulfillers |
 | W2 | BTC Address Pool | `feature/mymi-xchain-001-w2-btc-address-pool` | | | PENDING | |
 | W3 | EVM One-Click Pay | `feature/mymi-xchain-001-w3-evm-one-click` | | | PENDING | |
 | W5 | Non-Custodial Swaps | `feature/mymi-xchain-001-w5-non-custodial-swaps` | | | PENDING | |
