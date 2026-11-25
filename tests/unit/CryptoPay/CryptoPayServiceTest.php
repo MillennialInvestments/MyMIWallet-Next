@@ -202,7 +202,7 @@ final class CryptoPayServiceTest extends CIUnitTestCase
         $svc = $this->service(50, $audit);
         $c = $svc->checkout(7, 'base', 'auction_topup', '12', 1000);
         $this->usdcLog((int) $c['amount_raw'], 503);
-        $this->block = 504;
+        $this->block = 505; // logs are read two blocks behind the head
 
         $r = $svc->confirm($c['reference'], 7);
         $this->assertSame('fulfilled', $r['status']);
@@ -239,13 +239,12 @@ final class CryptoPayServiceTest extends CIUnitTestCase
         $this->assertSame('pending', $svc->confirm($c['reference'], 7)['status']);
         $this->assertSame([], $this->fulfilled);
 
-        $this->usdcLog($amount, 505);                                  // real, 1 of 2 confirmations
-        $r = $svc->confirm($c['reference'], 7);
-        $this->assertSame('pending', $r['status']);
-        $this->assertTrue($r['seen']);
-        $this->assertStringContainsString('1 of 2', $r['message']);
-
+        $this->usdcLog($amount, 505);                                  // real, in the newest block
         $this->block = 506;
+        $this->assertSame('pending', $svc->confirm($c['reference'], 7)['status'], 'the newest two blocks are not read yet');
+        $this->assertSame([], $this->fulfilled);
+
+        $this->block = 507;
         $this->assertSame('fulfilled', $svc->confirm($c['reference'], 7)['status']);
     }
 
@@ -289,7 +288,7 @@ final class CryptoPayServiceTest extends CIUnitTestCase
         $this->assertSame(539, (int) $this->row($c['reference'])['scan_cursor'], 'blocks with fewer than 2 confirmations, plus a margin, are read again');
 
         $this->usdcLog((int) $c['amount_raw'], 560);
-        $this->block = 561;
+        $this->block = 562;
         $this->assertSame('fulfilled', $svc->confirm($c['reference'], 7)['status']);
     }
 
