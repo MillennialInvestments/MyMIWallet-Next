@@ -30,9 +30,7 @@ final class OptionsPositionsAuthTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        if (service('authentication')->check()) {
-            service('authentication')->logout();
-        }
+        \Config\Services::resetSingle('authentication');
         session()->destroy();
 
         $db = db_connect();
