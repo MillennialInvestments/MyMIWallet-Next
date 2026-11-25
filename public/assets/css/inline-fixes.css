@@ -100,12 +100,18 @@ button:focus-visible,
   color: #fff !important;
 }
 
-/* Modal Stacking & Visibility Guards (Bootstrap 5 Standard) */
+/* Modal Stacking & Visibility Guards (Always sit above .modal-backdrop 1990) */
 .modal {
-  z-index: 1055 !important;
+  z-index: 2000 !important;
 }
 .modal-backdrop {
-  z-index: 1050 !important;
+  z-index: 1990 !important;
+}
+body.modal-open .modal {
+  z-index: 2000 !important;
+}
+body.modal-open .modal-backdrop {
+  z-index: 1990 !important;
 }
 .modal.fade .modal-dialog {
   transition: transform .3s ease-out;
@@ -123,6 +129,7 @@ button:focus-visible,
   width: auto;
   margin: 1.75rem auto;
   pointer-events: auto;
+  z-index: 2005 !important;
 }
 .modal-content {
   position: relative;
@@ -130,11 +137,12 @@ button:focus-visible,
   flex-direction: column;
   width: 100%;
   pointer-events: auto;
-  background-color: #fff;
+  background-color: #fff !important;
   background-clip: padding-box;
   border: 1px solid rgba(0,0,0,.15);
   border-radius: 0.5rem;
   outline: 0;
+  z-index: 2006 !important;
 }
 
 /* Sidebar flex containment & independent scroll */

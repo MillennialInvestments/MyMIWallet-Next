@@ -15,9 +15,9 @@ if ($tourCount === 0) {
     return;
 }
 ?>
-<div class="modal fade" id="firstLoginTourModal" tabindex="-1" aria-labelledby="firstLoginTourTitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down">
-        <div class="modal-content">
+<div class="modal fade" id="firstLoginTourModal" tabindex="-1" aria-labelledby="firstLoginTourTitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" style="z-index: 2050 !important;">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down" style="z-index: 2055 !important; pointer-events: auto;">
+        <div class="modal-content" style="z-index: 2060 !important; pointer-events: auto; background-color: #ffffff !important;">
             <div class="modal-header border-bottom-0 pb-0">
                 <div class="w-100">
                     <div class="d-flex justify-content-between align-items-center mb-2">
