@@ -2905,3 +2905,11 @@ $routes->group('Exchange/Paper', ['namespace' => '\App\Modules\Exchange\Controll
     $routes->get('Balances', 'PaperExchangeController::balances');
 });
 
+// MYMI-XCHAIN-001 W7: MyMI Coin accredited offering routes under MDIT Reg D 506(c)
+$routes->group('Offerings/MyMI-Coin', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore', 'feature:mymicoin_offering']], static function ($routes) {
+    $routes->get('/', 'MyMICoinOfferingController::index');
+    $routes->post('Interest', 'MyMICoinOfferingController::interest');
+    $routes->post('Deposit', 'MyMICoinOfferingController::deposit');
+    $routes->post('Mint', 'MyMICoinOfferingController::mint');
+});
+
