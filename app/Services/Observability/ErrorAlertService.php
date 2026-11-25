@@ -15,7 +15,7 @@ class ErrorAlertService
         $eventsModel = new ErrorAlertEventModel();
         $db = Database::connect();
 
-        $rules = $rulesModel->where('is_enabled', 1)->findAll();
+        $rules = $rulesModel->where('is_enabled', 1)->limit(100)->findAll();
 
         $fired = 0;
         foreach ($rules as $rule) {

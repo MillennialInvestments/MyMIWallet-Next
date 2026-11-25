@@ -2199,6 +2199,7 @@ $routes->group('Wallets', ['namespace' => '\App\Modules\User\Controllers', 'filt
     $routes->match(['GET', 'POST'], 'Add/(:segment)', 'WalletsController::add/$1', ['as' => 'wallets.add.segment']);
     $routes->match(['GET', 'POST'], 'Add/(:segment)/(:segment)', 'WalletsController::addFetch/$1/$2', ['as' => 'wallets.add.segment.segment']);
     $routes->match(['GET', 'POST'], 'Add/Bank-Account', 'WalletsController::createBankeAccount', ['as' => 'wallets.add.bank-account']);
+    $routes->match(['GET', 'POST'], 'Connect-Bank-Account', 'WalletsController::add', ['as' => 'wallets.connect-bank-account']);
     $routes->match(['GET', 'POST'], 'Attach-Account', 'WalletsController::attachAccount', ['as' => 'wallets.attach-account']);
     $routes->match(['GET', 'POST'], 'Attach-Account/(:segment)/(:segment)/(:segment)', 'WalletsController::attachAccount/$1/$2/$3', ['as' => 'wallets.attach-account.segment.segment.segment']);
     $routes->match(['GET', 'POST'], 'Bank', 'WalletsController::bank', ['as' => 'wallets.bank']);
@@ -2275,6 +2276,35 @@ $routes->group('Wallets', ['namespace' => '\App\Modules\User\Controllers', 'filt
     $routes->match(['GET', 'POST'], 'Withdraw/(:segment)', 'WalletsController::withdraw/$1', ['as' => 'wallets.withdraw.segment']); // Previously /Wallets/Withdraw-Funds
     $routes->match(['GET', 'POST'], 'Withdraw/Fetch', 'WalletsController::addWithdrawFetch', ['as' => 'wallets.withdraw.fetch']);
     // Add other necessary route definitions here
+});
+
+// Top-level aliases for legacy form actions
+$routes->match(['GET', 'POST'], 'Deposit-Funds', '\App\Modules\User\Controllers\WalletsController::deposit', ['filter' => ['login', 'noStore']]);
+$routes->match(['GET', 'POST'], 'Withdraw-Funds', '\App\Modules\User\Controllers\WalletsController::withdraw', ['filter' => ['login', 'noStore']]);
+$routes->match(['GET', 'POST'], 'Web_Design/Test_Page_Email', '\App\Modules\Management\Controllers\APIAdminController::Test_Page_Email', ['filter' => ['login', 'noStore']]);
+$routes->match(['GET', 'POST'], 'Content-Creator', '\App\Modules\Management\Controllers\WebDesignAdminController::contentCreator', ['filter' => ['role:admin,team']]);
+$routes->match(['GET', 'POST'], 'CFA/Analysis/Application/Account_Manager', '\App\Modules\Advisor\Controllers\AdvisorController::cfaAccountManager', ['filter' => 'csrf']);
+
+// User - Wallets Legacy & Form Endpoints (GT-FORM-ROUTES-001)
+$routes->group('User/Wallets', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) {
+    $routes->match(['GET', 'POST'], 'Wallet_Manager', 'WalletsController::walletManager');
+    $routes->match(['GET', 'POST'], 'Wallet_Transaction', 'WalletsController::walletTransaction');
+    $routes->match(['GET', 'POST'], 'Purchase_Coins_Transaction', 'WalletsController::purchaseCoinsTransaction');
+    $routes->match(['GET', 'POST'], 'Wallet_Generator', 'WalletsController::walletGenerator');
+});
+
+// Plaid & Institutions compatibility routes (GT-FORM-ROUTES-001)
+$routes->group('Institutions/Integrations', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => ['login']], static function ($routes) {
+    $routes->post('savePublicToken', 'WalletsAPIController::plaidExchange');
+    $routes->post('exchange_public_token', 'WalletsAPIController::plaidExchange');
+    $routes->post('create_wallet', 'WalletsAPIController::create');
+});
+
+$routes->group('api', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => ['login']], static function ($routes) {
+    $routes->get('create_link_token', 'WalletsAPIController::plaidLinkToken');
+    $routes->post('exchange_public_token', 'WalletsAPIController::plaidExchange');
+    $routes->get('data', 'WalletsAPIController::index');
+    $routes->get('is_account_connected', 'WalletsAPIController::summary');
 });
 
 // // Management - Admin:

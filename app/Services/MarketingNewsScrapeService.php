@@ -1290,9 +1290,7 @@ class MarketingNewsScrapeService
         if ($queryMutator !== null) {
             $queryMutator($builder);
         }
-        $builder->orderBy('id', 'DESC')->limit($limit);
-
-        return $builder->get()->getResultArray();
+        return $builder->orderBy('id', 'DESC')->limit($limit)->get()->getResultArray();
     }
 
     /**

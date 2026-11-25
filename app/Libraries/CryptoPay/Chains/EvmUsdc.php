@@ -26,6 +26,12 @@ final class EvmUsdc implements ChainAdapter
      * blocks keeps such a payment from being skipped.
      */
     private const REREAD_BLOCKS = 20;
+    /**
+     * Logs are read up to this many blocks behind the head the endpoint
+     * reported: a load-balanced RPC often refuses eth_getLogs for its newest
+     * block ("block range extends beyond current head"), seen live on Base.
+     */
+    private const HEAD_LAG = 2;
 
     /** @var array<string, true> endpoints that reported this chain's id */
     private array $verified = [];
@@ -131,8 +137,9 @@ final class EvmUsdc implements ChainAdapter
         $found = [];
         $complete = true;
         $readTo = $from - 1;
-        for ($i = 0; $i < self::MAX_CHUNKS && $from <= $latest; $i++) {
-            $to = min($latest, $from + self::CHUNK - 1);
+        $readHead = $latest - self::HEAD_LAG;
+        for ($i = 0; $i < self::MAX_CHUNKS && $from <= $readHead; $i++) {
+            $to = min($readHead, $from + self::CHUNK - 1);
             $logs = $this->rpcAt($url, 'eth_getLogs', [[
                 'fromBlock' => '0x' . dechex($from), 'toBlock' => '0x' . dechex($to),
                 'address' => $this->usdc, 'topics' => [self::TRANSFER_TOPIC, null, $topicTo],
@@ -153,7 +160,7 @@ final class EvmUsdc implements ChainAdapter
             $readTo = $to;
             $from = $to + 1;
         }
-        if ($from <= $latest) {
+        if ($from <= $readHead) {
             $complete = false; // more blocks than one sweep reads; the next sweep continues
         }
         // Only blocks deep enough to be final, plus a margin, are skipped next time; newer ones are read again.
