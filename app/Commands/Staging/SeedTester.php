@@ -312,7 +312,7 @@ class SeedTester extends SafeBaseCommand
         $webhook = $webhookService->getOrCreateWebhook($userId);
 
         // 2. Incoming Alerts
-        $existing = $webhookService->getUserAlerts($userId, 5);
+        $existing = $webhookService->getUserAlerts($userId);
         if (empty($existing)) {
             $sampleAlerts = [
                 [
@@ -342,7 +342,7 @@ class SeedTester extends SafeBaseCommand
             ];
 
             foreach ($sampleAlerts as $alertData) {
-                $webhookService->receiveAlert($webhook['webhook_token'], $alertData);
+                $webhookService->ingestByToken($webhook['webhook_token'], json_encode($alertData));
             }
             CLI::write('  ✓ Seeded active personal alert webhook & sample incoming alerts feed', 'green');
         }
