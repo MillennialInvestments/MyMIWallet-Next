@@ -97,7 +97,7 @@ else
 fi
 
 if [ "$KEEP_SAMPLE" != "1" ]; then
-  spark sports:import --remove-sample --json > "$OUT/remove.json" 2>&1 && ok "sample rows removed" || bad "sample removal failed"
+  spark sports:import --remove-sample --approve --json > "$OUT/remove.json" 2>&1 && ok "sample rows removed" || bad "sample removal failed"
 fi
 
 echo "RESULT PASS $PASS FAIL $FAIL   (logs in $OUT)"

@@ -22,7 +22,7 @@ Status: PROPOSED (branch `claude/project-thread-z2z2v6`). Analytics only. No wag
 | Math | `app/Modules/Sports/Libraries/RbSplitsCalculator.php`, `GoldilocksEngine.php` |
 | Storage | `SportsPropsService.php`, migration `2026-11-27-000100_CreateSportsPropAnalyticsTables` (`bf_sports_players`, `bf_sports_rb_game_logs`, `bf_sports_defense_ranks`) |
 | Data | `Providers/StatsProviderInterface.php`, `CsvStatsProvider.php`, bundled fictional sample set in `app/Modules/Sports/Data/` |
-| CLI | `php spark sports:import --provider sample`, `sports:import --logs FILE --defense FILE`, `sports:import --remove-sample`, `sports:goldilocks --player Alpha --opponent KC --lines "rush_yds:65.5:-115:-105"` |
+| CLI | `php spark sports:import --provider sample`, `sports:import --logs FILE --defense FILE`, `sports:import --remove-sample --approve`, `sports:goldilocks --player Alpha --opponent KC --lines "rush_yds:65.5:-115:-105"` |
 | Tests | `tests/unit/Sports/` (14 tests), `tests/smoke/sports-rb-props-smoke.sh` |
 
 The sidebar's existing "My Sports" links (`/MyMISports`, `/MyMISports/NFL`, `/MyMISports/NBA`) now resolve; NBA goes to the NFL page until NBA work exists.
@@ -49,7 +49,7 @@ Good result: `RESULT PASS 4 FAIL 0` and `smoke exit=0`. To include the web-route
 5. Leave the lines blank and submit. Expect "No sportsbook lines given" and suggested over/under lines per market.
 6. Sign out and open `/MyMISports/NFL`. Expect the login page, not a 404.
 
-Remove the sample players when done: `cd /apps/TBI/www/mymiwallet-staging/current && sudo -u www-data php spark sports:import --remove-sample`.
+Remove the sample players when done: `cd /apps/TBI/www/mymiwallet-staging/current && sudo -u www-data php spark sports:import --remove-sample --approve`.
 
 ## Real data
 

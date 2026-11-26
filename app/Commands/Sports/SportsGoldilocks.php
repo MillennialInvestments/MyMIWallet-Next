@@ -6,14 +6,14 @@ namespace App\Commands\Sports;
 
 use App\Modules\Sports\Libraries\GoldilocksEngine;
 use App\Modules\Sports\Libraries\SportsPropsService;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
 /**
  * Read-only: prints a running back's defense-tier splits and the Goldilocks
  * prop pick for an upcoming opponent. Never places or records a wager.
  */
-class SportsGoldilocks extends BaseCommand
+class SportsGoldilocks extends SafeBaseCommand
 {
     use SportsOptionsTrait;
 
@@ -31,6 +31,7 @@ class SportsGoldilocks extends BaseCommand
 
     public function run(array $params)
     {
+        $this->parseParams($params);
         $json = $this->flag($params, 'json');
         $svc = new SportsPropsService(db_connect());
         if (! $svc->tablesReady()) {
