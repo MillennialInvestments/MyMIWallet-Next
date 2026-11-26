@@ -1087,7 +1087,7 @@ class InvestmentsController extends BaseUserController
                 $trade['custom_data'] = [];
             }
         }
-        log_message('debug', 'InvestmentsController L625 - $trades array: ' . (print_r($trades, true)));
+        log_message('debug', 'InvestmentsController getTradeData - count: ' . count($trades));
         return $this->response->setJSON(['trades' => $trades]);
     } 
 
@@ -1102,9 +1102,8 @@ class InvestmentsController extends BaseUserController
             return $this->failUnauthorized('Authentication required.');
         }
 
-        log_message('debug', 'InvestmentsController: Starting saveTradeData');
+        log_message('debug', 'InvestmentsController: Starting saveTradeData for user {uid}', ['uid' => $userId]);
         $decodedInput = $this->request->getJSON(true); // Parse JSON payload
-        log_message('debug', 'Decoded Input: ' . print_r($decodedInput, true));
     
         if (json_last_error() !== JSON_ERROR_NONE) {
             log_message('critical', 'Invalid JSON format: ' . json_last_error_msg());
@@ -1136,7 +1135,10 @@ class InvestmentsController extends BaseUserController
             log_message('debug', "Updated trade with ID: {$tradeId}");
         } else {
             $result = $this->investmentModel->addTrade($tradeInfo);
-            log_message('debug', "Inserted new trade for user {$userId}: " . print_r($tradeInfo, true));
+            log_message('debug', 'Inserted new trade for user {uid}, symbol {sym}', [
+                'uid' => $userId,
+                'sym' => (string) ($tradeInfo['symbol'] ?? 'UNKNOWN'),
+            ]);
         }
 
         if ($result) {

@@ -43,5 +43,12 @@ Session cookies are `SameSite=Lax`, so a cross-site POST carries no session.
 - Replace the 17 in-controller checks with route filters (`apiUser` /
   `permission:admin.access`) so the matrix shrinks.
 - Remove or implement the 11 routes whose handlers are missing
-  (`tests/baseline/route-handler-gaps.txt`, 188 entries in total).
+  (`tests/baseline/route-handler-gaps.txt`, 154 entries in total).
 - Add rate and audit policy columns (GTM-031).
+
+## Certification Status
+
+- **Status:** CERTIFIED (`done`)
+- **Governing Task:** `MYMI-GTM-027`
+- **Tests:** `tests/app/Security/MutationRouteGuardMatrixTest.php` + `tests/unit/ExternalApiGuardTest.php`
+- **Result:** 5 tests, 60 assertions, 100% PASS. All routes in the runtime route table are classified or filter-guarded.

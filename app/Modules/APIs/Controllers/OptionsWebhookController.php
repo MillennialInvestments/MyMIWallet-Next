@@ -89,12 +89,18 @@ class OptionsWebhookController extends BaseAPIController
      */
     public function positions(): ResponseInterface
     {
+        $userId = (int) ($this->cuID ?? session('user_id') ?? (function_exists('user_id') ? user_id() : (service('authentication')->id() ?? 0)));
+        if ($userId <= 0) {
+            return $this->error('Authentication required to view options positions', 401);
+        }
+
         $positionModel = new OptionsPositionModel();
-        $active = $positionModel->getActivePositions();
-        $summary = $positionModel->getActiveSummary();
+        $active = $positionModel->getActivePositions($userId);
+        $summary = $positionModel->getActiveSummary($userId);
 
         return $this->success([
-            'summary' => $summary,
+            'user_id'   => $userId,
+            'summary'   => $summary,
             'positions' => $active,
         ]);
     }

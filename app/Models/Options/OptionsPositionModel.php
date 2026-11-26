@@ -42,22 +42,33 @@ class OptionsPositionModel extends Model
     protected $useTimestamps = false;
 
     /**
-     * Fetch all open active positions requiring live monitoring.
+     * Fetch open active positions requiring live monitoring.
+     * When $userId is provided, scopes results strictly to that user.
+     * When $userId is <= 0 (unauthenticated), fails closed and returns empty array.
      *
+     * @param int|null $userId
      * @return array
      */
-    public function getActivePositions(): array
+    public function getActivePositions(?int $userId = null): array
     {
-        return $this->whereIn('status', [
+        if ($userId !== null && $userId <= 0) {
+            return [];
+        }
+
+        $builder = $this->whereIn('status', [
             'open',
             'warning_momentum',
             'warning_trailing',
             'warning_theta',
             'warning_spread',
             'target_reached',
-        ])
-        ->orderBy('created_at', 'DESC')
-        ->findAll();
+        ]);
+
+        if ($userId !== null && $userId > 0) {
+            $builder->where('user_id', $userId);
+        }
+
+        return $builder->orderBy('created_at', 'DESC')->limit(100)->findAll();
     }
 
     /**
@@ -72,13 +83,15 @@ class OptionsPositionModel extends Model
     }
 
     /**
-     * Calculate summary metrics across all active positions.
+     * Calculate summary metrics across active positions.
+     * When $userId is provided, scopes metrics strictly to that user.
      *
+     * @param int|null $userId
      * @return array
      */
-    public function getActiveSummary(): array
+    public function getActiveSummary(?int $userId = null): array
     {
-        $active = $this->getActivePositions();
+        $active = $this->getActivePositions($userId);
         $totalCapital = 0.0;
         $totalValue = 0.0;
         $totalUnrealizedPnl = 0.0;

@@ -163,11 +163,12 @@ class WalletsAPIController extends BaseAPIController
             if (!$uid && function_exists('auth') && auth()->loggedIn()) { $uid = (int) auth()->user()->id; }
             if (!$uid) return $this->failUnauthorized('Unauthorized');
 
-            $category    = strtolower((string) $this->request->getPost('category'));
-            $provider    = strtolower((string) $this->request->getPost('provider'));
-            $label       = trim((string) $this->request->getPost('label'));
-            $status      = strtolower((string) ($this->request->getPost('status') ?? 'linked'));
-            $credentials = $this->parseCredentials($this->request->getPost('credentials'));
+            $json = $this->request->getJSON(true) ?: [];
+            $category    = strtolower((string) ($json['category'] ?? $this->request->getPost('category') ?? 'bank'));
+            $provider    = strtolower((string) ($json['provider'] ?? $this->request->getPost('provider') ?? 'plaid'));
+            $label       = trim((string) ($json['label'] ?? $this->request->getPost('label') ?? ''));
+            $status      = strtolower((string) ($json['status'] ?? $this->request->getPost('status') ?? 'linked'));
+            $credentials = $this->parseCredentials($json['credentials'] ?? $this->request->getPost('credentials') ?? $json);
 
             if (!$category || !$provider) {
                 return $this->failValidationErrors('Missing category or provider');
@@ -353,8 +354,9 @@ class WalletsAPIController extends BaseAPIController
                 ], 401);
             }
 
-            $publicToken = (string) $this->request->getPost('public_token');
-            $metadataRaw = (string) $this->request->getPost('metadata');
+            $json = $this->request->getJSON(true) ?: [];
+            $publicToken = (string) ($json['public_token'] ?? $json['publicToken'] ?? $this->request->getPost('public_token') ?? '');
+            $metadataRaw = (string) ($json['metadata'] ?? $this->request->getPost('metadata') ?? '');
 
             $metadataDecoded = $metadataRaw !== '' ? json_decode($metadataRaw, true) : [];
             $metadata = is_array($metadataDecoded) ? $metadataDecoded : [];

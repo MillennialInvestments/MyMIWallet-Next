@@ -1,11 +1,5 @@
 # Known route handler gaps (GTM-022..026). Remove a line once it is fixed.
 App\Controllers\Api\HealthController::index
-App\Controllers\AuthController::handleProviderCallback
-App\Controllers\AuthController::linkProvider
-App\Controllers\AuthController::linkRobinhood
-App\Controllers\AuthController::linkSnapTrade
-App\Controllers\AuthController::redirectToProvider
-App\Controllers\AuthController::unlinkProvider
 App\Controllers\Ops::opcacheReset
 App\Controllers\ServiceWorker::index
 App\Modules\APIs\Controllers\APIController::getSymbolsByTradeType
@@ -150,10 +144,6 @@ App\Modules\User\Controllers\WalletsController::coinSwap
 App\Modules\User\Controllers\WalletsController::createBankeAccount
 App\Modules\User\Controllers\WalletsController::customizeMembership
 App\Modules\User\Controllers\WalletsController::featureManager
-App\Modules\User\Controllers\WalletsController::generateWallet
 App\Modules\User\Controllers\WalletsController::linkAccount
 App\Modules\User\Controllers\WalletsController::linkAccountSuccess
 App\Modules\User\Controllers\WalletsController::purchaseManager
-App\Modules\User\Controllers\WalletsController::walletGenerator
-App\Modules\User\Controllers\WalletsController::walletManager
-App\Modules\User\Controllers\WalletsController::walletTransaction

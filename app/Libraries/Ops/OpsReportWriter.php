@@ -9,7 +9,9 @@ class OpsReportWriter
     public function write(string $jobKey, string $markdown, ?string $dateString = null): string
     {
         $date = $dateString ?: date('Y-m-d');
-        $baseDir = ROOTPATH . 'docs' . DIRECTORY_SEPARATOR . 'ops' . DIRECTORY_SEPARATOR . 'reports';
+        // Releases are read-only for the web and timer user, so reports go under
+        // writable/ (the shared directory that survives release switches).
+        $baseDir = rtrim(WRITEPATH, '/\\') . DIRECTORY_SEPARATOR . 'ops' . DIRECTORY_SEPARATOR . 'reports';
         $targetDir = $baseDir . DIRECTORY_SEPARATOR . $date;
 
         if (! is_dir($targetDir)) {
