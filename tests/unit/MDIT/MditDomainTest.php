@@ -80,6 +80,12 @@ final class MditDomainTest extends CIUnitTestCase
         );
     }
 
+    protected function tearDown(): void
+    {
+        Services::resetSingle('authentication');
+        parent::tearDown();
+    }
+
     public function testKycLifecycleAndAccreditationAttestation(): void
     {
         $service = new MditInvestorService();
