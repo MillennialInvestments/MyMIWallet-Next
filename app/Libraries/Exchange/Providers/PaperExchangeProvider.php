@@ -64,11 +64,22 @@ class PaperExchangeProvider implements ExchangeProvider
 
         // Standard default baseline paper pricing if spot price is offline
         $fallbackPrices = [
-            'BTC'  => 96500.0,
-            'ETH'  => 3450.0,
-            'SOL'  => 215.0,
-            'XRP'  => 1.45,
-            'USDC' => 1.0,
+            'BTC'   => 96500.0,
+            'ETH'   => 3450.0,
+            'SOL'   => 215.0,
+            'XRP'   => 1.45,
+            'USDC'  => 1.0,
+            'USDT'  => 1.0,
+            'PYUSD' => 1.0,
+            'EURC'  => 1.05,
+            'POL'   => 0.50,
+            'ARB'   => 0.85,
+            'OP'    => 1.95,
+            'AVAX'  => 38.50,
+            'BNB'   => 640.0,
+            'LTC'   => 95.0,
+            'DOGE'  => 0.38,
+            'TRX'   => 0.20,
         ];
 
         if (isset($fallbackPrices[$base])) {

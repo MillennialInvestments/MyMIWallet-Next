@@ -68,7 +68,16 @@ class SwapService
             return $this->solanaProvider->quote($inputToken, $outputToken, $amount, $options);
         }
 
-        if (in_array($cleanChain, ['ethereum', 'base', 'evm'], true)) {
+        if (in_array($cleanChain, ['ethereum', 'base', 'polygon', 'arbitrum', 'optimism', 'avalanche', 'bsc', 'evm'], true)) {
+            $options['chain_id'] = $options['chain_id'] ?? match ($cleanChain) {
+                'polygon'   => 137,
+                'arbitrum'  => 42161,
+                'optimism'  => 10,
+                'avalanche' => 43114,
+                'bsc'       => 56,
+                'base'      => 8453,
+                default     => 1,
+            };
             return $this->evmProvider->quote($inputToken, $outputToken, $amount, $options);
         }
 
