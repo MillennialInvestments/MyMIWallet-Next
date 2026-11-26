@@ -24,6 +24,7 @@ class Features extends BaseConfig
             'FEATURE_PREDICTIONS' => $this->readBool('FEATURE_PREDICTIONS', false),
             'FEATURE_MARKETING_AUTOMATION' => $this->readBool('FEATURE_MARKETING_AUTOMATION', true),
             // GT-FORM-ROUTES-001: money, crypto and payment flows. Off until the owner turns each one on.
+            'FEATURE_EXCHANGE_TRADING' => $this->readBool('FEATURE_EXCHANGE_TRADING', false),
             'FEATURE_SOLANA_TRADING' => $this->readBool('FEATURE_SOLANA_TRADING', false),
             'FEATURE_AUCTIONS' => $this->readBool('FEATURE_AUCTIONS', false),
             'FEATURE_PROJECT_INVESTING' => $this->readBool('FEATURE_PROJECT_INVESTING', false),
