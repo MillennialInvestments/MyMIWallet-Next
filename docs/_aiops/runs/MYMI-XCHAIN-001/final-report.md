@@ -105,7 +105,7 @@ CRYPTO_PAY_BITCOIN_NETWORK=testnet
 CRYPTO_PAY_XRPL_NETWORK=testnet
 EOF' && \
 cd /apps/TBI/www/mymiwallet-staging/current && \
-sudo -u www-data php scripts/ops/db/run-migrations.php CreateCryptoPayRequests CreateGoldLedger CreateBtcAddressPool CreatePaperExchangeTables CreateMyMICoinInterestTable && \
+sudo -u www-data php scripts/ops/db/run-migrations.php 2026-11-25-000100_CreateCryptoPayRequests 2026-11-25-000200_CreateGoldLedger 2026-11-25-000300_CreateBtcAddressPool 2026-11-25-000400_CreatePaperExchangeTables 2026-11-25-000500_CreateMyMICoinInterestTable && \
 sudo rm -f /apps/TBI/www/mymiwallet-staging/shared/writable/cache/FileLocatorCache && \
 sudo -u www-data php spark compliance:update-sanctions --offline-seed && \
 bash scripts/ops/staging/mymi-xchain-smoke.sh /apps/TBI/www/mymiwallet-staging/current
