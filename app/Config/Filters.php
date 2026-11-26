@@ -33,7 +33,8 @@ class Filters extends BaseConfig
      */
     public array $aliases = [
         // PATCH: session security filters
-        'responsecache' => \CodeIgniter\Filters\ResponseCache::class,
+        // CodeIgniter 4.7 has no Filters\ResponseCache; its page-cache filter is PageCache.
+        'responsecache' => \CodeIgniter\Filters\PageCache::class,
         'sessionTracker'  => \App\Filters\SessionTrackerFilter::class,
         'sessionRevoked'  => \App\Filters\SessionRevokedFilter::class,
         // PATCH: register RBAC permission filter
