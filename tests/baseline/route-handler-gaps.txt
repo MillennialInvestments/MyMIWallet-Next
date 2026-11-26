@@ -1,11 +1,5 @@
 # Known route handler gaps (GTM-022..026). Remove a line once it is fixed.
 App\Controllers\Api\HealthController::index
-App\Controllers\AuthController::handleProviderCallback
-App\Controllers\AuthController::linkProvider
-App\Controllers\AuthController::linkRobinhood
-App\Controllers\AuthController::linkSnapTrade
-App\Controllers\AuthController::redirectToProvider
-App\Controllers\AuthController::unlinkProvider
 App\Controllers\Ops::opcacheReset
 App\Controllers\ServiceWorker::index
 App\Modules\APIs\Controllers\APIController::getSymbolsByTradeType
