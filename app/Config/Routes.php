@@ -2920,6 +2920,11 @@ if (is_file(APPPATH . 'Modules/PropFirms/Config/Routes.php')) {
     require APPPATH . 'Modules/PropFirms/Config/Routes.php';
 }
 
+// MyMI Sports: NFL running back prop analytics (read-only, no wagering)
+if (is_file(APPPATH . 'Modules/Sports/Config/Routes.php')) {
+    require APPPATH . 'Modules/Sports/Config/Routes.php';
+}
+
 // BEGIN MyMI Solana public web route exposure
 // Explicit public aliases for Solana Exchange smoke-tested URLs.
 // These aliases preserve existing controller methods and do not enable minting/broadcasting.

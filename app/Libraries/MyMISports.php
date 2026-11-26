@@ -18,7 +18,7 @@ class MyMISports
 
     public function __construct()
     {
-        $this->apiKey = 'c1e82d6f5beab624c459f7bc89c3321a';
+        $this->apiKey = (string) env('API_SPORTS_KEY', ''); // was hardcoded; key must be rotated at api-sports.io
         $this->apiNFLHost = 'v1.american-football.api-sports.io';
         $this->apiNBAHost = 'v2.nba.api-sports.io';
         $this->sportsModel = new SportsModel();
