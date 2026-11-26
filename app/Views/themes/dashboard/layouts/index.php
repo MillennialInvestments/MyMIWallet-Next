@@ -38,6 +38,7 @@ if ($nextGoal) {
 echo view('themes/dashboard/layouts/header', $subViewData);
 ?>
     <body class="nk-body npc-landing bg-white intro" data-base-url="<?= esc(rtrim(site_url('/'), '/') . '/', 'attr') ?>">
+        <a href="#dashboard-main-content" class="skip-link">Skip to main content</a>
         <?php //echo view('themes/dashboard/layouts/data_distribution', $subViewData); ?>
         <div class="nk-app-root">
             <div class="nk-main">
@@ -47,7 +48,7 @@ echo view('themes/dashboard/layouts/header', $subViewData);
                 <?php echo view('themes/dashboard/layouts/sidebar', $subViewData); ?>
                 <div class="nk-wrap db-nk-wrap px-3 px-md-1 pl-xxl-3">
                     <?php echo view('themes/dashboard/layouts/_sitenav', $subViewData); ?>
-                    <div class="nk-content content-wrapper pt-3 pt-xxl-3 ml-xxl-3 px-xxl-3 pl-xxl-3">
+                    <main id="dashboard-main-content" class="nk-content content-wrapper pt-3 pt-xxl-3 ml-xxl-3 px-xxl-3 pl-xxl-3" role="main">
                         <div class="mb-3 pl-md-5 ml-xl-5 pl-xl-3">
                             <?= view('App\Views\Auth\_message_block') ?>
                             <div class="row justify-content-center pt-md-0 pt-md-0 pl-md-5 pr-md-3 px-xxl-0 pb-md-3">
@@ -61,7 +62,7 @@ echo view('themes/dashboard/layouts/header', $subViewData);
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </main>
                     <?php
                     // Assume $viewFileData is passed from the controller
                     echo view('themes/dashboard/layouts/footer', $subViewData);

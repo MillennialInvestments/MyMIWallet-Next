@@ -63,8 +63,10 @@
 						<div class="form-group mb-3">
 							<label for="login" class="form-label fw-semibold text-dark small"><?=lang('Auth.email')?></label>
 							<input type="email" class="form-control <?php if (session('errors.login')) : ?>is-invalid<?php endif ?>"
-								   name="login" value="<?= esc(old('login')) ?>" placeholder="<?=lang('Auth.email')?>">
-							<div class="invalid-feedback">
+								   id="login" name="login" value="<?= esc(old('login')) ?>" placeholder="<?=lang('Auth.email')?>"
+								   required aria-required="true"
+								   <?php if (session('errors.login')) : ?>aria-invalid="true" aria-describedby="login-feedback"<?php endif ?>>
+							<div class="invalid-feedback" id="login-feedback">
 								<?= session('errors.login') ?>
 							</div>
 						</div>
@@ -72,8 +74,10 @@
 						<div class="form-group mb-3">
 							<label for="login" class="form-label fw-semibold text-dark small"><?=lang('Auth.emailOrUsername')?></label>
 							<input type="text" class="form-control <?php if (session('errors.login')) : ?>is-invalid<?php endif ?>"
-								   name="login" value="<?= esc(old('login')) ?>" placeholder="<?=lang('Auth.emailOrUsername')?>">
-							<div class="invalid-feedback">
+								   id="login" name="login" value="<?= esc(old('login')) ?>" placeholder="<?=lang('Auth.emailOrUsername')?>"
+								   required aria-required="true"
+								   <?php if (session('errors.login')) : ?>aria-invalid="true" aria-describedby="login-feedback"<?php endif ?>>
+							<div class="invalid-feedback" id="login-feedback">
 								<?= session('errors.login') ?>
 							</div>
 						</div>
@@ -86,8 +90,10 @@
 									<a href="<?= url_to('forgot') ?>" class="small text-primary text-decoration-none"><?=lang('Auth.forgotYourPassword')?></a>
 								<?php endif; ?>
 							</div>
-							<input type="password" name="password" class="form-control <?php if (session('errors.password')) : ?>is-invalid<?php endif ?>" placeholder="<?=lang('Auth.password')?>">
-							<div class="invalid-feedback">
+							<input type="password" id="password" name="password" class="form-control <?php if (session('errors.password')) : ?>is-invalid<?php endif ?>" placeholder="<?=lang('Auth.password')?>"
+								   required aria-required="true"
+								   <?php if (session('errors.password')) : ?>aria-invalid="true" aria-describedby="password-feedback"<?php endif ?>>
+							<div class="invalid-feedback" id="password-feedback">
 								<?= session('errors.password') ?>
 							</div>
 						</div>
