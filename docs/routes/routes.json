@@ -1,59 +1,45 @@
 {
-    "generated_utc": "2026-04-02T09:57:00Z",
+    "generated_utc": "2026-11-25T20:30:16Z",
     "environment": "development",
     "mode": "all",
     "limit": 0,
     "summary": {
-        "total": 1562,
+        "total": 1877,
         "methods": {
-            "GET": 1018,
-            "POST": 511,
-            "PUT": 3,
-            "DELETE": 12,
+            "GET": 1155,
+            "POST": 680,
+            "PUT": 6,
+            "DELETE": 15,
             "PATCH": 0,
-            "OPTIONS": 0,
+            "OPTIONS": 1,
             "CLI": 1,
-            "OTHER": 17
+            "OTHER": 19
         },
         "surfaces": {
-            "Public/User": 794,
-            "API": 744,
-            "Admin": 13,
+            "Public/User": 1011,
+            "API": 836,
+            "Admin": 19,
             "Ops": 11
         }
     },
     "routes": [
         {
             "method": "GET",
-            "route": "([^/]+)/register",
-            "handler": "unknown_handler",
-            "surface": "Public/User",
-            "issues": []
-        },
-        {
-            "method": "POST",
-            "route": "([^/]+)/register",
-            "handler": "unknown_handler",
-            "surface": "Public/User",
-            "issues": []
-        },
-        {
-            "method": "GET",
-            "route": "([^/]+)/register/([^/]+)",
-            "handler": "unknown_handler",
-            "surface": "Public/User",
-            "issues": []
-        },
-        {
-            "method": "POST",
-            "route": "([^/]+)/register/([^/]+)",
-            "handler": "unknown_handler",
-            "surface": "Public/User",
-            "issues": []
-        },
-        {
-            "method": "GET",
             "route": "/",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "HEAD",
+            "route": "/",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "AI-Chat",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -138,6 +124,27 @@
         {
             "method": "POST",
             "route": "API/AIOps/usage/log",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Admin/PayPalSmokeTest/audit",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Admin/PayPalSmokeTest/probe",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Admin/PayPalSmokeTest/simulate",
             "handler": "unknown_handler",
             "surface": "API",
             "issues": []
@@ -264,6 +271,13 @@
         {
             "method": "POST",
             "route": "API/Alerts/createTradeAlert/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Alerts/dismissAlert/([0-9]+)",
             "handler": "unknown_handler",
             "surface": "API",
             "issues": []
@@ -703,6 +717,13 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "API/Alerts/regenerateWebhook",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "API/Alerts/scanner",
             "handler": "unknown_handler",
@@ -739,6 +760,20 @@
         },
         {
             "method": "GET",
+            "route": "API/Alerts/sendDiscordAlertsBySymbol",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Alerts/sendDiscordAlertsBySymbol",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "API/Alerts/sendDiscordAlertsBySymbol/([^/]+)",
             "handler": "unknown_handler",
             "surface": "API",
@@ -747,13 +782,6 @@
         {
             "method": "POST",
             "route": "API/Alerts/sendDiscordAlertsBySymbol/([^/]+)",
-            "handler": "unknown_handler",
-            "surface": "API",
-            "issues": []
-        },
-        {
-            "method": "GET",
-            "route": "API/Alerts/sign",
             "handler": "unknown_handler",
             "surface": "API",
             "issues": []
@@ -873,6 +901,20 @@
         {
             "method": "POST",
             "route": "API/Alerts/updateTradeAlerts",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Alerts/userAlerts",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Alerts/webhook/([^/]+)",
             "handler": "unknown_handler",
             "surface": "API",
             "issues": []
@@ -1705,6 +1747,48 @@
         },
         {
             "method": "POST",
+            "route": "API/CoinVault/approveContribution/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/CoinVault/approvePayout/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/CoinVault/contributionEvent",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/CoinVault/rejectContribution/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/CoinVault/rejectPayout/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/CoinVault/requestPayout",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
             "route": "API/ContentEngine/approvePost/([0-9]+)",
             "handler": "unknown_handler",
             "surface": "API",
@@ -1830,6 +1914,27 @@
             "issues": []
         },
         {
+            "method": "GET",
+            "route": "API/Discord/lookup/crypto",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Discord/lookup/quote",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Discord/lookup/ticker",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
             "method": "POST",
             "route": "API/Discord/messageHook",
             "handler": "unknown_handler",
@@ -1853,6 +1958,13 @@
         {
             "method": "DELETE",
             "route": "API/Discord/purge-dead",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Discord/register-guild-commands",
             "handler": "unknown_handler",
             "surface": "API",
             "issues": []
@@ -1985,6 +2097,13 @@
         },
         {
             "method": "GET",
+            "route": "API/Email/fetchTagAnalytics",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "API/Email/getAllCampaigns",
             "handler": "unknown_handler",
             "surface": "API",
@@ -2041,6 +2160,13 @@
         },
         {
             "method": "GET",
+            "route": "API/Email/trackBounceWebhook",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
             "route": "API/Email/trackBounceWebhook",
             "handler": "unknown_handler",
             "surface": "API",
@@ -2404,6 +2530,55 @@
             "issues": []
         },
         {
+            "method": "GET",
+            "route": "API/Management/Projects/TBI-Coins/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Management/Projects/TBI-Coins/Approve-Contribution/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Management/Projects/TBI-Coins/Create-Defaults/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Management/Projects/TBI-Coins/Prepare-Exchange-Asset/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Management/Projects/TBI-Coins/Prepare-Solana-Mint/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Management/Projects/TBI-Coins/Record-Contribution",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Management/Projects/TBI-Coins/Reject-Contribution/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
             "method": "POST",
             "route": "API/Management/Projects/checkThreshold/([0-9]+)",
             "handler": "unknown_handler",
@@ -2629,6 +2804,13 @@
         },
         {
             "method": "GET",
+            "route": "API/Management/fetchBufferPaginated",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "API/Management/fetchCoffeeAndStocksNewsletter",
             "handler": "unknown_handler",
             "surface": "API",
@@ -2749,6 +2931,13 @@
         {
             "method": "GET",
             "route": "API/Management/getAutoloadHealth",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Management/getGeneratedPostsPaginated",
             "handler": "unknown_handler",
             "surface": "API",
             "issues": []
@@ -3111,6 +3300,48 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "API/Marketing/Distro/distribute",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Marketing/Distro/feed",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Marketing/Distro/fetch",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Marketing/Distro/generate",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Marketing/Distro/injectSample",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Marketing/Distro/voiceover",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "API/Marketing/Edit-Content/([0-9]+)",
             "handler": "unknown_handler",
@@ -3190,6 +3421,13 @@
         {
             "method": "GET",
             "route": "API/Marketing/Ideas",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Marketing/Ingress",
             "handler": "unknown_handler",
             "surface": "API",
             "issues": []
@@ -3497,6 +3735,34 @@
         },
         {
             "method": "GET",
+            "route": "API/Marketing/distributionChannelTotals",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Marketing/distributionFailedSummary",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Marketing/distributionHistory/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Marketing/distributionSummary",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "API/Marketing/downloadVoiceover/(.*)",
             "handler": "unknown_handler",
             "surface": "API",
@@ -3727,6 +3993,13 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "API/Marketing/generateMarketingPackage",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "API/Marketing/generateNewsletter",
             "handler": "unknown_handler",
@@ -3846,6 +4119,13 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "API/Marketing/getStoryUpdates",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "API/Marketing/getStoryboardPackage/([0-9]+)",
             "handler": "unknown_handler",
@@ -3909,6 +4189,13 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "API/Marketing/massResendActivationEmails",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "API/Marketing/monitorKeywords",
             "handler": "unknown_handler",
@@ -3952,6 +4239,62 @@
         },
         {
             "method": "GET",
+            "route": "API/Marketing/processPendingCampaigns",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Marketing/processPendingCampaigns",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Marketing/processPendingGeneratedContent",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Marketing/processPendingGeneratedContent",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Marketing/processPendingNotifications",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Marketing/processPendingNotifications",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Marketing/processPendingTempScraper",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Marketing/processPendingTempScraper",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "API/Marketing/publishGroupedContentDraft",
             "handler": "unknown_handler",
             "surface": "API",
@@ -3980,6 +4323,34 @@
         },
         {
             "method": "GET",
+            "route": "API/Marketing/retryDistributionTargets",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Marketing/retryDistributionTargets",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Marketing/retryDistributionTargets/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Marketing/retryDistributionTargets/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "API/Marketing/runContentGenerationBatch",
             "handler": "unknown_handler",
             "surface": "API",
@@ -3995,6 +4366,62 @@
         {
             "method": "GET",
             "route": "API/Marketing/runKeywordEnrichment",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Marketing/runMarketingPipeline",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Marketing/runMarketingPipeline",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Marketing/runNewsGenerate",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Marketing/runNewsGenerate",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Marketing/runNewsPipeline",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Marketing/runNewsPipeline",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Marketing/runNewsScrape",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Marketing/runNewsScrape",
             "handler": "unknown_handler",
             "surface": "API",
             "issues": []
@@ -4211,6 +4638,13 @@
         },
         {
             "method": "POST",
+            "route": "API/Marketing/uploadNotification",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
             "route": "API/Marketing/upsertPlatformRule",
             "handler": "unknown_handler",
             "surface": "API",
@@ -4408,6 +4842,41 @@
         {
             "method": "GET",
             "route": "API/Ops/status",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Ops/watch-status",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Options/candidates",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Options/positions",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Options/webhook",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/PayPal/Webhook",
             "handler": "unknown_handler",
             "surface": "API",
             "issues": []
@@ -4721,6 +5190,20 @@
             "issues": []
         },
         {
+            "method": "GET",
+            "route": "API/PropFirms/replay/([0-9]+)/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/PropFirms/replay/([0-9]+)/diagnostics",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
             "method": "POST",
             "route": "API/Referrals/bulk-delete",
             "handler": "unknown_handler",
@@ -4772,6 +5255,13 @@
         {
             "method": "POST",
             "route": "API/Scanner/universe/sync",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/Search",
             "handler": "unknown_handler",
             "surface": "API",
             "issues": []
@@ -4841,6 +5331,13 @@
         },
         {
             "method": "POST",
+            "route": "API/Solana/swap/preview",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
             "route": "API/Solana/swap/quote",
             "handler": "unknown_handler",
             "surface": "API",
@@ -4856,6 +5353,13 @@
         {
             "method": "POST",
             "route": "API/Solana/token/mint",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Solana/transaction/preview",
             "handler": "unknown_handler",
             "surface": "API",
             "issues": []
@@ -4891,6 +5395,27 @@
         {
             "method": "GET",
             "route": "API/Solana/wallet/([^/]+)/tokens",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "OPTIONS",
+            "route": "API/SolanaPay/Tx/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/SolanaPay/Tx/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/SolanaPay/Tx/([^/]+)",
             "handler": "unknown_handler",
             "surface": "API",
             "issues": []
@@ -5106,7 +5631,21 @@
             "issues": []
         },
         {
-            "method": "GET",
+            "method": "POST",
+            "route": "API/Wallets/Plaid/Refresh/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/Wallets/Plaid/Sync-Transactions/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
             "route": "API/Wallets/Plaid/Webhook",
             "handler": "unknown_handler",
             "surface": "API",
@@ -5143,6 +5682,13 @@
         {
             "method": "GET",
             "route": "API/Wallets/summary",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/account-state/([0-9]+)",
             "handler": "unknown_handler",
             "surface": "API",
             "issues": []
@@ -5226,6 +5772,76 @@
         },
         {
             "method": "GET",
+            "route": "API/management/run-cron-tasks",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/management/run-cron-tasks",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/mobile/alerts",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/mobile/auth/login",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/mobile/auth/logout",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "API/mobile/auth/register",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/mobile/budget",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/mobile/dashboard",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/mobile/investments",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "API/mobile/me",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "API/v1/Health",
             "handler": "unknown_handler",
             "surface": "API",
@@ -5247,6 +5863,13 @@
         },
         {
             "method": "GET",
+            "route": "API/v1/SecureTransfer/status",
+            "handler": "unknown_handler",
+            "surface": "API",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "API/v1/Status",
             "handler": "unknown_handler",
             "surface": "API",
@@ -5262,6 +5885,34 @@
         {
             "method": "GET",
             "route": "Account",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Account",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Account/2fa/backup/regenerate",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Account/2fa/disable",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Account/2fa/enable",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -5296,6 +5947,34 @@
         },
         {
             "method": "GET",
+            "route": "Account/Privacy/Download/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Account/Privacy/Erase",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Account/Privacy/Export",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Account/Privacy/Requests",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "Account/Security",
             "handler": "unknown_handler",
             "surface": "Public/User",
@@ -5310,9 +5989,58 @@
         },
         {
             "method": "GET",
+            "route": "Account/Two-Factor",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "Accounts/createLinkToken",
             "handler": "unknown_handler",
             "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Admin/CoinVault",
+            "handler": "unknown_handler",
+            "surface": "Admin",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Admin/CoinVault/Contributions",
+            "handler": "unknown_handler",
+            "surface": "Admin",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Admin/CoinVault/Payouts",
+            "handler": "unknown_handler",
+            "surface": "Admin",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Admin/CoinVault/Project/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Admin",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Admin/CoinVault/Projects",
+            "handler": "unknown_handler",
+            "surface": "Admin",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Admin/CoinVault/Wallet/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Admin",
             "issues": []
         },
         {
@@ -5457,21 +6185,63 @@
         },
         {
             "method": "GET",
-            "route": "Alerts//Trades",
-            "handler": "unknown_handler",
-            "surface": "Public/User",
-            "issues": []
-        },
-        {
-            "method": "POST",
-            "route": "Alerts//Trades",
+            "route": "Alerts/Preview/([^/]+)",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
         },
         {
             "method": "GET",
-            "route": "Alerts/Preview/([^/]+)",
+            "route": "Alerts/Trades",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Alerts/Trades",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Alerts/View/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Alerts/filterAlerts",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Alerts/filterAlerts",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Alerts/getUserAlerts",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Alerts/userAlerts",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Alerts/viewAlert/([0-9]+)",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -5540,6 +6310,20 @@
             "issues": []
         },
         {
+            "method": "GET",
+            "route": "Auth/Two-Factor",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Auth/Two-Factor/verify",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "POST",
             "route": "Auth/link-robinhood",
             "handler": "unknown_handler",
@@ -5549,6 +6333,13 @@
         {
             "method": "POST",
             "route": "Auth/link-snaptrade",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Beta/register",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -5591,6 +6382,20 @@
         {
             "method": "GET",
             "route": "Blog/Earnings/Test",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Blog/Earnings/update",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Blog/Email/Subscription/Account-Manager",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -6093,6 +6898,13 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "Budget/Settings/Save/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "Budget/Status/Paid/([^/]+)",
             "handler": "unknown_handler",
@@ -6164,6 +6976,13 @@
         },
         {
             "method": "GET",
+            "route": "Dashboard/Economy",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "Dashboard/Economy/Widget",
             "handler": "unknown_handler",
             "surface": "Public/User",
@@ -6172,6 +6991,20 @@
         {
             "method": "GET",
             "route": "Dashboard/LoadingScreen",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "*",
+            "route": "Dashboard/PropFirm",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Dashboard/PropFirms",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -6214,6 +7047,13 @@
         {
             "method": "GET",
             "route": "Dashboard/Transaction-Modal/([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Dashboard/account-completion/dismiss",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -6290,7 +7130,21 @@
         },
         {
             "method": "POST",
+            "route": "Dashboard/onboarding/tour/complete",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
             "route": "Dashboard/onboarding/watchlist",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Dashboard/propfirms",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -6318,7 +7172,14 @@
         },
         {
             "method": "GET",
-            "route": "Dev/BitcoinTest",
+            "route": "Deposit-Funds",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Deposit-Funds",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -6347,6 +7208,27 @@
         {
             "method": "POST",
             "route": "Discord/register/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Docs",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Docs/Search",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Docs/View/(.*)",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -6361,6 +7243,13 @@
         {
             "method": "GET",
             "route": "Economic-Calendar/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Economic-Intelligence",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -6569,6 +7458,13 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "Exchange/Solana/Create-Token",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "Exchange/Solana/Create/Wallet",
             "handler": "unknown_handler",
@@ -6578,6 +7474,13 @@
         {
             "method": "POST",
             "route": "Exchange/Solana/Create/Wallet",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Exchange/Solana/Edit-Wallet",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -6604,7 +7507,28 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "Exchange/Solana/Purchase",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Exchange/Solana/Sell",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "GET",
+            "route": "Exchange/Solana/Swap",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
             "route": "Exchange/Solana/Swap",
             "handler": "unknown_handler",
             "surface": "Public/User",
@@ -6627,6 +7551,13 @@
         {
             "method": "POST",
             "route": "Exchange/Solana/Wallet/Disconnect",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Exchange/Solana/Wallet/Disconnect/([^/]+)",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -6836,6 +7767,13 @@
         },
         {
             "method": "GET",
+            "route": "Free/register",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "Getting-Started",
             "handler": "unknown_handler",
             "surface": "Public/User",
@@ -7010,6 +7948,13 @@
             "issues": []
         },
         {
+            "method": "GET",
+            "route": "Investments/API/getSymbolsByTradeType/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "POST",
             "route": "Investments/Account-Manager",
             "handler": "unknown_handler",
@@ -7131,6 +8076,13 @@
         {
             "method": "GET",
             "route": "Investments/News",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Investments/Options",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -7270,6 +8222,13 @@
         },
         {
             "method": "GET",
+            "route": "Investments/Trade-Tracker",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "Investments/Watchlist",
             "handler": "unknown_handler",
             "surface": "Public/User",
@@ -7284,7 +8243,35 @@
         },
         {
             "method": "GET",
+            "route": "Investments/fetchEconomicData",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "Investments/forecastModal/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Investments/likeEconomicData",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Investments/saveRetirementPlan",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Investments/searchEconomicData",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -7535,6 +8522,13 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "Management/Alerts/Advisor/generateNow",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "Management/Alerts/Audit/Emails",
             "handler": "unknown_handler",
@@ -7591,6 +8585,13 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "Management/Alerts/Submit/TradingView",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "Management/Alerts/Tasks/fetchAlerts",
             "handler": "unknown_handler",
@@ -7633,7 +8634,7 @@
             "issues": []
         },
         {
-            "method": "GET",
+            "method": "POST",
             "route": "Management/Alerts/addTradeAlert",
             "handler": "unknown_handler",
             "surface": "Public/User",
@@ -7642,6 +8643,27 @@
         {
             "method": "GET",
             "route": "Management/Alerts/fetchData",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Alerts/getFullMetrics",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Management/Alerts/previewSignalFile/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Alerts/submitTradingView",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -7662,6 +8684,27 @@
         },
         {
             "method": "GET",
+            "route": "Management/AuthHealth",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Management/AuthHealth/details/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/AuthHealth/runAuthSmoke",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "Management/Budgeting",
             "handler": "unknown_handler",
             "surface": "Public/User",
@@ -7670,6 +8713,27 @@
         {
             "method": "GET",
             "route": "Management/Budgets",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Chat/ResetUser",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Chat/Settings",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Management/Chat/Usage",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -7697,56 +8761,56 @@
         },
         {
             "method": "POST",
-            "route": "Management/Discord/Discord/Channels/Delete",
+            "route": "Management/Discord/Channels/Delete",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
         },
         {
             "method": "POST",
-            "route": "Management/Discord/Discord/Channels/Save",
+            "route": "Management/Discord/Channels/Save",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
         },
         {
             "method": "POST",
-            "route": "Management/Discord/Discord/Policies/Delete",
+            "route": "Management/Discord/Policies/Delete",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
         },
         {
             "method": "POST",
-            "route": "Management/Discord/Discord/Policies/Save",
+            "route": "Management/Discord/Policies/Save",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
         },
         {
             "method": "POST",
-            "route": "Management/Discord/Discord/Subscriptions/Delete",
+            "route": "Management/Discord/Subscriptions/Delete",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
         },
         {
             "method": "POST",
-            "route": "Management/Discord/Discord/Subscriptions/Save",
+            "route": "Management/Discord/Subscriptions/Save",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
         },
         {
             "method": "POST",
-            "route": "Management/Discord/Discord/Templates/Delete",
+            "route": "Management/Discord/Templates/Delete",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
         },
         {
             "method": "POST",
-            "route": "Management/Discord/Discord/Templates/Save",
+            "route": "Management/Discord/Templates/Save",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -7803,6 +8867,13 @@
         {
             "method": "POST",
             "route": "Management/Drip-Campaigns/Create",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Drip-Campaigns/previewTemplate",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -7901,6 +8972,20 @@
         {
             "method": "POST",
             "route": "Management/Email/updateCampaign/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Management/EmailOutbox",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/EmailOutbox/send-test",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -8145,6 +9230,27 @@
         },
         {
             "method": "GET",
+            "route": "Management/Marketing/Distribution",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Management/Marketing/Distro",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Management/Marketing/DistroDashboard",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "Management/Marketing/Edit-Content/([0-9]+)",
             "handler": "unknown_handler",
             "surface": "Public/User",
@@ -8229,6 +9335,13 @@
         },
         {
             "method": "GET",
+            "route": "Management/Marketing/Exchange/Top-Communities-Refresh/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "Management/Marketing/Exchange/Top-Communities/([^/]+)",
             "handler": "unknown_handler",
             "surface": "Public/User",
@@ -8237,6 +9350,13 @@
         {
             "method": "GET",
             "route": "Management/Marketing/Financial-News",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Marketing/GenerateContentFromTweet",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -8368,6 +9488,13 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "Management/Marketing/Twitter",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "Management/Marketing/Video-Creator",
             "handler": "unknown_handler",
@@ -8389,8 +9516,36 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "Management/Marketing/addContent",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Marketing/composePost",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "Management/Marketing/fetchEmails",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Management/Marketing/fetchGeneratedSummariesBlock",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Management/Marketing/fetchGeneratedSummariesJson",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -8418,6 +9573,13 @@
         },
         {
             "method": "GET",
+            "route": "Management/Marketing/generateContentFromScraper",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "Management/Marketing/generateDailyContentDigest",
             "handler": "unknown_handler",
             "surface": "Public/User",
@@ -8425,7 +9587,56 @@
         },
         {
             "method": "GET",
+            "route": "Management/Marketing/generateKimiPosts",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Management/Marketing/generateKimiSummaries",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Marketing/generateLivePreview",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "Management/Marketing/generateNewsletter",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Marketing/generatePostMediaContent",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Management/Marketing/generatePostsFromSummary/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Management/Marketing/generateThreadFromSummary/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Marketing/getPostingPlan",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -8440,6 +9651,34 @@
         {
             "method": "GET",
             "route": "Management/Marketing/previewGeneratedPost/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Management/Marketing/reprocessIncompleteEmails",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Management/Marketing/runDailyContentDigest",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Management/Marketing/runKeywordBackfillBatch",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Marketing/savePostMedia",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -8466,8 +9705,57 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "Management/Marketing/sendNotification",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "Management/Marketing/submitDailyLog",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Marketing/submitDailyLog",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Marketing/submitLargeContent",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Marketing/submitManualContent",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Marketing/updateCampaignLinks",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Marketing/updateCampaignMessageField",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Marketing/updateInsight",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -8550,8 +9838,36 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "Management/Privacy/Erase/([0-9]+)/Approve",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Privacy/Erase/([0-9]+)/Reject",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "Management/Projects",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Management/Projects/Add",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Projects/Add",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -8725,6 +10041,13 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "Management/Users/ajaxBlockUser",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "Management/Users/ajaxBlockUser/([^/]+)",
             "handler": "unknown_handler",
@@ -8748,6 +10071,13 @@
         {
             "method": "POST",
             "route": "Management/Users/ajaxBulkBanUsers",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Management/Users/checkForSpamUsers",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -8762,6 +10092,13 @@
         {
             "method": "POST",
             "route": "Management/Wallets/EmailUserAboutIssue/([0-9]+)/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Management/Wallets/NotifyUser",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -8810,6 +10147,13 @@
         },
         {
             "method": "POST",
+            "route": "Management/runCronManually",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
             "route": "Management/saveSuggestion",
             "handler": "unknown_handler",
             "surface": "Public/User",
@@ -8839,6 +10183,27 @@
         {
             "method": "GET",
             "route": "Memberships/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Memberships/CancelSubscription",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Memberships/PurchaseCallback",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Memberships/SubscribeCallback",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -8902,6 +10267,13 @@
         {
             "method": "*",
             "route": "News",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Notes/save",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -8974,6 +10346,48 @@
             "route": "Ops/tasks/save",
             "handler": "unknown_handler",
             "surface": "Ops",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Pay/Crypto",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Pay/Crypto/Checkout",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Pay/Crypto/Status/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Pay/Solana",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Pay/Solana/Checkout",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Pay/Solana/Status/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
             "issues": []
         },
         {
@@ -9111,7 +10525,35 @@
         },
         {
             "method": "POST",
+            "route": "Projects/Add",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Projects/AddComment",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Projects/Commit",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
             "route": "Projects/Commit/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Projects/Create",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -9152,6 +10594,27 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "Projects/SubmitCommit",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Projects/SubmitInvest",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Projects/SubmitSell",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "Projects/View/([0-9]+)",
             "handler": "unknown_handler",
@@ -9166,6 +10629,174 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "Projects/reportRevenue",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "PropFirms",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "PropFirms/Accounts",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "PropFirms/Accounts",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "PropFirms/Accounts/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "PUT",
+            "route": "PropFirms/Accounts/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "DELETE",
+            "route": "PropFirms/Accounts/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "PropFirms/Accounts/([0-9]+)/connect-broker",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "PropFirms/Accounts/([0-9]+)/edit",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "PropFirms/Accounts/([0-9]+)/refresh-state",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "PropFirms/Accounts/([0-9]+)/tradovate/connect",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "PropFirms/Accounts/([0-9]+)/tradovate/disconnect",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "PropFirms/Accounts/([0-9]+)/tradovate/sync",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "PropFirms/Accounts/([0-9]+)/tradovate/sync-fills",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "PropFirms/Accounts/([0-9]+)/tradovate/sync-orders",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "PropFirms/Accounts/([0-9]+)/tradovate/sync-positions",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "PropFirms/Accounts/create",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "PropFirms/Notifications",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "PropFirms/Notifications/([0-9]+)/read",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "PropFirms/Replay/([0-9]+)/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "PropFirms/Replay/([0-9]+)/save-review",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "PropFirms/RuleSets",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "PropFirms/Rules/SeedDefaults",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "PropFirms/Signals/scan/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "Purchase/MyMIGold",
             "handler": "unknown_handler",
@@ -9173,6 +10804,48 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "Referral-Program/Activate/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Referral-Program/Agreement",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Referral-Program/Applications",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Referral-Program/Apply",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Referral-Program/Apply",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Referral-Program/Success",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "Referrals",
             "handler": "unknown_handler",
@@ -9202,6 +10875,34 @@
         },
         {
             "method": "GET",
+            "route": "Referrals/My_Referrals",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Referrals/My_Referrals",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Referrals/processPayments",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Referrals/processPayments",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "Referrals/sendReferralEmail",
             "handler": "unknown_handler",
             "surface": "Public/User",
@@ -9210,6 +10911,20 @@
         {
             "method": "POST",
             "route": "Referrals/sendReferralEmail",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Referrals/share",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Referrals/share",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -9300,7 +11015,98 @@
         },
         {
             "method": "GET",
+            "route": "Search/All",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "Sector/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "SecureTransfer",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "SecureTransfer/blob/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "SecureTransfer/challenge",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "SecureTransfer/inbox",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "SecureTransfer/keys",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "SecureTransfer/keys",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "SecureTransfer/keys/revoke",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "SecureTransfer/outbox",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "SecureTransfer/recipient/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "SecureTransfer/revoke",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "SecureTransfer/send",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "SecureTransfer/transfer/([^/]+)",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -9341,6 +11147,13 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "Subscribe/Submit",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "Support",
             "handler": "unknown_handler",
@@ -9357,6 +11170,13 @@
         {
             "method": "GET",
             "route": "Support/Account",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Support/Article",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -9385,6 +11205,27 @@
         {
             "method": "GET",
             "route": "Support/Feedback",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Support/Feedback",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Support/Manager",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Support/Response",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -9518,6 +11359,13 @@
         {
             "method": "GET",
             "route": "Trade-Tracker/getTradeData",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Trade-Tracker/importCsv",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -9804,6 +11652,20 @@
         },
         {
             "method": "GET",
+            "route": "Wallets/Connect-Bank-Account",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Wallets/Connect-Bank-Account",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "Wallets/Create",
             "handler": "unknown_handler",
             "surface": "Public/User",
@@ -9868,6 +11730,20 @@
         {
             "method": "POST",
             "route": "Wallets/Crypto",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Wallets/Crypto/Details/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Wallets/Crypto/Details/([^/]+)",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -10223,6 +12099,13 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "Wallets/MyMIGPayPalCallback",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "Wallets/Purchase",
             "handler": "unknown_handler",
@@ -10350,6 +12233,13 @@
         },
         {
             "method": "GET",
+            "route": "Wallets/Purchase/Memberships/Pro",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "Wallets/Purchase/Memberships/Success",
             "handler": "unknown_handler",
             "surface": "Public/User",
@@ -10462,20 +12352,6 @@
         },
         {
             "method": "GET",
-            "route": "Wallets/Wallets/MyMIGPayPalCallback",
-            "handler": "unknown_handler",
-            "surface": "Public/User",
-            "issues": []
-        },
-        {
-            "method": "POST",
-            "route": "Wallets/Wallets/MyMIGPayPalCallback",
-            "handler": "unknown_handler",
-            "surface": "Public/User",
-            "issues": []
-        },
-        {
-            "method": "GET",
             "route": "Wallets/Withdraw",
             "handler": "unknown_handler",
             "surface": "Public/User",
@@ -10512,6 +12388,41 @@
         {
             "method": "POST",
             "route": "Wallets/Withdraw/Fetch",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Web_Design/Test_Page_Email",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Web_Design/Test_Page_Email",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "Withdraw-Funds",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "Withdraw-Funds",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "YourController/setUserTimezone",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -10552,6 +12463,20 @@
             "issues": []
         },
         {
+            "method": "POST",
+            "route": "add-to-watchlist",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "add_new_wallet",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "GET",
             "route": "admin/ops/health",
             "handler": "unknown_handler",
@@ -10563,6 +12488,20 @@
             "route": "admin/ops/health/run",
             "handler": "unknown_handler",
             "surface": "Admin",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "ai-chat",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "api/account/update-profile",
+            "handler": "unknown_handler",
+            "surface": "API",
             "issues": []
         },
         {
@@ -10651,14 +12590,28 @@
         },
         {
             "method": "POST",
-            "route": "debug",
+            "route": "csp-report",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
         },
         {
             "method": "GET",
-            "route": "debug/common-data/smoke",
+            "route": "dashboard",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "dashboard/completeOnboardingStep/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "debug",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -10673,6 +12626,62 @@
         {
             "method": "GET",
             "route": "debug/register-success-probe",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "earnings/update",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "email-queue",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "email-queue/create",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "email-queue/processQueue",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "email-queue/store",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "email-templates",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "email-templates/create",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "email-templates/store",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -10694,13 +12703,6 @@
         {
             "method": "GET",
             "route": "forgot-password",
-            "handler": "unknown_handler",
-            "surface": "Public/User",
-            "issues": []
-        },
-        {
-            "method": "POST",
-            "route": "get2FAQRCode",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -10748,6 +12750,41 @@
             "issues": []
         },
         {
+            "method": "GET",
+            "route": "index.php/Blog",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "index.php/Blog/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "index.php/Blog/([^/]+)/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "index.php/How-It-Works",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "index.php/How-It-Works/([^/]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
             "method": "*",
             "route": "index.php/images/(.*)",
             "handler": "unknown_handler",
@@ -10756,7 +12793,28 @@
         },
         {
             "method": "GET",
-            "route": "investments/economy/update_all",
+            "route": "index.php/login",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "index.php/login",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "index.php/register",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "index.php/register",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -10777,6 +12835,76 @@
         },
         {
             "method": "GET",
+            "route": "investments/goals",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "investments/goals",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "investments/goals/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "PUT",
+            "route": "investments/goals/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "DELETE",
+            "route": "investments/goals/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "investments/strategies",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "investments/strategies",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "investments/strategies/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "PUT",
+            "route": "investments/strategies/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "DELETE",
+            "route": "investments/strategies/([0-9]+)",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "login",
             "handler": "unknown_handler",
             "surface": "Public/User",
@@ -10791,6 +12919,20 @@
         },
         {
             "method": "GET",
+            "route": "login-shield",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "login-shield",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "logout",
             "handler": "unknown_handler",
             "surface": "Public/User",
@@ -10799,6 +12941,62 @@
         {
             "method": "POST",
             "route": "logout",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "marketing/postToFacebook",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "marketing/postToFacebook",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "marketing/postToGroup",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "marketing/postToGroup",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
+            "route": "marketing/sendNotification",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "marketing/sendNotification",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "newsletter/store",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "newsletter/subscribe",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -10826,6 +13024,20 @@
         },
         {
             "method": "GET",
+            "route": "register-shield",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "register-shield",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "GET",
             "route": "register/([^/]+)",
             "handler": "unknown_handler",
             "surface": "Public/User",
@@ -10841,6 +13053,13 @@
         {
             "method": "GET",
             "route": "register/success",
+            "handler": "unknown_handler",
+            "surface": "Public/User",
+            "issues": []
+        },
+        {
+            "method": "POST",
+            "route": "remove-from-watchlist",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []
@@ -10938,21 +13157,7 @@
         },
         {
             "method": "GET",
-            "route": "test-create-user",
-            "handler": "unknown_handler",
-            "surface": "Public/User",
-            "issues": []
-        },
-        {
-            "method": "GET",
             "route": "test/crash",
-            "handler": "unknown_handler",
-            "surface": "Public/User",
-            "issues": []
-        },
-        {
-            "method": "POST",
-            "route": "verify2FACode",
             "handler": "unknown_handler",
             "surface": "Public/User",
             "issues": []

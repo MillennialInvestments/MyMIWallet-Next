@@ -6,35 +6,36 @@ $totalAccountBalance                                = (float)($totalAccountBalan
 $totalAccountBalanceFMT                             = (string)($totalAccountBalanceFMT ?? number_format($totalAccountBalance, 2));
 // app/Views/themes/dashboard/layouts/index.php
 $subViewData['uri']                                 = isset($uri) ? $uri : ''; // Fallback if $uri is not set
-$subViewData['siteSettings']                        = isset($siteSettings) ? $siteSettings : '';
+$subViewData['siteSettings']                        = isset($siteSettings) ? $siteSettings : (object)[];
 $subViewData['pageTitle']                           = $pageTitle ?? "My Dashboard | MyMI Wallet | The Future of Finance";
-$subViewData['cuID']                                = $cuID;
+$subViewData['cuID']                                = $cuID ?? 0;
 $subViewData['totalAccountBalance']                 = $totalAccountBalance;
 $subViewData['totalAccountBalanceFMT']              = $totalAccountBalanceFMT;
 $subViewData['promotionalBanners']                  = $promotionalBanners;
-if ($siteSettings->solanaExchange === 1) {
-    $subViewData['cuSolanaDW']                      = $cuSolanaDW; 
+if (isset($siteSettings) && is_object($siteSettings) && ($siteSettings->solanaExchange ?? 0) === 1) {
+    $subViewData['cuSolanaDW']                      = $cuSolanaDW ?? [];
 }
-$completedGoals                                     = array_column($completedGoals, 'goal_id');
+$completedGoals                                     = is_array($completedGoals ?? null) ? array_column($completedGoals, 'goal_id') : [];
 $nextGoal                                           = null;
+$pendingGoals                                       = is_array($pendingGoals ?? null) ? $pendingGoals : [];
 
 // Find the next goal that hasn't been completed
 foreach ($pendingGoals as $goals) { // Assuming $userDashboard['goals'] holds the goals
-    if (!in_array($goals['id'], $completedGoals)) {
+    if (is_array($goals) && isset($goals['id']) && !in_array($goals['id'], $completedGoals)) {
         $nextGoal                                   = $goals;
         break;
     }
 }
 
-if ($nextGoal) { 
-    $subViewData['userNextGoal']                    = $nextGoal; 
+if ($nextGoal) {
+    $subViewData['userNextGoal']                    = $nextGoal;
 } else {
-    $subViewData['userNextGoal']['gold_reward']     = 0; 
+    $subViewData['userNextGoal']['gold_reward']     = 0;
 }
 // log_message('info', 'layouts/index - L8: siteSettings: ' . print_r($siteSettings, true));
 // log_message('debug', 'SubView Data before including header.php: ' . print_r($subViewData, true));
 // Assume $viewFileData is passed from the controller
-echo view('themes/dashboard/layouts/header', $subViewData); 
+echo view('themes/dashboard/layouts/header', $subViewData);
 ?>
     <body class="nk-body npc-landing bg-white intro" data-base-url="<?= esc(rtrim(site_url('/'), '/') . '/', 'attr') ?>">
         <?php //echo view('themes/dashboard/layouts/data_distribution', $subViewData); ?>
@@ -63,7 +64,7 @@ echo view('themes/dashboard/layouts/header', $subViewData);
                     </div>
                     <?php
                     // Assume $viewFileData is passed from the controller
-                    echo view('themes/dashboard/layouts/footer', $subViewData); 
+                    echo view('themes/dashboard/layouts/footer', $subViewData);
                     echo view('UserModule\Views\Dashboard\index\transaction-modal', $subViewData);
                     echo view('partials/debug_hud');
                     ?>

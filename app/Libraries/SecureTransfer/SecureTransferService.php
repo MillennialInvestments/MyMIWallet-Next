@@ -12,13 +12,62 @@ use Config\SecureTransfer as SecureTransferConfig;
  */
 final class SecureTransferService
 {
+    /** Purge page size (smaller in tests). */
+    public int $purgePage = 1000;
+
     private const ID_RE = '/^[0-9a-f]{32}$/';
+
+    /** IP and browser of the current request, for the investigation record. */
+    private array $request = ['ip' => null, 'user_agent' => null];
 
     public function __construct(
         private SecureTransferConfig $config,
         private TransferStore $store,
         private ?\Closure $clock = null,
+        private ?AuditLog $audit = null,
     ) {
+    }
+
+    private ?\App\Libraries\SolanaFees\SolanaFeeService $fees = null;
+
+    /** Charge the transfer_processing SOL fee on send (when one is priced). */
+    public function withFees(?\App\Libraries\SolanaFees\SolanaFeeService $fees): self
+    {
+        $this->fees = $fees;
+        return $this;
+    }
+
+    public function withRequest(?string $ip, ?string $userAgent): self
+    {
+        $this->request = ['ip' => $ip, 'user_agent' => $userAgent];
+        return $this;
+    }
+
+    private function log(string $event, ?int $userId, ?string $wallet, ?string $transferId, array $detail = []): void
+    {
+        if ($this->audit === null) {
+            return;
+        }
+        $this->audit->record($event, ['user_id' => $userId, 'wallet' => $wallet, 'transfer_id' => $transferId,
+            'ip' => $this->request['ip'], 'user_agent' => $this->request['user_agent'], 'detail' => $detail, 'created_at' => $this->now()]);
+    }
+
+    /** Wallet-shaped strings only, so a refused request cannot write arbitrary text into the record. */
+    private static function walletOrNull(string $wallet): ?string
+    {
+        return Base58::walletPublicKey($wallet) !== null ? $wallet : null;
+    }
+
+    private function held(string $transferId): bool
+    {
+        if ($this->audit === null) {
+            return false;
+        }
+        $p = $this->store->transferParties($transferId);
+        if ($p === null) {
+            return false;
+        }
+        return $this->audit->isHeld($transferId, $p['sender_user_id'], array_merge([$p['sender_wallet']], $p['recipients']));
     }
 
     private function now(): int
@@ -50,6 +99,17 @@ final class SecureTransferService
 
     /** Step 2: the wallet signed the binding statement for a device transfer key. */
     public function bindKey(int $userId, string $wallet, string $transferKey, string $nonce, int $issuedAt, string $signature): array
+    {
+        $r = $this->checkAndBindKey($userId, $wallet, $transferKey, $nonce, $issuedAt, $signature);
+        if ($r['ok'] && empty($r['already_bound'])) {
+            $this->log('key_linked', $userId, $wallet, null, ['transfer_key' => $transferKey]);
+        } elseif (!$r['ok']) {
+            $this->log('key_link_refused', $userId, self::walletOrNull($wallet), null, ['reason' => $r['error']]);
+        }
+        return $r;
+    }
+
+    private function checkAndBindKey(int $userId, string $wallet, string $transferKey, string $nonce, int $issuedAt, string $signature): array
     {
         if (Base58::walletPublicKey($wallet) === null) {
             return self::refuse('invalid_wallet');
@@ -108,6 +168,9 @@ final class SecureTransferService
     public function revokeKey(int $userId, string $wallet, string $transferKey): array
     {
         $n = $this->store->revokeKey($userId, $wallet, $transferKey, $this->now());
+        if ($n > 0) {
+            $this->log('key_revoked', $userId, $wallet, null, ['transfer_key' => $transferKey]);
+        }
         return $n > 0 ? ['ok' => true, 'revoked' => $n] : self::refuse('key_not_found');
     }
 
@@ -115,7 +178,25 @@ final class SecureTransferService
      * Accept a sealed transfer. $ciphertextPath is the uploaded temp file; on
      * success it is moved into storage and named by transfer id.
      */
-    public function send(int $userId, array $manifest, string $signature, string $ciphertextPath, CiphertextStore $files): array
+    public function send(int $userId, array $manifest, string $signature, string $ciphertextPath, CiphertextStore $files, string $feeSignature = ''): array
+    {
+        $r = $this->checkAndSend($userId, $manifest, $signature, $ciphertextPath, $files, $feeSignature);
+        $sender = is_string($manifest['sender_wallet'] ?? null) ? self::walletOrNull($manifest['sender_wallet']) : null;
+        $tid = is_string($manifest['transfer_id'] ?? null) && preg_match(self::ID_RE, $manifest['transfer_id']) ? $manifest['transfer_id'] : null;
+        if ($r['ok']) {
+            $this->log('transfer_sent', $userId, $sender, $tid, [
+                'recipients' => array_values(array_unique(array_column($manifest['recipients'], 'wallet'))),
+                'ciphertext_bytes' => $manifest['ciphertext_bytes'], 'ciphertext_sha256' => $manifest['ciphertext_sha256'],
+                'expires_at' => $manifest['expires_at'], 'manifest_signature' => $signature,
+                'fee' => $r['fee'] ?? null,
+            ]);
+        } else {
+            $this->log('transfer_refused', $userId, $sender, $tid, ['reason' => $r['error']]);
+        }
+        return $r;
+    }
+
+    private function checkAndSend(int $userId, array $manifest, string $signature, string $ciphertextPath, CiphertextStore $files, string $feeSignature = ''): array
     {
         $now = $this->now();
         $errors = (new ManifestValidator($this->config))->validate($manifest, $signature, $now);
@@ -151,7 +232,25 @@ final class SecureTransferService
         if (!hash_equals($manifest['ciphertext_sha256'], (string) hash_file('sha256', $ciphertextPath))) {
             return self::refuse('ciphertext_hash_mismatch');
         }
+        $fee = null;
+        if ($this->fees !== null && $this->fees->required('transfer_processing')) {
+            if ($feeSignature === '') {
+                return self::refuse('transfer_fee_required') + ['fee' => $this->fees->quote('transfer_processing')];
+            }
+            $paid = $this->fees->claim('transfer_processing', $userId, $manifest['sender_wallet'], $feeSignature, $manifest['transfer_id'],
+                fn (string $ref) => $this->store->transferExists($ref));
+            if (!$paid['ok']) {
+                return self::refuse($paid['error']) + ['fee' => $this->fees->quote('transfer_processing')];
+            }
+            $fee = ['kind' => 'transfer_processing', 'signature' => $feeSignature, 'lamports' => $paid['lamports']];
+        }
+        $settle = function (bool $done) use ($fee, $feeSignature, $manifest): void {
+            if ($fee !== null) {
+                $this->fees->settle($feeSignature, $manifest['transfer_id'], $done);
+            }
+        };
         if (!$files->put($manifest['transfer_id'], $ciphertextPath)) {
+            $settle(false);
             return self::refuse('storage_unavailable');
         }
         $wallets = array_values(array_unique(array_column($manifest['recipients'], 'wallet')));
@@ -162,9 +261,11 @@ final class SecureTransferService
         }
         if (!$saved) {
             $files->delete($manifest['transfer_id']);
+            $settle(false);
             return self::refuse('storage_unavailable');
         }
-        return ['ok' => true, 'transfer_id' => $manifest['transfer_id'], 'expires_at' => $manifest['expires_at']];
+        $settle(true);
+        return ['ok' => true, 'transfer_id' => $manifest['transfer_id'], 'expires_at' => $manifest['expires_at']] + ($fee ? ['fee' => $fee] : []);
     }
 
     /** Transfers addressed to the user's bound wallets. Metadata only. */
@@ -183,7 +284,7 @@ final class SecureTransferService
      * Manifest, signature and ciphertext path for one recipient wallet the user holds.
      * The browser verifies the signature and hash again before decrypting.
      */
-    public function download(int $userId, string $transferId, string $wallet, CiphertextStore $files): array
+    public function download(int $userId, string $transferId, string $wallet, CiphertextStore $files, string $part = 'blob'): array
     {
         if (!preg_match(self::ID_RE, $transferId)) {
             return self::refuse('invalid_transfer_id');
@@ -198,6 +299,7 @@ final class SecureTransferService
             return self::refuse('not_found');
         }
         $this->store->markDownloaded($transferId, $wallet, $now);
+        $this->log('transfer_accessed', $userId, $wallet, $transferId, ['part' => $part]);
         return ['ok' => true, 'manifest' => $row['manifest'], 'signature' => $row['signature'], 'path' => $path];
     }
 
@@ -210,8 +312,13 @@ final class SecureTransferService
         if ($this->store->revokeTransfer($transferId, $userId, $now) === 0) {
             return self::refuse('not_found');
         }
-        $files->delete($transferId);
-        $this->store->markPurged($transferId, $now);
+        // Withdrawn: recipients lose access at once. Under a legal hold the stored ciphertext is kept as evidence.
+        $held = $this->held($transferId);
+        if (!$held) {
+            $files->delete($transferId);
+            $this->store->markPurged($transferId, $now);
+        }
+        $this->log('transfer_withdrawn', $userId, null, $transferId, ['ciphertext_kept_for_hold' => $held]);
         return ['ok' => true];
     }
 
@@ -219,14 +326,29 @@ final class SecureTransferService
     public function purge(CiphertextStore $files, bool $apply): array
     {
         $now = $this->now();
-        $ids = $this->store->purgeable($now);
+        $ids = [];
+        $held = 0;
+        // Page in id order so held transfers never block the ones after them.
+        $after = '';
+        do {
+            $page = $this->store->purgeable($now, $after, $this->purgePage);
+            foreach ($page as $id) {
+                $after = (string) $id;
+                if ($this->held($id)) {
+                    $held++;
+                    continue;
+                }
+                $ids[] = $id;
+            }
+        } while (count($page) === $this->purgePage);
         if ($apply) {
             foreach ($ids as $id) {
                 $files->delete($id);
                 $this->store->markPurged($id, $now);
+                $this->log('transfer_purged', null, null, $id);
             }
         }
-        return ['ok' => true, 'purgeable' => count($ids), 'applied' => $apply];
+        return ['ok' => true, 'purgeable' => count($ids), 'held' => $held, 'applied' => $apply];
     }
 
     public function stats(): array

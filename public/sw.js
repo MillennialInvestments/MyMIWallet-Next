@@ -1,5 +1,5 @@
-/* MyMI SW v1.2 (tolerant precache + logging) */
-const VERSION = 'v1.2';
+/* MyMI SW v1.3: caches static /assets/ only; pages and API replies always come from the server */
+const VERSION = 'v1.3';
 const CACHE   = `mymi-shell-${VERSION}`;
 
 /**
@@ -21,7 +21,26 @@ const ASSETS = [
 const toAbs = (p) => new URL(p, self.registration.scope).toString();
 // public/sw.js
 self.addEventListener('install', () => self.skipWaiting());
-self.addEventListener('activate',  () => self.clients.claim());
+// v1.2 cached signed-in pages and JSON replies, so users saw old pages and stale data.
+// Drop every older cache on activate.
+self.addEventListener('activate', (event) => {
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter((k) => k.startsWith('mymi-shell-') && k !== CACHE).map((k) => caches.delete(k)));
+    await self.clients.claim();
+  })());
+});
+
+// Only same-origin static files under /assets/ are cached. Everything else (pages,
+// API and AJAX replies, downloads) goes straight to the network, untouched.
+const isStaticAsset = (req) => {
+  try {
+    const url = new URL(req.url);
+    return url.origin === self.location.origin && url.pathname.startsWith('/assets/');
+  } catch (e) {
+    return false;
+  }
+};
 
 // self.addEventListener('install', (event) => {
 //   event.waitUntil((async () => {
@@ -56,7 +75,7 @@ self.addEventListener('activate',  () => self.clients.claim());
 // Stale-while-revalidate for text assets; pass-through for others
 self.addEventListener('fetch', (event) => {
   const req = event.request;
-  if (req.method !== 'GET') return;
+  if (req.method !== 'GET' || req.mode === 'navigate' || !isStaticAsset(req)) return;
 
   event.respondWith((async () => {
     const cached = await caches.match(req);
@@ -66,7 +85,7 @@ self.addEventListener('fetch', (event) => {
         try {
           const res = await fetch(req);
           const ct  = res && res.headers.get('Content-Type') || '';
-          if (res && res.ok && /text|javascript|json|css|svg|xml/.test(ct)) {
+          if (res && res.ok && /javascript|css|svg|font|image/.test(ct)) {
             const cache = await caches.open(CACHE);
             await cache.put(req, res.clone());
           }
@@ -77,7 +96,7 @@ self.addEventListener('fetch', (event) => {
     try {
       const res = await fetch(req);
       const ct  = res && res.headers.get('Content-Type') || '';
-      if (res && res.ok && /text|javascript|json|css|svg|xml/.test(ct)) {
+      if (res && res.ok && /javascript|css|svg|font|image/.test(ct)) {
         const cache = await caches.open(CACHE);
         await cache.put(req, res.clone());
       }

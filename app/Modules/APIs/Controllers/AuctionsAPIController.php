@@ -60,15 +60,21 @@ class AuctionsAPIController extends BaseAPIController
         return $this->respond($result);
     }
 
+    /**
+     * Auction top-ups stay closed until they are backed by a verified payment
+     * (crypto checkout). The old handler credited any amount for any user_id
+     * sent in the form and debited nothing, so it is refused here.
+     */
     public function topUp()
     {
-        $payload = $this->request->getPost();
-        $result  = model(AuctionPaymentModel::class)->processTopUp($payload);
+        log_message('warning', 'Refused auction top-up: no verified payment path yet (user {user}).', [
+            'user' => (int) (session('cuID') ?? 0),
+        ]);
 
-        if (($result['status'] ?? 'error') === 'error') {
-            return $this->fail($result['message'] ?? 'Unable to process top up');
-        }
-
-        return $this->respond($result);
+        return $this->respond([
+            'status'  => 'error',
+            'message' => 'Auction top-ups open soon with crypto checkout.',
+            'reason'  => 'verified_payment_required',
+        ], 503);
     }
 }

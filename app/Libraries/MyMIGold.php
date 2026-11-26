@@ -94,6 +94,8 @@ class MyMIGold
                 $bal  = $svc->getBalance($addr);
                 return ['address' => $addr, 'amount' => $bal['satoshi'] ?? 0];
             case 'digibyte':
+                // Off until FEATURE_DIGIBYTE: the DigiByte library does not load yet.
+                if (! \App\Filters\FeatureFlagFilter::enabled('digibyte')) { return ['address' => null, 'amount' => 0]; }
                 $svc  = service('myMIDigibyte');
                 if (!method_exists($svc, 'normalizeAddress')) { return ['address'=>null,'amount'=>0]; }
                 $addr = $svc->normalizeAddress($address);

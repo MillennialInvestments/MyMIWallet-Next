@@ -4,3 +4,11 @@
 6ba259a7393939b5e007d66a60c4fb8c5288202b:tests/unit/Solana/SolanaWalletLifecycleTest.php:generic-api-key:116
 # Synthetic CoinVault test fixture in ProjectsCoinVaultTest
 9c60687b888dbb83396edff3c54bcd07aec6449d:tests/unit/Projects/ProjectsCoinVaultTest.php:generic-api-key:677
+# Fixed HMAC test key in the TbiChatLink unit test (replaced with a low-entropy value in the next commit), not a credential.
+ba4ff3fafad8ca5b007ad96bc6582657ebc7b63e:tests/unit/TbiChat/TbiChatLinkTest.php:generic-api-key:19
+# Public Solana USDC mint address in non-custodial swaps production promotion packet
+33a35753356460104a6e919515d01055d8f9cef8:docs/_aiops/runs/MYMI-XCHAIN-001/prod-packets/03-non-custodial-swaps.md:generic-api-key:41
+# Public Solana AMM pool address in mock test fixture
+bb05d38ec40807ad28bb1c12eb298cc1163dcbfe:tests/fixtures/swaps/jupiter-sol-usdc.json:generic-api-key:14
+# Public Ethereum USDC token contract address (0xa0b86991...) in mock test fixture
+bb05d38ec40807ad28bb1c12eb298cc1163dcbfe:tests/fixtures/swaps/zeroex-eth-usdc.json:generic-api-key:6

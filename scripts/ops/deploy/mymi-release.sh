@@ -111,6 +111,9 @@ build)
   [ -d "$R/writable" ] && rm -rf -- "$R/writable"
   private_writable "$R"
   ln -s "$BASE/shared/.env" "$R/.env"
+  if [ -f "$BASE/shared/chat.env" ]; then
+    ln -s "$BASE/shared/chat.env" "$R/chat/.env"
+  fi
   echo "$SHA" > "$R/REVISION"
 
   echo "--- composer install (no dev) ---"
@@ -129,8 +132,10 @@ build)
   done
 
   # php-fpm runs as www-data and must be able to read every file.
+  # The chat service runs Node as a non-www-data user, so directories and files
+  # must remain traversable and readable (o+rX) for systemd to chdir into chat/.
   chgrp -R www-data "$R" 2>/dev/null || sudo chgrp -R www-data "$R"
-  chmod -R g+rX,o-rwx "$R" 2>/dev/null || sudo chmod -R g+rX,o-rwx "$R"
+  chmod -R g+rX,o+rX "$R" 2>/dev/null || sudo chmod -R g+rX,o+rX "$R"
   sudo -u www-data test -r "$R/vendor/autoload.php" && sudo -u www-data test -r "$R/public/index.php" \
     || die "www-data cannot read the new release; fix permissions before activating"
 
