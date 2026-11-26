@@ -7,10 +7,9 @@
 
 set -euo pipefail
 
-ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 if [ -z "$ROOT" ]; then
-    echo "STOP: repository root could not be resolved"
-    exit 1
+    ROOT="$(pwd)"
 fi
 cd "$ROOT"
 

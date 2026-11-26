@@ -25,6 +25,7 @@ app/FiltersO/
 .env.*
 !env/.env.ci.example
 !env/.env.github-control.example
+!env/.env.crypto-pay.example
 chat/.env*
 !chat/.env.staging.example
 !chat/.env.production.example

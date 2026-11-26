@@ -132,6 +132,13 @@ final class Xrpl implements ChainAdapter
         }
         $hash = strtoupper((string) ($entry['hash'] ?? $tx['hash'] ?? ''));
         $delivered = $meta['delivered_amount'] ?? $meta['DeliveredAmount'] ?? null;
+        if (isset($tx['DestinationTag']) && (int) $tx['DestinationTag'] === (int) $row['dest_tag']
+            && ($tx['Destination'] ?? '') === $row['recipient']
+            && is_string($delivered) && ctype_digit($delivered)
+            && (int) $delivered < (int) $row['asset_amount']) {
+            \App\Libraries\CryptoPay\CryptoPayAlerts::underpayment((string) $row['reference'], (int) $delivered, (int) $row['asset_amount'], 'xrpl');
+        }
+
         if (($tx['TransactionType'] ?? '') !== 'Payment'
             || ($tx['Destination'] ?? '') !== $row['recipient']
             || ! isset($tx['DestinationTag']) || (int) $tx['DestinationTag'] !== (int) $row['dest_tag']
@@ -198,6 +205,7 @@ final class Xrpl implements ChainAdapter
         $ok = $this->network === 'mainnet' ? ($id === 0 && $seq >= self::MAINNET_MIN_LEDGER) : $id > 0;
         if (! $ok) {
             log_message('error', 'Crypto checkout: XRPL endpoint {url} is not on {net} (network_id {id}); not used', ['url' => parse_url($url, PHP_URL_HOST), 'net' => $this->network, 'id' => $id]);
+            \App\Libraries\CryptoPay\CryptoPayAlerts::endpointRefusal('xrpl', $url, "network ID {$id} is not valid for network {$this->network}");
             return false;
         }
         $this->verified[$url] = true;

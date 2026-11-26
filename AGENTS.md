@@ -72,6 +72,9 @@ This repository participates in Teddy's centralized Codex ⇄ AIOps workflow. Co
 - **Money and legal records:** Secure Transfer's investigation record (`bf_secure_transfer_audit`) is add-only and hash-chained; never update or delete rows, and verify with `securetransfer:audit --verify`. SOL fee receipts (`bf_solana_fee_receipts`) are one per transaction signature; reuse only through the service's atomic reclaim, never by editing rows. Test fee flows on staging with devnet (`SOLANA_FEE_RPC`), never mainnet SOL.
 - **Operator style:** the owner runs server commands by hand from an iPad. Give one batched, copy-paste block per step, read-only checks first and mutating steps last behind explicit gates (`&&`, `FAIL 0` checks); write scratch output to `~`, not `/tmp`.
 - **Chat service permissions and env:** `mymi-wallet-chat.service` runs Node.js as a non-www-data user. Releases must keep `o+rX` permissions on the release directory and symlink `shared/chat.env` to `$R/chat/.env`, otherwise systemd fails at step `CHDIR` with Permission Denied and release health checks fail on `chat: FAILED`.
+- **Migration runner file resolution:** `scripts/ops/db/run-migrations.php` expects full timestamped filenames (`YYYY-MM-DD-HHMMSS_<Name>`). A fallback glob matcher exists for short class names, but operator packets and automation must pass exact timestamped names for deterministic execution across release versions.
+- **Staging and production release smoke tests:** Releases deployed via Composer `--no-dev` omit `vendor/bin/phpunit`. Smoke scripts executing on staging or production must invoke native CLI checks (`sudo -u www-data php spark aiops:form:test --scan-all`) instead of calling PHPUnit test suites.
+- **Shared cache permissions on staging:** `FileLocatorCache` under `shared/writable/cache/` is owned by `www-data`. Operator shell users (`timoteo2392`) cannot delete it without `sudo`. Always run `sudo rm -f shared/writable/cache/FileLocatorCache` to prevent permission denial that silently retains stale Spark command lists.
 
 ## Trading Intelligence, MCP & Options Accounting Lessons (2026-11)
 
@@ -90,3 +93,13 @@ This repository participates in Teddy's centralized Codex ⇄ AIOps workflow. Co
   - *ChatGPT:* Data modeling, 12-metric accounting math, and user journey clarity.
   - *Grok:* Red-team challenges, negative return boundaries, and fill deduplication invariants.
   - *Gemini / Antigravity:* Full-stack CI4 implementation, DataTables re-init guards, and deterministic PHPUnit suites.
+
+## Multi-Chain, Gold, Swaps & Reg D Offering Lessons (2026-11)
+
+- **Keyed RPC Endpoint Ordering:** In multi-chain RPC configurations (`CRYPTO_PAY_ETHEREUM_RPC`, `CRYPTO_PAY_BASE_RPC`), always configure authenticated keyed providers first, keeping unauthenticated public nodes strictly as last-resort fallbacks to avoid RPC throttling during payment sweeps.
+- **Sub-Millisecond OFAC Sanctions Screening:** Sanctions screening must operate with O(1) in-memory keyed lookups (`array<string, true>`) against local files to guarantee sub-millisecond evaluation (< 0.05 ms) without introducing blocking external HTTP dependencies in critical payment/swap paths.
+- **Closed-Loop In-App Utility Credit Invariants:** Utility credits (MyMI Gold) must never expose withdrawal, export, cash-out, or peer-to-peer transfer endpoints. Refunds must return strictly to the original fiat/crypto funding method, and store checkouts must decouple USD base pricing from credit rates.
+- **Non-Custodial Swaps Liquidity Gating:** Because testnets lack decentralized exchange liquidity, staging environments must default to quote-only mode (`SWAPS_EXECUTE=false`). MyMI must never take custody of keys or assets; transactions must be signed directly in user self-custody wallets after sanctions verification.
+- **Reg D 506(c) Private Placement Offering Gating:** Private placement tokens (MyMI Coin) must enforce fail-closed accredited investor gating (`isVerifiedAndAccredited`) before deposit initiation or ledger minting. Offerings must have zero public purchase buttons, zero secondary exchange listings, and zero guaranteed return claims across all UI views and marketing materials.
+- **Spark Command FileLocator Cache Flush:** When registering new Spark commands or migrating modules, a stale `shared/writable/cache/FileLocatorCache` will hide newly created commands from `php spark list`. Always flush this cache file before executing or smoke-testing new CLI commands.
+

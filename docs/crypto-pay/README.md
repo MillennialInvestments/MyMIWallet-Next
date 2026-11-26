@@ -33,7 +33,9 @@ Crypto checkout is off unless all of these hold: `CRYPTO_PAY_ENABLED=true`, `CRY
 | `CRYPTO_PAY_BITCOIN_RECIPIENT` | Receiving BTC address (bc1... on mainnet, tb1... on testnet) |
 | `CRYPTO_PAY_FEE_CENTS` | MyMI processing fee in US cents on every chain (default 0) |
 | `CRYPTO_PAY_<CHAIN>_FEE_CENTS` | Per-chain fee override |
-| `CRYPTO_PAY_<CHAIN>_RPC` | Comma-separated endpoints, tried in order. Put a self-hosted node first; the public defaults stay as fallbacks only if you list them |
+| `CRYPTO_PAY_<CHAIN>_RPC` | Comma-separated endpoints, tried in order. Put a dedicated keyed endpoint first (e.g. Alchemy, Infura, QuickNode); public endpoints stay as fallbacks. Adapters automatically fail over to the next endpoint if the first fails or responds with an invalid chain id |
+| `CRYPTO_PAY_ALERT_WEBHOOK` | Webhook URL (Discord/AIOps) for operational alerts: reconcile failures, late payments, underpayments, and endpoint network refusals |
+| `COMPLIANCE_SANCTIONS_ENABLED` | Set `true` to refuse checkouts/claims from addresses listed in `writable/compliance/sanctions-addresses.txt` |
 | `CRYPTO_PAY_<CHAIN>_CONFIRMATIONS` | Confirmations before delivery (defaults: mainnet ETH 3, Base 5, BTC 2; testnet 1) |
 | `CRYPTO_PAY_TTL_SECONDS` | How long a checkout stays open (900) |
 

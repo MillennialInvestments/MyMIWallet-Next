@@ -1,0 +1,22 @@
+{
+  "chainId": 1,
+  "price": "3120.45",
+  "grossPrice": "3122.10",
+  "estimatedPriceImpact": "0.02",
+  "buyTokenAddress": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+  "buyAmount": "3120450000",
+  "grossBuyAmount": "3122100000",
+  "sellTokenAddress": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "sellAmount": "1000000000000000000",
+  "grossSellAmount": "1000000000000000000",
+  "sources": [
+    {"name": "Uniswap_V3", "proportion": "0.75"},
+    {"name": "Curve", "proportion": "0.25"}
+  ],
+  "gas": "145000",
+  "gasPrice": "15000000000",
+  "estimatedGasTokenRefund": "0",
+  "protocolFee": "0",
+  "minimumProtocolFee": "0",
+  "allowanceTarget": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"
+}
