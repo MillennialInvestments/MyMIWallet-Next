@@ -76,23 +76,48 @@ class CryptoCheckoutsController extends BaseController
 
         $now = time();
         if ($action === 'credit_gold') {
-            $db->table(self::TABLE)->where('reference', $reference)->update([
+            // Only a checkout that was paid (has a payment) and not delivered can
+            // be settled in Gold, and only once.
+            $status = (string) ($row['status'] ?? '');
+            if (! in_array($status, ['confirmed', 'unfulfilled'], true) || trim((string) ($row['payment_id'] ?? '')) === '') {
+                return redirect()->back()->with('err', 'Only a paid checkout that was not delivered can be credited in Gold (status is ' . esc($status) . ').');
+            }
+
+            $goldAmount = round(((int) $row['usd_cents']) / 100, 8);
+            $gold = (new \App\Services\Gold\GoldLedgerService($db))->credit(
+                (int) $row['user_id'],
+                $goldAmount,
+                'admin_credit',
+                'crypto_pay_admin',
+                $reference
+            );
+            if (! ($gold['ok'] ?? false)) {
+                return redirect()->back()->with('err', 'Gold was not credited for ' . esc($reference) . ': ' . esc((string) ($gold['error'] ?? 'unknown')));
+            }
+
+            $db->table(self::TABLE)->where('reference', $reference)->whereIn('status', ['confirmed', 'unfulfilled'])->update([
                 'status'     => 'delivered',
                 'result'     => 'admin_credit_gold',
                 'updated_at' => $now,
             ]);
 
             audit('cryptopay.admin_credit_gold', [
-                'reference' => $reference,
-                'user_id'   => (int) $row['user_id'],
-                'admin_id'  => $adminId,
-                'action'    => 'credit_gold',
+                'reference'     => $reference,
+                'user_id'       => (int) $row['user_id'],
+                'admin_id'      => $adminId,
+                'action'        => 'credit_gold',
+                'gold_amount'   => $goldAmount,
+                'gold_entry_id' => (int) ($gold['entry_id'] ?? 0),
+                'idempotent'    => (bool) ($gold['idempotent'] ?? false),
             ], 'cryptopay');
 
-            return redirect()->to('/Admin/Crypto/Checkouts?status=delivered')->with('msg', 'Gold credited and marked delivered for ' . esc($reference));
+            return redirect()->to('/Admin/Crypto/Checkouts?status=delivered')->with('msg', 'Credited ' . $goldAmount . ' Gold and marked delivered for ' . esc($reference));
         }
 
         if ($action === 'mark_refunded') {
+            if ((string) ($row['status'] ?? '') === 'delivered') {
+                return redirect()->back()->with('err', 'A delivered checkout cannot be marked refunded here; reverse the delivery first.');
+            }
             $db->table(self::TABLE)->where('reference', $reference)->update([
                 'status'     => 'refunded',
                 'result'     => 'refunded_manual',

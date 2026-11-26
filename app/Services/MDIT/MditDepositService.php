@@ -35,6 +35,13 @@ class MditDepositService
         return $this->deposits->find($id);
     }
 
+    public function find(int $depositId): ?array
+    {
+        $row = $this->deposits->find($depositId);
+
+        return is_array($row) ? $row : null;
+    }
+
     public function ensureWalletOwned(int $userId, string $walletAddress, string $chain): bool
     {
         $wallet = $this->wallets

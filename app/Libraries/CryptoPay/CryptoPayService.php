@@ -101,6 +101,13 @@ final class CryptoPayService
         if ($usdCents < $this->config->minCents || $usdCents > $this->config->maxCents) {
             return ['ok' => false, 'error' => 'amount_out_of_range', 'min_cents' => $this->config->minCents, 'max_cents' => $this->config->maxCents];
         }
+        if ($purpose === 'mymigold') {
+            // The daily Gold cap is checked before payment: once paid, Gold is always credited.
+            $cap = (new \App\Services\Gold\GoldLedgerService($this->db))->purchaseAllowed($userId, $usdCents / 100);
+            if (! $cap['ok']) {
+                return $cap;
+            }
+        }
         $now = $this->now();
         $open = $this->db->table(self::TABLE)->where('user_id', $userId)->where('status', 'pending')
             ->where('expires_at >=', $now)->countAllResults();
@@ -180,7 +187,19 @@ final class CryptoPayService
             'expires_at'     => $now + $this->config->requestTtlSeconds,
             'updated_at'     => $now,
         ];
-        if (! $this->insertOpen($row)) {
+        try {
+            $saved = $this->insertOpen($row);
+        } catch (\Throwable $e) {
+            if ($usingPool) {
+                $poolService->release($recipient, $reference);
+            }
+            throw $e;
+        }
+        if (! $saved) {
+            if ($usingPool) {
+                $poolService->release($recipient, $reference);
+            }
+
             return ['ok' => false, 'error' => 'busy_try_again'];
         }
 

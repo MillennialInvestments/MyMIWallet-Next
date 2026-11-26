@@ -85,6 +85,28 @@ final class BtcAddressPoolTest extends CIUnitTestCase
         $this->assertNull($second);
     }
 
+    public function testReleaseReturnsOnlyThatCheckoutsReservation(): void
+    {
+        $this->poolService->importAddresses([
+            ['address' => 'tb1qreleaseaddresszzzzzzzzzzzzzzzzzzzzzz', 'index' => 20]
+        ], 'testnet');
+
+        $addr = $this->poolService->acquireAddress('CHK-UNSAVED', 'testnet');
+        $this->assertNotNull($addr);
+
+        // Another checkout's reference cannot release it.
+        $this->assertFalse($this->poolService->release($addr, 'CHK-OTHER'));
+        $this->assertNull($this->poolService->acquireAddress('CHK-NEXT', 'testnet'));
+
+        // The checkout that was never saved gives it back, so it is reused.
+        $this->assertTrue($this->poolService->release($addr, 'CHK-UNSAVED'));
+        $this->assertSame($addr, $this->poolService->acquireAddress('CHK-NEXT', 'testnet'));
+
+        // A used address is never released.
+        $this->poolService->markUsed($addr);
+        $this->assertFalse($this->poolService->release($addr, 'CHK-NEXT'));
+    }
+
     public function testBitcoinAdapterMatchesByAddressWhenPoolUsed(): void
     {
         $http = new FallbackTestHttp();

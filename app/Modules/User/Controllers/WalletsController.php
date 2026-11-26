@@ -2232,13 +2232,21 @@ class WalletsController extends BaseUserController
         $db->transStart();
         ($this->walletModel ?? new WalletModel())->submitMyMIGold($row);
         $claims->markFulfilled((int) $result['claim_id']);
-        (new \App\Services\Gold\GoldLedgerService())->credit(
+        $gold = (new \App\Services\Gold\GoldLedgerService())->credit(
             $userId,
             $coins,
             'purchase',
             'paypal',
             strtoupper($orderId)
         );
+        if (! ($gold['ok'] ?? false)) {
+            // Undo the wallet credit and claim so both ledgers stay equal; the
+            // claim stays open and the same order can be confirmed again.
+            log_message('error', 'Gold ledger credit failed for PayPal order {id}: {err}', ['id' => strtoupper($orderId), 'err' => (string) ($gold['error'] ?? 'unknown')]);
+            $db->transRollback();
+
+            return $this->response->setStatusCode(500)->setJSON(['status' => 'error', 'message' => 'Payment confirmed but Gold could not be credited. Support has the record.']);
+        }
         $db->transComplete();
 
         if (! $db->transStatus()) {

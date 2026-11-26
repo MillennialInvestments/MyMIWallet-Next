@@ -54,6 +54,21 @@ final class PaperExchangeTest extends CIUnitTestCase
         parent::tearDown();
     }
 
+    public function testClientSuppliedPriceIsIgnored(): void
+    {
+        $res = $this->provider->placeOrder(43, [
+            'symbol'   => 'BTC/USD',
+            'side'     => 'buy',
+            'quantity' => 0.05,
+            'price'    => 0.01,
+        ]);
+
+        $this->assertTrue($res['ok']);
+        $this->assertSame(90000.0, $res['price']);
+        $this->assertSame(4500.0, $res['total_cost']);
+        $this->assertSame(5500.0, $this->provider->balances(43)['USD']);
+    }
+
     public function testInitialFundingAndBalances(): void
     {
         $balances = $this->provider->balances(42);
