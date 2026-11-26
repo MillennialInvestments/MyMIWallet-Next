@@ -2814,7 +2814,7 @@ $routes->group('Tax', ['namespace' => '\\App\\Modules\\User\\Tax\\Controllers', 
 });
 
 // Tax admin module nested under Management
-$routes->group('Admin/Tax', ['namespace' => '\\App\\Modules\\Management\\TaxAdmin\\Controllers', 'filter' => 'login'], static function ($routes) {
+$routes->group('Admin/Tax', ['namespace' => '\\App\\Modules\\Management\\TaxAdmin\\Controllers', 'filter' => ['login', 'role:admin,team']], static function ($routes) {
     $routes->get('/', 'TaxConfig::index');
     $routes->get('Templates', 'TaxConfig::templates');
     $routes->match(['GET', 'POST'], 'Templates/edit/(:num)', 'TaxConfig::editTemplate/$1');
