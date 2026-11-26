@@ -26,6 +26,6 @@ class MarketingVideoTemplateModel extends Model
             $builder->where('platform', $platform);
         }
 
-        return $builder->orderBy('template_name', 'ASC')->findAll();
+        return $builder->orderBy('template_name', 'ASC')->limit(100)->findAll();
     }
 }

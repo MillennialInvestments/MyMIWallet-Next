@@ -7,7 +7,19 @@
 (function () {
   'use strict';
   var root = document.getElementById('mst1-app');
-  if (!root || !window.MST1 || !window.nacl) return;
+  if (!root) return;
+  if (!window.MST1 || !window.nacl || !window.crypto || !window.crypto.subtle) {
+    var warn = document.getElementById('mst1-device');
+    if (warn) {
+      warn.textContent = !window.crypto || !window.crypto.subtle
+        ? 'This browser cannot encrypt files here. Open the page over HTTPS in a current browser.'
+        : 'The encryption scripts did not load. Reload the page; if it keeps happening, report it to support.';
+      warn.className = 'small mt-2 text-danger';
+    }
+    var pending = document.getElementById('mst1-connect');
+    if (pending) pending.removeAttribute('data-mst1-pending');
+    return;
+  }
   var cfg = JSON.parse(root.getAttribute('data-config') || '{}');
   var enc = new TextEncoder();
   var state = { wallet: null, provider: null, device: null };
@@ -77,11 +89,163 @@
   async function connect() {
     var p = provider();
     var status = $('mst1-device');
-    if (!p) { text(status, 'No Solana wallet found in this browser. Install Phantom or Solflare and reload.', 'text-danger'); return; }
+    if (!p) { text(status, 'No Solana wallet found in this browser. Install Phantom or Solflare, or enter your wallet address instead.', 'text-danger'); return; }
+    text(status, 'Waiting for your wallet. If nothing opens, click the wallet icon in your browser toolbar and unlock it.');
     var resp = await p.connect();
     var pk = (resp && resp.publicKey) || p.publicKey;
+    await link(p, pk.toBase58 ? pk.toBase58() : String(pk));
+  }
+
+  /* Decode a pasted Ed25519 signature: base58 (most wallets), base64 or hex. */
+  function decodeSignature(raw) {
+    var v = String(raw || '').replace(/\s+/g, '');
+    var out = null;
+    if (/^[0-9a-fA-F]{128}$/.test(v)) {
+      out = new Uint8Array(64);
+      for (var i = 0; i < 64; i++) out[i] = parseInt(v.substr(i * 2, 2), 16);
+      return out;
+    }
+    try { out = MST1.base58Decode(v); } catch (e) { out = null; }
+    if (out && out.length === 64) return out;
+    try { out = MST1.unb64(v); } catch (e) { out = null; }
+    return out && out.length === 64 ? out : null;
+  }
+
+  /* A wallet with no browser extension: the user signs each statement in their own wallet app and pastes the signature. */
+  function manualProvider(wallet) {
+    return {
+      manual: true,
+      signMessage: function (bytes) {
+        var message = new TextDecoder().decode(bytes);
+        var panel = $('mst1-manual-sign');
+        $('mst1-manual-statement').textContent = message;
+        $('mst1-manual-sig').value = '';
+        text($('mst1-manual-error'), '');
+        panel.classList.remove('d-none');
+        panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return new Promise(function (resolve, reject) {
+          function done() { $('mst1-manual-ok').onclick = null; $('mst1-manual-cancel').onclick = null; panel.classList.add('d-none'); }
+          $('mst1-manual-ok').onclick = function () {
+            var sig = decodeSignature($('mst1-manual-sig').value);
+            if (!sig) { text($('mst1-manual-error'), 'That does not look like a signature. Paste the whole signature your wallet gave you.', 'text-danger'); return; }
+            if (!MST1.verifyWalletSignature(wallet, message, MST1.b64(sig))) {
+              text($('mst1-manual-error'), 'The signature does not match this statement and wallet ' + short(wallet) + '. Sign the exact text above with that wallet.', 'text-danger');
+              return;
+            }
+            done(); resolve({ signature: sig });
+          };
+          $('mst1-manual-cancel').onclick = function () { done(); reject(new Error('Signing cancelled.')); };
+        });
+      }
+    };
+  }
+
+  async function connectManual() {
+    var wallet = $('mst1-manual-wallet').value.trim();
+    var pk = null;
+    try { pk = MST1.base58Decode(wallet); } catch (e) { pk = null; }
+    if (!pk || pk.length !== 32) { text($('mst1-device'), 'Enter a valid Solana wallet address.', 'text-danger'); return; }
+    text($('mst1-device'), 'Sign the statement below with wallet ' + short(wallet) + ' to prove it is yours.');
+    await link(manualProvider(wallet), wallet);
+  }
+
+  var B58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+  function base58Encode(bytes) {
+    var digits = [0];
+    for (var i = 0; i < bytes.length; i++) {
+      var carry = bytes[i];
+      for (var j = 0; j < digits.length; j++) { carry += digits[j] << 8; digits[j] = carry % 58; carry = (carry / 58) | 0; }
+      while (carry) { digits.push(carry % 58); carry = (carry / 58) | 0; }
+    }
+    var out = '';
+    for (var k = 0; k < bytes.length && bytes[k] === 0; k++) out += '1';
+    for (var q = digits.length - 1; q >= 0; q--) out += B58[digits[q]];
+    return out;
+  }
+
+  /* Phone wallet over WalletConnect: the page shows a QR code, the wallet app approves and signs. */
+  var SOLANA_MAINNET = 'solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp';
+  var wc = { client: null, loading: null };
+
+  function loadWalletConnect() {
+    if (window.MST1WC) return Promise.resolve(window.MST1WC);
+    if (wc.loading) return wc.loading;
+    wc.loading = new Promise(function (resolve, reject) {
+      var tag = document.createElement('script');
+      var me = document.querySelector('script[src*="secure-transfer-ui.js"]');
+      if (me && me.nonce) tag.nonce = me.nonce;
+      tag.src = cfg.wcScript;
+      tag.onload = function () { window.MST1WC ? resolve(window.MST1WC) : reject(new Error('The phone wallet module did not start.')); };
+      tag.onerror = function () { wc.loading = null; reject(new Error('The phone wallet module did not load. Reload and try again.')); };
+      document.head.appendChild(tag);
+    });
+    return wc.loading;
+  }
+
+  function wcProvider(client, session, wallet) {
+    return {
+      signMessage: async function (bytes) {
+        $('mst1-device').textContent = 'Approve the signature request in your phone wallet…';
+        var res = await client.request({
+          topic: session.topic,
+          chainId: SOLANA_MAINNET,
+          request: { method: 'solana_signMessage', params: { message: base58Encode(bytes), pubkey: wallet } }
+        });
+        var sig = decodeSignature(res && res.signature ? res.signature : res);
+        if (!sig) throw new Error('The phone wallet returned an unreadable signature.');
+        return { signature: sig };
+      }
+    };
+  }
+
+  async function connectPhone() {
+    var panel = $('mst1-wc-panel');
+    var status = $('mst1-wc-status');
+    text($('mst1-device'), 'Starting phone wallet connection…');
+    var lib = await loadWalletConnect();
+    if (!wc.client) {
+      wc.client = await lib.SignClient.init({
+        projectId: cfg.wcProjectId,
+        metadata: { name: 'MyMI Secure Transfer', description: 'Encrypted wallet-to-wallet files', url: location.origin, icons: [location.origin + '/favicon.ico'] }
+      });
+    }
+    var started = await wc.client.connect({
+      optionalNamespaces: { solana: { chains: [SOLANA_MAINNET], methods: ['solana_signMessage'], events: [] } }
+    });
+    var cancelled = false;
+    if (started.uri) {
+      var qr = lib.qrcode(0, 'M');
+      qr.addData(started.uri);
+      qr.make();
+      $('mst1-wc-qr').innerHTML = qr.createSvgTag({ cellSize: 5, margin: 2, scalable: false });
+      $('mst1-wc-open').href = started.uri;
+      status.textContent = 'Waiting for your phone wallet to approve…';
+      panel.classList.remove('d-none');
+      text($('mst1-device'), 'Scan the QR code below with your phone wallet.');
+    }
+    var cancel = new Promise(function (_, reject) {
+      $('mst1-wc-cancel').onclick = function () { cancelled = true; reject(new Error('Phone wallet connection cancelled.')); };
+    });
+    var session;
+    try {
+      session = await Promise.race([started.approval(), cancel]);
+    } finally {
+      panel.classList.add('d-none');
+      $('mst1-wc-qr').textContent = '';
+      $('mst1-wc-cancel').onclick = null;
+    }
+    if (cancelled) return;
+    var accounts = (session.namespaces.solana && session.namespaces.solana.accounts) || [];
+    var account = accounts.filter(function (a) { return a.indexOf(SOLANA_MAINNET + ':') === 0; })[0] || accounts[0];
+    if (!account) throw new Error('The phone wallet did not share a Solana account.');
+    var wallet = account.split(':').pop();
+    await link(wcProvider(wc.client, session, wallet), wallet);
+  }
+
+  async function link(p, wallet) {
+    var status = $('mst1-device');
     state.provider = p;
-    state.wallet = pk.toBase58 ? pk.toBase58() : String(pk);
+    state.wallet = wallet;
     $('mst1-wallet').textContent = state.wallet;
 
     var kp = loadDevice(state.wallet);
@@ -91,7 +255,7 @@
     if (!bound) {
       kp = kp || nacl.box.keyPair();
       pub = MST1.b64(kp.publicKey);
-      text(status, 'Approve the link statement in your wallet…');
+      if (!p.manual) text(status, 'Approve the link statement in your wallet…');
       // Keep the key on this device before the server lists it, so a lost reply never strands files.
       saveDevice(state.wallet, kp);
       var c = await postJson('/challenge', { wallet: state.wallet });
@@ -129,6 +293,11 @@
       if (!wallets.length) throw new Error('Add at least one recipient wallet.');
       if (wallets.length > cfg.maxRecipients) throw new Error('At most ' + cfg.maxRecipients + ' recipients.');
       if (file.size > cfg.maxBytes) throw new Error('The file is larger than ' + size(cfg.maxBytes) + '.');
+      var feeSig = '';
+      if (cfg.fee && cfg.fee.required) {
+        feeSig = $('mst1-fee-sig').value.trim();
+        if (!/^[1-9A-HJ-NP-Za-km-z]{80,90}$/.test(feeSig)) throw new Error('Pay the ' + cfg.fee.sol + ' SOL transfer fee first, then paste its transaction signature.');
+      }
       text(status, 'Checking recipients…');
       var recipients = await recipientKeys(wallets);
       text(status, 'Encrypting on this device…');
@@ -137,16 +306,18 @@
       var sealed = await MST1.seal(plain, file.name, file.type || 'application/octet-stream', state.wallet,
         MST1.b64(state.device.publicKey), recipients, now + days * 86400, now);
       plain.fill(0);
-      text(status, 'Approve the transfer in your wallet…');
+      text(status, state.provider.manual ? 'Sign the transfer statement shown above…' : 'Approve the transfer in your wallet…');
       var signature = await signText(await MST1.manifestMessage(sealed.manifest));
       var form = new FormData();
       form.append('manifest', JSON.stringify(sealed.manifest));
       form.append('signature', signature);
+      if (feeSig) form.append('fee_signature', feeSig);
       form.append('ciphertext', new Blob([sealed.ciphertext], { type: 'application/octet-stream' }), 'payload.mst1');
       text(status, 'Uploading the encrypted file…');
       await api('/send', { method: 'POST', body: form });
       text(status, 'Sent. Only the recipients\' devices can open it.', 'text-success');
-      $('mst1-file').value = '';
+      $('mst1-file').value = ''; $('mst1-file-name').textContent = 'No file chosen';
+      if ($('mst1-fee-sig')) $('mst1-fee-sig').value = '';
       refresh();
     } catch (e) {
       text(status, String(e.message || e), 'text-danger');
@@ -228,7 +399,40 @@
     });
   }
 
-  $('mst1-connect').addEventListener('click', function () { connect().catch(function (e) { text($('mst1-device'), String(e.message || e), 'text-danger'); }); });
+  var connectBtn = $('mst1-connect');
+  connectBtn.addEventListener('click', function () {
+    connectBtn.disabled = true;
+    connect().catch(function (e) {
+      var msg = String((e && e.message) || e);
+      if (e && (e.code === 4001 || /reject/i.test(msg))) msg = 'You cancelled the request in your wallet. Click Connect wallet to try again.';
+      text($('mst1-device'), msg, 'text-danger');
+    }).then(function () { connectBtn.disabled = false; });
+  });
+  function runManual() {
+    var b = $('mst1-manual-use');
+    b.disabled = true;
+    connectManual().catch(function (e) { text($('mst1-device'), String((e && e.message) || e), 'text-danger'); }).then(function () { b.disabled = false; });
+  }
+  $('mst1-manual-use').addEventListener('click', runManual);
+  $('mst1-manual-wallet').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); runManual(); } });
+  $('mst1-manual-copy').addEventListener('click', function () {
+    var t = $('mst1-manual-statement').textContent;
+    if (navigator.clipboard) navigator.clipboard.writeText(t).then(function () { $('mst1-manual-copy').textContent = 'Copied'; setTimeout(function () { $('mst1-manual-copy').textContent = 'Copy statement'; }, 1500); });
+  });
+  if (cfg.wcProjectId && cfg.wcScript) {
+    $('mst1-wc-wrap').classList.remove('d-none');
+    $('mst1-wc').addEventListener('click', function () {
+      var b = $('mst1-wc');
+      b.disabled = true;
+      connectPhone().catch(function (e) { text($('mst1-device'), String((e && e.message) || e), 'text-danger'); }).then(function () { b.disabled = false; });
+    });
+  }
+  connectBtn.removeAttribute('data-mst1-pending');
+  text($('mst1-device'), '');
   $('mst1-send').addEventListener('click', send);
+  $('mst1-file').addEventListener('change', function () {
+    var f = this.files && this.files[0];
+    $('mst1-file-name').textContent = f ? f.name + ' (' + size(f.size) + ')' : 'No file chosen';
+  });
   $('mst1-refresh').addEventListener('click', function () { refresh().catch(function () {}); });
 })();

@@ -20,6 +20,10 @@ The feature is **off by default**. With `SECURE_TRANSFER_ENABLED` unset, every r
 
    The server checks the Ed25519 signature against the wallet address before storing the key. A wallet stays tied to the first account that linked it.
 
+   Without a browser wallet, the user can click **Connect with phone wallet**: the page loads a self-hosted WalletConnect client (`public/assets/vendor/walletconnect/`, only on click), shows a QR code, and the phone wallet approves the session and signs each statement with `solana_signMessage`. Phantom's app does not support WalletConnect; Solflare, Trust and Backpack do.
+
+   Or the user types their address instead. The page then shows each statement (the binding, and later each manifest) for the user to sign in their own wallet app and paste back. It accepts base58, base64 or hex, and checks the signature against the address in the browser before using it, so a typed address alone never links a wallet.
+
 2. **Send.** The sender's browser:
    - fetches each recipient's linked keys and checks every binding signature itself, so it does not rely on the server's word;
    - makes a random 32-byte file key and encrypts the file in 64 KiB chunks with XSalsa20-Poly1305 (`crypto_secretbox`), nonce = 16 random bytes followed by the chunk index;
@@ -45,6 +49,28 @@ PHP (`app/Libraries/SecureTransfer/TransferCrypto.php`, libsodium) and the brows
 - Any signed-in user can see whether a wallet has linked devices (`/recipient/{wallet}`). That is needed to send to it.
 - A file sent before a device was linked opens only on the devices linked at the time.
 - Daily send limits are checked before the upload is saved, so several uploads started at the same moment can go slightly over them.
+
+## Investigation record and legal holds
+
+MyMI keeps an add-only record of who did what, so the company can answer a lawful request from federal or state investigators about who sent what to whom. The feature will not run without it: if the audit tables are missing, every route answers 404.
+
+- **What is recorded** (table `bf_secure_transfer_audit`): wallet links and refusals, key revocations, every transfer sent or refused (sender account, sender wallet, recipient wallets, ciphertext size and SHA-256, expiry, manifest signature), every manifest or file download, withdrawals, purges, holds and exports. Each entry has the account id, wallet, IP address, user agent and time.
+- **What is not recorded**: file contents, file names or device keys. The server never has them. A lawful request can get the stored ciphertext and the record; only the recipient's device can decrypt the file.
+- **Tamper evidence**: each entry stores `row_hash = sha256(prev_hash + entry)`. Editing or deleting an old entry breaks the chain at that entry. `php spark securetransfer:audit --verify` walks the whole chain.
+- **Legal holds** (table `bf_secure_transfer_holds`): a hold on a transfer, a MyMI user id, or a wallet keeps the ciphertext through withdrawal and expiry, so the purge job skips it. Recipients still lose access on withdrawal or expiry.
+- The page tells users these records are kept and shared when the law requires it.
+
+Owner commands (run on the server; each one is itself recorded):
+
+```bash
+php spark securetransfer:audit --verify
+php spark securetransfer:audit --holds
+php spark securetransfer:audit --hold=wallet:<address> --reason="<case reference>" --by=<your name>
+php spark securetransfer:audit --release=<hold id> --by=<your name>
+php spark securetransfer:audit --wallet=<address> --from=2026-01-01 --to=2026-12-31 --case="<case reference>" --by=<your name> --out=/secure/path/export.jsonl
+```
+
+An export can be scoped by `--user`, `--wallet` or `--transfer`. It is written as JSON lines with mode 0600 and the command prints its SHA-256 so the file handed over can be proven unchanged. Talk to counsel before answering any request; this tool records and exports, it does not decide what must be disclosed.
 
 ## Routes
 
@@ -75,6 +101,7 @@ The user id always comes from the session, never from the request.
 | `SECURE_TRANSFER_DOMAIN` | `mymiwallet.com` |
 | `SECURE_TRANSFER_MAX_BYTES` | 25 MiB |
 | `SECURE_TRANSFER_STORAGE` | `writable/secure_transfer` (dirs 0700, files 0600) |
+| `SECURE_TRANSFER_WC_PROJECT_ID` | empty (QR button hidden). A free WalletConnect/Reown project ID from cloud.reown.com, with the site's domains allowed. Public, not a secret. |
 
 Other limits are in `app/Config/SecureTransfer.php`: 10 recipients, 30 days, 5 keys per wallet, 50 transfers and 250 MiB per user per day.
 
@@ -83,10 +110,10 @@ Other limits are in `app/Config/SecureTransfer.php`: 10 recipients, 30 days, 5 k
 Each step needs owner approval. Do not run plain `php spark migrate` in production.
 
 1. Deploy the merged ref to staging with `scripts/ops/staging/mymi-staging.sh deploy <ref>`.
-2. Run only this migration: `MIGRATE=2026-11-21-000100_CreateSecureTransferTables`, using the release's named-migration path.
+2. Run only these migrations, in order: `MIGRATE=2026-11-21-000100_CreateSecureTransferTables`, then `MIGRATE=2026-11-23-000100_CreateSecureTransferAuditTables`, using the release's named-migration path.
 3. Set `SECURE_TRANSFER_ENABLED=true` in staging `.env` and reload PHP-FPM.
-4. Test with two wallets: link, send, open, withdraw.
-5. Add the purge job to cron: `php spark securetransfer:purge --apply` daily. Without `--apply` it only counts.
+4. Run `php spark securetransfer:smoke` as the web user. It makes two throwaway wallets and runs link, send, download, decrypt, legal hold, withdraw, purge and the record check through the real database and file store. No SOL is spent (wallets only sign messages). It refuses to run unless the site address contains `staging`. Optionally test by hand with two real wallets too.
+5. Add the purge job to cron: `php spark securetransfer:purge --apply` daily. Without `--apply` it only counts. With `--apply` it refuses to run if the audit tables are missing, and it skips transfers under a legal hold.
 6. Repeat for production after a separate approval.
 
 ## Rollback

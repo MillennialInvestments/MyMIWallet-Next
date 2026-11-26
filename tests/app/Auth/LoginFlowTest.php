@@ -89,6 +89,12 @@ final class LoginFlowTest extends CIUnitTestCase
         $this->assertNull(session('auth_message'));
     }
 
+    protected function tearDown(): void
+    {
+        Services::resetSingle('authentication');
+        parent::tearDown();
+    }
+
     public function testLoginPageRendersForLoggedOutVisitor(): void
     {
         Services::injectMock('authentication', new FakeAuthentication(false, false));

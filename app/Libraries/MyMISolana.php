@@ -251,16 +251,19 @@ class MyMISolana implements CryptoCurrencyInterface
         }
     }
 
+    /**
+     * Not a Solana signature (it was an HMAC), so it is refused. Transactions
+     * are signed in the user's own wallet.
+     */
     public function signTransaction($transaction, $privateKey)
     {
-        $transaction['signature'] = hash_hmac('sha256', json_encode($transaction), $privateKey);
-        return $transaction;
+        throw new \RuntimeException('Server-side Solana signing is disabled; sign in the user\'s wallet.');
     }
 
+    /** The old check compared HMACs, which proves nothing on Solana. */
     public function verifySignature($transaction, $signature, $publicKey)
     {
-        $validSignature = hash_hmac('sha256', json_encode($transaction), hex2bin($publicKey));
-        return hash_equals($validSignature, $signature);
+        return false;
     }
     
     // public function createToken($name, $symbol, $supply) {
@@ -297,14 +300,14 @@ class MyMISolana implements CryptoCurrencyInterface
             return $guard;
         }
 
-        $transactionData = [
-            'from' => $fromAddress,
-            'to' => $toAddress,
-            'assetId' => $assetId,
-            'value' => $amount
+        // This used to return a made-up transaction id without touching the
+        // chain. Refuse instead so nothing records a payment that never happened.
+        return [
+            'allowed' => false,
+            'status'  => 'error',
+            'message' => 'Server-side sends are disabled; sign in the user\'s wallet.',
+            'reason'  => 'wallet_signature_required',
         ];
-        $signedTransaction = $this->signTransaction($transactionData, $privateKey);
-        return 'Transaction ID: ' . hash('sha256', json_encode($signedTransaction));
     }
 
     public function getTransactionStatus($transactionId)

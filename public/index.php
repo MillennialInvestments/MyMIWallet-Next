@@ -127,6 +127,12 @@ try {
     error_log('404: ' . $requestUri);
     throw $e;
 
+} catch (\CodeIgniter\Exceptions\HTTPExceptionInterface $e) {
+
+    // A client error such as a URI with disallowed characters (HTTP 400) is
+    // not a boot failure: let CodeIgniter's exception handler answer it.
+    throw $e;
+
 } catch (\Throwable $e) {
 
     error_log('EMERGENCY BOOT FAILURE: ' . $e->getMessage());
