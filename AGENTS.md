@@ -75,6 +75,7 @@ This repository participates in Teddy's centralized Codex ⇄ AIOps workflow. Co
 - **Migration runner file resolution:** `scripts/ops/db/run-migrations.php` expects full timestamped filenames (`YYYY-MM-DD-HHMMSS_<Name>`). A fallback glob matcher exists for short class names, but operator packets and automation must pass exact timestamped names for deterministic execution across release versions.
 - **Staging and production release smoke tests:** Releases deployed via Composer `--no-dev` omit `vendor/bin/phpunit`. Smoke scripts executing on staging or production must invoke native CLI checks (`sudo -u www-data php spark aiops:form:test --scan-all`) instead of calling PHPUnit test suites.
 - **Shared cache permissions on staging:** `FileLocatorCache` under `shared/writable/cache/` is owned by `www-data`. Operator shell users (`timoteo2392`) cannot delete it without `sudo`. Always run `sudo rm -f shared/writable/cache/FileLocatorCache` to prevent permission denial that silently retains stale Spark command lists.
+- **CI4 CLI Broken Pipe (SIGPIPE) on piped `grep -q`:** CodeIgniter 4 CLI commands (e.g., `php spark list`) raise an unhandled `ErrorException: fwrite(): Write of ... bytes failed with errno=32 Broken pipe` if stdout is closed prematurely by tools like `grep -q` under `set -eo pipefail`. In automation and smoke scripts, always buffer CLI output into a shell variable or temp file first before inspecting substrings.
 
 ## Trading Intelligence, MCP & Options Accounting Lessons (2026-11)
 

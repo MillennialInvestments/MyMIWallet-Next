@@ -33,8 +33,10 @@ REQUIRED_COMMANDS=(
     "compliance:update-sanctions"
 )
 
+SPARK_LIST="$(sudo -u www-data php spark list)"
+
 for cmd in "${REQUIRED_COMMANDS[@]}"; do
-    if sudo -u www-data php spark list | grep -q "$cmd"; then
+    if echo "$SPARK_LIST" | grep -F "$cmd" > /dev/null; then
         echo "  [PASS] Command registered: $cmd"
     else
         echo "  [FAIL] Missing command: $cmd"
@@ -45,12 +47,13 @@ done
 # 3. Form Certification Smoke
 echo ""
 echo "--- 2. Form & Route Certification Smoke Check ---"
-sudo -u www-data php -d display_errors=1 spark aiops:form:test --scan-all > /tmp/xchain-002-form-test.log
-if grep -q "FAIL     0" /tmp/xchain-002-form-test.log; then
+FORM_LOG="${HOME:-/tmp}/xchain-002-form-test.log"
+sudo -u www-data php -d display_errors=1 spark aiops:form:test --scan-all > "$FORM_LOG"
+if grep -q "FAIL     0" "$FORM_LOG"; then
     echo "  [PASS] Form certification scan: FAIL 0 verified."
 else
     echo "  [FAIL] Form certification scan reported failures:"
-    cat /tmp/xchain-002-form-test.log
+    cat "$FORM_LOG"
     exit 1
 fi
 
