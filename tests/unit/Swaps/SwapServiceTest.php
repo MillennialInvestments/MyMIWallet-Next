@@ -145,4 +145,20 @@ final class SwapServiceTest extends CIUnitTestCase
         $this->assertTrue($res['execution_allowed']);
         $this->assertSame('Ready for user signature.', $res['execution_note']);
     }
+
+    public function testEvmMultiChainQuoteRouting(): void
+    {
+        $fixturePath = ROOTPATH . 'tests/fixtures/swaps/zeroex-eth-usdc.json';
+        $fixture = json_decode((string) file_get_contents($fixturePath), true);
+
+        $zeroEx = new ZeroExSwapProvider($fixture);
+        $service = new SwapService(null, $zeroEx);
+
+        $polyQuote = $service->getQuote('polygon', '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619', '1000000');
+        $this->assertTrue($polyQuote['ok']);
+        $this->assertSame('zeroex', $polyQuote['provider']);
+
+        $arbQuote = $service->getQuote('arbitrum', '0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8', '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1', '1000000');
+        $this->assertTrue($arbQuote['ok']);
+    }
 }

@@ -40,7 +40,15 @@ final class CryptoPayFactory
         foreach ($config->chains() as $chain) {
             $urls = $config->endpoints[$chain];
             $out[$chain] = match ($chain) {
-                'ethereum', 'base' => new EvmUsdc($chain, CryptoPayConfig::CHAIN_IDS[$chain][$net], CryptoPayConfig::USDC[$chain][$net], $urls, $http, $config->confirmations[$chain]),
+                'ethereum', 'base', 'polygon', 'arbitrum', 'optimism', 'avalanche', 'bsc' => new EvmUsdc(
+                    $chain,
+                    CryptoPayConfig::CHAIN_IDS[$chain][$net],
+                    CryptoPayConfig::USDC[$chain][$net],
+                    $urls,
+                    $http,
+                    $config->confirmations[$chain],
+                    CryptoPayConfig::DECIMALS[$chain] ?? 6
+                ),
                 'xrpl'             => new Xrpl($net, $urls, $http, $prices),
                 'bitcoin'          => new Bitcoin($net, $urls, $http, $prices),
             };

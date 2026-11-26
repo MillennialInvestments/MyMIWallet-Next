@@ -44,6 +44,8 @@ final class EvmUsdc implements ChainAdapter
         private array $endpoints,
         private Http $http,
         private int $confirmations,
+        private int $decimals = 6,
+        private string $asset = 'USDC',
     ) {
         $this->usdc = strtolower($usdc);
     }
@@ -55,12 +57,12 @@ final class EvmUsdc implements ChainAdapter
 
     public function asset(): string
     {
-        return 'USDC';
+        return $this->asset;
     }
 
     public function decimals(): int
     {
-        return 6;
+        return $this->decimals;
     }
 
     public function matchMode(): string
@@ -70,12 +72,12 @@ final class EvmUsdc implements ChainAdapter
 
     public function maxAmountTag(): int
     {
-        return 9999; // under one cent of USDC
+        return $this->decimals === 18 ? 9_999_999_999_999_999 : 9999;
     }
 
     public function amountStep(): int
     {
-        return 10000; // one cent
+        return $this->decimals === 18 ? 10_000_000_000_000_000 : 10000;
     }
 
     public function chainId(): int

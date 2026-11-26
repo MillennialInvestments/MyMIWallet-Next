@@ -197,4 +197,25 @@ final class PaperExchangeTest extends CIUnitTestCase
         $this->assertSame('partner_gate_required', $quote['error']);
         $this->assertSame('G-PARTNER', $quote['code']);
     }
+
+    public function testFallbackQuotesForExpandedCryptoAssets(): void
+    {
+        $provider = new PaperExchangeProvider($this->db, null, []);
+
+        $ltcQuote = $provider->quote('LTC/USD');
+        $this->assertTrue($ltcQuote['ok']);
+        $this->assertSame(95.0, $ltcQuote['price']);
+
+        $dogeQuote = $provider->quote('DOGE/USD');
+        $this->assertTrue($dogeQuote['ok']);
+        $this->assertSame(0.38, $dogeQuote['price']);
+
+        $polyQuote = $provider->quote('POL/USD');
+        $this->assertTrue($polyQuote['ok']);
+        $this->assertSame(0.50, $polyQuote['price']);
+
+        $bnbQuote = $provider->quote('BNB/USD');
+        $this->assertTrue($bnbQuote['ok']);
+        $this->assertSame(640.0, $bnbQuote['price']);
+    }
 }
