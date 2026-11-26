@@ -1,45 +1,100 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
-use App\Libraries\{BaseLoader};
 use App\Models\NotificationModel;
 
 class NotificationService
 {
+    protected NotificationModel $notificationModel;
 
-    protected $notificationModel;
-
-    public function __construct()
+    public function __construct(?NotificationModel $notificationModel = null)
     {
-        $this->notificationModel = new NotificationModel();
+        $this->notificationModel = $notificationModel ?? new NotificationModel();
     }
 
-    public function sendGoalCompletionNotification($userId, $goalId)
+    /**
+     * Send goal completion notification if the user owns the goal.
+     */
+    public function sendGoalCompletionNotification(int $userId, int $goalId): bool
     {
         $goal = $this->notificationModel->getGoalById($goalId);
-        if ($goal && $goal['user_id'] === $userId) {
-            // Logic to send goal completion notification
-            return $this->notificationModel->sendNotification($userId, "Goal '{$goal['name']}' completed!");
+        if ($goal && (int) ($goal['user_id'] ?? 0) === $userId) {
+            $name = (string) ($goal['name'] ?? $goal['title'] ?? 'Financial Goal');
+            return $this->notificationModel->sendNotification(
+                $userId,
+                "Goal '{$name}' completed!",
+                'Goal Completed',
+                'goal'
+            );
         }
         return false;
     }
 
-    public function sendBudgetLimitAlert($userId, $budgetCategory)
+    /**
+     * Send budget limit alert for a category.
+     */
+    public function sendBudgetLimitAlert(int $userId, string $budgetCategory): bool
     {
-        // Logic to send budget limit alert
-        return $this->notificationModel->sendNotification($userId, "You have exceeded your budget for {$budgetCategory}.");
+        return $this->notificationModel->sendNotification(
+            $userId,
+            "You have exceeded your budget for {$budgetCategory}.",
+            'Budget Limit Alert',
+            'budget'
+        );
     }
 
-    public function sendUpcomingPaymentReminder($userId, $paymentId)
+    /**
+     * Send upcoming payment reminder.
+     */
+    public function sendUpcomingPaymentReminder(int $userId, int $paymentId): bool
     {
-        // Logic to send payment reminder
-        return $this->notificationModel->sendNotification($userId, "Upcoming payment reminder for payment ID: {$paymentId}.");
+        return $this->notificationModel->sendNotification(
+            $userId,
+            "Upcoming payment reminder for payment ID: {$paymentId}.",
+            'Payment Reminder',
+            'payment'
+        );
     }
 
-    public function sendMonthlySummary($userId)
+    /**
+     * Send monthly financial summary.
+     */
+    public function sendMonthlySummary(int $userId): bool
     {
-        // Logic to send monthly financial summary
-        return $this->notificationModel->sendNotification($userId, "Your monthly financial summary is ready.");
+        return $this->notificationModel->sendNotification(
+            $userId,
+            "Your monthly financial summary is ready.",
+            'Monthly Financial Summary',
+            'summary'
+        );
+    }
+
+    /**
+     * Retrieve user notifications bounded by limit.
+     *
+     * @return list<array<string, mixed>>
+     */
+    public function getUserNotifications(int $userId, int $limit = 20): array
+    {
+        return $this->notificationModel->getUserNotifications($userId, $limit);
+    }
+
+    /**
+     * Mark a notification as read.
+     */
+    public function markAsRead(int $notificationId, ?int $userId = null): bool
+    {
+        return $this->notificationModel->markAsRead($notificationId, $userId);
+    }
+
+    /**
+     * Count unread notifications for a user.
+     */
+    public function getUnreadCount(int $userId): int
+    {
+        return $this->notificationModel->getUnreadCount($userId);
     }
 }

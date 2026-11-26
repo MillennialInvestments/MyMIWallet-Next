@@ -2189,6 +2189,8 @@ $routes->group('API', ['namespace' => '\\App\\Modules\\APIs\\Controllers'], stat
 // Customer Support:
 $routes->group('Support', ['namespace' => '\App\Modules\Support\Controllers'], function($routes) {
     $routes->get('ticket/(:num)', 'SupportTicketController::show/$1');
+    $routes->post('ticket/(:num)/reply', 'SupportTicketController::reply/$1');
+    $routes->get('tickets', 'SupportTicketController::index');
     $routes->get('/', 'SupportController::index');
     $routes->get('Account', 'AccountSupportController::index');
     $routes->post('resendActivation', 'AccountSupportController::resendActivation');
