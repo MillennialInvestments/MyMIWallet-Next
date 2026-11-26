@@ -1106,6 +1106,21 @@ class AuthController extends BaseController
             if ($newUserId > 0) {
                 $onboardingProgress->ensureRecord($newUserId);
                 $this->persistRegistrationAttribution($newUserId, $referralCode, $attribution);
+
+                // Record versioned legal consent (Terms of Service & Privacy Policy)
+                try {
+                    $securityModel = model(SecurityModel::class);
+                    $clientIp = $this->request->getIPAddress();
+                    $userAgent = (string) $this->request->getUserAgent();
+                    $securityModel->recordUserConsent($newUserId, 'terms_of_service', '1.0', $clientIp, $userAgent);
+                    $securityModel->recordUserConsent($newUserId, 'privacy_policy', '1.0', $clientIp, $userAgent);
+                    service('eventTracker')->track('legal.consent_recorded', [
+                        'consent_types' => ['terms_of_service', 'privacy_policy'],
+                        'version'       => '1.0',
+                    ], $newUserId);
+                } catch (\Throwable $e) {
+                    log_message('warning', '[REGISTRATION] Could not record user consent: ' . $e->getMessage());
+                }
             }
 
             if ($referralCode !== '') {

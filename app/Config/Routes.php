@@ -314,9 +314,24 @@ $routes->group('', ['namespace' => '\App\Modules\User\Controllers'], static func
     // Legacy alias
     $routes->get('Preview/Alert/(:segment)', 'AlertsController::preview/$1');
 });
-$routes->get('/Privacy-Policy', 'Home::privacyPolicy');
-$routes->get('/Legal/Privacy-Policy', 'Home::privacyPolicy');
-$routes->get('/Legal/Terms-And-Conditions', 'Home::terms');
+// Legal, terms, privacy, and compliance routes (GTM-057)
+$routes->get('Privacy-Policy', 'Home::privacyPolicy');
+$routes->get('privacy-policy', 'Home::privacyPolicy');
+$routes->get('privacy', 'Home::privacyPolicy');
+$routes->get('Legal/Privacy-Policy', 'Home::privacyPolicy');
+$routes->get('legal/privacy-policy', 'Home::privacyPolicy');
+
+$routes->get('Legal/Terms-And-Conditions', 'Home::terms');
+$routes->get('legal/terms-and-conditions', 'Home::terms');
+$routes->get('terms-and-conditions', 'Home::terms');
+$routes->get('Terms-Of-Service', 'Home::termsOfService');
+$routes->get('terms-of-service', 'Home::termsOfService');
+$routes->get('terms', 'Home::termsOfService');
+
+$routes->get('disclaimer', 'Home::disclaimer');
+$routes->get('disclaimers', 'Home::disclaimer');
+$routes->get('legal/disclaimer', 'Home::disclaimer');
+$routes->get('disclosures', 'Home::disclaimer');
 $routes->get('/Customer-Support', '\App\Modules\Support\Controllers\SupportController::index');
 // GT-FORM-ROUTES-001: public newsletter sign-up forms (landing page and blog posts).
 $routes->post('newsletter/subscribe', '\App\Controllers\NewsletterController::subscribe');
@@ -335,7 +350,6 @@ $routes->get('/index.php/How-It-Works', static fn() => redirect()->to(site_url('
 $routes->get('/index.php/How-It-Works/(:segment)', static fn($slug) => redirect()->to(site_url('How-It-Works/' . $slug), 301));
 
 $routes->get('Sector/(:segment)', 'Home::sector/$1');
-$routes->get('/Terms-Of-Service', 'Home::termsOfService');
 $routes->get('/resend-activation', 'AuthController::resendActivation', ['as' => 'resend-activation']);
 $routes->post('/resend-activation', 'AuthController::resendActivationCode', ['as' => 'resend-activation-code']);
 

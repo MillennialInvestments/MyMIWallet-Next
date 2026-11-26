@@ -7,7 +7,8 @@ $meta        = $meta        ?? [];
 $siteSettings= $siteSettings?? [];
 $pageTitle   = $pageTitle   ?? ($meta['title'] ?? 'MyMI Wallet');
 helper('security');
-$cspNonce = $cspNonce ?? ($csp['script'] ?? (service('renderer')->getData('cspNonce') ?? ''));
+$rawHeaderNonce = $cspNonce ?? ($csp['script'] ?? (service('renderer')->getData('cspNonce') ?? ''));
+$cspNonce = is_array($rawHeaderNonce) ? ($rawHeaderNonce['script'] ?? '') : (string) $rawHeaderNonce;
 $viewFileData               = [
     'siteSettings'          => $siteSettings,
     'uri'                   => $uri,
