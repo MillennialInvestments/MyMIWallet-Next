@@ -54,7 +54,7 @@ class TaxConfig extends BaseController
         $this->ensureAdmin();
 
         return view('App\\Modules\\Management\\TaxAdmin\\Views\\templates\\index', [
-            'templates' => $this->templates->orderBy('name', 'ASC')->findAll(),
+            'templates' => $this->templates->orderBy('name', 'ASC')->findAll(100),
         ]);
     }
 
@@ -147,7 +147,7 @@ class TaxConfig extends BaseController
         }
 
         return view('App\\Modules\\Management\\TaxAdmin\\Views\\jurisdictions\\index', [
-            'jurisdictions' => $this->jurisdictions->orderBy('code')->findAll(),
+            'jurisdictions' => $this->jurisdictions->orderBy('code')->findAll(100),
         ]);
     }
 
@@ -158,8 +158,8 @@ class TaxConfig extends BaseController
             'rates'          => $this->rates->select('bf_tax_rates.*, bf_tax_jurisdictions.name as jurisdiction_name, bf_tax_jurisdictions.code as jurisdiction_code')
                 ->join('bf_tax_jurisdictions', 'bf_tax_jurisdictions.id = bf_tax_rates.jurisdiction_id', 'left')
                 ->orderBy('effective_start', 'DESC')
-                ->findAll(),
-            'jurisdictions'  => $this->jurisdictions->where('active', 1)->orderBy('code')->findAll(),
+                ->findAll(100),
+            'jurisdictions'  => $this->jurisdictions->where('active', 1)->orderBy('code')->findAll(100),
         ]);
     }
 
@@ -193,7 +193,7 @@ class TaxConfig extends BaseController
 
         return view('App\\Modules\\Management\\TaxAdmin\\Views\\rates\\edit', [
             'rate'           => null,
-            'jurisdictions'  => $this->jurisdictions->where('active', 1)->orderBy('code')->findAll(),
+            'jurisdictions'  => $this->jurisdictions->where('active', 1)->orderBy('code')->findAll(100),
         ]);
     }
 
@@ -231,7 +231,7 @@ class TaxConfig extends BaseController
 
         return view('App\\Modules\\Management\\TaxAdmin\\Views\\rates\\edit', [
             'rate'           => $rate,
-            'jurisdictions'  => $this->jurisdictions->where('active', 1)->orderBy('code')->findAll(),
+            'jurisdictions'  => $this->jurisdictions->where('active', 1)->orderBy('code')->findAll(100),
         ]);
     }
 

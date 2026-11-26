@@ -1,6 +1,6 @@
 <?php namespace App\Libraries;
 
-use App\Modules\Predictions\Models\{
+use App\Models\Predictions\{
     MarketsModel,OptionsModel,OrdersModel,TradesModel,PositionsModel,
     LiquidityModel,SettlementsModel,PayoutsModel
 };
@@ -9,26 +9,40 @@ use CodeIgniter\Database\BaseConnection;
 
 class MyMIPredictions
 {
-    private const VALID_STATES = ['DRAFT', 'OPEN', 'LOCKED', 'RESOLVED', 'CANCELED'];
-    private const PUBLIC_STATES = ['OPEN', 'LOCKED', 'RESOLVED', 'CANCELED'];
-    private const VALID_MODES = ['GOLD_CENTRIC', 'MULTI_ASSET'];
+    public const VALID_STATES = ['DRAFT', 'OPEN', 'LOCKED', 'RESOLVED', 'CANCELED'];
+    public const ALL_STATES = self::VALID_STATES;
+    public const PUBLIC_STATES = ['OPEN', 'LOCKED', 'RESOLVED', 'CANCELED'];
+    public const VALID_MODES = ['GOLD_CENTRIC', 'MULTI_ASSET'];
+    public const MODES = self::VALID_MODES;
 
     public function __construct(
-        protected MarketsModel $markets,
-        protected OptionsModel $options,
-        protected OrdersModel $orders,
-        protected TradesModel $trades,
-        protected PositionsModel $positions,
-        protected LiquidityModel $liquidity,
-        protected SettlementsModel $settlements,
-        protected PayoutsModel $payouts,
-        protected \App\Libraries\MyMIGold $gold,
-        protected \App\Libraries\MyMISolana $solana,
-        protected \App\Libraries\MyMIRaydium $raydium,
-        protected \App\Libraries\MyMICoin $coin,
+        protected ?MarketsModel $markets = null,
+        protected ?OptionsModel $options = null,
+        protected ?OrdersModel $orders = null,
+        protected ?TradesModel $trades = null,
+        protected ?PositionsModel $positions = null,
+        protected ?LiquidityModel $liquidity = null,
+        protected ?SettlementsModel $settlements = null,
+        protected ?PayoutsModel $payouts = null,
+        protected ?\App\Libraries\MyMIGold $gold = null,
+        protected ?\App\Libraries\MyMISolana $solana = null,
+        protected ?\App\Libraries\MyMIRaydium $raydium = null,
+        protected ?\App\Libraries\MyMICoin $coin = null,
         protected ?PredCfg $cfg = null,
         protected ?BaseConnection $db = null
     ) {
+        $this->markets ??= new MarketsModel();
+        $this->options ??= new OptionsModel();
+        $this->orders ??= new OrdersModel();
+        $this->trades ??= new TradesModel();
+        $this->positions ??= new PositionsModel();
+        $this->liquidity ??= new LiquidityModel();
+        $this->settlements ??= new SettlementsModel();
+        $this->payouts ??= new PayoutsModel();
+        $this->gold ??= new \App\Libraries\MyMIGold();
+        $this->solana ??= new \App\Libraries\MyMISolana();
+        $this->raydium ??= new \App\Libraries\MyMIRaydium();
+        $this->coin ??= new \App\Libraries\MyMICoin();
         $this->cfg ??= config(PredCfg::class);
         $this->db  ??= \Config\Database::connect();
     }
@@ -272,7 +286,11 @@ class MyMIPredictions
         $this->db->transStart();
 
         $table = $this->options->getTable();
-        $this->db->query("SELECT id FROM {$table} WHERE id=? FOR UPDATE", [$optionId]);
+        $lockSql = "SELECT id FROM {$table} WHERE id=?";
+        if (stripos($this->db->DBDriver ?? '', 'sqlite') === false) {
+            $lockSql .= ' FOR UPDATE';
+        }
+        $this->db->query($lockSql, [$optionId]);
 
         $this->debitStake($userId, $asset, $amount + $feeAmt, 'Predictions stake');
 
@@ -367,13 +385,17 @@ class MyMIPredictions
 
     public function debitStake(int $userId, string $asset, float $amount, string $reason): string
     {
-        if ($asset === 'MIMG') return $this->gold->debit($userId, $amount, $reason);
+        if ($asset === 'MIMG' && method_exists($this->gold, 'debit')) {
+            return $this->gold->debit($userId, $amount, $reason);
+        }
         return 'ledger:debit:'.$asset.':'.$amount;
     }
 
     public function creditPayout(int $userId, string $asset, float $amount, string $reason): string
     {
-        if ($asset === 'MIMG') return $this->gold->credit($userId, $amount, $reason);
+        if ($asset === 'MIMG' && method_exists($this->gold, 'credit')) {
+            return $this->gold->credit($userId, $amount, $reason);
+        }
         return 'ledger:credit:'.$asset.':'.$amount;
     }
 }

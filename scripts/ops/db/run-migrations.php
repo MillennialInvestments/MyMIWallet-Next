@@ -62,8 +62,14 @@ foreach ($names as $name) {
     $name = basename($name, '.php');
     $file = APPPATH . 'Database/Migrations/' . $name . '.php';
     if (! is_file($file)) {
-        fwrite(STDERR, "NOT FOUND: {$name}\n");
-        exit(1);
+        $matches = glob(APPPATH . 'Database/Migrations/*_' . $name . '.php');
+        if (! empty($matches) && count($matches) === 1) {
+            $file = $matches[0];
+            $name = basename($file, '.php');
+        } else {
+            fwrite(STDERR, "NOT FOUND: {$name}\n");
+            exit(1);
+        }
     }
     [$version] = explode('_', $name, 2);
     $class     = 'App\\Database\\Migrations\\' . substr($name, strlen($version) + 1);

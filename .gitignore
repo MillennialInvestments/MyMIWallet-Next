@@ -25,6 +25,7 @@ app/FiltersO/
 .env.*
 !env/.env.ci.example
 !env/.env.github-control.example
+!env/.env.crypto-pay.example
 chat/.env*
 !chat/.env.staging.example
 !chat/.env.production.example
@@ -70,6 +71,12 @@ application/modules/investments/controllers/API_Squeeze.php
 /writable/logs/
 /aiops/logs/
 /aiops/n8n.pid
+/aiops/bridge.pid
+# Local n8n data (database, keys, backups). MyMI workflows run in the governed
+# TBI n8n on gq-ai01; never commit an n8n database: it holds users and credentials.
+/aiops/.n8n/
+/aiops/backups/
+/aiops/.env.aiops
 
 # Checked-in sample payloads for content ingestion smoke tests
 !/writable/samples/

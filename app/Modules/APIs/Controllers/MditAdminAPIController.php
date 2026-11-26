@@ -31,7 +31,7 @@ class MditAdminAPIController extends MditBaseAPIController
 
     public function pendingRedemptions(): ResponseInterface
     {
-        $pending = $this->redemptions->where('status', 'REQUESTED')->orderBy('requested_on', 'ASC')->findAll();
+        $pending = $this->redemptions->where('status', 'REQUESTED')->orderBy('requested_on', 'ASC')->findAll(100);
 
         return $this->respond([
             'status' => 'success',
@@ -82,7 +82,7 @@ class MditAdminAPIController extends MditBaseAPIController
 
     public function pendingDeposits(): ResponseInterface
     {
-        $pending = $this->deposits->where('status', 'CONFIRMED_ONCHAIN')->orderBy('created_on', 'ASC')->findAll();
+        $pending = $this->deposits->where('status', 'CONFIRMED_ONCHAIN')->orderBy('created_on', 'ASC')->findAll(100);
 
         return $this->respond([
             'status' => 'success',

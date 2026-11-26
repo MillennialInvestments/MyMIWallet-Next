@@ -13,6 +13,8 @@
 #   sudo bash mymi-staging.sh smart         # drive health only (SMART, through RAID cards too)
 #   sudo bash mymi-staging.sh tester-check  # read-only: why staging-tester cannot sign in
 #   sudo bash mymi-staging.sh reset-testers # recreate both test accounts with the saved passwords
+#   sudo bash mymi-staging.sh admin-user <email> # provision or update an admin email with full MyMI Auth & Shield access
+#   sudo bash mymi-staging.sh auth-basic on|off  # toggle Nginx HTTP basic auth prompt
 #
 # What it never does: write to the live database, the live site folder, the
 # live .env, or the live nginx site. It reads the live .env (for DB host/port
@@ -289,6 +291,14 @@ SQL
     if [ "$who" = admin ]; then
       "${MYSQL[@]}" "$STG_DB" -e "INSERT IGNORE INTO auth_groups_users (group_id, user_id) SELECT id, $id FROM auth_groups WHERE name IN ('admin','superadmin');" 2>/dev/null || true
     fi
+    # Shield sync: ensure auth_identities exists for Shield logins
+    if "${MYSQL[@]}" "$STG_DB" -e "DESCRIBE auth_identities" >/dev/null 2>&1; then
+      "${MYSQL[@]}" "$STG_DB" <<SQL
+DELETE FROM auth_identities WHERE (user_id = $id OR secret = '$email') AND type = 'email_password';
+INSERT INTO auth_identities (user_id, type, name, secret, secret2, force_reset, created_at, updated_at)
+VALUES ($id, 'email_password', 'staging', '$email', '$hash', 0, NOW(), NOW());
+SQL
+    fi
     echo "  $email (id $id) ready; password in $CREDS"
   done
 }
@@ -407,8 +417,73 @@ set_password() {
   [ -n "$pw" ] && [ "$pw" = "$pw2" ] || die "passwords empty or different; nothing changed"
   hash="$(PW="$pw" php -r 'echo password_hash(getenv("PW"), PASSWORD_DEFAULT);')"
   "${MYSQL[@]}" "$STG_DB" -e "UPDATE bf_users SET password_hash='$hash' WHERE email='staging-$who@staging.invalid'"
+  if "${MYSQL[@]}" "$STG_DB" -e "DESCRIBE auth_identities" >/dev/null 2>&1; then
+    "${MYSQL[@]}" "$STG_DB" -e "UPDATE auth_identities SET secret2='$hash' WHERE secret='staging-$who@staging.invalid' AND type='email_password'" 2>/dev/null || true
+  fi
   cred_set "STAGING_${who^^}_PASSWORD" "$pw"
   echo "staging-$who@staging.invalid password set and saved in $CREDS"
+}
+
+# Provision or update any admin account with full MyMI Auth & Shield access on staging
+admin_user() {
+  local email="${1:-}" pw pw2 hash id
+  [ -n "$email" ] || die "usage: sudo bash $0 admin-user <email>"
+  read -rsp "Password for $email on staging: " pw; echo; read -rsp "Again: " pw2; echo
+  [ -n "$pw" ] && [ "$pw" = "$pw2" ] || die "passwords empty or different; nothing changed"
+  hash="$(PW="$pw" php -r 'echo password_hash(getenv("PW"), PASSWORD_DEFAULT);')"
+
+  local cols; cols="$("${MYSQL[@]}" -N -e "SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='$STG_DB' AND TABLE_NAME='bf_users'")"
+  id="$("${MYSQL[@]}" -N "$STG_DB" -e "SELECT id FROM bf_users WHERE email='$email' LIMIT 1")"
+  if [ -n "$id" ]; then
+    "${MYSQL[@]}" "$STG_DB" -e "UPDATE bf_users SET password_hash='$hash', active=1, deleted=0 WHERE id=$id"
+    printf '%s\n' "$cols" | grep -qx "role_id" && "${MYSQL[@]}" "$STG_DB" -e "UPDATE bf_users SET role_id=1 WHERE id=$id"
+    printf '%s\n' "$cols" | grep -qx "email_verified" && "${MYSQL[@]}" "$STG_DB" -e "UPDATE bf_users SET email_verified=1 WHERE id=$id"
+  else
+    local uname; uname="${email%%@*}"
+    local set="email='$email', username='$uname', password_hash='$hash', active=1, deleted=0"
+    printf '%s\n' "$cols" | grep -qx "role_id" && set="$set, role_id=1"
+    printf '%s\n' "$cols" | grep -qx "email_verified" && set="$set, email_verified=1"
+    "${MYSQL[@]}" "$STG_DB" <<SQL
+SET SESSION sql_mode = REPLACE(REPLACE(@@sql_mode, 'STRICT_TRANS_TABLES', ''), 'STRICT_ALL_TABLES', '');
+INSERT INTO bf_users SET $set;
+SQL
+    id="$("${MYSQL[@]}" -N "$STG_DB" -e "SELECT id FROM bf_users WHERE email='$email' LIMIT 1")"
+  fi
+
+  "${MYSQL[@]}" "$STG_DB" -e "INSERT IGNORE INTO auth_groups_users (group_id, user_id) SELECT id, $id FROM auth_groups WHERE name IN ('admin','superadmin');" 2>/dev/null || true
+
+  if "${MYSQL[@]}" "$STG_DB" -e "DESCRIBE auth_identities" >/dev/null 2>&1; then
+    "${MYSQL[@]}" "$STG_DB" <<SQL
+DELETE FROM auth_identities WHERE (user_id = $id OR secret = '$email') AND type = 'email_password';
+INSERT INTO auth_identities (user_id, type, name, secret, secret2, force_reset, created_at, updated_at)
+VALUES ($id, 'email_password', 'staging', '$email', '$hash', 0, NOW(), NOW());
+SQL
+  fi
+  echo "Admin user $email (id $id) configured in MyMI Auth and Shield on staging."
+}
+
+# Toggle Nginx HTTP Basic Auth prompt
+auth_basic_toggle() {
+  local mode="${1:-}"
+  local live_site; live_site="$(find /etc/nginx/sites-available /etc/nginx/sites-enabled -name "*$HOST*" -type f 2>/dev/null | head -1 || true)"
+  [ -n "$live_site" ] || live_site="$NGINX_SITE"
+  case "$mode" in
+    off)
+      sed -i 's/^[[:space:]]*auth_basic /    # auth_basic /' "$live_site"
+      sed -i 's/^[[:space:]]*auth_basic_user_file /    # auth_basic_user_file /' "$live_site"
+      nginx -t && systemctl reload nginx
+      echo "Nginx HTTP Basic Auth disabled on $HOST."
+      ;;
+    on)
+      sed -i 's/^[[:space:]]*#[[:space:]]*auth_basic /    auth_basic /' "$live_site"
+      sed -i 's/^[[:space:]]*#[[:space:]]*auth_basic_user_file /    auth_basic_user_file /' "$live_site"
+      nginx -t && systemctl reload nginx
+      echo "Nginx HTTP Basic Auth enabled on $HOST."
+      ;;
+    *)
+      die "usage: sudo bash $0 auth-basic on|off"
+      ;;
+  esac
 }
 
 # Live form test against staging only, signed in as the tester account. The
@@ -496,6 +571,8 @@ form-test) form_test "$ARG" ;;
 revision) cat "$STG_BASE/current/REVISION" ;;
 tester-check) tester_check ;;
 reset-testers) test_accounts; tester_check ;;
+admin-user) admin_user "$ARG" ;;
+auth-basic) auth_basic_toggle "$ARG" ;;
 smart) storage_ok=1; for d in $(lsblk -dno NAME,TYPE | awk '$2=="disk"{print "/dev/"$1}'); do smart_disk "$d"; done; [ "$storage_ok" = 1 ] && echo "SMART: all drives that answered report healthy" || echo "SMART: at least one drive is NOT healthy" ;;
-*) sed -n '2,15p' "$0"; exit 1 ;;
+*) sed -n '2,17p' "$0"; exit 1 ;;
 esac

@@ -286,24 +286,91 @@ class SecurityModel extends Model
         $this->logSecurityEvent($userId, 'account_unlocked', 'Account unlocked by admin');
     }
 
-    public function recordUserConsent($userId, $consentType)
+    private function resolveConsentTable(): ?string
     {
-        $data = [
-            'user_id' => $userId,
-            'consent_type' => $consentType,
-            'consent_time' => date('Y-m-d H:i:s')
-        ];
-        return $this->db->table('bf_user_consent')->insert($data);
+        if ($this->db->tableExists($this->db->prefixTable('user_consent'))) {
+            return 'user_consent';
+        }
+        if ($this->db->tableExists('bf_user_consent')) {
+            return 'bf_user_consent';
+        }
+        return null;
     }
 
-    public function hasUserConsented($userId, $consentType)
+    public function recordUserConsent(
+        int $userId,
+        string $consentType,
+        string $version = '1.0',
+        ?string $ipAddress = null,
+        ?string $userAgent = null
+    ): bool {
+        $table = $this->resolveConsentTable();
+        if ($table === null) {
+            return false;
+        }
+
+        $now = date('Y-m-d H:i:s');
+        $data = [
+            'user_id'      => $userId,
+            'consent_type' => $consentType,
+            'consent_time' => $now,
+        ];
+
+        $fields = $this->db->getFieldNames($this->db->prefixTable($table));
+        if (in_array('version', $fields, true)) {
+            $data['version'] = $version;
+        }
+        if (in_array('ip_address', $fields, true) && $ipAddress !== null) {
+            $data['ip_address'] = $ipAddress;
+        }
+        if (in_array('user_agent', $fields, true) && $userAgent !== null) {
+            $data['user_agent'] = substr($userAgent, 0, 255);
+        }
+        if (in_array('created_at', $fields, true)) {
+            $data['created_at'] = $now;
+        }
+        if (in_array('updated_at', $fields, true)) {
+            $data['updated_at'] = $now;
+        }
+
+        return (bool) $this->db->table($table)->insert($data);
+    }
+
+    public function hasUserConsented(int $userId, string $consentType, ?string $minVersion = null): bool
     {
-        $result = $this->db->table('bf_user_consent')
-                           ->where('user_id', $userId)
-                           ->where('consent_type', $consentType)
-                           ->get()
-                           ->getRowArray();
-        return !empty($result);
+        $table = $this->resolveConsentTable();
+        if ($table === null) {
+            return false;
+        }
+
+        $query = $this->db->table($table)
+            ->where('user_id', $userId)
+            ->where('consent_type', $consentType);
+
+        if ($minVersion !== null) {
+            $fields = $this->db->getFieldNames($this->db->prefixTable($table));
+            if (in_array('version', $fields, true)) {
+                $query->where('version >=', $minVersion);
+            }
+        }
+
+        $result = $query->get()->getRowArray();
+
+        return ! empty($result);
+    }
+
+    public function getUserConsents(int $userId): array
+    {
+        $table = $this->resolveConsentTable();
+        if ($table === null) {
+            return [];
+        }
+
+        return $this->db->table($table)
+            ->where('user_id', $userId)
+            ->orderBy('id', 'DESC')
+            ->get()
+            ->getResultArray();
     }
 
     public function processDataDeletionRequest($userId)

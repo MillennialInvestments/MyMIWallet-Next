@@ -30,9 +30,9 @@ class AccountsController extends UserController
         $userId = (int) ($this->cuID ?? 0);
         $data = $this->commonData();
         $data['pageTitle'] = 'Prop Accounts';
-        $data['firms'] = $this->firms->orderBy('name', 'ASC')->findAll();
-        $data['ruleSets'] = $this->ruleSets->orderBy('name', 'ASC')->findAll();
-        $data['accounts'] = $this->accounts->where('user_id', $userId)->orderBy('id', 'DESC')->findAll();
+        $data['firms'] = $this->firms->orderBy('name', 'ASC')->findAll(100);
+        $data['ruleSets'] = $this->ruleSets->orderBy('name', 'ASC')->findAll(100);
+        $data['accounts'] = $this->accounts->where('user_id', $userId)->orderBy('id', 'DESC')->findAll(100);
 
         return $this->renderTheme('App\Modules\PropFirms\Views\accounts\index', $data);
     }
@@ -42,8 +42,8 @@ class AccountsController extends UserController
         return $this->response->setJSON([
             'status' => 'ok',
             'data' => [
-                'firms' => $this->firms->orderBy('name', 'ASC')->findAll(),
-                'rule_sets' => $this->ruleSets->orderBy('name', 'ASC')->findAll(),
+                'firms' => $this->firms->orderBy('name', 'ASC')->findAll(100),
+                'rule_sets' => $this->ruleSets->orderBy('name', 'ASC')->findAll(100),
                 'platforms' => ['tradovate', 'rithmic', 'ninjatrader', 'tradingview'],
                 'account_types' => ['eval', 'funded', 'swing', 'pa'],
             ],

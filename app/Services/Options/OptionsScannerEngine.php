@@ -108,7 +108,7 @@ class OptionsScannerEngine
         $results = [];
 
         foreach ($universe as $ticker) {
-            $candidate = $this->evaluateTicker($ticker, [
+            $evalParams = array_merge($options, [
                 'strategy' => $strategy,
                 'otm_offset_pct' => $otmOffsetPct,
                 'target_profit' => $targetProfit,
@@ -127,6 +127,7 @@ class OptionsScannerEngine
                 'expiry' => $expiry,
                 'now' => $now,
             ]);
+            $candidate = $this->evaluateTicker($ticker, $evalParams);
 
             if (! $dryRun && $this->candidateModel !== null) {
                 try {
@@ -143,11 +144,16 @@ class OptionsScannerEngine
 
         $qualified = array_filter($results, fn($r) => $r['scan_status'] === 'qualified');
 
+        $topRecommendation = (! empty($qualified) && ($qualified[array_key_first($qualified)]['ranking_score'] ?? 0) >= 70.0)
+            ? 'TRADE'
+            : 'NO TRADE';
+
         return [
             'scanned_at' => $now,
             'universe_count' => count($universe),
             'scanned_count' => count($results),
             'qualified_count' => count($qualified),
+            'recommendation' => $topRecommendation,
             'strategy' => $strategy,
             'target_balance_call' => $callTargetBalance,
             'target_balance_put' => $putTargetBalance,
@@ -244,11 +250,12 @@ class OptionsScannerEngine
         $avgIv = ($ivCall + $ivPut) / 2.0;
         $ivRvRatio = $realizedVol20d > 0 ? round($avgIv / $realizedVol20d, 4) : 1.0;
 
-        $spreadPct = 0.025; // 2.5% typical spread on liquid weekly strikes
+        $spreadPct = (float) ($params['spread_pct'] ?? 0.025); // 2.5% typical spread on liquid weekly strikes
 
         // Required price moves
         $combinedDebit = (float) $params['combined_debit'];
         $requiredExitValue = (float) $params['required_exit_value'];
+        $targetProfit = (float) ($params['target_profit'] ?? 200.0);
         $breakevenMove = $combinedDebit;
         $breakevenMovePct = $price > 0 ? round(($breakevenMove / $price) * 100, 4) : 0.0;
         $targetMove = $requiredExitValue;
@@ -280,31 +287,59 @@ class OptionsScannerEngine
                 'top_headline' => '',
             ];
 
-        // Composite Ranking Score (0 - 100)
-        $rankingScore = $this->calculateRankingScore([
+        // Composite Ranking Score (0 - 100) using 5-part research breakdown
+        $rankingBreakdown = $this->calculate5PartRankingScore([
             'reachability_score' => $reachabilityScore,
             'displacement_efficiency' => $displacementEfficiency,
             'turnover_efficiency' => $turnoverEfficiency,
             'rvol' => $rvol,
             'vol_accel_5m' => $volAccel5m,
             'range_expansion' => $rangeExpansionRatio,
-            'catalyst_boost' => $catalystData['catalyst_momentum_boost'] ?? 0.0,
+            'catalyst_detected' => (bool) ($catalystData['catalyst_detected'] ?? false),
+            'sentiment_score' => (float) ($catalystData['sentiment_score'] ?? 0.0),
+            'catalyst_boost' => (float) ($catalystData['catalyst_momentum_boost'] ?? 0.0),
+            'spread_pct' => $spreadPct,
+            'iv_rv_ratio' => $ivRvRatio,
+            'combined_debit' => $combinedDebit,
+            'target_profit' => $targetProfit,
         ]);
+        $rankingScore = $rankingBreakdown['total_score'];
 
-        // Screening decisions
+        // Screening decisions & exclusion codes
         $rejectionReason = null;
+        $exclusionCode = null;
         $status = 'qualified';
 
-        if ($reachabilityScore < 45.0) {
+        $maxSpreadPct = (float) ($params['max_spread_pct'] ?? 0.05);
+        $minScore = (float) ($params['min_score'] ?? 70.0);
+
+        if ($rvol < (float) $params['min_rvol']) {
             $status = 'rejected';
-            $rejectionReason = 'Insufficient 5-day movement capacity relative to required $3.90 exit target.';
-        } elseif ($rvol < (float) $params['min_rvol']) {
-            $status = 'rejected';
+            $exclusionCode = 'RVOL_INSUFFICIENT';
             $rejectionReason = sprintf('RVOL %.2f below required %.2f baseline.', $rvol, (float) $params['min_rvol']);
+        } elseif ($spreadPct > $maxSpreadPct) {
+            $status = 'rejected';
+            $exclusionCode = 'SPREAD_TOO_WIDE';
+            $rejectionReason = sprintf('Bid-ask spread %.2f%% exceeds maximum allowed %.2f%%.', $spreadPct * 100, $maxSpreadPct * 100);
         } elseif ($ivRvRatio > (float) $params['max_iv_rv']) {
             $status = 'rejected';
+            $exclusionCode = 'IV_RV_OVERPRICED';
             $rejectionReason = sprintf('IV/RV ratio %.2f exceeds max %.2f (options overpriced).', $ivRvRatio, (float) $params['max_iv_rv']);
+        } elseif ($reachabilityScore < 45.0) {
+            $status = 'rejected';
+            $exclusionCode = 'INSUFFICIENT_RANGE_CAPACITY';
+            $rejectionReason = 'Insufficient 5-day movement capacity relative to required exit target.';
+        } elseif (! empty($params['require_catalyst']) && empty($catalystData['catalyst_detected'])) {
+            $status = 'rejected';
+            $exclusionCode = 'NO_CATALYST';
+            $rejectionReason = 'No verifiable news or earnings catalyst detected.';
+        } elseif ($rankingScore < $minScore) {
+            $status = 'rejected';
+            $exclusionCode = 'SCORE_BELOW_THRESHOLD';
+            $rejectionReason = sprintf('Composite ranking score %.1f is below required %.1f threshold.', $rankingScore, $minScore);
         }
+
+        $recommendation = ($status === 'qualified' && $rankingScore >= $minScore) ? 'TRADE' : 'NO TRADE';
 
         return [
             'ticker' => $ticker,
@@ -347,6 +382,9 @@ class OptionsScannerEngine
             'spread_pct' => round($spreadPct, 4),
             'reachability_score' => round($reachabilityScore, 2),
             'ranking_score' => round($rankingScore, 2),
+            'ranking_breakdown' => $rankingBreakdown,
+            'recommendation' => $recommendation,
+            'exclusion_code' => $exclusionCode,
             'news_catalyst_detected' => $catalystData['catalyst_detected'] ?? false,
             'news_catalyst_type' => $catalystData['catalyst_type'] ?? 'none',
             'news_sentiment_label' => $catalystData['sentiment_label'] ?? 'Neutral',
@@ -357,6 +395,78 @@ class OptionsScannerEngine
             'rejection_reason' => $rejectionReason,
             'scanned_at' => $params['now'],
             'created_at' => $params['now'],
+        ];
+    }
+
+    /**
+     * Calculate 5-part research ranking score (0 - 100 points).
+     *
+     * Breakdown:
+     * - Technical setup: max 25 pts
+     * - Catalyst quality: max 20 pts
+     * - Execution liquidity: max 20 pts
+     * - Risk / reward: max 25 pts
+     * - Capital suitability: max 10 pts
+     */
+    public function calculate5PartRankingScore(array $data): array
+    {
+        $reachability = (float) ($data['reachability_score'] ?? 50.0);
+        $rvol = (float) ($data['rvol'] ?? 1.0);
+        $volAccel = (float) ($data['vol_accel_5m'] ?? 1.0);
+        $rangeExpansion = (float) ($data['range_expansion'] ?? 1.0);
+        $displacement = (float) ($data['displacement_efficiency'] ?? 0.35);
+        $catalystDetected = (bool) ($data['catalyst_detected'] ?? false);
+        $sentimentScore = (float) ($data['sentiment_score'] ?? 0.0);
+        $catalystBoost = (float) ($data['catalyst_boost'] ?? 0.0);
+        $spreadPct = (float) ($data['spread_pct'] ?? 0.025);
+        $ivRvRatio = (float) ($data['iv_rv_ratio'] ?? 1.0);
+        $combinedDebit = (float) ($data['combined_debit'] ?? 1.90);
+        $targetProfit = (float) ($data['target_profit'] ?? 200.0);
+
+        // 1. Technical Setup (max 25)
+        $dispPts = min(8.0, max(0.0, $displacement * 15.0));
+        $accelPts = min(8.0, max(0.0, ($volAccel - 0.8) * 10.0));
+        $rangePts = min(9.0, max(0.0, ($rangeExpansion - 0.6) * 12.0));
+        $technicalSetup = min(25.0, max(0.0, round($dispPts + $accelPts + $rangePts, 2)));
+
+        // 2. Catalyst Quality (max 20)
+        if ($catalystDetected) {
+            $catBase = 10.0;
+            $catSentiment = min(7.0, max(0.0, abs($sentimentScore) * 10.0));
+            $catBoostPts = min(3.0, max(0.0, $catalystBoost * 1.5));
+            $catalystQuality = min(20.0, max(0.0, round($catBase + $catSentiment + $catBoostPts, 2)));
+        } else {
+            $catalystQuality = 0.0;
+        }
+
+        // 3. Execution Liquidity (max 20)
+        $rvolPts = min(10.0, max(0.0, ($rvol / 1.8) * 10.0));
+        $spreadPts = min(10.0, max(0.0, (1.0 - ($spreadPct / 0.05)) * 10.0));
+        $executionLiquidity = min(20.0, max(0.0, round($rvolPts + $spreadPts, 2)));
+
+        // 4. Risk / Reward (max 25)
+        $reachPts = min(18.0, max(0.0, ($reachability / 100.0) * 18.0));
+        $ivRvPts = min(7.0, max(0.0, (1.6 - $ivRvRatio) * 7.0));
+        $riskReward = min(25.0, max(0.0, round($reachPts + $ivRvPts, 2)));
+
+        // 5. Capital Suitability (max 10)
+        $debitPts = min(6.0, max(0.0, (3.50 - $combinedDebit) * 3.0));
+        $profitMultiple = $combinedDebit > 0 ? ($targetProfit / ($combinedDebit * 100.0)) : 1.0;
+        $profitPts = min(4.0, max(0.0, $profitMultiple * 3.5));
+        $capitalSuitability = min(10.0, max(0.0, round($debitPts + $profitPts, 2)));
+
+        $totalScore = min(100.0, max(5.0, round(
+            $technicalSetup + $catalystQuality + $executionLiquidity + $riskReward + $capitalSuitability,
+            2
+        )));
+
+        return [
+            'technical_setup' => $technicalSetup,
+            'catalyst_quality' => $catalystQuality,
+            'execution_liquidity' => $executionLiquidity,
+            'risk_reward' => $riskReward,
+            'capital_suitability' => $capitalSuitability,
+            'total_score' => $totalScore,
         ];
     }
 

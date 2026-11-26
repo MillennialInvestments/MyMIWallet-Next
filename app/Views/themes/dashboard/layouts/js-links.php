@@ -19,6 +19,15 @@ $subViewData = $subViewData ?? [];
 
 <?php // 2) Bootstrap bundle & core helpers (can stay deferred) ?>
 <script src="<?= base_url('assets/vendor/bootstrap5/bootstrap.bundle.min.js'); ?>" <?= $scriptNonceAttr ?>></script>
+<script <?= $scriptNonceAttr ?>>
+  // Universal Bootstrap 5 modal reparenting guard:
+  // Moving .modal to document.body ensures .modal-backdrop never renders on top of the dialog
+  document.addEventListener('show.bs.modal', function(e) {
+    if (e.target && e.target.classList && e.target.classList.contains('modal') && e.target.parentElement !== document.body) {
+      document.body.appendChild(e.target);
+    }
+  });
+</script>
 
 <?php // 3) Theme base (defines NioApp) BEFORE any code that requires it ?>
 <script src="<?= base_url('assets/js/scripts.js'); ?>" <?= $scriptNonceAttr ?> defer></script>

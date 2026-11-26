@@ -49,10 +49,14 @@ interface TransferStore
     public function revokeTransfer(string $transferId, int $senderUserId, int $now): int;
 
     /** @return list<string> transfer ids expired or revoked whose ciphertext should be removed */
-    public function purgeable(int $now): array;
+    /** Up to $limit purgeable transfer ids greater than $after, in id order (page with the last id). */
+    public function purgeable(int $now, string $after = '', int $limit = 1000): array;
 
     public function markPurged(string $transferId, int $now): void;
 
     /** Counts only, for operators and the AIOps MCP. */
     public function stats(int $now): array;
+
+    /** Sender and recipient wallets of one transfer (any state), for legal-hold checks. */
+    public function transferParties(string $transferId): ?array;
 }

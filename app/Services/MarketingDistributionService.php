@@ -94,7 +94,7 @@ class MarketingDistributionService
         $targets = $this->targetModel
             ->where('generated_content_id', $generatedContentId)
             ->whereIn('status', self::PROCESSABLE_STATUSES)
-            ->findAll();
+            ->limit(100)->findAll();
 
         $targetResults = [];
         foreach ($targets as $target) {
@@ -186,13 +186,13 @@ class MarketingDistributionService
         return $this->targetModel
             ->where('generated_content_id', $generatedContentId)
             ->orderBy('id', 'ASC')
-            ->findAll();
+            ->limit(100)->findAll();
     }
 
     /** @return array<string,mixed> */
     public function getFailedRetryableSummary(): array
     {
-        $rows = $this->targetModel->whereIn('status', ['failed_retryable', 'failed_permanent', 'dead_letter'])->findAll();
+        $rows = $this->targetModel->whereIn('status', ['failed_retryable', 'failed_permanent', 'dead_letter'])->limit(1000)->findAll();
         $maxRetries = max(0, (int) $this->distributionConfig->maxRetries);
         $retryable = array_filter($rows, static fn(array $row): bool => (int) ($row['retry_count'] ?? 0) < $maxRetries);
 
@@ -272,10 +272,9 @@ class MarketingDistributionService
             ->where("channel", "discord")
             ->where("destination", "community_news")
             ->where("status", "pending")
-            ->orderBy("id", "ASC")
-            ->limit(max(1, $limit));
+            ->orderBy("id", "ASC");
 
-        $rows = $builder->findAll();
+        $rows = $builder->limit(max(1, $limit))->findAll();
         $ids = array_map(static fn(array $row): int => (int) ($row["id"] ?? 0), $rows);
         $ids = array_values(array_filter($ids, static fn(int $id): bool => $id > 0));
 
@@ -614,7 +613,7 @@ class MarketingDistributionService
 
         $rows = $this->targetModel
             ->where('generated_content_id', $generatedContentId)
-            ->findAll();
+            ->limit(100)->findAll();
 
         if ($rows === []) {
             return false;
@@ -642,7 +641,7 @@ class MarketingDistributionService
 
     private function updateGeneratedContentStatus(int $generatedContentId): array
     {
-        $rows = $this->targetModel->where('generated_content_id', $generatedContentId)->findAll();
+        $rows = $this->targetModel->where('generated_content_id', $generatedContentId)->limit(100)->findAll();
         if ($rows === []) {
             return ['distribution_status' => 'pending', 'status' => 'generated'];
         }

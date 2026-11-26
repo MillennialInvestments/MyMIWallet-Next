@@ -27,15 +27,15 @@ class ProjectsController extends BaseUserController
 
     public function index()
     {
+        $this->data['pageTitle'] = 'Projects | MyMI Wallet | The Future of Finance';
         $projects = cache('projects_list');
         if (! is_array($projects)) {
             $projects = $this->projectsModel->getActiveProjectsWithStats();
             cache()->save('projects_list', $projects, 300);
         }
 
-        return $this->renderTheme('App\\Modules\\User\\Views\\Projects\\index', [
-            'projects' => $projects,
-        ]);
+        $this->data['projects'] = $projects;
+        return $this->renderTheme('App\\Modules\\User\\Views\\Projects\\index', $this->data);
     }
 
     public function view(int $projectId)

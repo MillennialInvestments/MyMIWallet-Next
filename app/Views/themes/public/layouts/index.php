@@ -22,13 +22,14 @@ $subViewData['userAgent'] = $userAgent;
 echo view('themes/public/layouts/header', $subViewData);
 ?>
     <body class="nk-body npc-landing bg-white intro" data-base-url="<?= esc(rtrim(site_url('/'), '/') . '/', 'attr') ?>">
+        <a href="#main-content" class="skip-link">Skip to main content</a>
         <?php //echo view('themes/public/layouts/data_distribution', $subViewData); ?>
         <div class="nk-app-root">
             <div class="nk-main">
                 <div class="nk-wrap ml-0">
                     <?php echo view('themes/public/layouts/_sitenav', $subViewData); ?>
-                    <div class="nk-content content-wrapper mt-0 p-0">
-                        <div class="pt-5 pt-lg-5 mb-3">
+                    <main id="main-content" class="nk-content content-wrapper mt-0 p-0" role="main">
+                        <div class="pt-3 pt-lg-1 mb-3">
                             <div class="row justify-content-center">
                                 <div class="col-12 pr-md-0 pt-xl-0">
                                     <?php
@@ -40,7 +41,7 @@ echo view('themes/public/layouts/header', $subViewData);
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </main>
                     <?php
                     // Assume $viewFileData is passed from the controller
                     echo view('themes/public/layouts/footer', $subViewData); ?>
