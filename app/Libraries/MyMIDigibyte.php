@@ -103,18 +103,13 @@ class MyMIDigibyte implements CryptoCurrencyInterface {
         return $keyPair->verify($transaction, $signature);
     }
 
+    /** Returned a made-up transaction id without touching DigiByte; refused instead. */
     public function sendAsset($privateKey, $fromAddress, $toAddress, $assetId, $amount) {
-        $transaction = [
-            'operation' => 'sendAsset',
-            'from' => $fromAddress,
-            'to' => $toAddress,
-            'assetId' => $assetId,
-            'amount' => $amount
+        return [
+            'status'  => 'error',
+            'message' => 'DigiByte sends are not available.',
+            'reason'  => 'not_implemented',
         ];
-        $transactionJson = json_encode($transaction);
-        $signature = $this->signTransaction($transactionJson, $privateKey);
-        $transaction['signature'] = $signature;
-        return 'Transaction ID: ' . hash('sha256', $transactionJson);
     }
 
     public function getTransactionStatus($transactionId) {

@@ -30,6 +30,11 @@ class SecureTransfer extends BaseConfig
      * The balance check itself is wired separately (see docs/secure-transfer).
      */
     public int $minMymiCoinBalance = 0;
+    /**
+     * WalletConnect (Reown) project ID for "Connect with phone wallet" (QR). Public,
+     * not a secret. Empty = the QR button is hidden.
+     */
+    public string $walletConnectProjectId = '';
 
     public function __construct()
     {
@@ -37,6 +42,7 @@ class SecureTransfer extends BaseConfig
         $this->enabled = filter_var(env('SECURE_TRANSFER_ENABLED', $this->enabled), FILTER_VALIDATE_BOOL);
         $this->domain = (string) env('SECURE_TRANSFER_DOMAIN', $this->domain);
         $this->maxBytes = (int) env('SECURE_TRANSFER_MAX_BYTES', $this->maxBytes);
+        $this->walletConnectProjectId = trim((string) env('SECURE_TRANSFER_WC_PROJECT_ID', $this->walletConnectProjectId));
         $this->storagePath = (string) env('SECURE_TRANSFER_STORAGE', $this->storagePath !== '' ? $this->storagePath : WRITEPATH . 'secure_transfer');
     }
 }

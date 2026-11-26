@@ -7,10 +7,9 @@
 
 set -euo pipefail
 
-ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 if [ -z "$ROOT" ]; then
-    echo "STOP: repository root could not be resolved"
-    exit 1
+    ROOT="$(pwd)"
 fi
 cd "$ROOT"
 
@@ -38,16 +37,16 @@ FAIL_COUNT="$(echo "$SCAN_OUT" | awk '/FAIL/{print $2}' | head -n1)"
 
 echo
 echo "--- 4. Assertion Checks ---"
-echo "PASS Count: ${PASS_COUNT:-0} (Required: >= 293)"
-echo "FAIL Count: ${FAIL_COUNT:-999} (Required: <= 22)"
+echo "PASS Count: ${PASS_COUNT:-0} (Required: >= 317)"
+echo "FAIL Count: ${FAIL_COUNT:-999} (Required: <= 0)"
 
-if [ "${PASS_COUNT:-0}" -lt 293 ]; then
-    echo "ERROR: PASS count ${PASS_COUNT:-0} is below required threshold 293" >&2
+if [ "${PASS_COUNT:-0}" -lt 317 ]; then
+    echo "ERROR: PASS count ${PASS_COUNT:-0} is below required threshold 317" >&2
     exit 1
 fi
 
-if [ "${FAIL_COUNT:-999}" -gt 22 ]; then
-    echo "ERROR: FAIL count ${FAIL_COUNT:-999} exceeds maximum threshold 22" >&2
+if [ "${FAIL_COUNT:-999}" -gt 0 ]; then
+    echo "ERROR: FAIL count ${FAIL_COUNT:-999} exceeds maximum threshold 0" >&2
     exit 1
 fi
 

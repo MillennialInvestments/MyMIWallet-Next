@@ -3,6 +3,8 @@
 // $nonce and $csp are injected by BaseController; fall back safely if missing.
 $nonce = $nonce ?? ['style' => '', 'script' => ''];
 $csp   = $csp   ?? ['style' => '', 'script' => ''];
+$needsMarketCharts = $needsMarketCharts ?? true;
+$useSummernote     = $useSummernote ?? false;
 
 $cspNonce = $cspNonce ?? $csp['script'] ?? '';
 $scriptNonceValue = $cspNonce;
@@ -14,14 +16,23 @@ $scriptNonceAttr  = '';
   window.__CSP_NONCE__ = window.__CSP_NONCE__ || <?= json_encode($scriptNonceValue) ?>;
 </script>
 
-<!-- Core deps (global) -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+<!-- Core deps (jQuery first, non-deferred) -->
+<script src="<?= base_url('assets/vendor/jquery/jquery-3.6.0.min.js'); ?>"></script>
 
-<!-- Plugins you were already using globally -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js" defer></script>
+<!-- Bootstrap 5 bundle (deferred) -->
+<script src="<?= base_url('assets/vendor/bootstrap5/bootstrap.bundle.min.js'); ?>"></script>
 
-<!-- DataTables 1.11.5 (current production set) -->
+<!-- Theme base (defines NioApp) -->
+<script src="<?= base_url('assets/js/scripts.js'); ?>" defer></script>
+
+<!-- UI vendors that depend on jQuery -->
+<script src="<?= base_url('assets/vendor/bootstrap-select/bootstrap-select.min.js'); ?>" defer></script>
+<script src="<?= base_url('assets/vendor/select2/js/select2.min.js'); ?>" defer></script>
+<script src="<?= base_url('assets/vendor/jquery-validation/jquery.validate.min.js'); ?>" defer></script>
+<script src="<?= base_url('assets/vendor/jquery-knob/jquery.knob.min.js'); ?>" defer></script>
+<script src="<?= base_url('assets/vendor/flatpickr/js/flatpickr.min.js'); ?>" defer></script>
+
+<!-- DataTables -->
 <script src="https://cdn.jsdelivr.net/npm/datatables.net@1.11.5/js/jquery.dataTables.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/datatables.net-bs5@1.11.5/js/dataTables.bootstrap5.min.js" defer></script>
 <?php
@@ -30,35 +41,7 @@ $dataTablesHelperVersion = is_file($dataTablesHelperPath) ? filemtime($dataTable
 ?>
 <script src="<?= base_url('assets/js/datatables-helper.js') . '?v=' . $dataTablesHelperVersion; ?>" defer></script>
 
-<!-- Chart.js (v2.1.2 per your asset list) -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.1.2/dist/Chart.min.js" defer></script>
-
 <!-- Vite application bundle -->
-<?= vite_tags('app', $scriptNonceValue); ?>
-
-<!-- AOS (already present in your file) -->
-<?php
-$needsMarketCharts = $needsMarketCharts ?? true;
-$useSummernote     = $useSummernote ?? false;
-
-// 1) jQuery FIRST (NO defer)
-?>
-<script src="<?= base_url('assets/vendor/jquery/jquery-3.6.0.min.js'); ?>"></script>
-
-<?php // 2) Bootstrap bundle & core helpers (can stay deferred) ?>
-<!-- <script src="<?= base_url('assets/vendor/bootstrap5/bootstrap.bundle.min.js'); ?>" <?= $scriptNonceAttr ?>></script> -->
-
-<?php // 3) Theme base (defines NioApp) BEFORE any code that requires it ?>
-<script src="<?= base_url('assets/js/scripts.js'); ?>" defer></script>
-
-<?php // 4) Form/UI vendors that depend on jQuery (safe deferred after jQuery is non-deferred) ?>
-<script src="<?= base_url('assets/vendor/bootstrap-select/bootstrap-select.min.js'); ?>" defer></script>
-<script src="<?= base_url('assets/vendor/select2/js/select2.min.js'); ?>" defer></script>
-<script src="<?= base_url('assets/vendor/jquery-validation/jquery.validate.min.js'); ?>" defer></script>
-<script src="<?= base_url('assets/vendor/jquery-knob/jquery.knob.min.js'); ?>" defer></script>
-<script src="<?= base_url('assets/vendor/flatpickr/js/flatpickr.min.js'); ?>" defer></script>
-
-<?php // 5) Vite entry (if you actually use Vite; otherwise remove this line) ?>
 <?php if (function_exists('vite_tags')): ?>
   <?= vite_tags('app', $scriptNonceValue ?: null); ?>
 <?php endif; ?>
