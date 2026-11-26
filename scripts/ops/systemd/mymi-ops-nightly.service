@@ -1,0 +1,15 @@
+[Unit]
+Description=MyMI Wallet nightly ops jobs (route smoke test, security headers scan)
+After=mysql.service
+
+[Service]
+Type=oneshot
+User=www-data
+Group=www-data
+WorkingDirectory=/apps/TBI/www/mymiwallet/current
+# The first job may fail without skipping the second; each job's result is in writable/ops/last-run/.
+ExecStart=-/usr/bin/php spark ops:job:run ops.routes.smoke_test
+ExecStart=/usr/bin/php spark ops:job:run ops.security.headers_scan
+Nice=10
+IOSchedulingClass=idle
+TimeoutStartSec=20min

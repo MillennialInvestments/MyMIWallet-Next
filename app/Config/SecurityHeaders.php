@@ -26,9 +26,11 @@ class SecurityHeaders extends BaseConfig
                               'https://stackpath.bootstrapcdn.com', 'https://cdn.datatables.net', 'https://unpkg.com'],
         'font-src'        => ["'self'", 'data:', 'https://fonts.gstatic.com', 'https://cdn.jsdelivr.net', 'https://cdnjs.cloudflare.com'],
         'img-src'         => ["'self'", 'data:', 'blob:', 'https:'],
-        'connect-src'     => ["'self'", 'https://*.plaid.com', 'https://www.google-analytics.com', 'https://*.clarity.ms', 'wss://*.tawk.to', 'https://*.tawk.to'],
+        'connect-src'     => ["'self'", 'https://*.plaid.com', 'https://www.google-analytics.com', 'https://*.clarity.ms', 'wss://*.tawk.to', 'https://*.tawk.to',
+                              // WalletConnect relay for Secure Transfer phone-wallet connect
+                              'wss://relay.walletconnect.org', 'wss://relay.walletconnect.com', 'https://*.walletconnect.org', 'https://*.walletconnect.com'],
         'frame-src'       => ["'self'", 'https://cdn.plaid.com', 'https://www.youtube.com', 'https://s.tradingview.com', 'https://www.tradingview.com',
-                              'https://www.google.com', 'https://tawk.to'],
+                              'https://www.google.com', 'https://tawk.to', 'https://verify.walletconnect.org', 'https://verify.walletconnect.com'],
         'object-src'      => ["'none'"],
         'base-uri'        => ["'self'"],
         'form-action'     => ["'self'"],

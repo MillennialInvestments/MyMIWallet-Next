@@ -112,6 +112,10 @@
     max-width: 100% !important;
 }
 
+.modal {
+    z-index: 2000 !important;
+}
+
 .modal-backdrop {
     position: fixed !important;
     inset: 0 !important;

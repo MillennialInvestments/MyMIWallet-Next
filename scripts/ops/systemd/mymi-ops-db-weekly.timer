@@ -1,0 +1,10 @@
+[Unit]
+Description=Run the MyMI Wallet ops table maintenance Sundays 03:00 Chicago (opt-in)
+
+[Timer]
+OnCalendar=Sun *-*-* 03:00:00 America/Chicago
+RandomizedDelaySec=10m
+Persistent=true
+
+[Install]
+WantedBy=timers.target

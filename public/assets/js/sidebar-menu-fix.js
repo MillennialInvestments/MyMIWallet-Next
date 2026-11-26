@@ -47,4 +47,30 @@
     },
     true // capture=true helps beat other bubbling handlers
   );
+
+  // On page load, sanitize active submenu state so Account (and other menus) don't erroneously stay expanded
+  function sanitizeActiveSubmenus() {
+    var path = window.location.pathname.replace(/\/$/, '') || '/';
+    var isAccountPath = path.toLowerCase().indexOf('/account') === 0;
+
+    document.querySelectorAll('.nk-menu-item.has-sub').forEach(function (item) {
+      var textEl = item.querySelector(':scope > .nk-menu-link .nk-menu-text');
+      var text = textEl ? textEl.textContent.trim().toLowerCase() : '';
+      if (text === 'account' && !isAccountPath) {
+        item.classList.remove('active', 'current-page');
+        var sub = item.querySelector('.nk-menu-sub');
+        if (sub) {
+          sub.style.display = 'none';
+        }
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', sanitizeActiveSubmenus);
+  } else {
+    sanitizeActiveSubmenus();
+  }
+  // Re-run shortly after DashLite's CurrentLink runs to ensure it doesn't reopen
+  window.setTimeout(sanitizeActiveSubmenus, 250);
 })();

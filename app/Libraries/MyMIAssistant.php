@@ -57,6 +57,9 @@ class MyMIAssistant
         $scopes    = $this->normalizeScopes($link['scopes_json'] ?? null);
         $session   = $this->ensureSession($sessionKey, $userId, $discordUserId, $channelContext, $link);
         $context   = $this->buildContext($userId, $scopes);
+        if (!empty($payload['ticker_intelligence'])) {
+            $context['ticker_intelligence'] = $payload['ticker_intelligence'];
+        }
 
         if (!empty($context)) {
             $this->sessionModel->update($session['id'], ['context_json' => json_encode($context)]);
@@ -287,7 +290,16 @@ class MyMIAssistant
             }
         }
 
-        $content = 'Here\'s a quick response based on your MyMI data:' . $budgetSummary . $alertsSummary;
+        $tickerSummary = '';
+        if (!empty($prompt['context']['ticker_intelligence'])) {
+            $tickerService = new \App\Services\AI\TickerIntelligenceService();
+            $formatted = $tickerService->formatContextSummary($prompt['context']['ticker_intelligence']);
+            if ($formatted !== '') {
+                $tickerSummary = ' Market Intelligence: ' . $formatted;
+            }
+        }
+
+        $content = 'Here\'s a quick response based on your MyMI data:' . $budgetSummary . $alertsSummary . $tickerSummary;
         $content .= ' You asked: ' . ($prompt['message'] ?? '');
 
         return [

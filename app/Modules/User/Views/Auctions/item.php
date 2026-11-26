@@ -243,6 +243,11 @@
 
         topUpForm.addEventListener('submit', async (event) => {
             event.preventDefault();
+            // Top-ups are paid with USDC on Solana (verified on-chain); the old
+            // unverified top-up endpoint is closed.
+            const goldCents = new FormData(topUpForm).get('amount_cents') || '';
+            window.location.href = '<?= site_url('Pay/Solana') ?>?purpose=auction_topup&lot=' + encodeURIComponent(lotId) + '&gold_cents=' + encodeURIComponent(goldCents);
+            return;
             topUpStatus.className = 'small text-muted';
             topUpStatus.textContent = 'Processing...';
             const formData = new FormData(topUpForm);

@@ -76,14 +76,8 @@ $nextMonthMonthly    = $nextMonthsExpense;
         <div class="nk-order-ovwg">
             <div class="row align-end g-4">
                 <div class="col-12">
-                    <div class="nk-order-ovwg-ck" style="height:100%">
-                        <!-- <div id='budget-data' hidden><?php // echo json_encode($userBudgetRecords, JSON_HEX_TAG); ?></div>
-                        <div id='credit-data' hidden><?php // echo json_encode($currentBalances, JSON_HEX_TAG); ?></div>
-                        <div id='available-data' hidden><?php // echo json_encode($availableBalances, JSON_HEX_TAG); ?></div>
-                        <div id='repayment-summary' hidden><?php // echo json_encode($repaymentSummary, JSON_HEX_TAG); ?></div> -->
-                        <div class="h-100">
-                            <canvas class="h-100" id="report-chart"></canvas>
-                        </div>
+                    <div class="nk-order-ovwg-ck" style="min-height: 300px; height: 320px; position: relative;">
+                        <canvas id="report-chart" style="width: 100%; height: 300px;"></canvas>
                     </div>
                 </div>
             </div>
@@ -228,7 +222,6 @@ window.budgetDashboardData = <?= json_encode($budgetChartPayload, JSON_HEX_TAG |
 
 <script <?= $nonce['script'] ?? '' ?>>
 document.addEventListener('DOMContentLoaded', function () {
-  // Ensure Chart.js is available (layout should include it; this is a fallback)
   function ensureChart(cb) {
     if (window.Chart) return cb();
     var s = document.createElement('script');
@@ -239,9 +232,10 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   ensureChart(function () {
-    // ====== YOUR ORIGINAL CODE STARTS HERE ======
-    // Shared state object
-    // Shared state object
+    const canvas = document.getElementById('report-chart');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
     const state = {
         budgetData: [],
         creditData: [],
@@ -249,251 +243,76 @@ document.addEventListener('DOMContentLoaded', function () {
         repaymentSummary: []
     };
 
-    document.addEventListener('budget:data-loaded', function (event) {
-        const payload = event.detail || window.budgetDashboardData || {};
-
-        state.budgetData = Array.isArray(payload.budgetData) ? payload.budgetData : [];
-        state.creditData = Array.isArray(payload.creditData) ? payload.creditData : [];
-        state.availableData = Array.isArray(payload.availableData) ? payload.availableData : [];
-        state.repaymentSummary = Array.isArray(payload.repaymentSummary) ? payload.repaymentSummary : [];
-
-        updateChartData();  
-    });
-
-    document.addEventListener('budget:data-loaded', function (event) {
-        if (typeof updateChartData === 'function') {
-            updateChartData(event.detail || window.budgetDashboardData || null);
-        }
-    });
-
-    const isValidRecord = (r) =>
-      r && r.account_type && r.year && r.month && r.day && r.net_amount !== undefined;
-
-    const getMonthLabels = (start, end, showYears = true) => {
-      const MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-      let labels = [], m = start.month, y = start.year;
-      while (y < end.year || (y === end.year && m <= end.month)) {
-        labels.push(showYears ? `${MONTHS[m-1]} ${y}` : MONTHS[m-1]);
-        m++; if (m > 12) { m = 1; y++; }
-      }
-      return labels;
-    };
-
-    const extractData = (type, data, start, end) => {
-      const result = new Array(getMonthLabels(start, end, false).length).fill(0);
-      data.forEach(record => {
-        const recordDate = new Date(record.year, record.month - 1, record.day);
-        if (record.account_type === type &&
-            recordDate >= new Date(start.year, start.month - 1) &&
-            recordDate <= new Date(end.year, end.month - 1)) {
-          const idx = (record.year - start.year) * 12 + (record.month - start.month);
-          if (idx >= 0 && idx < result.length) result[idx] += parseFloat(record.net_amount) || 0;
-        }
-      });
-      return result;
-    };
-
-    const calculateSurplus           = (expenses, incomes) => incomes.map((v,i)=>(v||0)-(expenses[i]||0));
-    const calculateCumulativeSurplus = (surpluses) => {
-      const cumulative = []; surpluses.reduce((a,v) => { const c=a+v; cumulative.push(c); return c; }, 0); return cumulative;
-    };
-    const calculateSurplusColors     = (surpluses) => surpluses.map(v => (v >= 0 ? '#1ee0ac' : '#e85347'));
-
-    const adjustMonths = (date, months) => { const d=new Date(date); d.setMonth(d.getMonth()+months); return d; };
-    const formatDate   = (date) => ({ year: date.getFullYear(), month: date.getMonth() + 1 });
-
-    const getSelectedValue = (selector) => {
-      const el = document.querySelector(`${selector} .option.active`);
-      return el ? parseInt(el.dataset.value, 10) : null;
-    };
-
-    const canvas = document.getElementById('report-chart');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-
-    const chart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: [],
-        datasets: [
-          { type: 'line', label: 'Overall', data: [], borderColor: '#3E61BC', borderWidth: 3 },
-          { type: 'bar',  label: 'Income',  data: [], backgroundColor: '#1ee0ac', borderWidth: 1 },
-          { type: 'bar',  label: 'Expenses',data: [], backgroundColor: '#e85347', borderWidth: 1 },
-          {
-            type: 'line',
-            label: 'Cumulative Surplus',
-            data: [],
-            borderColor: [],
-            borderWidth: 3,
-            pointBackgroundColor: [],
-            pointBorderColor: '#000',
-            pointBorderWidth: 2,
-            tension: 0.4,
-            fill: false
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            display: true,
-            position: 'bottom',
-            onClick: function (e, legendItem) {
-              const idx = legendItem.datasetIndex, ci = e.chart, meta = ci.getDatasetMeta(idx);
-              meta.hidden = meta.hidden === null ? !ci.data.datasets[idx].hidden : null; ci.update();
-            }
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: { callback: (value) => '$' + Number(value).toLocaleString() }
-          }
-        }
-      }
-    });
-
-    const scheduleChartUpdate = (() => {
-      let frame = null;
-      return () => {
-        if (frame !== null) {
-          cancelAnimationFrame(frame);
-        }
-        frame = requestAnimationFrame(() => {
-          frame = null;
-          chart.update();
-        });
-      };
-    })();
-
-    function updateChartData(payload = null) {
-      const budgetPayload = payload || window.budgetDashboardData || {};
-
-      const budgetData = budgetPayload.budgetData || [];
-      const creditData = budgetPayload.creditData || [];
-      const availableData = budgetPayload.availableData || [];
-      const repaymentSummary = budgetPayload.repaymentSummary || [];
-
-      const cleanData   = state.budgetData.filter(isValidRecord);
-      const lowerAmount = getSelectedValue('#chart-lower-options') || -1;
-      const upperAmount = getSelectedValue('#chart-upper-options') || 12;
-
-      const startDate = formatDate(adjustMonths(new Date(), lowerAmount));
-      const endDate   = formatDate(adjustMonths(new Date(), upperAmount));
-
-      const incomes   = extractData('Income',  cleanData, startDate, endDate);
-      const expenses  = extractData('Expense', cleanData, startDate, endDate);
-      const surplus   = calculateSurplus(expenses, incomes);
-      const cum       = calculateCumulativeSurplus(surplus);
-      const colors    = calculateSurplusColors(cum);
-
-      chart.data.labels                 = getMonthLabels(startDate, endDate, true);
-      chart.data.datasets[0].data       = surplus;
-      chart.data.datasets[1].data       = incomes;
-      chart.data.datasets[2].data       = expenses;
-      chart.data.datasets[3].data       = cum;
-      chart.data.datasets[3].borderColor= colors;
-      chart.data.datasets[3].pointBackgroundColor = colors;
-      scheduleChartUpdate();
-    };
-
-    const initializeDropdown = (selector, callback) => {
-      const options = document.querySelectorAll(`${selector} .option`);
-      options.forEach(option => {
-        option.addEventListener('click', function () {
-          options.forEach(opt => opt.classList.remove('active'));
-          this.classList.add('active');
-          callback();
-        }, { passive: true });
-      });
-    };
-
-    const setDefaultDropdown = () => {
-      document.querySelectorAll('#chart-lower-options .option').forEach(o => {
-        o.classList.remove('active'); if (parseInt(o.dataset.value, 10) === -1) o.classList.add('active');
-      });
-      document.querySelectorAll('#chart-upper-options .option').forEach(o => {
-        o.classList.remove('active'); if (parseInt(o.dataset.value, 10) === 0)  o.classList.add('active');
-      });
-    };
-
-    initializeDropdown('#chart-lower-options', updateChartData);
-    initializeDropdown('#chart-upper-options', updateChartData);
-    setDefaultDropdown();
-
-    if (window.budgetDashboardData) {
-        const payload = window.budgetDashboardData;
-
-        state.budgetData = Array.isArray(payload.budgetData) ? payload.budgetData : [];
-        state.creditData = Array.isArray(payload.creditData) ? payload.creditData : [];
-        state.availableData = Array.isArray(payload.availableData) ? payload.availableData : [];
-        state.repaymentSummary = Array.isArray(payload.repaymentSummary) ? payload.repaymentSummary : [];
-
-        updateChartData();
+    function extractRecords(data) {
+        if (Array.isArray(data)) return data;
+        if (data && Array.isArray(data.records)) return data.records;
+        return [];
     }
-    // ====== YOUR ORIGINAL CODE ENDS HERE ======
-  });
-});
-</script>
 
+    const parseRecord = (r) => {
+        if (!r) return null;
+        let year = parseInt(r.year, 10);
+        let month = parseInt(r.month, 10);
+        let day = parseInt(r.day || 1, 10);
 
-<!-- <script <?= $nonce['script'] ?? '' ?>>
-document.addEventListener('DOMContentLoaded', function () {
-    // Utility to safely parse JSON from DOM elements
-    const getJsonContent = (selector, defaultValue = '[]') => {
-        const element = document.querySelector(selector);
-        if (element) {
-            try {
-                return JSON.parse(element.textContent || defaultValue);
-            } catch (error) {
-                console.error(`Error parsing JSON from selector ${selector}:`, error);
-                return JSON.parse(defaultValue);
+        if (isNaN(year) || isNaN(month)) {
+            const dateStr = r.designated_date || r.paid_date || r.date || r.due_date || r.submitted_on;
+            if (dateStr) {
+                const parts = String(dateStr).split(/[-/]/);
+                if (parts.length >= 2) {
+                    year = parseInt(parts[0], 10);
+                    month = parseInt(parts[1], 10);
+                    day = parts[2] ? parseInt(parts[2], 10) : 1;
+                }
             }
         }
-        return JSON.parse(defaultValue);
+
+        if (isNaN(year) || isNaN(month)) return null;
+
+        const rawType = (r.account_type || r.type || '').toString().toLowerCase();
+        const type = rawType.includes('income') ? 'income' : 'expense';
+        const amount = parseFloat(r.net_amount ?? r.gross_amount ?? r.amount ?? 0);
+
+        return {
+            year,
+            month,
+            day: isNaN(day) ? 1 : day,
+            type,
+            amount: isNaN(amount) ? 0 : amount,
+            name: r.name || ''
+        };
     };
 
-    const budgetData = getJsonContent("#budget-data");
-    console.log("Loaded Budget Data:", budgetData);
-
-    // Helper function to generate month labels
     const getMonthLabels = (start, end, showYears = true) => {
-        const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-        let labels = [];
-        let currentMonth = start.month;
-        let currentYear = start.year;
-
-        while (currentYear < end.year || (currentYear === end.year && currentMonth <= end.month)) {
-            labels.push(showYears ? `${MONTHS[currentMonth - 1]} ${currentYear}` : MONTHS[currentMonth - 1]);
-            currentMonth++;
-            if (currentMonth > 12) {
-                currentMonth = 1;
-                currentYear++;
-            }
+        const MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+        let labels = [], m = start.month, y = start.year;
+        while (y < end.year || (y === end.year && m <= end.month)) {
+            labels.push(showYears ? `${MONTHS[m-1]} ${y}` : MONTHS[m-1]);
+            m++;
+            if (m > 12) { m = 1; y++; }
         }
         return labels;
     };
 
-    const extractData = (type, data, start, end) => {
-        if (!Array.isArray(data)) {
-            console.error('Error: extractData expects an array but received:', data);
-            return new Array(getMonthLabels(start, end, false).length).fill(0);
-        }
+    const extractData = (targetType, rawRecords, start, end) => {
+        const monthLabels = getMonthLabels(start, end, false);
+        const result = new Array(monthLabels.length).fill(0);
+        const target = targetType.toLowerCase();
 
-        const result = new Array(getMonthLabels(start, end, false).length).fill(0);
+        rawRecords.forEach(r => {
+            const parsed = parseRecord(r);
+            if (!parsed) return;
 
-        data.forEach(record => {
-            if (!record || !record.account_type || !record.year || !record.month || !record.day) {
-                console.warn('Skipping invalid record:', record);
-                return;
-            }
+            if (parsed.type === target) {
+                const recordDate = new Date(parsed.year, parsed.month - 1, parsed.day);
+                const startDate = new Date(start.year, start.month - 1, 1, 0, 0, 0);
+                const endDate = new Date(end.year, end.month, 0, 23, 59, 59, 999);
 
-            const recordDate = new Date(record.year, record.month - 1, record.day);
-            if (record.account_type === type && recordDate >= new Date(start.year, start.month - 1) && recordDate <= new Date(end.year, end.month - 1)) {
-                const index = (record.year - start.year) * 12 + (record.month - start.month);
-                if (index >= 0 && index < result.length) {
-                    result[index] += parseFloat(record.net_amount) || 0;
+                if (recordDate >= startDate && recordDate <= endDate) {
+                    const idx = (parsed.year - start.year) * 12 + (parsed.month - start.month);
+                    if (idx >= 0 && idx < result.length) {
+                        result[idx] += parsed.amount;
+                    }
                 }
             }
         });
@@ -501,119 +320,187 @@ document.addEventListener('DOMContentLoaded', function () {
         return result;
     };
 
-    const calculateOverall = (expenses, incomes) => {
-        const length = Math.max(expenses.length, incomes.length);
-        return Array.from({ length }, (_, i) => (incomes[i] || 0) - (expenses[i] || 0));
+    const calculateOverall = (expenses, incomes) => incomes.map((v, i) => Math.round(((v || 0) - (expenses[i] || 0)) * 100) / 100);
+    const calculateCumulativeSurplus = (surpluses) => {
+        const cumulative = [];
+        surpluses.reduce((a, v) => {
+            const c = Math.round((a + v) * 100) / 100;
+            cumulative.push(c);
+            return c;
+        }, 0);
+        return cumulative;
     };
 
     const adjustMonths = (date, months) => {
-        const newDate = new Date(date);
-        newDate.setMonth(newDate.getMonth() + months);
-        return newDate;
+        const d = new Date(date);
+        d.setMonth(d.getMonth() + months);
+        return d;
     };
-
-    const formatDate = (date) => ({
-        year: date.getFullYear(),
-        month: date.getMonth() + 1
-    });
+    const formatDate = (date) => ({ year: date.getFullYear(), month: date.getMonth() + 1 });
 
     const getSelectedValue = (selector) => {
-        const activeElement = document.querySelector(`${selector} .option.active`);
-        return activeElement ? parseInt(activeElement.dataset.value, 10) : null;
+        const el = document.querySelector(`${selector} .option.active`);
+        return el ? parseInt(el.dataset.value, 10) : null;
     };
 
-    /* legacy_duplicate_chart_block_disabled
-const ctx = document.getElementById('report-chart').getContext('2d');
     const chart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: [],
             datasets: [
-                { type: 'line', label: 'Overall', data: [], borderColor: '#3E61BC', borderWidth: 3 },
-                { type: 'bar', label: 'Income', data: [], backgroundColor: '#1ee0ac', borderWidth: 1 },
-                { type: 'bar', label: 'Expenses', data: [], backgroundColor: '#e85347', borderWidth: 1 }
+                {
+                    type: 'line',
+                    label: 'Overall Net',
+                    data: [],
+                    borderColor: '#3E61BC',
+                    backgroundColor: 'rgba(62, 97, 188, 0.1)',
+                    borderWidth: 3,
+                    fill: false,
+                    tension: 0.3,
+                    order: 1
+                },
+                {
+                    type: 'bar',
+                    label: 'Income',
+                    data: [],
+                    backgroundColor: 'rgba(30, 224, 172, 0.85)',
+                    borderColor: '#1ee0ac',
+                    borderWidth: 1,
+                    order: 2
+                },
+                {
+                    type: 'bar',
+                    label: 'Expenses',
+                    data: [],
+                    backgroundColor: 'rgba(232, 83, 71, 0.85)',
+                    borderColor: '#e85347',
+                    borderWidth: 1,
+                    order: 3
+                },
+                {
+                    type: 'line',
+                    label: 'Cumulative Growth',
+                    data: [],
+                    borderColor: '#f5a623',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    pointBackgroundColor: '#f5a623',
+                    pointRadius: 4,
+                    fill: false,
+                    tension: 0.2,
+                    order: 0
+                }
             ]
         },
-        options: { 
+        options: {
             responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
             plugins: {
                 legend: {
                     display: true,
                     position: 'bottom',
-                    onClick: function (e, legendItem) {
-                        const index = legendItem.datasetIndex;
-                        const ci = e.chart;
-                        const meta = ci.getDatasetMeta(index);
-                        meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
-                        ci.update();
+                    labels: {
+                        boxWidth: 14,
+                        padding: 16
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            var label = context.dataset.label || '';
+                            var val = context.parsed.y !== null ? context.parsed.y : 0;
+                            var prefix = val < 0 ? '-$' : '$';
+                            return label + ': ' + prefix + Math.abs(val).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                        }
                     }
                 }
             },
-            scales: { 
-                y: { 
+            scales: {
+                x: {
+                    grid: { display: false }
+                },
+                y: {
                     beginAtZero: true,
                     ticks: {
-                        callback: (value) => `$${value.toLocaleString()}`
+                        callback: (value) => '$' + Number(value).toLocaleString()
                     }
-                } 
-            } 
+                }
+            }
         }
     });
 
-    const updateChartData = () => {
-        const lowerAmount = getSelectedValue('#chart-lower-options') || -1; // Default to last month (-1)
-        const upperAmount = getSelectedValue('#chart-upper-options') || 12;  // Default to 0 (current month)
+    function updateChartData() {
+        const rawBudget = state.budgetData && state.budgetData.length > 0
+            ? state.budgetData
+            : extractRecords(window.budgetDashboardData?.budgetData);
+
+        const lowerVal = getSelectedValue('#chart-lower-options');
+        const upperVal = getSelectedValue('#chart-upper-options');
+        const lowerAmount = lowerVal !== null ? lowerVal : -6;
+        const upperAmount = upperVal !== null ? upperVal : 12;
 
         const startDate = formatDate(adjustMonths(new Date(), lowerAmount));
-        const endDate = formatDate(adjustMonths(new Date(), upperAmount));
+        const endDate   = formatDate(adjustMonths(new Date(), upperAmount));
 
-        console.log('Chart Range:', { startDate, endDate });
+        const incomes   = extractData('income',  rawBudget, startDate, endDate);
+        const expenses  = extractData('expense', rawBudget, startDate, endDate);
+        const overall   = calculateOverall(expenses, incomes);
+        const cum       = calculateCumulativeSurplus(overall);
 
-        chart.data.labels = getMonthLabels(startDate, endDate, true);
-        chart.data.datasets[0].data = calculateOverall(
-            extractData('Expense', budgetData, startDate, endDate),
-            extractData('Income', budgetData, startDate, endDate)
-        );
-        chart.data.datasets[1].data = extractData('Income', budgetData, startDate, endDate);
-        chart.data.datasets[2].data = extractData('Expense', budgetData, startDate, endDate);
+        chart.data.labels           = getMonthLabels(startDate, endDate, true);
+        chart.data.datasets[0].data = overall;
+        chart.data.datasets[1].data = incomes;
+        chart.data.datasets[2].data = expenses;
+        chart.data.datasets[3].data = cum;
+
         chart.update();
-    };
+    }
 
-    const initializeDropdown = (selector, callback) => {
+    const initializeDropdown = (selector) => {
         const options = document.querySelectorAll(`${selector} .option`);
         options.forEach(option => {
             option.addEventListener('click', function () {
                 options.forEach(opt => opt.classList.remove('active'));
                 this.classList.add('active');
-                callback();
-            });
+                updateChartData();
+            }, { passive: true });
         });
     };
 
-    // Set default to "Past 1 Month"
-    const setDefaultDropdown = () => {
-        document.querySelectorAll('#chart-lower-options .option').forEach(option => {
-            option.classList.remove('active');
-            if (parseInt(option.dataset.value, 10) === -1) {
-                option.classList.add('active');
-            }
-        });
-        document.querySelectorAll('#chart-upper-options .option').forEach(option => {
-            option.classList.remove('active');
-            if (parseInt(option.dataset.value, 10) === 0) {
-                option.classList.add('active');
-            }
-        });
-    };
+    initializeDropdown('#chart-lower-options');
+    initializeDropdown('#chart-upper-options');
 
-    // Initialize dropdowns and set defaults
-    initializeDropdown('#chart-lower-options', updateChartData);
-    initializeDropdown('#chart-upper-options', updateChartData);
-    setDefaultDropdown();
+    // Default dropdown configuration: 6 months backward, 12 months forward
+    document.querySelectorAll('#chart-lower-options .option').forEach(o => {
+        o.classList.remove('active');
+        if (parseInt(o.dataset.value, 10) === -6) o.classList.add('active');
+    });
+    document.querySelectorAll('#chart-upper-options .option').forEach(o => {
+        o.classList.remove('active');
+        if (parseInt(o.dataset.value, 10) === 12) o.classList.add('active');
+    });
 
-    // Initial chart rendering with default settings
-    updateChartData();
+    document.addEventListener('budget:data-loaded', function (event) {
+        const payload = event.detail || window.budgetDashboardData || {};
+        state.budgetData = extractRecords(payload.budgetData);
+        state.creditData = extractRecords(payload.creditData);
+        state.availableData = extractRecords(payload.availableData);
+        state.repaymentSummary = extractRecords(payload.repaymentSummary);
+        updateChartData();
+    });
+
+    // Initial render with server-injected payload
+    if (window.budgetDashboardData) {
+        state.budgetData = extractRecords(window.budgetDashboardData.budgetData);
+        state.creditData = extractRecords(window.budgetDashboardData.creditData);
+        state.availableData = extractRecords(window.budgetDashboardData.availableData);
+        state.repaymentSummary = extractRecords(window.budgetDashboardData.repaymentSummary);
+        updateChartData();
+    }
+  });
 });
-
-*/
-</script> -->
+</script>
