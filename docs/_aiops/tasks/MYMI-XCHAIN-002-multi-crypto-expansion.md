@@ -1,9 +1,9 @@
 # AIOps Task: MYMI-XCHAIN-002 Multi-Crypto & Multi-Chain Platform Expansion
 
-**Task Key:** `MYMI-XCHAIN-002`  
-**Domain:** `crypto / payments / multi-chain / EVM / stablecoins / UTXO / Tron`  
-**Created:** 2026-11-26  
-**Governing Standard:** `tbi-fullstack-prep` (WF-ENG-003) & `tbi-release-evidence` (WF-ENG-005)  
+**Task Key:** `MYMI-XCHAIN-002`
+**Domain:** `crypto / payments / multi-chain / EVM / stablecoins / UTXO / Tron`
+**Created:** 2026-11-26
+**Governing Standard:** `tbi-fullstack-prep` (WF-ENG-003) & `tbi-release-evidence` (WF-ENG-005)
 **Parent Mission:** `MYMI-XCHAIN-001` (Closed & Promoted to Production)
 
 ---

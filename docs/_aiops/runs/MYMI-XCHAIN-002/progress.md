@@ -1,8 +1,8 @@
 # MYMI-XCHAIN-002 Progress Log
 
-**Mission ID:** `MYMI-XCHAIN-002`  
-**Application:** MyMI Wallet Next  
-**Started:** 2026-11-26  
+**Mission ID:** `MYMI-XCHAIN-002`
+**Application:** MyMI Wallet Next
+**Started:** 2026-11-26
 
 ---
 
@@ -10,10 +10,10 @@
 
 | Wave | Scope | Status | PR / Branch | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| **W0** | Baseline & Task Admission | IN PROGRESS | `feature/mymi-xchain-002-w0-baseline` | Initial run scaffold & task registration |
-| **W1** | Multi-EVM Expansion (Polygon, Arbitrum, Optimism, Avalanche, BSC) | PENDING | `feature/mymi-xchain-002-w1-multi-evm` | Chain IDs, RPC configurations, browser wallet switching |
-| **W2** | Multi-Stablecoin Expansion (USDT, PYUSD, EURC) | PENDING | `feature/mymi-xchain-002-w2-stablecoins` | Contract registry, decimals normalization |
-| **W3** | UTXO Multi-Asset Pool (Litecoin & Dogecoin) | PENDING | `feature/mymi-xchain-002-w3-utxo-expansion` | Address pool schema update, block explorer verification |
-| **W4** | Tron Payment Rail (TRX & USDT-TRC20) | PENDING | `feature/mymi-xchain-002-w4-tron` | Base58 validation, TronGrid JSON-RPC adapter |
-| **W5** | DEX Swaps & Paper Exchange Expansion | PENDING | `feature/mymi-xchain-002-w5-swaps-exchange` | Swaps quotes, paper trading market pairs |
-| **W6** | Staging Integration & Smoke Certification | PENDING | `integration/mymi-xchain-002` | Consolidated branch, smoke tests, staging packet |
+| **W0** | Baseline & Task Admission | PASS | `feature/mymi-xchain-002-w0-baseline` | [PR #792](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/792) |
+| **W1** | Multi-EVM Expansion (Polygon, Arbitrum, Optimism, Avalanche, BSC) | PASS | `feature/mymi-xchain-002-w1-multi-evm` | [PR #793](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/793) |
+| **W2** | Multi-Stablecoin Expansion (USDT, PYUSD, EURC) | PASS | `feature/mymi-xchain-002-w2-stablecoins` | [PR #794](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/794) |
+| **W3** | UTXO Multi-Asset Pool (Litecoin & Dogecoin) | PASS | `feature/mymi-xchain-002-w3-utxo-expansion` | [PR #795](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/795) |
+| **W4** | Tron Payment Rail (TRX & USDT-TRC20) | PASS | `feature/mymi-xchain-002-w4-tron` | [PR #796](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/796) |
+| **W5** | DEX Swaps & Paper Exchange Expansion | PASS | `feature/mymi-xchain-002-w5-swaps-exchange` | [PR #797](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/797) |
+| **W6** | Staging Integration & Smoke Certification | PASS | `integration/mymi-xchain-002` | Consolidated branch ready for staging & merge |
