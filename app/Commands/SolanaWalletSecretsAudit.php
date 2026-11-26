@@ -296,10 +296,17 @@ class SolanaWalletSecretsAudit extends SafeBaseCommand
     private function parseOptions(array $params): array
     {
         $options = [];
-        $count = count($params);
+        foreach ($params as $k => $v) {
+            if (is_string($k) && $k !== '') {
+                $options[ltrim($k, '-')] = $v ?? true;
+            }
+        }
+
+        $values = array_values($params);
+        $count = count($values);
 
         for ($i = 0; $i < $count; $i++) {
-            $param = (string) $params[$i];
+            $param = (string) $values[$i];
 
             if (! str_starts_with($param, '--')) {
                 continue;
@@ -315,12 +322,12 @@ class SolanaWalletSecretsAudit extends SafeBaseCommand
 
             $key = $param;
 
-            if (in_array($key, ['apply', 'include-all-crypto'], true)) {
+            if (in_array($key, ['apply', 'include-all-crypto', 'guardrails-smoke'], true)) {
                 $options[$key] = true;
                 continue;
             }
 
-            $next = $params[$i + 1] ?? null;
+            $next = $values[$i + 1] ?? null;
 
             if (is_string($next) && ! str_starts_with($next, '--')) {
                 $options[$key] = trim($next, "\"'");

@@ -1,5 +1,7 @@
 # Public RFC 6238 test vector (base32 of "12345678901234567890"), not a credential.
 4f292454ec91628c6ff851e7d8c632ad8d2a8bed:tests/unit/Security/TotpServiceTest.php:generic-api-key:15
+# Synthetic 32-byte hex test fixture in SolanaWalletLifecycleTest
+6ba259a7393939b5e007d66a60c4fb8c5288202b:tests/unit/Solana/SolanaWalletLifecycleTest.php:generic-api-key:116
 # Fixed HMAC test key in the TbiChatLink unit test (replaced with a low-entropy value in the next commit), not a credential.
 ba4ff3fafad8ca5b007ad96bc6582657ebc7b63e:tests/unit/TbiChat/TbiChatLinkTest.php:generic-api-key:19
 # Public Solana USDC mint address in non-custodial swaps production promotion packet
@@ -8,4 +10,3 @@ ba4ff3fafad8ca5b007ad96bc6582657ebc7b63e:tests/unit/TbiChat/TbiChatLinkTest.php:
 bb05d38ec40807ad28bb1c12eb298cc1163dcbfe:tests/fixtures/swaps/jupiter-sol-usdc.json:generic-api-key:14
 # Public Ethereum USDC token contract address (0xa0b86991...) in mock test fixture
 bb05d38ec40807ad28bb1c12eb298cc1163dcbfe:tests/fixtures/swaps/zeroex-eth-usdc.json:generic-api-key:6
-
