@@ -14,6 +14,13 @@ use App\Models\PrivacyRequestModel;
  */
 class PrivacyController extends BaseUserController
 {
+    protected $helpers = ['audit'];
+
+    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
+    {
+        parent::initController($request, $response, $logger);
+        helper('audit');
+    }
     public function status()
     {
         $userId = $this->userId();
@@ -56,6 +63,7 @@ class PrivacyController extends BaseUserController
 
     public function download(int $requestId)
     {
+        $this->response ??= service('response');
         $userId = $this->userId();
         $req = (new PrivacyRequestModel())->find($requestId);
         if ($userId <= 0 || ! $req || (int) $req['user_id'] !== $userId || $req['type'] !== 'export' || $req['status'] !== 'done') {
@@ -114,6 +122,7 @@ class PrivacyController extends BaseUserController
         if (! $req || $req['type'] !== 'erase' || $req['status'] !== 'pending') {
             return $this->fail('Not found');
         }
+        $this->request ??= service('request');
         $note = substr(trim((string) $this->request->getPost('reason')), 0, 200);
         $m->update($requestId, ['status' => 'rejected', 'updated_at' => date('Y-m-d H:i:s'), 'notes' => $note]);
         audit('privacy.erase.rejected', ['req_id' => $requestId], 'privacy');
@@ -128,16 +137,19 @@ class PrivacyController extends BaseUserController
 
     private function ok(string $msg, array $data = [])
     {
-        return $this->response->setJSON(['status' => 'success', 'message' => $msg, 'data' => $data, 'csrf' => csrf_hash()]);
+        $this->response ??= service('response');
+        return $this->response->setStatusCode(200)->setJSON(['status' => 'success', 'message' => $msg, 'data' => $data, 'csrf' => csrf_hash()]);
     }
 
     private function fail(string $msg)
     {
+        $this->response ??= service('response');
         return $this->response->setStatusCode(400)->setJSON(['status' => 'error', 'message' => $msg, 'csrf' => csrf_hash()]);
     }
 
     private function forbid()
     {
+        $this->response ??= service('response');
         return $this->response->setStatusCode(403)->setJSON(['status' => 'error', 'message' => 'Forbidden', 'csrf' => csrf_hash()]);
     }
 }
