@@ -45,6 +45,7 @@ final class EvmUsdc implements ChainAdapter
         private Http $http,
         private int $confirmations,
         private int $decimals = 6,
+        private string $asset = 'USDC',
     ) {
         $this->usdc = strtolower($usdc);
     }
@@ -56,7 +57,7 @@ final class EvmUsdc implements ChainAdapter
 
     public function asset(): string
     {
-        return 'USDC';
+        return $this->asset;
     }
 
     public function decimals(): int
