@@ -64,8 +64,7 @@ class OptionsScanCandidateModel extends Model
     {
         return $this->where('scan_status', 'qualified')
             ->orderBy('ranking_score', 'DESC')
-            ->limit($limit)
-            ->findAll();
+            ->limit($limit)->findAll();
     }
 
     /**

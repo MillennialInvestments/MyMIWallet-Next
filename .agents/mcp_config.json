@@ -10,6 +10,46 @@
         "health"
       ],
       "timeoutSeconds": 300
+    },
+    "mymi-trading": {
+      "command": "python3",
+      "args": [
+        "scripts/mcp/trading_mcp_server.py"
+      ],
+      "env": {},
+      "enabledTools": [
+        "mymi.capabilities",
+        "mymi.market_snapshot",
+        "mymi.market_scan",
+        "mymi.options_chain",
+        "mymi.strategy_simulate",
+        "mymi.portfolio_summary",
+        "mymi.open_campaigns",
+        "mymi.execution_history",
+        "mymi.campaign_performance",
+        "mymi.risk_check",
+        "mymi.provider_health"
+      ],
+      "timeoutSeconds": 60
+    },
+    "mymi-platform": {
+      "command": "python3",
+      "args": [
+        "scripts/mcp/mymi_platform_mcp_server.py"
+      ],
+      "env": {},
+      "enabledTools": [
+        "mymi.platform_status",
+        "mymi.user_profile",
+        "mymi.budget_summary",
+        "mymi.alerts_feed",
+        "mymi.memberships_catalog",
+        "mymi.ai_copilot_telemetry",
+        "mymi.schema_inventory",
+        "mymi.form_certification_audit",
+        "mymi.model_limit_audit"
+      ],
+      "timeoutSeconds": 60
     }
   }
 }

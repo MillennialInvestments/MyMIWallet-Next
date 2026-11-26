@@ -21,6 +21,11 @@ $mmNotice   = '';
 $mmCurrent  = $mmUserId > 0 ? (new \App\Services\Payments\MembershipLifecycleService())->current($mmUserId) : null;
 $mmPlanId   = $mmPlan === null ? '' : \App\Services\Payments\PayPalSubscriptionClient::planId($mmPlan['slug']);
 $mmAuto     = $mmUserId > 0 ? (new \App\Services\Payments\MembershipSubscriptionService())->activeFor($mmUserId) : null;
+$host       = (string) (service('request')->getUri()->getHost() ?? $_SERVER['HTTP_HOST'] ?? '');
+$isStagingContext = str_contains($host, 'staging') || str_contains($host, 'localhost') || str_contains($host, '127.0.0.1')
+    || (config('SiteSettings')->beta ?? 0) === 1
+    || ENVIRONMENT !== 'production'
+    || ((int) (session('cuRole') ?? 4) <= 2);
 // Monthly billing is offered only when its switch is on, PayPal can tell us about payments
 // (webhook id set), the member has not asked for a single payment, and is not already subscribed.
 $mmMonthly  = $mmReady && $mmPlanId !== '' && $mmAuto === null
@@ -30,7 +35,9 @@ $mmMonthly  = $mmReady && $mmPlanId !== '' && $mmAuto === null
 $mmCurrentText = $mmCurrent === null ? '' : 'Your ' . $mmCurrent['label'] . ' membership is active until ' . date('F j, Y', (int) strtotime($mmCurrent['expires_at'])) . '.'
     . ($mmAuto !== null ? ' It renews automatically each month.' : ' Buying the same plan again adds 30 days.');
 if (! $mmReady) {
-    $mmNotice = '<div class="alert alert-info mb-0">Online purchases are not open yet.</div>';
+    $mmNotice = $isStagingContext
+        ? '<div class="alert alert-warning mb-2"><em class="icon ni ni-alert-circle"></em> <strong>PayPal Integration Notice:</strong> Live checkout is not active. Use the <strong>Staging Smoke Test Suite</strong> below to inspect configuration, probe PayPal REST API, or simulate sandbox approval.</div>'
+        : '<div class="alert alert-info mb-0">Online purchases are not open yet.</div>';
 } elseif ($mmUserId <= 0) {
     $mmNotice = '<div class="alert alert-light mb-0">Please <a href="' . esc(site_url('login'), 'attr') . '">sign in</a> or <a href="' . esc(site_url('register'), 'attr') . '">create a free account</a> to buy this membership.</div>';
 }
@@ -199,6 +206,128 @@ document.addEventListener('DOMContentLoaded', function () {
             show('warning', 'The payment did not go through. You have not been charged. Please try again.');
         }
     }).render('#paypal-button-container');
+});
+</script>
+<?php endif; ?>
+
+<?php if ($isStagingContext): ?>
+<div class="card card-bordered mt-4 bg-light border-warning shadow-sm" id="paypal-smoke-test-card">
+    <div class="card-inner">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="badge bg-warning text-dark"><em class="icon ni ni-shield-check"></em> STAGING PAYPAL SMOKE TEST SUITE</span>
+            <span class="badge bg-outline-secondary"><?= esc(strtoupper((string) ($checkoutPlan ?? 'PLAN'))) ?></span>
+        </div>
+        <p class="small text-muted mb-3">
+            Diagnostic tool for staging and sandbox certification. Inspect configuration, probe PayPal OAuth REST handshake, and simulate sandbox fulfillment without touching live funds.
+        </p>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+            <button type="button" class="btn btn-sm btn-outline-primary" id="btn-smoke-audit">
+                <em class="icon ni ni-file-text"></em> Audit Config &amp; Tables
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-info" id="btn-smoke-probe">
+                <em class="icon ni ni-activity-round"></em> Probe PayPal OAuth API
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-success" id="btn-smoke-simulate">
+                <em class="icon ni ni-play-circle"></em> Simulate Sandbox Purchase &amp; Callback
+            </button>
+        </div>
+        <div id="paypal-smoke-results" class="small p-3 bg-white rounded border d-none" style="max-height: 280px; overflow-y: auto; font-family: monospace;"></div>
+    </div>
+</div>
+
+<script<?= script_nonce_attr() ?>>
+document.addEventListener('DOMContentLoaded', function () {
+    var out = document.getElementById('paypal-smoke-results');
+    var btnAudit = document.getElementById('btn-smoke-audit');
+    var btnProbe = document.getElementById('btn-smoke-probe');
+    var btnSimulate = document.getElementById('btn-smoke-simulate');
+
+    function log(title, data, isError) {
+        if (!out) return;
+        out.classList.remove('d-none');
+        var time = new Date().toLocaleTimeString();
+        var color = isError ? 'text-danger' : 'text-success';
+        var html = '<div class="border-bottom pb-2 mb-2">'
+            + '<div class="fw-bold ' + color + '">[' + time + '] ' + title + '</div>'
+            + '<pre class="mb-0 text-dark" style="white-space: pre-wrap; word-break: break-all;">'
+            + JSON.stringify(data, null, 2)
+            + '</pre></div>';
+        out.innerHTML = html + out.innerHTML;
+    }
+
+    if (btnAudit) {
+        btnAudit.addEventListener('click', function () {
+            btnAudit.disabled = true;
+            btnAudit.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Auditing...';
+            var form = new FormData();
+            form.append(<?= json_encode(csrf_token()) ?>, <?= json_encode(csrf_hash()) ?>);
+
+            fetch(<?= json_encode(site_url('API/Admin/PayPalSmokeTest/audit')) ?>, {
+                method: 'POST', body: form, credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            }).then(function (res) {
+                return res.json().then(function (data) {
+                    log('Audit Configuration Report', data, !data.ok);
+                });
+            }).catch(function (err) {
+                log('Audit Request Failed', { error: err.message }, true);
+            }).finally(function () {
+                btnAudit.disabled = false;
+                btnAudit.innerHTML = '<em class="icon ni ni-file-text"></em> Audit Config &amp; Tables';
+            });
+        });
+    }
+
+    if (btnProbe) {
+        btnProbe.addEventListener('click', function () {
+            btnProbe.disabled = true;
+            btnProbe.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Probing PayPal...';
+            var form = new FormData();
+            form.append(<?= json_encode(csrf_token()) ?>, <?= json_encode(csrf_hash()) ?>);
+
+            fetch(<?= json_encode(site_url('API/Admin/PayPalSmokeTest/probe')) ?>, {
+                method: 'POST', body: form, credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            }).then(function (res) {
+                return res.json().then(function (data) {
+                    log('PayPal OAuth Handshake Probe (Status: ' + res.status + ')', data, !res.ok);
+                });
+            }).catch(function (err) {
+                log('Probe Request Failed', { error: err.message }, true);
+            }).finally(function () {
+                btnProbe.disabled = false;
+                btnProbe.innerHTML = '<em class="icon ni ni-activity-round"></em> Probe PayPal OAuth API';
+            });
+        });
+    }
+
+    if (btnSimulate) {
+        btnSimulate.addEventListener('click', function () {
+            if (!confirm('Simulate a verified Sandbox purchase for the <?= esc($checkoutPlan) ?> plan? This will insert a test claim and activate the plan.')) {
+                return;
+            }
+            btnSimulate.disabled = true;
+            btnSimulate.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Simulating...';
+            var form = new FormData();
+            form.append(<?= json_encode(csrf_token()) ?>, <?= json_encode(csrf_hash()) ?>);
+            form.append('plan', <?= json_encode($checkoutPlan ?? 'starter') ?>);
+
+            fetch(<?= json_encode(site_url('API/Admin/PayPalSmokeTest/simulate')) ?>, {
+                method: 'POST', body: form, credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            }).then(function (res) {
+                return res.json().then(function (data) {
+                    log('Sandbox Purchase Simulation', data, !res.ok);
+                    if (res.ok && data.expires_at) {
+                        alert('Simulation Success: Plan ' + data.plan + ' activated until ' + data.expires_at);
+                        location.reload();
+                    }
+                });
+            }).catch(function (err) {
+                log('Simulation Request Failed', { error: err.message }, true);
+            }).finally(function () {
+                btnSimulate.disabled = false;
+                btnSimulate.innerHTML = '<em class="icon ni ni-play-circle"></em> Simulate Sandbox Purchase &amp; Callback';
+            });
+        });
+    }
 });
 </script>
 <?php endif; ?>

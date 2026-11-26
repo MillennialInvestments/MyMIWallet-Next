@@ -25,6 +25,7 @@ $cspNonce = $cspNonce ?? $csp['script'] ?? '';
     <link rel="stylesheet" href="<?= base_url('assets/css/dashlite3.css?ver=3.0.2'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap-select.min.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/responsive-overrides.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/inline-fixes.css') . '?v=' . (is_file(FCPATH.'assets/css/inline-fixes.css') ? filemtime(FCPATH.'assets/css/inline-fixes.css') : '1'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/mymiwallet.mobile.css') . '?v=' . (is_file(FCPATH.'assets/css/mymiwallet.mobile.css') ? filemtime(FCPATH.'assets/css/mymiwallet.mobile.css') : '1'); ?>">
 
     <?php // No inline <style nonce="<?= esc($csp['style']) >"> here. Move any previous inline CSS into responsive-overrides.css ?>

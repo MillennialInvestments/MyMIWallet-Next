@@ -20,6 +20,6 @@ class MarketingVideoAssetModel extends Model
 
     public function forContent(int $contentId): array
     {
-        return $this->where('video_content_id', $contentId)->orderBy('sort_order', 'ASC')->findAll();
+        return $this->where('video_content_id', $contentId)->orderBy('sort_order', 'ASC')->limit(100)->findAll();
     }
 }

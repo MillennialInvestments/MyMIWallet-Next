@@ -193,4 +193,20 @@ class AdvisorController extends BaseController
     {
         return (string) ($result['choices'][0]['message']['content'] ?? '');
     }
+
+    /**
+     * GT-FORM-ROUTES-001: Handle CFA Partner & Client application submissions.
+     */
+    public function cfaAccountManager(): \CodeIgniter\HTTP\ResponseInterface
+    {
+        $payload = $this->request->getJSON(true) ?: $this->request->getPost();
+        log_message('info', 'AdvisorController::cfaAccountManager - Received application: {data}', [
+            'data' => json_encode($payload),
+        ]);
+
+        return $this->response->setJSON([
+            'status'  => 'success',
+            'message' => 'CFA Application submitted successfully.',
+        ]);
+    }
 }

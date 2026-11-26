@@ -1,0 +1,36 @@
+{
+    "index.php\/(.*)": "$1",
+    "index.php": "\/",
+    "index.php\/images\/(.*)": "images\/$1",
+    "Home": {
+        "\/": "\\App\\Controllers\\Home::index"
+    },
+    "News": "Blog\/News-And-Updates",
+    "API\/Status": {
+        "API\/v1\/Status": "\\App\\Modules\\APIs\\Controllers\\APIController::status"
+    },
+    "API\/Health": {
+        "API\/v1\/Health": "\\App\\Modules\\APIs\\Controllers\\HealthAPIController::index"
+    },
+    "Dashboard\/PropFirm": "PropFirms",
+    "Features\/Advanced-Investment-Portfoio-Manager": "Features\/Advanced-Investment-Portfolio-Manager",
+    "Premium-Features\/Due-Diligence-Database": {
+        "Features\/Brokerage-Integrations": "\\App\\Modules\\Advertise\\Controllers\\FeaturesController::BrokerageIntegrations"
+    },
+    "Premium-Features\/Advanced-Charting": {
+        "Features\/Brokerage-Integrations": "\\App\\Modules\\Advertise\\Controllers\\FeaturesController::BrokerageIntegrations"
+    },
+    "Premium-Features\/Advanced-Trade-Tracker": "Investments\/Trade-Tracker",
+    "Premium-Features\/Wallets": "Wallets\/Manager",
+    "Premium_Features\/Brokerage-Integrations": {
+        "Features\/Brokerage-Integrations": "\\App\\Modules\\Advertise\\Controllers\\FeaturesController::BrokerageIntegrations"
+    },
+    "How-To-Guides": "Knowledgebase\/Tutorials",
+    "Budget\/Financial-Institute": {
+        "Budget\/Account-Manager": "\\App\\Modules\\User\\Controllers\\BudgetController::accountManager"
+    },
+    "Budget\/Financial-Advisors": {
+        "Advisor": "\\App\\Modules\\Advisor\\Controllers\\AdvisorController::index"
+    },
+    "Investments\/Reports": "Investments\/Trade-Tracker"
+}

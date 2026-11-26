@@ -14,7 +14,7 @@ class TbiProjectCoinModel extends Model
     protected $useTimestamps = true;
 
     public function getCoinByKey(string $coinKey): ?array { return $this->where('coin_key', $coinKey)->first(); }
-    public function getCoinsForProject(int $projectId): array { return $this->where('project_id', $projectId)->findAll(); }
+    public function getCoinsForProject(int $projectId): array { return $this->where('project_id', $projectId)->limit(100)->findAll(); }
 
     public function createDefaultCoinsForProject(int $projectId): array
     {
@@ -32,7 +32,7 @@ class TbiProjectCoinModel extends Model
         return $created;
     }
 
-    public function getContributionCategories(): array { return $this->db->table('bf_tbi_coin_contribution_categories')->where('is_active', 1)->get()->getResultArray(); }
+    public function getContributionCategories(): array { return $this->db->table('bf_tbi_coin_contribution_categories')->where('is_active', 1)->limit(100)->get()->getResultArray(); }
     public function recordContribution(array $data): int { $this->db->table('bf_tbi_coin_contribution_ledger')->insert($data); return (int) $this->db->insertID(); }
     public function approveContribution(int $ledgerId, int $reviewedBy): bool { return (bool) $this->db->table('bf_tbi_coin_contribution_ledger')->where('id', $ledgerId)->where('status', 'pending')->update(['status' => 'approved', 'reviewed_by' => $reviewedBy, 'reviewed_at' => date('Y-m-d H:i:s')]); }
     public function rejectContribution(int $ledgerId, int $reviewedBy, string $reason = ''): bool { return (bool) $this->db->table('bf_tbi_coin_contribution_ledger')->where('id', $ledgerId)->where('status', 'pending')->update(['status' => 'rejected', 'reviewed_by' => $reviewedBy, 'reviewed_at' => date('Y-m-d H:i:s'), 'metadata_json' => json_encode(['reason' => $reason])]); }
