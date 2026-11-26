@@ -104,3 +104,31 @@ This repository participates in Teddy's centralized Codex ⇄ AIOps workflow. Co
 - **Reg D 506(c) Private Placement Offering Gating:** Private placement tokens (MyMI Coin) must enforce fail-closed accredited investor gating (`isVerifiedAndAccredited`) before deposit initiation or ledger minting. Offerings must have zero public purchase buttons, zero secondary exchange listings, and zero guaranteed return claims across all UI views and marketing materials.
 - **Spark Command FileLocator Cache Flush:** When registering new Spark commands or migrating modules, a stale `shared/writable/cache/FileLocatorCache` will hide newly created commands from `php spark list`. Always flush this cache file before executing or smoke-testing new CLI commands.
 
+## Operational Invariants & Test State Hardening (2026-11)
+
+- **Migration List Word Splitting (`MIGRATE=`):** In `scripts/ops/deploy/mymi-release.sh`, the runner iterates over `$MIGRATE` using bash whitespace splitting: `for m in ${MIGRATE:-}; do`. Migration lists must be **space-separated**, NOT comma-separated (e.g. `MIGRATE='2026-11-22-000100_A 2026-11-22-000200_B'`). Comma-separated strings are parsed as a single literal filename, causing the release script to halt before any database mutation occurs.
+- **Global Auth Singleton Mock Leaks:** Any PHPUnit test suite that mocks global authentication using `Services::injectMock('authentication', $mock)` must explicitly reset the singleton in `tearDown()` using `Services::resetSingle('authentication')`. Failure to do so corrupts subsequent unit tests that rely on legitimate session context or expect 401 unauthenticated responses across other domain test suites.
+- **GitHub Actions Codeloader 429 Resilience:** Transient `HTTP/2 429` rate limits from `codeload.github.com` during `composer install` on public CI runners are non-deterministic. Never modify application code to resolve a CDN 429; trigger a workflow rerun (`gh run rerun <id>`) or rebase push.
+- **Squash-Merge Commit Ancestry on Staging:** Staging must always run the exact squashed merge commit of `main` (not the pre-merge feature branch), because `mymi-release.sh activate` enforces an exact SHA equality check between staging and candidate production releases.
+
+## US Regulatory & Multi-Line Compliance Invariants ("Brick A" Standard)
+
+Every AI agent and contributor must honor these federal and state legal constraints before drafting routes, database migrations, controllers, or UI components:
+
+1. **FinCEN / State MTLs (Non-Custodial Invariant):**
+   - MyMI Wallet is strictly non-custodial software. Never write code that stores, pools, or transmits user private keys on the server.
+   - Non-custodial DEX swaps must construct unsigned transactions for client-side signing in user self-custody wallets.
+2. **OFAC Sanctions & SDN Screening:**
+   - Any transaction initiation (crypto checkout, non-custodial swap, address import) must evaluate recipient and sender addresses against local OFAC SDN lists using sub-millisecond in-memory lookups (`SanctionsListService`). Blocked transactions must fail closed (`AUTH_FAIL: sanctions_block`).
+3. **Closed-Loop Stored Value (MyMI Gold):**
+   - Utility credits must strictly satisfy 31 CFR § 1010.100(ff)(4)(iii). Never implement peer-to-peer transfers, secondary market trading, cash-out, or external export of in-app credits.
+4. **SEC Reg D 506(c) Accredited Gating (MDIT & MyMI Coin):**
+   - Private placement tokens and alternative trust assets must enforce fail-closed accredited investor gating (`isVerifiedAndAccredited`).
+   - Zero public buy/invest buttons on unauthenticated or unaccredited pages; zero guaranteed yield/return claims; zero secondary exchange listings.
+5. **SEC / FINRA Publisher Exemption (Investment Analytics & AI Copilot):**
+   - Analytical models, AI chat insights, and rule engines (Apex, Topstep, Momentum) are educational tools under *Lowe v. SEC*. Every research page and copilot response must display standard disclaimers.
+   - UI code must never clamp negative returns or describe funded positions as "risk-free".
+6. **Privacy, Consent & GLBA (NPI Protection):**
+   - Registration requires versioned consent logging in `bf_user_consent`.
+   - Consumer financial records must resolve strictly from active session IDs (fail-closed IDOR).
+   - Sensitive financial payloads must never be dumped into log files.
