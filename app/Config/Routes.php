@@ -2082,10 +2082,10 @@ $routes->group('Predictions', ['namespace' => '\App\Modules\User\Controllers'], 
     $routes->get('/', 'PredictionsController::index');
     $routes->get('Markets', 'PredictionsController::markets');
     $routes->get('Market/(:num)', 'PredictionsController::view/$1');
-    $routes->get('Portfolio', 'PredictionsController::portfolio');
-    $routes->get('Settlements', 'PredictionsController::settlements');
-    $routes->post('PlaceOrder', 'PredictionsController::placeOrder');     // POST
-    $routes->post('CancelOrder', 'PredictionsController::cancelOrder');   // POST
+    $routes->get('Portfolio', 'PredictionsController::portfolio', ['filter' => 'login']);
+    $routes->get('Settlements', 'PredictionsController::settlements', ['filter' => 'login']);
+    $routes->post('PlaceOrder', 'PredictionsController::placeOrder', ['filter' => ['login', 'feature:predictions']]);     // POST
+    $routes->post('CancelOrder', 'PredictionsController::cancelOrder', ['filter' => ['login', 'feature:predictions']]);   // POST
 });
 
 // ===== Projects (User) =====
