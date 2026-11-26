@@ -275,7 +275,7 @@ $agent                  = service('request')->getUserAgent();
                                 <li class="nk-menu-item">
                                     <form action="<?= site_url('logout') ?>" method="post" class="m-0">
                                         <?= csrf_field() ?>
-                                        <button type="submit" class="nk-menu-link border-0 bg-transparent w-100 text-start">
+                                        <button type="submit" class="nk-menu-link border-0 bg-transparent w-100 text-start" href="<?= site_url('logout') ?>">
                                             <span class="nk-menu-text">Sign Out</span>
                                         </button>
                                     </form>
@@ -310,6 +310,13 @@ $agent                  = service('request')->getUserAgent();
 								<span class="nk-menu-icon"><em class="icon ni ni-pie"></em></span><span class="nk-menu-text">My Budget</span>
 							</a>
 						</li> 
+                        <?php if (\App\Libraries\TbiChat\TbiChatLink::fromEnv()->enabled()): ?>
+                        <li class="nk-menu-item">
+							<a href="<?php echo site_url('/AI-Chat'); ?>" class="nk-menu-link" rel="noopener">
+								<span class="nk-menu-icon"><em class="icon ni ni-chat"></em></span><span class="nk-menu-text">AI Chat</span>
+							</a>
+						</li>
+                        <?php endif; ?>
                         <?php 
                         if ($debtOperations === 1 && $creditOperations === 1) {
                         ?>

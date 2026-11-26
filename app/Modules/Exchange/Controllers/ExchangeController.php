@@ -286,8 +286,8 @@ class ExchangeController extends UserController
             'time' => $this->request->getPost('time'),
             'trade_type' => $this->request->getPost('trade_type'),
             'beta' => $this->request->getPost('beta'),
-            'user_id' => $this->request->getPost('user_id'),
-            'user_email' => $this->request->getPost('user_email'),
+            'user_id' => $this->cuID,
+            'user_email' => $this->session?->get('user_email') ?? '',
             'wallet_id' => $this->request->getPost('wallet_id'),
             'market_pair' => $this->request->getPost('market_pair'),
             'market' => $this->request->getPost('market'),
@@ -332,8 +332,8 @@ class ExchangeController extends UserController
                 'time' => $this->request->getPost('time'),
                 'trade_type' => $this->request->getPost('trade_type'),
                 'beta' => $this->request->getPost('beta'),
-                'user_id' => $this->request->getPost('user_id'),
-                'user_email' => $this->request->getPost('user_email'),
+                'user_id' => $this->cuID,
+                'user_email' => $this->session?->get('user_email') ?? '',
                 'wallet_id' => $this->request->getPost('wallet_id'),
                 'market_pair' => $this->request->getPost('market_pair'),
                 'market' => $this->request->getPost('market'),
@@ -386,8 +386,8 @@ class ExchangeController extends UserController
                 'time' => $this->request->getPost('time'),
                 'trade_type' => $this->request->getPost('trade_type'),
                 'beta' => $this->request->getPost('beta'),
-                'user_id' => $this->request->getPost('user_id'),
-                'user_email' => $this->request->getPost('user_email'),
+                'user_id' => $this->cuID,
+                'user_email' => $this->session?->get('user_email') ?? '',
                 'wallet_id' => $this->request->getPost('wallet_id'),
                 'market_pair' => $this->request->getPost('market_pair'),
                 'market' => $this->request->getPost('market'),
@@ -437,8 +437,8 @@ class ExchangeController extends UserController
         ])) {
             $formData = [
                 'kyc' => 'Yes',
-                'user_id' => $this->request->getPost('user_id'),
-                'email' => $this->request->getPost('user_email'),
+                'user_id' => $this->cuID,
+                'email' => $this->session?->get('user_email') ?? '',
                 'username' => $this->request->getPost('user_username'),
                 'first_name' => $this->request->getPost('first_name'),
                 'middle_name' => $this->request->getPost('middle_name'),
@@ -467,6 +467,10 @@ class ExchangeController extends UserController
 
     public function kycReward($cuID)
     {
+        $targetId = (int) $cuID;
+        if ($targetId !== (int) $this->cuID && ! (auth()->user()?->can('admin.access') ?? false)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Unauthorized KYC reward request');
+        }
         $userInfo = $this->exchangeModel->getUserInfo($cuID)->getRowArray();
         $coinValue = $this->exchangeModel->getCoinValue()->getRowArray();
 
@@ -501,14 +505,33 @@ class ExchangeController extends UserController
 
     public function updateOrder()
     {
-        $id = $this->request->getPost('id');
-        $field = $this->request->getPost('field');
+        $userId = (int) ($this->cuID ?? session()->get('user_id') ?? $this->auth?->id() ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Unauthorized'])->setStatusCode(401);
+        }
+
+        $id = (int) $this->request->getPost('id');
+        $field = (string) $this->request->getPost('field');
         $value = $this->request->getPost('value');
+
+        $order = $this->exchangeModel->getOrderById($id);
+        if (! $order) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Order not found'])->setStatusCode(404);
+        }
+
+        $ownerId = is_object($order) ? (int) ($order->user_id ?? 0) : (int) ($order['user_id'] ?? 0);
+        if ($ownerId !== $userId && ! (auth()->user()?->can('admin.access') ?? false)) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Unauthorized'])->setStatusCode(403);
+        }
+
+        $allowedFields = ['client_ref', 'notes'];
+        if (! in_array($field, $allowedFields, true)) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Field cannot be updated'])->setStatusCode(400);
+        }
 
         $this->exchangeModel->updateOrders($id, $field, $value);
 
-        echo 1;
-        exit;
+        return $this->response->setJSON(['status' => 'success'])->setStatusCode(200);
     }
 
     // User Profile Management
@@ -644,14 +667,26 @@ class ExchangeController extends UserController
     // Order Management
     public function createOrder()
     {
+        $userId = (int) ($this->cuID ?? session()->get('user_id') ?? $this->auth?->id() ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Unauthorized'])->setStatusCode(401);
+        }
+
         $data = [
-            'user_id' => session()->get('user_id'),
-            'asset_id' => $this->request->getPost('asset_id'),
-            'order_type' => $this->request->getPost('order_type'),
-            'order_price' => $this->request->getPost('order_price'),
-            'order_quantity' => $this->request->getPost('order_quantity')
+            'symbol'      => $this->request->getPost('symbol') ?? $this->request->getPost('asset_id') ?? '',
+            'trade_type'  => $this->request->getPost('order_type') ?? $this->request->getPost('trade_type') ?? 'Buy',
+            'price'       => $this->request->getPost('order_price') ?? $this->request->getPost('price') ?? 0,
+            'amount'      => $this->request->getPost('order_quantity') ?? $this->request->getPost('amount') ?? 0,
+            'market_pair' => $this->request->getPost('market_pair') ?? 'USD',
         ];
-        $this->exchangeModel->createOrder($data);
+
+        try {
+            $result = $this->exchangeService->placeOrder($data, $userId);
+            $statusCode = ($result['status'] ?? '') === 'success' ? 200 : 400;
+            return $this->response->setJSON($result)->setStatusCode($statusCode);
+        } catch (\Throwable $e) {
+            return $this->response->setJSON(['status' => 'error', 'message' => $e->getMessage()])->setStatusCode(400);
+        }
     }
 
     public function updateOrderNews()
@@ -665,10 +700,31 @@ class ExchangeController extends UserController
         $this->exchangeModel->updateOrder($order_id, $data);
     }
 
+    public function cancelOrder()
+    {
+        $userId = (int) ($this->cuID ?? session()->get('user_id') ?? $this->auth?->id() ?? 0);
+        if ($userId <= 0) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Unauthorized'])->setStatusCode(401);
+        }
+
+        $orderId = (int) $this->request->getPost('order_id');
+        if ($orderId <= 0) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Invalid order ID'])->setStatusCode(400);
+        }
+
+        try {
+            $result = $this->exchangeService->cancelOrder($orderId, $userId);
+            return $this->response->setJSON($result)->setStatusCode(200);
+        } catch (\CodeIgniter\Exceptions\PageNotFoundException $e) {
+            return $this->response->setJSON(['status' => 'error', 'message' => $e->getMessage()])->setStatusCode(404);
+        } catch (\Throwable $e) {
+            return $this->response->setJSON(['status' => 'error', 'message' => $e->getMessage()])->setStatusCode(400);
+        }
+    }
+
     public function deleteOrder()
     {
-        $order_id = $this->request->getPost('order_id');
-        $this->exchangeModel->deleteOrder($order_id);
+        return $this->cancelOrder();
     }
 
     // Trade Execution

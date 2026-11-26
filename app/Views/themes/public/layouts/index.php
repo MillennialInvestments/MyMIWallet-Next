@@ -29,7 +29,7 @@ echo view('themes/public/layouts/header', $subViewData);
                 <div class="nk-wrap ml-0">
                     <?php echo view('themes/public/layouts/_sitenav', $subViewData); ?>
                     <main id="main-content" class="nk-content content-wrapper mt-0 p-0" role="main">
-                        <div class="pt-5 pt-lg-5 mb-3">
+                        <div class="pt-3 pt-lg-1 mb-3">
                             <div class="row justify-content-center">
                                 <div class="col-12 pr-md-0 pt-xl-0">
                                     <?php

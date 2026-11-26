@@ -7,7 +7,8 @@ $meta        = $meta        ?? [];
 $siteSettings= $siteSettings?? [];
 $pageTitle   = $pageTitle   ?? ($meta['title'] ?? 'MyMI Wallet');
 helper('security');
-$cspNonce = $cspNonce ?? ($csp['script'] ?? (service('renderer')->getData('cspNonce') ?? ''));
+$rawHeaderNonce = $cspNonce ?? ($csp['script'] ?? (service('renderer')->getData('cspNonce') ?? ''));
+$cspNonce = is_array($rawHeaderNonce) ? ($rawHeaderNonce['script'] ?? '') : (string) $rawHeaderNonce;
 $viewFileData               = [
     'siteSettings'          => $siteSettings,
     'uri'                   => $uri,
@@ -18,7 +19,7 @@ $viewFileData               = [
     'csp'                   => $csp ?? [],
 ]; 
 ?>
-<!doctype html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="en" data-env="<?= esc(strtolower(ENVIRONMENT), 'attr') ?>">
 <head>  
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">

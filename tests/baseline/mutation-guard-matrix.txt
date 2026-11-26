@@ -7,6 +7,7 @@
 # MutationRouteGuardMatrixTest until it is guarded or classified here.
 
 # Webhooks and machine callers (signature, shared secret or API key)
+POST API/Alerts/webhook/([^/]+) # webhook: AlertWebhookService validates user token segment; no session
 POST API/Discord/interactions # Discord; Ed25519 request signature (verifySignature); no session
 POST API/Email/trackBounceWebhook # Postmark; X-Webhook-Token = ESP_WEBHOOK_SECRET; no session
 POST API/eSports/receiveResultWebhook # provider; feature flag + webhook signature verify; no session
@@ -21,6 +22,7 @@ POST API/ContentEngine/sendPost/([0-9]+) # admin or automation; guardAdminOrToke
 POST API/ContentEngine/runDaily # admin or automation; guardAdminOrToken()
 POST csp-report # browsers; CSP violation beacon, write-only log, no auth by design
 POST API/mobile/auth/login # mobile app; credential login issuing API token; rate-limited globally
+POST API/AI/Chat # public: in-controller AIChatQuotaService IP quota (5/day) or user session
 
 # Signed-in user or admin, checked inside the controller
 POST API/AiOps/run # admin; isAdmin() in controller, 401/403 otherwise

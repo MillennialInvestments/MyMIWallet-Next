@@ -68,12 +68,6 @@ a:focus {
     color: #0770fe;
     text-decoration: underline;
 }
-input[type="checkbox"] {
-    width: 15%;
-}
-.intro-copyright {
-    color: #ffffff;
-}
 body {
     background-color: white !important;
     border: none;
@@ -1597,9 +1591,9 @@ a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-prima
     .sidebar-open .nk-sidebar,
     .sidebar-closed .nk-sidebar {
         width: 100%; /* Sidebar takes full width of the screen */
-        position: absolute; /* Make it full screen 
-        height: 100vh; / Full height /
-        z-index: 9999; / Ensure it's on top */
+        position: absolute; /* Make it full screen */
+        height: 100vh; /* Full height */
+        z-index: 9999; /* Ensure it's on top */
         transition: transform 0.3s ease-in-out;
     }
     .sidebar-closed .nk-sidebar {

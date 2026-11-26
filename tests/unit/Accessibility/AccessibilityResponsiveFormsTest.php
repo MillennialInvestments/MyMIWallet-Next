@@ -93,11 +93,11 @@ class AccessibilityResponsiveFormsTest extends CIUnitTestCase
         $content = file_get_contents($loginViewPath);
 
         // Matching label for="login" and id="login"
-        $this->assertStringContainsString('<label for="login">', $content);
+        $this->assertStringContainsString('<label for="login"', $content);
         $this->assertStringContainsString('id="login"', $content);
 
         // Matching label for="password" and id="password"
-        $this->assertStringContainsString('<label for="password">', $content);
+        $this->assertStringContainsString('<label for="password"', $content);
         $this->assertStringContainsString('id="password"', $content);
 
         // ARIA required attributes

@@ -17,7 +17,8 @@ $page_description = $seoData['page_description'] ?? 'Experience the future of fi
 $page_url         = $seoData['page_url']         ?? $thisURL;
 $page_image       = $seoData['page_image']       ?? $defaultImage;
 $page_type        = $seoData['page_type']        ?? 'Manual';
-$cspNonce = $cspNonce ?? (service('renderer')->getData('cspNonce') ?? '');
+$rawNonce = $cspNonce ?? service('renderer')->getData('cspNonce') ?? '';
+$cspNonce = is_array($rawNonce) ? ($rawNonce['script'] ?? '') : (string) $rawNonce;
 ?>
 <title><?= esc($page_title) ?></title>
 <meta name="description" content="<?= esc($page_description) ?>">

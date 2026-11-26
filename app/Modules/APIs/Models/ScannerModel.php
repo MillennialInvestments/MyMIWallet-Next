@@ -57,7 +57,7 @@ class ScannerModel extends ObservedModel
         if (! $this->db->tableExists('bf_investment_tickers')) {
             return 0;
         }
-        $rows = $this->db->table('bf_investment_tickers')->select('ticker as symbol, exchange, asset_type')->get()->getResultArray();
+        $rows = $this->db->table('bf_investment_tickers')->select('ticker as symbol, exchange, asset_type')->limit(5000)->get()->getResultArray();
         $count = 0;
         foreach ($rows as $row) {
             $this->db->table('bf_scanner_symbol_universe')->replace([

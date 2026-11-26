@@ -17,6 +17,7 @@ class MyMIBitcoin
 
     protected BitcoinService $svc;
     protected CacheInterface $cache;
+    protected $db;
     /** Base URL for public BTC explorer API */
     private string $apiBase = 'https://api.blockcypher.com/v1/btc/main';
     protected static bool $warnedInject = false;
@@ -24,7 +25,8 @@ class MyMIBitcoin
     public function __construct()
     {
         $this->svc = new BitcoinService();
-        $this->cache = $cache ?? Services::cache();
+        $this->cache = Services::cache();
+        $this->db = \Config\Database::connect();
     }
 
     /**
@@ -63,7 +65,7 @@ class MyMIBitcoin
         if ($cuID === null) return [];
 
         $defAddr = $this->db->table('bf_exchanges_coin_addresses')
-            ->where(['cuID' => $cuID, 'chain' => 'bitcoin'])
+            ->where(['user_id' => $cuID, 'chain' => 'bitcoin'])
             ->select('address')
             ->get()->getRowArray();
 

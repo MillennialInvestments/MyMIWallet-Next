@@ -41,6 +41,9 @@ $subViewData = [];
                             </tbody>
                         </table>
                     </div>
+                    <div class="alert alert-light border mt-3 text-muted small" role="note">
+                        <strong>Tax Disclaimer:</strong> This investment tax report is generated for informational and tracking purposes only. Capital gains, losses, and tax liability calculations may differ from IRS or state calculations due to wash sale adjustments, holding period classifications, or cost basis methods. MyMI Wallet is not a CPA, tax attorney, or registered tax advisory firm. Consult a qualified CPA or tax advisor for tax filings.
+                    </div>
                 </div>
             </div>
         </div>

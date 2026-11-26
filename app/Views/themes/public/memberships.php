@@ -13,15 +13,25 @@
         width: 10%; 
     }
 </style>
-<div class="bg-light mt-3 pt-3 pt-xl-3 pb-3">
+<div class="bg-light border-bottom py-3">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="breadcrumb">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <ul class="breadcrumb mb-1">
                     <li class="breadcrumb-item"><a href="<?= site_url('/'); ?>">Home</a></li>
-                    <li class="breadcrumb-item text-primary active" aria-current="page">MyMI Memberships</li>
+                    <li class="breadcrumb-item"><a href="<?= site_url('Memberships'); ?>">Memberships</a></li>
+                    <?php if (!empty($uri->getSegment(2))): ?>
+                    <li class="breadcrumb-item text-primary active" aria-current="page"><?= esc(ucfirst($uri->getSegment(2))); ?></li>
+                    <?php else: ?>
+                    <li class="breadcrumb-item text-primary active" aria-current="page">Pricing &amp; Plans</li>
+                    <?php endif; ?>
                 </ul>
-                <h1>MyMI Memberships</h1>
+                <h2 class="mb-0">MyMI Memberships</h2>
+            </div>
+            <div class="col-md-4 text-md-end mt-2 mt-md-0">
+                <a href="<?= site_url('Dashboard'); ?>" class="btn btn-outline-primary btn-sm">
+                    <em class="icon ni ni-dashboard"></em> Investor Dashboard
+                </a>
             </div>
         </div>
     </div>

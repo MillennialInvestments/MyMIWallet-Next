@@ -455,4 +455,19 @@ class Home extends BaseController
     {
         return $this->terms($section);
     }
+
+    public function disclaimer(?string $section = null)
+    {
+        $data = $this->buildCommonData([
+            'layout'         => 'public',
+            'pageName'       => 'Financial & Legal Disclaimers',
+            'pageTitle'      => 'Disclaimers & Risk Disclosures — MyMI Wallet',
+            'contentSection' => $section ?? 'disclaimers',
+        ]);
+        if ($data instanceof ResponseInterface) {
+            return $data;
+        }
+
+        return $this->renderTheme('themes/public/termsOfService', $data);
+    }
 }

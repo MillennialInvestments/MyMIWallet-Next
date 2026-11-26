@@ -41,7 +41,7 @@ form.d-flex.align-items-center button.btn {
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="navbar-collapse" id="dashboardNavbarNav">
+        <div class="collapse navbar-collapse" id="dashboardNavbarNav">
             <div class="navbar-nav me-lg-4 align-items-lg-center">
                 <span class="navbar-text text-white d-none d-lg-inline">
                     Welcome <?= esc($cuDisplayName ?? 'User'); ?>
@@ -136,35 +136,45 @@ form.d-flex.align-items-center button.btn {
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item dropdown notification-dropdown" style="top: -5px; left: -10px;">
-                    <a class="nav-link dropdown-toggle nk-quick-nav-icon"
+                <li class="nav-item dropdown notification-dropdown">
+                    <a class="nav-link dropdown-toggle nk-quick-nav-icon position-relative d-flex align-items-center"
                        href="#"
                        id="dashboardNotificationsDropdown"
                        role="button"
                        data-bs-toggle="dropdown"
-                       aria-expanded="false">
+                       data-bs-auto-close="outside"
+                       aria-expanded="false"
+                       aria-label="View notifications">
                         <div class="icon-status icon-status-info"><em class="icon ni ni-bell"></em></div>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="mymiNotificationBadge" style="font-size: 0.65rem;">
+                            1
+                            <span class="visually-hidden">unread notifications</span>
+                        </span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-xl" aria-labelledby="dashboardNotificationsDropdown">
-                        <div class="dropdown-head d-flex justify-content-between align-items-center px-3 py-2">
-                            <span class="sub-title nk-dropdown-title">Notifications</span>
-                            <a class="small" href="#">Mark All as Read</a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-xl shadow-lg border-0 py-0" aria-labelledby="dashboardNotificationsDropdown" id="mymiNotificationMenu">
+                        <div class="dropdown-head d-flex justify-content-between align-items-center px-3 py-2 bg-light rounded-top border-bottom">
+                            <span class="sub-title nk-dropdown-title fw-bold">Notifications</span>
+                            <button type="button" class="btn btn-link btn-sm text-decoration-none p-0 small" id="mymiMarkAllRead">Mark All as Read</button>
                         </div>
-                        <div class="dropdown-body px-3 py-2">
-                            <div class="nk-notification">
-                                <div class="nk-notification-item dropdown-inner">
-                                    <div class="nk-notification-icon">
-                                        <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
+                        <div class="dropdown-body px-3 py-2" id="mymiNotificationBody" style="max-height: 320px; overflow-y: auto;">
+                            <div class="nk-notification" id="mymiNotificationList">
+                                <div class="nk-notification-item dropdown-inner unread-notice py-2 border-bottom">
+                                    <div class="nk-notification-icon me-2">
+                                        <em class="icon icon-circle bg-primary-dim ni ni-bell-fill"></em>
                                     </div>
-                                    <div class="nk-notification-content">
-                                        <div class="nk-notification-text">You have requested to <span>Withdraw</span></div>
-                                        <div class="nk-notification-time">2 hrs ago</div>
+                                    <div class="nk-notification-content flex-grow-1">
+                                        <div class="nk-notification-text small text-dark">Welcome to your updated <strong>MyMI Wallet</strong> dashboard.</div>
+                                        <div class="nk-notification-time small text-muted">Just now</div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="text-center py-4 text-muted d-none" id="mymiNotificationEmpty">
+                                <em class="icon ni ni-check-circle fs-3 text-success d-block mb-1"></em>
+                                <span class="small">All caught up! No unread notifications.</span>
+                            </div>
                         </div>
-                        <div class="dropdown-foot center px-3 py-2">
-                            <a href="#">View All</a>
+                        <div class="dropdown-foot text-center px-3 py-2 bg-light rounded-bottom border-top">
+                            <a href="<?= site_url('/Account/Notifications'); ?>" class="small text-primary fw-semibold text-decoration-none">Manage Notification Settings</a>
                         </div>
                     </div>
                 </li>
@@ -203,3 +213,30 @@ form.d-flex.align-items-center button.btn {
         </div>
     </div>
 </nav>
+
+<script <?= $nonce['script'] ?? '' ?>>
+document.addEventListener('DOMContentLoaded', function () {
+    var markBtn = document.getElementById('mymiMarkAllRead');
+    var badge = document.getElementById('mymiNotificationBadge');
+    var list = document.getElementById('mymiNotificationList');
+    var empty = document.getElementById('mymiNotificationEmpty');
+
+    if (markBtn) {
+        markBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (badge) {
+                badge.classList.add('d-none');
+            }
+            if (list) {
+                list.classList.add('d-none');
+            }
+            if (empty) {
+                empty.classList.remove('d-none');
+            }
+            markBtn.disabled = true;
+            markBtn.textContent = 'All read';
+        });
+    }
+});
+</script>

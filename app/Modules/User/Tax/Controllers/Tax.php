@@ -29,7 +29,7 @@ class Tax extends BaseController
         $this->taxJurisdictionModel = model(TaxJurisdictionModel::class);
 
         $auth               = service('authentication');
-        $this->currentUserId = (int) ($auth->id() ?? session('user_id') ?? 0);
+        $this->currentUserId = (int) (auth()->id() ?? $auth->id() ?? (service('auth')->id() ?? 0) ?: session()->get('user_id') ?? 0);
     }
 
     public function index()
@@ -37,7 +37,7 @@ class Tax extends BaseController
         $returns = $this->taxReturnModel
             ->where('user_id', $this->currentUserId)
             ->orderBy('filing_period_start', 'DESC')
-            ->findAll();
+            ->findAll(50);
 
         return view('App\\Modules\\User\\Tax\\Views\\index', [
             'returns'   => $returns,
@@ -108,10 +108,19 @@ class Tax extends BaseController
 
     public function ajaxSaveLine()
     {
+        if ($this->currentUserId <= 0) {
+            return $this->failUnauthorized('Authentication required');
+        }
+
         $returnId    = (int) $this->request->getPost('return_id');
         $lineNumber  = (int) $this->request->getPost('line_number');
         $amount      = (float) $this->request->getPost('amount');
         $explainText = $this->request->getPost('explain_text');
+
+        $return = $this->taxReturnModel->find($returnId);
+        if (!$return || (int) ($return['user_id'] ?? 0) !== $this->currentUserId) {
+            return $this->failForbidden('Access denied');
+        }
 
         $success = $this->taxReturnModel->saveLineValue($returnId, $lineNumber, $amount, $explainText);
         if (!$success) {
@@ -127,6 +136,15 @@ class Tax extends BaseController
 
     public function ajaxRecalc(int $id)
     {
+        if ($this->currentUserId <= 0) {
+            return $this->failUnauthorized('Authentication required');
+        }
+
+        $return = $this->taxReturnModel->find($id);
+        if (!$return || (int) ($return['user_id'] ?? 0) !== $this->currentUserId) {
+            return $this->failForbidden('Access denied');
+        }
+
         $recalc = $this->taxReturnModel->recalculateReturn($id);
         if (isset($recalc['error'])) {
             return $this->fail($recalc['error'], 404);
@@ -137,9 +155,18 @@ class Tax extends BaseController
 
     public function ajaxSaveAllocation()
     {
+        if ($this->currentUserId <= 0) {
+            return $this->failUnauthorized('Authentication required');
+        }
+
         $returnId      = (int) $this->request->getPost('return_id');
         $allocationId  = (int) $this->request->getPost('allocation_id');
         $taxableAmount = (float) $this->request->getPost('taxable_amount');
+
+        $return = $this->taxReturnModel->find($returnId);
+        if (!$return || (int) ($return['user_id'] ?? 0) !== $this->currentUserId) {
+            return $this->failForbidden('Access denied');
+        }
 
         $result = $this->taxReturnModel->updateAllocation($returnId, $allocationId, $taxableAmount);
         if (!$result) {
@@ -216,6 +243,7 @@ class Tax extends BaseController
             'lines'         => $lines,
             'jurisdictions' => $jurisdictions,
             'total_remitted'=> $returnData['return']['total_remitted'],
+            'disclaimer'    => 'MyMI Wallet provides tax calculation and reporting tools for informational and organizational purposes only. MyMI Wallet is not a CPA, tax attorney, or registered tax advisory firm. The calculations, reports, and exports provided do not constitute official tax, legal, or accounting advice. Please consult with a qualified professional or licensed CPA prior to filing official tax returns.',
         ];
     }
 
@@ -255,6 +283,10 @@ class Tax extends BaseController
 
         $rows[] = '';
         $rows[] = "Total Remitted,{$payload['total_remitted']}";
+        if (!empty($payload['disclaimer'])) {
+            $rows[] = '';
+            $rows[] = "Disclaimer,\"" . str_replace('"', '""', $payload['disclaimer']) . "\"";
+        }
 
         return implode(PHP_EOL, $rows);
     }
