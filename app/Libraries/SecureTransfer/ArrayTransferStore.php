@@ -179,12 +179,18 @@ final class ArrayTransferStore implements TransferStore
         return 1;
     }
 
-    public function purgeable(int $now): array
+    public function purgeable(int $now, string $after = '', int $limit = 1000): array
     {
         $out = [];
-        foreach ($this->transfers as $id => $t) {
-            if ($t['purged_at'] === null && ($t['revoked_at'] !== null || $t['expires_at'] <= $now)) {
+        $ids = array_map('strval', array_keys($this->transfers));
+        sort($ids, SORT_STRING);
+        foreach ($ids as $id) {
+            $t = $this->transfers[$id];
+            if (strcmp($id, $after) > 0 && $t['purged_at'] === null && ($t['revoked_at'] !== null || $t['expires_at'] <= $now)) {
                 $out[] = $id;
+                if (count($out) >= $limit) {
+                    break;
+                }
             }
         }
         return $out;
@@ -216,5 +222,15 @@ final class ArrayTransferStore implements TransferStore
             }
         }
         return ['live_transfers' => $live, 'live_ciphertext_bytes' => $bytes, 'transfers_last_24h' => $day, 'wallets_with_keys' => count($wallets)];
+    }
+
+    public function transferParties(string $transferId): ?array
+    {
+        $t = $this->transfers[$transferId] ?? null;
+        if ($t === null) {
+            return null;
+        }
+        return ['sender_user_id' => (int) $t['sender_user_id'], 'sender_wallet' => $t['sender_wallet'],
+            'recipients' => array_keys($this->recipients[$transferId] ?? [])];
     }
 }

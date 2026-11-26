@@ -139,8 +139,11 @@ $(document).ready(function () {
             title: "Symbol",
             data: "symbol",
             render: function (data, type, row) {
-                // Render an input field with a placeholder
-                return `<input type="text" class="form-control symbol-input" placeholder="--Enter Symbol--" value="${data || ''}">`;
+                let badge = '';
+                if (row && (row.trade_type === 'Option' || (row.custom_data && row.custom_data.occ_symbol))) {
+                    badge = ` <span class="badge badge-dim bg-info fs-10px ms-1">Option</span>`;
+                }
+                return `<div class="d-flex align-items-center"><input type="text" class="form-control symbol-input" placeholder="--Enter Symbol--" value="${data || ''}">${badge}</div>`;
             },
             className: "editable-cell",
         },
@@ -280,9 +283,9 @@ $(document).ready(function () {
         const shares = parseFloat(rowData.shares) || 0;
         const entryPrice = parseFloat(rowData.entry_price) || 0;
         const currentPrice = parseFloat(rowData.current_price) || 0;
-        // Ensure values are non-negative
+        // Total cost cannot be negative, but net gains/losses CAN be negative
         rowData.total_trade_costs = Math.max(0, shares * entryPrice);
-        rowData.net_gains = Math.max(0, (shares * currentPrice) - rowData.total_trade_costs);
+        rowData.net_gains = (shares * currentPrice) - rowData.total_trade_costs;
 
         // Update the UI for derived fields
         row.find('td').eq(6).text(rowData.total_trade_costs.toFixed(2)); // Trade Cost
@@ -304,12 +307,10 @@ $(document).ready(function () {
                 current_price: parseFloat(rowData.current_price) || 0.00,
                 total_trade_costs: parseFloat(rowData.shares) * parseFloat(rowData.entry_price) || 0.00,
                 net_gains: (parseFloat(rowData.shares) * parseFloat(rowData.current_price)) - 
-                        (parseFloat(rowData.shares) * parseFloat(rowData.entry_price)) || 0.00,
+                        (parseFloat(rowData.shares) * parseFloat(rowData.entry_price)),
                 user_id: <?= $cuID ?>, // Add user ID dynamically
             },
         };
-
-        console.log("Saving Trade Data:", payload);
 
         $.ajax({
             url: "<?= site_url('Trade-Tracker/saveTradeData') ?>",
@@ -354,57 +355,61 @@ $(document).ready(function () {
     const csrfToken = $('meta[name="csrf-token"]').attr('content');
     const csrfHash = $('input[name="' + csrfName + '"]').val();
 
-    let table = initDataTableSafe($('#trade-tracker-table'),{
-        ajax: {
-            url: '/index.php/Trade-Tracker/getTradeData',
-            dataSrc: 'trades'
-        },
-        columns: [
-            { title: '', data: 'id', orderable: false },
-            {
-                title: 'Symbol', data: 'symbol',
-                render: function (data) {
-                    return `<input type="text" class="form-control symbol-input" value="${data || ''}" placeholder="Symbol">`;
-                }
+    let table;
+    if ($.fn.DataTable.isDataTable('#trade-tracker-table')) {
+        table = $('#trade-tracker-table').DataTable();
+    } else {
+        table = initDataTableSafe($('#trade-tracker-table'),{
+            ajax: {
+                url: "<?= site_url('Trade-Tracker/getTradeData') ?>",
+                dataSrc: 'trades'
             },
-            {
-                title: 'Status', data: 'order_status',
-                render: function (data) {
-                    return `
-                        <select class="form-control order-status-select">
-                            <option value="Open" ${data === 'Open' ? 'selected' : ''}>Open</option>
-                            <option value="Closed" ${data === 'Closed' ? 'selected' : ''}>Closed</option>
-                        </select>`;
-                }
-            },
-            { title: 'Shares', data: 'shares' },
-            { title: 'Entry Price', data: 'entry_price' },
-            { title: 'Current Price', data: 'current_price' },
-            {
-                title: 'Net Gain',
-                data: null,
-                render: function (data) {
-                    const gain = (parseFloat(data.current_price) - parseFloat(data.entry_price)) * parseFloat(data.shares);
-                    return gain.toFixed(2);
-                }
-            },
-            {
-                title: 'Summary', data: null,
-                render: function () {
-                    return `<button class="btn btn-info show-summary">📋</button>`;
+            columns: [
+                { title: '', data: 'id', orderable: false },
+                {
+                    title: 'Symbol', data: 'symbol',
+                    render: function (data) {
+                        return `<input type="text" class="form-control symbol-input" value="${data || ''}" placeholder="Symbol">`;
+                    }
                 },
-                orderable: false
-            },
-
-            {
-                title: 'Manage', data: null,
-                render: function () {
-                    return `<button class="btn btn-sm btn-success save-row">Save</button>`;
+                {
+                    title: 'Status', data: 'order_status',
+                    render: function (data) {
+                        return `
+                            <select class="form-control order-status-select">
+                                <option value="Open" ${data === 'Open' ? 'selected' : ''}>Open</option>
+                                <option value="Closed" ${data === 'Closed' ? 'selected' : ''}>Closed</option>
+                            </select>`;
+                    }
                 },
-                orderable: false
-            }
-        ]
-    });
+                { title: 'Shares', data: 'shares' },
+                { title: 'Entry Price', data: 'entry_price' },
+                { title: 'Current Price', data: 'current_price' },
+                {
+                    title: 'Net Gain',
+                    data: null,
+                    render: function (data) {
+                        const gain = (parseFloat(data.current_price) - parseFloat(data.entry_price)) * parseFloat(data.shares);
+                        return gain.toFixed(2);
+                    }
+                },
+                {
+                    title: 'Summary', data: null,
+                    render: function () {
+                        return `<button class="btn btn-info show-summary">📋</button>`;
+                    },
+                    orderable: false
+                },
+                {
+                    title: 'Manage', data: null,
+                    render: function () {
+                        return `<button class="btn btn-sm btn-success save-row">Save</button>`;
+                    },
+                    orderable: false
+                }
+            ]
+        });
+    }
 
     $('#add-trade-btn').on('click', function () {
         table.row.add({
@@ -449,7 +454,7 @@ $(document).ready(function () {
         };
 
         $.ajax({
-            url: '/index.php/Trade-Tracker/saveTradeData',
+            url: "<?= site_url('Trade-Tracker/saveTradeData') ?>",
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ trade: updated }),

@@ -147,11 +147,11 @@ final class DbTransferStore implements TransferStore
         return $this->db->affectedRows();
     }
 
-    public function purgeable(int $now): array
+    public function purgeable(int $now, string $after = '', int $limit = 1000): array
     {
-        $rows = $this->db->table(self::TRANSFERS)->select('transfer_id')->where('purged_at', null)
+        $rows = $this->db->table(self::TRANSFERS)->select('transfer_id')->where('purged_at', null)->where('transfer_id >', $after)
             ->groupStart()->where('revoked_at IS NOT NULL', null, false)->orWhere('expires_at <=', $now)->groupEnd()
-            ->get(1000)->getResultArray();
+            ->orderBy('transfer_id', 'ASC')->get(max(1, min($limit, 1000)))->getResultArray();
         return array_column($rows, 'transfer_id');
     }
 
@@ -178,5 +178,16 @@ final class DbTransferStore implements TransferStore
             }
         }
         return $row;
+    }
+
+    public function transferParties(string $transferId): ?array
+    {
+        $t = $this->db->table(self::TRANSFERS)->select('sender_user_id, sender_wallet')->where('transfer_id', $transferId)->get(1)->getRowArray();
+        if (!$t) {
+            return null;
+        }
+        $rows = $this->db->table(self::RECIPIENTS)->select('wallet')->where('transfer_id', $transferId)->get(100)->getResultArray();
+        return ['sender_user_id' => (int) $t['sender_user_id'], 'sender_wallet' => (string) $t['sender_wallet'],
+            'recipients' => array_column($rows, 'wallet')];
     }
 }

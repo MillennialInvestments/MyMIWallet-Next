@@ -151,14 +151,19 @@ class OpsAPIController extends BaseAPIController
             return $auth;
         }
 
-        $baseDir = ROOTPATH . 'docs/ops/reports';
-        if (! is_dir($baseDir)) {
+        // OpsReportWriter writes under writable/ops/reports; older reports may sit in docs/ops/reports.
+        $baseDirs = array_filter([rtrim(WRITEPATH, '/') . '/ops/reports', ROOTPATH . 'docs/ops/reports'], 'is_dir');
+        if ($baseDirs === []) {
             return $this->respondError('No reports directory', Response::HTTP_NOT_FOUND);
         }
 
         $latestFile = null;
         $latestMtime = 0;
-        foreach (glob($baseDir . '/*/*') ?: [] as $file) {
+        $files = [];
+        foreach ($baseDirs as $baseDir) {
+            $files = array_merge($files, glob($baseDir . '/*/*') ?: []);
+        }
+        foreach ($files as $file) {
             if (! is_file($file)) {
                 continue;
             }
@@ -174,7 +179,7 @@ class OpsAPIController extends BaseAPIController
         }
 
         return $this->respond([
-            'path'     => str_replace(ROOTPATH, '', $latestFile),
+            'path'     => str_replace([rtrim(WRITEPATH, '/') . '/', ROOTPATH], ['writable/', ''], $latestFile),
             'modified' => date('c', (int) $latestMtime),
             'content'  => file_get_contents($latestFile),
         ]);

@@ -6,8 +6,12 @@ namespace App\Modules\User\Controllers;
 
 use App\Controllers\UserController;
 use App\Libraries\SecureTransfer\CiphertextStore;
+use App\Libraries\SecureTransfer\DbAuditLog;
 use App\Libraries\SecureTransfer\DbTransferStore;
 use App\Libraries\SecureTransfer\SecureTransferService;
+use App\Libraries\SolanaFees\DbFeeReceiptStore;
+use App\Libraries\SolanaFees\HttpSolanaRpc;
+use App\Libraries\SolanaFees\SolanaFeeService;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\SecureTransfer as SecureTransferConfig;
 
@@ -26,12 +30,40 @@ class SecureTransferController extends UserController
     private function enabled(): bool
     {
         $this->stConfig ??= config(SecureTransferConfig::class);
-        return $this->stConfig->enabled && db_connect()->tableExists('bf_secure_transfers');
+        $db = db_connect();
+        // The investigation record is required: no transfers without it.
+        return $this->stConfig->enabled && $db->tableExists('bf_secure_transfers') && DbAuditLog::available($db)
+            && (!$this->feePriced() || DbFeeReceiptStore::available($db));
     }
 
     private function service(): SecureTransferService
     {
-        return $this->service ??= new SecureTransferService($this->stConfig, new DbTransferStore(db_connect()));
+        if ($this->service === null) {
+            $db = db_connect();
+            $audit = DbAuditLog::available($db) ? new DbAuditLog($db) : null;
+            $this->service = (new SecureTransferService($this->stConfig, new DbTransferStore($db), null, $audit))
+                ->withRequest($this->request->getIPAddress(), substr((string) $this->request->getUserAgent(), 0, 255))
+                ->withFees($this->fees());
+        }
+        return $this->service;
+    }
+
+    /** The SOL fee checker, or null when no fee table exists. A priced fee without its table blocks sending (see enabled()). */
+    private function fees(): ?SolanaFeeService
+    {
+        $db = db_connect();
+        if (!DbFeeReceiptStore::available($db)) {
+            return null;
+        }
+        $cfg = config(\Config\SolanaFees::class);
+        return new SolanaFeeService($cfg, new HttpSolanaRpc($cfg->rpc), new DbFeeReceiptStore($db));
+    }
+
+    /** True when a transfer fee is priced; then the receipts table must exist or sending stays off. */
+    private function feePriced(): bool
+    {
+        $cfg = config(\Config\SolanaFees::class);
+        return $cfg->treasury !== '' && ($cfg->lamports['transfer_processing'] ?? 0) > 0;
     }
 
     private function files(): CiphertextStore
@@ -85,6 +117,8 @@ class SecureTransferController extends UserController
             'maxBytes' => $this->stConfig->maxBytes,
             'maxDays' => $this->stConfig->maxDays,
             'maxRecipients' => $this->stConfig->maxRecipients,
+            'fee' => ($f = $this->fees()) ? $f->quote('transfer_processing') : ['required' => false],
+            'wcProjectId' => preg_match('/^[A-Za-z0-9]{8,64}$/', $this->stConfig->walletConnectProjectId) ? $this->stConfig->walletConnectProjectId : '',
         ];
         return $this->renderTheme('App\Modules\User\Views\SecureTransfer\index', $this->data);
     }
@@ -142,7 +176,8 @@ class SecureTransferController extends UserController
         if (!is_array($manifest) || $file === null || !$file->isValid()) {
             return $this->reply(['ok' => false, 'error' => 'manifest_and_ciphertext_required']);
         }
-        $result = $this->service()->send($this->userId(), $manifest, self::str($this->request->getPost('signature')), $file->getTempName(), $this->files());
+        $result = $this->service()->send($this->userId(), $manifest, self::str($this->request->getPost('signature')), $file->getTempName(), $this->files(),
+            trim(self::str($this->request->getPost('fee_signature'))));
         return $this->reply($result);
     }
 
@@ -168,7 +203,7 @@ class SecureTransferController extends UserController
         if ($r = $this->guard()) {
             return $r;
         }
-        $result = $this->service()->download($this->userId(), $transferId, self::str($this->request->getGet('wallet')), $this->files());
+        $result = $this->service()->download($this->userId(), $transferId, self::str($this->request->getGet('wallet')), $this->files(), 'manifest');
         unset($result['path']);
         return $this->reply($result);
     }

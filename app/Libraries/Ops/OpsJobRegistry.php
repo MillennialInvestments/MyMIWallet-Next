@@ -345,8 +345,9 @@ class OpsJobRegistry
             try {
                 $response   = $client->get($target, ['timeout' => 8]);
                 $statusCode = $response->getStatusCode();
-                foreach ($response->getHeaderNames() as $name) {
-                    $headersFound[strtolower($name)] = $response->getHeaderLine($name);
+                // CodeIgniter's Response has headers() (keyed by name), not PSR-7 getHeaderNames().
+                foreach (array_keys($response->headers()) as $name) {
+                    $headersFound[strtolower((string) $name)] = $response->getHeaderLine((string) $name);
                 }
             } catch (Throwable $e) {
                 $error = $e->getMessage();

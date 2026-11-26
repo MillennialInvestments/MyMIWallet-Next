@@ -3,11 +3,11 @@
         <div class="card-inner">
             <div class="user-card">
                 <div class="user-avatar bg-primary">
-                    <span><?php //echo $cuFirstName ?? 'N' . $cuLastName[0] ?? '/A'; ?></span>
+                    <span><?php echo esc(strtoupper(substr($cuDisplayName ?? 'U', 0, 2))); ?></span>
                 </div>
                 <div class="user-info">
-                    <span class="lead-text"><?php echo $cuDisplayName; ?></span>
-                    <span class="sub-text"><?php echo $cuEmail; ?></span>
+                    <span class="lead-text"><?php echo esc($cuDisplayName ?? 'User'); ?></span>
+                    <span class="sub-text"><?php echo esc($cuEmail ?? ''); ?></span>
                 </div>
                 <div class="user-action">
                     <div class="dropdown">

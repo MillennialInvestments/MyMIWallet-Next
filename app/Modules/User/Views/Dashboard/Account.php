@@ -1,26 +1,17 @@
-<?php 
+<?php
 $subViewData = [
-    'cuFirstName'       => $cuFirstName, 
-    'cuMiddleName'      => $cuMiddleName, 
-    'cuLastName'        => $cuLastName, 
-    'cuNameSuffix'      => $cuNameSuffix, 
-    'cuDisplayName'     => $cuDisplayName, 
-    'cuUsername'        => $cuUsername, 
-    'cuEmail'           => $cuEmail, 
-    'cuPhone'           => $cuPhone, 
-    'MyMIGCoinSum'      => $MyMIGCoinSum ?? 0, 
-    // 'cuFirstName'   => $cuFirstName, 
-    // 'cuFirstName'   => $cuFirstName, 
-    // 'cuFirstName'   => $cuFirstName, 
-    // 'cuFirstName'   => $cuFirstName, 
-    // 'cuFirstName'   => $cuFirstName, 
-    // 'cuFirstName'   => $cuFirstName, 
-    // 'cuFirstName'   => $cuFirstName, 
-    // 'cuFirstName'   => $cuFirstName, 
-    // 'cuFirstName'   => $cuFirstName, 
-    // 'cuFirstName'   => $cuFirstName, 
-    // 'cuFirstName'   => $cuFirstName, 
-]; 
+    'cuFirstName'       => $cuFirstName ?? '',
+    'cuMiddleName'      => $cuMiddleName ?? '',
+    'cuLastName'        => $cuLastName ?? '',
+    'cuNameSuffix'      => $cuNameSuffix ?? '',
+    'cuDisplayName'     => $cuDisplayName ?? 'User',
+    'cuUsername'        => $cuUsername ?? '',
+    'cuEmail'           => $cuEmail ?? '',
+    'cuPhone'           => $cuPhone ?? '',
+    'cuDOB'             => $cuDOB ?? '',
+    'cuMailingAddress'  => $cuMailingAddress ?? '',
+    'MyMIGCoinSum'      => $MyMIGCoinSum ?? 0,
+];
 ?>
 <div class="nk-block">
     <div class="card card-bordered">
@@ -54,35 +45,35 @@ $subViewData = [
                         <div class="data-item" data-bs-toggle="modal" data-bs-target="#profile-edit">
                             <div class="data-col">
                                 <span class="data-label">Username</span>
-                                <span class="data-value"><?php echo $cuUsername; ?></span>
+                                <span class="data-value"><?php echo esc($cuUsername ?? ''); ?></span>
                             </div>
                             <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
                         </div><!-- data-item -->
                         <div class="data-item">
                             <div class="data-col">
                                 <span class="data-label">Email</span>
-                                <span class="data-value"><?php echo $cuEmail; ?></span>
+                                <span class="data-value"><?php echo esc($cuEmail ?? ''); ?></span>
                             </div>
                             <div class="data-col data-col-end"><span class="data-more disable"><em class="icon ni ni-lock-alt"></em></span></div>
                         </div><!-- data-item -->
                         <div class="data-item" data-bs-toggle="modal" data-bs-target="#profile-edit">
                             <div class="data-col">
                                 <span class="data-label">Phone Number</span>
-                                <span class="data-value text-soft"><?php echo $cuPhone; ?></span>
+                                <span class="data-value text-soft"><?php echo esc($cuPhone ?? ''); ?></span>
                             </div>
                             <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
                         </div><!-- data-item -->
                         <div class="data-item" data-bs-toggle="modal" data-bs-target="#profile-edit">
                             <div class="data-col">
                                 <span class="data-label">Date of Birth</span>
-                                <span class="data-value"><?php echo $cuDOB; ?></span>
+                                <span class="data-value"><?php echo esc($cuDOB ?? ''); ?></span>
                             </div>
                             <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
                         </div><!-- data-item -->
                         <div class="data-item" data-bs-toggle="modal" data-bs-target="#profile-edit" data-tab-target="#address">
                             <div class="data-col">
                                 <span class="data-label">Address</span>
-                                <span class="data-value"><?php echo $cuMailingAddress; ?></span>
+                                <span class="data-value"><?php echo esc($cuMailingAddress ?? ''); ?></span>
                             </div>
                             <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
                         </div><!-- data-item -->
@@ -115,8 +106,8 @@ $subViewData = [
                     </div><!-- data-list -->
                 </div><!-- .nk-block -->
             </div>
-            <?php 
-            echo view('UserModule\Views\Dashboard\Account\ControlCenter', $subViewData); 
+            <?php
+            echo view('UserModule\Views\Dashboard\Account\ControlCenter', $subViewData);
             echo view('UserModule\Views\Dashboard\Account\modals\profile_edit', $subViewData);
             ?>
         </div><!-- .card-aside-wrap -->

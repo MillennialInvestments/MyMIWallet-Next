@@ -48,6 +48,7 @@ final class DocsKnowledgebaseBlogTest extends CIUnitTestCase
     protected function tearDown(): void
     {
         Services::resetSingle('auth');
+        Services::resetSingle('authentication');
         parent::tearDown();
     }
 

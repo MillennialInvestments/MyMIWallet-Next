@@ -266,6 +266,7 @@ class SolanaController extends UserController {
     }
 
     public function index() {
+        $this->commonData();
         $this->data['pageTitle'] = 'Solana Exchange | MyMI Wallet | The Future of Finance';
 
         // // Check URI segment to determine if real-time data is needed
@@ -291,7 +292,7 @@ class SolanaController extends UserController {
         $label = trim((string)$this->request->getPost('label'));
 
         $svc = service('solanaService');
-$addr = $svc->normalizeAddress($row);
+        $addr = $svc->normalizeAddress($addr);
         if (!$addr || !$svc->isValidPublicKey($addr)) {
             return $this->response->setStatusCode(422)->setJSON(['ok'=>false,'msg'=>'Invalid Solana address']);
         }
@@ -337,6 +338,7 @@ $addr = $svc->normalizeAddress($row);
     }
 
     public function assets() {
+        $this->commonData();
         $this->data['pageTitle'] = 'My Solana Assets | MyMI Wallet | The Future of Finance';
         return $this->renderTheme('App\Modules\Exchange\Views\Solana\assets', $this->data);
     }
@@ -358,6 +360,7 @@ $addr = $svc->normalizeAddress($row);
     }
 
     public function coinSwap() {
+        $this->commonData();
         $this->data['pageTitle'] = 'Solana Coin Swap | MyMI Wallet | The Future of Finance';
         return $this->renderTheme('App\Modules\Exchange\Views\Solana\swap', $this->data);
     }
@@ -385,6 +388,7 @@ $addr = $svc->normalizeAddress($row);
     }
 
     public function create() {
+        $this->commonData();
         $this->data['pageTitle'] = 'Create With Solana | MyMI Wallet | The Future of Finance';
         return $this->renderTheme('App\Modules\Exchange\Views\Solana\create', $this->data);
     }
@@ -594,7 +598,7 @@ $addr = $svc->normalizeAddress($row);
                 $amount = floatval($this->request->getPost('amount'));
                 $fromToken = esc($this->request->getPost('from_token'));
                 $toToken = esc($this->request->getPost('to_token'));
-                $userId = esc($this->request->getPost('user_id'));
+                $userId = (int) ($this->cuID ?? $this->currentUserId() ?? 0);
                 $publicKey = esc($this->request->getPost('public_key'));
                 return $this->privateKeySubmissionDisabledResponse();
                 $fromAddress = esc($this->request->getPost('from_address'));
@@ -643,7 +647,8 @@ $addr = $svc->normalizeAddress($row);
                 $this->recordTransactionHistory($userId, $fromToken, $toToken, $amount, $transactionFees, $transferResult, $isSuspicious);
     
                 // Send transaction confirmation
-                $this->sendTransactionConfirmation($this->request->getPost('user_email'), $transferResult);
+                $userEmail = (string) ($this->session?->get('user_email') ?? $this->request->getPost('user_email') ?? '');
+                $this->sendTransactionConfirmation($userEmail, $transferResult);
     
                 return $this->respond(['status' => 'success', 'transactionResult' => $transferResult]);
             } catch (\Exception $e) {
@@ -975,7 +980,7 @@ $addr = $svc->normalizeAddress($row);
     }
 
     public function lockTokens() {
-        $user = $this->request->getPost('user');
+        $user = (string) ($this->currentUserId() ?: $this->request->getPost('user'));
         $amount = $this->request->getPost('amount');
         $txId = $this->request->getPost('tx_id');
     
