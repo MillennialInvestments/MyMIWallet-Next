@@ -2,6 +2,8 @@
 4f292454ec91628c6ff851e7d8c632ad8d2a8bed:tests/unit/Security/TotpServiceTest.php:generic-api-key:15
 # Synthetic 32-byte hex test fixture in SolanaWalletLifecycleTest
 6ba259a7393939b5e007d66a60c4fb8c5288202b:tests/unit/Solana/SolanaWalletLifecycleTest.php:generic-api-key:116
+# Synthetic CoinVault test fixture in ProjectsCoinVaultTest
+9c60687b888dbb83396edff3c54bcd07aec6449d:tests/unit/Projects/ProjectsCoinVaultTest.php:generic-api-key:677
 # Fixed HMAC test key in the TbiChatLink unit test (replaced with a low-entropy value in the next commit), not a credential.
 ba4ff3fafad8ca5b007ad96bc6582657ebc7b63e:tests/unit/TbiChat/TbiChatLinkTest.php:generic-api-key:19
 # Public Solana USDC mint address in non-custodial swaps production promotion packet

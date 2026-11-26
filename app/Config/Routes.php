@@ -2092,13 +2092,13 @@ $routes->group('Predictions', ['namespace' => '\App\Modules\User\Controllers'], 
 $routes->group('Projects', ['namespace' => '\App\Modules\User\Controllers'], static function($routes) {
     $routes->get('/', 'ProjectsController::index');
     $routes->get('View/(:num)', 'ProjectsController::view/$1');
-    $routes->post('Commit/(:num)', 'ProjectsController::commit/$1');
-    $routes->post('Withdraw-Commit/(:num)', 'ProjectsController::withdrawCommit/$1');
-    $routes->get('My/Commitments', 'ProjectsController::myCommitments');
-    $routes->post('Request-Monthly-Withdrawal/(:num)', 'ProjectsController::requestMonthlyWithdrawal/$1');
-    $routes->post('Accept-Private-Allocation/(:num)', 'ProjectsController::acceptPrivateAllocation/$1');
-    $routes->get('Fund', 'ProjectsController::fund');
-    $routes->get('Fund/(:num)', 'ProjectsController::fund/$1');
+    $routes->post('Commit/(:num)', 'ProjectsController::commit/$1', ['filter' => ['login', 'feature:project_investing']]);
+    $routes->post('Withdraw-Commit/(:num)', 'ProjectsController::withdrawCommit/$1', ['filter' => ['login', 'feature:project_investing']]);
+    $routes->get('My/Commitments', 'ProjectsController::myCommitments', ['filter' => 'login']);
+    $routes->post('Request-Monthly-Withdrawal/(:num)', 'ProjectsController::requestMonthlyWithdrawal/$1', ['filter' => ['login', 'feature:project_investing']]);
+    $routes->post('Accept-Private-Allocation/(:num)', 'ProjectsController::acceptPrivateAllocation/$1', ['filter' => ['login', 'feature:project_investing']]);
+    $routes->get('Fund', 'ProjectsController::fund', ['filter' => 'login']);
+    $routes->get('Fund/(:num)', 'ProjectsController::fund/$1', ['filter' => 'login']);
     // Issues units, so it needs a signed-in user and the investing switch (off by default) like Commit/Invest/Sell.
     $routes->post('PurchaseFundUnits', 'ProjectsController::purchaseFundUnits', ['filter' => ['login', 'feature:project_investing']]);
     // GT-FORM-ROUTES-001: dashboard project modals.

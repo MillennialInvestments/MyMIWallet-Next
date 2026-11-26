@@ -120,12 +120,12 @@ class ProjectsModel extends Model
             ->first();
     }
 
-    public function getProjectFundHolders(int $projectId): array
+    public function getProjectFundHolders(int $projectId, int $limit = 100): array
     {
         return $this->db->table('bf_projects_fund_holders')
             ->where('project_id', $projectId)
             ->orderBy('units_owned', 'DESC')
-            ->limit(500)->get()->getResultArray();
+            ->limit($limit)->get()->getResultArray();
     }
 
     public function getFundHolderByUser(int $projectId, int $userId): ?array
@@ -205,12 +205,12 @@ class ProjectsModel extends Model
         return (int) $this->db->insertID();
     }
 
-    public function getProjectDistributionsDetailed(int $projectId): array
+    public function getProjectDistributionsDetailed(int $projectId, int $limit = 50): array
     {
         return $this->db->table('bf_projects_fund_distributions')
             ->where('project_id', $projectId)
             ->orderBy('created_at', 'DESC')
-            ->limit(100)->get()->getResultArray();
+            ->limit($limit)->get()->getResultArray();
     }
 
     public function getProjectFundSummary(int $projectId): array
@@ -368,7 +368,7 @@ class ProjectsModel extends Model
         return (int) $this->db->insertID();
     }
 
-    public function getActiveProjectsWithStats(): array
+    public function getActiveProjectsWithStats(int $limit = 50): array
     {
         if (! $this->db->tableExists('bf_projects')) {
             return [];
@@ -402,8 +402,7 @@ class ProjectsModel extends Model
             ->where('p.status', 'active')
             ->groupBy('p.id')
             ->orderBy('p.created_at', 'DESC')
-            ->get()
-            ->getResultArray();
+            ->limit($limit)->get()->getResultArray();
     }
 
     public function getProjectFullDetails(int $projectId): array
