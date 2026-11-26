@@ -36,7 +36,17 @@ class SanctionsScreen
             }
         }
 
-        return filter_var(env('FEATURE_SANCTIONS_SCREENING', env('COMPLIANCE_SANCTIONS_ENABLED', false)), FILTER_VALIDATE_BOOLEAN);
+        $screening = env('FEATURE_SANCTIONS_SCREENING');
+        if ($screening !== null && filter_var($screening, FILTER_VALIDATE_BOOLEAN)) {
+            return true;
+        }
+
+        $compliance = env('COMPLIANCE_SANCTIONS_ENABLED');
+        if ($compliance !== null && filter_var($compliance, FILTER_VALIDATE_BOOLEAN)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

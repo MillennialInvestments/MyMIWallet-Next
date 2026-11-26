@@ -65,6 +65,7 @@ TXT;
 
     public function testCheckReturnsSanctionedAddressCodeWhenEnabled(): void
     {
+        putenv('FEATURE_SANCTIONS_SCREENING=true');
         putenv('COMPLIANCE_SANCTIONS_ENABLED=true');
         $screen = new SanctionsScreen($this->tempSanctionsFile);
 
@@ -75,6 +76,7 @@ TXT;
         $cleanResult = $screen->check('0x0000000000000000000000000000000000000001');
         $this->assertTrue($cleanResult['ok']);
 
+        putenv('FEATURE_SANCTIONS_SCREENING=false');
         putenv('COMPLIANCE_SANCTIONS_ENABLED=false');
     }
 }

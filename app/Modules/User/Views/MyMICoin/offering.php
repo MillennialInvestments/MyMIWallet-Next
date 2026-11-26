@@ -95,7 +95,7 @@
     </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
 document.addEventListener('DOMContentLoaded', function () {
     var form = document.getElementById('mymicoin-interest-form');
     if (!form) return;

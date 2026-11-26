@@ -145,7 +145,7 @@
     </div>
 </div>
 
-<script>
+<script<?= script_nonce_attr() ?>>
 document.addEventListener('DOMContentLoaded', function () {
     var form = document.getElementById('paper-order-form');
     if (!form) return;
