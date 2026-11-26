@@ -36,7 +36,12 @@ $routes->setDefaultNamespace('App\Controllers');
 $routes->setDefaultController('Home');   // change if you have a different landing controller
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
-$routes->set404Override(function () {
+// The 404 override must return a string: CodeIgniter 4.7 echoes a Closure
+// override's return value (CodeIgniter::display404errors), so returning a
+// Response object was a fatal "could not be converted to string" (HTTP 500).
+// The handler below sets status/headers on the shared response and the
+// wrapper hands CodeIgniter only the body.
+$mymi404Handler = static function () {
     $request = service('request');
     $method = strtoupper((string) $request->getMethod());
     $path = '/' . ltrim((string) $request->getUri()->getPath(), '/');
@@ -162,6 +167,11 @@ $routes->set404Override(function () {
         'url' => current_url(),
         'path' => $path,
     ]);
+};
+$routes->set404Override(static function () use ($mymi404Handler): string {
+    $out = $mymi404Handler();
+
+    return $out instanceof \CodeIgniter\HTTP\ResponseInterface ? (string) $out->getBody() : (string) $out;
 });
 
 $routes->get('/', 'Home::index');
@@ -340,8 +350,8 @@ $routes->get('Management/System-Debug', 'SystemDebugController::index', ['filter
 // App Health and Ops endpoints
 $routes->group('', ['namespace' => 'App\Controllers'], static function($routes) {
     // Health
-    $routes->get('health', 'Health::index', ['filter' => 'responsecache:60']);     // JSON {"status":"ok",...}
-    $routes->get('status', 'Health::status', ['filter' => 'responsecache:60']);    // plain "OK"
+    $routes->get('health', 'Health::index');     // JSON {"status":"ok",...}
+    $routes->get('status', 'Health::status');    // plain "OK"
     $routes->get('api/health', 'Api\\HealthController::index'); // convenient alias
     $routes->get('api/admin/chat-usage', 'Api\\AdminChatUsageController::index', ['filter' => 'permission:admin.access']);
     $routes->post('api/aiops/manual-run', 'Api\\AiOpsManualRunController::run', ['filter' => 'permission:admin.access']);
