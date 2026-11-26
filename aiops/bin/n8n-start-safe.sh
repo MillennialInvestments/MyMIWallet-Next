@@ -9,6 +9,17 @@ LOCK_DIR="$RUNTIME_DIR/n8n.lock"
 N8N_PORT="${N8N_PORT:-5678}"
 BRIDGE_PORT="${BRIDGE_PORT:-8500}"
 
+# Retired on gq-ai01: MyMI workflows run in the one governed TBI n8n there
+# (tbisolutions/aiops-platform ops/n8n/tbi-n8n.sh, port 5678). This launcher
+# is from the DreamHost era and needs aiops/node_modules/.bin/n8n, which no
+# release ships, so it only ever logged "No such file". A second n8n would
+# also fight the governed one for ports 5678/5679. Set
+# MYMI_ALLOW_LOCAL_N8N=1 to use it on a developer machine.
+if [ -d /apps/TBI ] && [ "${MYMI_ALLOW_LOCAL_N8N:-0}" != "1" ]; then
+  printf '{"ts":"%s","component":"n8n-launcher","level":"info","message":"retired on this host: MyMI workflows run in the governed TBI n8n (aiops-platform ops/n8n/tbi-n8n.sh)"}\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+  exit 0
+fi
+
 mkdir -p "$RUNTIME_DIR" "$LOG_DIR" "$BASE_DIR/.n8n"
 
 log() {

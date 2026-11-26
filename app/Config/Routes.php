@@ -36,7 +36,12 @@ $routes->setDefaultNamespace('App\Controllers');
 $routes->setDefaultController('Home');   // change if you have a different landing controller
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
-$routes->set404Override(function () {
+// The 404 override must return a string: CodeIgniter 4.7 echoes a Closure
+// override's return value (CodeIgniter::display404errors), so returning a
+// Response object was a fatal "could not be converted to string" (HTTP 500).
+// The handler below sets status/headers on the shared response and the
+// wrapper hands CodeIgniter only the body.
+$mymi404Handler = static function () {
     $request = service('request');
     $method = strtoupper((string) $request->getMethod());
     $path = '/' . ltrim((string) $request->getUri()->getPath(), '/');
@@ -162,6 +167,11 @@ $routes->set404Override(function () {
         'url' => current_url(),
         'path' => $path,
     ]);
+};
+$routes->set404Override(static function () use ($mymi404Handler): string {
+    $out = $mymi404Handler();
+
+    return $out instanceof \CodeIgniter\HTTP\ResponseInterface ? (string) $out->getBody() : (string) $out;
 });
 
 $routes->get('/', 'Home::index');
@@ -201,6 +211,12 @@ $routes->group('Admin/CoinVault', ['namespace' => '\App\Modules\CoinVault\Contro
     $routes->get('Contributions', 'CoinVaultController::contributions');
     $routes->get('Payouts', 'CoinVaultController::payouts');
     $routes->get('Wallet/(:num)', 'CoinVaultController::wallet/$1');
+});
+
+// Crypto checkout support admin routes (MYMI-XCHAIN-001 W1)
+$routes->group('Admin/Crypto', ['namespace' => '\App\Modules\Admin\Controllers', 'filter' => 'permission:admin.access'], static function ($routes) {
+    $routes->get('Checkouts', 'CryptoCheckoutsController::index');
+    $routes->post('Checkouts/Action', 'CryptoCheckoutsController::action');
 });
 $routes->group('API/CoinVault', ['namespace' => '\App\Modules\CoinVault\Controllers\Api'], static function ($routes) {
     $routes->post('contributionEvent', 'CoinVaultApiController::contributionEvent');
@@ -245,6 +261,28 @@ $routes->get('/Getting-Started/(:segment)', 'Home::gettingStarted');
 $routes->get('/Getting-Started', 'Home::gettingStarted');
 $routes->post('Notes/save', '\\App\\Controllers\\NotesController::save', ['filter' => 'login']); // GT-FORM-ROUTES-001: Advisor "Save to Notes"
 // MyMI Secure Transfer (MST1): end-to-end encrypted wallet-to-wallet files. 404 unless SECURE_TRANSFER_ENABLED.
+// Solana Pay checkout (USDC on Solana, buyer's own wallet signs). Off until SOLANA_PAY_ENABLED and migrated.
+$routes->group('Pay/Solana', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) {
+    $routes->get('/', 'SolanaPayController::index');
+    $routes->post('Checkout', 'SolanaPayController::checkout');
+    $routes->get('Status/(:segment)', 'SolanaPayController::status/$1');
+});
+// Crypto checkout on Ethereum, Base, XRP Ledger and Bitcoin (buyer's own wallet pays). Off until CRYPTO_PAY_ENABLED, a network and migrated.
+$routes->group('Pay/Crypto', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) {
+    $routes->get('/', 'SolanaPayController::index');
+    $routes->post('Checkout', 'SolanaPayController::cryptoCheckout');
+    $routes->get('Status/(:segment)', 'SolanaPayController::cryptoStatus/$1');
+});
+// MYMI-XCHAIN-001 W5: Non-custodial DEX swaps (Jupiter on Solana, 0x on EVM)
+$routes->group('Swaps', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore', 'feature:swaps']], static function ($routes) {
+    $routes->get('/', 'SwapsController::index');
+    $routes->post('Quote', 'SwapsController::quote');
+});
+// Called by the buyer's wallet app (Solana Pay transaction request); no session.
+$routes->get('API/SolanaPay/Tx/(:segment)', '\App\Modules\APIs\Controllers\SolanaPayTxController::describe/$1');
+$routes->post('API/SolanaPay/Tx/(:segment)', '\App\Modules\APIs\Controllers\SolanaPayTxController::transaction/$1');
+$routes->options('API/SolanaPay/Tx/(:segment)', '\App\Modules\APIs\Controllers\SolanaPayTxController::options/$1');
+
 $routes->group('SecureTransfer', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function ($routes) {
     $routes->get('/', 'SecureTransferController::index');
     $routes->post('challenge', 'SecureTransferController::challenge');
@@ -285,7 +323,7 @@ $routes->post('newsletter/subscribe', '\App\Controllers\NewsletterController::su
 $routes->post('Blog/Email/Subscription/Account-Manager', '\App\Controllers\NewsletterController::subscribe');
 $routes->get('/Investments/News', static fn() => redirect()->to(site_url('News'), 301));
 $routes->get('/Profile', '\App\Modules\User\Controllers\DashboardController::profile', ['filter' => 'login']);
-$routes->get('/Purchase/MyMIGold', static fn() => redirect()->to(site_url('Wallets/Purchase/MyMI-Gold'), 301));
+$routes->get('/Purchase/MyMIGold', static fn() => redirect()->to(site_url('Wallets/Purchase/MyMI-Gold'), 301), ['filter' => ['login', 'feature:mymigold_purchases']]);
 $routes->post('auth/resend-activation', 'AuthController::resendActivationCode', ['as' => 'auth/resend-activation-legacy']);
 $routes->get('/How-It-Works/Purchase/MyMIGold', static fn() => redirect()->to(site_url('How-It-Works/Purchase-MyMI-Gold'), 301));
 $routes->get('/How-It-Works', '\\App\\Modules\\Blog\\Controllers\\HowItWorksController::index');
@@ -310,11 +348,11 @@ if (ENVIRONMENT !== 'production') {
     $routes->get('Debug/whoami', 'Debug::whoami');
     $routes->get('Debug/auth-audit-cache', 'Debug::authAuditCacheSelfTest');
 
-    $routes->group('debug', ['namespace' => '\App\Controllers\Debug'], static function ($routes) {
-        if (class_exists('\App\Controllers\Debug\CommonDataController')) {
+    if (class_exists('\App\Controllers\Debug\CommonDataController')) {
+        $routes->group('debug', ['namespace' => '\App\Controllers\Debug'], static function ($routes) {
             $routes->get('common-data/smoke', 'CommonDataController::smoke');
-        }
-    });
+        });
+    }
     $routes->get('debug/register-success-probe', 'AuthController::registerSuccessProbe');
 }
 $routes->get('API/Management/error-heatmap', 'SystemDebugController::errorHeatmap', ['filter' => 'permission:admin.access']);
@@ -323,8 +361,8 @@ $routes->get('Management/System-Debug', 'SystemDebugController::index', ['filter
 // App Health and Ops endpoints
 $routes->group('', ['namespace' => 'App\Controllers'], static function($routes) {
     // Health
-    $routes->get('health', 'Health::index', ['filter' => 'responsecache:60']);     // JSON {"status":"ok",...}
-    $routes->get('status', 'Health::status', ['filter' => 'responsecache:60']);    // plain "OK"
+    $routes->get('health', 'Health::index');     // JSON {"status":"ok",...}
+    $routes->get('status', 'Health::status');    // plain "OK"
     $routes->get('api/health', 'Api\\HealthController::index'); // convenient alias
     $routes->get('api/admin/chat-usage', 'Api\\AdminChatUsageController::index', ['filter' => 'permission:admin.access']);
     $routes->post('api/aiops/manual-run', 'Api\\AiOpsManualRunController::run', ['filter' => 'permission:admin.access']);
@@ -466,6 +504,7 @@ $routes->group('', ['namespace' => '\App\Modules\User\Controllers', 'filter' => 
     // $routes->get('/Support', 'DashboardController::support', ['as' => 'support']);
     // $routes->match(['GET', 'POST'], '/', 'InvestmentsController::tradeTracker');
     $routes->get('/Trade-Tracker', 'InvestmentsController::tradeTracker', ['as' => 'mymi-trade-tracker']);
+    $routes->get('/Investments/Trade-Tracker', 'InvestmentsController::tradeTracker', ['as' => 'mymi-investments-trade-tracker', 'filter' => 'login']);
     $routes->get('/Investments/Options', '\App\Modules\User\Controllers\OptionsController::index', ['as' => 'mymi-options-momentum']);
     $routes->get('/Trade-Tracker/getTradeData', 'InvestmentsController::getTradeData', ['as' => 'get-trade-tracker-data']);
     $routes->post('/Trade-Tracker/saveTradeData', 'InvestmentsController::saveTradeData', ['as' => 'save-trade-tracker-data']);
@@ -810,7 +849,7 @@ $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  functio
         $routes->post('settle/(:num)', 'AuctionsAPIController::settle/$1');
         $routes->post('escrow/release/(:num)', 'AuctionsAPIController::releaseEscrow/$1');
         $routes->post('escrow/refund/(:num)', 'AuctionsAPIController::refundEscrow/$1');
-        $routes->post('topup', 'AuctionsAPIController::topUp');
+        $routes->post('topup', 'AuctionsAPIController::topUp', ['filter' => 'feature:auctions']);
     });
 
     // ------------------------
@@ -1426,6 +1465,11 @@ $routes->get('index.php/Blog/(:segment)/(:segment)', static fn($a, $b) => redire
 $routes->get('Dashboard', '\App\Modules\User\Controllers\DashboardController::index', ['filter' => ['login', 'noStore']]);
 $routes->get('dashboard', '\App\Modules\User\Controllers\DashboardController::index', ['filter' => ['login', 'noStore']]);
 
+// MyMI AI chat on TBI AIOps (docs/aiops/tbi-tenant-chat.md): one-time sign-in
+// link to https://chat.mymiwallet.com for the signed-in member.
+$routes->get('AI-Chat', '\App\Controllers\AIChatController::open', ['filter' => ['login', 'noStore']]);
+$routes->get('ai-chat', '\App\Controllers\AIChatController::open', ['filter' => ['login', 'noStore']]);
+
 $routes->group('Dashboard', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], function($routes) {
     $routes->get('/', 'DashboardController::index', ['as' => 'dashboard']);
     // Backward-compatible alias for legacy singular path
@@ -1869,7 +1913,15 @@ $routes->get('Exchange/Solana/Create', '\App\Modules\Exchange\Controllers\Solana
 $routes->group('Exchange', ['namespace' => '\App\Modules\Exchange\Controllers', 'filter' => 'login'], function($routes) {
     $routes->get('', 'ExchangeController::index', ['as' => 'mymi-exchange']);
     $routes->get('Projects/(:any)', 'ExchangeController::project/$1');
-    $routes->group('DigiByte', function($routes) {
+    // Trading and order management routes (money switch: feature:exchange_trading, off by default)
+    $routes->post('CreateOrder', 'ExchangeController::createOrder', ['filter' => ['login', 'feature:exchange_trading']]);
+    $routes->post('CancelOrder', 'ExchangeController::cancelOrder', ['filter' => ['login', 'feature:exchange_trading']]);
+    $routes->post('Buy', 'ExchangeController::buy', ['filter' => ['login', 'feature:exchange_trading']]);
+    $routes->post('Sell', 'ExchangeController::sell', ['filter' => ['login', 'feature:exchange_trading']]);
+    $routes->post('OrderFetch', 'ExchangeController::orderFetch', ['filter' => ['login', 'feature:exchange_trading']]);
+    $routes->post('UpdateOrder', 'ExchangeController::updateOrder', ['filter' => ['login', 'feature:exchange_trading']]);
+    // DigiByte stays off (404) until FEATURE_DIGIBYTE=true: its library does not load yet.
+    $routes->group('DigiByte', ['filter' => 'feature:digibyte'], function($routes) {
         $routes->post('fetchFrontendData', 'DigiByteController::fetchFrontendData', ['filter' => 'csrf']);
         $routes->post('provisionDefaultWallet', 'DigiByteController::provisionDefaultWallet', ['filter' => 'csrf']);
         $routes->post('disconnectWallet', 'DigiByteController::disconnectWallet', ['filter' => 'csrf']);
@@ -2030,24 +2082,25 @@ $routes->group('Predictions', ['namespace' => '\App\Modules\User\Controllers'], 
     $routes->get('/', 'PredictionsController::index');
     $routes->get('Markets', 'PredictionsController::markets');
     $routes->get('Market/(:num)', 'PredictionsController::view/$1');
-    $routes->get('Portfolio', 'PredictionsController::portfolio');
-    $routes->get('Settlements', 'PredictionsController::settlements');
-    $routes->post('PlaceOrder', 'PredictionsController::placeOrder');     // POST
-    $routes->post('CancelOrder', 'PredictionsController::cancelOrder');   // POST
+    $routes->get('Portfolio', 'PredictionsController::portfolio', ['filter' => 'login']);
+    $routes->get('Settlements', 'PredictionsController::settlements', ['filter' => 'login']);
+    $routes->post('PlaceOrder', 'PredictionsController::placeOrder', ['filter' => ['login', 'feature:predictions']]);     // POST
+    $routes->post('CancelOrder', 'PredictionsController::cancelOrder', ['filter' => ['login', 'feature:predictions']]);   // POST
 });
 
 // ===== Projects (User) =====
 $routes->group('Projects', ['namespace' => '\App\Modules\User\Controllers'], static function($routes) {
     $routes->get('/', 'ProjectsController::index');
     $routes->get('View/(:num)', 'ProjectsController::view/$1');
-    $routes->post('Commit/(:num)', 'ProjectsController::commit/$1');
-    $routes->post('Withdraw-Commit/(:num)', 'ProjectsController::withdrawCommit/$1');
-    $routes->get('My/Commitments', 'ProjectsController::myCommitments');
-    $routes->post('Request-Monthly-Withdrawal/(:num)', 'ProjectsController::requestMonthlyWithdrawal/$1');
-    $routes->post('Accept-Private-Allocation/(:num)', 'ProjectsController::acceptPrivateAllocation/$1');
-    $routes->get('Fund', 'ProjectsController::fund');
-    $routes->get('Fund/(:num)', 'ProjectsController::fund/$1');
-    $routes->post('PurchaseFundUnits', 'ProjectsController::purchaseFundUnits');
+    $routes->post('Commit/(:num)', 'ProjectsController::commit/$1', ['filter' => ['login', 'feature:project_investing']]);
+    $routes->post('Withdraw-Commit/(:num)', 'ProjectsController::withdrawCommit/$1', ['filter' => ['login', 'feature:project_investing']]);
+    $routes->get('My/Commitments', 'ProjectsController::myCommitments', ['filter' => 'login']);
+    $routes->post('Request-Monthly-Withdrawal/(:num)', 'ProjectsController::requestMonthlyWithdrawal/$1', ['filter' => ['login', 'feature:project_investing']]);
+    $routes->post('Accept-Private-Allocation/(:num)', 'ProjectsController::acceptPrivateAllocation/$1', ['filter' => ['login', 'feature:project_investing']]);
+    $routes->get('Fund', 'ProjectsController::fund', ['filter' => 'login']);
+    $routes->get('Fund/(:num)', 'ProjectsController::fund/$1', ['filter' => 'login']);
+    // Issues units, so it needs a signed-in user and the investing switch (off by default) like Commit/Invest/Sell.
+    $routes->post('PurchaseFundUnits', 'ProjectsController::purchaseFundUnits', ['filter' => ['login', 'feature:project_investing']]);
     // GT-FORM-ROUTES-001: dashboard project modals.
     $routes->post('SubmitCommit', 'ProjectsController::submitCommit', ['filter' => ['login', 'feature:project_investing']]);
     $routes->post('SubmitInvest', 'ProjectsController::submitInvest', ['filter' => ['login', 'feature:project_investing']]);
@@ -2174,6 +2227,7 @@ $routes->group('Wallets', ['namespace' => '\App\Modules\User\Controllers', 'filt
     $routes->match(['GET', 'POST'], 'Add/(:segment)', 'WalletsController::add/$1', ['as' => 'wallets.add.segment']);
     $routes->match(['GET', 'POST'], 'Add/(:segment)/(:segment)', 'WalletsController::addFetch/$1/$2', ['as' => 'wallets.add.segment.segment']);
     $routes->match(['GET', 'POST'], 'Add/Bank-Account', 'WalletsController::createBankeAccount', ['as' => 'wallets.add.bank-account']);
+    $routes->match(['GET', 'POST'], 'Connect-Bank-Account', 'WalletsController::add', ['as' => 'wallets.connect-bank-account']);
     $routes->match(['GET', 'POST'], 'Attach-Account', 'WalletsController::attachAccount', ['as' => 'wallets.attach-account']);
     $routes->match(['GET', 'POST'], 'Attach-Account/(:segment)/(:segment)/(:segment)', 'WalletsController::attachAccount/$1/$2/$3', ['as' => 'wallets.attach-account.segment.segment.segment']);
     $routes->match(['GET', 'POST'], 'Bank', 'WalletsController::bank', ['as' => 'wallets.bank']);
@@ -2236,7 +2290,7 @@ $routes->group('Wallets', ['namespace' => '\App\Modules\User\Controllers', 'filt
     $routes->match(['GET', 'POST'], 'Purchase/(:segment)/Complete', 'WalletsController::purchaseComplete');
     $routes->match(['GET', 'POST'], 'Purchase/Complete/(:segment)', 'WalletsController::purchaseComplete/$1');
     $routes->match(['GET', 'POST'], 'Purchase/Complete/(:segment)/(:segment)', 'WalletsController::purchaseComplete/$1/$2');
-    $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold', 'WalletsController::purchaseMyMIGold');
+    $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold', 'WalletsController::purchaseMyMIGold', ['filter' => ['login', 'noStore', 'feature:mymigold_purchases']]);
     // $routes->match(['GET', 'POST'], 'Purchase/Complete/MyMI-Gold', 'WalletsController::purchaseMyMIGold');
     // $routes->match(['GET', 'POST'], 'Purchase/Complete/MyMI-Gold/(:segment)', 'WalletsController::purchaseMyMIGold');
     // $routes->match(['GET', 'POST'], 'Purchase/MyMI-Gold/Complete/(:segment)', 'WalletsController::purchaseComplete/$1');
@@ -2250,6 +2304,35 @@ $routes->group('Wallets', ['namespace' => '\App\Modules\User\Controllers', 'filt
     $routes->match(['GET', 'POST'], 'Withdraw/(:segment)', 'WalletsController::withdraw/$1', ['as' => 'wallets.withdraw.segment']); // Previously /Wallets/Withdraw-Funds
     $routes->match(['GET', 'POST'], 'Withdraw/Fetch', 'WalletsController::addWithdrawFetch', ['as' => 'wallets.withdraw.fetch']);
     // Add other necessary route definitions here
+});
+
+// Top-level aliases for legacy form actions
+$routes->match(['GET', 'POST'], 'Deposit-Funds', '\App\Modules\User\Controllers\WalletsController::deposit', ['filter' => ['login', 'noStore']]);
+$routes->match(['GET', 'POST'], 'Withdraw-Funds', '\App\Modules\User\Controllers\WalletsController::withdraw', ['filter' => ['login', 'noStore']]);
+$routes->match(['GET', 'POST'], 'Web_Design/Test_Page_Email', '\App\Modules\Management\Controllers\APIAdminController::Test_Page_Email', ['filter' => ['login', 'noStore']]);
+$routes->match(['GET', 'POST'], 'Content-Creator', '\App\Modules\Management\Controllers\WebDesignAdminController::contentCreator', ['filter' => ['role:admin,team']]);
+$routes->match(['GET', 'POST'], 'CFA/Analysis/Application/Account_Manager', '\App\Modules\Advisor\Controllers\AdvisorController::cfaAccountManager', ['filter' => 'csrf']);
+
+// User - Wallets Legacy & Form Endpoints (GT-FORM-ROUTES-001)
+$routes->group('User/Wallets', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) {
+    $routes->match(['GET', 'POST'], 'Wallet_Manager', 'WalletsController::walletManager');
+    $routes->match(['GET', 'POST'], 'Wallet_Transaction', 'WalletsController::walletTransaction');
+    $routes->match(['GET', 'POST'], 'Purchase_Coins_Transaction', 'WalletsController::purchaseCoinsTransaction');
+    $routes->match(['GET', 'POST'], 'Wallet_Generator', 'WalletsController::walletGenerator');
+});
+
+// Plaid & Institutions compatibility routes (GT-FORM-ROUTES-001)
+$routes->group('Institutions/Integrations', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => ['login']], static function ($routes) {
+    $routes->post('savePublicToken', 'WalletsAPIController::plaidExchange');
+    $routes->post('exchange_public_token', 'WalletsAPIController::plaidExchange');
+    $routes->post('create_wallet', 'WalletsAPIController::create');
+});
+
+$routes->group('api', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => ['login']], static function ($routes) {
+    $routes->get('create_link_token', 'WalletsAPIController::plaidLinkToken');
+    $routes->post('exchange_public_token', 'WalletsAPIController::plaidExchange');
+    $routes->get('data', 'WalletsAPIController::index');
+    $routes->get('is_account_connected', 'WalletsAPIController::summary');
 });
 
 // // Management - Admin:
@@ -2684,12 +2767,23 @@ $routes->group('API/Alerts', ['namespace' => '\\App\\Modules\\APIs\\Controllers'
     $routes->match(['GET', 'POST'], 'processAllEmails', '\\App\\Modules\\APIs\\Controllers\\AlertsAPIController::processAllEmails');
     $routes->get('previewScraper/(:num)', '\\App\\Modules\\APIs\\Controllers\\AlertsAPIController::previewScraper/$1');
     $routes->get('scanner', 'AlertsAPIController::scanner', ['filter' => 'internalToken']);
+    // Centralized Inbound Webhook & User Alerts
+    $routes->post('webhook/(:segment)', 'AlertWebhookAPIController::receiveWebhook/$1');
+    $routes->post('regenerateWebhook', 'AlertWebhookAPIController::regenerateWebhook', ['filter' => 'login']);
+    $routes->get('userAlerts', 'AlertWebhookAPIController::userAlerts', ['filter' => 'login']);
+    $routes->post('dismissAlert/(:num)', 'AlertWebhookAPIController::dismissAlert/$1', ['filter' => 'login']);
+});
+
+$routes->group('API/Admin/PayPalSmokeTest', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => 'login'], static function($routes) {
+    $routes->post('audit', 'PayPalSmokeTestAPIController::audit');
+    $routes->post('probe', 'PayPalSmokeTestAPIController::probe');
+    $routes->post('simulate', 'PayPalSmokeTestAPIController::simulate');
 });
 
 $routes->group('API/Options', ['namespace' => '\App\Modules\APIs\Controllers'], static function($routes) {
     $routes->post('webhook', 'OptionsWebhookController::receiveWebhook');
     $routes->get('candidates', 'OptionsWebhookController::candidates');
-    $routes->get('positions', 'OptionsWebhookController::positions');
+    $routes->get('positions', 'OptionsWebhookController::positions', ['filter' => 'login']);
 });
 
 $routes->group('system', static function($routes) {
@@ -2729,6 +2823,9 @@ $routes->group('Admin/Tax', ['namespace' => '\\App\\Modules\\Management\\TaxAdmi
     $routes->match(['GET', 'POST'], 'Rates/create', 'TaxConfig::createRate');
     $routes->match(['GET', 'POST'], 'Rates/edit/(:num)', 'TaxConfig::editRate/$1');
 });
+
+// Read-only ops snapshot for the TBI AIOps watch. Its own token (MYMI_OPS_STATUS_TOKEN), GET only.
+$routes->get('API/Ops/watch-status', '\App\Controllers\Ops\OpsStatusController::index', ['filter' => 'opsStatusToken']);
 
 $routes->group('API/Ops', ['namespace' => '\App\Modules\APIs\Controllers', 'filter' => 'internalToken'], static function ($routes) {
     $routes->get('healthcheck', '\App\Modules\Ops\Controllers\OpsController::healthcheck');
@@ -2816,4 +2913,20 @@ $routes->get('Exchange/Solana/Assets', '\App\Modules\Exchange\Controllers\Solana
 $routes->get('Exchange/Solana/Create', '\App\Modules\Exchange\Controllers\SolanaController::create');
 $routes->get('API/Solana/health', '\App\Modules\APIs\Controllers\SolanaAPIController::health');
 // END MyMI Solana public web route exposure
+
+// MYMI-XCHAIN-001 W6: MyMI Exchange paper trading routes
+$routes->group('Exchange/Paper', ['namespace' => '\App\Modules\Exchange\Controllers', 'filter' => ['login', 'noStore', 'feature:exchange_paper']], static function ($routes) {
+    $routes->get('/', 'PaperExchangeController::index');
+    $routes->post('Order', 'PaperExchangeController::order');
+    $routes->post('Cancel', 'PaperExchangeController::cancel');
+    $routes->get('Balances', 'PaperExchangeController::balances');
+});
+
+// MYMI-XCHAIN-001 W7: MyMI Coin accredited offering routes under MDIT Reg D 506(c)
+$routes->group('Offerings/MyMI-Coin', ['namespace' => '\App\Modules\User\Controllers', 'filter' => ['login', 'noStore', 'feature:mymicoin_offering']], static function ($routes) {
+    $routes->get('/', 'MyMICoinOfferingController::index');
+    $routes->post('Interest', 'MyMICoinOfferingController::interest');
+    $routes->post('Deposit', 'MyMICoinOfferingController::deposit');
+    $routes->post('Mint', 'MyMICoinOfferingController::mint');
+});
 

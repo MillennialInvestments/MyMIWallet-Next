@@ -22,7 +22,7 @@ class OpsExportService
             ->join('ops_projects', 'ops_projects.id = ops_tasks.project_id', 'left')
             ->join('ops_subprojects', 'ops_subprojects.id = ops_tasks.subproject_id', 'left')
             ->orderBy('ops_tasks.updated_at', 'DESC')
-            ->findAll();
+            ->limit(1000)->findAll();
     }
 
     public function exportTasksCsv(string $path): string

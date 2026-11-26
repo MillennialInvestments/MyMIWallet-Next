@@ -183,9 +183,9 @@ class APISettings extends BaseConfig
 
     // Gemini Crypto Exchange settings // !! FIX THIS
 
-    public string $geminiAPIKey = 'master-MpbrYCK5R27sm1hcCNC7'; 
+    public string $geminiAPIKey = ''; // set GEMINI_API_KEY in .env
 
-    public string $geminiAPISecret = '4LjK4FiYpPiHktRBSt3BBYexfzVk';
+    public string $geminiAPISecret = ''; // set GEMINI_API_SECRET in .env
 
     public string $geminiBTCWallet = ''; 
 
@@ -400,6 +400,8 @@ class APISettings extends BaseConfig
         );
     
         // Load from .env
+        $this->geminiAPIKey = (string) (env('GEMINI_API_KEY') ?: '');
+        $this->geminiAPISecret = (string) (env('GEMINI_API_SECRET') ?: '');
         $this->alpacaApiKey = env('ALPACA_API_KEY') ?: '';
         $this->alphaVantageApiKey = env('ALPHAVANTAGE_API_KEY') ?: '';
 

@@ -31,6 +31,9 @@ foreach ($pendingTradeAlerts as $alert) {
 
 $alertNews = $alertNews ?? [];
 $scannerSignals = $scannerSignals ?? [];
+$isPremium = (bool) ($isPremium ?? false);
+$userWebhook = $userWebhook ?? [];
+$userIncomingAlerts = $userIncomingAlerts ?? [];
 ?>
 
 <div class="nk-block">
@@ -83,6 +86,204 @@ $scannerSignals = $scannerSignals ?? [];
                     <span class="nk-block-title">Resolved Alerts</span>
                     <h3 class="nk-block-number mb-1"><?= (int) $resolvedCount; ?></h3>
                     <span class="sub-text">Closed or expired trade alerts</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Centralized Trade Alert & Webhook Integrator -->
+    <div class="row g-gs mt-3">
+        <div class="col-12">
+            <div class="card card-bordered">
+                <div class="card-inner">
+                    <div class="card-title-group align-items-start mb-3">
+                        <div class="card-title">
+                            <h5 class="title mb-1">
+                                <em class="icon ni ni-link-alt text-primary me-1"></em>
+                                Centralized 3rd-Party Alert &amp; Webhook Hub
+                            </h5>
+                            <p class="sub-text">
+                                Send trade alerts from TradingView, TrendSpider, Discord bots, or custom trading systems directly into your personal feed.
+                            </p>
+                        </div>
+                        <div class="card-tools">
+                            <?php if ($isPremium): ?>
+                                <span class="badge bg-success-dim text-success border border-success-subtle">
+                                    <em class="icon ni ni-shield-check"></em> Premium Unlimited
+                                </span>
+                            <?php else: ?>
+                                <span class="badge bg-warning-dim text-warning border border-warning-subtle">
+                                    <em class="icon ni ni-info"></em> Free Tier (5 Alert Limit)
+                                </span>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <?php if (! $isPremium): ?>
+                        <div class="alert alert-fill alert-light alert-icon alert-dismissible mb-4 border" role="alert">
+                            <em class="icon ni ni-spark"></em>
+                            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center w-100 gap-2">
+                                <div>
+                                    <strong>Free Tier Active:</strong> You can receive and view up to 5 incoming alerts. Upgrade to <strong>Premium</strong> for unlimited webhooks, SMS &amp; Discord dispatch, and real-time push alerts.
+                                </div>
+                                <a href="<?= esc(site_url('Memberships'), 'attr'); ?>" class="btn btn-sm btn-primary text-nowrap">
+                                    Upgrade to Premium
+                                </a>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                    <!-- Webhook Generation & Configuration Bar -->
+                    <div class="bg-lighter p-3 rounded mb-4">
+                        <label class="form-label fw-bold mb-1" for="userWebhookUrl">Your Personal Inbound Webhook URL</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control form-control-lg font-monospace text-muted" id="userWebhookUrl" readonly value="<?= esc($userWebhook['webhook_url'] ?? site_url('API/Alerts/webhook/not-generated')); ?>">
+                            <button type="button" class="btn btn-primary" id="btnCopyWebhook">
+                                <em class="icon ni ni-copy"></em> <span>Copy URL</span>
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" id="btnRotateWebhook" title="Rotate your token if compromised">
+                                <em class="icon ni ni-reload"></em> <span>Rotate Token</span>
+                            </button>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-2 small text-muted">
+                            <div>
+                                <span id="webhookCopyFeedback" class="text-success d-none fw-bold"><em class="icon ni ni-check"></em> Copied to clipboard!</span>
+                                <span class="text-soft">Total alerts received via this webhook: <strong id="webhookAlertCount"><?= (int) ($userWebhook['alert_count'] ?? 0); ?></strong></span>
+                            </div>
+                            <a class="link link-primary small" data-bs-toggle="collapse" href="#webhookGuideCollapse" role="button" aria-expanded="false" aria-controls="webhookGuideCollapse">
+                                <em class="icon ni ni-help"></em> TradingView Setup Guide &amp; Payload Format
+                            </a>
+                        </div>
+
+                        <!-- Integration Guide Collapse -->
+                        <div class="collapse mt-3" id="webhookGuideCollapse">
+                            <div class="card card-inner bg-white border">
+                                <h6 class="title mb-2">TradingView Alert Instructions</h6>
+                                <ol class="small text-muted ps-3 mb-3">
+                                    <li>Create an Alert on TradingView (or TrendSpider).</li>
+                                    <li>Check the <strong>Webhook URL</strong> checkbox and paste your personal URL above.</li>
+                                    <li>In the <strong>Message</strong> box, paste the JSON snippet below:</li>
+                                </ol>
+                                <div class="bg-dark text-light p-3 rounded small font-monospace position-relative">
+                                    <pre class="m-0 text-light" id="tvJsonSnippet">{
+  "ticker": "{{ticker}}",
+  "action": "BUY",
+  "price": {{close}},
+  "strategy": "Trend Divergence",
+  "timeframe": "{{interval}}",
+  "stop_loss": {{plot("Stop Loss")}},
+  "target_price": {{plot("Target 1")}},
+  "message": "Strong breakout signal"
+}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inbound Alerts Feed Table -->
+                    <div class="card-title-group mb-2">
+                        <div class="card-title">
+                            <h6 class="title">My Inbound Custom Alerts</h6>
+                        </div>
+                        <div class="card-tools">
+                            <div class="btn-group btn-group-sm" role="group" id="alertProviderFilter">
+                                <button type="button" class="btn btn-outline-light active" data-filter="all">All</button>
+                                <button type="button" class="btn btn-outline-light" data-filter="tradingview">TradingView</button>
+                                <button type="button" class="btn btn-outline-light" data-filter="trendspider">TrendSpider</button>
+                                <button type="button" class="btn btn-outline-light" data-filter="custom">Custom</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover align-middle mb-0" id="inboundAlertsTable">
+                            <thead>
+                                <tr>
+                                    <th>Ticker</th>
+                                    <th>Action</th>
+                                    <th>Price</th>
+                                    <th>Strategy / Event</th>
+                                    <th>Target / Stop</th>
+                                    <th>Source</th>
+                                    <th>Received</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if (! empty($userIncomingAlerts)): ?>
+                                    <?php foreach ($userIncomingAlerts as $inAlert): ?>
+                                        <?php
+                                        $act = strtoupper((string) ($inAlert['action'] ?? 'ALERT'));
+                                        $badgeClass = 'bg-primary-dim text-primary';
+                                        if ($act === 'BUY') {
+                                            $badgeClass = 'bg-success-dim text-success';
+                                        } elseif ($act === 'SELL') {
+                                            $badgeClass = 'bg-danger-dim text-danger';
+                                        } elseif (in_array($act, ['CALL', 'PUT'], true)) {
+                                            $badgeClass = 'bg-info-dim text-info';
+                                        }
+                                        ?>
+                                        <tr data-provider="<?= esc(strtolower((string) ($inAlert['provider'] ?? 'custom')), 'attr'); ?>" id="alert-row-<?= (int) $inAlert['id']; ?>">
+                                            <td>
+                                                <span class="badge bg-dark text-white fw-bold fs-6">
+                                                    <?= esc($inAlert['ticker'] ?? 'N/A'); ?>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="badge <?= $badgeClass; ?> fw-bold">
+                                                    <?= esc($act); ?>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <strong><?= isset($inAlert['price']) && $inAlert['price'] !== null ? '$' . number_format((float) $inAlert['price'], 2) : '-'; ?></strong>
+                                            </td>
+                                            <td>
+                                                <div><strong><?= esc($inAlert['strategy'] ?? 'Signal'); ?></strong></div>
+                                                <?php if (! empty($inAlert['message'])): ?>
+                                                    <small class="text-muted text-truncate d-inline-block" style="max-width: 200px;">
+                                                        <?= esc($inAlert['message']); ?>
+                                                    </small>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <small class="text-muted d-block">
+                                                    Target: <?= isset($inAlert['target_price']) && $inAlert['target_price'] !== null ? '$' . number_format((float) $inAlert['target_price'], 2) : 'None'; ?>
+                                                </small>
+                                                <small class="text-muted d-block">
+                                                    Stop: <?= isset($inAlert['stop_loss']) && $inAlert['stop_loss'] !== null ? '$' . number_format((float) $inAlert['stop_loss'], 2) : 'None'; ?>
+                                                </small>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-light text-dark border">
+                                                    <?= esc(ucfirst((string) ($inAlert['provider'] ?? 'Webhook'))); ?>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <small class="text-soft">
+                                                    <?= esc($inAlert['created_at'] ?? 'Just now'); ?>
+                                                </small>
+                                            </td>
+                                            <td class="text-end">
+                                                <button type="button" class="btn btn-trigger btn-icon btn-sm btnViewPayload" data-payload="<?= esc($inAlert['raw_payload'] ?? '{}', 'attr'); ?>" title="View Raw JSON">
+                                                    <em class="icon ni ni-code"></em>
+                                                </button>
+                                                <button type="button" class="btn btn-trigger btn-icon btn-sm text-danger btnDismissAlert" data-alert-id="<?= (int) $inAlert['id']; ?>" title="Dismiss">
+                                                    <em class="icon ni ni-cross"></em>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr id="emptyAlertsRow">
+                                        <td colspan="8" class="text-center py-4 text-muted">
+                                            <em class="icon ni ni-inbox fs-2 d-block mb-1 text-soft"></em>
+                                            No incoming custom alerts yet. Send an alert to your Webhook URL above to start receiving live signals.
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -529,5 +730,185 @@ document.addEventListener('DOMContentLoaded', function () {
             },
         });
     }
+});
+</script>
+
+<!-- Modal: View Raw Webhook Payload -->
+<div class="modal fade" id="viewPayloadModal" tabindex="-1" role="dialog" aria-labelledby="viewPayloadModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewPayloadModalTitle">Inbound Webhook Payload</h5>
+                <button type="button" class="close btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <pre class="bg-dark text-light p-3 rounded font-monospace small" id="payloadJsonDisplay" style="max-height: 400px; overflow-y: auto;"></pre>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script<?= script_nonce_attr() ?>>
+document.addEventListener('DOMContentLoaded', function () {
+    // 1. Copy Webhook URL
+    var copyBtn = document.getElementById('btnCopyWebhook');
+    var webhookInput = document.getElementById('userWebhookUrl');
+    var feedback = document.getElementById('webhookCopyFeedback');
+
+    if (copyBtn && webhookInput) {
+        copyBtn.addEventListener('click', function () {
+            webhookInput.select();
+            webhookInput.setSelectionRange(0, 99999);
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(webhookInput.value).then(showFeedback);
+            } else {
+                document.execCommand('copy');
+                showFeedback();
+            }
+        });
+    }
+
+    function showFeedback() {
+        if (!feedback) return;
+        feedback.classList.remove('d-none');
+        setTimeout(function () {
+            feedback.classList.add('d-none');
+        }, 3000);
+    }
+
+    // 2. Rotate Webhook Token
+    var rotateBtn = document.getElementById('btnRotateWebhook');
+    if (rotateBtn) {
+        rotateBtn.addEventListener('click', function () {
+            if (!confirm('Are you sure you want to rotate your webhook token? You will need to update TradingView and your other services with the new URL.')) {
+                return;
+            }
+
+            rotateBtn.disabled = true;
+            rotateBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Rotating...';
+
+            var csrfName = window.CSRF_TOKEN ? window.CSRF_TOKEN.name : '<?= csrf_token() ?>';
+            var csrfHash = window.CSRF_TOKEN ? window.CSRF_TOKEN.hash : '<?= csrf_hash() ?>';
+
+            var formData = new FormData();
+            formData.append(csrfName, csrfHash);
+
+            fetch('<?= site_url('API/Alerts/regenerateWebhook'); ?>', {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-Token': csrfHash
+                },
+                body: formData
+            })
+            .then(function (res) { return res.json(); })
+            .then(function (data) {
+                rotateBtn.disabled = false;
+                rotateBtn.innerHTML = '<em class="icon ni ni-reload"></em> <span>Rotate Token</span>';
+                if (data.status === 'success' && data.data && data.data.webhook_url) {
+                    webhookInput.value = data.data.webhook_url;
+                    var countEl = document.getElementById('webhookAlertCount');
+                    if (countEl) countEl.textContent = '0';
+                    alert('Your webhook token has been regenerated successfully!');
+                } else {
+                    alert(data.message || 'Failed to rotate webhook token');
+                }
+            })
+            .catch(function (err) {
+                rotateBtn.disabled = false;
+                rotateBtn.innerHTML = '<em class="icon ni ni-reload"></em> <span>Rotate Token</span>';
+                console.error('Error rotating token:', err);
+                alert('An error occurred while rotating your token.');
+            });
+        });
+    }
+
+    // 3. View Payload Modal
+    document.querySelectorAll('.btnViewPayload').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var raw = this.getAttribute('data-payload') || '{}';
+            var formatted = raw;
+            try {
+                var parsed = JSON.parse(raw);
+                formatted = JSON.stringify(parsed, null, 2);
+            } catch (e) {
+                formatted = raw;
+            }
+            var display = document.getElementById('payloadJsonDisplay');
+            if (display) display.textContent = formatted;
+
+            var modalEl = document.getElementById('viewPayloadModal');
+            if (modalEl && window.bootstrap && window.bootstrap.Modal) {
+                var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                modal.show();
+            }
+        });
+    });
+
+    // 4. Dismiss Inbound Alert
+    document.querySelectorAll('.btnDismissAlert').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var alertId = this.getAttribute('data-alert-id');
+            if (!alertId || !confirm('Dismiss this alert from your active feed?')) {
+                return;
+            }
+
+            var csrfName = window.CSRF_TOKEN ? window.CSRF_TOKEN.name : '<?= csrf_token() ?>';
+            var csrfHash = window.CSRF_TOKEN ? window.CSRF_TOKEN.hash : '<?= csrf_hash() ?>';
+
+            var formData = new FormData();
+            formData.append(csrfName, csrfHash);
+
+            fetch('<?= site_url('API/Alerts/dismissAlert'); ?>/' + alertId, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-Token': csrfHash
+                },
+                body: formData
+            })
+            .then(function (res) { return res.json(); })
+            .then(function (data) {
+                if (data.status === 'success') {
+                    var row = document.getElementById('alert-row-' + alertId);
+                    if (row) row.remove();
+                }
+            })
+            .catch(function (err) {
+                console.error('Dismiss error:', err);
+            });
+        });
+    });
+
+    // 5. Provider Filtering
+    var filterButtons = document.querySelectorAll('#alertProviderFilter button');
+    filterButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            filterButtons.forEach(function (b) { b.classList.remove('active'); });
+            this.classList.add('active');
+
+            var filter = this.getAttribute('data-filter');
+            var rows = document.querySelectorAll('#inboundAlertsTable tbody tr[data-provider]');
+            var visibleCount = 0;
+
+            rows.forEach(function (row) {
+                var prov = row.getAttribute('data-provider');
+                if (filter === 'all' || prov === filter) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            var emptyRow = document.getElementById('emptyAlertsRow');
+            if (emptyRow) {
+                emptyRow.style.display = visibleCount === 0 && rows.length > 0 ? '' : 'none';
+            }
+        });
+    });
 });
 </script>

@@ -47,31 +47,27 @@
    Button hover "resize/jump" fixes (Dashlite/theme overrides)
    ========================================================= */
 
-/* 1) Prevent font-weight changes from resizing buttons */
+/* 1) Prevent font-weight changes and coordinate shifts from resizing buttons */
 .btn,
 .btn:hover,
 .btn:focus,
-.btn:active {
+.btn:active,
+.btn.active {
   font-weight: inherit !important;
+  transform: none !important;
 }
 
-/* 2) Lock border width so hover doesn't change the box size */
+/* 2) Lock border width and padding so hover/focus/active never changes box size or cancels clicks */
 .btn {
   border-width: 1px !important;
-  padding: 0.65rem 0.65rem;
+  padding: 0.65rem 1rem;
 }
-a:hover, a:focus {
-    color: white!important;;
-}
-/* If your theme forces outline buttons to thicker borders on hover, hard-lock it */
-.btn-outline-primary,
-.btn-outline-secondary,
-.btn-outline-success,
-.btn-outline-danger,
-.btn-outline-warning,
-.btn-outline-info,
-.btn-outline-dark {
+.btn:hover,
+.btn:focus,
+.btn:active,
+.btn.active {
   border-width: 1px !important;
+  padding: 0.65rem 1rem !important;
 }
 
 /* 3) If your "Quick Links" buttons are meant to be full-width, make it explicit */
@@ -82,33 +78,113 @@ a:hover, a:focus {
   width: 100%;
 }
 
-/* 4) Stop any hover transform that can feel like a resize */
-.btn:hover {
-  transform: none !important;
-  padding: 0.6rem !important;
-}
-
-/* 5) Keep line-height stable (some themes change it on hover) */
-/* .btn {
-  line-height: 1 !important;
-} */
 /* =========================================================
-   STOP global focus styling from breaking buttons/links
+   Accessible focus rings without color corruption or jump
    ========================================================= */
 
-/* Remove the global focus paint from interactive UI elements */
-a:focus, a:focus-visible,
-button:focus, button:focus-visible,
-.btn:focus, .btn:focus-visible {
-  background-color: inherit !important;
-  color: white !important;
+/* Prevent browser focus outlines from distorting button geometry */
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible {
   outline: none !important;
 }
 
-/* Apply a proper Bootstrap-like focus ring instead */
+/* Apply clean Bootstrap-standard focus ring */
 .btn:focus,
 .btn:focus-visible {
   box-shadow: 0 0 0 .25rem rgba(13,110,253,.25) !important;
+}
+
+/* Ensure outline buttons keep legible text contrast on hover/focus */
+.btn-primary:focus, .btn-primary:active {
+  color: #fff !important;
+}
+
+/* Modal Stacking & Visibility Guards (Always sit above .modal-backdrop 1990) */
+.modal {
+  z-index: 2000 !important;
+}
+.modal-backdrop {
+  z-index: 1990 !important;
+}
+body.modal-open .modal {
+  z-index: 2000 !important;
+}
+body.modal-open .modal-backdrop {
+  z-index: 1990 !important;
+}
+.modal.fade .modal-dialog {
+  transition: transform .3s ease-out;
+  transform: translate(0, -50px);
+}
+.modal.show .modal-dialog {
+  transform: none !important;
+}
+.modal.show {
+  display: block !important;
+  opacity: 1 !important;
+}
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 1.75rem auto;
+  pointer-events: auto;
+  z-index: 2005 !important;
+}
+.modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  background-color: #fff !important;
+  background-clip: padding-box;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 0.5rem;
+  outline: 0;
+  z-index: 2006 !important;
+}
+
+/* Sidebar flex containment & independent scroll */
+.nk-sidebar-fixed {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  z-index: 1020 !important;
+}
+.nk-sidebar-element.nk-sidebar-head {
+  flex: 0 0 65px !important;
+}
+.nk-sidebar-element:not(.nk-sidebar-head) {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: calc(100vh - 65px) !important;
+  max-height: calc(100vh - 65px) !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+.nk-sidebar-body,
+.scrollable-sidebar {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch;
+}
+.nk-sidebar-content {
+  min-height: 100% !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 /* Sidebar submenu visibility guard (class-driven only) */
@@ -151,5 +227,216 @@ button:focus, button:focus-visible,
   }
   body.mymi-sidebar-collapsed #mymiSidebarOpen {
     display: inline-flex;
+  }
+}
+
+/* =========================================================
+   High-Contrast Solid Navbar Typography & Toggler
+   ========================================================= */
+
+/* Public Intro Navbar container */
+.intro-navbar {
+  background-color: #061540 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 4px 20px rgba(0, 7, 34, 0.25) !important;
+}
+
+/* Force solid 100% white contrast on all navbar links (eliminates Bootstrap 55% transparent wash) */
+.navbar-dark .navbar-nav .nav-link,
+.intro-navbar .nav-link,
+.intro-navbar .intro-nav-link {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  font-weight: 600 !important;
+  font-size: 0.9375rem !important;
+  letter-spacing: 0.01em;
+  padding: 0.5rem 0.85rem !important;
+  transition: color 0.15s ease-in-out;
+}
+
+/* Hover and active states pop with brand teal */
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus,
+.intro-navbar .nav-link:hover,
+.intro-navbar .nav-link:focus,
+.intro-navbar .intro-nav-link:hover,
+.intro-navbar .intro-nav-link:focus,
+.navbar-dark .navbar-nav .nav-link.active {
+  color: #38cfc2 !important;
+}
+
+/* Brand and plain navbar text */
+.navbar-dark .navbar-brand,
+.navbar-dark .navbar-text,
+.intro-navbar .navbar-brand {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  font-weight: 600;
+}
+
+/* Mobile toggler button and hamburger icon */
+.navbar-dark .navbar-toggler,
+.intro-navbar .navbar-toggler {
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  padding: 0.35rem 0.65rem !important;
+  border-radius: 6px !important;
+  background-color: transparent !important;
+}
+.navbar-dark .navbar-toggler:focus,
+.intro-navbar .navbar-toggler:focus {
+  box-shadow: 0 0 0 0.2rem rgba(56, 207, 194, 0.35) !important;
+}
+.navbar-dark .navbar-toggler-icon,
+.intro-navbar .navbar-toggler-icon {
+  background-color: transparent !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* =========================================================
+   High-Contrast Solid Public Footer (Deep Navy Theme)
+   ========================================================= */
+
+.intro-footer,
+.intro-section.intro-footer {
+  background-color: #061540 !important;
+  color: #cbd5e1 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+  padding: 2.75rem 1rem 2.25rem !important;
+  margin-bottom: 0 !important;
+}
+
+/* Footer menu list */
+.intro-footer .intro-menu {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 0 1.25rem 0 !important;
+}
+.intro-footer .intro-menu li {
+  display: inline-block !important;
+  padding: 0 1rem !important;
+}
+
+/* Footer links: solid white, crisp, legible uppercase */
+.intro-footer .intro-menu a,
+.intro-footer a.link-to {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  transition: color 0.15s ease-in-out;
+}
+.intro-footer .intro-menu a:hover,
+.intro-footer .intro-menu a:focus,
+.intro-footer a.link-to:hover,
+.intro-footer a.link-to:focus {
+  color: #38cfc2 !important;
+  text-decoration: underline !important;
+}
+
+/* Copyright text: clear light slate (high-contrast on #061540) */
+.intro-footer .intro-copyright,
+.intro-footer .intro-copyright p {
+  color: #cbd5e1 !important;
+  font-size: 0.8125rem !important;
+  line-height: 1.65 !important;
+  margin: 0 !important;
+}
+
+/* Powered by link in copyright */
+.intro-footer .intro-copyright a {
+  color: #38cfc2 !important;
+  text-decoration: underline !important;
+  font-weight: 600 !important;
+  transition: color 0.15s ease-in-out;
+}
+.intro-footer .intro-copyright a:hover,
+.intro-footer .intro-copyright a:focus {
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   High-Contrast Clean Dashboard Footer
+   ========================================================= */
+
+footer.map-bg,
+.map-bg {
+  background-color: #f8fafc !important;
+  border-top: 1px solid #e2e8f0 !important;
+  padding: 2.5rem 0 1.5rem !important;
+}
+
+footer.map-bg h4 {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+  font-size: 0.9375rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.85rem;
+}
+
+footer.map-bg .text-muted,
+footer.map-bg .text-muted a,
+footer.map-bg a.reset-anchor,
+footer.map-bg a {
+  color: #334155 !important;
+  font-size: 0.875rem !important;
+  text-decoration: none !important;
+  transition: color 0.15s ease-in-out;
+}
+
+footer.map-bg a.reset-anchor:hover,
+footer.map-bg a:hover,
+footer.map-bg .text-muted a:hover {
+  color: #2563eb !important;
+  text-decoration: underline !important;
+}
+
+footer.map-bg p.text-muted {
+  color: #64748b !important;
+  font-size: 0.8125rem !important;
+}
+
+/* =========================================================
+   Checkbox & Badge Form Controls Fixes
+   ========================================================= */
+
+/* Fix checkbox and radio sizing (undo legacy 15% width distortion) */
+input[type="checkbox"],
+input[type="checkbox"].form-check-input {
+  width: 1.15em !important;
+  height: 1.15em !important;
+  max-width: 1.15em !important;
+  margin-top: 0.25em;
+  vertical-align: top;
+  border-radius: 0.25em;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Ensure clean badge typography and spacing */
+.badge {
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 0.35rem 0.65rem;
+}
+.badge .icon {
+  margin-right: 0.25rem;
+}
+
+/* =========================================================
+   Fixed Header & Content Spacing Fix
+   Prevents content from colliding/overlapping with the fixed navbar
+   ========================================================= */
+.nk-wrap > .nk-content,
+.nk-content.content-wrapper {
+  margin-top: 65px !important;
+}
+@media (max-width: 991.98px) {
+  .nk-wrap > .nk-content,
+  .nk-content.content-wrapper {
+    margin-top: 75px !important;
   }
 }

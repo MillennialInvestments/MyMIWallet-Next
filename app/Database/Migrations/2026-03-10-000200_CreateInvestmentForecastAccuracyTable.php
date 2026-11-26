@@ -14,7 +14,7 @@ class CreateInvestmentForecastAccuracyTable extends Migration
                 'forecast_id' => ['type' => 'BIGINT', 'unsigned' => true],
                 'ticker' => ['type' => 'VARCHAR', 'constraint' => 16],
                 'timeframe' => ['type' => 'VARCHAR', 'constraint' => 16],
-                'evaluation_window' => ['type' => 'INT', 'constraint' => 6],
+                'evaluation_window' => ['type' => 'INT', 'constraint' => 6, 'null' => true],
                 'forecast_direction' => ['type' => 'ENUM', 'constraint' => ['bullish', 'bearish', 'neutral']],
                 'confidence_score' => ['type' => 'INT', 'constraint' => 3, 'default' => 0],
                 'target_price' => ['type' => 'DECIMAL', 'constraint' => '16,6', 'null' => true],
@@ -27,7 +27,7 @@ class CreateInvestmentForecastAccuracyTable extends Migration
                 'window_end' => ['type' => 'DATETIME', 'null' => true],
                 'evaluated_at' => ['type' => 'DATETIME', 'null' => true],
                 'notes' => ['type' => 'TEXT', 'null' => true],
-                'created_at' => ['type' => 'DATETIME'],
+                'created_at' => ['type' => 'DATETIME', 'null' => true],
             ]);
             $this->forge->addKey('id', true);
             $this->forge->addKey('forecast_id');
@@ -35,7 +35,29 @@ class CreateInvestmentForecastAccuracyTable extends Migration
             $this->forge->addKey('timeframe');
             $this->forge->addKey('evaluation_window');
             $this->forge->addKey('created_at');
-            $this->forge->createTable('bf_investment_forecast_accuracy');
+            $this->forge->createTable('bf_investment_forecast_accuracy', true);
+        } else {
+            $existingFields = $this->db->getFieldNames('bf_investment_forecast_accuracy');
+            $additiveColumns = [
+                'evaluation_window' => ['type' => 'INT', 'constraint' => 6, 'null' => true],
+                'confidence_score' => ['type' => 'INT', 'constraint' => 3, 'default' => 0],
+                'target_price' => ['type' => 'DECIMAL', 'constraint' => '16,6', 'null' => true],
+                'range_low' => ['type' => 'DECIMAL', 'constraint' => '16,6', 'null' => true],
+                'range_high' => ['type' => 'DECIMAL', 'constraint' => '16,6', 'null' => true],
+                'hit_result' => ['type' => 'VARCHAR', 'constraint' => 16, 'default' => 'unknown'],
+                'mfe' => ['type' => 'DECIMAL', 'constraint' => '16,6', 'null' => true],
+                'mae' => ['type' => 'DECIMAL', 'constraint' => '16,6', 'null' => true],
+                'window_start' => ['type' => 'DATETIME', 'null' => true],
+                'window_end' => ['type' => 'DATETIME', 'null' => true],
+                'evaluated_at' => ['type' => 'DATETIME', 'null' => true],
+                'notes' => ['type' => 'TEXT', 'null' => true],
+                'created_at' => ['type' => 'DATETIME', 'null' => true],
+            ];
+            foreach ($additiveColumns as $columnName => $definition) {
+                if (! in_array($columnName, $existingFields, true)) {
+                    $this->forge->addColumn('bf_investment_forecast_accuracy', [$columnName => $definition]);
+                }
+            }
         }
     }
 

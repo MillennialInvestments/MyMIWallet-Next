@@ -23,7 +23,11 @@ class PositionsModel extends Model
     public function accumulate(
         int $userId, int $marketId, int $optionId, int $fillOddsBips, string $asset, float $stake, float $payout
     ): void {
-        $existing = $this->where(compact('user_id','market_id','option_id'))->first();
+        $existing = $this->where([
+            'user_id' => $userId,
+            'market_id' => $marketId,
+            'option_id' => $optionId,
+        ])->first();
         $now = date('Y-m-d H:i:s');
         if ($existing) {
             $newStake  = (float)$existing['stake_total'] + $stake;
