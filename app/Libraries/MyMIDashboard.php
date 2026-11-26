@@ -120,7 +120,7 @@ class MyMIDashboard
     }
 
     public function getCryptoAccount($cuID, $exchange = null) {
-        if ($cuID === 0) {
+        if (empty($cuID)) {
             return [
                 'accountInfo' => [
                     'id' => 0,
@@ -135,9 +135,10 @@ class MyMIDashboard
         }
         // log_message('debug', 'MyMIDashboard L110 - $cuID: ' . $cuID); 
 
-        if ($exchange === 'Solana' && $this->siteSettings->solanaExchange === 1) {
+        if ($exchange === 'Solana' && ($this->siteSettings->solanaExchange ?? 0) === 1) {
             $this->MyMISolana = new MyMISolana();
-            $cuSolanaDW = $this->MyMISolana->getUserDefaultSolana($cuID)['cuSolanaDW'];
+            $defaultSolana = $this->MyMISolana->getUserDefaultSolana((int) $cuID);
+            $cuSolanaDW = is_array($defaultSolana) ? ($defaultSolana['cuSolanaDW'] ?? []) : [];
 
             return [
                 'accountInfo' => [

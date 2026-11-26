@@ -68,7 +68,11 @@
                 </div><!-- .nk-block-content -->
             </div>
             <?php 
-            $controlCenterData = [];
+            $controlCenterData = [
+                'cuDisplayName' => $cuDisplayName ?? 'User',
+                'cuEmail'       => $cuEmail ?? '',
+                'MyMIGCoinSum'  => $MyMIGCoinSum ?? 0,
+            ];
             echo view('UserModule\Views\Dashboard\Account\ControlCenter', $controlCenterData); 
             ?>
         </div><!-- .card-aside-wrap -->

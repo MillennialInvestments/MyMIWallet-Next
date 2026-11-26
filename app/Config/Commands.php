@@ -37,5 +37,6 @@ class Commands extends BaseConfig
         'exchange:create-tbi-project-coin-drafts' => \App\Commands\CreateTbiProjectCoinDrafts::class,
         'market:freshness:audit' => \App\Commands\Market\MarketFreshnessAudit::class,
         'alerts:evaluate' => \App\Commands\Alerts\Evaluate::class,
+        'exchange:reconcile' => \App\Commands\Exchange\Reconcile::class,
     ];
 }

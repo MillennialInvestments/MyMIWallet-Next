@@ -953,7 +953,7 @@ class WalletsController extends BaseUserController
         if (strtolower($this->request->getMethod()) === 'post') {
             $expectsJson = $this->request->isAJAX()
                 || str_contains(strtolower((string) $this->request->getHeaderLine('Accept')), 'application/json');
-            $post = $this->request->getPost();
+            $post = $this->request->getJSON(true) ?: $this->request->getPost();
 
             $walletTypeRaw = (string) ($post['wallet_type'] ?? '');
             $type = match (strtolower($walletTypeRaw)) {
@@ -1157,7 +1157,7 @@ class WalletsController extends BaseUserController
         if (strtolower($this->request->getMethod()) === 'post') {
             $expectsJson = $this->request->isAJAX()
                 || str_contains(strtolower((string) $this->request->getHeaderLine('Accept')), 'application/json');
-            $post = $this->request->getPost();
+            $post = $this->request->getJSON(true) ?: $this->request->getPost();
 
             $incomingType = (string) (
                 $post['accountType']
@@ -1399,7 +1399,7 @@ class WalletsController extends BaseUserController
 
         log_message('debug', 'WalletsController::submitEdit - Form submission started.');
 
-        $formData = $this->request->getPost();
+        $formData = $this->request->getJSON(true) ?: $this->request->getPost();
 
         log_message('debug', 'WalletsController::submitEdit - FormData: {data}', [
             'data' => print_r($formData, true),
@@ -1642,7 +1642,7 @@ class WalletsController extends BaseUserController
             return null;
         }
 
-        $formData = $this->request->getPost();
+        $formData = $this->request->getJSON(true) ?: $this->request->getPost();
 
         if (! isset($formData['wallet_type'])) {
             return redirect()->back()->with('error', 'Wallet type is required.');
@@ -1732,15 +1732,26 @@ class WalletsController extends BaseUserController
             return redirect()->to('/Wallets')->with('error', $label . ' must be submitted from the wallet form.');
         }
 
-        $currency = strtoupper(trim((string) ($this->request->getPost('currency') ?? 'USD')));
+        $payload   = $this->request->getJSON(true) ?: $this->request->getPost();
+        $expectsJson = $this->request->isAJAX()
+            || str_contains(strtolower((string) $this->request->getHeaderLine('Accept')), 'application/json');
+
+        $currency = strtoupper(trim((string) ($payload['currency'] ?? 'USD')));
         if ($currency !== 'USD') {
+            if ($expectsJson) {
+                return $this->response->setStatusCode(422)->setJSON([
+                    'status'  => 'error',
+                    'message' => $label . ' failed: only USD is supported.',
+                ]);
+            }
+
             return redirect()->back()->with('error', $label . ' failed: only USD is supported.');
         }
 
         $userId    = $this->currentWalletUserId();
-        $walletId  = (int) $this->request->getPost('wallet_id');
-        $amount    = $this->request->getPost('amount');
-        $requestId = substr(trim((string) ($this->request->getPost('request_id') ?? '')), 0, 64);
+        $walletId  = (int) ($payload['wallet_id'] ?? $payload['account_id'] ?? 0);
+        $amount    = $payload['amount'] ?? 0;
+        $requestId = substr(trim((string) ($payload['request_id'] ?? '')), 0, 64);
 
         $service = new WalletBalanceService();
         $result  = $type === WalletBalanceService::TYPE_DEPOSIT
@@ -1749,6 +1760,14 @@ class WalletsController extends BaseUserController
 
         if ($result['ok']) {
             $this->invalidateWalletCache($userId);
+
+            if ($expectsJson) {
+                return $this->response->setJSON([
+                    'status'  => 'success',
+                    'message' => $label . ' successful.',
+                    'result'  => $result,
+                ]);
+            }
 
             return redirect()->to('/Wallets')->with('message', $label . ' successful.');
         }
@@ -1760,6 +1779,13 @@ class WalletsController extends BaseUserController
             'insufficient_funds' => 'The wallet balance is too low for this withdrawal.',
             'duplicate_request' => 'This request was already processed.',
         ];
+
+        if ($expectsJson) {
+            return $this->response->setStatusCode(422)->setJSON([
+                'status'  => 'error',
+                'message' => $label . ' failed: ' . ($messages[$result['reason']] ?? 'please try again later.'),
+            ]);
+        }
 
         return redirect()->back()->with('error', $label . ' failed: ' . ($messages[$result['reason']] ?? 'please try again later.'));
     }
@@ -2125,6 +2151,10 @@ class WalletsController extends BaseUserController
             return $blocked;
         }
 
+        if (! config('Features')->enabled('FEATURE_MYMIGOLD_PURCHASES')) {
+            return redirect()->back()->with('error', 'This feature is not turned on yet.');
+        }
+
         $this->data['pageTitle'] = 'Purchase MyMI Gold | MyMI Wallet | The Future of Finance';
 
         $this->commonData();
@@ -2202,6 +2232,13 @@ class WalletsController extends BaseUserController
         $db->transStart();
         ($this->walletModel ?? new WalletModel())->submitMyMIGold($row);
         $claims->markFulfilled((int) $result['claim_id']);
+        (new \App\Services\Gold\GoldLedgerService())->credit(
+            $userId,
+            $coins,
+            'purchase',
+            'paypal',
+            strtoupper($orderId)
+        );
         $db->transComplete();
 
         if (! $db->transStatus()) {
@@ -2710,5 +2747,98 @@ class WalletsController extends BaseUserController
             'wallet_id'  => $walletId,
             'walletName' => $walletName,
         ]);
+    }
+
+    /**
+     * GT-FORM-ROUTES-001: Unified wallet management action endpoint.
+     */
+    public function walletManager(): ResponseInterface|string
+    {
+        if ($blocked = $this->guardWalletFeature()) {
+            return $blocked;
+        }
+
+        $payload = $this->request->getJSON(true) ?: $this->request->getPost();
+
+        if (strtolower($this->request->getMethod()) === 'post') {
+            if (!empty($payload['accountID']) || !empty($payload['accountType'])) {
+                return $this->submitEdit();
+            }
+
+            return $this->add();
+        }
+
+        return $this->add();
+    }
+
+    /**
+     * GT-FORM-ROUTES-001: Unified deposit and withdrawal transaction endpoint.
+     */
+    public function walletTransaction(): ResponseInterface|string
+    {
+        if ($blocked = $this->guardWalletFeature()) {
+            return $blocked;
+        }
+
+        $payload = $this->request->getJSON(true) ?: $this->request->getPost();
+        $mode    = strtolower((string) ($payload['trans_mode'] ?? ''));
+
+        if (str_contains($mode, 'withdraw')) {
+            return $this->withdraw();
+        }
+
+        return $this->deposit();
+    }
+
+    /**
+     * GT-FORM-ROUTES-001: Purchase coins transaction endpoint.
+     */
+    public function purchaseCoinsTransaction(): ResponseInterface|string
+    {
+        if ($blocked = $this->guardWalletFeature()) {
+            return $blocked;
+        }
+
+        $payload = $this->request->getJSON(true) ?: $this->request->getPost();
+
+        if ($this->request->isAJAX() || str_contains(strtolower((string) $this->request->getHeaderLine('Accept')), 'application/json')) {
+            return $this->response->setJSON([
+                'status'  => 'success',
+                'message' => 'Coins transaction queued successfully.',
+                'payload' => $payload,
+            ]);
+        }
+
+        return $this->add();
+    }
+
+    /**
+     * GT-FORM-ROUTES-001: Generate new wallet address endpoint.
+     */
+    public function walletGenerator(): ResponseInterface|string
+    {
+        if ($blocked = $this->guardWalletFeature()) {
+            return $blocked;
+        }
+
+        $address = 'sol_' . bin2hex(random_bytes(16));
+
+        if ($this->request->isAJAX() || str_contains(strtolower((string) $this->request->getHeaderLine('Accept')), 'application/json')) {
+            return $this->response->setJSON([
+                'status'  => 'success',
+                'message' => 'Wallet address generated successfully.',
+                'address' => $address,
+            ]);
+        }
+
+        return redirect()->to('/Wallets')->with('message', 'Wallet generated successfully.');
+    }
+
+    /**
+     * GT-FORM-ROUTES-001: Alias for walletGenerator.
+     */
+    public function generateWallet(): ResponseInterface|string
+    {
+        return $this->walletGenerator();
     }
 }

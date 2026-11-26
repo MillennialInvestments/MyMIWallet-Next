@@ -1,0 +1,10 @@
+[Unit]
+Description=Run the MyMI Wallet nightly ops jobs at 02:00 Chicago
+
+[Timer]
+OnCalendar=*-*-* 02:00:00 America/Chicago
+RandomizedDelaySec=10m
+Persistent=true
+
+[Install]
+WantedBy=timers.target

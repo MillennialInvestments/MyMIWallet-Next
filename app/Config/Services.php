@@ -576,6 +576,17 @@ class Services extends CoreServices
         return new MyMIForecaster($provider, $forecastModel, $alertsModel, $cache, $config);
     }
 
+    public static function mymipredictions(bool $getShared = true): \App\Libraries\MyMIPredictions
+    {
+        if ($getShared) {
+            /** @var \App\Libraries\MyMIPredictions $service */
+            $service = static::getSharedInstance('mymipredictions');
+            return $service;
+        }
+
+        return new \App\Libraries\MyMIPredictions();
+    }
+
     public static function forecastAggregation(bool $getShared = true)
     {
         return static::forecastAggregationService($getShared);

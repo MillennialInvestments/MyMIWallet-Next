@@ -222,7 +222,7 @@ class SolanaAPIController extends BaseAPIController {
                 $fromToken = $this->request->getPost('from_token');
                 $toToken = $this->request->getPost('to_token');
                 $amount = $this->request->getPost('amount');
-                $userId = $this->request->getPost('user_id');
+                $userId = (int) ($this->cuID ?? $this->auth?->id() ?? 0);
                 $publicKey = $this->request->getPost('public_key');
                 return $this->privateKeySubmissionDisabledResponse();
                 $fromAddress = $this->request->getPost('from_address');
@@ -245,7 +245,8 @@ class SolanaAPIController extends BaseAPIController {
 
                 $this->updateUserBalance($userId, $publicKey, $balance - $totalCost);
                 $this->recordTransactionHistory($userId, $fromToken, $toToken, $amount, $transactionFees, $transactionResult);
-                $this->sendTransactionConfirmation($this->request->getPost('user_email'), $transactionResult);
+                $userEmail = (string) ($this->session?->get('user_email') ?? $this->request->getPost('user_email') ?? '');
+                $this->sendTransactionConfirmation($userEmail, $transactionResult);
 
                 return $this->respond(['status' => 'success', 'transactionResult' => $transactionResult]);
             } catch (\Exception $e) {

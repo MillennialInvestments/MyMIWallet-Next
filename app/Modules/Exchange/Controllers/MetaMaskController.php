@@ -42,16 +42,12 @@ class MetaMaskController extends UserController
 
     public function generateWallet()
     {
-        $response = $this->metaMask->generateWallet();
-        return $this->response->setJSON($response);
+        return $this->walletSignatureRequired('generateWallet');
     }
 
     public function signTransaction()
     {
-        $transaction = $this->request->getPost('transaction');
-        $privateKey = $this->request->getPost('privateKey');
-        $response = $this->metaMask->signTransaction($transaction, $privateKey);
-        return $this->response->setJSON($response);
+        return $this->walletSignatureRequired('signTransaction');
     }
 
     public function verifySignature()
@@ -65,13 +61,24 @@ class MetaMaskController extends UserController
 
     public function sendAsset()
     {
-        $privateKey = $this->request->getPost('privateKey');
-        $fromAddress = $this->request->getPost('fromAddress');
-        $toAddress = $this->request->getPost('toAddress');
-        $assetId = $this->request->getPost('assetId');
-        $amount = $this->request->getPost('amount');
-        $response = $this->metaMask->sendAsset($privateKey, $fromAddress, $toAddress, $assetId, $amount);
-        return $this->response->setJSON($response);
+        return $this->walletSignatureRequired('sendAsset');
+    }
+
+    /**
+     * Private keys never travel to or from the server. These endpoints took a
+     * raw key in the POST (or returned a new one), so they are closed; Ethereum
+     * payments will be signed in the user's own wallet.
+     */
+    private function walletSignatureRequired(string $endpoint)
+    {
+        log_message('warning', 'Blocked MetaMask private-key endpoint {endpoint}.', ['endpoint' => $endpoint]);
+
+        return $this->response->setStatusCode(403)->setJSON([
+            'success' => false,
+            'status'  => 'error',
+            'message' => 'Private keys are never sent to MyMI. Sign in your own wallet instead.',
+            'errors'  => ['reason' => 'wallet_signature_required'],
+        ]);
     }
 
     public function getTransactionStatus()

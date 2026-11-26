@@ -123,12 +123,13 @@ class CoinVaultService
             return 0;
         }
 
-        $category = $this->db->table($table)
+        $builder = $this->db->table($table)
             ->where('category_key', $contributionType)
             ->orWhere('category_key', 'cash_contribution')
-            ->orderBy("FIELD(category_key, " . $this->db->escape($contributionType) . ", 'cash_contribution')", '', false)
-            ->get(1)
-            ->getRowArray();
+            ->orderBy('CASE WHEN category_key = ' . $this->db->escape($contributionType) . ' THEN 0 ELSE 1 END', 'ASC', false);
+
+        $result = $builder->get(1);
+        $category = $result ? $result->getRowArray() : null;
 
         return (int) ($category['id'] ?? 0);
     }
