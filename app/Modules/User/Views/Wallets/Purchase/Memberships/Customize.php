@@ -46,6 +46,7 @@ $client_id = $cuUserType === 'Beta' ? 'AffPMSjviq6Zkkpvn79YQnawbzP6bnG7J71vfbMu5
                     </div>
                     <div class="card-inner">
                         <form id="membershipForm">
+                            <?= csrf_field() ?>
                             <div class="row g-gs">
                                 <?php 
                                 // log_message('debug', 'Wallets\Purchase\Memberships\Customize L29 - $getFeatures: ' . (print_r($getFeatures, true)));
@@ -176,11 +177,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 const formData = new FormData(document.getElementById('membershipForm'));
                 formData.append('transaction_id', details.id);
                 formData.append('total_cost', details.purchase_units[0].amount.value);
+                formData.append('plan', 'customize');
+                formData.append('<?= csrf_token() ?>', '<?= csrf_hash() ?>');
 
                 fetch('<?=site_url("/Memberships/PurchaseCallback")?>', {
                     method: 'POST',
                     body: formData,
-                    credentials: 'same-origin'
+                    credentials: 'same-origin',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
                 }).then(function(response) {
                     return response.json().catch(function () { return {}; }).then(function (json) {
                         if (response.ok) {

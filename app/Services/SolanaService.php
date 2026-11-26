@@ -582,17 +582,37 @@ class SolanaService
 
     public function b58encodeFromBinary(string $bin): string
     {
-        $this->requireGmp();
+        if (function_exists('gmp_init')) {
+            // Convert bytes to big integer
+            $int = gmp_init(bin2hex($bin), 16);
+            $encoded = '';
 
-        // Convert bytes to big integer
-        $int = gmp_init(bin2hex($bin), 16);
-        $encoded = '';
-
-        // NOTE: compute remainder first, then divide
-        while (gmp_cmp($int, 0) > 0) {
-            $rem = gmp_intval(gmp_mod($int, 58));
-            $int = gmp_div_q($int, 58);
-            $encoded = self::B58_ALPHABET[$rem] . $encoded;
+            // NOTE: compute remainder first, then divide
+            while (gmp_cmp($int, 0) > 0) {
+                $rem = gmp_intval(gmp_mod($int, 58));
+                $int = gmp_div_q($int, 58);
+                $encoded = self::B58_ALPHABET[$rem] . $encoded;
+            }
+        } else {
+            // Pure-PHP base58 fallback when ext-gmp is not loaded
+            $digits = [0];
+            $len = strlen($bin);
+            for ($i = 0; $i < $len; $i++) {
+                $carry = ord($bin[$i]);
+                for ($j = 0; $j < count($digits); $j++) {
+                    $carry += $digits[$j] << 8;
+                    $digits[$j] = $carry % 58;
+                    $carry = intdiv($carry, 58);
+                }
+                while ($carry > 0) {
+                    $digits[] = $carry % 58;
+                    $carry = intdiv($carry, 58);
+                }
+            }
+            $encoded = '';
+            for ($k = count($digits) - 1; $k >= 0; $k--) {
+                $encoded .= self::B58_ALPHABET[$digits[$k]];
+            }
         }
 
         // Preserve leading 0x00 bytes as '1'

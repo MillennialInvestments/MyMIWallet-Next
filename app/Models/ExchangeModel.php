@@ -189,7 +189,7 @@ class ExchangeModel extends Model
                     ->where('status', 'Yes')
                     ->where('market_pair', $marketPair)
                     ->where('market', $market)
-                    ->findAll();
+                    ->findAll(50);
     }
 
     public function getAllOpenOrders($marketPair, $market)
@@ -252,6 +252,32 @@ class ExchangeModel extends Model
     {
         $this->table = 'bf_exchanges_orders'; // Change table for orders
         return $this->where('id', $orderId)->first();
+    }
+
+    public function createOrder(array $data)
+    {
+        return $this->db->table('bf_exchanges_orders')->insert($data);
+    }
+
+    public function updateOrders(int $id, string $field, $value)
+    {
+        return $this->db->table('bf_exchanges_orders')
+            ->where('id', $id)
+            ->update([$field => $value]);
+    }
+
+    public function deleteOrder(int $orderId)
+    {
+        return $this->db->table('bf_exchanges_orders')
+            ->where('id', $orderId)
+            ->delete();
+    }
+
+    public function executeTrade(int $orderId)
+    {
+        return $this->db->table('bf_exchanges_orders')
+            ->where('id', $orderId)
+            ->update(['status' => 'Closed', 'completed_on' => date('Y-m-d H:i:s')]);
     }
 
     public function addAccountInformation($userId, $data)

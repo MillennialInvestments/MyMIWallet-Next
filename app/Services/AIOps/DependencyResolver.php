@@ -18,7 +18,7 @@ class DependencyResolver
 
     public function isRunnable(int $instructionId): array
     {
-        $rows = $this->deps->where('instruction_id', $instructionId)->findAll();
+        $rows = $this->deps->where('instruction_id', $instructionId)->limit(100)->findAll();
 
         foreach ($rows as $r) {
             $depId = (int) $r['depends_on'];
@@ -61,7 +61,7 @@ class DependencyResolver
 
     public function detectCycles(): array
     {
-        $edges = $this->deps->findAll();
+        $edges = $this->deps->limit(1000)->findAll();
         $graph = [];
 
         foreach ($edges as $e) {

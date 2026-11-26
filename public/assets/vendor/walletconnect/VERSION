@@ -1,0 +1,6 @@
+Self-hosted bundle for MyMI Secure Transfer phone-wallet (QR) connect.
+@walletconnect/sign-client 2.26.0 (Apache-2.0) and qrcode-generator 2.0.4 (MIT),
+bundled with esbuild 0.28.2:
+  echo "import SignClient from '@walletconnect/sign-client'; import qrcode from 'qrcode-generator'; window.MST1WC = { SignClient, qrcode };" > entry.js
+  npx esbuild entry.js --bundle --minify --format=iife --platform=browser --target=es2020 --define:global=globalThis --legal-comments=eof --outfile=walletconnect-sign-client.min.js
+Loaded only when a user clicks "Connect with phone wallet". Third-party licence texts are at the end of the file.

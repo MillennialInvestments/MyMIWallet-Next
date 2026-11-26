@@ -8,9 +8,11 @@ use App\Services\OnboardingProgressService;
 use App\Services\RegistrationAttributionService;
 use App\Services\RegistrationSourceContentService;
 use App\Models\UserIpHistoryModel;
+use App\Models\WalletModel;
 use App\Modules\Support\Services\SupportTicketService;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Session\Session;
 use Myth\Auth\Config\Auth as AuthConfig;
 use Myth\Auth\Entities\User;
@@ -2519,5 +2521,366 @@ class AuthController extends BaseController
                 'message' => $e->getMessage(),
             ]);
         }
+    }
+
+    // --------------------------------------------------------------------
+    // Third-Party OAuth / Provider & Broker Authentication Handlers
+    // --------------------------------------------------------------------
+
+    /**
+     * GET /auth/provider/(:segment)
+     * Redirects the user to the third-party OAuth provider authentication portal.
+     *
+     * @param string|null $provider
+     * @return RedirectResponse|void
+     */
+    public function redirectToProvider(?string $provider = null)
+    {
+        $resolved = $this->resolveAuthProvider($provider);
+        if ($resolved === null) {
+            $this->setAuthMessage('danger', 'Invalid or unsupported authentication provider.');
+            return redirect()->to(site_url('login'));
+        }
+
+        [$providerKey, $displayName, $config] = $resolved;
+
+        if (! $this->isAuthProviderConfigured($providerKey, $config)) {
+            $this->setAuthMessage('warning', "Social login with {$displayName} is currently disabled or not configured.");
+            return redirect()->to(site_url('login'));
+        }
+
+        if (class_exists(\Hybridauth\Hybridauth::class)) {
+            try {
+                $adapter = new \Hybridauth\Hybridauth($config);
+                $adapter->authenticate($providerKey);
+                return;
+            } catch (\Throwable $e) {
+                log_message('error', "Hybridauth authentication failed for {$providerKey}: {msg}", ['msg' => $e->getMessage()]);
+            }
+        }
+
+        $this->setAuthMessage('warning', "Social login with {$displayName} is temporarily unavailable. Please sign in with your email and password.");
+        return redirect()->to(site_url('login'));
+    }
+
+    /**
+     * GET /auth/provider/(:segment)/callback
+     * Handles third-party OAuth provider callback after user authorization.
+     *
+     * @param string|null $provider
+     * @return RedirectResponse
+     */
+    public function handleProviderCallback(?string $provider = null): RedirectResponse
+    {
+        $resolved = $this->resolveAuthProvider($provider);
+        if ($resolved === null) {
+            $this->setAuthMessage('danger', 'Invalid or unsupported authentication provider.');
+            return redirect()->to(site_url('login'));
+        }
+
+        [$providerKey, $displayName, $config] = $resolved;
+
+        $error = $this->request->getGet('error') ?? $this->request->getGet('error_description');
+        if (! empty($error)) {
+            $this->setAuthMessage('danger', "Authentication with {$displayName} was canceled or declined.");
+            return redirect()->to(site_url('login'));
+        }
+
+        if (class_exists(\Hybridauth\Hybridauth::class) && $this->isAuthProviderConfigured($providerKey, $config)) {
+            try {
+                $hybridauth = new \Hybridauth\Hybridauth($config);
+                $adapter = $hybridauth->authenticate($providerKey);
+                if ($adapter && $adapter->isConnected()) {
+                    $userProfile = $adapter->getUserProfile();
+                    if (! empty($userProfile->email)) {
+                        $users = model(UserModel::class);
+                        $user = $users->where('email', $userProfile->email)->first();
+                        if ($user) {
+                            $this->auth?->login($user);
+                            return $this->redirectAfterLogin();
+                        }
+                    }
+                }
+            } catch (\Throwable $e) {
+                log_message('error', "handleProviderCallback failed for {$providerKey}: {msg}", ['msg' => $e->getMessage()]);
+            }
+        }
+
+        $this->setAuthMessage('danger', "Unable to complete {$displayName} authentication. Please sign in with your email and password.");
+        return redirect()->to(site_url('login'));
+    }
+
+    /**
+     * GET /auth/link/(:segment)
+     * Links a social/third-party auth provider to the currently authenticated account.
+     *
+     * @param string|null $provider
+     * @return RedirectResponse|void
+     */
+    public function linkProvider(?string $provider = null)
+    {
+        if (! $this->safeAuthCheck()) {
+            $this->setAuthMessage('warning', 'Please log in first to link your account.');
+            return redirect()->to(site_url('login'));
+        }
+
+        $resolved = $this->resolveAuthProvider($provider);
+        if ($resolved === null) {
+            $this->setAuthMessage('danger', 'Invalid or unsupported provider.');
+            return redirect()->to(site_url('Account'));
+        }
+
+        [$providerKey, $displayName, $config] = $resolved;
+
+        if (! $this->isAuthProviderConfigured($providerKey, $config)) {
+            $this->setAuthMessage('warning', "Provider {$displayName} linking is not configured.");
+            return redirect()->to(site_url('Account'));
+        }
+
+        if (class_exists(\Hybridauth\Hybridauth::class)) {
+            try {
+                $adapter = new \Hybridauth\Hybridauth($config);
+                $adapter->authenticate($providerKey);
+                return;
+            } catch (\Throwable $e) {
+                log_message('error', "linkProvider failed for {$providerKey}: {msg}", ['msg' => $e->getMessage()]);
+            }
+        }
+
+        $this->setAuthMessage('warning', "Provider {$displayName} linking is temporarily unavailable.");
+        return redirect()->to(site_url('Account'));
+    }
+
+    /**
+     * GET /auth/unlink/(:segment)
+     * Unlinks a third-party auth provider from the currently authenticated account.
+     *
+     * @param string|null $provider
+     * @return RedirectResponse
+     */
+    public function unlinkProvider(?string $provider = null): RedirectResponse
+    {
+        if (! $this->safeAuthCheck()) {
+            $this->setAuthMessage('warning', 'Please log in first to manage your account.');
+            return redirect()->to(site_url('login'));
+        }
+
+        $resolved = $this->resolveAuthProvider($provider);
+        if ($resolved === null) {
+            $this->setAuthMessage('danger', 'Invalid or unsupported provider.');
+            return redirect()->to(site_url('Account'));
+        }
+
+        [$providerKey, $displayName] = $resolved;
+
+        if (class_exists(\Hybridauth\Hybridauth::class)) {
+            try {
+                $config = config(\Config\Hybridauth::class) ?? [];
+                $adapter = new \Hybridauth\Hybridauth($config);
+                $adapter->disconnect($providerKey);
+            } catch (\Throwable $e) {
+                // Ignore disconnect exceptions safely
+            }
+        }
+
+        $this->setAuthMessage('success', "Provider {$displayName} has been unlinked.");
+        return redirect()->to(site_url('Account'));
+    }
+
+    /**
+     * POST /Auth/link-robinhood
+     * Link Robinhood provider credentials for the authenticated user.
+     *
+     * @return ResponseInterface
+     */
+    public function linkRobinhood(): ResponseInterface
+    {
+        try {
+            $userId = (int) ($this->auth?->id() ?? ($this->safeAuthUser()?->id ?? 0));
+            if ($userId <= 0) {
+                return $this->response->setStatusCode(401)->setJSON([
+                    'status'  => 'error',
+                    'message' => 'Unauthorized',
+                ]);
+            }
+
+            $payload = $this->request->getJSON(true) ?: $this->request->getPost();
+            $apiKey        = trim((string) ($payload['api_key'] ?? ''));
+            $privateKeyB64 = trim((string) ($payload['private_key_b64'] ?? ''));
+            $label         = trim((string) ($payload['label'] ?? 'Robinhood'));
+
+            if ($apiKey === '' || $privateKeyB64 === '') {
+                return $this->response->setStatusCode(422)->setJSON([
+                    'status'  => 'error',
+                    'message' => 'Missing api_key or private_key_b64',
+                ]);
+            }
+
+            $ok = true;
+            try {
+                if (class_exists(\App\Libraries\MyMIRobinhood::class)) {
+                    $rh = new \App\Libraries\MyMIRobinhood();
+                    if (method_exists($rh, 'ping')) {
+                        $ok = $rh->ping($apiKey, $privateKeyB64);
+                    }
+                }
+            } catch (\Throwable $libErr) {
+                log_message('warning', 'Robinhood lib ping failed: {m}', ['m' => $libErr->getMessage()]);
+            }
+
+            if ($ok === false) {
+                return $this->response->setStatusCode(422)->setJSON([
+                    'status'  => 'error',
+                    'message' => 'Robinhood credentials invalid',
+                ]);
+            }
+
+            $m = new WalletModel();
+            $walletId = $m->upsertProviderWallet($userId, 'robinhood', $label, [
+                'api_key'         => $apiKey,
+                'private_key_b64' => $privateKeyB64,
+                'linked_at'       => date('c'),
+            ]);
+
+            $cache = service('cache');
+            $cache?->delete('wallets_' . $userId);
+            $cache?->delete('user:' . $userId);
+
+            return $this->response->setJSON([
+                'status'    => 'success',
+                'wallet_id' => $walletId,
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'AuthController linkRobinhood failed: {msg}', ['msg' => $e->getMessage()]);
+            return $this->response->setStatusCode(500)->setJSON([
+                'status'  => 'error',
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    /**
+     * POST /Auth/link-snaptrade
+     * Link SnapTrade credentials for the authenticated user.
+     *
+     * @return ResponseInterface
+     */
+    public function linkSnapTrade(): ResponseInterface
+    {
+        try {
+            $userId = (int) ($this->auth?->id() ?? ($this->safeAuthUser()?->id ?? 0));
+            if ($userId <= 0) {
+                return $this->response->setStatusCode(401)->setJSON([
+                    'status'  => 'error',
+                    'message' => 'Unauthorized',
+                ]);
+            }
+
+            $payload = $this->request->getJSON(true) ?: $this->request->getPost();
+            $snapUserId = trim((string) ($payload['snaptrade_user_id'] ?? ''));
+            $label      = trim((string) ($payload['label'] ?? 'SnapTrade'));
+
+            if ($snapUserId === '') {
+                try {
+                    if (class_exists(\App\Libraries\MyMISnapTrader::class)) {
+                        $st = new \App\Libraries\MyMISnapTrader();
+                        if (method_exists($st, 'createUser')) {
+                            $snapUserId = (string) $st->createUser($userId);
+                        }
+                    }
+                } catch (\Throwable $libErr) {
+                    log_message('warning', 'SnapTrade createUser failed: {m}', ['m' => $libErr->getMessage()]);
+                }
+            }
+
+            if ($snapUserId === '') {
+                return $this->response->setStatusCode(422)->setJSON([
+                    'status'  => 'error',
+                    'message' => 'Missing or failed to create snaptrade_user_id',
+                ]);
+            }
+
+            $m = new WalletModel();
+            $walletId = $m->upsertProviderWallet($userId, 'snaptrade', $label, [
+                'snaptrade_user_id' => $snapUserId,
+                'linked_at'         => date('c'),
+            ]);
+
+            $cache = service('cache');
+            $cache?->delete('wallets_' . $userId);
+            $cache?->delete('user:' . $userId);
+
+            return $this->response->setJSON([
+                'status'    => 'success',
+                'wallet_id' => $walletId,
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'AuthController linkSnapTrade failed: {msg}', ['msg' => $e->getMessage()]);
+            return $this->response->setStatusCode(500)->setJSON([
+                'status'  => 'error',
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    /**
+     * Resolves and normalizes an OAuth provider name.
+     *
+     * @param string|null $provider
+     * @return array{0: string, 1: string, 2: array<string, mixed>}|null
+     */
+    private function resolveAuthProvider(?string $provider): ?array
+    {
+        if ($provider === null || trim($provider) === '') {
+            return null;
+        }
+
+        $map = [
+            'google'   => ['Google', 'Google'],
+            'github'   => ['GitHub', 'GitHub'],
+            'linkedin' => ['LinkedIn', 'LinkedIn'],
+            'discord'  => ['Discord', 'Discord'],
+            'facebook' => ['Facebook', 'Facebook'],
+        ];
+
+        $key = strtolower(trim($provider));
+        if (! isset($map[$key])) {
+            return null;
+        }
+
+        [$providerKey, $displayName] = $map[$key];
+
+        $rawConfig = config(\Config\Hybridauth::class);
+        $configArray = [];
+        if ($rawConfig instanceof \Config\Hybridauth) {
+            $configArray = [
+                'callback'  => site_url("auth/provider/{$key}/callback"),
+                'providers' => $rawConfig->providers,
+            ];
+        } elseif (is_array($rawConfig)) {
+            $configArray = $rawConfig;
+        }
+
+        return [$providerKey, $displayName, $configArray];
+    }
+
+    /**
+     * Checks if the specified OAuth provider has active credentials configured.
+     *
+     * @param string $providerKey
+     * @param array<string, mixed> $config
+     * @return bool
+     */
+    private function isAuthProviderConfigured(string $providerKey, array $config): bool
+    {
+        $providerConfig = $config['providers'][$providerKey] ?? null;
+        if (! is_array($providerConfig) || empty($providerConfig['enabled'])) {
+            return false;
+        }
+
+        $id = trim((string) ($providerConfig['keys']['id'] ?? ''));
+        $secret = trim((string) ($providerConfig['keys']['secret'] ?? ''));
+
+        return $id !== '' && $secret !== '';
     }
 }

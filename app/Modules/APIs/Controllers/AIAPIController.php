@@ -47,12 +47,34 @@ class AIAPIController extends BaseAPIController
             return $this->failValidationErrors('message is required');
         }
 
+        $userId = $this->cuID ?? session('cuID') ?? session('user_id') ?? (function_exists('user_id') ? user_id() : null);
+        $userId = $userId ? (int) $userId : null;
+        $ipAddress = (string) $this->request->getIPAddress();
+
+        // Anonymous IP-based question quota check (5 questions per IP/day)
+        $quotaService = new \App\Services\AI\AIChatQuotaService();
+        $quota = $quotaService->checkQuota($userId, $ipAddress);
+        if (! $quota['allowed']) {
+            return $this->response->setStatusCode(429)->setJSON([
+                'status'          => 'quota_exceeded',
+                'message'         => $quota['message'],
+                'quota_remaining' => 0,
+                'requires_auth'   => true,
+            ]);
+        }
+
+        // Ticker Intelligence Extraction
+        $tickerService = new \App\Services\AI\TickerIntelligenceService();
+        $tickers = $tickerService->extractTickers($message);
+        $tickerIntel = !empty($tickers) ? $tickerService->getIntelligence($tickers, $userId) : [];
+
         $params = [
-            'message'        => $message,
-            'session_key'    => $payload['session_key'] ?? null,
-            'user_id'        => $this->cuID ?? ($payload['user_id'] ?? null),
-            'discord_user_id'=> $payload['discord_user_id'] ?? null,
-            'channel_context'=> [
+            'message'             => $message,
+            'session_key'         => $payload['session_key'] ?? null,
+            'user_id'             => $userId,
+            'discord_user_id'     => $payload['discord_user_id'] ?? null,
+            'ticker_intelligence' => $tickerIntel,
+            'channel_context'     => [
                 'channel_id' => $payload['channel_id'] ?? null,
                 'source'     => $payload['source'] ?? 'web',
             ],
@@ -60,6 +82,18 @@ class AIAPIController extends BaseAPIController
 
         try {
             $result = $this->assistant->chat($params);
+
+            // Increment quota for anonymous visitors
+            $newCount = $quotaService->incrementQuota($userId, $ipAddress);
+            $remaining = $userId ? 'unlimited' : max(0, \App\Services\AI\AIChatQuotaService::DEFAULT_GUEST_DAILY_LIMIT - $newCount);
+
+            $result['quota'] = [
+                'quota_type'      => $quota['quota_type'],
+                'quota_remaining' => $remaining,
+            ];
+            $result['tickers_detected'] = $tickers;
+            $result['ticker_intelligence'] = $tickerIntel;
+
             return $this->respond($result);
         } catch (\Throwable $e) {
             log_message('error', 'AIController::postChat failed: {msg}', ['msg' => $e->getMessage()]);

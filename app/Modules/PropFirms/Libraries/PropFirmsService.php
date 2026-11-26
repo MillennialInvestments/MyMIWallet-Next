@@ -13,6 +13,7 @@ class PropFirmsService
         $accounts = $db->table('bf_user_prop_accounts')
             ->select('id, current_balance, updated_at')
             ->where('user_id', $userId)
+            ->limit(100)
             ->get()
             ->getResultArray();
 

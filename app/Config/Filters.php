@@ -33,7 +33,8 @@ class Filters extends BaseConfig
      */
     public array $aliases = [
         // PATCH: session security filters
-        'responsecache' => \CodeIgniter\Filters\ResponseCache::class,
+        // CodeIgniter 4.7 has no Filters\ResponseCache; its page-cache filter is PageCache.
+        'responsecache' => \CodeIgniter\Filters\PageCache::class,
         'sessionTracker'  => \App\Filters\SessionTrackerFilter::class,
         'sessionRevoked'  => \App\Filters\SessionRevokedFilter::class,
         // PATCH: register RBAC permission filter
@@ -42,6 +43,7 @@ class Filters extends BaseConfig
         // PATCH: API token authentication filter
         'apiToken'       => \App\Filters\ApiTokenAuthFilter::class,
         'internalToken' => \App\Filters\InternalTokenFilter::class,
+        'opsStatusToken' => \App\Filters\OpsStatusTokenFilter::class,
         // PATCH: feature flag route filter
         'feature'        => \App\Filters\FeatureFlagFilter::class,
         // PATCH: anti-abuse filters
@@ -388,7 +390,6 @@ class Filters extends BaseConfig
         // GTM-027: signed-in user write APIs (JSON 401 when signed out).
         'apiUser' => [
             'before' => [
-                'API/AI/Chat',
                 'API/AI/LinkSettings',
                 'API/Alerts/generateTradeAlertSummary',
                 'API/Alerts/getLatestPrices',
