@@ -26,7 +26,16 @@ echo ""
 # ------------------------------------------------------------------------------
 echo "--- 1. Spark CLI Command Verification ---"
 # Clear file locator cache so freshly deployed commands are discovered
-rm -f writable/cache/FileLocatorCache shared/writable/cache/FileLocatorCache 2>/dev/null || true
+SPARK_RUNNER="php"
+if [[ "$(id -u)" -eq 0 ]]; then
+    rm -f writable/cache/FileLocatorCache shared/writable/cache/FileLocatorCache 2>/dev/null || true
+    SPARK_RUNNER="sudo -u www-data php"
+elif sudo -n true 2>/dev/null && id -u www-data >/dev/null 2>&1; then
+    sudo rm -f writable/cache/FileLocatorCache shared/writable/cache/FileLocatorCache 2>/dev/null || true
+    SPARK_RUNNER="sudo -u www-data php"
+else
+    rm -f writable/cache/FileLocatorCache shared/writable/cache/FileLocatorCache 2>/dev/null || true
+fi
 
 COMMANDS=(
     "cryptopay:reconcile"
@@ -36,7 +45,7 @@ COMMANDS=(
     "compliance:update-sanctions"
 )
 
-SPARK_LIST=$(php spark list 2>&1 || true)
+SPARK_LIST=$($SPARK_RUNNER spark list 2>&1 || true)
 
 ALL_CMD_OK=true
 for cmd in "${COMMANDS[@]}"; do

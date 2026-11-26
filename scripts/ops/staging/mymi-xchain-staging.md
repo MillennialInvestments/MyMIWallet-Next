@@ -44,7 +44,7 @@ sudo rm -f /apps/TBI/www/mymiwallet-staging/shared/writable/cache/FileLocatorCac
 sudo -u www-data php spark compliance:update-sanctions --offline-seed && \
 
 # 6. Run staging smoke verification
-bash scripts/ops/staging/mymi-xchain-smoke.sh /apps/TBI/www/mymiwallet-staging/current
+sudo bash scripts/ops/staging/mymi-xchain-smoke.sh /apps/TBI/www/mymiwallet-staging/current
 ```
 
 ---
