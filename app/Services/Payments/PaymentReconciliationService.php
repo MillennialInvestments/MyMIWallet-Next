@@ -151,10 +151,9 @@ class PaymentReconciliationService
                 continue;
             }
 
-            // Solana Pay Gold purchases are written to the ledger under a short id.
-            $ledgerKey = (string) ($claim['provider'] ?? '') === 'solana'
-                ? strtoupper(\App\Libraries\SolanaPay\Fulfillers::ledgerId(trim((string) ($claim['provider_txn_id'] ?? ''))))
-                : $providerTxId;
+            // Crypto checkout Gold purchases (Solana Pay, CryptoPay) are written to the ledger under a short id.
+            $cryptoKey = \App\Libraries\SolanaPay\Fulfillers::ledgerKey((string) ($claim['provider'] ?? ''), trim((string) ($claim['provider_txn_id'] ?? '')));
+            $ledgerKey = $cryptoKey !== null ? strtoupper($cryptoKey) : $providerTxId;
 
             // Check if matching ledger entry exists
             if (isset($transactions[$ledgerKey])) {

@@ -148,8 +148,18 @@ class WebDesignAdminController extends BaseAdminController
         return $this->renderTheme('App\Modules\Management\Views\Web_Design\index', $this->data);
     }
 
-    public function contentCreator()
+    public function contentCreator(): \CodeIgniter\HTTP\ResponseInterface|string
     {
+        if (strtolower($this->request->getMethod()) === 'post' || $this->request->isAJAX()) {
+            return $this->response->setJSON([
+                'status'             => 'ok',
+                'integration_key'    => '',
+                'request_id'         => bin2hex(random_bytes(8)),
+                'institution_id'     => '',
+                'userInstitution_id' => '',
+            ]);
+        }
+
         $this->data['pageTitle'] = 'Content Creator | Web Design | Management | MyMI Wallet';
         $this->commonData();
         return $this->renderTheme('App\Modules\Management\Views\Web_Design\content_creator', $this->data);

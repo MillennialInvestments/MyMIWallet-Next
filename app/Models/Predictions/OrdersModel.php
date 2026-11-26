@@ -22,8 +22,10 @@ class OrdersModel extends Model
 
     public function markCanceled(int $orderId, int $userId): bool
     {
-        return $this->where('id',$orderId)->where('user_id',$userId)
-            ->set(['state'=>'CANCELED','updated_at'=>date('Y-m-d H:i:s')])
+        $this->where('id', $orderId)->where('user_id', $userId)
+            ->set(['state' => 'CANCELED', 'updated_at' => date('Y-m-d H:i:s')])
             ->update();
+
+        return $this->db->affectedRows() > 0;
     }
 }

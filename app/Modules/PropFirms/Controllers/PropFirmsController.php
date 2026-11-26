@@ -24,6 +24,12 @@ class PropFirmsController extends UserController
 
     public function seedDefaults()
     {
+        $role = $this->session->get('role') ?? $this->session->get('role_name') ?? $this->session->get('user_role');
+        $isAdmin = (function_exists('in_groups') && (in_groups('admin') || in_groups('team'))) || in_array($role, ['admin', 'team', 'developer'], true);
+        if (! $isAdmin) {
+            return $this->response->setStatusCode(403)->setJSON(['status' => 'error', 'message' => 'Admin access required.']);
+        }
+
         $result = (new PropFirmDefaultsSeeder())->seedDefaults();
 
         return $this->response->setJSON([

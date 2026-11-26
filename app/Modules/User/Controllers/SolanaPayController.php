@@ -4,6 +4,8 @@ namespace App\Modules\User\Controllers;
 
 use App\Controllers\UserController;
 use App\Filters\FeatureFlagFilter;
+use App\Libraries\CryptoPay\CryptoPayFactory;
+use App\Libraries\CryptoPay\CryptoPayService;
 use App\Libraries\SolanaPay\Fulfillers;
 use App\Libraries\SolanaPay\SolanaPayFactory;
 use App\Libraries\SolanaPay\SolanaPayService;
@@ -14,16 +16,28 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Config\SolanaPay as SolanaPayConfig;
 
 /**
- * Pay for MyMI products with USDC on Solana (Solana Pay). Prices are always
- * set here from MyMI's own config, never taken from the browser as a price.
+ * Pay for MyMI products with crypto: USDC on Solana (Solana Pay), USDC on
+ * Ethereum and Base, XRP and BTC (CryptoPay). Prices are always set here from
+ * MyMI's own config, never taken from the browser as a price.
  */
 class SolanaPayController extends UserController
 {
     private ?SolanaPayService $svc = null;
+    private ?CryptoPayService $crypto = null;
+    private bool $cryptoLoaded = false;
 
     private function service(): ?SolanaPayService
     {
         return $this->svc ??= SolanaPayFactory::make();
+    }
+
+    private function cryptoService(): ?CryptoPayService
+    {
+        if (! $this->cryptoLoaded) {
+            $this->crypto = CryptoPayFactory::make();
+            $this->cryptoLoaded = true;
+        }
+        return $this->crypto;
     }
 
     private function userId(): int
@@ -44,8 +58,13 @@ class SolanaPayController extends UserController
 
     public function index()
     {
-        if ($this->service() === null) {
+        $crypto = $this->cryptoService();
+        if ($this->service() === null && $crypto === null) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+        $chains = $this->service() !== null ? [['chain' => 'solana', 'asset' => 'USDC']] : [];
+        foreach ($crypto?->offered() ?? [] as $c) {
+            $chains[] = $c;
         }
         $plans = [];
         foreach (['Starter', 'Basic', 'Pro', 'Premium'] as $slug) {
@@ -53,19 +72,23 @@ class SolanaPayController extends UserController
                 $plans[] = $p;
             }
         }
-        $this->data['pageTitle'] = 'Pay with Solana | MyMI Wallet';
+        $this->data['pageTitle'] = 'Pay with crypto | MyMI Wallet';
         $this->data['solanaPay'] = [
             'purposes' => $this->openPurposes(),
             'plans'    => $plans,
             'goldUsd'  => Fulfillers::goldValue(),
             'fee'      => (int) (config('SolanaFees')->lamports['payment_processing'] ?? 0),
             'cluster'  => config(SolanaPayConfig::class)->cluster,
+            'chains'   => $chains,
+            'cryptoNetwork' => $crypto !== null ? config(\Config\CryptoPay::class)->network : '',
+            'cryptoFees' => $crypto !== null ? config(\Config\CryptoPay::class)->feeCents : [],
             'preset'   => [
                 'purpose' => (string) $this->request->getGet('purpose'),
                 'plan'    => (string) $this->request->getGet('plan'),
                 'project' => (string) $this->request->getGet('project'),
                 'lot'     => (string) $this->request->getGet('lot'),
                 'gold_cents' => (string) $this->request->getGet('gold_cents'),
+                'chain'   => (string) $this->request->getGet('chain'),
             ],
         ];
         return $this->renderTheme('App\Modules\User\Views\SolanaPay\index', $this->data);
@@ -99,6 +122,47 @@ class SolanaPayController extends UserController
             'outputType' => QRCode::OUTPUT_MARKUP_SVG, 'imageBase64' => true, 'eccLevel' => QRCode::ECC_M, 'addQuietzone' => true,
         ])))->render($r['url']);
         return $this->json($r);
+    }
+
+    /** Checkout on Ethereum, Base, the XRP Ledger or Bitcoin. */
+    public function cryptoCheckout()
+    {
+        $svc = $this->cryptoService();
+        if ($svc === null) {
+            return $this->json(['ok' => false, 'error' => 'not_found'], 404);
+        }
+        if ($this->userId() <= 0) {
+            return $this->json(['ok' => false, 'error' => 'sign_in_required'], 401);
+        }
+        $in = $this->request->getJSON(true);
+        $in = is_array($in) ? $in : (array) $this->request->getPost();
+        $purpose = is_string($in['purpose'] ?? null) ? $in['purpose'] : '';
+        $chain = is_string($in['chain'] ?? null) ? $in['chain'] : '';
+        if (! in_array($purpose, $this->openPurposes(), true)) {
+            return $this->json(['ok' => false, 'error' => 'not_available'], 422);
+        }
+        [$cents, $ref, $error] = $this->price($purpose, $in);
+        if ($error !== null) {
+            return $this->json(['ok' => false, 'error' => $error], 422);
+        }
+        $r = $svc->checkout($this->userId(), $chain, $purpose, $ref, $cents);
+        if (! $r['ok']) {
+            return $this->json($r, in_array($r['error'], ['price_unavailable', 'network_unavailable', 'busy_try_again'], true) ? 503 : 422);
+        }
+        $r['qr'] = (new QRCode(new QROptions([
+            'outputType' => QRCode::OUTPUT_MARKUP_SVG, 'imageBase64' => true, 'eccLevel' => QRCode::ECC_M, 'addQuietzone' => true,
+        ])))->render($r['uri']);
+        return $this->json($r);
+    }
+
+    public function cryptoStatus($reference = '')
+    {
+        $svc = $this->cryptoService();
+        if ($svc === null) {
+            return $this->json(['ok' => false, 'error' => 'not_found'], 404);
+        }
+        $r = $svc->confirm((string) $reference, $this->userId());
+        return $this->json($r, $r['status'] === 'not_found' ? 404 : 200);
     }
 
     public function status($reference = '')

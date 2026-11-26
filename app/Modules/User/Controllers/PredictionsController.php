@@ -64,13 +64,69 @@ class PredictionsController extends BaseUserController
         return $this->renderTheme('Predictions/settlements', []);
     }
 
+    protected function currentUserId(): int
+    {
+        $userId = $this->resolveCurrentUserId();
+        if (! $userId) {
+            $auth = function_exists('auth') ? auth()->id() : null;
+            $userId = $auth ?: (service('authentication')->id() ?? session()->get('user_id'));
+        }
+        return (int) ($userId ?? 0);
+    }
+
     public function placeOrder()
     {
-        return redirect()->back();
+        $userId = $this->currentUserId();
+        if ($userId <= 0) {
+            return redirect()->to(site_url('login'));
+        }
+
+        $post = (array) ($this->request->getJSON(true) ?: $this->request->getPost());
+        if (empty($post['market_id']) || empty($post['option_id']) || empty($post['stake_amount'])) {
+            return redirect()->back()->with('error', 'Market, option, and stake amount are required.');
+        }
+
+        try {
+            $result = $this->svc()->placeOrder($post, $userId);
+            if ($this->request->isAJAX() || ($this->request->hasHeader('Accept') && str_contains((string) $this->request->getHeaderLine('Accept'), 'application/json'))) {
+                return $this->response->setJSON(['status' => 'success', 'data' => $result]);
+            }
+            return redirect()->back()->with('message', 'Order placed successfully.');
+        } catch (\Throwable $e) {
+            if ($this->request->isAJAX() || ($this->request->hasHeader('Accept') && str_contains((string) $this->request->getHeaderLine('Accept'), 'application/json'))) {
+                return $this->response->setStatusCode(400)->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+            }
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     public function cancelOrder()
     {
-        return redirect()->back();
+        $userId = $this->currentUserId();
+        if ($userId <= 0) {
+            return redirect()->to(site_url('login'));
+        }
+
+        $post = (array) ($this->request->getJSON(true) ?: $this->request->getPost());
+        $orderId = (int) ($post['order_id'] ?? 0);
+        if ($orderId <= 0) {
+            if ($this->request->isAJAX() || ($this->request->hasHeader('Accept') && str_contains((string) $this->request->getHeaderLine('Accept'), 'application/json'))) {
+                return $this->response->setStatusCode(400)->setJSON(['status' => 'error', 'message' => 'Valid order_id required.']);
+            }
+            return redirect()->back()->with('error', 'Valid order_id required.');
+        }
+
+        try {
+            $ok = $this->svc()->cancelOrder($orderId, $userId);
+            if ($this->request->isAJAX() || ($this->request->hasHeader('Accept') && str_contains((string) $this->request->getHeaderLine('Accept'), 'application/json'))) {
+                return $this->response->setJSON(['status' => $ok ? 'success' : 'error', 'canceled' => $ok]);
+            }
+            return redirect()->back()->with($ok ? 'message' : 'error', $ok ? 'Order canceled.' : 'Order could not be canceled.');
+        } catch (\Throwable $e) {
+            if ($this->request->isAJAX() || ($this->request->hasHeader('Accept') && str_contains((string) $this->request->getHeaderLine('Accept'), 'application/json'))) {
+                return $this->response->setStatusCode(400)->setJSON(['status' => 'error', 'message' => $e->getMessage()]);
+            }
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 }

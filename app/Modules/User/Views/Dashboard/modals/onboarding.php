@@ -11,9 +11,9 @@ $stepStatus = [
     'stage_b.watchlist' => (bool) ($stepsPayload['stage_b']['watchlist'] ?? false),
 ];
 ?>
-<div class="modal fade" id="onboardingWalkthroughModal" tabindex="-1" aria-labelledby="onboardingWalkthroughLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
+<div class="modal fade" id="onboardingWalkthroughModal" tabindex="-1" aria-labelledby="onboardingWalkthroughLabel" aria-hidden="true" style="z-index: 2050 !important;">
+    <div class="modal-dialog modal-lg modal-dialog-centered" style="z-index: 2055 !important; pointer-events: auto;">
+        <div class="modal-content" style="z-index: 2060 !important; pointer-events: auto; background-color: #ffffff !important;">
             <div class="modal-header">
                 <h5 class="modal-title" id="onboardingWalkthroughLabel">Finish your MyMI Wallet setup</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -320,7 +320,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (<?= $showModal ? 'true' : 'false' ?>) {
         const openWalkthrough = () => {
-            const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('onboardingWalkthroughModal'));
+            const modalEl = document.getElementById('onboardingWalkthroughModal');
+            if (modalEl && modalEl.parentElement !== document.body) {
+                document.body.appendChild(modalEl);
+            }
+            const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
             modal.show();
         };
         // The first-login tour goes first; setup opens once it closes.

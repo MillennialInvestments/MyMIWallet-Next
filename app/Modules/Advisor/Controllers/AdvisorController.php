@@ -58,7 +58,17 @@ class AdvisorController extends BaseController
             return $this->disabledResponse();
         }
 
-        $userId = (int) ($this->request->getPost('user_id') ?? $this->cuID ?? 0);
+        $sessionUserId = (int) ($this->cuID ?? 0);
+        if ($sessionUserId <= 0 && function_exists('auth') && auth()->id()) {
+            $sessionUserId = (int) auth()->id();
+        }
+        $requestedUserId = (int) ($this->request->getPost('user_id') ?? 0);
+
+        // IDOR protection: only admin/team can query another user's financial details
+        $session = \CodeIgniter\Config\Services::session();
+        $role = $session->get('role') ?? $session->get('role_name') ?? $session->get('user_role');
+        $isAdmin = (function_exists('in_groups') && (in_groups('admin') || in_groups('team'))) || in_array($role, ['admin', 'team', 'developer'], true);
+        $userId = ($isAdmin && $requestedUserId > 0) ? $requestedUserId : $sessionUserId;
 
         $budgetSummary      = $this->safeCall(fn() => method_exists($this->budget, 'getBudgetSummaryForAI') ? $this->budget->getBudgetSummaryForAI($userId) : null);
         $portfolioSummary   = $this->safeCall(fn() => method_exists($this->investments, 'getPortfolioSummaryForAI') ? $this->investments->getPortfolioSummaryForAI($userId) : null);
@@ -102,11 +112,14 @@ class AdvisorController extends BaseController
         }
 
         $db     = db_connect();
-        $recent = $db->table('bf_marketing_scraper')
-            ->orderBy('created_at', 'DESC')
-            ->limit(6)
-            ->get()
-            ->getResultArray();
+        $recent = [];
+        if ($db->tableExists('bf_marketing_scraper')) {
+            $recent = $db->table('bf_marketing_scraper')
+                ->orderBy('created_at', 'DESC')
+                ->limit(6)
+                ->get()
+                ->getResultArray();
+        }
 
         $messages = [
             [
@@ -192,5 +205,21 @@ class AdvisorController extends BaseController
     private function extractContent(array $result): string
     {
         return (string) ($result['choices'][0]['message']['content'] ?? '');
+    }
+
+    /**
+     * GT-FORM-ROUTES-001: Handle CFA Partner & Client application submissions.
+     */
+    public function cfaAccountManager(): \CodeIgniter\HTTP\ResponseInterface
+    {
+        $payload = $this->request->getJSON(true) ?: $this->request->getPost();
+        log_message('info', 'AdvisorController::cfaAccountManager - Received application: {data}', [
+            'data' => json_encode($payload),
+        ]);
+
+        return $this->response->setJSON([
+            'status'  => 'success',
+            'message' => 'CFA Application submitted successfully.',
+        ]);
     }
 }

@@ -30,7 +30,6 @@ class OptionsPositionHistoryModel extends Model
     {
         return $this->where('position_id', $positionId)
             ->orderBy('recorded_at', 'DESC')
-            ->limit($limit)
-            ->findAll();
+            ->limit($limit)->findAll();
     }
 }
