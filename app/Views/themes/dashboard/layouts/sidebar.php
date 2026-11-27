@@ -604,6 +604,11 @@ $agent                  = service('request')->getUserAgent();
                                     </a>
                                 </li>
                                 <li class="nk-menu-item">
+                                    <a href="<?php echo site_url('/My-Bets/SGP'); ?>" class="nk-menu-link">
+                                        <span class="nk-menu-text">SGP Correlation Engine</span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
                                     <a href="<?php echo site_url('/My-Bets/Calculators'); ?>" class="nk-menu-link">
                                         <span class="nk-menu-text">+EV Calculators</span>
                                     </a>
@@ -622,13 +627,23 @@ $agent                  = service('request')->getUserAgent();
                             </a>
                             <ul class="nk-menu-sub" id="sidebarSportsMenu">
                                 <li class="nk-menu-item">
+                                    <a href="<?php echo site_url('/MyMISports/NFL'); ?>" class="nk-menu-link">
+                                        <span class="nk-menu-text">NFL Stats</span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
                                     <a href="<?php echo site_url('/MyMISports/NBA'); ?>" class="nk-menu-link">
                                         <span class="nk-menu-text">NBA Stats</span>
                                     </a>
                                 </li>
                                 <li class="nk-menu-item">
-                                    <a href="<?php echo site_url('/MyMISports/NFL'); ?>" class="nk-menu-link">
-                                        <span class="nk-menu-text">NFL Stats</span>
+                                    <a href="<?php echo site_url('/MyMISports/MLB'); ?>" class="nk-menu-link">
+                                        <span class="nk-menu-text">MLB Analytics</span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a href="<?php echo site_url('/MyMISports/NHL'); ?>" class="nk-menu-link">
+                                        <span class="nk-menu-text">NHL Analytics</span>
                                     </a>
                                 </li>
                             </ul><!-- .nk-menu-sub -->

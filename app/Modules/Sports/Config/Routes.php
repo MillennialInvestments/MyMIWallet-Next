@@ -27,6 +27,23 @@ $routes->group('MyMISports', ['namespace' => 'App\Modules\Sports\Controllers', '
     $routes->get('NBA/Player/(:num)', 'SportsController::nbaPlayer/$1');
     $routes->post('NBA/Refresh', 'SportsController::refreshNbaStats');
 
+    // MLB Intelligence & Matchup Routes
+    $routes->get('MLB', 'SportsController::mlb');
+    $routes->get('mlb', 'SportsController::mlb');
+    $routes->get('MLB/Player/(:num)', 'SportsController::mlbPlayer/$1');
+    $routes->post('MLB/Refresh', 'SportsController::refreshMlbStats');
+
+    // NHL Intelligence & Matchup Routes
+    $routes->get('NHL', 'SportsController::nhl');
+    $routes->get('nhl', 'SportsController::nhl');
+    $routes->get('NHL/Player/(:num)', 'SportsController::nhlPlayer/$1');
+    $routes->post('NHL/Refresh', 'SportsController::refreshNhlStats');
+
+    // Same-Game Parlay (SGP) Correlation Engine Routes
+    $routes->get('SGP', 'SportsController::sgp');
+    $routes->get('sgp', 'SportsController::sgp');
+    $routes->post('SGP/Calculate', 'SportsController::sgpCalculateApi');
+
     // Bet Tracker & Bankroll Ledger Routes
     $routes->get('Tracker', 'SportsController::tracker');
     $routes->get('tracker', 'SportsController::tracker');
@@ -109,6 +126,10 @@ foreach ($betsGroups as $group) {
         $routes->get('export', 'SportsController::exportBets');
         $routes->get('Odds', 'SportsController::odds');
         $routes->get('odds', 'SportsController::odds');
+        $routes->get('SGP', 'SportsController::sgp');
+        $routes->get('sgp', 'SportsController::sgp');
+        $routes->post('SGP/Calculate', 'SportsController::sgpCalculateApi');
+        $routes->post('sgp/calculate', 'SportsController::sgpCalculateApi');
         $routes->get('Calculators', 'SportsController::calculators');
         $routes->get('calculators', 'SportsController::calculators');
         $routes->post('Calculators/Calculate', 'SportsController::calculateApi');
