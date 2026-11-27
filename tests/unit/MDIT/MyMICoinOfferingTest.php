@@ -172,6 +172,34 @@ final class MyMICoinOfferingTest extends CIUnitTestCase
         $this->assertSame(7500.0, (float) $ledger['units']);
     }
 
+    public function testAccreditedUserCannotMintAnotherUsersDeposit(): void
+    {
+        foreach ([404, 505] as $uid) {
+            $this->profileModel->insert([
+                'user_id'              => $uid,
+                'kyc_status'           => 'VERIFIED',
+                'accreditation_status' => 'ACCREDITED',
+                'created_on'           => date('Y-m-d H:i:s'),
+                'updated_on'           => date('Y-m-d H:i:s'),
+            ]);
+        }
+
+        $depositRes = $this->offeringService->initiateAccreditedDeposit(404, [
+            'amount'          => 6000,
+            'wallet_address'  => 'So11111111111111111111111111111111111111112',
+            'chain'           => 'SOLANA',
+            'idempotency_key' => 'dep_test_404',
+        ]);
+        $depositId = (int) $depositRes['deposit_id'];
+        $this->depositModel->update($depositId, ['status' => 'CONFIRMED_ONCHAIN', 'tx_hash' => 'tx_404']);
+
+        $res = $this->offeringService->mintMyMICoin(505, $depositId);
+
+        $this->assertFalse($res['ok']);
+        $this->assertSame('deposit_not_found', $res['error']);
+        $this->assertNull($this->ledgerModel->where('source_deposit_id', $depositId)->first());
+    }
+
     public function testRegisterInterestStoresAttestation(): void
     {
         $userId = 303;

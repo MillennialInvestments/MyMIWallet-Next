@@ -100,6 +100,29 @@ class BtcAddressPoolService
     }
 
     /**
+     * Return an address reserved for a checkout that was never saved, so no
+     * payer was ever shown it. Only that checkout's own reservation is undone.
+     */
+    public function release(string $address, string $checkoutRef): bool
+    {
+        if (! $this->db->tableExists(self::TABLE)) {
+            return false;
+        }
+
+        $this->db->table(self::TABLE)
+            ->where('address', $address)
+            ->where('checkout_ref', $checkoutRef)
+            ->where('status', 'reserved')
+            ->update([
+                'status'       => 'unused',
+                'checkout_ref' => null,
+                'used_at'      => null,
+            ]);
+
+        return $this->db->affectedRows() === 1;
+    }
+
+    /**
      * Mark an address as confirmed and settled ('used').
      */
     public function markUsed(string $address): bool

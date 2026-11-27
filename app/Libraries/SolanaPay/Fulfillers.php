@@ -79,8 +79,11 @@ final class Fulfillers
             return ['ok' => false, 'reason' => 'gold_ledger_insert_failed'];
         }
 
+        // The legacy wallet ledger above is the balance users see today; the
+        // closed-loop Gold ledger must match it, so a failed credit is an
+        // alert for support, not a silent log line.
         try {
-            (new \App\Services\Gold\GoldLedgerService())->credit(
+            $gold = (new \App\Services\Gold\GoldLedgerService())->credit(
                 $userId,
                 $coins,
                 'purchase',
@@ -88,7 +91,15 @@ final class Fulfillers
                 (string) $row['reference']
             );
         } catch (\Throwable $e) {
-            log_message('notice', 'GoldLedgerService credit logged: {m}', ['m' => $e->getMessage()]);
+            $gold = ['ok' => false, 'error' => $e->getMessage()];
+        }
+        if (! ($gold['ok'] ?? false)) {
+            log_message('error', 'Gold ledger credit failed for {ref}: {err}', ['ref' => (string) $row['reference'], 'err' => (string) ($gold['error'] ?? 'unknown')]);
+            if (class_exists(\App\Libraries\CryptoPay\CryptoPayAlerts::class)) {
+                \App\Libraries\CryptoPay\CryptoPayAlerts::notify('GOLD_LEDGER_CREDIT_FAILED', 'Checkout ' . (string) $row['reference'] . ' paid and credited in the wallet ledger, but not in the Gold ledger', [
+                    'ref' => (string) $row['reference'], 'user_id' => $userId, 'error' => (string) ($gold['error'] ?? 'unknown'),
+                ]);
+            }
         }
 
         return ['ok' => true, 'reason' => 'fulfilled', 'message' => 'Payment confirmed. ' . $coins . ' MyMI Gold added.'];

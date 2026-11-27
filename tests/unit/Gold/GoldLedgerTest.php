@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Gold;
 
+use App\Database\Migrations\AddGoldLedgerChainUniqueKey;
 use App\Database\Migrations\CreateGoldLedger;
 use App\Services\Gold\GoldLedgerService;
 use App\Services\Gold\GoldPricing;
@@ -14,6 +15,7 @@ if (! defined('TESTPATH')) {
 }
 
 require_once APPPATH . 'Database/Migrations/2026-11-25-000200_CreateGoldLedger.php';
+require_once APPPATH . 'Database/Migrations/2026-11-26-000300_AddGoldLedgerChainUniqueKey.php';
 
 final class GoldLedgerTest extends CIUnitTestCase
 {
@@ -33,6 +35,7 @@ final class GoldLedgerTest extends CIUnitTestCase
 
         $migration = new CreateGoldLedger(\Config\Database::forge($this->sqlite));
         $migration->up();
+        (new AddGoldLedgerChainUniqueKey(\Config\Database::forge($this->sqlite)))->up();
 
         $this->service = new GoldLedgerService($this->sqlite);
     }
@@ -110,21 +113,64 @@ final class GoldLedgerTest extends CIUnitTestCase
         $this->assertSame(30.0, $spend2['balance']); // Still 30, not 10
     }
 
-    public function testDailyPurchaseCapEnforced(): void
+    public function testDailyPurchaseCapCheckedBeforePaymentNeverAfter(): void
     {
         $userId = 99104;
         putenv('MYMIGOLD_DAILY_CAP_USD=1000');
 
-        $res1 = $this->service->credit($userId, 800.0, 'purchase', 'crypto_pay', 'CHK-CAP1');
-        $this->assertTrue($res1['ok']);
+        $this->assertTrue($this->service->purchaseAllowed($userId, 800.0)['ok']);
+        $this->assertTrue($this->service->credit($userId, 800.0, 'purchase', 'crypto_pay', 'CHK-CAP1')['ok']);
 
-        // Attempting to purchase another 300 exceeds 1000 cap
-        $res2 = $this->service->credit($userId, 300.0, 'purchase', 'crypto_pay', 'CHK-CAP2');
-        $this->assertFalse($res2['ok']);
-        $this->assertSame('daily_purchase_cap_exceeded', $res2['error']);
-        $this->assertSame(800.0, $this->service->getBalance($userId));
+        // A new 300 purchase would exceed the 1000 cap: refused at checkout...
+        $check = $this->service->purchaseAllowed($userId, 300.0);
+        $this->assertFalse($check['ok']);
+        $this->assertSame('daily_purchase_cap_exceeded', $check['error']);
+
+        // ...but a payment that already arrived is always credited.
+        $paid = $this->service->credit($userId, 300.0, 'purchase', 'crypto_pay', 'CHK-CAP2');
+        $this->assertTrue($paid['ok']);
+        $this->assertSame(1100.0, $this->service->getBalance($userId));
 
         putenv('MYMIGOLD_DAILY_CAP_USD=2000');
+    }
+
+    public function testTwoEntriesCannotBuildOnTheSameLatestEntry(): void
+    {
+        $userId = 99105;
+        $this->service->credit($userId, 100.0, 'purchase', 'crypto_pay', 'CHK-RACE');
+        $latest = $this->sqlite->table('bf_gold_ledger')->where('user_id', $userId)->get()->getRowArray();
+
+        // First spend builds on the credit.
+        $this->assertTrue($this->service->spend($userId, 80.0, 'service_spend', 'RACE-1')['ok']);
+
+        // A second writer that read the same latest entry (a concurrent spend)
+        // tries to append after it too: the unique chain key refuses the fork.
+        $forked = false;
+        try {
+            $forked = (bool) $this->sqlite->table('bf_gold_ledger')->insert([
+                'user_id' => $userId, 'amount_gold' => -80.0, 'balance_after' => 20.0, 'reason' => 'spend',
+                'reference_type' => 'service_spend', 'reference_id' => 'RACE-2',
+                'prev_hash' => $latest['hash'], 'hash' => str_repeat('a', 64), 'created_at' => time(),
+            ]);
+        } catch (\Throwable $e) {
+            $forked = false;
+        }
+        $this->assertFalse($forked);
+        $this->assertSame(20.0, $this->service->getBalance($userId));
+
+        // The real second spend reads the new balance and is refused.
+        $second = $this->service->spend($userId, 80.0, 'service_spend', 'RACE-2');
+        $this->assertFalse($second['ok']);
+        $this->assertSame('insufficient_gold_balance', $second['error']);
+    }
+
+    public function testRefusedSpendLeavesLedgerUsable(): void
+    {
+        $userId = 99106;
+        $this->assertFalse($this->service->spend($userId, 5.0, 'service_spend', 'EMPTY-1')['ok']);
+        $this->assertTrue($this->service->credit($userId, 10.0, 'purchase', 'crypto_pay', 'CHK-AFTER')['ok']);
+        $this->assertTrue($this->sqlite->transStatus());
+        $this->assertSame(10.0, $this->service->getBalance($userId));
     }
 
     public function testReportsCalculatesOutstandingDeferredRevenueAndDailyBreakdown(): void

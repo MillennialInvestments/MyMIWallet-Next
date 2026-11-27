@@ -145,6 +145,13 @@ class MyMICoinOfferingService
             ];
         }
 
+        // The deposit must be this investor's own MyMI Coin deposit: otherwise an
+        // accredited user could mint units from someone else's (or an MDIT) deposit.
+        $deposit = $this->depositService->find($depositId);
+        if ($deposit === null || (int) ($deposit['user_id'] ?? 0) !== $userId) {
+            return ['ok' => false, 'error' => 'deposit_not_found', 'message' => 'Deposit not found.'];
+        }
+
         try {
             $ledgerEntry = $this->issuanceService->mintForDeposit($depositId, 'MYMIC');
             return [

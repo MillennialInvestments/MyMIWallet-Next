@@ -114,10 +114,10 @@ class PaperExchangeProvider implements ExchangeProvider
         // Seed initial paper cash balance ($10,000 USD) if user is new
         $this->ensureUserInitialized($userId);
 
-        // Resolve price
-        $price = isset($params['price']) && (float) $params['price'] > 0
-            ? (float) $params['price']
-            : ($this->quote($symbol)['price'] ?? 0.0);
+        // Every paper order fills at once at the provider's own quote. A price
+        // sent by the browser is ignored: otherwise anyone could "buy" BTC at
+        // $0.01 and sell it back at market, inflating paper balances.
+        $price = (float) ($this->quote($symbol)['price'] ?? 0.0);
 
         if ($price <= 0) {
             return ['ok' => false, 'error' => 'price_unavailable', 'message' => 'Cannot execute order without valid price.'];
