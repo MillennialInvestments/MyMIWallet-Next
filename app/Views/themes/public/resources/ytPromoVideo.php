@@ -1,3 +1,4 @@
+<?php $socialMedia = $socialMedia ?? config('SocialMedia'); // not every caller passes it ?>
 <div class="content">
     <div class="ratio ratio-16x9 mb-5">
         <iframe width="560" height="315" src="<?= $socialMedia->promotional_yt_video ?>" 

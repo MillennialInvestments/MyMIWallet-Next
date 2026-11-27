@@ -86,7 +86,8 @@ class HealthController extends BaseController
             $db = db_connect();
             // CodeIgniter 4.7 connections have no isConnected(); calling it threw
             // on every probe, so /healthz always answered 503. simpleQuery()
-            // connects on first use and returns false when the query fails.
+            // connects on first use; a failure returns false or throws
+            // (DBDebug), and the catch below reports it.
             $ok = $db->simpleQuery('SELECT 1') !== false;
 
             return [

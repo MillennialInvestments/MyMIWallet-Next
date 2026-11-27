@@ -24,7 +24,7 @@ final class HealthzDatabaseProbeTest extends CIUnitTestCase
         $database = $payload['checks']['database'] ?? [];
         if (($database['status'] ?? null) !== 'ok') {
             // No test database here: the probe must still fail cleanly, not with a PHP error.
-            $this->assertSame('database unreachable', $database['detail'] ?? null, 'probe must not throw');
+            $this->assertContains($database['detail'] ?? null, ['database unreachable', 'database error'], 'probe must fail cleanly');
             return;
         }
 
