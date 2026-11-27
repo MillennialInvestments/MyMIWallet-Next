@@ -31,15 +31,64 @@ class SportsController extends UserController
     {
         $svc = $this->sports();
         $ready = $svc->tablesReady();
+        $pos = strtoupper(trim((string) ($this->request->getGet('pos') ?? 'ALL')));
+        if (! in_array($pos, ['ALL', 'RB', 'QB', 'WR', 'TE', 'MATCHUPS'], true)) {
+            $pos = 'ALL';
+        }
+
+        $season = $this->seasonParam();
+        $players = $ready && $pos !== 'MATCHUPS' ? $svc->listPlayers($season, $pos === 'ALL' ? null : $pos) : [];
+        $picks = $ready ? $svc->weeklyPicks(PropLinesService::fromEnv(db_connect())) : [];
+
+        // Teams for matchups tab
+        $teams = $ready ? $svc->teams($season ?? \App\Modules\Sports\Libraries\Providers\NflverseStatsProvider::currentSeason(), 'nflverse') : [];
+        if ($teams === [] && $ready) {
+            $teams = $svc->teams($season ?? 2025, 'sample');
+        }
+
+        $pageTitle = match ($pos) {
+            'QB'       => 'NFL Quarterback Props & Pass D Splits',
+            'WR', 'TE' => 'NFL Receiver Props & Secondary Splits',
+            'MATCHUPS' => 'NFL Team vs Team Game Matchups',
+            default    => 'NFL Props & Matchup Intelligence',
+        };
 
         return $this->renderTheme('App\Modules\Sports\Views\nfl\index', [
-            'pageTitle'   => 'NFL Running Back Props',
-            'tablesReady' => $ready,
-            'players'     => $ready ? $svc->listPlayers() : [],
-            'picks'       => $ready ? $svc->weeklyPicks(PropLinesService::fromEnv(db_connect())) : [],
-            'statsUpdated' => SportsPropsService::statsUpdatedAt(),
-            'notice'      => session()->getFlashdata('sports_notice'),
-            'disclaimer'  => SportsPropsService::DISCLAIMER,
+            'pageTitle'    => $pageTitle,
+            'activePos'    => $pos,
+            'tablesReady'  => $ready,
+            'players'      => $players,
+            'teams'        => $teams,
+            'picks'        => $picks,
+            'statsUpdated' => SportsPropsService::statsUpdatedAt($season),
+            'notice'       => session()->getFlashdata('sports_notice'),
+            'disclaimer'   => SportsPropsService::DISCLAIMER,
+        ]);
+    }
+
+    public function matchups()
+    {
+        return redirect()->to(site_url('MyMISports/NFL?pos=MATCHUPS'));
+    }
+
+    public function matchup(string $home, string $away)
+    {
+        $svc = $this->sports();
+        if (! $svc->tablesReady()) {
+            return redirect()->to(site_url('MyMISports/NFL'));
+        }
+
+        $home = strtoupper(trim($home));
+        $away = strtoupper(trim($away));
+        $lines = $this->matchupLinesParam();
+
+        $report = $svc->matchupReport($home, $away, $this->seasonParam(), $lines);
+
+        return $this->renderTheme('App\Modules\Sports\Views\nfl\matchup', [
+            'pageTitle' => $away . ' @ ' . $home . ' | NFL Game Matchup',
+            'report'    => $report,
+            'lines'     => $lines,
+            'notice'    => session()->getFlashdata('sports_notice'),
         ]);
     }
 
@@ -202,5 +251,32 @@ class SportsController extends UserController
             $g('over'),
             $g('under'),
         );
+    }
+
+    private function matchupLinesParam(): array
+    {
+        $markets = (array) ($this->request->getGet('market') ?? []);
+        $lines = (array) ($this->request->getGet('line') ?? []);
+        $overs = (array) ($this->request->getGet('over') ?? []);
+        $unders = (array) ($this->request->getGet('under') ?? []);
+
+        $out = [];
+        foreach ($markets as $i => $m) {
+            $market = (string) $m;
+            $line = isset($lines[$i]) && is_numeric($lines[$i]) ? (float) $lines[$i] : null;
+            $over = isset($overs[$i]) && is_numeric($overs[$i]) ? (int) $overs[$i] : null;
+            $under = isset($unders[$i]) && is_numeric($unders[$i]) ? (int) $unders[$i] : null;
+
+            if ($market !== '') {
+                $out[] = [
+                    'market'     => $market,
+                    'line'       => $line ?? 0.0,
+                    'over_odds'  => $over,
+                    'under_odds' => $under,
+                ];
+            }
+        }
+
+        return $out;
     }
 }

@@ -79,9 +79,11 @@ final class NflverseAndLinesTest extends CIUnitTestCase
 
     public function testNflverseProviderReadsRbRowsAndHomeAway(): void
     {
-        $logs = iterator_to_array((new NflverseStatsProvider($this->fixture()))->gameLogs(), false);
-        $this->assertCount(6, $logs, 'QB row must be skipped');
-        $runner = $logs[0];
+        $rbLogs = iterator_to_array((new NflverseStatsProvider($this->fixture(), ['RB']))->gameLogs(), false);
+        $this->assertCount(6, $rbLogs, 'QB row must be skipped when filtering to RB');
+        $allLogs = iterator_to_array((new NflverseStatsProvider($this->fixture()))->gameLogs(), false);
+        $this->assertCount(7, $allLogs, 'All positions including QB should be read by default');
+        $runner = $rbLogs[0];
         $this->assertSame('Runner Back', $runner['player_name']);
         $this->assertSame('AAA', $runner['opponent']);
         $this->assertSame('A', $runner['home_away'], 'BBB is the away team in 2026_01_BBB_AAA');
@@ -106,7 +108,7 @@ final class NflverseAndLinesTest extends CIUnitTestCase
 
         $r = $this->svc->import(new NflverseStatsProvider($this->fixture()));
         $this->assertTrue($r['ok']);
-        $this->assertSame(4, $r['players']);
+        $this->assertSame(5, $r['players']);
         // Week 2 game vs CCC is tagged with CCC's week-1 rank (32 = bottom tier), not a rank that includes week 2.
         $def = $this->svc->defenseFor('CCC', 2026, 2, 'nflverse');
         $this->assertSame(1, (int) $def['week']);
@@ -269,7 +271,7 @@ final class NflverseAndLinesTest extends CIUnitTestCase
         $body = file_get_contents($this->fixture());
         $r = $this->svc->refreshNflverse(2026, static fn () => $body);
         $this->assertTrue($r['ok']);
-        $this->assertSame(4, $r['players']);
+        $this->assertSame(5, $r['players']);
         $this->assertSame(strlen($body), $r['download']['bytes']);
         $this->assertNotNull(SportsPropsService::statsUpdatedAt(2026));
         @unlink(NflverseStatsProvider::defaultPath(2026));

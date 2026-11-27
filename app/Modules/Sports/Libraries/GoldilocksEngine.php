@@ -39,23 +39,57 @@ final class GoldilocksEngine
     public const W_EMPIRICAL = 0.35;
 
     /** Floors on the spread so a few similar games don't fake certainty. */
-    public const SIGMA_FLOOR = ['rush_yds' => 12.0, 'rec_yds' => 8.0, 'rush_rec_yds' => 15.0];
+    public const SIGMA_FLOOR = [
+        'rush_yds'      => 12.0,
+        'rec_yds'       => 8.0,
+        'rush_rec_yds'  => 15.0,
+        'pass_yds'      => 25.0,
+        'pass_tds'      => 0.65,
+        'completions'   => 2.5,
+        'pass_att'      => 3.5,
+        'interceptions' => 0.45,
+        'receptions'    => 1.2,
+        'targets'       => 1.5,
+        'anytime_td'    => 0.35,
+    ];
+
+    public const ALL_MARKETS = [
+        'rush_yds', 'rec_yds', 'rush_rec_yds',
+        'pass_yds', 'pass_tds', 'completions', 'pass_att', 'interceptions',
+        'receptions', 'targets', 'anytime_td',
+        'spread', 'total', 'team_total',
+    ];
 
     /** Target hit rate used to suggest lines when no sportsbook lines are given. */
     public const SUGGEST_PROB = 0.65;
 
     /**
-     * @param list<array<string,mixed>> $taggedGames output of RbSplitsCalculator::tagGames()
-     * @param array<string,mixed>       $opponentDefense defense row for the upcoming opponent (rush_def_rank, rb_rec_def_rank)
+     * @param list<array<string,mixed>> $taggedGames output of splits calculator tagGames()
+     * @param array<string,mixed>       $opponentDefense defense row for the upcoming opponent
      * @param list<array{market:string,line:float,over_odds:?int,under_odds:?int}> $lines offered prop lines
+     * @param string                    $position player position ('RB', 'QB', 'WR', 'TE')
      */
-    public static function evaluate(array $taggedGames, array $opponentDefense, array $lines = []): array
+    public static function evaluate(array $taggedGames, array $opponentDefense, array $lines = [], string $position = 'RB'): array
     {
-        $splits = RbSplitsCalculator::splits($taggedGames);
+        $pos = strtoupper(trim($position));
+        if ($pos === 'QB') {
+            $markets = QbSplitsCalculator::MARKETS;
+            $splits = QbSplitsCalculator::splits($taggedGames);
+            $tierResolver = static fn (string $m, array $def) => QbSplitsCalculator::tierForRank(QbSplitsCalculator::rankForMarket($m, $def));
+        } elseif ($pos === 'WR' || $pos === 'TE') {
+            $markets = ReceiverSplitsCalculator::MARKETS;
+            $splits = ReceiverSplitsCalculator::splits($taggedGames);
+            $tierResolver = static fn (string $m, array $def) => ReceiverSplitsCalculator::tierForRank(ReceiverSplitsCalculator::rankForMarket($m, $def));
+        } else {
+            $markets = RbSplitsCalculator::MARKETS;
+            $splits = RbSplitsCalculator::splits($taggedGames);
+            $tierResolver = static fn (string $m, array $def) => RbSplitsCalculator::tierForRank(RbSplitsCalculator::rankForMarket($m, $def));
+        }
+
         $projections = [];
-        foreach (RbSplitsCalculator::MARKETS as $market) {
-            $tier = RbSplitsCalculator::tierForRank(RbSplitsCalculator::rankForMarket($market, $opponentDefense));
-            $projections[$market] = self::project($market, $tier, $splits[$market], $taggedGames);
+        foreach ($markets as $market) {
+            $tier = $tierResolver($market, $opponentDefense);
+            $projections[$market] = self::project($market, $tier, $splits[$market] ?? ['overall' => ['games' => 0]], $taggedGames);
         }
 
         $candidates = [];
@@ -65,7 +99,7 @@ final class GoldilocksEngine
                 continue;
             }
             foreach (['over', 'under'] as $side) {
-                $candidates[] = self::scoreSide($projections[$market], $taggedGames, $line, $side);
+                $candidates[] = self::scoreSide($projections[$market], $taggedGames, $line, $side, $pos);
             }
         }
 
@@ -75,12 +109,13 @@ final class GoldilocksEngine
 
         $suggested = [];
         foreach ($projections as $market => $projection) {
-            $suggested[$market] = self::suggestLines($projection, $taggedGames);
+            $suggested[$market] = self::suggestLines($projection, $taggedGames, $pos);
         }
 
         $best = $goldilocks[0] ?? null;
 
         return [
+            'position'       => $pos,
             'opponent_tiers' => array_map(static fn ($p) => $p['opponent_tier'], $projections),
             'projections'    => $projections,
             'candidates'     => $candidates,
@@ -141,11 +176,12 @@ final class GoldilocksEngine
     }
 
     /** Model probability that the player goes OVER the line. */
-    public static function probOver(array $projection, array $taggedGames, float $line): float
+    public static function probOver(array $projection, array $taggedGames, float $line, string $position = 'RB'): float
     {
         if ($projection['projection'] === null) {
             return 0.5;
         }
+        $pos = strtoupper(trim($position));
         $market = $projection['market'];
         $pNormal = 1.0 - self::normalCdf(($line - (float) $projection['projection']) / (float) $projection['sigma']);
 
@@ -156,7 +192,12 @@ final class GoldilocksEngine
         }
         $hits = 0;
         foreach ($pool as $g) {
-            if (RbSplitsCalculator::marketValue($market, $g) > $line) {
+            $val = match ($pos) {
+                'QB'       => QbSplitsCalculator::marketValue($market, $g),
+                'WR', 'TE' => ReceiverSplitsCalculator::marketValue($market, $g),
+                default    => RbSplitsCalculator::marketValue($market, $g),
+            };
+            if ($val > $line) {
                 $hits++;
             }
         }
@@ -167,10 +208,10 @@ final class GoldilocksEngine
         return min(0.99, max(0.01, $p));
     }
 
-    public static function scoreSide(array $projection, array $taggedGames, array $line, string $side): array
+    public static function scoreSide(array $projection, array $taggedGames, array $line, string $side, string $position = 'RB'): array
     {
         $value = (float) $line['line'];
-        $pOver = self::probOver($projection, $taggedGames, $value);
+        $pOver = self::probOver($projection, $taggedGames, $value, $position);
         $modelProb = $side === 'over' ? $pOver : 1.0 - $pOver;
 
         $overOdds = isset($line['over_odds']) ? (int) $line['over_odds'] : null;
@@ -222,19 +263,33 @@ final class GoldilocksEngine
     }
 
     /**
-     * Lines (half-yard steps) where over / under each hit at about SUGGEST_PROB.
+     * Lines where over / under each hit at about SUGGEST_PROB.
      * Over: the highest line still at or above the target. Under: the lowest.
      */
-    public static function suggestLines(array $projection, array $taggedGames): array
+    public static function suggestLines(array $projection, array $taggedGames, string $position = 'RB'): array
     {
         if ($projection['projection'] === null) {
             return ['fair_line' => null, 'over_at_or_below' => null, 'under_at_or_above' => null];
         }
 
+        $market = $projection['market'];
+        $maxLine = match ($market) {
+            'pass_tds', 'interceptions', 'anytime_td' => 6.5,
+            'receptions', 'targets'                   => 20.5,
+            'completions', 'pass_att'                 => 60.5,
+            'rush_yds', 'rec_yds', 'rush_rec_yds'     => 250.5,
+            'pass_yds'                                => 500.5,
+            default                                   => 300.5,
+        };
+        $step = match ($market) {
+            'pass_tds', 'interceptions', 'anytime_td' => 0.5,
+            default                                   => 1.0,
+        };
+
         $overLine = null;
         $underLine = null;
-        for ($line = 0.5; $line <= 300.5; $line += 1.0) {
-            $pOver = self::probOver($projection, $taggedGames, $line);
+        for ($line = 0.5; $line <= $maxLine; $line += $step) {
+            $pOver = self::probOver($projection, $taggedGames, $line, $position);
             if ($pOver >= self::SUGGEST_PROB) {
                 $overLine = $line;
             }
@@ -282,10 +337,21 @@ final class GoldilocksEngine
     public static function marketLabel(string $market): string
     {
         return match ($market) {
-            'rush_yds'     => 'rushing yards',
-            'rec_yds'      => 'receiving yards',
-            'rush_rec_yds' => 'rush + rec yards',
-            default        => $market,
+            'rush_yds'      => 'rushing yards',
+            'rec_yds'       => 'receiving yards',
+            'rush_rec_yds'  => 'rush + rec yards',
+            'pass_yds'      => 'passing yards',
+            'pass_tds'      => 'passing touchdowns',
+            'completions'   => 'pass completions',
+            'pass_att'      => 'pass attempts',
+            'interceptions' => 'interceptions thrown',
+            'receptions'    => 'receptions',
+            'targets'       => 'targets',
+            'anytime_td'    => 'anytime touchdown',
+            'spread'        => 'point spread',
+            'total'         => 'game total',
+            'team_total'    => 'team total',
+            default         => $market,
         };
     }
 
@@ -295,7 +361,7 @@ final class GoldilocksEngine
     }
 
     /**
-     * Parse lines from "rush_yds:65.5:-115:-105,rec_yds:22.5" or from
+     * Parse lines from "rush_yds:65.5:-115:-105,pass_yds:245.5" or from
      * parallel arrays market[], line[], over[], under[].
      *
      * @return list<array{market:string,line:float,over_odds:?int,under_odds:?int}>
@@ -315,7 +381,7 @@ final class GoldilocksEngine
 
         $out = [];
         foreach ($rows as [$market, $line, $over, $under]) {
-            if (! in_array($market, RbSplitsCalculator::MARKETS, true) || ! is_numeric($line)) {
+            if (! in_array($market, self::ALL_MARKETS, true) || ! is_numeric($line)) {
                 continue;
             }
             $lineValue = (float) $line;

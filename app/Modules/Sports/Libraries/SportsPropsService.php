@@ -68,10 +68,15 @@ final class SportsPropsService
             $existing = $this->db->table(self::T_DEFENSE)->where($key)->get()->getRowArray();
             $data = [
                 'rush_def_rank'       => $row['rush_def_rank'],
-                'rb_rec_def_rank'     => $row['rb_rec_def_rank'],
-                'rush_yds_allowed_pg' => $row['rush_yds_allowed_pg'],
+                'rb_rec_def_rank'     => $row['rb_rec_def_rank'] ?? null,
+                'rush_yds_allowed_pg' => $row['rush_yds_allowed_pg'] ?? null,
                 'updated_at'          => $now,
             ];
+            foreach (['pass_def_rank', 'pass_yds_allowed_pg', 'pass_td_def_rank', 'scoring_def_rank', 'points_allowed_pg'] as $col) {
+                if (isset($row[$col]) && $this->db->fieldExists($col, self::T_DEFENSE)) {
+                    $data[$col] = $row[$col];
+                }
+            }
             if ($existing) {
                 $this->db->table(self::T_DEFENSE)->where('id', $existing['id'])->update($data);
             } else {
@@ -103,6 +108,11 @@ final class SportsPropsService
                 'rush_td' => $row['rush_td'], 'targets' => $row['targets'], 'receptions' => $row['receptions'],
                 'rec_yds' => $row['rec_yds'], 'rec_td' => $row['rec_td'], 'updated_at' => $now,
             ];
+            foreach (['pass_att', 'completions', 'pass_yds', 'pass_td', 'interceptions'] as $col) {
+                if (isset($row[$col]) && $this->db->fieldExists($col, self::T_LOGS)) {
+                    $data[$col] = $row[$col];
+                }
+            }
             $existing = $this->db->table(self::T_LOGS)->where($key)->get()->getRowArray();
             if ($existing) {
                 $this->db->table(self::T_LOGS)->where('id', $existing['id'])->update($data);
@@ -160,21 +170,33 @@ final class SportsPropsService
         return ['removed_players' => count($ids), 'ok' => $this->db->transStatus()];
     }
 
-    public function listPlayers(?int $season = null): array
+    public function listPlayers(?int $season = null, ?string $position = null): array
     {
+        $hasPassing = $this->db->fieldExists('pass_yds', self::T_LOGS);
+        $select = 'p.id, p.full_name, p.team, p.position, p.provider, COUNT(l.id) AS games, SUM(l.rush_yds) AS rush_yds, SUM(l.rec_yds) AS rec_yds, MAX(l.season) AS season';
+        if ($hasPassing) {
+            $select .= ', SUM(l.pass_yds) AS pass_yds, SUM(l.pass_td) AS pass_td, SUM(l.receptions) AS receptions';
+        }
+
         $builder = $this->db->table(self::T_LOGS . ' l')
-            ->select('p.id, p.full_name, p.team, p.position, p.provider, COUNT(l.id) AS games, SUM(l.rush_yds) AS rush_yds, SUM(l.rec_yds) AS rec_yds, MAX(l.season) AS season')
+            ->select($select)
             ->join(self::T_PLAYERS . ' p', 'p.id = l.player_id')
             ->groupBy('p.id, p.full_name, p.team, p.position, p.provider')
             ->orderBy('p.full_name', 'ASC');
+
         if ($season !== null) {
             $builder->where('l.season', $season);
         }
+        if ($position !== null && strtoupper($position) !== 'ALL') {
+            $builder->where('p.position', strtoupper($position));
+        }
+
         $rows = $builder->get()->getResultArray();
         foreach ($rows as &$r) {
             $games = max(1, (int) $r['games']);
-            $r['rush_avg'] = round((int) $r['rush_yds'] / $games, 1);
-            $r['rec_avg'] = round((int) $r['rec_yds'] / $games, 1);
+            $r['rush_avg'] = round((int) ($r['rush_yds'] ?? 0) / $games, 1);
+            $r['rec_avg']  = round((int) ($r['rec_yds'] ?? 0) / $games, 1);
+            $r['pass_avg'] = round((int) ($r['pass_yds'] ?? 0) / $games, 1);
         }
 
         return $rows;
@@ -241,16 +263,28 @@ final class SportsPropsService
         }
         $season ??= $this->latestSeason($playerId);
         $provider = (string) $player['provider'];
+        $pos = strtoupper(trim((string) ($player['position'] ?? 'RB')));
 
         $games = $season === null ? [] : $this->db->table(self::T_LOGS)
             ->where(['player_id' => $playerId, 'season' => $season])
             ->orderBy('week', 'ASC')->get()->getResultArray();
 
-        $tagged = RbSplitsCalculator::tagGames($games, fn (array $g) => $this->defenseFor((string) $g['opponent'], (int) $g['season'], (int) $g['week'], $provider));
-        $splits = RbSplitsCalculator::splits($tagged);
+        $defenseResolver = fn (array $g) => $this->defenseFor((string) $g['opponent'], (int) $g['season'], (int) $g['week'], $provider);
+
+        if ($pos === 'QB') {
+            $tagged = QbSplitsCalculator::tagGames($games, $defenseResolver);
+            $splits = QbSplitsCalculator::splits($tagged);
+        } elseif ($pos === 'WR' || $pos === 'TE') {
+            $tagged = ReceiverSplitsCalculator::tagGames($games, $defenseResolver);
+            $splits = ReceiverSplitsCalculator::splits($tagged);
+        } else {
+            $tagged = RbSplitsCalculator::tagGames($games, $defenseResolver);
+            $splits = RbSplitsCalculator::splits($tagged);
+        }
 
         $report = [
             'player'     => $player,
+            'position'   => $pos,
             'season'     => $season,
             'games'      => $tagged,
             'splits'     => $splits,
@@ -267,15 +301,106 @@ final class SportsPropsService
             // Upcoming game: use the most recent rank we have for that defense.
             $defense = $this->defenseFor($opponent, $season, 99, $provider);
             $report['opponent'] = [
-                'team'            => $opponent,
-                'rush_def_rank'   => $defense['rush_def_rank'] ?? null,
-                'rb_rec_def_rank' => $defense['rb_rec_def_rank'] ?? null,
-                'known'           => $defense !== null,
+                'team'                => $opponent,
+                'rush_def_rank'       => $defense['rush_def_rank'] ?? null,
+                'rb_rec_def_rank'     => $defense['rb_rec_def_rank'] ?? null,
+                'pass_def_rank'       => $defense['pass_def_rank'] ?? null,
+                'pass_yds_allowed_pg' => $defense['pass_yds_allowed_pg'] ?? null,
+                'pass_td_def_rank'    => $defense['pass_td_def_rank'] ?? null,
+                'scoring_def_rank'    => $defense['scoring_def_rank'] ?? null,
+                'points_allowed_pg'   => $defense['points_allowed_pg'] ?? null,
+                'known'               => $defense !== null,
             ];
-            $report['goldilocks'] = GoldilocksEngine::evaluate($tagged, $defense ?? [], $lines);
+            $report['goldilocks'] = GoldilocksEngine::evaluate($tagged, $defense ?? [], $lines, $pos);
         }
 
         return $report;
+    }
+
+    /**
+     * Models Team vs Team game matchups: final score projections, spread, total, moneyline,
+     * win probabilities, and Goldilocks picks.
+     */
+    public function matchupReport(string $homeTeam, string $awayTeam, ?int $season = null, array $lines = []): array
+    {
+        $homeTeam = strtoupper(trim($homeTeam));
+        $awayTeam = strtoupper(trim($awayTeam));
+        $season ??= Providers\NflverseStatsProvider::currentSeason();
+
+        // Get defensive & offensive metrics for both teams from latest defense ranks
+        $homeDef = $this->defenseFor($homeTeam, $season, 99, 'nflverse') ?? $this->defenseFor($homeTeam, $season, 99, 'sample');
+        $awayDef = $this->defenseFor($awayTeam, $season, 99, 'nflverse') ?? $this->defenseFor($awayTeam, $season, 99, 'sample');
+
+        $homeAllowed = isset($homeDef['points_allowed_pg']) && (float) $homeDef['points_allowed_pg'] > 0
+            ? (float) $homeDef['points_allowed_pg']
+            : TeamMatchupCalculator::LEAGUE_AVG_POINTS;
+
+        $awayAllowed = isset($awayDef['points_allowed_pg']) && (float) $awayDef['points_allowed_pg'] > 0
+            ? (float) $awayDef['points_allowed_pg']
+            : TeamMatchupCalculator::LEAGUE_AVG_POINTS;
+
+        $homeRank = (int) ($homeDef['scoring_def_rank'] ?? 16);
+        $awayRank = (int) ($awayDef['scoring_def_rank'] ?? 16);
+        $homeScored = round(TeamMatchupCalculator::LEAGUE_AVG_POINTS + (16 - $homeRank) * 0.4, 1);
+        $awayScored = round(TeamMatchupCalculator::LEAGUE_AVG_POINTS + (16 - $awayRank) * 0.4, 1);
+
+        $homeStats = [
+            'points_scored_pg'  => $homeScored,
+            'points_allowed_pg' => $homeAllowed,
+        ];
+        $awayStats = [
+            'points_scored_pg'  => $awayScored,
+            'points_allowed_pg' => $awayAllowed,
+        ];
+
+        $projection = TeamMatchupCalculator::projectMatchup($homeStats, $awayStats);
+
+        $candidates = [];
+        foreach ($lines as $line) {
+            $m = $line['market'] ?? '';
+            if ($m === 'spread') {
+                $spreadLine = (float) $line['line'];
+                $homeOdds = $line['over_odds'] ?? -110;
+                $awayOdds = $line['under_odds'] ?? -110;
+                $ev = TeamMatchupCalculator::evaluateSpread($projection['projected_spread'], $spreadLine, $homeOdds, $awayOdds);
+                $candidates[] = $ev['home'];
+                $candidates[] = $ev['away'];
+            } elseif ($m === 'total') {
+                $totalLine = (float) $line['line'];
+                $overOdds = $line['over_odds'] ?? -110;
+                $underOdds = $line['under_odds'] ?? -110;
+                $ev = TeamMatchupCalculator::evaluateTotal($projection['projected_total'], $totalLine, $overOdds, $underOdds);
+                $candidates[] = $ev['over'];
+                $candidates[] = $ev['under'];
+            } elseif ($m === 'moneyline') {
+                $homeMl = $line['over_odds'] ?? -110;
+                $awayMl = $line['under_odds'] ?? 100;
+                $ev = TeamMatchupCalculator::evaluateMoneyline($projection['home_win_prob'], $homeMl, $awayMl);
+                $candidates[] = $ev['home'];
+                $candidates[] = $ev['away'];
+            }
+        }
+
+        $goldilocks = array_values(array_filter($candidates, static fn ($c) => $c['goldilocks'] ?? false));
+        usort($goldilocks, static fn ($a, $b) => ($b['ev_per_dollar'] ?? 0) <=> ($a['ev_per_dollar'] ?? 0));
+        $best = $goldilocks[0] ?? null;
+
+        return [
+            'home_team'   => $homeTeam,
+            'away_team'   => $awayTeam,
+            'season'      => $season,
+            'home_stats'  => $homeStats,
+            'away_stats'  => $awayStats,
+            'home_def'    => $homeDef,
+            'away_def'    => $awayDef,
+            'projection'  => $projection,
+            'candidates'  => $candidates,
+            'best'        => $best,
+            'verdict'     => $best !== null
+                ? sprintf('%s is the Goldilocks pick: %.0f%% model chance vs %.0f%% priced in.', $best['pick'], ($best['model_prob'] ?? 0) * 100, ($best['market_prob'] ?? 0) * 100)
+                : 'Projected score: ' . $homeTeam . ' ' . $projection['home_score'] . ', ' . $awayTeam . ' ' . $projection['away_score'] . '. Spread: ' . ($projection['projected_spread'] <= 0 ? $homeTeam . ' ' . $projection['projected_spread'] : $awayTeam . ' -' . $projection['projected_spread']) . ', Total: ' . $projection['projected_total'],
+            'disclaimer'  => self::DISCLAIMER,
+        ];
     }
 
     /**
