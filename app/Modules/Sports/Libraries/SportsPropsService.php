@@ -448,8 +448,15 @@ final class SportsPropsService
         return $out;
     }
 
-    public const T_NBA_LOGS    = 'bf_sports_nba_game_logs';
-    public const T_NBA_DEFENSE = 'bf_sports_nba_defense_ranks';
+    public const T_NBA_LOGS         = 'bf_sports_nba_game_logs';
+    public const T_NBA_DEFENSE      = 'bf_sports_nba_defense_ranks';
+    public const T_MLB_PITCHER_LOGS = 'bf_sports_mlb_pitcher_logs';
+    public const T_MLB_BATTER_LOGS  = 'bf_sports_mlb_batter_logs';
+    public const T_MLB_PARK_FACTORS = 'bf_sports_mlb_park_factors';
+    public const T_NHL_SKATER_LOGS  = 'bf_sports_nhl_skater_logs';
+    public const T_NHL_GOALIE_LOGS  = 'bf_sports_nhl_goalie_logs';
+    public const T_NHL_DEFENSE      = 'bf_sports_nhl_team_defense';
+    public const T_SGP_CORRELATIONS = 'bf_sports_sgp_correlations';
 
     public function nbaTablesReady(): bool
     {
@@ -761,6 +768,106 @@ final class SportsPropsService
             ];
         }
 
+        if ($sport === 'MLB') {
+            return [
+                [
+                    'name'            => 'Tarik Skubal',
+                    'event'           => 'DET @ CLE',
+                    'market_label'    => 'Pitcher Strikeouts',
+                    'consensus_line'  => 7.5,
+                    'books'           => [
+                        'DraftKings' => ['line' => 7.5, 'over_odds' => -115, 'under_odds' => -105],
+                        'FanDuel'    => ['line' => 6.5, 'over_odds' => -130, 'under_odds' => 105],
+                        'BetMGM'     => ['line' => 7.5, 'over_odds' => -110, 'under_odds' => -110],
+                        'Caesars'    => ['line' => 7.5, 'over_odds' => -105, 'under_odds' => -120],
+                    ],
+                    'best_over_book'  => 'FanDuel',
+                    'best_under_book' => 'Caesars',
+                    'discrepancy'     => '1.0 K Line Gap (FD 6.5 vs DK/MGM 7.5)',
+                ],
+                [
+                    'name'            => 'Aaron Judge',
+                    'event'           => 'NYY @ BOS',
+                    'market_label'    => 'Total Bases',
+                    'consensus_line'  => 1.5,
+                    'books'           => [
+                        'DraftKings' => ['line' => 1.5, 'over_odds' => -110, 'under_odds' => -110],
+                        'FanDuel'    => ['line' => 1.5, 'over_odds' => -105, 'under_odds' => -118],
+                        'BetMGM'     => ['line' => 1.5, 'over_odds' => -115, 'under_odds' => -105],
+                        'Caesars'    => ['line' => 1.5, 'over_odds' => 102, 'under_odds' => -125],
+                    ],
+                    'best_over_book'  => 'Caesars',
+                    'best_under_book' => 'FanDuel',
+                    'discrepancy'     => '+EV Plus-Money Over Available (+102 CZR)',
+                ],
+                [
+                    'name'            => 'New York Yankees',
+                    'event'           => 'NYY @ BOS',
+                    'market_label'    => 'First 5 (F5) Run Line',
+                    'consensus_line'  => -0.5,
+                    'books'           => [
+                        'DraftKings' => ['line' => -0.5, 'over_odds' => -125, 'under_odds' => 105],
+                        'FanDuel'    => ['line' => -0.5, 'over_odds' => -120, 'under_odds' => 100],
+                        'BetMGM'     => ['line' => -0.5, 'over_odds' => -130, 'under_odds' => 110],
+                        'Caesars'    => ['line' => -0.5, 'over_odds' => -118, 'under_odds' => -105],
+                    ],
+                    'best_over_book'  => 'Caesars',
+                    'best_under_book' => 'BetMGM',
+                    'discrepancy'     => '12c Juice Differential on F5 Favorite',
+                ],
+            ];
+        }
+
+        if ($sport === 'NHL') {
+            return [
+                [
+                    'name'            => 'Connor McDavid',
+                    'event'           => 'EDM @ CGY',
+                    'market_label'    => 'Shots on Goal (SOG)',
+                    'consensus_line'  => 3.5,
+                    'books'           => [
+                        'DraftKings' => ['line' => 3.5, 'over_odds' => -115, 'under_odds' => -105],
+                        'FanDuel'    => ['line' => 3.5, 'over_odds' => -108, 'under_odds' => -114],
+                        'BetMGM'     => ['line' => 3.5, 'over_odds' => -120, 'under_odds' => 100],
+                        'Caesars'    => ['line' => 4.5, 'over_odds' => 115, 'under_odds' => -140],
+                    ],
+                    'best_over_book'  => 'FanDuel',
+                    'best_under_book' => 'Caesars',
+                    'discrepancy'     => '1.0 SOG Line Spread (FD 3.5 vs CZR 4.5)',
+                ],
+                [
+                    'name'            => 'Igor Shesterkin',
+                    'event'           => 'NYR @ NJD',
+                    'market_label'    => 'Goalie Saves',
+                    'consensus_line'  => 28.5,
+                    'books'           => [
+                        'DraftKings' => ['line' => 28.5, 'over_odds' => -110, 'under_odds' => -110],
+                        'FanDuel'    => ['line' => 27.5, 'over_odds' => -125, 'under_odds' => 102],
+                        'BetMGM'     => ['line' => 28.5, 'over_odds' => -115, 'under_odds' => -105],
+                        'Caesars'    => ['line' => 29.5, 'over_odds' => 105, 'under_odds' => -130],
+                    ],
+                    'best_over_book'  => 'FanDuel',
+                    'best_under_book' => 'Caesars',
+                    'discrepancy'     => '2.0 Save Margin Across Books (27.5 vs 29.5)',
+                ],
+                [
+                    'name'            => 'Edmonton Oilers',
+                    'event'           => 'EDM @ CGY',
+                    'market_label'    => 'Puck Line (-1.5)',
+                    'consensus_line'  => -1.5,
+                    'books'           => [
+                        'DraftKings' => ['line' => -1.5, 'over_odds' => 135, 'under_odds' => -160],
+                        'FanDuel'    => ['line' => -1.5, 'over_odds' => 140, 'under_odds' => -170],
+                        'BetMGM'     => ['line' => -1.5, 'over_odds' => 130, 'under_odds' => -155],
+                        'Caesars'    => ['line' => -1.5, 'over_odds' => 142, 'under_odds' => -175],
+                    ],
+                    'best_over_book'  => 'Caesars',
+                    'best_under_book' => 'BetMGM',
+                    'discrepancy'     => '12c Spread on +Money Puck Line',
+                ],
+            ];
+        }
+
         // NFL Multi-Book Board
         return [
             [
@@ -809,6 +916,635 @@ final class SportsPropsService
                 'discrepancy'     => 'Critical 3.0 Key Number Spread Line',
             ],
         ];
+    }
+
+    public function mlbTablesReady(): bool
+    {
+        return $this->db->tableExists(self::T_PLAYERS, false)
+            && $this->db->tableExists(self::T_MLB_PITCHER_LOGS, false)
+            && $this->db->tableExists(self::T_MLB_BATTER_LOGS, false)
+            && $this->db->tableExists(self::T_MLB_PARK_FACTORS, false);
+    }
+
+    public function ensureMlbSampleData(): void
+    {
+        if (! $this->mlbTablesReady()) {
+            return;
+        }
+
+        $now = date('Y-m-d H:i:s');
+        $season = 2025;
+
+        // Seed park factors
+        $parks = [
+            ['team' => 'COL', 'venue' => 'Coors Field', 'run' => 1.180, 'hr' => 1.150, 'alt' => 5280, 'dome' => 0],
+            ['team' => 'BOS', 'venue' => 'Fenway Park', 'run' => 1.080, 'hr' => 0.980, 'alt' => 20, 'dome' => 0],
+            ['team' => 'NYY', 'venue' => 'Yankee Stadium', 'run' => 1.040, 'hr' => 1.140, 'alt' => 54, 'dome' => 0],
+            ['team' => 'LAD', 'venue' => 'Dodger Stadium', 'run' => 1.020, 'hr' => 1.120, 'alt' => 267, 'dome' => 0],
+            ['team' => 'HOU', 'venue' => 'Minute Maid Park', 'run' => 0.990, 'hr' => 1.030, 'alt' => 42, 'dome' => 1],
+            ['team' => 'SD',  'venue' => 'Petco Park', 'run' => 0.920, 'hr' => 0.880, 'alt' => 13, 'dome' => 0],
+        ];
+
+        foreach ($parks as $p) {
+            $this->db->table(self::T_MLB_PARK_FACTORS)->replace([
+                'team'          => $p['team'],
+                'venue_name'    => $p['venue'],
+                'run_factor'    => $p['run'],
+                'hr_factor'     => $p['hr'],
+                'altitude_feet' => $p['alt'],
+                'is_dome'       => $p['dome'],
+                'created_at'    => $now,
+                'updated_at'    => $now,
+            ]);
+        }
+
+        $count = $this->db->table(self::T_PLAYERS)->where('sport', 'MLB')->countAllResults();
+        if ($count > 0) {
+            return;
+        }
+
+        $opponents = ['COL', 'BOS', 'NYY', 'LAD', 'HOU', 'SD'];
+
+        // Pitchers
+        $pitchers = [
+            ['name' => 'Tarik Skubal', 'team' => 'DET', 'pos' => 'SP', 'base_k' => 8.2, 'base_ip' => 6.2, 'base_er' => 1.8],
+            ['name' => 'Zack Wheeler', 'team' => 'PHI', 'pos' => 'SP', 'base_k' => 7.6, 'base_ip' => 6.1, 'base_er' => 2.1],
+            ['name' => 'Paul Skenes', 'team' => 'PIT', 'pos' => 'SP', 'base_k' => 8.5, 'base_ip' => 6.0, 'base_er' => 1.9],
+        ];
+
+        foreach ($pitchers as $pitcher) {
+            $this->db->table(self::T_PLAYERS)->insert([
+                'provider'    => 'sample',
+                'external_id' => 'mlb_' . strtolower(str_replace(' ', '_', $pitcher['name'])),
+                'full_name'   => $pitcher['name'],
+                'team'        => $pitcher['team'],
+                'position'    => $pitcher['pos'],
+                'sport'       => 'MLB',
+                'created_at'  => $now,
+                'updated_at'  => $now,
+            ]);
+            $playerId = (int) $this->db->insertID();
+
+            for ($i = 1; $i <= 12; $i++) {
+                $opp = $opponents[($i - 1) % count($opponents)];
+                $kRank = ($i % 3 === 0) ? 5 : (($i % 3 === 1) ? 15 : 26);
+                $noise = (($i % 4) - 1.5);
+                $ks = max(3, (int) round($pitcher['base_k'] + $noise + ($kRank <= 10 ? 1.5 : -1.0)));
+                $er = max(0, (int) round($pitcher['base_er'] + (($i % 3) - 1)));
+
+                $this->db->table(self::T_MLB_PITCHER_LOGS)->insert([
+                    'player_id'       => $playerId,
+                    'season'          => $season,
+                    'game_date'       => date('Y-m-d', strtotime("-{$i} days")),
+                    'opponent'        => $opp,
+                    'home_away'       => $i % 2 === 0 ? 'H' : 'A',
+                    'ip'              => $pitcher['base_ip'],
+                    'strikeouts'      => $ks,
+                    'walks'           => ($i % 3 === 0) ? 2 : 1,
+                    'hits_allowed'    => max(2, (int) round(4.5 + (($i % 3) - 1))),
+                    'er'              => $er,
+                    'pitches'         => (int) round(92 + (($i % 3) * 4)),
+                    'swings_misses'   => (int) round(14 + (($i % 3) * 2)),
+                    'opp_k_rate_rank' => $kRank,
+                    'created_at'      => $now,
+                    'updated_at'      => $now,
+                ]);
+            }
+        }
+
+        // Batters
+        $batters = [
+            ['name' => 'Aaron Judge', 'team' => 'NYY', 'pos' => 'OF', 'base_tb' => 2.4, 'base_hits' => 1.3, 'base_hr' => 0.38],
+            ['name' => 'Shohei Ohtani', 'team' => 'LAD', 'pos' => 'DH', 'base_tb' => 2.5, 'base_hits' => 1.4, 'base_hr' => 0.40],
+            ['name' => 'Juan Soto', 'team' => 'NYY', 'pos' => 'OF', 'base_tb' => 2.0, 'base_hits' => 1.2, 'base_hr' => 0.28],
+            ['name' => 'Gunnar Henderson', 'team' => 'BAL', 'pos' => 'SS', 'base_tb' => 2.1, 'base_hits' => 1.2, 'base_hr' => 0.25],
+        ];
+
+        foreach ($batters as $batter) {
+            $this->db->table(self::T_PLAYERS)->insert([
+                'provider'    => 'sample',
+                'external_id' => 'mlb_' . strtolower(str_replace(' ', '_', $batter['name'])),
+                'full_name'   => $batter['name'],
+                'team'        => $batter['team'],
+                'position'    => $batter['pos'],
+                'sport'       => 'MLB',
+                'created_at'  => $now,
+                'updated_at'  => $now,
+            ]);
+            $playerId = (int) $this->db->insertID();
+
+            for ($i = 1; $i <= 12; $i++) {
+                $opp = $opponents[($i - 1) % count($opponents)];
+                $hand = $i % 3 === 0 ? 'L' : 'R';
+                $hits = ($i % 4 === 0) ? 0 : (($i % 4 === 3) ? 2 : 1);
+                $isHr = ($i % 3 === 0) ? 1 : 0;
+                $is2b = ($i % 4 === 2) ? 1 : 0;
+                $tb = $isHr ? 4 : ($is2b ? 2 : $hits);
+
+                $this->db->table(self::T_MLB_BATTER_LOGS)->insert([
+                    'player_id'        => $playerId,
+                    'season'           => $season,
+                    'game_date'        => date('Y-m-d', strtotime("-{$i} days")),
+                    'opponent'         => $opp,
+                    'home_away'        => $i % 2 === 0 ? 'H' : 'A',
+                    'opp_pitcher_hand' => $hand,
+                    'at_bats'          => 4,
+                    'hits'             => $hits,
+                    'doubles'          => $is2b,
+                    'triples'          => 0,
+                    'home_runs'        => $isHr,
+                    'total_bases'      => $tb,
+                    'rbi'              => $isHr ? 2 : ($hits > 0 ? 1 : 0),
+                    'runs'             => $hits > 0 ? 1 : 0,
+                    'strikeouts'       => ($i % 2 === 0) ? 1 : 0,
+                    'walks'            => ($i % 3 === 0) ? 1 : 0,
+                    'created_at'       => $now,
+                    'updated_at'       => $now,
+                ]);
+            }
+        }
+    }
+
+    /**
+     * @return list<array<string,mixed>>
+     */
+    public function listMlbPlayers(?int $season = null, ?string $pos = null): array
+    {
+        if (! $this->mlbTablesReady()) {
+            return [];
+        }
+
+        $this->ensureMlbSampleData();
+
+        $season ??= 2025;
+        $b = $this->db->table(self::T_PLAYERS)->where('sport', 'MLB');
+
+        if ($pos !== null && $pos !== 'ALL') {
+            if ($pos === 'PITCHER') {
+                $b->whereIn('position', ['SP', 'RP']);
+            } elseif ($pos === 'BATTER') {
+                $b->whereNotIn('position', ['SP', 'RP']);
+            } else {
+                $b->where('position', strtoupper(trim($pos)));
+            }
+        }
+
+        $players = $b->orderBy('full_name', 'ASC')->get()->getResultArray();
+        $out = [];
+
+        foreach ($players as $p) {
+            $isPitcher = in_array($p['position'], ['SP', 'RP'], true);
+            $logTable = $isPitcher ? self::T_MLB_PITCHER_LOGS : self::T_MLB_BATTER_LOGS;
+
+            $logs = $this->db->table($logTable)
+                ->where('player_id', (int) $p['id'])
+                ->where('season', $season)
+                ->get()
+                ->getResultArray();
+
+            $n = count($logs);
+            if ($n === 0) {
+                continue;
+            }
+
+            if ($isPitcher) {
+                $sumK = array_sum(array_column($logs, 'strikeouts'));
+                $sumIp = array_sum(array_column($logs, 'ip'));
+                $sumEr = array_sum(array_column($logs, 'er'));
+                $out[] = array_merge($p, [
+                    'games'    => $n,
+                    'season'   => $season,
+                    'type'     => 'Pitcher',
+                    'k_pg'     => round($sumK / $n, 1),
+                    'ip_pg'    => round($sumIp / $n, 1),
+                    'era'      => round(($sumEr * 9.0) / max(1.0, $sumIp), 2),
+                ]);
+            } else {
+                $sumHits = array_sum(array_column($logs, 'hits'));
+                $sumAb = array_sum(array_column($logs, 'at_bats'));
+                $sumTb = array_sum(array_column($logs, 'total_bases'));
+                $sumHr = array_sum(array_column($logs, 'home_runs'));
+                $out[] = array_merge($p, [
+                    'games'    => $n,
+                    'season'   => $season,
+                    'type'     => 'Batter',
+                    'avg'      => round($sumHits / max(1, $sumAb), 3),
+                    'tb_pg'    => round($sumTb / $n, 1),
+                    'hr_total' => (int) $sumHr,
+                ]);
+            }
+        }
+
+        return $out;
+    }
+
+    /**
+     * @return array<string,mixed>|null
+     */
+    public function mlbPlayerReport(int $playerId, ?int $season = null, ?string $opponent = null): ?array
+    {
+        if (! $this->mlbTablesReady()) {
+            return null;
+        }
+
+        $player = $this->db->table(self::T_PLAYERS)->where('id', $playerId)->get()->getRowArray();
+        if ($player === null) {
+            return null;
+        }
+
+        $season ??= 2025;
+        $isPitcher = in_array($player['position'], ['SP', 'RP'], true);
+        $logTable = $isPitcher ? self::T_MLB_PITCHER_LOGS : self::T_MLB_BATTER_LOGS;
+
+        $games = $this->db->table($logTable)
+            ->where('player_id', $playerId)
+            ->where('season', $season)
+            ->orderBy('game_date', 'ASC')
+            ->get()
+            ->getResultArray();
+
+        $parks = $this->mlbParkFactors();
+        $opp = strtoupper(trim((string) ($opponent ?? 'COL')));
+        $park = $parks[$opp] ?? ['run_factor' => 1.0, 'hr_factor' => 1.0, 'altitude_feet' => 0];
+
+        $splits = $isPitcher ? MlbSplitsCalculator::pitcherSplits($games) : MlbSplitsCalculator::batterSplits($games);
+        $f5 = $isPitcher ? MlbSplitsCalculator::f5Projection(3.20, 4.10, (float) ($park['run_factor'] ?? 1.0), true) : [];
+
+        return [
+            'player'     => $player,
+            'is_pitcher' => $isPitcher,
+            'season'     => $season,
+            'opponent'   => $opp,
+            'park'       => $park,
+            'games'      => $games,
+            'splits'     => $splits,
+            'f5'         => $f5,
+        ];
+    }
+
+    /**
+     * @return array<string,array<string,mixed>>
+     */
+    public function mlbParkFactors(): array
+    {
+        if (! $this->mlbTablesReady()) {
+            return [];
+        }
+
+        $rows = $this->db->table(self::T_MLB_PARK_FACTORS)->get()->getResultArray();
+        $out = [];
+        foreach ($rows as $r) {
+            $out[$r['team']] = $r;
+        }
+
+        return $out;
+    }
+
+    public function nhlTablesReady(): bool
+    {
+        return $this->db->tableExists(self::T_PLAYERS, false)
+            && $this->db->tableExists(self::T_NHL_SKATER_LOGS, false)
+            && $this->db->tableExists(self::T_NHL_GOALIE_LOGS, false)
+            && $this->db->tableExists(self::T_NHL_DEFENSE, false);
+    }
+
+    public function ensureNhlSampleData(): void
+    {
+        if (! $this->nhlTablesReady()) {
+            return;
+        }
+
+        $now = date('Y-m-d H:i:s');
+        $season = 2025;
+
+        // Seed defense rankings
+        $defTeams = [
+            'CAR' => ['sog_pg' => 25.8, 'sog_r' => 1,  'ga_pg' => 2.38, 'ga_r' => 1,  'pk' => 86.2, 'pk_r' => 1,  'pp' => 24.1, 'pp_r' => 5],
+            'BOS' => ['sog_pg' => 27.2, 'sog_r' => 2,  'ga_pg' => 2.45, 'ga_r' => 2,  'pk' => 84.5, 'pk_r' => 3,  'pp' => 23.2, 'pp_r' => 8],
+            'NYR' => ['sog_pg' => 29.5, 'sog_r' => 12, 'ga_pg' => 2.75, 'ga_r' => 8,  'pk' => 83.1, 'pk_r' => 6,  'pp' => 26.5, 'pp_r' => 2],
+            'EDM' => ['sog_pg' => 28.4, 'sog_r' => 9,  'ga_pg' => 2.85, 'ga_r' => 11, 'pk' => 79.5, 'pk_r' => 18, 'pp' => 27.8, 'pp_r' => 1],
+            'ANA' => ['sog_pg' => 33.8, 'sog_r' => 30, 'ga_pg' => 3.65, 'ga_r' => 30, 'pk' => 75.1, 'pk_r' => 27, 'pp' => 17.8, 'pp_r' => 26],
+            'SJS' => ['sog_pg' => 35.1, 'sog_r' => 32, 'ga_pg' => 3.92, 'ga_r' => 32, 'pk' => 73.2, 'pk_r' => 31, 'pp' => 16.5, 'pp_r' => 28],
+        ];
+
+        foreach ($defTeams as $t => $d) {
+            $this->db->table(self::T_NHL_DEFENSE)->replace([
+                'season'         => $season,
+                'team'           => $t,
+                'sog_allowed_pg' => $d['sog_pg'],
+                'sog_def_rank'   => $d['sog_r'],
+                'ga_pg'          => $d['ga_pg'],
+                'ga_def_rank'    => $d['ga_r'],
+                'pk_pct'         => $d['pk'],
+                'pk_def_rank'    => $d['pk_r'],
+                'pp_pct'         => $d['pp'],
+                'pp_rank'        => $d['pp_r'],
+                'created_at'     => $now,
+                'updated_at'     => $now,
+            ]);
+        }
+
+        $count = $this->db->table(self::T_PLAYERS)->where('sport', 'NHL')->countAllResults();
+        if ($count > 0) {
+            return;
+        }
+
+        $opponents = array_keys($defTeams);
+
+        // Skaters
+        $skaters = [
+            ['name' => 'Connor McDavid', 'team' => 'EDM', 'pos' => 'C', 'base_sog' => 3.9, 'base_pts' => 1.6, 'base_g' => 0.6, 'base_a' => 1.0],
+            ['name' => 'Auston Matthews', 'team' => 'TOR', 'pos' => 'C', 'base_sog' => 4.4, 'base_pts' => 1.3, 'base_g' => 0.8, 'base_a' => 0.5],
+            ['name' => 'Nathan MacKinnon', 'team' => 'COL', 'pos' => 'C', 'base_sog' => 4.6, 'base_pts' => 1.6, 'base_g' => 0.6, 'base_a' => 1.0],
+            ['name' => 'Nikita Kucherov', 'team' => 'TBL', 'pos' => 'RW', 'base_sog' => 3.8, 'base_pts' => 1.7, 'base_g' => 0.5, 'base_a' => 1.2],
+        ];
+
+        foreach ($skaters as $skater) {
+            $this->db->table(self::T_PLAYERS)->insert([
+                'provider'    => 'sample',
+                'external_id' => 'nhl_' . strtolower(str_replace(' ', '_', $skater['name'])),
+                'full_name'   => $skater['name'],
+                'team'        => $skater['team'],
+                'position'    => $skater['pos'],
+                'sport'       => 'NHL',
+                'created_at'  => $now,
+                'updated_at'  => $now,
+            ]);
+            $playerId = (int) $this->db->insertID();
+
+            for ($i = 1; $i <= 12; $i++) {
+                $opp = $opponents[($i - 1) % count($opponents)];
+                $sog = max(1, (int) round($skater['base_sog'] + (($i % 3) - 1)));
+                $g = ($i % 3 === 0) ? 1 : (($i % 5 === 0) ? 2 : 0);
+                $a = ($i % 2 === 0) ? 1 : (($i % 4 === 0) ? 2 : 0);
+
+                $this->db->table(self::T_NHL_SKATER_LOGS)->insert([
+                    'player_id'        => $playerId,
+                    'season'           => $season,
+                    'game_date'        => date('Y-m-d', strtotime("-{$i} days")),
+                    'opponent'         => $opp,
+                    'home_away'        => $i % 2 === 0 ? 'H' : 'A',
+                    'toi_minutes'      => 21.5,
+                    'shots_on_goal'    => $sog,
+                    'shot_attempts'    => (int) round($sog * 1.6),
+                    'goals'            => $g,
+                    'assists'          => $a,
+                    'points'           => $g + $a,
+                    'powerplay_points' => ($g > 0 && $i % 2 === 0) ? 1 : 0,
+                    'blocked_shots'    => ($i % 3 === 0) ? 1 : 0,
+                    'created_at'       => $now,
+                    'updated_at'       => $now,
+                ]);
+            }
+        }
+
+        // Goalies
+        $goalies = [
+            ['name' => 'Igor Shesterkin', 'team' => 'NYR', 'pos' => 'G', 'base_saves' => 29.5, 'base_ga' => 2.3, 'base_sp' => 0.925],
+            ['name' => 'Connor Hellebuyck', 'team' => 'WPG', 'pos' => 'G', 'base_saves' => 28.8, 'base_ga' => 2.1, 'base_sp' => 0.930],
+        ];
+
+        foreach ($goalies as $goalie) {
+            $this->db->table(self::T_PLAYERS)->insert([
+                'provider'    => 'sample',
+                'external_id' => 'nhl_' . strtolower(str_replace(' ', '_', $goalie['name'])),
+                'full_name'   => $goalie['name'],
+                'team'        => $goalie['team'],
+                'position'    => $goalie['pos'],
+                'sport'       => 'NHL',
+                'created_at'  => $now,
+                'updated_at'  => $now,
+            ]);
+            $playerId = (int) $this->db->insertID();
+
+            for ($i = 1; $i <= 12; $i++) {
+                $opp = $opponents[($i - 1) % count($opponents)];
+                $saves = max(20, (int) round($goalie['base_saves'] + (($i % 4) - 1.5) * 3));
+                $ga = max(0, (int) round($goalie['base_ga'] + (($i % 3) - 1)));
+                $shots = $saves + $ga;
+                $sp = round($saves / max(1, $shots), 3);
+
+                $this->db->table(self::T_NHL_GOALIE_LOGS)->insert([
+                    'player_id'     => $playerId,
+                    'season'        => $season,
+                    'game_date'     => date('Y-m-d', strtotime("-{$i} days")),
+                    'opponent'      => $opp,
+                    'home_away'     => $i % 2 === 0 ? 'H' : 'A',
+                    'shots_faced'   => $shots,
+                    'saves'         => $saves,
+                    'goals_against' => $ga,
+                    'save_pct'      => $sp,
+                    'xga'           => round($ga + 0.3, 2),
+                    'decision'      => $ga <= 2 ? 'W' : 'L',
+                    'created_at'    => $now,
+                    'updated_at'    => $now,
+                ]);
+            }
+        }
+    }
+
+    /**
+     * @return list<array<string,mixed>>
+     */
+    public function listNhlPlayers(?int $season = null, ?string $pos = null): array
+    {
+        if (! $this->nhlTablesReady()) {
+            return [];
+        }
+
+        $this->ensureNhlSampleData();
+
+        $season ??= 2025;
+        $b = $this->db->table(self::T_PLAYERS)->where('sport', 'NHL');
+
+        if ($pos !== null && $pos !== 'ALL') {
+            if ($pos === 'SKATER') {
+                $b->where('position !=', 'G');
+            } elseif ($pos === 'GOALIE') {
+                $b->where('position', 'G');
+            } else {
+                $b->where('position', strtoupper(trim($pos)));
+            }
+        }
+
+        $players = $b->orderBy('full_name', 'ASC')->get()->getResultArray();
+        $out = [];
+
+        foreach ($players as $p) {
+            $isGoalie = $p['position'] === 'G';
+            $logTable = $isGoalie ? self::T_NHL_GOALIE_LOGS : self::T_NHL_SKATER_LOGS;
+
+            $logs = $this->db->table($logTable)
+                ->where('player_id', (int) $p['id'])
+                ->where('season', $season)
+                ->get()
+                ->getResultArray();
+
+            $n = count($logs);
+            if ($n === 0) {
+                continue;
+            }
+
+            if ($isGoalie) {
+                $sumSaves = array_sum(array_column($logs, 'saves'));
+                $sumGa = array_sum(array_column($logs, 'goals_against'));
+                $sumShots = array_sum(array_column($logs, 'shots_faced'));
+                $out[] = array_merge($p, [
+                    'games'    => $n,
+                    'season'   => $season,
+                    'type'     => 'Goalie',
+                    'saves_pg' => round($sumSaves / $n, 1),
+                    'ga_pg'    => round($sumGa / $n, 2),
+                    'save_pct' => round($sumSaves / max(1, $sumShots), 3),
+                ]);
+            } else {
+                $sumSog = array_sum(array_column($logs, 'shots_on_goal'));
+                $sumPts = array_sum(array_column($logs, 'points'));
+                $sumG = array_sum(array_column($logs, 'goals'));
+                $sumA = array_sum(array_column($logs, 'assists'));
+                $out[] = array_merge($p, [
+                    'games'    => $n,
+                    'season'   => $season,
+                    'type'     => 'Skater',
+                    'sog_pg'   => round($sumSog / $n, 1),
+                    'pts_pg'   => round($sumPts / $n, 1),
+                    'goals'    => (int) $sumG,
+                    'assists'  => (int) $sumA,
+                ]);
+            }
+        }
+
+        return $out;
+    }
+
+    /**
+     * @return array<string,mixed>|null
+     */
+    public function nhlPlayerReport(int $playerId, ?int $season = null, ?string $opponent = null): ?array
+    {
+        if (! $this->nhlTablesReady()) {
+            return null;
+        }
+
+        $player = $this->db->table(self::T_PLAYERS)->where('id', $playerId)->get()->getRowArray();
+        if ($player === null) {
+            return null;
+        }
+
+        $season ??= 2025;
+        $isGoalie = $player['position'] === 'G';
+        $logTable = $isGoalie ? self::T_NHL_GOALIE_LOGS : self::T_NHL_SKATER_LOGS;
+
+        $games = $this->db->table($logTable)
+            ->where('player_id', $playerId)
+            ->where('season', $season)
+            ->orderBy('game_date', 'ASC')
+            ->get()
+            ->getResultArray();
+
+        $defByTeam = $this->nhlTeamsDefense($season);
+        $opp = strtoupper(trim((string) ($opponent ?? 'SJS')));
+        $oppDef = $defByTeam[$opp] ?? [];
+
+        $splits = $isGoalie ? [] : NhlSplitsCalculator::skaterSplits($games, $defByTeam);
+        $specialTeams = NhlSplitsCalculator::specialTeamsEdge(26.5, (float) ($oppDef['pk_pct'] ?? 80.0));
+
+        return [
+            'player'        => $player,
+            'is_goalie'     => $isGoalie,
+            'season'        => $season,
+            'opponent'      => $opp,
+            'opp_defense'   => $oppDef,
+            'games'         => $games,
+            'splits'        => $splits,
+            'special_teams' => $specialTeams,
+        ];
+    }
+
+    /**
+     * @return array<string,array<string,mixed>>
+     */
+    public function nhlTeamsDefense(?int $season = null): array
+    {
+        if (! $this->nhlTablesReady()) {
+            return [];
+        }
+
+        $season ??= 2025;
+        $rows = $this->db->table(self::T_NHL_DEFENSE)
+            ->where('season', $season)
+            ->get()
+            ->getResultArray();
+
+        $out = [];
+        foreach ($rows as $r) {
+            $out[$r['team']] = $r;
+        }
+
+        return $out;
+    }
+
+    public function sgpTablesReady(): bool
+    {
+        return $this->db->tableExists(self::T_SGP_CORRELATIONS, false);
+    }
+
+    public function ensureSgpCorrelations(): void
+    {
+        if (! $this->sgpTablesReady()) {
+            return;
+        }
+
+        $count = $this->db->table(self::T_SGP_CORRELATIONS)->countAllResults();
+        if ($count > 0) {
+            return;
+        }
+
+        $now = date('Y-m-d H:i:s');
+        foreach (SgpCorrelationEngine::CORRELATION_MATRIX as $sport => $list) {
+            foreach ($list as $item) {
+                $this->db->table(self::T_SGP_CORRELATIONS)->replace([
+                    'sport'             => $sport,
+                    'leg_a_market'      => $item['leg_a'],
+                    'leg_b_market'      => $item['leg_b'],
+                    'direction'         => $item['direction'],
+                    'correlation_coeff' => $item['r'],
+                    'synergy_label'     => $item['synergy'],
+                    'notes'             => $item['description'],
+                    'created_at'        => $now,
+                    'updated_at'        => $now,
+                ]);
+            }
+        }
+    }
+
+    /**
+     * @return list<array<string,mixed>>
+     */
+    public function getSgpCorrelations(?string $sport = null): array
+    {
+        if (! $this->sgpTablesReady()) {
+            if ($sport !== null) {
+                return SgpCorrelationEngine::CORRELATION_MATRIX[strtoupper($sport)] ?? [];
+            }
+            $flat = [];
+            foreach (SgpCorrelationEngine::CORRELATION_MATRIX as $sp => $arr) {
+                foreach ($arr as $row) {
+                    $row['sport'] = $sp;
+                    $flat[] = $row;
+                }
+            }
+            return $flat;
+        }
+
+        $this->ensureSgpCorrelations();
+
+        $b = $this->db->table(self::T_SGP_CORRELATIONS);
+        if ($sport !== null && $sport !== 'ALL') {
+            $b->where('sport', strtoupper(trim($sport)));
+        }
+
+        return $b->orderBy('sport', 'ASC')->orderBy('correlation_coeff', 'DESC')->get()->getResultArray();
     }
 
     private function defenseRows(int $season, string $provider): array

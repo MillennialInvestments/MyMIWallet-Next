@@ -62,6 +62,21 @@ $disclaimer = \App\Modules\Sports\Libraries\SportsPropsService::DISCLAIMER;
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link <?= $activeTab === 'mlb' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('MyMISports/MLB') ?>">
+                <i class="bi bi-baseball me-1"></i> MLB
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?= $activeTab === 'nhl' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('MyMISports/NHL') ?>">
+                <i class="bi bi-snow me-1"></i> NHL
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?= $activeTab === 'sgp' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('My-Bets/SGP') ?>">
+                <i class="bi bi-diagram-3-fill me-1 text-danger"></i> SGP Engine
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link <?= $activeTab === 'predictions' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('My-Predictions') ?>">
                 <i class="bi bi-lightning-charge-fill me-1 text-primary"></i> My Predictions
             </a>

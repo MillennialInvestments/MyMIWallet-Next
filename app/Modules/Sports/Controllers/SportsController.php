@@ -8,10 +8,13 @@ use App\Controllers\UserController;
 use App\Modules\Sports\Libraries\BettingCalculators;
 use App\Modules\Sports\Libraries\GamificationLeaderboardService;
 use App\Modules\Sports\Libraries\GoldilocksEngine;
+use App\Modules\Sports\Libraries\MlbSplitsCalculator;
 use App\Modules\Sports\Libraries\NbaSplitsCalculator;
+use App\Modules\Sports\Libraries\NhlSplitsCalculator;
 use App\Modules\Sports\Libraries\OnrampRevenueService;
 use App\Modules\Sports\Libraries\PredictionMarketsService;
 use App\Modules\Sports\Libraries\PropLinesService;
+use App\Modules\Sports\Libraries\SgpCorrelationEngine;
 use App\Modules\Sports\Libraries\SportsBetTrackerService;
 use App\Modules\Sports\Libraries\SportsPropsService;
 
@@ -385,6 +388,154 @@ class SportsController extends UserController
         }
 
         return redirect()->to(site_url('MyMISports/NBA'));
+    }
+
+    public function mlb()
+    {
+        $svc = $this->sports();
+        $ready = $svc->mlbTablesReady();
+        $pos = strtoupper(trim((string) ($this->request->getGet('pos') ?? 'ALL')));
+        if (! in_array($pos, ['ALL', 'PITCHER', 'BATTER'], true)) {
+            $pos = 'ALL';
+        }
+
+        $players = $ready ? $svc->listMlbPlayers(2025, $pos === 'ALL' ? null : $pos) : [];
+        $parks = $ready ? $svc->mlbParkFactors() : [];
+
+        return $this->renderTheme('App\Modules\Sports\Views\mlb\index', [
+            'pageTitle'    => 'MLB Baseball Analytics & Prop Intelligence',
+            'activePos'    => $pos,
+            'tablesReady'  => $ready,
+            'players'      => $players,
+            'parks'        => $parks,
+            'statsUpdated' => date('M j, Y H:i'),
+            'notice'       => session()->getFlashdata('sports_notice'),
+            'disclaimer'   => SportsPropsService::DISCLAIMER,
+        ]);
+    }
+
+    public function mlbPlayer(int $playerId)
+    {
+        $svc = $this->sports();
+        if (! $svc->mlbTablesReady()) {
+            return redirect()->to(site_url('MyMISports/MLB'));
+        }
+
+        $opponent = $this->opponentParam() ?: 'COL';
+        $report = $svc->mlbPlayerReport($playerId, 2025, $opponent);
+        if ($report === null) {
+            return redirect()->to(site_url('MyMISports/MLB'));
+        }
+
+        $parks = $svc->mlbParkFactors();
+
+        return $this->renderTheme('App\Modules\Sports\Views\mlb\player', [
+            'pageTitle'        => $report['player']['full_name'] . ' | MLB Prop Splits',
+            'player'           => $report['player'],
+            'report'           => $report,
+            'parks'            => $parks,
+            'selectedOpponent' => $opponent,
+            'disclaimer'       => SportsPropsService::DISCLAIMER,
+        ]);
+    }
+
+    public function refreshMlbStats()
+    {
+        $svc = $this->sports();
+        if ($svc->mlbTablesReady()) {
+            $svc->ensureMlbSampleData();
+            session()->setFlashdata('sports_notice', 'MLB player stats and ballpark factors refreshed successfully.');
+        }
+
+        return redirect()->to(site_url('MyMISports/MLB'));
+    }
+
+    public function nhl()
+    {
+        $svc = $this->sports();
+        $ready = $svc->nhlTablesReady();
+        $pos = strtoupper(trim((string) ($this->request->getGet('pos') ?? 'ALL')));
+        if (! in_array($pos, ['ALL', 'SKATER', 'GOALIE'], true)) {
+            $pos = 'ALL';
+        }
+
+        $players = $ready ? $svc->listNhlPlayers(2025, $pos === 'ALL' ? null : $pos) : [];
+        $teamsDefense = $ready ? $svc->nhlTeamsDefense(2025) : [];
+
+        return $this->renderTheme('App\Modules\Sports\Views\nhl\index', [
+            'pageTitle'    => 'NHL Hockey Analytics & Prop Intelligence',
+            'activePos'    => $pos,
+            'tablesReady'  => $ready,
+            'players'      => $players,
+            'teamsDefense' => $teamsDefense,
+            'statsUpdated' => date('M j, Y H:i'),
+            'notice'       => session()->getFlashdata('sports_notice'),
+            'disclaimer'   => SportsPropsService::DISCLAIMER,
+        ]);
+    }
+
+    public function nhlPlayer(int $playerId)
+    {
+        $svc = $this->sports();
+        if (! $svc->nhlTablesReady()) {
+            return redirect()->to(site_url('MyMISports/NHL'));
+        }
+
+        $opponent = $this->opponentParam() ?: 'SJS';
+        $report = $svc->nhlPlayerReport($playerId, 2025, $opponent);
+        if ($report === null) {
+            return redirect()->to(site_url('MyMISports/NHL'));
+        }
+
+        $teamsDefense = $svc->nhlTeamsDefense(2025);
+
+        return $this->renderTheme('App\Modules\Sports\Views\nhl\player', [
+            'pageTitle'        => $report['player']['full_name'] . ' | NHL Prop Splits',
+            'player'           => $report['player'],
+            'report'           => $report,
+            'teamsDefense'     => $teamsDefense,
+            'selectedOpponent' => $opponent,
+            'disclaimer'       => SportsPropsService::DISCLAIMER,
+        ]);
+    }
+
+    public function refreshNhlStats()
+    {
+        $svc = $this->sports();
+        if ($svc->nhlTablesReady()) {
+            $svc->ensureNhlSampleData();
+            session()->setFlashdata('sports_notice', 'NHL player stats and shot suppression defense refreshed successfully.');
+        }
+
+        return redirect()->to(site_url('MyMISports/NHL'));
+    }
+
+    public function sgp()
+    {
+        $sport = strtoupper(trim((string) ($this->request->getGet('sport') ?? 'ALL')));
+        $correlations = $this->sports()->getSgpCorrelations($sport === 'ALL' ? null : $sport);
+
+        return $this->renderTheme('App\Modules\Sports\Views\sgp\index', [
+            'pageTitle'    => 'Same-Game Parlay (SGP) Correlation & +EV Valuation Engine',
+            'activeSport'  => $sport,
+            'correlations' => $correlations,
+            'disclaimer'   => SportsPropsService::DISCLAIMER,
+            'notice'       => session()->getFlashdata('sports_notice'),
+        ]);
+    }
+
+    public function sgpCalculateApi()
+    {
+        $post = (array) ($this->request->getPost() ?: $this->request->getJSON(true) ?: []);
+
+        $oddsA = (int) ($post['odds_a'] ?? -110);
+        $oddsB = (int) ($post['odds_b'] ?? -110);
+        $r = (float) ($post['r'] ?? 0.50);
+        $offeredOdds = (int) ($post['offered_odds'] ?? 185);
+
+        $result = SgpCorrelationEngine::evaluateTwoLegSgp($oddsA, $oddsB, $r, $offeredOdds);
+
+        return $this->response->setJSON($result);
     }
 
     public function tracker()
