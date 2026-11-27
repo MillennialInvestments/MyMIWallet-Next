@@ -11,7 +11,7 @@ use CodeIgniter\HTTP\ResponseInterface;
  *
  * Guarantees:
  * - Accredited-only gating on deposits and minting.
- * - Session IDOR enforcement via $this->resolveCuID().
+ * - Session IDOR enforcement via (int) ($this->resolveCurrentUserId() ?? 0).
  * - No public purchase button; no guaranteed returns.
  */
 class MyMICoinOfferingController extends UserController
@@ -25,7 +25,7 @@ class MyMICoinOfferingController extends UserController
 
     public function index(): string
     {
-        $userId = $this->resolveCuID();
+        $userId = (int) ($this->resolveCurrentUserId() ?? 0);
         $service = $this->getService();
         $isAccredited = $userId > 0 ? $service->isAccredited($userId) : false;
         $offering = $service->getOfferingDetails();
@@ -43,7 +43,7 @@ class MyMICoinOfferingController extends UserController
 
     public function interest(): ResponseInterface
     {
-        $userId = $this->resolveCuID();
+        $userId = (int) ($this->resolveCurrentUserId() ?? 0);
         if ($userId <= 0) {
             return $this->response->setStatusCode(401)->setJSON([
                 'ok'      => false,
@@ -66,7 +66,7 @@ class MyMICoinOfferingController extends UserController
 
     public function deposit(): ResponseInterface
     {
-        $userId = $this->resolveCuID();
+        $userId = (int) ($this->resolveCurrentUserId() ?? 0);
         if ($userId <= 0) {
             return $this->response->setStatusCode(401)->setJSON([
                 'ok'      => false,
@@ -87,7 +87,7 @@ class MyMICoinOfferingController extends UserController
 
     public function mint(): ResponseInterface
     {
-        $userId = $this->resolveCuID();
+        $userId = (int) ($this->resolveCurrentUserId() ?? 0);
         if ($userId <= 0) {
             return $this->response->setStatusCode(401)->setJSON([
                 'ok'      => false,
