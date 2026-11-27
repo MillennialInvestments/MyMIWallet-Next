@@ -2,7 +2,8 @@
 use App\Modules\Sports\Libraries\GoldilocksEngine;
 use App\Modules\Sports\Libraries\RbSplitsCalculator;
 
-/** @var array $report @var array $lines */
+/** @var array $report @var array $lines @var ?array $bookLines */
+$bookLines ??= null;
 $p = $report['player'];
 $gold = $report['goldilocks'];
 $opp = $report['opponent'];
@@ -19,6 +20,9 @@ while (count($rows) < 3) {
     <h1 class="h3 mb-1"><?= esc((string) $p['full_name']) ?> <small class="text-muted"><?= esc((string) $p['team']) ?> · <?= esc((string) $p['position']) ?> · <?= (int) $report['season'] ?></small></h1>
     <?php if ($report['provenance']['is_sample']): ?><span class="badge bg-secondary mb-2">sample data, not real stats</span><?php endif; ?>
     <div class="alert alert-warning small" role="note"><?= esc($report['disclaimer']) ?></div>
+    <?php if ($bookLines !== null): ?>
+        <div class="alert alert-info small" id="sports-book-lines-note">Next game vs <?= esc((string) $bookLines['opponent']) ?><?php if ($bookLines['commence_time']): ?> on <?= esc(date('D M j', strtotime($bookLines['commence_time'] . ' UTC'))) ?><?php endif; ?>. Lines below are from <?= esc(ucfirst((string) $bookLines['bookmaker'])) ?>, fetched <?= esc((string) $bookLines['fetched_at']) ?> UTC. Change them and press the button to test other numbers.</div>
+    <?php endif; ?>
 
     <div class="card mb-3">
         <div class="card-header"><strong>Matchup and prop lines</strong></div>
@@ -122,7 +126,7 @@ while (count($rows) < 3) {
                 </tbody>
             </table>
         </div>
-        <div class="card-footer small text-muted">Rushing uses the opponent's rush defense rank; receiving uses its rank against running-back receiving.</div>
+        <div class="card-footer small text-muted">Rushing uses the opponent's rush defense rank; receiving uses its rank against running-back receiving.<?php if (! empty($report['provenance']['attribution'])): ?> <?= esc($report['provenance']['attribution']) ?>; ranks are computed from running-back yards allowed before each week.<?php endif; ?></div>
     </div>
 
     <div class="card">

@@ -1,6 +1,6 @@
 # MyMI Sports: NFL running back props (Goldilocks)
 
-Status: PROPOSED (branch `claude/project-thread-z2z2v6`). Analytics only. No wagering, no money, no external API calls.
+Status: LIVE (#803, #805). Real-data import added in this change. Analytics only. No wagering, no money.
 
 ## What it does
 
@@ -23,7 +23,8 @@ Status: PROPOSED (branch `claude/project-thread-z2z2v6`). Analytics only. No wag
 | Storage | `SportsPropsService.php`, migration `2026-11-27-000100_CreateSportsPropAnalyticsTables` (`bf_sports_players`, `bf_sports_rb_game_logs`, `bf_sports_defense_ranks`) |
 | Data | `Providers/StatsProviderInterface.php`, `CsvStatsProvider.php`, bundled fictional sample set in `app/Modules/Sports/Data/` |
 | CLI | `php spark sports:import --provider sample`, `sports:import --logs FILE --defense FILE`, `sports:import --remove-sample --approve`, `sports:goldilocks --player Alpha --opponent KC --lines "rush_yds:65.5:-115:-105"` |
-| Tests | `tests/unit/Sports/` (14 tests), `tests/smoke/sports-rb-props-smoke.sh` |
+| Real data | `Providers/NflverseStatsProvider.php`, `PropLinesService.php`, `php spark sports:import --provider nflverse`, `php spark sports:lines` |
+| Tests | `tests/unit/Sports/` (24 tests), `tests/smoke/sports-rb-props-smoke.sh` |
 
 The sidebar's existing "My Sports" links (`/MyMISports`, `/MyMISports/NFL`, `/MyMISports/NBA`) now resolve; NBA goes to the NFL page until NBA work exists.
 
@@ -53,15 +54,41 @@ Remove the sample players when done: `cd /apps/TBI/www/mymiwallet-staging/curren
 
 ## Real data
 
-Import a CSV export (columns in `CsvStatsProvider.php`; sample files show the format) with `sports:import --logs FILE --defense FILE --provider csv`. Re-imports update rows in place.
-A live stats API is a separate owner decision (cost, terms, key in `.env` only). `StatsProviderInterface` is the plug-in point.
+### Stats: nflverse (free, no key)
+
+`php spark sports:import --provider nflverse [--season 2026]` downloads the free weekly player stats CSV
+(`https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_{season}.csv`, about 5-9 MB) to
+`writable/cache/nflverse/`, imports every RB row, and computes defense ranks from the same file: after each week every defense is
+ranked by RB rushing yards per game allowed so far (1 = fewest), and separately by RB receiving yards. A week-N game uses the
+ranks after week N-1 (no look-ahead); week 1 shows "rank unknown". Re-running updates rows in place. Use `--file PATH` to import a
+file you already downloaded. License: CC BY 4.0 (checked against the nflverse-data LICENSE); pages show "Stats: nflverse (CC BY 4.0)".
+Checked 2026-11-27 against the real 2026 file (weeks 1-12): 149 RBs, 941 game logs, 32 defenses, import under 1 second.
+
+Cost-efficient schedule: once a day during the season (nflverse refreshes after games). One request per run.
+
+### Sportsbook lines: The Odds API (optional, key in .env)
+
+`php spark sports:lines` fetches RB prop lines (`player_rush_yds`, `player_reception_yds`, `player_rush_reception_yds`;
+DraftKings then FanDuel) into `bf_sports_prop_lines` (migration `2026-11-27-000200_CreateSportsPropLinesTable`).
+Does nothing unless `ODDS_API_KEY` is set in `.env`. The events list is free; each game costs about 3 credits.
+Guards: only games starting in the next `--days 7`, at most `--max-events 16`, stops when remaining credits would fall under
+`--reserve 25`, skips games already started. One run a week for a full slate is about 48 credits, so the free 500-credit plan
+covers roughly two runs a week. The key is never logged (errors mask `apiKey=`).
+
+With lines stored, a player page with no matchup typed in pre-fills the next opponent and the book's lines, and `/MyMISports/NFL`
+lists "This week's Goldilocks picks". Typing your own lines still works and overrides them. Book names are matched to nflverse
+names ignoring case, punctuation and Jr/Sr/II/III suffixes.
+
+### CSV
+
+Import a CSV export (columns in `CsvStatsProvider.php`; sample files show the format) with `sports:import --logs FILE --defense FILE --provider csv`.
 
 ## Gates and risks
 
 - **Legal:** this is educational analytics. Taking, placing or brokering wagers, paid picks, or affiliate sportsbook links need a separate legal/compliance review per state before any build. Not enabled here.
 - **Exposed key:** `app/Libraries/MyMISports.php` had an API-Sports key hardcoded in this public repo. This change reads `API_SPORTS_KEY` from `.env` instead, but the old key is in git history: **rotate it at api-sports.io**.
 - Model weights are heuristics, not back-tested. Treat picks as a research aid.
-- Production: not deployed. Needs the named migration through `mymi-release.sh` (`MIGRATE=` list) after staging passes. Never plain `spark migrate`.
+- Production: deploy through `mymi-release.sh` with the named migrations in `MIGRATE=` after staging passes. Never plain `spark migrate`.
 
 ## Rollback
 

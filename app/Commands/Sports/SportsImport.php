@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace App\Commands\Sports;
 
 use App\Modules\Sports\Libraries\Providers\CsvStatsProvider;
+use App\Modules\Sports\Libraries\Providers\NflverseStatsProvider;
 use App\Modules\Sports\Libraries\SportsPropsService;
 use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
 /**
  * Loads NFL running back game logs and defense ranks into the sports tables.
- * Writes only bf_sports_* reference tables. No external API calls.
+ * Writes only bf_sports_* reference tables. The nflverse provider downloads
+ * one free public CSV per season (no key); the others read local files.
  */
 class SportsImport extends SafeBaseCommand
 {
@@ -19,10 +21,12 @@ class SportsImport extends SafeBaseCommand
 
     protected $group       = 'Sports';
     protected $name        = 'sports:import';
-    protected $description = 'Import RB game logs + defense ranks (bundled sample or your CSV files). Use --remove-sample to delete sample rows.';
-    protected $usage       = 'sports:import [--provider=sample] [--logs=FILE --defense=FILE] [--remove-sample --approve] [--json]';
+    protected $description = 'Import RB game logs + defense ranks (nflverse real stats, bundled sample, or your CSV files). Use --remove-sample to delete sample rows.';
+    protected $usage       = 'sports:import [--provider=nflverse [--season=2026] [--file=PATH]] [--provider=sample] [--logs=FILE --defense=FILE] [--remove-sample --approve] [--json]';
     protected $options     = [
-        '--provider'      => 'sample (bundled fictional data) or csv (default when --logs is given).',
+        '--provider'      => 'nflverse (real stats, free download), sample (bundled fictional data) or csv (default when --logs is given).',
+        '--season'        => 'nflverse season (default: the current NFL season).',
+        '--file'          => 'nflverse: use this already-downloaded CSV instead of downloading.',
         '--logs'          => 'Path to a game log CSV.',
         '--defense'       => 'Path to a defense rank CSV.',
         '--remove-sample' => 'Delete only rows imported by the sample provider (needs --approve).',
@@ -51,7 +55,17 @@ class SportsImport extends SafeBaseCommand
         $providerName = (string) ($this->opt($params, 'provider') ?? ($logs ? 'csv' : 'sample'));
 
         try {
-            if ($providerName === 'sample') {
+            $download = null;
+            if ($providerName === NflverseStatsProvider::NAME) {
+                $seasonOpt = $this->opt($params, 'season');
+                $season = is_numeric($seasonOpt) ? (int) $seasonOpt : NflverseStatsProvider::currentSeason();
+                $file = $this->opt($params, 'file');
+                if (! is_string($file)) {
+                    $file = NflverseStatsProvider::defaultPath($season);
+                    $download = NflverseStatsProvider::download($season, $file);
+                }
+                $provider = new NflverseStatsProvider($file);
+            } elseif ($providerName === 'sample') {
                 $provider = CsvStatsProvider::sample();
             } else {
                 if (! is_string($logs) || ! is_string($defense)) {
@@ -66,6 +80,10 @@ class SportsImport extends SafeBaseCommand
             $r = $svc->import($provider);
         } catch (\Throwable $e) {
             return $this->out($json, ['status' => 'FAIL', 'reason' => $e->getMessage()], 1);
+        }
+
+        if ($download !== null) {
+            $r['download'] = ['url' => $download['url'], 'bytes' => $download['bytes']];
         }
 
         return $this->out($json, ['status' => $r['ok'] ? 'PASS' : 'FAIL'] + $r + ['counts' => $svc->counts()], $r['ok'] ? 0 : 1);
