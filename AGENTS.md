@@ -111,6 +111,16 @@ This repository participates in Teddy's centralized Codex ⇄ AIOps workflow. Co
 - **GitHub Actions Codeloader 429 Resilience:** Transient `HTTP/2 429` rate limits from `codeload.github.com` during `composer install` on public CI runners are non-deterministic. Never modify application code to resolve a CDN 429; trigger a workflow rerun (`gh run rerun <id>`) or rebase push.
 - **Squash-Merge Commit Ancestry on Staging:** Staging must always run the exact squashed merge commit of `main` (not the pre-merge feature branch), because `mymi-release.sh activate` enforces an exact SHA equality check between staging and candidate production releases.
 
+## CodeIgniter 4.7 Boot-Failure Lessons (2026-11, PRs #791, #811, #814)
+
+- **A Closure 404 override must return a string.** CI 4.7 `display404errors()` echoes the override's return value; returning a `Response` gives "Object of class Response could not be converted to string" and HTTP 500 on every missing page. Return `(string) $response->getBody()` (see `NotFoundOverrideTest`).
+- **Use only framework classes that exist in the installed version.** CI 4.7 has `PageCache`, not `ResponseCache`; connections have no `isConnected()` (use `simpleQuery('SELECT 1') !== false`). A missing class or method in a filter or health probe fails every request it touches, so check `vendor/codeigniter4/framework` before using one.
+- **Never `addRedirect()` a path that is also a GET route.** The Router then redirects to the GET route's handler string (`/\App\...::index`), which clients get as HTTP 400 "disallowed characters". Keep one definition per path.
+- **Let HTTP exceptions through `public/index.php`.** Catch `HTTPExceptionInterface` and rethrow before the generic `Throwable` catch, or scanner probes (`*.sql`, `wp-*`) are logged as EMERGENCY boot failures.
+- **Header reads:** `getHeaderLine()` throws when a header is sent twice (for example `Cache-Control`); read `headers()` and join repeated values (`OpsJobRegistry::headerMap()`).
+- **Every view variable must be passed.** A controller that renders a shared template without its data (`$title`, `$contentHtml`) is an EMERGENCY boot failure; redirect or render a real view instead.
+- **Verify on live, not only in tests.** After a deploy, read the MCP `mymi_status` emergency counts (24 h) and confirm each fixed message is gone before closing the issue. Before giving a production `activate` command, check the live revision and main again, and never glob release names.
+
 ## US Regulatory & Multi-Line Compliance Invariants ("Brick A" Standard)
 
 Every AI agent and contributor must honor these federal and state legal constraints before drafting routes, database migrations, controllers, or UI components:
