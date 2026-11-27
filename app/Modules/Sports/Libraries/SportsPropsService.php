@@ -233,7 +233,8 @@ final class SportsPropsService
             'opponent'   => null,
             'goldilocks' => null,
             'disclaimer' => self::DISCLAIMER,
-            'provenance' => ['provider' => $provider, 'is_sample' => $provider === 'sample', 'read_only' => true, 'wagering' => false],
+            'provenance' => ['provider' => $provider, 'is_sample' => $provider === 'sample', 'read_only' => true, 'wagering' => false,
+                'attribution' => $provider === Providers\NflverseStatsProvider::NAME ? Providers\NflverseStatsProvider::ATTRIBUTION : null],
         ];
 
         if ($opponent !== null && $opponent !== '' && $season !== null) {
@@ -250,6 +251,51 @@ final class SportsPropsService
         }
 
         return $report;
+    }
+
+    /**
+     * Goldilocks verdicts for every player who has upcoming sportsbook lines.
+     * Players are matched by name; when the same name exists under several
+     * providers, real data wins over the sample set.
+     *
+     * @return list<array{player:array, opponent:?string, commence_time:?string, bookmaker:?string, best:?array, verdict:string}>
+     */
+    public function weeklyPicks(PropLinesService $lines, int $limit = 60): array
+    {
+        $keys = array_flip($lines->upcomingPlayerKeys());
+        if ($keys === [] || ! $this->tablesReady()) {
+            return [];
+        }
+
+        $players = [];
+        foreach ($this->listPlayers() as $p) {
+            $k = PropLinesService::nameKey((string) $p['full_name']);
+            if (isset($keys[$k]) && (! isset($players[$k]) || $players[$k]['provider'] === 'sample')) {
+                $players[$k] = $p;
+            }
+        }
+
+        $out = [];
+        foreach (array_slice($players, 0, $limit) as $p) {
+            $up = $lines->upcomingFor((string) $p['full_name'], (string) $p['team']);
+            if ($up === null || $up['opponent'] === null || $up['lines'] === []) {
+                continue;
+            }
+            $report = $this->playerReport((int) $p['id'], null, $up['opponent'], $up['lines']);
+            $gold = $report['goldilocks'] ?? null;
+            $out[] = [
+                'player'        => $p,
+                'opponent'      => $up['opponent'],
+                'commence_time' => $up['commence_time'],
+                'bookmaker'     => $up['bookmaker'],
+                'best'          => $gold['best'] ?? null,
+                'verdict'       => (string) ($gold['verdict'] ?? ''),
+            ];
+        }
+
+        usort($out, static fn ($a, $b) => [$b['best'] !== null, $b['best']['ev_per_dollar'] ?? 0] <=> [$a['best'] !== null, $a['best']['ev_per_dollar'] ?? 0]);
+
+        return $out;
     }
 
     private function defenseRows(int $season, string $provider): array

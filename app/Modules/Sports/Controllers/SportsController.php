@@ -6,6 +6,7 @@ namespace App\Modules\Sports\Controllers;
 
 use App\Controllers\UserController;
 use App\Modules\Sports\Libraries\GoldilocksEngine;
+use App\Modules\Sports\Libraries\PropLinesService;
 use App\Modules\Sports\Libraries\SportsPropsService;
 
 /**
@@ -35,6 +36,7 @@ class SportsController extends UserController
             'pageTitle'   => 'NFL Running Back Props',
             'tablesReady' => $ready,
             'players'     => $ready ? $svc->listPlayers() : [],
+            'picks'       => $ready ? $svc->weeklyPicks(PropLinesService::fromEnv(db_connect())) : [],
             'disclaimer'  => SportsPropsService::DISCLAIMER,
         ]);
     }
@@ -46,7 +48,26 @@ class SportsController extends UserController
             return redirect()->to(site_url('MyMISports/NFL'));
         }
 
-        $report = $svc->playerReport($playerId, $this->seasonParam(), $this->opponentParam(), $this->linesParam());
+        $opponent = $this->opponentParam();
+        $lines = $this->linesParam();
+        $bookLines = null;
+
+        // No matchup typed in: use the player's next game and the sportsbook
+        // lines fetched by sports:lines, when there are any.
+        if ($opponent === null && $lines === [] && $this->request->getGet('manual') === null) {
+            $player = $svc->findPlayer($playerId);
+            if ($player !== null) {
+                $bookLines = PropLinesService::fromEnv(db_connect())->upcomingFor((string) $player['full_name'], (string) $player['team']);
+                if ($bookLines !== null && $bookLines['opponent'] !== null) {
+                    $opponent = $bookLines['opponent'];
+                    $lines = $bookLines['lines'];
+                } else {
+                    $bookLines = null;
+                }
+            }
+        }
+
+        $report = $svc->playerReport($playerId, $this->seasonParam(), $opponent, $lines);
         if ($report === null) {
             return $this->response->setStatusCode(404)->setBody('Player not found.');
         }
@@ -54,7 +75,8 @@ class SportsController extends UserController
         return $this->renderTheme('App\Modules\Sports\Views\nfl\player', [
             'pageTitle' => $report['player']['full_name'] . ' | RB Props',
             'report'    => $report,
-            'lines'     => $this->linesParam(),
+            'lines'     => $lines,
+            'bookLines' => $bookLines,
         ]);
     }
 
