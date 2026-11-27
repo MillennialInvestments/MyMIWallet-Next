@@ -551,7 +551,8 @@ $routes->group('API/v1', ['namespace' => '\App\Modules\APIs\Controllers', 'filte
 // They used to be addRedirect() aliases to /API/v1/*, but the same paths are
 // also GET routes in that group, and CodeIgniter 4.7 then redirects to the GET
 // route's handler string ("/\App\Modules\...::index"), which every client
-// got back as HTTP 400 "disallowed characters".
+// got back as HTTP 400 "disallowed characters". Note: the group's Status
+// route points at APIController, which does not exist, so /API/Status is a 404.
 
 $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  function($routes) {
     $routes->get('/', 'APIController::index');

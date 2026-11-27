@@ -273,7 +273,7 @@ class EarningsController extends UserController
             }
         } catch (\Exception $e) {
             log_message('error', 'Config file loading failed: ' . $e->getMessage());
-            return redirect()->to('/Blog/Earnings');
+            return redirect()->to(site_url('Corporate-Earnings'));
         }
     
         // Step 7: Add dynamic data to be passed to the view
