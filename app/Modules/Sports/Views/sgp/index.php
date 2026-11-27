@@ -94,6 +94,20 @@ $disclaimer ??= \App\Modules\Sports\Libraries\SportsPropsService::DISCLAIMER;
                             <span class="small fw-bold">Mathematical Verdict:</span>
                             <span class="badge bg-success" id="res-verdict">+EV High Value SGP</span>
                         </div>
+                        <div class="mt-3 pt-2 border-top">
+                            <form method="post" action="<?= site_url('MyMISports/Tracker/Create') ?>" id="sgp-track-form">
+                                <?= csrf_field() ?>
+                                <input type="hidden" name="sport" id="track-sport" value="NFL">
+                                <input type="hidden" name="sportsbook" value="DraftKings">
+                                <input type="hidden" name="event_description" id="track-event" value="Same-Game Parlay (Correlated SGP)">
+                                <input type="hidden" name="selection" id="track-selection" value="2-Leg SGP (+EV Boost)">
+                                <input type="hidden" name="odds" id="track-odds" value="185">
+                                <input type="hidden" name="stake_amount" value="50.00">
+                                <button type="submit" class="btn btn-outline-success btn-sm w-100">
+                                    <i class="bi bi-plus-circle me-1"></i> Track SGP in My Bets Ledger
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

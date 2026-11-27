@@ -6,6 +6,7 @@ namespace App\Modules\Sports\Controllers;
 
 use App\Controllers\UserController;
 use App\Modules\Sports\Libraries\BettingCalculators;
+use App\Modules\Sports\Libraries\CollegeMatchupEngine;
 use App\Modules\Sports\Libraries\GamificationLeaderboardService;
 use App\Modules\Sports\Libraries\GoldilocksEngine;
 use App\Modules\Sports\Libraries\MlbSplitsCalculator;
@@ -15,6 +16,7 @@ use App\Modules\Sports\Libraries\OnrampRevenueService;
 use App\Modules\Sports\Libraries\PredictionMarketsService;
 use App\Modules\Sports\Libraries\PropLinesService;
 use App\Modules\Sports\Libraries\SgpCorrelationEngine;
+use App\Modules\Sports\Libraries\SoccerSplitsCalculator;
 use App\Modules\Sports\Libraries\SportsBetTrackerService;
 use App\Modules\Sports\Libraries\SportsPropsService;
 
@@ -535,6 +537,71 @@ class SportsController extends UserController
 
         $result = SgpCorrelationEngine::evaluateTwoLegSgp($oddsA, $oddsB, $r, $offeredOdds);
 
+        return $this->response->setJSON($result);
+    }
+
+    public function soccer()
+    {
+        $svc = $this->sports();
+        $ready = $svc->soccerTablesReady();
+        $league = strtoupper(trim((string) ($this->request->getGet('league') ?? 'EPL')));
+        if (! in_array($league, ['EPL', 'UCL'], true)) {
+            $league = 'EPL';
+        }
+
+        $teams = $ready ? $svc->listSoccerTeams($league) : [];
+        $fixtures = $ready ? $svc->listSoccerFixtures($league) : [];
+
+        return $this->renderTheme('App\Modules\Sports\Views\soccer\index', [
+            'pageTitle'    => 'Soccer Analytics & Poisson Expected Goals (xG) Engine',
+            'activeLeague' => $league,
+            'tablesReady'  => $ready,
+            'teams'        => $teams,
+            'fixtures'     => $fixtures,
+            'disclaimer'   => SportsPropsService::DISCLAIMER,
+            'notice'       => session()->getFlashdata('sports_notice'),
+        ]);
+    }
+
+    public function soccerSimulateApi()
+    {
+        $post = (array) ($this->request->getPost() ?: $this->request->getJSON(true) ?: []);
+        $home = (string) ($post['home_team'] ?? 'ARS');
+        $away = (string) ($post['away_team'] ?? 'MCI');
+
+        $result = $this->sports()->simulateSoccerMatch($home, $away);
+        return $this->response->setJSON($result);
+    }
+
+    public function college()
+    {
+        $svc = $this->sports();
+        $ready = $svc->collegeTablesReady();
+        $sport = strtoupper(trim((string) ($this->request->getGet('sport') ?? 'NCAAF')));
+        if (! in_array($sport, ['NCAAF', 'NCAAB'], true)) {
+            $sport = 'NCAAF';
+        }
+
+        $teams = $ready ? $svc->listCollegeTeams($sport) : [];
+
+        return $this->renderTheme('App\Modules\Sports\Views\college\index', [
+            'pageTitle'    => 'College Sports (NCAAF & NCAAB) Matchup & Spread Intelligence',
+            'activeSport'  => $sport,
+            'tablesReady'  => $ready,
+            'teams'        => $teams,
+            'disclaimer'   => SportsPropsService::DISCLAIMER,
+            'notice'       => session()->getFlashdata('sports_notice'),
+        ]);
+    }
+
+    public function collegeSimulateApi()
+    {
+        $post = (array) ($this->request->getPost() ?: $this->request->getJSON(true) ?: []);
+        $home = (string) ($post['home_team'] ?? 'UGA');
+        $away = (string) ($post['away_team'] ?? 'TEX');
+        $neutral = ! empty($post['neutral_site']);
+
+        $result = $this->sports()->simulateCollegeMatch($home, $away, $neutral);
         return $this->response->setJSON($result);
     }
 

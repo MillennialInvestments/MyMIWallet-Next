@@ -88,6 +88,43 @@ $hasSportsKey = ! empty($settings['has_api_sports_key']);
                             </select>
                         </div>
 
+                        <hr>
+
+                        <h3 class="h6 fw-bold mb-1">Quantitative Edge Model Personalization</h3>
+                        <p class="small text-muted mb-3">Tune the relative weighting of variables in your personal Goldilocks prop &amp; +EV edge calculations.</p>
+
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between small fw-semibold">
+                                <span>Recent Form Weight (Last 3 Games)</span>
+                                <span id="val-form"><?= (int) (((float) ($settings['quant_form_weight'] ?? 0.35)) * 100) ?>%</span>
+                            </div>
+                            <input type="range" class="form-range" min="0.10" max="0.60" step="0.05" name="quant_form_weight" id="quant_form_weight" value="<?= (float) ($settings['quant_form_weight'] ?? 0.35) ?>" oninput="document.getElementById('val-form').textContent = Math.round(this.value * 100) + '%'">
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between small fw-semibold">
+                                <span>Defensive Matchup Weight (Opponent Rank)</span>
+                                <span id="val-matchup"><?= (int) (((float) ($settings['quant_matchup_weight'] ?? 0.40)) * 100) ?>%</span>
+                            </div>
+                            <input type="range" class="form-range" min="0.10" max="0.60" step="0.05" name="quant_matchup_weight" id="quant_matchup_weight" value="<?= (float) ($settings['quant_matchup_weight'] ?? 0.40) ?>" oninput="document.getElementById('val-matchup').textContent = Math.round(this.value * 100) + '%'">
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between small fw-semibold">
+                                <span>Home / Away Venue Weight</span>
+                                <span id="val-home"><?= (int) (((float) ($settings['quant_home_away_weight'] ?? 0.15)) * 100) ?>%</span>
+                            </div>
+                            <input type="range" class="form-range" min="0.05" max="0.30" step="0.05" name="quant_home_away_weight" id="quant_home_away_weight" value="<?= (float) ($settings['quant_home_away_weight'] ?? 0.15) ?>" oninput="document.getElementById('val-home').textContent = Math.round(this.value * 100) + '%'">
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between small fw-semibold">
+                                <span>Ballpark Altitude &amp; Weather Weight</span>
+                                <span id="val-venue"><?= (int) (((float) ($settings['quant_venue_weight'] ?? 0.10)) * 100) ?>%</span>
+                            </div>
+                            <input type="range" class="form-range" min="0.00" max="0.25" step="0.05" name="quant_venue_weight" id="quant_venue_weight" value="<?= (float) ($settings['quant_venue_weight'] ?? 0.10) ?>" oninput="document.getElementById('val-venue').textContent = Math.round(this.value * 100) + '%'">
+                        </div>
+
                         <button type="submit" class="btn btn-primary btn-sm">
                             <i class="bi bi-save me-1"></i> Save Preferences &amp; Keys
                         </button>
