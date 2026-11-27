@@ -65,3 +65,57 @@ $routes->group('MyMISports', ['namespace' => 'App\Modules\Sports\Controllers', '
     $routes->get('onramp', 'SportsController::onramp');
     $routes->post('Onramp/Checkout', 'SportsController::onrampCheckout');
 });
+
+/**
+ * Dedicated /My-Predictions & /Predictions Routes:
+ * First-class navigation endpoints for the non-custodial Prediction Markets Hub,
+ * Social Leaderboard, and Licensed Crypto On-Ramp.
+ */
+$predictionGroups = ['My-Predictions', 'my-predictions', 'Predictions', 'predictions'];
+foreach ($predictionGroups as $group) {
+    $routes->group($group, ['namespace' => 'App\Modules\Sports\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) {
+        $routes->get('/', 'SportsController::predictions');
+        $routes->post('Order', 'SportsController::placePredictionOrder');
+        $routes->post('order', 'SportsController::placePredictionOrder');
+        $routes->post('Confirm', 'SportsController::confirmPredictionOrder');
+        $routes->post('confirm', 'SportsController::confirmPredictionOrder');
+        $routes->get('Leaderboard', 'SportsController::leaderboard');
+        $routes->get('leaderboard', 'SportsController::leaderboard');
+        $routes->get('Onramp', 'SportsController::onramp');
+        $routes->get('onramp', 'SportsController::onramp');
+        $routes->post('Onramp/Checkout', 'SportsController::onrampCheckout');
+        $routes->post('onramp/checkout', 'SportsController::onrampCheckout');
+    });
+}
+
+/**
+ * Dedicated /My-Bets Routes:
+ * First-class navigation endpoints for the Personal Bet Tracker, Bankroll Ledger,
+ * Line Shopping Matrix, Quantitative Calculators, and BYOK Settings.
+ */
+$betsGroups = ['My-Bets', 'my-bets'];
+foreach ($betsGroups as $group) {
+    $routes->group($group, ['namespace' => 'App\Modules\Sports\Controllers', 'filter' => ['login', 'noStore']], static function ($routes) {
+        $routes->get('/', 'SportsController::tracker');
+        $routes->post('Create', 'SportsController::createBet');
+        $routes->post('create', 'SportsController::createBet');
+        $routes->post('UpdateStatus/(:num)', 'SportsController::updateBetStatus/$1');
+        $routes->post('updateStatus/(:num)', 'SportsController::updateBetStatus/$1');
+        $routes->post('Delete/(:num)', 'SportsController::deleteBet/$1');
+        $routes->post('delete/(:num)', 'SportsController::deleteBet/$1');
+        $routes->post('Import', 'SportsController::importBets');
+        $routes->post('import', 'SportsController::importBets');
+        $routes->get('Export', 'SportsController::exportBets');
+        $routes->get('export', 'SportsController::exportBets');
+        $routes->get('Odds', 'SportsController::odds');
+        $routes->get('odds', 'SportsController::odds');
+        $routes->get('Calculators', 'SportsController::calculators');
+        $routes->get('calculators', 'SportsController::calculators');
+        $routes->post('Calculators/Calculate', 'SportsController::calculateApi');
+        $routes->post('calculators/calculate', 'SportsController::calculateApi');
+        $routes->get('Settings', 'SportsController::settings');
+        $routes->get('settings', 'SportsController::settings');
+        $routes->post('Settings/Save', 'SportsController::saveSettings');
+        $routes->post('settings/save', 'SportsController::saveSettings');
+    });
+}

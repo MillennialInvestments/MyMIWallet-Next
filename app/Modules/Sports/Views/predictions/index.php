@@ -26,7 +26,7 @@ $activeProvider ??= 'all';
     <div class="card mb-4 shadow-sm border-0">
         <div class="card-body">
             <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
-                <form method="get" action="<?= site_url('MyMISports/Predictions') ?>" class="d-flex flex-wrap align-items-center gap-2">
+                <form method="get" action="<?= site_url('My-Predictions') ?>" class="d-flex flex-wrap align-items-center gap-2">
                     <label class="form-label mb-0 fw-semibold small text-muted">Category:</label>
                     <select name="category" class="form-select form-select-sm" style="width: auto;" onchange="this.form.submit()">
                         <option value="all" <?= $activeCategory === 'all' ? 'selected' : '' ?>>All Categories</option>
@@ -171,7 +171,7 @@ $activeProvider ??= 'all';
     <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="post" action="<?= site_url('MyMISports/Predictions/Order') ?>" id="form-prediction-order">
+                <form method="post" action="<?= site_url('My-Predictions/Order') ?>" id="form-prediction-order">
                     <?= csrf_field() ?>
                     <input type="hidden" id="modal-market-id" name="market_id">
                     <input type="hidden" id="modal-outcome" name="outcome">

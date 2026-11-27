@@ -97,7 +97,7 @@ $currency = $summary['currency'] ?? 'USD';
     <div class="card mb-4 shadow-sm border-0">
         <div class="card-body">
             <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
-                <form method="get" action="<?= site_url('MyMISports/Tracker') ?>" class="d-flex flex-wrap align-items-center gap-2" id="tracker-filter-form">
+                <form method="get" action="<?= site_url('My-Bets') ?>" class="d-flex flex-wrap align-items-center gap-2" id="tracker-filter-form">
                     <label class="form-label mb-0 fw-semibold small text-muted">Filter By:</label>
                     <select name="status" class="form-select form-select-sm" style="width: auto;" onchange="this.form.submit()">
                         <option value="all" <?= ($filters['status'] ?? 'all') === 'all' ? 'selected' : '' ?>>All Statuses</option>
@@ -130,7 +130,7 @@ $currency = $summary['currency'] ?? 'USD';
                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newBetModal" id="btn-open-new-bet">
                         <i class="bi bi-plus-circle me-1"></i> Log New Bet Slip
                     </button>
-                    <a href="<?= site_url('MyMISports/Tracker/Export') ?>" class="btn btn-outline-secondary btn-sm" title="Download all slips as CSV">
+                    <a href="<?= site_url('My-Bets/Export') ?>" class="btn btn-outline-secondary btn-sm" title="Download all slips as CSV">
                         <i class="bi bi-download me-1"></i> Export CSV
                     </a>
                     <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#importModal">
@@ -216,23 +216,23 @@ $currency = $summary['currency'] ?? 'USD';
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
                                         <?php if ($status === 'open'): ?>
-                                            <form method="post" action="<?= site_url('MyMISports/Tracker/UpdateStatus/' . (int) $b['id']) ?>" class="d-inline">
+                                            <form method="post" action="<?= site_url('My-Bets/UpdateStatus/' . (int) $b['id']) ?>" class="d-inline">
                                                 <?= csrf_field() ?>
                                                 <input type="hidden" name="status" value="won">
                                                 <button type="submit" class="btn btn-outline-success btn-sm py-0 px-1" title="Mark Won"><i class="bi bi-check-lg"></i></button>
                                             </form>
-                                            <form method="post" action="<?= site_url('MyMISports/Tracker/UpdateStatus/' . (int) $b['id']) ?>" class="d-inline">
+                                            <form method="post" action="<?= site_url('My-Bets/UpdateStatus/' . (int) $b['id']) ?>" class="d-inline">
                                                 <?= csrf_field() ?>
                                                 <input type="hidden" name="status" value="lost">
                                                 <button type="submit" class="btn btn-outline-danger btn-sm py-0 px-1" title="Mark Lost"><i class="bi bi-x-lg"></i></button>
                                             </form>
-                                            <form method="post" action="<?= site_url('MyMISports/Tracker/UpdateStatus/' . (int) $b['id']) ?>" class="d-inline">
+                                            <form method="post" action="<?= site_url('My-Bets/UpdateStatus/' . (int) $b['id']) ?>" class="d-inline">
                                                 <?= csrf_field() ?>
                                                 <input type="hidden" name="status" value="push">
                                                 <button type="submit" class="btn btn-outline-secondary btn-sm py-0 px-1" title="Mark Push"><i class="bi bi-dash"></i></button>
                                             </form>
                                         <?php endif; ?>
-                                        <form method="post" action="<?= site_url('MyMISports/Tracker/Delete/' . (int) $b['id']) ?>" class="d-inline" onsubmit="return confirm('Delete this bet slip?');">
+                                        <form method="post" action="<?= site_url('My-Bets/Delete/' . (int) $b['id']) ?>" class="d-inline" onsubmit="return confirm('Delete this bet slip?');">
                                             <?= csrf_field() ?>
                                             <button type="submit" class="btn btn-outline-secondary btn-sm py-0 px-1 text-danger" title="Delete"><i class="bi bi-trash"></i></button>
                                         </form>
@@ -250,7 +250,7 @@ $currency = $summary['currency'] ?? 'USD';
     <div class="modal fade" id="newBetModal" tabindex="-1" aria-labelledby="newBetModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form method="post" action="<?= site_url('MyMISports/Tracker/Create') ?>" id="form-create-bet">
+                <form method="post" action="<?= site_url('My-Bets/Create') ?>" id="form-create-bet">
                     <?= csrf_field() ?>
                     <div class="modal-header">
                         <h5 class="modal-title fw-bold" id="newBetModalLabel"><i class="bi bi-journal-plus me-1 text-primary"></i> Log New Bet Slip</h5>
@@ -352,7 +352,7 @@ $currency = $summary['currency'] ?? 'USD';
     <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="post" action="<?= site_url('MyMISports/Tracker/Import') ?>" enctype="multipart/form-data">
+                <form method="post" action="<?= site_url('My-Bets/Import') ?>" enctype="multipart/form-data">
                     <?= csrf_field() ?>
                     <div class="modal-header">
                         <h5 class="modal-title fw-bold" id="importModalLabel"><i class="bi bi-upload me-1 text-info"></i> Import Bet Slips from CSV</h5>

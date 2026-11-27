@@ -30,7 +30,7 @@ $hasSportsKey = ! empty($settings['has_api_sports_key']);
                         All keys are encrypted at rest using audited military-grade encryption (<code>enc:v1</code>).
                     </p>
 
-                    <form method="post" action="<?= site_url('MyMISports/Settings/Save') ?>">
+                    <form method="post" action="<?= site_url('My-Bets/Settings/Save') ?>">
                         <?= csrf_field() ?>
 
                         <div class="mb-3">
@@ -127,7 +127,7 @@ $hasSportsKey = ! empty($settings['has_api_sports_key']);
                         <div class="mb-3 border-start border-2 border-success ps-3">
                             <div class="fw-bold">Step 3: 1-Click Import into MyMI Wallet</div>
                             <div class="text-muted">
-                                Head to the <a href="<?= site_url('MyMISports/Tracker') ?>">Bet Tracker</a> tab and click <strong>Import Slips</strong> to parse your bets directly into your private ledger.
+                                Head to the <a href="<?= site_url('My-Bets') ?>">Bet Tracker</a> tab and click <strong>Import Slips</strong> to parse your bets directly into your private ledger.
                             </div>
                         </div>
                     </div>
@@ -138,7 +138,7 @@ $hasSportsKey = ! empty($settings['has_api_sports_key']);
                     <p class="small text-muted">
                         You can export your complete MyMI betting history anytime for personal accounting, spreadsheets, or tax reconciliation.
                     </p>
-                    <a href="<?= site_url('MyMISports/Tracker/Export') ?>" class="btn btn-outline-secondary btn-sm">
+                    <a href="<?= site_url('My-Bets/Export') ?>" class="btn btn-outline-secondary btn-sm">
                         <i class="bi bi-download me-1"></i> Download Complete Bet History (CSV)
                     </a>
                 </div>

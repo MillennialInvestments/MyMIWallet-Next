@@ -18,19 +18,19 @@ $disclaimer = \App\Modules\Sports\Libraries\SportsPropsService::DISCLAIMER;
             <p class="text-muted mb-0"><?= esc($pageSubtitle ?? 'Quantitative player prop distributions, non-custodial prediction markets, bankroll tracking, and crypto on-ramps.') ?></p>
         </div>
         <div class="d-flex flex-wrap gap-2 mt-2 mt-md-0">
-            <a href="<?= site_url('MyMISports/Predictions') ?>" class="btn btn-sm btn-outline-primary">
-                <i class="bi bi-graph-up me-1"></i> Predictions
+            <a href="<?= site_url('My-Predictions') ?>" class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-graph-up me-1"></i> My Predictions
             </a>
-            <a href="<?= site_url('MyMISports/Onramp') ?>" class="btn btn-sm btn-outline-success">
+            <a href="<?= site_url('My-Bets') ?>" class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-journal-check me-1"></i> My Bets
+            </a>
+            <a href="<?= site_url('My-Predictions/Onramp') ?>" class="btn btn-sm btn-outline-success">
                 <i class="bi bi-currency-exchange me-1"></i> Buy Crypto
             </a>
-            <a href="<?= site_url('MyMISports/Leaderboard') ?>" class="btn btn-sm btn-outline-warning text-dark">
+            <a href="<?= site_url('My-Predictions/Leaderboard') ?>" class="btn btn-sm btn-outline-warning text-dark">
                 <i class="bi bi-trophy me-1"></i> Leaderboard
             </a>
-            <a href="<?= site_url('MyMISports/Tracker') ?>" class="btn btn-sm btn-outline-secondary">
-                <i class="bi bi-journal-check me-1"></i> Bet Tracker
-            </a>
-            <a href="<?= site_url('MyMISports/Calculators') ?>" class="btn btn-sm btn-outline-info">
+            <a href="<?= site_url('My-Bets/Calculators') ?>" class="btn btn-sm btn-outline-info">
                 <i class="bi bi-calculator me-1"></i> Calculators
             </a>
         </div>
@@ -62,37 +62,37 @@ $disclaimer = \App\Modules\Sports\Libraries\SportsPropsService::DISCLAIMER;
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= $activeTab === 'predictions' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('MyMISports/Predictions') ?>">
-                <i class="bi bi-lightning-charge-fill me-1 text-primary"></i> Prediction Markets
+            <a class="nav-link <?= $activeTab === 'predictions' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('My-Predictions') ?>">
+                <i class="bi bi-lightning-charge-fill me-1 text-primary"></i> My Predictions
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= $activeTab === 'leaderboard' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('MyMISports/Leaderboard') ?>">
+            <a class="nav-link <?= $activeTab === 'leaderboard' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('My-Predictions/Leaderboard') ?>">
                 <i class="bi bi-star-fill me-1 text-warning"></i> Social Leaderboard
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= $activeTab === 'onramp' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('MyMISports/Onramp') ?>">
+            <a class="nav-link <?= $activeTab === 'onramp' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('My-Predictions/Onramp') ?>">
                 <i class="bi bi-cash-coin me-1 text-success"></i> Crypto On-Ramp
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= $activeTab === 'tracker' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('MyMISports/Tracker') ?>">
-                <i class="bi bi-wallet2 me-1"></i> Bet Tracker
+            <a class="nav-link <?= $activeTab === 'tracker' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('My-Bets') ?>">
+                <i class="bi bi-wallet2 me-1"></i> My Bets
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= $activeTab === 'odds' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('MyMISports/Odds') ?>">
+            <a class="nav-link <?= $activeTab === 'odds' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('My-Bets/Odds') ?>">
                 <i class="bi bi-graph-up-arrow me-1"></i> Line Shopping
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= $activeTab === 'calculators' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('MyMISports/Calculators') ?>">
+            <a class="nav-link <?= $activeTab === 'calculators' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('My-Bets/Calculators') ?>">
                 <i class="bi bi-calculator me-1"></i> +EV Calculators
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= $activeTab === 'settings' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('MyMISports/Settings') ?>">
+            <a class="nav-link <?= $activeTab === 'settings' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('My-Bets/Settings') ?>">
                 <i class="bi bi-sliders me-1"></i> Settings &amp; BYOK
             </a>
         </li>
