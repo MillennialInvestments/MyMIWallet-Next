@@ -45,9 +45,19 @@
     return false;
   }
 
+  // The desktop sidebar is a slide-over drawer below 992px (inline-fixes.css).
+  function isDrawer() {
+    return !isDesktop() && !!document.getElementById('collapseSidebar');
+  }
+
   function onClick(event) {
     var trigger = event.target.closest('[data-mymi-sidebar-toggle]');
     if (!trigger) {
+      // Tapping the page outside an open drawer closes it.
+      var drawer = document.getElementById('collapseSidebar');
+      if (isDrawer() && drawer && !document.body.classList.contains(CLS) && !drawer.contains(event.target)) {
+        apply(true);
+      }
       return;
     }
     event.preventDefault();
@@ -58,12 +68,27 @@
 
     var collapsed = !document.body.classList.contains(CLS);
     apply(collapsed);
-    write(collapsed);
+    // Only the wide-screen choice is remembered; the drawer always starts closed.
+    if (!isDrawer()) {
+      write(collapsed);
+    }
+  }
+
+  function onResize() {
+    apply(isDrawer() ? true : read());
   }
 
   function init() {
-    apply(read());
+    onResize();
+    document.body.classList.add('mymi-sidebar-ready');
     document.addEventListener('click', onClick);
+    if (DESKTOP) {
+      if (DESKTOP.addEventListener) {
+        DESKTOP.addEventListener('change', onResize);
+      } else if (DESKTOP.addListener) {
+        DESKTOP.addListener(onResize);
+      }
+    }
   }
 
   if (document.readyState === 'loading') {
