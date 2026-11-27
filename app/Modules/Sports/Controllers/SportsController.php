@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace App\Modules\Sports\Controllers;
 
 use App\Controllers\UserController;
+use App\Modules\Sports\Libraries\BettingCalculators;
 use App\Modules\Sports\Libraries\GoldilocksEngine;
+use App\Modules\Sports\Libraries\NbaSplitsCalculator;
 use App\Modules\Sports\Libraries\PropLinesService;
+use App\Modules\Sports\Libraries\SportsBetTrackerService;
 use App\Modules\Sports\Libraries\SportsPropsService;
 
 /**
@@ -16,10 +19,21 @@ use App\Modules\Sports\Libraries\SportsPropsService;
 class SportsController extends UserController
 {
     private ?SportsPropsService $sports = null;
+    private ?SportsBetTrackerService $betTracker = null;
 
     protected function sports(): SportsPropsService
     {
         return $this->sports ??= new SportsPropsService(db_connect());
+    }
+
+    protected function betTracker(): SportsBetTrackerService
+    {
+        return $this->betTracker ??= new SportsBetTrackerService(db_connect());
+    }
+
+    protected function activeUserId(): int
+    {
+        return (int) ($this->getCuID() ?? (function_exists('auth') && auth()->id() ? auth()->id() : 0));
     }
 
     public function index()
@@ -278,5 +292,280 @@ class SportsController extends UserController
         }
 
         return $out;
+    }
+
+    public function nba()
+    {
+        $svc = $this->sports();
+        $ready = $svc->nbaTablesReady();
+        $pos = strtoupper(trim((string) ($this->request->getGet('pos') ?? 'ALL')));
+        if (! in_array($pos, ['ALL', 'PG', 'SG', 'SF', 'PF', 'C'], true)) {
+            $pos = 'ALL';
+        }
+
+        $players = $ready ? $svc->listNbaPlayers(2025, $pos === 'ALL' ? null : $pos) : [];
+        $picks = [];
+        if ($ready && $players !== []) {
+            foreach (array_slice($players, 0, 3) as $p) {
+                $report = $svc->nbaPlayerReport((int) $p['id'], 2025, 'WAS');
+                if ($report !== null && ! empty($report['evaluation']['goldilocks'])) {
+                    $topPick = $report['evaluation']['goldilocks'][0];
+                    $topPick['player_name'] = $p['full_name'];
+                    $topPick['team'] = $p['team'];
+                    $topPick['market_label'] = NbaSplitsCalculator::MARKET_LABELS[$topPick['market']] ?? $topPick['market'];
+                    $picks[] = $topPick;
+                }
+            }
+        }
+
+        return $this->renderTheme('App\Modules\Sports\Views\nba\index', [
+            'pageTitle'    => 'NBA Props & Matchup Intelligence',
+            'activePos'    => $pos,
+            'tablesReady'  => $ready,
+            'players'      => $players,
+            'picks'        => $picks,
+            'statsUpdated' => date('M j, Y H:i'),
+            'notice'       => session()->getFlashdata('sports_notice'),
+            'disclaimer'   => SportsPropsService::DISCLAIMER,
+        ]);
+    }
+
+    public function nbaPlayer(int $playerId)
+    {
+        $svc = $this->sports();
+        if (! $svc->nbaTablesReady()) {
+            return redirect()->to(site_url('MyMISports/NBA'));
+        }
+
+        $opponent = $this->opponentParam();
+        $report = $svc->nbaPlayerReport($playerId, 2025, $opponent);
+        if ($report === null) {
+            return redirect()->to(site_url('MyMISports/NBA'));
+        }
+
+        $teams = $svc->nbaTeams(2025);
+
+        return $this->renderTheme('App\Modules\Sports\Views\nba\player', [
+            'pageTitle'        => $report['player']['full_name'] . ' | NBA Prop Splits',
+            'player'           => $report['player'],
+            'report'           => $report,
+            'teams'            => $teams,
+            'selectedOpponent' => $opponent,
+            'disclaimer'       => SportsPropsService::DISCLAIMER,
+        ]);
+    }
+
+    public function refreshNbaStats()
+    {
+        $svc = $this->sports();
+        if ($svc->nbaTablesReady()) {
+            $svc->ensureNbaSampleData();
+            session()->setFlashdata('sports_notice', 'NBA player stats refreshed successfully.');
+        }
+
+        return redirect()->to(site_url('MyMISports/NBA'));
+    }
+
+    public function tracker()
+    {
+        $userId = $this->activeUserId();
+        if ($userId <= 0) {
+            return redirect()->to(site_url('login'));
+        }
+
+        $tracker = $this->betTracker();
+        $status = strtolower(trim((string) ($this->request->getGet('status') ?? 'all')));
+        $sport = strtoupper(trim((string) ($this->request->getGet('sport') ?? 'all')));
+        $sportsbook = trim((string) ($this->request->getGet('sportsbook') ?? 'all'));
+
+        $filters = [
+            'status'     => $status,
+            'sport'      => $sport,
+            'sportsbook' => $sportsbook,
+        ];
+
+        $summary = $tracker->getSummary($userId);
+        $bets = $tracker->listBets($userId, $filters);
+        $settings = $tracker->getUserSettings($userId);
+
+        return $this->renderTheme('App\Modules\Sports\Views\tracker\index', [
+            'pageTitle'  => 'Sports Bet Tracker & Bankroll Intelligence',
+            'summary'    => $summary,
+            'bets'       => $bets,
+            'filters'    => $filters,
+            'settings'   => $settings,
+            'disclaimer' => SportsPropsService::DISCLAIMER,
+            'notice'     => session()->getFlashdata('sports_notice'),
+        ]);
+    }
+
+    public function createBet()
+    {
+        $userId = $this->activeUserId();
+        if ($userId <= 0) {
+            return redirect()->to(site_url('login'));
+        }
+
+        $post = (array) ($this->request->getPost() ?: $this->request->getJSON(true) ?: []);
+        $this->betTracker()->createBet($userId, $post);
+        session()->setFlashdata('sports_notice', 'Bet slip successfully recorded to your ledger.');
+
+        $returnUrl = (string) ($this->request->getServer('HTTP_REFERER') ?? site_url('MyMISports/Tracker'));
+        return redirect()->to($returnUrl);
+    }
+
+    public function updateBetStatus(int $betId)
+    {
+        $userId = $this->activeUserId();
+        if ($userId <= 0) {
+            return redirect()->to(site_url('login'));
+        }
+
+        $status = (string) ($this->request->getPost('status') ?? 'won');
+        $this->betTracker()->updateStatus($userId, $betId, $status);
+        session()->setFlashdata('sports_notice', 'Bet slip updated.');
+
+        $returnUrl = (string) ($this->request->getServer('HTTP_REFERER') ?? site_url('MyMISports/Tracker'));
+        return redirect()->to($returnUrl);
+    }
+
+    public function deleteBet(int $betId)
+    {
+        $userId = $this->activeUserId();
+        if ($userId <= 0) {
+            return redirect()->to(site_url('login'));
+        }
+
+        $this->betTracker()->deleteBet($userId, $betId);
+        session()->setFlashdata('sports_notice', 'Bet slip deleted.');
+
+        return redirect()->to(site_url('MyMISports/Tracker'));
+    }
+
+    public function importBets()
+    {
+        $userId = $this->activeUserId();
+        if ($userId <= 0) {
+            return redirect()->to(site_url('login'));
+        }
+
+        $file = $this->request->getFile('csv_file');
+        if ($file && $file->isValid() && ! $file->hasMoved()) {
+            $content = (string) file_get_contents($file->getRealPath());
+            $res = $this->betTracker()->importCsv($userId, $content);
+            session()->setFlashdata('sports_notice', "Imported {$res['imported']} slips ({$res['skipped']} skipped).");
+        } else {
+            session()->setFlashdata('sports_notice', 'Failed to upload CSV file.');
+        }
+
+        return redirect()->to(site_url('MyMISports/Tracker'));
+    }
+
+    public function exportBets()
+    {
+        $userId = $this->activeUserId();
+        if ($userId <= 0) {
+            return redirect()->to(site_url('login'));
+        }
+
+        $csv = $this->betTracker()->exportCsv($userId);
+        return $this->response
+            ->setHeader('Content-Type', 'text/csv; charset=utf-8')
+            ->setHeader('Content-Disposition', 'attachment; filename="mymi-bets-' . date('Y-m-d') . '.csv"')
+            ->setBody($csv);
+    }
+
+    public function odds()
+    {
+        $sport = strtoupper(trim((string) ($this->request->getGet('sport') ?? 'NFL')));
+        if (! in_array($sport, ['NFL', 'NBA'], true)) {
+            $sport = 'NFL';
+        }
+
+        $userId = $this->activeUserId();
+        $hasByok = $this->betTracker()->getUserSettings($userId)['has_odds_api_key'] ?? false;
+        $oddsBoard = $this->sports()->multiBookOddsMatrix($sport);
+
+        return $this->renderTheme('App\Modules\Sports\Views\odds\index', [
+            'pageTitle'    => 'Multi-Book Line Shopping & Odds Comparison Matrix',
+            'activeSport'  => $sport,
+            'oddsBoard'    => $oddsBoard,
+            'hasByok'      => $hasByok,
+            'disclaimer'   => SportsPropsService::DISCLAIMER,
+            'notice'       => session()->getFlashdata('sports_notice'),
+        ]);
+    }
+
+    public function calculators()
+    {
+        $userId = $this->activeUserId();
+        $settings = $this->betTracker()->getUserSettings($userId);
+
+        return $this->renderTheme('App\Modules\Sports\Views\calculators\index', [
+            'pageTitle'       => 'Quantitative Sports Betting & Bankroll Calculators',
+            'defaultBankroll' => (float) ($settings['default_bankroll'] ?? 2500.0),
+            'defaultUnit'     => (float) ($settings['default_unit_size'] ?? 50.0),
+            'disclaimer'      => SportsPropsService::DISCLAIMER,
+            'notice'          => session()->getFlashdata('sports_notice'),
+        ]);
+    }
+
+    public function calculateApi()
+    {
+        $post = (array) ($this->request->getPost() ?: $this->request->getJSON(true) ?: []);
+        $type = (string) ($post['type'] ?? 'kelly');
+
+        $result = match ($type) {
+            'kelly' => BettingCalculators::kelly(
+                (float) ($post['bankroll'] ?? 1000.0),
+                (int) ($post['odds'] ?? -110),
+                (float) ($post['win_prob'] ?? 0.55),
+                (float) ($post['fraction'] ?? 0.5)
+            ),
+            'arbitrage' => BettingCalculators::arbitrage(
+                (float) ($post['total_stake'] ?? 1000.0),
+                (int) ($post['odds_a'] ?? 120),
+                (int) ($post['odds_b'] ?? -105)
+            ),
+            'no_vig' => BettingCalculators::noVig(
+                (int) ($post['odds_a'] ?? -110),
+                (int) ($post['odds_b'] ?? -110),
+                isset($post['model_prob']) ? (float) $post['model_prob'] : null
+            ),
+            default => ['error' => 'Unknown calculator type: ' . $type],
+        };
+
+        return $this->response->setJSON($result);
+    }
+
+    public function settings()
+    {
+        $userId = $this->activeUserId();
+        if ($userId <= 0) {
+            return redirect()->to(site_url('login'));
+        }
+
+        $settings = $this->betTracker()->getUserSettings($userId);
+
+        return $this->renderTheme('App\Modules\Sports\Views\settings\index', [
+            'pageTitle'  => 'Sports Integrations & BYOK Settings',
+            'settings'   => $settings,
+            'disclaimer' => SportsPropsService::DISCLAIMER,
+            'notice'     => session()->getFlashdata('sports_notice'),
+        ]);
+    }
+
+    public function saveSettings()
+    {
+        $userId = $this->activeUserId();
+        if ($userId <= 0) {
+            return redirect()->to(site_url('login'));
+        }
+
+        $post = (array) ($this->request->getPost() ?: $this->request->getJSON(true) ?: []);
+        $this->betTracker()->saveUserSettings($userId, $post);
+        session()->setFlashdata('sports_notice', 'Settings and encrypted BYOK credentials saved successfully.');
+
+        return redirect()->to(site_url('MyMISports/Settings'));
     }
 }
