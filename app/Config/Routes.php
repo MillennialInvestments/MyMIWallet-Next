@@ -547,9 +547,11 @@ $routes->group('API/v1', ['namespace' => '\App\Modules\APIs\Controllers', 'filte
     $routes->get('SecureTransfer/status', 'SecureTransferAPIController::status'); // counts only, for the TBI AIOps MCP
 });
 
-// Backward-compatible legacy aliases (deprecated; migrate to /API/v1/*)
-$routes->addRedirect('API/Status', 'API/v1/Status', 302);
-$routes->addRedirect('API/Health', 'API/v1/Health', 302);
+// Legacy /API/Status and /API/Health are served by the 'API' group below.
+// They used to be addRedirect() aliases to /API/v1/*, but the same paths are
+// also GET routes in that group, and CodeIgniter 4.7 then redirects to the GET
+// route's handler string ("/\App\Modules\...::index"), which every client
+// got back as HTTP 400 "disallowed characters".
 
 $routes->group('API', ['namespace' => '\App\Modules\APIs\Controllers'],  function($routes) {
     $routes->get('/', 'APIController::index');
