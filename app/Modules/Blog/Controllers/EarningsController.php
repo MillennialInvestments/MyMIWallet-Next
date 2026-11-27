@@ -101,9 +101,11 @@ class EarningsController extends UserController
 
     public function index()
     {
-        $this->data['pageTitle']                    = 'How It Works | MyMI Wallet | The Future of Finance';
-        $this->commonData(); // Ensure this is correctly populating $this->data
-        $this->renderTheme('App\Modules\Blog\Views\HowItWorks\index', $this->data);
+        // /Blog/Earnings has no landing view of its own (Earnings/index.php is
+        // empty). It used to render the How It Works article template with no
+        // $title/$contentHtml, which was "BOOT FAILURE: Undefined variable $title".
+        // The earnings calendar lives at /Corporate-Earnings.
+        return redirect()->to(site_url('Corporate-Earnings'));
     }
 
     public function test()

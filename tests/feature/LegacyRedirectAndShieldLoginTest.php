@@ -34,4 +34,12 @@ final class LegacyRedirectAndShieldLoginTest extends CIUnitTestCase
             config('Auth')->activeResetter,
         );
     }
+
+    public function testBlogEarningsLandingRedirectsInsteadOfRenderingAnEmptyArticle(): void
+    {
+        $result = $this->get('Blog/Earnings');
+
+        $this->assertSame(302, $result->response()->getStatusCode());
+        $this->assertStringEndsWith('/Corporate-Earnings', $result->response()->getHeaderLine('Location'));
+    }
 }
