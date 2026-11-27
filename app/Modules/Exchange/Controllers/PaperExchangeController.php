@@ -10,7 +10,7 @@ use CodeIgniter\HTTP\ResponseInterface;
  * Controller for Paper Trading Exchange.
  *
  * Guarantees:
- * - Session IDOR enforcement via active session ($this->resolveCuID()).
+ * - Session IDOR enforcement via active session ((int) ($this->resolveCurrentUserId() ?? 0)).
  * - Untradable assets protection (MyMI Gold and MyMI Coin blocked).
  * - Real-time non-negative paper balances.
  */
@@ -25,7 +25,7 @@ class PaperExchangeController extends UserController
 
     public function index(): string
     {
-        $userId = $this->resolveCuID();
+        $userId = (int) ($this->resolveCurrentUserId() ?? 0);
         $provider = $this->getProvider();
         $balances = $userId > 0 ? $provider->balances($userId) : [];
         $history = $userId > 0 ? $provider->history($userId, 20) : [];
@@ -43,7 +43,7 @@ class PaperExchangeController extends UserController
 
     public function order(): ResponseInterface
     {
-        $userId = $this->resolveCuID();
+        $userId = (int) ($this->resolveCurrentUserId() ?? 0);
         if ($userId <= 0) {
             return $this->response->setStatusCode(401)->setJSON([
                 'ok'      => false,
@@ -76,7 +76,7 @@ class PaperExchangeController extends UserController
 
     public function cancel(): ResponseInterface
     {
-        $userId = $this->resolveCuID();
+        $userId = (int) ($this->resolveCurrentUserId() ?? 0);
         if ($userId <= 0) {
             return $this->response->setStatusCode(401)->setJSON([
                 'ok'      => false,
@@ -104,7 +104,7 @@ class PaperExchangeController extends UserController
 
     public function balances(): ResponseInterface
     {
-        $userId = $this->resolveCuID();
+        $userId = (int) ($this->resolveCurrentUserId() ?? 0);
         if ($userId <= 0) {
             return $this->response->setStatusCode(401)->setJSON([
                 'ok'      => false,

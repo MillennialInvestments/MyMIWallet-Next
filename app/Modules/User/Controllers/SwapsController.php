@@ -38,7 +38,7 @@ class SwapsController extends UserController
     public function quote(): ResponseInterface
     {
         // Enforce active session IDOR safety
-        $userId = $this->resolveCuID();
+        $userId = (int) ($this->resolveCurrentUserId() ?? 0);
         if ($userId <= 0) {
             return $this->response->setStatusCode(401)->setJSON([
                 'ok'      => false,
