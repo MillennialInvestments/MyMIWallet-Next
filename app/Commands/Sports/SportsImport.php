@@ -82,10 +82,6 @@ class SportsImport extends SafeBaseCommand
             return $this->out($json, ['status' => 'FAIL', 'reason' => $e->getMessage()], 1);
         }
 
-        if ($download !== null) {
-            $r['download'] = ['url' => $download['url'], 'bytes' => $download['bytes']];
-        }
-
         return $this->out($json, ['status' => $r['ok'] ? 'PASS' : 'FAIL'] + $r + ['counts' => $svc->counts()], $r['ok'] ? 0 : 1);
     }
 
