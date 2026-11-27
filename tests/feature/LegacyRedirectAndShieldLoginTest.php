@@ -24,6 +24,7 @@ final class LegacyRedirectAndShieldLoginTest extends CIUnitTestCase
         $this->assertStringNotContainsString('Controller', $location);
         $this->assertNotSame(400, $result->response()->getStatusCode());
         $this->assertNotSame(500, $result->response()->getStatusCode());
+        $this->assertNotSame(404, $result->response()->getStatusCode());
     }
 
     public function testShieldConfigHasTheResetterTheLoginViewReads(): void
