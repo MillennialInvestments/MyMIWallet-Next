@@ -55,3 +55,19 @@
 - **Full Application Regression Suite**: **945 tests, 6,474 assertions passing** across the entire codebase.
 - **PHP Lint (`php -l`)**: 0 syntax errors detected across all modified files and views.
 - **Whitespace & Formatting (`git diff --check`)**: Clean.
+
+---
+
+## 5. Staging Certification & Production Release Activation
+
+- **PR Merged**: [#812](https://github.com/MillennialInvestments/MyMIWallet-Next/pull/812) into `main` (`2b0b3363f` -> `f556acf9e`).
+- **Staging Deployment**: `20261127T171911Z-f556acf9`
+  - Staging Smoke & Form Scan: `PASS 340, FAIL 0`.
+- **Production Artifact**: `20261127T172154Z-gtm-f556acf9`
+  - Backup: `mymiwallet_prod_20260628135446_20261127T172203Z.sql.gz` (132M)
+  - Applied Migration: `2026-11-27-000400_CreateSportsBetTrackerAndUserSettingsTables`
+  - Chat Service: `{"status":"ok","enabled":true}`
+  - Live Endpoint Check: `HTTP/2 200 OK` on `https://www.mymiwallet.com` (`x-mymi-frontcontroller: 1`).
+- **Rollback Target**: `20261127T164944Z-gtm-275c6eb8`
+  - Command: `bash scripts/ops/deploy/mymi-release.sh rollback 20261127T164944Z-gtm-275c6eb8`
+
