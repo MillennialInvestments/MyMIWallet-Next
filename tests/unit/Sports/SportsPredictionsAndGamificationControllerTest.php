@@ -75,6 +75,47 @@ final class SportsPredictionsAndGamificationControllerTest extends CIUnitTestCas
         $result->assertSee('Kalshi');
     }
 
+    public function testMyPredictionsAndPredictionsAliasRoutesRender(): void
+    {
+        // Test /My-Predictions
+        $res1 = $this->withSession(['logged_in' => 42, 'userID' => 42])
+            ->get('My-Predictions');
+        $res1->assertOK();
+        $res1->assertSee('Non-Custodial Prediction Markets Hub');
+
+        // Test /Predictions redirects to /My-Predictions
+        $res2 = $this->withSession(['logged_in' => 42, 'userID' => 42])
+            ->get('Predictions');
+        $this->assertTrue($res2->isRedirect());
+    }
+
+    public function testMyBetsRoutesRender(): void
+    {
+        // Test /My-Bets
+        $res1 = $this->withSession(['logged_in' => 42, 'userID' => 42])
+            ->get('My-Bets');
+        $res1->assertOK();
+        $res1->assertSee('Sports Bet Tracker');
+
+        // Test /My-Bets/Odds
+        $res2 = $this->withSession(['logged_in' => 42, 'userID' => 42])
+            ->get('My-Bets/Odds');
+        $res2->assertOK();
+        $res2->assertSee('Multi-Book Line Shopping');
+
+        // Test /My-Bets/Calculators
+        $res3 = $this->withSession(['logged_in' => 42, 'userID' => 42])
+            ->get('My-Bets/Calculators');
+        $res3->assertOK();
+        $res3->assertSee('Quantitative Sports Betting');
+
+        // Test /My-Bets/Settings
+        $res4 = $this->withSession(['logged_in' => 42, 'userID' => 42, 'user_id' => 42, 'cuID' => 42])
+            ->get('My-Bets/Settings');
+        $res4->assertOK();
+        $res4->assertSee('Bring Your Own Keys');
+    }
+
     public function testLeaderboardRouteRendersForAuthenticatedUser(): void
     {
         $result = $this->withSession(['logged_in' => 42, 'userID' => 42])
@@ -154,5 +195,38 @@ final class SportsPredictionsAndGamificationControllerTest extends CIUnitTestCas
         $this->assertTrue($json['success']);
         $this->assertStringContainsString('buy.moonpay.com', $json['checkout_url']);
         $this->assertSame(2.50, $json['platform_fee_earned']);
+    }
+
+    public function testMyPredictionsOrderAndOnrampEndpoints(): void
+    {
+        // Test POST /My-Predictions/Order
+        $res1 = $this->withSession(['logged_in' => 42, 'userID' => 42, 'user_id' => 42, 'cuID' => 42])
+            ->withHeaders(['X-Requested-With' => 'XMLHttpRequest'])
+            ->post('My-Predictions/Order', [
+                csrf_token()  => csrf_hash(),
+                'market_id'   => 1,
+                'outcome'     => 'YES',
+                'stake_usdc'  => 50.0,
+                'user_wallet' => '0xabcdefabcdefabcdefabcdefabcdefabcdefabcd',
+            ]);
+        $res1->assertOK();
+        $json1 = json_decode($res1->getJSON(), true);
+        $this->assertTrue($json1['success']);
+        $this->assertSame(0.25, $json1['order']['platform_fee_usdc']);
+
+        // Test POST /My-Predictions/Onramp/Checkout
+        $res2 = $this->withSession(['logged_in' => 42, 'userID' => 42, 'user_id' => 42, 'cuID' => 42])
+            ->withHeaders(['X-Requested-With' => 'XMLHttpRequest'])
+            ->post('My-Predictions/Onramp/Checkout', [
+                csrf_token()         => csrf_hash(),
+                'crypto_asset'       => 'USDC',
+                'destination_wallet' => '0x8888888888888888888888888888888888888888',
+                'fiat_amount'        => 100.0,
+                'provider'           => 'stripe',
+            ]);
+        $res2->assertOK();
+        $json2 = json_decode($res2->getJSON(), true);
+        $this->assertTrue($json2['success']);
+        $this->assertStringContainsString('crypto.stripe.com', $json2['checkout_url']);
     }
 }

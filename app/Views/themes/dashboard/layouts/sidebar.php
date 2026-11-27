@@ -564,17 +564,63 @@ $agent                  = service('request')->getUserAgent();
                         <?php
                         if ($bettingOperations === 1) {
                         ?>
-						<li class="nk-menu-item">
-							<a href="<?php echo site_url('/MyMISports'); ?>" class="nk-menu-link">
-								<span class="nk-menu-icon"><i class="icon ni ni-share-alt"></i></span><span class="nk-menu-text">My Sports</span>
-							</a>
-						</li>
                         <li class="nk-menu-item has-sub">
                             <a href="#" class="nk-menu-link nk-menu-toggle">
-                                <span class="nk-menu-icon"><em class="icon ni ni-tile-thumb"></em></span>
+                                <span class="nk-menu-icon"><em class="icon ni ni-trend-up"></em></span>
+                                <span class="nk-menu-text">My Predictions</span>
+                            </a>
+                            <ul class="nk-menu-sub" id="sidebarPredictionsMenu">
+                                <li class="nk-menu-item">
+                                    <a href="<?php echo site_url('/My-Predictions'); ?>" class="nk-menu-link">
+                                        <span class="nk-menu-text">Markets Hub</span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a href="<?php echo site_url('/My-Predictions/Leaderboard'); ?>" class="nk-menu-link">
+                                        <span class="nk-menu-text">Leaderboard &amp; Contests</span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a href="<?php echo site_url('/My-Predictions/Onramp'); ?>" class="nk-menu-link">
+                                        <span class="nk-menu-text">Buy Crypto (On-Ramp)</span>
+                                    </a>
+                                </li>
+                            </ul><!-- .nk-menu-sub -->
+                        </li>
+                        <li class="nk-menu-item has-sub">
+                            <a href="#" class="nk-menu-link nk-menu-toggle">
+                                <span class="nk-menu-icon"><em class="icon ni ni-activity-round"></em></span>
+                                <span class="nk-menu-text">My Bets</span>
+                            </a>
+                            <ul class="nk-menu-sub" id="sidebarBetsMenu">
+                                <li class="nk-menu-item">
+                                    <a href="<?php echo site_url('/My-Bets'); ?>" class="nk-menu-link">
+                                        <span class="nk-menu-text">Bet Tracker &amp; Ledger</span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a href="<?php echo site_url('/My-Bets/Odds'); ?>" class="nk-menu-link">
+                                        <span class="nk-menu-text">Line Shopping &amp; Odds</span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a href="<?php echo site_url('/My-Bets/Calculators'); ?>" class="nk-menu-link">
+                                        <span class="nk-menu-text">+EV Calculators</span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a href="<?php echo site_url('/My-Bets/Settings'); ?>" class="nk-menu-link">
+                                        <span class="nk-menu-text">Settings &amp; BYOK</span>
+                                    </a>
+                                </li>
+                            </ul><!-- .nk-menu-sub -->
+                        </li>
+                        <li class="nk-menu-item has-sub">
+                            <a href="#" class="nk-menu-link nk-menu-toggle">
+                                <span class="nk-menu-icon"><em class="icon ni ni-share-alt"></em></span>
                                 <span class="nk-menu-text">My Sports</span>
                             </a>
-                            <ul class="nk-menu-sub" id="sidebarSupportMenu">
+                            <ul class="nk-menu-sub" id="sidebarSportsMenu">
                                 <li class="nk-menu-item">
                                     <a href="<?php echo site_url('/MyMISports/NBA'); ?>" class="nk-menu-link">
                                         <span class="nk-menu-text">NBA Stats</span>

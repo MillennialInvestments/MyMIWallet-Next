@@ -46,7 +46,7 @@ $assets = $config['supported_assets'] ?? [];
                     </span>
                 </div>
                 <div class="card-body p-4">
-                    <form id="onramp-checkout-form" method="post" action="<?= site_url('MyMISports/Onramp/Checkout') ?>">
+                    <form id="onramp-checkout-form" method="post" action="<?= site_url('My-Predictions/Onramp/Checkout') ?>">
                         <?= csrf_field() ?>
 
                         <!-- Provider Selection -->

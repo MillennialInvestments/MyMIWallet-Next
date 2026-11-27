@@ -13,7 +13,7 @@ class PredictionsController extends BaseUserController
 
     public function index()
     {
-        return redirect()->to(site_url('Predictions/Markets'));
+        return redirect()->to(site_url('My-Predictions'));
     }
 
     public function markets()
