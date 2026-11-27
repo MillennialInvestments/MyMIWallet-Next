@@ -1,6 +1,7 @@
 <?php
 /** @var bool $tablesReady @var array $players @var string $disclaimer */
 ?>
+<?= view('App\\Modules\\Sports\\Views\\nfl\\_responsive') ?>
 <section class="container-fluid py-4" id="sports-rb-props">
     <div class="mb-3">
         <h1 class="h3 mb-1">NFL Running Back Props</h1>
@@ -16,18 +17,18 @@
     <?php else: ?>
         <div class="card">
             <div class="table-responsive">
-                <table class="table table-striped mb-0" id="sports-player-table">
-                    <thead><tr><th>Player</th><th>Team</th><th>Season</th><th class="text-end">Games</th><th class="text-end">Rush yds / game</th><th class="text-end">Rec yds / game</th><th></th></tr></thead>
+                <table class="table table-striped mb-0 sports-stack" id="sports-player-table">
+                    <thead><tr><th>Player</th><th>Team</th><th>Season</th><th class="text-end">Games</th><th class="text-end">Rush yds / game</th><th class="text-end">Rec yds / game</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
                     <tbody>
                     <?php foreach ($players as $p): ?>
                         <tr>
-                            <td><?= esc((string) $p['full_name']) ?><?php if ($p['provider'] === 'sample'): ?> <span class="badge bg-secondary">sample data</span><?php endif; ?></td>
-                            <td><?= esc((string) $p['team']) ?></td>
-                            <td><?= (int) $p['season'] ?></td>
-                            <td class="text-end"><?= (int) $p['games'] ?></td>
-                            <td class="text-end"><?= esc(number_format((float) $p['rush_avg'], 1)) ?></td>
-                            <td class="text-end"><?= esc(number_format((float) $p['rec_avg'], 1)) ?></td>
-                            <td><a class="btn btn-sm btn-primary" href="<?= site_url('MyMISports/NFL/Player/' . (int) $p['id']) ?>">Splits &amp; Goldilocks</a></td>
+                            <td class="sports-stack-title"><?= esc((string) $p['full_name']) ?><?php if ($p['provider'] === 'sample'): ?> <span class="badge bg-secondary">sample data</span><?php endif; ?></td>
+                            <td data-label="Team"><?= esc((string) $p['team']) ?></td>
+                            <td data-label="Season"><?= (int) $p['season'] ?></td>
+                            <td class="text-end" data-label="Games"><?= (int) $p['games'] ?></td>
+                            <td class="text-end" data-label="Rush yds / game"><?= esc(number_format((float) $p['rush_avg'], 1)) ?></td>
+                            <td class="text-end" data-label="Rec yds / game"><?= esc(number_format((float) $p['rec_avg'], 1)) ?></td>
+                            <td class="sports-stack-action"><a class="btn btn-sm btn-primary text-nowrap" href="<?= site_url('MyMISports/NFL/Player/' . (int) $p['id']) ?>">Splits &amp; Goldilocks</a></td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>

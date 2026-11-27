@@ -229,6 +229,52 @@ body.modal-open .modal-backdrop {
     display: inline-flex;
   }
 }
+/* Below 992px (iPad portrait, small laptop windows) the desktop sidebar
+   (#collapseSidebar) becomes a slide-over drawer. It starts hidden there
+   (sidebar-toggle.js), the arrow closes it, the menu button reopens it, and
+   the page always uses the full width. The phone sidebar (#sidebarMenu) keeps
+   its own Bootstrap collapse. */
+@media (max-width: 991.98px) {
+  #collapseSidebar.nk-sidebar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100vh;
+    width: min(300px, 85vw) !important;
+    overflow-y: auto;
+    z-index: 1045 !important;
+    transform: none;
+    visibility: visible;
+    transition: transform 0.25s ease-in-out, visibility 0.25s;
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.35);
+  }
+  /* Hidden until sidebar-toggle.js runs, so the drawer never flashes open. */
+  body:not(.mymi-sidebar-ready) #collapseSidebar.nk-sidebar,
+  body.mymi-sidebar-collapsed #collapseSidebar.nk-sidebar {
+    transform: translateX(-100%);
+    visibility: hidden;
+    box-shadow: none;
+  }
+  #collapseSidebar + .nk-wrap,
+  #collapseSidebar ~ .db-nk-wrap {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  body:not(.mymi-sidebar-ready) #collapseSidebar ~ .db-nk-wrap,
+  body.mymi-sidebar-collapsed #collapseSidebar + .nk-wrap,
+  body.mymi-sidebar-collapsed #collapseSidebar ~ .db-nk-wrap {
+    padding-left: 56px !important;
+  }
+  #collapseSidebar ~ .nk-wrap > .nk-header-fixed {
+    left: 0 !important;
+  }
+  body:not(.mymi-sidebar-ready):has(#collapseSidebar) #mymiSidebarOpen,
+  body.mymi-sidebar-collapsed #mymiSidebarOpen {
+    display: inline-flex;
+  }
+}
 
 /* =========================================================
    High-Contrast Solid Navbar Typography & Toggler

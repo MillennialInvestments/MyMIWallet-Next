@@ -152,6 +152,20 @@ final class SportsPropsServiceTest extends CIUnitTestCase
         $index = view('App\\Modules\\Sports\\Views\\nfl\\index', ['tablesReady' => true, 'players' => $this->svc->listPlayers(), 'disclaimer' => SportsPropsService::DISCLAIMER]);
         $this->assertStringContainsString('Sample RB Alpha', $index);
         $this->assertStringContainsString('/MyMISports/NFL/Player/', $index);
+
+        // Portrait phones/tablets: every data table stacks into labelled cards.
+        foreach (['sports-player-table' => $index, 'sports-projections' => $html, 'sports-candidates' => $html, 'sports-splits' => $html, 'sports-gamelog' => $html] as $id => $doc) {
+            $this->assertMatchesRegularExpression('/class="[^"]*sports-stack(-lg)?" id="' . $id . '"/', $doc, $id . ' must use the stacked mobile layout');
+        }
+        $this->assertStringContainsString('data-label="Rush yds / game"', $index);
+        $this->assertStringContainsString('data-label="Model chance"', $html);
+        $this->assertStringContainsString('@media (max-width: 767.98px)', $html);
+        $this->assertStringContainsString('@media (max-width: 991.98px)', $html);
+
+        if (($dump = getenv('SPORTS_VIEW_DUMP')) !== false && is_dir($dump)) {
+            file_put_contents($dump . '/index.html', $index);
+            file_put_contents($dump . '/player.html', $html);
+        }
     }
 
     public function testCsvProviderRejectsMissingFile(): void
