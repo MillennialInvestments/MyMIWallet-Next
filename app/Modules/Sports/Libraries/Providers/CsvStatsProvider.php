@@ -59,6 +59,11 @@ final class CsvStatsProvider implements StatsProviderInterface
                 'game_date'   => preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) ? $date : null,
                 'opponent'    => substr($opponent, 0, 8),
                 'home_away'   => strtoupper(substr(trim((string) ($row['home_away'] ?? '')), 0, 1)) === 'A' ? 'A' : 'H',
+                'pass_att'    => (int) ($row['pass_att'] ?? 0),
+                'completions' => (int) ($row['completions'] ?? 0),
+                'pass_yds'    => (int) ($row['pass_yds'] ?? 0),
+                'pass_td'     => (int) ($row['pass_td'] ?? 0),
+                'interceptions' => (int) ($row['interceptions'] ?? 0),
                 'rush_att'    => (int) ($row['rush_att'] ?? 0),
                 'rush_yds'    => (int) ($row['rush_yds'] ?? 0),
                 'rush_td'     => (int) ($row['rush_td'] ?? 0),
@@ -80,6 +85,11 @@ final class CsvStatsProvider implements StatsProviderInterface
             }
             $recRank = $row['rb_rec_def_rank'] ?? '';
             $allowed = $row['rush_yds_allowed_pg'] ?? '';
+            $passRank = $row['pass_def_rank'] ?? '';
+            $passYdsPg = $row['pass_yds_allowed_pg'] ?? '';
+            $passTdRank = $row['pass_td_def_rank'] ?? '';
+            $scoreRank = $row['scoring_def_rank'] ?? '';
+            $ptsAllowedPg = $row['points_allowed_pg'] ?? '';
 
             yield [
                 'season'              => (int) $row['season'],
@@ -88,6 +98,11 @@ final class CsvStatsProvider implements StatsProviderInterface
                 'rush_def_rank'       => max(1, min(32, (int) $rank)),
                 'rb_rec_def_rank'     => is_numeric($recRank) ? max(1, min(32, (int) $recRank)) : null,
                 'rush_yds_allowed_pg' => is_numeric($allowed) ? round((float) $allowed, 1) : null,
+                'pass_def_rank'       => is_numeric($passRank) ? max(1, min(32, (int) $passRank)) : null,
+                'pass_yds_allowed_pg' => is_numeric($passYdsPg) ? round((float) $passYdsPg, 1) : null,
+                'pass_td_def_rank'    => is_numeric($passTdRank) ? max(1, min(32, (int) $passTdRank)) : null,
+                'scoring_def_rank'    => is_numeric($scoreRank) ? max(1, min(32, (int) $scoreRank)) : null,
+                'points_allowed_pg'   => is_numeric($ptsAllowedPg) ? round((float) $ptsAllowedPg, 1) : null,
             ];
         }
     }

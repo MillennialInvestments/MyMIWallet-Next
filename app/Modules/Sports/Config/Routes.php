@@ -13,6 +13,8 @@ $routes->group('MyMISports', ['namespace' => 'App\Modules\Sports\Controllers', '
     $routes->get('NFL', 'SportsController::nfl');
     $routes->get('nfl', 'SportsController::nfl');
     $routes->get('NFL/Player/(:num)', 'SportsController::player/$1');
+    $routes->get('NFL/Matchup/(:segment)/(:segment)', 'SportsController::matchup/$1/$2');
+    $routes->get('NFL/Matchups', 'SportsController::matchups');
     $routes->get('NFL/API/Goldilocks', 'SportsController::goldilocksApi');
     $routes->post('NFL/Refresh', 'SportsController::refreshStats');
     $routes->post('NFL/RefreshLines/(:num)', 'SportsController::refreshLines/$1');

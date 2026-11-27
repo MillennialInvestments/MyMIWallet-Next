@@ -29,12 +29,15 @@ final class NflverseStatsProvider implements StatsProviderInterface
     public const ATTRIBUTION = 'Stats: nflverse (CC BY 4.0)';
     public const MAX_ROWS    = 60000;
     public const MAX_BYTES   = 40_000_000;
+    public const POSITIONS_ALL = ['RB', 'QB', 'WR', 'TE'];
 
     /** @var list<array<string,string>>|null */
     private ?array $rows = null;
+    private readonly array $positions;
 
-    public function __construct(private readonly string $csvPath)
+    public function __construct(private readonly string $csvPath, ?array $positions = null)
     {
+        $this->positions = $positions !== null ? array_map('strtoupper', $positions) : self::POSITIONS_ALL;
     }
 
     public function name(): string
@@ -103,7 +106,8 @@ final class NflverseStatsProvider implements StatsProviderInterface
     public function gameLogs(): iterable
     {
         foreach ($this->rows() as $r) {
-            if (strtoupper($r['position'] ?? '') !== 'RB') {
+            $pos = strtoupper($r['position'] ?? '');
+            if (! in_array($pos, $this->positions, true)) {
                 continue;
             }
             $team = strtoupper($r['team'] ?? '');
@@ -112,12 +116,17 @@ final class NflverseStatsProvider implements StatsProviderInterface
                 'external_id' => substr($r['player_id'], 0, 64),
                 'player_name' => substr($r['player_display_name'] !== '' ? $r['player_display_name'] : ($r['player_name'] ?? ''), 0, 120),
                 'team'        => substr($team, 0, 8),
-                'position'    => 'RB',
+                'position'    => $pos,
                 'season'      => (int) $r['season'],
                 'week'        => (int) $r['week'],
                 'game_date'   => null,
                 'opponent'    => substr(strtoupper($r['opponent_team']), 0, 8),
                 'home_away'   => self::homeAway((string) ($r['game_id'] ?? ''), $team),
+                'pass_att'    => self::int($r, 'attempts'),
+                'completions' => self::int($r, 'completions'),
+                'pass_yds'    => self::int($r, 'passing_yards'),
+                'pass_td'     => self::int($r, 'passing_tds'),
+                'interceptions' => self::int($r, 'interceptions'),
                 'rush_att'    => self::int($r, 'carries'),
                 'rush_yds'    => self::int($r, 'rushing_yards'),
                 'rush_td'     => self::int($r, 'rushing_tds'),
@@ -131,45 +140,74 @@ final class NflverseStatsProvider implements StatsProviderInterface
 
     public function defenseRanks(): iterable
     {
-        // [season][week][defense] => [rush yds, rec yds] allowed to RBs that week
+        // [season][week][defense] => [rush yds (RB), rec yds (RB), pass yds (QB), pass tds, pts allowed]
         $allowed = [];
         foreach ($this->rows() as $r) {
-            if (strtoupper($r['position'] ?? '') !== 'RB') {
-                continue;
-            }
+            $pos = strtoupper($r['position'] ?? '');
             $def = strtoupper($r['opponent_team']);
             $s = (int) $r['season'];
             $w = (int) $r['week'];
-            $allowed[$s][$w][$def] ??= [0, 0];
-            $allowed[$s][$w][$def][0] += self::int($r, 'rushing_yards');
-            $allowed[$s][$w][$def][1] += self::int($r, 'receiving_yards');
+            $allowed[$s][$w][$def] ??= [
+                'rush'    => 0,
+                'rb_rec'  => 0,
+                'pass'    => 0,
+                'pass_td' => 0,
+                'points'  => 0,
+            ];
+
+            if ($pos === 'RB') {
+                $allowed[$s][$w][$def]['rush'] += self::int($r, 'rushing_yards');
+                $allowed[$s][$w][$def]['rb_rec'] += self::int($r, 'receiving_yards');
+            }
+            if ($pos === 'QB') {
+                $allowed[$s][$w][$def]['pass'] += self::int($r, 'passing_yards');
+                $allowed[$s][$w][$def]['pass_td'] += self::int($r, 'passing_tds');
+            }
+            // Estimate offensive scoring allowed (rush TDs + pass TDs * 7)
+            $allowed[$s][$w][$def]['points'] += (self::int($r, 'rushing_tds') + self::int($r, 'passing_tds')) * 7;
         }
 
         foreach ($allowed as $season => $weeks) {
             ksort($weeks);
-            $totals = []; // defense => [rush, rec, games]
+            $totals = []; // defense => ['rush', 'rb_rec', 'pass', 'pass_td', 'points', 'games']
             foreach ($weeks as $week => $byDefense) {
-                foreach ($byDefense as $def => [$rush, $rec]) {
-                    $totals[$def] ??= [0, 0, 0];
-                    $totals[$def][0] += $rush;
-                    $totals[$def][1] += $rec;
-                    $totals[$def][2]++;
+                foreach ($byDefense as $def => $stats) {
+                    $totals[$def] ??= ['rush' => 0, 'rb_rec' => 0, 'pass' => 0, 'pass_td' => 0, 'points' => 0, 'games' => 0];
+                    $totals[$def]['rush'] += $stats['rush'];
+                    $totals[$def]['rb_rec'] += $stats['rb_rec'];
+                    $totals[$def]['pass'] += $stats['pass'];
+                    $totals[$def]['pass_td'] += $stats['pass_td'];
+                    $totals[$def]['points'] += $stats['points'];
+                    $totals[$def]['games']++;
                 }
-                $rushPg = $recPg = [];
-                foreach ($totals as $def => [$rush, $rec, $games]) {
-                    $rushPg[$def] = $rush / $games;
-                    $recPg[$def] = $rec / $games;
+                $rushPg = $rbRecPg = $passPg = $passTdPg = $pointsPg = [];
+                foreach ($totals as $def => $tot) {
+                    $g = max(1, $tot['games']);
+                    $rushPg[$def] = $tot['rush'] / $g;
+                    $rbRecPg[$def] = $tot['rb_rec'] / $g;
+                    $passPg[$def] = $tot['pass'] / $g;
+                    $passTdPg[$def] = $tot['pass_td'] / $g;
+                    $pointsPg[$def] = $tot['points'] / $g;
                 }
                 $rushRank = self::rank($rushPg);
-                $recRank = self::rank($recPg);
+                $rbRecRank = self::rank($rbRecPg);
+                $passRank = self::rank($passPg);
+                $passTdRank = self::rank($passTdPg);
+                $scoringRank = self::rank($pointsPg);
+
                 foreach ($rushPg as $def => $pg) {
                     yield [
                         'season'              => (int) $season,
                         'week'                => (int) $week,
                         'team'                => substr((string) $def, 0, 8),
                         'rush_def_rank'       => $rushRank[$def],
-                        'rb_rec_def_rank'     => $recRank[$def],
+                        'rb_rec_def_rank'     => $rbRecRank[$def],
                         'rush_yds_allowed_pg' => round($pg, 1),
+                        'pass_def_rank'       => $passRank[$def] ?? null,
+                        'pass_yds_allowed_pg' => isset($passPg[$def]) ? round($passPg[$def], 1) : null,
+                        'pass_td_def_rank'    => $passTdRank[$def] ?? null,
+                        'scoring_def_rank'    => $scoringRank[$def] ?? null,
+                        'points_allowed_pg'   => isset($pointsPg[$def]) ? round($pointsPg[$def], 1) : null,
                     ];
                 }
             }
@@ -244,7 +282,8 @@ final class NflverseStatsProvider implements StatsProviderInterface
                 }
             }
             $keep = array_flip(['player_id', 'player_name', 'player_display_name', 'position', 'season', 'week', 'season_type', 'game_id', 'team', 'opponent_team',
-                'carries', 'rushing_yards', 'rushing_tds', 'targets', 'receptions', 'receiving_yards', 'receiving_tds']);
+                'carries', 'rushing_yards', 'rushing_tds', 'targets', 'receptions', 'receiving_yards', 'receiving_tds',
+                'attempts', 'completions', 'passing_yards', 'passing_tds', 'interceptions']);
             while (($line = fgetcsv($fh, 0, ',', '"', '\\')) !== false) {
                 if (count($rows) >= self::MAX_ROWS) {
                     break;
