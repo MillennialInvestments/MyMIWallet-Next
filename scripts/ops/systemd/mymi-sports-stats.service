@@ -1,0 +1,14 @@
+[Unit]
+Description=MyMI Wallet: pull NFL running back stats from nflverse (free, no key)
+After=mysql.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=www-data
+Group=www-data
+WorkingDirectory=/apps/TBI/www/mymiwallet/current
+ExecStart=/usr/bin/php spark sports:import --provider nflverse
+Nice=10
+IOSchedulingClass=idle
+TimeoutStartSec=10min

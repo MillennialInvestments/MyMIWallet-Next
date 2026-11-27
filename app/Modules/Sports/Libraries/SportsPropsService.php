@@ -120,6 +120,31 @@ final class SportsPropsService
         return $result;
     }
 
+    /**
+     * Downloads the current nflverse season file and imports it. Used by the
+     * daily timer (sports:import) and the on-page refresh button.
+     *
+     * @return array<string,mixed>
+     */
+    public function refreshNflverse(?int $season = null, ?callable $fetch = null): array
+    {
+        $season ??= Providers\NflverseStatsProvider::currentSeason();
+        $path = Providers\NflverseStatsProvider::defaultPath($season);
+        $dl = Providers\NflverseStatsProvider::download($season, $path, $fetch);
+        $r = $this->import(new Providers\NflverseStatsProvider($path));
+        $r['download'] = ['url' => $dl['url'], 'bytes' => $dl['bytes']];
+
+        return $r;
+    }
+
+    /** When the stats were last downloaded (UTC "Y-m-d H:i"), or null. */
+    public static function statsUpdatedAt(?int $season = null): ?string
+    {
+        $path = Providers\NflverseStatsProvider::defaultPath($season ?? Providers\NflverseStatsProvider::currentSeason());
+
+        return is_file($path) ? gmdate('Y-m-d H:i', (int) filemtime($path)) : null;
+    }
+
     /** Removes only rows imported by the bundled sample provider. */
     public function removeSample(): array
     {

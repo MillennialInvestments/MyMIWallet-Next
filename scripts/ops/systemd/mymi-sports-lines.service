@@ -1,0 +1,13 @@
+[Unit]
+Description=MyMI Wallet: pull NFL running back prop lines from The Odds API (about 3 credits per game; skips without ODDS_API_KEY)
+After=mysql.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=www-data
+Group=www-data
+WorkingDirectory=/apps/TBI/www/mymiwallet/current
+ExecStart=/usr/bin/php spark sports:lines --days 7 --max-events 16 --reserve 120
+Nice=10
+TimeoutStartSec=10min

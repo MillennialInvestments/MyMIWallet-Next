@@ -37,6 +37,8 @@ class SportsController extends UserController
             'tablesReady' => $ready,
             'players'     => $ready ? $svc->listPlayers() : [],
             'picks'       => $ready ? $svc->weeklyPicks(PropLinesService::fromEnv(db_connect())) : [],
+            'statsUpdated' => SportsPropsService::statsUpdatedAt(),
+            'notice'      => session()->getFlashdata('sports_notice'),
             'disclaimer'  => SportsPropsService::DISCLAIMER,
         ]);
     }
@@ -77,7 +79,84 @@ class SportsController extends UserController
             'report'    => $report,
             'lines'     => $lines,
             'bookLines' => $bookLines,
+            'notice'    => session()->getFlashdata('sports_notice'),
         ]);
+    }
+
+    /** Minutes between on-demand refreshes (stats for everyone; lines per team). */
+    public const STATS_COOLDOWN_MIN = 15;
+    public const LINES_COOLDOWN_MIN = 15;
+
+    /**
+     * "Refresh stats" button: re-downloads the free nflverse file and
+     * re-imports it. One refresh per 15 minutes site-wide; nflverse itself
+     * publishes after games, so more often adds nothing.
+     */
+    public function refreshStats()
+    {
+        $svc = $this->sports();
+        $back = redirect()->to(site_url('MyMISports/NFL'));
+        if (! $svc->tablesReady()) {
+            return $back;
+        }
+        $key = 'sports_refresh_stats';
+        $last = cache($key);
+        if (is_int($last) && time() - $last < self::STATS_COOLDOWN_MIN * 60) {
+            return $back->with('sports_notice', sprintf('Stats were refreshed %d min ago. They can be refreshed again in %d min.', intdiv(time() - $last, 60), self::STATS_COOLDOWN_MIN - intdiv(time() - $last, 60)));
+        }
+        cache()->save($key, time(), self::STATS_COOLDOWN_MIN * 60);
+
+        try {
+            $r = $svc->refreshNflverse();
+            $msg = $r['ok']
+                ? sprintf('Stats refreshed: %d running backs, %d new and %d updated games.', $r['players'], $r['game_logs_inserted'], $r['game_logs_updated'])
+                : 'The stats refresh did not finish. Try again later.';
+        } catch (\Throwable $e) {
+            log_message('error', 'sports refreshStats: ' . $e->getMessage());
+            $msg = 'Could not reach the stats source right now. Try again later.';
+        }
+
+        return $back->with('sports_notice', $msg);
+    }
+
+    /**
+     * "Refresh lines" button on a player page: pulls current sportsbook lines
+     * for that player's next game only (about 3 API credits). One refresh per
+     * team per 15 minutes, and never below a 100-credit reserve.
+     */
+    public function refreshLines(int $playerId)
+    {
+        $svc = $this->sports();
+        $back = redirect()->to(site_url('MyMISports/NFL/Player/' . $playerId));
+        $player = $svc->tablesReady() ? $svc->findPlayer($playerId) : null;
+        if ($player === null) {
+            return redirect()->to(site_url('MyMISports/NFL'));
+        }
+        $team = strtoupper((string) $player['team']);
+        $key = 'sports_refresh_lines_' . preg_replace('/[^A-Z]/', '', $team);
+        $last = cache($key);
+        if (is_int($last) && time() - $last < self::LINES_COOLDOWN_MIN * 60) {
+            return $back->with('sports_notice', sprintf('%s lines were refreshed %d min ago. They can be refreshed again in %d min.', $team, intdiv(time() - $last, 60), self::LINES_COOLDOWN_MIN - intdiv(time() - $last, 60)));
+        }
+        cache()->save($key, time(), self::LINES_COOLDOWN_MIN * 60);
+
+        try {
+            $r = PropLinesService::fromEnv(db_connect())->fetchForTeam($team);
+            $msg = match ($r['status']) {
+                'PASS'  => sprintf('Lines refreshed for %s\'s next game (%d lines).', $team, $r['lines_saved']),
+                default => match ($r['reason'] ?? '') {
+                    'ODDS_API_KEY not set' => 'Live sportsbook lines are not switched on.',
+                    'credit_reserve'       => 'Live line refreshes are paused until the monthly allowance resets.',
+                    'no upcoming game'     => $team . ' has no game in the next week with lines posted yet.',
+                    default                => 'Lines could not be refreshed right now.',
+                },
+            };
+        } catch (\Throwable $e) {
+            log_message('error', 'sports refreshLines: ' . $e->getMessage());
+            $msg = 'Could not reach the sportsbook data source right now. Try again later.';
+        }
+
+        return $back->with('sports_notice', $msg);
     }
 
     public function goldilocksApi()

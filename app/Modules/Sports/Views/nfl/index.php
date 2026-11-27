@@ -4,6 +4,8 @@ use App\Modules\Sports\Libraries\GoldilocksEngine;
 use App\Modules\Sports\Libraries\Providers\NflverseStatsProvider;
 
 $picks ??= [];
+$notice ??= null;
+$statsUpdated ??= null;
 $hasReal = in_array(NflverseStatsProvider::NAME, array_column($players, 'provider'), true);
 ?>
 <?= view('App\\Modules\\Sports\\Views\\nfl\\_responsive') ?>
@@ -14,6 +16,14 @@ $hasReal = in_array(NflverseStatsProvider::NAME, array_column($players, 'provide
     </div>
 
     <div class="alert alert-warning small" role="note"><?= esc($disclaimer) ?></div>
+    <?php if (is_string($notice) && $notice !== ''): ?><div class="alert alert-info" role="status" id="sports-notice"><?= esc($notice) ?></div><?php endif; ?>
+    <?php if ($tablesReady): ?>
+        <form method="post" action="<?= site_url('MyMISports/NFL/Refresh') ?>" class="d-flex flex-wrap align-items-center gap-2 mb-3" id="sports-refresh-form">
+            <?= csrf_field() ?>
+            <button type="submit" class="btn btn-outline-primary btn-sm">Refresh stats now</button>
+            <span class="text-muted small"><?= $statsUpdated ? 'Stats last pulled ' . esc($statsUpdated) . ' UTC. They update automatically every morning.' : 'Stats update automatically every morning.' ?></span>
+        </form>
+    <?php endif; ?>
 
     <?php if (! $tablesReady): ?>
         <div class="alert alert-info">Sports tables are not set up yet. An operator runs the migration <code>2026-11-27-000100_CreateSportsPropAnalyticsTables</code>, then <code>php spark sports:import --provider=sample</code>.</div>

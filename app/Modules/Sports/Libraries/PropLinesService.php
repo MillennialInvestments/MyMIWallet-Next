@@ -144,6 +144,54 @@ final class PropLinesService
     }
 
     /**
+     * On-demand refresh for one team's next game: the events list is free and
+     * the one game costs about 3 credits. Stops at a larger reserve than the
+     * scheduled run so user clicks can never drain the monthly allowance.
+     *
+     * @return array<string,mixed>
+     */
+    public function fetchForTeam(string $team, int $days = 8, int $reserve = 100): array
+    {
+        if (! $this->enabled()) {
+            return ['status' => 'SKIP', 'reason' => 'ODDS_API_KEY not set'];
+        }
+        if (! $this->tableReady()) {
+            return ['status' => 'FAIL', 'reason' => 'table_not_migrated'];
+        }
+        $team = strtoupper($team);
+        $names = array_keys(self::TEAMS, $team, true);
+        if ($names === []) {
+            return ['status' => 'SKIP', 'reason' => 'unknown team'];
+        }
+
+        $now = time();
+        $events = $this->get(self::BASE . '/events?' . http_build_query(['apiKey' => $this->apiKey, 'dateFormat' => 'iso', 'commenceTimeTo' => gmdate('Y-m-d\TH:i:s\Z', $now + $days * 86400)]));
+        $list = json_decode($events['body'], true);
+        $remaining = $events['headers']['x-requests-remaining'] ?? '';
+        foreach (is_array($list) ? $list : [] as $event) {
+            $start = strtotime((string) ($event['commence_time'] ?? '')) ?: 0;
+            if ($start < $now || empty($event['id']) || ! array_intersect($names, [(string) ($event['home_team'] ?? ''), (string) ($event['away_team'] ?? '')])) {
+                continue;
+            }
+            if (is_numeric($remaining) && (float) $remaining - count(self::MARKETS) < $reserve) {
+                return ['status' => 'SKIP', 'reason' => 'credit_reserve', 'credits_remaining' => $remaining];
+            }
+            $res = $this->get(self::BASE . '/events/' . rawurlencode((string) $event['id']) . '/odds?' . http_build_query([
+                'apiKey'     => $this->apiKey,
+                'markets'    => implode(',', array_keys(self::MARKETS)),
+                'bookmakers' => implode(',', self::BOOKMAKERS),
+                'oddsFormat' => 'american',
+                'dateFormat' => 'iso',
+            ]));
+            $data = json_decode($res['body'], true);
+
+            return ['status' => 'PASS', 'lines_saved' => is_array($data) ? $this->store($data) : 0, 'credits_remaining' => $res['headers']['x-requests-remaining'] ?? ''];
+        }
+
+        return ['status' => 'SKIP', 'reason' => 'no upcoming game', 'credits_remaining' => $remaining];
+    }
+
+    /**
      * Saves one event-odds payload. Pairs each player's Over and Under at the
      * same point for a book into one row.
      */
