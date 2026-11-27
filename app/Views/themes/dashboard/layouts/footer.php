@@ -1,15 +1,16 @@
 <?php helper('premium'); ?>
 <?php
+$siteSettings               = $siteSettings ?? config('SiteSettings');
 $nonce                      = $nonce ?? ['script' => '', 'style' => ''];
 $csp                        = $csp   ?? [];
 $scriptNonceValue           = $csp['script'] ?? null;
 $currentUser                = $currentUser   ?? null;
 $totalSegments              = isset($totalSegments) && is_numeric($totalSegments) ? (int)$totalSegments : 0;
 $subViewData                = [
-    'uri'                   => $uri,
-    'cuID'                  => $cuID,
+    'uri'                   => $uri ?? '',
+    'cuID'                  => $cuID ?? 0,
     'siteSettings'          => $siteSettings,
-    'pageTitle'             => $pageTitle ?? $siteSettings->companyMetaTitle,
+    'pageTitle'             => $pageTitle ?? ($siteSettings->companyMetaTitle ?? 'MyMI Wallet'),
     'nonce'                 => $nonce,
     'csp'                   => $csp,
     'theme'                 => $theme ?? 'dashboard',
@@ -127,10 +128,10 @@ $subViewData                = [
      <footer class="map-bg ml-5 pl-5">
         <div class="container-fluid border-bottom z-index-20 position-relative">
             <div class="row gy-4 px-3">
-                <div class="col-lg-2 col-md-6 mt-1"><img class="footer-brand-logo w-100 mt-2 mb-1" src="<?= base_url($siteSettings->companyLogo); ?>" alt="<?php echo $siteSettings->companyMetaTitle; ?>">
+                <div class="col-lg-2 col-md-6 mt-1"><img class="footer-brand-logo w-100 mt-2 mb-1" src="<?= base_url($siteSettings->companyLogo ?? 'assets/images/logo.png'); ?>" alt="<?php echo $siteSettings->companyMetaTitle ?? 'MyMI Wallet'; ?>">
                     <ul class="list-unstyled text-muted">
-                        <li><a class="reset-anchor text-sm" href="mailto:<?php echo $siteSettings->companySupportEmail; ?>"><?php echo $siteSettings->companySupportEmail; ?></a></li>
-                        <li><a class="reset-anchor text-sm" href="tel:<?php echo $siteSettings->companyPhone; ?>"><?php echo $siteSettings->companyPhone; ?></a></li>
+                        <li><a class="reset-anchor text-sm" href="mailto:<?php echo $siteSettings->companySupportEmail ?? 'support@mymiwallet.com'; ?>"><?php echo $siteSettings->companySupportEmail ?? 'support@mymiwallet.com'; ?></a></li>
+                        <li><a class="reset-anchor text-sm" href="tel:<?php echo $siteSettings->companyPhone ?? ''; ?>"><?php echo $siteSettings->companyPhone ?? ''; ?></a></li>
                     </ul>
                     <ul class="list-inline text-muted">
                         <li class="list-inline-item"><a class="reset-anchor" href="#!"><i class="fab fa-facebook-f"></i></a></li>
@@ -171,11 +172,11 @@ $subViewData                = [
                         <li class="mb-1"><a class="text-sm reset-anchor" href="<?php echo site_url('/Exchange/Solana'); ?>">Exchange</a></li>
                         <?php if (!empty($cuSolanaDW['id'])) : ?>
                             <li class="mb-1"><a class="text-sm reset-anchor dynamicModalLoader" data-formtype="Solana" data-endpoint="connectWalletModal" href="#">Connect</a></li>
-                        <?php if ($siteSettings->createSolanaStatus === 1) : ?>
+                        <?php if (($siteSettings->createSolanaStatus ?? 0) === 1) : ?>
                             <li class="mb-1"><a class="text-sm reset-anchor" href="<?php echo site_url('/Exchange/Solana/Assets'); ?>">Assets</a></li>
                             <li class="mb-1"><a class="text-sm reset-anchor" href="<?php echo site_url('/Exchange/Solana/Create'); ?>">Create</a></li>
                         <?php endif; ?>
-                        <?php if ($siteSettings->swapSolanaStatus === 1) : ?>
+                        <?php if (($siteSettings->swapSolanaStatus ?? 0) === 1) : ?>
                             <?php if (premium_feature_enabled('exchange.swap')) : ?>
                                 <li class="mb-1"><a class="text-sm reset-anchor dynamicModalLoader" data-formtype="Solana" data-endpoint="coinSwap" href="#">Swap</a></li>
                             <?php else : ?>
@@ -216,7 +217,7 @@ $subViewData                = [
         <div class="container pl-5 py-5 pr-5 mx-0 z-index-20 position-relative">
              <div class="row text-center">
                  <div class="col-lg-6 p-lg-0 text-lg-start">
-                 <p class="text-muted text-sm mb-0">© <?php echo date("Y"); ?> <?php echo $siteSettings->companyName . ' | ' . $siteSettings->websiteVersion; ?>, All Rights Reserved.</p>
+                 <p class="text-muted text-sm mb-0">© <?php echo date("Y"); ?> <?php echo ($siteSettings->companyName ?? 'MyMI Wallet') . ' | ' . ($siteSettings->websiteVersion ?? 'v1.0'); ?>, All Rights Reserved.</p>
                  </div>
                  <div class="col-lg-6 p-lg-0 text-lg-end">
                     <p class="text-muted text-sm mb-0">Powered by <a href="https://timothyburks.com" target="_blank">TBI Solutions, LLC.</a>

@@ -51,6 +51,12 @@ final class GoldilocksEngine
         'receptions'    => 1.2,
         'targets'       => 1.5,
         'anytime_td'    => 0.35,
+        'pts'           => 4.5,
+        'reb'           => 1.8,
+        'ast'           => 1.5,
+        'threes'        => 0.8,
+        'stocks'        => 0.7,
+        'pra'           => 6.0,
     ];
 
     public const ALL_MARKETS = [
@@ -58,6 +64,7 @@ final class GoldilocksEngine
         'pass_yds', 'pass_tds', 'completions', 'pass_att', 'interceptions',
         'receptions', 'targets', 'anytime_td',
         'spread', 'total', 'team_total',
+        'pts', 'reb', 'ast', 'threes', 'stocks', 'pra',
     ];
 
     /** Target hit rate used to suggest lines when no sportsbook lines are given. */
@@ -80,6 +87,10 @@ final class GoldilocksEngine
             $markets = ReceiverSplitsCalculator::MARKETS;
             $splits = ReceiverSplitsCalculator::splits($taggedGames);
             $tierResolver = static fn (string $m, array $def) => ReceiverSplitsCalculator::tierForRank(ReceiverSplitsCalculator::rankForMarket($m, $def));
+        } elseif (in_array($pos, ['PG', 'SG', 'SF', 'PF', 'C', 'NBA'], true)) {
+            $markets = NbaSplitsCalculator::MARKETS;
+            $splits = NbaSplitsCalculator::splits($taggedGames);
+            $tierResolver = static fn (string $m, array $def) => NbaSplitsCalculator::tierForRank(NbaSplitsCalculator::rankForMarket($m, $def));
         } else {
             $markets = RbSplitsCalculator::MARKETS;
             $splits = RbSplitsCalculator::splits($taggedGames);
@@ -193,9 +204,10 @@ final class GoldilocksEngine
         $hits = 0;
         foreach ($pool as $g) {
             $val = match ($pos) {
-                'QB'       => QbSplitsCalculator::marketValue($market, $g),
-                'WR', 'TE' => ReceiverSplitsCalculator::marketValue($market, $g),
-                default    => RbSplitsCalculator::marketValue($market, $g),
+                'QB'                                => QbSplitsCalculator::marketValue($market, $g),
+                'WR', 'TE'                          => ReceiverSplitsCalculator::marketValue($market, $g),
+                'PG', 'SG', 'SF', 'PF', 'C', 'NBA'  => NbaSplitsCalculator::marketValue($market, $g),
+                default                             => RbSplitsCalculator::marketValue($market, $g),
             };
             if ($val > $line) {
                 $hits++;
