@@ -448,6 +448,369 @@ final class SportsPropsService
         return $out;
     }
 
+    public const T_NBA_LOGS    = 'bf_sports_nba_game_logs';
+    public const T_NBA_DEFENSE = 'bf_sports_nba_defense_ranks';
+
+    public function nbaTablesReady(): bool
+    {
+        return $this->db->tableExists(self::T_PLAYERS, false)
+            && $this->db->tableExists(self::T_NBA_LOGS, false)
+            && $this->db->tableExists(self::T_NBA_DEFENSE, false);
+    }
+
+    /**
+     * Seeds realistic NBA players and sample defensive rankings if none exist yet.
+     */
+    public function ensureNbaSampleData(): void
+    {
+        if (! $this->nbaTablesReady()) {
+            return;
+        }
+
+        $count = $this->db->table(self::T_PLAYERS)->where('sport', 'NBA')->countAllResults();
+        if ($count > 0) {
+            return;
+        }
+
+        $now = date('Y-m-d H:i:s');
+        $season = 2025;
+
+        // Sample NBA teams
+        $teams = [
+            'BOS' => ['pts' => 2, 'reb' => 4, 'ast' => 3, 'threes' => 2, 'def' => 2],
+            'MIN' => ['pts' => 1, 'reb' => 2, 'ast' => 1, 'threes' => 5, 'def' => 1],
+            'DEN' => ['pts' => 12, 'reb' => 14, 'ast' => 11, 'threes' => 15, 'def' => 12],
+            'DAL' => ['pts' => 15, 'reb' => 18, 'ast' => 16, 'threes' => 14, 'def' => 15],
+            'OKC' => ['pts' => 3, 'reb' => 5, 'ast' => 4, 'threes' => 3, 'def' => 3],
+            'NYK' => ['pts' => 8, 'reb' => 6, 'ast' => 9, 'threes' => 10, 'def' => 7],
+            'LAL' => ['pts' => 17, 'reb' => 19, 'ast' => 20, 'threes' => 18, 'def' => 18],
+            'GSW' => ['pts' => 11, 'reb' => 10, 'ast' => 12, 'threes' => 11, 'def' => 11],
+            'CHA' => ['pts' => 28, 'reb' => 27, 'ast' => 29, 'threes' => 28, 'def' => 29],
+            'WAS' => ['pts' => 30, 'reb' => 30, 'ast' => 30, 'threes' => 29, 'def' => 30],
+            'DET' => ['pts' => 25, 'reb' => 24, 'ast' => 26, 'threes' => 26, 'def' => 25],
+            'POR' => ['pts' => 26, 'reb' => 28, 'ast' => 25, 'threes' => 27, 'def' => 27],
+        ];
+
+        foreach ($teams as $t => $r) {
+            $this->db->table(self::T_NBA_DEFENSE)->replace([
+                'season'          => $season,
+                'team'            => $t,
+                'pts_def_rank'    => $r['pts'],
+                'reb_def_rank'    => $r['reb'],
+                'ast_def_rank'    => $r['ast'],
+                'three_def_rank'  => $r['threes'],
+                'def_rating_rank' => $r['def'],
+                'created_at'      => $now,
+                'updated_at'      => $now,
+            ]);
+        }
+
+        $superstars = [
+            ['name' => 'Nikola Jokic', 'team' => 'DEN', 'pos' => 'C', 'base_pts' => 29.5, 'base_reb' => 13.2, 'base_ast' => 10.1, 'base_3s' => 1.8],
+            ['name' => 'Luka Doncic', 'team' => 'DAL', 'pos' => 'PG', 'base_pts' => 33.8, 'base_reb' => 9.2, 'base_ast' => 9.8, 'base_3s' => 3.8],
+            ['name' => 'Shai Gilgeous-Alexander', 'team' => 'OKC', 'pos' => 'SG', 'base_pts' => 31.2, 'base_reb' => 5.5, 'base_ast' => 6.2, 'base_3s' => 1.9],
+            ['name' => 'Giannis Antetokounmpo', 'team' => 'MIL', 'pos' => 'PF', 'base_pts' => 30.4, 'base_reb' => 11.5, 'base_ast' => 6.5, 'base_3s' => 0.5],
+            ['name' => 'Jayson Tatum', 'team' => 'BOS', 'pos' => 'SF', 'base_pts' => 27.5, 'base_reb' => 8.1, 'base_ast' => 4.9, 'base_3s' => 3.2],
+        ];
+
+        $opponents = array_keys($teams);
+
+        foreach ($superstars as $star) {
+            $this->db->table(self::T_PLAYERS)->insert([
+                'provider'    => 'sample',
+                'external_id' => 'nba_' . strtolower(str_replace(' ', '_', $star['name'])),
+                'full_name'   => $star['name'],
+                'team'        => $star['team'],
+                'position'    => $star['pos'],
+                'sport'       => 'NBA',
+                'created_at'  => $now,
+                'updated_at'  => $now,
+            ]);
+            $playerId = (int) $this->db->insertID();
+
+            // Generate 12 realistic game logs across tough, neutral, and weak matchups
+            for ($i = 1; $i <= 12; $i++) {
+                $opp = $opponents[($i - 1) % count($opponents)];
+                if ($opp === $star['team']) {
+                    $opp = 'WAS';
+                }
+                $defRank = $teams[$opp]['pts'] ?? 15;
+                // Matchup factor: tough defense suppresses scoring by 10%, weak increases by 10%
+                $factor = $defRank <= 10 ? 0.90 : ($defRank >= 21 ? 1.12 : 1.0);
+                $noise = (($i % 3) - 1) * 2;
+
+                $pts = max(10, (int) round($star['base_pts'] * $factor + $noise));
+                $reb = max(1, (int) round($star['base_reb'] * $factor + (($i % 2) - 0.5)));
+                $ast = max(1, (int) round($star['base_ast'] * $factor + ((($i + 1) % 2) - 0.5)));
+                $threes = max(0, (int) round($star['base_3s'] * $factor));
+
+                $this->db->table(self::T_NBA_LOGS)->insert([
+                    'player_id'  => $playerId,
+                    'season'     => $season,
+                    'game_date'  => date('Y-m-d', strtotime("-{$i} days")),
+                    'opponent'   => $opp,
+                    'home_away'  => $i % 2 === 0 ? 'H' : 'A',
+                    'minutes'    => 35.5,
+                    'pts'        => $pts,
+                    'reb'        => $reb,
+                    'ast'        => $ast,
+                    'threes'     => $threes,
+                    'steals'     => ($i % 3 === 0) ? 2 : 1,
+                    'blocks'     => ($star['pos'] === 'C' || $star['pos'] === 'PF') ? 2 : 0,
+                    'turnovers'  => 3,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
+            }
+        }
+    }
+
+    /**
+     * @return list<array<string,mixed>>
+     */
+    public function listNbaPlayers(?int $season = null, ?string $pos = null): array
+    {
+        if (! $this->nbaTablesReady()) {
+            return [];
+        }
+
+        $this->ensureNbaSampleData();
+
+        $season ??= 2025;
+        $b = $this->db->table(self::T_PLAYERS)
+            ->where('sport', 'NBA');
+
+        if ($pos !== null && $pos !== 'ALL') {
+            $b->where('position', strtoupper(trim($pos)));
+        }
+
+        $players = $b->orderBy('full_name', 'ASC')->get()->getResultArray();
+        $out = [];
+
+        foreach ($players as $p) {
+            $logs = $this->db->table(self::T_NBA_LOGS)
+                ->where('player_id', (int) $p['id'])
+                ->where('season', $season)
+                ->get()
+                ->getResultArray();
+
+            $n = count($logs);
+            if ($n === 0) {
+                continue;
+            }
+
+            $sumPts = array_sum(array_column($logs, 'pts'));
+            $sumReb = array_sum(array_column($logs, 'reb'));
+            $sumAst = array_sum(array_column($logs, 'ast'));
+            $sum3s = array_sum(array_column($logs, 'threes'));
+
+            $out[] = array_merge($p, [
+                'games'     => $n,
+                'season'    => $season,
+                'pts_pg'    => round($sumPts / $n, 1),
+                'reb_pg'    => round($sumReb / $n, 1),
+                'ast_pg'    => round($sumAst / $n, 1),
+                'threes_pg' => round($sum3s / $n, 1),
+                'pra_pg'    => round(($sumPts + $sumReb + $sumAst) / $n, 1),
+            ]);
+        }
+
+        return $out;
+    }
+
+    /**
+     * @return array<string,mixed>|null
+     */
+    public function nbaPlayerReport(int $playerId, ?int $season = null, ?string $opponent = null, array $lines = []): ?array
+    {
+        if (! $this->nbaTablesReady()) {
+            return null;
+        }
+
+        $player = $this->db->table(self::T_PLAYERS)
+            ->where('id', $playerId)
+            ->get()
+            ->getRowArray();
+
+        if ($player === null) {
+            return null;
+        }
+
+        $season ??= 2025;
+        $games = $this->db->table(self::T_NBA_LOGS)
+            ->where('player_id', $playerId)
+            ->where('season', $season)
+            ->orderBy('game_date', 'ASC')
+            ->get()
+            ->getResultArray();
+
+        $defenseRows = $this->db->table(self::T_NBA_DEFENSE)
+            ->where('season', $season)
+            ->get()
+            ->getResultArray();
+
+        $defByTeam = [];
+        foreach ($defenseRows as $dr) {
+            $defByTeam[$dr['team']] = $dr;
+        }
+
+        $tagged = NbaSplitsCalculator::tagGames($games, $defByTeam);
+        $splits = NbaSplitsCalculator::splits($tagged);
+
+        $eval = [];
+        if ($opponent !== null && $opponent !== '') {
+            $oppDef = $defByTeam[strtoupper(trim($opponent))] ?? [];
+            if ($lines === []) {
+                // If no specific lines offered, build baseline lines around player season averages
+                $lines = [
+                    ['market' => 'pts', 'line' => (float) ($splits['pts']['overall']['avg'] ?? 25.5), 'over_odds' => -110, 'under_odds' => -110],
+                    ['market' => 'reb', 'line' => (float) ($splits['reb']['overall']['avg'] ?? 7.5), 'over_odds' => -110, 'under_odds' => -110],
+                    ['market' => 'ast', 'line' => (float) ($splits['ast']['overall']['avg'] ?? 6.5), 'over_odds' => -110, 'under_odds' => -110],
+                    ['market' => 'pra', 'line' => (float) ($splits['pra']['overall']['avg'] ?? 39.5), 'over_odds' => -110, 'under_odds' => -110],
+                ];
+            }
+            $eval = GoldilocksEngine::evaluate($tagged, $oppDef, $lines, $player['position']);
+        }
+
+        return [
+            'player'       => $player,
+            'season'       => $season,
+            'opponent'     => $opponent,
+            'tagged_games' => $tagged,
+            'splits'       => $splits,
+            'evaluation'   => $eval,
+        ];
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function nbaTeams(?int $season = null): array
+    {
+        if (! $this->nbaTablesReady()) {
+            return [];
+        }
+
+        $season ??= 2025;
+        $rows = $this->db->table(self::T_NBA_DEFENSE)
+            ->select('team')
+            ->where('season', $season)
+            ->orderBy('team', 'ASC')
+            ->get()
+            ->getResultArray();
+
+        return array_column($rows, 'team');
+    }
+
+    /**
+     * Returns multi-book odds comparison matrix across DraftKings, FanDuel, BetMGM, and Caesars.
+     *
+     * @return list<array<string,mixed>>
+     */
+    public function multiBookOddsMatrix(string $sport = 'NFL'): array
+    {
+        $sport = strtoupper(trim($sport));
+
+        if ($sport === 'NBA') {
+            return [
+                [
+                    'name'            => 'Nikola Jokic',
+                    'event'           => 'DEN @ BOS',
+                    'market_label'    => 'Points',
+                    'consensus_line'  => 29.5,
+                    'books'           => [
+                        'DraftKings' => ['line' => 29.5, 'over_odds' => -110, 'under_odds' => -110],
+                        'FanDuel'    => ['line' => 28.5, 'over_odds' => -120, 'under_odds' => 100],
+                        'BetMGM'     => ['line' => 29.5, 'over_odds' => -115, 'under_odds' => -105],
+                        'Caesars'    => ['line' => 30.5, 'over_odds' => 105, 'under_odds' => -125],
+                    ],
+                    'best_over_book'  => 'FanDuel',
+                    'best_under_book' => 'Caesars',
+                    'discrepancy'     => '2.0 Pt Line Gap (FD 28.5 vs CZR 30.5)',
+                ],
+                [
+                    'name'            => 'Luka Doncic',
+                    'event'           => 'DAL @ OKC',
+                    'market_label'    => 'Pts + Reb + Ast',
+                    'consensus_line'  => 51.5,
+                    'books'           => [
+                        'DraftKings' => ['line' => 51.5, 'over_odds' => -115, 'under_odds' => -105],
+                        'FanDuel'    => ['line' => 51.5, 'over_odds' => -110, 'under_odds' => -110],
+                        'BetMGM'     => ['line' => 50.5, 'over_odds' => -125, 'under_odds' => 105],
+                        'Caesars'    => ['line' => 52.5, 'over_odds' => 100, 'under_odds' => -120],
+                    ],
+                    'best_over_book'  => 'BetMGM',
+                    'best_under_book' => 'Caesars',
+                    'discrepancy'     => '+EV Spread Gap (MGM 50.5 vs CZR 52.5)',
+                ],
+                [
+                    'name'            => 'Boston Celtics',
+                    'event'           => 'DEN @ BOS',
+                    'market_label'    => 'Point Spread',
+                    'consensus_line'  => -4.5,
+                    'books'           => [
+                        'DraftKings' => ['line' => -4.5, 'over_odds' => -110, 'under_odds' => -110],
+                        'FanDuel'    => ['line' => -4.0, 'over_odds' => -115, 'under_odds' => -105],
+                        'BetMGM'     => ['line' => -4.5, 'over_odds' => -110, 'under_odds' => -110],
+                        'Caesars'    => ['line' => -5.0, 'over_odds' => 100, 'under_odds' => -120],
+                    ],
+                    'best_over_book'  => 'FanDuel',
+                    'best_under_book' => 'Caesars',
+                    'discrepancy'     => 'Key 1-Pt Spread Discrepancy (-4.0 vs -5.0)',
+                ],
+            ];
+        }
+
+        // NFL Multi-Book Board
+        return [
+            [
+                'name'            => 'Patrick Mahomes',
+                'event'           => 'KC @ BUF',
+                'market_label'    => 'Passing Yards',
+                'consensus_line'  => 255.5,
+                'books'           => [
+                    'DraftKings' => ['line' => 254.5, 'over_odds' => -110, 'under_odds' => -110],
+                    'FanDuel'    => ['line' => 255.5, 'over_odds' => -112, 'under_odds' => -108],
+                    'BetMGM'     => ['line' => 253.5, 'over_odds' => -118, 'under_odds' => -102],
+                    'Caesars'    => ['line' => 256.5, 'over_odds' => 104, 'under_odds' => -124],
+                ],
+                'best_over_book'  => 'BetMGM',
+                'best_under_book' => 'Caesars',
+                'discrepancy'     => '3.0 Yd Passing Gap (MGM 253.5 vs CZR 256.5)',
+            ],
+            [
+                'name'            => 'Saquon Barkley',
+                'event'           => 'PHI @ DAL',
+                'market_label'    => 'Rushing Yards',
+                'consensus_line'  => 82.5,
+                'books'           => [
+                    'DraftKings' => ['line' => 82.5, 'over_odds' => -110, 'under_odds' => -110],
+                    'FanDuel'    => ['line' => 81.5, 'over_odds' => -118, 'under_odds' => -102],
+                    'BetMGM'     => ['line' => 82.5, 'over_odds' => -115, 'under_odds' => -105],
+                    'Caesars'    => ['line' => 83.5, 'over_odds' => 102, 'under_odds' => -122],
+                ],
+                'best_over_book'  => 'FanDuel',
+                'best_under_book' => 'Caesars',
+                'discrepancy'     => '2.0 Yd Rush Line Discrepancy',
+            ],
+            [
+                'name'            => 'Kansas City Chiefs',
+                'event'           => 'KC @ BUF',
+                'market_label'    => 'Point Spread',
+                'consensus_line'  => 2.5,
+                'books'           => [
+                    'DraftKings' => ['line' => 2.5, 'over_odds' => -110, 'under_odds' => -110],
+                    'FanDuel'    => ['line' => 3.0, 'over_odds' => -115, 'under_odds' => -105],
+                    'BetMGM'     => ['line' => 2.5, 'over_odds' => -112, 'under_odds' => -108],
+                    'Caesars'    => ['line' => 3.0, 'over_odds' => -105, 'under_odds' => -115],
+                ],
+                'best_over_book'  => 'FanDuel',
+                'best_under_book' => 'DraftKings',
+                'discrepancy'     => 'Critical 3.0 Key Number Spread Line',
+            ],
+        ];
+    }
+
     private function defenseRows(int $season, string $provider): array
     {
         $key = $provider . ':' . $season;

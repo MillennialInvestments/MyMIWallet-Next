@@ -12,13 +12,12 @@ $hasReal = in_array(NflverseStatsProvider::NAME, array_column($players, 'provide
 ?>
 <?= view('App\\Modules\\Sports\\Views\\nfl\\_responsive') ?>
 <section class="container-fluid py-4" id="sports-props-index">
-    <div class="mb-3">
-        <h1 class="h3 mb-1"><?= esc($pageTitle ?? 'NFL Props & Matchup Analytics') ?></h1>
-        <p class="text-muted mb-0">Player prop distributions by defensive tier (QBs, RBs, Receivers) and team-vs-team spread/total simulations.</p>
-    </div>
-
-    <div class="alert alert-warning small" role="note"><?= esc($disclaimer) ?></div>
-    <?php if (is_string($notice) && $notice !== ''): ?><div class="alert alert-info" role="status" id="sports-notice"><?= esc($notice) ?></div><?php endif; ?>
+    <?= view('App\\Modules\\Sports\\Views\\_header', [
+        'activeTab'    => 'nfl',
+        'pageTitle'    => $pageTitle ?? 'NFL Props & Matchup Analytics',
+        'pageSubtitle' => 'Player prop distributions by defensive tier (QBs, RBs, Receivers) and team-vs-team spread/total simulations.',
+        'notice'       => $notice ?? null,
+    ]) ?>
 
     <!-- Category Navigation Pills -->
     <ul class="nav nav-pills mb-3" id="sports-nav-pills">
