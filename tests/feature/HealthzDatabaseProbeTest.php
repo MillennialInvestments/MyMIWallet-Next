@@ -22,12 +22,9 @@ final class HealthzDatabaseProbeTest extends CIUnitTestCase
 
         $this->assertIsArray($payload);
         $database = $payload['checks']['database'] ?? [];
-        if (($database['status'] ?? null) !== 'ok') {
-            // No test database here: the probe must still fail cleanly, not with a PHP error.
-            $this->assertContains($database['detail'] ?? null, ['database unreachable', 'database error'], 'probe must fail cleanly');
-            return;
-        }
-
+        // The test database (SQLite) is up, so the probe must say so; the old
+        // isConnected() call threw and reported 'database error' here.
+        $this->assertSame('ok', $database['status'] ?? null);
         $this->assertSame('database reachable', $database['detail']);
     }
 }
