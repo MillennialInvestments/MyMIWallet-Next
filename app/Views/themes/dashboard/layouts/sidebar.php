@@ -646,6 +646,16 @@ $agent                  = service('request')->getUserAgent();
                                         <span class="nk-menu-text">NHL Analytics</span>
                                     </a>
                                 </li>
+                                <li class="nk-menu-item">
+                                    <a href="<?php echo site_url('/MyMISports/Soccer'); ?>" class="nk-menu-link">
+                                        <span class="nk-menu-text">Soccer xG Engine</span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a href="<?php echo site_url('/MyMISports/College'); ?>" class="nk-menu-link">
+                                        <span class="nk-menu-text">College Sports</span>
+                                    </a>
+                                </li>
                             </ul><!-- .nk-menu-sub -->
                         </li>
                         <?php 

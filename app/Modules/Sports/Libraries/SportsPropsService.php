@@ -457,6 +457,9 @@ final class SportsPropsService
     public const T_NHL_GOALIE_LOGS  = 'bf_sports_nhl_goalie_logs';
     public const T_NHL_DEFENSE      = 'bf_sports_nhl_team_defense';
     public const T_SGP_CORRELATIONS = 'bf_sports_sgp_correlations';
+    public const T_SOCCER_STATS     = 'bf_sports_soccer_team_stats';
+    public const T_SOCCER_FIXTURES  = 'bf_sports_soccer_fixtures';
+    public const T_COLLEGE_TEAMS    = 'bf_sports_college_teams';
 
     public function nbaTablesReady(): bool
     {
@@ -864,6 +867,61 @@ final class SportsPropsService
                     'best_over_book'  => 'Caesars',
                     'best_under_book' => 'BetMGM',
                     'discrepancy'     => '12c Spread on +Money Puck Line',
+                ],
+            ];
+        }
+
+        if ($sport === 'SOCCER') {
+            return [
+                [
+                    'name'            => 'Arsenal vs Man City',
+                    'event'           => 'ARS vs MCI (EPL)',
+                    'market_label'    => 'Both Teams to Score (BTTS)',
+                    'consensus_line'  => 0.5,
+                    'books'           => [
+                        'DraftKings' => ['line' => 0.5, 'over_odds' => -135, 'under_odds' => 105],
+                        'FanDuel'    => ['line' => 0.5, 'over_odds' => -128, 'under_odds' => 102],
+                        'BetMGM'     => ['line' => 0.5, 'over_odds' => -140, 'under_odds' => 110],
+                        'Caesars'    => ['line' => 0.5, 'over_odds' => -125, 'under_odds' => 100],
+                    ],
+                    'best_over_book'  => 'Caesars',
+                    'best_under_book' => 'BetMGM',
+                    'discrepancy'     => '15c Juice Spread on BTTS Yes',
+                ],
+                [
+                    'name'            => 'Liverpool vs Chelsea',
+                    'event'           => 'LIV vs CHE (EPL)',
+                    'market_label'    => 'Over / Under 2.5 Goals',
+                    'consensus_line'  => 2.5,
+                    'books'           => [
+                        'DraftKings' => ['line' => 2.5, 'over_odds' => -150, 'under_odds' => 120],
+                        'FanDuel'    => ['line' => 2.5, 'over_odds' => -142, 'under_odds' => 115],
+                        'BetMGM'     => ['line' => 2.5, 'over_odds' => -155, 'under_odds' => 125],
+                        'Caesars'    => ['line' => 2.5, 'over_odds' => -145, 'under_odds' => 118],
+                    ],
+                    'best_over_book'  => 'FanDuel',
+                    'best_under_book' => 'BetMGM',
+                    'discrepancy'     => '13c Discrepancy on Over 2.5 Goals',
+                ],
+            ];
+        }
+
+        if ($sport === 'COLLEGE' || $sport === 'NCAAF') {
+            return [
+                [
+                    'name'            => 'Georgia vs Texas',
+                    'event'           => 'UGA @ TEX (SEC)',
+                    'market_label'    => 'Point Spread',
+                    'consensus_line'  => -3.5,
+                    'books'           => [
+                        'DraftKings' => ['line' => -3.5, 'over_odds' => -110, 'under_odds' => -110],
+                        'FanDuel'    => ['line' => -3.0, 'over_odds' => -118, 'under_odds' => -102],
+                        'BetMGM'     => ['line' => -3.5, 'over_odds' => -110, 'under_odds' => -110],
+                        'Caesars'    => ['line' => -4.0, 'over_odds' => 102, 'under_odds' => -122],
+                    ],
+                    'best_over_book'  => 'FanDuel',
+                    'best_under_book' => 'Caesars',
+                    'discrepancy'     => '1.0 Pt Spread Gap Across Key Number 3 (-3.0 vs -4.0)',
                 ],
             ];
         }
@@ -1545,6 +1603,218 @@ final class SportsPropsService
         }
 
         return $b->orderBy('sport', 'ASC')->orderBy('correlation_coeff', 'DESC')->get()->getResultArray();
+    }
+
+    public function soccerTablesReady(): bool
+    {
+        return $this->db->tableExists(self::T_SOCCER_STATS, false)
+            && $this->db->tableExists(self::T_SOCCER_FIXTURES, false);
+    }
+
+    public function ensureSoccerSampleData(): void
+    {
+        if (! $this->soccerTablesReady()) {
+            return;
+        }
+
+        $count = $this->db->table(self::T_SOCCER_STATS)->countAllResults();
+        if ($count > 0) {
+            return;
+        }
+
+        $now = date('Y-m-d H:i:s');
+        $eplTeams = [
+            ['team' => 'ARS', 'name' => 'Arsenal', 'mp' => 12, 'xg_f' => 2.15, 'xg_a' => 0.82, 'gf' => 2.25, 'ga' => 0.90, 'cs' => 50.0, 'btts' => 45.0, 'o25' => 58.0, 'poss' => 59.5],
+            ['team' => 'MCI', 'name' => 'Manchester City', 'mp' => 12, 'xg_f' => 2.30, 'xg_a' => 0.95, 'gf' => 2.40, 'ga' => 1.05, 'cs' => 42.0, 'btts' => 60.0, 'o25' => 67.0, 'poss' => 65.2],
+            ['team' => 'LIV', 'name' => 'Liverpool', 'mp' => 12, 'xg_f' => 2.10, 'xg_a' => 0.88, 'gf' => 2.20, 'ga' => 0.85, 'cs' => 50.0, 'btts' => 50.0, 'o25' => 58.0, 'poss' => 58.1],
+            ['team' => 'CHE', 'name' => 'Chelsea', 'mp' => 12, 'xg_f' => 1.75, 'xg_a' => 1.25, 'gf' => 1.85, 'ga' => 1.30, 'cs' => 33.0, 'btts' => 65.0, 'o25' => 60.0, 'poss' => 56.4],
+            ['team' => 'AVL', 'name' => 'Aston Villa', 'mp' => 12, 'xg_f' => 1.65, 'xg_a' => 1.35, 'gf' => 1.60, 'ga' => 1.40, 'cs' => 25.0, 'btts' => 62.0, 'o25' => 55.0, 'poss' => 51.2],
+            ['team' => 'TOT', 'name' => 'Tottenham Hotspur', 'mp' => 12, 'xg_f' => 1.85, 'xg_a' => 1.45, 'gf' => 1.95, 'ga' => 1.50, 'cs' => 25.0, 'btts' => 70.0, 'o25' => 75.0, 'poss' => 55.8],
+        ];
+
+        foreach ($eplTeams as $t) {
+            $this->db->table(self::T_SOCCER_STATS)->replace([
+                'league'           => 'EPL',
+                'team'             => $t['team'],
+                'team_name'        => $t['name'],
+                'matches_played'   => $t['mp'],
+                'xg_for_pg'        => $t['xg_f'],
+                'xg_against_pg'    => $t['xg_a'],
+                'goals_for_pg'     => $t['gf'],
+                'goals_against_pg' => $t['ga'],
+                'clean_sheet_pct'  => $t['cs'],
+                'btts_pct'         => $t['btts'],
+                'over_25_pct'      => $t['o25'],
+                'possession_pct'   => $t['poss'],
+                'created_at'       => $now,
+                'updated_at'       => $now,
+            ]);
+        }
+
+        // Pre-simulate sample upcoming fixtures
+        $fixtures = [
+            ['home' => 'ARS', 'away' => 'MCI', 'date' => date('Y-m-d 16:30:00', strtotime('+2 days'))],
+            ['home' => 'LIV', 'away' => 'CHE', 'date' => date('Y-m-d 14:00:00', strtotime('+3 days'))],
+            ['home' => 'TOT', 'away' => 'AVL', 'date' => date('Y-m-d 16:30:00', strtotime('+3 days'))],
+        ];
+
+        foreach ($fixtures as $f) {
+            $sim = $this->simulateSoccerMatch($f['home'], $f['away']);
+            $this->db->table(self::T_SOCCER_FIXTURES)->insert([
+                'league'         => 'EPL',
+                'home_team'      => $f['home'],
+                'away_team'      => $f['away'],
+                'fixture_date'   => $f['date'],
+                'home_xg_proj'   => $sim['home_xg'],
+                'away_xg_proj'   => $sim['away_xg'],
+                'btts_prob'      => $sim['btts_prob'],
+                'over_25_prob'   => $sim['over_25_prob'],
+                'home_win_prob'  => $sim['home_win_prob'],
+                'draw_prob'      => $sim['draw_prob'],
+                'away_win_prob'  => $sim['away_win_prob'],
+                'fair_home_odds' => $sim['fair_home_odds'],
+                'fair_draw_odds' => $sim['fair_draw_odds'],
+                'fair_away_odds' => $sim['fair_away_odds'],
+                'created_at'     => $now,
+                'updated_at'     => $now,
+            ]);
+        }
+    }
+
+    public function listSoccerTeams(?string $league = 'EPL'): array
+    {
+        if (! $this->soccerTablesReady()) {
+            return [];
+        }
+
+        $this->ensureSoccerSampleData();
+
+        $b = $this->db->table(self::T_SOCCER_STATS);
+        if ($league !== null && $league !== 'ALL') {
+            $b->where('league', strtoupper(trim($league)));
+        }
+
+        return $b->orderBy('xg_for_pg', 'DESC')->get()->getResultArray();
+    }
+
+    public function listSoccerFixtures(?string $league = 'EPL'): array
+    {
+        if (! $this->soccerTablesReady()) {
+            return [];
+        }
+
+        $this->ensureSoccerSampleData();
+
+        $b = $this->db->table(self::T_SOCCER_FIXTURES);
+        if ($league !== null && $league !== 'ALL') {
+            $b->where('league', strtoupper(trim($league)));
+        }
+
+        return $b->orderBy('fixture_date', 'ASC')->get()->getResultArray();
+    }
+
+    public function simulateSoccerMatch(string $homeTeam, string $awayTeam): array
+    {
+        $h = strtoupper(trim($homeTeam));
+        $a = strtoupper(trim($awayTeam));
+
+        $hStats = [];
+        $aStats = [];
+
+        if ($this->soccerTablesReady()) {
+            $this->ensureSoccerSampleData();
+            $hStats = $this->db->table(self::T_SOCCER_STATS)->where('team', $h)->get()->getRowArray() ?? [];
+            $aStats = $this->db->table(self::T_SOCCER_STATS)->where('team', $a)->get()->getRowArray() ?? [];
+        }
+
+        $proj = SoccerSplitsCalculator::projectXg($hStats, $aStats);
+        return SoccerSplitsCalculator::simulateMatch($proj['home_xg'], $proj['away_xg']);
+    }
+
+    public function collegeTablesReady(): bool
+    {
+        return $this->db->tableExists(self::T_COLLEGE_TEAMS, false);
+    }
+
+    public function ensureCollegeSampleData(): void
+    {
+        if (! $this->collegeTablesReady()) {
+            return;
+        }
+
+        $count = $this->db->table(self::T_COLLEGE_TEAMS)->countAllResults();
+        if ($count > 0) {
+            return;
+        }
+
+        $now = date('Y-m-d H:i:s');
+        $cfbTeams = [
+            ['team' => 'UGA', 'name' => 'Georgia Bulldogs', 'sport' => 'NCAAF', 'conf' => 'SEC', 'rank' => 1, 'off' => 38.5, 'def' => 16.2, 'net' => 22.3, 'tempo' => 68.0, 'hca' => 3.5],
+            ['team' => 'OSU', 'name' => 'Ohio State Buckeyes', 'sport' => 'NCAAF', 'conf' => 'Big Ten', 'rank' => 2, 'off' => 41.2, 'def' => 15.8, 'net' => 25.4, 'tempo' => 66.5, 'hca' => 3.5],
+            ['team' => 'TEX', 'name' => 'Texas Longhorns', 'sport' => 'NCAAF', 'conf' => 'SEC', 'rank' => 3, 'off' => 37.8, 'def' => 17.5, 'net' => 20.3, 'tempo' => 70.0, 'hca' => 3.5],
+            ['team' => 'ORE', 'name' => 'Oregon Ducks', 'sport' => 'NCAAF', 'conf' => 'Big Ten', 'rank' => 4, 'off' => 42.0, 'def' => 19.2, 'net' => 22.8, 'tempo' => 72.0, 'hca' => 4.0],
+            ['team' => 'ALA', 'name' => 'Alabama Crimson Tide', 'sport' => 'NCAAF', 'conf' => 'SEC', 'rank' => 7, 'off' => 39.0, 'def' => 21.0, 'net' => 18.0, 'tempo' => 69.5, 'hca' => 3.5],
+        ];
+
+        $cbbTeams = [
+            ['team' => 'UCONN', 'name' => 'UConn Huskies', 'sport' => 'NCAAB', 'conf' => 'Big East', 'rank' => 1, 'off' => 122.5, 'def' => 92.0, 'net' => 30.5, 'tempo' => 66.0, 'hca' => 4.5],
+            ['team' => 'KU',    'name' => 'Kansas Jayhawks', 'sport' => 'NCAAB', 'conf' => 'Big 12', 'rank' => 2, 'off' => 119.0, 'def' => 91.5, 'net' => 27.5, 'tempo' => 69.5, 'hca' => 5.0],
+            ['team' => 'DUKE',  'name' => 'Duke Blue Devils', 'sport' => 'NCAAB', 'conf' => 'ACC', 'rank' => 4, 'off' => 120.2, 'def' => 93.8, 'net' => 26.4, 'tempo' => 68.0, 'hca' => 4.5],
+            ['team' => 'HOU',   'name' => 'Houston Cougars', 'sport' => 'NCAAB', 'conf' => 'Big 12', 'rank' => 5, 'off' => 115.0, 'def' => 88.0, 'net' => 27.0, 'tempo' => 63.5, 'hca' => 4.0],
+        ];
+
+        foreach (array_merge($cfbTeams, $cbbTeams) as $t) {
+            $this->db->table(self::T_COLLEGE_TEAMS)->replace([
+                'sport'              => $t['sport'],
+                'team'               => $t['team'],
+                'team_name'          => $t['name'],
+                'conference'         => $t['conf'],
+                'ap_rank'            => $t['rank'],
+                'off_rating'         => $t['off'],
+                'def_rating'         => $t['def'],
+                'net_rating'         => $t['net'],
+                'tempo_pace'         => $t['tempo'],
+                'home_court_adv_pts' => $t['hca'],
+                'created_at'         => $now,
+                'updated_at'         => $now,
+            ]);
+        }
+    }
+
+    public function listCollegeTeams(?string $sport = 'NCAAF', ?string $conf = null): array
+    {
+        if (! $this->collegeTablesReady()) {
+            return [];
+        }
+
+        $this->ensureCollegeSampleData();
+
+        $b = $this->db->table(self::T_COLLEGE_TEAMS);
+        if ($sport !== null && $sport !== 'ALL') {
+            $b->where('sport', strtoupper(trim($sport)));
+        }
+        if ($conf !== null && $conf !== 'ALL') {
+            $b->where('conference', trim($conf));
+        }
+
+        return $b->orderBy('net_rating', 'DESC')->get()->getResultArray();
+    }
+
+    public function simulateCollegeMatch(string $homeTeam, string $awayTeam, bool $neutralSite = false): array
+    {
+        $h = strtoupper(trim($homeTeam));
+        $a = strtoupper(trim($awayTeam));
+
+        $hStats = [];
+        $aStats = [];
+
+        if ($this->collegeTablesReady()) {
+            $this->ensureCollegeSampleData();
+            $hStats = $this->db->table(self::T_COLLEGE_TEAMS)->where('team', $h)->get()->getRowArray() ?? [];
+            $aStats = $this->db->table(self::T_COLLEGE_TEAMS)->where('team', $a)->get()->getRowArray() ?? [];
+        }
+
+        return CollegeMatchupEngine::projectMatchup($hStats, $aStats, $neutralSite);
     }
 
     private function defenseRows(int $season, string $provider): array

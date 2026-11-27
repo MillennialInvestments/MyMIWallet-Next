@@ -44,6 +44,16 @@ $routes->group('MyMISports', ['namespace' => 'App\Modules\Sports\Controllers', '
     $routes->get('sgp', 'SportsController::sgp');
     $routes->post('SGP/Calculate', 'SportsController::sgpCalculateApi');
 
+    // Soccer Analytics & Poisson xG Routes
+    $routes->get('Soccer', 'SportsController::soccer');
+    $routes->get('soccer', 'SportsController::soccer');
+    $routes->post('Soccer/Simulate', 'SportsController::soccerSimulateApi');
+
+    // College Sports (NCAAF / NCAAB) Routes
+    $routes->get('College', 'SportsController::college');
+    $routes->get('college', 'SportsController::college');
+    $routes->post('College/Simulate', 'SportsController::collegeSimulateApi');
+
     // Bet Tracker & Bankroll Ledger Routes
     $routes->get('Tracker', 'SportsController::tracker');
     $routes->get('tracker', 'SportsController::tracker');

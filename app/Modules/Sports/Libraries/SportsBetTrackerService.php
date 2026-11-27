@@ -351,6 +351,10 @@ class SportsBetTrackerService
             'bankroll_currency'       => 'USD',
             'has_odds_api_key'        => false,
             'has_api_sports_key'      => false,
+            'quant_form_weight'       => 0.35,
+            'quant_matchup_weight'    => 0.40,
+            'quant_home_away_weight'  => 0.15,
+            'quant_venue_weight'      => 0.10,
         ];
 
         if ($userId <= 0 || ! $this->tablesReady()) {
@@ -373,6 +377,10 @@ class SportsBetTrackerService
             'bankroll_currency'       => (string) ($row['bankroll_currency'] ?? 'USD'),
             'has_odds_api_key'        => ! empty($row['odds_api_key_encrypted']),
             'has_api_sports_key'      => ! empty($row['api_sports_key_encrypted']),
+            'quant_form_weight'       => (float) ($row['quant_form_weight'] ?? 0.35),
+            'quant_matchup_weight'    => (float) ($row['quant_matchup_weight'] ?? 0.40),
+            'quant_home_away_weight'  => (float) ($row['quant_home_away_weight'] ?? 0.15),
+            'quant_venue_weight'      => (float) ($row['quant_venue_weight'] ?? 0.10),
         ];
     }
 
@@ -399,6 +407,19 @@ class SportsBetTrackerService
             'bankroll_currency' => ! empty($data['bankroll_currency']) ? strtoupper(substr(trim((string) $data['bankroll_currency']), 0, 8)) : 'USD',
             'updated_at'        => $now,
         ];
+
+        if (isset($data['quant_form_weight'])) {
+            $row['quant_form_weight'] = max(0.0, min(1.0, (float) $data['quant_form_weight']));
+        }
+        if (isset($data['quant_matchup_weight'])) {
+            $row['quant_matchup_weight'] = max(0.0, min(1.0, (float) $data['quant_matchup_weight']));
+        }
+        if (isset($data['quant_home_away_weight'])) {
+            $row['quant_home_away_weight'] = max(0.0, min(1.0, (float) $data['quant_home_away_weight']));
+        }
+        if (isset($data['quant_venue_weight'])) {
+            $row['quant_venue_weight'] = max(0.0, min(1.0, (float) $data['quant_venue_weight']));
+        }
 
         // Encrypt BYOK keys if provided; if explicitly cleared, set to null
         if (isset($data['odds_api_key'])) {
