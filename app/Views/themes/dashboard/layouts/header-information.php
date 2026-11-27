@@ -19,7 +19,7 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="msapplication-tap-highlight" content="no">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<?php if ($siteSettings->csrfEnabled === 1) : ?>
+<?php if (($siteSettings->csrfEnabled ?? 0) === 1) : ?>
 <meta name="csrf_token_name" content="<?= csrf_token() ?>">
 <meta name="csrf_token_value" content="<?= csrf_hash() ?>">
 
