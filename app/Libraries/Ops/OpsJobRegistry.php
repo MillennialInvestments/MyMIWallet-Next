@@ -345,10 +345,7 @@ class OpsJobRegistry
             try {
                 $response   = $client->get($target, ['timeout' => 8]);
                 $statusCode = $response->getStatusCode();
-                // CodeIgniter's Response has headers() (keyed by name), not PSR-7 getHeaderNames().
-                foreach (array_keys($response->headers()) as $name) {
-                    $headersFound[strtolower((string) $name)] = $response->getHeaderLine((string) $name);
-                }
+                $headersFound = self::headerMap($response->headers());
             } catch (Throwable $e) {
                 $error = $e->getMessage();
             }
@@ -819,6 +816,29 @@ class OpsJobRegistry
         }
 
         return array_values(array_unique(array_filter($matches, static fn($line) => $line !== '')));
+    }
+
+    /**
+     * Lower-cased header name => value line, from CodeIgniter's Response::headers().
+     * A header sent more than once (e.g. Cache-Control) comes back as a list of
+     * Header objects; getHeaderLine() throws for those, so join their values here.
+     *
+     * @param array<string, mixed> $headers
+     *
+     * @return array<string, string>
+     */
+    public static function headerMap(array $headers): array
+    {
+        $map = [];
+        foreach ($headers as $name => $header) {
+            $values = [];
+            foreach (is_array($header) ? $header : [$header] as $one) {
+                $values[] = is_object($one) && method_exists($one, 'getValueLine') ? $one->getValueLine() : (string) $one;
+            }
+            $map[strtolower((string) $name)] = implode(', ', $values);
+        }
+
+        return $map;
     }
 
     protected function httpClient()
