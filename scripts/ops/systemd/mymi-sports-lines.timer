@@ -1,0 +1,10 @@
+[Unit]
+Description=Pull NFL prop lines Tuesday and Saturday at 10:00 Chicago (about 300 credits a month)
+
+[Timer]
+OnCalendar=Tue,Sat *-*-* 10:00:00 America/Chicago
+RandomizedDelaySec=10m
+Persistent=true
+
+[Install]
+WantedBy=timers.target

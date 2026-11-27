@@ -4,6 +4,7 @@ use App\Modules\Sports\Libraries\RbSplitsCalculator;
 
 /** @var array $report @var array $lines @var ?array $bookLines */
 $bookLines ??= null;
+$notice ??= null;
 $p = $report['player'];
 $gold = $report['goldilocks'];
 $opp = $report['opponent'];
@@ -20,6 +21,11 @@ while (count($rows) < 3) {
     <h1 class="h3 mb-1"><?= esc((string) $p['full_name']) ?> <small class="text-muted"><?= esc((string) $p['team']) ?> · <?= esc((string) $p['position']) ?> · <?= (int) $report['season'] ?></small></h1>
     <?php if ($report['provenance']['is_sample']): ?><span class="badge bg-secondary mb-2">sample data, not real stats</span><?php endif; ?>
     <div class="alert alert-warning small" role="note"><?= esc($report['disclaimer']) ?></div>
+    <?php if (is_string($notice) && $notice !== ''): ?><div class="alert alert-info" role="status" id="sports-notice"><?= esc($notice) ?></div><?php endif; ?>
+    <form method="post" action="<?= site_url('MyMISports/NFL/RefreshLines/' . (int) $p['id']) ?>" class="mb-3" id="sports-refresh-lines-form">
+        <?= csrf_field() ?>
+        <button type="submit" class="btn btn-outline-primary btn-sm">Refresh live lines for <?= esc((string) $p['team']) ?>'s next game</button>
+    </form>
     <?php if ($bookLines !== null): ?>
         <div class="alert alert-info small" id="sports-book-lines-note">Next game vs <?= esc((string) $bookLines['opponent']) ?><?php if ($bookLines['commence_time']): ?> on <?= esc(date('D M j', strtotime($bookLines['commence_time'] . ' UTC'))) ?><?php endif; ?>. Lines below are from <?= esc(ucfirst((string) $bookLines['bookmaker'])) ?>, fetched <?= esc((string) $bookLines['fetched_at']) ?> UTC. Change them and press the button to test other numbers.</div>
     <?php endif; ?>

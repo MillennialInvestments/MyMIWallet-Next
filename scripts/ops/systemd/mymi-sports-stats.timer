@@ -1,0 +1,10 @@
+[Unit]
+Description=Pull NFL running back stats every morning at 08:30 Chicago
+
+[Timer]
+OnCalendar=*-*-* 08:30:00 America/Chicago
+RandomizedDelaySec=10m
+Persistent=true
+
+[Install]
+WantedBy=timers.target

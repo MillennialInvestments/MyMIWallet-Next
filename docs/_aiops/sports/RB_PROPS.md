@@ -79,6 +79,16 @@ With lines stored, a player page with no matchup typed in pre-fills the next opp
 lists "This week's Goldilocks picks". Typing your own lines still works and overrides them. Book names are matched to nflverse
 names ignoring case, punctuation and Jr/Sr/II/III suffixes.
 
+### Schedules and refresh buttons
+
+- Timers (install once on gq-ai01: `sudo bash scripts/ops/systemd/install-mymi-sports-timers.sh --apply`):
+  `mymi-sports-stats` daily 08:30 Chicago (`sports:import --provider nflverse`), `mymi-sports-lines` Tue+Sat 10:00 Chicago
+  (`sports:lines --reserve 120`, about 300 credits a month). Remove with `--remove`.
+- **Refresh stats now** (NFL page, POST `/MyMISports/NFL/Refresh`): re-downloads nflverse; one refresh per 15 minutes site-wide.
+  nflverse publishes after games, so stats are never more current than its last update.
+- **Refresh live lines** (player page, POST `/MyMISports/NFL/RefreshLines/{id}`): that team's next game only (free events list +
+  about 3 credits), one per team per 15 minutes, never below a 100-credit reserve. Both need login + CSRF.
+
 ### CSV
 
 Import a CSV export (columns in `CsvStatsProvider.php`; sample files show the format) with `sports:import --logs FILE --defense FILE --provider csv`.

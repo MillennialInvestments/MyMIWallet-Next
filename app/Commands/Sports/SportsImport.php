@@ -55,14 +55,14 @@ class SportsImport extends SafeBaseCommand
         $providerName = (string) ($this->opt($params, 'provider') ?? ($logs ? 'csv' : 'sample'));
 
         try {
-            $download = null;
             if ($providerName === NflverseStatsProvider::NAME) {
                 $seasonOpt = $this->opt($params, 'season');
                 $season = is_numeric($seasonOpt) ? (int) $seasonOpt : NflverseStatsProvider::currentSeason();
                 $file = $this->opt($params, 'file');
                 if (! is_string($file)) {
-                    $file = NflverseStatsProvider::defaultPath($season);
-                    $download = NflverseStatsProvider::download($season, $file);
+                    $r = $svc->refreshNflverse($season);
+
+                    return $this->out($json, ['status' => $r['ok'] ? 'PASS' : 'FAIL'] + $r + ['counts' => $svc->counts()], $r['ok'] ? 0 : 1);
                 }
                 $provider = new NflverseStatsProvider($file);
             } elseif ($providerName === 'sample') {
@@ -80,10 +80,6 @@ class SportsImport extends SafeBaseCommand
             $r = $svc->import($provider);
         } catch (\Throwable $e) {
             return $this->out($json, ['status' => 'FAIL', 'reason' => $e->getMessage()], 1);
-        }
-
-        if ($download !== null) {
-            $r['download'] = ['url' => $download['url'], 'bytes' => $download['bytes']];
         }
 
         return $this->out($json, ['status' => $r['ok'] ? 'PASS' : 'FAIL'] + $r + ['counts' => $svc->counts()], $r['ok'] ? 0 : 1);

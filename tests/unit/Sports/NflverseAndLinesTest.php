@@ -243,6 +243,38 @@ final class NflverseAndLinesTest extends CIUnitTestCase
         $this->assertNotSame('', $picks[0]['verdict']);
     }
 
+    public function testFetchForTeamSpendsOneGameOnly(): void
+    {
+        $calls = [];
+        $lines = new PropLinesService(Database::connect(), 'test-key', $this->oddsHttp($calls));
+        $r = $lines->fetchForTeam('LV');
+        $this->assertSame('PASS', $r['status']);
+        $this->assertSame(3, $r['lines_saved']);
+        $this->assertCount(2, $calls, 'free events list + one game');
+
+        $calls = [];
+        $this->assertSame('no upcoming game', (new PropLinesService(Database::connect(), 'test-key', $this->oddsHttp($calls)))->fetchForTeam('KC')['reason']);
+        $this->assertCount(1, $calls, 'no game call when the team has no upcoming game');
+
+        $calls = [];
+        $r = (new PropLinesService(Database::connect(), 'test-key', $this->oddsHttp($calls, 90)))->fetchForTeam('NO');
+        $this->assertSame('credit_reserve', $r['reason'], 'button refreshes keep a 100-credit reserve');
+        $this->assertCount(1, $calls);
+
+        $this->assertSame('SKIP', (new PropLinesService(Database::connect(), '', $this->oddsHttp($calls)))->fetchForTeam('NO')['status']);
+    }
+
+    public function testRefreshNflverseDownloadsAndImports(): void
+    {
+        $body = file_get_contents($this->fixture());
+        $r = $this->svc->refreshNflverse(2026, static fn () => $body);
+        $this->assertTrue($r['ok']);
+        $this->assertSame(4, $r['players']);
+        $this->assertSame(strlen($body), $r['download']['bytes']);
+        $this->assertNotNull(SportsPropsService::statsUpdatedAt(2026));
+        @unlink(NflverseStatsProvider::defaultPath(2026));
+    }
+
     public function testNameKeyIgnoresSuffixAndPunctuation(): void
     {
         $this->assertSame('kenneth walker', PropLinesService::nameKey('Kenneth Walker III'));

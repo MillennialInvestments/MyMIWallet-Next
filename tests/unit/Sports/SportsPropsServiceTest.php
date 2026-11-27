@@ -181,6 +181,10 @@ final class SportsPropsServiceTest extends CIUnitTestCase
             $code = $result->response()->getStatusCode();
             $this->assertContains($code, [301, 302, 303, 307, 401, 403], $path . ' must be routed and refuse anonymous access, got ' . $code);
         }
+        foreach (['MyMISports/NFL/Refresh', 'MyMISports/NFL/RefreshLines/1'] as $path) {
+            $code = $this->post($path)->response()->getStatusCode();
+            $this->assertContains($code, [301, 302, 303, 307, 401, 403], 'POST ' . $path . ' must refuse anonymous access, got ' . $code);
+        }
         $this->assertTrue(class_exists(SportsController::class));
     }
 }
