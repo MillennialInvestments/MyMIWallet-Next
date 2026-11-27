@@ -46,9 +46,11 @@ sudo bash /apps/TBI/www/mymiwallet-staging/current/scripts/ops/staging/mymi-xcha
 ```
 
 ```bash
-cd /apps/TBI/www/mymiwallet-staging/current
-sudo -u www-data bash scripts/ops/staging/mymi-xchain-002-smoke.sh
+sudo bash /apps/TBI/www/mymiwallet-staging/current/scripts/ops/staging/mymi-xchain-002-smoke.sh /apps/TBI/www/mymiwallet-staging/current
 ```
+
+(The XCHAIN-002 smoke calls `sudo -u www-data` itself, so it runs under
+`sudo`, not as `www-data`.)
 
 PASS: each script ends with its "PASSED" banner. STOP: any failed check; send
 the summary block.
