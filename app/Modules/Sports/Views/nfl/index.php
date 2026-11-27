@@ -67,7 +67,7 @@ $hasReal = in_array(NflverseStatsProvider::NAME, array_column($players, 'provide
             </div>
         </div>
         <?php if ($hasReal): ?><p class="small text-muted mt-2 mb-0"><?= esc(NflverseStatsProvider::ATTRIBUTION) ?>, <a href="https://github.com/nflverse/nflverse-data" rel="noopener" target="_blank">github.com/nflverse</a>. Defense ranks are computed from running-back yards allowed each week.</p><?php endif; ?>
-        <script>
+        <script<?= script_nonce_attr() ?>>
         (function () {
             var input = document.getElementById('sports-player-filter');
             var rows = document.querySelectorAll('#sports-player-table tbody tr');
