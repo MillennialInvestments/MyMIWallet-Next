@@ -33,6 +33,15 @@ class Auth extends ShieldAuth
     public int $resetTime = 3600;
 
     /**
+     * Auth/login and Auth/resend_activation read $config->activeResetter to show
+     * the "Forgot password" link. Shield's config has no such property, so a
+     * login page rendered with this config (e.g. Shield's own login view) threw "Undefined property:
+     * Config\Auth::$activeResetter". Keep in step with
+     * App\Legacy\Auth\Config\Auth::$activeResetter.
+     */
+    public ?string $activeResetter = 'App\Legacy\Auth\Authentication\Resetters\EmailResetter';
+
+    /**
      * AUTH-LOGIN-006: Myth's LoginModel reads config('Auth')->allowRemembering
      * in purgeOldRememberTokens(), which Myth runs on about 1 in 5 logins, and
      * config('Auth')->rememberLength when it refreshes a remember-me token.
