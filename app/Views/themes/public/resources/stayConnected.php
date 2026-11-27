@@ -1,3 +1,9 @@
+<?php
+// Callers pass $socialMedia in $subViewData only sometimes (the Economic
+// Calendar page did not), which was "BOOT FAILURE: Undefined variable
+// $socialMedia". Fall back to the config so this block renders everywhere.
+$socialMedia = $socialMedia ?? config('SocialMedia');
+?>
 <div class="row justify-content-center my-5">
         <div class="col-12 col-lg-12">            
             <div class="container container-xxl text-center">

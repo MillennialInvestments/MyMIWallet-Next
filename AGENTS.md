@@ -118,7 +118,7 @@ This repository participates in Teddy's centralized Codex ⇄ AIOps workflow. Co
 - **Never `addRedirect()` a path that is also a GET route.** The Router then redirects to the GET route's handler string (`/\App\...::index`), which clients get as HTTP 400 "disallowed characters". Keep one definition per path.
 - **Let HTTP exceptions through `public/index.php`.** Catch `HTTPExceptionInterface` and rethrow before the generic `Throwable` catch, or scanner probes (`*.sql`, `wp-*`) are logged as EMERGENCY boot failures.
 - **Header reads:** `getHeaderLine()` throws when a header is sent twice (for example `Cache-Control`); read `headers()` and join repeated values (`OpsJobRegistry::headerMap()`).
-- **Every view variable must be passed.** A controller that renders a shared template without its data (`$title`, `$contentHtml`) is an EMERGENCY boot failure; redirect or render a real view instead.
+- **Every view variable must be passed.** A controller that renders a shared template without its data (`$title`, `$contentHtml`) is an EMERGENCY boot failure; redirect or render a real view instead. A shared partial (for example `stayConnected`) should fall back on its own (`$socialMedia ??= config('SocialMedia')`), because not every caller passes its data.
 - **Verify on live, not only in tests.** After a deploy, read the MCP `mymi_status` emergency counts (24 h) and confirm each fixed message is gone before closing the issue. Before giving a production `activate` command, check the live revision and main again, and never glob release names.
 
 ## US Regulatory & Multi-Line Compliance Invariants ("Brick A" Standard)
