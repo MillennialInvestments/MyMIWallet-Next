@@ -189,7 +189,7 @@ $agent                  = service('request')->getUserAgent();
                                     </a>
 
                                 </li>
-                                <?php if($siteSettings->monthlyMemberships === 1): ?>
+                                <?php if(($siteSettings->monthlyMemberships ?? 0) === 1): ?>
                                 <li class="nk-menu-item">
                                     <a href="<?php echo site_url('Wallets/Purchase/Memberships'); ?>" class="nk-menu-link" title="">
                                         <span class="nk-menu-text">Memberships</span>
@@ -207,21 +207,21 @@ $agent                  = service('request')->getUserAgent();
                                         <p>No upcoming goals</p>
                                     </li>
                                 <?php //endif; ?> -->
-                                <?php if($siteSettings->dailyGoals === 1): ?>
+                                <?php if(($siteSettings->dailyGoals ?? 0) === 1): ?>
                                 <li class="nk-menu-item">
                                     <a href="<?php echo site_url('MyMI-Gold/Goals/Daily'); ?>" class="nk-menu-link" title="">
                                         <span class="nk-menu-text">Daily <small>(<?php echo number_format($userNextGoal['gold_reward'] ?? 0,0) ?? '0'; ?> MyMIGold Left)</small></span>
                                     </a>
                                 </li>
                                 <?php endif; ?>
-                                <?php if($siteSettings->weeklyGoals === 1): ?>
+                                <?php if(($siteSettings->weeklyGoals ?? 0) === 1): ?>
                                 <li class="nk-menu-item">
                                     <a href="<?php echo site_url('MyMI-Gold/Goals/Weekly'); ?>" class="nk-menu-link" title="">
                                         <span class="nk-menu-text">Weekly - 0 Free Left</span>
                                     </a>
                                 </li>
                                 <?php endif; ?>
-                                <?php if($siteSettings->monthlyGoals === 1): ?>
+                                <?php if(($siteSettings->monthlyGoals ?? 0) === 1): ?>
                                 <li class="nk-menu-item">
                                     <a href="<?php echo site_url('MyMIGold/Goals/Monthly'); ?>" class="nk-menu-link" title="">
                                         <span class="nk-menu-text">Monthly - 0 Free Left</span>
@@ -354,7 +354,7 @@ $agent                  = service('request')->getUserAgent();
                                             <span class="nk-menu-icon"><em class="icon ni ni-wallet-alt"></em></span><span class="nk-menu-text">My Wallet</span>
                                         </a>
                                     </li>
-                                    <?php if ($siteSettings->createSolanaStatus === 1) : ?>
+                                    <?php if (($siteSettings->createSolanaStatus ?? 0) === 1) : ?>
                                         <li class="nk-menu-item">
                                             <a href="<?php echo site_url('/Exchange/Solana/Assets'); ?>" class="nk-menu-link">
                                                 <span class="nk-menu-icon"><em class="icon ni ni-layers"></em></span><span class="nk-menu-text">Assets</span>
@@ -373,7 +373,7 @@ $agent                  = service('request')->getUserAgent();
                                             </a>
                                         </li>
                                     <?php endif; ?>
-                                    <?php if ($siteSettings->swapSolanaStatus === 1) : ?>
+                                    <?php if (($siteSettings->swapSolanaStatus ?? 0) === 1) : ?>
                                         <li class="nk-menu-item">
                                             <a href="#" class="nk-menu-link dynamicModalLoader" data-formtype="Solana" data-endpoint="coinSwap">
                                                 <span class="nk-menu-icon"><em class="icon ni ni-swap"></em></span><span class="nk-menu-text">Swap</span>
@@ -422,7 +422,7 @@ $agent                  = service('request')->getUserAgent();
                         if ($activeThisRightHere === 1) {
                             if ($marketplaceOperations === 1) {
                             ?>
-                            <?php if ($siteSettings->solanaExchange === 1) : ?>
+                            <?php if (($siteSettings->solanaExchange ?? 0) === 1) : ?>
                         <li class="nk-menu-item has-sub">
                             <a href="#" class="nk-menu-link nk-menu-toggle">
                                 <span class="nk-menu-icon"><em class="icon ni ni-coin"></em></span>
@@ -441,7 +441,7 @@ $agent                  = service('request')->getUserAgent();
                                             <span class="nk-menu-icon"><em class="icon ni ni-wallet-alt"></em></span><span class="nk-menu-text">My Wallet</span>
                                         </a>
                                     </li>
-                                    <?php if ($siteSettings->createSolanaStatus === 1) : ?>
+                                    <?php if (($siteSettings->createSolanaStatus ?? 0) === 1) : ?>
                                         <li class="nk-menu-item">
                                             <a href="<?php echo site_url('/Exchange/Solana/Assets'); ?>" class="nk-menu-link">
                                                 <span class="nk-menu-icon"><em class="icon ni ni-layers"></em></span><span class="nk-menu-text">Assets</span>
@@ -460,7 +460,7 @@ $agent                  = service('request')->getUserAgent();
                                             </a>
                                         </li>
                                     <?php endif; ?>
-                                    <?php if ($siteSettings->swapSolanaStatus === 1) : ?>
+                                    <?php if (($siteSettings->swapSolanaStatus ?? 0) === 1) : ?>
                                         <li class="nk-menu-item">
                                             <a href="#" class="nk-menu-link dynamicModalLoader" data-formtype="Solana" data-endpoint="coinSwap">
                                                 <span class="nk-menu-icon"><em class="icon ni ni-swap"></em></span><span class="nk-menu-text">Swap</span>
@@ -639,7 +639,7 @@ $agent                  = service('request')->getUserAgent();
                             </a>
                         </li>
 
-                        <?php if ($siteSettings->solanaExchange === 1) : ?>
+                        <?php if (($siteSettings->solanaExchange ?? 0) === 1) : ?>
                             <li class="nk-menu-item has-sub">
                                 <a href="#" class="nk-menu-link nk-menu-toggle">
                                     <span class="nk-menu-icon"><em class="icon ni ni-coin"></em></span>
@@ -660,7 +660,7 @@ $agent                  = service('request')->getUserAgent();
                                                 <span class="nk-menu-text">My Wallet</span>
                                             </a>
                                         </li>
-                                        <?php if ($siteSettings->createSolanaStatus === 1) : ?>
+                                        <?php if (($siteSettings->createSolanaStatus ?? 0) === 1) : ?>
                                             <li class="nk-menu-item">
                                                 <a href="<?php echo site_url('/Exchange/Solana/Assets'); ?>" class="nk-menu-link">
                                                     <span class="nk-menu-icon"><em class="icon ni ni-layers"></em></span>
@@ -674,7 +674,7 @@ $agent                  = service('request')->getUserAgent();
                                                 </a>
                                             </li>
                                         <?php endif; ?>
-                                        <?php if ($siteSettings->swapSolanaStatus === 1) : ?>
+                                        <?php if (($siteSettings->swapSolanaStatus ?? 0) === 1) : ?>
                                             <li class="nk-menu-item">
                                                 <a href="#" class="nk-menu-link dynamicModalLoader" data-formtype="Solana" data-endpoint="coinSwap">
                                                     <span class="nk-menu-icon"><em class="icon ni ni-swap"></em></span>
@@ -704,7 +704,7 @@ $agent                  = service('request')->getUserAgent();
   
                 <?php 
                 } 
-                if ($siteSettings->debug === 1) {
+                if (($siteSettings->debug ?? 0) === 1) {
                     log_message('info', 'sidebar L341 - $cuRole: ' .  $cuRole);
                 }
                 if ($cuRole <= 2) {
@@ -732,7 +732,7 @@ $agent                  = service('request')->getUserAgent();
                             </a>
                         </li>
 
-                        <?php if ($siteSettings->solanaExchange === 1) : ?>
+                        <?php if (($siteSettings->solanaExchange ?? 0) === 1) : ?>
                             <li class="nk-menu-item has-sub">
                                 <a href="#" class="nk-menu-link nk-menu-toggle">
                                     <span class="nk-menu-icon"><em class="icon ni ni-coin"></em></span>
@@ -753,7 +753,7 @@ $agent                  = service('request')->getUserAgent();
                                                 <span class="nk-menu-text">My Wallet</span>
                                             </a>
                                         </li>
-                                        <?php if ($siteSettings->createSolanaStatus === 1) : ?>
+                                        <?php if (($siteSettings->createSolanaStatus ?? 0) === 1) : ?>
                                             <li class="nk-menu-item">
                                                 <a href="<?php echo site_url('/Exchange/Solana/Assets'); ?>" class="nk-menu-link">
                                                     <span class="nk-menu-icon"><em class="icon ni ni-layers"></em></span>
@@ -767,7 +767,7 @@ $agent                  = service('request')->getUserAgent();
                                                 </a>
                                             </li>
                                         <?php endif; ?>
-                                        <?php if ($siteSettings->swapSolanaStatus === 1) : ?>
+                                        <?php if (($siteSettings->swapSolanaStatus ?? 0) === 1) : ?>
                                             <li class="nk-menu-item">
                                                 <a href="#" class="nk-menu-link dynamicModalLoader" data-formtype="Solana" data-endpoint="coinSwap">
                                                     <span class="nk-menu-icon"><em class="icon ni ni-swap"></em></span>

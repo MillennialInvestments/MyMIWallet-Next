@@ -49,4 +49,19 @@ $routes->group('MyMISports', ['namespace' => 'App\Modules\Sports\Controllers', '
     $routes->get('Settings', 'SportsController::settings');
     $routes->get('settings', 'SportsController::settings');
     $routes->post('Settings/Save', 'SportsController::saveSettings');
+
+    // Prediction Markets Hub (Polymarket & Kalshi Aggregation)
+    $routes->get('Predictions', 'SportsController::predictions');
+    $routes->get('predictions', 'SportsController::predictions');
+    $routes->post('Predictions/Order', 'SportsController::placePredictionOrder');
+    $routes->post('Predictions/Confirm', 'SportsController::confirmPredictionOrder');
+
+    // Social Gamification & UIGEA Fantasy Tournament Leaderboards
+    $routes->get('Leaderboard', 'SportsController::leaderboard');
+    $routes->get('leaderboard', 'SportsController::leaderboard');
+
+    // Licensed Crypto On-Ramp (MoonPay & Stripe Crypto Onramp with OFAC Screening)
+    $routes->get('Onramp', 'SportsController::onramp');
+    $routes->get('onramp', 'SportsController::onramp');
+    $routes->post('Onramp/Checkout', 'SportsController::onrampCheckout');
 });

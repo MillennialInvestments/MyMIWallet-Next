@@ -6,8 +6,11 @@ namespace App\Modules\Sports\Controllers;
 
 use App\Controllers\UserController;
 use App\Modules\Sports\Libraries\BettingCalculators;
+use App\Modules\Sports\Libraries\GamificationLeaderboardService;
 use App\Modules\Sports\Libraries\GoldilocksEngine;
 use App\Modules\Sports\Libraries\NbaSplitsCalculator;
+use App\Modules\Sports\Libraries\OnrampRevenueService;
+use App\Modules\Sports\Libraries\PredictionMarketsService;
 use App\Modules\Sports\Libraries\PropLinesService;
 use App\Modules\Sports\Libraries\SportsBetTrackerService;
 use App\Modules\Sports\Libraries\SportsPropsService;
@@ -20,6 +23,9 @@ class SportsController extends UserController
 {
     private ?SportsPropsService $sports = null;
     private ?SportsBetTrackerService $betTracker = null;
+    private ?PredictionMarketsService $predictionMarkets = null;
+    private ?GamificationLeaderboardService $gamification = null;
+    private ?OnrampRevenueService $onramp = null;
 
     protected function sports(): SportsPropsService
     {
@@ -29,6 +35,21 @@ class SportsController extends UserController
     protected function betTracker(): SportsBetTrackerService
     {
         return $this->betTracker ??= new SportsBetTrackerService(db_connect());
+    }
+
+    protected function predictionMarketsService(): PredictionMarketsService
+    {
+        return $this->predictionMarkets ??= new PredictionMarketsService(db_connect());
+    }
+
+    protected function gamificationService(): GamificationLeaderboardService
+    {
+        return $this->gamification ??= new GamificationLeaderboardService(db_connect());
+    }
+
+    protected function onrampService(): OnrampRevenueService
+    {
+        return $this->onramp ??= new OnrampRevenueService(db_connect());
     }
 
     protected function activeUserId(): int
@@ -567,5 +588,159 @@ class SportsController extends UserController
         session()->setFlashdata('sports_notice', 'Settings and encrypted BYOK credentials saved successfully.');
 
         return redirect()->to(site_url('MyMISports/Settings'));
+    }
+
+    public function predictions()
+    {
+        $userId = $this->activeUserId();
+        $svc = $this->predictionMarketsService();
+        $category = (string) ($this->request->getGet('category') ?? 'all');
+        $provider = (string) ($this->request->getGet('provider') ?? 'all');
+
+        $svc->ensureSampleMarkets();
+        $markets = $svc->listMarkets(
+            $category === 'all' ? null : $category,
+            $provider === 'all' ? null : $provider
+        );
+        $userOrders = $userId > 0 ? $svc->listUserOrders($userId) : [];
+
+        return $this->renderTheme('App\Modules\Sports\Views\predictions\index', [
+            'pageTitle'      => 'Non-Custodial Prediction Markets Hub',
+            'markets'        => $markets,
+            'userOrders'     => $userOrders,
+            'activeCategory' => $category,
+            'activeProvider' => $provider,
+            'disclaimer'     => SportsPropsService::DISCLAIMER,
+            'notice'         => session()->getFlashdata('sports_notice'),
+        ]);
+    }
+
+    public function placePredictionOrder()
+    {
+        $userId = $this->activeUserId();
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Unauthenticated']);
+        }
+
+        $post = (array) ($this->request->getPost() ?: $this->request->getJSON(true) ?: []);
+        $marketId = (int) ($post['market_id'] ?? 0);
+        $outcome = (string) ($post['outcome'] ?? '');
+        $stakeUsdc = (float) ($post['stake_usdc'] ?? 0.0);
+        $userWallet = (string) ($post['user_wallet'] ?? '');
+        $odds = isset($post['odds']) ? (float) $post['odds'] : null;
+
+        try {
+            $svc = $this->predictionMarketsService();
+            $svc->ensureSampleMarkets();
+            $order = $svc->prepareOrderPayload(
+                $userId,
+                $marketId,
+                $outcome,
+                $stakeUsdc,
+                $userWallet,
+                $odds
+            );
+
+            return $this->response->setJSON(['success' => true, 'order' => $order]);
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(400)->setJSON([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function confirmPredictionOrder()
+    {
+        $userId = $this->activeUserId();
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Unauthenticated']);
+        }
+
+        $post = (array) ($this->request->getPost() ?: $this->request->getJSON(true) ?: []);
+        $orderId = (int) ($post['order_id'] ?? 0);
+        $txHash = (string) ($post['tx_hash'] ?? '');
+
+        try {
+            $confirmed = $this->predictionMarketsService()->confirmOrderExecution($userId, $orderId, $txHash);
+
+            return $this->response->setJSON([
+                'success' => $confirmed,
+                'message' => $confirmed ? 'Order confirmed on-chain.' : 'Order confirmation failed.',
+            ]);
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(400)->setJSON([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function leaderboard()
+    {
+        $userId = $this->activeUserId();
+        $svc = $this->gamificationService();
+
+        $svc->ensureSampleLeaderboard();
+        $leaders = $svc->getLeaderboard(50);
+        $userStats = $userId > 0 ? $svc->getUserPrestige($userId) : null;
+        $tournament = $svc->getWeeklyTournamentInfo();
+
+        return $this->renderTheme('App\Modules\Sports\Views\leaderboard\index', [
+            'pageTitle'  => 'Social Prediction Leaderboard & Weekly Tournament',
+            'leaders'    => $leaders,
+            'userStats'  => $userStats,
+            'tournament' => $tournament,
+            'disclaimer' => SportsPropsService::DISCLAIMER,
+            'notice'     => session()->getFlashdata('sports_notice'),
+        ]);
+    }
+
+    public function onramp()
+    {
+        $userId = $this->activeUserId();
+        $svc = $this->onrampService();
+
+        $config = $svc->getOnrampConfig($userId);
+        $transactions = $userId > 0 ? $svc->listUserTransactions($userId) : [];
+
+        return $this->renderTheme('App\Modules\Sports\Views\onramp\index', [
+            'pageTitle'    => 'Licensed Crypto On-Ramp & Monetization Gateway',
+            'config'       => $config,
+            'transactions' => $transactions,
+            'disclaimer'   => SportsPropsService::DISCLAIMER,
+            'notice'       => session()->getFlashdata('sports_notice'),
+        ]);
+    }
+
+    public function onrampCheckout()
+    {
+        $userId = $this->activeUserId();
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Unauthenticated']);
+        }
+
+        $post = (array) ($this->request->getPost() ?: $this->request->getJSON(true) ?: []);
+        $asset = (string) ($post['crypto_asset'] ?? 'USDC');
+        $wallet = (string) ($post['destination_wallet'] ?? '');
+        $fiatAmount = (float) ($post['fiat_amount'] ?? 100.0);
+        $provider = (string) ($post['provider'] ?? 'moonpay');
+
+        try {
+            $result = $this->onrampService()->generateOnrampUrl(
+                $userId,
+                $asset,
+                $wallet,
+                $fiatAmount,
+                $provider
+            );
+
+            return $this->response->setJSON(array_merge(['success' => true], $result));
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(400)->setJSON([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 }

@@ -25,12 +25,13 @@ if (! $adminGate) {
 }
 
 $requestId = $request ? ($request->getHeaderLine('X-Request-Id') ?: (string) $request->getServer('HTTP_X_REQUEST_ID')) : '';
-$sessionId = $session ? $session->getId() : (function_exists('session_id') ? session_id() : '');
+$sessionId = $session && method_exists($session, 'getId') ? $session->getId() : (function_exists('session_id') ? session_id() : '');
 $controller = $router ? sprintf('%s::%s', $router->controllerName(), $router->methodName()) : 'unknown';
 $route = $request ? (string) $request->getUri() : '';
 $memoryMb = number_format(memory_get_usage(true) / 1048576, 2);
 $trace = $safeCache && method_exists($safeCache, 'getTrace') ? $safeCache->getTrace() : [];
 $cspNonce = $cspNonce ?? (service('renderer')->getData('cspNonce') ?? '');
+$cspNonce = is_array($cspNonce) ? ($cspNonce['style'] ?? $cspNonce['script'] ?? '') : (string) $cspNonce;
 ?>
 <style nonce="<?= esc($cspNonce) ?>">
     .debug-hud {
