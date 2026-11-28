@@ -407,28 +407,79 @@ class ProjectsAdminController extends BaseAdminController
             'zillow_url'    => 'permit_empty|valid_url',
             'address_line1' => 'permit_empty|string',
             'city'          => 'permit_empty|string',
-            'state'         => 'permit_empty|alpha|min_length[2]|max_length[2]',
+            'state'         => 'permit_empty|string',
             'postal_code'   => 'permit_empty|string',
         ];
         if (!$this->validate($rules)) {
             return redirect()->back()->with('error','Invalid input.')->withInput();
         }
 
-        $in     = $this->request->getPost();
-        $source = !empty($in['zillow_url']) ? 'zillow' : 'address';
-        if ($source === 'address' && empty($in['address_line1'])) {
-            return redirect()->back()->with('error','Provide a Zillow (or similar) link or an address.');
+        $in = $this->request->getPost();
+        $zillowUrl = trim((string) ($in['zillow_url'] ?? ''));
+
+        // If Zillow link was provided, auto-parse missing address components and price
+        if ($zillowUrl !== '' && (empty($in['address_line1']) || empty($in['purchase_price']))) {
+            try {
+                $ingestService = new \App\Services\RealEstateIngestService();
+                $parsed = $ingestService->parseListingUrl($zillowUrl);
+                if ($parsed['ok'] ?? false) {
+                    if (empty($in['address_line1']) && !empty($parsed['address_line1'])) {
+                        $in['address_line1'] = $parsed['address_line1'];
+                    }
+                    if (empty($in['city']) && !empty($parsed['city'])) {
+                        $in['city'] = $parsed['city'];
+                    }
+                    if (empty($in['state']) && !empty($parsed['state'])) {
+                        $in['state'] = $parsed['state'];
+                    }
+                    if (empty($in['postal_code']) && !empty($parsed['postal_code'])) {
+                        $in['postal_code'] = $parsed['postal_code'];
+                    }
+                    if (empty($in['purchase_price']) && !empty($parsed['purchase_price'])) {
+                        $in['purchase_price'] = $parsed['purchase_price'];
+                    }
+                    if (empty($in['title']) && !empty($parsed['title'])) {
+                        $in['title'] = $parsed['title'];
+                    }
+                }
+            } catch (\Throwable $e) {
+                log_message('notice', 'realEstateQuickSubmit parseListingUrl notice: ' . $e->getMessage());
+            }
         }
 
+        $source = $zillowUrl !== '' ? 'zillow' : 'address';
+        if ($source === 'address' && empty($in['address_line1'])) {
+            return redirect()->back()->with('error','Provide a Zillow (or similar) link or an address.')->withInput();
+        }
+
+        // 1. If pro forma or direct project creation requested, initialize syndicated project
+        if ($this->request->getPost('create_project') || ! empty($in['purchase_price'])) {
+            try {
+                $dealService = new \App\Services\RealEstateDealService();
+                $intakeResult = $dealService->intakePropertyDeal((int) ($this->cuID ?? 1), $in);
+                if ($intakeResult['ok'] ?? false) {
+                    return redirect()->to(site_url('Projects/Real-Estate/' . (int) $intakeResult['project_id']))
+                        ->with('success', 'Real Estate Project and Pro Forma successfully created and live in marketplace!');
+                }
+                if (!empty($intakeResult['error'])) {
+                    return redirect()->back()->with('error', $intakeResult['error'])->withInput();
+                }
+            } catch (\Throwable $e) {
+                log_message('error', 'realEstateQuickSubmit deal creation error: ' . $e->getMessage());
+                return redirect()->back()->with('error', 'Deal creation error: ' . $e->getMessage())->withInput();
+            }
+        }
+
+        // 2. Queue for background ingestion
         /** @var \App\Models\ProjectsModel $pm */
         $pm = model('ProjectsModel');
         $id = $pm->reSaveIntake([
-            'user_id'       => (int)$this->cuID,
+            'user_id'       => (int) ($this->cuID ?? 1),
             'source'        => $source,
             'raw_input'     => $source === 'zillow'
-                ? (string)$in['zillow_url']
+                ? $zillowUrl
                 : trim(($in['address_line1'] ?? '').' '.($in['city'] ?? '').' '.($in['state'] ?? '').' '.($in['postal_code'] ?? '')),
-            'zillow_url'    => $in['zillow_url'] ?? null,
+            'zillow_url'    => $zillowUrl ?: null,
             'address_line1' => $in['address_line1'] ?? null,
             'city'          => $in['city'] ?? null,
             'state'         => strtoupper($in['state'] ?? ''),
@@ -436,26 +487,13 @@ class ProjectsAdminController extends BaseAdminController
             'status'        => 'queued',
         ]);
 
-        if (!$id) {
-            return redirect()->back()->with('error','Failed to queue property.');
-        }
-
-        // If pro forma or direct project creation requested, initialize syndicated project
-        if ($this->request->getPost('create_project') || ! empty($in['purchase_price'])) {
-            $dealService = new \App\Services\RealEstateDealService();
-            $intakeResult = $dealService->intakePropertyDeal((int) ($this->cuID ?? 1), $in);
-            if ($intakeResult['ok'] ?? false) {
-                return redirect()->to(site_url('Projects/Real-Estate/' . $intakeResult['project_id']))
-                    ->with('success', 'Real Estate Project and Pro Forma successfully created!');
-            }
-        }
-
         try {
             $ingest = new \App\Services\RealEstateIngestService();
             $ingest->queue((int)$id);
         } catch (\Throwable $e) {
             log_message('error', 'realEstateQuickSubmit ingest error: ' . $e->getMessage());
         }
+
         return redirect()->back()->with('success','Submitted! We’re fetching public details now.');
     }
     

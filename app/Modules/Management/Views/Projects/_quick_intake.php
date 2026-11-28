@@ -20,8 +20,17 @@
   <p class="small text-soft mb-3"><strong>Operating Managers &amp; Co-Owners:</strong> Timothy Burks &amp; AnneAlicia Burks &bull; Bossier City, Louisiana</p>
 
   <div class="mb-3">
-    <label class="form-label" for="zillow_url">Listing Link (Zillow, Realtor, LoopNet)</label>
-    <input type="url" name="zillow_url" id="zillow_url" class="form-control" placeholder="https://www.zillow.com/homedetails/...">
+    <label class="form-label d-flex justify-content-between align-items-center mb-1" for="zillow_url">
+      <span><em class="icon ni ni-link-alt text-primary me-1"></em>Listing Link (Zillow, Realtor, LoopNet)</span>
+      <span class="badge bg-outline-info small" id="intakeListingBadge" style="display:none;"></span>
+    </label>
+    <div class="input-group">
+      <input type="url" name="zillow_url" id="zillow_url" class="form-control" placeholder="https://www.zillow.com/homedetails/..." autocomplete="off">
+      <button type="button" class="btn btn-primary" id="btnIntakeFetch">
+        <em class="icon ni ni-download-cloud me-1"></em><span>Auto-Fill from Link</span>
+      </button>
+    </div>
+    <div id="intakeListingAlert" class="mt-2" style="display:none;"></div>
   </div>
 
   <div class="text-center my-2 text-soft small">— or enter property details —</div>
@@ -120,6 +129,16 @@ document.addEventListener('DOMContentLoaded', function(){
   const strBox = document.getElementById('strInputs');
   const commBox = document.getElementById('commercialInputs');
   const furnishCol = document.getElementById('furnishingCol');
+  const btnFetch = document.getElementById('btnIntakeFetch');
+  const inputUrl = document.getElementById('zillow_url');
+  const inputAddress = document.getElementById('address_line1');
+  const inputCity = document.getElementById('city');
+  const inputState = document.getElementById('state');
+  const inputZip = document.getElementById('postal_code');
+  const inputPurchase = document.getElementById('rePurchase');
+  const inputTitle = document.getElementById('reTitle');
+  const badgeListing = document.getElementById('intakeListingBadge');
+  const alertListing = document.getElementById('intakeListingAlert');
 
   function updateCategory(){
     if (catSelect.value === 'commercial_lease') {
@@ -168,5 +187,116 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 
   calcProForma();
+
+  // Listing URL Fetch & Auto-Fill
+  function doFetchIntakeListing(rawUrl) {
+    const url = (rawUrl || inputUrl.value || '').trim();
+    if (!url) {
+      alertListing.className = 'alert alert-warning py-1 px-2 small mb-0';
+      alertListing.innerHTML = 'Please enter a valid Zillow, Realtor, or listing link.';
+      alertListing.style.display = 'block';
+      return;
+    }
+
+    const origBtnHtml = btnFetch.innerHTML;
+    btnFetch.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status"></span> Fetching...';
+    btnFetch.disabled = true;
+    badgeListing.style.display = 'inline-block';
+    badgeListing.className = 'badge bg-warning text-dark small';
+    badgeListing.innerText = 'Extracting...';
+    alertListing.style.display = 'none';
+
+    const form = document.getElementById('reQuickIntake');
+    const csrfToken = form.querySelector('input[name="csrf_token_name"]')?.value || form.querySelector('input[name="csrf_test_name"]')?.value || '';
+
+    const payload = new FormData();
+    payload.append('url', url);
+    payload.append('zillow_url', url);
+    if (csrfToken) {
+      payload.append('csrf_token_name', csrfToken);
+      payload.append('csrf_test_name', csrfToken);
+    }
+
+    fetch('<?= site_url("Management/Projects/Quick-Analysis/Parse-Listing") ?>', {
+      method: 'POST',
+      body: payload,
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
+    .then(r => r.json())
+    .then(res => {
+      btnFetch.innerHTML = origBtnHtml;
+      btnFetch.disabled = false;
+
+      if (!res || res.status !== 'ok' || !res.data) {
+        badgeListing.className = 'badge bg-danger text-white small';
+        badgeListing.innerText = 'Manual entry';
+        alertListing.className = 'alert alert-danger py-1 px-2 small mb-0';
+        alertListing.innerHTML = res?.message || 'Could not auto-extract listing. You may enter details manually.';
+        alertListing.style.display = 'block';
+        return;
+      }
+
+      const d = res.data;
+      badgeListing.className = 'badge bg-success text-white small';
+      badgeListing.innerText = '✓ Extracted (' + (d.source_domain || 'Zillow') + ')';
+
+      if (d.address_line1) inputAddress.value = d.address_line1;
+      if (d.city) inputCity.value = d.city;
+      if (d.state) inputState.value = d.state;
+      if (d.postal_code) inputZip.value = d.postal_code;
+      if (d.purchase_price && Number(d.purchase_price) > 0) {
+        inputPurchase.value = Math.round(Number(d.purchase_price));
+      }
+      if (d.title) {
+        inputTitle.value = d.title;
+      } else if (d.address_line1) {
+        inputTitle.value = d.address_line1 + ' Acquisition';
+      }
+
+      alertListing.className = 'alert alert-success py-1 px-2 small mb-0';
+      const priceStr = d.purchase_price ? ' | Price: $' + Number(d.purchase_price).toLocaleString() : '';
+      alertListing.innerHTML = '<strong>Success!</strong> Auto-filled from ' + (d.source_domain || 'listing') + ': ' + (d.address_line1 || '') + priceStr;
+      alertListing.style.display = 'block';
+
+      calcProForma();
+    })
+    .catch(err => {
+      btnFetch.innerHTML = origBtnHtml;
+      btnFetch.disabled = false;
+      badgeListing.className = 'badge bg-danger text-white small';
+      badgeListing.innerText = 'Fetch error';
+      alertListing.className = 'alert alert-danger py-1 px-2 small mb-0';
+      alertListing.innerHTML = 'Network error fetching listing details.';
+      alertListing.style.display = 'block';
+      console.error(err);
+    });
+  }
+
+  btnFetch.addEventListener('click', function(e){
+    e.preventDefault();
+    doFetchIntakeListing();
+  });
+
+  inputUrl.addEventListener('paste', function(e){
+    setTimeout(function(){
+      const val = inputUrl.value.trim();
+      if (val.startsWith('http://') || val.startsWith('https://') || val.includes('zillow.com') || val.includes('realtor.com')) {
+        doFetchIntakeListing(val);
+      }
+    }, 100);
+  });
+
+  inputAddress.addEventListener('paste', function(e){
+    setTimeout(function(){
+      const val = inputAddress.value.trim();
+      if (val.startsWith('http://') || val.startsWith('https://') || val.includes('zillow.com') || val.includes('realtor.com')) {
+        inputUrl.value = val;
+        inputAddress.value = '';
+        doFetchIntakeListing(val);
+      }
+    }, 100);
+  });
 });
 </script>

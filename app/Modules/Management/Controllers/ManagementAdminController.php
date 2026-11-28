@@ -297,7 +297,7 @@ class ManagementAdminController extends BaseAdminController
         /** @var \App\Models\ProjectsModel $pm */
         $pm = model('ProjectsModel');
         $id = $pm->reSaveIntake([
-            'user_id'       => (int)$this->cuID,
+            'user_id'       => (int) ($this->cuID ?? 1),
             'source'        => $source,
             'raw_input'     => $source === 'zillow'
                 ? (string)$in['zillow_url']
@@ -310,11 +310,13 @@ class ManagementAdminController extends BaseAdminController
             'status'        => 'queued',
         ]);
 
-        if (!$id) {
-            return redirect()->back()->with('error','Failed to queue property.');
+        try {
+            $ingest = new \App\Services\RealEstateIngestService();
+            $ingest->queue((int)$id);
+        } catch (\Throwable $e) {
+            log_message('error', 'realEstateQuickSubmit ingest error: ' . $e->getMessage());
         }
 
-        service('RealEstateIngestService')->queue((int)$id); // run now
         return redirect()->back()->with('success','Submitted! We’re fetching public details now.');
     }
     
