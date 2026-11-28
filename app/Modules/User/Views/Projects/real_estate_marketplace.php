@@ -42,13 +42,20 @@
                 $raised = (float) ($prop['current_amount'] ?? 0.0);
                 $pct = $targetRaise > 0 ? min(100.0, round(($raised / $targetRaise) * 100, 1)) : 0.0;
                 $propCategory = $prop['property_category'] ?? 'residential_str';
+                $isStr = ($propCategory === 'residential_str');
+                $isFlip = ($propCategory === 'wholesale_flip');
+                $isLtr = ($propCategory === 'residential_ltr');
+                $isCommercial = ($propCategory === 'commercial_lease');
+
                 $catBadge = match($propCategory) {
                     'residential_ltr'  => 'bg-primary',
+                    'wholesale_flip'   => 'bg-warning text-dark',
                     'commercial_lease' => 'bg-info',
                     default            => 'bg-success',
                 };
                 $catLabel = match($propCategory) {
                     'residential_ltr'  => 'Residential Pure Rental',
+                    'wholesale_flip'   => 'Contract Flip / Wholesale Dispo',
                     'commercial_lease' => 'Commercial NNN Lease',
                     default            => 'Residential Airbnb/VRBO',
                 };
@@ -77,21 +84,33 @@
 
                                 <div class="row g-2 mb-3 bg-light rounded p-2">
                                     <div class="col-6">
-                                        <div class="sub-text">Target Raise</div>
+                                        <div class="sub-text"><?= $isFlip ? 'End Buyer Price' : 'Target Raise' ?></div>
                                         <div class="lead-text fs-14px">$<?= number_format((float) ($prop['total_acquisition_cost'] ?? $prop['target_amount'] ?? 0), 2) ?></div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="sub-text">Target CoC Return</div>
-                                        <div class="lead-text fs-14px text-success"><?= number_format((float) ($prop['target_coc_return'] ?? 0), 2) ?>% / yr</div>
+                                        <div class="sub-text"><?= $isFlip ? 'Wholesale Spread' : 'Target CoC Return' ?></div>
+                                        <div class="lead-text fs-14px text-success">
+                                            <?= $isFlip ? '+$' . number_format((float) ($prop['projected_annual_noi'] ?? 15000), 2) : number_format((float) ($prop['target_coc_return'] ?? 0), 2) . '% / yr' ?>
+                                        </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="sub-text">Est. Annual NOI</div>
-                                        <div class="lead-text fs-14px">$<?= number_format((float) ($prop['projected_annual_noi'] ?? 0), 2) ?></div>
+                                        <div class="sub-text"><?= $isFlip ? 'Assignment Profit' : 'Est. Annual NOI' ?></div>
+                                        <div class="lead-text fs-14px text-success">$<?= number_format((float) ($prop['projected_annual_noi'] ?? 0), 2) ?></div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="sub-text"><?= $isStr ? 'Projected ADR' : 'Monthly Rent' ?></div>
+                                        <div class="sub-text">
+                                            <?php
+                                            if ($isFlip) echo 'Close Speed';
+                                            elseif ($isStr) echo 'Projected ADR';
+                                            else echo 'Monthly Rent';
+                                            ?>
+                                        </div>
                                         <div class="lead-text fs-14px">
-                                            $<?= number_format((float) ($isStr ? ($prop['projected_adr'] ?? 0) : ($prop['projected_monthly_rent'] ?? 0)), 2) ?>
+                                            <?php
+                                            if ($isFlip) echo '14-Day Cash Close';
+                                            elseif ($isStr) echo '$' . number_format((float) ($prop['projected_adr'] ?? 0), 2) . ' / night';
+                                            else echo '$' . number_format((float) ($prop['projected_monthly_rent'] ?? 0), 2) . ' / mo';
+                                            ?>
                                         </div>
                                     </div>
                                 </div>
@@ -109,7 +128,7 @@
 
                             <div class="pt-2">
                                 <a href="<?= site_url('Projects/Real-Estate/' . (int) $prop['project_id']) ?>" class="btn btn-primary w-100">
-                                    <span>View Deal & Co-Invest</span>
+                                    <span><?= $isFlip ? 'View Contract & Match Buyers' : 'View Deal & Co-Invest' ?></span>
                                     <em class="icon ni ni-arrow-right"></em>
                                 </a>
                             </div>

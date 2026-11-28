@@ -27,7 +27,17 @@ class ProjectsController extends BaseUserController
 
     public function index()
     {
-        $this->data['pageTitle'] = 'Projects | MyMI Wallet | The Future of Finance';
+        $this->data['pageTitle'] = 'Real Estate Projects & Syndications | MyMI Wallet';
+        $this->data['layout'] = 'public';
+
+        try {
+            $reModel = new \App\Models\ProjectsRealEstateModel();
+            $this->data['properties'] = $reModel->getActiveRealEstateProjects(50);
+        } catch (\Throwable $e) {
+            log_message('error', 'ProjectsController::index real estate error: ' . $e->getMessage());
+            $this->data['properties'] = [];
+        }
+
         $projects = cache('projects_list');
         if (! is_array($projects)) {
             $projects = $this->projectsModel->getActiveProjectsWithStats();
@@ -35,7 +45,7 @@ class ProjectsController extends BaseUserController
         }
 
         $this->data['projects'] = $projects;
-        return $this->renderTheme('App\\Modules\\User\\Views\\Projects\\index', $this->data);
+        return $this->renderTheme('App\\Modules\\User\\Views\\Projects\\real_estate_marketplace', $this->data);
     }
 
     public function view(int $projectId)

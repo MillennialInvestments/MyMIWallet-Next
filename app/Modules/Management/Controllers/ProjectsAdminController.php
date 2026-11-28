@@ -220,10 +220,59 @@ class ProjectsAdminController extends BaseAdminController
     // Views
     public function index()
     {
-        $this->data['pageTitle'] = 'MyMI Dashboard | MyMI Wallet | The Future of Finance';
+        $this->data['pageTitle'] = 'Real Estate & Project Operations Mission Control | MyMI Admin';
         $this->commonData();
         $this->data['useDataTables'] = true;
         $this->data['useProjectListDT'] = true;
+
+        $realEstateProjects = [];
+        $reMetrics = [
+            'total_portfolio_value'   => 0.0,
+            'active_properties_count' => 0,
+            'total_projected_noi'     => 0.0,
+            'wholesale_pipeline_count'=> 0,
+            'str_count'               => 0,
+            'ltr_count'               => 0,
+            'commercial_count'        => 0,
+        ];
+
+        try {
+            $reModel = new \App\Models\ProjectsRealEstateModel();
+            $realEstateProjects = $reModel->getActiveRealEstateProjects(100);
+
+            foreach ($realEstateProjects as $rep) {
+                $reMetrics['active_properties_count']++;
+                $val = (float) ($rep['purchase_price'] ?? $rep['target_acquisition_cost'] ?? $rep['total_acquisition_cost'] ?? 0);
+                $reMetrics['total_portfolio_value'] += $val;
+                $noi = (float) ($rep['projected_annual_noi'] ?? 0);
+                $reMetrics['total_projected_noi'] += $noi;
+
+                $cat = $rep['property_category'] ?? 'residential_str';
+                if ($cat === 'wholesale_flip') {
+                    $reMetrics['wholesale_pipeline_count']++;
+                } elseif ($cat === 'residential_ltr') {
+                    $reMetrics['ltr_count']++;
+                } elseif ($cat === 'commercial_lease') {
+                    $reMetrics['commercial_count']++;
+                } else {
+                    $reMetrics['str_count']++;
+                }
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'ProjectsAdminController::index real estate error: ' . $e->getMessage());
+        }
+
+        $inboxSubmissions = [];
+        try {
+            $inboxSubmissions = $this->projectsModel->getRecentInboxSubmissions(25);
+        } catch (\Throwable $e) {
+            log_message('error', 'ProjectsAdminController::index inbox error: ' . $e->getMessage());
+        }
+
+        $this->data['realEstateProjects'] = $realEstateProjects;
+        $this->data['reMetrics']          = $reMetrics;
+        $this->data['inboxSubmissions']   = $inboxSubmissions;
+
         return $this->renderTheme('App\Modules\Management\Views\Projects\index', $this->data);
     }
 

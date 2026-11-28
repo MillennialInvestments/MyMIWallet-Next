@@ -164,4 +164,33 @@ class RealEstateDealServiceTest extends CIUnitTestCase
         $this->assertSame(6.84, $proForma['target_coc_return']);
         $this->assertSame(1231.20, $proForma['projected_monthly_distributable']);
     }
+
+    public function testWholesaleFlipProFormaCalculation(): void
+    {
+        $inputs = [
+            'contract_price'        => 145000.00,
+            'arv'                   => 225000.00,
+            'renovation_budget'     => 25000.00,
+            'assignment_fee'        => 15000.00,
+            'earnest_money_deposit' => 2500.00,
+            'days_to_close'         => 14,
+        ];
+
+        $proForma = $this->service->calculateWholesaleFlipProForma($inputs);
+
+        $this->assertSame('wholesale_flip', $proForma['property_category']);
+        $this->assertSame('wholesale_contract_flip', $proForma['monetization_strategy']);
+        $this->assertSame(145000.00, $proForma['contract_price']);
+        $this->assertSame(225000.00, $proForma['after_repair_value']);
+        $this->assertSame(15000.00, $proForma['assignment_fee']);
+        $this->assertSame(160000.00, $proForma['end_buyer_price']);
+        $this->assertSame(4000.00, $proForma['end_buyer_closing_costs']);
+        $this->assertSame(189000.00, $proForma['end_buyer_all_in']);
+        $this->assertSame(22500.00, $proForma['end_buyer_net_profit']);
+        $this->assertSame(11.90, $proForma['end_buyer_roi_pct']);
+        $this->assertSame(117500.00, $proForma['mao_70_pct']);
+        $this->assertSame(2500.00, $proForma['earnest_money_deposit']);
+        $this->assertSame(14, $proForma['days_to_close']);
+        $this->assertSame(600.00, $proForma['target_coc_return']);
+    }
 }

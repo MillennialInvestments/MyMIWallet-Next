@@ -151,6 +151,82 @@ class RealEstateDealService
     }
 
     /**
+     * Underwrite Wholesale Contract Flip & Cash Buyer Economics (Tranchi-Style).
+     *
+     * @param array<string, mixed> $inputs
+     * @return array<string, mixed>
+     */
+    public function calculateWholesaleFlipProForma(array $inputs): array
+    {
+        $contractPrice       = max(0.0, (float) ($inputs['contract_price'] ?? $inputs['purchase_price'] ?? 0.0));
+        $renovationBudget    = max(0.0, (float) ($inputs['renovation_budget'] ?? $inputs['rehab_estimate'] ?? 0.0));
+        $estimatedArv        = max(0.0, (float) ($inputs['after_repair_value'] ?? $inputs['arv'] ?? 0.0));
+
+        // Auto-estimate ARV if not provided: ~1.38x contract price or contract + rehab + $35k margin
+        if ($estimatedArv <= 0.0 && $contractPrice > 0.0) {
+            $estimatedArv = round(max($contractPrice * 1.38, $contractPrice + $renovationBudget + 35000.0), -2);
+        }
+
+        // Wholesale Assignment Fee target: default $15,000 or ~8% of contract price, min $7,500
+        $assignmentFee       = max(0.0, (float) ($inputs['assignment_fee'] ?? $inputs['wholesale_fee'] ?? 0.0));
+        if ($assignmentFee <= 0.0 && $contractPrice > 0.0) {
+            $assignmentFee = round(max(7500.0, min(35000.0, $contractPrice * 0.08)), -2);
+        } elseif ($assignmentFee <= 0.0) {
+            $assignmentFee = 15000.0;
+        }
+
+        // End Buyer Cash Purchase Price = Contract Price + Assignment Fee
+        $endBuyerPrice       = round($contractPrice + $assignmentFee, 2);
+
+        // End Buyer Closing Costs (~2.5% of end buyer price)
+        $endBuyerClosing     = round($endBuyerPrice * 0.025, 2);
+
+        // End Buyer All-In Capital Investment (Purchase + Assignment + Rehab + Closing)
+        $endBuyerAllIn       = round($endBuyerPrice + $renovationBudget + $endBuyerClosing, 2);
+
+        // End Buyer Projected Net Profit upon retail resale at ARV (accounting for ~6% broker/resale fee)
+        $retailResaleFees    = round($estimatedArv * 0.06, 2);
+        $endBuyerProfit      = max(0.0, round($estimatedArv - $endBuyerAllIn - $retailResaleFees, 2));
+        $endBuyerRoiPct      = $endBuyerAllIn > 0 ? round(($endBuyerProfit / $endBuyerAllIn) * 100, 2) : 0.0;
+
+        // MAO @ 70% rule = (ARV * 0.70) - Renovation - Assignment Fee
+        $mao70Pct            = max(0.0, round(($estimatedArv * 0.70) - $renovationBudget - $assignmentFee, 2));
+
+        // TBI Upfront Capital: Earnest Money Deposit only
+        $earnestMoneyDeposit = min(10000.0, max(1000.0, (float) ($inputs['earnest_money_deposit'] ?? 2500.0)));
+        $daysToClose         = max(7, min(60, (int) ($inputs['days_to_close'] ?? 14)));
+
+        // CoC Return on Wholesale Capital Outlay: (Assignment Fee / EMD) * 100
+        $tbiWholesaleCoc     = $earnestMoneyDeposit > 0
+            ? round(($assignmentFee / $earnestMoneyDeposit) * 100, 2)
+            : 0.0;
+
+        return [
+            'property_category'           => 'wholesale_flip',
+            'monetization_strategy'       => 'wholesale_contract_flip',
+            'purchase_price'              => $contractPrice,
+            'contract_price'              => $contractPrice,
+            'after_repair_value'          => $estimatedArv,
+            'renovation_budget'           => $renovationBudget,
+            'furnishing_budget'           => 0.00,
+            'closing_costs'               => round($contractPrice * 0.03, 2),
+            'assignment_fee'              => $assignmentFee,
+            'end_buyer_price'             => $endBuyerPrice,
+            'end_buyer_closing_costs'     => $endBuyerClosing,
+            'end_buyer_all_in'            => $endBuyerAllIn,
+            'end_buyer_net_profit'        => $endBuyerProfit,
+            'end_buyer_roi_pct'           => $endBuyerRoiPct,
+            'mao_70_pct'                  => $mao70Pct,
+            'earnest_money_deposit'       => $earnestMoneyDeposit,
+            'days_to_close'               => $daysToClose,
+            'total_acquisition_cost'      => $endBuyerPrice,
+            'projected_annual_noi'        => $assignmentFee,
+            'target_coc_return'           => $tbiWholesaleCoc,
+            'projected_monthly_distributable' => round($assignmentFee / 12, 2),
+        ];
+    }
+
+    /**
      * Underwrite Commercial Leased Property Pro Forma (NNN or Gross).
      *
      * @param array<string, mixed> $inputs
@@ -231,6 +307,7 @@ class RealEstateDealService
         $proForma = match ($category) {
             'commercial_lease' => $this->calculateCommercialProForma($input),
             'residential_ltr'  => $this->calculateLtrProForma($input),
+            'wholesale_flip'   => $this->calculateWholesaleFlipProForma($input),
             default            => $this->calculateStrProForma($input),
         };
 

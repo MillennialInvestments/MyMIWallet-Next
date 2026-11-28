@@ -554,4 +554,40 @@ class ProjectsModel extends Model
             'updated_at'   => date('Y-m-d H:i:s'),
         ]);
     }
+
+    /**
+     * Get recent intake submissions from bf_projects_inbox.
+     *
+     * @param int $limit
+     * @return array<int, array<string, mixed>>
+     */
+    public function getRecentInboxSubmissions(int $limit = 20): array
+    {
+        try {
+            $db = $this->db ?? \Config\Database::connect();
+            if (! $db->tableExists('bf_projects_inbox')) {
+                return [];
+            }
+            $rows = $db->table('bf_projects_inbox')
+                ->orderBy('id', 'DESC')
+                ->limit($limit)
+                ->get()
+                ->getResultArray();
+
+            foreach ($rows as &$r) {
+                if (! empty($r['payload_json'])) {
+                    $decoded = json_decode((string) $r['payload_json'], true);
+                    if (is_array($decoded)) {
+                        $r['parsed_payload'] = $decoded;
+                    }
+                }
+            }
+            unset($r);
+
+            return $rows;
+        } catch (\Throwable $e) {
+            log_message('error', 'getRecentInboxSubmissions error: ' . $e->getMessage());
+            return [];
+        }
+    }
 }

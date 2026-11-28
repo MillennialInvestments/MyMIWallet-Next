@@ -10,6 +10,7 @@
 $cat = $property['property_category'] ?? 'residential_str';
 $isStr = $cat === 'residential_str';
 $isLtr = $cat === 'residential_ltr';
+$isFlip = $cat === 'wholesale_flip';
 $isCommercial = $cat === 'commercial_lease';
 $targetRaise = (float) ($property['total_acquisition_cost'] ?? $project['target_amount'] ?? 1.0);
 $raised = (float) ($project['current_amount'] ?? 0.0);
@@ -23,7 +24,9 @@ $pct = $targetRaise > 0 ? min(100.0, round(($raised / $targetRaise) * 100, 1)) :
             </nav>
             <h3 class="nk-block-title page-title"><?= esc($project['name'] ?? $project['title'] ?? 'Real Estate Syndication') ?></h3>
             <div class="nk-block-des text-soft">
-                <?php if ($isLtr): ?>
+                <?php if ($isFlip): ?>
+                    <span class="badge bg-warning text-dark me-2">Contract Flip / Wholesale Dispo</span>
+                <?php elseif ($isLtr): ?>
                     <span class="badge bg-primary me-2">Pure Long-Term Rental (12-Mo Lease)</span>
                 <?php elseif ($isCommercial): ?>
                     <span class="badge bg-info me-2">Commercial Triple-Net (NNN) Lease</span>
@@ -86,13 +89,25 @@ $pct = $targetRaise > 0 ? min(100.0, round(($raised / $targetRaise) * 100, 1)) :
                     <hr class="my-4">
 
                     <?php
-                    $metricsTitle = $isStr
-                        ? 'STR Projected Operating Metrics'
-                        : ($isLtr ? 'Long-Term Rental Projected Operating Metrics' : 'Commercial Lease Parameters');
+                    $metricsTitle = match(true) {
+                        $isFlip       => 'Wholesale Contract Assignment & Dispo Parameters',
+                        $isStr        => 'STR Projected Operating Metrics',
+                        $isLtr        => 'Long-Term Rental Projected Operating Metrics',
+                        default       => 'Commercial Lease Parameters',
+                    };
                     ?>
                     <h6 class="overline-title text-soft mb-2"><?= $metricsTitle ?></h6>
                     <div class="row g-3">
-                        <?php if ($isStr): ?>
+                        <?php if ($isFlip): ?>
+                            <div class="col-md-4">
+                                <div class="sub-text">Wholesale Assignment Spread</div>
+                                <div class="lead-text text-success">+$<?= number_format((float) ($property['projected_annual_noi'] ?? 15000), 2) ?> Cash</div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="sub-text">Closing Timeline</div>
+                                <div class="lead-text">14-Day Cash Close</div>
+                            </div>
+                        <?php elseif ($isStr): ?>
                             <div class="col-md-4">
                                 <div class="sub-text">Average Daily Rate (ADR)</div>
                                 <div class="lead-text">$<?= number_format((float) ($property['projected_adr'] ?? 0), 2) ?> / night</div>
