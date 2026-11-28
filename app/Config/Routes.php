@@ -1776,6 +1776,8 @@ $routes->group('Management', ['namespace' => '\App\Modules\Management\Controller
         $routes->get('quick-analysis', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::realEstateQuickAnalysis');
         $routes->match(['GET', 'POST'], 'Quick-Analysis/Analyze', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::runQuickAnalysis');
         $routes->match(['GET', 'POST'], 'quick-analysis/analyze', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::runQuickAnalysis');
+        $routes->match(['GET', 'POST'], 'Quick-Analysis/Parse-Listing', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::parseListingUrl');
+        $routes->match(['GET', 'POST'], 'quick-analysis/parse-listing', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::parseListingUrl');
         $routes->post('Quick-Analysis/Publish', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::publishQuickAnalysis');
         $routes->post('quick-analysis/publish', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::publishQuickAnalysis');
         $routes->get('Quick-Intake', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::realEstateQuickIntake');
