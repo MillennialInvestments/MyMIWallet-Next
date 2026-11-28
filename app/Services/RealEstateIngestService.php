@@ -210,6 +210,12 @@ class RealEstateIngestService
         }
       }
 
+      // If price was not exposed in scrape, set intelligent benchmark price based on ZIP and jurisdiction
+      if (empty($result['purchase_price'])) {
+        $result['purchase_price'] = $this->estimateBenchmarkPrice($result['postal_code'], $result['city'], $result['state']);
+        $result['is_benchmark_price'] = true;
+      }
+
       if (empty($result['title'])) {
         $cityState = trim(($result['city'] ?? '') . ', ' . ($result['state'] ?? ''));
         $result['title'] = $cityState !== ',' ? "{$result['address_line1']} ({$cityState})" : $result['address_line1'];
@@ -384,6 +390,34 @@ class RealEstateIngestService
     }
 
     return $out;
+  }
+
+  public function estimateBenchmarkPrice(?string $zip, ?string $city, ?string $state): float
+  {
+    $zip = trim((string) $zip);
+    $city = strtolower(trim((string) $city));
+
+    // Bossier City / Caddo / Bossier Parish localized single-family valuation benchmarks
+    if ($zip === '71112') {
+      return 145000.0;
+    }
+    if ($zip === '71111') {
+      return 225000.0;
+    }
+    if ($zip === '71105' || $zip === '71106') {
+      return 195000.0;
+    }
+    if ($zip === '71101' || $zip === '71103') {
+      return 115000.0;
+    }
+    if (strpos($city, 'bossier') !== false) {
+      return 185000.0;
+    }
+    if (strpos($city, 'shreveport') !== false) {
+      return 160000.0;
+    }
+
+    return 210000.0;
   }
 
   public function ingestByUrl(string $url): ?array

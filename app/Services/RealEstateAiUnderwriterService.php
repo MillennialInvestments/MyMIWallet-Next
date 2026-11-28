@@ -227,10 +227,15 @@ Provide concise, high-value investment analysis.";
         // Fallback: Deterministic Expert AIOps Synthesis
         $loc = "{$city}, {$state}";
         $isStr = $category === 'residential_str';
+        $propertyLabel = $address !== '' ? "{$address} in {$loc}" : ($title ?: "property in {$loc}");
+        $purchasePriceFmt = number_format($purchasePrice);
+        $totalRaiseFmt = number_format($totalRaise);
+        $annualNoiFmt = number_format($annualNoi);
+        $cocFmt = number_format($coc, 2);
 
         $summary = $isStr
-            ? "Strong residential short-term rental conversion opportunity in {$loc}. At a \${$purchasePrice} acquisition price with \${$totalRaise} total capitalization, the property achieves a projected \${$annualNoi}/yr Net Operating Income ({$coc}% Cash-on-Cash yield). AnneAlicia & Timothy can execute a high-end designer furnishing strategy targeting leisure travelers, regional corporate bookings, and event guests."
-            : "Prime commercial leased asset in {$loc} providing durable, inflation-hedged passive cash flows. Capitalized at \${$totalRaise}, the property generates \${$annualNoi}/yr NOI ({$coc}% Cash-on-Cash yield) backed by stable tenant lease commitments with triple-net operating cost pass-throughs.";
+            ? "Strong residential short-term rental conversion opportunity for {$propertyLabel}. At a \${$purchasePriceFmt} acquisition price with \${$totalRaiseFmt} total capitalization, the property achieves a projected \${$annualNoiFmt}/yr Net Operating Income ({$cocFmt}% Cash-on-Cash yield). AnneAlicia & Timothy can execute a high-end designer furnishing strategy targeting leisure travelers, regional corporate bookings, and event guests."
+            : "Prime commercial leased asset for {$propertyLabel} providing durable, inflation-hedged passive cash flows. Capitalized at \${$totalRaiseFmt}, the property generates \${$annualNoiFmt}/yr NOI ({$cocFmt}% Cash-on-Cash yield) backed by stable tenant lease commitments with triple-net operating cost pass-throughs.";
 
         return [
             'executive_summary'  => $summary,
