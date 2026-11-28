@@ -15,4 +15,15 @@ class Projects extends BaseConfig
         ['days' => 90, 'fee' => 5.0],
     ];
     public float $postQuarterFee = 1.0;
+
+    /**
+     * Real Estate Private Equity & Syndication Sponsor Configuration
+     */
+    public string $sponsorEntity = 'Timothy Burks Incorporated, LLC.';
+    public array $operatingManagers = [
+        'Timothy Burks'       => 'Managing Member & Co-Owner',
+        'AnneAlicia Burks'    => 'Managing Member & Co-Owner',
+    ];
+    public string $sponsorJurisdiction = 'Bossier City, Louisiana';
+    public string $sponsorRegistration = 'Louisiana Secretary of State (GeauxBiz)';
 }

@@ -25,9 +25,80 @@ class RealEstateIngestService
 
   protected function ingestByAddress(array $rec): ?array
   {
-    // Use free sources: geocode (Nominatim), public listing JSON-LD if discoverable.
-    // Respect rate limits / robots. Best-effort; return partials when available.
-    return ['latitude'=>null,'longitude'=>null];
+    $raw = trim(($rec['address_line1'] ?? '') . ', ' . ($rec['city'] ?? '') . ', ' . ($rec['state'] ?? '') . ' ' . ($rec['postal_code'] ?? ''));
+    if ($raw === '' || $raw === ',  ') {
+        $raw = (string) ($rec['raw_input'] ?? '');
+    }
+    if ($raw === '') {
+        return null;
+    }
+
+    $client = new Client([
+        'timeout' => 8,
+        'headers' => [
+            'User-Agent' => 'MyMI-Wallet-RealEstate/1.0 (contact@mymiwallet.com)',
+            'Accept'     => 'application/json',
+        ],
+    ]);
+
+    // Tier 1: US Census Bureau Geocoding API (100% Free, Unlimited, No Key)
+    try {
+        $url = 'https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address='
+            . urlencode($raw) . '&benchmark=Public_AR_Current&format=json';
+        $res = $client->get($url);
+        if ($res->getStatusCode() === 200) {
+            $json = json_decode((string) $res->getBody(), true);
+            $matches = $json['result']['addressMatches'] ?? [];
+            if (! empty($matches[0])) {
+                $m = $matches[0];
+                $coords = $m['coordinates'] ?? [];
+                $comp   = $m['addressComponents'] ?? [];
+                return [
+                    'latitude'       => (float) ($coords['y'] ?? null),
+                    'longitude'      => (float) ($coords['x'] ?? null),
+                    'matched_address'=> (string) ($m['matchedAddress'] ?? $raw),
+                    'city'           => $comp['city'] ?? ($rec['city'] ?? null),
+                    'state'          => $comp['state'] ?? ($rec['state'] ?? null),
+                    'postal_code'    => $comp['zip'] ?? ($rec['postal_code'] ?? null),
+                    'source_tier'    => 'us_census_geocoder',
+                ];
+            }
+        }
+    } catch (\Throwable $e) {
+        log_message('notice', 'Census Geocoder fallback: {msg}', ['msg' => $e->getMessage()]);
+    }
+
+    // Tier 2: OpenStreetMap Nominatim Fallback (100% Free)
+    try {
+        $osmUrl = 'https://nominatim.openstreetmap.org/search?q='
+            . urlencode($raw) . '&format=json&addressdetails=1&countrycodes=us&limit=1';
+        $res = $client->get($osmUrl);
+        if ($res->getStatusCode() === 200) {
+            $json = json_decode((string) $res->getBody(), true);
+            if (! empty($json[0])) {
+                $item = $json[0];
+                $addr = $item['address'] ?? [];
+                return [
+                    'latitude'       => (float) ($item['lat'] ?? null),
+                    'longitude'      => (float) ($item['lon'] ?? null),
+                    'matched_address'=> (string) ($item['display_name'] ?? $raw),
+                    'city'           => $addr['city'] ?? ($addr['town'] ?? ($rec['city'] ?? null)),
+                    'state'          => $addr['state'] ?? ($rec['state'] ?? null),
+                    'postal_code'    => $addr['postcode'] ?? ($rec['postal_code'] ?? null),
+                    'source_tier'    => 'osm_nominatim',
+                ];
+            }
+        }
+    } catch (\Throwable $e) {
+        log_message('notice', 'Nominatim fallback: {msg}', ['msg' => $e->getMessage()]);
+    }
+
+    return [
+        'latitude'       => null,
+        'longitude'      => null,
+        'matched_address'=> $raw,
+        'source_tier'    => 'manual_entry',
+    ];
   }
 
   protected function ingestByUrl(string $url): ?array
