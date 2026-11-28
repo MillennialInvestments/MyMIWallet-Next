@@ -53,7 +53,16 @@ class ProjectsRealEstateModel extends Model
      */
     public function getByProjectId(int $projectId): ?array
     {
-        return $this->where('project_id', $projectId)->first();
+        if (! $this->db->tableExists($this->table)) {
+            return null;
+        }
+
+        try {
+            return $this->where('project_id', $projectId)->first();
+        } catch (\Throwable $e) {
+            log_message('error', 'ProjectsRealEstateModel::getByProjectId error: ' . $e->getMessage());
+            return null;
+        }
     }
 
     /**
@@ -61,14 +70,23 @@ class ProjectsRealEstateModel extends Model
      */
     public function saveOrUpdate(int $projectId, array $data): bool
     {
-        $existing = $this->getByProjectId($projectId);
-        $data['project_id'] = $projectId;
-
-        if ($existing) {
-            return (bool) $this->update($existing['id'], $data);
+        if (! $this->db->tableExists($this->table)) {
+            return false;
         }
 
-        return (bool) $this->insert($data);
+        try {
+            $existing = $this->getByProjectId($projectId);
+            $data['project_id'] = $projectId;
+
+            if ($existing) {
+                return (bool) $this->update($existing['id'], $data);
+            }
+
+            return (bool) $this->insert($data);
+        } catch (\Throwable $e) {
+            log_message('error', 'ProjectsRealEstateModel::saveOrUpdate error: ' . $e->getMessage());
+            return false;
+        }
     }
 
     /**
@@ -76,7 +94,16 @@ class ProjectsRealEstateModel extends Model
      */
     public function updateStage(int $projectId, string $stage): bool
     {
-        return (bool) $this->where('project_id', $projectId)->set(['operational_stage' => $stage])->update();
+        if (! $this->db->tableExists($this->table)) {
+            return false;
+        }
+
+        try {
+            return (bool) $this->where('project_id', $projectId)->set(['operational_stage' => $stage])->update();
+        } catch (\Throwable $e) {
+            log_message('error', 'ProjectsRealEstateModel::updateStage error: ' . $e->getMessage());
+            return false;
+        }
     }
 
     /**
@@ -84,11 +111,59 @@ class ProjectsRealEstateModel extends Model
      */
     public function getActiveRealEstateProjects(int $limit = 50): array
     {
-        return $this->db->table($this->table)
-            ->select('bf_projects_real_estate.*, bf_projects.name, bf_projects.title, bf_projects.description, bf_projects.target_amount, bf_projects.current_amount, bf_projects.status as project_status, bf_projects.nav_per_unit, bf_projects.total_units_issued')
-            ->join('bf_projects', 'bf_projects.id = bf_projects_real_estate.project_id', 'inner')
-            ->limit($limit)
-            ->get()
-            ->getResultArray();
+        if (! $this->db->tableExists($this->table)) {
+            return [];
+        }
+
+        try {
+            if (! $this->db->tableExists('bf_projects')) {
+                return $this->db->table($this->table)->limit($limit)->get()->getResultArray();
+            }
+
+            $fields = $this->db->getFieldNames('bf_projects');
+            $hasName = in_array('name', $fields, true);
+            $hasTitle = in_array('title', $fields, true);
+            $hasDesc = in_array('description', $fields, true);
+            $hasTargetRaise = in_array('target_raise', $fields, true);
+            $hasTargetAmount = in_array('target_amount', $fields, true);
+            $hasCurrentAmount = in_array('current_amount', $fields, true);
+            $hasStatus = in_array('status', $fields, true);
+            $hasNav = in_array('nav_per_unit', $fields, true);
+            $hasUnits = in_array('total_units_issued', $fields, true);
+
+            $selects = ["{$this->table}.*"];
+            $selects[] = $hasName ? 'bf_projects.name' : ($hasTitle ? 'bf_projects.title as name' : "'' as name");
+            $selects[] = $hasTitle ? 'bf_projects.title' : ($hasName ? 'bf_projects.name as title' : "'' as title");
+            if ($hasDesc) {
+                $selects[] = 'bf_projects.description';
+            }
+            $selects[] = $hasTargetAmount ? 'bf_projects.target_amount' : ($hasTargetRaise ? 'bf_projects.target_raise as target_amount' : '0.00 as target_amount');
+            if ($hasCurrentAmount) {
+                $selects[] = 'bf_projects.current_amount';
+            }
+            if ($hasStatus) {
+                $selects[] = 'bf_projects.status as project_status';
+            }
+            if ($hasNav) {
+                $selects[] = 'bf_projects.nav_per_unit';
+            }
+            if ($hasUnits) {
+                $selects[] = 'bf_projects.total_units_issued';
+            }
+
+            return $this->db->table($this->table)
+                ->select(implode(', ', $selects))
+                ->join('bf_projects', "bf_projects.id = {$this->table}.project_id", 'left')
+                ->limit($limit)
+                ->get()
+                ->getResultArray();
+        } catch (\Throwable $e) {
+            log_message('error', 'ProjectsRealEstateModel::getActiveRealEstateProjects error: ' . $e->getMessage());
+            try {
+                return $this->db->table($this->table)->limit($limit)->get()->getResultArray();
+            } catch (\Throwable) {
+                return [];
+            }
+        }
     }
 }

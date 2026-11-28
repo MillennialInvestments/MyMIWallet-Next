@@ -2131,11 +2131,22 @@ $routes->group('Projects', ['namespace' => '\App\Modules\User\Controllers'], sta
     $routes->post('reportRevenue', 'ProjectsController::reportRevenue', ['filter' => 'login']);
     // Real Estate Private Equity & Syndication
     $routes->get('Real-Estate', 'ProjectsController::realEstateMarketplace');
+    $routes->get('real-estate', 'ProjectsController::realEstateMarketplace');
     $routes->get('Real-Estate/(:num)', 'ProjectsController::realEstateDetail/$1');
+    $routes->get('real-estate/(:num)', 'ProjectsController::realEstateDetail/$1');
     $routes->match(['GET', 'POST'], 'ProForma-Calculate', 'ProjectsController::proFormaCalculate');
+    $routes->match(['GET', 'POST'], 'proforma-calculate', 'ProjectsController::proFormaCalculate');
     $routes->post('Invest-Crypto/(:num)', 'ProjectsController::investCrypto/$1', ['filter' => ['login', 'feature:project_investing']]);
+    $routes->post('invest-crypto/(:num)', 'ProjectsController::investCrypto/$1', ['filter' => ['login', 'feature:project_investing']]);
     $routes->post('Report-RealEstate-Revenue', 'ProjectsController::reportRealEstateRevenue', ['filter' => 'login']);
+    $routes->post('report-realestate-revenue', 'ProjectsController::reportRealEstateRevenue', ['filter' => 'login']);
 });
+
+// Top-level Real Estate routes for direct navigation
+$routes->get('Real-Estate', '\App\Modules\User\Controllers\ProjectsController::realEstateMarketplace');
+$routes->get('real-estate', '\App\Modules\User\Controllers\ProjectsController::realEstateMarketplace');
+$routes->get('Real-Estate/(:num)', '\App\Modules\User\Controllers\ProjectsController::realEstateDetail/$1');
+$routes->get('real-estate/(:num)', '\App\Modules\User\Controllers\ProjectsController::realEstateDetail/$1');
 
 // Blog:
 $routes->group('Announcements', ['namespace' => '\App\Modules\Blog\Controllers'], function($routes) {
