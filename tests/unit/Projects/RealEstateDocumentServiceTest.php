@@ -21,6 +21,10 @@ class RealEstateDocumentServiceTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
+        exec('python3 -c "import reportlab" 2>&1', $out, $rc);
+        if ($rc !== 0) {
+            $this->markTestSkipped('reportlab is not installed in the Python runtime.');
+        }
         $this->service = new RealEstateDocumentService();
     }
 

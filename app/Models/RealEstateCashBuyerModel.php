@@ -62,7 +62,7 @@ class RealEstateCashBuyerModel extends Model
 
         $buyers = $builder->orderBy('proof_of_funds_verified', 'DESC')
                           ->orderBy('max_purchase_price', 'DESC')
-                          ->findAll();
+                          ->findAll(50);
 
         if ($zip !== null && $zip !== '') {
             $cleanZip = trim($zip);

@@ -56,15 +56,19 @@ final class SportsPredictionsAndGamificationControllerTest extends CIUnitTestCas
 
     protected function tearDown(): void
     {
-        \Config\Services::resetSingle('authentication');
-        (new CreatePredictionsAndGamificationTables(Database::forge()))->down();
-        (new CreateSportsBetTrackerAndUserSettingsTables(Database::forge()))->down();
-        (new CreateSportsQbWrMatchupTables(Database::forge()))->down();
-        (new CreateSportsPropLinesTable(Database::forge()))->down();
-        (new CreateSportsPropAnalyticsTables(Database::forge()))->down();
-        Database::connect()->setPrefix($this->prefix);
-        Database::connect()->resetDataCache();
-        parent::tearDown();
+        try {
+            \Config\Services::resetSingle('authentication');
+            (new CreateSportsPaperTradingAndScannerTables(Database::forge()))->down();
+            (new CreatePredictionsAndGamificationTables(Database::forge()))->down();
+            (new CreateSportsBetTrackerAndUserSettingsTables(Database::forge()))->down();
+            (new CreateSportsQbWrMatchupTables(Database::forge()))->down();
+            (new CreateSportsPropLinesTable(Database::forge()))->down();
+            (new CreateSportsPropAnalyticsTables(Database::forge()))->down();
+        } finally {
+            Database::connect()->setPrefix($this->prefix);
+            Database::connect()->resetDataCache();
+            parent::tearDown();
+        }
     }
 
     public function testPredictionsRouteRendersForAuthenticatedUser(): void
