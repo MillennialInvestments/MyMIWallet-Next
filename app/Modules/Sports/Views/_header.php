@@ -87,6 +87,11 @@ $disclaimer = \App\Modules\Sports\Libraries\SportsPropsService::DISCLAIMER;
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link <?= $activeTab === 'value_finder' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('My-Bets/Value-Finder') ?>">
+                <i class="bi bi-radar me-1 text-warning"></i> +EV Radar
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link <?= $activeTab === 'predictions' ? 'active fw-bold' : 'text-secondary' ?>" href="<?= site_url('My-Predictions') ?>">
                 <i class="bi bi-lightning-charge-fill me-1 text-primary"></i> My Predictions
             </a>

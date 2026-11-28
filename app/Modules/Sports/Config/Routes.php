@@ -44,6 +44,12 @@ $routes->group('MyMISports', ['namespace' => 'App\Modules\Sports\Controllers', '
     $routes->get('sgp', 'SportsController::sgp');
     $routes->post('SGP/Calculate', 'SportsController::sgpCalculateApi');
 
+    // Automated +EV SGP & Arbitrage Value Finder Radar
+    $routes->get('Value-Finder', 'SportsController::valueFinder');
+    $routes->get('value-finder', 'SportsController::valueFinder');
+    $routes->post('Value-Finder/Scan', 'SportsController::valueFinderScanApi');
+    $routes->post('value-finder/scan', 'SportsController::valueFinderScanApi');
+
     // Soccer Analytics & Poisson xG Routes
     $routes->get('Soccer', 'SportsController::soccer');
     $routes->get('soccer', 'SportsController::soccer');
@@ -82,6 +88,8 @@ $routes->group('MyMISports', ['namespace' => 'App\Modules\Sports\Controllers', '
     $routes->get('predictions', 'SportsController::predictions');
     $routes->post('Predictions/Order', 'SportsController::placePredictionOrder');
     $routes->post('Predictions/Confirm', 'SportsController::confirmPredictionOrder');
+    $routes->post('Predictions/Paper-Trade', 'SportsController::paperTradePredictionOrder');
+    $routes->post('Predictions/Reset-Balance', 'SportsController::resetPaperBalance');
 
     // Social Gamification & UIGEA Fantasy Tournament Leaderboards
     $routes->get('Leaderboard', 'SportsController::leaderboard');
@@ -106,6 +114,10 @@ foreach ($predictionGroups as $group) {
         $routes->post('order', 'SportsController::placePredictionOrder');
         $routes->post('Confirm', 'SportsController::confirmPredictionOrder');
         $routes->post('confirm', 'SportsController::confirmPredictionOrder');
+        $routes->post('Paper-Trade', 'SportsController::paperTradePredictionOrder');
+        $routes->post('paper-trade', 'SportsController::paperTradePredictionOrder');
+        $routes->post('Reset-Balance', 'SportsController::resetPaperBalance');
+        $routes->post('reset-balance', 'SportsController::resetPaperBalance');
         $routes->get('Leaderboard', 'SportsController::leaderboard');
         $routes->get('leaderboard', 'SportsController::leaderboard');
         $routes->get('Onramp', 'SportsController::onramp');
@@ -140,6 +152,10 @@ foreach ($betsGroups as $group) {
         $routes->get('sgp', 'SportsController::sgp');
         $routes->post('SGP/Calculate', 'SportsController::sgpCalculateApi');
         $routes->post('sgp/calculate', 'SportsController::sgpCalculateApi');
+        $routes->get('Value-Finder', 'SportsController::valueFinder');
+        $routes->get('value-finder', 'SportsController::valueFinder');
+        $routes->post('Value-Finder/Scan', 'SportsController::valueFinderScanApi');
+        $routes->post('value-finder/scan', 'SportsController::valueFinderScanApi');
         $routes->get('Calculators', 'SportsController::calculators');
         $routes->get('calculators', 'SportsController::calculators');
         $routes->post('Calculators/Calculate', 'SportsController::calculateApi');

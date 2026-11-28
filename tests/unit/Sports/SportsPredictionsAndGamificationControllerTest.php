@@ -6,6 +6,7 @@ namespace Tests\Unit\Sports;
 
 use App\Database\Migrations\CreatePredictionsAndGamificationTables;
 use App\Database\Migrations\CreateSportsBetTrackerAndUserSettingsTables;
+use App\Database\Migrations\CreateSportsPaperTradingAndScannerTables;
 use App\Database\Migrations\CreateSportsPropAnalyticsTables;
 use App\Database\Migrations\CreateSportsPropLinesTable;
 use App\Database\Migrations\CreateSportsQbWrMatchupTables;
@@ -18,6 +19,7 @@ require_once APPPATH . 'Database/Migrations/2026-11-27-000200_CreateSportsPropLi
 require_once APPPATH . 'Database/Migrations/2026-11-27-000300_CreateSportsQbWrMatchupTables.php';
 require_once APPPATH . 'Database/Migrations/2026-11-27-000400_CreateSportsBetTrackerAndUserSettingsTables.php';
 require_once APPPATH . 'Database/Migrations/2026-11-27-000500_CreatePredictionsAndGamificationTables.php';
+require_once APPPATH . 'Database/Migrations/2026-11-28-000400_CreateSportsPaperTradingAndScannerTables.php';
 
 final class SportsPredictionsAndGamificationControllerTest extends CIUnitTestCase
 {
@@ -48,6 +50,7 @@ final class SportsPredictionsAndGamificationControllerTest extends CIUnitTestCas
         (new CreateSportsQbWrMatchupTables(Database::forge()))->up();
         (new CreateSportsBetTrackerAndUserSettingsTables(Database::forge()))->up();
         (new CreatePredictionsAndGamificationTables(Database::forge()))->up();
+        (new CreateSportsPaperTradingAndScannerTables(Database::forge()))->up();
         $db->resetDataCache();
     }
 

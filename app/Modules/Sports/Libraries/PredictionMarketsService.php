@@ -303,21 +303,175 @@ class PredictionMarketsService
     }
 
     /**
+     * Executes a virtual paper-trading order on a prediction market.
+     * Deducts virtual credits, records order with is_paper_trade=1, and awards Gamification XP.
+     *
+     * @return array<string,mixed>
+     */
+    public function executePaperTrade(int $userId, int $marketId, string $outcome, float $amountCredits): array
+    {
+        if ($userId <= 0) {
+            throw new \InvalidArgumentException('Unauthenticated user cannot place prediction orders.');
+        }
+
+        $market = $this->getMarket($marketId);
+        if ($market === null) {
+            throw new \InvalidArgumentException('Market not found.');
+        }
+
+        $outcome = strtoupper(trim($outcome));
+        if (! in_array($outcome, ['YES', 'NO'], true)) {
+            $outcome = 'YES';
+        }
+
+        $price = $outcome === 'YES' ? (float) $market['yes_price'] : (float) $market['no_price'];
+        $price = max(0.01, min(0.99, $price));
+
+        $amountCredits = max(1.0, round($amountCredits, 2));
+
+        $tracker = new SportsBetTrackerService($this->db);
+        $currentBalance = $tracker->getPaperBalance($userId);
+
+        if ($currentBalance < $amountCredits) {
+            throw new \RuntimeException(sprintf('Insufficient virtual credits ($%.2f available, $%.2f requested).', $currentBalance, $amountCredits));
+        }
+
+        $sharesCount = round($amountCredits / $price, 4);
+        $potentialPayout = round($sharesCount * 1.00, 2);
+        $potentialRoi = round((($potentialPayout - $amountCredits) / $amountCredits) * 100.0, 1);
+
+        $newBalance = $tracker->updatePaperBalance($userId, -$amountCredits);
+
+        $now = date('Y-m-d H:i:s');
+        $orderData = [
+            'user_id'          => $userId,
+            'market_id'        => $marketId,
+            'outcome'          => $outcome,
+            'shares_count'     => $sharesCount,
+            'share_price'      => $price,
+            'total_amount_usd' => $amountCredits,
+            'platform_fee_usd' => 0.0000,
+            'tx_signature'     => 'PAPER_' . strtoupper(bin2hex(random_bytes(6))),
+            'wallet_address'   => 'virtual://paper-account',
+            'is_paper_trade'   => 1,
+            'status'           => 'confirmed',
+            'settled_payout'   => 0.00,
+            'created_at'       => $now,
+            'updated_at'       => $now,
+        ];
+
+        $this->db->table(self::T_ORDERS)->insert($orderData);
+        $orderId = (int) $this->db->insertID();
+
+        // Award Gamification XP points (15 XP per paper trade)
+        $this->awardPredictionXp($userId, 15);
+
+        return [
+            'order_id'         => $orderId,
+            'market_title'     => $market['title'],
+            'outcome'          => $outcome,
+            'price_cents'      => (int) round($price * 100),
+            'shares'           => $sharesCount,
+            'amount_credits'   => $amountCredits,
+            'payout_credits'   => $potentialPayout,
+            'potential_roi'    => $potentialRoi,
+            'new_balance'      => $newBalance,
+            'xp_awarded'       => 15,
+            'is_paper_trade'   => true,
+            'status'           => 'confirmed',
+        ];
+    }
+
+    /**
+     * Resolves the user's available paper trading balance.
+     */
+    public function getPaperBalance(int $userId): float
+    {
+        $tracker = new SportsBetTrackerService($this->db);
+        return $tracker->getPaperBalance($userId);
+    }
+
+    /**
+     * Resets paper trading balance to 1,000 virtual credits.
+     */
+    public function resetPaperBalance(int $userId): float
+    {
+        $tracker = new SportsBetTrackerService($this->db);
+        return $tracker->resetPaperBalance($userId, 1000.00);
+    }
+
+    /**
+     * Awards social gamification XP points to user profile.
+     */
+    public function awardPredictionXp(int $userId, int $xp): void
+    {
+        if ($userId <= 0 || ! $this->db->tableExists(GamificationLeaderboardService::TABLE, false)) {
+            return;
+        }
+
+        $now = date('Y-m-d H:i:s');
+        $row = $this->db->table(GamificationLeaderboardService::TABLE)
+            ->where('user_id', $userId)
+            ->where('season_year', 2025)
+            ->get()
+            ->getRowArray();
+
+        if ($row === null) {
+            $this->db->table(GamificationLeaderboardService::TABLE)->insert([
+                'user_id'           => $userId,
+                'username'          => 'User_' . $userId,
+                'avatar_badge'      => 'rookie',
+                'tier_level'        => 1,
+                'season_year'       => 2025,
+                'virtual_bankroll'  => 2500.00,
+                'total_predictions' => 1,
+                'won_predictions'   => 0,
+                'lost_predictions'  => 0,
+                'win_rate_pct'      => 0.00,
+                'net_roi_pct'       => 0.00,
+                'current_streak'    => 0,
+                'best_streak'       => 0,
+                'xp_points'         => $xp,
+                'created_at'        => $now,
+                'updated_at'        => $now,
+            ]);
+        } else {
+            $newXp = (int) ($row['xp_points'] ?? 0) + $xp;
+            $tier = $newXp >= 15000 ? 5 : ($newXp >= 10000 ? 4 : ($newXp >= 5000 ? 3 : ($newXp >= 2000 ? 2 : 1)));
+            $this->db->table(GamificationLeaderboardService::TABLE)
+                ->where('id', $row['id'])
+                ->update([
+                    'xp_points'         => $newXp,
+                    'tier_level'        => $tier,
+                    'total_predictions' => (int) ($row['total_predictions'] ?? 0) + 1,
+                    'updated_at'        => $now,
+                ]);
+        }
+    }
+
+    /**
      * Lists user prediction orders with fail-closed isolation.
      *
      * @return list<array<string,mixed>>
      */
-    public function listUserOrders(int $userId): array
+    public function listUserOrders(int $userId, ?string $mode = 'all'): array
     {
         if ($userId <= 0 || ! $this->tablesReady()) {
             return [];
         }
 
-        return $this->db->table(self::T_ORDERS . ' o')
+        $b = $this->db->table(self::T_ORDERS . ' o')
             ->select('o.*, m.title as market_title, m.category as market_category, m.provider as market_provider, m.chain as market_chain')
             ->join(self::T_MARKETS . ' m', 'm.id = o.market_id', 'left')
-            ->where('o.user_id', $userId)
-            ->orderBy('o.id', 'DESC')
+            ->where('o.user_id', $userId);
+
+        if ($mode === 'paper') {
+            $b->where('o.is_paper_trade', 1);
+        } elseif ($mode === 'web3') {
+            $b->where('o.is_paper_trade', 0);
+        }
+
+        return $b->orderBy('o.id', 'DESC')
             ->limit(50)
             ->get()
             ->getResultArray();

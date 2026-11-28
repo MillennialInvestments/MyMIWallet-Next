@@ -215,6 +215,7 @@ $currency = $summary['currency'] ?? 'USD';
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
+                                        <button type="button" class="btn btn-outline-info btn-sm py-0 px-1" onclick="openShareModal('<?= esc($b['sport'], 'js') ?>', '<?= esc($b['selection'], 'js') ?>', '<?= esc($b['event_description'], 'js') ?>', <?= (int) $odds ?>, <?= (float) $stake ?>, '<?= esc($b['sportsbook'], 'js') ?>', '<?= esc($status, 'js') ?>', <?= (float) $pnl ?>)" title="Share Bet Card"><i class="bi bi-share"></i></button>
                                         <?php if ($status === 'open'): ?>
                                             <form method="post" action="<?= site_url('My-Bets/UpdateStatus/' . (int) $b['id']) ?>" class="d-inline">
                                                 <?= csrf_field() ?>
@@ -373,4 +374,158 @@ $currency = $summary['currency'] ?? 'USD';
             </div>
         </div>
     </div>
+
+    <!-- Modal: Share Bet Slip Card -->
+    <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="shareModalLabel"><i class="bi bi-share text-info me-2"></i> Share Verified Bet Card</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <canvas id="shareSlipCanvas" width="560" height="320" class="img-fluid rounded shadow-sm border mb-3"></canvas>
+
+                    <div class="mb-3 text-start">
+                        <label class="form-label small fw-semibold text-muted">Formatted Social Post (X / Telegram / Discord):</label>
+                        <div class="input-group">
+                            <textarea id="shareTextSnippet" class="form-control font-monospace small" rows="4" readonly></textarea>
+                            <button type="button" class="btn btn-outline-secondary" onclick="copyShareText()"><i class="bi bi-clipboard"></i> Copy</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light justify-content-between">
+                    <span class="small text-muted"><i class="bi bi-shield-check text-success"></i> Educational disclaimer watermarked</span>
+                    <div>
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary btn-sm fw-bold" onclick="downloadSlipImage()"><i class="bi bi-download me-1"></i> Download PNG Card</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script<?= script_nonce_attr() ?>>
+    function openShareModal(sport, selection, event, odds, stake, book, status, pnl) {
+        const oddsStr = odds > 0 ? '+' + odds : odds;
+        const statusUpper = status.toUpperCase();
+
+        // 1. Generate text snippet
+        const text = `🎯 MyMI Wallet Verified Edge\n` +
+            `🏆 ${sport} | ${selection}\n` +
+            `📅 Event: ${event}\n` +
+            `💰 Odds: ${oddsStr} (${book}) | Stake: $${stake.toFixed(2)}\n` +
+            `📊 Status: ${statusUpper}` + (statusUpper === 'WON' ? ` (+$${pnl.toFixed(2)})` : '') + `\n` +
+            `🔒 Analytics via mymiwallet.com/My-Bets\n` +
+            `⚠️ Educational analytics only. 1-800-GAMBLER.`;
+
+        document.getElementById('shareTextSnippet').value = text;
+
+        // 2. Render Graphic onto Canvas
+        const canvas = document.getElementById('shareSlipCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Background Gradient
+        const grad = ctx.createLinearGradient(0, 0, 560, 320);
+        grad.addColorStop(0, '#0f172a');
+        grad.addColorStop(1, '#1e293b');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 560, 320);
+
+        // Header Border / Top bar
+        ctx.fillStyle = '#10b981';
+        ctx.fillRect(0, 0, 560, 6);
+
+        // Logo / Title
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 20px system-ui, -apple-system, sans-serif';
+        ctx.fillText('MYMI WALLET', 24, 38);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '12px system-ui, -apple-system, sans-serif';
+        ctx.fillText('SPORTS QUANTITATIVE LEDGER', 170, 37);
+
+        // Status Badge in Canvas
+        const statusColor = statusUpper === 'WON' ? '#10b981' : (statusUpper === 'LOST' ? '#ef4444' : '#f59e0b');
+        ctx.fillStyle = statusColor;
+        ctx.beginPath();
+        ctx.roundRect(450, 18, 86, 26, 4);
+        ctx.fill();
+
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 12px system-ui, -apple-system, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(statusUpper, 493, 35);
+        ctx.textAlign = 'left';
+
+        // Sport Tag
+        ctx.fillStyle = '#38bdf8';
+        ctx.font = 'bold 13px system-ui, -apple-system, sans-serif';
+        ctx.fillText(sport.toUpperCase() + ' MATCHUP', 24, 76);
+
+        // Selection
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 22px system-ui, -apple-system, sans-serif';
+        const truncatedSelection = selection.length > 36 ? selection.substring(0, 34) + '...' : selection;
+        ctx.fillText(truncatedSelection, 24, 110);
+
+        // Event
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '14px system-ui, -apple-system, sans-serif';
+        const truncatedEvent = event.length > 44 ? event.substring(0, 42) + '...' : event;
+        ctx.fillText(truncatedEvent, 24, 138);
+
+        // Divider
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(24, 160);
+        ctx.lineTo(536, 160);
+        ctx.stroke();
+
+        // Metrics Row: Odds, Stake, Bookmaker
+        ctx.fillStyle = '#64748b';
+        ctx.font = '11px system-ui, -apple-system, sans-serif';
+        ctx.fillText('OFFERED ODDS', 24, 186);
+        ctx.fillText('STAKE AMOUNT', 170, 186);
+        ctx.fillText('SPORTSBOOK', 330, 186);
+
+        ctx.fillStyle = '#38bdf8';
+        ctx.font = 'bold 20px monospace';
+        ctx.fillText(oddsStr, 24, 214);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 20px monospace';
+        ctx.fillText('$' + stake.toFixed(2), 170, 214);
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = 'bold 18px system-ui, -apple-system, sans-serif';
+        ctx.fillText(book, 330, 214);
+
+        // Watermark Footer & Disclaimer
+        ctx.fillStyle = '#475569';
+        ctx.font = '10px system-ui, -apple-system, sans-serif';
+        ctx.fillText('Educational analytics only. MyMI Wallet does not accept wagers. 1-800-GAMBLER.', 24, 290);
+        ctx.fillText('mymiwallet.com', 460, 290);
+
+        const modal = new bootstrap.Modal(document.getElementById('shareModal'));
+        modal.show();
+    }
+
+    function copyShareText() {
+        const text = document.getElementById('shareTextSnippet');
+        text.select();
+        navigator.clipboard.writeText(text.value).then(() => {
+            alert('Bet slip text copied to clipboard!');
+        });
+    }
+
+    function downloadSlipImage() {
+        const canvas = document.getElementById('shareSlipCanvas');
+        const link = document.createElement('a');
+        link.download = 'mymi-betslip-' + Date.now() + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    }
+    </script>
 </section>
