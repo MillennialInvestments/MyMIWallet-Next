@@ -970,4 +970,211 @@ class ProjectsAdminController extends BaseAdminController
         }
     }
 
+    /** GET Management/Projects/Buyers: Cash Buyer CRM Management Console */
+    public function cashBuyersIndex()
+    {
+        $this->commonData();
+        $this->data['pageTitle'] = 'Cash Buyer CRM & Wholesale Dispo Network | MyMI Admin';
+
+        try {
+            $buyerModel = model(\App\Models\RealEstateCashBuyerModel::class);
+            $this->data['cashBuyers'] = $buyerModel->orderBy('proof_of_funds_verified', 'DESC')
+                ->orderBy('max_purchase_price', 'DESC')
+                ->findAll();
+        } catch (\Throwable $e) {
+            log_message('error', 'cashBuyersIndex error: ' . $e->getMessage());
+            $this->data['cashBuyers'] = [];
+        }
+
+        return $this->renderTheme('App\\Modules\\Management\\Views\\Projects\\buyers_page', $this->data);
+    }
+
+    /** GET/POST Management/Projects/Buyers/List: Return JSON array of active buyers */
+    public function cashBuyersList()
+    {
+        try {
+            $buyerModel = model(\App\Models\RealEstateCashBuyerModel::class);
+            $buyers = $buyerModel->where('status', 'active')
+                ->orderBy('proof_of_funds_verified', 'DESC')
+                ->findAll();
+            return $this->respond(['status' => 'ok', 'buyers' => $buyers]);
+        } catch (\Throwable $e) {
+            return $this->respond(['status' => 'error', 'message' => $e->getMessage()], 400);
+        }
+    }
+
+    /** POST Management/Projects/Buyers/Add: Register new institutional or private cash buyer */
+    public function addCashBuyer()
+    {
+        $in = $this->request->getPost() ?: $this->request->getJSON(true) ?: [];
+        $fullName = trim((string) ($in['full_name'] ?? ''));
+        $email = trim((string) ($in['email'] ?? ''));
+
+        if ($fullName === '' || $email === '') {
+            return $this->respond(['status' => 'error', 'message' => 'Full Name and Email are required.'], 400);
+        }
+
+        try {
+            $buyerModel = model(\App\Models\RealEstateCashBuyerModel::class);
+            $insertData = [
+                'full_name'                => $fullName,
+                'company_name'             => trim((string) ($in['company_name'] ?? '')),
+                'email'                    => $email,
+                'phone'                    => trim((string) ($in['phone'] ?? '')),
+                'buyer_type'               => trim((string) ($in['buyer_type'] ?? 'institutional_fund')),
+                'max_purchase_price'       => (float) ($in['max_purchase_price'] ?? 250000.0),
+                'min_roi_pct'              => (float) ($in['min_roi_pct'] ?? 10.0),
+                'target_zips'              => trim((string) ($in['target_zips'] ?? '71111, 71101, 71105')),
+                'target_cities'            => trim((string) ($in['target_cities'] ?? 'Bossier City, Shreveport')),
+                'proof_of_funds_verified'  => ! empty($in['proof_of_funds_verified']) ? 1 : 0,
+                'proof_of_funds_amount'    => (float) ($in['proof_of_funds_amount'] ?? 0.0),
+                'status'                   => 'active',
+                'notes'                    => trim((string) ($in['notes'] ?? '')),
+                'deals_received_count'     => 0,
+                'deals_closed_count'       => 0,
+            ];
+
+            $id = $buyerModel->insert($insertData);
+            return $this->respond(['status' => 'ok', 'id' => $id, 'message' => 'Cash buyer added successfully.']);
+        } catch (\Throwable $e) {
+            log_message('error', 'addCashBuyer error: ' . $e->getMessage());
+            return $this->respond(['status' => 'error', 'message' => $e->getMessage()], 400);
+        }
+    }
+
+    /** POST Management/Projects/Buyers/Match: Find buyers matching specific deal criteria */
+    public function matchBuyersForDeal()
+    {
+        $in = $this->request->getPost() ?: $this->request->getJSON(true) ?: [];
+        $price = (float) ($in['price'] ?? $in['end_buyer_price'] ?? 0.0);
+        $roi   = (float) ($in['roi'] ?? $in['end_buyer_roi_pct'] ?? 0.0);
+        $zip   = trim((string) ($in['zip'] ?? ''));
+
+        try {
+            $buyerModel = model(\App\Models\RealEstateCashBuyerModel::class);
+            $matched = $buyerModel->findMatchingBuyers($price, $roi, $zip);
+            return $this->respond([
+                'status'        => 'ok',
+                'matches_count' => count($matched),
+                'buyers'        => $matched,
+            ]);
+        } catch (\Throwable $e) {
+            return $this->respond(['status' => 'error', 'message' => $e->getMessage()], 400);
+        }
+    }
+
+    /** POST Management/Projects/Buyers/Broadcast: Dispatch deal package to selected cash buyers */
+    public function broadcastDealToBuyers()
+    {
+        $in = $this->request->getPost() ?: $this->request->getJSON(true) ?: [];
+        $buyerIds = $in['buyer_ids'] ?? [];
+        if (is_string($buyerIds)) {
+            $buyerIds = explode(',', $buyerIds);
+        }
+        $buyerIds = array_map('intval', (array) $buyerIds);
+        $buyerIds = array_filter($buyerIds, fn($id) => $id > 0);
+
+        if (empty($buyerIds)) {
+            return $this->respond(['status' => 'error', 'message' => 'No cash buyers selected for broadcast.'], 400);
+        }
+
+        try {
+            $buyerModel = model(\App\Models\RealEstateCashBuyerModel::class);
+            $buyerModel->recordBroadcast($buyerIds);
+
+            return $this->respond([
+                'status'          => 'ok',
+                'broadcast_count' => count($buyerIds),
+                'message'         => 'Deal packet successfully dispatched to ' . count($buyerIds) . ' verified cash buyers.',
+            ]);
+        } catch (\Throwable $e) {
+            return $this->respond(['status' => 'error', 'message' => $e->getMessage()], 400);
+        }
+    }
+
+    /** GET/POST Management/Projects/Quick-Analysis/Generate-Contract: Export LREC Assignment Agreement PDF */
+    public function downloadAssignmentContract()
+    {
+        $in = array_merge($this->request->getGet(), $this->request->getPost());
+
+        $deal = [
+            'address'               => $in['address'] ?? '1842 Barksdale Blvd',
+            'city'                  => $in['city'] ?? 'Bossier City',
+            'state'                 => $in['state'] ?? 'LA',
+            'zip'                   => $in['zip'] ?? '71111',
+            'contract_price'        => (float) ($in['contract_price'] ?? 42500.0),
+            'assignment_fee'        => (float) ($in['assignment_fee'] ?? 15000.0),
+            'earnest_money_deposit' => (float) ($in['earnest_deposit'] ?? 2500.0),
+            'days_to_close'         => (int) ($in['days_to_close'] ?? 14),
+            'sqft'                  => (int) ($in['sqft'] ?? 1820),
+            'beds'                  => (int) ($in['beds'] ?? 3),
+            'baths'                 => (float) ($in['baths'] ?? 2.0),
+            'title_escrow_agent'    => $in['title_escrow_agent'] ?? 'North Louisiana Title & Escrow, LLC',
+        ];
+
+        $buyer = [
+            'name'    => $in['buyer_name'] ?? 'Bayou Equity Capital Partners, LLC',
+            'company' => $in['buyer_company'] ?? 'Bayou Equity Fund I',
+            'phone'   => $in['buyer_phone'] ?? '318-555-0192',
+            'email'   => $in['buyer_email'] ?? 'acquisitions@bayouequity.com',
+            'address' => $in['buyer_address'] ?? '700 Texas St, Suite 400, Shreveport, LA 71101',
+        ];
+
+        try {
+            $docService = new \App\Services\RealEstateDocumentService();
+            $pdfPath = $docService->generateAssignmentContractPdf($deal, $buyer);
+
+            if (! file_exists($pdfPath)) {
+                return $this->respond(['status' => 'error', 'message' => 'PDF generation failed.'], 500);
+            }
+
+            $content = (string) file_get_contents($pdfPath);
+            return $this->response
+                ->setHeader('Content-Type', 'application/pdf')
+                ->setHeader('Content-Disposition', 'attachment; filename="' . basename($pdfPath) . '"')
+                ->setBody($content);
+        } catch (\Throwable $e) {
+            log_message('error', 'downloadAssignmentContract error: ' . $e->getMessage());
+            return $this->respond(['status' => 'error', 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    /** GET/POST Management/Projects/Quick-Analysis/Export-Dscr-Package: Export Lender DSCR Package PDF */
+    public function downloadDscrLenderPackage()
+    {
+        $in = array_merge($this->request->getGet(), $this->request->getPost());
+
+        $deal = [
+            'address'           => $in['address'] ?? '1842 Barksdale Blvd',
+            'city'              => $in['city'] ?? 'Bossier City',
+            'state'             => $in['state'] ?? 'LA',
+            'zip'               => $in['zip'] ?? '71111',
+            'purchase_price'    => (float) ($in['purchase_price'] ?? 42500.0),
+            'sqft'              => (int) ($in['sqft'] ?? 1820),
+            'beds'              => (int) ($in['beds'] ?? 3),
+            'baths'             => (float) ($in['baths'] ?? 2.0),
+            'renovation_budget' => (float) ($in['renovation_budget'] ?? 15000.0),
+            'appraised_arv'     => (float) ($in['appraised_arv'] ?? 125000.0),
+            'monthly_rent'      => (float) ($in['monthly_rent'] ?? 1485.0),
+        ];
+
+        try {
+            $docService = new \App\Services\RealEstateDocumentService();
+            $pdfPath = $docService->generateDscrLenderPackagePdf($deal);
+
+            if (! file_exists($pdfPath)) {
+                return $this->respond(['status' => 'error', 'message' => 'PDF generation failed.'], 500);
+            }
+
+            $content = (string) file_get_contents($pdfPath);
+            return $this->response
+                ->setHeader('Content-Type', 'application/pdf')
+                ->setHeader('Content-Disposition', 'attachment; filename="' . basename($pdfPath) . '"')
+                ->setBody($content);
+        } catch (\Throwable $e) {
+            log_message('error', 'downloadDscrLenderPackage error: ' . $e->getMessage());
+            return $this->respond(['status' => 'error', 'message' => $e->getMessage()], 500);
+        }
+    }
+
 }

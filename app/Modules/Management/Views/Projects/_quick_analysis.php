@@ -87,6 +87,21 @@
               </div>
             </div>
 
+            <div class="row g-2 mb-2">
+              <div class="col-4">
+                <label class="form-label small" for="qaSqft">Square Feet</label>
+                <input type="number" step="10" min="500" name="sqft" id="qaSqft" class="form-control form-control-sm" value="1820">
+              </div>
+              <div class="col-4">
+                <label class="form-label small" for="qaBeds">Beds</label>
+                <input type="number" step="1" min="1" max="10" name="bedrooms" id="qaBeds" class="form-control form-control-sm" value="3">
+              </div>
+              <div class="col-4">
+                <label class="form-label small" for="qaBaths">Baths</label>
+                <input type="number" step="0.5" min="1" max="10" name="bathrooms" id="qaBaths" class="form-control form-control-sm" value="2.0">
+              </div>
+            </div>
+
             <div class="mb-2">
               <label class="form-label small" for="qaCategory">Property Category</label>
               <select name="property_category" id="qaCategory" class="form-select form-select-sm">
@@ -483,11 +498,11 @@
             <div class="p-2 rounded bg-light border">
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <span class="small fw-bold text-dark">
-                  <em class="icon ni ni-send text-primary me-1"></em>1-Click Buyer Dispo Marketing Generators
+                  <em class="icon ni ni-send text-primary me-1"></em>1-Click Buyer Dispo &amp; Legal Contract Engines
                 </span>
                 <span class="badge bg-success-soft text-success small" id="dispoCopyFeedback" style="display:none;">Copied to clipboard!</span>
               </div>
-              <div class="d-flex gap-2">
+              <div class="d-flex flex-wrap gap-2 mb-2">
                 <button type="button" class="btn btn-sm btn-outline-primary flex-fill" id="btnCopySmsBlast">
                   <em class="icon ni ni-mobile me-1"></em><span>Copy SMS Deal Blast</span>
                 </button>
@@ -496,6 +511,14 @@
                 </button>
                 <button type="button" class="btn btn-sm btn-outline-secondary" id="btnToggleContractTerms" title="View Louisiana Assignment Checklist">
                   <em class="icon ni ni-file-text me-1"></em><span>Assignment Terms</span>
+                </button>
+              </div>
+              <div class="d-flex flex-wrap gap-2">
+                <button type="button" class="btn btn-sm btn-success flex-fill" id="btnDownloadAssignmentPdf">
+                  <em class="icon ni ni-file-pdf me-1"></em><span>Download LREC Assignment Agreement (PDF)</span>
+                </button>
+                <button type="button" class="btn btn-sm btn-primary flex-fill" id="btnExportDscrPdf">
+                  <em class="icon ni ni-file-pdf me-1"></em><span>Export DSCR Loan Package (PDF)</span>
                 </button>
               </div>
               <div class="mt-2 p-2 bg-white rounded border small text-muted" id="boxContractTerms" style="display: none; font-size: 0.72rem;">
@@ -509,6 +532,92 @@
             </div>
           </div>
         </div>
+
+        <!-- Title, Tax Lien & Encumbrance Due Diligence Checklist (Louisiana Focus) -->
+        <div class="card card-bordered mb-3 border-danger-subtle shadow-sm" id="cardDueDiligenceChecklist">
+          <div class="card-inner py-2 px-3 bg-lighter border-bottom d-flex justify-content-between align-items-center">
+            <h6 class="card-title mb-0 fs-13px text-dark">
+              <em class="icon ni ni-shield-check text-danger me-1"></em>Title, Tax Lien &amp; Encumbrance Due Diligence (Louisiana Focus)
+            </h6>
+            <span class="badge bg-danger-dim text-danger small">Risk Mitigation Standard</span>
+          </div>
+          <div class="card-inner p-3">
+            <div class="row g-2">
+              <!-- Item 1: Louisiana 3-Year Tax Sale Redemption -->
+              <div class="col-md-6">
+                <div class="border rounded p-2 bg-white h-100">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <strong class="text-danger small"><em class="icon ni ni-alert-circle me-1"></em>3-Yr Tax Redemption Period</strong>
+                    <span class="badge bg-outline-danger" style="font-size:0.65rem;">La. Const. Art. VII § 25</span>
+                  </div>
+                  <p class="small text-muted mb-1">
+                    Properties acquired through parish tax sales remain subject to a 3-year statutory redemption right by tax debtors. Requires title commitment or Monition proceeding before issuing merchantable title.
+                  </p>
+                  <div class="form-check form-switch small">
+                    <input class="form-check-input" type="checkbox" id="chkTaxRedemption">
+                    <label class="form-check-label text-dark" for="chkTaxRedemption">Confirmed &gt;3 Yrs Elapsed or Quitclaim Acquired</label>
+                  </div>
+                </div>
+              </div>
+              <!-- Item 2: Parish Clerk & Assessor Records Links -->
+              <div class="col-md-6">
+                <div class="border rounded p-2 bg-white h-100">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <strong class="text-primary small"><em class="icon ni ni-folder me-1"></em>Parish Conveyance &amp; Mortgage Search</strong>
+                    <span class="badge bg-outline-primary" style="font-size:0.65rem;">Direct Official Portals</span>
+                  </div>
+                  <p class="small text-muted mb-2">
+                    Verify chain of title, lis pendens filings, judgments, and current assessed ad valorem taxes:
+                  </p>
+                  <div class="d-flex flex-wrap gap-1">
+                    <a href="https://www.bossierassessor.org" target="_blank" class="btn btn-xs btn-outline-info">
+                      <em class="icon ni ni-external me-1"></em>Bossier Assessor
+                    </a>
+                    <a href="https://www.bossierclerk.com" target="_blank" class="btn btn-xs btn-outline-primary">
+                      <em class="icon ni ni-external me-1"></em>Bossier Clerk of Court
+                    </a>
+                    <a href="https://caddoassessor.org" target="_blank" class="btn btn-xs btn-outline-info">
+                      <em class="icon ni ni-external me-1"></em>Caddo Assessor
+                    </a>
+                    <a href="https://www.caddoclerk.com" target="_blank" class="btn btn-xs btn-outline-primary">
+                      <em class="icon ni ni-external me-1"></em>Caddo Clerk of Court
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <!-- Item 3: Senior vs Junior Lien Priority -->
+              <div class="col-md-6">
+                <div class="border rounded p-2 bg-white h-100">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <strong class="text-dark small"><em class="icon ni ni-file-docs me-1"></em>Senior Mortgage Lien Check</strong>
+                    <span class="badge bg-outline-warning" style="font-size:0.65rem;">1st vs 2nd Position</span>
+                  </div>
+                  <p class="small text-muted mb-1">
+                    Ensure foreclosure or distressed sale is from the senior 1st mortgage deed of trust. Foreclosure of a 2nd mortgage or HELOC does not wipe out the 1st mortgage balance.
+                  </p>
+                  <div class="form-check form-switch small">
+                    <input class="form-check-input" type="checkbox" id="chkFirstMortgage">
+                    <label class="form-check-label text-dark" for="chkFirstMortgage">1st Lien Position Verified (Zero Senior Encumbrances)</label>
+                  </div>
+                </div>
+              </div>
+              <!-- Item 4: Municipal Code & Weed Liens -->
+              <div class="col-md-6">
+                <div class="border rounded p-2 bg-white h-100">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <strong class="text-dark small"><em class="icon ni ni-building me-1"></em>City Code &amp; Demolition Liens</strong>
+                    <span class="badge bg-outline-secondary" style="font-size:0.65rem;">Municipal Ordinance</span>
+                  </div>
+                  <p class="small text-muted mb-1">
+                    Check Shreveport/Bossier City property standards department for unsafe structure notices, weed liens, demolition orders, or utility cutoff holds.
+                  </p>
+                  <div class="form-check form-switch small">
+                    <input class="form-check-input" type="checkbox" id="chkCityCode">
+                    <label class="form-check-label text-dark" for="chkCityCode">No Active Demolition or Environmental Liens</label>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1134,6 +1243,44 @@ document.addEventListener('DOMContentLoaded', function(){
     if (boxTerms) {
       boxTerms.style.display = boxTerms.style.display === 'none' ? 'block' : 'none';
     }
+  });
+
+  // Download LREC Assignment Agreement PDF
+  document.getElementById('btnDownloadAssignmentPdf')?.addEventListener('click', function(e){
+    e.preventDefault();
+    const params = new URLSearchParams({
+      address: inputAddress ? inputAddress.value.trim() : '1842 Barksdale Blvd',
+      city: inputCity ? inputCity.value.trim() : 'Bossier City',
+      state: inputState ? inputState.value.trim() : 'LA',
+      zip: inputZip ? inputZip.value.trim() : '71111',
+      contract_price: inputPurchase ? inputPurchase.value : '42500',
+      assignment_fee: inputFee ? inputFee.value : '15000',
+      earnest_deposit: inputEmd ? inputEmd.value : '2500',
+      days_to_close: inputDays ? inputDays.value : '14',
+      sqft: document.getElementById('qaSqft') ? document.getElementById('qaSqft').value : '1820',
+      beds: document.getElementById('qaBeds') ? document.getElementById('qaBeds').value : '3',
+      baths: document.getElementById('qaBaths') ? document.getElementById('qaBaths').value : '2.0',
+    });
+    window.location.href = '/Management/Projects/Quick-Analysis/Generate-Contract?' + params.toString();
+  });
+
+  // Export DSCR Loan Underwriting Package PDF
+  document.getElementById('btnExportDscrPdf')?.addEventListener('click', function(e){
+    e.preventDefault();
+    const params = new URLSearchParams({
+      address: inputAddress ? inputAddress.value.trim() : '1842 Barksdale Blvd',
+      city: inputCity ? inputCity.value.trim() : 'Bossier City',
+      state: inputState ? inputState.value.trim() : 'LA',
+      zip: inputZip ? inputZip.value.trim() : '71111',
+      purchase_price: inputPurchase ? inputPurchase.value : '42500',
+      sqft: document.getElementById('qaSqft') ? document.getElementById('qaSqft').value : '1820',
+      beds: document.getElementById('qaBeds') ? document.getElementById('qaBeds').value : '3',
+      baths: document.getElementById('qaBaths') ? document.getElementById('qaBaths').value : '2.0',
+      renovation_budget: inputReno ? inputReno.value : '15000',
+      appraised_arv: inputArv ? inputArv.value : '125000',
+      monthly_rent: inputLtrRent ? inputLtrRent.value : '1485',
+    });
+    window.location.href = '/Management/Projects/Quick-Analysis/Export-Dscr-Package?' + params.toString();
   });
 
   // Function to fetch and parse listing URL
