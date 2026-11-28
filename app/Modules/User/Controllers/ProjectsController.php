@@ -323,8 +323,16 @@ class ProjectsController extends BaseUserController
     public function realEstateMarketplace()
     {
         $this->data['pageTitle'] = 'Real Estate Private Equity & Syndication | MyMI Wallet';
-        $reModel = new \App\Models\ProjectsRealEstateModel();
-        $this->data['properties'] = $reModel->getActiveRealEstateProjects(50);
+        $this->data['layout'] = 'public';
+
+        try {
+            $reModel = new \App\Models\ProjectsRealEstateModel();
+            $this->data['properties'] = $reModel->getActiveRealEstateProjects(50);
+        } catch (\Throwable $e) {
+            log_message('error', 'ProjectsController::realEstateMarketplace error: ' . $e->getMessage());
+            $this->data['properties'] = [];
+        }
+
         return $this->renderTheme('App\\Modules\\User\\Views\\Projects\\real_estate_marketplace', $this->data);
     }
 
@@ -336,14 +344,23 @@ class ProjectsController extends BaseUserController
             throw PageNotFoundException::forPageNotFound('Project not found.');
         }
 
-        $reModel = new \App\Models\ProjectsRealEstateModel();
-        $property = $reModel->getByProjectId($projectId);
+        $property = null;
+        $revenues = [];
+        $totals = ['total_gross' => 0.0, 'total_distributed' => 0.0, 'periods_count' => 0];
 
-        $revModel = new \App\Models\ProjectsRealEstateRevenueModel();
-        $revenues = $revModel->getRevenuesByProject($projectId, 20);
-        $totals = $revModel->getProjectDistributedTotals($projectId);
+        try {
+            $reModel = new \App\Models\ProjectsRealEstateModel();
+            $property = $reModel->getByProjectId($projectId);
 
-        $this->data['pageTitle'] = esc($project['name'] ?? $project['title']) . ' | Real Estate Syndication';
+            $revModel = new \App\Models\ProjectsRealEstateRevenueModel();
+            $revenues = $revModel->getRevenuesByProject($projectId, 20);
+            $totals = $revModel->getProjectDistributedTotals($projectId);
+        } catch (\Throwable $e) {
+            log_message('error', 'ProjectsController::realEstateDetail error: ' . $e->getMessage());
+        }
+
+        $this->data['layout'] = 'public';
+        $this->data['pageTitle'] = esc($project['name'] ?? $project['title'] ?? 'Real Estate Property') . ' | Real Estate Syndication';
         $this->data['project'] = $project;
         $this->data['property'] = $property;
         $this->data['revenues'] = $revenues;
