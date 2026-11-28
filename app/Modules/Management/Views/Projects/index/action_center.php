@@ -63,12 +63,12 @@
         <div class="nk-wg-action">
             <div class="nk-wg-action-content">
                 <em class="icon ni ni-users text-warning"></em>
-                <div class="title">Cash Buyer Dispo Match</div>
-                <p class="small text-muted mb-0">Match wholesale contracts with pre-screened cash buyers across Bossier City and Caddo.</p>
+                <div class="title">Cash Buyer CRM &amp; Dispo Desk</div>
+                <p class="small text-muted mb-0">Match wholesale contracts and broadcast packages to verified cash buyers across Ark-La-Tex.</p>
             </div>
-            <a href="<?= site_url('Management/Projects/Quick-Analysis'); ?>" class="btn btn-warning btn-sm text-dark">
-                <em class="icon ni ni-bolt"></em>
-                <span>Dispo Desk</span>
+            <a href="<?= site_url('Management/Projects/Buyers'); ?>" class="btn btn-warning btn-sm text-dark">
+                <em class="icon ni ni-users"></em>
+                <span>Buyer CRM</span>
             </a>
         </div>
     </div><!-- .card-inner -->

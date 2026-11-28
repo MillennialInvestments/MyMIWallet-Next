@@ -56,6 +56,9 @@ $metrics = $reMetrics ?? [
             </div>
         </div>
         <div class="nk-block-head-content">
+            <a href="<?= site_url('Management/Projects/Buyers') ?>" class="btn btn-outline-warning text-dark me-2">
+                <em class="icon ni ni-users"></em><span>Buyer CRM</span>
+            </a>
             <a href="<?= site_url('Management/Projects/Deal-Finder') ?>" class="btn btn-outline-danger me-2">
                 <em class="icon ni ni-search"></em><span>Distressed Deal Finder</span>
             </a>
