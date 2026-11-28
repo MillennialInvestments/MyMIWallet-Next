@@ -310,6 +310,52 @@ class ProjectsAdminController extends BaseAdminController
         log_message('debug', 'ProjectsController::add - Method End');
     }
 
+    /** GET Management/Projects/Quick-Analysis: Interactive AI Underwriting Dashboard */
+    public function realEstateQuickAnalysis()
+    {
+        $this->data['pageTitle'] = 'AIOps Real Estate Quick-Analysis | MyMI Admin';
+        return $this->renderTheme('App\\Modules\\Management\\Views\\Projects\\quick_analysis_page', $this->data);
+    }
+
+    /** POST Management/Projects/Quick-Analysis/Analyze: Run AIOps analysis via AJAX */
+    public function runQuickAnalysis()
+    {
+        $input = $this->request->getPost() ?: $this->request->getJSON(true) ?: [];
+        $actorId = (int) ($this->cuID ?? 1);
+
+        try {
+            $underwriter = new \App\Services\RealEstateAiUnderwriterService();
+            $result = $underwriter->analyze($input, $actorId);
+            return $this->respond($result);
+        } catch (\Throwable $e) {
+            log_message('error', 'runQuickAnalysis error: ' . $e->getMessage());
+            return $this->fail('AIOps analysis error: ' . $e->getMessage(), 400);
+        }
+    }
+
+    /** POST Management/Projects/Quick-Analysis/Publish: Publish analyzed deal directly to marketplace */
+    public function publishQuickAnalysis()
+    {
+        helper(['form']);
+        $in = $this->request->getPost() ?: [];
+        $actorId = (int) ($this->cuID ?? 1);
+
+        try {
+            $dealService = new \App\Services\RealEstateDealService();
+            $result = $dealService->intakePropertyDeal($actorId, $in);
+
+            if ($result['ok'] ?? false) {
+                return redirect()->to(site_url('Projects/Real-Estate/' . (int) $result['project_id']))
+                    ->with('success', 'Real Estate Project approved, underwritten, and published live to community marketplace!');
+            }
+
+            return redirect()->back()->with('error', $result['error'] ?? 'Failed to publish project.');
+        } catch (\Throwable $e) {
+            log_message('error', 'publishQuickAnalysis error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Publish error: ' . $e->getMessage());
+        }
+    }
+
     public function realEstateQuickIntake()
     {
         $this->data['pageTitle'] = 'Quick Property Intake';

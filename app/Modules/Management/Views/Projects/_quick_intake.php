@@ -9,7 +9,12 @@
   <?= csrf_field(); ?>
   <div class="d-flex justify-content-between align-items-center mb-2">
     <h5 class="mb-0">Real Estate Property Sourcing & Underwriting</h5>
-    <span class="badge bg-primary">Timothy Burks Incorporated, LLC.</span>
+    <div class="d-flex gap-2 align-items-center">
+      <a href="<?= site_url('Management/Projects/Quick-Analysis') ?>" class="btn btn-sm btn-outline-primary">
+        <em class="icon ni ni-spark"></em><span>Open AIOps Quick-Analysis</span>
+      </a>
+      <span class="badge bg-primary">Timothy Burks Incorporated, LLC.</span>
+    </div>
   </div>
   <p class="text-muted small mb-1">Paste a Zillow/listing link or enter an address. Optionally enable instant pro forma underwriting to structure an Airbnb or commercial co-investment deal.</p>
   <p class="small text-soft mb-3"><strong>Operating Managers &amp; Co-Owners:</strong> Timothy Burks &amp; AnneAlicia Burks &bull; Bossier City, Louisiana</p>
