@@ -220,10 +220,59 @@ class ProjectsAdminController extends BaseAdminController
     // Views
     public function index()
     {
-        $this->data['pageTitle'] = 'MyMI Dashboard | MyMI Wallet | The Future of Finance';
+        $this->data['pageTitle'] = 'Real Estate & Project Operations Mission Control | MyMI Admin';
         $this->commonData();
         $this->data['useDataTables'] = true;
         $this->data['useProjectListDT'] = true;
+
+        $realEstateProjects = [];
+        $reMetrics = [
+            'total_portfolio_value'   => 0.0,
+            'active_properties_count' => 0,
+            'total_projected_noi'     => 0.0,
+            'wholesale_pipeline_count'=> 0,
+            'str_count'               => 0,
+            'ltr_count'               => 0,
+            'commercial_count'        => 0,
+        ];
+
+        try {
+            $reModel = new \App\Models\ProjectsRealEstateModel();
+            $realEstateProjects = $reModel->getActiveRealEstateProjects(100);
+
+            foreach ($realEstateProjects as $rep) {
+                $reMetrics['active_properties_count']++;
+                $val = (float) ($rep['purchase_price'] ?? $rep['target_acquisition_cost'] ?? $rep['total_acquisition_cost'] ?? 0);
+                $reMetrics['total_portfolio_value'] += $val;
+                $noi = (float) ($rep['projected_annual_noi'] ?? 0);
+                $reMetrics['total_projected_noi'] += $noi;
+
+                $cat = $rep['property_category'] ?? 'residential_str';
+                if ($cat === 'wholesale_flip') {
+                    $reMetrics['wholesale_pipeline_count']++;
+                } elseif ($cat === 'residential_ltr') {
+                    $reMetrics['ltr_count']++;
+                } elseif ($cat === 'commercial_lease') {
+                    $reMetrics['commercial_count']++;
+                } else {
+                    $reMetrics['str_count']++;
+                }
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'ProjectsAdminController::index real estate error: ' . $e->getMessage());
+        }
+
+        $inboxSubmissions = [];
+        try {
+            $inboxSubmissions = $this->projectsModel->getRecentInboxSubmissions(25);
+        } catch (\Throwable $e) {
+            log_message('error', 'ProjectsAdminController::index inbox error: ' . $e->getMessage());
+        }
+
+        $this->data['realEstateProjects'] = $realEstateProjects;
+        $this->data['reMetrics']          = $reMetrics;
+        $this->data['inboxSubmissions']   = $inboxSubmissions;
+
         return $this->renderTheme('App\Modules\Management\Views\Projects\index', $this->data);
     }
 
@@ -495,6 +544,61 @@ class ProjectsAdminController extends BaseAdminController
         }
 
         return redirect()->back()->with('success','Submitted! We’re fetching public details now.');
+    }
+
+    /** GET Management/Projects/Deal-Finder: Distressed sourcing across 5 platforms */
+    public function dealFinder()
+    {
+        $this->commonData();
+        $this->data['pageTitle'] = 'Distressed Property & Section 8 Deal Finder | MyMI Admin';
+
+        try {
+            $finderService = new \App\Services\RealEstateDealFinderService();
+            $defaultResults = $finderService->searchDistressedOpportunities([
+                'max_price' => 50000,
+                'min_sqft'  => 1700,
+                'beds'      => 3,
+                'zip'       => '71111',
+            ]);
+            $this->data['dealFinderData'] = $defaultResults;
+        } catch (\Throwable $e) {
+            log_message('error', 'dealFinder error: ' . $e->getMessage());
+            $this->data['dealFinderData'] = [];
+        }
+
+        return $this->renderTheme('App\\Modules\\Management\\Views\\Projects\\deal_finder_page', $this->data);
+    }
+
+    /** POST Management/Projects/Deal-Finder/Search: Run search across 5 platforms via AJAX */
+    public function searchDistressedDeals()
+    {
+        $input = $this->request->getPost() ?: $this->request->getJSON(true) ?: [];
+        try {
+            $finderService = new \App\Services\RealEstateDealFinderService();
+            $results = $finderService->searchDistressedOpportunities($input);
+            return $this->respond($results);
+        } catch (\Throwable $e) {
+            log_message('error', 'searchDistressedDeals error: ' . $e->getMessage());
+            return $this->fail('Search error: ' . $e->getMessage(), 400);
+        }
+    }
+
+    /** POST Management/Projects/Deal-Finder/Hud-Fmr: Fetch HUD Fair Market Rent by ZIP */
+    public function hudFairMarketRent()
+    {
+        $input = $this->request->getPost() ?: $this->request->getJSON(true) ?: [];
+        $zip = trim((string) ($input['zip'] ?? '71111'));
+        try {
+            $finderService = new \App\Services\RealEstateDealFinderService();
+            $hudFmr = $finderService->getHudFairMarketRent($zip);
+            return $this->respond([
+                'status' => 'ok',
+                'data'   => $hudFmr,
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'hudFairMarketRent error: ' . $e->getMessage());
+            return $this->fail('HUD FMR error: ' . $e->getMessage(), 400);
+        }
     }
     
     public function viewProject($projectID = null)

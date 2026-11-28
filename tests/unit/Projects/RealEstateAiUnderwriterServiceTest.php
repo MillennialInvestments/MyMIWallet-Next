@@ -116,4 +116,43 @@ class RealEstateAiUnderwriterServiceTest extends CIUnitTestCase
         $this->assertSame(100.0, $analysis['crowdfund_structure']['unit_nav_usd']);
         $this->assertGreaterThan(0, $analysis['crowdfund_structure']['total_units_issued']);
     }
+
+    public function testUnderwriteWholesaleContractFlipAndMatchBuyers(): void
+    {
+        $input = [
+            'title'               => 'Mark Ave Wholesale Flip',
+            'property_category'   => 'wholesale_flip',
+            'address_line1'       => '1279 Mark Ave',
+            'city'                => 'Bossier City',
+            'state'               => 'LA',
+            'postal_code'         => '71112',
+            'purchase_price'      => 135000.0,
+            'contract_price'      => 135000.0,
+            'arv'                 => 210000.0,
+            'renovation_budget'   => 20000.0,
+            'assignment_fee'      => 15000.0,
+        ];
+
+        $analysis = $this->underwriter->analyze($input, 1);
+
+        $this->assertSame('ok', $analysis['status']);
+        $this->assertSame('Wholesale Contract Flip & Cash Buyer Match', $analysis['property']['category_label']);
+
+        // Check wholesale pro forma
+        $this->assertArrayHasKey('wholesale_contract_flip', $analysis);
+        $this->assertSame(15000.0, $analysis['wholesale_contract_flip']['assignment_fee']);
+        $this->assertSame(150000.0, $analysis['wholesale_contract_flip']['end_buyer_price']);
+
+        // Check buyer matching engine (Tranchi-Style)
+        $this->assertArrayHasKey('matched_buyers', $analysis);
+        $this->assertCount(4, $analysis['matched_buyers']);
+        $this->assertSame('Fix & Flip Rehabber', $analysis['matched_buyers'][0]['buyer_type']);
+        $this->assertGreaterThan(80, $analysis['matched_buyers'][0]['match_score']);
+
+        // Check disposition marketing package
+        $this->assertArrayHasKey('dispo_package', $analysis);
+        $this->assertStringContainsString('EXCLUSIVE OFF-MARKET WHOLESALE', $analysis['dispo_package']['sms_blast']);
+        $this->assertStringContainsString('Timothy Burks Incorporated, LLC', $analysis['dispo_package']['email_pitch']);
+        $this->assertArrayHasKey('1. Contract Execution', $analysis['dispo_package']['assignment_checklist']);
+    }
 }

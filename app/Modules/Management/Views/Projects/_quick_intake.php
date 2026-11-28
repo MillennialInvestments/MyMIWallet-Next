@@ -10,6 +10,9 @@
   <div class="d-flex justify-content-between align-items-center mb-2">
     <h5 class="mb-0">Real Estate Property Sourcing & Underwriting</h5>
     <div class="d-flex gap-2 align-items-center">
+      <a href="<?= site_url('Management/Projects/Deal-Finder') ?>" class="btn btn-sm btn-outline-danger">
+        <em class="icon ni ni-search"></em><span>Distressed Deal Finder</span>
+      </a>
       <a href="<?= site_url('Management/Projects/Quick-Analysis') ?>" class="btn btn-sm btn-outline-primary">
         <em class="icon ni ni-spark"></em><span>Open AIOps Quick-Analysis</span>
       </a>

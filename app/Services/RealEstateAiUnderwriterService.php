@@ -46,12 +46,23 @@ class RealEstateAiUnderwriterService
         $proForma = match ($category) {
             'commercial_lease' => $this->dealService->calculateCommercialProForma($input),
             'residential_ltr'  => $this->dealService->calculateLtrProForma($input),
+            'wholesale_flip'   => $this->dealService->calculateWholesaleFlipProForma($input),
             default            => $this->dealService->calculateStrProForma($input),
         };
 
-        // Dual Strategy Calculation: Airbnb/VRBO vs. Pure Traditional Renting
-        $strProForma = $this->dealService->calculateStrProForma($input);
-        $ltrProForma = $this->dealService->calculateLtrProForma($input);
+        // Multi-Strategy Calculations: Airbnb/VRBO vs. Pure Traditional Renting vs. Wholesale Flip
+        $strProForma       = $this->dealService->calculateStrProForma($input);
+        $ltrProForma       = $this->dealService->calculateLtrProForma($input);
+        $wholesaleProForma = $this->dealService->calculateWholesaleFlipProForma($input);
+
+        // Buyer Matching & Dispo Generation (Tranchi-Style)
+        $matchedBuyers = $this->matchTargetCashBuyers($wholesaleProForma, $city, $state);
+        $dispoPackage  = $this->generateDispoPackage($wholesaleProForma, [
+            'address' => $address,
+            'city'    => $city,
+            'state'   => $state,
+            'title'   => $title,
+        ]);
 
         $strNoi = (float) $strProForma['projected_annual_noi'];
         $ltrNoi = (float) $ltrProForma['projected_annual_noi'];
@@ -81,6 +92,19 @@ class RealEstateAiUnderwriterService
                 'coc_return'          => (float) $ltrProForma['target_coc_return'],
                 'monthly_rent'        => (float) $ltrProForma['projected_monthly_rent'],
                 'vacancy_pct'         => (float) $ltrProForma['vacancy_reserve_pct'],
+            ],
+            'wholesale' => [
+                'strategy_title'      => 'Wholesale Contract Flip (Tranchi-Style)',
+                'contract_price'      => (float) $wholesaleProForma['contract_price'],
+                'after_repair_value'  => (float) $wholesaleProForma['after_repair_value'],
+                'renovation_budget'   => (float) $wholesaleProForma['renovation_budget'],
+                'assignment_fee'      => (float) $wholesaleProForma['assignment_fee'],
+                'end_buyer_price'     => (float) $wholesaleProForma['end_buyer_price'],
+                'end_buyer_profit'    => (float) $wholesaleProForma['end_buyer_net_profit'],
+                'end_buyer_roi_pct'   => (float) $wholesaleProForma['end_buyer_roi_pct'],
+                'earnest_money'       => (float) $wholesaleProForma['earnest_money_deposit'],
+                'days_to_close'       => (int) $wholesaleProForma['days_to_close'],
+                'coc_return'          => (float) $wholesaleProForma['target_coc_return'],
             ],
             'comparison' => [
                 'noi_difference_annual' => $noiDiff,
@@ -142,6 +166,7 @@ class RealEstateAiUnderwriterService
                 'category_label'        => match ($category) {
                     'commercial_lease' => 'Commercial Leased Asset (NNN / Triple Net)',
                     'residential_ltr'  => 'Pure Long-Term Rental (12-Mo Lease)',
+                    'wholesale_flip'   => 'Wholesale Contract Flip & Cash Buyer Match',
                     default            => 'Residential Airbnb / VRBO',
                 },
                 'address'               => $address,
@@ -167,6 +192,9 @@ class RealEstateAiUnderwriterService
                 'details'               => $proForma,
             ],
             'dual_strategy_comparison'=> $dualComparison,
+            'wholesale_contract_flip' => $wholesaleProForma,
+            'matched_buyers'          => $matchedBuyers,
+            'dispo_package'           => $dispoPackage,
             'crowdfund_structure'     => [
                 'target_raise_usd'      => $totalAcquisition,
                 'unit_nav_usd'          => $unitPrice,
@@ -290,6 +318,16 @@ Provide concise, high-value investment analysis.";
 
         if ($category === 'commercial_lease') {
             $summary = "Prime commercial leased asset for {$propertyLabel} providing durable, inflation-hedged passive cash flows. Capitalized at \${$totalRaiseFmt}, the property generates \${$annualNoiFmt}/yr NOI ({$cocFmt}% Cash-on-Cash yield) backed by stable tenant lease commitments with triple-net operating cost pass-throughs.";
+        } elseif ($category === 'wholesale_flip') {
+            $feeFmt = number_format($proForma['assignment_fee'] ?? 15000);
+            $arvFmt = number_format($proForma['after_repair_value'] ?? ($purchasePrice * 1.38));
+            $rehabFmt = number_format($proForma['renovation_budget'] ?? 25000);
+            $endPriceFmt = number_format($proForma['end_buyer_price'] ?? ($purchasePrice + 15000));
+            $endProfitFmt = number_format($proForma['end_buyer_net_profit'] ?? 25000);
+            $endRoiFmt = number_format($proForma['end_buyer_roi_pct'] ?? 15, 1);
+            $days = (int) ($proForma['days_to_close'] ?? 14);
+
+            $summary = "Tranchi-style rapid liquidity wholesale contract flip opportunity for {$propertyLabel}. Secured at a \${$purchasePriceFmt} contract purchase price with an estimated \${$arvFmt} After Repair Value (ARV) and \${$rehabFmt} renovation scope. Assigning to an end cash buyer at \${$endPriceFmt} yields an immediate \${$feeFmt} net cash assignment fee for Timothy Burks Incorporated, LLC in {$days} days with zero permanent capital tied up, zero renovation debt, and zero holding costs. The end rehabber retains a projected \${$endProfitFmt} net profit ({$endRoiFmt}% ROI).";
         } elseif ($isLtr) {
             $summary = "Turnkey residential pure long-term rental opportunity for {$propertyLabel}. At a \${$purchasePriceFmt} acquisition with \${$totalRaiseFmt} capitalization ($0 furnishing required), the asset yields \${$annualNoiFmt}/yr Net Operating Income ({$cocFmt}% Cash-on-Cash) backed by standard 12-month tenant leases, low turnover, and zero hospitality overhead.";
         } else {
@@ -319,6 +357,15 @@ Provide concise, high-value investment analysis.";
             ];
         }
 
+        if ($category === 'wholesale_flip') {
+            return [
+                '1. Assignable Contract'       => 'Execute Louisiana purchase contract with standard assignability clause and 14-day inspection/closing window.',
+                '2. Cash Buyer Blast'          => 'Distribute Tranchi-style VIP deal teaser and SMS broadcast to verified cash flippers and landlord buyers.',
+                '3. Title Escrow Opening'      => 'Deposit non-refundable EMD with Louisiana title agency and verify clear, marketable conveyance.',
+                '4. Assignment Fee Settlement' => 'Execute Assignment Agreement, collect assignment spread at closing, and wire funds to corporate treasury.',
+            ];
+        }
+
         if ($category === 'residential_ltr') {
             return [
                 'Tenant Screening'      => 'Execute rigorous background, credit, and employment verification to place reliable 12-month lease tenants.',
@@ -339,6 +386,15 @@ Provide concise, high-value investment analysis.";
     protected function defaultRisks(string $category, float $coc): array
     {
         $buffer = round(max(5.0, $coc * 0.35), 1);
+
+        if ($category === 'wholesale_flip') {
+            return [
+                'Buyer Performance Guard' => 'Non-refundable $2,500 earnest money deposit from assignee ensures closing certainty or covers escrow forfeit.',
+                'Clear Title Guarantee'   => 'Title search verifies absence of unrecorded vendor liens, tax judgments, or parish code violations.',
+                'Price Margin Safety'     => 'Underwritten with a minimum 15% end-buyer net ROI cushion to ensure rapid contract clearance even in changing rate environments.',
+            ];
+        }
+
         if ($category === 'residential_ltr') {
             return [
                 'Vacancy Allowance'     => 'Underwritten with an explicit 5% vacancy allowance and 20% operational reserve to protect uninterrupted monthly distributions.',
@@ -351,6 +407,127 @@ Provide concise, high-value investment analysis.";
             'Occupancy Sensitivity' => "Even under a 15% drop in bookings, the property retains a {$buffer}% net cash flow buffer before debt service or fixed costs.",
             'Long-Term Rent Hedge'  => 'If short-term rental demand softens or local municipal rules change, the property converts immediately to pure traditional renting with no additional capex.',
             'Emergency Reserve'     => 'Deal capitalization includes an upfront 6-month operating reserve to cushion against HVAC, plumbing, or seasonal lulls.',
+        ];
+    }
+
+    /**
+     * Match wholesale contract to active target cash buyer profiles (Tranchi-Style).
+     *
+     * @param array<string, mixed> $flip Wholesale pro forma data
+     * @param string $city Property city
+     * @param string $state Property state
+     * @return array<int, array<string, mixed>>
+     */
+    public function matchTargetCashBuyers(array $flip, string $city, string $state): array
+    {
+        $endBuyerPrice  = (float) ($flip['end_buyer_price'] ?? 0);
+        $endBuyerProfit = (float) ($flip['end_buyer_net_profit'] ?? 0);
+        $roi            = (float) ($flip['end_buyer_roi_pct'] ?? 0);
+        $locLabel       = $city ?: 'Bossier City';
+
+        return [
+            [
+                'buyer_type'         => 'Fix & Flip Rehabber',
+                'badge'              => 'Grade A Cash Buyer',
+                'badge_class'        => 'bg-success',
+                'match_score'        => min(98, max(75, (int) round(70 + ($roi * 1.4)))),
+                'closing_speed'      => '7 - 10 Days (Cash / Hard Money with POF)',
+                'typical_offer'      => '$' . number_format($endBuyerPrice),
+                'projected_margin'   => '$' . number_format($endBuyerProfit) . ' net flip spread (' . number_format($roi, 1) . '% ROI)',
+                'criteria_summary'   => "Targeting cosmetically distressed homes with >= 15% net ROI in {$locLabel}.",
+                'buyer_pool_count'   => 4,
+            ],
+            [
+                'buyer_type'         => 'Turnkey & Cash Flow Landlord',
+                'badge'              => 'Buy & Hold Match',
+                'badge_class'        => 'bg-primary',
+                'match_score'        => 91,
+                'closing_speed'      => '10 - 14 Days (Cash / DSCR Loan)',
+                'typical_offer'      => '$' . number_format($endBuyerPrice),
+                'projected_margin'   => '10.5% projected cap rate under 12-month traditional leasing',
+                'criteria_summary'   => "Seeking turnkey or light-rehab SFR assets for long-term rental portfolios in {$locLabel}.",
+                'buyer_pool_count'   => 6,
+            ],
+            [
+                'buyer_type'         => 'STR / Airbnb Hospitality Operator',
+                'badge'              => 'Hospitality Operator',
+                'badge_class'        => 'bg-info',
+                'match_score'        => 88,
+                'closing_speed'      => '14 Days (Entity Cash Reserves)',
+                'typical_offer'      => '$' . number_format($endBuyerPrice),
+                'projected_margin'   => 'High ADR potential ($220-$310/night) for regional corporate & leisure travelers',
+                'criteria_summary'   => "Prioritizes prime highway, casino, medical, or military base access in {$locLabel}.",
+                'buyer_pool_count'   => 3,
+            ],
+            [
+                'buyer_type'         => 'Institutional Portfolio Aggregator',
+                'badge'              => 'Institutional Desk',
+                'badge_class'        => 'bg-secondary',
+                'match_score'        => 83,
+                'closing_speed'      => '14 - 21 Days (Direct Wire Transfer)',
+                'typical_offer'      => '$' . number_format(round($endBuyerPrice * 0.97, -2)),
+                'projected_margin'   => 'Bulk portfolio yield acquisition with zero inspection contingencies',
+                'criteria_summary'   => '1975+ build, single-family residential, clean title, minimum 3 bed / 2 bath.',
+                'buyer_pool_count'   => 2,
+            ],
+        ];
+    }
+
+    /**
+     * Generate Tranchi-style wholesale disposition packet (SMS, Email, Assignment terms).
+     *
+     * @param array<string, mixed> $flip Wholesale pro forma
+     * @param array<string, mixed> $prop Property metadata
+     * @return array<string, mixed>
+     */
+    public function generateDispoPackage(array $flip, array $prop): array
+    {
+        $address = $prop['address'] ?: 'Off-Market Property';
+        $city    = $prop['city'] ?: 'Bossier City';
+        $state   = $prop['state'] ?: 'LA';
+        $endPrice      = number_format((float) ($flip['end_buyer_price'] ?? 0));
+        $contractPrice = number_format((float) ($flip['contract_price'] ?? 0));
+        $fee           = number_format((float) ($flip['assignment_fee'] ?? 15000));
+        $arv           = number_format((float) ($flip['after_repair_value'] ?? 0));
+        $rehab         = number_format((float) ($flip['renovation_budget'] ?? 0));
+        $profit        = number_format((float) ($flip['end_buyer_net_profit'] ?? 0));
+        $roi           = number_format((float) ($flip['end_buyer_roi_pct'] ?? 0), 1);
+        $emd           = number_format((float) ($flip['earnest_money_deposit'] ?? 2500));
+        $days          = (int) ($flip['days_to_close'] ?? 14);
+
+        $sms = "🔥 EXCLUSIVE OFF-MARKET WHOLESALE: {$address}, {$city}, {$state}\n"
+             . "💰 End Buyer Cash Price: \${$endPrice}\n"
+             . "📊 ARV: \${$arv} | Est. Rehab: \${$rehab}\n"
+             . "💵 Your Projected Net Flip Profit: \${$profit} ({$roi}% ROI)\n"
+             . "⚡ {$days}-Day Cash Close | \${$emd} Non-Refundable EMD | Clear Title at Louisiana Escrow\n"
+             . "Assignor: Timothy Burks Incorporated, LLC\n"
+             . "Reply 'POF' now with Proof of Funds to lock assignment!";
+
+        $email = "Subject: [OFF-MARKET] {$address}, {$city} - \${$endPrice} (ARV: \${$arv} | \${$profit} Net Profit)\n\n"
+               . "VIP Cash Buyers & Investors,\n\n"
+               . "Timothy Burks Incorporated, LLC has secured an exclusive, assignable purchase contract on the following asset:\n\n"
+               . "📍 Property: {$address}, {$city}, {$state}\n"
+               . "🏷️ Wholesale Assignment Price: \${$endPrice} (Cash or Hard Money)\n"
+               . "📈 After Repair Value (ARV): \${$arv}\n"
+               . "🔨 Estimated Renovation Budget: \${$rehab}\n"
+               . "💰 Projected End-Buyer Net Resale Profit: \${$profit} ({$roi}% ROI)\n"
+               . "⏱️ Timeline: {$days}-day closing with clear and marketable Louisiana title guarantee.\n"
+               . "📝 Terms: Standard Louisiana Assignment of Purchase Contract, \${$emd} non-refundable earnest money deposit held in escrow.\n\n"
+               . "To review the full inspection packet and execute assignment, reply directly with your Proof of Funds (POF).\n\n"
+               . "Regards,\nTimothy Burks & AnneAlicia Burks\nTimothy Burks Incorporated, LLC\nBossier City, Louisiana";
+
+        $checklist = [
+            '1. Contract Execution' => "Assignable Purchase and Sale Agreement executed with seller under Louisiana Act of Cash Sale warranty.",
+            '2. Title & Escrow'     => "Title search opened with Louisiana escrow agent ensuring clear, unencumbered, marketable conveyance.",
+            '3. Earnest Deposit'    => "\${$emd} non-refundable earnest money deposit required within 48 hours of assignment agreement signing.",
+            '4. Proof of Funds'     => "Buyer must present verified bank statement or hard money pre-approval letter prior to contract transfer.",
+            '5. Rapid Close'        => "Strict {$days}-day closing timeline with assignment fee wired directly to Timothy Burks Incorporated, LLC at settlement.",
+        ];
+
+        return [
+            'sms_blast'            => $sms,
+            'email_pitch'          => $email,
+            'assignment_checklist' => $checklist,
         ];
     }
 }

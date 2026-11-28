@@ -1784,6 +1784,12 @@ $routes->group('Management', ['namespace' => '\App\Modules\Management\Controller
         $routes->post('Quick-Intake', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::realEstateQuickSubmit');
         $routes->get('quick-intake', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::realEstateQuickIntake');
         $routes->post('quick-intake', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::realEstateQuickSubmit');
+        $routes->get('Deal-Finder', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::dealFinder');
+        $routes->get('deal-finder', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::dealFinder');
+        $routes->match(['GET', 'POST'], 'Deal-Finder/Search', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::searchDistressedDeals');
+        $routes->match(['GET', 'POST'], 'deal-finder/search', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::searchDistressedDeals');
+        $routes->match(['GET', 'POST'], 'Deal-Finder/Hud-Fmr', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::hudFairMarketRent');
+        $routes->match(['GET', 'POST'], 'deal-finder/hud-fmr', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::hudFairMarketRent');
         $routes->get('Distribution-Console/(:num)', 'ProjectsAdminController::distributionConsole/$1');
         $routes->get('distribution-console/(:num)', 'ProjectsAdminController::distributionConsole/$1');
         $routes->post('Execute-Distribution/(:num)', 'ProjectsAdminController::executeDistribution/$1');
