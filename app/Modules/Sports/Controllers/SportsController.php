@@ -364,7 +364,9 @@ class SportsController extends UserController
         }
 
         $opponent = $this->opponentParam();
-        $report = $svc->nbaPlayerReport($playerId, 2025, $opponent);
+        $userId = $this->activeUserId();
+        $quantWeights = $userId > 0 ? $this->betTracker()->getUserSettings($userId) : null;
+        $report = $svc->nbaPlayerReport($playerId, 2025, $opponent, [], $quantWeights);
         if ($report === null) {
             return redirect()->to(site_url('MyMISports/NBA'));
         }
@@ -424,7 +426,9 @@ class SportsController extends UserController
         }
 
         $opponent = $this->opponentParam() ?: 'COL';
-        $report = $svc->mlbPlayerReport($playerId, 2025, $opponent);
+        $userId = $this->activeUserId();
+        $quantWeights = $userId > 0 ? $this->betTracker()->getUserSettings($userId) : null;
+        $report = $svc->mlbPlayerReport($playerId, 2025, $opponent, $quantWeights);
         if ($report === null) {
             return redirect()->to(site_url('MyMISports/MLB'));
         }
@@ -484,7 +488,9 @@ class SportsController extends UserController
         }
 
         $opponent = $this->opponentParam() ?: 'SJS';
-        $report = $svc->nhlPlayerReport($playerId, 2025, $opponent);
+        $userId = $this->activeUserId();
+        $quantWeights = $userId > 0 ? $this->betTracker()->getUserSettings($userId) : null;
+        $report = $svc->nhlPlayerReport($playerId, 2025, $opponent, $quantWeights);
         if ($report === null) {
             return redirect()->to(site_url('MyMISports/NHL'));
         }
@@ -814,13 +820,15 @@ class SportsController extends UserController
         $svc = $this->predictionMarketsService();
         $category = (string) ($this->request->getGet('category') ?? 'all');
         $provider = (string) ($this->request->getGet('provider') ?? 'all');
+        $mode = (string) ($this->request->getGet('mode') ?? 'all');
 
         $svc->ensureSampleMarkets();
         $markets = $svc->listMarkets(
             $category === 'all' ? null : $category,
             $provider === 'all' ? null : $provider
         );
-        $userOrders = $userId > 0 ? $svc->listUserOrders($userId) : [];
+        $userOrders = $userId > 0 ? $svc->listUserOrders($userId, $mode) : [];
+        $paperBalance = $userId > 0 ? $svc->getPaperBalance($userId) : 1000.00;
 
         return $this->renderTheme('App\Modules\Sports\Views\predictions\index', [
             'pageTitle'      => 'Non-Custodial Prediction Markets Hub',
@@ -828,6 +836,8 @@ class SportsController extends UserController
             'userOrders'     => $userOrders,
             'activeCategory' => $category,
             'activeProvider' => $provider,
+            'activeMode'     => $mode,
+            'paperBalance'   => $paperBalance,
             'disclaimer'     => SportsPropsService::DISCLAIMER,
             'notice'         => session()->getFlashdata('sports_notice'),
         ]);
@@ -892,6 +902,75 @@ class SportsController extends UserController
                 'message' => $e->getMessage(),
             ]);
         }
+    }
+
+    public function paperTradePredictionOrder()
+    {
+        $userId = $this->activeUserId();
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Unauthenticated']);
+        }
+
+        $post = (array) ($this->request->getPost() ?: $this->request->getJSON(true) ?: []);
+        $marketId = (int) ($post['market_id'] ?? 0);
+        $outcome = (string) ($post['outcome'] ?? 'YES');
+        $amountCredits = (float) ($post['amount_credits'] ?? 10.0);
+
+        try {
+            $svc = $this->predictionMarketsService();
+            $svc->ensureSampleMarkets();
+            $result = $svc->executePaperTrade($userId, $marketId, $outcome, $amountCredits);
+
+            return $this->response->setJSON(array_merge(['success' => true], $result));
+        } catch (\Throwable $e) {
+            return $this->response->setStatusCode(400)->setJSON([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function resetPaperBalance()
+    {
+        $userId = $this->activeUserId();
+        if ($userId <= 0) {
+            return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Unauthenticated']);
+        }
+
+        $svc = $this->predictionMarketsService();
+        $newBal = $svc->resetPaperBalance($userId);
+
+        return $this->response->setJSON([
+            'success' => true,
+            'balance' => $newBal,
+            'message' => 'Virtual paper credits reset to 1,000.00 credits.',
+        ]);
+    }
+
+    public function valueFinder()
+    {
+        $sport = strtoupper(trim((string) ($this->request->getGet('sport') ?? 'ALL')));
+        $scanType = strtolower(trim((string) ($this->request->getGet('type') ?? 'all')));
+
+        $finder = new SportsValueFinderService($this->db);
+        $edges = $finder->getCachedEdges($sport === 'ALL' ? null : $sport, $scanType === 'all' ? null : $scanType);
+
+        return $this->renderTheme('App\Modules\Sports\Views\value_finder\index', [
+            'pageTitle'   => 'Automated +EV SGP & Market Arbitrage Radar',
+            'activeSport' => $sport,
+            'activeType'  => $scanType,
+            'edges'       => $edges,
+            'disclaimer'  => SportsPropsService::DISCLAIMER,
+            'notice'      => session()->getFlashdata('sports_notice'),
+        ]);
+    }
+
+    public function valueFinderScanApi()
+    {
+        $finder = new SportsValueFinderService($this->db);
+        $stats = $finder->refreshAndCacheScan();
+
+        return $this->response->setJSON(array_merge(['success' => true], $stats));
     }
 
     public function leaderboard()

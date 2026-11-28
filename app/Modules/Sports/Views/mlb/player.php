@@ -53,6 +53,25 @@ $games = $report['games'] ?? [];
         </div>
     </div>
 
+    <?php if (! empty($report['personalized_quant'])): ?>
+        <?php $pq = $report['personalized_quant']; ?>
+        <div class="alert alert-warning-subtle border border-warning-subtle py-2 px-3 mb-4 rounded-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-sliders text-warning fs-5"></i>
+                <div>
+                    <strong class="text-dark">Personalized Quant Model Active:</strong>
+                    <span class="text-muted small">Weights: Form (<?= $pq['weights']['form'] ?>%), Matchup (<?= $pq['weights']['matchup'] ?>%), Home/Away (<?= $pq['weights']['home_away'] ?>%), Venue (<?= $pq['weights']['venue'] ?>%).</span>
+                </div>
+            </div>
+            <div class="d-flex align-items-center gap-2 small">
+                <span class="badge bg-white text-dark border font-monospace">Baseline: <?= $pq['baseline_projection'] ?></span>
+                <i class="bi bi-arrow-right text-muted"></i>
+                <span class="badge bg-success text-white font-monospace">Personalized: <?= $pq['personalized_projection'] ?> (<?= $pq['edge_shift_pct'] >= 0 ? '+' : '' ?><?= $pq['edge_shift_pct'] ?>%)</span>
+                <span class="badge bg-secondary-subtle text-dark"><?= esc($pq['dominant_driver']) ?></span>
+            </div>
+        </div>
+    <?php endif; ?>
+
     <!-- Matchup & Park Impact Summary -->
     <div class="row g-3 mb-4">
         <div class="col-12 col-md-6 col-xl-4">

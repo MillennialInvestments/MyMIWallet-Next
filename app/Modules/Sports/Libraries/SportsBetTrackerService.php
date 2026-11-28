@@ -355,6 +355,7 @@ class SportsBetTrackerService
             'quant_matchup_weight'    => 0.40,
             'quant_home_away_weight'  => 0.15,
             'quant_venue_weight'      => 0.10,
+            'paper_balance_credits'   => 1000.00,
         ];
 
         if ($userId <= 0 || ! $this->tablesReady()) {
@@ -381,7 +382,109 @@ class SportsBetTrackerService
             'quant_matchup_weight'    => (float) ($row['quant_matchup_weight'] ?? 0.40),
             'quant_home_away_weight'  => (float) ($row['quant_home_away_weight'] ?? 0.15),
             'quant_venue_weight'      => (float) ($row['quant_venue_weight'] ?? 0.10),
+            'paper_balance_credits'   => (float) ($row['paper_balance_credits'] ?? 1000.00),
         ];
+    }
+
+    /**
+     * Resolves the user's available paper trading virtual credits balance.
+     */
+    public function getPaperBalance(int $userId): float
+    {
+        if ($userId <= 0 || ! $this->tablesReady()) {
+            return 1000.00;
+        }
+
+        try {
+            $row = $this->db->table('bf_sports_user_settings')
+                ->select('paper_balance_credits')
+                ->where('user_id', $userId)
+                ->get()
+                ->getRowArray();
+
+            return isset($row['paper_balance_credits']) ? (float) $row['paper_balance_credits'] : 1000.00;
+        } catch (\Throwable) {
+            return 1000.00;
+        }
+    }
+
+    /**
+     * Updates paper trading balance by delta (positive or negative).
+     */
+    public function updatePaperBalance(int $userId, float $delta): float
+    {
+        if ($userId <= 0 || ! $this->tablesReady()) {
+            return 1000.00;
+        }
+
+        try {
+            $current = $this->getPaperBalance($userId);
+            $newBalance = max(0.0, round($current + $delta, 2));
+
+            $existing = $this->db->table('bf_sports_user_settings')
+                ->where('user_id', $userId)
+                ->get()
+                ->getRowArray();
+
+            $now = date('Y-m-d H:i:s');
+            if ($existing === null) {
+                $this->db->table('bf_sports_user_settings')->insert([
+                    'user_id'               => $userId,
+                    'paper_balance_credits' => $newBalance,
+                    'created_at'            => $now,
+                    'updated_at'            => $now,
+                ]);
+            } else {
+                $this->db->table('bf_sports_user_settings')
+                    ->where('user_id', $userId)
+                    ->update([
+                        'paper_balance_credits' => $newBalance,
+                        'updated_at'            => $now,
+                    ]);
+            }
+
+            return $newBalance;
+        } catch (\Throwable) {
+            return 1000.00;
+        }
+    }
+
+    /**
+     * Resets paper trading balance to default 1,000 credits.
+     */
+    public function resetPaperBalance(int $userId, float $initial = 1000.00): float
+    {
+        if ($userId <= 0 || ! $this->tablesReady()) {
+            return $initial;
+        }
+
+        try {
+            $now = date('Y-m-d H:i:s');
+            $existing = $this->db->table('bf_sports_user_settings')
+                ->where('user_id', $userId)
+                ->get()
+                ->getRowArray();
+
+            if ($existing === null) {
+                $this->db->table('bf_sports_user_settings')->insert([
+                    'user_id'               => $userId,
+                    'paper_balance_credits' => $initial,
+                    'created_at'            => $now,
+                    'updated_at'            => $now,
+                ]);
+            } else {
+                $this->db->table('bf_sports_user_settings')
+                    ->where('user_id', $userId)
+                    ->update([
+                        'paper_balance_credits' => $initial,
+                        'updated_at'            => $now,
+                    ]);
+            }
+
+            return $initial;
+        } catch (\Throwable) {
+            return $initial;
+        }
     }
 
     /**

@@ -609,6 +609,11 @@ $agent                  = service('request')->getUserAgent();
                                     </a>
                                 </li>
                                 <li class="nk-menu-item">
+                                    <a href="<?php echo site_url('/My-Bets/Value-Finder'); ?>" class="nk-menu-link">
+                                        <span class="nk-menu-text">+EV Radar &amp; Arbitrage</span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
                                     <a href="<?php echo site_url('/My-Bets/Calculators'); ?>" class="nk-menu-link">
                                         <span class="nk-menu-text">+EV Calculators</span>
                                     </a>

@@ -53,8 +53,7 @@ class ProjectsRealEstateRevenueModel extends Model
         try {
             return $this->where('project_id', $projectId)
                 ->orderBy('reporting_period', 'DESC')
-                ->limit($limit)
-                ->findAll();
+                ->findAll($limit);
         } catch (\Throwable $e) {
             log_message('error', 'ProjectsRealEstateRevenueModel::getRevenuesByProject error: ' . $e->getMessage());
             return [];

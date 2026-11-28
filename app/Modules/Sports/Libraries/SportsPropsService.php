@@ -21,6 +21,92 @@ final class SportsPropsService
     public const DISCLAIMER = 'Educational analytics only, not betting advice. MyMI Wallet does not accept, place or broker wagers. '
         . 'Sports betting is regulated by each state; check your local laws. Gambling problem? Call 1-800-GAMBLER.';
 
+    /**
+     * Evaluates personalized quantitative model adjustment on a baseline projection.
+     * Incorporates user custom weights:
+     * - quant_form_weight: recent 3 games streak/momentum vs season average.
+     * - quant_matchup_weight: opponent defensive efficiency rank tier.
+     * - quant_home_away_weight: home venue advantage vs road disadvantage.
+     * - quant_venue_weight: ballpark dimensions, weather, or altitude factor.
+     *
+     * @param float $baseline
+     * @param array<string,float> $quantWeights
+     * @param array{recent_avg?:float, season_avg?:float, def_rank?:int, is_home?:bool, venue_factor?:float} $context
+     * @return array<string,mixed>
+     */
+    public static function evaluateQuantProjection(float $baseline, array $quantWeights = [], array $context = []): array
+    {
+        $wForm = (float) ($quantWeights['quant_form_weight'] ?? 0.25);
+        $wMatchup = (float) ($quantWeights['quant_matchup_weight'] ?? 0.25);
+        $wHomeAway = (float) ($quantWeights['quant_home_away_weight'] ?? 0.25);
+        $wVenue = (float) ($quantWeights['quant_venue_weight'] ?? 0.25);
+
+        $totalW = $wForm + $wMatchup + $wHomeAway + $wVenue;
+        if ($totalW <= 0.0) {
+            $wForm = $wMatchup = $wHomeAway = $wVenue = 0.25;
+            $totalW = 1.0;
+        }
+
+        // Normalize weights
+        $wForm /= $totalW;
+        $wMatchup /= $totalW;
+        $wHomeAway /= $totalW;
+        $wVenue /= $totalW;
+
+        // 1. Form Adjustment (last 3 games vs season average)
+        $recentAvg = (float) ($context['recent_avg'] ?? $baseline);
+        $seasonAvg = (float) ($context['season_avg'] ?? $baseline);
+        $formRatio = $seasonAvg > 0 ? max(0.70, min(1.30, $recentAvg / $seasonAvg)) : 1.0;
+        $formAdj = ($formRatio - 1.0) * ($wForm * 1.5);
+
+        // 2. Matchup Adjustment (opponent defensive rating: 1 tough, 32 weak)
+        $defRank = (int) ($context['def_rank'] ?? 16);
+        $matchupRaw = ($defRank - 16.0) / 16.0 * 0.12; // -12% to +12%
+        $matchupAdj = $matchupRaw * ($wMatchup * 2.0);
+
+        // 3. Home/Away Adjustment
+        $isHome = ! empty($context['is_home']);
+        $homeAwayRaw = $isHome ? 0.04 : -0.03;
+        $homeAwayAdj = $homeAwayRaw * ($wHomeAway * 2.0);
+
+        // 4. Venue / Park Factor Adjustment
+        $venueFactor = (float) ($context['venue_factor'] ?? 1.0);
+        $venueAdj = ($venueFactor - 1.0) * ($wVenue * 2.0);
+
+        // Net combined multiplier bounded between 0.70 and 1.35
+        $netMultiplier = max(0.70, min(1.35, 1.0 + $formAdj + $matchupAdj + $homeAwayAdj + $venueAdj));
+        $personalized = round($baseline * $netMultiplier, 1);
+        $edgeShiftPct = round(($netMultiplier - 1.0) * 100.0, 1);
+
+        // Determine dominant driver
+        $adjustments = [
+            'Recent Form Momentum'       => abs($formAdj),
+            'Matchup Defense Tier'       => abs($matchupAdj),
+            'Home/Away Court Split'      => abs($homeAwayAdj),
+            'Venue/Altitude Environment' => abs($venueAdj),
+        ];
+        arsort($adjustments);
+        $dominant = array_key_first($adjustments) ?: 'Baseline Balance';
+
+        return [
+            'active'                  => true,
+            'weights'                 => [
+                'form'      => round($wForm * 100, 1),
+                'matchup'   => round($wMatchup * 100, 1),
+                'home_away' => round($wHomeAway * 100, 1),
+                'venue'     => round($wVenue * 100, 1),
+            ],
+            'baseline_projection'     => $baseline,
+            'personalized_projection' => $personalized,
+            'net_multiplier'          => round($netMultiplier, 3),
+            'edge_shift_pct'          => $edgeShiftPct,
+            'dominant_driver'         => $dominant,
+            'verdict'                 => $edgeShiftPct >= 0
+                ? sprintf('+%.1f%% edge boost driven by %s.', $edgeShiftPct, $dominant)
+                : sprintf('%.1f%% conservative discount driven by %s.', $edgeShiftPct, $dominant),
+        ];
+    }
+
     /** @var array<string, list<array>> */
     private array $defenseCache = [];
 
@@ -255,7 +341,7 @@ final class SportsPropsService
      * Full report for one player: tagged games, tier splits, and (when an
      * opponent is given) a Goldilocks evaluation of the offered lines.
      */
-    public function playerReport(int $playerId, ?int $season = null, ?string $opponent = null, array $lines = []): ?array
+    public function playerReport(int $playerId, ?int $season = null, ?string $opponent = null, array $lines = [], ?array $customQuantWeights = null): ?array
     {
         $player = $this->findPlayer($playerId);
         if ($player === null) {
@@ -312,6 +398,30 @@ final class SportsPropsService
                 'known'               => $defense !== null,
             ];
             $report['goldilocks'] = GoldilocksEngine::evaluate($tagged, $defense ?? [], $lines, $pos);
+        }
+
+        if ($customQuantWeights !== null) {
+            $baseline = 0.0;
+            if ($pos === 'QB') {
+                $baseline = (float) ($splits['pass_yds']['overall']['avg'] ?? 250.0);
+            } elseif ($pos === 'WR' || $pos === 'TE') {
+                $baseline = (float) ($splits['rec_yds']['overall']['avg'] ?? 65.0);
+            } else {
+                $baseline = (float) ($splits['rush_yds']['overall']['avg'] ?? 75.0);
+            }
+            $recent = array_slice($tagged, -3);
+            $recentAvg = $baseline;
+            if ($recent !== []) {
+                $key = $pos === 'QB' ? 'pass_yds' : ($pos === 'WR' || $pos === 'TE' ? 'rec_yds' : 'rush_yds');
+                $recentAvg = array_sum(array_column($recent, $key)) / count($recent);
+            }
+            $defRank = (int) ($defense['rush_def_rank'] ?? 16);
+            $report['personalized_quant'] = self::evaluateQuantProjection($baseline, $customQuantWeights, [
+                'recent_avg' => $recentAvg,
+                'season_avg' => $baseline,
+                'def_rank'   => $defRank,
+                'is_home'    => true,
+            ]);
         }
 
         return $report;
@@ -631,7 +741,7 @@ final class SportsPropsService
     /**
      * @return array<string,mixed>|null
      */
-    public function nbaPlayerReport(int $playerId, ?int $season = null, ?string $opponent = null, array $lines = []): ?array
+    public function nbaPlayerReport(int $playerId, ?int $season = null, ?string $opponent = null, array $lines = [], ?array $customQuantWeights = null): ?array
     {
         if (! $this->nbaTablesReady()) {
             return null;
@@ -682,13 +792,29 @@ final class SportsPropsService
             $eval = GoldilocksEngine::evaluate($tagged, $oppDef, $lines, $player['position']);
         }
 
+        $quant = null;
+        if ($customQuantWeights !== null) {
+            $basePts = (float) ($splits['pts']['overall']['avg'] ?? 25.0);
+            $recent = array_slice($tagged, -3);
+            $recentPts = $recent !== [] ? array_sum(array_column($recent, 'pts')) / count($recent) : $basePts;
+            $oppDef = $defByTeam[strtoupper(trim((string) $opponent))] ?? [];
+            $defRank = (int) ($oppDef['pts_def_rank'] ?? 15);
+            $quant = self::evaluateQuantProjection($basePts, $customQuantWeights, [
+                'recent_avg' => $recentPts,
+                'season_avg' => $basePts,
+                'def_rank'   => $defRank,
+                'is_home'    => true,
+            ]);
+        }
+
         return [
-            'player'       => $player,
-            'season'       => $season,
-            'opponent'     => $opponent,
-            'tagged_games' => $tagged,
-            'splits'       => $splits,
-            'evaluation'   => $eval,
+            'player'             => $player,
+            'season'             => $season,
+            'opponent'           => $opponent,
+            'tagged_games'       => $tagged,
+            'splits'             => $splits,
+            'evaluation'         => $eval,
+            'personalized_quant' => $quant,
         ];
     }
 
@@ -1199,7 +1325,7 @@ final class SportsPropsService
     /**
      * @return array<string,mixed>|null
      */
-    public function mlbPlayerReport(int $playerId, ?int $season = null, ?string $opponent = null): ?array
+    public function mlbPlayerReport(int $playerId, ?int $season = null, ?string $opponent = null, ?array $customQuantWeights = null): ?array
     {
         if (! $this->mlbTablesReady()) {
             return null;
@@ -1228,15 +1354,31 @@ final class SportsPropsService
         $splits = $isPitcher ? MlbSplitsCalculator::pitcherSplits($games) : MlbSplitsCalculator::batterSplits($games);
         $f5 = $isPitcher ? MlbSplitsCalculator::f5Projection(3.20, 4.10, (float) ($park['run_factor'] ?? 1.0), true) : [];
 
+        $quant = null;
+        if ($customQuantWeights !== null) {
+            $baseVal = $isPitcher ? (float) ($splits['overall']['k_pg'] ?? 6.5) : (float) ($splits['overall']['total_bases_pg'] ?? 2.0);
+            $recent = array_slice($games, -3);
+            $key = $isPitcher ? 'strikeouts' : 'total_bases';
+            $recentAvg = $recent !== [] ? array_sum(array_column($recent, $key)) / count($recent) : $baseVal;
+            $quant = self::evaluateQuantProjection($baseVal, $customQuantWeights, [
+                'recent_avg'   => $recentAvg,
+                'season_avg'   => $baseVal,
+                'def_rank'     => 16,
+                'is_home'      => true,
+                'venue_factor' => (float) ($park['run_factor'] ?? 1.0),
+            ]);
+        }
+
         return [
-            'player'     => $player,
-            'is_pitcher' => $isPitcher,
-            'season'     => $season,
-            'opponent'   => $opp,
-            'park'       => $park,
-            'games'      => $games,
-            'splits'     => $splits,
-            'f5'         => $f5,
+            'player'             => $player,
+            'is_pitcher'         => $isPitcher,
+            'season'             => $season,
+            'opponent'           => $opp,
+            'park'               => $park,
+            'games'              => $games,
+            'splits'             => $splits,
+            'f5'                 => $f5,
+            'personalized_quant' => $quant,
         ];
     }
 
@@ -1478,7 +1620,7 @@ final class SportsPropsService
     /**
      * @return array<string,mixed>|null
      */
-    public function nhlPlayerReport(int $playerId, ?int $season = null, ?string $opponent = null): ?array
+    public function nhlPlayerReport(int $playerId, ?int $season = null, ?string $opponent = null, ?array $customQuantWeights = null): ?array
     {
         if (! $this->nhlTablesReady()) {
             return null;
@@ -1507,15 +1649,30 @@ final class SportsPropsService
         $splits = $isGoalie ? [] : NhlSplitsCalculator::skaterSplits($games, $defByTeam);
         $specialTeams = NhlSplitsCalculator::specialTeamsEdge(26.5, (float) ($oppDef['pk_pct'] ?? 80.0));
 
+        $quant = null;
+        if ($customQuantWeights !== null) {
+            $baseVal = $isGoalie ? 28.5 : (float) ($splits['overall']['sog_pg'] ?? 3.5);
+            $recent = array_slice($games, -3);
+            $key = $isGoalie ? 'saves' : 'shots_on_goal';
+            $recentAvg = $recent !== [] ? array_sum(array_column($recent, $key)) / count($recent) : $baseVal;
+            $quant = self::evaluateQuantProjection($baseVal, $customQuantWeights, [
+                'recent_avg' => $recentAvg,
+                'season_avg' => $baseVal,
+                'def_rank'   => (int) ($oppDef['shot_suppression_rank'] ?? 16),
+                'is_home'    => true,
+            ]);
+        }
+
         return [
-            'player'        => $player,
-            'is_goalie'     => $isGoalie,
-            'season'        => $season,
-            'opponent'      => $opp,
-            'opp_defense'   => $oppDef,
-            'games'         => $games,
-            'splits'        => $splits,
-            'special_teams' => $specialTeams,
+            'player'             => $player,
+            'is_goalie'          => $isGoalie,
+            'season'             => $season,
+            'opponent'           => $opp,
+            'opp_defense'        => $oppDef,
+            'games'              => $games,
+            'splits'             => $splits,
+            'special_teams'      => $specialTeams,
+            'personalized_quant' => $quant,
         ];
     }
 
