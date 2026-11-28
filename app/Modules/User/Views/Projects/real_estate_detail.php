@@ -7,7 +7,10 @@
  * @var array $revenues
  * @var array $revenueTotals
  */
-$isStr = ($property['property_category'] ?? '') === 'residential_str';
+$cat = $property['property_category'] ?? 'residential_str';
+$isStr = $cat === 'residential_str';
+$isLtr = $cat === 'residential_ltr';
+$isCommercial = $cat === 'commercial_lease';
 $targetRaise = (float) ($property['total_acquisition_cost'] ?? $project['target_amount'] ?? 1.0);
 $raised = (float) ($project['current_amount'] ?? 0.0);
 $pct = $targetRaise > 0 ? min(100.0, round(($raised / $targetRaise) * 100, 1)) : 0.0;
@@ -20,9 +23,13 @@ $pct = $targetRaise > 0 ? min(100.0, round(($raised / $targetRaise) * 100, 1)) :
             </nav>
             <h3 class="nk-block-title page-title"><?= esc($project['name'] ?? $project['title'] ?? 'Real Estate Syndication') ?></h3>
             <div class="nk-block-des text-soft">
-                <span class="badge <?= $isStr ? 'bg-success' : 'bg-info' ?> me-2">
-                    <?= $isStr ? 'Residential Airbnb/VRBO Conversion' : 'Commercial Triple-Net (NNN) Lease' ?>
-                </span>
+                <?php if ($isLtr): ?>
+                    <span class="badge bg-primary me-2">Pure Long-Term Rental (12-Mo Lease)</span>
+                <?php elseif ($isCommercial): ?>
+                    <span class="badge bg-info me-2">Commercial Triple-Net (NNN) Lease</span>
+                <?php else: ?>
+                    <span class="badge bg-success me-2">Residential Airbnb/VRBO Conversion</span>
+                <?php endif; ?>
                 <span><em class="icon ni ni-map-pin"></em> <?= esc(($property['property_address'] ?? '') . ', ' . ($property['city'] ?? '') . ' ' . ($property['state'] ?? '')) ?></span>
                 <span class="ms-3 badge bg-outline-primary text-uppercase"><?= esc($property['operational_stage'] ?? 'sourcing') ?></span>
             </div>
@@ -78,7 +85,12 @@ $pct = $targetRaise > 0 ? min(100.0, round(($raised / $targetRaise) * 100, 1)) :
 
                     <hr class="my-4">
 
-                    <h6 class="overline-title text-soft mb-2"><?= $isStr ? 'STR Projected Operating Metrics' : 'Commercial Lease Parameters' ?></h6>
+                    <?php
+                    $metricsTitle = $isStr
+                        ? 'STR Projected Operating Metrics'
+                        : ($isLtr ? 'Long-Term Rental Projected Operating Metrics' : 'Commercial Lease Parameters');
+                    ?>
+                    <h6 class="overline-title text-soft mb-2"><?= $metricsTitle ?></h6>
                     <div class="row g-3">
                         <?php if ($isStr): ?>
                             <div class="col-md-4">
@@ -88,6 +100,15 @@ $pct = $targetRaise > 0 ? min(100.0, round(($raised / $targetRaise) * 100, 1)) :
                             <div class="col-md-4">
                                 <div class="sub-text">Projected Occupancy</div>
                                 <div class="lead-text"><?= number_format((float) ($property['projected_occupancy_pct'] ?? 70), 1) ?>%</div>
+                            </div>
+                        <?php elseif ($isLtr): ?>
+                            <div class="col-md-4">
+                                <div class="sub-text">Projected Monthly Rent</div>
+                                <div class="lead-text">$<?= number_format((float) ($property['projected_monthly_rent'] ?? 0), 2) ?> / mo</div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="sub-text">Lease Structure</div>
+                                <div class="lead-text text-uppercase">12-Month Traditional Lease</div>
                             </div>
                         <?php else: ?>
                             <div class="col-md-4">

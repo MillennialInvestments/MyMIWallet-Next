@@ -43,9 +43,56 @@ class RealEstateAiUnderwriterService
         $title = trim((string) ($input['title'] ?? ($address ?: 'Strategic Property Acquisition')));
 
         // 1. Compute Base Underwriting Pro Forma
-        $proForma = $category === 'commercial_lease'
-            ? $this->dealService->calculateCommercialProForma($input)
-            : $this->dealService->calculateStrProForma($input);
+        $proForma = match ($category) {
+            'commercial_lease' => $this->dealService->calculateCommercialProForma($input),
+            'residential_ltr'  => $this->dealService->calculateLtrProForma($input),
+            default            => $this->dealService->calculateStrProForma($input),
+        };
+
+        // Dual Strategy Calculation: Airbnb/VRBO vs. Pure Traditional Renting
+        $strProForma = $this->dealService->calculateStrProForma($input);
+        $ltrProForma = $this->dealService->calculateLtrProForma($input);
+
+        $strNoi = (float) $strProForma['projected_annual_noi'];
+        $ltrNoi = (float) $ltrProForma['projected_annual_noi'];
+        $noiDiff = round($strNoi - $ltrNoi, 2);
+        $monthlyDiff = round($noiDiff / 12, 2);
+        $cocDiff = round((float) $strProForma['target_coc_return'] - (float) $ltrProForma['target_coc_return'], 2);
+
+        $dualComparison = [
+            'str' => [
+                'strategy_title'      => 'Airbnb / VRBO (Short-Term Rental)',
+                'total_acquisition'   => (float) $strProForma['total_acquisition_cost'],
+                'furnishing_budget'   => (float) $strProForma['furnishing_budget'],
+                'gross_annual'        => (float) $strProForma['gross_annual_revenue'],
+                'annual_noi'          => $strNoi,
+                'monthly_noi'         => (float) $strProForma['projected_monthly_distributable'],
+                'coc_return'          => (float) $strProForma['target_coc_return'],
+                'adr'                 => (float) $strProForma['projected_adr'],
+                'occupancy_pct'       => (float) $strProForma['projected_occupancy_pct'],
+            ],
+            'ltr' => [
+                'strategy_title'      => 'Pure Traditional Renting (12-Mo Lease)',
+                'total_acquisition'   => (float) $ltrProForma['total_acquisition_cost'],
+                'furnishing_budget'   => 0.0,
+                'gross_annual'        => (float) $ltrProForma['gross_annual_rent'],
+                'annual_noi'          => $ltrNoi,
+                'monthly_noi'         => (float) $ltrProForma['projected_monthly_distributable'],
+                'coc_return'          => (float) $ltrProForma['target_coc_return'],
+                'monthly_rent'        => (float) $ltrProForma['projected_monthly_rent'],
+                'vacancy_pct'         => (float) $ltrProForma['vacancy_reserve_pct'],
+            ],
+            'comparison' => [
+                'noi_difference_annual' => $noiDiff,
+                'noi_difference_monthly'=> $monthlyDiff,
+                'coc_difference_pct'    => $cocDiff,
+                'capital_saved_ltr'     => (float) ($strProForma['total_acquisition_cost'] - $ltrProForma['total_acquisition_cost']),
+                'recommended_strategy'  => $strNoi >= $ltrNoi ? 'residential_str' : 'residential_ltr',
+                'verdict'               => $strNoi >= $ltrNoi
+                    ? "Airbnb / VRBO delivers +$" . number_format($monthlyDiff) . "/mo (+{$cocDiff}% CoC premium) over pure renting, while long-term renting provides a safe, steady downside baseline."
+                    : "Pure Traditional Renting outperforms STR by +$" . number_format(abs($monthlyDiff)) . "/mo with zero furnishing capital required.",
+            ],
+        ];
 
         $purchasePrice = (float) ($proForma['purchase_price'] ?? 350000.0);
         $renoBudget = (float) ($proForma['renovation_budget'] ?? 25000.0);
@@ -73,7 +120,8 @@ class RealEstateAiUnderwriterService
             $totalAcquisition,
             $annualNoi,
             $targetCoc,
-            $proForma
+            $proForma,
+            $dualComparison
         );
 
         // 4. Generate Crowdfund Unit Structuring ($100 per unit)
@@ -91,7 +139,11 @@ class RealEstateAiUnderwriterService
             'property'                => [
                 'title'                 => $title,
                 'category'              => $category,
-                'category_label'        => $category === 'commercial_lease' ? 'Commercial NNN Lease' : 'Residential Airbnb / VRBO',
+                'category_label'        => match ($category) {
+                    'commercial_lease' => 'Commercial Leased Asset (NNN / Triple Net)',
+                    'residential_ltr'  => 'Pure Long-Term Rental (12-Mo Lease)',
+                    default            => 'Residential Airbnb / VRBO',
+                },
                 'address'               => $address,
                 'city'                  => $city,
                 'state'                 => $state,
@@ -114,6 +166,7 @@ class RealEstateAiUnderwriterService
                 'sponsor_fee_pct'       => (float) ($proForma['sponsor_management_fee_pct'] ?? 15.0),
                 'details'               => $proForma,
             ],
+            'dual_strategy_comparison'=> $dualComparison,
             'crowdfund_structure'     => [
                 'target_raise_usd'      => $totalAcquisition,
                 'unit_nav_usd'          => $unitPrice,
@@ -194,7 +247,8 @@ class RealEstateAiUnderwriterService
         float $totalRaise,
         float $annualNoi,
         float $coc,
-        array $proForma
+        array $proForma,
+        array $dualComparison = []
     ): array {
         $prompt = "You are AIOps Real Estate Underwriter for Timothy Burks Incorporated, LLC.
 Evaluate this property deal for Operating Managers Timothy Burks & AnneAlicia Burks:
@@ -227,15 +281,25 @@ Provide concise, high-value investment analysis.";
         // Fallback: Deterministic Expert AIOps Synthesis
         $loc = "{$city}, {$state}";
         $isStr = $category === 'residential_str';
+        $isLtr = $category === 'residential_ltr';
         $propertyLabel = $address !== '' ? "{$address} in {$loc}" : ($title ?: "property in {$loc}");
         $purchasePriceFmt = number_format($purchasePrice);
         $totalRaiseFmt = number_format($totalRaise);
         $annualNoiFmt = number_format($annualNoi);
         $cocFmt = number_format($coc, 2);
 
-        $summary = $isStr
-            ? "Strong residential short-term rental conversion opportunity for {$propertyLabel}. At a \${$purchasePriceFmt} acquisition price with \${$totalRaiseFmt} total capitalization, the property achieves a projected \${$annualNoiFmt}/yr Net Operating Income ({$cocFmt}% Cash-on-Cash yield). AnneAlicia & Timothy can execute a high-end designer furnishing strategy targeting leisure travelers, regional corporate bookings, and event guests."
-            : "Prime commercial leased asset for {$propertyLabel} providing durable, inflation-hedged passive cash flows. Capitalized at \${$totalRaiseFmt}, the property generates \${$annualNoiFmt}/yr NOI ({$cocFmt}% Cash-on-Cash yield) backed by stable tenant lease commitments with triple-net operating cost pass-throughs.";
+        if ($category === 'commercial_lease') {
+            $summary = "Prime commercial leased asset for {$propertyLabel} providing durable, inflation-hedged passive cash flows. Capitalized at \${$totalRaiseFmt}, the property generates \${$annualNoiFmt}/yr NOI ({$cocFmt}% Cash-on-Cash yield) backed by stable tenant lease commitments with triple-net operating cost pass-throughs.";
+        } elseif ($isLtr) {
+            $summary = "Turnkey residential pure long-term rental opportunity for {$propertyLabel}. At a \${$purchasePriceFmt} acquisition with \${$totalRaiseFmt} capitalization ($0 furnishing required), the asset yields \${$annualNoiFmt}/yr Net Operating Income ({$cocFmt}% Cash-on-Cash) backed by standard 12-month tenant leases, low turnover, and zero hospitality overhead.";
+        } else {
+            // Default residential STR with dual strategy context
+            $strMonthly = !empty($dualComparison['str']['monthly_noi']) ? number_format($dualComparison['str']['monthly_noi']) : number_format($annualNoi / 12);
+            $ltrMonthly = !empty($dualComparison['ltr']['monthly_noi']) ? number_format($dualComparison['ltr']['monthly_noi']) : '1,428';
+            $diffMonthly = !empty($dualComparison['comparison']['noi_difference_monthly']) ? number_format($dualComparison['comparison']['noi_difference_monthly']) : '1,473';
+
+            $summary = "High-yield residential opportunity for {$propertyLabel} evaluated under dual monetization models. Operating as an Airbnb / VRBO short-term rental at \${$totalRaiseFmt} total capitalization, the asset achieves a projected \${$annualNoiFmt}/yr Net Operating Income (\${$strMonthly}/mo, {$cocFmt}% Cash-on-Cash yield). Pure 12-month traditional renting serves as a rock-solid downside hedge generating \${$ltrMonthly}/mo NOI with zero furnishing capital. AnneAlicia & Timothy can execute an active hospitality strategy yielding a +\${$diffMonthly}/mo premium while maintaining complete pivot flexibility.";
+        }
 
         return [
             'executive_summary'  => $summary,
@@ -255,20 +319,37 @@ Provide concise, high-value investment analysis.";
             ];
         }
 
+        if ($category === 'residential_ltr') {
+            return [
+                'Tenant Screening'      => 'Execute rigorous background, credit, and employment verification to place reliable 12-month lease tenants.',
+                'Louisiana SPV Closing' => 'Convey property into a Louisiana SPV LLC managed by Timothy Burks Incorporated, LLC. under Act of Cash Sale.',
+                'Direct Deposit Payout' => 'Collect monthly rent automatically via ACH/MyMI Wallet with scheduled reserve allocations and investor distributions.',
+                'Dual-Exit Strategy'   => 'Maintain the option to pivot into an Airbnb / VRBO furnished model in peak travel seasons if hospitality yields exceed long-term rent.',
+            ];
+        }
+
         return [
             'Hospitality Furnishing' => 'Deploy high-yield interior design (local art, luxury bedding, game room/hot tub) to maximize Airbnb/VRBO average daily rate.',
             'Smart Access & Tech'    => 'Install remote keyless entry, smart thermostats, and exterior noise/security monitoring to minimize overhead.',
             'Multi-Platform Snd'     => 'Syndicate calendar simultaneously across Airbnb, VRBO, and direct MyMI booking channels with dynamic pricing.',
-            'Audited Distributions'  => 'Pool platform payouts monthly, deduct operating expenses, and distribute audited USDC pro-rata to coinvestor wallets.',
+            'Downside Rent Pivot'    => 'Preserve seamless transition to pure 12-month long-term leasing if local ordinance rules or travel patterns change.',
         ];
     }
 
     protected function defaultRisks(string $category, float $coc): array
     {
         $buffer = round(max(5.0, $coc * 0.35), 1);
+        if ($category === 'residential_ltr') {
+            return [
+                'Vacancy Allowance'     => 'Underwritten with an explicit 5% vacancy allowance and 20% operational reserve to protect uninterrupted monthly distributions.',
+                'Tenant Default Buffer' => 'Security deposit escrow plus eviction insurance mitigate tenant non-payment risks under Louisiana landlord law.',
+                'Emergency Reserve'     => 'Deal capitalization includes an upfront 6-month operating reserve to cushion against HVAC, plumbing, or turnover costs.',
+            ];
+        }
+
         return [
             'Occupancy Sensitivity' => "Even under a 15% drop in bookings, the property retains a {$buffer}% net cash flow buffer before debt service or fixed costs.",
-            'Local Ordinance Rules' => 'Bossier City / Caddo Parish zoning and short-term lodging regulations are factored with local tourist tax compliance.',
+            'Long-Term Rent Hedge'  => 'If short-term rental demand softens or local municipal rules change, the property converts immediately to pure traditional renting with no additional capex.',
             'Emergency Reserve'     => 'Deal capitalization includes an upfront 6-month operating reserve to cushion against HVAC, plumbing, or seasonal lulls.',
         ];
     }

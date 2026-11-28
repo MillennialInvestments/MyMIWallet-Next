@@ -92,6 +92,65 @@ class RealEstateDealService
     }
 
     /**
+     * Underwrite Pure Long-Term Rental (LTR) Traditional Lease Pro Forma.
+     *
+     * @param array<string, mixed> $inputs
+     * @return array<string, mixed>
+     */
+    public function calculateLtrProForma(array $inputs): array
+    {
+        $purchasePrice       = max(0.0, (float) ($inputs['purchase_price'] ?? 0.0));
+        $renovationBudget    = max(0.0, (float) ($inputs['renovation_budget'] ?? 0.0));
+        $closingCosts        = max(0.0, (float) ($inputs['closing_costs'] ?? ($purchasePrice * 0.03)));
+
+        // Auto-estimate long-term rent if not provided: ~0.85% to 1.0% of purchase price or default $1,350
+        $monthlyRent         = max(0.0, (float) ($inputs['ltr_monthly_rent'] ?? $inputs['pure_monthly_rent'] ?? $inputs['monthly_rent'] ?? 0.0));
+        if ($monthlyRent <= 0.0 && $purchasePrice > 0.0) {
+            $monthlyRent = round(max(950.0, min(3500.0, $purchasePrice * 0.0085)), -1);
+        } elseif ($monthlyRent <= 0.0) {
+            $monthlyRent = 1350.0;
+        }
+
+        $vacancyReservePct   = min(50.0, max(0.0, (float) ($inputs['vacancy_reserve_pct'] ?? 5.0)));
+        $sponsorFeePct       = min(50.0, max(0.0, (float) ($inputs['sponsor_fee_pct'] ?? $inputs['sponsor_management_fee_pct'] ?? 8.0)));
+        $opexPct             = min(50.0, max(0.0, (float) ($inputs['ltr_opex_pct'] ?? 20.0))); // taxes, insurance, routine repairs
+
+        // Pure rentals do not need a furnishing budget
+        $totalAcquisitionCost = round($purchasePrice + $renovationBudget + $closingCosts, 2);
+
+        $grossAnnualRent     = round($monthlyRent * 12, 2);
+        $vacancyReserve      = round($grossAnnualRent * ($vacancyReservePct / 100), 2);
+        $effectiveGrossRent  = round($grossAnnualRent - $vacancyReserve, 2);
+        $operatingExpenses   = round($effectiveGrossRent * ($opexPct / 100), 2);
+        $sponsorFee          = round($effectiveGrossRent * ($sponsorFeePct / 100), 2);
+
+        $projectedAnnualNoi  = max(0.0, round($effectiveGrossRent - $operatingExpenses - $sponsorFee, 2));
+        $targetCocReturn     = $totalAcquisitionCost > 0
+            ? round(($projectedAnnualNoi / $totalAcquisitionCost) * 100, 2)
+            : 0.0;
+
+        return [
+            'property_category'           => 'residential_ltr',
+            'monetization_strategy'       => 'pure_long_term_rental',
+            'purchase_price'              => $purchasePrice,
+            'renovation_budget'           => $renovationBudget,
+            'furnishing_budget'           => 0.00,
+            'closing_costs'               => $closingCosts,
+            'total_acquisition_cost'      => $totalAcquisitionCost,
+            'projected_monthly_rent'      => $monthlyRent,
+            'vacancy_reserve_pct'         => $vacancyReservePct,
+            'gross_annual_rent'           => $grossAnnualRent,
+            'effective_gross_rent'        => $effectiveGrossRent,
+            'operating_expenses'          => $operatingExpenses,
+            'sponsor_management_fee'      => $sponsorFee,
+            'sponsor_management_fee_pct'  => $sponsorFeePct,
+            'projected_annual_noi'        => $projectedAnnualNoi,
+            'target_coc_return'           => $targetCocReturn,
+            'projected_monthly_distributable' => round($projectedAnnualNoi / 12, 2),
+        ];
+    }
+
+    /**
      * Underwrite Commercial Leased Property Pro Forma (NNN or Gross).
      *
      * @param array<string, mixed> $inputs
@@ -169,9 +228,11 @@ class RealEstateDealService
         }
 
         $category = (string) ($input['property_category'] ?? 'residential_str');
-        $proForma = $category === 'commercial_lease'
-            ? $this->calculateCommercialProForma($input)
-            : $this->calculateStrProForma($input);
+        $proForma = match ($category) {
+            'commercial_lease' => $this->calculateCommercialProForma($input),
+            'residential_ltr'  => $this->calculateLtrProForma($input),
+            default            => $this->calculateStrProForma($input),
+        };
 
         $totalRaise = (float) $proForma['total_acquisition_cost'];
         if ($totalRaise <= 0.0) {

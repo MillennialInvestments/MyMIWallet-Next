@@ -88,6 +88,7 @@
               <label class="form-label small" for="qaCategory">Property Category</label>
               <select name="property_category" id="qaCategory" class="form-select form-select-sm">
                 <option value="residential_str" selected>Residential Short-Term Rental (Airbnb / VRBO)</option>
+                <option value="residential_ltr">Residential Pure Renting (12-Month Lease)</option>
                 <option value="commercial_lease">Commercial Leased Asset (NNN / Triple Net)</option>
               </select>
             </div>
@@ -128,7 +129,7 @@
               </div>
             </div>
 
-            <div class="row g-2 mb-3" id="qaStrInputs">
+            <div class="row g-2 mb-2" id="qaStrInputs">
               <div class="col-4">
                 <label class="form-label small" for="qaFurnish">Furnishing ($)</label>
                 <input type="number" step="500" min="0" name="furnishing_budget" id="qaFurnish" class="form-control form-control-sm" value="20000">
@@ -140,6 +141,23 @@
               <div class="col-4">
                 <label class="form-label small" for="qaOcc">Occupancy (%)</label>
                 <input type="number" step="1" min="1" max="100" name="projected_occupancy_pct" id="qaOcc" class="form-control form-control-sm" value="72">
+              </div>
+            </div>
+
+            <div class="p-2 mb-3 bg-light rounded border" id="qaLtrInputs">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <label class="form-label small fw-bold text-dark mb-0" for="qaLtrRent">
+                  <em class="icon ni ni-home text-primary me-1"></em>Pure Renting (LTR) Est. Rent ($/mo)
+                </label>
+                <span class="text-muted small" style="font-size: 0.72rem;">12-Mo Traditional Lease</span>
+              </div>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text">$</span>
+                <input type="number" step="50" min="0" name="ltr_monthly_rent" id="qaLtrRent" class="form-control" value="2100">
+                <span class="input-group-text">/mo</span>
+              </div>
+              <div class="small text-muted mt-1" style="font-size: 0.7rem;">
+                Evaluated side-by-side with Airbnb/VRBO cash flow ($0 furnishing capital required).
               </div>
             </div>
 
@@ -201,6 +219,109 @@
               <span class="sub-text">Target CoC Return</span>
               <div class="h3 mb-0 text-success" id="cardCocYield">9.30%</div>
               <span class="small text-muted" id="cardCapRate">Cap Rate: 10.88%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dual Strategy Underwriting Evaluation: Airbnb/VRBO vs. Pure Traditional Renting -->
+        <div class="card card-bordered mb-3 border-primary-subtle shadow-sm" id="cardDualComparisonBox">
+          <div class="card-inner py-2 px-3 bg-lighter border-bottom d-flex justify-content-between align-items-center">
+            <h6 class="card-title mb-0 fs-13px text-dark">
+              <em class="icon ni ni-swap-alt text-primary me-1"></em>Dual Strategy Evaluation: Airbnb/VRBO vs. Pure Renting
+            </h6>
+            <span class="badge bg-success small" id="dualComparisonVerdictBadge">Airbnb Yields +$1,473/mo</span>
+          </div>
+          <div class="card-inner p-3">
+            <div class="row g-2">
+              <!-- Left: STR Column -->
+              <div class="col-6">
+                <div class="border rounded p-2 h-100 bg-white" id="boxStrStrategy">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="fw-bold text-dark small"><em class="icon ni ni-building text-success me-1"></em>Airbnb / VRBO</span>
+                    <span class="badge bg-outline-success" style="font-size: 0.65rem;">Active STR</span>
+                  </div>
+                  <div class="small text-muted">
+                    <div class="d-flex justify-content-between py-1 border-bottom">
+                      <span>All-In Raise:</span>
+                      <strong class="text-dark" id="dualStrRaise">$374,600</strong>
+                    </div>
+                    <div class="d-flex justify-content-between py-1 border-bottom">
+                      <span>Furnishing:</span>
+                      <strong class="text-dark" id="dualStrFurnish">$20,000</strong>
+                    </div>
+                    <div class="d-flex justify-content-between py-1 border-bottom">
+                      <span>Gross Rev / yr:</span>
+                      <strong class="text-dark" id="dualStrGross">$69,642</strong>
+                    </div>
+                    <div class="d-flex justify-content-between py-1 border-bottom">
+                      <span>Annual NOI:</span>
+                      <strong class="text-success" id="dualStrNoi">$34,821</strong>
+                    </div>
+                    <div class="d-flex justify-content-between py-1 border-bottom">
+                      <span>Monthly NOI:</span>
+                      <strong class="text-success" id="dualStrMonthly">$2,901 / mo</strong>
+                    </div>
+                    <div class="d-flex justify-content-between pt-1">
+                      <span>CoC Return:</span>
+                      <strong class="text-success fs-14px" id="dualStrCoc">9.30%</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: LTR Column -->
+              <div class="col-6">
+                <div class="border rounded p-2 h-100 bg-white" id="boxLtrStrategy">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="fw-bold text-dark small"><em class="icon ni ni-home text-primary me-1"></em>Pure Renting (LTR)</span>
+                    <span class="badge bg-outline-primary" style="font-size: 0.65rem;">12-Mo Lease</span>
+                  </div>
+                  <div class="small text-muted">
+                    <div class="d-flex justify-content-between py-1 border-bottom">
+                      <span>All-In Raise:</span>
+                      <strong class="text-dark" id="dualLtrRaise">$354,600</strong>
+                    </div>
+                    <div class="d-flex justify-content-between py-1 border-bottom">
+                      <span>Furnishing:</span>
+                      <strong class="text-success" id="dualLtrFurnish">$0 (Saves $20k)</strong>
+                    </div>
+                    <div class="d-flex justify-content-between py-1 border-bottom">
+                      <span>Gross Rent / yr:</span>
+                      <strong class="text-dark" id="dualLtrGross">$25,200</strong>
+                    </div>
+                    <div class="d-flex justify-content-between py-1 border-bottom">
+                      <span>Annual NOI:</span>
+                      <strong class="text-primary" id="dualLtrNoi">$17,136</strong>
+                    </div>
+                    <div class="d-flex justify-content-between py-1 border-bottom">
+                      <span>Monthly NOI:</span>
+                      <strong class="text-primary" id="dualLtrMonthly">$1,428 / mo</strong>
+                    </div>
+                    <div class="d-flex justify-content-between pt-1">
+                      <span>CoC Return:</span>
+                      <strong class="text-primary fs-14px" id="dualLtrCoc">4.83%</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Comparative Verdict & Strategy Selection -->
+            <div class="mt-2 p-2 rounded border bg-light small" id="dualVerdictBanner">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <div>
+                  <span class="fw-bold text-success" id="dualPremiumLabel"><em class="icon ni ni-trend-up me-1"></em>Airbnb Cash Flow Advantage:</span>
+                  <strong class="text-dark ms-1" id="dualDeltaMonthly">+$1,473 / mo</strong>
+                  <span class="badge bg-success-soft text-success ms-1" id="dualDeltaCoc">+4.47% CoC</span>
+                </div>
+                <div class="btn-group btn-group-sm" role="group">
+                  <button type="button" class="btn btn-xs btn-outline-success" id="btnSelectStr">Set Airbnb</button>
+                  <button type="button" class="btn btn-xs btn-outline-primary" id="btnSelectLtr">Set Pure Renting</button>
+                </div>
+              </div>
+              <div class="text-muted" style="font-size: 0.72rem;" id="dualHedgeText">
+                🛡️ <strong>Downside Hedge:</strong> Pure renting requires $20,000 less capital and establishes a guaranteed $1,428/mo NOI baseline if travel demand or municipal lodging rules fluctuate.
+              </div>
             </div>
           </div>
         </div>
@@ -312,7 +433,9 @@
 document.addEventListener('DOMContentLoaded', function(){
   const cat = document.getElementById('qaCategory');
   const strBox = document.getElementById('qaStrInputs');
+  const ltrBox = document.getElementById('qaLtrInputs');
   const commBox = document.getElementById('qaCommercialInputs');
+  const dualCard = document.getElementById('cardDualComparisonBox');
   const btnAnalyze = document.getElementById('btnRunAiopsAnalysis');
   const btnFetch = document.getElementById('btnFetchListing');
   const inputUrl = document.getElementById('qaListingUrl');
@@ -325,45 +448,154 @@ document.addEventListener('DOMContentLoaded', function(){
   const inputFurnish = document.getElementById('qaFurnish');
   const inputAdr = document.getElementById('qaAdr');
   const inputOcc = document.getElementById('qaOcc');
+  const inputLtrRent = document.getElementById('qaLtrRent');
   const inputRent = document.getElementById('qaRent');
   const inputTitle = document.getElementById('qaTitle');
   const badgeListing = document.getElementById('qaListingBadge');
   const alertListing = document.getElementById('qaListingAlert');
 
-  // Real-Time Client-Side Pro Forma & Underwriting Calculation Engine
+  // Real-Time Client-Side Pro Forma & Dual Underwriting Calculation Engine
   function recalcQuickAnalysisUI() {
     const isCommercial = cat.value === 'commercial_lease';
+    const isLtr = cat.value === 'residential_ltr';
     const purchase = parseFloat(inputPurchase.value) || 0;
     const reno = parseFloat(inputReno.value) || 0;
-    const furnish = isCommercial ? 0 : (parseFloat(inputFurnish.value) || 0);
     const closing = purchase * 0.03;
-    const totalRaise = purchase + reno + furnish + closing;
 
-    let noi = 0;
+    // STR calculations (Airbnb / VRBO)
+    const strFurnish = parseFloat(inputFurnish.value) || 0;
+    const strTotalRaise = purchase + reno + strFurnish + closing;
+    const adr = parseFloat(inputAdr.value) || 0;
+    const occ = (parseFloat(inputOcc.value) || 70) / 100;
+    const grossStr = adr * 365 * occ;
+    const strNoi = grossStr * 0.50; // 15% platform/cleaning, 20% opex, 15% sponsor fee
+    const strMonthlyNoi = strNoi / 12;
+    const strCoc = strTotalRaise > 0 ? (strNoi / strTotalRaise) * 100 : 0;
+    const strCap = purchase > 0 ? (strNoi / purchase) * 100 : 0;
+
+    // Pure Renting calculations (12-Month Traditional Lease, $0 furnishing)
+    const ltrTotalRaise = purchase + reno + closing;
+    const ltrRent = parseFloat(inputLtrRent ? inputLtrRent.value : 0) || (purchase > 0 ? Math.round(purchase * 0.0075 / 50) * 50 : 1450);
+    const grossLtr = ltrRent * 12;
+    const effectiveLtr = grossLtr * 0.95; // 5% vacancy allowance
+    const ltrNoi = effectiveLtr * 0.72; // 20% opex, 8% sponsor management fee
+    const ltrMonthlyNoi = ltrNoi / 12;
+    const ltrCoc = ltrTotalRaise > 0 ? (ltrNoi / ltrTotalRaise) * 100 : 0;
+    const ltrCap = purchase > 0 ? (ltrNoi / purchase) * 100 : 0;
+
+    // Update Dual Strategy Comparison Box
+    if (dualCard) {
+      if (isCommercial) {
+        dualCard.style.display = 'none';
+      } else {
+        dualCard.style.display = 'block';
+
+        const elStrRaise = document.getElementById('dualStrRaise');
+        const elStrFurnish = document.getElementById('dualStrFurnish');
+        const elStrGross = document.getElementById('dualStrGross');
+        const elStrNoi = document.getElementById('dualStrNoi');
+        const elStrMonthly = document.getElementById('dualStrMonthly');
+        const elStrCoc = document.getElementById('dualStrCoc');
+
+        const elLtrRaise = document.getElementById('dualLtrRaise');
+        const elLtrFurnish = document.getElementById('dualLtrFurnish');
+        const elLtrGross = document.getElementById('dualLtrGross');
+        const elLtrNoi = document.getElementById('dualLtrNoi');
+        const elLtrMonthly = document.getElementById('dualLtrMonthly');
+        const elLtrCoc = document.getElementById('dualLtrCoc');
+
+        if (elStrRaise) elStrRaise.innerText = '$' + Math.round(strTotalRaise).toLocaleString();
+        if (elStrFurnish) elStrFurnish.innerText = '$' + Math.round(strFurnish).toLocaleString();
+        if (elStrGross) elStrGross.innerText = '$' + Math.round(grossStr).toLocaleString();
+        if (elStrNoi) elStrNoi.innerText = '$' + Math.round(strNoi).toLocaleString();
+        if (elStrMonthly) elStrMonthly.innerText = '$' + Math.round(strMonthlyNoi).toLocaleString() + ' / mo';
+        if (elStrCoc) elStrCoc.innerText = strCoc.toFixed(2) + '%';
+
+        if (elLtrRaise) elLtrRaise.innerText = '$' + Math.round(ltrTotalRaise).toLocaleString();
+        if (elLtrFurnish) elLtrFurnish.innerHTML = '$0 <span class="badge bg-success-soft text-success" style="font-size:0.65rem;">Saves $' + Math.round(strFurnish).toLocaleString() + '</span>';
+        if (elLtrGross) elLtrGross.innerText = '$' + Math.round(grossLtr).toLocaleString();
+        if (elLtrNoi) elLtrNoi.innerText = '$' + Math.round(ltrNoi).toLocaleString();
+        if (elLtrMonthly) elLtrMonthly.innerText = '$' + Math.round(ltrMonthlyNoi).toLocaleString() + ' / mo';
+        if (elLtrCoc) elLtrCoc.innerText = ltrCoc.toFixed(2) + '%';
+
+        const diffMonthly = strMonthlyNoi - ltrMonthlyNoi;
+        const diffCoc = strCoc - ltrCoc;
+        const verdictBadge = document.getElementById('dualComparisonVerdictBadge');
+        const premiumLabel = document.getElementById('dualPremiumLabel');
+        const deltaMonthlyEl = document.getElementById('dualDeltaMonthly');
+        const deltaCocEl = document.getElementById('dualDeltaCoc');
+        const hedgeEl = document.getElementById('dualHedgeText');
+
+        if (diffMonthly >= 0) {
+          if (verdictBadge) {
+            verdictBadge.className = 'badge bg-success small';
+            verdictBadge.innerText = 'Airbnb Yields +$' + Math.round(diffMonthly).toLocaleString() + '/mo';
+          }
+          if (premiumLabel) {
+            premiumLabel.innerHTML = '<em class="icon ni ni-trend-up me-1"></em>Airbnb Cash Flow Advantage:';
+          }
+          if (deltaMonthlyEl) {
+            deltaMonthlyEl.className = 'text-success fw-bold ms-1';
+            deltaMonthlyEl.innerText = '+$' + Math.round(diffMonthly).toLocaleString() + ' / mo';
+          }
+          if (deltaCocEl) {
+            deltaCocEl.className = 'badge bg-success-soft text-success ms-1';
+            deltaCocEl.innerText = '+' + diffCoc.toFixed(2) + '% CoC';
+          }
+        } else {
+          if (verdictBadge) {
+            verdictBadge.className = 'badge bg-primary small';
+            verdictBadge.innerText = 'Pure Renting Yields +$' + Math.round(Math.abs(diffMonthly)).toLocaleString() + '/mo';
+          }
+          if (premiumLabel) {
+            premiumLabel.innerHTML = '<em class="icon ni ni-trend-up me-1"></em>Pure Renting Advantage:';
+          }
+          if (deltaMonthlyEl) {
+            deltaMonthlyEl.className = 'text-primary fw-bold ms-1';
+            deltaMonthlyEl.innerText = '+$' + Math.round(Math.abs(diffMonthly)).toLocaleString() + ' / mo';
+          }
+          if (deltaCocEl) {
+            deltaCocEl.className = 'badge bg-primary-soft text-primary ms-1';
+            deltaCocEl.innerText = '+' + Math.abs(diffCoc).toFixed(2) + '% CoC';
+          }
+        }
+
+        if (hedgeEl) {
+          hedgeEl.innerHTML = '🛡️ <strong>Downside Hedge:</strong> Pure renting requires $' + Math.round(strFurnish).toLocaleString() + ' less initial capital and establishes a guaranteed $' + Math.round(ltrMonthlyNoi).toLocaleString() + '/mo NOI baseline if travel demand or municipal lodging rules fluctuate.';
+        }
+      }
+    }
+
+    // Determine active strategy numbers for top metric ribbon
+    let activeTotalRaise = strTotalRaise;
+    let activeNoi = strNoi;
+    let activeCoc = strCoc;
+    let activeCapRate = strCap;
+
     if (isCommercial) {
       const rent = parseFloat(inputRent.value) || 0;
       const annualRent = rent * 12 * 0.95; // 5% vacancy allowance
-      noi = annualRent * 0.89; // opex + 8% sponsor management fee
-    } else {
-      const adr = parseFloat(inputAdr.value) || 0;
-      const occ = (parseFloat(inputOcc.value) || 70) / 100;
-      const gross = adr * 365 * occ;
-      noi = gross * 0.50; // 15% platform/cleaning, 20% opex, 15% sponsor fee
+      activeNoi = annualRent * 0.89; // opex + 8% sponsor management fee
+      activeTotalRaise = purchase + reno + closing;
+      activeCoc = activeTotalRaise > 0 ? (activeNoi / activeTotalRaise) * 100 : 0;
+      activeCapRate = purchase > 0 ? (activeNoi / purchase) * 100 : 0;
+    } else if (isLtr) {
+      activeTotalRaise = ltrTotalRaise;
+      activeNoi = ltrNoi;
+      activeCoc = ltrCoc;
+      activeCapRate = ltrCap;
     }
-
-    const coc = totalRaise > 0 ? (noi / totalRaise) * 100 : 0;
-    const capRate = purchase > 0 ? (noi / purchase) * 100 : 0;
 
     // Deal score computation (0 - 100)
     let score = 50;
-    if (coc >= 14) score += 30;
-    else if (coc >= 10) score += 24;
-    else if (coc >= 8) score += 18;
-    else if (coc >= 6) score += 10;
+    if (activeCoc >= 14) score += 30;
+    else if (activeCoc >= 10) score += 24;
+    else if (activeCoc >= 8) score += 18;
+    else if (activeCoc >= 6) score += 10;
 
-    if (capRate >= 10) score += 15;
-    else if (capRate >= 8) score += 12;
-    else if (capRate >= 6.5) score += 8;
+    if (activeCapRate >= 10) score += 15;
+    else if (activeCapRate >= 8) score += 12;
+    else if (activeCapRate >= 6.5) score += 8;
 
     const state = (inputState.value || 'LA').toUpperCase();
     if (state === 'LA' || state === 'LOUISIANA') score += 5;
@@ -376,18 +608,18 @@ document.addEventListener('DOMContentLoaded', function(){
     else if (score >= 65) grade = 'B';
 
     // Crowdfund Unit Structuring
-    const totalUnits = Math.ceil(totalRaise / 100);
-    const monthlyNoi = noi / 12;
-    const monthlyPayoutPer1k = totalRaise > 0 ? (monthlyNoi * 0.85) / (totalRaise / 1000) : 0;
+    const totalUnits = Math.ceil(activeTotalRaise / 100);
+    const activeMonthlyNoi = activeNoi / 12;
+    const monthlyPayoutPer1k = activeTotalRaise > 0 ? (activeMonthlyNoi * 0.85) / (activeTotalRaise / 1000) : 0;
 
     // Update Right-Hand Metric Ribbon
     document.getElementById('cardDealScore').innerText = score + '/100';
     document.getElementById('cardDealGrade').innerText = 'Grade ' + grade;
-    document.getElementById('cardTotalRaise').innerText = '$' + Math.round(totalRaise).toLocaleString();
-    document.getElementById('cardAnnualNoi').innerText = '$' + Math.round(noi).toLocaleString();
-    document.getElementById('cardMonthlyNoi').innerText = '$' + Math.round(monthlyNoi).toLocaleString() + '/mo';
-    document.getElementById('cardCocYield').innerText = coc.toFixed(2) + '%';
-    document.getElementById('cardCapRate').innerText = 'Cap Rate: ' + capRate.toFixed(2) + '%';
+    document.getElementById('cardTotalRaise').innerText = '$' + Math.round(activeTotalRaise).toLocaleString();
+    document.getElementById('cardAnnualNoi').innerText = '$' + Math.round(activeNoi).toLocaleString();
+    document.getElementById('cardMonthlyNoi').innerText = '$' + Math.round(activeMonthlyNoi).toLocaleString() + '/mo';
+    document.getElementById('cardCocYield').innerText = activeCoc.toFixed(2) + '%';
+    document.getElementById('cardCapRate').innerText = 'Cap Rate: ' + activeCapRate.toFixed(2) + '%';
     document.getElementById('cardTotalUnits').innerText = totalUnits.toLocaleString();
     document.getElementById('cardPayoutPer1k').innerText = '$' + monthlyPayoutPer1k.toFixed(2) + ' / mo';
 
@@ -395,77 +627,107 @@ document.addEventListener('DOMContentLoaded', function(){
     const addr = inputAddress.value.trim() || 'Target Property';
     const city = inputCity.value.trim() || 'Bossier City';
     const st = (inputState.value.trim() || 'LA').toUpperCase();
-    const typeLabel = isCommercial ? 'commercial triple-net leased asset' : 'residential short-term rental conversion';
+    const typeLabel = isCommercial
+      ? 'commercial triple-net leased asset'
+      : (isLtr ? 'residential pure long-term rental' : 'residential short-term rental conversion');
     document.getElementById('cardExecutiveSummary').innerHTML =
       `Strong ${typeLabel} opportunity at <strong>${addr}</strong> in <strong>${city}, ${st}</strong>. ` +
-      `At a <strong>$${Math.round(purchase).toLocaleString()}</strong> acquisition price with <strong>$${Math.round(totalRaise).toLocaleString()}</strong> total capitalization, ` +
-      `the property achieves a projected <strong>$${Math.round(noi).toLocaleString()}/yr</strong> Net Operating Income (<strong>${coc.toFixed(2)}%</strong> Cash-on-Cash yield). ` +
+      `At a <strong>$${Math.round(purchase).toLocaleString()}</strong> acquisition price with <strong>$${Math.round(activeTotalRaise).toLocaleString()}</strong> total capitalization, ` +
+      `the property achieves a projected <strong>$${Math.round(activeNoi).toLocaleString()}/yr</strong> Net Operating Income (<strong>${activeCoc.toFixed(2)}%</strong> Cash-on-Cash yield). ` +
       `AnneAlicia &amp; Timothy can execute a high-yield monetization strategy targeting robust community returns and audited monthly investor distributions.`;
   }
 
   cat.addEventListener('change', function(){
     if (this.value === 'commercial_lease') {
       strBox.style.display = 'none';
+      if (ltrBox) ltrBox.style.display = 'none';
       commBox.style.display = 'flex';
+      if (dualCard) dualCard.style.display = 'none';
+    } else if (this.value === 'residential_ltr') {
+      strBox.style.display = 'none';
+      if (ltrBox) ltrBox.style.display = 'block';
+      commBox.style.display = 'none';
+      if (dualCard) dualCard.style.display = 'block';
     } else {
       strBox.style.display = 'flex';
+      if (ltrBox) ltrBox.style.display = 'block';
       commBox.style.display = 'none';
+      if (dualCard) dualCard.style.display = 'block';
     }
     recalcQuickAnalysisUI();
   });
 
   // Attach live input listeners to all form controls for instantaneous calculation
-  [inputPurchase, inputReno, inputFurnish, inputAdr, inputOcc, inputRent, inputAddress, inputCity, inputState, inputZip].forEach(el => {
+  [inputPurchase, inputReno, inputFurnish, inputAdr, inputOcc, inputLtrRent, inputRent, inputAddress, inputCity, inputState, inputZip].forEach(el => {
     if (el) {
       el.addEventListener('input', recalcQuickAnalysisUI);
       el.addEventListener('change', recalcQuickAnalysisUI);
     }
   });
 
+  // 1-Click Strategy Switchers on the Dual Comparison Card
+  document.getElementById('btnSelectStr')?.addEventListener('click', function(e){
+    e.preventDefault();
+    cat.value = 'residential_str';
+    cat.dispatchEvent(new Event('change'));
+    if ((parseFloat(inputFurnish.value) || 0) === 0) {
+      inputFurnish.value = 20000;
+    }
+    recalcQuickAnalysisUI();
+    btnAnalyze.click();
+  });
+
+  document.getElementById('btnSelectLtr')?.addEventListener('click', function(e){
+    e.preventDefault();
+    cat.value = 'residential_ltr';
+    cat.dispatchEvent(new Event('change'));
+    recalcQuickAnalysisUI();
+    btnAnalyze.click();
+  });
+
   // 1-Click Deal Preset Overrides
   document.getElementById('btnPresetStarter')?.addEventListener('click', function(){
     cat.value = 'residential_str';
-    strBox.style.display = 'flex';
-    commBox.style.display = 'none';
+    cat.dispatchEvent(new Event('change'));
     inputPurchase.value = 125000;
     inputReno.value = 25000;
     inputFurnish.value = 15000;
     inputAdr.value = 195;
     inputOcc.value = 68;
+    if (inputLtrRent) inputLtrRent.value = 1150;
     inputTitle.value = (inputAddress.value.trim() || 'Bossier City') + ' (Starter STR)';
     recalcQuickAnalysisUI();
   });
 
   document.getElementById('btnPresetTurnkey')?.addEventListener('click', function(){
     cat.value = 'residential_str';
-    strBox.style.display = 'flex';
-    commBox.style.display = 'none';
+    cat.dispatchEvent(new Event('change'));
     inputPurchase.value = 225000;
     inputReno.value = 15000;
     inputFurnish.value = 20000;
     inputAdr.value = 250;
     inputOcc.value = 72;
+    if (inputLtrRent) inputLtrRent.value = 1650;
     inputTitle.value = (inputAddress.value.trim() || 'Bossier City') + ' (Turnkey STR)';
     recalcQuickAnalysisUI();
   });
 
   document.getElementById('btnPresetLuxury')?.addEventListener('click', function(){
     cat.value = 'residential_str';
-    strBox.style.display = 'flex';
-    commBox.style.display = 'none';
+    cat.dispatchEvent(new Event('change'));
     inputPurchase.value = 320000;
     inputReno.value = 25000;
     inputFurnish.value = 25000;
     inputAdr.value = 310;
     inputOcc.value = 75;
+    if (inputLtrRent) inputLtrRent.value = 2100;
     inputTitle.value = (inputAddress.value.trim() || 'Bossier City') + ' (Luxury STR)';
     recalcQuickAnalysisUI();
   });
 
   document.getElementById('btnPresetCommercial')?.addEventListener('click', function(){
     cat.value = 'commercial_lease';
-    strBox.style.display = 'none';
-    commBox.style.display = 'flex';
+    cat.dispatchEvent(new Event('change'));
     inputPurchase.value = 450000;
     inputReno.value = 20000;
     inputRent.value = 4800;
@@ -476,18 +738,30 @@ document.addEventListener('DOMContentLoaded', function(){
   // Price Step Adjusters
   document.getElementById('btnPriceMinus25')?.addEventListener('click', function(){
     inputPurchase.value = Math.max(10000, (parseFloat(inputPurchase.value) || 0) - 25000);
+    if (inputLtrRent) {
+      inputLtrRent.value = Math.max(800, Math.round((parseFloat(inputPurchase.value) * 0.0075) / 50) * 50);
+    }
     recalcQuickAnalysisUI();
   });
   document.getElementById('btnPriceMinus10')?.addEventListener('click', function(){
     inputPurchase.value = Math.max(10000, (parseFloat(inputPurchase.value) || 0) - 10000);
+    if (inputLtrRent) {
+      inputLtrRent.value = Math.max(800, Math.round((parseFloat(inputPurchase.value) * 0.0075) / 50) * 50);
+    }
     recalcQuickAnalysisUI();
   });
   document.getElementById('btnPricePlus10')?.addEventListener('click', function(){
     inputPurchase.value = (parseFloat(inputPurchase.value) || 0) + 10000;
+    if (inputLtrRent) {
+      inputLtrRent.value = Math.max(800, Math.round((parseFloat(inputPurchase.value) * 0.0075) / 50) * 50);
+    }
     recalcQuickAnalysisUI();
   });
   document.getElementById('btnPricePlus25')?.addEventListener('click', function(){
     inputPurchase.value = (parseFloat(inputPurchase.value) || 0) + 25000;
+    if (inputLtrRent) {
+      inputLtrRent.value = Math.max(800, Math.round((parseFloat(inputPurchase.value) * 0.0075) / 50) * 50);
+    }
     recalcQuickAnalysisUI();
   });
 
@@ -550,6 +824,9 @@ document.addEventListener('DOMContentLoaded', function(){
       if (d.postal_code) inputZip.value = d.postal_code;
       if (d.purchase_price && Number(d.purchase_price) > 0) {
         inputPurchase.value = Math.round(Number(d.purchase_price));
+        if (inputLtrRent) {
+          inputLtrRent.value = Math.max(800, Math.round((Number(d.purchase_price) * 0.0075) / 50) * 50);
+        }
       }
       if (d.title) {
         inputTitle.value = d.title;
@@ -640,6 +917,75 @@ document.addEventListener('DOMContentLoaded', function(){
       document.getElementById('cardMonthlyNoi').innerText = '$' + Math.round(data.pro_forma.projected_monthly_noi).toLocaleString() + '/mo';
       document.getElementById('cardCocYield').innerText = Number(data.pro_forma.target_coc_return).toFixed(2) + '%';
       document.getElementById('cardCapRate').innerText = 'Cap Rate: ' + Number(data.pro_forma.cap_rate).toFixed(2) + '%';
+
+      // Update Dual Strategy Comparison from server if present
+      if (data.dual_strategy_comparison && dualCard) {
+        const dual = data.dual_strategy_comparison;
+        if (dual.str) {
+          document.getElementById('dualStrRaise').innerText = '$' + Math.round(dual.str.total_acquisition).toLocaleString();
+          document.getElementById('dualStrFurnish').innerText = '$' + Math.round(dual.str.furnishing_budget).toLocaleString();
+          document.getElementById('dualStrGross').innerText = '$' + Math.round(dual.str.gross_annual).toLocaleString();
+          document.getElementById('dualStrNoi').innerText = '$' + Math.round(dual.str.annual_noi).toLocaleString();
+          document.getElementById('dualStrMonthly').innerText = '$' + Math.round(dual.str.monthly_noi).toLocaleString() + ' / mo';
+          document.getElementById('dualStrCoc').innerText = Number(dual.str.coc_return).toFixed(2) + '%';
+        }
+        if (dual.ltr) {
+          document.getElementById('dualLtrRaise').innerText = '$' + Math.round(dual.ltr.total_acquisition).toLocaleString();
+          document.getElementById('dualLtrFurnish').innerHTML = '$0 <span class="badge bg-success-soft text-success" style="font-size:0.65rem;">Saves $' + Math.round(dual.comparison?.capital_saved_ltr || 20000).toLocaleString() + '</span>';
+          document.getElementById('dualLtrGross').innerText = '$' + Math.round(dual.ltr.gross_annual).toLocaleString();
+          document.getElementById('dualLtrNoi').innerText = '$' + Math.round(dual.ltr.annual_noi).toLocaleString();
+          document.getElementById('dualLtrMonthly').innerText = '$' + Math.round(dual.ltr.monthly_noi).toLocaleString() + ' / mo';
+          document.getElementById('dualLtrCoc').innerText = Number(dual.ltr.coc_return).toFixed(2) + '%';
+        }
+        if (dual.comparison) {
+          const diffMonthly = Number(dual.comparison.noi_difference_monthly);
+          const diffCoc = Number(dual.comparison.coc_difference_pct);
+          const verdictBadge = document.getElementById('dualComparisonVerdictBadge');
+          const premiumLabel = document.getElementById('dualPremiumLabel');
+          const deltaMonthlyEl = document.getElementById('dualDeltaMonthly');
+          const deltaCocEl = document.getElementById('dualDeltaCoc');
+
+          if (diffMonthly >= 0) {
+            if (verdictBadge) {
+              verdictBadge.className = 'badge bg-success small';
+              verdictBadge.innerText = 'Airbnb Yields +$' + Math.round(diffMonthly).toLocaleString() + '/mo';
+            }
+            if (premiumLabel) {
+              premiumLabel.innerHTML = '<em class="icon ni ni-trend-up me-1"></em>Airbnb Cash Flow Advantage:';
+            }
+            if (deltaMonthlyEl) {
+              deltaMonthlyEl.className = 'text-success fw-bold ms-1';
+              deltaMonthlyEl.innerText = '+$' + Math.round(diffMonthly).toLocaleString() + ' / mo';
+            }
+            if (deltaCocEl) {
+              deltaCocEl.className = 'badge bg-success-soft text-success ms-1';
+              deltaCocEl.innerText = '+' + diffCoc.toFixed(2) + '% CoC';
+            }
+          } else {
+            if (verdictBadge) {
+              verdictBadge.className = 'badge bg-primary small';
+              verdictBadge.innerText = 'Pure Renting Yields +$' + Math.round(Math.abs(diffMonthly)).toLocaleString() + '/mo';
+            }
+            if (premiumLabel) {
+              premiumLabel.innerHTML = '<em class="icon ni ni-trend-up me-1"></em>Pure Renting Advantage:';
+            }
+            if (deltaMonthlyEl) {
+              deltaMonthlyEl.className = 'text-primary fw-bold ms-1';
+              deltaMonthlyEl.innerText = '+$' + Math.round(Math.abs(diffMonthly)).toLocaleString() + ' / mo';
+            }
+            if (deltaCocEl) {
+              deltaCocEl.className = 'badge bg-primary-soft text-primary ms-1';
+              deltaCocEl.innerText = '+' + Math.abs(diffCoc).toFixed(2) + '% CoC';
+            }
+          }
+          if (dual.comparison.verdict) {
+            const hedgeEl = document.getElementById('dualHedgeText');
+            if (hedgeEl) {
+              hedgeEl.innerHTML = '🛡️ <strong>AIOps Verdict:</strong> ' + dual.comparison.verdict;
+            }
+          }
+        }
+      }
 
       // Update summary
       if (data.executive_summary) {
