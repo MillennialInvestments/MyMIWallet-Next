@@ -1772,6 +1772,12 @@ $routes->group('Management', ['namespace' => '\App\Modules\Management\Controller
         $routes->post('Approve/(:segment)', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::approveProject/$1');
         $routes->post('Edit/(:segment)', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::approveProject/$1');
         $routes->post('Reject/(:segment)', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::rejectProject/$1');
+        $routes->get('Quick-Analysis', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::realEstateQuickAnalysis');
+        $routes->get('quick-analysis', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::realEstateQuickAnalysis');
+        $routes->match(['GET', 'POST'], 'Quick-Analysis/Analyze', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::runQuickAnalysis');
+        $routes->match(['GET', 'POST'], 'quick-analysis/analyze', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::runQuickAnalysis');
+        $routes->post('Quick-Analysis/Publish', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::publishQuickAnalysis');
+        $routes->post('quick-analysis/publish', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::publishQuickAnalysis');
         $routes->get('Quick-Intake', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::realEstateQuickIntake');
         $routes->post('Quick-Intake', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::realEstateQuickSubmit');
         $routes->get('quick-intake', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::realEstateQuickIntake');
