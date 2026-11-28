@@ -33,7 +33,15 @@ class AIChatController extends BaseController
             log_message('warning', 'tbi_chat tier lookup failed: {err}', ['err' => $e->getMessage()]);
         }
         $tier = TbiChatLink::tierFor($active);
-        $link = $chat->linkFor($userId, $tier, time());
+        // First name only, so the chat can greet the member; never required.
+        $firstName = null;
+        try {
+            $info = $this->getMyMIUser()->getUserInformation($userId);
+            $firstName = is_array($info) && is_string($info['cuFirstName'] ?? null) ? $info['cuFirstName'] : null;
+        } catch (Throwable $e) {
+            log_message('warning', 'tbi_chat name lookup failed: {err}', ['err' => $e->getMessage()]);
+        }
+        $link = $chat->linkFor($userId, $tier, time(), $firstName);
         if ($link === null) {
             return redirect()->to(site_url('/Dashboard'))
                 ->with('error', 'The AI chat is not available yet. Please try again later.');

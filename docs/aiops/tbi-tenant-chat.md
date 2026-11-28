@@ -73,3 +73,22 @@ two hours, or at once when the TBI side turns `TENANT_MYMI_ENABLED=off`.
 
 - Usage reporting from the TBI ledger back to MyMI (per member, per day).
 - Read-only finance tools (Phase 4) under a separate review.
+
+## First name and usage report (2026-11-28)
+
+- **First name.** `/AI-Chat` now adds the member's first name (`cuFirstName`)
+  to the one-time link as the optional `name` claim, so the chat can greet
+  them. Only a plain name is sent (letters in any language, marks, spaces,
+  `'`, `.`, `-`, up to 40 characters); the chat applies the same rule. No
+  email, last name or account data is sent. Turn it off with
+  `TBI_CHAT_SEND_NAME=off`.
+- **Usage report.** `php spark tbichat:usage` reads MyMI's AI chat usage back
+  from TBI AIOps for one UTC day (`--date YYYYMMDD`, default today; `--days N`
+  for the days before it, up to 45). It shows totals, one row per member
+  (MyMI user id, tier, messages, failures, tokens) and one anonymous total.
+  `--save` keeps each day as JSON in `writable/tbi-chat/` (mode 0600) and
+  `--json` prints JSON. It signs a `scope: usage.read` token with the same
+  `TBI_CHAT_SIGNING_KEY`; nothing new to configure. If this server cannot
+  reach its own public address, set `TBI_CHAT_REPORT_RESOLVE` to the chat
+  host's local IP; TLS is still checked against chat.mymiwallet.com.
+  Needs TBI timothyburks PR #2085 deployed.
