@@ -155,10 +155,12 @@ final class TbiChatLinkTest extends TestCase
 
         $answer = ['status' => 401, 'body' => '{"ok":false,"reason":"bad_signature"}'];
         $this->assertSame(['ok' => false, 'reason' => 'bad_signature', 'status' => 401], $usage->day('20261128', self::NOW));
+        $answer = ['status' => 200, 'body' => '{"ok":true,"tier":"public","left":{}}'];
+        $this->assertSame('no_report', $usage->day('20261128', self::NOW)['reason'], 'a chat without the report');
         $answer = ['status' => 0, 'body' => ''];
         $this->assertSame('unreachable', $usage->day('20261128', self::NOW)['reason']);
         $this->assertSame('bad_date', $usage->day('2026-11-28', self::NOW)['reason']);
         $this->assertSame('chat_off', (new TbiChatUsage(new TbiChatLink(false, self::KEY), $get))->day('20261128', self::NOW)['reason']);
-        $this->assertCount(3, $seen, 'no call without a valid date or while off');
+        $this->assertCount(4, $seen, 'no call without a valid date or while off');
     }
 }

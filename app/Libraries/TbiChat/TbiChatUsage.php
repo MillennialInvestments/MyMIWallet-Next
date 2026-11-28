@@ -61,6 +61,10 @@ final class TbiChatUsage
         if (($data['ok'] ?? false) !== true || $res['status'] !== 200) {
             return ['ok' => false, 'reason' => is_string($data['reason'] ?? null) ? $data['reason'] : 'refused', 'status' => $res['status']];
         }
+        if (! is_array($data['members'] ?? null)) {
+            // An older chat answers a member's own /usage instead of the report.
+            return ['ok' => false, 'reason' => 'no_report', 'status' => $res['status']];
+        }
 
         return $data;
     }
