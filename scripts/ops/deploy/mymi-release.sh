@@ -21,6 +21,11 @@ REPO="${REPO:-/apps/TBI/repos/mymiwallet-next}"
 REMOTE="${REMOTE:-origin}"
 SITE_URL="${SITE_URL:-https://www.mymiwallet.com/}"
 CHAT_HEALTH="${CHAT_HEALTH:-http://127.0.0.1:8300/health}"
+# The old Node AI chat (mymi-wallet-chat.service). Members now use the chat on
+# TBI AIOps (chat.mymiwallet.com via /AI-Chat). Once the owner disables the
+# service, releases stop restarting and health-checking it.
+CHAT_SERVICE="${CHAT_SERVICE:-mymi-wallet-chat.service}"
+legacy_chat_on() { [ "$(systemctl is-enabled "$CHAT_SERVICE" 2>/dev/null || true)" = enabled ]; }
 STAGING_BASE="${STAGING_BASE:-/apps/TBI/www/mymiwallet-staging}"
 CMD="${1:-}"; ARG="${2:-}"
 
@@ -82,13 +87,17 @@ health() {
   # PHP can print a fatal error with status 200, so check the page body too.
   if grep -qiE 'Fatal error|Uncaught Error|Failed to open stream' "$body"; then site="$site+PHP-ERROR"; fi
   rm -f "$body"
-  chat="$(curl -fsS "$CHAT_HEALTH" 2>/dev/null || echo FAILED)"
+  if legacy_chat_on; then
+    chat="$(curl -fsS "$CHAT_HEALTH" 2>/dev/null || echo FAILED)"
+  else
+    chat="retired ($CHAT_SERVICE disabled)"
+  fi
   echo "site: $site   chat: $chat"
   [ "$site" = "200" ] && [ "$chat" != "FAILED" ]
 }
 restart() {
   sudo systemctl reload php8.2-fpm
-  sudo systemctl restart mymi-wallet-chat.service
+  if legacy_chat_on; then sudo systemctl restart "$CHAT_SERVICE"; fi
   sleep 5
 }
 
