@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Commands\TbiChat;
 
 use App\Libraries\TbiChat\TbiChatUsage;
-use CodeIgniter\CLI\BaseCommand;
+use App\Commands\SafeBaseCommand;
 use CodeIgniter\CLI\CLI;
 
 /**
@@ -15,7 +15,7 @@ use CodeIgniter\CLI\CLI;
  * on TBI; --save also keeps each day as JSON under
  * WRITEPATH/tbi-chat/usage-YYYYMMDD.json (mode 0600) for billing.
  */
-class Usage extends BaseCommand
+class Usage extends SafeBaseCommand
 {
     protected $group = 'TbiChat';
     protected $name = 'tbichat:usage';
