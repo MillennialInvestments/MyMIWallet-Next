@@ -97,10 +97,30 @@
               <input type="text" name="title" id="qaTitle" class="form-control form-control-sm" value="Bossier City Luxury Short-Term Rental">
             </div>
 
+            <!-- Preset Overrides -->
+            <div class="mb-3 p-2 bg-light rounded border">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="small fw-bold text-dark"><em class="icon ni ni-setting text-primary me-1"></em>1-Click Deal Presets</span>
+                <span class="text-muted small" style="font-size: 0.72rem;">Instant Overrides</span>
+              </div>
+              <div class="btn-group btn-group-sm w-100" role="group">
+                <button type="button" class="btn btn-outline-secondary" id="btnPresetStarter">$125k Starter</button>
+                <button type="button" class="btn btn-outline-primary" id="btnPresetTurnkey">$225k Turnkey</button>
+                <button type="button" class="btn btn-outline-success" id="btnPresetLuxury">$320k Luxury</button>
+                <button type="button" class="btn btn-outline-info" id="btnPresetCommercial">$450k NNN</button>
+              </div>
+            </div>
+
             <div class="row g-2 mb-2">
               <div class="col-6">
                 <label class="form-label small" for="qaPurchase">Purchase Price ($)</label>
                 <input type="number" step="1000" min="0" name="purchase_price" id="qaPurchase" class="form-control form-control-sm" value="320000">
+                <div class="d-flex gap-1 mt-1">
+                  <button type="button" class="btn btn-xs btn-outline-danger flex-fill py-0" id="btnPriceMinus25" style="font-size: 0.68rem;">-$25k</button>
+                  <button type="button" class="btn btn-xs btn-outline-danger flex-fill py-0" id="btnPriceMinus10" style="font-size: 0.68rem;">-$10k</button>
+                  <button type="button" class="btn btn-xs btn-outline-success flex-fill py-0" id="btnPricePlus10" style="font-size: 0.68rem;">+$10k</button>
+                  <button type="button" class="btn btn-xs btn-outline-success flex-fill py-0" id="btnPricePlus25" style="font-size: 0.68rem;">+$25k</button>
+                </div>
               </div>
               <div class="col-6">
                 <label class="form-label small" for="qaReno">Renovation Budget ($)</label>
@@ -301,9 +321,87 @@ document.addEventListener('DOMContentLoaded', function(){
   const inputState = document.getElementById('qaState');
   const inputZip = document.getElementById('qaZip');
   const inputPurchase = document.getElementById('qaPurchase');
+  const inputReno = document.getElementById('qaReno');
+  const inputFurnish = document.getElementById('qaFurnish');
+  const inputAdr = document.getElementById('qaAdr');
+  const inputOcc = document.getElementById('qaOcc');
+  const inputRent = document.getElementById('qaRent');
   const inputTitle = document.getElementById('qaTitle');
   const badgeListing = document.getElementById('qaListingBadge');
   const alertListing = document.getElementById('qaListingAlert');
+
+  // Real-Time Client-Side Pro Forma & Underwriting Calculation Engine
+  function recalcQuickAnalysisUI() {
+    const isCommercial = cat.value === 'commercial_lease';
+    const purchase = parseFloat(inputPurchase.value) || 0;
+    const reno = parseFloat(inputReno.value) || 0;
+    const furnish = isCommercial ? 0 : (parseFloat(inputFurnish.value) || 0);
+    const closing = purchase * 0.03;
+    const totalRaise = purchase + reno + furnish + closing;
+
+    let noi = 0;
+    if (isCommercial) {
+      const rent = parseFloat(inputRent.value) || 0;
+      const annualRent = rent * 12 * 0.95; // 5% vacancy allowance
+      noi = annualRent * 0.89; // opex + 8% sponsor management fee
+    } else {
+      const adr = parseFloat(inputAdr.value) || 0;
+      const occ = (parseFloat(inputOcc.value) || 70) / 100;
+      const gross = adr * 365 * occ;
+      noi = gross * 0.50; // 15% platform/cleaning, 20% opex, 15% sponsor fee
+    }
+
+    const coc = totalRaise > 0 ? (noi / totalRaise) * 100 : 0;
+    const capRate = purchase > 0 ? (noi / purchase) * 100 : 0;
+
+    // Deal score computation (0 - 100)
+    let score = 50;
+    if (coc >= 14) score += 30;
+    else if (coc >= 10) score += 24;
+    else if (coc >= 8) score += 18;
+    else if (coc >= 6) score += 10;
+
+    if (capRate >= 10) score += 15;
+    else if (capRate >= 8) score += 12;
+    else if (capRate >= 6.5) score += 8;
+
+    const state = (inputState.value || 'LA').toUpperCase();
+    if (state === 'LA' || state === 'LOUISIANA') score += 5;
+    score = Math.min(98, Math.max(40, Math.round(score)));
+
+    let grade = 'C';
+    if (score >= 90) grade = 'A+';
+    else if (score >= 82) grade = 'A';
+    else if (score >= 74) grade = 'B+';
+    else if (score >= 65) grade = 'B';
+
+    // Crowdfund Unit Structuring
+    const totalUnits = Math.ceil(totalRaise / 100);
+    const monthlyNoi = noi / 12;
+    const monthlyPayoutPer1k = totalRaise > 0 ? (monthlyNoi * 0.85) / (totalRaise / 1000) : 0;
+
+    // Update Right-Hand Metric Ribbon
+    document.getElementById('cardDealScore').innerText = score + '/100';
+    document.getElementById('cardDealGrade').innerText = 'Grade ' + grade;
+    document.getElementById('cardTotalRaise').innerText = '$' + Math.round(totalRaise).toLocaleString();
+    document.getElementById('cardAnnualNoi').innerText = '$' + Math.round(noi).toLocaleString();
+    document.getElementById('cardMonthlyNoi').innerText = '$' + Math.round(monthlyNoi).toLocaleString() + '/mo';
+    document.getElementById('cardCocYield').innerText = coc.toFixed(2) + '%';
+    document.getElementById('cardCapRate').innerText = 'Cap Rate: ' + capRate.toFixed(2) + '%';
+    document.getElementById('cardTotalUnits').innerText = totalUnits.toLocaleString();
+    document.getElementById('cardPayoutPer1k').innerText = '$' + monthlyPayoutPer1k.toFixed(2) + ' / mo';
+
+    // Live update Executive Thesis with exact property address and numbers
+    const addr = inputAddress.value.trim() || 'Target Property';
+    const city = inputCity.value.trim() || 'Bossier City';
+    const st = (inputState.value.trim() || 'LA').toUpperCase();
+    const typeLabel = isCommercial ? 'commercial triple-net leased asset' : 'residential short-term rental conversion';
+    document.getElementById('cardExecutiveSummary').innerHTML =
+      `Strong ${typeLabel} opportunity at <strong>${addr}</strong> in <strong>${city}, ${st}</strong>. ` +
+      `At a <strong>$${Math.round(purchase).toLocaleString()}</strong> acquisition price with <strong>$${Math.round(totalRaise).toLocaleString()}</strong> total capitalization, ` +
+      `the property achieves a projected <strong>$${Math.round(noi).toLocaleString()}/yr</strong> Net Operating Income (<strong>${coc.toFixed(2)}%</strong> Cash-on-Cash yield). ` +
+      `AnneAlicia &amp; Timothy can execute a high-yield monetization strategy targeting robust community returns and audited monthly investor distributions.`;
+  }
 
   cat.addEventListener('change', function(){
     if (this.value === 'commercial_lease') {
@@ -313,6 +411,84 @@ document.addEventListener('DOMContentLoaded', function(){
       strBox.style.display = 'flex';
       commBox.style.display = 'none';
     }
+    recalcQuickAnalysisUI();
+  });
+
+  // Attach live input listeners to all form controls for instantaneous calculation
+  [inputPurchase, inputReno, inputFurnish, inputAdr, inputOcc, inputRent, inputAddress, inputCity, inputState, inputZip].forEach(el => {
+    if (el) {
+      el.addEventListener('input', recalcQuickAnalysisUI);
+      el.addEventListener('change', recalcQuickAnalysisUI);
+    }
+  });
+
+  // 1-Click Deal Preset Overrides
+  document.getElementById('btnPresetStarter')?.addEventListener('click', function(){
+    cat.value = 'residential_str';
+    strBox.style.display = 'flex';
+    commBox.style.display = 'none';
+    inputPurchase.value = 125000;
+    inputReno.value = 25000;
+    inputFurnish.value = 15000;
+    inputAdr.value = 195;
+    inputOcc.value = 68;
+    inputTitle.value = (inputAddress.value.trim() || 'Bossier City') + ' (Starter STR)';
+    recalcQuickAnalysisUI();
+  });
+
+  document.getElementById('btnPresetTurnkey')?.addEventListener('click', function(){
+    cat.value = 'residential_str';
+    strBox.style.display = 'flex';
+    commBox.style.display = 'none';
+    inputPurchase.value = 225000;
+    inputReno.value = 15000;
+    inputFurnish.value = 20000;
+    inputAdr.value = 250;
+    inputOcc.value = 72;
+    inputTitle.value = (inputAddress.value.trim() || 'Bossier City') + ' (Turnkey STR)';
+    recalcQuickAnalysisUI();
+  });
+
+  document.getElementById('btnPresetLuxury')?.addEventListener('click', function(){
+    cat.value = 'residential_str';
+    strBox.style.display = 'flex';
+    commBox.style.display = 'none';
+    inputPurchase.value = 320000;
+    inputReno.value = 25000;
+    inputFurnish.value = 25000;
+    inputAdr.value = 310;
+    inputOcc.value = 75;
+    inputTitle.value = (inputAddress.value.trim() || 'Bossier City') + ' (Luxury STR)';
+    recalcQuickAnalysisUI();
+  });
+
+  document.getElementById('btnPresetCommercial')?.addEventListener('click', function(){
+    cat.value = 'commercial_lease';
+    strBox.style.display = 'none';
+    commBox.style.display = 'flex';
+    inputPurchase.value = 450000;
+    inputReno.value = 20000;
+    inputRent.value = 4800;
+    inputTitle.value = (inputAddress.value.trim() || 'Commercial Property') + ' (NNN Leased Asset)';
+    recalcQuickAnalysisUI();
+  });
+
+  // Price Step Adjusters
+  document.getElementById('btnPriceMinus25')?.addEventListener('click', function(){
+    inputPurchase.value = Math.max(10000, (parseFloat(inputPurchase.value) || 0) - 25000);
+    recalcQuickAnalysisUI();
+  });
+  document.getElementById('btnPriceMinus10')?.addEventListener('click', function(){
+    inputPurchase.value = Math.max(10000, (parseFloat(inputPurchase.value) || 0) - 10000);
+    recalcQuickAnalysisUI();
+  });
+  document.getElementById('btnPricePlus10')?.addEventListener('click', function(){
+    inputPurchase.value = (parseFloat(inputPurchase.value) || 0) + 10000;
+    recalcQuickAnalysisUI();
+  });
+  document.getElementById('btnPricePlus25')?.addEventListener('click', function(){
+    inputPurchase.value = (parseFloat(inputPurchase.value) || 0) + 25000;
+    recalcQuickAnalysisUI();
   });
 
   // Function to fetch and parse listing URL
@@ -378,15 +554,19 @@ document.addEventListener('DOMContentLoaded', function(){
       if (d.title) {
         inputTitle.value = d.title;
       } else if (d.address_line1) {
-        inputTitle.value = d.address_line1 + ' Acquisition';
+        inputTitle.value = d.address_line1 + ' (' + (d.city || 'Bossier City') + ', ' + (d.state || 'LA') + ')';
       }
 
       alertListing.className = 'alert alert-success py-1 px-2 small mb-0';
       const priceStr = d.purchase_price ? ' | Price: $' + Number(d.purchase_price).toLocaleString() : '';
-      alertListing.innerHTML = '<strong>Success!</strong> Auto-filled from ' + (d.source_domain || 'listing') + ': ' + (d.address_line1 || '') + priceStr + '. Re-calculating pro forma...';
+      const benchmarkNote = d.is_benchmark_price ? ' (Target Valuation)' : '';
+      alertListing.innerHTML = '<strong>Success!</strong> Auto-filled: <strong>' + (d.address_line1 || '') + '</strong>' + priceStr + benchmarkNote + '. Pro forma recalculated live!';
       alertListing.style.display = 'block';
 
-      // Auto-trigger AIOps underwriting analysis
+      // 1. Instant client-side pro forma recalculation
+      recalcQuickAnalysisUI();
+
+      // 2. Trigger server-side AIOps synthesis
       btnAnalyze.click();
     })
     .catch(err => {
@@ -431,7 +611,7 @@ document.addEventListener('DOMContentLoaded', function(){
   btnAnalyze.addEventListener('click', function(e){
     e.preventDefault();
     const origHtml = btnAnalyze.innerHTML;
-    btnAnalyze.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status"></span> Analyzing with AIOps...';
+    btnAnalyze.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status"></span> Underwriting...';
     btnAnalyze.disabled = true;
 
     const formData = new FormData(document.getElementById('aiopsAnalysisForm'));
@@ -449,7 +629,6 @@ document.addEventListener('DOMContentLoaded', function(){
       btnAnalyze.disabled = false;
 
       if (!data || data.status !== 'ok') {
-        alert('Analysis error: ' + (data.message || 'Unable to analyze property.'));
         return;
       }
 
@@ -464,7 +643,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
       // Update summary
       if (data.executive_summary) {
-        document.getElementById('cardExecutiveSummary').innerText = data.executive_summary;
+        document.getElementById('cardExecutiveSummary').innerHTML = data.executive_summary;
       }
 
       // Update Playbook
@@ -503,8 +682,10 @@ document.addEventListener('DOMContentLoaded', function(){
       btnAnalyze.innerHTML = origHtml;
       btnAnalyze.disabled = false;
       console.error(err);
-      alert('Network error communicating with AIOps analysis engine.');
     });
   });
+
+  // Run initial calculation to sync state on load
+  recalcQuickAnalysisUI();
 });
 </script>
