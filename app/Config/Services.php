@@ -929,4 +929,13 @@ class Services extends CoreServices
             new \CodeIgniter\HTTP\UserAgent(),
         );
     }
+
+    public static function realEstateIngestService(bool $getShared = true): \App\Services\RealEstateIngestService
+    {
+        if ($getShared) {
+            return static::getSharedInstance('realEstateIngestService');
+        }
+
+        return new \App\Services\RealEstateIngestService();
+    }
 }

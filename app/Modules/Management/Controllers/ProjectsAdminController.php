@@ -85,78 +85,119 @@ class ProjectsAdminController extends BaseAdminController
 
     public function commonData(): array
     {
-        $this->data = parent::commonData();
-        // Fetch data from UserService
-        $userData = $this->getuserService()->commonData();
-    
-        // Merge the user data with BudgetController data
-        $this->data = array_merge($this->data, $userData);
+        $base = parent::commonData();
+        if ($base instanceof \CodeIgniter\HTTP\ResponseInterface) {
+            return $base;
+        }
+        $this->data = array_merge($base, $this->data);
 
         // Site Settings
-        $this->data['siteSettings'] = $this->siteSettings;
-        $this->data['beta'] = (string) $this->siteSettings->beta;
-        $this->data['debug'] = (string) $this->siteSettings->debug;
-        $this->data['request'] = $this->request;
-        $this->data['uri'] = $this->request->getUri();
-        $this->data['userAgent'] = $this->request->getUserAgent();
-        $this->data['date'] = $this->siteSettings->date;
-        $this->data['time'] = $this->siteSettings->time;
-        $this->data['hostTime'] = $this->siteSettings->hostTime;
-        $this->data['cuID'] = $this->cuID;
+        $this->data['siteSettings'] = $this->siteSettings ?? config('SiteSettings');
+        $this->data['beta']         = (string) ($this->siteSettings->beta ?? '');
+        $this->data['debug']        = (string) ($this->siteSettings->debug ?? '');
+        $this->data['request']      = $this->request ?? service('request');
+        $this->data['uri']          = $this->request ? $this->request->getUri() : null;
+        $this->data['userAgent']    = $this->request ? $this->request->getUserAgent() : null;
+        $this->data['date']         = $this->siteSettings->date ?? date('Y-m-d');
+        $this->data['time']         = $this->siteSettings->time ?? date('H:i:s');
+        $this->data['hostTime']     = $this->siteSettings->hostTime ?? time();
+        $this->data['cuID']         = $this->cuID;
 
-        // Budget Info
-        $budgetInfo = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID);
-        $this->data['totalAccountBalance'] = $budgetInfo['totalAccountBalance'];
-        $this->data['totalAccountBalanceFMT'] = $budgetInfo['totalAccountBalanceFMT'];
+        // Defaults to protect views from undefined key notices
+        $this->data['totalAccountBalance']    = (float) ($this->data['totalAccountBalance'] ?? 0.0);
+        $this->data['totalAccountBalanceFMT'] = (string) ($this->data['totalAccountBalanceFMT'] ?? '$0.00');
+        $this->data['getFeatures']            = $this->data['getFeatures'] ?? [];
+        $this->data['completedGoals']         = $this->data['completedGoals'] ?? [];
+        $this->data['pendingGoals']           = $this->data['pendingGoals'] ?? [];
+        $this->data['promotionalBanners']     = $this->data['promotionalBanners'] ?? [];
+        $this->data['cuWalletID']             = $this->data['cuWalletID'] ?? 0;
+        $this->data['cuRole']                 = $this->data['cuRole'] ?? 1;
+        $this->data['cuUserType']             = $this->data['cuUserType'] ?? 'admin';
+        $this->data['cuEmail']                = $this->data['cuEmail'] ?? '';
+        $this->data['cuDisplayName']          = $this->data['cuDisplayName'] ?? '';
+        $this->data['cuUsername']             = $this->data['cuUsername'] ?? '';
+        $this->data['cuNameInitials']         = $this->data['cuNameInitials'] ?? '';
+        $this->data['cuKYC']                  = $this->data['cuKYC'] ?? '';
+        $this->data['cuWalletCount']          = $this->data['cuWalletCount'] ?? 0;
+        $this->data['MyMIGCoinSum']           = $this->data['MyMIGCoinSum'] ?? 0;
+        $this->data['walletID']               = $this->data['walletID'] ?? 0;
+        $this->data['cuSolanaDW']             = $this->data['cuSolanaDW'] ?? null;
+        $this->data['cuSolanaTotal']          = $this->data['cuSolanaTotal'] ?? 0;
+        $this->data['cuSolanaValue']          = $this->data['cuSolanaValue'] ?? 0;
+        $this->data['solanaNetworkStatus']    = $this->data['solanaNetworkStatus'] ?? ['healthy' => false];
+        $this->data['projects']               = $this->data['projects'] ?? [];
 
-        // Dashboard Info
-        $this->data['getFeatures'] = $this->getMyMIDashboard()->getFeatures();
-        $dashboardInfo = $this->getMyMIDashboard()->dashboardInfo($this->cuID);
-        $this->data['completedGoals'] = $dashboardInfo['progressGoalData']['completions'];
-        //log_message('debug', 'DashboardController L104 - $pendingGoals - $dashboardInfo[progressGoalData][goals]: ' . (print_r($dashboardInfo['progressGoalData']['goals'], true)));
-        $this->data['pendingGoals'] = $dashboardInfo['progressGoalData']['goals'];
-        $this->data['promotionalBanners'] = $dashboardInfo['promotionalBanners'];
-
-        // User Info
-        $userInfo = $this->getMyMIUser()->getUserInformation($this->cuID);
-        $this->data['cuWalletID'] = $userInfo['cuWalletID'];
-        $this->data['cuRole'] = $userInfo['cuRole'] ?? 4;
-        $this->data['cuUserType'] = $userInfo['cuUserType'] ?? '';
-        $this->data['cuEmail'] = $userInfo['cuEmail'] ?? '';
-        $this->data['cuDisplayName'] = $userInfo['cuDisplayName'] ?? '';
-        $this->data['cuUsername'] = $userInfo['cuUsername'] ?? '';
-        $this->data['cuNameInitials'] = $userInfo['cuNameInitials'] ?? '';
-        $this->data['cuKYC'] = $userInfo['cuKYC'] ?? '';
-        $this->data['cuWalletCount'] = $userInfo['cuWalletCount'];
-        $this->data['MyMIGCoinSum'] = $userInfo['MyMIGCoinSum'];
-        $this->data['walletID'] = $userInfo['walletID'];
-
-        // Fetch Solana data
-        $userSolanaData = $this->getSolanaService()->getSolanaData($this->cuID);
-        $this->data['cuSolanaDW'] = $userSolanaData['userSolanaWallets']['cuSolanaDW'] ?? null;
-        // Ensure Solana network status exists to avoid "Undefined array key"
+        // Safe optional data enrichment
         try {
-            if (!isset($this->solanaService)) {
-                $this->solanaService = service('solanaService'); // or however you DI it
+            $userData = $this->getuserService()->commonData();
+            if (is_array($userData)) {
+                $this->data = array_merge($this->data, $userData);
             }
-            $data['solanaNetworkStatus'] = $this->solanaService->getNetworkStatus();
         } catch (\Throwable $e) {
-            log_message('error', 'WalletsController getNetworkStatus failed: {msg}', ['msg' => $e->getMessage()]);
-            $data['solanaNetworkStatus'] = [
-                'healthy' => false,
-                'slot'    => null,
-                'version' => null,
-                'error'   => $e->getMessage(),
-            ];
+            log_message('notice', 'ProjectsAdminController commonData: userService skipped: ' . $e->getMessage());
         }
-        $this->data['cuSolanaTotal'] = $userSolanaData['userSolanaWallets']['cuSolanaTotal'] ?? 0;
-        $this->data['cuSolanaValue'] = $userSolanaData['userSolanaWallets']['cuSolanaValue'] ?? 0;
 
-        // Projects Data
-        $this->data['projects'] = $this->getMyMIProjects()->projectsData($this->cuID); 
+        if (! empty($this->cuID)) {
+            // Safely enrich with Budget Info
+            try {
+                $budgetInfo = $this->getMyMIBudget()->allUserBudgetInfo($this->cuID);
+                if (is_array($budgetInfo)) {
+                    $this->data['totalAccountBalance']    = (float) ($budgetInfo['totalAccountBalance'] ?? 0.0);
+                    $this->data['totalAccountBalanceFMT'] = (string) ($budgetInfo['totalAccountBalanceFMT'] ?? '$0.00');
+                }
+            } catch (\Throwable $e) {
+                log_message('notice', 'ProjectsAdminController commonData: budgetInfo skipped: ' . $e->getMessage());
+            }
+
+            // Safely enrich with Dashboard Info
+            try {
+                $this->data['getFeatures'] = $this->getMyMIDashboard()->getFeatures() ?: [];
+                $dashboardInfo = $this->getMyMIDashboard()->dashboardInfo($this->cuID);
+                if (is_array($dashboardInfo)) {
+                    $this->data['completedGoals']     = $dashboardInfo['progressGoalData']['completions'] ?? [];
+                    $this->data['pendingGoals']       = $dashboardInfo['progressGoalData']['goals'] ?? [];
+                    $this->data['promotionalBanners'] = $dashboardInfo['promotionalBanners'] ?? [];
+                }
+            } catch (\Throwable $e) {
+                log_message('notice', 'ProjectsAdminController commonData: dashboardInfo skipped: ' . $e->getMessage());
+            }
+
+            // Safely enrich with User Info
+            try {
+                $userInfo = $this->getMyMIUser()->getUserInformation($this->cuID);
+                if (is_array($userInfo)) {
+                    foreach (['cuWalletID','cuRole','cuUserType','cuEmail','cuDisplayName','cuUsername','cuNameInitials','cuKYC','cuWalletCount','MyMIGCoinSum','walletID'] as $key) {
+                        if (isset($userInfo[$key])) {
+                            $this->data[$key] = $userInfo[$key];
+                        }
+                    }
+                }
+            } catch (\Throwable $e) {
+                log_message('notice', 'ProjectsAdminController commonData: userInfo skipped: ' . $e->getMessage());
+            }
+
+            // Safely enrich with Solana Info
+            try {
+                $userSolanaData = $this->getSolanaService()->getSolanaData($this->cuID);
+                if (is_array($userSolanaData)) {
+                    $this->data['cuSolanaDW']    = $userSolanaData['userSolanaWallets']['cuSolanaDW'] ?? null;
+                    $this->data['cuSolanaTotal'] = $userSolanaData['userSolanaWallets']['cuSolanaTotal'] ?? 0;
+                    $this->data['cuSolanaValue'] = $userSolanaData['userSolanaWallets']['cuSolanaValue'] ?? 0;
+                }
+            } catch (\Throwable $e) {
+                log_message('notice', 'ProjectsAdminController commonData: solanaData skipped: ' . $e->getMessage());
+            }
+
+            // Safely enrich with Projects Data
+            try {
+                $this->data['projects'] = $this->getMyMIProjects()->projectsData($this->cuID);
+            } catch (\Throwable $e) {
+                log_message('notice', 'ProjectsAdminController commonData: projectsData skipped: ' . $e->getMessage());
+            }
+        }
 
         return $this->data;
-}
+    }
 
     // Refactored userAccountData to ensure all account-related data is captured
     private function userAccountData()
@@ -325,7 +366,12 @@ class ProjectsAdminController extends BaseAdminController
             }
         }
 
-        service('RealEstateIngestService')->queue((int)$id); // run now
+        try {
+            $ingest = new \App\Services\RealEstateIngestService();
+            $ingest->queue((int)$id);
+        } catch (\Throwable $e) {
+            log_message('error', 'realEstateQuickSubmit ingest error: ' . $e->getMessage());
+        }
         return redirect()->back()->with('success','Submitted! We’re fetching public details now.');
     }
     
@@ -660,20 +706,25 @@ class ProjectsAdminController extends BaseAdminController
         $projectId = (int) $projectId;
         $project = $this->projectsModel->find($projectId);
         if (! $project) {
-            return $this->failNotFound('Project not found.');
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound('Project not found.');
         }
 
-        $reModel = new \App\Models\ProjectsRealEstateModel();
-        $property = $reModel->getByProjectId($projectId);
+        $property = null;
+        $revenues = [];
+        try {
+            $reModel = new \App\Models\ProjectsRealEstateModel();
+            $property = $reModel->getByProjectId($projectId);
 
-        $revModel = new \App\Models\ProjectsRealEstateRevenueModel();
-        $revenues = $revModel->getRevenuesByProject($projectId);
+            $revModel = new \App\Models\ProjectsRealEstateRevenueModel();
+            $revenues = $revModel->getRevenuesByProject($projectId);
+        } catch (\Throwable $e) {
+            log_message('error', 'distributionConsole error: ' . $e->getMessage());
+        }
 
         $this->data['pageTitle'] = 'Real Estate Revenue Distribution Console | MyMI Admin';
         $this->data['project'] = $project;
         $this->data['property'] = $property;
         $this->data['revenues'] = $revenues;
-        $this->commonData();
 
         return $this->renderTheme('App\\Modules\\Management\\Views\\Projects\\distribution_console', $this->data);
     }
