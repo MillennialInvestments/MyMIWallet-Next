@@ -44,15 +44,15 @@ class Usage extends SafeBaseCommand
         $failed = false;
         for ($i = 0; $i < $days; $i++) {
             $ymd = $start->modify('-' . $i . ' day')->format('Ymd');
-            $report = $usage->day($ymd, $now);
+            $report = $usage->day($ymd, time()); // a fresh token per day: each lives 120 s
             $all[$ymd] = $report;
             if (($report['ok'] ?? false) !== true) {
                 $failed = true;
 
                 continue;
             }
-            if (CLI::getOption('save') !== null) {
-                $this->save($ymd, $report);
+            if (CLI::getOption('save') !== null && ! $this->save($ymd, $report)) {
+                $failed = true; // not kept, so a scheduled run can retry
             }
         }
 
@@ -89,13 +89,13 @@ class Usage extends SafeBaseCommand
         return $failed ? EXIT_ERROR : EXIT_SUCCESS;
     }
 
-    private function save(string $ymd, array $report): void
+    private function save(string $ymd, array $report): bool
     {
         $dir = rtrim(WRITEPATH, '/') . '/tbi-chat';
         if (! is_dir($dir) && ! @mkdir($dir, 0700, true) && ! is_dir($dir)) {
             CLI::error("STOP: cannot create {$dir}");
 
-            return;
+            return false;
         }
         $file = $dir . '/usage-' . $ymd . '.json';
         $tmp = $file . '.' . bin2hex(random_bytes(4));
@@ -106,5 +106,7 @@ class Usage extends SafeBaseCommand
             @unlink($tmp);
             CLI::error("STOP: cannot write {$file}");
         }
+
+        return $ok;
     }
 }
