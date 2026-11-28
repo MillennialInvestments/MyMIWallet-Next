@@ -93,7 +93,7 @@ final class TbiChatLink
 
     /**
      * A plain first name (letters in any language, marks, spaces, ' . -,
-     * at most 40 characters), or null. The chat applies the same rule.
+     * at most 30 characters and three words), or null. The chat applies the same rule.
      */
     public static function firstName(?string $name): ?string
     {
@@ -101,7 +101,7 @@ final class TbiChatLink
             return null;
         }
         $name = trim((string) preg_replace('/\s+/u', ' ', $name));
-        if ($name === '' || mb_strlen($name) > 40 || ! preg_match("/^\p{L}[\p{L}\p{M}' .-]*$/u", $name)) {
+        if ($name === '' || mb_strlen($name) > 30 || substr_count($name, ' ') > 2 || ! preg_match("/^\p{L}[\p{L}\p{M}' .-]*$/u", $name)) {
             return null;
         }
 

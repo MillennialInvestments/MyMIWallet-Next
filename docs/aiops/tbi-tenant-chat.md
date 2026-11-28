@@ -79,7 +79,7 @@ two hours, or at once when the TBI side turns `TENANT_MYMI_ENABLED=off`.
 - **First name.** `/AI-Chat` now adds the member's first name (`cuFirstName`)
   to the one-time link as the optional `name` claim, so the chat can greet
   them. Only a plain name is sent (letters in any language, marks, spaces,
-  `'`, `.`, `-`, up to 40 characters); the chat applies the same rule. No
+  `'`, `.`, `-`, up to 30 characters and three words); the chat applies the same rule. No
   email, last name or account data is sent. Turn it off with
   `TBI_CHAT_SEND_NAME=off`.
 - **Usage report.** `php spark tbichat:usage` reads MyMI's AI chat usage back
