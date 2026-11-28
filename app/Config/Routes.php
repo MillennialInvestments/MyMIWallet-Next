@@ -1774,8 +1774,12 @@ $routes->group('Management', ['namespace' => '\App\Modules\Management\Controller
         $routes->post('Reject/(:segment)', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::rejectProject/$1');
         $routes->get('Quick-Intake', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::realEstateQuickIntake');
         $routes->post('Quick-Intake', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::realEstateQuickSubmit');
+        $routes->get('quick-intake', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::realEstateQuickIntake');
+        $routes->post('quick-intake', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::realEstateQuickSubmit');
         $routes->get('Distribution-Console/(:num)', 'ProjectsAdminController::distributionConsole/$1');
+        $routes->get('distribution-console/(:num)', 'ProjectsAdminController::distributionConsole/$1');
         $routes->post('Execute-Distribution/(:num)', 'ProjectsAdminController::executeDistribution/$1');
+        $routes->post('execute-distribution/(:num)', 'ProjectsAdminController::executeDistribution/$1');
         $routes->get('Fund', 'ProjectsAdminController::fundOverview');
         $routes->get('Fund/(:num)', 'ProjectsAdminController::fundOverview/$1');
         $routes->post('UpdateFundNAV', 'ProjectsAdminController::updateFundNAV');
