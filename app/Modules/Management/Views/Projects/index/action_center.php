@@ -49,6 +49,19 @@
     <div class="card-inner border-top">
         <div class="nk-wg-action">
             <div class="nk-wg-action-content">
+                <em class="icon ni ni-search text-danger"></em>
+                <div class="title">Distressed Deal Finder</div>
+                <p class="small text-muted mb-0">Scan foreclosure.com, auction.com, equator.com, xome.com &amp; Section 8 FMR.</p>
+            </div>
+            <a href="<?= site_url('Management/Projects/Deal-Finder'); ?>" class="btn btn-danger btn-sm text-white">
+                <em class="icon ni ni-search"></em>
+                <span>Deal Finder</span>
+            </a>
+        </div>
+    </div><!-- .card-inner -->
+    <div class="card-inner border-top">
+        <div class="nk-wg-action">
+            <div class="nk-wg-action-content">
                 <em class="icon ni ni-users text-warning"></em>
                 <div class="title">Cash Buyer Dispo Match</div>
                 <p class="small text-muted mb-0">Match wholesale contracts with pre-screened cash buyers across Bossier City and Caddo.</p>

@@ -545,6 +545,61 @@ class ProjectsAdminController extends BaseAdminController
 
         return redirect()->back()->with('success','Submitted! We’re fetching public details now.');
     }
+
+    /** GET Management/Projects/Deal-Finder: Distressed sourcing across 5 platforms */
+    public function dealFinder()
+    {
+        $this->commonData();
+        $this->data['pageTitle'] = 'Distressed Property & Section 8 Deal Finder | MyMI Admin';
+
+        try {
+            $finderService = new \App\Services\RealEstateDealFinderService();
+            $defaultResults = $finderService->searchDistressedOpportunities([
+                'max_price' => 50000,
+                'min_sqft'  => 1700,
+                'beds'      => 3,
+                'zip'       => '71111',
+            ]);
+            $this->data['dealFinderData'] = $defaultResults;
+        } catch (\Throwable $e) {
+            log_message('error', 'dealFinder error: ' . $e->getMessage());
+            $this->data['dealFinderData'] = [];
+        }
+
+        return $this->renderTheme('App\\Modules\\Management\\Views\\Projects\\deal_finder_page', $this->data);
+    }
+
+    /** POST Management/Projects/Deal-Finder/Search: Run search across 5 platforms via AJAX */
+    public function searchDistressedDeals()
+    {
+        $input = $this->request->getPost() ?: $this->request->getJSON(true) ?: [];
+        try {
+            $finderService = new \App\Services\RealEstateDealFinderService();
+            $results = $finderService->searchDistressedOpportunities($input);
+            return $this->respond($results);
+        } catch (\Throwable $e) {
+            log_message('error', 'searchDistressedDeals error: ' . $e->getMessage());
+            return $this->fail('Search error: ' . $e->getMessage(), 400);
+        }
+    }
+
+    /** POST Management/Projects/Deal-Finder/Hud-Fmr: Fetch HUD Fair Market Rent by ZIP */
+    public function hudFairMarketRent()
+    {
+        $input = $this->request->getPost() ?: $this->request->getJSON(true) ?: [];
+        $zip = trim((string) ($input['zip'] ?? '71111'));
+        try {
+            $finderService = new \App\Services\RealEstateDealFinderService();
+            $hudFmr = $finderService->getHudFairMarketRent($zip);
+            return $this->respond([
+                'status' => 'ok',
+                'data'   => $hudFmr,
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'hudFairMarketRent error: ' . $e->getMessage());
+            return $this->fail('HUD FMR error: ' . $e->getMessage(), 400);
+        }
+    }
     
     public function viewProject($projectID = null)
     {

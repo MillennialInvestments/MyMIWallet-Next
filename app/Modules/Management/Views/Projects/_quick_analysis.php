@@ -23,6 +23,9 @@
       </div>
     </div>
     <div class="nk-block-head-content">
+      <a href="<?= site_url('Management/Projects/Deal-Finder') ?>" class="btn btn-outline-danger me-2">
+        <em class="icon ni ni-search"></em><span>Distressed Deal Finder</span>
+      </a>
       <a href="<?= site_url('Management/Projects/Quick-Intake') ?>" class="btn btn-outline-primary me-2">
         <em class="icon ni ni-plus"></em><span>Quick-Intake Form</span>
       </a>
