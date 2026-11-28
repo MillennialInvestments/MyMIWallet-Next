@@ -137,4 +137,31 @@ class RealEstateDealServiceTest extends CIUnitTestCase
         $this->assertSame(0.0, $proForma['total_acquisition_cost']);
         $this->assertSame(0.0, $proForma['target_coc_return']);
     }
+
+    public function testLtrProFormaCalculation(): void
+    {
+        $inputs = [
+            'purchase_price'              => 200000.00,
+            'renovation_budget'           => 10000.00,
+            'closing_costs'               => 6000.00,
+            'ltr_monthly_rent'            => 1800.00,
+            'vacancy_reserve_pct'         => 5.0,
+            'sponsor_management_fee_pct'  => 8.0,
+            'ltr_opex_pct'                => 20.0,
+        ];
+
+        $proForma = $this->service->calculateLtrProForma($inputs);
+
+        $this->assertSame('residential_ltr', $proForma['property_category']);
+        $this->assertSame('pure_long_term_rental', $proForma['monetization_strategy']);
+        $this->assertSame(0.0, $proForma['furnishing_budget']);
+        $this->assertSame(216000.00, $proForma['total_acquisition_cost']);
+        $this->assertSame(21600.00, $proForma['gross_annual_rent']);
+        $this->assertSame(20520.00, $proForma['effective_gross_rent']);
+        $this->assertSame(4104.00, $proForma['operating_expenses']);
+        $this->assertSame(1641.60, $proForma['sponsor_management_fee']);
+        $this->assertSame(14774.40, $proForma['projected_annual_noi']);
+        $this->assertSame(6.84, $proForma['target_coc_return']);
+        $this->assertSame(1231.20, $proForma['projected_monthly_distributable']);
+    }
 }

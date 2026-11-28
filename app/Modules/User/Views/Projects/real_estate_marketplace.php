@@ -41,15 +41,25 @@
                 $targetRaise = (float) ($prop['target_acquisition_cost'] ?? $prop['total_acquisition_cost'] ?? $prop['target_amount'] ?? 1.0);
                 $raised = (float) ($prop['current_amount'] ?? 0.0);
                 $pct = $targetRaise > 0 ? min(100.0, round(($raised / $targetRaise) * 100, 1)) : 0.0;
-                $isStr = ($prop['property_category'] ?? '') === 'residential_str';
+                $propCategory = $prop['property_category'] ?? 'residential_str';
+                $catBadge = match($propCategory) {
+                    'residential_ltr'  => 'bg-primary',
+                    'commercial_lease' => 'bg-info',
+                    default            => 'bg-success',
+                };
+                $catLabel = match($propCategory) {
+                    'residential_ltr'  => 'Residential Pure Rental',
+                    'commercial_lease' => 'Commercial NNN Lease',
+                    default            => 'Residential Airbnb/VRBO',
+                };
                 ?>
                 <div class="col-md-6 col-lg-4">
                     <div class="card card-bordered h-100">
                         <div class="card-inner d-flex flex-column justify-content-between">
                             <div>
                                 <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <span class="badge <?= $isStr ? 'bg-success' : 'bg-info' ?>">
-                                        <?= $isStr ? 'Residential Airbnb/VRBO' : 'Commercial NNN Lease' ?>
+                                    <span class="badge <?= $catBadge ?>">
+                                        <?= $catLabel ?>
                                     </span>
                                     <span class="badge bg-outline-secondary text-uppercase">
                                         <?= esc($prop['operational_stage'] ?? 'sourcing') ?>

@@ -49,6 +49,47 @@ class RealEstateAiUnderwriterServiceTest extends CIUnitTestCase
         $this->assertGreaterThan(0.0, $analysis['pro_forma']['target_coc_return']);
         $this->assertNotEmpty($analysis['value_add_playbook']);
         $this->assertNotEmpty($analysis['stress_test_risks']);
+
+        // Validate Dual Strategy Comparison (Airbnb/VRBO vs. Pure Traditional Renting)
+        $this->assertArrayHasKey('dual_strategy_comparison', $analysis);
+        $dual = $analysis['dual_strategy_comparison'];
+        $this->assertArrayHasKey('str', $dual);
+        $this->assertArrayHasKey('ltr', $dual);
+        $this->assertArrayHasKey('comparison', $dual);
+
+        $this->assertSame('Airbnb / VRBO (Short-Term Rental)', $dual['str']['strategy_title']);
+        $this->assertGreaterThan(0.0, $dual['str']['annual_noi']);
+        $this->assertSame(20000.0, $dual['str']['furnishing_budget']);
+
+        $this->assertSame('Pure Traditional Renting (12-Mo Lease)', $dual['ltr']['strategy_title']);
+        $this->assertSame(0.0, $dual['ltr']['furnishing_budget']);
+        $this->assertGreaterThan(0.0, $dual['ltr']['annual_noi']);
+
+        $this->assertNotEmpty($dual['comparison']['verdict']);
+        $this->assertArrayHasKey('recommended_strategy', $dual['comparison']);
+    }
+
+    public function testUnderwriteResidentialLtrDeal(): void
+    {
+        $input = [
+            'title'               => 'Benton Rd Long-Term Rental',
+            'property_category'   => 'residential_ltr',
+            'address_line1'       => '1420 Benton Rd',
+            'city'                => 'Bossier City',
+            'state'               => 'LA',
+            'postal_code'         => '71111',
+            'purchase_price'      => 225000.0,
+            'renovation_budget'   => 15000.0,
+            'ltr_monthly_rent'    => 1750.0,
+        ];
+
+        $analysis = $this->underwriter->analyze($input, 1);
+
+        $this->assertSame('ok', $analysis['status']);
+        $this->assertSame('Pure Long-Term Rental (12-Mo Lease)', $analysis['property']['category_label']);
+        $this->assertSame(0.0, $analysis['pro_forma']['furnishing_budget']);
+        $this->assertGreaterThan(0.0, $analysis['pro_forma']['projected_annual_noi']);
+        $this->assertArrayHasKey('Tenant Screening', $analysis['value_add_playbook']);
     }
 
     public function testUnderwriteCommercialDealReturnsNoiAndPlaybook(): void
@@ -69,7 +110,7 @@ class RealEstateAiUnderwriterServiceTest extends CIUnitTestCase
         $analysis = $this->underwriter->analyze($input, 1);
 
         $this->assertSame('ok', $analysis['status']);
-        $this->assertSame('Commercial NNN Lease', $analysis['property']['category_label']);
+        $this->assertSame('Commercial Leased Asset (NNN / Triple Net)', $analysis['property']['category_label']);
         $this->assertGreaterThan(0.0, $analysis['pro_forma']['cap_rate']);
         $this->assertArrayHasKey('Tenant Underwriting', $analysis['value_add_playbook']);
         $this->assertSame(100.0, $analysis['crowdfund_structure']['unit_nav_usd']);
