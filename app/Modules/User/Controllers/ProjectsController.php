@@ -319,6 +319,164 @@ class ProjectsController extends BaseUserController
         return $this->formReply(['ok' => true, 'reason' => 'stored'], 'Project revenue recorded.');
     }
 
+    /** GET Projects/Real-Estate: Real Estate Syndication Marketplace */
+    public function realEstateMarketplace()
+    {
+        $this->data['pageTitle'] = 'Real Estate Private Equity & Syndication | MyMI Wallet';
+        $reModel = new \App\Models\ProjectsRealEstateModel();
+        $this->data['properties'] = $reModel->getActiveRealEstateProjects(50);
+        return $this->renderTheme('App\\Modules\\User\\Views\\Projects\\real_estate_marketplace', $this->data);
+    }
+
+    /** GET Projects/Real-Estate/(:num): Property Details, Pro Forma, & Co-Investment */
+    public function realEstateDetail(int $projectId)
+    {
+        $project = $this->projectsModel->find($projectId);
+        if (! $project) {
+            throw PageNotFoundException::forPageNotFound('Project not found.');
+        }
+
+        $reModel = new \App\Models\ProjectsRealEstateModel();
+        $property = $reModel->getByProjectId($projectId);
+
+        $revModel = new \App\Models\ProjectsRealEstateRevenueModel();
+        $revenues = $revModel->getRevenuesByProject($projectId, 20);
+        $totals = $revModel->getProjectDistributedTotals($projectId);
+
+        $this->data['pageTitle'] = esc($project['name'] ?? $project['title']) . ' | Real Estate Syndication';
+        $this->data['project'] = $project;
+        $this->data['property'] = $property;
+        $this->data['revenues'] = $revenues;
+        $this->data['revenueTotals'] = $totals;
+
+        return $this->renderTheme('App\\Modules\\User\\Views\\Projects\\real_estate_detail', $this->data);
+    }
+
+    /** GET/POST Projects/ProForma-Calculate: Dynamic real estate pro forma calculator */
+    public function proFormaCalculate()
+    {
+        $input = $this->request->getPost() ?: $this->request->getGet();
+        $dealService = new \App\Services\RealEstateDealService();
+        $category = (string) ($input['property_category'] ?? 'residential_str');
+
+        $result = $category === 'commercial_lease'
+            ? $dealService->calculateCommercialProForma($input)
+            : $dealService->calculateStrProForma($input);
+
+        return $this->respond(['status' => 'ok', 'data' => $result]);
+    }
+
+    /** POST Projects/Invest-Crypto/(:num): Co-invest via SolanaPay or CryptoPay */
+    public function investCrypto(int $projectId)
+    {
+        $this->ensurePost();
+        $userId = $this->currentUserId();
+
+        $project = $this->projectsModel->find($projectId);
+        if (! $project) {
+            return $this->failNotFound('Project not found.');
+        }
+
+        // Compliance invariant: Check if user is an accredited/eligible fund investor
+        if (! $this->projectsModel->isEligibleFundInvestor($projectId, $userId)) {
+            return $this->fail([
+                'status'  => 'compliance_required',
+                'message' => 'SEC Reg D 506(c) compliance requires an accredited investor profile verification before co-investing in private syndications.',
+            ], 403);
+        }
+
+        $amount = (float) $this->request->getPost('amount');
+        $minCommit = (float) ($project['min_commit'] ?? 100.0);
+        if ($amount < $minCommit) {
+            return $this->failValidationErrors("Minimum co-investment amount is \${$minCommit}.");
+        }
+
+        $chain = strtolower(trim((string) ($this->request->getPost('chain') ?? 'solana')));
+        $payerAddress = trim((string) ($this->request->getPost('payer_address') ?? ''));
+        $usdCents = (int) round($amount * 100);
+
+        if ($chain === 'solana') {
+            $solanaPay = \App\Libraries\SolanaPay\SolanaPayFactory::make();
+            if (! $solanaPay) {
+                return $this->fail('Solana Pay is currently unavailable.', 503);
+            }
+            $checkout = $solanaPay->checkout($userId, 'fund_units', (string) $projectId, $usdCents);
+            if (! ($checkout['ok'] ?? false)) {
+                return $this->fail($checkout['error'] ?? 'Failed to initiate Solana Pay checkout.', 400);
+            }
+            return $this->respond([
+                'status'       => 'ok',
+                'provider'     => 'solana',
+                'project_id'   => $projectId,
+                'checkout_url' => $checkout['url'] ?? null,
+                'solana_url'   => $checkout['solana_url'] ?? null,
+                'reference'    => $checkout['reference'] ?? null,
+                'usd_cents'    => $usdCents,
+            ]);
+        }
+
+        // Multi-chain CryptoPay (Ethereum, Base, Bitcoin)
+        $cryptoPay = \App\Libraries\CryptoPay\CryptoPayFactory::make();
+        if (! $cryptoPay) {
+            return $this->fail('CryptoPay service is currently unavailable.', 503);
+        }
+        $checkout = $cryptoPay->checkout($userId, $chain, 'fund_units', (string) $projectId, $usdCents, $payerAddress ?: null);
+        if (! ($checkout['ok'] ?? false)) {
+            return $this->fail($checkout['error'] ?? 'Failed to initiate CryptoPay checkout.', 400);
+        }
+
+        return $this->respond([
+            'status'       => 'ok',
+            'provider'     => 'crypto-' . $chain,
+            'chain'        => $chain,
+            'project_id'   => $projectId,
+            'checkout_url' => $checkout['url'] ?? null,
+            'pay_address'  => $checkout['pay_address'] ?? null,
+            'reference'    => $checkout['reference'] ?? null,
+            'usd_cents'    => $usdCents,
+        ]);
+    }
+
+    /** POST Projects/Report-RealEstate-Revenue: Audited monthly revenue and expense submission */
+    public function reportRealEstateRevenue()
+    {
+        $this->ensurePost();
+        $userId = $this->currentUserId();
+        $projectId = (int) $this->request->getPost('project_id');
+
+        $project = $this->projectsModel->find($projectId);
+        if (! $project || (int) ($project['created_by'] ?? 0) !== $userId) {
+            return $this->failNotFound('Project not found or you are not authorized as the sponsor.');
+        }
+
+        $revModel = new \App\Models\ProjectsRealEstateRevenueModel();
+        $data = [
+            'project_id'           => $projectId,
+            'reporting_period'     => (string) $this->request->getPost('reporting_period'),
+            'revenue_source'       => (string) ($this->request->getPost('revenue_source') ?? 'airbnb_payout'),
+            'gross_revenue'        => (float) $this->request->getPost('gross_revenue'),
+            'platform_fees'        => (float) ($this->request->getPost('platform_fees') ?? 0.0),
+            'cleaning_fees'        => (float) ($this->request->getPost('cleaning_fees') ?? 0.0),
+            'utilities'            => (float) ($this->request->getPost('utilities') ?? 0.0),
+            'property_taxes'       => (float) ($this->request->getPost('property_taxes') ?? 0.0),
+            'insurance'            => (float) ($this->request->getPost('insurance') ?? 0.0),
+            'maintenance_reserves' => (float) ($this->request->getPost('maintenance_reserves') ?? 0.0),
+            'sponsor_fee'          => (float) ($this->request->getPost('sponsor_fee') ?? 0.0),
+            'proof_attachment_url' => (string) ($this->request->getPost('proof_attachment_url') ?? ''),
+            'reported_by'          => $userId,
+            'status'               => 'draft',
+            'notes'                => (string) ($this->request->getPost('notes') ?? ''),
+        ];
+
+        $revId = $revModel->recordMonthlyRevenue($data);
+
+        return $this->respond([
+            'status'     => 'ok',
+            'revenue_id' => $revId,
+            'message'    => 'Revenue report recorded successfully in draft state for audit review.',
+        ]);
+    }
+
     protected function ensurePost(): void
     {
         if (strtolower($this->request->getMethod()) !== 'post') {

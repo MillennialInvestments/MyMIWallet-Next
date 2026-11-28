@@ -1774,6 +1774,8 @@ $routes->group('Management', ['namespace' => '\App\Modules\Management\Controller
         $routes->post('Reject/(:segment)', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::rejectProject/$1');
         $routes->get('Quick-Intake', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::realEstateQuickIntake');
         $routes->post('Quick-Intake', '\\App\\Modules\\Management\\Controllers\\ProjectsAdminController::realEstateQuickSubmit');
+        $routes->get('Distribution-Console/(:num)', 'ProjectsAdminController::distributionConsole/$1');
+        $routes->post('Execute-Distribution/(:num)', 'ProjectsAdminController::executeDistribution/$1');
         $routes->get('Fund', 'ProjectsAdminController::fundOverview');
         $routes->get('Fund/(:num)', 'ProjectsAdminController::fundOverview/$1');
         $routes->post('UpdateFundNAV', 'ProjectsAdminController::updateFundNAV');
@@ -2127,6 +2129,12 @@ $routes->group('Projects', ['namespace' => '\App\Modules\User\Controllers'], sta
     $routes->post('Commit', 'ProjectsController::submitCommit', ['filter' => ['login', 'feature:project_investing']]);
     $routes->post('Create', 'ProjectsController::submitProposal', ['filter' => 'login']);
     $routes->post('reportRevenue', 'ProjectsController::reportRevenue', ['filter' => 'login']);
+    // Real Estate Private Equity & Syndication
+    $routes->get('Real-Estate', 'ProjectsController::realEstateMarketplace');
+    $routes->get('Real-Estate/(:num)', 'ProjectsController::realEstateDetail/$1');
+    $routes->match(['GET', 'POST'], 'ProForma-Calculate', 'ProjectsController::proFormaCalculate');
+    $routes->post('Invest-Crypto/(:num)', 'ProjectsController::investCrypto/$1', ['filter' => ['login', 'feature:project_investing']]);
+    $routes->post('Report-RealEstate-Revenue', 'ProjectsController::reportRealEstateRevenue', ['filter' => 'login']);
 });
 
 // Blog:

@@ -315,6 +315,16 @@ class ProjectsAdminController extends BaseAdminController
             return redirect()->back()->with('error','Failed to queue property.');
         }
 
+        // If pro forma or direct project creation requested, initialize syndicated project
+        if ($this->request->getPost('create_project') || ! empty($in['purchase_price'])) {
+            $dealService = new \App\Services\RealEstateDealService();
+            $intakeResult = $dealService->intakePropertyDeal((int) ($this->cuID ?? 1), $in);
+            if ($intakeResult['ok'] ?? false) {
+                return redirect()->to(site_url('Projects/Real-Estate/' . $intakeResult['project_id']))
+                    ->with('success', 'Real Estate Project and Pro Forma successfully created!');
+            }
+        }
+
         service('RealEstateIngestService')->queue((int)$id); // run now
         return redirect()->back()->with('success','Submitted! We’re fetching public details now.');
     }
@@ -640,6 +650,44 @@ class ProjectsAdminController extends BaseAdminController
         try {
             $asset = $this->getMyMIProjects()->registerProjectAsExchangeAsset($projectId);
             return $this->respond(['status' => 'success', 'data' => $asset]);
+        } catch (\Throwable $e) {
+            return $this->respond(['status' => 'error', 'message' => $e->getMessage()], 400);
+        }
+    }
+
+    public function distributionConsole($projectId)
+    {
+        $projectId = (int) $projectId;
+        $project = $this->projectsModel->find($projectId);
+        if (! $project) {
+            return $this->failNotFound('Project not found.');
+        }
+
+        $reModel = new \App\Models\ProjectsRealEstateModel();
+        $property = $reModel->getByProjectId($projectId);
+
+        $revModel = new \App\Models\ProjectsRealEstateRevenueModel();
+        $revenues = $revModel->getRevenuesByProject($projectId);
+
+        $this->data['pageTitle'] = 'Real Estate Revenue Distribution Console | MyMI Admin';
+        $this->data['project'] = $project;
+        $this->data['property'] = $property;
+        $this->data['revenues'] = $revenues;
+        $this->commonData();
+
+        return $this->renderTheme('App\\Modules\\Management\\Views\\Projects\\distribution_console', $this->data);
+    }
+
+    public function executeDistribution($projectId)
+    {
+        $projectId = (int) $projectId;
+        $revenueId = (int) $this->request->getPost('revenue_id');
+        $actorId = (int) ($this->cuID ?? 1);
+
+        try {
+            $dealService = new \App\Services\RealEstateDealService();
+            $result = $dealService->executeRevenueDistribution($projectId, $revenueId, $actorId);
+            return $this->respond(['status' => 'success', 'data' => $result]);
         } catch (\Throwable $e) {
             return $this->respond(['status' => 'error', 'message' => $e->getMessage()], 400);
         }

@@ -445,4 +445,73 @@ class ProjectsModel extends Model
             ->getRow();
     }
 
+    /**
+     * Store real estate property intake record in bf_projects_inbox.
+     *
+     * @param array<string, mixed> $data
+     * @return int
+     */
+    public function reSaveIntake(array $data): int
+    {
+        $inbox = model(ProjectInboxModel::class);
+        $payload = [
+            'source'       => strtoupper((string) ($data['source'] ?? 'ZILLOW')),
+            'trigger'      => 'PROPERTY',
+            'raw_subject'  => $data['raw_input'] ?? null,
+            'raw_body'     => json_encode($data),
+            'url'          => $data['zillow_url'] ?? null,
+            'payload_json' => json_encode($data),
+            'status'       => $data['status'] ?? 'queued',
+            'created_at'   => date('Y-m-d H:i:s'),
+            'updated_at'   => date('Y-m-d H:i:s'),
+        ];
+
+        return (int) $inbox->insert($payload, true);
+    }
+
+    /**
+     * Find real estate property intake record by ID.
+     *
+     * @param int $id
+     * @return array|null
+     */
+    public function reFindIntake(int $id): ?array
+    {
+        $inbox = model(ProjectInboxModel::class);
+        $row = $inbox->find($id);
+        if (! $row) {
+            return null;
+        }
+
+        $payload = ! empty($row['payload_json']) ? json_decode((string) $row['payload_json'], true) : [];
+        if (! is_array($payload)) {
+            $payload = [];
+        }
+
+        return array_merge($row, $payload);
+    }
+
+    /**
+     * Update real estate property intake record.
+     *
+     * @param int $id
+     * @param array<string, mixed> $data
+     * @return bool
+     */
+    public function reUpdateIntake(int $id, array $data): bool
+    {
+        $inbox = model(ProjectInboxModel::class);
+        $existing = $this->reFindIntake($id);
+        if (! $existing) {
+            return false;
+        }
+
+        $merged = array_merge($existing, $data);
+
+        return (bool) $inbox->update($id, [
+            'status'       => $data['status'] ?? ($existing['status'] ?? 'updated'),
+            'payload_json' => json_encode($merged),
+            'updated_at'   => date('Y-m-d H:i:s'),
+        ]);
+    }
 }
