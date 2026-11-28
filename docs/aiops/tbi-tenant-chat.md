@@ -61,7 +61,11 @@ dashboard with "The AI chat is not available yet".
 3. Sign in to MyMI Wallet as a member, open **AI Chat** and send a message.
 4. When members use it, stop the old Node chat:
    `sudo systemctl disable --now mymi-wallet-chat.service`. Keep
-   `chat/` in the repository until a separate cleanup PR.
+   `chat/` in the repository until a separate cleanup PR. From 2026-11-28
+   `mymi-release.sh` only restarts and health-checks that service while it
+   is enabled, so a release after this step prints `chat: retired` instead
+   of failing its health check. To bring it back:
+   `sudo systemctl enable --now mymi-wallet-chat.service`.
 
 ## Rollback
 
@@ -71,7 +75,8 @@ two hours, or at once when the TBI side turns `TENANT_MYMI_ENABLED=off`.
 
 ## Next
 
-- Usage reporting from the TBI ledger back to MyMI (per member, per day).
+- Usage reporting from the TBI ledger back to MyMI: done 2026-11-28
+  (`php spark tbichat:usage`, see above).
 - Read-only finance tools (Phase 4) under a separate review.
 
 ## First name and usage report (2026-11-28)
