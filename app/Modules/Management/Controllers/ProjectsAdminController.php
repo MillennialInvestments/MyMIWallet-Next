@@ -333,6 +333,44 @@ class ProjectsAdminController extends BaseAdminController
         }
     }
 
+    /** POST Management/Projects/Quick-Analysis/Parse-Listing: Ingest and parse Zillow or listing URL */
+    public function parseListingUrl()
+    {
+        $input = $this->request->getPost() ?: $this->request->getJSON(true) ?: [];
+        $url = trim((string) ($input['url'] ?? $input['zillow_url'] ?? ''));
+
+        if ($url === '') {
+            return $this->respond([
+                'status'  => 'error',
+                'message' => 'Please provide a valid listing URL.',
+            ], 400);
+        }
+
+        try {
+            $ingestService = new \App\Services\RealEstateIngestService();
+            $parsed = $ingestService->parseListingUrl($url);
+
+            if (!($parsed['ok'] ?? false)) {
+                return $this->respond([
+                    'status'  => 'error',
+                    'message' => $parsed['message'] ?? 'Could not parse listing details from this link. You can enter the details manually.',
+                    'data'    => $parsed,
+                ], 200);
+            }
+
+            return $this->respond([
+                'status' => 'ok',
+                'data'   => $parsed,
+            ]);
+        } catch (\Throwable $e) {
+            log_message('error', 'parseListingUrl error: ' . $e->getMessage());
+            return $this->respond([
+                'status'  => 'error',
+                'message' => 'Failed to parse listing URL: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
     /** POST Management/Projects/Quick-Analysis/Publish: Publish analyzed deal directly to marketplace */
     public function publishQuickAnalysis()
     {

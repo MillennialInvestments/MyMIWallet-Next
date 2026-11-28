@@ -43,9 +43,30 @@
           <form id="aiopsAnalysisForm" method="post" action="<?= site_url('Management/Projects/Quick-Analysis/Publish'); ?>">
             <?= csrf_field(); ?>
 
+            <!-- Zillow / Listing Link Drop-in Box -->
+            <div class="p-3 mb-3 bg-lighter rounded border border-primary-subtle shadow-sm">
+              <label class="form-label d-flex justify-content-between align-items-center mb-1" for="qaListingUrl">
+                <span class="text-primary fw-bold">
+                  <em class="icon ni ni-link-alt me-1"></em>Zillow / Listing Link Drop-in
+                </span>
+                <span class="badge bg-primary-soft text-primary small">Instant AI Extraction</span>
+              </label>
+              <div class="input-group">
+                <input type="url" name="zillow_url" id="qaListingUrl" class="form-control" placeholder="Drop/paste Zillow link (e.g., https://www.zillow.com/homedetails/...)" autocomplete="off">
+                <button type="button" class="btn btn-primary" id="btnFetchListing">
+                  <em class="icon ni ni-download-cloud me-1"></em><span>Fetch</span>
+                </button>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-1">
+                <span class="small text-muted" style="font-size: 0.75rem;">Supports Zillow, Realtor.com, Redfin, or MLS links.</span>
+                <span class="badge bg-outline-info small" style="font-size: 0.7rem;" id="qaListingBadge">Ready for link</span>
+              </div>
+              <div id="qaListingAlert" class="mt-2" style="display:none;"></div>
+            </div>
+
             <div class="mb-2">
-              <label class="form-label" for="qaAddress">Street Address / Listing Link</label>
-              <input type="text" name="address_line1" id="qaAddress" class="form-control" value="1420 Benton Rd" placeholder="123 Main St or Zillow URL" required>
+              <label class="form-label" for="qaAddress">Street Address</label>
+              <input type="text" name="address_line1" id="qaAddress" class="form-control" value="1420 Benton Rd" placeholder="123 Main St" required>
             </div>
 
             <div class="row g-2 mb-2">
@@ -273,6 +294,16 @@ document.addEventListener('DOMContentLoaded', function(){
   const strBox = document.getElementById('qaStrInputs');
   const commBox = document.getElementById('qaCommercialInputs');
   const btnAnalyze = document.getElementById('btnRunAiopsAnalysis');
+  const btnFetch = document.getElementById('btnFetchListing');
+  const inputUrl = document.getElementById('qaListingUrl');
+  const inputAddress = document.getElementById('qaAddress');
+  const inputCity = document.getElementById('qaCity');
+  const inputState = document.getElementById('qaState');
+  const inputZip = document.getElementById('qaZip');
+  const inputPurchase = document.getElementById('qaPurchase');
+  const inputTitle = document.getElementById('qaTitle');
+  const badgeListing = document.getElementById('qaListingBadge');
+  const alertListing = document.getElementById('qaListingAlert');
 
   cat.addEventListener('change', function(){
     if (this.value === 'commercial_lease') {
@@ -282,6 +313,119 @@ document.addEventListener('DOMContentLoaded', function(){
       strBox.style.display = 'flex';
       commBox.style.display = 'none';
     }
+  });
+
+  // Function to fetch and parse listing URL
+  function doFetchListing(rawUrl) {
+    const url = (rawUrl || inputUrl.value || '').trim();
+    if (!url) {
+      alertListing.className = 'alert alert-warning py-1 px-2 small mb-0';
+      alertListing.innerHTML = 'Please paste a valid Zillow, Realtor, or listing URL.';
+      alertListing.style.display = 'block';
+      return;
+    }
+
+    const origBtnHtml = btnFetch.innerHTML;
+    btnFetch.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status"></span> Extracting...';
+    btnFetch.disabled = true;
+    badgeListing.className = 'badge bg-warning text-dark small';
+    badgeListing.innerText = 'Extracting data...';
+    alertListing.style.display = 'none';
+
+    const form = document.getElementById('aiopsAnalysisForm');
+    const csrfToken = form.querySelector('input[name="csrf_token_name"]')?.value || form.querySelector('input[name="csrf_test_name"]')?.value || '';
+
+    const payload = new FormData();
+    payload.append('url', url);
+    payload.append('zillow_url', url);
+    if (csrfToken) {
+      payload.append('csrf_token_name', csrfToken);
+      payload.append('csrf_test_name', csrfToken);
+    }
+
+    fetch('<?= site_url("Management/Projects/Quick-Analysis/Parse-Listing") ?>', {
+      method: 'POST',
+      body: payload,
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
+    .then(r => r.json())
+    .then(res => {
+      btnFetch.innerHTML = origBtnHtml;
+      btnFetch.disabled = false;
+
+      if (!res || res.status !== 'ok' || !res.data) {
+        badgeListing.className = 'badge bg-danger text-white small';
+        badgeListing.innerText = 'Manual input needed';
+        alertListing.className = 'alert alert-danger py-1 px-2 small mb-0';
+        alertListing.innerHTML = res?.message || 'Could not auto-extract listing. You may enter property details manually.';
+        alertListing.style.display = 'block';
+        return;
+      }
+
+      const d = res.data;
+      badgeListing.className = 'badge bg-success text-white small';
+      badgeListing.innerText = '✓ Extracted (' + (d.source_domain || 'Zillow') + ')';
+
+      if (d.address_line1) inputAddress.value = d.address_line1;
+      if (d.city) inputCity.value = d.city;
+      if (d.state) inputState.value = d.state;
+      if (d.postal_code) inputZip.value = d.postal_code;
+      if (d.purchase_price && Number(d.purchase_price) > 0) {
+        inputPurchase.value = Math.round(Number(d.purchase_price));
+      }
+      if (d.title) {
+        inputTitle.value = d.title;
+      } else if (d.address_line1) {
+        inputTitle.value = d.address_line1 + ' Acquisition';
+      }
+
+      alertListing.className = 'alert alert-success py-1 px-2 small mb-0';
+      const priceStr = d.purchase_price ? ' | Price: $' + Number(d.purchase_price).toLocaleString() : '';
+      alertListing.innerHTML = '<strong>Success!</strong> Auto-filled from ' + (d.source_domain || 'listing') + ': ' + (d.address_line1 || '') + priceStr + '. Re-calculating pro forma...';
+      alertListing.style.display = 'block';
+
+      // Auto-trigger AIOps underwriting analysis
+      btnAnalyze.click();
+    })
+    .catch(err => {
+      btnFetch.innerHTML = origBtnHtml;
+      btnFetch.disabled = false;
+      badgeListing.className = 'badge bg-danger text-white small';
+      badgeListing.innerText = 'Fetch error';
+      alertListing.className = 'alert alert-danger py-1 px-2 small mb-0';
+      alertListing.innerHTML = 'Network error fetching listing. Please check connection or enter address manually.';
+      alertListing.style.display = 'block';
+      console.error(err);
+    });
+  }
+
+  btnFetch.addEventListener('click', function(e){
+    e.preventDefault();
+    doFetchListing();
+  });
+
+  // Auto-detect when URL is pasted into the listing URL input
+  inputUrl.addEventListener('paste', function(e){
+    setTimeout(function(){
+      const val = inputUrl.value.trim();
+      if (val.startsWith('http://') || val.startsWith('https://') || val.includes('zillow.com') || val.includes('realtor.com')) {
+        doFetchListing(val);
+      }
+    }, 100);
+  });
+
+  // If user accidentally pastes a URL into the Address field, intercept and redirect to Listing URL
+  inputAddress.addEventListener('paste', function(e){
+    setTimeout(function(){
+      const val = inputAddress.value.trim();
+      if (val.startsWith('http://') || val.startsWith('https://') || val.includes('zillow.com') || val.includes('realtor.com')) {
+        inputUrl.value = val;
+        inputAddress.value = '';
+        doFetchListing(val);
+      }
+    }, 100);
   });
 
   btnAnalyze.addEventListener('click', function(e){
